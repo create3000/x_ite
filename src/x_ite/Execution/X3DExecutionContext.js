@@ -62,8 +62,6 @@ import X3DCast                     from "../Base/X3DCast.js";
 import X3DConstants                from "../Base/X3DConstants.js";
 import SFNodeCache                 from "../Fields/SFNodeCache.js";
 
-X3DConstants .addNode (X3DExecutionContext);
-
 const
    _namedNodes     = Symbol (),
    _importedNodes  = Symbol (),
@@ -1026,5 +1024,7 @@ Object .defineProperties (X3DExecutionContext,
       enumerable: true,
    },
 });
+
+X3DConstants .addNode (X3DExecutionContext);
 
 export default X3DExecutionContext;

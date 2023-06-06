@@ -54,8 +54,6 @@ import X3DProtoDeclarationNode from "./X3DProtoDeclarationNode.js";
 import X3DConstants            from "../Base/X3DConstants.js";
 import FileLoader              from "../InputOutput/FileLoader.js";
 
-X3DConstants .addNode (X3DExternProtoDeclaration);
-
 const
    _proto = Symbol (),
    _scene = Symbol ();
@@ -445,5 +443,7 @@ Object .defineProperties (X3DExternProtoDeclaration,
       enumerable: true,
    },
 });
+
+X3DConstants .addNode (X3DExternProtoDeclaration);
 
 export default X3DExternProtoDeclaration;

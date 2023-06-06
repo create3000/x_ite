@@ -53,8 +53,6 @@ import Layer          from "../Components/Layering/Layer.js";
 import X3DCast        from "../Base/X3DCast.js";
 import X3DConstants   from "../Base/X3DConstants.js";
 
-X3DConstants .addNode (X3DWorld);
-
 function X3DWorld (executionContext)
 {
    X3DBaseNode .call (this, executionContext);
@@ -158,5 +156,7 @@ Object .defineProperties (X3DWorld,
       enumerable: true,
    },
 });
+
+X3DConstants .addNode (X3DWorld);
 
 export default X3DWorld;

@@ -58,8 +58,6 @@ import X3DCast             from "../Base/X3DCast.js";
 import X3DConstants        from "../Base/X3DConstants.js";
 import SFNodeCache         from "../Fields/SFNodeCache.js";
 
-X3DConstants .addNode (X3DScene);
-
 const
    _browser              = Symbol .for ("X_ITE.X3DEventObject.browser"),
    _specificationVersion = Symbol (),
@@ -1105,5 +1103,7 @@ Object .defineProperties (X3DScene,
       enumerable: true,
    },
 });
+
+X3DConstants .addNode (X3DScene);
 
 export default X3DScene;

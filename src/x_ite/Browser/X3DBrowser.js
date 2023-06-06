@@ -69,8 +69,6 @@ import Algorithm           from "../../standard/Math/Algorithm.js";
 import MapUtilities        from "../../standard/Utility/MapUtilities.js";
 import _                   from "../../locale/gettext.js";
 
-X3DConstants .addNode (X3DBrowser);
-
 const
    _DOMIntegration   = Symbol (),
    _reject           = Symbol (),
@@ -941,5 +939,7 @@ Object .defineProperties (X3DBrowser,
       enumerable: true,
    },
 });
+
+X3DConstants .addNode (X3DBrowser);
 
 export default X3DBrowser;
