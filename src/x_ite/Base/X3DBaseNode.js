@@ -56,7 +56,7 @@ import HTMLSupport          from "../Parser/HTMLSupport.js";
 const
    _executionContext  = Symbol (),
    _type              = Symbol (),
-   _fieldDefinitions  = Symbol ("X_ITE.X3DBaseNode.fieldDefinitions"),
+   _fieldDefinitions  = Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions"),
    _fields            = Symbol (),
    _predefinedFields  = Symbol (),
    _aliases           = Symbol (),
@@ -77,7 +77,7 @@ function X3DBaseNode (executionContext)
 
    this [_executionContext]  = executionContext;
    this [_type]              = [ X3DConstants .X3DBaseNode ];
-   this [_fieldDefinitions]  = this .constructor .fieldDefinitions ?? this .getFieldDefinitions ();
+   this [_fieldDefinitions]  = this .constructor .fieldDefinitions ?? this [_fieldDefinitions];
    this [_fields]            = new FieldArray ();
    this [_predefinedFields]  = new FieldArray ();
    this [_aliases]           = new Map ();

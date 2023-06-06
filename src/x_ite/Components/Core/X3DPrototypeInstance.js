@@ -51,16 +51,17 @@ import X3DExecutionContext from "../../Execution/X3DExecutionContext.js";
 import X3DConstants        from "../../Base/X3DConstants.js";
 
 const
-   _fieldDefinitions = Symbol ("X_ITE.X3DBaseNode.fieldDefinitions"),
+   _fieldDefinitions = Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions"),
    _protoNode        = Symbol (),
    _protoFields      = Symbol (),
    _body             = Symbol ();
 
 function X3DPrototypeInstance (executionContext, protoNode)
 {
-   this [_protoNode]   = protoNode;
-   this [_protoFields] = new Map (Array .from (protoNode .getFields (), f => [f, f .getName ()]));
-   this [_body]        = null;
+   this [_protoNode]        = protoNode;
+   this [_protoFields]      = new Map (Array .from (protoNode .getFields (), f => [f, f .getName ()]));
+   this [_fieldDefinitions] = protoNode .getFieldDefinitions ();
+   this [_body]             = null;
 
    X3DNode .call (this, executionContext);
 
@@ -77,10 +78,6 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
    getTypeName: function ()
    {
       return this [_protoNode] .getName ();
-   },
-   getFieldDefinitions: function ()
-   {
-      return this [_protoNode] .getFieldDefinitions ();
    },
    initialize: function ()
    {
