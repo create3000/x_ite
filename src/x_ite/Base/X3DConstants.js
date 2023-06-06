@@ -55,86 +55,86 @@ class X3DConstants
 {
    // Browser event
 
-   static CONNECTION_ERROR =  BROWSER_EVENT ++
-   static BROWSER_EVENT =     BROWSER_EVENT ++
+   static CONNECTION_ERROR  = BROWSER_EVENT ++
+   static BROWSER_EVENT     = BROWSER_EVENT ++
    static INITIALIZED_EVENT = BROWSER_EVENT ++
-   static SHUTDOWN_EVENT =    BROWSER_EVENT ++
+   static SHUTDOWN_EVENT    = BROWSER_EVENT ++
    static INITIALIZED_ERROR = BROWSER_EVENT ++
 
    // Load state
 
    static NOT_STARTED_STATE = LOAD_STATE ++
    static IN_PROGRESS_STATE = LOAD_STATE ++
-   static COMPLETE_STATE =    LOAD_STATE ++
-   static FAILED_STATE =      LOAD_STATE ++
+   static COMPLETE_STATE    = LOAD_STATE ++
+   static FAILED_STATE      = LOAD_STATE ++
 
    // Access type
 
    static initializeOnly = 0b001
-   static inputOnly =      0b010
-   static outputOnly =     0b100
-   static inputOutput =    0b111
+   static inputOnly      = 0b010
+   static outputOnly     = 0b100
+   static inputOutput    = 0b111
 
    // X3DField
 
-   static SFBool =      FIELD_TYPE ++
-   static SFColor =     FIELD_TYPE ++
+   static SFBool      = FIELD_TYPE ++
+   static SFColor     = FIELD_TYPE ++
    static SFColorRGBA = FIELD_TYPE ++
-   static SFDouble =    FIELD_TYPE ++
-   static SFFloat =     FIELD_TYPE ++
-   static SFImage =     FIELD_TYPE ++
-   static SFInt32 =     FIELD_TYPE ++
-   static SFMatrix3d =  FIELD_TYPE ++
-   static SFMatrix3f =  FIELD_TYPE ++
-   static SFMatrix4d =  FIELD_TYPE ++
-   static SFMatrix4f =  FIELD_TYPE ++
-   static SFNode =      FIELD_TYPE ++
-   static SFRotation =  FIELD_TYPE ++
-   static SFString =    FIELD_TYPE ++
-   static SFTime =      FIELD_TYPE ++
-   static SFVec2d =     FIELD_TYPE ++
-   static SFVec2f =     FIELD_TYPE ++
-   static SFVec3d =     FIELD_TYPE ++
-   static SFVec3f =     FIELD_TYPE ++
-   static SFVec4d =     FIELD_TYPE ++
-   static SFVec4f =     FIELD_TYPE ++
+   static SFDouble    = FIELD_TYPE ++
+   static SFFloat     = FIELD_TYPE ++
+   static SFImage     = FIELD_TYPE ++
+   static SFInt32     = FIELD_TYPE ++
+   static SFMatrix3d  = FIELD_TYPE ++
+   static SFMatrix3f  = FIELD_TYPE ++
+   static SFMatrix4d  = FIELD_TYPE ++
+   static SFMatrix4f  = FIELD_TYPE ++
+   static SFNode      = FIELD_TYPE ++
+   static SFRotation  = FIELD_TYPE ++
+   static SFString    = FIELD_TYPE ++
+   static SFTime      = FIELD_TYPE ++
+   static SFVec2d     = FIELD_TYPE ++
+   static SFVec2f     = FIELD_TYPE ++
+   static SFVec3d     = FIELD_TYPE ++
+   static SFVec3f     = FIELD_TYPE ++
+   static SFVec4d     = FIELD_TYPE ++
+   static SFVec4f     = FIELD_TYPE ++
 
-   static VrmlMatrix =  FIELD_TYPE ++
+   static VrmlMatrix  = FIELD_TYPE ++
 
    // X3DArrayField
 
-   static MFBool =      FIELD_TYPE ++
-   static MFColor =     FIELD_TYPE ++
+   static MFBool      = FIELD_TYPE ++
+   static MFColor     = FIELD_TYPE ++
    static MFColorRGBA = FIELD_TYPE ++
-   static MFDouble =    FIELD_TYPE ++
-   static MFFloat =     FIELD_TYPE ++
-   static MFImage =     FIELD_TYPE ++
-   static MFInt32 =     FIELD_TYPE ++
-   static MFMatrix3d =  FIELD_TYPE ++
-   static MFMatrix3f =  FIELD_TYPE ++
-   static MFMatrix4d =  FIELD_TYPE ++
-   static MFMatrix4f =  FIELD_TYPE ++
-   static MFNode =      FIELD_TYPE ++
-   static MFRotation =  FIELD_TYPE ++
-   static MFString =    FIELD_TYPE ++
-   static MFTime =      FIELD_TYPE ++
-   static MFVec2d =     FIELD_TYPE ++
-   static MFVec2f =     FIELD_TYPE ++
-   static MFVec3d =     FIELD_TYPE ++
-   static MFVec3f =     FIELD_TYPE ++
-   static MFVec4d =     FIELD_TYPE ++
-   static MFVec4f =     FIELD_TYPE ++
+   static MFDouble    = FIELD_TYPE ++
+   static MFFloat     = FIELD_TYPE ++
+   static MFImage     = FIELD_TYPE ++
+   static MFInt32     = FIELD_TYPE ++
+   static MFMatrix3d  = FIELD_TYPE ++
+   static MFMatrix3f  = FIELD_TYPE ++
+   static MFMatrix4d  = FIELD_TYPE ++
+   static MFMatrix4f  = FIELD_TYPE ++
+   static MFNode      = FIELD_TYPE ++
+   static MFRotation  = FIELD_TYPE ++
+   static MFString    = FIELD_TYPE ++
+   static MFTime      = FIELD_TYPE ++
+   static MFVec2d     = FIELD_TYPE ++
+   static MFVec2f     = FIELD_TYPE ++
+   static MFVec3d     = FIELD_TYPE ++
+   static MFVec3f     = FIELD_TYPE ++
+   static MFVec4d     = FIELD_TYPE ++
+   static MFVec4f     = FIELD_TYPE ++
 
    // Abstract nodes and nodes types are added later.
 
    static X3DBaseNode = NODE_TYPE
 
-   static addNode (Node)
+   static addNode ({ typeName })
    {
-      if (X3DConstants [Node .typeName])
+      if (X3DConstants [typeName])
          return;
-         
-      X3DConstants [Node .typeName] = ++ NODE_TYPE;
+
+      X3DConstants [typeName] = ++ NODE_TYPE;
    }
 }
 

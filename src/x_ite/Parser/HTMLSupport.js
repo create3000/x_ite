@@ -38,11 +38,11 @@ const
 
 const HTMLSupport =
 {
-   addConcreteNode: function (ConcreteNode)
+   addConcreteNode: function ({ typeName, fieldDefinitions })
    {
-      HTMLSupport .addNodeTypeName (ConcreteNode .typeName);
+      HTMLSupport .addNodeTypeName (typeName);
 
-      for (const { name, accessType } of ConcreteNode .fieldDefinitions)
+      for (const { name, accessType } of fieldDefinitions)
       {
          if (accessType & X3DConstants .initializeOnly)
             HTMLSupport .addFieldName (name)
