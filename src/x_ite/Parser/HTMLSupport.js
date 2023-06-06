@@ -36,9 +36,9 @@ const
    nodeTypeNames = new Map (), // (TYPENAME -> TypeName)
    fieldNames    = new Map (); // (fieldname -> fieldName)
 
-const HTMLSupport =
+class HTMLSupport
 {
-   addConcreteNode: function ({ typeName, fieldDefinitions })
+   static addConcreteNode ({ typeName, fieldDefinitions })
    {
       HTMLSupport .addNodeTypeName (typeName);
 
@@ -47,25 +47,29 @@ const HTMLSupport =
          if (accessType & X3DConstants .initializeOnly)
             HTMLSupport .addFieldName (name)
       }
-   },
-   addNodeTypeName: function (typeName)
+   }
+
+   static addNodeTypeName (typeName)
    {
       nodeTypeNames .set (typeName,                 typeName);
       nodeTypeNames .set (typeName .toUpperCase (), typeName);
-   },
-   getNodeTypeName: function (typeName)
+   }
+
+   static getNodeTypeName (typeName)
    {
       return nodeTypeNames .get (typeName);
-   },
-   addFieldName: function (name)
+   }
+
+   static addFieldName (name)
    {
       fieldNames .set (name,                 name);
       fieldNames .set (name .toLowerCase (), name);
-   },
-   getFieldName: function (name)
+   }
+
+   static getFieldName (name)
    {
       return fieldNames .get (name);
-   },
-};
+   }
+}
 
 export default HTMLSupport;
