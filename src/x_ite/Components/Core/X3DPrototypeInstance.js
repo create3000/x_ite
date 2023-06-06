@@ -168,6 +168,8 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
    },
    update: function ()
    {
+      // Assign field definitions.
+      
       this [_fieldDefinitions] .assign (this [_protoNode] .getFieldDefinitions ());
 
       // Remove old fields.
