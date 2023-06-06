@@ -62,7 +62,7 @@ import X3DCast                     from "../Base/X3DCast.js";
 import X3DConstants                from "../Base/X3DConstants.js";
 import SFNodeCache                 from "../Fields/SFNodeCache.js";
 
-AbstractNodes .add ("X3DExecutionContext", X3DExecutionContext);
+X3DConstants .addNode (X3DExecutionContext);
 
 const
    _namedNodes     = Symbol (),

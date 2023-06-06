@@ -52,7 +52,7 @@ import X3DPrototypeInstance from "../Components/Core/X3DPrototypeInstance.js";
 import SFNodeCache          from "../Fields/SFNodeCache.js";
 import X3DConstants         from "../Base/X3DConstants.js";
 
-AbstractNodes .add ("X3DProtoDeclarationNode", X3DProtoDeclarationNode);
+X3DConstants .addNode (X3DProtoDeclarationNode);
 
 function X3DProtoDeclarationNode (executionContext)
 {

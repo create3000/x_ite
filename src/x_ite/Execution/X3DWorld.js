@@ -53,7 +53,7 @@ import Layer          from "../Components/Layering/Layer.js";
 import X3DCast        from "../Base/X3DCast.js";
 import X3DConstants   from "../Base/X3DConstants.js";
 
-AbstractNodes .add ("X3DWorld", X3DWorld);
+X3DConstants .addNode (X3DWorld);
 
 function X3DWorld (executionContext)
 {

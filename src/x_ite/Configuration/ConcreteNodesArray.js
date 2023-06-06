@@ -49,8 +49,6 @@ import X3DInfoArray from "../Base/X3DInfoArray.js";
 import X3DConstants from "../Base/X3DConstants.js";
 import HTMLSupport  from "../Parser/HTMLSupport.js";
 
-const _NODE_TYPE = Symbol .for ("X_ITE.NODE_TYPE");
-
 function ConcreteNodesArray (values = [ ])
 {
    return X3DInfoArray .call (this, Array .from (values, value => [value .typeName, value]), Function);
@@ -61,7 +59,7 @@ ConcreteNodesArray .prototype = Object .assign (Object .create (X3DInfoArray .pr
    constructor: ConcreteNodesArray,
    add: function (typeName, ConcreteNode)
    {
-      X3DConstants [typeName] = ++ X3DConstants [_NODE_TYPE]; // Start with 1, as X3DBaseNode is 0.
+      X3DConstants .addNode (ConcreteNode);
 
       X3DInfoArray .prototype .add .call (this, typeName, ConcreteNode);
 

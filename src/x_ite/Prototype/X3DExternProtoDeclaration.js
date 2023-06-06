@@ -54,7 +54,7 @@ import X3DProtoDeclarationNode from "./X3DProtoDeclarationNode.js";
 import X3DConstants            from "../Base/X3DConstants.js";
 import FileLoader              from "../InputOutput/FileLoader.js";
 
-AbstractNodes .add ("X3DExternProtoDeclaration", X3DExternProtoDeclaration);
+X3DConstants .addNode (X3DExternProtoDeclaration);
 
 const
    _proto = Symbol (),
