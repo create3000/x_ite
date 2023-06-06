@@ -32,44 +32,43 @@
 
 import X3DConstants from "../Base/X3DConstants.js";
 
-const
-   nodeTypeNames = new Map (), // (TYPENAME -> TypeName)
-   fieldNames    = new Map (); // (fieldname -> fieldName)
-
 class HTMLSupport
 {
-   static addConcreteNode ({ typeName, fieldDefinitions })
+   nodeTypeNames = new Map () // (TYPENAME -> TypeName)
+   fieldNames    = new Map () // (fieldname -> fieldName)
+
+   addConcreteNode ({ typeName, fieldDefinitions })
    {
-      HTMLSupport .addNodeTypeName (typeName);
+      this .addNodeTypeName (typeName);
 
       for (const { name, accessType } of fieldDefinitions)
       {
          if (accessType & X3DConstants .initializeOnly)
-            HTMLSupport .addFieldName (name)
+            this .addFieldName (name)
       }
    }
 
-   static addNodeTypeName (typeName)
+   addNodeTypeName (typeName)
    {
-      nodeTypeNames .set (typeName,                 typeName);
-      nodeTypeNames .set (typeName .toUpperCase (), typeName);
+      this .nodeTypeNames .set (typeName,                 typeName);
+      this .nodeTypeNames .set (typeName .toUpperCase (), typeName);
    }
 
-   static getNodeTypeName (typeName)
+   getNodeTypeName (typeName)
    {
-      return nodeTypeNames .get (typeName);
+      return this .nodeTypeNames .get (typeName);
    }
 
-   static addFieldName (name)
+   addFieldName (name)
    {
-      fieldNames .set (name,                 name);
-      fieldNames .set (name .toLowerCase (), name);
+      this .fieldNames .set (name,                 name);
+      this .fieldNames .set (name .toLowerCase (), name);
    }
 
-   static getFieldName (name)
+   getFieldName (name)
    {
-      return fieldNames .get (name);
+      return this .fieldNames .get (name);
    }
 }
 
-export default HTMLSupport;
+export default new HTMLSupport ();
