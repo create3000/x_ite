@@ -143,6 +143,8 @@ X3DInfoArray .prototype = Object .assign (Object .create (X3DChildObject .protot
 
       this [_array] = Array .from (other [_array]);
       this [_index] = new Map (other [_index]);
+
+      this .addEvent ();
    },
    equals: function (array)
    {
