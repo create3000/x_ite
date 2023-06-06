@@ -574,9 +574,9 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          if (accessType === undefined)
             accessType = X3DConstants .initializeOnly;
 
-         var type = Fields [xmlElement .getAttribute ("type")];
+         var Field = Fields [xmlElement .getAttribute ("type")];
 
-         if (type === undefined)
+         if (Field === undefined)
             return;
 
          var name = xmlElement .getAttribute ("name");
@@ -584,7 +584,7 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          if (! this .id (name))
             return;
 
-         var field = new type ();
+         var field = new Field ();
 
          if (accessType & X3DConstants .initializeOnly)
          {
@@ -974,7 +974,7 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       try
       {
-         const field = node .getField (this .attributeToCamelCase (node, xmlAttribute .name));
+         const field = node .getPredefinedField (this .attributeToCamelCase (node, xmlAttribute .name));
 
          if (field .isInitializable ())
             this .fieldValue (field, xmlAttribute .value);

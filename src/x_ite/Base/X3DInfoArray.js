@@ -188,7 +188,7 @@ X3DInfoArray .prototype = Object .assign (Object .create (X3DChildObject .protot
 
       this .addEvent ();
    },
-   addAlias: function (alias, key)
+   alias: function (alias, key)
    {
       this [_index] .set (alias, this [_index] .get (key));
 

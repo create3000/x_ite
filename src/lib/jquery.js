@@ -23,6 +23,8 @@ $.toLowerCaseFirst = function (string)
    return string [0] .toLowerCase () + string .slice (1);
 };
 
+$.try = callback => { try { return callback () } catch (error) { } };
+
 $.fn.isInViewport = function ()
 {
    const

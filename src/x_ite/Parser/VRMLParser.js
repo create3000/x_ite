@@ -1369,7 +1369,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                            {
                               if (reference .isReference (accessType))
                               {
-                                 var field = baseNode .getUserDefinedFields () .get (fieldId);
+                                 var field = $.try (() => baseNode .getUserDefinedField (fieldId));
 
                                  if (!field)
                                  {
@@ -1410,7 +1410,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       if (field)
       {
-         var existingField = baseNode .getUserDefinedFields () .get (field .getName ());
+         var existingField = $.try (() => baseNode .getUserDefinedField (field .getName ()));
 
          if (existingField)
          {
@@ -1448,7 +1448,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
          try
          {
-            var field = baseNode .getField (fieldId);
+            var field = baseNode .getPredefinedField (fieldId);
          }
          catch (error)
          {

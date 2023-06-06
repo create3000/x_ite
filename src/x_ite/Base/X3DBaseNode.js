@@ -59,7 +59,6 @@ const
    _fieldDefinitions  = Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions"),
    _fields            = Symbol (),
    _predefinedFields  = Symbol (),
-   _aliases           = Symbol (),
    _userDefinedFields = Symbol (),
    _childObjects      = Symbol (),
    _initialized       = Symbol (),
@@ -80,7 +79,6 @@ function X3DBaseNode (executionContext)
    this [_fieldDefinitions]  = this .constructor .fieldDefinitions ?? this [_fieldDefinitions];
    this [_fields]            = new FieldArray ();
    this [_predefinedFields]  = new FieldArray ();
-   this [_aliases]           = new Map ();
    this [_userDefinedFields] = new FieldArray ();
    this [_childObjects]      = [ ];
    this [_live]              = true;
@@ -322,8 +320,8 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
       field .setName (name);
       field .setAccessType (accessType);
 
-      this [_fields]           .add (name, field);
       this [_predefinedFields] .add (name, field);
+      this [_fields]           .add (name, field);
 
       Object .defineProperty (this, "_" + name,
       {
@@ -336,47 +334,10 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
       if (!this .isPrivate ())
          field .addCloneCount (1);
    },
-   getField: (function ()
-   {
-      const
-         set_field     = /^set_(.*?)$/,
-         field_changed = /^(.*?)_changed$/;
-
-      return function (name)
-      {
-         const field = this [_fields] .get (name) || this [_aliases] .get (name);
-
-         if (field)
-            return field;
-
-         const match = name .match (set_field);
-
-         if (match)
-         {
-            const field = this [_fields] .get (match [1]) || this [_aliases] .get (match [1]);
-
-            if (field && field .getAccessType () === X3DConstants .inputOutput)
-               return field;
-         }
-         else
-         {
-            const match = name .match (field_changed);
-
-            if (match)
-            {
-               const field = this [_fields] .get (match [1]) || this [_aliases] .get (match [1]);
-
-               if (field && field .getAccessType () === X3DConstants .inputOutput)
-                  return field;
-            }
-         }
-
-         throw new Error ("Unknown field '" + name + "' in node class " + this .getTypeName () + ".");
-      };
-   })(),
    addAlias: function (alias, field)
    {
-      this [_aliases] .set (alias, field);
+      this [_predefinedFields] .alias (alias, field .getName ());
+      this [_fields]           .alias (alias, field .getName ());
 
       Object .defineProperty (this, "_" + alias,
       {
@@ -395,14 +356,28 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
       {
          field .removeParent (this);
 
-         this [_fields]           .remove (name);
          this [_predefinedFields] .remove (name);
+
+         if (this [_fields] .get () === field)
+            this [_fields] .remove (name);
 
          delete this ["_" + field .getName ()];
 
          if (!this .isPrivate ())
             field .removeCloneCount (1);
       }
+   },
+   getField: function (name)
+   {
+      return getFieldFromArray .call (this, this [_fields], name);
+   },
+   getPredefinedField: function (name)
+   {
+      return getFieldFromArray .call (this, this [_predefinedFields], name);
+   },
+   getPredefinedFields: function ()
+   {
+      return this [_predefinedFields];
    },
    canUserDefinedFields: function ()
    {
@@ -425,8 +400,8 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
       this [_fields]           .remove (name);
 
       this [_fieldDefinitions]  .add (name, new X3DFieldDefinition (accessType, name, field));
-      this [_fields]            .add (name, field);
       this [_userDefinedFields] .add (name, field);
+      this [_fields]            .add (name, field);
 
       if (!this .isPrivate ())
          field .addCloneCount (1);
@@ -439,21 +414,21 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
       {
          field .removeParent (this);
 
-         this [_fields]            .remove (name);
-         this [_userDefinedFields] .remove (name);
          this [_fieldDefinitions]  .remove (name);
+         this [_userDefinedFields] .remove (name);
+         this [_fields]            .remove (name);
 
          if (!this .isPrivate ())
             field .removeCloneCount (1);
       }
    },
+   getUserDefinedField: function (name)
+   {
+      return getFieldFromArray .call (this, this [_userDefinedFields], name);
+   },
    getUserDefinedFields: function ()
    {
       return this [_userDefinedFields];
-   },
-   getPredefinedFields: function ()
-   {
-      return this [_predefinedFields];
    },
    getChangedFields: function (extended)
    {
@@ -596,6 +571,45 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
       X3DEventObject .prototype .dispose .call (this);
    },
 });
+
+const getFieldFromArray = (function ()
+{
+   const
+      set_field     = /^set_(.*?)$/,
+      field_changed = /^(.*?)_changed$/;
+
+   return function (array, name)
+   {
+      const field = array .get (name);
+
+      if (field)
+         return field;
+
+      const match = name .match (set_field);
+
+      if (match)
+      {
+         const field = array .get (match [1]);
+
+         if (field && field .getAccessType () === X3DConstants .inputOutput)
+            return field;
+      }
+      else
+      {
+         const match = name .match (field_changed);
+
+         if (match)
+         {
+            const field = array .get (match [1]);
+
+            if (field && field .getAccessType () === X3DConstants .inputOutput)
+               return field;
+         }
+      }
+
+      throw new Error ("Unknown field '" + name + "' in node class " + this .getTypeName () + ".");
+   };
+})();
 
 for (const key of Reflect .ownKeys (X3DBaseNode .prototype))
    Object .defineProperty (X3DBaseNode .prototype, key, { enumerable: false });
