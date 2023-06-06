@@ -232,23 +232,16 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
       {
          // Disconnect old proto node.
 
-         if (this [_protoNode])
-         {
-            const protoNode = this [_protoNode];
+         const protoNode = this [_protoNode];
 
-            protoNode ._name_changed .removeFieldInterest (this ._typeName_changed);
-            protoNode ._updateInstances .removeInterest ("construct", this);
-            protoNode ._updateInstances .removeInterest ("update",    this);
-         }
-
-         this [_fieldDefinitions] .removeParent (this);
+         protoNode ._name_changed .removeFieldInterest (this ._typeName_changed);
+         protoNode ._updateInstances .removeInterest ("construct", this);
+         protoNode ._updateInstances .removeInterest ("update",    this);
 
          // Get fields from new proto node.
 
          this [_protoFields]      = new Map (Array .from (protoNode .getFields (), f => [f, f .getName ()]));
          this [_fieldDefinitions] = protoNode .getFieldDefinitions ();
-
-         this [_fieldDefinitions] .addParent (this);
       }
 
       this [_protoNode] = protoNode;
