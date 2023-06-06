@@ -134,7 +134,11 @@ X3DInfoArray .prototype = Object .assign (Object .create (X3DChildObject .protot
    },
    copy: function ()
    {
-      return new (this .constructor) (this [_array]);
+      const copy = new (this .constructor) ();
+
+      copy .assign (this);
+
+      return copy;
    },
    assign: function (array)
    {
