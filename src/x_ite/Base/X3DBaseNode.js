@@ -56,7 +56,7 @@ import HTMLSupport          from "../Parser/HTMLSupport.js";
 const
    _executionContext  = Symbol (),
    _type              = Symbol (),
-   _fieldDefinitions  = Symbol (),
+   _fieldDefinitions  = Symbol ("X_ITE.X3DBaseNode.fieldDefinitions"),
    _fields            = Symbol (),
    _predefinedFields  = Symbol (),
    _aliases           = Symbol (),

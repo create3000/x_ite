@@ -45,16 +45,16 @@
  *
  ******************************************************************************/
 
-import Fields              from "../../Fields.js";
 import X3DChildObject      from "../../Base/X3DChildObject.js";
 import X3DNode             from "./X3DNode.js";
 import X3DExecutionContext from "../../Execution/X3DExecutionContext.js";
 import X3DConstants        from "../../Base/X3DConstants.js";
 
 const
-   _protoNode   = Symbol (),
-   _protoFields = Symbol (),
-   _body        = Symbol ();
+   _fieldDefinitions = Symbol ("X_ITE.X3DBaseNode.fieldDefinitions"),
+   _protoNode        = Symbol (),
+   _protoFields      = Symbol (),
+   _body             = Symbol ();
 
 function X3DPrototypeInstance (executionContext, protoNode)
 {
