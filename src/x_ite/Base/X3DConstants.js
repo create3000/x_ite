@@ -131,6 +131,9 @@ class X3DConstants
 
    static addNode (Node)
    {
+      if (X3DConstants [Node .typeName])
+         return;
+         
       X3DConstants [Node .typeName] = ++ NODE_TYPE;
    }
 }

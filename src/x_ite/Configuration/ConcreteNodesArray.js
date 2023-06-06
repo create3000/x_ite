@@ -67,6 +67,7 @@ ConcreteNodesArray .prototype = Object .assign (Object .create (X3DInfoArray .pr
    },
    update: function (oldTypeName, typeName, ConcreteNode)
    {
+      X3DConstants .addNode (ConcreteNode);
       HTMLSupport .addConcreteNode (ConcreteNode);
 
       X3DInfoArray .prototype .update .call (this, oldTypeName, typeName, ConcreteNode);
