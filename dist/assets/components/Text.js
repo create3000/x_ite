@@ -1,7 +1,7 @@
 /* X_ITE v8.7.8 */(() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 652:
+/***/ 771:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 /**
@@ -14745,11 +14745,12 @@ function X3DFontStyleNode (executionContext)
 
    this .addType ((X3DConstants_default()).X3DFontStyleNode);
 
-   this .addChildObjects ("load",                 new (Fields_default()).SFBool (true),
+   this .addChildObjects ("url",                  this ._family,
+                          "load",                 new (Fields_default()).SFBool (true),
                           "autoRefresh",          new (Fields_default()).SFTime (),
                           "autoRefreshTimeLimit", new (Fields_default()).SFTime (3600));
 
-   this .addAlias ("url", this ._family);
+   this ._family .setName ("family");
 
    this .familyStack = [ ];
    this .alignments  = [ ];
@@ -16072,7 +16073,7 @@ Namespace_default().set ("x_ite/Components/Text/FontStyle", FontStyle_default_);
 /* harmony default export */ const Text_FontStyle = (FontStyle_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Text/X3DTextContext.js
 /* provided dependency */ var $ = __webpack_require__(355);
-/* provided dependency */ var opentype = __webpack_require__(652);
+/* provided dependency */ var opentype = __webpack_require__(771);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
