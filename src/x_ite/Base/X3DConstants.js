@@ -51,93 +51,96 @@ let
    FIELD_TYPE    = 0,
    NODE_TYPE     = 0;
 
-class X3DConstants
+const X3DConstants =
 {
    // Browser event
 
-   CONNECTION_ERROR  = BROWSER_EVENT ++
-   BROWSER_EVENT     = BROWSER_EVENT ++
-   INITIALIZED_EVENT = BROWSER_EVENT ++
-   SHUTDOWN_EVENT    = BROWSER_EVENT ++
-   INITIALIZED_ERROR = BROWSER_EVENT ++
+   CONNECTION_ERROR:  BROWSER_EVENT ++,
+   BROWSER_EVENT:     BROWSER_EVENT ++,
+   INITIALIZED_EVENT: BROWSER_EVENT ++,
+   SHUTDOWN_EVENT:    BROWSER_EVENT ++,
+   INITIALIZED_ERROR: BROWSER_EVENT ++,
 
    // Load state
 
-   NOT_STARTED_STATE = LOAD_STATE ++
-   IN_PROGRESS_STATE = LOAD_STATE ++
-   COMPLETE_STATE    = LOAD_STATE ++
-   FAILED_STATE      = LOAD_STATE ++
+   NOT_STARTED_STATE: LOAD_STATE ++,
+   IN_PROGRESS_STATE: LOAD_STATE ++,
+   COMPLETE_STATE:    LOAD_STATE ++,
+   FAILED_STATE:      LOAD_STATE ++,
 
    // Access type
 
-   initializeOnly = 0b001
-   inputOnly      = 0b010
-   outputOnly     = 0b100
-   inputOutput    = 0b111
+   initializeOnly: 0b001,
+   inputOnly:      0b010,
+   outputOnly:     0b100,
+   inputOutput:    0b111,
 
    // X3DField
 
-   SFBool      = FIELD_TYPE ++
-   SFColor     = FIELD_TYPE ++
-   SFColorRGBA = FIELD_TYPE ++
-   SFDouble    = FIELD_TYPE ++
-   SFFloat     = FIELD_TYPE ++
-   SFImage     = FIELD_TYPE ++
-   SFInt32     = FIELD_TYPE ++
-   SFMatrix3d  = FIELD_TYPE ++
-   SFMatrix3f  = FIELD_TYPE ++
-   SFMatrix4d  = FIELD_TYPE ++
-   SFMatrix4f  = FIELD_TYPE ++
-   SFNode      = FIELD_TYPE ++
-   SFRotation  = FIELD_TYPE ++
-   SFString    = FIELD_TYPE ++
-   SFTime      = FIELD_TYPE ++
-   SFVec2d     = FIELD_TYPE ++
-   SFVec2f     = FIELD_TYPE ++
-   SFVec3d     = FIELD_TYPE ++
-   SFVec3f     = FIELD_TYPE ++
-   SFVec4d     = FIELD_TYPE ++
-   SFVec4f     = FIELD_TYPE ++
+   SFBool:      FIELD_TYPE ++,
+   SFColor:     FIELD_TYPE ++,
+   SFColorRGBA: FIELD_TYPE ++,
+   SFDouble:    FIELD_TYPE ++,
+   SFFloat:     FIELD_TYPE ++,
+   SFImage:     FIELD_TYPE ++,
+   SFInt32:     FIELD_TYPE ++,
+   SFMatrix3d:  FIELD_TYPE ++,
+   SFMatrix3f:  FIELD_TYPE ++,
+   SFMatrix4d:  FIELD_TYPE ++,
+   SFMatrix4f:  FIELD_TYPE ++,
+   SFNode:      FIELD_TYPE ++,
+   SFRotation:  FIELD_TYPE ++,
+   SFString:    FIELD_TYPE ++,
+   SFTime:      FIELD_TYPE ++,
+   SFVec2d:     FIELD_TYPE ++,
+   SFVec2f:     FIELD_TYPE ++,
+   SFVec3d:     FIELD_TYPE ++,
+   SFVec3f:     FIELD_TYPE ++,
+   SFVec4d:     FIELD_TYPE ++,
+   SFVec4f:     FIELD_TYPE ++,
 
-   VrmlMatrix  = FIELD_TYPE ++
+   VrmlMatrix:  FIELD_TYPE ++,
 
    // X3DArrayField
 
-   MFBool      = FIELD_TYPE ++
-   MFColor     = FIELD_TYPE ++
-   MFColorRGBA = FIELD_TYPE ++
-   MFDouble    = FIELD_TYPE ++
-   MFFloat     = FIELD_TYPE ++
-   MFImage     = FIELD_TYPE ++
-   MFInt32     = FIELD_TYPE ++
-   MFMatrix3d  = FIELD_TYPE ++
-   MFMatrix3f  = FIELD_TYPE ++
-   MFMatrix4d  = FIELD_TYPE ++
-   MFMatrix4f  = FIELD_TYPE ++
-   MFNode      = FIELD_TYPE ++
-   MFRotation  = FIELD_TYPE ++
-   MFString    = FIELD_TYPE ++
-   MFTime      = FIELD_TYPE ++
-   MFVec2d     = FIELD_TYPE ++
-   MFVec2f     = FIELD_TYPE ++
-   MFVec3d     = FIELD_TYPE ++
-   MFVec3f     = FIELD_TYPE ++
-   MFVec4d     = FIELD_TYPE ++
-   MFVec4f     = FIELD_TYPE ++
+   MFBool:      FIELD_TYPE ++,
+   MFColor:     FIELD_TYPE ++,
+   MFColorRGBA: FIELD_TYPE ++,
+   MFDouble:    FIELD_TYPE ++,
+   MFFloat:     FIELD_TYPE ++,
+   MFImage:     FIELD_TYPE ++,
+   MFInt32:     FIELD_TYPE ++,
+   MFMatrix3d:  FIELD_TYPE ++,
+   MFMatrix3f:  FIELD_TYPE ++,
+   MFMatrix4d:  FIELD_TYPE ++,
+   MFMatrix4f:  FIELD_TYPE ++,
+   MFNode:      FIELD_TYPE ++,
+   MFRotation:  FIELD_TYPE ++,
+   MFString:    FIELD_TYPE ++,
+   MFTime:      FIELD_TYPE ++,
+   MFVec2d:     FIELD_TYPE ++,
+   MFVec2f:     FIELD_TYPE ++,
+   MFVec3d:     FIELD_TYPE ++,
+   MFVec3f:     FIELD_TYPE ++,
+   MFVec4d:     FIELD_TYPE ++,
+   MFVec4f:     FIELD_TYPE ++,
 
    // Abstract nodes and nodes types are added later.
 
-   X3DBaseNode = NODE_TYPE
+   X3DBaseNode: NODE_TYPE,
 
-   addNode ({ typeName })
+   [Symbol .toStringTag]: "X3DConstants",
+};
+
+Object .defineProperty (X3DConstants, "addNode",
+{
+   value: function ({ typeName })
    {
       if (this [typeName])
          return;
 
       this [typeName] = ++ NODE_TYPE;
-   }
+   },
+});
 
-   [Symbol .toStringTag] = "X3DConstants"
-}
-
-export default new X3DConstants ();
+export default X3DConstants;
