@@ -183,7 +183,7 @@ Appearance .prototype = Object .assign (Object .create (X3DAppearanceNode .proto
    },
    set_alphaMode__: function ()
    {
-      this .alphaMode = this .getEnum (AlphaMode, this ._alphaMode .getValue (), AlphaMode .AUTO);
+      this .alphaMode = $.enum (AlphaMode, this ._alphaMode .getValue (), AlphaMode .AUTO);
 
       this .set_alphaCutoff__ ();
    },

@@ -540,10 +540,6 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
       if (this [_initialized])
          this ._cloneCount_changed = time;
    },
-   getEnum: function (object, property, defaultValue)
-   {
-      return object .hasOwnProperty (property) ? object [property] : defaultValue;
-   },
    dispose: function ()
    {
       this .setLive (false);

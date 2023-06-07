@@ -195,7 +195,7 @@ BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototy
          primitiveQuality = value .getValue () .toUpperCase ();
 
       this .localStorage .PrimitiveQuality = primitiveQuality;
-      this .primitiveQuality               = this .getEnum (PrimitiveQuality, primitiveQuality, PrimitiveQuality .MEDIUM);
+      this .primitiveQuality               = $.enum (PrimitiveQuality, primitiveQuality, PrimitiveQuality .MEDIUM);
 
       if (typeof browser .setPrimitiveQuality2D === "function")
          browser .setPrimitiveQuality2D (this .primitiveQuality);
@@ -210,7 +210,7 @@ BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototy
          textureQuality = value .getValue () .toUpperCase ();
 
       this .localStorage .TextureQuality = textureQuality;
-      this .textureQuality               = this .getEnum (TextureQuality, textureQuality, TextureQuality .MEDIUM);
+      this .textureQuality               = $.enum (TextureQuality, textureQuality, TextureQuality .MEDIUM);
 
       if (typeof browser .setTextureQuality === "function")
          browser .setTextureQuality (this .textureQuality);
@@ -231,7 +231,7 @@ BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototy
             browser = this .getBrowser (),
             shading = value .getValue () .toUpperCase () .replace ("POINTSET", "POINT");
 
-         this .shading = this .getEnum (Shading, shading, Shading .GOURAUD);
+         this .shading = $.enum (Shading, shading, Shading .GOURAUD);
 
          browser .getRenderingProperties () ._Shading = strings [this .shading];
          browser .setShading (this .shading);

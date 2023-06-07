@@ -25,6 +25,11 @@ $.toLowerCaseFirst = function (string)
 
 $.try = callback => { try { return callback () } catch (error) { } };
 
+$.enum = function (object, property, defaultValue)
+{
+   return object .hasOwnProperty (property) ? object [property] : defaultValue;
+};
+
 $.fn.isInViewport = function ()
 {
    const
