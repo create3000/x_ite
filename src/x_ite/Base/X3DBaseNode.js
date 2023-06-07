@@ -312,6 +312,10 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
 
       throw new Error ("Unknown field '" + name + "' in node class " + this .getTypeName () + ".");
    },
+   getFields: function ()
+   {
+      return [... this [_predefinedFields], ... this [_userDefinedFields]];
+   },
    addPredefinedField: function ({ accessType, name, value })
    {
       const field = value .copy ();
