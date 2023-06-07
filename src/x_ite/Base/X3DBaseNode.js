@@ -305,14 +305,13 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
    },
    getField: function (name)
    {
-      try
-      {
-         return this .getUserDefinedField (name);
-      }
-      catch (error)
-      {
-         return this .getPredefinedField (name);
-      }
+      const field = getFieldFromArray .call (this, this [_userDefinedFields], name)
+         ?? getFieldFromArray .call (this, this [_predefinedFields], name);
+
+      if (field)
+         return field;
+
+      throw new Error ("Unknown field '" + name + "' in node class " + this .getTypeName () + ".");
    },
    addPredefinedField: function (fieldDefinition)
    {
@@ -363,7 +362,12 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
    },
    getPredefinedField: function (name)
    {
-      return getFieldFromArray .call (this, this [_predefinedFields], name);
+      const field = getFieldFromArray .call (this, this [_predefinedFields], name);
+
+      if (field)
+         return field;
+
+      throw new Error ("Unknown field '" + name + "' in node class " + this .getTypeName () + ".");
    },
    getPredefinedFields: function ()
    {
@@ -411,7 +415,12 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
    },
    getUserDefinedField: function (name)
    {
-      return getFieldFromArray .call (this, this [_userDefinedFields], name);
+      const field = getFieldFromArray .call (this, this [_userDefinedFields], name);
+
+      if (field)
+         return field;
+
+      throw new Error ("Unknown field '" + name + "' in node class " + this .getTypeName () + ".");
    },
    getUserDefinedFields: function ()
    {
@@ -585,7 +594,7 @@ const getFieldFromArray = (function ()
       {
          const field = array .get (match [1]);
 
-         if (field && field .getAccessType () === X3DConstants .inputOutput)
+         if (field ?.getAccessType () === X3DConstants .inputOutput)
             return field;
       }
       else
@@ -596,12 +605,10 @@ const getFieldFromArray = (function ()
          {
             const field = array .get (match [1]);
 
-            if (field && field .getAccessType () === X3DConstants .inputOutput)
+            if (field ?.getAccessType () === X3DConstants .inputOutput)
                return field;
          }
       }
-
-      throw new Error ("Unknown field '" + name + "' in node class " + this .getTypeName () + ".");
    };
 })();
 
