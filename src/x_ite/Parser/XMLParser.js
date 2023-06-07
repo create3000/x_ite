@@ -563,10 +563,10 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
          var node = this .getParent ();
 
-         if (! (node instanceof X3DBaseNode))
+         if (!(node instanceof X3DBaseNode))
             return;
 
-         if (! node .canUserDefinedFields ())
+         if (!node .canUserDefinedFields ())
             return;
 
          var accessType = AccessType [xmlElement .getAttribute ("accessType")];
@@ -581,7 +581,7 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
          var name = xmlElement .getAttribute ("name");
 
-         if (! this .id (name))
+         if (!this .id (name))
             return;
 
          var field = new Field ();
@@ -647,7 +647,7 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             node  = this .getParent (),
             proto = this .getPrototype ();
 
-         if (! (node instanceof X3DNode))
+         if (!(node instanceof X3DNode))
             return;
 
          var
@@ -682,7 +682,7 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          {
             var node = this .getExecutionContext () .createProto (name, false);
 
-            if (! node)
+            if (!node)
                throw new Error ("Unknown proto or externproto type '" + name + "'.");
 
             ///DOMIntegration: attach node to DOM xmlElement for access from DOM.
@@ -693,7 +693,7 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             this .pushParent (node);
             this .childrenElements (xmlElement);
 
-            if (! this .isInsideProtoDefinition ())
+            if (!this .isInsideProtoDefinition ())
                node .setup ();
 
             this .popParent ();
@@ -718,10 +718,10 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             node = this .getParent (),
             name = xmlElement .getAttribute ("name");
 
-         if (! (node instanceof X3DPrototypeInstance))
+         if (!(node instanceof X3DPrototypeInstance))
             return;
 
-         if (! this .id (name))
+         if (!this .id (name))
             return;
 
          var
@@ -775,7 +775,7 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          this .nodeAttributes (xmlElement, node);
          this .childrenElements (xmlElement);
 
-         if (! this .isInsideProtoDefinition ())
+         if (!this .isInsideProtoDefinition ())
             node .setup ();
 
          this .popParent ();
@@ -866,7 +866,7 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          if (exportedNodeName === null)
             throw new Error ("Bad IMPORT statement: Expected importedDEF attribute.");
 
-         if (! localNodeName)
+         if (!localNodeName)
             localNodeName = exportedNodeName;
 
          var inlineNode = this .getExecutionContext () .getNamedNode (inlineNodeName);
@@ -895,7 +895,7 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          if (localNodeName === null)
             throw new Error ("Bad EXPORT statement: Expected localDEF attribute.");
 
-         if (! exportedNodeName)
+         if (!exportedNodeName)
             exportedNodeName = localNodeName;
 
          var localNode = this .getExecutionContext () .getLocalNode (localNodeName);
@@ -1054,7 +1054,7 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       {
          var containerField = xmlElement .getAttribute ("containerField");
 
-         if (! containerField)
+         if (!containerField)
          {
             if (node)
                containerField = node .getContainerField ();
