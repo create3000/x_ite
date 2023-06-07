@@ -359,6 +359,10 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
    {
       return getFieldFromArray .call (this, this [_fields], name);
    },
+   getFields: function ()
+   {
+      return this [_fields];
+   },
    getPredefinedField: function (name)
    {
       return getFieldFromArray .call (this, this [_predefinedFields], name);
@@ -474,10 +478,6 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
       }
 
       return !field .getModificationTime ();
-   },
-   getFields: function ()
-   {
-      return this [_fields];
    },
    hasRoutes: function ()
    {
