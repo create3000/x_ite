@@ -1,7 +1,39 @@
 /* X_ITE v8.7.8 */(() => { // webpackBootstrap
 /******/ 	"use strict";
-/******/ 	// The require scope
-/******/ 	var __webpack_require__ = {};
+/******/ 	var __webpack_modules__ = ({
+
+/***/ 355:
+/***/ ((module) => {
+
+module.exports = window [Symbol .for ("X_ITE.X3D-8.7.8")] .require ("lib/jquery");
+
+/***/ })
+
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
 /******/ 	
 /************************************************************************/
 /******/ 	/* webpack/runtime/compat get default export */
@@ -35,6 +67,8 @@
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+(() => {
 
 // UNUSED EXPORTS: default
 
@@ -3021,6 +3055,7 @@ const BVH_default_ = BVH;
 Namespace_default().set ("standard/Math/Utility/BVH", BVH_default_);
 /* harmony default export */ const Utility_BVH = (BVH_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/ParticleSystems/ParticleSystem.js
+/* provided dependency */ var $ = __webpack_require__(355);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -3351,7 +3386,7 @@ ParticleSystem .prototype = Object .assign (Object .create ((X3DShapeNode_defaul
 
       // Get geometryType.
 
-      this .geometryType = this .getEnum (ParticleSystems_GeometryTypes, this ._geometryType .getValue (), ParticleSystems_GeometryTypes.QUAD);
+      this .geometryType = $.enum (ParticleSystems_GeometryTypes, this ._geometryType .getValue (), ParticleSystems_GeometryTypes.QUAD);
 
       // Create buffers.
 
@@ -5164,5 +5199,7 @@ const ParticleSystems_default_ = undefined;
 
 Namespace_default().set ("assets/components/ParticleSystems", ParticleSystems_default_);
 /* harmony default export */ const ParticleSystems = ((/* unused pure expression or super */ null && (ParticleSystems_default_)));
+})();
+
 /******/ })()
 ;
