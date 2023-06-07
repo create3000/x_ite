@@ -64,12 +64,12 @@ MetadataSet .prototype = Object .assign (Object .create (X3DNode .prototype),
    X3DMetadataObject .prototype,
 {
    constructor: MetadataSet,
-   initialize: function ()
+   initialize ()
    {
       X3DNode           .prototype .initialize .call (this);
       X3DMetadataObject .prototype .initialize .call (this);
    },
-   dispose: function ()
+   dispose ()
    {
       X3DMetadataObject .prototype .dispose .call (this);
       X3DNode           .prototype .dispose .call (this);

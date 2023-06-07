@@ -63,13 +63,13 @@ function NormalInterpolator (executionContext)
 NormalInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
 {
    constructor: NormalInterpolator,
-   initialize: function ()
+   initialize ()
    {
       X3DInterpolatorNode .prototype .initialize .call (this);
 
       this ._keyValue .addInterest ("set_keyValue__", this);
    },
-   set_keyValue__: function () { },
+   set_keyValue__ () { },
    interpolate: (function ()
    {
       const

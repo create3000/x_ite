@@ -62,7 +62,7 @@ function BoundedPhysicsModel (executionContext)
 BoundedPhysicsModel .prototype = Object .assign (Object .create (X3DParticlePhysicsModelNode .prototype),
 {
    constructor: BoundedPhysicsModel,
-   initialize: function ()
+   initialize ()
    {
       X3DParticlePhysicsModelNode .prototype .initialize .call (this);
 
@@ -70,7 +70,7 @@ BoundedPhysicsModel .prototype = Object .assign (Object .create (X3DParticlePhys
 
       this .set_geometry__ ();
    },
-   set_geometry__: function ()
+   set_geometry__ ()
    {
       if (this .geometryNode)
          this .geometryNode ._rebuild .removeInterest ("addNodeEvent", this);
@@ -80,7 +80,7 @@ BoundedPhysicsModel .prototype = Object .assign (Object .create (X3DParticlePhys
       if (this .geometryNode)
          this .geometryNode ._rebuild .addInterest ("addNodeEvent", this);
    },
-   addGeometry: function (boundedNormals, boundedVertices)
+   addGeometry (boundedNormals, boundedVertices)
    {
       if (this .geometryNode && this ._enabled .getValue ())
       {

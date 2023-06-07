@@ -81,17 +81,17 @@ function FileLoader (node)
 FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
 {
    constructor: FileLoader,
-   abort: function ()
+   abort ()
    {
       this .url .length = 0;
 
       this .controller .abort ();
    },
-   getURL: function ()
+   getURL ()
    {
       return this .URL;
    },
-   getReferer: function ()
+   getReferer ()
    {
       if (this .node instanceof X3DWorld)
       {
@@ -101,7 +101,7 @@ FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
 
       return this .executionContext .getWorldURL ();
    },
-   getTarget: function (parameters)
+   getTarget (parameters)
    {
       for (const parameter of parameters)
       {
@@ -116,7 +116,7 @@ FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
 
       return "";
    },
-   createX3DFromString: function (worldURL, string = "", resolve, reject)
+   createX3DFromString (worldURL, string = "", resolve, reject)
    {
       try
       {
@@ -144,12 +144,12 @@ FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
             throw error;
       }
    },
-   setScene: function (scene, resolve, reject)
+   setScene (scene, resolve, reject)
    {
       scene ._initLoadCount .addInterest ("set_initLoadCount__", this, scene, resolve, reject);
       scene ._initLoadCount .addEvent ();
    },
-   set_initLoadCount__: function (scene, resolve, reject, field)
+   set_initLoadCount__ (scene, resolve, reject, field)
    {
       // Wait for extern protos to be loaded.
 
@@ -183,7 +183,7 @@ FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
             console .info (`Done loading scene '${decodeURI (this .URL .href)}'`);
       }
    },
-   createX3DFromURL: function (url, parameter, callback, bindViewpoint, foreign)
+   createX3DFromURL (url, parameter, callback, bindViewpoint, foreign)
    {
       this .bindViewpoint = bindViewpoint;
       this .foreign       = foreign;
@@ -191,14 +191,14 @@ FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
 
       return this .loadDocument (url, this .createX3DFromURLAsync .bind (this, callback));
    },
-   createX3DFromURLAsync: function (callback, data)
+   createX3DFromURLAsync (callback, data)
    {
       if (data === null)
          callback (null);
       else
          this .createX3DFromString (this .URL, data, callback, this .loadDocumentError .bind (this));
    },
-   loadDocument: function (url, callback)
+   loadDocument (url, callback)
    {
       this .url      = url .copy ();
       this .callback = callback;
@@ -297,14 +297,14 @@ FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
 
       this .callback ($.ungzip (await response .arrayBuffer ()), this .URL);
    },
-   handleErrors: function (response)
+   handleErrors (response)
    {
       if (response .ok)
          return response;
 
       throw Error (response .statusText || response .status);
    },
-   loadDocumentError: function (error)
+   loadDocumentError (error)
    {
       // Output error.
 
@@ -322,7 +322,7 @@ FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
          this .callback (null);
       }
    },
-   setError: function (error)
+   setError (error)
    {
       if (this .URL .protocol === "data:")
          console .error (`Couldn't load data URL.`, error);

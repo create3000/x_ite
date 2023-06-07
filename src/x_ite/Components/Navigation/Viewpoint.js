@@ -70,7 +70,7 @@ function Viewpoint (executionContext)
 Viewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prototype),
 {
    constructor: Viewpoint,
-   getRelativeTransformation: function (fromViewpointNode)
+   getRelativeTransformation (fromViewpointNode)
    {
       const relative = X3DViewpointNode .prototype .getRelativeTransformation .call (this, fromViewpointNode);
 
@@ -79,7 +79,7 @@ Viewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prototy
 
       return relative;
    },
-   setInterpolators: function (fromViewpointNode, relative)
+   setInterpolators (fromViewpointNode, relative)
    {
       if (fromViewpointNode .constructor === this .constructor)
       {
@@ -96,17 +96,17 @@ Viewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prototy
          this ._fieldOfViewScale = this ._fieldOfViewScale .getValue ();
       }
    },
-   getLogarithmicDepthBuffer: function ()
+   getLogarithmicDepthBuffer ()
    {
       return false;
    },
-   getFieldOfView: function ()
+   getFieldOfView ()
    {
       const fov = this ._fieldOfView .getValue () * this ._fieldOfViewScale .getValue ();
 
       return fov > 0 && fov < Math .PI ? fov : Math .PI / 4;
    },
-   getScreenScale: function (point, viewport, screenScale)
+   getScreenScale (point, viewport, screenScale)
    {
       // Returns the screen scale in meter/pixel for on pixel.
 
@@ -143,11 +143,11 @@ Viewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prototy
          return viewportSize .set (size, size / aspect);
       };
    })(),
-   getLookAtDistance: function (bbox)
+   getLookAtDistance (bbox)
    {
       return (bbox .size .magnitude () / 2) / Math .tan (this .getFieldOfView () / 2);
    },
-   getProjectionMatrixWithLimits: function (nearValue, farValue, viewport)
+   getProjectionMatrixWithLimits (nearValue, farValue, viewport)
    {
       return Camera .perspective (this .getFieldOfView (), nearValue, farValue, viewport [2], viewport [3], this .projectionMatrix);
    },

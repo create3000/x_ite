@@ -61,25 +61,25 @@ function X3DSingleTextureCoordinateNode (executionContext)
 X3DSingleTextureCoordinateNode .prototype = Object .assign (Object .create (X3DTextureCoordinateNode .prototype),
 {
    constructor: X3DSingleTextureCoordinateNode,
-   getCount: function ()
+   getCount ()
    {
       return 1;
    },
-   init: function (multiArray)
+   init (multiArray)
    {
       this .texCoordArray .length = 0;
 
       multiArray .push (this .texCoordArray);
    },
-   addPoint: function (index, multiArray)
+   addPoint (index, multiArray)
    {
       this .addPointToChannel (index, multiArray [0]);
    },
-   getTextureCoordinateMapping: function (textureCoordinateMapping, channel = 0)
+   getTextureCoordinateMapping (textureCoordinateMapping, channel = 0)
    {
       textureCoordinateMapping .set (this ._mapping .getValue () || channel, channel);
    },
-   setShaderUniforms: function (gl, shaderObject, channel = 0)
+   setShaderUniforms (gl, shaderObject, channel = 0)
    {
       gl .uniform1i (shaderObject .x3d_TextureCoordinateGeneratorMode [channel], 0);
    },

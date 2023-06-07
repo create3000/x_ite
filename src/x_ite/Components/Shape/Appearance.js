@@ -69,7 +69,7 @@ function Appearance (executionContext)
 Appearance .prototype = Object .assign (Object .create (X3DAppearanceNode .prototype),
 {
    constructor: Appearance,
-   initialize: function ()
+   initialize ()
    {
       X3DAppearanceNode .prototype .initialize .call (this);
 
@@ -107,91 +107,91 @@ Appearance .prototype = Object .assign (Object .create (X3DAppearanceNode .proto
       this .set_blendMode__ ();
       this .set_transparent__ ();
    },
-   getAlphaMode: function ()
+   getAlphaMode ()
    {
       return this .alphaMode;
    },
-   getNormalizedAlphaMode: function (transparent)
+   getNormalizedAlphaMode (transparent)
    {
       return this .alphaMode || (transparent ? AlphaMode .BLEND : AlphaMode .OPAQUE);
    },
-   getAlphaCutoff: function ()
+   getAlphaCutoff ()
    {
       return this .alphaCutoff;
    },
-   getStyleProperties: function (geometryType)
+   getStyleProperties (geometryType)
    {
       return this .stylePropertiesNode [geometryType];
    },
-   getPointProperties: function ()
+   getPointProperties ()
    {
       return this .stylePropertiesNode [0];
    },
-   getLineProperties: function ()
+   getLineProperties ()
    {
       return this .stylePropertiesNode [1];
    },
-   getFillProperties: function ()
+   getFillProperties ()
    {
       return this .stylePropertiesNode [2];
    },
-   getMaterial: function ()
+   getMaterial ()
    {
       return this .materialNode;
    },
-   getBackMaterial: function ()
+   getBackMaterial ()
    {
       return this .backMaterialNode;
    },
-   getTexture: function ()
+   getTexture ()
    {
       return this .textureNode;
    },
-   getTextureBits: function ()
+   getTextureBits ()
    {
       return this .textureBits;
    },
-   updateTextureBits: function ()
+   updateTextureBits ()
    {
       this .textureBits .clear ();
       this .textureNode .updateTextureBits (this .textureBits);
    },
-   getTextureTransform: function ()
+   getTextureTransform ()
    {
       return this .textureTransformNode;
    },
-   getTextureTransformMapping: function ()
+   getTextureTransformMapping ()
    {
       return this .textureTransformMapping;
    },
-   getShader: function (geometryContext, renderContext)
+   getShader (geometryContext, renderContext)
    {
       return this .materialNode .getShader (geometryContext, renderContext);
    },
-   getBackShader: function (geometryContext, renderContext)
+   getBackShader (geometryContext, renderContext)
    {
       return this .backMaterialNode .getShader (geometryContext, renderContext);
    },
-   getBlendMode: function ()
+   getBlendMode ()
    {
       return this .blendModeNode;
    },
-   set_contentScale__: function ()
+   set_contentScale__ ()
    {
       this .set_pointProperties__ ();
       this .set_applied__ ();
    },
-   set_alphaMode__: function ()
+   set_alphaMode__ ()
    {
       this .alphaMode = $.enum (AlphaMode, this ._alphaMode .getValue (), AlphaMode .AUTO);
 
       this .set_alphaCutoff__ ();
    },
-   set_alphaCutoff__: function ()
+   set_alphaCutoff__ ()
    {
       this .alphaCutoff = this .alphaMode === AlphaMode .MASK ? this ._alphaCutoff .getValue () : 0;
    },
-   set_pointProperties__: function ()
+   set_pointProperties__ ()
    {
       this .stylePropertiesNode [0] = X3DCast (X3DConstants .PointProperties, this ._pointProperties);
 
@@ -203,7 +203,7 @@ Appearance .prototype = Object .assign (Object .create (X3DAppearanceNode .proto
             this .stylePropertiesNode [0] = browser .getDefaultPointProperties ();
       }
    },
-   set_lineProperties__: function ()
+   set_lineProperties__ ()
    {
       if (this .linePropertiesNode)
          this .linePropertiesNode ._applied .removeInterest ("set_applied__", this);
@@ -215,7 +215,7 @@ Appearance .prototype = Object .assign (Object .create (X3DAppearanceNode .proto
 
       this .set_applied__ ();
    },
-   set_applied__: function ()
+   set_applied__ ()
    {
       if (this .linePropertiesNode && this .linePropertiesNode ._applied .getValue ())
       {
@@ -231,7 +231,7 @@ Appearance .prototype = Object .assign (Object .create (X3DAppearanceNode .proto
             this .stylePropertiesNode [1] = null;
       }
    },
-   set_fillProperties__: function ()
+   set_fillProperties__ ()
    {
       if (this .stylePropertiesNode [2])
          this .stylePropertiesNode [2] ._transparent .removeInterest ("set_transparent__", this);
@@ -243,7 +243,7 @@ Appearance .prototype = Object .assign (Object .create (X3DAppearanceNode .proto
 
       this .stylePropertiesNode [3] = this .stylePropertiesNode [2];
    },
-   set_material__: function ()
+   set_material__ ()
    {
       if (this .materialNode)
          this .materialNode ._transparent .removeInterest ("set_transparent__", this);
@@ -261,7 +261,7 @@ Appearance .prototype = Object .assign (Object .create (X3DAppearanceNode .proto
       if (X3DCast (X3DConstants .TwoSidedMaterial, this .materialNode))
          this .set_backMaterial__ ();
    },
-   set_backMaterial__: function ()
+   set_backMaterial__ ()
    {
       if (this .backMaterialNode)
          this .backMaterialNode ._transparent .removeInterest ("set_transparent__", this);
@@ -276,7 +276,7 @@ Appearance .prototype = Object .assign (Object .create (X3DAppearanceNode .proto
       if (!this .backMaterialNode && X3DCast (X3DConstants .TwoSidedMaterial, this .materialNode))
          this .backMaterialNode = this .materialNode;
    },
-   set_texture__: function ()
+   set_texture__ ()
    {
       if (this .textureNode)
       {
@@ -298,7 +298,7 @@ Appearance .prototype = Object .assign (Object .create (X3DAppearanceNode .proto
          this .textureBits .clear ();
       }
    },
-   set_textureTransform__: function ()
+   set_textureTransform__ ()
    {
       if (this .textureTransformNode)
          this .textureTransformNode .removeInterest ("updateTextureTransformMapping", this);
@@ -312,13 +312,13 @@ Appearance .prototype = Object .assign (Object .create (X3DAppearanceNode .proto
 
       this .updateTextureTransformMapping ();
    },
-   updateTextureTransformMapping: function ()
+   updateTextureTransformMapping ()
    {
       this .textureTransformMapping .clear ();
 
       this .textureTransformNode .getTextureTransformMapping (this .textureTransformMapping);
    },
-   set_shaders__: function ()
+   set_shaders__ ()
    {
       const shaderNodes = this .shaderNodes;
 
@@ -379,11 +379,11 @@ Appearance .prototype = Object .assign (Object .create (X3DAppearanceNode .proto
          }
       };
    })(),
-   set_blendMode__: function ()
+   set_blendMode__ ()
    {
       this .blendModeNode = X3DCast (X3DConstants .BlendMode, this ._blendMode);
    },
-   set_transparent__: function ()
+   set_transparent__ ()
    {
       switch (this .alphaMode)
       {
@@ -406,7 +406,7 @@ Appearance .prototype = Object .assign (Object .create (X3DAppearanceNode .proto
             break;
       }
    },
-   traverse: function (type, renderObject)
+   traverse (type, renderObject)
    {
       if (this .textureNode)
          this .textureNode .traverse (type, renderObject);

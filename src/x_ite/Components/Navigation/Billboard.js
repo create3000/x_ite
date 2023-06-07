@@ -67,11 +67,11 @@ function Billboard (executionContext)
 Billboard .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
 {
    constructor: Billboard,
-   getBBox: function (bbox, shadows)
+   getBBox (bbox, shadows)
    {
       return X3DGroupingNode .prototype .getBBox .call (this, bbox, shadows) .multRight (this .matrix);
    },
-   getMatrix: function ()
+   getMatrix ()
    {
       return this .matrix;
    },
@@ -122,7 +122,7 @@ Billboard .prototype = Object .assign (Object .create (X3DGroupingNode .prototyp
          return this .matrix;
       };
    })(),
-   traverse: function (type, renderObject)
+   traverse (type, renderObject)
    {
       const modelViewMatrix = renderObject .getModelViewMatrix ();
 

@@ -81,7 +81,7 @@ function PointEmitter (executionContext)
 PointEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),
 {
    constructor: PointEmitter,
-   initialize: function ()
+   initialize ()
    {
       X3DParticleEmitterNode .prototype .initialize .call (this);
 
@@ -94,7 +94,7 @@ PointEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode
       this .set_position__ ();
       this .set_direction__ ();
    },
-   set_position__: function ()
+   set_position__ ()
    {
       const position = this ._position .getValue ();
 

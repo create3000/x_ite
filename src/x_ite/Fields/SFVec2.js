@@ -74,11 +74,11 @@ function SFVec2Template (TypeName, double)
       Object .defineProperty (SFVec2 .prototype, key, { enumerable: false });
 
    const x = {
-      get: function ()
+      get ()
       {
          return this .getValue () .x;
       },
-      set: function (value)
+      set (value)
       {
          this .getValue () .x = +value;
          this .addEvent ();
@@ -86,11 +86,11 @@ function SFVec2Template (TypeName, double)
    };
 
    const y = {
-      get: function ()
+      get ()
       {
          return this .getValue () .y;
       },
-      set: function (value)
+      set (value)
       {
          this .getValue () .y = +value;
          this .addEvent ();

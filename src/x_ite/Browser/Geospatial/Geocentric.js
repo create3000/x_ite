@@ -52,15 +52,15 @@ function Geocentric () { }
 Geocentric .prototype =
 {
    constructor: Geocentric,
-   convert: function (geocentric, result)
+   convert (geocentric, result)
    {
       return result .assign (geocentric);
    },
-   apply: function (geocentric, result)
+   apply (geocentric, result)
    {
       return result .assign (geocentric);
    },
-   slerp: function (source, destination, t)
+   slerp (source, destination, t)
    {
       const
          sourceLength      = source      .magnitude (),

@@ -70,7 +70,7 @@ function X3DTimeDependentNode (executionContext)
 X3DTimeDependentNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 {
    constructor: X3DTimeDependentNode,
-   initialize: function ()
+   initialize ()
    {
       this .getLive ()  .addInterest ("set_live__", this);
       this ._isEvenLive .addInterest ("set_live__", this);
@@ -90,27 +90,27 @@ X3DTimeDependentNode .prototype = Object .assign (Object .create (X3DChildNode .
 
       this ._initialized = this .getBrowser () .getCurrentTime ();
    },
-   getDisabled: function ()
+   getDisabled ()
    {
       return this .disabled;
    },
-   getLiveState: function ()
+   getLiveState ()
    {
       ///  Determines the live state of this node.
 
       return this .isLive () && (this .getExecutionContext () .getLive () .getValue () || this ._isEvenLive .getValue ());
    },
-   getElapsedTime: function ()
+   getElapsedTime ()
    {
       return this .getBrowser () .getCurrentTime () - this .start - this .pauseInterval;
    },
-   resetElapsedTime: function ()
+   resetElapsedTime ()
    {
       this .start         = this .getBrowser () .getCurrentTime ();
       this .pause         = this .getBrowser () .getCurrentTime ();
       this .pauseInterval = 0;
    },
-   set_live__: function ()
+   set_live__ ()
    {
       if (this .getLive () .getValue () || this ._isEvenLive .getValue ())
       {
@@ -132,7 +132,7 @@ X3DTimeDependentNode .prototype = Object .assign (Object .create (X3DChildNode .
          }
       }
    },
-   set_enabled__: function ()
+   set_enabled__ ()
    {
       if (this ._enabled .getValue ())
          this .set_loop__ ();
@@ -140,7 +140,7 @@ X3DTimeDependentNode .prototype = Object .assign (Object .create (X3DChildNode .
       else
          this .stop ();
    },
-   set_loop__: function ()
+   set_loop__ ()
    {
       if (this ._enabled .getValue ())
       {
@@ -156,7 +156,7 @@ X3DTimeDependentNode .prototype = Object .assign (Object .create (X3DChildNode .
 
       this .set_loop ();
    },
-   set_startTime__: function ()
+   set_startTime__ ()
    {
       this .startTimeValue = this ._startTime .getValue ();
 
@@ -171,7 +171,7 @@ X3DTimeDependentNode .prototype = Object .assign (Object .create (X3DChildNode .
             this .addTimeout ("start", "do_start", this .startTimeValue);
       }
    },
-   set_pauseTime__: function ()
+   set_pauseTime__ ()
    {
       this .pauseTimeValue = this ._pauseTime .getValue ();
 
@@ -189,7 +189,7 @@ X3DTimeDependentNode .prototype = Object .assign (Object .create (X3DChildNode .
             this .addTimeout ("pause", "do_pause", this .pauseTimeValue);
       }
    },
-   set_resumeTime__: function ()
+   set_resumeTime__ ()
    {
       this .resumeTimeValue = this ._resumeTime .getValue ();
 
@@ -207,7 +207,7 @@ X3DTimeDependentNode .prototype = Object .assign (Object .create (X3DChildNode .
             this .addTimeout ("resume", "do_resume", this .resumeTimeValue);
       }
    },
-   set_stopTime__: function ()
+   set_stopTime__ ()
    {
       this .stopTimeValue = this ._stopTime .getValue ();
 
@@ -225,7 +225,7 @@ X3DTimeDependentNode .prototype = Object .assign (Object .create (X3DChildNode .
             this .addTimeout ("stop", "do_stop", this .stopTimeValue);
       }
    },
-   do_start: function ()
+   do_start ()
    {
       if (!this ._isActive .getValue ())
       {
@@ -249,7 +249,7 @@ X3DTimeDependentNode .prototype = Object .assign (Object .create (X3DChildNode .
          }
       }
    },
-   do_pause: function ()
+   do_pause ()
    {
       if (this ._isActive .getValue () && !this ._isPaused .getValue ())
       {
@@ -262,7 +262,7 @@ X3DTimeDependentNode .prototype = Object .assign (Object .create (X3DChildNode .
             this .real_pause ();
       }
    },
-   real_pause: function ()
+   real_pause ()
    {
       this .pause = Date .now ();
 
@@ -270,7 +270,7 @@ X3DTimeDependentNode .prototype = Object .assign (Object .create (X3DChildNode .
 
       this .getBrowser () .timeEvents () .removeInterest ("set_time" ,this);
    },
-   do_resume: function ()
+   do_resume ()
    {
       if (this ._isActive .getValue () && this ._isPaused .getValue ())
       {
@@ -283,7 +283,7 @@ X3DTimeDependentNode .prototype = Object .assign (Object .create (X3DChildNode .
             this .real_resume ();
       }
    },
-   real_resume: function ()
+   real_resume ()
    {
       const interval = (Date .now () - this .pause) / 1000;
 
@@ -294,11 +294,11 @@ X3DTimeDependentNode .prototype = Object .assign (Object .create (X3DChildNode .
       this .getBrowser () .timeEvents () .addInterest ("set_time", this);
       this .getBrowser () .addBrowserEvent ();
    },
-   do_stop: function ()
+   do_stop ()
    {
       this .stop ();
    },
-   stop: function ()
+   stop ()
    {
       if (this ._isActive .getValue ())
       {
@@ -316,19 +316,19 @@ X3DTimeDependentNode .prototype = Object .assign (Object .create (X3DChildNode .
          this .getBrowser () .timeEvents () .removeInterest ("set_time" ,this);
       }
    },
-   addTimeout: function (name, callback, time)
+   addTimeout (name, callback, time)
    {
       this .removeTimeout (name);
 
       this .timeouts .set (name, setTimeout (this .processTimeout .bind (this, callback), (time - this .getBrowser () .getCurrentTime ()) * 1000));
    },
-   removeTimeout: function (name)
+   removeTimeout (name)
    {
       clearTimeout (this .timeouts .get (name));
 
       this .timeouts .delete (name);
    },
-   processTimeout: function (callback)
+   processTimeout (callback)
    {
       if (!this ._enabled .getValue ())
          return;
@@ -346,7 +346,7 @@ X3DTimeDependentNode .prototype = Object .assign (Object .create (X3DChildNode .
    set_resume: Function .prototype,
    set_stop: Function .prototype,
    set_time: Function .prototype,
-   dispose: function ()
+   dispose ()
    {
       for (const name of [... this .timeouts .keys ()])
          this .removeTimeout (name);

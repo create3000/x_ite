@@ -73,7 +73,7 @@ function CylinderSensor (executionContext)
 CylinderSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .prototype),
 {
    constructor: CylinderSensor,
-   initialize: function ()
+   initialize ()
    {
       X3DDragSensorNode .prototype .initialize .call (this);
 
@@ -90,7 +90,7 @@ CylinderSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .p
       this .fromVector  = new Vector3 (0, 0, 0);
       this .startOffset = new Rotation4 ();
    },
-   isBehind: function (hitRay, hitPoint)
+   isBehind (hitRay, hitPoint)
    {
       const
          enter = new Vector3 (0, 0 ,0),
@@ -100,7 +100,7 @@ CylinderSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .p
 
       return hitPoint .distance (enter) > hitPoint .distance (exit);
    },
-   getTrackPoint: function (hitRay, trackPoint)
+   getTrackPoint (hitRay, trackPoint)
    {
       const zPoint = new Vector3 (0, 0, 0);
 
@@ -122,7 +122,7 @@ CylinderSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .p
       rotation .multVecRot (trackPoint .assign (this .szNormal) .multiply (this .cylinder .radius));
       trackPoint .add (axisPoint);
    },
-   getAngle: function (rotation)
+   getAngle (rotation)
    {
       if (rotation .getAxis (new Vector3 (0, 0, 0)) .dot (this .cylinder .axis .direction) > 0)
          return rotation .angle;
@@ -130,7 +130,7 @@ CylinderSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .p
       else
          return -rotation .angle;
    },
-   set_active__: function (active, hit, modelViewMatrix, projectionMatrix, viewport)
+   set_active__ (active, hit, modelViewMatrix, projectionMatrix, viewport)
    {
       X3DDragSensorNode .prototype .set_active__ .call (this, active, hit, modelViewMatrix, projectionMatrix, viewport);
 
@@ -189,7 +189,7 @@ CylinderSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .p
             this ._offset = this .getAngle (this ._rotation_changed .getValue ());
       }
    },
-   set_motion__: function (hit)
+   set_motion__ (hit)
    {
       const
          hitRay     = hit .hitRay .copy () .multLineMatrix (this .invModelViewMatrix),

@@ -56,12 +56,12 @@ function X3DLayeringContext ()
 
 X3DLayeringContext .prototype =
 {
-   initialize: function ()
+   initialize ()
    {
       this [_defaultViewport] .setPrivate (true);
       this [_defaultViewport] .setup ();
    },
-   getDefaultViewport: function ()
+   getDefaultViewport ()
    {
       return this [_defaultViewport];
    },

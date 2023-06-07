@@ -60,29 +60,29 @@ function X3DVolumeRenderStyleNode (executionContext)
 X3DVolumeRenderStyleNode .prototype = Object .assign (Object .create (X3DNode .prototype),
 {
    constructor: X3DVolumeRenderStyleNode,
-   addShaderFields: function (shaderNode)
+   addShaderFields (shaderNode)
    { },
-   getUniformsText: function ()
+   getUniformsText ()
    {
       return "";
    },
-   getFunctionsText: function ()
+   getFunctionsText ()
    {
       return "";
    },
-   getVolumeData: function ()
+   getVolumeData ()
    {
       return this .volumeDataNodes;
    },
-   addVolumeData: function (volumeDataNode)
+   addVolumeData (volumeDataNode)
    {
       this .volumeDataNodes .add (volumeDataNode);
    },
-   removeVolumeData: function (volumeDataNode)
+   removeVolumeData (volumeDataNode)
    {
       this .volumeDataNodes .delete (volumeDataNode);
    },
-   getNormalText: function (surfaceNormalsNode)
+   getNormalText (surfaceNormalsNode)
    {
       let string = "";
 

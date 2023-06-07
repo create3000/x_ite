@@ -84,7 +84,7 @@ function KeySensor (executionContext)
 KeySensor .prototype = Object .assign (Object .create (X3DKeyDeviceSensorNode .prototype),
 {
    constructor: KeySensor,
-   keydown: function (event)
+   keydown (event)
    {
       event .preventDefault ();
 
@@ -201,7 +201,7 @@ KeySensor .prototype = Object .assign (Object .create (X3DKeyDeviceSensorNode .p
          }
       }
    },
-   keyup: function (event)
+   keyup (event)
    {
       event .preventDefault ();
 
@@ -324,7 +324,7 @@ KeySensor .prototype = Object .assign (Object .create (X3DKeyDeviceSensorNode .p
       if (this ._isActive .getValue ())
          this ._isActive = false;
    },
-   release: function ()
+   release ()
    {
       if (this ._shiftKey .getValue ())
          this ._shiftKey = false;

@@ -55,7 +55,7 @@ function SquatInterpolator ()
 SquatInterpolator .prototype =
 {
    constructor: SquatInterpolator,
-   generate: function (closed, key, keyValue)
+   generate (closed, key, keyValue)
    {
       const s = this .s;
 

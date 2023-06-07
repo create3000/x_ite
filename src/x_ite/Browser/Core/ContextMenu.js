@@ -62,7 +62,7 @@ function ContextMenu (executionContext)
 ContextMenu .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 {
    constructor: ContextMenu,
-   initialize: function ()
+   initialize ()
    {
       X3DBaseNode .prototype .initialize .call (this);
 
@@ -75,15 +75,15 @@ ContextMenu .prototype = Object .assign (Object .create (X3DBaseNode .prototype)
          animation: {duration: 500, show: "fadeIn", hide: "fadeOut"},
       });
    },
-   getUserMenu: function ()
+   getUserMenu ()
    {
       return this [_userMenu];
    },
-   setUserMenu: function (userMenu)
+   setUserMenu (userMenu)
    {
       this [_userMenu] = userMenu;
    },
-   createUserMenu: function ()
+   createUserMenu ()
    {
       const userMenu = { };
 
@@ -100,7 +100,7 @@ ContextMenu .prototype = Object .assign (Object .create (X3DBaseNode .prototype)
 
       return userMenu;
    },
-   build: function (event)
+   build (event)
    {
       const
          browser    = this .getBrowser (),
@@ -358,7 +358,7 @@ ContextMenu .prototype = Object .assign (Object .create (X3DBaseNode .prototype)
          "world-info": {
             name: _("Show World Info"),
             className: "context-menu-icon x_ite-private-icon-world-info",
-            callback: function ()
+            callback ()
             {
                browser .getShadow () .find (".x_ite-private-world-info") .remove ();
 
@@ -399,7 +399,7 @@ ContextMenu .prototype = Object .assign (Object .create (X3DBaseNode .prototype)
          "about": {
             name: _("About X_ITE"),
             className: "context-menu-icon x_ite-private-icon-help-about",
-            callback: function ()
+            callback ()
             {
                window .open (browser .getProviderUrl ());
             },
@@ -433,7 +433,7 @@ ContextMenu .prototype = Object .assign (Object .create (X3DBaseNode .prototype)
 
       return menu;
    },
-   getViewpoints: function ()
+   getViewpoints ()
    {
       const
          browser     = this .getBrowser (),
@@ -476,7 +476,7 @@ ContextMenu .prototype = Object .assign (Object .create (X3DBaseNode .prototype)
 
       return menu;
    },
-   getAvailableViewers: function ()
+   getAvailableViewers ()
    {
       const
          browser          = this .getBrowser (),
@@ -503,7 +503,7 @@ ContextMenu .prototype = Object .assign (Object .create (X3DBaseNode .prototype)
 
       return menu;
    },
-   getViewerName: function (viewer)
+   getViewerName (viewer)
    {
       switch (viewer)
       {
@@ -521,17 +521,17 @@ ContextMenu .prototype = Object .assign (Object .create (X3DBaseNode .prototype)
             return _("None Viewer");
       }
    },
-   init: function (options)
+   init (options)
    {
       this .show = this .createRoot .bind (this, options);
 
       options .element .on ("contextmenu", this .show);
    },
-   show: function (event)
+   show (event)
    { },
-   hide: function (event)
+   hide (event)
    { },
-   createRoot: function (options, event)
+   createRoot (options, event)
    {
       const
          menu  = options .build (event),
@@ -639,7 +639,7 @@ ContextMenu .prototype = Object .assign (Object .create (X3DBaseNode .prototype)
 
       return false;
    },
-   createItem: function (item, parent, key, level, hide)
+   createItem (item, parent, key, level, hide)
    {
       const li = $("<li></li>") .addClass ("context-menu-item");
 

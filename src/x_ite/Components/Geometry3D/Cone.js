@@ -67,7 +67,7 @@ function Cone (executionContext)
 Cone .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 {
    constructor: Cone,
-   set_live__: function ()
+   set_live__ ()
    {
       X3DGeometryNode .prototype .set_live__ .call (this);
 
@@ -76,7 +76,7 @@ Cone .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
       else
          this .getBrowser () .getConeOptions () .removeInterest ("requestRebuild", this);
    },
-   build: function ()
+   build ()
    {
       const
          options       = this .getBrowser () .getConeOptions (),
@@ -185,7 +185,7 @@ Cone .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
       this .setSolid (this ._solid .getValue ());
       this .setExtents ();
    },
-   setExtents: function ()
+   setExtents ()
    {
       const
          bottomRadius = this ._bottomRadius .getValue (),

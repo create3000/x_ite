@@ -55,36 +55,36 @@ function SFTime (value)
 SFTime .prototype = Object .assign (Object .create (X3DField .prototype),
 {
    constructor: SFTime,
-   copy: function ()
+   copy ()
    {
       return new SFTime (this .getValue ());
    },
-   isDefaultValue: function ()
+   isDefaultValue ()
    {
       return this .getValue () === 0;
    },
-   set: function (value)
+   set (value)
    {
       X3DField .prototype .set .call (this, +value);
    },
    valueOf: X3DField .prototype .getValue,
-   toStream: function (generator)
+   toStream (generator)
    {
       generator .string += this .getValue ();
    },
-   toVRMLStream: function (generator)
+   toVRMLStream (generator)
    {
       this .toStream (generator);
    },
-   toXMLStream: function (generator)
+   toXMLStream (generator)
    {
       this .toStream (generator);
    },
-   toJSONStream: function (generator)
+   toJSONStream (generator)
    {
       this .toJSONStreamValue (generator);
    },
-   toJSONStreamValue: function (generator)
+   toJSONStreamValue (generator)
    {
       generator .string += generator .JSONNumber (generator .DoubleFormat (this .getValue ()));
    },

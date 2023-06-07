@@ -79,7 +79,7 @@ GeoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prot
    X3DGeospatialObject .prototype,
 {
    constructor: GeoViewpoint,
-   initialize: function ()
+   initialize ()
    {
       X3DViewpointNode    .prototype .initialize .call (this);
       X3DGeospatialObject .prototype .initialize .call (this);
@@ -108,7 +108,7 @@ GeoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prot
    getViewportSize: Viewpoint .prototype .getViewportSize,
    getLookAtDistance: Viewpoint .prototype .getLookAtDistance,
    getProjectionMatrixWithLimits: Viewpoint .prototype .getProjectionMatrixWithLimits,
-   getLogarithmicDepthBuffer: function ()
+   getLogarithmicDepthBuffer ()
    {
       return this .logarithmicDepthBuffer;
    },
@@ -184,7 +184,7 @@ GeoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prot
          return this .getCoord (this ._centerOfRotation .getValue (), centerOfRotation);
       };
    })(),
-   getMaxFarValue: function ()
+   getMaxFarValue ()
    {
       return 1e9;
    },
@@ -208,11 +208,11 @@ GeoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prot
          }
       };
    })(),
-   getSpeedFactor: function ()
+   getSpeedFactor ()
    {
       return (Math .max (this .elevation, 0.0) + 10) / 10 * this ._speedFactor .getValue ();
    },
-   dispose: function ()
+   dispose ()
    {
       X3DGeospatialObject .prototype .dispose .call (this);
       X3DViewpointNode    .prototype .dispose .call (this);

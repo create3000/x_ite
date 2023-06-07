@@ -69,7 +69,7 @@ function X3DWorld (executionContext)
 X3DWorld .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 {
    constructor: X3DWorld,
-   initialize: function ()
+   initialize ()
    {
       X3DBaseNode .prototype .initialize .call (this);
 
@@ -88,19 +88,19 @@ X3DWorld .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 
       this .set_activeLayer__ ();
    },
-   getCache: function ()
+   getCache ()
    {
       return this .getBrowser () .getBrowserOption ("Cache");
    },
-   getLayerSet: function ()
+   getLayerSet ()
    {
       return this .layerSet;
    },
-   getActiveLayer: function ()
+   getActiveLayer ()
    {
       return this ._activeLayer .getValue ();
    },
-   set_rootNodes__: function ()
+   set_rootNodes__ ()
    {
       const
          oldLayerSet = this .layerSet,
@@ -127,11 +127,11 @@ X3DWorld .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 
       this .set_activeLayer__ ();
    },
-   set_activeLayer__: function ()
+   set_activeLayer__ ()
    {
       this ._activeLayer = this .layerSet .getActiveLayer ();
    },
-   bindBindables: function ()
+   bindBindables ()
    {
       // Bind first X3DBindableNodes found in each layer.
 
@@ -139,7 +139,7 @@ X3DWorld .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 
       this .layerSet .bindBindables (decodeURIComponent (new URL (worldURL, worldURL) .hash .substr (1)));
    },
-   traverse: function (type, renderObject)
+   traverse (type, renderObject)
    {
       this .layerSet .traverse (type, renderObject);
    },

@@ -61,13 +61,13 @@ function X3DVertexAttributeNode (executionContext)
 X3DVertexAttributeNode .prototype = Object .assign (Object .create (X3DGeometricPropertyNode .prototype),
 {
    constructor: X3DVertexAttributeNode,
-   initialize: function ()
+   initialize ()
    {
       X3DGeometricPropertyNode .prototype .initialize .call (this);
 
       this ._name .addInterest ("set_attribute__", this);
    },
-   set_attribute__: function ()
+   set_attribute__ ()
    {
       this ._attribute_changed = this .getBrowser () .getCurrentTime ();
    },

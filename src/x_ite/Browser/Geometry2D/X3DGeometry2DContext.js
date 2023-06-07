@@ -56,31 +56,31 @@ function X3DGeometry2DContext () { }
 
 X3DGeometry2DContext .prototype =
 {
-   initialize: function ()
+   initialize ()
    {
       this .setPrimitiveQuality2D (this .getBrowserOptions () .getPrimitiveQuality ());
    },
-   getArc2DOptions: function ()
+   getArc2DOptions ()
    {
       return getOptionNode .call (this, "getArc2DOptions", Arc2DOptions);
    },
-   getArcClose2DOptions: function ()
+   getArcClose2DOptions ()
    {
       return getOptionNode .call (this, "getArcClose2DOptions", ArcClose2DOptions);
    },
-   getCircle2DOptions: function ()
+   getCircle2DOptions ()
    {
       return getOptionNode .call (this, "getCircle2DOptions", Circle2DOptions);
    },
-   getDisk2DOptions: function ()
+   getDisk2DOptions ()
    {
       return getOptionNode .call (this, "getDisk2DOptions", Disk2DOptions);
    },
-   getRectangle2DOptions: function ()
+   getRectangle2DOptions ()
    {
       return getOptionNode .call (this, "getRectangle2DOptions", Rectangle2DOptions);
    },
-   setPrimitiveQuality2D: function (primitiveQuality)
+   setPrimitiveQuality2D (primitiveQuality)
    {
       const
          arc      = this .getArc2DOptions (),

@@ -63,12 +63,12 @@ function X3DAppearanceNode (executionContext)
 X3DAppearanceNode .prototype = Object .assign (Object .create (X3DNode .prototype),
 {
    constructor: X3DAppearanceNode,
-   setTransparent: function (value)
+   setTransparent (value)
    {
       if (value !== this ._transparent .getValue ())
          this ._transparent = value;
    },
-   isTransparent: function ()
+   isTransparent ()
    {
       return this ._transparent .getValue ();
    },

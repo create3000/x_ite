@@ -69,25 +69,25 @@ function SFColorRGBA (r, g, b, a)
 SFColorRGBA .prototype = Object .assign (Object .create (X3DField .prototype),
 {
    constructor: SFColorRGBA,
-   [Symbol .iterator]: function* ()
+   *[Symbol .iterator] ()
    {
       yield* this .getValue ();
    },
-   copy: function ()
+   copy ()
    {
       return new SFColorRGBA (this .getValue () .copy ());
    },
    equals: SFColor .prototype .equals,
-   isDefaultValue: function ()
+   isDefaultValue ()
    {
       return this .getValue () .equals (Color4 .Transparent);
    },
    set: SFColor .prototype .set,
-   getHSVA: function ()
+   getHSVA ()
    {
       return this .getValue () .getHSVA ([ ]);
    },
-   setHSVA: function (h, s, v, a)
+   setHSVA (h, s, v, a)
    {
       this .getValue () .setHSVA (h, s, v, a);
       this .addEvent ();
@@ -123,11 +123,11 @@ for (const key of Reflect .ownKeys (SFColorRGBA .prototype))
    Object .defineProperty (SFColorRGBA .prototype, key, { enumerable: false });
 
 const r = {
-   get: function ()
+   get ()
    {
       return this .getValue () .r;
    },
-   set: function (value)
+   set (value)
    {
       this .getValue () .r = +value;
       this .addEvent ();
@@ -135,11 +135,11 @@ const r = {
 };
 
 const g = {
-   get: function ()
+   get ()
    {
       return this .getValue () .g;
    },
-   set: function (value)
+   set (value)
    {
       this .getValue () .g = +value;
       this .addEvent ();
@@ -147,11 +147,11 @@ const g = {
 };
 
 const b = {
-   get: function ()
+   get ()
    {
       return this .getValue () .b;
    },
-   set: function (value)
+   set (value)
    {
       this .getValue () .b = +value;
       this .addEvent ();
@@ -159,11 +159,11 @@ const b = {
 };
 
 const a = {
-   get: function ()
+   get ()
    {
       return this .getValue () .a;
    },
-   set: function (value)
+   set (value)
    {
       this .getValue () .a = +value;
       this .addEvent ();

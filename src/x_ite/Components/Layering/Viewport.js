@@ -69,7 +69,7 @@ function Viewport (executionContext)
 Viewport .prototype = Object .assign (Object .create (X3DViewportNode .prototype),
 {
    constructor: Viewport,
-   getRectangle: function ()
+   getRectangle ()
    {
       const
          viewport = this .getBrowser () .getViewport (),
@@ -85,23 +85,23 @@ Viewport .prototype = Object .assign (Object .create (X3DViewportNode .prototype
 
       return this .rectangle;
    },
-   getLeft: function ()
+   getLeft ()
    {
       return this ._clipBoundary .length > 0 ? this ._clipBoundary [0] : 0;
    },
-   getRight: function ()
+   getRight ()
    {
       return this ._clipBoundary .length > 1 ? this ._clipBoundary [1] : 1;
    },
-   getBottom: function ()
+   getBottom ()
    {
       return this ._clipBoundary .length > 2 ? this ._clipBoundary [2] : 0;
    },
-   getTop: function ()
+   getTop ()
    {
       return this ._clipBoundary .length > 3 ? this ._clipBoundary [3] : 1;
    },
-   traverse: function (type, renderObject)
+   traverse (type, renderObject)
    {
       this .push (renderObject);
 
@@ -121,7 +121,7 @@ Viewport .prototype = Object .assign (Object .create (X3DViewportNode .prototype
 
       this .pop (renderObject);
    },
-   push: function (renderObject)
+   push (renderObject)
    {
       const
          viewVolumes = renderObject .getViewVolumes (),
@@ -133,7 +133,7 @@ Viewport .prototype = Object .assign (Object .create (X3DViewportNode .prototype
 
       viewVolumes .push (viewVolume);
    },
-   pop: function (renderObject)
+   pop (renderObject)
    {
       ViewVolumes .push (renderObject .getViewVolumes () .pop ());
    },

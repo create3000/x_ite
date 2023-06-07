@@ -66,12 +66,12 @@ BufferAudioSource .prototype = Object .assign (Object .create (X3DSoundSourceNod
    X3DUrlObject .prototype,
 {
    constructor: BufferAudioSource,
-   initialize: function ()
+   initialize ()
    {
       X3DSoundSourceNode .prototype .initialize .call (this);
       X3DUrlObject       .prototype .initialize .call (this);
    },
-   dispose: function ()
+   dispose ()
    {
       X3DUrlObject       .prototype .dispose .call (this);
       X3DSoundSourceNode .prototype .dispose .call (this);

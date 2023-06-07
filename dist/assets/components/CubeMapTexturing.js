@@ -167,19 +167,19 @@ function X3DEnvironmentTextureNode (executionContext)
 X3DEnvironmentTextureNode .prototype = Object .assign (Object .create ((X3DSingleTextureNode_default()).prototype),
 {
    constructor: X3DEnvironmentTextureNode,
-   getTarget: function ()
+   getTarget ()
    {
       return this .target;
    },
-   getTextureType: function ()
+   getTextureType ()
    {
       return 4;
    },
-   getTextureTypeString: function ()
+   getTextureTypeString ()
    {
       return "CUBE";
    },
-   getTargets: function ()
+   getTargets ()
    {
       return this .targets;
    },
@@ -199,7 +199,7 @@ X3DEnvironmentTextureNode .prototype = Object .assign (Object .create ((X3DSingl
          this .setTransparent (false);
       };
    })(),
-   updateTextureParameters: function ()
+   updateTextureParameters ()
    {
       X3DSingleTextureNode_default().prototype.updateTextureParameters.call (this,
                                                                       this .target,
@@ -211,7 +211,7 @@ X3DEnvironmentTextureNode .prototype = Object .assign (Object .create ((X3DSingl
                                                                       false,
                                                                       false);
    },
-   setShaderUniforms: function (gl, shaderObject, renderObject, channel = shaderObject .x3d_Texture [0])
+   setShaderUniforms (gl, shaderObject, renderObject, channel = shaderObject .x3d_Texture [0])
    {
       const textureUnit = this .getBrowser () .getTextureCubeUnit ();
 
@@ -327,7 +327,7 @@ function ComposedCubeMapTexture (executionContext)
 ComposedCubeMapTexture .prototype = Object .assign (Object .create (CubeMapTexturing_X3DEnvironmentTextureNode.prototype),
 {
    constructor: ComposedCubeMapTexture,
-   initialize: function ()
+   initialize ()
    {
       CubeMapTexturing_X3DEnvironmentTextureNode.prototype.initialize.call (this);
 
@@ -356,7 +356,7 @@ ComposedCubeMapTexture .prototype = Object .assign (Object .create (CubeMapTextu
       this .set_texture__ (this ._topTexture,    4);
       this .set_texture__ (this ._bottomTexture, 5);
    },
-   set_texture__: function (node, index)
+   set_texture__ (node, index)
    {
       let textureNode = this .textureNodes [index];
 
@@ -368,17 +368,17 @@ ComposedCubeMapTexture .prototype = Object .assign (Object .create (CubeMapTextu
 
       this .set_loadState__ (textureNode, index);
    },
-   set_loadState__: function (textureNode, index)
+   set_loadState__ (textureNode, index)
    {
       this .setTextureBit (index, textureNode, textureNode ?.checkLoadState () ?? (X3DConstants_default()).NOT_STARTED);
 
       this ._update .addEvent ();
    },
-   setTextureBit: function (bit, textureNode, loadState)
+   setTextureBit (bit, textureNode, loadState)
    {
       this .textureBits .set (bit, loadState === (X3DConstants_default()).COMPLETE_STATE || textureNode ?.getWidth ());
    },
-   isComplete: function ()
+   isComplete ()
    {
       if (+this .textureBits !== 0b111111)
          return false;
@@ -398,7 +398,7 @@ ComposedCubeMapTexture .prototype = Object .assign (Object .create (CubeMapTextu
 
       return true;
    },
-   update: function ()
+   update ()
    {
       if (this .isComplete ())
       {
@@ -575,44 +575,44 @@ DependentRenderer .prototype = Object .assign (Object .create ((X3DBaseNode_defa
    (X3DRenderObject_default()).prototype,
 {
    constructor: DependentRenderer,
-   initialize: function ()
+   initialize ()
    {
       X3DBaseNode_default().prototype.initialize.call (this);
       X3DRenderObject_default().prototype.initialize.call (this);
    },
-   isIndependent: function ()
+   isIndependent ()
    {
       return false;
    },
-   setRenderer: function (value)
+   setRenderer (value)
    {
       this .renderObject = value;
    },
-   getLayer: function ()
+   getLayer ()
    {
       return this .renderObject .getLayer ();
    },
-   getBackground: function ()
+   getBackground ()
    {
       return this .renderObject .getBackground ();
    },
-   getFog: function ()
+   getFog ()
    {
       return this .renderObject .getFog ();
    },
-   getNavigationInfo: function ()
+   getNavigationInfo ()
    {
       return this .renderObject .getNavigationInfo ();
    },
-   getViewpoint: function ()
+   getViewpoint ()
    {
       return this .renderObject .getViewpoint ();
    },
-   getLightContainer: function ()
+   getLightContainer ()
    {
       return this .renderObject .getLights () [this .lightIndex ++];
    },
-   render: function (type, callback, group)
+   render (type, callback, group)
    {
       switch (type)
       {
@@ -752,7 +752,7 @@ function GeneratedCubeMapTexture (executionContext)
 GeneratedCubeMapTexture .prototype = Object .assign (Object .create (CubeMapTexturing_X3DEnvironmentTextureNode.prototype),
 {
    constructor: GeneratedCubeMapTexture,
-   initialize: function ()
+   initialize ()
    {
       CubeMapTexturing_X3DEnvironmentTextureNode.prototype.initialize.call (this);
 
@@ -762,7 +762,7 @@ GeneratedCubeMapTexture .prototype = Object .assign (Object .create (CubeMapText
 
       this .set_size__ ();
    },
-   set_size__: function ()
+   set_size__ ()
    {
       const
          browser = this .getBrowser (),
@@ -797,7 +797,7 @@ GeneratedCubeMapTexture .prototype = Object .assign (Object .create (CubeMapText
          this .frameBuffer = null;
       }
    },
-   traverse: function (type, renderObject)
+   traverse (type, renderObject)
    {
       // TraverseType .DISPLAY
 
@@ -1069,7 +1069,7 @@ ImageCubeMapTexture .prototype = Object .assign (Object .create (CubeMapTexturin
    (X3DUrlObject_default()).prototype,
 {
    constructor: ImageCubeMapTexture,
-   initialize: function ()
+   initialize ()
    {
       CubeMapTexturing_X3DEnvironmentTextureNode.prototype.initialize.call (this);
       X3DUrlObject_default().prototype.initialize.call (this);
@@ -1091,16 +1091,16 @@ ImageCubeMapTexture .prototype = Object .assign (Object .create (CubeMapTexturin
 
       this .requestImmediateLoad () .catch (Function .prototype);
    },
-   unloadData: function ()
+   unloadData ()
    {
       this .clearTexture ();
    },
-   loadData: function ()
+   loadData ()
    {
       this .urlStack .setValue (this ._url);
       this .loadNext ();
    },
-   loadNext: function ()
+   loadNext ()
    {
       if (this .urlStack .length === 0)
       {
@@ -1121,14 +1121,14 @@ ImageCubeMapTexture .prototype = Object .assign (Object .create (CubeMapTexturin
 
       this .image .attr ("src", this .URL .href);
    },
-   setError: function ()
+   setError ()
    {
       if (this .URL .protocol !== "data:")
          console .warn (`Error loading image '${decodeURI (this .URL .href)}'`);
 
       this .loadNext ();
    },
-   setImage: function ()
+   setImage ()
    {
       if ((DEVELOPMENT_default()))
       {
@@ -1219,7 +1219,7 @@ ImageCubeMapTexture .prototype = Object .assign (Object .create (CubeMapTexturin
          this .setError ();
       }
    },
-   dispose: function ()
+   dispose ()
    {
       X3DUrlObject_default().prototype.dispose.call (this);
       CubeMapTexturing_X3DEnvironmentTextureNode.prototype.dispose.call (this);

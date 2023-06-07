@@ -70,7 +70,7 @@ function SFVec3Template (TypeName, double)
 
    SFVec3 .prototype = Object .assign (SFVecPrototypeTemplate (SFVec3, TypeName, Vector3, double),
    {
-      cross: function (vector)
+      cross (vector)
       {
          return new (this .constructor) (this .getValue () .copy () .cross (vector .getValue ()));
       },
@@ -80,11 +80,11 @@ function SFVec3Template (TypeName, double)
       Object .defineProperty (SFVec3 .prototype, key, { enumerable: false });
 
    const x = {
-      get: function ()
+      get ()
       {
          return this .getValue () .x;
       },
-      set: function (value)
+      set (value)
       {
          this .getValue () .x = +value;
          this .addEvent ();
@@ -92,11 +92,11 @@ function SFVec3Template (TypeName, double)
    };
 
    const y = {
-      get: function ()
+      get ()
       {
          return this .getValue () .y;
       },
-      set: function (value)
+      set (value)
       {
          this .getValue () .y = +value;
          this .addEvent ();
@@ -104,11 +104,11 @@ function SFVec3Template (TypeName, double)
    };
 
    const z = {
-      get: function ()
+      get ()
       {
          return this .getValue () .z;
       },
-      set: function (value)
+      set (value)
       {
          this .getValue () .z = +value;
          this .addEvent ();

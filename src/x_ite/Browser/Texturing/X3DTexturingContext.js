@@ -80,7 +80,7 @@ function X3DTexturingContext ()
 
 X3DTexturingContext .prototype =
 {
-   initialize: function ()
+   initialize ()
    {
       const gl = this .getContext ();
 
@@ -137,35 +137,35 @@ X3DTexturingContext .prototype =
 
       this .setTextureQuality (this .getBrowserOptions () .getTextureQuality ());
    },
-   getMaxTextures: function ()
+   getMaxTextures ()
    {
       return this [_maxTextures];
    },
-   getMaxTextureTransforms: function ()
+   getMaxTextureTransforms ()
    {
       return 4;
    },
-   getMaxTexCoords: function ()
+   getMaxTexCoords ()
    {
       return 4;
    },
-   getMinTextureSize: function ()
+   getMinTextureSize ()
    {
       return 16;
    },
-   getMaxTextureSize: function ()
+   getMaxTextureSize ()
    {
       const gl = this .getContext ();
 
       return gl .getParameter (gl .MAX_TEXTURE_SIZE);
    },
-   getMaxCombinedTextureUnits: function ()
+   getMaxCombinedTextureUnits ()
    {
       const gl = this .getContext ();
 
       return gl .getParameter (gl .MAX_COMBINED_TEXTURE_IMAGE_UNITS)
    },
-   popTexture2DUnit: function ()
+   popTexture2DUnit ()
    {
       if (this [_texture2DUnitIndex] > 0)
       {
@@ -178,7 +178,7 @@ X3DTexturingContext .prototype =
          return this [_combinedTextureUnits] .pop ();
       }
    },
-   pushTexture2DUnit: function (textureUnit)
+   pushTexture2DUnit (textureUnit)
    {
       if (textureUnit === undefined)
          return;
@@ -187,7 +187,7 @@ X3DTexturingContext .prototype =
 
       this [_texture2DUnits] .push (textureUnit);
    },
-   getTexture2DUnit: function ()
+   getTexture2DUnit ()
    {
       if (this [_texture2DUnitIndex] > 0)
          return this [_texture2DUnits] [-- this [_texture2DUnitIndex]];
@@ -199,7 +199,7 @@ X3DTexturingContext .prototype =
 
       return textureUnit;
    },
-   getTexture3DUnit: function ()
+   getTexture3DUnit ()
    {
       if (this [_texture3DUnitIndex] > 0)
          return this [_texture3DUnits] [-- this [_texture3DUnitIndex]];
@@ -211,7 +211,7 @@ X3DTexturingContext .prototype =
 
       return textureUnit;
    },
-   getTextureCubeUnit: function ()
+   getTextureCubeUnit ()
    {
       if (this [_textureCubeUnitIndex] > 0)
          return this [_textureCubeUnits] [-- this [_textureCubeUnitIndex]];
@@ -223,7 +223,7 @@ X3DTexturingContext .prototype =
 
       return textureUnit;
    },
-   getTextureUnit: function (textureType)
+   getTextureUnit (textureType)
    {
       switch (textureType)
       {
@@ -232,29 +232,29 @@ X3DTexturingContext .prototype =
          case 4: return this .getTextureCubeUnit ();
       }
    },
-   resetTextureUnits: function ()
+   resetTextureUnits ()
    {
       this [_texture2DUnitIndex]   = this [_texture2DUnits]   .length;
       this [_texture3DUnitIndex]   = this [_texture3DUnits]   .length;
       this [_textureCubeUnitIndex] = this [_textureCubeUnits] .length;
    },
-   getDefaultTexture2DUnit: function ()
+   getDefaultTexture2DUnit ()
    {
       return this [_texture2DUnits] [0];
    },
-   getDefaultTexture3DUnit: function ()
+   getDefaultTexture3DUnit ()
    {
       return this [_texture3DUnits] [0];
    },
-   getDefaultTextureCubeUnit: function ()
+   getDefaultTextureCubeUnit ()
    {
       return this [_textureCubeUnits] [0];
    },
-   getTextureMemory: function ()
+   getTextureMemory ()
    {
       return NaN;
    },
-   getDefaultTextureProperties: function ()
+   getDefaultTextureProperties ()
    {
       this [_defaultTextureProperties] = new TextureProperties (this .getPrivateScene ());
       this [_defaultTextureProperties] ._magnificationFilter = "NICEST";
@@ -270,7 +270,7 @@ X3DTexturingContext .prototype =
 
       return this [_defaultTextureProperties];
    },
-   getDefaultTextureTransform: function ()
+   getDefaultTextureTransform ()
    {
       this [_defaultTextureTransform] = new TextureTransform (this .getPrivateScene ());
       this [_defaultTextureTransform] .setPrivate (true);
@@ -282,7 +282,7 @@ X3DTexturingContext .prototype =
 
       return this [_defaultTextureTransform];
    },
-   getDefaultTextureCoordinate: function ()
+   getDefaultTextureCoordinate ()
    {
       this [_defaultTextureCoordinate] = new TextureCoordinate (this .getPrivateScene ());
       this [_defaultTextureCoordinate] .setPrivate (true);
@@ -294,7 +294,7 @@ X3DTexturingContext .prototype =
 
       return this [_defaultTextureCoordinate];
    },
-   setTextureQuality: function (textureQuality)
+   setTextureQuality (textureQuality)
    {
       const textureProperties = this .getDefaultTextureProperties ();
 

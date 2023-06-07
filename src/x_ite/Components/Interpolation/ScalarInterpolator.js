@@ -62,13 +62,13 @@ function ScalarInterpolator (executionContext)
 ScalarInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
 {
    constructor: ScalarInterpolator,
-   initialize: function ()
+   initialize ()
    {
       X3DInterpolatorNode .prototype .initialize .call (this);
 
       this ._keyValue .addInterest ("set_keyValue__", this);
    },
-   set_keyValue__: function ()
+   set_keyValue__ ()
    {
       const
          key      = this ._key,
@@ -77,7 +77,7 @@ ScalarInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorN
       if (keyValue .length < key .length)
          keyValue .resize (key .length, keyValue .length ? keyValue [keyValue .length - 1] : 0);
    },
-   interpolate: function (index0, index1, weight)
+   interpolate (index0, index1, weight)
    {
       this ._value_changed = Algorithm .lerp (this ._keyValue [index0], this ._keyValue [index1], weight);
    },

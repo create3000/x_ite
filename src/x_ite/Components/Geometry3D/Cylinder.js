@@ -67,7 +67,7 @@ function Cylinder (executionContext)
 Cylinder .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 {
    constructor: Cylinder,
-   set_live__: function ()
+   set_live__ ()
    {
       X3DGeometryNode .prototype .set_live__ .call (this);
 
@@ -76,7 +76,7 @@ Cylinder .prototype = Object .assign (Object .create (X3DGeometryNode .prototype
       else
          this .getBrowser () .getCylinderOptions () .removeInterest ("requestRebuild", this);
    },
-   build: function ()
+   build ()
    {
       const
          options       = this .getBrowser () .getCylinderOptions (),
@@ -237,7 +237,7 @@ Cylinder .prototype = Object .assign (Object .create (X3DGeometryNode .prototype
       this .setSolid (this ._solid .getValue ());
       this .setExtents ();
    },
-   setExtents: function ()
+   setExtents ()
    {
       const
          radius = this ._radius .getValue (),

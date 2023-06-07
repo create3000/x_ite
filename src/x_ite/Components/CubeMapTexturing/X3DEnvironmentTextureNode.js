@@ -71,19 +71,19 @@ function X3DEnvironmentTextureNode (executionContext)
 X3DEnvironmentTextureNode .prototype = Object .assign (Object .create (X3DSingleTextureNode .prototype),
 {
    constructor: X3DEnvironmentTextureNode,
-   getTarget: function ()
+   getTarget ()
    {
       return this .target;
    },
-   getTextureType: function ()
+   getTextureType ()
    {
       return 4;
    },
-   getTextureTypeString: function ()
+   getTextureTypeString ()
    {
       return "CUBE";
    },
-   getTargets: function ()
+   getTargets ()
    {
       return this .targets;
    },
@@ -103,7 +103,7 @@ X3DEnvironmentTextureNode .prototype = Object .assign (Object .create (X3DSingle
          this .setTransparent (false);
       };
    })(),
-   updateTextureParameters: function ()
+   updateTextureParameters ()
    {
       X3DSingleTextureNode .prototype .updateTextureParameters .call (this,
                                                                       this .target,
@@ -115,7 +115,7 @@ X3DEnvironmentTextureNode .prototype = Object .assign (Object .create (X3DSingle
                                                                       false,
                                                                       false);
    },
-   setShaderUniforms: function (gl, shaderObject, renderObject, channel = shaderObject .x3d_Texture [0])
+   setShaderUniforms (gl, shaderObject, renderObject, channel = shaderObject .x3d_Texture [0])
    {
       const textureUnit = this .getBrowser () .getTextureCubeUnit ();
 

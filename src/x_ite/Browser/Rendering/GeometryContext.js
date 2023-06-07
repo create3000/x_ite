@@ -71,11 +71,11 @@ GeometryContext .prototype =
 {
    constructor: GeometryContext,
    updateGeometryKey: X3DGeometryNode .prototype .updateGeometryKey,
-   getTextureCoordinateMapping: function ()
+   getTextureCoordinateMapping ()
    {
       return this .textureCoordinateMapping;
    },
-   getTextureCoordinate: function ()
+   getTextureCoordinate ()
    {
       return this .textureCoordinateNode;
    },

@@ -61,7 +61,7 @@ function BoundaryEnhancementVolumeStyle (executionContext)
 BoundaryEnhancementVolumeStyle .prototype = Object .assign (Object .create (X3DComposableVolumeRenderStyleNode .prototype),
 {
    constructor: BoundaryEnhancementVolumeStyle,
-   addShaderFields: function (shaderNode)
+   addShaderFields (shaderNode)
    {
       if (! this ._enabled .getValue ())
          return;
@@ -70,7 +70,7 @@ BoundaryEnhancementVolumeStyle .prototype = Object .assign (Object .create (X3DC
       shaderNode .addUserDefinedField (X3DConstants .inputOutput, "boundaryOpacity_" + this .getId (), this ._boundaryOpacity .copy ());
       shaderNode .addUserDefinedField (X3DConstants .inputOutput, "opacityFactor_"   + this .getId (), this ._opacityFactor   .copy ());
    },
-   getUniformsText: function ()
+   getUniformsText ()
    {
       if (! this ._enabled .getValue ())
          return "";
@@ -101,7 +101,7 @@ BoundaryEnhancementVolumeStyle .prototype = Object .assign (Object .create (X3DC
 
       return string;
    },
-   getFunctionsText: function ()
+   getFunctionsText ()
    {
       if (! this ._enabled .getValue ())
          return "";

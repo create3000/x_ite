@@ -68,7 +68,7 @@ function VisibilitySensor (executionContext)
 VisibilitySensor .prototype = Object .assign (Object .create (X3DEnvironmentalSensorNode .prototype),
 {
    constructor: VisibilitySensor,
-   initialize: function ()
+   initialize ()
    {
       X3DEnvironmentalSensorNode .prototype .initialize .call (this);
 
@@ -76,14 +76,14 @@ VisibilitySensor .prototype = Object .assign (Object .create (X3DEnvironmentalSe
 
       this .set_enabled__ ();
    },
-   set_enabled__: function ()
+   set_enabled__ ()
    {
       if (this ._enabled .getValue ())
          delete this .traverse;
       else
          this .traverse = Function .prototype;
    },
-   update: function ()
+   update ()
    {
       if (this .visible && this .getTraversed ())
       {

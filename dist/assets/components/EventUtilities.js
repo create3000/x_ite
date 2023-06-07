@@ -123,13 +123,13 @@ function BooleanFilter (executionContext)
 BooleanFilter .prototype = Object .assign (Object .create ((X3DChildNode_default()).prototype),
 {
    constructor: BooleanFilter,
-   initialize: function ()
+   initialize ()
    {
       X3DChildNode_default().prototype.initialize.call (this);
 
       this ._set_boolean .addInterest ("set_boolean__", this);
    },
-   set_boolean__: function ()
+   set_boolean__ ()
    {
       const value = this ._set_boolean .getValue ();
 
@@ -250,7 +250,7 @@ function X3DSequencerNode (executionContext)
 X3DSequencerNode .prototype = Object .assign (Object .create ((X3DChildNode_default()).prototype),
 {
    constructor: X3DSequencerNode,
-   initialize: function ()
+   initialize ()
    {
       X3DChildNode_default().prototype.initialize.call (this);
 
@@ -259,7 +259,7 @@ X3DSequencerNode .prototype = Object .assign (Object .create ((X3DChildNode_defa
       this ._next         .addInterest ("set_next__", this);
       this ._key          .addInterest ("set_index__", this);
    },
-   set_fraction__: function ()
+   set_fraction__ ()
    {
       const
          fraction = this ._set_fraction .getValue (),
@@ -292,7 +292,7 @@ X3DSequencerNode .prototype = Object .assign (Object .create ((X3DChildNode_defa
          }
       }
    },
-   set_previous__: function ()
+   set_previous__ ()
    {
       if (this ._previous .getValue ())
       {
@@ -306,7 +306,7 @@ X3DSequencerNode .prototype = Object .assign (Object .create ((X3DChildNode_defa
             this .sequence (this .index);
       }
    },
-   set_next__: function ()
+   set_next__ ()
    {
       if (this ._next .getValue ())
       {
@@ -320,7 +320,7 @@ X3DSequencerNode .prototype = Object .assign (Object .create ((X3DChildNode_defa
             this .sequence (this .index);
       }
    },
-   set_index__: function ()
+   set_index__ ()
    {
       this .index = -1;
    },
@@ -409,17 +409,17 @@ function BooleanSequencer (executionContext)
 BooleanSequencer .prototype = Object .assign (Object .create (EventUtilities_X3DSequencerNode.prototype),
 {
    constructor: BooleanSequencer,
-   initialize: function ()
+   initialize ()
    {
       EventUtilities_X3DSequencerNode.prototype.initialize.call (this);
 
       this ._keyValue .addInterest ("set_index__", this);
    },
-   getSize: function ()
+   getSize ()
    {
       return this ._keyValue .length;
    },
-   sequence: function (index)
+   sequence (index)
    {
       this ._value_changed = this ._keyValue [index];
    },
@@ -531,13 +531,13 @@ function BooleanToggle (executionContext)
 BooleanToggle .prototype = Object .assign (Object .create ((X3DChildNode_default()).prototype),
 {
    constructor: BooleanToggle,
-   initialize: function ()
+   initialize ()
    {
       X3DChildNode_default().prototype.initialize.call (this);
 
       this ._set_boolean .addInterest ("set_boolean__", this);
    },
-   set_boolean__: function ()
+   set_boolean__ ()
    {
       if (this ._set_boolean .getValue ())
          this ._toggle = ! this ._toggle .getValue ();
@@ -728,13 +728,13 @@ function BooleanTrigger (executionContext)
 BooleanTrigger .prototype = Object .assign (Object .create (EventUtilities_X3DTriggerNode.prototype),
 {
    constructor: BooleanTrigger,
-   initialize: function ()
+   initialize ()
    {
       EventUtilities_X3DTriggerNode.prototype.initialize.call (this);
 
       this ._set_triggerTime .addInterest ("set_triggerTime__", this);
    },
-   set_triggerTime__: function ()
+   set_triggerTime__ ()
    {
       this ._triggerTrue = true;
    },
@@ -842,17 +842,17 @@ function IntegerSequencer (executionContext)
 IntegerSequencer .prototype = Object .assign (Object .create (EventUtilities_X3DSequencerNode.prototype),
 {
    constructor: IntegerSequencer,
-   initialize: function ()
+   initialize ()
    {
       EventUtilities_X3DSequencerNode.prototype.initialize.call (this);
 
       this ._keyValue .addInterest ("set_index__", this);
    },
-   getSize: function ()
+   getSize ()
    {
       return this ._keyValue .length;
    },
-   sequence: function (index)
+   sequence (index)
    {
       this ._value_changed = this ._keyValue [index];
    },
@@ -964,13 +964,13 @@ function IntegerTrigger (executionContext)
 IntegerTrigger .prototype = Object .assign (Object .create (EventUtilities_X3DTriggerNode.prototype),
 {
    constructor: IntegerTrigger,
-   initialize: function ()
+   initialize ()
    {
       EventUtilities_X3DTriggerNode.prototype.initialize.call (this);
 
       this ._set_boolean .addInterest ("set_boolean__", this);
    },
-   set_boolean__: function ()
+   set_boolean__ ()
    {
       this ._triggerValue = this ._integerKey;
    },
@@ -1079,13 +1079,13 @@ function TimeTrigger (executionContext)
 TimeTrigger .prototype = Object .assign (Object .create (EventUtilities_X3DTriggerNode.prototype),
 {
    constructor: TimeTrigger,
-   initialize: function ()
+   initialize ()
    {
       EventUtilities_X3DTriggerNode.prototype.initialize.call (this);
 
       this ._set_boolean .addInterest ("set_boolean__", this);
    },
-   set_boolean__: function ()
+   set_boolean__ ()
    {
       this ._triggerTime = this .getBrowser () .getCurrentTime ();
    },

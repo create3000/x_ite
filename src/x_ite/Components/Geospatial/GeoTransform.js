@@ -71,7 +71,7 @@ GeoTransform .prototype = Object .assign (Object .create (X3DTransformMatrix3DNo
    X3DGeospatialObject .prototype,
 {
    constructor: GeoTransform,
-   initialize: function ()
+   initialize ()
    {
       X3DTransformMatrix3DNode .prototype .initialize .call (this);
       X3DGeospatialObject      .prototype .initialize .call (this);
@@ -80,7 +80,7 @@ GeoTransform .prototype = Object .assign (Object .create (X3DTransformMatrix3DNo
 
       this .eventsProcessed ();
    },
-   eventsProcessed: function ()
+   eventsProcessed ()
    {
       this .getLocationMatrix (this ._geoCenter .getValue (), locationMatrix);
 
@@ -91,7 +91,7 @@ GeoTransform .prototype = Object .assign (Object .create (X3DTransformMatrix3DNo
 
       this .setMatrix (matrix .multRight (locationMatrix) .multLeft (locationMatrix .inverse ()));
    },
-   dispose: function ()
+   dispose ()
    {
       X3DGeospatialObject      .prototype .dispose .call (this);
       X3DTransformMatrix3DNode .prototype .dispose .call (this);

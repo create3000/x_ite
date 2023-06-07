@@ -59,11 +59,11 @@ function Rectangle2DOptions (executionContext)
 Rectangle2DOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 {
    constructor: Rectangle2DOptions,
-   initialize: function ()
+   initialize ()
    {
       X3DBaseNode .prototype .initialize .call (this);
    },
-   getGeometry: function ()
+   getGeometry ()
    {
       if (this .geometry)
          return this .geometry;

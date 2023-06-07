@@ -75,12 +75,12 @@ X3DExternProtoDeclaration .prototype = Object .assign (Object .create (X3DProtoD
    X3DUrlObject .prototype,
 {
    constructor: X3DExternProtoDeclaration,
-   initialize: function ()
+   initialize ()
    {
       X3DProtoDeclarationNode .prototype .initialize .call (this);
       X3DUrlObject            .prototype .initialize .call (this);
    },
-   set_live__: function ()
+   set_live__ ()
    {
       X3DUrlObject .prototype .set_live__ .call (this);
 
@@ -89,11 +89,11 @@ X3DExternProtoDeclaration .prototype = Object .assign (Object .create (X3DProtoD
 
       this [_scene] .setLive (this .getLive () .getValue ());
    },
-   canUserDefinedFields: function ()
+   canUserDefinedFields ()
    {
       return true;
    },
-   setProtoDeclaration: function (proto)
+   setProtoDeclaration (proto)
    {
       this [_proto] = proto;
 
@@ -108,11 +108,11 @@ X3DExternProtoDeclaration .prototype = Object .assign (Object .create (X3DProtoD
 
       this .updateInstances ();
    },
-   getProtoDeclaration: function ()
+   getProtoDeclaration ()
    {
       return this [_proto];
    },
-   loadData: function ()
+   loadData ()
    {
       // 7.73 — ExternProtoDeclaration function
 
@@ -120,7 +120,7 @@ X3DExternProtoDeclaration .prototype = Object .assign (Object .create (X3DProtoD
 
       new FileLoader (this) .createX3DFromURL (this ._url, null, this .setInternalSceneAsync .bind (this));
    },
-   setInternalSceneAsync: function (value)
+   setInternalSceneAsync (value)
    {
       if (value)
          this .setInternalScene (value);
@@ -130,7 +130,7 @@ X3DExternProtoDeclaration .prototype = Object .assign (Object .create (X3DProtoD
 
       this .getScene () .removeInitLoadCount (this);
    },
-   setInternalScene: function (value)
+   setInternalScene (value)
    {
       this [_scene] = value;
 
@@ -148,13 +148,13 @@ X3DExternProtoDeclaration .prototype = Object .assign (Object .create (X3DProtoD
       this .setLoadState (X3DConstants .COMPLETE_STATE);
       this .setProtoDeclaration (proto);
    },
-   getInternalScene: function ()
+   getInternalScene ()
    {
       ///  Returns the internal X3DScene of this extern proto, that is loaded from the url given.
 
       return this [_scene];
    },
-   setError: function (error)
+   setError (error)
    {
       console .error (`Error loading extern prototype '${this .getName ()}':`, error);
 
@@ -163,7 +163,7 @@ X3DExternProtoDeclaration .prototype = Object .assign (Object .create (X3DProtoD
       this .setLoadState (X3DConstants .FAILED_STATE);
       this .setProtoDeclaration (null);
    },
-   toVRMLStream: function (generator)
+   toVRMLStream (generator)
    {
       generator .string += generator .Indent ();
       generator .string += "EXTERNPROTO";
@@ -212,7 +212,7 @@ X3DExternProtoDeclaration .prototype = Object .assign (Object .create (X3DProtoD
 
       this ._url .toVRMLStream (generator);
    },
-   toVRMLStreamUserDefinedField: function (generator, field, fieldTypeLength, accessTypeLength)
+   toVRMLStreamUserDefinedField (generator, field, fieldTypeLength, accessTypeLength)
    {
       generator .string += generator .Indent ();
       generator .string += generator .AccessType (field .getAccessType ()) .padEnd (accessTypeLength, " ");
@@ -221,7 +221,7 @@ X3DExternProtoDeclaration .prototype = Object .assign (Object .create (X3DProtoD
       generator .string += generator .Space ();
       generator .string += field .getName ();
    },
-   toXMLStream: function (generator)
+   toXMLStream (generator)
    {
       generator .string += generator .Indent ();
       generator .string += "<ExternProtoDeclare";
@@ -267,7 +267,7 @@ X3DExternProtoDeclaration .prototype = Object .assign (Object .create (X3DProtoD
       generator .string += generator .Indent ();
       generator .string += "</ExternProtoDeclare>";
    },
-   toJSONStream: function (generator)
+   toJSONStream (generator)
    {
       generator .string += generator .Indent ();
       generator .string += '{';
@@ -418,7 +418,7 @@ Object .defineProperties (X3DExternProtoDeclaration .prototype,
    },
    urls:
    {
-      get: function () { return this ._url; },
+      get () { return this ._url; },
       enumerable: true,
    },
    loadState:

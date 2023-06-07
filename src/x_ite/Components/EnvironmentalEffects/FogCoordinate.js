@@ -63,7 +63,7 @@ function FogCoordinate (executionContext)
 FogCoordinate .prototype = Object .assign (Object .create (X3DGeometricPropertyNode .prototype),
 {
    constructor: FogCoordinate,
-   initialize: function ()
+   initialize ()
    {
       X3DGeometricPropertyNode .prototype .initialize .call (this);
 
@@ -71,20 +71,20 @@ FogCoordinate .prototype = Object .assign (Object .create (X3DGeometricPropertyN
 
       this .set_depth__ ();
    },
-   set_depth__: function ()
+   set_depth__ ()
    {
       this .depth  = this ._depth .getValue ();
       this .length = this ._depth .length;
    },
-   isEmpty: function ()
+   isEmpty ()
    {
       return this .length === 0;
    },
-   getSize: function ()
+   getSize ()
    {
       return this .length;
    },
-   addDepth: function (index, array)
+   addDepth (index, array)
    {
       if (index < this .length)
          array .push (this .depth [index]);
@@ -95,7 +95,7 @@ FogCoordinate .prototype = Object .assign (Object .create (X3DGeometricPropertyN
       else
          array .push (0);
    },
-   addDepths: function (array, min)
+   addDepths (array, min)
    {
       const length = this .length;
 

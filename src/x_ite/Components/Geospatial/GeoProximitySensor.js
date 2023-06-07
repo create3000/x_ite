@@ -76,7 +76,7 @@ GeoProximitySensor .prototype = Object .assign (Object .create (X3DEnvironmental
    X3DGeospatialObject .prototype,
 {
    constructor: GeoProximitySensor,
-   initialize: function ()
+   initialize ()
    {
       X3DEnvironmentalSensorNode .prototype .initialize .call (this);
       X3DGeospatialObject        .prototype .initialize .call (this);
@@ -103,15 +103,15 @@ GeoProximitySensor .prototype = Object .assign (Object .create (X3DEnvironmental
 
       this .proximitySensor .setup ();
    },
-   set_position__: function (position)
+   set_position__ (position)
    {
       this ._geoCoord_changed = this .getGeoCoord (this .proximitySensor ._position_changed .getValue (), geoCoord);
    },
-   traverse: function (type, renderObject)
+   traverse (type, renderObject)
    {
       this .proximitySensor .traverse (type, renderObject);
    },
-   dispose: function ()
+   dispose ()
    {
       X3DGeospatialObject        .prototype .dispose .call (this);
       X3DEnvironmentalSensorNode .prototype .dispose .call (this);

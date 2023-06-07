@@ -57,14 +57,14 @@ function ConcreteNodesArray (values = [ ])
 ConcreteNodesArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
 {
    constructor: ConcreteNodesArray,
-   add: function (typeName, ConcreteNode)
+   add (typeName, ConcreteNode)
    {
       X3DConstants .addNode (ConcreteNode);
       HTMLSupport .addConcreteNode (ConcreteNode);
 
       X3DInfoArray .prototype .add .call (this, typeName, ConcreteNode);
    },
-   update: function (oldTypeName, typeName, ConcreteNode)
+   update (oldTypeName, typeName, ConcreteNode)
    {
       X3DConstants .addNode (ConcreteNode);
       HTMLSupport .addConcreteNode (ConcreteNode);

@@ -68,7 +68,7 @@ function LayerSet (executionContext)
 LayerSet .prototype = Object .assign (Object .create (X3DNode .prototype),
 {
    constructor: LayerSet,
-   initialize: function ()
+   initialize ()
    {
       X3DNode .prototype .initialize .call (this);
 
@@ -82,25 +82,25 @@ LayerSet .prototype = Object .assign (Object .create (X3DNode .prototype),
 
       this .set_layers__ ();
    },
-   getActiveLayer: function ()
+   getActiveLayer ()
    {
       return this .activeLayerNode;
    },
-   setLayer0: function (value)
+   setLayer0 (value)
    {
       this .layerNode0 = value;
 
       this .set_layers__ ();
    },
-   getLayer0: function ()
+   getLayer0 ()
    {
       return this .layerNode0;
    },
-   getLayers: function ()
+   getLayers ()
    {
       return this .layerNodes;
    },
-   set_activeLayer__: function ()
+   set_activeLayer__ ()
    {
       if (this ._activeLayer .getValue () === 0)
       {
@@ -123,7 +123,7 @@ LayerSet .prototype = Object .assign (Object .create (X3DNode .prototype),
          }
       }
    },
-   set_layers__: function ()
+   set_layers__ ()
    {
       const layers = this ._layers .getValue ();
 
@@ -151,7 +151,7 @@ LayerSet .prototype = Object .assign (Object .create (X3DNode .prototype),
 
       this .set_activeLayer__ ();
    },
-   bindBindables: function (viewpointName)
+   bindBindables (viewpointName)
    {
       const layers = this ._layers .getValue ();
 
@@ -165,7 +165,7 @@ LayerSet .prototype = Object .assign (Object .create (X3DNode .prototype),
             layerNode .bindBindables (viewpointName);
       }
    },
-   traverse: function (type, renderObject)
+   traverse (type, renderObject)
    {
       for (const layerNode of this .layerNodes)
          layerNode .traverse (type, renderObject);

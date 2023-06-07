@@ -61,13 +61,13 @@ function UnlitMaterial (executionContext)
 UnlitMaterial .prototype = Object .assign (Object .create (X3DOneSidedMaterialNode .prototype),
 {
    constructor: UnlitMaterial,
-   initialize: function ()
+   initialize ()
    {
       X3DOneSidedMaterialNode .prototype .initialize .call (this);
 
       this .set_transparent__ ();
    },
-   set_emissiveTexture__: function ()
+   set_emissiveTexture__ ()
    {
       if (this .getEmissiveTexture ())
          this .getEmissiveTexture () ._transparent .removeInterest ("set_transparent__", this);
@@ -77,16 +77,16 @@ UnlitMaterial .prototype = Object .assign (Object .create (X3DOneSidedMaterialNo
       if (this .getEmissiveTexture ())
          this .getEmissiveTexture () ._transparent .addInterest ("set_transparent__", this);
    },
-   set_transparent__: function ()
+   set_transparent__ ()
    {
       this .setTransparent (!!(this .getTransparency () ||
                                this .getEmissiveTexture () ?.isTransparent ()));
    },
-   getMaterialKey: function ()
+   getMaterialKey ()
    {
       return "0";
    },
-   createShader: function (key, geometryContext, renderContext)
+   createShader (key, geometryContext, renderContext)
    {
       const
          browser = this .getBrowser (),

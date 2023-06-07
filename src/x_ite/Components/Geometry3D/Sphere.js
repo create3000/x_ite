@@ -63,7 +63,7 @@ function Sphere (executionContext)
 Sphere .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 {
    constructor: Sphere,
-   set_live__: function ()
+   set_live__ ()
    {
       X3DGeometryNode .prototype .set_live__ .call (this);
 
@@ -72,7 +72,7 @@ Sphere .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
       else
          this .getBrowser () .getSphereOptions () .removeInterest ("requestRebuild", this);
    },
-   build: function ()
+   build ()
    {
       const
          options  = this .getBrowser () .getSphereOptions (),

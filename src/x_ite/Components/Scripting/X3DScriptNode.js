@@ -61,12 +61,12 @@ X3DScriptNode .prototype = Object .assign (Object .create (X3DChildNode .prototy
    X3DUrlObject .prototype,
 {
    constructor: X3DScriptNode,
-   initialize: function ()
+   initialize ()
    {
       X3DChildNode .prototype .initialize .call (this);
       X3DUrlObject .prototype .initialize .call (this);
    },
-   dispose: function ()
+   dispose ()
    {
       X3DUrlObject .prototype .dispose .call (this);
       X3DChildNode .prototype .dispose .call (this);

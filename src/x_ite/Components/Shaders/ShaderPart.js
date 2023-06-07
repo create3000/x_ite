@@ -83,7 +83,7 @@ ShaderPart .prototype = Object .assign (Object .create (X3DNode .prototype),
    X3DUrlObject .prototype,
 {
    constructor: ShaderPart,
-   initialize: function ()
+   initialize ()
    {
       X3DNode      .prototype .initialize .call (this);
       X3DUrlObject .prototype .initialize .call (this);
@@ -95,25 +95,25 @@ ShaderPart .prototype = Object .assign (Object .create (X3DNode .prototype),
 
       this .requestImmediateLoad () .catch (Function .prototype);
    },
-   set_type__: function ()
+   set_type__ ()
    {
       this .setLoadState (X3DConstants .NOT_STARTED_STATE);
 
       this .requestImmediateLoad () .catch (Function .prototype);
    },
-   getSourceText: function ()
+   getSourceText ()
    {
       return this ._url;
    },
-   getOptions: function ()
+   getOptions ()
    {
       return this .options;
    },
-   setOptions: function (value)
+   setOptions (value)
    {
       this .options = value;
    },
-   getShader: function ()
+   getShader ()
    {
       return this .shader;
    },
@@ -133,11 +133,11 @@ ShaderPart .prototype = Object .assign (Object .create (X3DNode .prototype),
          return shaderTypes .get (this ._type .getValue ()) || "VERTEX_SHADER";
       };
    })(),
-   unloadData: function ()
+   unloadData ()
    {
       this .valid = false;
    },
-   loadData: function ()
+   loadData ()
    {
       new FileLoader (this) .loadDocument (this ._url,
       function (data, url)
@@ -192,7 +192,7 @@ ShaderPart .prototype = Object .assign (Object .create (X3DNode .prototype),
       }
       .bind (this));
    },
-   dispose: function ()
+   dispose ()
    {
       X3DUrlObject .prototype .dispose .call (this);
       X3DNode      .prototype .dispose .call (this);

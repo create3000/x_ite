@@ -47,7 +47,7 @@
 
 const Events = Object .assign ([ ],
 {
-   create: function (field)
+   create (field)
    {
       if (this .length)
       {
@@ -65,7 +65,7 @@ const Events = Object .assign ([ ],
 
       return event;
    },
-   copy: function (event)
+   copy (event)
    {
       if (this .length)
       {
@@ -88,7 +88,7 @@ const Events = Object .assign ([ ],
 
       return copy;
    },
-   clear: function ()
+   clear ()
    {
       this .length = 0;
    },

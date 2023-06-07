@@ -61,7 +61,7 @@ function X3DArrayChaserTemplate (Type)
    Object .assign (X3DArrayChaserObject .prototype,
       X3DArrayFollower .prototype,
    {
-      step: function (value1, value2, t)
+      step (value1, value2, t)
       {
          const
             output   = this .output,

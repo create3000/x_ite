@@ -201,11 +201,11 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       ["INF", Infinity],
       ["INFINITY", Infinity],
    ]),
-   getEncoding: function ()
+   getEncoding ()
    {
       return "XML";
    },
-   isValid: function ()
+   isValid ()
    {
       if (!(this .input instanceof XMLDocument))
          return false;
@@ -232,7 +232,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          this .input = undefined;
       }
    },
-   parseIntoScene: function (resolve, reject)
+   parseIntoScene (resolve, reject)
    {
       this .xmlElement (this .input)
          .then (resolve)
@@ -361,12 +361,12 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       this .optimizeSceneGraph (scene .getRootNodes ());
    },
-   elements: function (xmlElement)
+   elements (xmlElement)
    {
       for (const childNode of xmlElement .childNodes)
 		   this .element (childNode);
    },
-   element: function (xmlElement)
+   element (xmlElement)
    {
       switch (xmlElement .nodeName)
       {
@@ -396,7 +396,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             return this .pathElement (xmlElement);
       }
    },
-   useElement: function (xmlElement)
+   useElement (xmlElement)
    {
       // Get href.
 
@@ -426,7 +426,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       this .popAll ();
    },
-   gElement: function (xmlElement)
+   gElement (xmlElement)
    {
       // Determine style.
 
@@ -445,7 +445,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       this .popAll ();
    },
-   switchElement: function (xmlElement)
+   switchElement (xmlElement)
    {
       // Determine style.
 
@@ -470,7 +470,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       this .popAll ();
    },
-   aElement: function (xmlElement)
+   aElement (xmlElement)
    {
       // Determine style.
 
@@ -507,7 +507,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       this .popAll ();
    },
-   rectElement: function (xmlElement)
+   rectElement (xmlElement)
    {
       // Create Transform node.
 
@@ -634,7 +634,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          this .pathLikeElement (xmlElement, [points]);
       }
    },
-   circleElement: function (xmlElement)
+   circleElement (xmlElement)
    {
       // Determine style.
 
@@ -708,7 +708,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       this .popAll ();
    },
-   ellipseElement: function (xmlElement)
+   ellipseElement (xmlElement)
    {
       // Determine style.
 
@@ -784,11 +784,11 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       this .popAll ();
    },
-   textElement: function (xmlElement)
+   textElement (xmlElement)
    {
 
    },
-   imageElement: function (xmlElement)
+   imageElement (xmlElement)
    {
       const transformNode = this .fillGeometries .get (xmlElement);
 
@@ -840,7 +840,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          this .popAll ();
       }
    },
-   polylineElement: function (xmlElement)
+   polylineElement (xmlElement)
    {
       // Get points.
 
@@ -853,7 +853,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       this .pathLikeElement (xmlElement, [points]);
    },
-   polygonElement: function (xmlElement)
+   polygonElement (xmlElement)
    {
       // Get points.
 
@@ -866,7 +866,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       this .pathLikeElement (xmlElement, [points]);
    },
-   pathElement: function (xmlElement)
+   pathElement (xmlElement)
    {
       // Get path points.
 
@@ -879,7 +879,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       this .pathLikeElement (xmlElement, contours);
    },
-   pathLikeElement: function (xmlElement, contours)
+   pathLikeElement (xmlElement, contours)
    {
       // Determine style.
 
@@ -997,7 +997,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       this .popAll ();
    },
-   linearGradientElementUrl: function (xmlElement, bbox)
+   linearGradientElementUrl (xmlElement, bbox)
    {
       const
          g        = this .linearGradientElement (xmlElement, bbox, { stops: [ ] }),
@@ -1005,7 +1005,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return this .drawGradient (gradient, g, bbox);
    },
-   linearGradientElement: function (xmlElement, bbox, gradient)
+   linearGradientElement (xmlElement, bbox, gradient)
    {
       if (xmlElement .nodeName !== "linearGradient")
          return;
@@ -1045,7 +1045,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return gradient;
    },
-   radialGradientElementUrl: function (xmlElement, bbox)
+   radialGradientElementUrl (xmlElement, bbox)
    {
       const
          g        = this .radialGradientElement (xmlElement, bbox, { stops: [ ] }),
@@ -1053,7 +1053,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return this .drawGradient (gradient, g, bbox);
    },
-   radialGradientElement: function (xmlElement, bbox, gradient)
+   radialGradientElement (xmlElement, bbox, gradient)
    {
       // Attribute xlink:href
 
@@ -1093,7 +1093,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return gradient;
    },
-   gradientElement: function (xmlElement, bbox, gradient)
+   gradientElement (xmlElement, bbox, gradient)
    {
       if (!xmlElement)
          return;
@@ -1106,12 +1106,12 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             return this .radialGradientElement (xmlElement, bbox, gradient);
       }
    },
-   gradientChild: function (xmlElement, gradient)
+   gradientChild (xmlElement, gradient)
    {
       if (xmlElement .nodeName === "stop")
 		   return this .stopElement (xmlElement, gradient);
    },
-   stopElement: function (xmlElement, gradient)
+   stopElement (xmlElement, gradient)
    {
       if (!this .styleAttributes (xmlElement))
          return;
@@ -1127,7 +1127,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       this .styles .pop ();
    },
-   drawGradient: function (gradient, g, bbox)
+   drawGradient (gradient, g, bbox)
    {
       // Add color stops.
 
@@ -1199,11 +1199,11 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       // Use PNG because image can have alpha channel.
       return this .canvas .toDataURL ("image/png");
    },
-   patternUrl: function (xmlElement)
+   patternUrl (xmlElement)
    {
       //console .debug ("pattern");
    },
-   idAttribute: function (attribute, node)
+   idAttribute (attribute, node)
    {
       if (attribute === null)
          return;
@@ -1218,7 +1218,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 		   scene .addExportedNode (scene .getUniqueExportName (name), node);
       }
    },
-   viewBoxAttribute: function (attribute, defaultValue)
+   viewBoxAttribute (attribute, defaultValue)
    {
       if (attribute === null)
          return defaultValue;
@@ -1249,7 +1249,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return defaultValue;
    },
-   hrefAttribute: function (attribute)
+   hrefAttribute (attribute)
    {
       if (!attribute)
          return;
@@ -1260,7 +1260,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return this .document .getElementById (hash);
    },
-   lengthAttribute: function (attribute, defaultValue, percent)
+   lengthAttribute (attribute, defaultValue, percent)
    {
       // Returns length in pixel.
 
@@ -1328,7 +1328,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return defaultValue;
    },
-   percentAttribute: function (attribute, defaultValue)
+   percentAttribute (attribute, defaultValue)
    {
       this .parseValue (attribute);
 
@@ -1346,7 +1346,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return defaultValue;
    },
-   pointsAttribute: function (attribute, points)
+   pointsAttribute (attribute, points)
    {
       if (attribute === null)
          return false;
@@ -1378,7 +1378,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return !! points .length;
    },
-   dAttribute: function (attribute, contours)
+   dAttribute (attribute, contours)
    {
       if (attribute === null)
          return false;
@@ -1904,7 +1904,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return !! contours .length;
    },
-   transformAttribute: function (attribute)
+   transformAttribute (attribute)
    {
       const matrix = new Matrix3 ();
 
@@ -2136,7 +2136,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return matrix;
    },
-   styleAttributes: function (xmlElement)
+   styleAttributes (xmlElement)
    {
       const style = Object .assign ({ }, this .styles .at (-1));
 
@@ -2154,7 +2154,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return true;
    },
-   styleAttribute: function (attribute)
+   styleAttribute (attribute)
    {
       if (attribute === null)
          return;
@@ -2171,7 +2171,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          this .parseStyle (pair [0] .trim (), pair [1] .trim ());
       }
    },
-   parseStyle: function (style, value)
+   parseStyle (style, value)
    {
       if (value === "inherit" || value == "unset")
          return;
@@ -2215,7 +2215,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             break;
       }
    },
-   displayStyle: function (value)
+   displayStyle (value)
    {
       if (value === "default")
       {
@@ -2225,7 +2225,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       this .style .display = value;
    },
-   fillStyle: function (value)
+   fillStyle (value)
    {
       if (value === "default")
       {
@@ -2261,7 +2261,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          return;
       }
    },
-   fillOpacityStyle: function (value)
+   fillOpacityStyle (value)
    {
       if (value === "default")
       {
@@ -2281,7 +2281,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          return;
       }
    },
-   fillRuleStyle: function (value)
+   fillRuleStyle (value)
    {
       if (value === "default")
       {
@@ -2291,7 +2291,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       this .style .fillRule = value;
    },
-   strokeStyle: function (value)
+   strokeStyle (value)
    {
       if (value === "default")
       {
@@ -2327,7 +2327,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          return;
       }
    },
-   strokeOpacityStyle: function (value)
+   strokeOpacityStyle (value)
    {
       if (value === "default")
       {
@@ -2347,7 +2347,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          return;
       }
    },
-   strokeWidthStyle: function (value)
+   strokeWidthStyle (value)
    {
       if (value === "default")
       {
@@ -2367,7 +2367,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          return;
       }
    },
-   opacityStyle: function (value)
+   opacityStyle (value)
    {
       if (value === "default")
       {
@@ -2387,7 +2387,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          return;
       }
    },
-   stopColorStyle: function (value)
+   stopColorStyle (value)
    {
       if (value === "default")
       {
@@ -2401,7 +2401,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          return;
       }
    },
-   stopOpacityStyle: function (value)
+   stopOpacityStyle (value)
    {
       if (value === "default")
       {
@@ -2421,7 +2421,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          return;
       }
    },
-   vectorEffectStyle: function (value)
+   vectorEffectStyle (value)
    {
       if (value === "default")
       {
@@ -2431,21 +2431,21 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       this .style .vectorEffect = value;
    },
-   parseValue: function (value)
+   parseValue (value)
    {
       this .input     = value;
       this .lastIndex = 0;
       this .value     = undefined;
    },
-   whitespaces: function ()
+   whitespaces ()
    {
       return Grammar .whitespaces .parse (this);
    },
-   comma: function ()
+   comma ()
    {
       return !! (this .whitespaces () | Grammar .comma .parse (this));
    },
-   int32: function ()
+   int32 ()
    {
       this .whitespaces ();
 
@@ -2458,7 +2458,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return false;
    },
-   double: function ()
+   double ()
    {
       this .whitespaces ();
 
@@ -2497,15 +2497,15 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          return true;
       };
    })(),
-   urlValue: function ()
+   urlValue ()
    {
       return Grammar .url .parse (this);
    },
-   cssColor: function (c, a = c .a)
+   cssColor (c, a = c .a)
    {
       return `rgba(${c .r * 255},${c .g * 255},${c .b * 255},${a})`;
    },
-   createTransform: function (xmlElement, t = Vector2 .Zero, s = Vector2 .One)
+   createTransform (xmlElement, t = Vector2 .Zero, s = Vector2 .One)
    {
       // Determine matrix.
 
@@ -2546,13 +2546,13 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return transformNode;
    },
-   popAll: function ()
+   popAll ()
    {
       this .groupNodes  .pop ();
       this .modelMatrix .pop ();
       this .styles      .pop ();
    },
-   createFillAppearance: function (bbox)
+   createFillAppearance (bbox)
    {
       const
          scene          = this .getExecutionContext (),
@@ -2598,7 +2598,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return appearanceNode;
    },
-   getFillUrl: function (fillURL, bbox)
+   getFillUrl (fillURL, bbox)
    {
       const xmlElement = this .hrefAttribute (fillURL);
 
@@ -2617,7 +2617,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             return this .patternUrl (xmlElement);
       }
    },
-   createStrokeAppearance: function ()
+   createStrokeAppearance ()
    {
       const
          scene          = this .getExecutionContext (),
@@ -2637,7 +2637,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return appearanceNode;
    },
-   getStokeWidth: function ()
+   getStokeWidth ()
    {
       const
          modelMatrix = this .modelMatrix .get (),
@@ -2645,7 +2645,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return (strokeWidth .x + strokeWidth .y) / 2;
    },
-   getLineProperties: function (strokeWidth)
+   getLineProperties (strokeWidth)
    {
       const lineProperties = this .lineProperties .get (strokeWidth);
 
@@ -2666,7 +2666,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          return lineProperties;
       }
    },
-   createTextureProperties: function ()
+   createTextureProperties ()
    {
       const
          scene                 = this .getExecutionContext (),
@@ -2682,7 +2682,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return texturePropertiesNode;
    },
-   createTextureCoordinate: function (coordinateNode, bbox, appearance)
+   createTextureCoordinate (coordinateNode, bbox, appearance)
    {
       if (!appearance || !appearance .texture)
          return null;
@@ -2697,7 +2697,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return texCoordNode;
    },
-   createTesselator: function ()
+   createTesselator ()
    {
       // Function called for each vertex of tessellator output.
 
@@ -2713,7 +2713,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return tessy;
    },
-   triangulatePolygon: function (contours, coordinateNode)
+   triangulatePolygon (contours, coordinateNode)
    {
       // Callback for when segments intersect and must be split.
 
@@ -2754,7 +2754,7 @@ SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
 Object .defineProperty (SVGParser .prototype, "style",
 {
-   get: function ()
+   get ()
    {
       return this .styles .at (-1);
    },

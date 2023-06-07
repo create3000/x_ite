@@ -63,7 +63,7 @@ function X3DTransformMatrix3DNode (executionContext)
 X3DTransformMatrix3DNode .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
 {
    constructor: X3DTransformMatrix3DNode,
-   setMatrix: function (matrix)
+   setMatrix (matrix)
    {
       if (matrix .equals (Matrix4 .Identity))
       {
@@ -80,11 +80,11 @@ X3DTransformMatrix3DNode .prototype = Object .assign (Object .create (X3DGroupin
          delete this .traverse;
       }
    },
-   getMatrix: function ()
+   getMatrix ()
    {
       return this .matrix;
    },
-   setTransform: function (t, r, s, so, c)
+   setTransform (t, r, s, so, c)
    {
       if (t .equals (Vector3 .Zero) && r .equals (Rotation4 .Identity) && s .equals (Vector3 .One))
       {
@@ -101,11 +101,11 @@ X3DTransformMatrix3DNode .prototype = Object .assign (Object .create (X3DGroupin
          delete this .traverse;
       }
    },
-   getBBox: function getBBox (bbox, shadows)
+   getBBox (bbox, shadows)
    {
       return this .getSubBBox (bbox, shadows) .multRight (this .matrix);
    },
-   traverse: function (type, renderObject)
+   traverse (type, renderObject)
    {
       const modelViewMatrix = renderObject .getModelViewMatrix ();
 

@@ -60,11 +60,11 @@ function ShaderCompiler (gl)
 
 ShaderCompiler .prototype =
 {
-   getSourceFileName: function (sourceFileNumber)
+   getSourceFileName (sourceFileNumber)
    {
       return Object .getOwnPropertyNames (this .includes) [sourceFileNumber - 1];
    },
-   process: function (source, parent = 0)
+   process (source, parent = 0)
    {
       const lines = source .split ("\n");
 

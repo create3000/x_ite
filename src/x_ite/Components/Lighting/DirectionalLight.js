@@ -85,7 +85,7 @@ function DirectionalLightContainer ()
 DirectionalLightContainer .prototype =
 {
    constructor: DirectionalLightContainer,
-   set: function (lightNode, groupNode, modelViewMatrix)
+   set (lightNode, groupNode, modelViewMatrix)
    {
       const shadowMapSize = lightNode .getShadowMapSize ();
 
@@ -106,7 +106,7 @@ DirectionalLightContainer .prototype =
             console .warn ("Couldn't create shadow buffer.");
       }
    },
-   renderShadowMap: function (renderObject)
+   renderShadowMap (renderObject)
    {
       if (! this .shadowBuffer)
          return;
@@ -146,7 +146,7 @@ DirectionalLightContainer .prototype =
 
       this .invLightSpaceProjectionMatrix .assign (invLightSpaceMatrix) .multRight (projectionMatrix) .multRight (lightNode .getBiasMatrix ());
    },
-   setGlobalVariables: function (renderObject)
+   setGlobalVariables (renderObject)
    {
       this .modelViewMatrix .get () .multDirMatrix (this .direction .assign (this .lightNode .getDirection ())) .normalize ();
 
@@ -156,7 +156,7 @@ DirectionalLightContainer .prototype =
       this .shadowMatrix .assign (renderObject .getCameraSpaceMatrix () .get ()) .multRight (this .invLightSpaceProjectionMatrix);
       this .shadowMatrixArray .set (this .shadowMatrix);
    },
-   setShaderUniforms: function (gl, shaderObject)
+   setShaderUniforms (gl, shaderObject)
    {
       const i = shaderObject .numLights ++;
 
@@ -214,7 +214,7 @@ DirectionalLightContainer .prototype =
          gl .uniform1f (shaderObject .x3d_ShadowIntensity [i], 0);
       }
    },
-   dispose: function ()
+   dispose ()
    {
       this .browser .pushShadowBuffer (this .shadowBuffer);
       this .browser .pushTexture2DUnit (this .textureUnit);
@@ -243,7 +243,7 @@ function DirectionalLight (executionContext)
 DirectionalLight .prototype = Object .assign (Object .create (X3DLightNode .prototype),
 {
    constructor: DirectionalLight,
-   getLights: function ()
+   getLights ()
    {
       return DirectionalLights;
    },

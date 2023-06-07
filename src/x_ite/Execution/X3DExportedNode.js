@@ -63,15 +63,15 @@ function X3DExportedNode (exportedName, localNode)
 X3DExportedNode .prototype = Object .assign (Object .create (X3DObject .prototype),
 {
    constructor: X3DExportedNode,
-   getExportedName: function ()
+   getExportedName ()
    {
       return this [_exportedName];
    },
-   getLocalNode: function ()
+   getLocalNode ()
    {
       return this [_localNode];
    },
-   toVRMLStream: function (generator)
+   toVRMLStream (generator)
    {
       const localName = generator .LocalName (this [_localNode]);
 
@@ -88,7 +88,7 @@ X3DExportedNode .prototype = Object .assign (Object .create (X3DObject .prototyp
          generator .string += this [_exportedName];
       }
    },
-   toXMLStream: function (generator)
+   toXMLStream (generator)
    {
       const localName = generator .LocalName (this [_localNode]);
 
@@ -109,7 +109,7 @@ X3DExportedNode .prototype = Object .assign (Object .create (X3DObject .prototyp
 
       generator .string += generator .closingTags ? "></EXPORT>" : "/>";
    },
-   toJSONStream: function (generator)
+   toJSONStream (generator)
    {
       const localName = generator .LocalName (this [_localNode]);
 
@@ -174,7 +174,7 @@ Object .defineProperties (X3DExportedNode .prototype,
 {
    exportedName:
    {
-      get: function ()
+      get ()
       {
          return this [_exportedName];
       },
@@ -182,7 +182,7 @@ Object .defineProperties (X3DExportedNode .prototype,
    },
    localNode:
    {
-      get: function ()
+      get ()
       {
          return SFNodeCache .get (this [_localNode]);
       },

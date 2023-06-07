@@ -61,44 +61,44 @@ DependentRenderer .prototype = Object .assign (Object .create (X3DBaseNode .prot
    X3DRenderObject .prototype,
 {
    constructor: DependentRenderer,
-   initialize: function ()
+   initialize ()
    {
       X3DBaseNode     .prototype .initialize .call (this);
       X3DRenderObject .prototype .initialize .call (this);
    },
-   isIndependent: function ()
+   isIndependent ()
    {
       return false;
    },
-   setRenderer: function (value)
+   setRenderer (value)
    {
       this .renderObject = value;
    },
-   getLayer: function ()
+   getLayer ()
    {
       return this .renderObject .getLayer ();
    },
-   getBackground: function ()
+   getBackground ()
    {
       return this .renderObject .getBackground ();
    },
-   getFog: function ()
+   getFog ()
    {
       return this .renderObject .getFog ();
    },
-   getNavigationInfo: function ()
+   getNavigationInfo ()
    {
       return this .renderObject .getNavigationInfo ();
    },
-   getViewpoint: function ()
+   getViewpoint ()
    {
       return this .renderObject .getViewpoint ();
    },
-   getLightContainer: function ()
+   getLightContainer ()
    {
       return this .renderObject .getLights () [this .lightIndex ++];
    },
-   render: function (type, callback, group)
+   render (type, callback, group)
    {
       switch (type)
       {

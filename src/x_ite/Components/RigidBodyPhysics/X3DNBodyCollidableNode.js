@@ -78,7 +78,7 @@ X3DNBodyCollidableNode .prototype = Object .assign (Object .create (X3DChildNode
    X3DBoundedObject .prototype,
 {
    constructor: X3DNBodyCollidableNode,
-   initialize: function ()
+   initialize ()
    {
       X3DChildNode     .prototype .initialize .call (this);
       X3DBoundedObject .prototype .initialize .call (this);
@@ -112,31 +112,31 @@ X3DNBodyCollidableNode .prototype = Object .assign (Object .create (X3DChildNode
          return l;
       };
    })(),
-   setBody: function (value)
+   setBody (value)
    {
       this ._body = value;
    },
-   getBody: function ()
+   getBody ()
    {
       return this ._body .getValue ();
    },
-   getCompoundShape: function ()
+   getCompoundShape ()
    {
       return this .compoundShape;
    },
-   setOffset: function (x, y, z)
+   setOffset (x, y, z)
    {
       this .offset .set (x, y, z);
    },
-   getOffset: function ()
+   getOffset ()
    {
       return this .offset;
    },
-   getMatrix: function ()
+   getMatrix ()
    {
       return this .matrix;
    },
-   eventsProcessed: function ()
+   eventsProcessed ()
    {
       this .matrix .set (this ._translation .getValue (),
                          this ._rotation    .getValue ());
@@ -144,7 +144,7 @@ X3DNBodyCollidableNode .prototype = Object .assign (Object .create (X3DChildNode
       if (this .compoundShape .getNumChildShapes ())
          this .compoundShape .updateChildTransform (0, this .getLocalTransform (), true);
    },
-   dispose: function ()
+   dispose ()
    {
       X3DBoundedObject .prototype .dispose .call (this);
       X3DChildNode     .prototype .dispose .call (this);

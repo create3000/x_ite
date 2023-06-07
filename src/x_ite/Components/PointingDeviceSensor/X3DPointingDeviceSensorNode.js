@@ -59,7 +59,7 @@ function X3DPointingDeviceSensorNode (executionContext)
 X3DPointingDeviceSensorNode .prototype = Object .assign (Object .create (X3DSensorNode .prototype),
 {
    constructor: X3DPointingDeviceSensorNode,
-   initialize: function ()
+   initialize ()
    {
       X3DSensorNode .prototype .initialize .call (this);
 
@@ -69,7 +69,7 @@ X3DPointingDeviceSensorNode .prototype = Object .assign (Object .create (X3DSens
 
       this .set_live__ ();
    },
-   set_live__: function ()
+   set_live__ ()
    {
       if (this .getLive () .getValue () && this ._enabled .getValue ())
       {
@@ -90,7 +90,7 @@ X3DPointingDeviceSensorNode .prototype = Object .assign (Object .create (X3DSens
          this .push = Function .prototype;
       }
    },
-   set_over__: function (over, hit)
+   set_over__ (over, hit)
    {
       if (over !== this ._isOver .getValue ())
       {
@@ -100,14 +100,14 @@ X3DPointingDeviceSensorNode .prototype = Object .assign (Object .create (X3DSens
             this .getBrowser () .getNotification () ._string = this ._description;
       }
    },
-   set_active__: function (active, hit)
+   set_active__ (active, hit)
    {
       if (active !== this ._isActive .getValue ())
          this ._isActive = active
    },
-   set_motion__: function (hit)
+   set_motion__ (hit)
    { },
-   push: function (renderObject, sensors)
+   push (renderObject, sensors)
    {
       sensors .push (new PointingDeviceSensorContainer (this,
                                                         renderObject .getModelViewMatrix  () .get (),

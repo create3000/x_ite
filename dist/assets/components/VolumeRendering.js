@@ -128,29 +128,29 @@ function X3DVolumeRenderStyleNode (executionContext)
 X3DVolumeRenderStyleNode .prototype = Object .assign (Object .create ((X3DNode_default()).prototype),
 {
    constructor: X3DVolumeRenderStyleNode,
-   addShaderFields: function (shaderNode)
+   addShaderFields (shaderNode)
    { },
-   getUniformsText: function ()
+   getUniformsText ()
    {
       return "";
    },
-   getFunctionsText: function ()
+   getFunctionsText ()
    {
       return "";
    },
-   getVolumeData: function ()
+   getVolumeData ()
    {
       return this .volumeDataNodes;
    },
-   addVolumeData: function (volumeDataNode)
+   addVolumeData (volumeDataNode)
    {
       this .volumeDataNodes .add (volumeDataNode);
    },
-   removeVolumeData: function (volumeDataNode)
+   removeVolumeData (volumeDataNode)
    {
       this .volumeDataNodes .delete (volumeDataNode);
    },
-   getNormalText: function (surfaceNormalsNode)
+   getNormalText (surfaceNormalsNode)
    {
       let string = "";
 
@@ -359,7 +359,7 @@ function OpacityMapVolumeStyle (executionContext)
 OpacityMapVolumeStyle .prototype = Object .assign (Object .create (VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype),
 {
    constructor: OpacityMapVolumeStyle,
-   initialize: function ()
+   initialize ()
    {
       VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype.initialize.call (this);
 
@@ -372,7 +372,7 @@ OpacityMapVolumeStyle .prototype = Object .assign (Object .create (VolumeRenderi
 
       this .set_transferFunction__ ();
    },
-   set_transferFunction__: function ()
+   set_transferFunction__ ()
    {
       this .transferFunctionNode = X3DCast_default() ((X3DConstants_default()).X3DTexture2DNode, this ._transferFunction);
 
@@ -382,14 +382,14 @@ OpacityMapVolumeStyle .prototype = Object .assign (Object .create (VolumeRenderi
       if (! this .transferFunctionNode)
          this .transferFunctionNode = this .getBrowser () .getDefaultTransferFunction ();
    },
-   addShaderFields: function (shaderNode)
+   addShaderFields (shaderNode)
    {
       if (! this ._enabled .getValue ())
          return;
 
       shaderNode .addUserDefinedField ((X3DConstants_default()).inputOutput, "transferFunction_" + this .getId (), new (Fields_default()).SFNode (this .transferFunctionNode));
    },
-   getUniformsText: function ()
+   getUniformsText ()
    {
       if (! this ._enabled .getValue ())
          return "";
@@ -425,7 +425,7 @@ OpacityMapVolumeStyle .prototype = Object .assign (Object .create (VolumeRenderi
 
       return string;
    },
-   getFunctionsText: function ()
+   getFunctionsText ()
    {
       if (! this ._enabled .getValue ())
          return "";
@@ -541,7 +541,7 @@ function X3DVolumeRenderingContext () { }
 
 X3DVolumeRenderingContext .prototype =
 {
-   getDefaultVoxels: function ()
+   getDefaultVoxels ()
    {
       this [_defaultVoxelsNode] = this .getPrivateScene () .createNode ("PixelTexture3D", false);
       this [_defaultVoxelsNode] ._image = [1, 1, 1, 1, 255];
@@ -557,7 +557,7 @@ X3DVolumeRenderingContext .prototype =
 
       return this [_defaultVoxelsNode];
    },
-   getDefaultVolumeStyle: function ()
+   getDefaultVolumeStyle ()
    {
       this [_defaultVolumeStyle] = new VolumeRendering_OpacityMapVolumeStyle (this .getPrivateScene ());
       this [_defaultVolumeStyle] .setPrivate (true);
@@ -569,7 +569,7 @@ X3DVolumeRenderingContext .prototype =
 
       return this [_defaultVolumeStyle];
    },
-   getDefaultBlendedVolumeStyle: function ()
+   getDefaultBlendedVolumeStyle ()
    {
       this [_defaultBlendedVolumeStyle] = new VolumeRendering_OpacityMapVolumeStyle (this .getPrivateScene ());
       this [_defaultBlendedVolumeStyle] .setPrivate (true);
@@ -581,7 +581,7 @@ X3DVolumeRenderingContext .prototype =
 
       return this [_defaultBlendedVolumeStyle];
    },
-   getDefaultTransferFunction: function ()
+   getDefaultTransferFunction ()
    {
       const textureProperties = new (TextureProperties_default()) (this .getPrivateScene ());
       textureProperties ._boundaryModeS       = "CLAMP_TO_EDGE";
@@ -680,7 +680,7 @@ function BlendedVolumeStyle (executionContext)
 BlendedVolumeStyle .prototype = Object .assign (Object .create (VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype),
 {
    constructor: BlendedVolumeStyle,
-   initialize: function ()
+   initialize ()
    {
       VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype.initialize.call (this);
 
@@ -699,29 +699,29 @@ BlendedVolumeStyle .prototype = Object .assign (Object .create (VolumeRendering_
       this .set_renderStyle__ ();
       this .set_voxels__ ();
    },
-   addVolumeData: function (volumeDataNode)
+   addVolumeData (volumeDataNode)
    {
       VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype.addVolumeData.call (this, volumeDataNode);
 
       if (this .renderStyleNode)
          this .renderStyleNode .addVolumeData (volumeDataNode);
    },
-   removeVolumeData: function (volumeDataNode)
+   removeVolumeData (volumeDataNode)
    {
       VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype.removeVolumeData.call (this, volumeDataNode);
 
       if (this .renderStyleNode)
          this .renderStyleNode .removeVolumeData (volumeDataNode);
    },
-   set_weightTransferFunction1__: function ()
+   set_weightTransferFunction1__ ()
    {
       this .weightTransferFunction1Node = X3DCast_default() ((X3DConstants_default()).X3DTexture2DNode, this ._weightTransferFunction1);
    },
-   set_weightTransferFunction2__: function ()
+   set_weightTransferFunction2__ ()
    {
       this .weightTransferFunction2Node = X3DCast_default() ((X3DConstants_default()).X3DTexture2DNode, this ._weightTransferFunction2);
    },
-   set_renderStyle__: function ()
+   set_renderStyle__ ()
    {
       if (this .renderStyleNode)
       {
@@ -741,11 +741,11 @@ BlendedVolumeStyle .prototype = Object .assign (Object .create (VolumeRendering_
             this .renderStyleNode .addVolumeData (volumeDataNode);
       }
    },
-   set_voxels__: function ()
+   set_voxels__ ()
    {
       this .voxelsNode = X3DCast_default() ((X3DConstants_default()).X3DTexture3DNode, this ._voxels);
    },
-   addShaderFields: function (shaderNode)
+   addShaderFields (shaderNode)
    {
       if (! this ._enabled .getValue ())
          return;
@@ -769,7 +769,7 @@ BlendedVolumeStyle .prototype = Object .assign (Object .create (VolumeRendering_
       if (this .renderStyleNode)
          this .renderStyleNode .addShaderFields (shaderNode);
    },
-   getUniformsText: function ()
+   getUniformsText ()
    {
       if (! this ._enabled .getValue ())
          return "";
@@ -912,7 +912,7 @@ BlendedVolumeStyle .prototype = Object .assign (Object .create (VolumeRendering_
 
       return string;
    },
-   getFunctionsText: function ()
+   getFunctionsText ()
    {
       if (! this ._enabled .getValue ())
          return "";
@@ -1040,7 +1040,7 @@ function BoundaryEnhancementVolumeStyle (executionContext)
 BoundaryEnhancementVolumeStyle .prototype = Object .assign (Object .create (VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype),
 {
    constructor: BoundaryEnhancementVolumeStyle,
-   addShaderFields: function (shaderNode)
+   addShaderFields (shaderNode)
    {
       if (! this ._enabled .getValue ())
          return;
@@ -1049,7 +1049,7 @@ BoundaryEnhancementVolumeStyle .prototype = Object .assign (Object .create (Volu
       shaderNode .addUserDefinedField ((X3DConstants_default()).inputOutput, "boundaryOpacity_" + this .getId (), this ._boundaryOpacity .copy ());
       shaderNode .addUserDefinedField ((X3DConstants_default()).inputOutput, "opacityFactor_"   + this .getId (), this ._opacityFactor   .copy ());
    },
-   getUniformsText: function ()
+   getUniformsText ()
    {
       if (! this ._enabled .getValue ())
          return "";
@@ -1080,7 +1080,7 @@ BoundaryEnhancementVolumeStyle .prototype = Object .assign (Object .create (Volu
 
       return string;
    },
-   getFunctionsText: function ()
+   getFunctionsText ()
    {
       if (! this ._enabled .getValue ())
          return "";
@@ -1201,7 +1201,7 @@ function CartoonVolumeStyle (executionContext)
 CartoonVolumeStyle .prototype = Object .assign (Object .create (VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype),
 {
    constructor: CartoonVolumeStyle,
-   initialize: function ()
+   initialize ()
    {
       VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype.initialize.call (this);
 
@@ -1214,11 +1214,11 @@ CartoonVolumeStyle .prototype = Object .assign (Object .create (VolumeRendering_
 
       this .set_surfaceNormals__ ();
    },
-   set_surfaceNormals__: function ()
+   set_surfaceNormals__ ()
    {
       this .surfaceNormalsNode = X3DCast_default() ((X3DConstants_default()).X3DTexture3DNode, this ._surfaceNormals);
    },
-   addShaderFields: function (shaderNode)
+   addShaderFields (shaderNode)
    {
       if (! this ._enabled .getValue ())
          return;
@@ -1230,7 +1230,7 @@ CartoonVolumeStyle .prototype = Object .assign (Object .create (VolumeRendering_
       if (this .surfaceNormalsNode)
          shaderNode .addUserDefinedField ((X3DConstants_default()).inputOutput, "surfaceNormals_" + this .getId (), new (Fields_default()).SFNode (this .surfaceNormalsNode));
    },
-   getUniformsText: function ()
+   getUniformsText ()
    {
       if (! this ._enabled .getValue ())
          return "";
@@ -1396,7 +1396,7 @@ CartoonVolumeStyle .prototype = Object .assign (Object .create (VolumeRendering_
 
       return string;
    },
-   getFunctionsText: function ()
+   getFunctionsText ()
    {
       if (! this ._enabled .getValue ())
          return "";
@@ -1520,7 +1520,7 @@ function ComposedVolumeStyle (executionContext)
 ComposedVolumeStyle .prototype = Object .assign (Object .create (VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype),
 {
    constructor: ComposedVolumeStyle,
-   initialize: function ()
+   initialize ()
    {
       VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype.initialize.call (this);
 
@@ -1533,21 +1533,21 @@ ComposedVolumeStyle .prototype = Object .assign (Object .create (VolumeRendering
 
       this .set_renderStyle__ ();
    },
-   addVolumeData: function (volumeDataNode)
+   addVolumeData (volumeDataNode)
    {
       VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype.addVolumeData.call (this, volumeDataNode);
 
       for (const renderStyleNode of this .renderStyleNodes)
          renderStyleNode .addVolumeData (volumeDataNode);
    },
-   removeVolumeData: function (volumeDataNode)
+   removeVolumeData (volumeDataNode)
    {
       VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype.removeVolumeData.call (this, volumeDataNode);
 
       for (const renderStyleNode of this .renderStyleNodes)
          renderStyleNode .removeVolumeData (volumeDataNode);
    },
-   set_renderStyle__: function ()
+   set_renderStyle__ ()
    {
       const renderStyleNodes = this .renderStyleNodes;
 
@@ -1577,7 +1577,7 @@ ComposedVolumeStyle .prototype = Object .assign (Object .create (VolumeRendering
             renderStyleNode .addVolumeData (volumeDataNode);
       }
    },
-   addShaderFields: function (shaderNode)
+   addShaderFields (shaderNode)
    {
       if (! this ._enabled .getValue ())
          return;
@@ -1585,7 +1585,7 @@ ComposedVolumeStyle .prototype = Object .assign (Object .create (VolumeRendering
       for (const renderStyleNode of this .renderStyleNodes)
          renderStyleNode .addShaderFields (shaderNode);
    },
-   getUniformsText: function ()
+   getUniformsText ()
    {
       if (! this ._enabled .getValue ())
          return "";
@@ -1609,7 +1609,7 @@ ComposedVolumeStyle .prototype = Object .assign (Object .create (VolumeRendering
 
       return string;
    },
-   getFunctionsText: function ()
+   getFunctionsText ()
    {
       if (! this ._enabled .getValue ())
          return "";
@@ -1728,7 +1728,7 @@ function EdgeEnhancementVolumeStyle (executionContext)
 EdgeEnhancementVolumeStyle .prototype = Object .assign (Object .create (VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype),
 {
    constructor: EdgeEnhancementVolumeStyle,
-   initialize: function ()
+   initialize ()
    {
       VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype.initialize.call (this);
 
@@ -1741,11 +1741,11 @@ EdgeEnhancementVolumeStyle .prototype = Object .assign (Object .create (VolumeRe
 
       this .set_surfaceNormals__ ();
    },
-   set_surfaceNormals__: function ()
+   set_surfaceNormals__ ()
    {
       this .surfaceNormalsNode = X3DCast_default() ((X3DConstants_default()).X3DTexture3DNode, this ._surfaceNormals);
    },
-   addShaderFields: function (shaderNode)
+   addShaderFields (shaderNode)
    {
       if (! this ._enabled .getValue ())
          return;
@@ -1756,7 +1756,7 @@ EdgeEnhancementVolumeStyle .prototype = Object .assign (Object .create (VolumeRe
       if (this .surfaceNormalsNode)
          shaderNode .addUserDefinedField ((X3DConstants_default()).inputOutput, "surfaceNormals_" + this .getId (), new (Fields_default()).SFNode (this .surfaceNormalsNode));
    },
-   getUniformsText: function ()
+   getUniformsText ()
    {
       if (! this ._enabled .getValue ())
          return "";
@@ -1793,7 +1793,7 @@ EdgeEnhancementVolumeStyle .prototype = Object .assign (Object .create (VolumeRe
 
       return string;
    },
-   getFunctionsText: function ()
+   getFunctionsText ()
    {
       if (! this ._enabled .getValue ())
          return "";
@@ -2020,11 +2020,11 @@ function VolumeMaterial (executionContext, volumeDataNode)
 VolumeMaterial .prototype = Object .assign (Object .create ((UnlitMaterial_default()).prototype),
 {
    constructor: VolumeMaterial,
-   getVolumeShaders: function ()
+   getVolumeShaders ()
    {
       return this .volumeShaderNodes;
    },
-   getShader: function (geometryContext, renderContext)
+   getShader (geometryContext, renderContext)
    {
       const { fogNode, objectsCount } = renderContext;
 
@@ -2038,7 +2038,7 @@ VolumeMaterial .prototype = Object .assign (Object .create ((UnlitMaterial_defau
 
       return this .volumeShaderNodes .get (key) || this .createShader (key, geometryContext, renderContext);
    },
-   createShader: function (key, geometryContext, renderContext)
+   createShader (key, geometryContext, renderContext)
    {
       const
          browser = this .getBrowser (),
@@ -2067,7 +2067,7 @@ VolumeMaterial .prototype = Object .assign (Object .create ((UnlitMaterial_defau
 
       return shaderNode;
    },
-   setShaderUniforms: function (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
+   setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
    {
       this .volumeDataNode .setShaderUniforms (gl, shaderObject);
    },
@@ -2187,7 +2187,7 @@ X3DVolumeDataNode .prototype = Object .assign (Object .create ((X3DChildNode_def
    (X3DBoundedObject_default()).prototype,
 {
    constructor: X3DVolumeDataNode,
-   initialize: function ()
+   initialize ()
    {
       X3DChildNode_default().prototype.initialize.call (this);
       X3DBoundedObject_default().prototype.initialize.call (this);
@@ -2247,26 +2247,26 @@ X3DVolumeDataNode .prototype = Object .assign (Object .create ((X3DChildNode_def
 
       this .set_textureTransform__ ();
    },
-   getBBox: function (bbox, shadows)
+   getBBox (bbox, shadows)
    {
       if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
          return bbox .set (this ._dimensions .getValue (), (Vector3_default()).Zero);
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
-   getAppearance: function ()
+   getAppearance ()
    {
       return this .appearanceNode;
    },
-   updateShader: function ()
+   updateShader ()
    {
       this .volumeMaterialNode .getVolumeShaders () .clear ();
    },
-   addShaderUniformNames: function (uniformNames)
+   addShaderUniformNames (uniformNames)
    {
       uniformNames .push ("x3d_TextureNormalMatrix");
    },
-   getNumPlanes: function ()
+   getNumPlanes ()
    {
       switch (this .getBrowser () .getBrowserOptions () .getTextureQuality ())
       {
@@ -2286,7 +2286,7 @@ X3DVolumeDataNode .prototype = Object .assign (Object .create ((X3DChildNode_def
 
       return 200;
    },
-   set_dimensions__: function ()
+   set_dimensions__ ()
    {
       const
          NUM_PLANES = this .getNumPlanes (),
@@ -2312,11 +2312,11 @@ X3DVolumeDataNode .prototype = Object .assign (Object .create ((X3DChildNode_def
                                                                  1 / this ._dimensions .y,
                                                                  1 / this ._dimensions .z);
    },
-   set_textureTransform__: function ()
+   set_textureTransform__ ()
    {
       this .textureNormalMatrixArray .set (this .textureTransformNode .getMatrix () .submatrix .inverse ());
    },
-   traverse: function (type, renderObject)
+   traverse (type, renderObject)
    {
       this .proximitySensorNode .traverse (type, renderObject);
       this .transformNode       .traverse (type, renderObject);
@@ -2325,7 +2325,7 @@ X3DVolumeDataNode .prototype = Object .assign (Object .create ((X3DChildNode_def
    {
       gl .uniformMatrix3fv (shaderObject .x3d_TextureNormalMatrix, true, this .textureNormalMatrixArray);
    },
-   dispose: function ()
+   dispose ()
    {
       X3DBoundedObject_default().prototype.dispose.call (this);
       X3DChildNode_default().prototype.dispose.call (this);
@@ -2426,7 +2426,7 @@ function IsoSurfaceVolumeData (executionContext)
 IsoSurfaceVolumeData .prototype = Object .assign (Object .create (VolumeRendering_X3DVolumeDataNode.prototype),
 {
    constructor: IsoSurfaceVolumeData,
-   initialize: function ()
+   initialize ()
    {
       VolumeRendering_X3DVolumeDataNode.prototype.initialize.call (this);
 
@@ -2451,11 +2451,11 @@ IsoSurfaceVolumeData .prototype = Object .assign (Object .create (VolumeRenderin
 
       this .updateShader ();
    },
-   set_gradients__: function ()
+   set_gradients__ ()
    {
       this .gradientsNode = X3DCast_default() ((X3DConstants_default()).X3DTexture3DNode, this ._gradients);
    },
-   set_renderStyle__: function ()
+   set_renderStyle__ ()
    {
       const renderStyleNodes = this .renderStyleNodes;
 
@@ -2481,7 +2481,7 @@ IsoSurfaceVolumeData .prototype = Object .assign (Object .create (VolumeRenderin
          renderStyleNode .addVolumeData (this);
       }
    },
-   set_voxels__: function ()
+   set_voxels__ ()
    {
       this .voxelsNode = X3DCast_default() ((X3DConstants_default()).X3DTexture3DNode, this ._voxels);
 
@@ -2490,7 +2490,7 @@ IsoSurfaceVolumeData .prototype = Object .assign (Object .create (VolumeRenderin
       else
          this .getAppearance () ._texture = this .getBrowser () .getDefaultVoxels ();
    },
-   createShader: function (options, vs, fs)
+   createShader (options, vs, fs)
    {
       // if (DEVELOPMENT)
       //    console .log ("Creating VolumeData Shader ...");
@@ -2793,14 +2793,14 @@ function ProjectionVolumeStyle (executionContext)
 ProjectionVolumeStyle .prototype = Object .assign (Object .create (VolumeRendering_X3DVolumeRenderStyleNode.prototype),
 {
    constructor: ProjectionVolumeStyle,
-   addShaderFields: function (shaderNode)
+   addShaderFields (shaderNode)
    {
       if (! this ._enabled .getValue ())
          return;
 
       shaderNode .addUserDefinedField ((X3DConstants_default()).inputOutput, "intensityThreshold_" + this .getId (), this ._intensityThreshold .copy ());
    },
-   getUniformsText: function ()
+   getUniformsText ()
    {
       if (! this ._enabled .getValue ())
          return "";
@@ -2910,7 +2910,7 @@ ProjectionVolumeStyle .prototype = Object .assign (Object .create (VolumeRenderi
 
       return string;
    },
-   getFunctionsText: function ()
+   getFunctionsText ()
    {
       if (! this ._enabled .getValue ())
          return "";
@@ -3035,7 +3035,7 @@ function SegmentedVolumeData (executionContext)
 SegmentedVolumeData .prototype = Object .assign (Object .create (VolumeRendering_X3DVolumeDataNode.prototype),
 {
    constructor: SegmentedVolumeData,
-   initialize: function ()
+   initialize ()
    {
       VolumeRendering_X3DVolumeDataNode.prototype.initialize.call (this);
 
@@ -3059,15 +3059,15 @@ SegmentedVolumeData .prototype = Object .assign (Object .create (VolumeRendering
 
       this .updateShader ();
    },
-   getSegmentEnabled: function (index)
+   getSegmentEnabled (index)
    {
       return index < this ._segmentEnabled .length ? this ._segmentEnabled [index] : true;
    },
-   set_segmentIdentifiers__: function ()
+   set_segmentIdentifiers__ ()
    {
       this .segmentIdentifiersNode = X3DCast_default() ((X3DConstants_default()).X3DTexture3DNode, this ._segmentIdentifiers);
    },
-   set_renderStyle__: function ()
+   set_renderStyle__ ()
    {
       const renderStyleNodes = this .renderStyleNodes;
 
@@ -3093,7 +3093,7 @@ SegmentedVolumeData .prototype = Object .assign (Object .create (VolumeRendering
          renderStyleNode .addVolumeData (this);
       }
    },
-   set_voxels__: function ()
+   set_voxels__ ()
    {
       this .voxelsNode = X3DCast_default() ((X3DConstants_default()).X3DTexture3DNode, this ._voxels);
 
@@ -3102,7 +3102,7 @@ SegmentedVolumeData .prototype = Object .assign (Object .create (VolumeRendering
       else
          this .getAppearance () ._texture = this .getBrowser () .getDefaultVoxels ();
    },
-   createShader: function (options, vs, fs)
+   createShader (options, vs, fs)
    {
       // if (DEVELOPMENT)
       //    console .log ("Creating SegmentedVolumeData Shader ...");
@@ -3315,7 +3315,7 @@ function ShadedVolumeStyle (executionContext)
 ShadedVolumeStyle .prototype = Object .assign (Object .create (VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype),
 {
    constructor: ShadedVolumeStyle,
-   initialize: function ()
+   initialize ()
    {
       VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype.initialize.call (this);
 
@@ -3330,7 +3330,7 @@ ShadedVolumeStyle .prototype = Object .assign (Object .create (VolumeRendering_X
       this .set_material__ ();
       this .set_surfaceNormals__ ();
    },
-   set_material__: function ()
+   set_material__ ()
    {
       if (this .materialNode)
          this .materialNode .removeInterest ("addNodeEvent", this);
@@ -3340,11 +3340,11 @@ ShadedVolumeStyle .prototype = Object .assign (Object .create (VolumeRendering_X
       if (this .materialNode)
          this .materialNode .addInterest ("addNodeEvent", this);
    },
-   set_surfaceNormals__: function ()
+   set_surfaceNormals__ ()
    {
       this .surfaceNormalsNode = X3DCast_default() ((X3DConstants_default()).X3DTexture3DNode, this ._surfaceNormals);
    },
-   addShaderFields: function (shaderNode)
+   addShaderFields (shaderNode)
    {
       if (! this ._enabled .getValue ())
          return;
@@ -3362,7 +3362,7 @@ ShadedVolumeStyle .prototype = Object .assign (Object .create (VolumeRendering_X
       if (this .surfaceNormalsNode)
          shaderNode .addUserDefinedField ((X3DConstants_default()).inputOutput, "surfaceNormals_" + this .getId (), new (Fields_default()).SFNode (this .surfaceNormalsNode));
    },
-   getUniformsText: function ()
+   getUniformsText ()
    {
       if (! this ._enabled .getValue ())
          return "";
@@ -3478,7 +3478,7 @@ ShadedVolumeStyle .prototype = Object .assign (Object .create (VolumeRendering_X
 
       return string;
    },
-   getFunctionsText: function ()
+   getFunctionsText ()
    {
       if (! this ._enabled .getValue ())
          return "";
@@ -3601,7 +3601,7 @@ function SilhouetteEnhancementVolumeStyle (executionContext)
 SilhouetteEnhancementVolumeStyle .prototype = Object .assign (Object .create (VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype),
 {
    constructor: SilhouetteEnhancementVolumeStyle,
-   initialize: function ()
+   initialize ()
    {
       VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype.initialize.call (this);
 
@@ -3614,11 +3614,11 @@ SilhouetteEnhancementVolumeStyle .prototype = Object .assign (Object .create (Vo
 
       this .set_surfaceNormals__ ();
    },
-   set_surfaceNormals__: function ()
+   set_surfaceNormals__ ()
    {
       this .surfaceNormalsNode = X3DCast_default() ((X3DConstants_default()).X3DTexture3DNode, this ._surfaceNormals);
    },
-   addShaderFields: function (shaderNode)
+   addShaderFields (shaderNode)
    {
       if (! this ._enabled .getValue ())
          return;
@@ -3630,7 +3630,7 @@ SilhouetteEnhancementVolumeStyle .prototype = Object .assign (Object .create (Vo
       if (this .surfaceNormalsNode)
          shaderNode .addUserDefinedField ((X3DConstants_default()).inputOutput, "surfaceNormals_" + this .getId (), new (Fields_default()).SFNode (this .surfaceNormalsNode));
    },
-   getUniformsText: function ()
+   getUniformsText ()
    {
       if (! this ._enabled .getValue ())
          return "";
@@ -3664,7 +3664,7 @@ SilhouetteEnhancementVolumeStyle .prototype = Object .assign (Object .create (Vo
 
       return string;
    },
-   getFunctionsText: function ()
+   getFunctionsText ()
    {
       if (! this ._enabled .getValue ())
          return "";
@@ -3786,7 +3786,7 @@ function ToneMappedVolumeStyle (executionContext)
 ToneMappedVolumeStyle .prototype = Object .assign (Object .create (VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype),
 {
    constructor: ToneMappedVolumeStyle,
-   initialize: function ()
+   initialize ()
    {
       VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype.initialize.call (this);
 
@@ -3799,11 +3799,11 @@ ToneMappedVolumeStyle .prototype = Object .assign (Object .create (VolumeRenderi
 
       this .set_surfaceNormals__ ();
    },
-   set_surfaceNormals__: function ()
+   set_surfaceNormals__ ()
    {
       this .surfaceNormalsNode = X3DCast_default() ((X3DConstants_default()).X3DTexture3DNode, this ._surfaceNormals);
    },
-   addShaderFields: function (shaderNode)
+   addShaderFields (shaderNode)
    {
       if (! this ._enabled .getValue ())
          return;
@@ -3814,7 +3814,7 @@ ToneMappedVolumeStyle .prototype = Object .assign (Object .create (VolumeRenderi
       if (this .surfaceNormalsNode)
          shaderNode .addUserDefinedField ((X3DConstants_default()).inputOutput, "surfaceNormals_" + this .getId (), new (Fields_default()).SFNode (this .surfaceNormalsNode));
    },
-   getUniformsText: function ()
+   getUniformsText ()
    {
       if (! this ._enabled .getValue ())
          return "";
@@ -3857,7 +3857,7 @@ ToneMappedVolumeStyle .prototype = Object .assign (Object .create (VolumeRenderi
 
       return string;
    },
-   getFunctionsText: function ()
+   getFunctionsText ()
    {
       if (! this ._enabled .getValue ())
          return "";
@@ -3982,7 +3982,7 @@ function VolumeData (executionContext)
 VolumeData .prototype = Object .assign (Object .create (VolumeRendering_X3DVolumeDataNode.prototype),
 {
    constructor: VolumeData,
-   initialize: function ()
+   initialize ()
    {
       VolumeRendering_X3DVolumeDataNode.prototype.initialize.call (this);
 
@@ -4003,7 +4003,7 @@ VolumeData .prototype = Object .assign (Object .create (VolumeRendering_X3DVolum
 
       this .updateShader ();
    },
-   set_renderStyle__: function ()
+   set_renderStyle__ ()
    {
       if (this .renderStyleNode)
       {
@@ -4019,7 +4019,7 @@ VolumeData .prototype = Object .assign (Object .create (VolumeRendering_X3DVolum
          this .renderStyleNode .addVolumeData (this);
       }
    },
-   set_voxels__: function ()
+   set_voxels__ ()
    {
       this .voxelsNode = X3DCast_default() ((X3DConstants_default()).X3DTexture3DNode, this ._voxels);
 
@@ -4028,7 +4028,7 @@ VolumeData .prototype = Object .assign (Object .create (VolumeRendering_X3DVolum
       else
          this .getAppearance () ._texture = this .getBrowser () .getDefaultVoxels ();
    },
-   createShader: function (options, vs, fs)
+   createShader (options, vs, fs)
    {
       // if (DEVELOPMENT)
       //    console .log ("Creating VolumeData Shader ...");

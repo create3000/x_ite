@@ -68,7 +68,7 @@ function PrimitivePickSensor (executionContext)
 PrimitivePickSensor .prototype = Object .assign (Object .create (X3DPickSensorNode .prototype),
 {
    constructor: PrimitivePickSensor,
-   initialize: function ()
+   initialize ()
    {
       X3DPickSensorNode .prototype .initialize .call (this);
 
@@ -76,7 +76,7 @@ PrimitivePickSensor .prototype = Object .assign (Object .create (X3DPickSensorNo
 
       this .set_pickingGeometry__ ();
    },
-   set_pickingGeometry__: function ()
+   set_pickingGeometry__ ()
    {
       this .pickingGeometryNode = null;
 

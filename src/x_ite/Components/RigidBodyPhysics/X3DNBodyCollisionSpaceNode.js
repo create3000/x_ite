@@ -61,12 +61,12 @@ X3DNBodyCollisionSpaceNode .prototype = Object .assign (Object .create (X3DNode 
    X3DBoundedObject .prototype,
 {
    constructor: X3DNBodyCollisionSpaceNode,
-   initialize: function ()
+   initialize ()
    {
       X3DNode          .prototype .initialize .call (this);
       X3DBoundedObject .prototype .initialize .call (this);
    },
-   dispose: function ()
+   dispose ()
    {
       X3DBoundedObject .prototype .dispose .call (this);
       X3DNode          .prototype .dispose .call (this);

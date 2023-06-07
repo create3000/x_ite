@@ -89,21 +89,21 @@ function Script (executionContext)
 Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
 {
    constructor: Script,
-   initialize: function ()
+   initialize ()
    {
       X3DScriptNode .prototype .initialize .call (this);
 
       this .requestImmediateLoad () .catch (Function .prototype);
    },
-   getExtendedEventHandling: function ()
+   getExtendedEventHandling ()
    {
       return false;
    },
-   canUserDefinedFields: function ()
+   canUserDefinedFields ()
    {
       return true;
    },
-   addUserDefinedField: function (accessType, name, field)
+   addUserDefinedField (accessType, name, field)
    {
       X3DScriptNode .prototype .addUserDefinedField .call (this, accessType, name, field);
 
@@ -113,7 +113,7 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
       this .setLoadState (X3DConstants .NOT_STARTED_STATE);
       this .requestImmediateLoad () .catch (Function .prototype);
    },
-   removeUserDefinedField: function (name)
+   removeUserDefinedField (name)
    {
       this .getUserDefinedFields () .get (name) ?.removeInterest ("set_field__", this);
 
@@ -125,15 +125,15 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
       this .setLoadState (X3DConstants .NOT_STARTED_STATE);
       this .requestImmediateLoad () .catch (Function .prototype);
    },
-   getSourceText: function ()
+   getSourceText ()
    {
       return this ._url;
    },
-   unloadData: function ()
+   unloadData ()
    {
       this .initialize__ ("");
    },
-   loadData: function ()
+   loadData ()
    {
       new FileLoader (this) .loadDocument (this ._url, (data) =>
       {
@@ -149,7 +149,7 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
          }
       });
    },
-   getContext: function (sourceText)
+   getContext (sourceText)
    {
       try
       {
@@ -192,11 +192,11 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
          return new Map ();
       }
    },
-   evaluate: function (sourceText)
+   evaluate (sourceText)
    {
       return evaluate (this .globalObject, `return (${sourceText})`);
    },
-   getGlobalObject: function ()
+   getGlobalObject ()
    {
       const
          browser          = this .getBrowser (),
@@ -336,7 +336,7 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
 
       return Object .create (Object .prototype, globalObject);
    },
-   initialize__: function (sourceText)
+   initialize__ (sourceText)
    {
       this .disconnect ();
 
@@ -401,7 +401,7 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
       if (typeof initialize === "function")
          this .call__ (initialize, "initialize");
    },
-   call__: function (callback, name)
+   call__ (callback, name)
    {
       const browser = this .getBrowser ();
 
@@ -418,7 +418,7 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
 
       browser .getScriptStack () .pop ();
    },
-   set_field__: function (callback, field)
+   set_field__ (callback, field)
    {
       const browser = this .getBrowser ();
 
@@ -437,12 +437,12 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
       browser .getScriptStack () .pop ();
       field .setTainted (false);
    },
-   setError: function (reason, error)
+   setError (reason, error)
    {
       console .error ("JavaScript Error in Script '" + this .getName () + "', " + reason + "\nworld url is '" + this .getExecutionContext () .getWorldURL () + "':");
       console .error (error);
    },
-   disconnect: function ()
+   disconnect ()
    {
       // Call shutdown.
 
@@ -468,7 +468,7 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
       for (const field of this .getUserDefinedFields ())
          field .removeInterest ("set_field__", this);
    },
-   dispose: function ()
+   dispose ()
    {
       this .disconnect ();
 

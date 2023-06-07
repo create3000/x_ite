@@ -69,7 +69,7 @@ function X3DRigidJointNode (executionContext)
 X3DRigidJointNode .prototype = Object .assign (Object .create (X3DNode .prototype),
 {
    constructor: X3DRigidJointNode,
-   initialize: function ()
+   initialize ()
    {
       X3DNode .prototype .initialize .call (this);
 
@@ -81,7 +81,7 @@ X3DRigidJointNode .prototype = Object .assign (Object .create (X3DNode .prototyp
       this .set_body1__ ();
       this .set_body2__ ();
    },
-   setCollection: function (value)
+   setCollection (value)
    {
       this .removeJoint ();
 
@@ -89,27 +89,27 @@ X3DRigidJointNode .prototype = Object .assign (Object .create (X3DNode .prototyp
 
       this .addJoint ();
    },
-   getCollection: function ()
+   getCollection ()
    {
       return this ._collection .getValue ();
    },
-   getBody1: function ()
+   getBody1 ()
    {
       return this .bodyNode1;
    },
-   getBody2: function ()
+   getBody2 ()
    {
       return this .bodyNode2;
    },
-   getInitialInverseMatrix1: function ()
+   getInitialInverseMatrix1 ()
    {
       return this .initialInverseMatrix1;
    },
-   getInitialInverseMatrix2: function ()
+   getInitialInverseMatrix2 ()
    {
       return this .initialInverseMatrix2;
    },
-   setOutput: function (value)
+   setOutput (value)
    {
       this .output = value;
 
@@ -130,18 +130,18 @@ X3DRigidJointNode .prototype = Object .assign (Object .create (X3DNode .prototyp
             this .bodyNode2 .removeInterest ("update2", this);
       }
    },
-   addJoint: function ()
+   addJoint ()
    { },
-   removeJoint: function ()
+   removeJoint ()
    { },
-   set_forceOutput__: function ()
+   set_forceOutput__ ()
    { },
-   set_joint__: function ()
+   set_joint__ ()
    {
       this .removeJoint ();
       this .addJoint ();
    },
-   set_body1__: function ()
+   set_body1__ ()
    {
       this .removeJoint ();
 
@@ -162,7 +162,7 @@ X3DRigidJointNode .prototype = Object .assign (Object .create (X3DNode .prototyp
          this .setOutput (this .output);
       }
    },
-   set_body2__: function ()
+   set_body2__ ()
    {
       this .removeJoint ();
 
@@ -183,21 +183,21 @@ X3DRigidJointNode .prototype = Object .assign (Object .create (X3DNode .prototyp
          this .setOutput (this .output);
       }
    },
-   initialize1: function ()
+   initialize1 ()
    {
       this .initialInverseMatrix1 .set (this .bodyNode1 ._position .getValue (), this .bodyNode1 ._orientation .getValue ());
       this .initialInverseMatrix1 .inverse ();
    },
-   initialize2: function ()
+   initialize2 ()
    {
       this .initialInverseMatrix2 .set (this .bodyNode2 ._position .getValue (), this .bodyNode2 ._orientation .getValue ());
       this .initialInverseMatrix2 .inverse ();
    },
-   update1: function ()
+   update1 ()
    { },
-   update2: function ()
+   update2 ()
    { },
-   dispose: function ()
+   dispose ()
    {
       this .removeJoint ();
 

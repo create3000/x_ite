@@ -187,24 +187,24 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       SQRT1_2: Math .SQRT1_2,
       SQRT2:   Math .SQRT2,
    },
-   getEncoding: function ()
+   getEncoding ()
    {
       return "STRING";
    },
-   isValid: function ()
+   isValid ()
    {
       if (!(typeof this .input === "string"))
          return false;
 
       return !! this .input .match (/^(?:#X3D|#VRML|(?:[\x20\n,\t\r]*|#.*?[\r\n])*(PROFILE|COMPONENT|META|UNIT|EXTERNPROTO|PROTO|DEF|NULL|IMPORT|EXPORT|ROUTE|\w+(?:[\x20\n,\t\r]*|#.*?[\r\n])\{|$))/);
    },
-   setInput: function (vrmlSyntax)
+   setInput (vrmlSyntax)
    {
       this .input      = vrmlSyntax;
       this .lineNumber = 1;
       this .lastIndex  = 0;
    },
-   parseIntoScene: function (resolve, reject)
+   parseIntoScene (resolve, reject)
    {
       try
       {
@@ -221,14 +221,14 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          throw new Error (this .getError (error));
       }
    },
-   throwOrWarn: function (string)
+   throwOrWarn (string)
    {
       if (this .getBrowser () .isStrict ())
          throw new Error (string);
 
       console .warn (string);
    },
-   getError: function (error)
+   getError (error)
    {
       //console .error (error);
 
@@ -264,7 +264,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return message;
    },
-   getLine: function ()
+   getLine ()
    {
       let
          input     = this .input,
@@ -278,7 +278,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return line;
    },
-   getLastLine: function ()
+   getLastLine ()
    {
       let
          input     = this .input,
@@ -295,19 +295,19 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return line;
    },
-   comments: function ()
+   comments ()
    {
       while (this .comment ())
          ;
    },
-   comment: function ()
+   comment ()
    {
       if (this .whitespaces ())
          return true;
 
       return Grammar .Comment .parse (this);
    },
-   whitespaces: function ()
+   whitespaces ()
    {
       if (Grammar .Whitespaces .parse (this))
       {
@@ -318,7 +318,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return false;
    },
-   lines: function (string)
+   lines (string)
    {
       const match = string .match (Grammar .Break);
 
@@ -394,7 +394,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          }
       };
    })(),
-   headerStatement: function ()
+   headerStatement ()
    {
       Grammar .Header .lastIndex = 0;
 
@@ -409,7 +409,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return false;
    },
-   profileStatement: function ()
+   profileStatement ()
    {
       this .comments ();
 
@@ -426,14 +426,14 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          throw new Error ("Expected a profile name.");
       }
    },
-   componentStatements: function ()
+   componentStatements ()
    {
       let component;
 
       while (component = this .componentStatement ())
          this .getScene () .addComponent (component);
    },
-   componentStatement: function ()
+   componentStatement ()
    {
       this .comments ();
 
@@ -465,16 +465,16 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return null;
    },
-   componentSupportLevel: function ()
+   componentSupportLevel ()
    {
       return this .int32 ();
    },
-   unitStatements: function ()
+   unitStatements ()
    {
       while (this .unitStatement ())
          ;
    },
-   unitStatement: function ()
+   unitStatement ()
    {
       this .comments ();
 
@@ -515,16 +515,16 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return false;
    },
-   unitConversionFactor: function ()
+   unitConversionFactor ()
    {
       return this .double ();
    },
-   metaStatements: function ()
+   metaStatements ()
    {
       while (this .metaStatement ())
          ;
    },
-   metaStatement: function ()
+   metaStatement ()
    {
       this .comments ();
 
@@ -550,15 +550,15 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return false;
    },
-   metaKey: function ()
+   metaKey ()
    {
       return this .string ();
    },
-   metaValue: function ()
+   metaValue ()
    {
       return this .string ();
    },
-   exportStatement: function ()
+   exportStatement ()
    {
       this .comments ();
 
@@ -598,7 +598,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return false;
    },
-   importStatement: function ()
+   importStatement ()
    {
       this .comments ();
 
@@ -647,12 +647,12 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       }
       return false;
    },
-   statements: function (field)
+   statements (field)
    {
       while (this .statement (field))
          ;
    },
-   statement: function (field)
+   statement (field)
    {
       if (this .protoStatement ())
          return true;
@@ -676,7 +676,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return false;
    },
-   nodeStatement: function ()
+   nodeStatement ()
    {
       this .comments ();
 
@@ -701,7 +701,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return this .node ("");
    },
-   protoStatement: function ()
+   protoStatement ()
    {
       if (this .proto ())
          return true;
@@ -711,12 +711,12 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return false;
    },
-   protoStatements: function ()
+   protoStatements ()
    {
       while (this .protoStatement ())
          ;
    },
-   proto: function ()
+   proto ()
    {
       this .comments ();
 
@@ -790,7 +790,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return false;
    },
-   protoBody: function (rootNodes)
+   protoBody (rootNodes)
    {
       this .protoStatements ();
 
@@ -801,7 +801,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       this .statements (rootNodes);
    },
-   rootNodeStatement: function ()
+   rootNodeStatement ()
    {
       this .comments ();
 
@@ -829,7 +829,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return false;
    },
-   interfaceDeclarations: function ()
+   interfaceDeclarations ()
    {
       const interfaceDeclarations = [ ];
 
@@ -840,7 +840,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return interfaceDeclarations;
    },
-   restrictedInterfaceDeclaration: function ()
+   restrictedInterfaceDeclaration ()
    {
       this .comments ();
 
@@ -926,7 +926,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return null;
    },
-   interfaceDeclaration: function ()
+   interfaceDeclaration ()
    {
       const field = this .restrictedInterfaceDeclaration ();
 
@@ -967,7 +967,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return null;
    },
-   externproto: function ()
+   externproto ()
    {
       this .comments ();
 
@@ -1023,7 +1023,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return false;
    },
-   externInterfaceDeclarations: function ()
+   externInterfaceDeclarations ()
    {
       const externInterfaceDeclarations = [ ];
 
@@ -1034,7 +1034,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return externInterfaceDeclarations;
    },
-   externInterfaceDeclaration: function ()
+   externInterfaceDeclaration ()
    {
       this .comments ();
 
@@ -1140,11 +1140,11 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return null;
    },
-   URLList: function (field)
+   URLList (field)
    {
       return this .mfstringValue (field);
    },
-   routeStatement: function ()
+   routeStatement ()
    {
       this .comments ();
 
@@ -1218,7 +1218,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return false;
    },
-   node: function (nodeNameId)
+   node (nodeNameId)
    {
       if (this .nodeTypeId ())
       {
@@ -1272,12 +1272,12 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return false;
    },
-   scriptBody: function (baseNode)
+   scriptBody (baseNode)
    {
       while (this .scriptBodyElement (baseNode))
          ;
    },
-   scriptBodyElement: function (baseNode)
+   scriptBodyElement (baseNode)
    {
       const
          lastIndex  = this .lastIndex,
@@ -1382,12 +1382,12 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return this .nodeBodyElement (baseNode);
    },
-   nodeBody: function (baseNode)
+   nodeBody (baseNode)
    {
       while (this .nodeBodyElement (baseNode))
          ;
    },
-   nodeBodyElement: function (baseNode)
+   nodeBodyElement (baseNode)
    {
       if (this .protoStatement ())
          return true;
@@ -1462,39 +1462,39 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return false;
    },
-   profileNameId: function () { return this .Id (); },
-   componentNameId: function ()
+   profileNameId () { return this .Id (); },
+   componentNameId ()
    {
       this .comments ();
 
       return Grammar .ComponentNameId .parse (this);
    },
-   categoryNameId: function () { return this .Id (); },
-   unitNameId: function () { return this .Id (); },
-   exportedNodeNameId: function () { return this .Id (); },
-   nodeNameId: function () { return this .Id (); },
-   nodeTypeId: function () { return this .Id (); },
-   initializeOnlyId: function () { return this .Id (); },
-   inputOnlyId: function () { return this .Id (); },
-   outputOnlyId: function () { return this .Id (); },
-   inputOutputId: function () { return this .Id (); },
-   Id: function ()
+   categoryNameId () { return this .Id (); },
+   unitNameId () { return this .Id (); },
+   exportedNodeNameId () { return this .Id (); },
+   nodeNameId () { return this .Id (); },
+   nodeTypeId () { return this .Id (); },
+   initializeOnlyId () { return this .Id (); },
+   inputOnlyId () { return this .Id (); },
+   outputOnlyId () { return this .Id (); },
+   inputOutputId () { return this .Id (); },
+   Id ()
    {
       this .comments ();
 
       return Grammar .Id .parse (this);
    },
-   fieldType: function ()
+   fieldType ()
    {
       this .comments ();
 
       return Grammar .FieldType .parse (this);
    },
-   fieldValue: function (field)
+   fieldValue (field)
    {
       return this [field .getType ()] (field, field .getUnit ());
    },
-   bool: function ()
+   bool ()
    {
       this .comments ();
 
@@ -1512,7 +1512,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return false;
    },
-   double: function ()
+   double ()
    {
       this .comments ();
 
@@ -1536,7 +1536,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return false;
    },
-   int32: function ()
+   int32 ()
    {
       this .comments ();
 
@@ -1548,7 +1548,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return false;
    },
-   string: function ()
+   string ()
    {
       this .comments ();
 
@@ -1563,7 +1563,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return false;
    },
-   sfboolValue: function (field)
+   sfboolValue (field)
    {
       if (this .bool ())
       {
@@ -1573,7 +1573,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return false;
    },
-   mfboolValue: function (field)
+   mfboolValue (field)
    {
       field .length = 0;
 
@@ -1595,7 +1595,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return false;
    },
-   sfboolValues: function (field)
+   sfboolValues (field)
    {
       field .length = 0;
       field         = field .getTarget ();
@@ -1603,7 +1603,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       while (this .bool ())
          field .push (this .value);
    },
-   sfcolorValue: function (field)
+   sfcolorValue (field)
    {
       const lastIndex = this .lastIndex;
 
@@ -1645,7 +1645,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return false;
    },
-   mfcolorValue: function (field)
+   mfcolorValue (field)
    {
       field .length = 0;
 
@@ -1667,7 +1667,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return false;
    },
-   sfcolorValues: function (field)
+   sfcolorValues (field)
    {
       field .length = 0;
       field         = field .getTarget ();
@@ -1677,7 +1677,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       while (this .sfcolorValue (value))
          field .push (value);
    },
-   sfcolorrgbaValue: function (field)
+   sfcolorrgbaValue (field)
    {
       const lastIndex = this .lastIndex;
 
@@ -1726,7 +1726,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return false;
    },
-   mfcolorrgbaValue: function (field)
+   mfcolorrgbaValue (field)
    {
       field .length = 0;
 
@@ -1748,7 +1748,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return false;
    },
-   sfcolorrgbaValues: function (field)
+   sfcolorrgbaValues (field)
    {
       field .length = 0;
       field         = field .getTarget ();
@@ -1758,7 +1758,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       while (this .sfcolorrgbaValue (value))
          field .push (value);
    },
-   sfdoubleValue: function (field)
+   sfdoubleValue (field)
    {
       if (this .double ())
       {
@@ -1768,7 +1768,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return false;
    },
-   mfdoubleValue: function (field)
+   mfdoubleValue (field)
    {
       field .length = 0;
 
@@ -1790,7 +1790,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return false;
    },
-   sfdoubleValues: function (field)
+   sfdoubleValues (field)
    {
       field .length = 0;
       field         = field .getTarget ();
@@ -1800,7 +1800,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       while (this .double ())
          field .push (this .fromUnit (unit, this .value));
    },
-   sfimageValue: function (field)
+   sfimageValue (field)
    {
       if (this .int32 ())
       {
@@ -1840,7 +1840,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return false;
    },
-   mfimageValue: function (field)
+   mfimageValue (field)
    {
       field .length = 0;
 
@@ -1862,7 +1862,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return false;
    },
-   sfimageValues: function (field)
+   sfimageValues (field)
    {
       field .length = 0;
       field         = field .getTarget ();
@@ -1872,7 +1872,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       while (this .sfimageValue (value))
          field .push (value);
    },
-   sfint32Value: function (field)
+   sfint32Value (field)
    {
       if (this .int32 ())
       {
@@ -1882,7 +1882,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return false;
    },
-   mfint32Value: function (field)
+   mfint32Value (field)
    {
       field .length = 0;
 
@@ -1904,7 +1904,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return false;
    },
-   sfint32Values: function (field)
+   sfint32Values (field)
    {
       field .length = 0;
       field         = field .getTarget ();
@@ -1912,7 +1912,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       while (this .int32 ())
          field .push (this .value);
    },
-   sfmatrix3Value: function (field)
+   sfmatrix3Value (field)
    {
       if (this .double ())
       {
@@ -1973,7 +1973,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return false;
    },
-   mfmatrix3Value: function (field)
+   mfmatrix3Value (field)
    {
       field .length = 0;
 
@@ -1995,7 +1995,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return false;
    },
-   sfmatrix3Values: function (field)
+   sfmatrix3Values (field)
    {
       field .length = 0;
       field         = field .getTarget ();
@@ -2005,7 +2005,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       while (this .sfmatrix3Value (value))
          field .push (value);
    },
-   sfmatrix4Value: function (field)
+   sfmatrix4Value (field)
    {
       if (this .double ())
       {
@@ -2108,7 +2108,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return false;
    },
-   mfmatrix4Value: function (field)
+   mfmatrix4Value (field)
    {
       field .length = 0;
 
@@ -2130,7 +2130,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return false;
    },
-   sfmatrix4Values: function (field)
+   sfmatrix4Values (field)
    {
       field .length = 0;
       field         = field .getTarget ();
@@ -2140,7 +2140,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       while (this .sfmatrix4Value (value))
          field .push (value);
    },
-   sfnodeValue: function (field)
+   sfnodeValue (field)
    {
       const baseNode = this .nodeStatement ();
 
@@ -2152,7 +2152,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return false;
    },
-   mfnodeValue: function (field)
+   mfnodeValue (field)
    {
       field .length = 0;
 
@@ -2176,7 +2176,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return false;
    },
-   nodeStatements: function (field)
+   nodeStatements (field)
    {
       this .statements (field);
 
@@ -2189,7 +2189,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       //    node = this .nodeStatement ();
       // }
    },
-   sfrotationValue: function (field)
+   sfrotationValue (field)
    {
       if (this .double ())
       {
@@ -2220,7 +2220,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return false;
    },
-   mfrotationValue: function (field)
+   mfrotationValue (field)
    {
       field .length = 0;
 
@@ -2242,7 +2242,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return false;
    },
-   sfrotationValues: function (field)
+   sfrotationValues (field)
    {
       field .length = 0;
       field         = field .getTarget ();
@@ -2252,7 +2252,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       while (this .sfrotationValue (value))
          field .push (value);
    },
-   sfstringValue: function (field)
+   sfstringValue (field)
    {
       if (this .string ())
       {
@@ -2262,7 +2262,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return false;
    },
-   mfstringValue: function (field)
+   mfstringValue (field)
    {
       field .length = 0;
 
@@ -2284,7 +2284,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return false;
    },
-   sfstringValues: function (field)
+   sfstringValues (field)
    {
       field .length = 0;
       field         = field .getTarget ();
@@ -2292,7 +2292,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       while (this .string ())
          field .push (this .value);
    },
-   sfvec2Value: function (field, unit)
+   sfvec2Value (field, unit)
    {
       if (this .double ())
       {
@@ -2311,7 +2311,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return false;
    },
-   mfvec2Value: function (field)
+   mfvec2Value (field)
    {
       field .length = 0;
 
@@ -2333,7 +2333,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return false;
    },
-   sfvec2Values: function (field)
+   sfvec2Values (field)
    {
       field .length = 0;
       field         = field .getTarget ();
@@ -2345,7 +2345,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       while (this .sfvec2Value (value, unit))
          field .push (value);
    },
-   sfvec3Value: function (field, unit)
+   sfvec3Value (field, unit)
    {
       if (this .double ())
       {
@@ -2370,7 +2370,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return false;
    },
-   mfvec3Value: function (field)
+   mfvec3Value (field)
    {
       field .length = 0;
 
@@ -2392,7 +2392,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return false;
    },
-   sfvec3Values: function (field)
+   sfvec3Values (field)
    {
       field .length = 0;
       field         = field .getTarget ();
@@ -2404,7 +2404,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       while (this .sfvec3Value (value, unit))
          field .push (value);
    },
-   sfvec4Value: function (field, unit)
+   sfvec4Value (field, unit)
    {
       if (this .double ())
       {
@@ -2435,7 +2435,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return false;
    },
-   mfvec4Value: function (field)
+   mfvec4Value (field)
    {
       field .length = 0;
 
@@ -2457,7 +2457,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return false;
    },
-   sfvec4Values: function (field)
+   sfvec4Values (field)
    {
       field .length = 0;
       field         = field .getTarget ();
@@ -2469,7 +2469,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       while (this .sfvec4Value (value, unit))
          field .push (value);
    },
-   accessTypeToString: function (accessType)
+   accessTypeToString (accessType)
    {
       switch (accessType)
       {

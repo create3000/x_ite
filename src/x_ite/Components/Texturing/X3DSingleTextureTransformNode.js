@@ -61,23 +61,23 @@ function X3DSingleTextureTransformNode (executionContext)
 X3DSingleTextureTransformNode .prototype = Object .assign (Object .create (X3DTextureTransformNode .prototype),
 {
    constructor: X3DSingleTextureTransformNode,
-   getCount: function ()
+   getCount ()
    {
       return 1;
    },
-   setMatrix: function (value)
+   setMatrix (value)
    {
       this .matrixArray .set (value);
    },
-   getTextureTransformMapping: function (textureTransformMapping, channel = 0)
+   getTextureTransformMapping (textureTransformMapping, channel = 0)
    {
       textureTransformMapping .set (this ._mapping .getValue () || channel, channel);
    },
-   setShaderUniforms: function (gl, shaderObject, channel = 0)
+   setShaderUniforms (gl, shaderObject, channel = 0)
    {
       gl .uniformMatrix4fv (shaderObject .x3d_TextureMatrix [channel], false, this .matrixArray);
    },
-   transformPoint: function (texCoord)
+   transformPoint (texCoord)
    {
       return Matrix4 .prototype .multVecMatrix .call (this .matrixArray, texCoord);
    },

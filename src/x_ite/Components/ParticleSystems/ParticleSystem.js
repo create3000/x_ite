@@ -138,7 +138,7 @@ function ParticleSystem (executionContext)
 ParticleSystem .prototype = Object .assign (Object .create (X3DShapeNode .prototype),
 {
    constructor: ParticleSystem,
-   initialize: function ()
+   initialize ()
    {
       X3DShapeNode .prototype .initialize .call (this);
 
@@ -202,11 +202,11 @@ ParticleSystem .prototype = Object .assign (Object .create (X3DShapeNode .protot
       this .set_colorRamp__ ();
       this .set_texCoordRamp__ ();
    },
-   getShapeKey: function ()
+   getShapeKey ()
    {
       return this .numTexCoords ? 2 : 1;
    },
-   getGeometryContext: function ()
+   getGeometryContext ()
    {
       switch (this .geometryType)
       {
@@ -216,7 +216,7 @@ ParticleSystem .prototype = Object .assign (Object .create (X3DShapeNode .protot
             return this .geometryContext;
       }
    },
-   set_bbox__: function ()
+   set_bbox__ ()
    {
       if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
          this .bbox .set ();
@@ -226,7 +226,7 @@ ParticleSystem .prototype = Object .assign (Object .create (X3DShapeNode .protot
       this .bboxSize   .assign (this .bbox .size);
       this .bboxCenter .assign (this .bbox .center);
    },
-   set_transparent__: function ()
+   set_transparent__ ()
    {
       if (this .getAppearance () .getAlphaMode () === AlphaMode .AUTO)
       {
@@ -252,7 +252,7 @@ ParticleSystem .prototype = Object .assign (Object .create (X3DShapeNode .protot
          this .setTransparent (this .getAppearance () .isTransparent ());
       }
    },
-   set_live__: function ()
+   set_live__ ()
    {
       if (this .getLive () .getValue ())
       {
@@ -278,7 +278,7 @@ ParticleSystem .prototype = Object .assign (Object .create (X3DShapeNode .protot
          }
       }
    },
-   set_enabled__: function ()
+   set_enabled__ ()
    {
       if (this ._enabled .getValue () && this ._maxParticles .getValue ())
       {
@@ -316,11 +316,11 @@ ParticleSystem .prototype = Object .assign (Object .create (X3DShapeNode .protot
 
       this .set_maxParticles__ ();
    },
-   set_createParticles__: function ()
+   set_createParticles__ ()
    {
       this .createParticles = this ._createParticles .getValue ();
    },
-   set_geometryType__: function ()
+   set_geometryType__ ()
    {
       const
          browser = this .getBrowser (),
@@ -399,7 +399,7 @@ ParticleSystem .prototype = Object .assign (Object .create (X3DShapeNode .protot
 
       this .set_transparent__ ();
    },
-   set_maxParticles__: function ()
+   set_maxParticles__ ()
    {
       const
          lastNumParticles = this .numParticles,
@@ -414,15 +414,15 @@ ParticleSystem .prototype = Object .assign (Object .create (X3DShapeNode .protot
       this .resizeBuffers (lastNumParticles);
       this .updateVertexArrays ();
    },
-   set_particleLifetime__: function ()
+   set_particleLifetime__ ()
    {
       this .particleLifetime = this ._particleLifetime .getValue ();
    },
-   set_lifetimeVariation__: function ()
+   set_lifetimeVariation__ ()
    {
       this .lifetimeVariation = this ._lifetimeVariation .getValue ();
    },
-   set_emitter__: function ()
+   set_emitter__ ()
    {
       this .emitterNode = X3DCast (X3DConstants .X3DParticleEmitterNode, this ._emitter);
 
@@ -431,7 +431,7 @@ ParticleSystem .prototype = Object .assign (Object .create (X3DShapeNode .protot
 
       this .createParticles = this ._createParticles .getValue ();
    },
-   set_physics__: function ()
+   set_physics__ ()
    {
       const
          physics                  = this ._physics .getValue (),
@@ -481,7 +481,7 @@ ParticleSystem .prototype = Object .assign (Object .create (X3DShapeNode .protot
 
       this .set_boundedPhysics__ ();
    },
-   set_boundedPhysics__: function ()
+   set_boundedPhysics__ ()
    {
       const
          gl                       = this .getBrowser () .getContext (),
@@ -529,7 +529,7 @@ ParticleSystem .prototype = Object .assign (Object .create (X3DShapeNode .protot
          gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, boundedArraySize, boundedArraySize, 0, gl .RGBA, gl .FLOAT, boundedArray);
       }
     },
-   set_colorRamp__: function ()
+   set_colorRamp__ ()
    {
       if (this .colorRampNode)
          this .colorRampNode .removeInterest ("set_color__", this);
@@ -542,7 +542,7 @@ ParticleSystem .prototype = Object .assign (Object .create (X3DShapeNode .protot
       this .set_color__ ();
       this .set_transparent__ ();
    },
-   set_color__: function ()
+   set_color__ ()
    {
       const
          gl           = this .getBrowser () .getContext (),
@@ -575,7 +575,7 @@ ParticleSystem .prototype = Object .assign (Object .create (X3DShapeNode .protot
       this .geometryContext .updateGeometryKey ();
       this .updateVertexArrays ();
    },
-   set_texCoordRamp__: function ()
+   set_texCoordRamp__ ()
    {
       if (this .texCoordRampNode)
          this .texCoordRampNode .removeInterest ("set_texCoord__", this);
@@ -587,7 +587,7 @@ ParticleSystem .prototype = Object .assign (Object .create (X3DShapeNode .protot
 
       this .set_texCoord__ ();
    },
-   set_texCoord__: function ()
+   set_texCoord__ ()
    {
       const
          gl           = this .getBrowser () .getContext (),
@@ -618,12 +618,12 @@ ParticleSystem .prototype = Object .assign (Object .create (X3DShapeNode .protot
 
       this .updateVertexArrays ();
    },
-   updateVertexArrays: function ()
+   updateVertexArrays ()
    {
       this .inputParticles  .vertexArrayObject  .update ();
       this .outputParticles .vertexArrayObject  .update ();
    },
-   createTexture: function ()
+   createTexture ()
    {
       const
          gl      = this .getBrowser () .getContext (),
@@ -640,7 +640,7 @@ ParticleSystem .prototype = Object .assign (Object .create (X3DShapeNode .protot
 
       return texture;
    },
-   createBuffer: function ()
+   createBuffer ()
    {
       const
          gl     = this .getBrowser () .getContext (),
@@ -651,7 +651,7 @@ ParticleSystem .prototype = Object .assign (Object .create (X3DShapeNode .protot
 
       return buffer;
    },
-   resizeBuffers: function (lastNumParticles)
+   resizeBuffers (lastNumParticles)
    {
       const
          gl              = this .getBrowser () .getContext (),
@@ -675,7 +675,7 @@ ParticleSystem .prototype = Object .assign (Object .create (X3DShapeNode .protot
 
       this .outputParticles = outputParticles;
    },
-   animateParticles: function ()
+   animateParticles ()
    {
       const
          browser     = this .getBrowser (),
@@ -818,9 +818,9 @@ ParticleSystem .prototype = Object .assign (Object .create (X3DShapeNode .protot
          gl .bufferData (gl .ARRAY_BUFFER, data, gl .DYNAMIC_DRAW);
       };
    })(),
-   intersectsBox: function (box, clipPlanes)
+   intersectsBox (box, clipPlanes)
    { },
-   traverse: function (type, renderObject)
+   traverse (type, renderObject)
    {
       switch (type)
       {
@@ -856,7 +856,7 @@ ParticleSystem .prototype = Object .assign (Object .create (X3DShapeNode .protot
             this .getGeometry () .traverse (type, renderObject); // Currently used for ScreenText.
       }
    },
-   displaySimple: function (gl, renderContext, shaderNode)
+   displaySimple (gl, renderContext, shaderNode)
    {
       if (this .numParticles)
       {
@@ -898,7 +898,7 @@ ParticleSystem .prototype = Object .assign (Object .create (X3DShapeNode .protot
          }
       }
    },
-   display: function (gl, renderContext)
+   display (gl, renderContext)
    {
       // Display geometry.
 

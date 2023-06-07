@@ -61,7 +61,7 @@ function LineProperties (executionContext)
 LineProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
 {
    constructor: LineProperties,
-   initialize: function ()
+   initialize ()
    {
       X3DAppearanceChildNode .prototype .initialize .call (this);
 
@@ -80,27 +80,27 @@ LineProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNo
       // Preload texture.
       this .getBrowser () .getLinetypeTexture ();
    },
-   getApplied: function ()
+   getApplied ()
    {
       return this .applied;
    },
-   getLinetype: function ()
+   getLinetype ()
    {
       return this .linetype;
    },
-   getLinewidthScaleFactor: function ()
+   getLinewidthScaleFactor ()
    {
       return this .linewidthScaleFactor;
    },
-   getTransformLines: function ()
+   getTransformLines ()
    {
       return this .transformLines;
    },
-   set_applied__: function ()
+   set_applied__ ()
    {
       this .applied = this ._applied .getValue ();
    },
-   set_linetype__: function ()
+   set_linetype__ ()
    {
       let linetype = this ._linetype .getValue ();
 
@@ -109,7 +109,7 @@ LineProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNo
 
       this .linetype = linetype;
    },
-   set_linewidthScaleFactor__: function ()
+   set_linewidthScaleFactor__ ()
    {
       const
          browser      = this .getBrowser (),
@@ -119,7 +119,7 @@ LineProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNo
       this .linewidthScaleFactor = Math .max (1, this ._linewidthScaleFactor .getValue ()) * contentScale;
       this .transformLines       = gl .HAS_FEATURE_TRANSFORMED_LINES && this .linewidthScaleFactor > 1;
    },
-   setShaderUniforms: function (gl, shaderObject)
+   setShaderUniforms (gl, shaderObject)
    {
       const browser = this .getBrowser ();
 

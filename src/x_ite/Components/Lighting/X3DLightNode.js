@@ -60,7 +60,7 @@ function X3DLightNode (executionContext)
 X3DLightNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 {
    constructor: X3DLightNode,
-   initialize: function ()
+   initialize ()
    {
       X3DChildNode .prototype .initialize .call (this);
 
@@ -69,7 +69,7 @@ X3DLightNode .prototype = Object .assign (Object .create (X3DChildNode .prototyp
 
       this .set_on__ ();
    },
-   set_on__: function ()
+   set_on__ ()
    {
       if (this ._on .getValue () && this .getIntensity () > 0)
       {
@@ -82,43 +82,43 @@ X3DLightNode .prototype = Object .assign (Object .create (X3DChildNode .prototyp
          this .pop  = Function .prototype;
       }
    },
-   getGlobal: function ()
+   getGlobal ()
    {
       return this ._global .getValue ();
    },
-   getColor: function ()
+   getColor ()
    {
       return this ._color .getValue ();
    },
-   getIntensity: function ()
+   getIntensity ()
    {
       return Math .max (this ._intensity .getValue (), 0);
    },
-   getAmbientIntensity: function ()
+   getAmbientIntensity ()
    {
       return Algorithm .clamp (this ._ambientIntensity .getValue (), 0, 1);
    },
-   getDirection: function ()
+   getDirection ()
    {
       return this ._direction .getValue ();
    },
-   getShadows: function ()
+   getShadows ()
    {
       return this ._shadows .getValue ();
    },
-   getShadowColor: function ()
+   getShadowColor ()
    {
       return this ._shadowColor .getValue ();
    },
-   getShadowIntensity: function ()
+   getShadowIntensity ()
    {
       return this .getShadows () ? Algorithm .clamp (this ._shadowIntensity .getValue (), 0, 1) : 0;
    },
-   getShadowBias: function ()
+   getShadowBias ()
    {
       return Algorithm .clamp (this ._shadowBias .getValue (), 0, 1);
    },
-   getShadowMapSize: function ()
+   getShadowMapSize ()
    {
       return Math .min (this ._shadowMapSize .getValue (), this .getBrowser () .getMaxTextureSize ());
    },
@@ -135,7 +135,7 @@ X3DLightNode .prototype = Object .assign (Object .create (X3DChildNode .prototyp
          return biasMatrix;
       };
    })(),
-   push: function (renderObject, groupNode)
+   push (renderObject, groupNode)
    {
       if (renderObject .isIndependent ())
       {
@@ -190,7 +190,7 @@ X3DLightNode .prototype = Object .assign (Object .create (X3DChildNode .prototyp
          }
       }
    },
-   pop: function (renderObject)
+   pop (renderObject)
    {
       if (this ._global .getValue ())
          return;

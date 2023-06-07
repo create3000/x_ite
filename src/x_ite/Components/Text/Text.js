@@ -68,7 +68,7 @@ function Text (executionContext)
 Text .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 {
    constructor: Text,
-   initialize: function ()
+   initialize ()
    {
       X3DGeometryNode .prototype .initialize .call (this);
 
@@ -76,18 +76,18 @@ Text .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 
       this .set_fontStyle__ ();
    },
-   getMatrix: function ()
+   getMatrix ()
    {
       return this .textGeometry .getMatrix ();
    },
-   getLength: function (index)
+   getLength (index)
    {
       if (index < this ._length .length)
          return Math .max (0, this ._length [index]);
 
       return 0;
    },
-   set_live__: function ()
+   set_live__ ()
    {
        X3DGeometryNode .prototype .set_live__ .call (this);
 
@@ -96,7 +96,7 @@ Text .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
       else
          this .getBrowser () .getBrowserOptions () ._PrimitiveQuality .removeInterest ("requestRebuild", this);
    },
-   set_fontStyle__: function ()
+   set_fontStyle__ ()
    {
       this .fontStyleNode ?.removeInterest ("requestRebuild", this);
 
@@ -111,20 +111,20 @@ Text .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 
       this .setTransparent (this .textGeometry .isTransparent ());
    },
-   build: function ()
+   build ()
    {
       this .textGeometry .update ();
       this .textGeometry .build ();
 
       this .setSolid (this ._solid .getValue ());
    },
-   traverse: function (type, renderObject)
+   traverse (type, renderObject)
    {
       this .textGeometry .traverse (type, renderObject);
 
       X3DGeometryNode .prototype .traverse .call (this, type, renderObject);
    },
-   display: function (gl, renderContext)
+   display (gl, renderContext)
    {
       this .textGeometry .display (gl, renderContext);
 
@@ -132,12 +132,12 @@ Text .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 
       renderContext .textureNode = null;
    },
-   transformLine: function (line)
+   transformLine (line)
    {
       // Apply sceen nodes transformation in place here.
       return this .textGeometry .transformLine (line);
    },
-   transformMatrix: function (matrix)
+   transformMatrix (matrix)
    {
       // Apply sceen nodes transformation in place here.
       return this .textGeometry .transformMatrix (matrix);

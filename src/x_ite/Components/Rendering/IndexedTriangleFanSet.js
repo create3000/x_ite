@@ -63,7 +63,7 @@ function IndexedTriangleFanSet (executionContext)
 IndexedTriangleFanSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .prototype),
 {
    constructor: IndexedTriangleFanSet,
-   initialize: function ()
+   initialize ()
    {
       X3DComposedGeometryNode .prototype .initialize .call (this);
 
@@ -72,7 +72,7 @@ IndexedTriangleFanSet .prototype = Object .assign (Object .create (X3DComposedGe
 
       this .set_index__ ();
    },
-   set_index__: function ()
+   set_index__ ()
    {
       // Build coordIndex
 
@@ -110,11 +110,11 @@ IndexedTriangleFanSet .prototype = Object .assign (Object .create (X3DComposedGe
          }
       }
    },
-   getPolygonIndex: function (index)
+   getPolygonIndex (index)
    {
       return this .triangleIndex [index];
    },
-   build: function ()
+   build ()
    {
       X3DComposedGeometryNode .prototype .build .call (this, 3, this .triangleIndex .length, 3, this .triangleIndex .length);
    },

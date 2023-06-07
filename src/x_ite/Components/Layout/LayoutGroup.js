@@ -71,7 +71,7 @@ function LayoutGroup (executionContext)
 LayoutGroup .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
 {
    constructor: LayoutGroup,
-   initialize: function ()
+   initialize ()
    {
       X3DGroupingNode .prototype .initialize .call (this);
 
@@ -81,30 +81,30 @@ LayoutGroup .prototype = Object .assign (Object .create (X3DGroupingNode .protot
       this .set_viewport__ ();
       this .set_layout__ ();
    },
-   set_viewport__: function ()
+   set_viewport__ ()
    {
       this .viewportNode = X3DCast (X3DConstants .X3DViewportNode, this ._viewport);
    },
-   set_layout__: function ()
+   set_layout__ ()
    {
       this .layoutNode = X3DCast (X3DConstants .X3DLayoutNode, this ._layout);
    },
-   getBBox: function (bbox, shadows)
+   getBBox (bbox, shadows)
    {
       return X3DGroupingNode .prototype .getBBox .call (this, bbox, shadows) .multRight (this .getMatrix ());
    },
-   getMatrix: function ()
+   getMatrix ()
    {
       if (this .layoutNode)
          return this .matrix .assign (this .modelViewMatrix) .inverse () .multLeft (this .screenMatrix);
 
       return this .matrix .identity ();
    },
-   getLayout: function ()
+   getLayout ()
    {
       return this .layoutNode;
    },
-   traverse: function (type, renderObject)
+   traverse (type, renderObject)
    {
       switch (type)
       {

@@ -64,7 +64,7 @@ function ComponentInfo (name, level, title, providerUrl, external = false, depen
 ComponentInfo .prototype = Object .assign (Object .create (X3DObject .prototype),
 {
    constructor: ComponentInfo,
-   toVRMLStream: function (generator)
+   toVRMLStream (generator)
    {
       generator .string += generator .Indent ();
       generator .string += "COMPONENT";
@@ -75,7 +75,7 @@ ComponentInfo .prototype = Object .assign (Object .create (X3DObject .prototype)
       generator .string += generator .TidySpace ();
       generator .string += this .level;
    },
-   toXMLStream: function (generator)
+   toXMLStream (generator)
    {
       generator .string += generator .Indent ();
       generator .string += "<component";
@@ -89,7 +89,7 @@ ComponentInfo .prototype = Object .assign (Object .create (X3DObject .prototype)
       generator .string += "'";
       generator .string += generator .closingTags ? "></component>" : "/>";
    },
-   toJSONStream: function (generator)
+   toJSONStream (generator)
    {
       generator .string += generator .Indent ();
       generator .string += '{';

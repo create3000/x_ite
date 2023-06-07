@@ -62,22 +62,22 @@ function X3DShaderNode (executionContext)
 X3DShaderNode .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
 {
    constructor: X3DShaderNode,
-   setValid: function (value)
+   setValid (value)
    {
       this ._isValid = this .valid = value;
    },
-   isValid: function ()
+   isValid ()
    {
       return this .valid;
    },
-   select: function ()
+   select ()
    {
       ++ this .selected;
 
       if (! this ._isSelected .getValue ())
          this ._isSelected = true;
    },
-   deselect: function ()
+   deselect ()
    {
       -- this .selected;
 

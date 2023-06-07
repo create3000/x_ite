@@ -70,7 +70,7 @@ Anchor .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
    X3DUrlObject .prototype,
 {
    constructor: Anchor,
-   initialize: function ()
+   initialize ()
    {
       X3DGroupingNode .prototype .initialize .call (this);
       X3DUrlObject    .prototype .initialize .call (this);
@@ -93,11 +93,11 @@ Anchor .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
             this .requestImmediateLoad () .catch (Function .prototype);
       };
    },
-   set_load__: function ()
+   set_load__ ()
    { },
-   set_url__: function ()
+   set_url__ ()
    { },
-   requestImmediateLoad: function (cache = true)
+   requestImmediateLoad (cache = true)
    {
       this .setCache (cache);
       this .setLoadState (X3DConstants .IN_PROGRESS_STATE, false);
@@ -139,7 +139,7 @@ Anchor .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
    },
    requestUnload ()
    { },
-   traverse: function (type, renderObject)
+   traverse (type, renderObject)
    {
       if (type === TraverseType .POINTER)
       {
@@ -167,7 +167,7 @@ Anchor .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
          X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
       }
    },
-   dispose: function ()
+   dispose ()
    {
       X3DUrlObject    .prototype .dispose .call (this);
       X3DGroupingNode .prototype .dispose .call (this);

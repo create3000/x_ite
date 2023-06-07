@@ -63,7 +63,7 @@ function Circle2D (executionContext)
 Circle2D .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototype),
 {
    constructor: Circle2D,
-   set_live__: function ()
+   set_live__ ()
    {
       X3DLineGeometryNode .prototype .set_live__ .call (this);
 
@@ -72,7 +72,7 @@ Circle2D .prototype = Object .assign (Object .create (X3DLineGeometryNode .proto
       else
          this .getBrowser () .getCircle2DOptions () .removeInterest ("requestRebuild", this);
    },
-   build: function ()
+   build ()
    {
       const
          options     = this .getBrowser () .getCircle2DOptions (),

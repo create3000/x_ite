@@ -57,15 +57,15 @@ function BindableStack (executionContext, defaultNode)
 BindableStack .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 {
    constructor: BindableStack,
-   get: function ()
+   get ()
    {
       return this .nodes;
    },
-   top: function ()
+   top ()
    {
       return this .nodes .at (-1);
    },
-   pushOnTop: function (node)
+   pushOnTop (node)
    {
       if (node !== this .nodes [0])
       {
@@ -79,7 +79,7 @@ BindableStack .prototype = Object .assign (Object .create (X3DBaseNode .prototyp
 
       this .addNodeEvent ();
    },
-   update: function (layerNode, removedNodes, changedNodes)
+   update (layerNode, removedNodes, changedNodes)
    {
       if (removedNodes .length === 0 && changedNodes .length === 0)
          return;

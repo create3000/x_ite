@@ -55,44 +55,44 @@ function SFString (value)
 SFString .prototype = Object .assign (Object .create (X3DField .prototype),
 {
    constructor: SFString,
-   [Symbol .iterator]: function* ()
+   *[Symbol .iterator] ()
    {
       yield* this .getValue ();
    },
-   copy: function ()
+   copy ()
    {
       return new SFString (this .getValue ());
    },
-   isDefaultValue: function ()
+   isDefaultValue ()
    {
       return this .getValue () === "";
    },
-   set: function (value)
+   set (value)
    {
       X3DField .prototype .set .call (this, "" + value);
    },
    valueOf: X3DField .prototype .getValue,
-   toStream: function (generator)
+   toStream (generator)
    {
       generator .string += '"';
       generator .string += SFString .escape (this .getValue ());
       generator .string += '"';
    },
-   toVRMLStream: function (generator)
+   toVRMLStream (generator)
    {
       this .toStream (generator);
    },
-   toXMLStream: function (generator, sourceText = false)
+   toXMLStream (generator, sourceText = false)
    {
       generator .string += sourceText
          ? generator .XMLEncodeSourceText (this .getValue ())
          : generator .XMLEncode (this .getValue ());
    },
-   toJSONStream: function (generator)
+   toJSONStream (generator)
    {
       this .toJSONStreamValue (generator)
    },
-   toJSONStreamValue: function (generator)
+   toJSONStreamValue (generator)
    {
       generator .string += '"';
       generator .string += generator .JSONEncode (this .getValue ());
@@ -105,7 +105,7 @@ for (const key of Reflect .ownKeys (SFString .prototype))
 
 Object .defineProperty (SFString .prototype, "length",
 {
-   get: function ()
+   get ()
    {
       return this .getValue () .length;
    },
@@ -122,11 +122,11 @@ Object .defineProperties (SFString,
 
 Object .assign (SFString,
 {
-   unescape: function (string)
+   unescape (string)
    {
       return string .replace (/\\([\\"])/g, "$1");
    },
-   escape: function (string)
+   escape (string)
    {
       return string .replace (/([\\"])/g, "\\$1");
    },

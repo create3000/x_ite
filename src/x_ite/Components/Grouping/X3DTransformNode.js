@@ -61,7 +61,7 @@ function X3DTransformNode (executionContext)
 X3DTransformNode .prototype = Object .assign (Object .create (X3DTransformMatrix3DNode .prototype),
 {
    constructor: X3DTransformNode,
-   initialize: function ()
+   initialize ()
    {
       X3DTransformMatrix3DNode .prototype .initialize .call (this);
 
@@ -69,7 +69,7 @@ X3DTransformNode .prototype = Object .assign (Object .create (X3DTransformMatrix
 
       this .eventsProcessed ();
    },
-   eventsProcessed: function ()
+   eventsProcessed ()
    {
       this .setTransform (this ._translation      .getValue (),
                           this ._rotation         .getValue (),

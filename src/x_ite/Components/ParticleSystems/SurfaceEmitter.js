@@ -98,7 +98,7 @@ function SurfaceEmitter (executionContext)
 SurfaceEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),
 {
    constructor: SurfaceEmitter,
-   initialize: function ()
+   initialize ()
    {
       X3DParticleEmitterNode .prototype .initialize .call (this);
 
@@ -117,7 +117,7 @@ SurfaceEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNo
 
       this .set_surface__ ();
    },
-   set_surface__: function ()
+   set_surface__ ()
    {
       if (this .surfaceNode)
       {
@@ -136,7 +136,7 @@ SurfaceEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNo
       this .set_solid__ ();
       this .set_geometry__ ();
    },
-   set_solid__: function ()
+   set_solid__ ()
    {
       if (this .surfaceNode)
          this .setUniform ("uniform1i", "solid", this .surfaceNode ._solid .getValue ());
@@ -206,7 +206,7 @@ SurfaceEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNo
          }
       };
    })(),
-   activateTextures: function (gl, program)
+   activateTextures (gl, program)
    {
       gl .activeTexture (gl .TEXTURE0 + program .surfaceTextureUnit);
       gl .bindTexture (gl .TEXTURE_2D, this .surfaceTexture);

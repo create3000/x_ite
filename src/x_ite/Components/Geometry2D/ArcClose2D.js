@@ -69,7 +69,7 @@ function ArcClose2D (executionContext)
 ArcClose2D .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 {
    constructor: ArcClose2D,
-   set_live__: function ()
+   set_live__ ()
    {
       X3DGeometryNode .prototype .set_live__ .call (this);
 
@@ -78,7 +78,7 @@ ArcClose2D .prototype = Object .assign (Object .create (X3DGeometryNode .prototy
       else
          this .getBrowser () .getArcClose2DOptions () .removeInterest ("requestRebuild", this);
    },
-   getSweepAngle: function ()
+   getSweepAngle ()
    {
       const
          start = Algorithm .interval (this ._startAngle .getValue (), 0, Math .PI * 2),

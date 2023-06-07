@@ -64,14 +64,14 @@ IconAnnotation .prototype = Object .assign (Object .create (X3DAnnotationNode .p
    X3DUrlObject .prototype,
 {
    constructor: IconAnnotation,
-   initialize: function ()
+   initialize ()
    {
       X3DAnnotationNode .prototype .initialize .call (this);
       X3DUrlObject      .prototype .initialize .call (this);
    },
-   requestImmediateLoad: function (cache = true)
+   requestImmediateLoad (cache = true)
    { },
-   dispose: function ()
+   dispose ()
    {
       X3DUrlObject      .prototype .dispose .call (this);
       X3DAnnotationNode .prototype .dispose .call (this);

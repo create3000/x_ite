@@ -69,7 +69,7 @@ function TextureProperties (executionContext)
 TextureProperties .prototype = Object .assign (Object .create (X3DNode .prototype),
 {
    constructor: TextureProperties,
-   getBorderWidth: function ()
+   getBorderWidth ()
    {
       // https://stackoverflow.com/questions/27760277/webgl-border-color-shader?lq=1
       return Algorithm .clamp (this ._borderWidth .getValue (), 0, 1);
@@ -94,15 +94,15 @@ TextureProperties .prototype = Object .assign (Object .create (X3DNode .prototyp
          return "REPEAT";
       };
    })(),
-   getBoundaryModeS: function ()
+   getBoundaryModeS ()
    {
       return this .getBoundaryMode (this ._boundaryModeS .getValue ());
    },
-   getBoundaryModeT: function ()
+   getBoundaryModeT ()
    {
       return this .getBoundaryMode (this ._boundaryModeT .getValue ());
    },
-   getBoundaryModeR: function ()
+   getBoundaryModeR ()
    {
       return this .getBoundaryMode (this ._boundaryModeR .getValue ());
    },

@@ -56,7 +56,7 @@ const
 
 const handler =
 {
-   get: function (target, key)
+   get (target, key)
    {
       const value = target [key];
 
@@ -82,7 +82,7 @@ const handler =
          }
       }
    },
-   set: function (target, key, value)
+   set (target, key, value)
    {
       if (key in target)
       {
@@ -101,18 +101,18 @@ const handler =
 
       return true;
    },
-   has: function (target, key)
+   has (target, key)
    {
       if (Number .isInteger (+key))
          return key < target .getValue () .length;
 
       return key in target;
    },
-   ownKeys: function (target)
+   ownKeys (target)
    {
       return Object .keys (target .getValue ());
    },
-   getOwnPropertyDescriptor: function (target, key)
+   getOwnPropertyDescriptor (target, key)
    {
       if (typeof key !== "string")
          return;
@@ -143,7 +143,7 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
    constructor: X3DObjectArrayField,
    [_target]: null,
    [_proxy]: null,
-   [Symbol .iterator]: function* ()
+   *[Symbol .iterator] ()
    {
       const
          target = this [_target],
@@ -152,11 +152,11 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
       for (const value of array)
          yield value .valueOf ();
    },
-   getTarget: function ()
+   getTarget ()
    {
       return this [_target];
    },
-   copy: function ()
+   copy ()
    {
       const
          target = this [_target],
@@ -168,7 +168,7 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
 
       return copy;
    },
-   equals: function (array)
+   equals (array)
    {
       const
          target = this [_target],
@@ -190,11 +190,11 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
 
       return true;
    },
-   isDefaultValue: function ()
+   isDefaultValue ()
    {
       return this .length === 0;
    },
-   set: function (value)
+   set (value)
    {
       const
          target    = this [_target],
@@ -206,14 +206,14 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
       for (let i = 0; i < newLength; ++ i)
          array [i] .set (value [i] instanceof X3DField ? value [i] .getValue () : value [i]);
    },
-   setValue: function (value)
+   setValue (value)
    {
       const target = this [_target];
 
       target .set (value instanceof X3DObjectArrayField ? value .getValue () : value);
       target .addEvent ();
    },
-   unshift: function (value)
+   unshift (value)
    {
       const
          target = this [_target],
@@ -232,7 +232,7 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
 
       return array .length;
    },
-   shift: function ()
+   shift ()
    {
       const
          target = this [_target],
@@ -250,7 +250,7 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
          return result;
       }
    },
-   push: function (value)
+   push (value)
    {
       const
          target = this [_target],
@@ -269,7 +269,7 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
 
       return array .length;
    },
-   pop: function ()
+   pop ()
    {
       const
          target = this [_target],
@@ -287,7 +287,7 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
          return result;
       }
    },
-   splice: function (index, deleteCount, ... insertValues)
+   splice (index, deleteCount, ... insertValues)
    {
       const
          target = this [_target],
@@ -307,7 +307,7 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
 
       return result;
    },
-   [_insert]: function (index, array)
+   [_insert] (index, array)
    {
       const
          target = this [_target],
@@ -325,7 +325,7 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
       target .getValue () .splice (index, 0, ... args);
       target .addEvent ();
    },
-   [_erase]: function (index, deleteCount)
+   [_erase] (index, deleteCount)
    {
       const
          target = this [_target],
@@ -339,7 +339,7 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
 
       return result;
    },
-   resize: function (size, value, silently)
+   resize (size, value, silently)
    {
       const
          target = this [_target],
@@ -373,16 +373,16 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
             target .addEvent ();
       }
    },
-   addChildObject: function (value)
+   addChildObject (value)
    {
       value .addParent (this [_proxy]);
    },
-   removeChildObject: function (value)
+   removeChildObject (value)
    {
       value .removeParent (this [_proxy]);
       value .dispose ();
    },
-   reverse: function ()
+   reverse ()
    {
       const target = this [_target];
 
@@ -391,7 +391,7 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
 
       return target [_proxy];
    },
-   sort: function (compareFn)
+   sort (compareFn)
    {
       const target = this [_target];
 
@@ -400,7 +400,7 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
 
       return target [_proxy];
    },
-   toStream: function (generator)
+   toStream (generator)
    {
       const
          target = this [_target],
@@ -453,11 +453,11 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
          }
       }
    },
-   toVRMLStream: function (generator)
+   toVRMLStream (generator)
    {
       this .toStream (generator);
    },
-   toXMLStream: function (generator)
+   toXMLStream (generator)
    {
       const
          target = this [_target],
@@ -481,7 +481,7 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
          generator .PopUnitCategory ();
       }
    },
-   toJSONStream: function (generator)
+   toJSONStream (generator)
    {
       const
          target = this [_target],
@@ -532,8 +532,8 @@ for (const key of Reflect .ownKeys (X3DObjectArrayField .prototype))
 
 Object .defineProperty (X3DObjectArrayField .prototype, "length",
 {
-   get: function () { return this [_target] .getValue () .length; },
-   set: function (value) { this [_target] .resize (value); },
+   get () { return this [_target] .getValue () .length; },
+   set (value) { this [_target] .resize (value); },
 });
 
 export default X3DObjectArrayField;

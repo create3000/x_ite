@@ -61,13 +61,13 @@ function IntegerTrigger (executionContext)
 IntegerTrigger .prototype = Object .assign (Object .create (X3DTriggerNode .prototype),
 {
    constructor: IntegerTrigger,
-   initialize: function ()
+   initialize ()
    {
       X3DTriggerNode .prototype .initialize .call (this);
 
       this ._set_boolean .addInterest ("set_boolean__", this);
    },
-   set_boolean__: function ()
+   set_boolean__ ()
    {
       this ._triggerValue = this ._integerKey;
    },

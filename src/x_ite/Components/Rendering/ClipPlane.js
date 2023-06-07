@@ -65,11 +65,11 @@ function ClipPlaneContainer ()
 ClipPlaneContainer .prototype =
 {
    constructor: ClipPlaneContainer,
-   isClipped: function (point)
+   isClipped (point)
    {
       return this .plane .getDistanceToPoint (point) < 0;
    },
-   set: function (clipPlane, modelViewMatrix)
+   set (clipPlane, modelViewMatrix)
    {
       const
          plane      = this .plane,
@@ -80,7 +80,7 @@ ClipPlaneContainer .prototype =
 
       plane .multRight (modelViewMatrix);
    },
-   setShaderUniforms: function (gl, shaderObject)
+   setShaderUniforms (gl, shaderObject)
    {
       const
          plane  = this .plane,
@@ -88,7 +88,7 @@ ClipPlaneContainer .prototype =
 
       gl .uniform4f (shaderObject .x3d_ClipPlane [shaderObject .numClipPlanes ++], normal .x, normal .y, normal .z, plane .distanceFromOrigin);
    },
-   dispose: function ()
+   dispose ()
    {
       ClipPlanes .push (this);
    },
@@ -107,7 +107,7 @@ function ClipPlane (executionContext)
 ClipPlane .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 {
    constructor: ClipPlane,
-   initialize: function ()
+   initialize ()
    {
       X3DChildNode .prototype .initialize .call (this);
 
@@ -116,13 +116,13 @@ ClipPlane .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 
       this .set_enabled__ ();
    },
-   set_enabled__: function ()
+   set_enabled__ ()
    {
       this .plane .assign (this ._plane .getValue ());
 
       this .enabled = this ._enabled .getValue () && ! this .plane .equals (Vector4 .Zero);
    },
-   push: function (renderObject)
+   push (renderObject)
    {
       if (this .enabled)
       {
@@ -135,7 +135,7 @@ ClipPlane .prototype = Object .assign (Object .create (X3DChildNode .prototype),
          ++ renderObject .getLocalObjectsCount () [0];
       }
    },
-   pop: function (renderObject)
+   pop (renderObject)
    {
       if (this .enabled)
       {

@@ -67,7 +67,7 @@ GeoTouchSensor .prototype = Object .assign (Object .create (X3DTouchSensorNode .
    X3DGeospatialObject .prototype,
 {
    constructor: GeoTouchSensor,
-   initialize: function ()
+   initialize ()
    {
       X3DTouchSensorNode  .prototype .initialize .call (this);
       X3DGeospatialObject .prototype .initialize .call (this);
@@ -84,7 +84,7 @@ GeoTouchSensor .prototype = Object .assign (Object .create (X3DTouchSensorNode .
             this ._hitGeoCoord_changed = this .getGeoCoord (this ._hitPoint_changed .getValue (), geoCoords);
       };
    })(),
-   dispose: function ()
+   dispose ()
    {
       X3DGeospatialObject .prototype .dispose .call (this);
       X3DTouchSensorNode  .prototype .dispose .call (this);

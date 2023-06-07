@@ -69,7 +69,7 @@ function VolumePickSensor (executionContext)
 VolumePickSensor .prototype = Object .assign (Object .create (X3DPickSensorNode .prototype),
 {
    constructor: VolumePickSensor,
-   initialize: function ()
+   initialize ()
    {
       X3DPickSensorNode .prototype .initialize .call (this);
 
@@ -77,7 +77,7 @@ VolumePickSensor .prototype = Object .assign (Object .create (X3DPickSensorNode 
 
       this .set_pickingGeometry__ ();
    },
-   set_pickingGeometry__: function ()
+   set_pickingGeometry__ ()
    {
       this .pickingGeometryNode = X3DCast (X3DConstants .X3DGeometryNode, this ._pickingGeometry);
    },

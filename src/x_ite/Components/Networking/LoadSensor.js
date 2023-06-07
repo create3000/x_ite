@@ -69,7 +69,7 @@ function LoadSensor (executionContext)
 LoadSensor .prototype = Object .assign (Object .create (X3DNetworkSensorNode .prototype),
 {
    constructor: LoadSensor,
-   initialize: function ()
+   initialize ()
    {
       X3DNetworkSensorNode .prototype .initialize .call (this);
 
@@ -79,7 +79,7 @@ LoadSensor .prototype = Object .assign (Object .create (X3DNetworkSensorNode .pr
 
       this .set_children__ ();
    },
-   set_enabled__: function ()
+   set_enabled__ ()
    {
       if (this ._enabled .getValue ())
          this .reset ();
@@ -90,7 +90,7 @@ LoadSensor .prototype = Object .assign (Object .create (X3DNetworkSensorNode .pr
          this .remove ();
       }
    },
-   set_timeOut__: function ()
+   set_timeOut__ ()
    {
       if (this ._isActive .getValue ())
       {
@@ -102,11 +102,11 @@ LoadSensor .prototype = Object .assign (Object .create (X3DNetworkSensorNode .pr
             this .timeOutId = setTimeout (this .abort .bind (this), this ._timeOut .getValue () * 1000);
       }
    },
-   set_children__: function ()
+   set_children__ ()
    {
       this .reset ();
    },
-   set_loadState__: function (urlObject)
+   set_loadState__ (urlObject)
    {
       switch (urlObject .checkLoadState ())
       {
@@ -121,7 +121,7 @@ LoadSensor .prototype = Object .assign (Object .create (X3DNetworkSensorNode .pr
          }
       }
    },
-   count: function ()
+   count ()
    {
       const urlObjects = this .urlObjects;
 
@@ -174,7 +174,7 @@ LoadSensor .prototype = Object .assign (Object .create (X3DNetworkSensorNode .pr
          this ._progress = 0;
       }
    },
-   abort: function ()
+   abort ()
    {
       this .clearTimeout ();
 
@@ -183,7 +183,7 @@ LoadSensor .prototype = Object .assign (Object .create (X3DNetworkSensorNode .pr
       if (this ._enabled .getValue ())
          this .count ();
    },
-   reset: function ()
+   reset ()
    {
       this .remove ();
 
@@ -206,7 +206,7 @@ LoadSensor .prototype = Object .assign (Object .create (X3DNetworkSensorNode .pr
 
       this .count ();
    },
-   remove: function ()
+   remove ()
    {
       this .clearTimeout ();
 
@@ -217,7 +217,7 @@ LoadSensor .prototype = Object .assign (Object .create (X3DNetworkSensorNode .pr
 
       urlObjects .length = 0;
    },
-   clearTimeout: function ()
+   clearTimeout ()
    {
       clearTimeout (this .timeOutId);
 

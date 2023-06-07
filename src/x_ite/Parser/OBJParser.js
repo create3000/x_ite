@@ -132,22 +132,22 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       ["INF", Infinity],
       ["INFINITY", Infinity],
    ]),
-   getEncoding: function ()
+   getEncoding ()
    {
       return "STRING";
    },
-   isValid: function ()
+   isValid ()
    {
       if (!(typeof this .input === "string"))
          return false;
 
       return !! this .input .match (/^(?:[\x20\n\t\r]+|#.*?[\r\n])*\b(?:mtllib|usemtl|o|g|s|vt|vn|v|f)\b/);
    },
-   setInput: function (string)
+   setInput (string)
    {
       this .input = string;
    },
-   parseIntoScene: function (resolve, reject)
+   parseIntoScene (resolve, reject)
    {
       this .obj ()
          .then (resolve)
@@ -187,12 +187,12 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return this .getScene ();
    },
-   comments: function ()
+   comments ()
    {
       while (this .comment ())
          ;
    },
-   comment: function ()
+   comment ()
    {
       this .whitespaces ();
 
@@ -201,11 +201,11 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return false;
    },
-   whitespaces: function ()
+   whitespaces ()
    {
       Grammar .whitespaces .parse (this);
    },
-   whitespacesNoLineTerminator: function ()
+   whitespacesNoLineTerminator ()
    {
       Grammar .whitespacesNoLineTerminator .parse (this);
    },
@@ -315,7 +315,7 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          console .warn (error);
       }
    },
-   usemtl: function ()
+   usemtl ()
    {
       this .comments ();
 
@@ -341,7 +341,7 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return false;
    },
-   o: function ()
+   o ()
    {
       this .comments ();
 
@@ -376,7 +376,7 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return false;
    },
-   g: function ()
+   g ()
    {
       this .comments ();
 
@@ -422,7 +422,7 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return false;
    },
-   s: function ()
+   s ()
    {
       this .comments ();
 
@@ -447,7 +447,7 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return false;
    },
-   vts: function ()
+   vts ()
    {
       const point = this .texCoord .point;
 
@@ -458,7 +458,7 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return result;
    },
-   vt: function (point)
+   vt (point)
    {
       this .comments ();
 
@@ -476,7 +476,7 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return false;
    },
-   vns: function ()
+   vns ()
    {
       const vector = this .normal .vector;
 
@@ -487,7 +487,7 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return result;
    },
-   vn: function (vector)
+   vn (vector)
    {
       this .comments ();
 
@@ -505,7 +505,7 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return false;
    },
-   vs: function ()
+   vs ()
    {
       const point = this .coord .point;
 
@@ -516,7 +516,7 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return result;
    },
-   v: function (point)
+   v (point)
    {
       this .comments ();
 
@@ -534,7 +534,7 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return false;
    },
-   fs: function ()
+   fs ()
    {
       this .comments ();
 
@@ -584,7 +584,7 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return false;
    },
-   f: function ()
+   f ()
    {
       this .comments ();
 
@@ -617,7 +617,7 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return false;
    },
-   indices: function (texCoordIndex, normalIndex, coordIndex, numTexCoords, numNormals, numCoords)
+   indices (texCoordIndex, normalIndex, coordIndex, numTexCoords, numNormals, numCoords)
    {
       if (this .int32 ())
       {
@@ -644,7 +644,7 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return false;
    },
-   index: function (index, length)
+   index (index, length)
    {
       if (index === 0)
          throw new Error ("Invalid index.");
@@ -654,7 +654,7 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return index - 1;
    },
-   int32: function ()
+   int32 ()
    {
       this .whitespaces ();
 
@@ -667,7 +667,7 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return false;
    },
-   double: function ()
+   double ()
    {
       this .whitespaces ();
 
@@ -690,7 +690,7 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return false;
    },
-   vec2: function ()
+   vec2 ()
    {
       if (this .double ())
       {
@@ -706,7 +706,7 @@ OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return false;
    },
-   vec3: function ()
+   vec3 ()
    {
       if (this .double ())
       {
@@ -747,7 +747,7 @@ MaterialParser .prototype =
       ["INF", Infinity],
       ["INFINITY", Infinity],
    ]),
-   parse: function ()
+   parse ()
    {
       try
       {
@@ -759,12 +759,12 @@ MaterialParser .prototype =
             console .log (error);
       }
    },
-   comments: function ()
+   comments ()
    {
       while (this .comment ())
          ;
    },
-   comment: function ()
+   comment ()
    {
       this .whitespaces ();
 
@@ -773,20 +773,20 @@ MaterialParser .prototype =
 
       return false;
    },
-   whitespaces: function ()
+   whitespaces ()
    {
       Grammar .whitespaces .parse (this);
    },
-   whitespacesNoLineTerminator: function ()
+   whitespacesNoLineTerminator ()
    {
       Grammar .whitespacesNoLineTerminator .parse (this);
    },
-   statements: function ()
+   statements ()
    {
       while (this .statement ())
 		   ;
    },
-   statement: function ()
+   statement ()
    {
       if (this .newmtl ())
          return true;
@@ -822,7 +822,7 @@ MaterialParser .prototype =
 
       return false;
    },
-   newmtl: function ()
+   newmtl ()
    {
       this .comments ();
 
@@ -850,7 +850,7 @@ MaterialParser .prototype =
 
       return false;
    },
-   Ka: function ()
+   Ka ()
    {
       this .comments ();
 
@@ -872,7 +872,7 @@ MaterialParser .prototype =
 
       return false;
    },
-   Kd: function ()
+   Kd ()
    {
       this .comments ();
 
@@ -892,7 +892,7 @@ MaterialParser .prototype =
 
       return false;
    },
-   Ks: function ()
+   Ks ()
    {
       this .comments ();
 
@@ -912,7 +912,7 @@ MaterialParser .prototype =
 
       return false;
    },
-   Ns: function ()
+   Ns ()
    {
       this .comments ();
 
@@ -932,7 +932,7 @@ MaterialParser .prototype =
 
       return false;
    },
-   d: function ()
+   d ()
    {
       this .comments ();
 
@@ -952,7 +952,7 @@ MaterialParser .prototype =
 
       return false;
    },
-   Tr: function ()
+   Tr ()
    {
       this .comments ();
 
@@ -972,7 +972,7 @@ MaterialParser .prototype =
 
       return false;
    },
-   illum: function ()
+   illum ()
    {
       this .comments ();
 
@@ -991,7 +991,7 @@ MaterialParser .prototype =
 
       return false;
    },
-   map_Kd: function ()
+   map_Kd ()
    {
       this .comments ();
 
@@ -1030,7 +1030,7 @@ MaterialParser .prototype =
 
       return false;
    },
-   int32: function ()
+   int32 ()
    {
       this .whitespaces ();
 
@@ -1043,7 +1043,7 @@ MaterialParser .prototype =
 
       return false;
    },
-   double: function ()
+   double ()
    {
       this .whitespaces ();
 
@@ -1066,7 +1066,7 @@ MaterialParser .prototype =
 
       return false;
    },
-   col3: function ()
+   col3 ()
    {
       if (this .double ())
       {

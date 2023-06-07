@@ -64,11 +64,11 @@ function NurbsTextureCoordinate (executionContext)
 NurbsTextureCoordinate .prototype = Object .assign (Object .create (X3DNode .prototype),
 {
    constructor: NurbsTextureCoordinate,
-   initialize: function ()
+   initialize ()
    {
       X3DNode .prototype .initialize .call (this);
    },
-   getControlPoints: function (texWeights)
+   getControlPoints (texWeights)
    {
       const
          controlPointArray = this ._controlPoint .getValue (),
@@ -94,7 +94,7 @@ NurbsTextureCoordinate .prototype = Object .assign (Object .create (X3DNode .pro
 
       return controlPoints;
    },
-   isValid: function ()
+   isValid ()
    {
       if (this ._uOrder .getValue () < 2)
          return false;

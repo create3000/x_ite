@@ -73,7 +73,7 @@ MovieTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
    X3DUrlObject .prototype,
 {
    constructor: MovieTexture,
-   initialize: function ()
+   initialize ()
    {
       X3DTexture2DNode   .prototype .initialize .call (this);
       X3DSoundSourceNode .prototype .initialize .call (this);
@@ -88,20 +88,20 @@ MovieTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
 
       this .requestImmediateLoad () .catch (Function .prototype);
    },
-   getElement: function ()
+   getElement ()
    {
       return this .video [0];
    },
-   set_live__: function ()
+   set_live__ ()
    {
       X3DSoundSourceNode .prototype .set_live__ .call (this);
       X3DUrlObject       .prototype .set_live__ .call (this);
    },
-   unloadData: function ()
+   unloadData ()
    {
       this .clearTexture ();
    },
-   loadData: function ()
+   loadData ()
    {
       delete this .gif;
       this .setMedia (null);
@@ -109,7 +109,7 @@ MovieTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
       this .video .on ("canplaythrough", this .setVideo .bind (this));
       this .loadNext ();
    },
-   loadNext: function ()
+   loadNext ()
    {
       if (this .urlStack .length === 0)
       {
@@ -146,7 +146,7 @@ MovieTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
          this .video .get (0) .load ();
       }
    },
-   setTimeout: function (event)
+   setTimeout (event)
    {
       setTimeout (() =>
       {
@@ -155,14 +155,14 @@ MovieTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
       },
       3000);
    },
-   setError: function (event)
+   setError (event)
    {
       if (this .URL .protocol !== "data:")
          console .warn (`Error loading movie '${decodeURI (this .URL .href)}'`, event .type);
 
       this .loadNext ();
    },
-   setVideo: function ()
+   setVideo ()
    {
       if (DEVELOPMENT)
       {
@@ -192,7 +192,7 @@ MovieTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
          this .setError ({ type: error .message });
       }
    },
-   setGif: function (gif)
+   setGif (gif)
    {
       try
       {
@@ -212,7 +212,7 @@ MovieTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
          this .setError ({ type: error .message });
       }
    },
-   set_time: function ()
+   set_time ()
    {
       X3DSoundSourceNode .prototype .set_time .call (this);
 
@@ -225,7 +225,7 @@ MovieTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
          this .updateTexture (this .video [0], true);
    },
    traverse: X3DTexture2DNode .prototype .traverse,
-   dispose: function ()
+   dispose ()
    {
       X3DUrlObject       .prototype .dispose .call (this);
       X3DSoundSourceNode .prototype .dispose .call (this);

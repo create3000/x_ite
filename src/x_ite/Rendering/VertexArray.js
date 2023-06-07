@@ -53,14 +53,14 @@ function VertexArray (gl)
 
 VertexArray .prototype =
 {
-   update: function (value = true)
+   update (value = true)
    {
       if (value)
          this .delete ();
 
       return this;
    },
-   enable: function (shaderNode)
+   enable (shaderNode)
    {
       const vertexArray = this .vertexArrays .get (shaderNode);
 
@@ -83,7 +83,7 @@ VertexArray .prototype =
          return true; // Rebuild
       }
    },
-   delete: function ()
+   delete ()
    {
       for (const vertexArray of this .vertexArrays .values ())
          this .gl .deleteVertexArray (vertexArray);

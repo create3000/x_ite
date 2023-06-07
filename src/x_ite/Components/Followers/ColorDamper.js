@@ -69,35 +69,35 @@ function ColorDamper (executionContext)
 ColorDamper .prototype = Object .assign (Object .create (X3DDamperNode .prototype),
 {
    constructor: ColorDamper,
-   getVector: function ()
+   getVector ()
    {
       return new Vector3 (0, 0, 0);
    },
-   getValue: function ()
+   getValue ()
    {
       return this ._set_value .getValue () .getHSV (vector);
    },
-   getDestination: function ()
+   getDestination ()
    {
       return this ._set_destination .getValue () .getHSV (vector);
    },
-   getInitialValue: function ()
+   getInitialValue ()
    {
       return this ._initialValue .getValue () .getHSV (initialValue);
    },
-   getInitialDestination: function ()
+   getInitialDestination ()
    {
       return this ._initialDestination .getValue () .getHSV (initialDestination);
    },
-   setValue: function (value)
+   setValue (value)
    {
       this ._value_changed .setHSV (value .x, value .y, value .z);
    },
-   equals: function (lhs, rhs, tolerance)
+   equals (lhs, rhs, tolerance)
    {
       return a .assign (lhs) .subtract (rhs) .magnitude () < tolerance;
    },
-   interpolate: function (source, destination, weight)
+   interpolate (source, destination, weight)
    {
       return Color3 .lerp (source, destination, weight, vector);
    },

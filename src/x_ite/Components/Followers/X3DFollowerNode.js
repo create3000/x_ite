@@ -64,57 +64,57 @@ function X3DFollowerNode (executionContext)
 X3DFollowerNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 {
    constructor: X3DFollowerNode,
-   initialize: function ()
+   initialize ()
    {
       X3DChildNode .prototype .initialize .call (this);
 
       this .getLive () .addInterest ("set_live__", this);
    },
-   getBuffer: function ()
+   getBuffer ()
    {
       return this .buffer;
    },
-   getValue: function ()
+   getValue ()
    {
       return this ._set_value .getValue ();
    },
-   getDestination: function ()
+   getDestination ()
    {
       return this ._set_destination .getValue ();
    },
-   getInitialValue: function ()
+   getInitialValue ()
    {
       return this ._initialValue .getValue ();
    },
-   getInitialDestination: function ()
+   getInitialDestination ()
    {
       return this ._initialDestination .getValue ();
    },
-   setValue: function (value)
+   setValue (value)
    {
       this ._value_changed = value;
    },
-   setDestination: function (value)
+   setDestination (value)
    {
       this .destination .assign (value);
    },
-   duplicate: function (value)
+   duplicate (value)
    {
       return value .copy ();
    },
-   assign: function (buffer, i, value)
+   assign (buffer, i, value)
    {
       buffer [i] .assign (value);
    },
-   equals: function (lhs, rhs, tolerance)
+   equals (lhs, rhs, tolerance)
    {
       return this .a .assign (lhs) .subtract (rhs) .magnitude () < tolerance;
    },
-   interpolate: function (source, destination, weight)
+   interpolate (source, destination, weight)
    {
       return this .vector .assign (source) .lerp (destination, weight);
    },
-   set_live__: function ()
+   set_live__ ()
    {
       if ((this .getLive () .getValue () || this .isPrivate ()) && this ._isActive .getValue ())
       {
@@ -124,7 +124,7 @@ X3DFollowerNode .prototype = Object .assign (Object .create (X3DChildNode .proto
       else
          this .getBrowser () .prepareEvents () .removeInterest ("prepareEvents", this);
    },
-   set_active: function (value)
+   set_active (value)
    {
       if (value !== this ._isActive .getValue ())
       {

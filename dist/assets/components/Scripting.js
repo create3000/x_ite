@@ -302,12 +302,12 @@ X3DScriptNode .prototype = Object .assign (Object .create ((X3DChildNode_default
    (X3DUrlObject_default()).prototype,
 {
    constructor: X3DScriptNode,
-   initialize: function ()
+   initialize ()
    {
       X3DChildNode_default().prototype.initialize.call (this);
       X3DUrlObject_default().prototype.initialize.call (this);
    },
-   dispose: function ()
+   dispose ()
    {
       X3DUrlObject_default().prototype.dispose.call (this);
       X3DChildNode_default().prototype.dispose.call (this);
@@ -429,21 +429,21 @@ function Script (executionContext)
 Script .prototype = Object .assign (Object .create (Scripting_X3DScriptNode.prototype),
 {
    constructor: Script,
-   initialize: function ()
+   initialize ()
    {
       Scripting_X3DScriptNode.prototype.initialize.call (this);
 
       this .requestImmediateLoad () .catch (Function .prototype);
    },
-   getExtendedEventHandling: function ()
+   getExtendedEventHandling ()
    {
       return false;
    },
-   canUserDefinedFields: function ()
+   canUserDefinedFields ()
    {
       return true;
    },
-   addUserDefinedField: function (accessType, name, field)
+   addUserDefinedField (accessType, name, field)
    {
       Scripting_X3DScriptNode.prototype.addUserDefinedField.call (this, accessType, name, field);
 
@@ -453,7 +453,7 @@ Script .prototype = Object .assign (Object .create (Scripting_X3DScriptNode.prot
       this .setLoadState ((X3DConstants_default()).NOT_STARTED_STATE);
       this .requestImmediateLoad () .catch (Function .prototype);
    },
-   removeUserDefinedField: function (name)
+   removeUserDefinedField (name)
    {
       this .getUserDefinedFields () .get (name) ?.removeInterest ("set_field__", this);
 
@@ -465,15 +465,15 @@ Script .prototype = Object .assign (Object .create (Scripting_X3DScriptNode.prot
       this .setLoadState ((X3DConstants_default()).NOT_STARTED_STATE);
       this .requestImmediateLoad () .catch (Function .prototype);
    },
-   getSourceText: function ()
+   getSourceText ()
    {
       return this ._url;
    },
-   unloadData: function ()
+   unloadData ()
    {
       this .initialize__ ("");
    },
-   loadData: function ()
+   loadData ()
    {
       new (FileLoader_default()) (this) .loadDocument (this ._url, (data) =>
       {
@@ -489,7 +489,7 @@ Script .prototype = Object .assign (Object .create (Scripting_X3DScriptNode.prot
          }
       });
    },
-   getContext: function (sourceText)
+   getContext (sourceText)
    {
       try
       {
@@ -532,11 +532,11 @@ Script .prototype = Object .assign (Object .create (Scripting_X3DScriptNode.prot
          return new Map ();
       }
    },
-   evaluate: function (sourceText)
+   evaluate (sourceText)
    {
       return Scripting_evaluate (this .globalObject, `return (${sourceText})`);
    },
-   getGlobalObject: function ()
+   getGlobalObject ()
    {
       const
          browser          = this .getBrowser (),
@@ -676,7 +676,7 @@ Script .prototype = Object .assign (Object .create (Scripting_X3DScriptNode.prot
 
       return Object .create (Object .prototype, globalObject);
    },
-   initialize__: function (sourceText)
+   initialize__ (sourceText)
    {
       this .disconnect ();
 
@@ -741,7 +741,7 @@ Script .prototype = Object .assign (Object .create (Scripting_X3DScriptNode.prot
       if (typeof initialize === "function")
          this .call__ (initialize, "initialize");
    },
-   call__: function (callback, name)
+   call__ (callback, name)
    {
       const browser = this .getBrowser ();
 
@@ -758,7 +758,7 @@ Script .prototype = Object .assign (Object .create (Scripting_X3DScriptNode.prot
 
       browser .getScriptStack () .pop ();
    },
-   set_field__: function (callback, field)
+   set_field__ (callback, field)
    {
       const browser = this .getBrowser ();
 
@@ -777,12 +777,12 @@ Script .prototype = Object .assign (Object .create (Scripting_X3DScriptNode.prot
       browser .getScriptStack () .pop ();
       field .setTainted (false);
    },
-   setError: function (reason, error)
+   setError (reason, error)
    {
       console .error ("JavaScript Error in Script '" + this .getName () + "', " + reason + "\nworld url is '" + this .getExecutionContext () .getWorldURL () + "':");
       console .error (error);
    },
-   disconnect: function ()
+   disconnect ()
    {
       // Call shutdown.
 
@@ -808,7 +808,7 @@ Script .prototype = Object .assign (Object .create (Scripting_X3DScriptNode.prot
       for (const field of this .getUserDefinedFields ())
          field .removeInterest ("set_field__", this);
    },
-   dispose: function ()
+   dispose ()
    {
       this .disconnect ();
 

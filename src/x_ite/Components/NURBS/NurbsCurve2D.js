@@ -71,30 +71,30 @@ function NurbsCurve2D (executionContext)
 NurbsCurve2D .prototype = Object .assign (Object .create (X3DNurbsControlCurveNode .prototype),
 {
    constructor: NurbsCurve2D,
-   getTessellation: function (numKnots)
+   getTessellation (numKnots)
    {
       return NURBS .getTessellation (this ._tessellation .getValue (), numKnots - this ._order .getValue ());
    },
-   getClosed: function (order, knot, weight, controlPoint)
+   getClosed (order, knot, weight, controlPoint)
    {
       if (! this ._closed .getValue ())
          return false;
 
       return NURBS .getClosed2D (order, knot, weight, controlPoint);
    },
-   getKnots: function (result, closed, order, dimension, knot)
+   getKnots (result, closed, order, dimension, knot)
    {
       return NURBS .getKnots (result, closed, order, dimension, knot);
    },
-   getWeights: function (result, dimension, weight)
+   getWeights (result, dimension, weight)
    {
       return NURBS .getWeights (result, dimension, weight);
    },
-   getControlPoints: function (result, closed, order, weights, controlPoint)
+   getControlPoints (result, closed, order, weights, controlPoint)
    {
       return NURBS .getControlPoints2D (result, closed, order, weights, controlPoint);
    },
-   tessellate: function (type)
+   tessellate (type)
    {
       const array = this .array;
 

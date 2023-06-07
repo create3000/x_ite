@@ -67,7 +67,7 @@ GeoLocation .prototype = Object .assign (Object .create (X3DTransformMatrix3DNod
    X3DGeospatialObject .prototype,
 {
    constructor: GeoLocation,
-   initialize: function ()
+   initialize ()
    {
       X3DTransformMatrix3DNode .prototype .initialize .call (this);
       X3DGeospatialObject      .prototype .initialize .call (this);
@@ -76,11 +76,11 @@ GeoLocation .prototype = Object .assign (Object .create (X3DTransformMatrix3DNod
 
       this .eventsProcessed ();
    },
-   eventsProcessed: function ()
+   eventsProcessed ()
    {
       this .setMatrix (this .getLocationMatrix (this ._geoCoords .getValue (), locationMatrix));
    },
-   dispose: function ()
+   dispose ()
    {
       X3DGeospatialObject      .prototype .dispose .call (this);
       X3DTransformMatrix3DNode .prototype .dispose .call (this);

@@ -1,7 +1,7 @@
 /* X_ITE v8.7.8 */(() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 15:
+/***/ 807:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -38,7 +38,7 @@ var Ib=[cx,_q,cr,Yr,as,fs,hs,Hu,Su,cx,cx,cx,cx,cx,cx,cx];var Jb=[dx,si,gi,Wh,Kh,
 
 /***/ }),
 
-/***/ 91:
+/***/ 207:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -72,7 +72,7 @@ var _a=[yj,od,ef,yj];var $a=[zj,Li,di,bi,Kb,Lb,Mb,Nb,Rc,Sc,Uc,jd,xd,Ye,lf,yd,zd,
 
 /***/ }),
 
-/***/ 598:
+/***/ 905:
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 /*! dicom-parser - 1.8.12 - 2023-02-20 | (c) 2017 Chris Hafey | https://github.com/cornerstonejs/dicomParser */
@@ -4028,7 +4028,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_zlib__;
 
 /***/ }),
 
-/***/ 226:
+/***/ 964:
 /***/ ((module) => {
 
 /* -*- tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- /
@@ -5183,7 +5183,7 @@ function decode(jpegData, userOpts = {}) {
 
 /***/ }),
 
-/***/ 353:
+/***/ 224:
 /***/ ((module) => {
 
 (function(f){if(true){module.exports=f()}else { var g; }})(function(){var define,module,exports;return (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c=undefined;if(!f&&c)return require(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u=undefined,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
@@ -7147,7 +7147,7 @@ function X3DTexture3DNode (executionContext)
 X3DTexture3DNode .prototype = Object .assign (Object .create ((X3DSingleTextureNode_default()).prototype),
 {
    constructor: X3DTexture3DNode,
-   initialize: function ()
+   initialize ()
    {
       X3DSingleTextureNode_default().prototype.initialize.call (this);
 
@@ -7163,31 +7163,31 @@ X3DTexture3DNode .prototype = Object .assign (Object .create ((X3DSingleTextureN
       gl .bindTexture (gl .TEXTURE_3D, this .getTexture ());
       gl .texImage3D  (gl .TEXTURE_3D, 0, gl .RGBA, 1, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
    },
-   getTarget: function ()
+   getTarget ()
    {
       return this .target;
    },
-   getTextureType: function ()
+   getTextureType ()
    {
       return 3;
    },
-   getTextureTypeString: function ()
+   getTextureTypeString ()
    {
       return "3D";
    },
-   getWidth: function ()
+   getWidth ()
    {
       return this .width;
    },
-   getHeight: function ()
+   getHeight ()
    {
       return this .height;
    },
-   getDepth: function ()
+   getDepth ()
    {
       return this .depth;
    },
-   clearTexture: function ()
+   clearTexture ()
    {
       const gl = this .getBrowser () .getContext ();
 
@@ -7195,7 +7195,7 @@ X3DTexture3DNode .prototype = Object .assign (Object .create ((X3DSingleTextureN
 
       this .data = null;
    },
-   setTexture: function (width, height, depth, transparent, format, data)
+   setTexture (width, height, depth, transparent, format, data)
    {
       this .width  = width;
       this .height = height;
@@ -7214,7 +7214,7 @@ X3DTexture3DNode .prototype = Object .assign (Object .create ((X3DSingleTextureN
       this .updateTextureParameters ();
       this .addNodeEvent ();
    },
-   updateTextureParameters: function ()
+   updateTextureParameters ()
    {
       X3DSingleTextureNode_default().prototype.updateTextureParameters.call (this,
                                                                       this .target,
@@ -7226,7 +7226,7 @@ X3DTexture3DNode .prototype = Object .assign (Object .create ((X3DSingleTextureN
                                                                       this ._repeatT .getValue (),
                                                                       this ._repeatR .getValue ());
    },
-   setShaderUniforms: function (gl, shaderObject, renderObject, channel = shaderObject .x3d_Texture [0])
+   setShaderUniforms (gl, shaderObject, renderObject, channel = shaderObject .x3d_Texture [0])
    {
       const textureUnit = this .getBrowser () .getTexture3DUnit ();
 
@@ -7328,7 +7328,7 @@ function ComposedTexture3D (executionContext)
 ComposedTexture3D .prototype = Object .assign (Object .create (Texturing3D_X3DTexture3DNode.prototype),
 {
    constructor: ComposedTexture3D,
-   initialize: function ()
+   initialize ()
    {
       Texturing3D_X3DTexture3DNode.prototype.initialize.call (this);
 
@@ -7341,11 +7341,11 @@ ComposedTexture3D .prototype = Object .assign (Object .create (Texturing3D_X3DTe
 
       this .set_texture__ ();
    },
-   checkLoadState: function ()
+   checkLoadState ()
    {
       return this ._loadState .getValue ();
    },
-   set_texture__: function ()
+   set_texture__ ()
    {
       const textureNodes = this .textureNodes;
 
@@ -7367,15 +7367,15 @@ ComposedTexture3D .prototype = Object .assign (Object .create (Texturing3D_X3DTe
 
       this .set_update__ ();
    },
-   set_update__: function ()
+   set_update__ ()
    {
       this ._update .addEvent ();
    },
-   isComplete: function ()
+   isComplete ()
    {
       return this .textureNodes .every (textureNode => textureNode .checkLoadState () === (X3DConstants_default()).COMPLETE_STATE || textureNode .getWidth ());
    },
-   update: function ()
+   update ()
    {
       const textureNodes = this .textureNodes
 
@@ -7550,7 +7550,7 @@ function NRRDParser ()
 
 NRRDParser .prototype =
 {
-   parse: function (input)
+   parse (input)
    {
       this .setInput (input);
 
@@ -7562,7 +7562,7 @@ NRRDParser .prototype =
 
       return this .nrrd;
    },
-   setInput: function (value)
+   setInput (value)
    {
       this .dataView     = new DataView (value);
       this .input        = jquery_default().decodeText (value);
@@ -7570,7 +7570,7 @@ NRRDParser .prototype =
       this .nrrd         = { };
       this .littleEndian = true;
    },
-   getNRRD: function ()
+   getNRRD ()
    {
       if (Grammar .NRRD .parse (this))
       {
@@ -7582,7 +7582,7 @@ NRRDParser .prototype =
       this .nrrd .nrrd = false;
       return false;
    },
-   getFields: function ()
+   getFields ()
    {
       while (Grammar .comment .parse (this))
          ;
@@ -7667,7 +7667,7 @@ NRRDParser .prototype =
          this .encoding = encoding;
       };
    })(),
-   getDimension: function (value)
+   getDimension (value)
    {
       const result = value .match (/(\d+)/);
 
@@ -7688,7 +7688,7 @@ NRRDParser .prototype =
 
       throw new Error ("Unsupported NRRD dimension '" + result [1] + "', must be 1, 2, 3, or 4.");
    },
-   getSizes: function (value)
+   getSizes (value)
    {
       const
          num   = /\s*(\d+)/gy,
@@ -7739,7 +7739,7 @@ NRRDParser .prototype =
             throw new Error ("Unsupported NRRD sizes.");
       }
    },
-   getEndian: function (value)
+   getEndian (value)
    {
       if (value === "little")
       {
@@ -7755,7 +7755,7 @@ NRRDParser .prototype =
 
       throw new Error ("Unsupported NRRD endian, must be either 'little' or 'big'.");
    },
-   getData: function ()
+   getData ()
    {
       switch (this .encoding)
       {
@@ -7781,7 +7781,7 @@ NRRDParser .prototype =
          }
       }
    },
-   ascii: function ()
+   ascii ()
    {
       const
          dataLength = this .nrrd .components * this .nrrd .width * this .nrrd .height * this .nrrd .depth,
@@ -7838,7 +7838,7 @@ NRRDParser .prototype =
          }
       }
    },
-   raw: function ()
+   raw ()
    {
       const
          dataView   = this .dataView,
@@ -7891,7 +7891,7 @@ NRRDParser .prototype =
          }
       }
    },
-   hex: function ()
+   hex ()
    {
       if (Grammar .data .parse (this))
       {
@@ -7910,7 +7910,7 @@ NRRDParser .prototype =
 
       throw new Error ("Invalid NRRD data.");
    },
-   gzip: function ()
+   gzip ()
    {
       try
       {
@@ -7938,11 +7938,11 @@ const NRRDParser_default_ = NRRDParser;
 Namespace_default().set ("x_ite/Browser/Texturing3D/NRRDParser", NRRDParser_default_);
 /* harmony default export */ const Texturing3D_NRRDParser = (NRRDParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Texturing3D/DICOMParser.js
-/* provided dependency */ var dicomParser = __webpack_require__(598);
-/* provided dependency */ var JpegImage = __webpack_require__(226);
-/* provided dependency */ var jpeg = __webpack_require__(353);
-/* provided dependency */ var CharLS = __webpack_require__(15);
-/* provided dependency */ var OpenJPEG = __webpack_require__(91);
+/* provided dependency */ var dicomParser = __webpack_require__(905);
+/* provided dependency */ var JpegImage = __webpack_require__(964);
+/* provided dependency */ var jpeg = __webpack_require__(224);
+/* provided dependency */ var CharLS = __webpack_require__(807);
+/* provided dependency */ var OpenJPEG = __webpack_require__(207);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -7997,7 +7997,7 @@ function DicomParser ()
 
 DicomParser .prototype =
 {
-   parse: function (input)
+   parse (input)
    {
       try
       {
@@ -8028,25 +8028,25 @@ DicomParser .prototype =
 
       return this .dicom;
    },
-   getPhotometricInterpretation: function ()
+   getPhotometricInterpretation ()
    {
       // https://dicom.innolitics.com/ciods/ct-image/image-pixel/00280004
       this .photometricInterpretation = this .dataSet .string ("x00280004");
    },
-   getComponents: function ()
+   getComponents ()
    {
       // https://dicom.innolitics.com/ciods/ct-image/image-pixel/00280002
       this .dicom .components = this .dataSet .uint16 ("x00280002");
    },
-   getWidth: function ()
+   getWidth ()
    {
       this .dicom .width = this .dataSet .uint16 ("x00280011");
    },
-   getHeight: function ()
+   getHeight ()
    {
       this .dicom .height = this .dataSet .uint16 ("x00280010");
    },
-   getDepth: function ()
+   getDepth ()
    {
       if (this .dataSet .elements .x00280008)
       {
@@ -8055,27 +8055,27 @@ DicomParser .prototype =
       else
          this .dicom .depth = 1;
    },
-   getBitsAllocated: function ()
+   getBitsAllocated ()
    {
       this .bitsAllocated  = this .dataSet .uint16 ("x00280100");
    },
-   getBitsStored: function ()
+   getBitsStored ()
    {
       this .bitsStored  = this .dataSet .uint16 ("x00280101");
    },
-   getPixelRepresentation: function ()
+   getPixelRepresentation ()
    {
       this .pixelRepresentation = this .dataSet .uint16 ("x00280103") || 0;
    },
-   getPlanarConfiguration: function ()
+   getPlanarConfiguration ()
    {
       this .planarConfiguration = this .dataSet .uint16 ("x00280006") || 0;
    },
-   getTansferSyntax: function ()
+   getTansferSyntax ()
    {
       this .transferSyntax = this .dataSet .string ("x00020010");
    },
-   getPixelData: function ()
+   getPixelData ()
    {
       var
          dicom        = this .dicom,
@@ -8240,7 +8240,7 @@ DicomParser .prototype =
       dicom .components = components;
       dicom .data       = bytes;
    },
-   getFrames: function (pixelElement)
+   getFrames (pixelElement)
    {
       var frames = [ ];
 
@@ -8304,7 +8304,7 @@ DicomParser .prototype =
 
       return frames;
    },
-   getTypedArray: function (frame)
+   getTypedArray (frame)
    {
       switch (this .bitsAllocated)
       {
@@ -8318,7 +8318,7 @@ DicomParser .prototype =
             throw new Error ("DICOM: unsupported pixel format.");
       }
    },
-   flipImage: function (frame, components)
+   flipImage (frame, components)
    {
       var
          width  = this .dicom .width,
@@ -8339,7 +8339,7 @@ DicomParser .prototype =
 
       return out;
    },
-   getNormalizeOffsetAndFactor: function (data)
+   getNormalizeOffsetAndFactor (data)
    {
       var
          min = Number .POSITIVE_INFINITY,
@@ -8355,7 +8355,7 @@ DicomParser .prototype =
 
       return { offset: min, factor: diverence ? 1 / diverence * 255 : 0 };
    },
-   unpackBinaryFrame: function (byteArray, frameOffset, pixelsPerFrame)
+   unpackBinaryFrame (byteArray, frameOffset, pixelsPerFrame)
    {
       function isBitSet (byte, bitPos)
       {
@@ -8382,7 +8382,7 @@ DicomParser .prototype =
 
       return pixelData;
    },
-   decodeLittleEndian: function (pixelData)
+   decodeLittleEndian (pixelData)
    {
       var
          buffer = pixelData .buffer,
@@ -8417,7 +8417,7 @@ DicomParser .prototype =
 
       return pixelData;
    },
-   decodeBigEndian: function (pixelData)
+   decodeBigEndian (pixelData)
    {
       function swap16 (value)
       {
@@ -8451,7 +8451,7 @@ DicomParser .prototype =
 
       return pixelData;
    },
-   decodeRLE: function  (pixelData)
+   decodeRLE  (pixelData)
    {
       if (this .bitsAllocated === 8)
       {
@@ -8466,7 +8466,7 @@ DicomParser .prototype =
 
       throw new Error ("DICOM: unsupported pixel format for RLE.");
    },
-   decodeRLE8: function  (pixelData)
+   decodeRLE8  (pixelData)
    {
       const frameData  = pixelData;
       const frameSize  = this .dicom .width * this .dicom .height;
@@ -8520,7 +8520,7 @@ DicomParser .prototype =
 
       return out;
    },
-   decodeRLE8Planar: function  (pixelData)
+   decodeRLE8Planar  (pixelData)
    {
       const frameData = pixelData;
       const frameSize = this .dicom .width * this .dicom .height;
@@ -8573,7 +8573,7 @@ DicomParser .prototype =
 
       return out;
    },
-   decodeRLE16: function  (pixelData)
+   decodeRLE16  (pixelData)
    {
       const frameData = pixelData;
       const frameSize = this .dicom .width * this .dicom .height;
@@ -8622,7 +8622,7 @@ DicomParser .prototype =
 
       return out;
    },
-   decodeJPEGBaseline: function (pixelData)
+   decodeJPEGBaseline (pixelData)
    {
       var jpeg = new JpegImage ();
 
@@ -8636,7 +8636,7 @@ DicomParser .prototype =
 
       return data;
     },
-    decodeJPEGLossless: function (pixelData)
+    decodeJPEGLossless (pixelData)
     {
       const
          decoder = new jpeg .lossless .Decoder (),
@@ -8644,7 +8644,7 @@ DicomParser .prototype =
 
       return new Uint8Array (buffer);
    },
-   decodeJPEGLS: function (pixelData)
+   decodeJPEGLS (pixelData)
    {
       var image = this .jpegLSDecode (pixelData, this .pixelRepresentation === 1);
 
@@ -8726,7 +8726,7 @@ DicomParser .prototype =
          return image;
       };
    })(),
-   decodeJPEG2000: function (pixelData)
+   decodeJPEG2000 (pixelData)
    {
       var
          bytesPerPixel = this .bitsAllocated <= 8 ? 1 : 2,
@@ -8830,7 +8830,7 @@ DicomParser .prototype =
          return image;
       };
    })(),
-   convertRGBColorByPlane: function (pixelData)
+   convertRGBColorByPlane (pixelData)
    {
       if (pixelData .length % 3 !== 0)
          throw new Error ("DICOM: convertRGBColorByPlane: RGB buffer length must be divisble by 3.");
@@ -8852,7 +8852,7 @@ DicomParser .prototype =
 
       return out;
     },
-    convertYBRFullByPixel: function (pixelData)
+    convertYBRFullByPixel (pixelData)
     {
       if (pixelData .length % 3 !== 0)
          throw new Error ("DICOM: convertYBRFullByPixel: YBR buffer length must be divisble by 3.");
@@ -8879,7 +8879,7 @@ DicomParser .prototype =
 
       return out;
     },
-    convertYBRFullByPlane: function (pixelData)
+    convertYBRFullByPlane (pixelData)
     {
       if (pixelData .length % 3 !== 0)
          throw new Error ("DICOM: convertYBRFullByPlane: YBR buffer length must be divisble by 3.");
@@ -8906,7 +8906,7 @@ DicomParser .prototype =
 
       return out;
    },
-   convertPaletteColor: function (pixelData)
+   convertPaletteColor (pixelData)
    {
       function convertLUTto8Bit (lut, shift)
       {
@@ -8961,7 +8961,7 @@ DicomParser .prototype =
 
       return out;
    },
-   getLUT: function ()
+   getLUT ()
    {
       if (this .LUT)
           return this .LUT;
@@ -8972,7 +8972,7 @@ DicomParser .prototype =
 
       return this .LUT;
    },
-   populatePaletteColorLut: function (dataSet, imagePixelModule)
+   populatePaletteColorLut (dataSet, imagePixelModule)
    {
       imagePixelModule .redPaletteColorLookupTableDescriptor   = this .getLutDescriptor (dataSet, 'x00281101');
       imagePixelModule .greenPaletteColorLookupTableDescriptor = this .getLutDescriptor (dataSet, 'x00281102');
@@ -9012,14 +9012,14 @@ DicomParser .prototype =
       imagePixelModule .greenPaletteColorLookupTableData = this .getLutData (dataSet, 'x00281202', imagePixelModule .greenPaletteColorLookupTableDescriptor);
       imagePixelModule .bluePaletteColorLookupTableData  = this .getLutData (dataSet, 'x00281203', imagePixelModule .bluePaletteColorLookupTableDescriptor);
    },
-   getLutDescriptor: function  (dataSet, tag)
+   getLutDescriptor  (dataSet, tag)
    {
       if (! dataSet .elements [tag] || dataSet .elements [tag] .length !== 6)
          return;
 
       return [dataSet .uint16 (tag, 0), dataSet .uint16 (tag, 1), dataSet .uint16 (tag, 2)];
    },
-   getLutData: function  (lutDataSet, tag, lutDescriptor)
+   getLutData  (lutDataSet, tag, lutDescriptor)
    {
       const lut     = [];
       const lutData = lutDataSet .elements [tag];
@@ -9117,14 +9117,14 @@ ImageTexture3D .prototype = Object .assign (Object .create (Texturing3D_X3DTextu
    (X3DUrlObject_default()).prototype,
 {
    constructor: ImageTexture3D,
-   initialize: function ()
+   initialize ()
    {
       Texturing3D_X3DTexture3DNode.prototype.initialize.call (this);
       X3DUrlObject_default().prototype.initialize.call (this);
 
       this .requestImmediateLoad () .catch (Function .prototype);
    },
-   getInternalType: function (components)
+   getInternalType (components)
    {
       const gl = this .getBrowser () .getContext ();
 
@@ -9140,11 +9140,11 @@ ImageTexture3D .prototype = Object .assign (Object .create (Texturing3D_X3DTextu
             return gl .RGBA;
       }
    },
-   unloadData: function ()
+   unloadData ()
    {
       this .clearTexture ();
    },
-   loadData: function ()
+   loadData ()
    {
       new (FileLoader_default()) (this) .loadDocument (this ._url,
       function (data)
@@ -9184,7 +9184,7 @@ ImageTexture3D .prototype = Object .assign (Object .create (Texturing3D_X3DTextu
       }
       .bind (this));
    },
-   dispose: function ()
+   dispose ()
    {
       X3DUrlObject_default().prototype.dispose.call (this);
       Texturing3D_X3DTexture3DNode.prototype.dispose.call (this);
@@ -9312,7 +9312,7 @@ ImageTextureAtlas .prototype = Object .assign (Object .create (Texturing3D_X3DTe
    (X3DUrlObject_default()).prototype,
 {
    constructor: ImageTextureAtlas,
-   initialize: function ()
+   initialize ()
    {
       Texturing3D_X3DTexture3DNode.prototype.initialize.call (this);
       X3DUrlObject_default().prototype.initialize.call (this);
@@ -9323,16 +9323,16 @@ ImageTextureAtlas .prototype = Object .assign (Object .create (Texturing3D_X3DTe
 
       this .requestImmediateLoad () .catch (Function .prototype);
    },
-   unloadData: function ()
+   unloadData ()
    {
       this .clearTexture ();
    },
-   loadData: function ()
+   loadData ()
    {
       this .urlStack .setValue (this ._url);
       this .loadNext ();
    },
-   loadNext: function ()
+   loadNext ()
    {
       if (this .urlStack .length === 0)
       {
@@ -9353,14 +9353,14 @@ ImageTextureAtlas .prototype = Object .assign (Object .create (Texturing3D_X3DTe
 
       this .image .attr ("src", this .URL .href);
    },
-   setError: function (event)
+   setError (event)
    {
       if (this .URL .protocol !== "data:")
          console .warn (`Error loading image '${decodeURI (this .URL .href)}'`, event .type);
 
       this .loadNext ();
    },
-   setImage: function ()
+   setImage ()
    {
       if ((DEVELOPMENT_default()))
       {
@@ -9436,7 +9436,7 @@ ImageTextureAtlas .prototype = Object .assign (Object .create (Texturing3D_X3DTe
          this .setError ({ type: error .message });
       }
    },
-   dispose: function ()
+   dispose ()
    {
       X3DUrlObject_default().prototype.dispose.call (this);
       Texturing3D_X3DTexture3DNode.prototype.dispose.call (this);
@@ -9557,7 +9557,7 @@ function PixelTexture3D (executionContext)
 PixelTexture3D .prototype = Object .assign (Object .create (Texturing3D_X3DTexture3DNode.prototype),
 {
    constructor: PixelTexture3D,
-   initialize: function ()
+   initialize ()
    {
       Texturing3D_X3DTexture3DNode.prototype.initialize.call (this);
 
@@ -9565,7 +9565,7 @@ PixelTexture3D .prototype = Object .assign (Object .create (Texturing3D_X3DTextu
 
       this .set_image__ ();
    },
-   checkLoadState: function ()
+   checkLoadState ()
    {
       return this ._loadState .getValue ();
    },
@@ -9788,7 +9788,7 @@ function TextureCoordinate3D (executionContext)
 TextureCoordinate3D .prototype = Object .assign (Object .create ((X3DSingleTextureCoordinateNode_default()).prototype),
 {
    constructor: TextureCoordinate3D,
-   initialize: function ()
+   initialize ()
    {
       X3DSingleTextureCoordinateNode_default().prototype.initialize.call (this);
 
@@ -9796,20 +9796,20 @@ TextureCoordinate3D .prototype = Object .assign (Object .create ((X3DSingleTextu
 
       this .set_point__ ();
    },
-   set_point__: function ()
+   set_point__ ()
    {
       this .point  = this ._point .getValue ();
       this .length = this ._point .length;
    },
-   isEmpty: function ()
+   isEmpty ()
    {
       return this .length === 0;
    },
-   getSize: function ()
+   getSize ()
    {
       return this .length;
    },
-   get1Point: function (index, vector)
+   get1Point (index, vector)
    {
       if (index >= 0 && index < this .length)
       {
@@ -9833,7 +9833,7 @@ TextureCoordinate3D .prototype = Object .assign (Object .create ((X3DSingleTextu
          return vector .set (0, 0, 0, 1);
       }
    },
-   getPoints: function (array)
+   getPoints (array)
    {
       const
          point  = this .point,
@@ -9844,7 +9844,7 @@ TextureCoordinate3D .prototype = Object .assign (Object .create ((X3DSingleTextu
 
       return array;
    },
-   addPointToChannel: function (index, array)
+   addPointToChannel (index, array)
    {
       if (index >= 0 && index < this .length)
       {
@@ -9973,7 +9973,7 @@ function TextureCoordinate4D (executionContext)
 TextureCoordinate4D .prototype = Object .assign (Object .create ((X3DSingleTextureCoordinateNode_default()).prototype),
 {
    constructor: TextureCoordinate4D,
-   initialize: function ()
+   initialize ()
    {
       X3DSingleTextureCoordinateNode_default().prototype.initialize.call (this);
 
@@ -9981,20 +9981,20 @@ TextureCoordinate4D .prototype = Object .assign (Object .create ((X3DSingleTextu
 
       this .set_point__ ();
    },
-   set_point__: function ()
+   set_point__ ()
    {
       this .point  = this ._point .getValue ();
       this .length = this ._point .length;
    },
-   isEmpty: function ()
+   isEmpty ()
    {
       return this .length === 0;
    },
-   getSize: function ()
+   getSize ()
    {
       return this .length;
    },
-   get1Point: function (index, vector)
+   get1Point (index, vector)
    {
       if (index >= 0 && index < this .length)
       {
@@ -10018,7 +10018,7 @@ TextureCoordinate4D .prototype = Object .assign (Object .create ((X3DSingleTextu
          return vector .set (0, 0, 0, 1);
       }
    },
-   getPoints: function (array)
+   getPoints (array)
    {
       const
          point  = this .point,
@@ -10029,7 +10029,7 @@ TextureCoordinate4D .prototype = Object .assign (Object .create ((X3DSingleTextu
 
       return array;
    },
-   addPointToChannel: function (index, array)
+   addPointToChannel (index, array)
    {
       if (index >= 0 && index < this .length)
       {
@@ -10174,7 +10174,7 @@ function TextureTransform3D (executionContext)
 TextureTransform3D .prototype = Object .assign (Object .create ((X3DSingleTextureTransformNode_default()).prototype),
 {
    constructor: TextureTransform3D,
-   initialize: function ()
+   initialize ()
    {
       X3DSingleTextureTransformNode_default().prototype.initialize.call (this);
 
@@ -10182,7 +10182,7 @@ TextureTransform3D .prototype = Object .assign (Object .create ((X3DSingleTextur
 
       this .eventsProcessed ();
    },
-   getMatrix: function ()
+   getMatrix ()
    {
       return this .matrix;
    },
@@ -10326,7 +10326,7 @@ function TextureTransformMatrix3D (executionContext)
 TextureTransformMatrix3D .prototype = Object .assign (Object .create ((X3DSingleTextureTransformNode_default()).prototype),
 {
    constructor: TextureTransformMatrix3D,
-   initialize: function ()
+   initialize ()
    {
       X3DSingleTextureTransformNode_default().prototype.initialize.call (this);
 
@@ -10334,11 +10334,11 @@ TextureTransformMatrix3D .prototype = Object .assign (Object .create ((X3DSingle
 
       this .eventsProcessed ();
    },
-   getMatrix: function ()
+   getMatrix ()
    {
       return this ._matrix .getValue ();
    },
-   eventsProcessed: function ()
+   eventsProcessed ()
    {
       this .setMatrix (this ._matrix .getValue ());
    },

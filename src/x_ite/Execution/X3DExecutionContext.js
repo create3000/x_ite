@@ -100,63 +100,63 @@ function X3DExecutionContext (executionContext, outerNode = null)
 X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 {
    constructor: X3DExecutionContext,
-   initialize: function ()
+   initialize ()
    {
       X3DBaseNode .prototype .initialize .call (this);
 
       if (!this .isScene ())
          this ._sceneGraph_changed .addInterest ("set_sceneGraph", this)
    },
-   set_sceneGraph: function ()
+   set_sceneGraph ()
    {
       this .getExecutionContext () ._sceneGraph_changed = this .getBrowser () .getCurrentTime ();
    },
-   isScene: function ()
+   isScene ()
    {
       return false;
    },
-   getOuterNode: function ()
+   getOuterNode ()
    {
       // Can be either of type X3DProtoDeclaration or X3DPrototypeInstance, or null.
       return this [_outerNode];
    },
-   getSpecificationVersion: function ()
+   getSpecificationVersion ()
    {
       return this .getExecutionContext () .getSpecificationVersion ();
    },
-   getEncoding: function ()
+   getEncoding ()
    {
       return this .getExecutionContext () .getEncoding ();
    },
-   getWorldURL: function ()
+   getWorldURL ()
    {
       return this .getExecutionContext () .getWorldURL ();
    },
-   getProfile: function ()
+   getProfile ()
    {
       return this .getExecutionContext () .getProfile ();
    },
-   hasComponent: function (name)
+   hasComponent (name)
    {
       return this .getExecutionContext () .hasComponent (name);
    },
-   getComponents: function ()
+   getComponents ()
    {
       return this .getExecutionContext () .getComponents ();
    },
-   fromUnit: function (category, value)
+   fromUnit (category, value)
    {
       return this .getExecutionContext () .fromUnit (category, value);
    },
-   toUnit: function (category, value)
+   toUnit (category, value)
    {
       return this .getExecutionContext () .toUnit (category, value);
    },
-   getUnits: function ()
+   getUnits ()
    {
       return this .getExecutionContext () .getUnits ();
    },
-   createNode: function (typeName, setup = true /* non-public argument */)
+   createNode (typeName, setup = true /* non-public argument */)
    {
       typeName = String (typeName);
 
@@ -205,7 +205,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
          return SFNodeCache .get (baseNode);
       }
    },
-   createProto: function (name, setup = true /* non-public argument */)
+   createProto (name, setup = true /* non-public argument */)
    {
       name = String (name);
 
@@ -229,7 +229,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
 
       throw new Error ("Unknown proto or externproto type '" + name + "'.");
    },
-   addNamedNode: function (name, node)
+   addNamedNode (name, node)
    {
       name = String (name);
       node = X3DCast (X3DConstants .X3DNode, node, false);
@@ -255,7 +255,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
 
       this [_namedNodes] .add (name, SFNodeCache .get (node));
    },
-   updateNamedNode: function (name, node)
+   updateNamedNode (name, node)
    {
       name = String (name);
       node = X3DCast (X3DConstants .X3DNode, node, false);
@@ -282,7 +282,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
 
       this ._namedNodes_changed = this .getBrowser () .getCurrentTime ();
    },
-   removeNamedNode: function (name)
+   removeNamedNode (name)
    {
       name = String (name);
 
@@ -297,7 +297,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
 
       this ._namedNodes_changed = this .getBrowser () .getCurrentTime ();
    },
-   getNamedNode: function (name)
+   getNamedNode (name)
    {
       name = String (name);
 
@@ -308,15 +308,15 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
 
       throw new Error ("Named node '" + name + "' not found.");
    },
-   getNamedNodes: function ()
+   getNamedNodes ()
    {
       return this [_namedNodes];
    },
-   getUniqueName: function (name)
+   getUniqueName (name)
    {
       return getUniqueName (this [_namedNodes], name);
    },
-   addImportedNode: function (inlineNode, exportedName, importedName = exportedName)
+   addImportedNode (inlineNode, exportedName, importedName = exportedName)
    {
       exportedName = String (exportedName);
       importedName = String (importedName);
@@ -326,7 +326,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
 
       this .updateImportedNode (inlineNode, exportedName, importedName);
    },
-   updateImportedNode: function (inlineNode, exportedName, importedName)
+   updateImportedNode (inlineNode, exportedName, importedName)
    {
       inlineNode   = X3DCast (X3DConstants .Inline, inlineNode, false);
       exportedName = String (exportedName);
@@ -354,7 +354,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
 
       this ._importedNodes_changed = this .getBrowser () .getCurrentTime ();
    },
-   removeImportedNode: function (importedName)
+   removeImportedNode (importedName)
    {
       importedName = String (importedName);
 
@@ -369,7 +369,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
 
       this ._importedNodes_changed = this .getBrowser () .getCurrentTime ();
    },
-   getImportedNode: function (importedName)
+   getImportedNode (importedName)
    {
       importedName = String (importedName);
 
@@ -380,11 +380,11 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
 
       throw new Error ("Imported node '" + importedName + "' not found.");
    },
-   getImportedNodes: function ()
+   getImportedNodes ()
    {
       return this [_importedNodes];
    },
-   getLocalNode: function (name)
+   getLocalNode (name)
    {
       name = String (name);
 
@@ -402,7 +402,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
          throw new Error ("Unknown named or imported node '" + name + "'.");
       }
    },
-   getLocalName: function (node)
+   getLocalName (node)
    {
       node = X3DCast (X3DConstants .X3DNode, node, false);
 
@@ -427,12 +427,12 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
 
       throw new Error ("Couldn't get local name: node is shared.");
    },
-   setRootNodes: function () { },
-   getRootNodes: function ()
+   setRootNodes () { },
+   getRootNodes ()
    {
       return this ._rootNodes;
    },
-   getProtoDeclaration: function (name)
+   getProtoDeclaration (name)
    {
       name = String (name);
 
@@ -497,15 +497,15 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
 
       this ._protos_changed = this .getBrowser () .getCurrentTime ();
    },
-   getProtoDeclarations: function ()
+   getProtoDeclarations ()
    {
       return this [_protos];
    },
-   getUniqueProtoName: function (name)
+   getUniqueProtoName (name)
    {
       return getUniqueName (this [_protos], name);
    },
-   getExternProtoDeclaration: function (name)
+   getExternProtoDeclaration (name)
    {
       name = String (name);
 
@@ -570,15 +570,15 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
 
       this ._externprotos_changed = this .getBrowser () .getCurrentTime ();
    },
-   getExternProtoDeclarations: function ()
+   getExternProtoDeclarations ()
    {
       return this [_externprotos];
    },
-   getUniqueExternProtoName: function (name)
+   getUniqueExternProtoName (name)
    {
       return getUniqueName (this [_externprotos], name);
    },
-   addRoute: function (sourceNode, sourceField, destinationNode, destinationField)
+   addRoute (sourceNode, sourceField, destinationNode, destinationField)
    {
       sourceNode       = X3DCast (X3DConstants .X3DNode, sourceNode, false);
       sourceField      = String (sourceField);
@@ -641,7 +641,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
 
       return this .addSimpleRoute (sourceNode, sourceField, destinationNode, destinationField);
    },
-   addSimpleRoute: function (sourceNode, sourceField, destinationNode, destinationField)
+   addSimpleRoute (sourceNode, sourceField, destinationNode, destinationField)
    {
       // Source and dest node are here X3DBaseNode.
 
@@ -682,7 +682,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
          throw new Error ("Bad ROUTE specification: " + error .message);
       }
    },
-   deleteRoute: function (route)
+   deleteRoute (route)
    {
       // sourceNode, sourceField, destinationNode, destinationField
       if (arguments .length === 4)
@@ -697,7 +697,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
       this .deleteSimpleRoute (route);
       this .deleteImportedRoute (route .sourceNode, route .destinationNode, route);
    },
-   deleteSimpleRoute: function (route)
+   deleteSimpleRoute (route)
    {
       const id = X3DRoute .getId (route .getSourceField (), route .getDestinationField ());
 
@@ -751,7 +751,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
          importedDestinationNode .deleteRoute (route);
       }
    },
-   getRoute: function (sourceNode, sourceField, destinationNode, destinationField)
+   getRoute (sourceNode, sourceField, destinationNode, destinationField)
    {
       sourceNode       = X3DCast (X3DConstants .X3DNode, sourceNode, false);
       sourceField      = String (sourceField)
@@ -769,19 +769,19 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
 
       return this [_routes] .get (X3DRoute .getId (sourceField, destinationField));
    },
-   getRoutes: function ()
+   getRoutes ()
    {
       return this [_routes];
    },
-   getWorldInfos: function ()
+   getWorldInfos ()
    {
       return this ._worldInfos;
    },
-   addWorldInfo: function (worldInfoNode)
+   addWorldInfo (worldInfoNode)
    {
       this ._worldInfos .push (worldInfoNode);
    },
-   removeWorldInfo: function (worldInfoNode)
+   removeWorldInfo (worldInfoNode)
    {
       for (let i = this ._worldInfos .length - 1; i >= 0; -- i)
       {
@@ -789,7 +789,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
             this ._worldInfos .splice (i, 1);
       }
    },
-   toVRMLStream: function (generator)
+   toVRMLStream (generator)
    {
       generator .PushExecutionContext (this);
       generator .EnterScope ();
@@ -849,7 +849,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
       generator .LeaveScope ();
       generator .PopExecutionContext ();
    },
-   toXMLStream: function (generator)
+   toXMLStream (generator)
    {
       generator .PushExecutionContext (this);
       generator .EnterScope ();
@@ -885,7 +885,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
       generator .LeaveScope ();
       generator .PopExecutionContext ();
    },
-   toJSONStream: function (generator)
+   toJSONStream (generator)
    {
       generator .PushExecutionContext (this);
       generator .EnterScope ();
@@ -939,7 +939,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
       generator .LeaveScope ();
       generator .PopExecutionContext ();
    },
-   dispose: function ()
+   dispose ()
    {
       for (const route of [... this [_routes]])
          this .deleteRoute (route);

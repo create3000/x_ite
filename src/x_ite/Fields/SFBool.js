@@ -55,36 +55,36 @@ function SFBool (value)
 SFBool .prototype = Object .assign (Object .create (X3DField .prototype),
 {
    constructor: SFBool,
-   copy: function ()
+   copy ()
    {
       return new SFBool (this .getValue ());
    },
-   isDefaultValue: function ()
+   isDefaultValue ()
    {
       return this .getValue () === false;
    },
-   set: function (value)
+   set (value)
    {
       X3DField .prototype .set .call (this, !! value);
    },
    valueOf: X3DField .prototype .getValue,
-   toStream: function (generator)
+   toStream (generator)
    {
       generator .string += this .getValue () ? "TRUE" : "FALSE";
    },
-   toVRMLStream: function (generator)
+   toVRMLStream (generator)
    {
       this .toStream (generator);
    },
-   toXMLStream: function (generator)
+   toXMLStream (generator)
    {
       generator .string += this .getValue () ? "true" : "false";
    },
-   toJSONStream: function (generator)
+   toJSONStream (generator)
    {
       this .toJSONStreamValue (generator);
    },
-   toJSONStreamValue: function (generator)
+   toJSONStreamValue (generator)
    {
       generator .string += this .getValue () ? "true" : "false";
    },

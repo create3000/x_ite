@@ -59,23 +59,23 @@ function FlyViewer (executionContext, navigationInfo)
 FlyViewer .prototype = Object .assign (Object .create (X3DFlyViewer .prototype),
 {
    constructor: FlyViewer,
-   addCollision: function ()
+   addCollision ()
    {
       this .getBrowser () .addCollision (this);
    },
-   removeCollision: function ()
+   removeCollision ()
    {
       this .getBrowser () .removeCollision (this);
    },
-   getFlyDirection: function (fromVector, toVector, direction)
+   getFlyDirection (fromVector, toVector, direction)
    {
       return direction .assign (toVector) .subtract (fromVector);
    },
-   getTranslationOffset: function (velocity)
+   getTranslationOffset (velocity)
    {
       return this .getActiveViewpoint () .getUserOrientation () .multVecRot (velocity);
    },
-   constrainPanDirection: function (direction)
+   constrainPanDirection (direction)
    {
       return direction;
    },

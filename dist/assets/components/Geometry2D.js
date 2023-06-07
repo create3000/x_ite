@@ -275,17 +275,17 @@ function Circle2DOptions (executionContext)
 Circle2DOptions .prototype = Object .assign (Object .create ((X3DBaseNode_default()).prototype),
 {
    constructor: Circle2DOptions,
-   initialize: function ()
+   initialize ()
    {
       this .addInterest ("build", this);
 
       this .build ();
    },
-   getVertices: function ()
+   getVertices ()
    {
       return this .vertices;
    },
-   build: function ()
+   build ()
    {
       const
          dimension = this ._dimension .getValue (),
@@ -393,25 +393,25 @@ function Disk2DOptions (executionContext)
 Disk2DOptions .prototype = Object .assign (Object .create ((X3DBaseNode_default()).prototype),
 {
    constructor: Disk2DOptions,
-   initialize: function ()
+   initialize ()
    {
       this .addInterest ("build", this);
 
       this .build ();
    },
-   getCircleVertices: function ()
+   getCircleVertices ()
    {
       return this .circleVertices;
    },
-   getDiskTexCoords: function ()
+   getDiskTexCoords ()
    {
       return this .diskTexCoords;
    },
-   getDiskNormals: function ()
+   getDiskNormals ()
    {
       return this .diskNormals;
    },
-   getDiskVertices: function ()
+   getDiskVertices ()
    {
       return this .diskVertices;
    },
@@ -561,11 +561,11 @@ function Rectangle2DOptions (executionContext)
 Rectangle2DOptions .prototype = Object .assign (Object .create ((X3DBaseNode_default()).prototype),
 {
    constructor: Rectangle2DOptions,
-   initialize: function ()
+   initialize ()
    {
       X3DBaseNode_default().prototype.initialize.call (this);
    },
-   getGeometry: function ()
+   getGeometry ()
    {
       if (this .geometry)
          return this .geometry;
@@ -679,31 +679,31 @@ function X3DGeometry2DContext () { }
 
 X3DGeometry2DContext .prototype =
 {
-   initialize: function ()
+   initialize ()
    {
       this .setPrimitiveQuality2D (this .getBrowserOptions () .getPrimitiveQuality ());
    },
-   getArc2DOptions: function ()
+   getArc2DOptions ()
    {
       return getOptionNode .call (this, "getArc2DOptions", Geometry2D_Arc2DOptions);
    },
-   getArcClose2DOptions: function ()
+   getArcClose2DOptions ()
    {
       return getOptionNode .call (this, "getArcClose2DOptions", Geometry2D_ArcClose2DOptions);
    },
-   getCircle2DOptions: function ()
+   getCircle2DOptions ()
    {
       return getOptionNode .call (this, "getCircle2DOptions", Geometry2D_Circle2DOptions);
    },
-   getDisk2DOptions: function ()
+   getDisk2DOptions ()
    {
       return getOptionNode .call (this, "getDisk2DOptions", Geometry2D_Disk2DOptions);
    },
-   getRectangle2DOptions: function ()
+   getRectangle2DOptions ()
    {
       return getOptionNode .call (this, "getRectangle2DOptions", Geometry2D_Rectangle2DOptions);
    },
-   setPrimitiveQuality2D: function (primitiveQuality)
+   setPrimitiveQuality2D (primitiveQuality)
    {
       const
          arc      = this .getArc2DOptions (),
@@ -844,7 +844,7 @@ function Arc2D (executionContext)
 Arc2D .prototype = Object .assign (Object .create ((X3DLineGeometryNode_default()).prototype),
 {
    constructor: Arc2D,
-   set_live__: function ()
+   set_live__ ()
    {
       X3DLineGeometryNode_default().prototype.set_live__.call (this);
 
@@ -853,7 +853,7 @@ Arc2D .prototype = Object .assign (Object .create ((X3DLineGeometryNode_default(
       else
          this .getBrowser () .getArc2DOptions () .removeInterest ("requestRebuild", this);
    },
-   getSweepAngle: function ()
+   getSweepAngle ()
    {
       const
          start = Algorithm_default().interval (this ._startAngle .getValue (), 0, Math .PI * 2),
@@ -873,7 +873,7 @@ Arc2D .prototype = Object .assign (Object .create ((X3DLineGeometryNode_default(
       // We must test for NAN, as NAN to int is undefined.
       return 0;
    },
-   build: function ()
+   build ()
    {
       const
          options     = this .getBrowser () .getArc2DOptions (),
@@ -1014,7 +1014,7 @@ function ArcClose2D (executionContext)
 ArcClose2D .prototype = Object .assign (Object .create ((X3DGeometryNode_default()).prototype),
 {
    constructor: ArcClose2D,
-   set_live__: function ()
+   set_live__ ()
    {
       X3DGeometryNode_default().prototype.set_live__.call (this);
 
@@ -1023,7 +1023,7 @@ ArcClose2D .prototype = Object .assign (Object .create ((X3DGeometryNode_default
       else
          this .getBrowser () .getArcClose2DOptions () .removeInterest ("requestRebuild", this);
    },
-   getSweepAngle: function ()
+   getSweepAngle ()
    {
       const
          start = Algorithm_default().interval (this ._startAngle .getValue (), 0, Math .PI * 2),
@@ -1241,7 +1241,7 @@ function Circle2D (executionContext)
 Circle2D .prototype = Object .assign (Object .create ((X3DLineGeometryNode_default()).prototype),
 {
    constructor: Circle2D,
-   set_live__: function ()
+   set_live__ ()
    {
       X3DLineGeometryNode_default().prototype.set_live__.call (this);
 
@@ -1250,7 +1250,7 @@ Circle2D .prototype = Object .assign (Object .create ((X3DLineGeometryNode_defau
       else
          this .getBrowser () .getCircle2DOptions () .removeInterest ("requestRebuild", this);
    },
-   build: function ()
+   build ()
    {
       const
          options     = this .getBrowser () .getCircle2DOptions (),
@@ -1383,11 +1383,11 @@ function Disk2D (executionContext)
 Disk2D .prototype = Object .assign (Object .create ((X3DGeometryNode_default()).prototype),
 {
    constructor: Disk2D,
-   initialize: function ()
+   initialize ()
    {
       X3DGeometryNode_default().prototype.initialize.call (this);
    },
-   set_live__: function ()
+   set_live__ ()
    {
       X3DGeometryNode_default().prototype.set_live__.call (this);
 
@@ -1396,7 +1396,7 @@ Disk2D .prototype = Object .assign (Object .create ((X3DGeometryNode_default()).
       else
          this .getBrowser () .getDisk2DOptions () .removeInterest ("requestRebuild", this);
    },
-   build: function ()
+   build ()
    {
       const
          browser     = this .getBrowser (),
@@ -1525,7 +1525,7 @@ Disk2D .prototype = Object .assign (Object .create ((X3DGeometryNode_default()).
       this .setSolid (this ._solid .getValue ());
       this .setBase ((X3DGeometryNode_default()));
    },
-   setBase: function (base)
+   setBase (base)
    {
       this .intersectsLine         = base .prototype .intersectsLine;
       this .intersectsBox          = base .prototype .intersectsBox;
@@ -1534,7 +1534,7 @@ Disk2D .prototype = Object .assign (Object .create ((X3DGeometryNode_default()).
       this .displaySimpleParticles = base .prototype .displaySimpleParticles;
       this .displayParticles       = base .prototype .displayParticles;
    },
-   updateRenderFunctions: function ()
+   updateRenderFunctions ()
    { },
 });
 
@@ -1643,7 +1643,7 @@ function Polyline2D (executionContext)
 Polyline2D .prototype = Object .assign (Object .create ((X3DLineGeometryNode_default()).prototype),
 {
    constructor: Polyline2D,
-   build: function ()
+   build ()
    {
       const
          lineSegments = this ._lineSegments .getValue (),
@@ -1760,7 +1760,7 @@ function Polypoint2D (executionContext)
 Polypoint2D .prototype = Object .assign (Object .create ((X3DPointGeometryNode_default()).prototype),
 {
    constructor: Polypoint2D,
-   build: function ()
+   build ()
    {
       const
          point       = this ._point .getValue (),
@@ -2035,7 +2035,7 @@ function TriangleSet2D (executionContext)
 TriangleSet2D .prototype = Object .assign (Object .create ((X3DGeometryNode_default()).prototype),
 {
    constructor: TriangleSet2D,
-   build: function ()
+   build ()
    {
       const
          vertices    = this ._vertices .getValue (),
@@ -2050,7 +2050,7 @@ TriangleSet2D .prototype = Object .assign (Object .create ((X3DGeometryNode_defa
 
       this .setSolid (this ._solid .getValue ());
    },
-   buildTexCoords: function ()
+   buildTexCoords ()
    {
       const texCoordArray = this .getTexCoords ();
 

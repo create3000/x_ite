@@ -67,7 +67,7 @@ function ComposedTexture3D (executionContext)
 ComposedTexture3D .prototype = Object .assign (Object .create (X3DTexture3DNode .prototype),
 {
    constructor: ComposedTexture3D,
-   initialize: function ()
+   initialize ()
    {
       X3DTexture3DNode .prototype .initialize .call (this);
 
@@ -80,11 +80,11 @@ ComposedTexture3D .prototype = Object .assign (Object .create (X3DTexture3DNode 
 
       this .set_texture__ ();
    },
-   checkLoadState: function ()
+   checkLoadState ()
    {
       return this ._loadState .getValue ();
    },
-   set_texture__: function ()
+   set_texture__ ()
    {
       const textureNodes = this .textureNodes;
 
@@ -106,15 +106,15 @@ ComposedTexture3D .prototype = Object .assign (Object .create (X3DTexture3DNode 
 
       this .set_update__ ();
    },
-   set_update__: function ()
+   set_update__ ()
    {
       this ._update .addEvent ();
    },
-   isComplete: function ()
+   isComplete ()
    {
       return this .textureNodes .every (textureNode => textureNode .checkLoadState () === X3DConstants .COMPLETE_STATE || textureNode .getWidth ());
    },
-   update: function ()
+   update ()
    {
       const textureNodes = this .textureNodes
 

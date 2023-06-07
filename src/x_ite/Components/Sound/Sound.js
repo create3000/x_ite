@@ -79,7 +79,7 @@ function Sound (executionContext)
 Sound .prototype = Object .assign (Object .create (X3DSoundNode .prototype),
 {
    constructor: Sound,
-   initialize: function ()
+   initialize ()
    {
       X3DSoundNode .prototype .initialize .call (this);
 
@@ -91,7 +91,7 @@ Sound .prototype = Object .assign (Object .create (X3DSoundNode .prototype),
       this .set_live__ ();
       this .set_source__ ();
    },
-   setTraversed: function (value)
+   setTraversed (value)
    {
       if (value)
       {
@@ -106,11 +106,11 @@ Sound .prototype = Object .assign (Object .create (X3DSoundNode .prototype),
 
       this .currentTraversed = value;
    },
-   getTraversed: function ()
+   getTraversed ()
    {
       return this .currentTraversed;
    },
-   set_live__: function ()
+   set_live__ ()
    {
       if (this .getLive () .getValue () && this ._traversed .getValue ())
       {
@@ -121,14 +121,14 @@ Sound .prototype = Object .assign (Object .create (X3DSoundNode .prototype),
          this .getBrowser () .sensorEvents () .removeInterest ("update", this);
       }
    },
-   set_source__: function ()
+   set_source__ ()
    {
       if (this .sourceNode)
          this .sourceNode .setVolume (0);
 
       this .sourceNode = X3DCast (X3DConstants .X3DSoundSourceNode, this ._source);
    },
-   update: function ()
+   update ()
    {
       if (! this .getTraversed ())
       {

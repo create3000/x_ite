@@ -61,13 +61,13 @@ function BooleanFilter (executionContext)
 BooleanFilter .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 {
    constructor: BooleanFilter,
-   initialize: function ()
+   initialize ()
    {
       X3DChildNode .prototype .initialize .call (this);
 
       this ._set_boolean .addInterest ("set_boolean__", this);
    },
-   set_boolean__: function ()
+   set_boolean__ ()
    {
       const value = this ._set_boolean .getValue ();
 

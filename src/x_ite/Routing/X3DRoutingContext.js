@@ -62,16 +62,16 @@ function X3DRoutingContext ()
 X3DRoutingContext .prototype =
 {
    constructor: X3DRoutingContext,
-   initialize: function () { },
-   addTaintedField: function (field, event)
+   initialize () { },
+   addTaintedField (field, event)
    {
       this [_taintedFields] .push (field, event);
    },
-   addTaintedNode: function (node)
+   addTaintedNode (node)
    {
       this [_taintedNodes] .push (node);
    },
-   [Symbol .for ("X_ITE.X3DRoutingContext.processEvents")]: function ()
+   [Symbol .for ("X_ITE.X3DRoutingContext.processEvents")] ()
    {
       do
       {
@@ -111,7 +111,7 @@ X3DRoutingContext .prototype =
       }
       while (this [_taintedFields] .length);
    },
-   dispose: function () { },
+   dispose () { },
 };
 
 export default X3DRoutingContext;

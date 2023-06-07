@@ -66,7 +66,7 @@ function Layer (executionContext)
 Layer .prototype = Object .assign (Object .create (X3DLayerNode .prototype),
 {
    constructor: Layer,
-   initialize: function ()
+   initialize ()
    {
       X3DLayerNode .prototype .initialize .call (this);
 

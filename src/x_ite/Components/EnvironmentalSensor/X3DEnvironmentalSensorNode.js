@@ -68,7 +68,7 @@ function X3DEnvironmentalSensorNode (executionContext)
 X3DEnvironmentalSensorNode .prototype = Object .assign (Object .create (X3DSensorNode .prototype),
 {
    constructor: X3DEnvironmentalSensorNode,
-   initialize: function ()
+   initialize ()
    {
       X3DSensorNode .prototype .initialize .call (this);
 
@@ -80,7 +80,7 @@ X3DEnvironmentalSensorNode .prototype = Object .assign (Object .create (X3DSenso
 
       this .set_live__ ();
    },
-   set_live__: function ()
+   set_live__ ()
    {
       if (this ._traversed .getValue () && this .getLive () .getValue () && this ._enabled .getValue () && !(this .zeroTest && this ._size. getValue () .equals (Vector3 .Zero)))
       {
@@ -97,15 +97,15 @@ X3DEnvironmentalSensorNode .prototype = Object .assign (Object .create (X3DSenso
          }
       }
    },
-   setZeroTest: function (value)
+   setZeroTest (value)
    {
       this .zeroTest = value;
    },
-   getZeroTest: function ()
+   getZeroTest ()
    {
       return this .zeroTest;
    },
-   setTraversed: function (value)
+   setTraversed (value)
    {
       if (value)
       {
@@ -120,11 +120,11 @@ X3DEnvironmentalSensorNode .prototype = Object .assign (Object .create (X3DSenso
 
       this .currentTraversed = value;
    },
-   getTraversed: function ()
+   getTraversed ()
    {
       return this .currentTraversed;
    },
-   update: function () { },
+   update () { },
 });
 
 Object .defineProperties (X3DEnvironmentalSensorNode,

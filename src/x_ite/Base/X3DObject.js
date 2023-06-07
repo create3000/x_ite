@@ -64,31 +64,31 @@ X3DObject .prototype =
    [_interests]: new Map (),
    [_values]: [ ],
    [_userData]: new Map (),
-   getId: function ()
+   getId ()
    {
       return X3DObject .getId (this);
    },
-   getTypeName: function ()
+   getTypeName ()
    {
       return this .constructor .typeName;
    },
-   setName: function (value)
+   setName (value)
    {
       this [_name] = value;
    },
-   getName: function ()
+   getName ()
    {
       return this [_name];
    },
-   getDisplayName: function ()
+   getDisplayName ()
    {
       return this [_name];
    },
-   hasInterest: function (callbackName, object)
+   hasInterest (callbackName, object)
    {
       return this [_interests] .has (X3DObject .getInterestId (callbackName, object));
    },
-   addInterest: function (callbackName, object, ... args)
+   addInterest (callbackName, object, ... args)
    {
       if (this [_interests] === X3DObject .prototype [_interests])
       {
@@ -102,15 +102,15 @@ X3DObject .prototype =
 
       this [_interests] .set (interestId, callback .bind (object, ... args, this));
    },
-   removeInterest: function (callbackName, object)
+   removeInterest (callbackName, object)
    {
       this [_interests] .delete (X3DObject .getInterestId (callbackName, object));
    },
-   getInterests: function ()
+   getInterests ()
    {
       return this [_interests];
    },
-   processInterests: function ()
+   processInterests ()
    {
       if (this [_interests] .size)
       {
@@ -118,22 +118,22 @@ X3DObject .prototype =
             interest ();
       }
    },
-   getUserData: function (key)
+   getUserData (key)
    {
       return this [_userData] .get (key);
    },
-   setUserData: function (key, value)
+   setUserData (key, value)
    {
       if (this [_userData] === X3DObject .prototype [_userData])
          this [_userData] = new Map ();
 
       this [_userData] .set (key, value);
    },
-   removeUserData: function (key)
+   removeUserData (key)
    {
       this [_userData] .delete (key);
    },
-   toString: function (options = Object .prototype)
+   toString (options = Object .prototype)
    {
       const generator = new Generator (options);
 
@@ -144,7 +144,7 @@ X3DObject .prototype =
 
       return generator .string;
    },
-   toVRMLString: function  (options = Object .prototype)
+   toVRMLString  (options = Object .prototype)
    {
       const generator = new Generator (options);
 
@@ -155,7 +155,7 @@ X3DObject .prototype =
 
       return generator .string;
    },
-   toXMLString: function  (options = Object .prototype)
+   toXMLString  (options = Object .prototype)
    {
       const generator = new Generator (options);
 
@@ -166,7 +166,7 @@ X3DObject .prototype =
 
       return generator .string;
    },
-   toJSONString: function (options = Object .prototype)
+   toJSONString (options = Object .prototype)
    {
       const generator = new Generator (options);
 
@@ -177,11 +177,11 @@ X3DObject .prototype =
 
       return generator .string;
    },
-   toStream: function (generator)
+   toStream (generator)
    {
       generator .string = Object .prototype .toString .call (this);
    },
-   dispose: function ()
+   dispose ()
    {
       this [_interests] .clear ();
       this [_userData]  .clear ();
@@ -195,7 +195,7 @@ Object .defineProperties (X3DObject .prototype,
 {
    [Symbol .toStringTag]:
    {
-      get: function () { return this .getTypeName (); },
+      get () { return this .getTypeName (); },
    },
 });
 
@@ -246,7 +246,7 @@ Object .assign (X3DObject,
          return counter;
       };
    })(),
-   getInterestId: function (callbackName, object)
+   getInterestId (callbackName, object)
    {
       return this .getId (object) + "." + this .getId (object [callbackName]);
    },

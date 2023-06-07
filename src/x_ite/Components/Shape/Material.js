@@ -70,7 +70,7 @@ function Material (executionContext)
 Material .prototype = Object .assign (Object .create (X3DOneSidedMaterialNode .prototype),
 {
    constructor: Material,
-   initialize: function ()
+   initialize ()
    {
       X3DOneSidedMaterialNode .prototype .initialize .call (this);
 
@@ -97,17 +97,17 @@ Material .prototype = Object .assign (Object .create (X3DOneSidedMaterialNode .p
       this .set_occlusionTexture__ ();
       this .set_transparent__ ();
    },
-   set_ambientIntensity__: function ()
+   set_ambientIntensity__ ()
    {
       this .ambientIntensity = Algorithm .clamp (this ._ambientIntensity .getValue (), 0, 1);
    },
-   set_ambientTexture__: function ()
+   set_ambientTexture__ ()
    {
       this .ambientTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._ambientTexture);
 
       this .setTexture (this .getTextureIndices () .AMBIENT_TEXTURE, this .ambientTextureNode);
    },
-   set_diffuseColor__: function ()
+   set_diffuseColor__ ()
    {
       //We cannot use this in Windows Edge:
       //this .diffuseColor .set (this ._diffuseColor .getValue ());
@@ -120,7 +120,7 @@ Material .prototype = Object .assign (Object .create (X3DOneSidedMaterialNode .p
       diffuseColor [1] = diffuseColor_ .g;
       diffuseColor [2] = diffuseColor_ .b;
    },
-   set_diffuseTexture__: function ()
+   set_diffuseTexture__ ()
    {
       if (this .diffuseTextureNode)
          this .diffuseTextureNode ._transparent .removeInterest ("set_transparent__", this);
@@ -132,7 +132,7 @@ Material .prototype = Object .assign (Object .create (X3DOneSidedMaterialNode .p
 
       this .setTexture (this .getTextureIndices () .DIFFUSE_TEXTURE, this .diffuseTextureNode);
    },
-   set_specularColor__: function ()
+   set_specularColor__ ()
    {
       //We cannot use this in Windows Edge:
       //this .specularColor .set (this ._specularColor .getValue ());
@@ -145,37 +145,37 @@ Material .prototype = Object .assign (Object .create (X3DOneSidedMaterialNode .p
       specularColor [1] = specularColor_ .g;
       specularColor [2] = specularColor_ .b;
    },
-   set_specularTexture__: function ()
+   set_specularTexture__ ()
    {
       this .specularTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._specularTexture);
 
       this .setTexture (this .getTextureIndices () .SPECULAR_TEXTURE, this .specularTextureNode);
    },
-   set_shininess__: function ()
+   set_shininess__ ()
    {
       this .shininess = Algorithm .clamp (this ._shininess .getValue (), 0, 1);
    },
-   set_shininessTexture__: function ()
+   set_shininessTexture__ ()
    {
       this .shininessTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._shininessTexture);
 
       this .setTexture (this .getTextureIndices () .SHININESS_TEXTURE, this .shininessTextureNode);
    },
-   set_occlusionStrength__: function ()
+   set_occlusionStrength__ ()
    {
       this .occlusionStrength = Algorithm .clamp (this ._occlusionStrength .getValue (), 0, 1);
    },
-   set_occlusionTexture__: function ()
+   set_occlusionTexture__ ()
    {
       this .occlusionTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._occlusionTexture);
 
       this .setTexture (this .getTextureIndices () .OCCLUSION_TEXTURE, this .occlusionTextureNode);
    },
-   set_transparent__: function ()
+   set_transparent__ ()
    {
       this .setTransparent (!!(this .getTransparency () || this .diffuseTextureNode ?.isTransparent ()));
    },
-   getBaseTexture: function ()
+   getBaseTexture ()
    {
       return this .diffuseTexture;
    },
@@ -198,11 +198,11 @@ Material .prototype = Object .assign (Object .create (X3DOneSidedMaterialNode .p
          return textureIndices;
       };
    })(),
-   getMaterialKey: function ()
+   getMaterialKey ()
    {
       return "2";
    },
-   createShader: function (key, geometryContext, renderContext)
+   createShader (key, geometryContext, renderContext)
    {
       const
          browser = this .getBrowser (),
@@ -253,7 +253,7 @@ Material .prototype = Object .assign (Object .create (X3DOneSidedMaterialNode .p
 
       return shaderNode;
    },
-   setShaderUniforms: function (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
+   setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
    {
       X3DOneSidedMaterialNode .prototype .setShaderUniforms .call (this, gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping);
 

@@ -66,7 +66,7 @@ function GoldenGate (scene)
 GoldenGate .prototype = Object .assign (Object .create (X3DParser .prototype),
 {
    constructor: GoldenGate,
-   parseIntoScene: function (x3dSyntax, resolve, reject)
+   parseIntoScene (x3dSyntax, resolve, reject)
    {
       for (const Parser of GoldenGate .Parser)
       {
@@ -105,7 +105,7 @@ GoldenGate .prototype = Object .assign (Object .create (X3DParser .prototype),
       else
          throw new Error ("Couldn't parse X3D. No suitable file handler found for '" + this .getScene () .worldURL + "'.");
    },
-   getInput: function (encoding, x3dSyntax)
+   getInput (encoding, x3dSyntax)
    {
       if (this .inputs .has (encoding))
          return this .inputs .get (encoding);
@@ -116,7 +116,7 @@ GoldenGate .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return input;
    },
-   createInput: function (encoding, x3dSyntax)
+   createInput (encoding, x3dSyntax)
    {
       try
       {

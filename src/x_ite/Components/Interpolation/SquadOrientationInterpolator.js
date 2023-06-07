@@ -67,13 +67,13 @@ function SquadOrientationInterpolator (executionContext)
 SquadOrientationInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
 {
    constructor: SquadOrientationInterpolator,
-   initialize: function ()
+   initialize ()
    {
       X3DInterpolatorNode .prototype .initialize .call (this);
 
       this ._keyValue .addInterest ("set_keyValue__", this);
    },
-   set_keyValue__: function ()
+   set_keyValue__ ()
    {
       const
          key      = this ._key,
@@ -86,7 +86,7 @@ SquadOrientationInterpolator .prototype = Object .assign (Object .create (X3DInt
                              this ._key,
                              this ._keyValue);
    },
-   interpolate: function (index0, index1, weight)
+   interpolate (index0, index1, weight)
    {
       try
       {

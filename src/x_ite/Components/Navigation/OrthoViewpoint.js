@@ -77,7 +77,7 @@ function OrthoViewpoint (executionContext)
 OrthoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prototype),
 {
    constructor: OrthoViewpoint,
-   initialize: function ()
+   initialize ()
    {
       X3DViewpointNode .prototype .initialize .call (this);
 
@@ -101,14 +101,14 @@ OrthoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .pr
       this .fieldOfViewOffsetInterpolator2 ._value_changed .addInterest ("set_fieldOfViewOffset__", this);
       this .fieldOfViewOffsetInterpolator3 ._value_changed .addInterest ("set_fieldOfViewOffset__", this);
    },
-   set_fieldOfViewOffset__: function ()
+   set_fieldOfViewOffset__ ()
    {
       this ._fieldOfViewOffset [0] = this .fieldOfViewOffsetInterpolator0 ._value_changed .getValue ();
       this ._fieldOfViewOffset [1] = this .fieldOfViewOffsetInterpolator1 ._value_changed .getValue ();
       this ._fieldOfViewOffset [2] = this .fieldOfViewOffsetInterpolator2 ._value_changed .getValue ();
       this ._fieldOfViewOffset [3] = this .fieldOfViewOffsetInterpolator3 ._value_changed .getValue ();
    },
-   resetUserOffsets: function ()
+   resetUserOffsets ()
    {
       X3DViewpointNode .prototype .resetUserOffsets .call (this);
 
@@ -117,7 +117,7 @@ OrthoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .pr
       this ._fieldOfViewOffset [2] = 0;
       this ._fieldOfViewOffset [3] = 0;
    },
-   getRelativeTransformation: function (fromViewpointNode)
+   getRelativeTransformation (fromViewpointNode)
    {
       const relative = X3DViewpointNode .prototype .getRelativeTransformation .call (this, fromViewpointNode);
 
@@ -131,7 +131,7 @@ OrthoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .pr
 
       return relative;
    },
-   setInterpolators: function (fromViewpointNode, relative)
+   setInterpolators (fromViewpointNode, relative)
    {
       if (fromViewpointNode .constructor === this .constructor)
       {
@@ -165,63 +165,63 @@ OrthoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .pr
          this ._fieldOfViewScale  = 1;
       }
    },
-   getLogarithmicDepthBuffer: function ()
+   getLogarithmicDepthBuffer ()
    {
       return false;
    },
-   getMinimumX: function ()
+   getMinimumX ()
    {
       return this ._fieldOfView .length > 0 ? this ._fieldOfView [0] : -1;
    },
-   getUserMinimumX: function ()
+   getUserMinimumX ()
    {
       return (this .getMinimumX () + this ._fieldOfViewOffset [0]) * this ._fieldOfViewScale .getValue ();
    },
-   getMinimumY: function ()
+   getMinimumY ()
    {
       return this ._fieldOfView .length > 1 ? this ._fieldOfView [1] : -1;
    },
-   getUserMinimumY: function ()
+   getUserMinimumY ()
    {
       return (this .getMinimumY () + this ._fieldOfViewOffset [1]) * this ._fieldOfViewScale .getValue ();
    },
-   getMaximumX: function ()
+   getMaximumX ()
    {
       return this ._fieldOfView .length > 2 ? this ._fieldOfView [2] : 1;
    },
-   getUserMaximumX: function ()
+   getUserMaximumX ()
    {
       return (this .getMaximumX () + this ._fieldOfViewOffset [2]) * this ._fieldOfViewScale .getValue ();
    },
-   getMaximumY: function ()
+   getMaximumY ()
    {
       return this ._fieldOfView .length > 3 ? this ._fieldOfView [3] : 1;
    },
-   getUserMaximumY: function ()
+   getUserMaximumY ()
    {
       return (this .getMaximumY () + this ._fieldOfViewOffset [3]) * this ._fieldOfViewScale .getValue ();
    },
-   getSizeX: function ()
+   getSizeX ()
    {
       return this .getMaximumX () - this .getMinimumX ();
    },
-   getUserSizeX: function ()
+   getUserSizeX ()
    {
       return this .getUserMaximumX () - this .getUserMinimumX ();
    },
-   getSizeY: function ()
+   getSizeY ()
    {
       return this .getMaximumY () - this .getMinimumY ();
    },
-   getUserSizeY: function ()
+   getUserSizeY ()
    {
       return this .getUserMaximumY () - this .getUserMinimumY ();
    },
-   getMaxFarValue: function ()
+   getMaxFarValue ()
    {
       return 1e4;
    },
-   getScreenScale: function (point, viewport, screenScale)
+   getScreenScale (point, viewport, screenScale)
    {
       const
          width  = viewport [2],
@@ -262,11 +262,11 @@ OrthoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .pr
          return viewportSize .set (sizeX, sizeX / aspect);
       };
    })(),
-   getLookAtDistance: function (bbox)
+   getLookAtDistance (bbox)
    {
       return bbox .size .magnitude () / 2 + 10;
    },
-   getProjectionMatrixWithLimits: function (nearValue, farValue, viewport)
+   getProjectionMatrixWithLimits (nearValue, farValue, viewport)
    {
       const
          width  = viewport [2],
@@ -292,7 +292,7 @@ OrthoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .pr
          return Camera .ortho (this .getUserMinimumX (), this .getUserMaximumX (), center - size1_2, center + size1_2, nearValue, farValue, this .projectionMatrix);
       }
    },
-   viewAll: function (bbox)
+   viewAll (bbox)
    {
       X3DViewpointNode .prototype .viewAll .call (this, bbox);
 

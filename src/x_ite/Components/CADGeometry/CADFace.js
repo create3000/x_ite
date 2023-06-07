@@ -69,7 +69,7 @@ CADFace .prototype = Object .assign (Object .create (X3DProductStructureChildNod
    X3DBoundedObject .prototype,
 {
    constructor: CADFace,
-   initialize: function ()
+   initialize ()
    {
       X3DProductStructureChildNode .prototype .initialize .call (this);
       X3DBoundedObject             .prototype .initialize .call (this);
@@ -78,14 +78,14 @@ CADFace .prototype = Object .assign (Object .create (X3DProductStructureChildNod
 
       this .set_shape__ ();
    },
-   getBBox: function (bbox, shadows)
+   getBBox (bbox, shadows)
    {
       if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
          return this .visibleNode ?.getBBox (bbox, shadows) ?? bbox .set ();
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
-   set_shape__: function ()
+   set_shape__ ()
    {
       if (this .childNode)
       {
@@ -143,15 +143,15 @@ CADFace .prototype = Object .assign (Object .create (X3DProductStructureChildNod
       this .set_visible__ ();
       this .set_bboxDisplay__ ();
    },
-   set_cameraObject__: function ()
+   set_cameraObject__ ()
    {
       this .setCameraObject (!!this .visibleNode ?.isCameraObject ());
    },
-   set_transformSensors__: function ()
+   set_transformSensors__ ()
    {
       this .setPickableObject (!!this .visibleNode ?.isPickableObject ());
    },
-   set_visible__: function ()
+   set_visible__ ()
    {
       if (this .childNode)
          this .visibleNode = this .childNode ._visible .getValue () ? this .childNode : null;
@@ -161,14 +161,14 @@ CADFace .prototype = Object .assign (Object .create (X3DProductStructureChildNod
       this .set_cameraObject__ ();
       this .set_transformSensors__ ();
    },
-   set_bboxDisplay__: function ()
+   set_bboxDisplay__ ()
    {
       if (this .childNode)
          this .boundedObject = this .childNode ._bboxDisplay .getValue () ? this .childNode : null;
       else
          this .boundedObject = null;
    },
-   traverse: function (type, renderObject)
+   traverse (type, renderObject)
    {
       switch (type)
       {
@@ -206,7 +206,7 @@ CADFace .prototype = Object .assign (Object .create (X3DProductStructureChildNod
          }
       }
    },
-   dispose: function ()
+   dispose ()
    {
       X3DBoundedObject             .prototype .dispose .call (this);
       X3DProductStructureChildNode .prototype .dispose .call (this);

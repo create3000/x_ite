@@ -72,7 +72,7 @@ function BrowserOptions (executionContext)
 BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 {
    constructor: BrowserOptions,
-   initialize: function ()
+   initialize ()
    {
       X3DBaseNode .prototype .initialize .call (this);
 
@@ -168,27 +168,27 @@ BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototy
          }
       };
    })(),
-   getPrimitiveQuality: function ()
+   getPrimitiveQuality ()
    {
       return this .primitiveQuality;
    },
-   getShading: function ()
+   getShading ()
    {
       return this .shading;
    },
-   getTextureQuality: function ()
+   getTextureQuality ()
    {
       return this .textureQuality;
    },
-   set_rubberband__: function (rubberband)
+   set_rubberband__ (rubberband)
    {
       this .localStorage .Rubberband = rubberband .getValue ();
    },
-   set_antialiased__: function ()
+   set_antialiased__ ()
    {
       this .set_multisampling__ (this ._Multisampling);
    },
-   set_primitiveQuality__: function (value)
+   set_primitiveQuality__ (value)
    {
       const
          browser          = this .getBrowser (),
@@ -203,7 +203,7 @@ BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototy
       if (typeof browser .setPrimitiveQuality3D === "function")
          browser .setPrimitiveQuality3D (this .primitiveQuality);
    },
-   set_textureQuality__: function (value)
+   set_textureQuality__ (value)
    {
       const
          browser        = this .getBrowser (),
@@ -237,14 +237,14 @@ BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototy
          browser .setShading (this .shading);
       };
    })(),
-   set_straightenHorizon__: function (straightenHorizon)
+   set_straightenHorizon__ (straightenHorizon)
    {
       this .localStorage .StraightenHorizon = straightenHorizon .getValue ();
 
       if (straightenHorizon .getValue ())
          this .getBrowser () .getActiveLayer () ?.straightenView ();
    },
-   updateContentScale: function ()
+   updateContentScale ()
    {
       const
          browser = this .getBrowser (),
@@ -262,7 +262,7 @@ BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototy
 
       browser .reshape ();
    },
-   set_autoUpdate__: function (autoUpdate)
+   set_autoUpdate__ (autoUpdate)
    {
       const events = ["resize", "scroll", "load"]
          .map (event => `${event}.${this .getTypeName ()}${this .getId ()}`)
@@ -296,7 +296,7 @@ BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototy
          $(window) .off (events);
       }
    },
-   set_contentScale__: function (contentScale)
+   set_contentScale__ (contentScale)
    {
       const browser = this .getBrowser ();
 
@@ -310,7 +310,7 @@ BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototy
 
       browser .reshape ();
    },
-   set_logarithmicDepthBuffer__: function (logarithmicDepthBuffer)
+   set_logarithmicDepthBuffer__ (logarithmicDepthBuffer)
    {
       const
          browser = this .getBrowser (),
@@ -318,7 +318,7 @@ BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototy
 
       browser .getRenderingProperties () ._LogarithmicDepthBuffer = logarithmicDepthBuffer .getValue () && gl .HAS_FEATURE_FRAG_DEPTH;
    },
-   set_multisampling__: function (multisampling)
+   set_multisampling__ (multisampling)
    {
       const
          browser = this .getBrowser (),
@@ -329,7 +329,7 @@ BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototy
 
       browser .reshape ();
    },
-   set_timings__: function (timings)
+   set_timings__ (timings)
    {
       this .localStorage .Timings = timings .getValue ();
    },

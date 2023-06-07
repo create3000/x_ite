@@ -67,19 +67,19 @@ PackagedShader .prototype = Object .assign (Object .create (X3DShaderNode .proto
    X3DProgrammableShaderObject .prototype,
 {
    constructor: PackagedShader,
-   getSourceText: function ()
+   getSourceText ()
    {
       return this ._url;
    },
-   requestImmediateLoad: function (cache = true)
+   requestImmediateLoad (cache = true)
    { },
-   initialize: function ()
+   initialize ()
    {
       X3DShaderNode               .prototype .initialize .call (this);
       X3DUrlObject                .prototype .initialize .call (this);
       X3DProgrammableShaderObject .prototype .initialize .call (this);
    },
-   dispose: function ()
+   dispose ()
    {
       X3DProgrammableShaderObject .prototype .dispose .call (this);
       X3DUrlObject                .prototype .dispose .call (this);

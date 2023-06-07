@@ -73,7 +73,7 @@ const Geospatial =
    GD: GD,
    UTM: UTM,
    GC: GC,
-   getReferenceFrame: function (geoSystem, radians)
+   getReferenceFrame (geoSystem, radians)
    {
       switch (this .getCoordinateSystem (geoSystem))
       {
@@ -98,11 +98,11 @@ const Geospatial =
 
       return new Geodetic (ReferenceEllipsoids .WE, true, radians);
    },
-   getElevationFrame: function (geoSystem, radians)
+   getElevationFrame (geoSystem, radians)
    {
       return new Geodetic (this .getEllipsoid (geoSystem), true, radians);
    },
-   getCoordinateSystem: function (geoSystem)
+   getCoordinateSystem (geoSystem)
    {
       for (const gs of geoSystem)
       {
@@ -114,7 +114,7 @@ const Geospatial =
 
       return GD;
    },
-   getEllipsoid: function (geoSystem)
+   getEllipsoid (geoSystem)
    {
       for (const gs of geoSystem)
       {
@@ -126,7 +126,7 @@ const Geospatial =
 
       return ReferenceEllipsoids .WE;
    },
-   getEllipsoidString: function (geoSystem)
+   getEllipsoidString (geoSystem)
    {
       for (const gs of geoSystem)
       {
@@ -138,7 +138,7 @@ const Geospatial =
 
       return "WE";
    },
-   isStandardOrder: function (geoSystem)
+   isStandardOrder (geoSystem)
    {
       switch (this .getCoordinateSystem (geoSystem))
       {
@@ -158,7 +158,7 @@ const Geospatial =
 
       return this .getLatitudeFirst (geoSystem);
    },
-   getLatitudeFirst: function (geoSystem)
+   getLatitudeFirst (geoSystem)
    {
       for (const gs of geoSystem)
       {
@@ -168,7 +168,7 @@ const Geospatial =
 
       return true;
    },
-   getNorthingFirst: function (geoSystem)
+   getNorthingFirst (geoSystem)
    {
       for (const gs of geoSystem)
       {
@@ -178,7 +178,7 @@ const Geospatial =
 
       return true;
    },
-   getZone: function (geoSystem)
+   getZone (geoSystem)
    {
       for (const gs of geoSystem)
       {
@@ -190,7 +190,7 @@ const Geospatial =
 
       return 1;
    },
-   getNorthernHemisphere: function (geoSystem)
+   getNorthernHemisphere (geoSystem)
    {
       for (const gs of geoSystem)
       {

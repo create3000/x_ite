@@ -90,7 +90,7 @@ function RigidBody (executionContext)
 RigidBody .prototype = Object .assign (Object .create (X3DNode .prototype),
 {
    constructor: RigidBody,
-   initialize: function ()
+   initialize ()
    {
       X3DNode .prototype .initialize .call (this);
 
@@ -120,28 +120,28 @@ RigidBody .prototype = Object .assign (Object .create (X3DNode .prototype),
       this .set_torques__ ();
       this .set_geometry__ ();
    },
-   setCollection: function (value)
+   setCollection (value)
    {
       this ._collection = value;
    },
-   getCollection: function ()
+   getCollection ()
    {
       return this ._collection .getValue ();
    },
-   getRigidBody: function ()
+   getRigidBody ()
    {
       return this .rigidBody;
    },
-   getMatrix: function ()
+   getMatrix ()
    {
       return this .matrix;
    },
-   set_position__: function ()
+   set_position__ ()
    {
       for (var i = 0, length = this .geometryNodes .length; i < length; ++ i)
          this .geometryNodes [i] ._translation = this ._position;
    },
-   set_orientation__: function ()
+   set_orientation__ ()
    {
       for (var i = 0, length = this .geometryNodes .length; i < length; ++ i)
          this .geometryNodes [i] ._rotation = this ._orientation;
@@ -241,7 +241,7 @@ RigidBody .prototype = Object .assign (Object .create (X3DNode .prototype),
          this .rigidBody .setAngularFactor (angularFactor);
       };
    })(),
-   set_damping__: function ()
+   set_damping__ ()
    {
       if (this ._autoDamp .getValue ())
          this .rigidBody .setDamping (this ._linearDampingFactor .getValue (), this ._angularDampingFactor .getValue ());
@@ -282,21 +282,21 @@ RigidBody .prototype = Object .assign (Object .create (X3DNode .prototype),
          this .rigidBody .setMassProps (this ._fixed .getValue () ? 0 : this ._mass .getValue (), localInertia);
       };
    })(),
-   set_forces__: function ()
+   set_forces__ ()
    {
       this .force .set (0, 0, 0);
 
       for (var i = 0, length = this ._forces .length; i < length; ++ i)
          this .force .add (this ._forces [i] .getValue ());
    },
-   set_torques__: function ()
+   set_torques__ ()
    {
       this .torque .set (0, 0, 0);
 
       for (var i = 0, length = this ._torques .length; i < length; ++ i)
          this .torque .add (this ._torques [i] .getValue ());
    },
-   set_disable__: function ()
+   set_disable__ ()
    {
       if (this ._autoDisable .getValue ())
       {
@@ -307,7 +307,7 @@ RigidBody .prototype = Object .assign (Object .create (X3DNode .prototype),
          this .rigidBody .setSleepingThresholds (0, 0);
       }
    },
-   set_geometry__: function ()
+   set_geometry__ ()
    {
       var geometryNodes = this .geometryNodes;
 
@@ -367,7 +367,7 @@ RigidBody .prototype = Object .assign (Object .create (X3DNode .prototype),
 
       this .set_compoundShape__ ();
    },
-   set_body__: function ()
+   set_body__ ()
    {
       this ._otherGeometry .addEvent ();
    },
@@ -451,7 +451,7 @@ RigidBody .prototype = Object .assign (Object .create (X3DNode .prototype),
          this ._angularVelocity = angularVelocity .set (btAngularVelocity .x (), btAngularVelocity .y (), btAngularVelocity .z ());
       };
    })(),
-   dispose: function ()
+   dispose ()
    {
       Ammo .destroy (this .rigidBody);
       Ammo .destroy (this .constructionInfo);

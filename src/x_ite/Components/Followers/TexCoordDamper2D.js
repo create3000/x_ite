@@ -67,7 +67,7 @@ TexCoordDamper2D .prototype = Object .assign (Object .create (X3DDamperNode .pro
    X3DArrayFollowerObject .prototype,
 {
    constructor: TexCoordDamper2D,
-   getVector: function ()
+   getVector ()
    {
       return new Vector2 (0, 0, 0);
    },

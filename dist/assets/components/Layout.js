@@ -151,7 +151,7 @@ function X3DLayoutContext ()
 
 X3DLayoutContext .prototype =
 {
-   getScreenTextureProperties: function ()
+   getScreenTextureProperties ()
    {
       this [_screenTextureProperties] = new (TextureProperties_default()) (this .getPrivateScene ());
 
@@ -441,7 +441,7 @@ Layout .prototype = Object .assign (Object .create (Layout_X3DLayoutNode.prototy
    currentRotation: new (Rotation4_default()) (),
    currentScale: new (Vector3_default()) (0, 0, 0),
    modelViewMatrix: new (Matrix4_default()) (),
-   initialize: function ()
+   initialize ()
    {
       Layout_X3DLayoutNode.prototype.initialize.call (this);
 
@@ -459,7 +459,7 @@ Layout .prototype = Object .assign (Object .create (Layout_X3DLayoutNode.prototy
       this .set_size__ ();
       this .set_scaleMode__ ();
    },
-   set_align__: function ()
+   set_align__ ()
    {
       // X
 
@@ -493,7 +493,7 @@ Layout .prototype = Object .assign (Object .create (Layout_X3DLayoutNode.prototy
       else
          this .alignY = CENTER;
    },
-   set_offsetUnits__: function ()
+   set_offsetUnits__ ()
    {
       if (this ._offsetUnits .length > 0)
       {
@@ -530,7 +530,7 @@ Layout .prototype = Object .assign (Object .create (Layout_X3DLayoutNode.prototy
          this .offsetUnitY = WORLD;
       }
    },
-   set_offset__: function ()
+   set_offset__ ()
    {
       if (this ._offset .length > 0)
       {
@@ -552,7 +552,7 @@ Layout .prototype = Object .assign (Object .create (Layout_X3DLayoutNode.prototy
          this .offsetY = 0;
       }
    },
-   set_sizeUnits__: function ()
+   set_sizeUnits__ ()
    {
       if (this ._sizeUnits .length > 0)
       {
@@ -589,7 +589,7 @@ Layout .prototype = Object .assign (Object .create (Layout_X3DLayoutNode.prototy
          this .sizeUnitY = WORLD;
       }
    },
-   set_size__: function ()
+   set_size__ ()
    {
       if (this ._size .length > 0)
       {
@@ -611,7 +611,7 @@ Layout .prototype = Object .assign (Object .create (Layout_X3DLayoutNode.prototy
          this .sizeY = 0;
       }
    },
-   set_scaleMode__: function ()
+   set_scaleMode__ ()
    {
       if (this ._scaleMode .length > 0)
       {
@@ -654,23 +654,23 @@ Layout .prototype = Object .assign (Object .create (Layout_X3DLayoutNode.prototy
          this .scaleModeY = NONE;
       }
    },
-   getRectangleCenter: function ()
+   getRectangleCenter ()
    {
       return this .rectangleCenter;
    },
-   getRectangleSize: function ()
+   getRectangleSize ()
    {
       return this .rectangleSize;
    },
-   getAlignX: function ()
+   getAlignX ()
    {
       return this .alignX;
    },
-   getAlignY: function ()
+   getAlignY ()
    {
       return this .alignY;
    },
-   getOffsetUnitX: function ()
+   getOffsetUnitX ()
    {
       if (this .offsetUnitX === WORLD)
       {
@@ -682,7 +682,7 @@ Layout .prototype = Object .assign (Object .create (Layout_X3DLayoutNode.prototy
 
       return this .offsetUnitX;
    },
-   getOffsetUnitY: function ()
+   getOffsetUnitY ()
    {
       if (this .offsetUnitY === WORLD)
       {
@@ -694,15 +694,15 @@ Layout .prototype = Object .assign (Object .create (Layout_X3DLayoutNode.prototy
 
       return this .offsetUnitY;
    },
-   getOffsetX: function ()
+   getOffsetX ()
    {
       return this .offsetX;
    },
-   getOffsetY: function ()
+   getOffsetY ()
    {
       return this .offsetY;
    },
-   getSizeUnitX: function ()
+   getSizeUnitX ()
    {
       if (this .sizeUnitX === WORLD)
       {
@@ -714,7 +714,7 @@ Layout .prototype = Object .assign (Object .create (Layout_X3DLayoutNode.prototy
 
       return this .sizeUnitX;
    },
-   getSizeUnitY: function ()
+   getSizeUnitY ()
    {
       if (this .sizeUnitY === WORLD)
       {
@@ -726,15 +726,15 @@ Layout .prototype = Object .assign (Object .create (Layout_X3DLayoutNode.prototy
 
       return this .sizeUnitY;
    },
-   getSizeX: function ()
+   getSizeX ()
    {
       return this .sizeX;
    },
-   getSizeY: function ()
+   getSizeY ()
    {
       return this .sizeY;
    },
-   getScaleModeX: function ()
+   getScaleModeX ()
    {
       if (this .parent)
          return this .scaleModeX;
@@ -744,7 +744,7 @@ Layout .prototype = Object .assign (Object .create (Layout_X3DLayoutNode.prototy
 
       return this .scaleModeX;
    },
-   getScaleModeY: function ()
+   getScaleModeY ()
    {
       if (this .parent)
          return this .scaleModeY;
@@ -754,7 +754,7 @@ Layout .prototype = Object .assign (Object .create (Layout_X3DLayoutNode.prototy
 
       return this .scaleModeY;
    },
-   transform: function (type, renderObject)
+   transform (type, renderObject)
    {
       const parent = this .parent = renderObject .getParentLayout ();
 
@@ -1060,7 +1060,7 @@ function LayoutGroup (executionContext)
 LayoutGroup .prototype = Object .assign (Object .create ((X3DGroupingNode_default()).prototype),
 {
    constructor: LayoutGroup,
-   initialize: function ()
+   initialize ()
    {
       X3DGroupingNode_default().prototype.initialize.call (this);
 
@@ -1070,30 +1070,30 @@ LayoutGroup .prototype = Object .assign (Object .create ((X3DGroupingNode_defaul
       this .set_viewport__ ();
       this .set_layout__ ();
    },
-   set_viewport__: function ()
+   set_viewport__ ()
    {
       this .viewportNode = X3DCast_default() ((X3DConstants_default()).X3DViewportNode, this ._viewport);
    },
-   set_layout__: function ()
+   set_layout__ ()
    {
       this .layoutNode = X3DCast_default() ((X3DConstants_default()).X3DLayoutNode, this ._layout);
    },
-   getBBox: function (bbox, shadows)
+   getBBox (bbox, shadows)
    {
       return X3DGroupingNode_default().prototype.getBBox.call (this, bbox, shadows) .multRight (this .getMatrix ());
    },
-   getMatrix: function ()
+   getMatrix ()
    {
       if (this .layoutNode)
          return this .matrix .assign (this .modelViewMatrix) .inverse () .multLeft (this .screenMatrix);
 
       return this .matrix .identity ();
    },
-   getLayout: function ()
+   getLayout ()
    {
       return this .layoutNode;
    },
-   traverse: function (type, renderObject)
+   traverse (type, renderObject)
    {
       switch (type)
       {
@@ -1255,7 +1255,7 @@ function LayoutLayer (executionContext)
 LayoutLayer .prototype = Object .assign (Object .create ((X3DLayerNode_default()).prototype),
 {
    constructor: LayoutLayer,
-   initialize: function ()
+   initialize ()
    {
       X3DLayerNode_default().prototype.initialize.call (this);
 
@@ -1415,11 +1415,11 @@ ScreenText .prototype = Object .assign (Object .create ((X3DTextGeometry_default
 {
    constructor: ScreenText,
    modelViewMatrix: new (Matrix4_default()) (),
-   isTransparent: function ()
+   isTransparent ()
    {
       return true;
    },
-   getMatrix: function ()
+   getMatrix ()
    {
       return this .matrix;
    },
@@ -1651,7 +1651,7 @@ ScreenText .prototype = Object .assign (Object .create ((X3DTextGeometry_default
             this .textureNode .clear ();
       };
    })(),
-   drawGlyph: function (cx, font, glyph, x, y, size)
+   drawGlyph (cx, font, glyph, x, y, size)
    {
       //console .log (glyph .name, x, y);
 
@@ -1706,7 +1706,7 @@ ScreenText .prototype = Object .assign (Object .create ((X3DTextGeometry_default
          cx .stroke ();
       }
    },
-   getGlyphExtents: function (font, glyph, primitiveQuality, min, max)
+   getGlyphExtents (font, glyph, primitiveQuality, min, max)
    {
       const unitsPerEm = font .unitsPerEm;
 
@@ -1728,7 +1728,7 @@ ScreenText .prototype = Object .assign (Object .create ((X3DTextGeometry_default
          this .getText () .setBBox (bbox);
       };
    })(),
-   display: function (gl, renderContext)
+   display (gl, renderContext)
    {
       Matrix4_default().prototype.multLeft.call (renderContext .modelViewMatrix, this .matrix);
 
@@ -1744,7 +1744,7 @@ ScreenText .prototype = Object .assign (Object .create ((X3DTextGeometry_default
          return line .multLineMatrix (invMatrix .assign (this .matrix) .inverse ());
       };
    })(),
-   transformMatrix: function (matrix)
+   transformMatrix (matrix)
    {
       // Apply screen nodes transformation in place here.
       return matrix .multLeft (this .matrix);
@@ -1821,17 +1821,17 @@ function ScreenFontStyle (executionContext)
 ScreenFontStyle .prototype = Object .assign (Object .create ((X3DFontStyleNode_default()).prototype),
 {
    constructor: ScreenFontStyle,
-   initialize: function ()
+   initialize ()
    {
       X3DFontStyleNode_default().prototype.initialize.call (this);
 
       this .getBrowser () .getRenderingProperties () ._ContentScale .addInterest ("addNodeEvent", this);
    },
-   getTextGeometry: function (text)
+   getTextGeometry (text)
    {
       return new Layout_ScreenText (text, this);
    },
-   getScale: function ()
+   getScale ()
    {
       return this ._pointSize .getValue () * this .getBrowser () .getPixelPerPoint ();
    },
@@ -1950,15 +1950,15 @@ function ScreenGroup (executionContext)
 ScreenGroup .prototype = Object .assign (Object .create ((X3DGroupingNode_default()).prototype),
 {
    constructor: ScreenGroup,
-   getBBox: function (bbox, shadows)
+   getBBox (bbox, shadows)
    {
       return this .getSubBBox (bbox, shadows) .multRight (this .matrix);
    },
-   getMatrix: function ()
+   getMatrix ()
    {
       return this .matrix;
    },
-   traverse: function (type, renderObject)
+   traverse (type, renderObject)
    {
       switch (type)
       {

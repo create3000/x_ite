@@ -62,7 +62,7 @@ function TextureCoordinate4D (executionContext)
 TextureCoordinate4D .prototype = Object .assign (Object .create (X3DSingleTextureCoordinateNode .prototype),
 {
    constructor: TextureCoordinate4D,
-   initialize: function ()
+   initialize ()
    {
       X3DSingleTextureCoordinateNode .prototype .initialize .call (this);
 
@@ -70,20 +70,20 @@ TextureCoordinate4D .prototype = Object .assign (Object .create (X3DSingleTextur
 
       this .set_point__ ();
    },
-   set_point__: function ()
+   set_point__ ()
    {
       this .point  = this ._point .getValue ();
       this .length = this ._point .length;
    },
-   isEmpty: function ()
+   isEmpty ()
    {
       return this .length === 0;
    },
-   getSize: function ()
+   getSize ()
    {
       return this .length;
    },
-   get1Point: function (index, vector)
+   get1Point (index, vector)
    {
       if (index >= 0 && index < this .length)
       {
@@ -107,7 +107,7 @@ TextureCoordinate4D .prototype = Object .assign (Object .create (X3DSingleTextur
          return vector .set (0, 0, 0, 1);
       }
    },
-   getPoints: function (array)
+   getPoints (array)
    {
       const
          point  = this .point,
@@ -118,7 +118,7 @@ TextureCoordinate4D .prototype = Object .assign (Object .create (X3DSingleTextur
 
       return array;
    },
-   addPointToChannel: function (index, array)
+   addPointToChannel (index, array)
    {
       if (index >= 0 && index < this .length)
       {

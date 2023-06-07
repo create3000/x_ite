@@ -78,7 +78,7 @@ function ComposedCubeMapTexture (executionContext)
 ComposedCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironmentTextureNode .prototype),
 {
    constructor: ComposedCubeMapTexture,
-   initialize: function ()
+   initialize ()
    {
       X3DEnvironmentTextureNode .prototype .initialize .call (this);
 
@@ -107,7 +107,7 @@ ComposedCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironme
       this .set_texture__ (this ._topTexture,    4);
       this .set_texture__ (this ._bottomTexture, 5);
    },
-   set_texture__: function (node, index)
+   set_texture__ (node, index)
    {
       let textureNode = this .textureNodes [index];
 
@@ -119,17 +119,17 @@ ComposedCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironme
 
       this .set_loadState__ (textureNode, index);
    },
-   set_loadState__: function (textureNode, index)
+   set_loadState__ (textureNode, index)
    {
       this .setTextureBit (index, textureNode, textureNode ?.checkLoadState () ?? X3DConstants .NOT_STARTED);
 
       this ._update .addEvent ();
    },
-   setTextureBit: function (bit, textureNode, loadState)
+   setTextureBit (bit, textureNode, loadState)
    {
       this .textureBits .set (bit, loadState === X3DConstants .COMPLETE_STATE || textureNode ?.getWidth ());
    },
-   isComplete: function ()
+   isComplete ()
    {
       if (+this .textureBits !== 0b111111)
          return false;
@@ -149,7 +149,7 @@ ComposedCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironme
 
       return true;
    },
-   update: function ()
+   update ()
    {
       if (this .isComplete ())
       {

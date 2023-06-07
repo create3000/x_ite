@@ -60,7 +60,7 @@ function X3DCoordinateNode (executionContext)
 X3DCoordinateNode .prototype = Object .assign (Object .create (X3DGeometricPropertyNode .prototype),
 {
    constructor: X3DCoordinateNode,
-   initialize: function ()
+   initialize ()
    {
       X3DGeometricPropertyNode .prototype .initialize .call (this);
 
@@ -68,24 +68,24 @@ X3DCoordinateNode .prototype = Object .assign (Object .create (X3DGeometricPrope
 
       this .set_point__ ();
    },
-   set_point__: function ()
+   set_point__ ()
    {
       this .point  = this ._point .getValue ();
       this .length = this ._point .length;
    },
-   isEmpty: function ()
+   isEmpty ()
    {
       return this .length === 0;
    },
-   getSize: function ()
+   getSize ()
    {
       return this .length;
    },
-   set1Point: function (index, point)
+   set1Point (index, point)
    {
       this ._point [index] = point;
    },
-   get1Point: function (index, result)
+   get1Point (index, result)
    {
       if (index < this .length)
       {
@@ -100,7 +100,7 @@ X3DCoordinateNode .prototype = Object .assign (Object .create (X3DGeometricPrope
          return result .set (0, 0, 0);
       }
    },
-   addPoint: function (index, array)
+   addPoint (index, array)
    {
       if (index < this .length)
       {
@@ -115,7 +115,7 @@ X3DCoordinateNode .prototype = Object .assign (Object .create (X3DGeometricPrope
          array .push (0, 0, 0, 1);
       }
    },
-   addPoints: function (array, min)
+   addPoints (array, min)
    {
       const point = this .point;
 

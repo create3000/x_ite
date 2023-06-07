@@ -66,7 +66,7 @@ function X3DComposedGeometryNode (executionContext)
 X3DComposedGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 {
    constructor: X3DComposedGeometryNode,
-   initialize: function ()
+   initialize ()
    {
       X3DGeometryNode .prototype .initialize .call (this);
 
@@ -84,27 +84,27 @@ X3DComposedGeometryNode .prototype = Object .assign (Object .create (X3DGeometry
       this .set_normal__ ();
       this .set_coord__ ();
    },
-   getFogCoord: function ()
+   getFogCoord ()
    {
       return this .fogCoordNode;
    },
-   getColor: function ()
+   getColor ()
    {
       return this .colorNode;
    },
-   getTexCoord: function ()
+   getTexCoord ()
    {
       return this .texCoordNode;
    },
-   getNormal: function ()
+   getNormal ()
    {
       return this .normalNode;
    },
-   getCoord: function ()
+   getCoord ()
    {
       return this .coordNode;
    },
-   set_attrib__: function ()
+   set_attrib__ ()
    {
       const attribNodes = this .getAttrib ();
 
@@ -132,7 +132,7 @@ X3DComposedGeometryNode .prototype = Object .assign (Object .create (X3DGeometry
 
       this .updateVertexArrays ();
    },
-   set_fogCoord__: function ()
+   set_fogCoord__ ()
    {
       this .fogCoordNode ?.removeInterest ("requestRebuild", this);
 
@@ -140,7 +140,7 @@ X3DComposedGeometryNode .prototype = Object .assign (Object .create (X3DGeometry
 
       this .fogCoordNode ?.addInterest ("requestRebuild", this);
    },
-   set_color__: function ()
+   set_color__ ()
    {
       this .colorNode ?.removeInterest ("requestRebuild", this);
 
@@ -150,7 +150,7 @@ X3DComposedGeometryNode .prototype = Object .assign (Object .create (X3DGeometry
 
       this .setTransparent (this .colorNode ?.isTransparent () ?? false);
    },
-   set_texCoord__: function ()
+   set_texCoord__ ()
    {
       this .texCoordNode ?.removeInterest ("requestRebuild", this);
 
@@ -160,7 +160,7 @@ X3DComposedGeometryNode .prototype = Object .assign (Object .create (X3DGeometry
 
       this .setTextureCoordinate (this .texCoordNode);
    },
-   set_normal__: function ()
+   set_normal__ ()
    {
       this .normalNode ?.removeInterest ("requestRebuild", this);
 
@@ -168,7 +168,7 @@ X3DComposedGeometryNode .prototype = Object .assign (Object .create (X3DGeometry
 
       this .normalNode ?.addInterest ("requestRebuild", this);
    },
-   set_coord__: function ()
+   set_coord__ ()
    {
       this .coordNode ?.removeInterest ("requestRebuild", this);
 
@@ -176,15 +176,15 @@ X3DComposedGeometryNode .prototype = Object .assign (Object .create (X3DGeometry
 
       this .coordNode ?.addInterest ("requestRebuild", this);
    },
-   getPolygonIndex: function (index)
+   getPolygonIndex (index)
    {
       return index;
    },
-   getTriangleIndex: function (index)
+   getTriangleIndex (index)
    {
       return index;
    },
-   build: function (verticesPerPolygon, polygonsSize, verticesPerFace, trianglesSize)
+   build (verticesPerPolygon, polygonsSize, verticesPerFace, trianglesSize)
    {
       if (!this .coordNode || this .coordNode .isEmpty ())
          return;
@@ -255,7 +255,7 @@ X3DComposedGeometryNode .prototype = Object .assign (Object .create (X3DGeometry
       this .setSolid (this ._solid .getValue ());
       this .setCCW (this ._ccw .getValue ());
    },
-   buildNormals: function (verticesPerPolygon, polygonsSize, trianglesSize)
+   buildNormals (verticesPerPolygon, polygonsSize, trianglesSize)
    {
       const
          normals     = this .createNormals (verticesPerPolygon, polygonsSize),
@@ -268,7 +268,7 @@ X3DComposedGeometryNode .prototype = Object .assign (Object .create (X3DGeometry
          normalArray .push (normal .x, normal .y, normal .z);
       }
    },
-   createNormals: function (verticesPerPolygon, polygonsSize)
+   createNormals (verticesPerPolygon, polygonsSize)
    {
       const normals = this .createFaceNormals (verticesPerPolygon, polygonsSize);
 
@@ -293,7 +293,7 @@ X3DComposedGeometryNode .prototype = Object .assign (Object .create (X3DGeometry
 
       return normals;
    },
-   createFaceNormals: function (verticesPerPolygon, polygonsSize)
+   createFaceNormals (verticesPerPolygon, polygonsSize)
    {
       const
          cw      = !this ._ccw .getValue (),

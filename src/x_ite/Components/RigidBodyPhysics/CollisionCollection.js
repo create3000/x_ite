@@ -71,7 +71,7 @@ function CollisionCollection (executionContext)
 CollisionCollection .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 {
    constructor: CollisionCollection,
-   initialize: function ()
+   initialize ()
    {
       X3DChildNode .prototype .initialize .call (this);
 
@@ -81,11 +81,11 @@ CollisionCollection .prototype = Object .assign (Object .create (X3DChildNode .p
       this .set_appliedParameters__ ();
       this .set_collidables__ ();
    },
-   getAppliedParameters: function ()
+   getAppliedParameters ()
    {
       return this .appliedParameters;
    },
-   getCollidables: function ()
+   getCollidables ()
    {
       return this .collidableNodes;
    },
@@ -116,7 +116,7 @@ CollisionCollection .prototype = Object .assign (Object .create (X3DChildNode .p
          }
       };
    })(),
-   set_collidables__: function ()
+   set_collidables__ ()
    {
       var collisionSpaceNodes = this .collisionSpaceNodes;
 
@@ -139,7 +139,7 @@ CollisionCollection .prototype = Object .assign (Object .create (X3DChildNode .p
 
       this .collect ();
    },
-   collect: function ()
+   collect ()
    {
       var
          collidableNodes     = this .collidableNodes,

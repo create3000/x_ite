@@ -77,13 +77,13 @@ function LOD (executionContext)
 LOD .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
 {
    constructor: LOD,
-   initialize: function ()
+   initialize ()
    {
       X3DGroupingNode .prototype .initialize .call (this);
 
       this ._children .addInterest ("set_child__", this);
    },
-   getSubBBox: function (bbox, shadows)
+   getSubBBox (bbox, shadows)
    {
       if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
       {
@@ -94,14 +94,14 @@ LOD .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
-   clear: function () { },
-   add: function () { },
-   remove: function () { },
-   set_child__: function ()
+   clear () { },
+   add () { },
+   remove () { },
+   set_child__ ()
    {
       this .set_level__ (Math .min (this ._level_changed .getValue (), this ._children .length - 1));
    },
-   set_level__: function (level)
+   set_level__ (level)
    {
       if (this .childNode)
       {
@@ -143,15 +143,15 @@ LOD .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
       this .set_visible__ ();
       this .set_bboxDisplay__ ();
    },
-   set_cameraObject__: function ()
+   set_cameraObject__ ()
    {
       this .setCameraObject (!!this .visibleNode ?.isCameraObject ());
    },
-   set_transformSensors__: function ()
+   set_transformSensors__ ()
    {
       this .setPickableObject (!!(this .getTransformSensors () .size || this .visibleNode ?.isPickableObject ()));
    },
-   set_visible__: function ()
+   set_visible__ ()
    {
       if (X3DCast (X3DConstants .X3DBoundedObject, this .childNode))
          this .visibleNode = this .childNode ._visible .getValue () ? this .childNode : null;
@@ -161,7 +161,7 @@ LOD .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
       this .set_cameraObject__ ();
       this .set_transformSensors__ ();
    },
-   set_bboxDisplay__: function ()
+   set_bboxDisplay__ ()
    {
       if (X3DCast (X3DConstants .X3DBoundedObject, this .childNode))
       {

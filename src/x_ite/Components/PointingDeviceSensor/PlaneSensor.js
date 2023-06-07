@@ -81,7 +81,7 @@ function PlaneSensor (executionContext)
 PlaneSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .prototype),
 {
    constructor: PlaneSensor,
-   initialize: function ()
+   initialize ()
    {
       X3DDragSensorNode .prototype .initialize .call (this);
 
@@ -96,7 +96,7 @@ PlaneSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .prot
       this .startOffset = new Vector3 (0, 0, 0);
       this .startPoint  = new Vector3 (0, 0, 0);
    },
-   getLineTrackPoint: function (hit, line, trackPoint)
+   getLineTrackPoint (hit, line, trackPoint)
    {
       ViewVolume .projectLine (line, this .modelViewMatrix, this .projectionMatrix, this .viewport, screenLine);
       screenLine .getClosestPointToPoint (hit .pointer, trackPoint1);
@@ -104,7 +104,7 @@ PlaneSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .prot
 
       return line .getClosestPointToLine (trackPointLine, trackPoint);
    },
-   set_active__: function (active, hit, modelViewMatrix, projectionMatrix, viewport)
+   set_active__ (active, hit, modelViewMatrix, projectionMatrix, viewport)
    {
       X3DDragSensorNode .prototype .set_active__ .call (this, active, hit, modelViewMatrix, projectionMatrix, viewport);
 
@@ -179,14 +179,14 @@ PlaneSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .prot
             this ._offset = this ._translation_changed;
       }
    },
-   trackStart: function (trackPoint)
+   trackStart (trackPoint)
    {
       this .startOffset .assign (this ._offset .getValue ());
 
       this ._trackPoint_changed  = trackPoint;
       this ._translation_changed = this ._offset .getValue ();
    },
-   set_motion__: function (hit)
+   set_motion__ (hit)
    {
       try
       {
@@ -234,7 +234,7 @@ PlaneSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .prot
          this ._translation_changed .addEvent ();
       }
    },
-   track: function (endPoint, trackPoint)
+   track (endPoint, trackPoint)
    {
       const
          axisRotation = this ._axisRotation .getValue (),

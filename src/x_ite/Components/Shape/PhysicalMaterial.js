@@ -65,7 +65,7 @@ function PhysicalMaterial (executionContext)
 PhysicalMaterial .prototype = Object .assign (Object .create (X3DOneSidedMaterialNode .prototype),
 {
    constructor: PhysicalMaterial,
-   initialize: function ()
+   initialize ()
    {
       X3DOneSidedMaterialNode .prototype .initialize .call (this);
 
@@ -86,7 +86,7 @@ PhysicalMaterial .prototype = Object .assign (Object .create (X3DOneSidedMateria
       this .set_occlusionTexture__ ();
       this .set_transparent__ ();
    },
-   set_baseColor__: function ()
+   set_baseColor__ ()
    {
       //We cannot use this in Windows Edge:
       //this .baseColor .set (this ._baseColor .getValue ());
@@ -99,7 +99,7 @@ PhysicalMaterial .prototype = Object .assign (Object .create (X3DOneSidedMateria
       baseColor [1] = baseColor_ .g;
       baseColor [2] = baseColor_ .b;
    },
-   set_baseTexture__: function ()
+   set_baseTexture__ ()
    {
       if (this .baseTextureNode)
          this .baseTextureNode ._transparent .removeInterest ("set_transparent__", this);
@@ -111,35 +111,35 @@ PhysicalMaterial .prototype = Object .assign (Object .create (X3DOneSidedMateria
       if (this .baseTextureNode)
          this .baseTextureNode ._transparent .addInterest ("set_transparent__", this);
    },
-   set_metallic__: function ()
+   set_metallic__ ()
    {
       this .metallic = Algorithm .clamp (this ._metallic .getValue (), 0, 1);
    },
-   set_roughness__: function ()
+   set_roughness__ ()
    {
       this .roughness = Algorithm .clamp (this ._roughness .getValue (), 0, 1);
    },
-   set_metallicRoughnessTexture__: function ()
+   set_metallicRoughnessTexture__ ()
    {
       this .metallicRoughnessTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._metallicRoughnessTexture);
 
       this .setTexture (this .getTextureIndices () .METALLIC_ROUGHNESS_TEXTURE, this .metallicRoughnessTextureNode);
    },
-   set_occlusionStrength__: function ()
+   set_occlusionStrength__ ()
    {
       this .occlusionStrength = Algorithm .clamp (this ._occlusionStrength .getValue (), 0, 1);
    },
-   set_occlusionTexture__: function ()
+   set_occlusionTexture__ ()
    {
       this .occlusionTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._occlusionTexture);
 
       this .setTexture (this .getTextureIndices () .OCCLUSION_TEXTURE, this .occlusionTextureNode);
    },
-   set_transparent__: function ()
+   set_transparent__ ()
    {
       this .setTransparent (!!(this .getTransparency () || this .baseTextureNode ?.isTransparent ()));
    },
-   getBaseTexture: function ()
+   getBaseTexture ()
    {
       return this .baseTextureNode;
    },
@@ -160,11 +160,11 @@ PhysicalMaterial .prototype = Object .assign (Object .create (X3DOneSidedMateria
          return textureIndices;
       };
    })(),
-   getMaterialKey: function ()
+   getMaterialKey ()
    {
       return "3";
    },
-   createShader: function (key, geometryContext, renderContext)
+   createShader (key, geometryContext, renderContext)
    {
       const
          browser = this .getBrowser (),
@@ -201,7 +201,7 @@ PhysicalMaterial .prototype = Object .assign (Object .create (X3DOneSidedMateria
 
       return shaderNode;
    },
-   setShaderUniforms: function (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
+   setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
    {
       X3DOneSidedMaterialNode .prototype .setShaderUniforms .call (this, gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping);
 

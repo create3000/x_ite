@@ -67,7 +67,7 @@ NurbsSet .prototype = Object .assign (Object .create (X3DChildNode .prototype),
    X3DBoundedObject .prototype,
 {
    constructor: NurbsSet,
-   initialize: function ()
+   initialize ()
    {
       X3DChildNode     .prototype .initialize .call (this);
       X3DBoundedObject .prototype .initialize .call (this);
@@ -79,7 +79,7 @@ NurbsSet .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 
       this .set_geometry__ ();
    },
-   getBBox: function (bbox, shadows)
+   getBBox (bbox, shadows)
    {
       // Add bounding boxes
 
@@ -88,14 +88,14 @@ NurbsSet .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 
       return bbox;
    },
-   set_tessellationScale__: function ()
+   set_tessellationScale__ ()
    {
       const tessellationScale = Math .max (0, this ._tessellationScale .getValue ());
 
       for (const geometryNode of this .geometryNodes)
          geometryNode .setTessellationScale (tessellationScale);
    },
-   set_addGeometry__: function ()
+   set_addGeometry__ ()
    {
       this ._addGeometry .setTainted (true);
       this ._addGeometry .assign (filter (this ._addGeometry, this ._geometry));
@@ -106,7 +106,7 @@ NurbsSet .prototype = Object .assign (Object .create (X3DChildNode .prototype),
       this ._addGeometry .length = 0;
       this ._addGeometry .setTainted (false);
    },
-   set_removeGeometry__: function ()
+   set_removeGeometry__ ()
    {
       this ._removeGeometry .setTainted (true);
       this ._geometry .assign (filter (this ._geometry, this ._removeGeometry));
@@ -114,7 +114,7 @@ NurbsSet .prototype = Object .assign (Object .create (X3DChildNode .prototype),
       this ._removeGeometry .length = 0;
       this ._removeGeometry .setTainted (false);
    },
-   set_geometry__: function ()
+   set_geometry__ ()
    {
       for (const geometryNode of this .geometryNodes)
          geometryNode .setTessellationScale (1);
@@ -131,7 +131,7 @@ NurbsSet .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 
       this .set_tessellationScale__ ();
    },
-   dispose: function ()
+   dispose ()
    {
       X3DBoundedObject .prototype .dispose .call (this);
       X3DChildNode     .prototype .dispose .call (this);

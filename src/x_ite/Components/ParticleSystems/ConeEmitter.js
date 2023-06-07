@@ -88,7 +88,7 @@ function ConeEmitter (executionContext)
 ConeEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),
 {
    constructor: ConeEmitter,
-   initialize: function ()
+   initialize ()
    {
       X3DParticleEmitterNode .prototype .initialize .call (this);
 
@@ -103,19 +103,19 @@ ConeEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode 
       this .set_direction__ ();
       this .set_angle__ ();
    },
-   set_position__: function ()
+   set_position__ ()
    {
       const position = this ._position .getValue ();
 
       this .setUniform ("uniform3f", "position", position .x, position .y, position .z);
    },
-   set_direction__: function ()
+   set_direction__ ()
    {
       const direction = this ._direction .getValue ();
 
       this .setUniform ("uniform3f", "direction", direction .x, direction .y, direction .z);
    },
-   set_angle__: function ()
+   set_angle__ ()
    {
       this .setUniform ("uniform1f", "angle", this ._angle .getValue ());
    },

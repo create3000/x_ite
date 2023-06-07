@@ -82,7 +82,7 @@ ImageCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironmentT
    X3DUrlObject .prototype,
 {
    constructor: ImageCubeMapTexture,
-   initialize: function ()
+   initialize ()
    {
       X3DEnvironmentTextureNode .prototype .initialize .call (this);
       X3DUrlObject              .prototype .initialize .call (this);
@@ -104,16 +104,16 @@ ImageCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironmentT
 
       this .requestImmediateLoad () .catch (Function .prototype);
    },
-   unloadData: function ()
+   unloadData ()
    {
       this .clearTexture ();
    },
-   loadData: function ()
+   loadData ()
    {
       this .urlStack .setValue (this ._url);
       this .loadNext ();
    },
-   loadNext: function ()
+   loadNext ()
    {
       if (this .urlStack .length === 0)
       {
@@ -134,14 +134,14 @@ ImageCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironmentT
 
       this .image .attr ("src", this .URL .href);
    },
-   setError: function ()
+   setError ()
    {
       if (this .URL .protocol !== "data:")
          console .warn (`Error loading image '${decodeURI (this .URL .href)}'`);
 
       this .loadNext ();
    },
-   setImage: function ()
+   setImage ()
    {
       if (DEVELOPMENT)
       {
@@ -232,7 +232,7 @@ ImageCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironmentT
          this .setError ();
       }
    },
-   dispose: function ()
+   dispose ()
    {
       X3DUrlObject              .prototype .dispose .call (this);
       X3DEnvironmentTextureNode .prototype .dispose .call (this);

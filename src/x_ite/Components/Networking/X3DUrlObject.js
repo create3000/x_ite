@@ -69,7 +69,7 @@ function X3DUrlObject (executionContext)
 X3DUrlObject .prototype =
 {
    constructor: X3DUrlObject,
-   initialize: function ()
+   initialize ()
    {
       this .getLive () .addInterest ("set_live__", this);
 
@@ -79,7 +79,7 @@ X3DUrlObject .prototype =
       this ._autoRefresh          .addInterest ("set_autoRefresh__", this);
       this ._autoRefreshTimeLimit .addInterest ("set_autoRefresh__", this);
    },
-   setLoadState: function (value, notify = true)
+   setLoadState (value, notify = true)
    {
       this ._loadState = value;
 
@@ -109,23 +109,23 @@ X3DUrlObject .prototype =
          }
       }
    },
-   checkLoadState: function ()
+   checkLoadState ()
    {
       return this ._loadState .getValue ();
    },
-   getLoadState: function ()
+   getLoadState ()
    {
       return this ._loadState;
    },
-   setCache: function (value)
+   setCache (value)
    {
       this [_cache] = value;
    },
-   getCache: function ()
+   getCache ()
    {
       return this [_cache] && this .getBrowser () .getBrowserOption ("Cache");
    },
-   requestImmediateLoad: function (cache = true)
+   requestImmediateLoad (cache = true)
    {
       return new Promise ((resolve, reject) =>
       {
@@ -187,15 +187,15 @@ X3DUrlObject .prototype =
          loading ();
       });
    },
-   loadNow: function ()
+   loadNow ()
    {
       this .setLoadState (X3DConstants .NOT_STARTED_STATE);
 
       return this .requestImmediateLoad ();
    },
-   loadData: function ()
+   loadData ()
    { },
-   requestUnload: function ()
+   requestUnload ()
    {
       const loadState = this .checkLoadState ();
 
@@ -205,13 +205,13 @@ X3DUrlObject .prototype =
       this .setLoadState (X3DConstants .NOT_STARTED_STATE);
       this .unloadData ();
    },
-   unloadNow: function ()
+   unloadNow ()
    {
       this .requestUnload ();
    },
-   unloadData: function ()
+   unloadData ()
    { },
-   setAutoRefreshTimer: function (autoRefreshInterval)
+   setAutoRefreshTimer (autoRefreshInterval)
    {
       clearTimeout (this [_autoRefreshId]);
 
@@ -228,26 +228,26 @@ X3DUrlObject .prototype =
 
       this [_autoRefreshId] = setTimeout (this .performAutoRefresh .bind (this), autoRefreshInterval * 1000);
    },
-   performAutoRefresh: function ()
+   performAutoRefresh ()
    {
       this .setLoadState (X3DConstants .NOT_STARTED_STATE);
       this .requestImmediateLoad (false) .catch (Function .prototype);
    },
-   set_live__: function ()
+   set_live__ ()
    {
       if (this .getLive () .getValue ())
          this .set_autoRefresh__ ();
       else
          clearTimeout (this [_autoRefreshId]);
    },
-   set_load__: function ()
+   set_load__ ()
    {
       if (this ._load .getValue ())
          this .requestImmediateLoad () .catch (Function .prototype);
       else
          this .requestUnload ();
    },
-   set_url__: function ()
+   set_url__ ()
    {
       if (!this ._load .getValue ())
          return;
@@ -255,7 +255,7 @@ X3DUrlObject .prototype =
       this .setLoadState (X3DConstants .NOT_STARTED_STATE);
       this .requestImmediateLoad () .catch (Function .prototype);
    },
-   set_autoRefresh__: function ()
+   set_autoRefresh__ ()
    {
       if (this .checkLoadState () !== X3DConstants .COMPLETE_STATE)
          return;
@@ -271,7 +271,7 @@ X3DUrlObject .prototype =
 
       this .setAutoRefreshTimer (autoRefreshInterval);
    },
-   dispose: function () { },
+   dispose () { },
 };
 
 Object .defineProperties (X3DUrlObject,

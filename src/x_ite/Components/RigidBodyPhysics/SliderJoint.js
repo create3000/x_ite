@@ -74,7 +74,7 @@ function SliderJoint (executionContext)
 SliderJoint .prototype = Object .assign (Object .create (X3DRigidJointNode .prototype),
 {
    constructor: SliderJoint,
-   initialize: function ()
+   initialize ()
    {
       X3DRigidJointNode .prototype .initialize .call (this);
 
@@ -144,7 +144,7 @@ SliderJoint .prototype = Object .assign (Object .create (X3DRigidJointNode .prot
          this .getCollection () .getDynamicsWorld () .addConstraint (this .joint, true);
       };
    })(),
-   removeJoint: function ()
+   removeJoint ()
    {
       if (! this .joint)
          return;
@@ -155,7 +155,7 @@ SliderJoint .prototype = Object .assign (Object .create (X3DRigidJointNode .prot
       Ammo .destroy (this .joint);
       this .joint = null;
    },
-   set_forceOutput__: function ()
+   set_forceOutput__ ()
    {
       for (var key in this .outputs)
          delete this .outputs [key];
@@ -177,7 +177,7 @@ SliderJoint .prototype = Object .assign (Object .create (X3DRigidJointNode .prot
 
       this .setOutput (! $.isEmptyObject (this .outputs));
    },
-   set_separation__: function ()
+   set_separation__ ()
    {
       if (! this .joint)
          return;

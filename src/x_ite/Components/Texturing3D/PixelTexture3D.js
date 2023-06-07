@@ -63,7 +63,7 @@ function PixelTexture3D (executionContext)
 PixelTexture3D .prototype = Object .assign (Object .create (X3DTexture3DNode .prototype),
 {
    constructor: PixelTexture3D,
-   initialize: function ()
+   initialize ()
    {
       X3DTexture3DNode .prototype .initialize .call (this);
 
@@ -71,7 +71,7 @@ PixelTexture3D .prototype = Object .assign (Object .create (X3DTexture3DNode .pr
 
       this .set_image__ ();
    },
-   checkLoadState: function ()
+   checkLoadState ()
    {
       return this ._loadState .getValue ();
    },

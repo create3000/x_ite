@@ -65,7 +65,7 @@ function TriangleSet2D (executionContext)
 TriangleSet2D .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 {
    constructor: TriangleSet2D,
-   build: function ()
+   build ()
    {
       const
          vertices    = this ._vertices .getValue (),
@@ -80,7 +80,7 @@ TriangleSet2D .prototype = Object .assign (Object .create (X3DGeometryNode .prot
 
       this .setSolid (this ._solid .getValue ());
    },
-   buildTexCoords: function ()
+   buildTexCoords ()
    {
       const texCoordArray = this .getTexCoords ();
 

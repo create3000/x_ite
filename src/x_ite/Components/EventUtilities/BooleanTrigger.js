@@ -61,13 +61,13 @@ function BooleanTrigger (executionContext)
 BooleanTrigger .prototype = Object .assign (Object .create (X3DTriggerNode .prototype),
 {
    constructor: BooleanTrigger,
-   initialize: function ()
+   initialize ()
    {
       X3DTriggerNode .prototype .initialize .call (this);
 
       this ._set_triggerTime .addInterest ("set_triggerTime__", this);
    },
-   set_triggerTime__: function ()
+   set_triggerTime__ ()
    {
       this ._triggerTrue = true;
    },

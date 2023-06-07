@@ -67,7 +67,7 @@ function NurbsSurfaceInterpolator (executionContext)
 NurbsSurfaceInterpolator .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 {
    constructor: NurbsSurfaceInterpolator,
-   initialize: function ()
+   initialize ()
    {
       this ._set_fraction .addInterest ("set_fraction__", this);
 

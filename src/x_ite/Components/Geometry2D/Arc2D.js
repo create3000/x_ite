@@ -67,7 +67,7 @@ function Arc2D (executionContext)
 Arc2D .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototype),
 {
    constructor: Arc2D,
-   set_live__: function ()
+   set_live__ ()
    {
       X3DLineGeometryNode .prototype .set_live__ .call (this);
 
@@ -76,7 +76,7 @@ Arc2D .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototyp
       else
          this .getBrowser () .getArc2DOptions () .removeInterest ("requestRebuild", this);
    },
-   getSweepAngle: function ()
+   getSweepAngle ()
    {
       const
          start = Algorithm .interval (this ._startAngle .getValue (), 0, Math .PI * 2),
@@ -96,7 +96,7 @@ Arc2D .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototyp
       // We must test for NAN, as NAN to int is undefined.
       return 0;
    },
-   build: function ()
+   build ()
    {
       const
          options     = this .getBrowser () .getArc2DOptions (),

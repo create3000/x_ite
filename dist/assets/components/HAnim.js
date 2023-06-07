@@ -281,7 +281,7 @@ HAnimHumanoid .prototype = Object .assign (Object .create ((X3DChildNode_default
    (X3DBoundedObject_default()).prototype,
 {
    constructor: HAnimHumanoid,
-   initialize: function ()
+   initialize ()
    {
       X3DChildNode_default().prototype.initialize.call (this);
       X3DBoundedObject_default().prototype.initialize.call (this);
@@ -349,11 +349,11 @@ HAnimHumanoid .prototype = Object .assign (Object .create ((X3DChildNode_default
       this .set_skinNormal__ ();
       this .set_skinCoord__ ();
    },
-   getBBox: function (bbox, shadows)
+   getBBox (bbox, shadows)
    {
       return this .transformNode .getBBox (bbox, shadows);
    },
-   set_joints__: function ()
+   set_joints__ ()
    {
       const jointNodes = this .jointNodes;
 
@@ -375,11 +375,11 @@ HAnimHumanoid .prototype = Object .assign (Object .create ((X3DChildNode_default
 
       this .set_joint__ ();
    },
-   set_joint__: function ()
+   set_joint__ ()
    {
       this .changed = true;
    },
-   set_skinNormal__: function ()
+   set_skinNormal__ ()
    {
       this .restNormalNode = null;
 
@@ -390,7 +390,7 @@ HAnimHumanoid .prototype = Object .assign (Object .create ((X3DChildNode_default
 
       this .changed = true;
    },
-   set_skinCoord__: function ()
+   set_skinCoord__ ()
    {
       this .restCoordNode = null;
 
@@ -409,7 +409,7 @@ HAnimHumanoid .prototype = Object .assign (Object .create ((X3DChildNode_default
 
       this .changed = true;
    },
-   traverse: function (type, renderObject)
+   traverse (type, renderObject)
    {
       this .transformNode .traverse (type, renderObject);
 
@@ -513,7 +513,7 @@ HAnimHumanoid .prototype = Object .assign (Object .create ((X3DChildNode_default
          }
       };
    })(),
-   toVRMLStream: function (generator)
+   toVRMLStream (generator)
    {
       if (this .skinCoordNode)
          this .skinCoordNode ._point = this .restCoordNode ._point;
@@ -523,7 +523,7 @@ HAnimHumanoid .prototype = Object .assign (Object .create ((X3DChildNode_default
 
       X3DChildNode_default().prototype.toVRMLStream.call (this, generator);
    },
-   toXMLStream: function (generator)
+   toXMLStream (generator)
    {
       if (this .skinCoordNode)
          this .skinCoordNode ._point = this .restCoordNode ._point;
@@ -533,7 +533,7 @@ HAnimHumanoid .prototype = Object .assign (Object .create ((X3DChildNode_default
 
       X3DChildNode_default().prototype.toXMLStream.call (this, generator);
    },
-   toJSONStream: function (generator)
+   toJSONStream (generator)
    {
       if (this .skinCoordNode)
          this .skinCoordNode ._point = this .restCoordNode ._point;
@@ -543,7 +543,7 @@ HAnimHumanoid .prototype = Object .assign (Object .create ((X3DChildNode_default
 
       X3DChildNode_default().prototype.toJSONStream.call (this, generator);
    },
-   dispose: function ()
+   dispose ()
    {
       X3DBoundedObject_default().prototype.dispose.call (this);
       X3DChildNode_default().prototype.dispose.call (this);
@@ -693,7 +693,7 @@ function HAnimJoint (executionContext)
 HAnimJoint .prototype = Object .assign (Object .create ((X3DTransformNode_default()).prototype),
 {
    constructor: HAnimJoint,
-   initialize: function ()
+   initialize ()
    {
       X3DTransformNode_default().prototype.initialize.call (this);
 
@@ -702,23 +702,23 @@ HAnimJoint .prototype = Object .assign (Object .create ((X3DTransformNode_defaul
 
       this .set_displacers__ ();
    },
-   setCameraObject: function (value)
+   setCameraObject (value)
    {
       X3DTransformNode_default().prototype.setCameraObject.call (this, value || !! this ._skinCoordIndex .length);
    },
-   getModelMatrix: function ()
+   getModelMatrix ()
    {
       return this .modelMatrix;
    },
-   getDisplacers: function ()
+   getDisplacers ()
    {
       return this .displacerNodes;
    },
-   set_skinCoordIndex__: function ()
+   set_skinCoordIndex__ ()
    {
       this .set_cameraObjects__ ();
    },
-   set_displacers__: function ()
+   set_displacers__ ()
    {
       const displacerNodes = this .displacerNodes;
 
@@ -732,7 +732,7 @@ HAnimJoint .prototype = Object .assign (Object .create ((X3DTransformNode_defaul
             displacerNodes .push (displacerNode);
       }
    },
-   traverse: function traverse (type, renderObject)
+   traverse (type, renderObject)
    {
       if (type === (TraverseType_default()).CAMERA)
       {
@@ -742,7 +742,7 @@ HAnimJoint .prototype = Object .assign (Object .create ((X3DTransformNode_defaul
 
       X3DTransformNode_default().prototype.traverse.call (this, type, renderObject);
    },
-   groupTraverse: function (type, renderObject)
+   groupTraverse (type, renderObject)
    {
       if (type === (TraverseType_default()).CAMERA)
       {
@@ -875,7 +875,7 @@ function HAnimMotion (executionContext)
 HAnimMotion .prototype = Object .assign (Object .create ((X3DChildNode_default()).prototype),
 {
    constructor: HAnimMotion,
-   initialize: function ()
+   initialize ()
    {
       X3DChildNode_default().prototype.initialize.call (this);
    },

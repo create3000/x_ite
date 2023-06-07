@@ -64,12 +64,12 @@ SignalPdu .prototype = Object .assign (Object .create (X3DSensorNode .prototype)
    X3DBoundedObject .prototype,
 {
    constructor: SignalPdu,
-   initialize: function ()
+   initialize ()
    {
       X3DSensorNode    .prototype .initialize .call (this);
       X3DBoundedObject .prototype .initialize .call (this);
    },
-   dispose: function ()
+   dispose ()
    {
       X3DBoundedObject .prototype .dispose .call (this);
       X3DSensorNode    .prototype .dispose .call (this);

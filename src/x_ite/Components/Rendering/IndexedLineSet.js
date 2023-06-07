@@ -67,7 +67,7 @@ function IndexedLineSet (executionContext)
 IndexedLineSet .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototype),
 {
    constructor: IndexedLineSet,
-   initialize: function ()
+   initialize ()
    {
       X3DLineGeometryNode .prototype .initialize .call (this);
 
@@ -85,7 +85,7 @@ IndexedLineSet .prototype = Object .assign (Object .create (X3DLineGeometryNode 
       this .set_normal__ ();
       this .set_coord__ ();
    },
-   set_attrib__: function ()
+   set_attrib__ ()
    {
       const attribNodes = this .getAttrib ();
 
@@ -113,7 +113,7 @@ IndexedLineSet .prototype = Object .assign (Object .create (X3DLineGeometryNode 
 
       this .updateVertexArrays ();
    },
-   set_fogCoord__: function ()
+   set_fogCoord__ ()
    {
       this .fogCoordNode ?.removeInterest ("requestRebuild", this);
 
@@ -121,7 +121,7 @@ IndexedLineSet .prototype = Object .assign (Object .create (X3DLineGeometryNode 
 
       this .fogCoordNode ?.addInterest ("requestRebuild", this);
    },
-   set_color__: function ()
+   set_color__ ()
    {
       this .colorNode ?.removeInterest ("requestRebuild", this);
 
@@ -131,7 +131,7 @@ IndexedLineSet .prototype = Object .assign (Object .create (X3DLineGeometryNode 
 
       this .setTransparent (this .colorNode ?.isTransparent () ?? false);
    },
-   set_normal__: function ()
+   set_normal__ ()
    {
       this .normalNode ?.removeInterest ("requestRebuild", this);
 
@@ -139,7 +139,7 @@ IndexedLineSet .prototype = Object .assign (Object .create (X3DLineGeometryNode 
 
       this .normalNode ?.addInterest ("requestRebuild", this);
    },
-   set_coord__: function ()
+   set_coord__ ()
    {
       this .coordNode ?.removeInterest ("requestRebuild", this);
 
@@ -147,21 +147,21 @@ IndexedLineSet .prototype = Object .assign (Object .create (X3DLineGeometryNode 
 
       this .coordNode ?.addInterest ("requestRebuild", this);
    },
-   getColorPerVertexIndex: function (index)
+   getColorPerVertexIndex (index)
    {
       if (index < this ._colorIndex .length)
          return this ._colorIndex [index];
 
       return this ._coordIndex [index];
    },
-   getColorIndex: function (index)
+   getColorIndex (index)
    {
       if (index < this ._colorIndex .length)
          return this ._colorIndex [index];
 
       return index;
    },
-   getPolylineIndices: function ()
+   getPolylineIndices ()
    {
       const
          coordIndex = this ._coordIndex,
@@ -197,7 +197,7 @@ IndexedLineSet .prototype = Object .assign (Object .create (X3DLineGeometryNode 
 
       return polylines;
    },
-   build: function ()
+   build ()
    {
       if (! this .coordNode || this .coordNode .isEmpty ())
          return;

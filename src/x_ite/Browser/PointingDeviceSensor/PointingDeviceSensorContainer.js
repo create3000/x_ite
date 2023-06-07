@@ -60,7 +60,7 @@ function PointingDeviceSensorContainer (node, modelViewMatrix, projectionMatrix,
 
 PointingDeviceSensorContainer .prototype =
 {
-   set: function (node, modelViewMatrix, projectionMatrix, viewport)
+   set (node, modelViewMatrix, projectionMatrix, viewport)
    {
       this .node = node;
 
@@ -68,15 +68,15 @@ PointingDeviceSensorContainer .prototype =
       this .projectionMatrix .assign (projectionMatrix);
       this .viewport         .assign (viewport);
    },
-   set_over__: function (over, hit)
+   set_over__ (over, hit)
    {
       this .node .set_over__ (over, hit, this .modelViewMatrix, this .projectionMatrix, this .viewport);
    },
-   set_active__: function (active, hit)
+   set_active__ (active, hit)
    {
       this .node .set_active__ (active, hit, this .modelViewMatrix, this .projectionMatrix, this .viewport);
    },
-   set_motion__: function (hit)
+   set_motion__ (hit)
    {
       this .node .set_motion__ (hit, this .modelViewMatrix, this .projectionMatrix, this .viewport);
    },

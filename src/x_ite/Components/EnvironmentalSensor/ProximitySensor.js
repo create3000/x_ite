@@ -78,7 +78,7 @@ function ProximitySensor (executionContext)
 ProximitySensor .prototype = Object .assign (Object .create (X3DEnvironmentalSensorNode .prototype),
 {
    constructor: ProximitySensor,
-   initialize: function ()
+   initialize ()
    {
       X3DEnvironmentalSensorNode .prototype .initialize .call (this);
 
@@ -91,7 +91,7 @@ ProximitySensor .prototype = Object .assign (Object .create (X3DEnvironmentalSen
       this .set_enabled__ ();
       this .set_extents__ ();
    },
-   set_enabled__: function ()
+   set_enabled__ ()
    {
       this .setCameraObject (this ._enabled .getValue ());
 
@@ -100,7 +100,7 @@ ProximitySensor .prototype = Object .assign (Object .create (X3DEnvironmentalSen
       else
          this .traverse = Function .prototype;
    },
-   set_extents__: function ()
+   set_extents__ ()
    {
       const
          s  = this ._size .getValue (),
@@ -223,7 +223,7 @@ ProximitySensor .prototype = Object .assign (Object .create (X3DEnvironmentalSen
          }
       };
    })(),
-   containsPoint: function (point)
+   containsPoint (point)
    {
       const
          min = this .min,

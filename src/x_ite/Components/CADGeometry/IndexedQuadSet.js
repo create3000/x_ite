@@ -61,7 +61,7 @@ function IndexedQuadSet (executionContext)
 IndexedQuadSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .prototype),
 {
    constructor: IndexedQuadSet,
-   initialize: function ()
+   initialize ()
    {
       X3DComposedGeometryNode .prototype .initialize .call (this);
 
@@ -79,11 +79,11 @@ IndexedQuadSet .prototype = Object .assign (Object .create (X3DComposedGeometryN
          return (i - mod) / 6 * 4 + indexMap [mod];
       };
    })(),
-   getPolygonIndex: function (i)
+   getPolygonIndex (i)
    {
       return this ._index [i];
    },
-   build: function ()
+   build ()
    {
       let length = this ._index .length;
 

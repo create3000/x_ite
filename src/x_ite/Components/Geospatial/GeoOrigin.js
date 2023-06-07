@@ -64,7 +64,7 @@ function GeoOrigin (executionContext)
 GeoOrigin .prototype = Object .assign (Object .create (X3DNode .prototype),
 {
    constructor: GeoOrigin,
-   initialize: function ()
+   initialize ()
    {
       X3DNode .prototype .initialize .call (this);
 
@@ -72,11 +72,11 @@ GeoOrigin .prototype = Object .assign (Object .create (X3DNode .prototype),
 
       this .set_geoSystem__ ();
    },
-   set_geoSystem__: function ()
+   set_geoSystem__ ()
    {
       this .referenceFrame = Geospatial .getReferenceFrame (this ._geoSystem, this .radians);
    },
-   getOrigin: function (result)
+   getOrigin (result)
    {
       return this .referenceFrame .convert (this ._geoCoords .getValue (), result);
    },

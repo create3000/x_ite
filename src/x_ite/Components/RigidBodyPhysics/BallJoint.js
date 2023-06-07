@@ -70,13 +70,13 @@ function BallJoint (executionContext)
 BallJoint .prototype = Object .assign (Object .create (X3DRigidJointNode .prototype),
 {
    constructor: BallJoint,
-   initialize: function ()
+   initialize ()
    {
       X3DRigidJointNode .prototype .initialize .call (this);
 
       this ._anchorPoint .addInterest ("set_anchorPoint__", this);
    },
-   addJoint: function ()
+   addJoint ()
    {
       if (!this .getCollection ())
          return;
@@ -102,7 +102,7 @@ BallJoint .prototype = Object .assign (Object .create (X3DRigidJointNode .protot
 
       this .getCollection () .getDynamicsWorld () .addConstraint (this .joint, true);
    },
-   removeJoint: function ()
+   removeJoint ()
    {
       if (!this .joint)
          return;
@@ -113,7 +113,7 @@ BallJoint .prototype = Object .assign (Object .create (X3DRigidJointNode .protot
       Ammo .destroy (this .joint);
       this .joint = null;
    },
-   set_forceOutput__: function ()
+   set_forceOutput__ ()
    {
       for (var key in this .outputs)
          delete this .outputs [key];
@@ -135,7 +135,7 @@ BallJoint .prototype = Object .assign (Object .create (X3DRigidJointNode .protot
 
       this .setOutput (!$.isEmptyObject (this .outputs));
    },
-   set_anchorPoint__: function ()
+   set_anchorPoint__ ()
    {
       if (this .joint)
       {

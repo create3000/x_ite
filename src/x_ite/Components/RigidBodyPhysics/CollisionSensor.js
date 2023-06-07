@@ -66,7 +66,7 @@ function CollisionSensor (executionContext)
 CollisionSensor .prototype = Object .assign (Object .create (X3DSensorNode .prototype),
 {
    constructor: CollisionSensor,
-   initialize: function ()
+   initialize ()
    {
       X3DSensorNode .prototype .initialize .call (this);
 
@@ -76,7 +76,7 @@ CollisionSensor .prototype = Object .assign (Object .create (X3DSensorNode .prot
 
       this .set_collider__ ();
    },
-   set_live__: function ()
+   set_live__ ()
    {
       if (this .getLive () .getValue () && this ._enabled .getValue () && this .colliderNode)
       {
@@ -87,7 +87,7 @@ CollisionSensor .prototype = Object .assign (Object .create (X3DSensorNode .prot
          this .getBrowser () .sensorEvents () .removeInterest ("update", this);
       }
    },
-   set_collider__: function ()
+   set_collider__ ()
    {
       this .colliderNode = X3DCast (X3DConstants .CollisionCollection, this ._collider);
 
@@ -233,7 +233,7 @@ CollisionSensor .prototype = Object .assign (Object .create (X3DSensorNode .prot
          }
       };
    })(),
-   getContact: function (index)
+   getContact (index)
    {
       const contactNode = this .contactCache [index];
 

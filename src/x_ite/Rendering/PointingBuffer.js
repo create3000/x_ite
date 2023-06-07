@@ -123,7 +123,7 @@ function PointingBuffer (browser)
 PointingBuffer .prototype =
 {
    constructor: PointingBuffer,
-   bind: function ()
+   bind ()
    {
       const gl = this .browser .getContext ();
 
@@ -133,13 +133,13 @@ PointingBuffer .prototype =
       gl .clearColor (0, 0, 0, 0);
       gl .clear (gl .COLOR_BUFFER_BIT);
    },
-   unbind: function ()
+   unbind ()
    {
       const gl = this .browser .getContext ();
 
       gl .bindFramebuffer (gl .FRAMEBUFFER, this .lastBuffer);
    },
-   getHit: function (hit)
+   getHit (hit)
    {
       const
          gl    = this .browser .getContext (),
@@ -172,7 +172,7 @@ PointingBuffer .prototype =
 
       gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffer);
    },
-   dispose: function ()
+   dispose ()
    {
       const gl = this .browser .getContext ();
 

@@ -89,7 +89,7 @@ GeoLOD .prototype = Object .assign (Object .create (X3DChildNode .prototype),
    X3DGeospatialObject .prototype,
 {
    constructor: GeoLOD,
-   initialize: function ()
+   initialize ()
    {
       X3DChildNode        .prototype .initialize .call (this);
       X3DBoundedObject    .prototype .initialize .call (this);
@@ -131,7 +131,7 @@ GeoLOD .prototype = Object .assign (Object .create (X3DChildNode .prototype),
       this .child3Inline .setup ();
       this .child4Inline .setup ();
    },
-   getBBox: function (bbox, shadows)
+   getBBox (bbox, shadows)
    {
       if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
       {
@@ -165,7 +165,7 @@ GeoLOD .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
-   set_rootLoadState__: function ()
+   set_rootLoadState__ ()
    {
       if (this ._level_changed .getValue () !== 0)
          return;
@@ -179,7 +179,7 @@ GeoLOD .prototype = Object .assign (Object .create (X3DChildNode .prototype),
          this .childrenLoaded = false;
       }
    },
-   set_childLoadState__: function ()
+   set_childLoadState__ ()
    {
       if (this ._level_changed .getValue () !== 1)
          return;
@@ -231,21 +231,21 @@ GeoLOD .prototype = Object .assign (Object .create (X3DChildNode .prototype),
             children .push (rootNodes [i]);
       }
    },
-   set_childCameraObject__: function ()
+   set_childCameraObject__ ()
    {
       this .setCameraObject (this .child1Inline .isCameraObject () ||
                              this .child2Inline .isCameraObject () ||
                              this .child3Inline .isCameraObject () ||
                              this .child4Inline .isCameraObject ());
    },
-   set_childPickableObject__: function ()
+   set_childPickableObject__ ()
    {
       this .setPickableObject (this .child1Inline .isPickableObject () ||
                                this .child2Inline .isPickableObject () ||
                                this .child3Inline .isPickableObject () ||
                                this .child4Inline .isPickableObject ());
    },
-   getLevel: function (modelViewMatrix)
+   getLevel (modelViewMatrix)
    {
       var distance = this .getDistance (modelViewMatrix);
 
@@ -254,13 +254,13 @@ GeoLOD .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 
       return 0;
    },
-   getDistance: function (modelViewMatrix)
+   getDistance (modelViewMatrix)
    {
       modelViewMatrix .translate (this .getCoord (this ._center .getValue (), center));
 
       return modelViewMatrix .origin .magnitude ();
    },
-   traverse: function (type, renderObject)
+   traverse (type, renderObject)
    {
       switch (type)
       {
@@ -386,7 +386,7 @@ GeoLOD .prototype = Object .assign (Object .create (X3DChildNode .prototype),
          }
       }
    },
-   traverseChildren: function (type, renderObject)
+   traverseChildren (type, renderObject)
    {
       switch (this .childrenLoaded ? this ._level_changed .getValue () : 0)
       {
@@ -409,7 +409,7 @@ GeoLOD .prototype = Object .assign (Object .create (X3DChildNode .prototype),
          }
       }
    },
-   dispose: function ()
+   dispose ()
    {
       X3DGeospatialObject .prototype .dispose .call (this);
       X3DBoundedObject    .prototype .dispose .call (this);

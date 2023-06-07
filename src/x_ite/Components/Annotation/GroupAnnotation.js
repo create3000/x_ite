@@ -64,12 +64,12 @@ GroupAnnotation .prototype = Object .assign (Object .create (X3DGroupingNode .pr
    X3DAnnotationNode .prototype,
 {
    constructor: GroupAnnotation,
-   initialize: function ()
+   initialize ()
    {
       X3DGroupingNode   .prototype .initialize .call (this);
       X3DAnnotationNode .prototype .initialize .call (this);
    },
-   dispose: function ()
+   dispose ()
    {
       X3DAnnotationNode .prototype .dispose .call (this);
       X3DGroupingNode   .prototype .dispose .call (this);

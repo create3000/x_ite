@@ -68,7 +68,7 @@ function X3DTexture3DNode (executionContext)
 X3DTexture3DNode .prototype = Object .assign (Object .create (X3DSingleTextureNode .prototype),
 {
    constructor: X3DTexture3DNode,
-   initialize: function ()
+   initialize ()
    {
       X3DSingleTextureNode .prototype .initialize .call (this);
 
@@ -84,31 +84,31 @@ X3DTexture3DNode .prototype = Object .assign (Object .create (X3DSingleTextureNo
       gl .bindTexture (gl .TEXTURE_3D, this .getTexture ());
       gl .texImage3D  (gl .TEXTURE_3D, 0, gl .RGBA, 1, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
    },
-   getTarget: function ()
+   getTarget ()
    {
       return this .target;
    },
-   getTextureType: function ()
+   getTextureType ()
    {
       return 3;
    },
-   getTextureTypeString: function ()
+   getTextureTypeString ()
    {
       return "3D";
    },
-   getWidth: function ()
+   getWidth ()
    {
       return this .width;
    },
-   getHeight: function ()
+   getHeight ()
    {
       return this .height;
    },
-   getDepth: function ()
+   getDepth ()
    {
       return this .depth;
    },
-   clearTexture: function ()
+   clearTexture ()
    {
       const gl = this .getBrowser () .getContext ();
 
@@ -116,7 +116,7 @@ X3DTexture3DNode .prototype = Object .assign (Object .create (X3DSingleTextureNo
 
       this .data = null;
    },
-   setTexture: function (width, height, depth, transparent, format, data)
+   setTexture (width, height, depth, transparent, format, data)
    {
       this .width  = width;
       this .height = height;
@@ -135,7 +135,7 @@ X3DTexture3DNode .prototype = Object .assign (Object .create (X3DSingleTextureNo
       this .updateTextureParameters ();
       this .addNodeEvent ();
    },
-   updateTextureParameters: function ()
+   updateTextureParameters ()
    {
       X3DSingleTextureNode .prototype .updateTextureParameters .call (this,
                                                                       this .target,
@@ -147,7 +147,7 @@ X3DTexture3DNode .prototype = Object .assign (Object .create (X3DSingleTextureNo
                                                                       this ._repeatT .getValue (),
                                                                       this ._repeatR .getValue ());
    },
-   setShaderUniforms: function (gl, shaderObject, renderObject, channel = shaderObject .x3d_Texture [0])
+   setShaderUniforms (gl, shaderObject, renderObject, channel = shaderObject .x3d_Texture [0])
    {
       const textureUnit = this .getBrowser () .getTexture3DUnit ();
 

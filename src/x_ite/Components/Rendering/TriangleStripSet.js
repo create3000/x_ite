@@ -63,7 +63,7 @@ function TriangleStripSet (executionContext)
 TriangleStripSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .prototype),
 {
    constructor: TriangleStripSet,
-   initialize: function ()
+   initialize ()
    {
       X3DComposedGeometryNode .prototype .initialize .call (this);
 
@@ -71,7 +71,7 @@ TriangleStripSet .prototype = Object .assign (Object .create (X3DComposedGeometr
 
       this .set_stripCount__ ();
    },
-   set_stripCount__: function ()
+   set_stripCount__ ()
    {
       // Build coordIndex
 
@@ -97,11 +97,11 @@ TriangleStripSet .prototype = Object .assign (Object .create (X3DComposedGeometr
          index += vertexCount;
       }
    },
-   getPolygonIndex: function (index)
+   getPolygonIndex (index)
    {
       return this .triangleIndex [index];
    },
-   build: function ()
+   build ()
    {
       X3DComposedGeometryNode .prototype .build .call (this, 3, this .triangleIndex .length, 3, this .triangleIndex .length);
    },

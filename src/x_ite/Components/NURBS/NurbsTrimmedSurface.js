@@ -64,7 +64,7 @@ function NurbsTrimmedSurface (executionContext)
 NurbsTrimmedSurface .prototype = Object .assign (Object .create (X3DNurbsSurfaceGeometryNode .prototype),
 {
    constructor: NurbsTrimmedSurface,
-   initialize: function ()
+   initialize ()
    {
       X3DNurbsSurfaceGeometryNode .prototype .initialize .call (this);
 
@@ -74,7 +74,7 @@ NurbsTrimmedSurface .prototype = Object .assign (Object .create (X3DNurbsSurface
 
       this .set_trimmingContour__ ();
    },
-   set_addTrimmingContour__: function ()
+   set_addTrimmingContour__ ()
    {
       this ._addTrimmingContour .setTainted (true);
       this ._addTrimmingContour .assign (filter (this ._addTrimmingContour, this ._trimmingContour), this ._addTrimmingContour .length);
@@ -85,7 +85,7 @@ NurbsTrimmedSurface .prototype = Object .assign (Object .create (X3DNurbsSurface
       this ._addTrimmingContour .length = 0;
       this ._addTrimmingContour .setTainted (false);
    },
-   set_removeTrimmingContour__: function ()
+   set_removeTrimmingContour__ ()
    {
       this ._removeTrimmingContour .setTainted (true);
       this ._trimmingContour .assign (filter (this ._trimmingContour, this ._removeTrimmingContour));
@@ -93,7 +93,7 @@ NurbsTrimmedSurface .prototype = Object .assign (Object .create (X3DNurbsSurface
       this ._removeTrimmingContour .length = 0;
       this ._removeTrimmingContour .setTainted (false);
    },
-   set_trimmingContour__: function ()
+   set_trimmingContour__ ()
    {
       const trimmingContourNodes = this .trimmingContourNodes;
 
@@ -107,7 +107,7 @@ NurbsTrimmedSurface .prototype = Object .assign (Object .create (X3DNurbsSurface
             trimmingContourNodes .push (trimmingContourNode);
       }
    },
-   getTrimmingContours: function ()
+   getTrimmingContours ()
    {
       const
          trimmingContourNodes = this .trimmingContourNodes,

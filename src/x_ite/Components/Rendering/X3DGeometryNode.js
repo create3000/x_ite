@@ -119,7 +119,7 @@ function X3DGeometryNode (executionContext)
 Object .defineProperty (X3DGeometryNode, "createArray",
 {
    // Function to select ether Array or MFFloat for color/normal/vertex arrays.
-   value: function ()
+   value ()
    {
       if (ARRAY_TYPE == "MFFloat")
          return new Fields .MFFloat ();
@@ -158,13 +158,13 @@ Object .defineProperty (X3DGeometryNode, "createArray",
 X3DGeometryNode .prototype = Object .assign (Object .create (X3DNode .prototype),
 {
    constructor: X3DGeometryNode,
-   setup: function ()
+   setup ()
    {
       X3DNode .prototype .setup .call (this);
 
       this .rebuild ();
    },
-   initialize: function ()
+   initialize ()
    {
       X3DNode .prototype .initialize .call (this);
 
@@ -190,29 +190,29 @@ X3DGeometryNode .prototype = Object .assign (Object .create (X3DNode .prototype)
 
       this .set_live__ ();
    },
-   setGeometryType: function (value)
+   setGeometryType (value)
    {
       this .geometryType = value;
    },
-   getGeometryType: function ()
+   getGeometryType ()
    {
       return this .geometryType;
    },
-   setTransparent: function (value)
+   setTransparent (value)
    {
       if (value !== this ._transparent .getValue ())
          this ._transparent = value;
    },
-   isTransparent: function ()
+   isTransparent ()
    {
       return this ._transparent .getValue ();
    },
-   getBBox: function ()
+   getBBox ()
    {
       // With screen matrix applied.
       return this .bbox;
    },
-   setBBox: function (bbox)
+   setBBox (bbox)
    {
       if (bbox .equals (this .bbox))
          return;
@@ -226,67 +226,67 @@ X3DGeometryNode .prototype = Object .assign (Object .create (X3DNode .prototype)
 
       this ._bbox_changed .addEvent ();
    },
-   getMin: function ()
+   getMin ()
    {
       // With screen matrix applied.
       return this .min;
    },
-   getMax: function ()
+   getMax ()
    {
       // With screen matrix applied.
       return this .max;
    },
-   getMatrix: function ()
+   getMatrix ()
    {
       return Matrix4 .Identity;
    },
-   setPrimitiveMode: function (value)
+   setPrimitiveMode (value)
    {
       this .primitiveMode = value;
    },
-   getPrimitiveMode: function ()
+   getPrimitiveMode ()
    {
       return this .primitiveMode;
    },
-   setSolid: function (value)
+   setSolid (value)
    {
       this .solid = value;
    },
-   setCCW: function (value)
+   setCCW (value)
    {
       const gl = this .getBrowser () .getContext ();
 
       this .frontFace = value ? gl .CCW : gl .CW;
    },
-   getAttrib: function ()
+   getAttrib ()
    {
       return this .attribNodes;
    },
-   getAttribs: function ()
+   getAttribs ()
    {
       return this .attribArrays;
    },
-   getAttribBuffers: function ()
+   getAttribBuffers ()
    {
       return this .attribBuffers;
    },
-   setFogDepths: function (value)
+   setFogDepths (value)
    {
       this .fogDepths .assign (value);
    },
-   getFogDepths: function ()
+   getFogDepths ()
    {
       return this .fogDepths;
    },
-   setColors: function (value)
+   setColors (value)
    {
       this .colors .assign (value);
    },
-   getColors: function ()
+   getColors ()
    {
       return this .colors;
    },
-   setMultiTexCoords: function (value)
+   setMultiTexCoords (value)
    {
       const
          multiTexCoords = this .multiTexCoords,
@@ -297,19 +297,19 @@ X3DGeometryNode .prototype = Object .assign (Object .create (X3DNode .prototype)
 
       multiTexCoords .length = length;
    },
-   getMultiTexCoords: function ()
+   getMultiTexCoords ()
    {
       return this .multiTexCoords;
    },
-   getTexCoords: function ()
+   getTexCoords ()
    {
       return this .texCoords;
    },
-   getTextureCoordinate: function ()
+   getTextureCoordinate ()
    {
       return this .textureCoordinateNode;
    },
-   setTextureCoordinate: function (value)
+   setTextureCoordinate (value)
    {
       this .textureCoordinateNode .removeInterest ("updateTextureCoordinateMapping", this);
 
@@ -322,39 +322,39 @@ X3DGeometryNode .prototype = Object .assign (Object .create (X3DNode .prototype)
 
       this .updateTextureCoordinateMapping ();
    },
-   getTextureCoordinateMapping: function ()
+   getTextureCoordinateMapping ()
    {
       return this .textureCoordinateMapping;
    },
-   updateTextureCoordinateMapping: function ()
+   updateTextureCoordinateMapping ()
    {
       this .textureCoordinateMapping .clear ();
 
       this .textureCoordinateNode .getTextureCoordinateMapping (this .textureCoordinateMapping);
    },
-   setNormals: function (value)
+   setNormals (value)
    {
       this .normals .assign (value);
    },
-   getNormals: function ()
+   getNormals ()
    {
       return this .normals;
    },
-   setVertices: function (value)
+   setVertices (value)
    {
       this .vertices .assign (value);
    },
-   getVertices: function ()
+   getVertices ()
    {
       return this .vertices;
    },
-   updateVertexArrays: function ()
+   updateVertexArrays ()
    {
       this .vertexArrayObject .update ();
 
       this .updateParticles = true;
    },
-   buildTexCoords: function ()
+   buildTexCoords ()
    {
       const texCoords = this .texCoords;
 
@@ -435,7 +435,7 @@ X3DGeometryNode .prototype = Object .assign (Object .create (X3DNode .prototype)
          return texCoordParams;
       };
    })(),
-   refineNormals: function (normalIndex, normals, creaseAngle)
+   refineNormals (normalIndex, normals, creaseAngle)
    {
       if (creaseAngle === 0)
          return normals;
@@ -468,15 +468,15 @@ X3DGeometryNode .prototype = Object .assign (Object .create (X3DNode .prototype)
 
       return normals_;
    },
-   transformLine: function (hitRay)
+   transformLine (hitRay)
    {
       // Apply sceen nodes transformation in place here.
    },
-   transformMatrix: function (hitRay)
+   transformMatrix (hitRay)
    {
       // Apply sceen nodes transformation in place here.
    },
-   isClipped: function (point, clipPlanes)
+   isClipped (point, clipPlanes)
    {
       return clipPlanes .some (function (clipPlane)
       {
@@ -698,7 +698,7 @@ X3DGeometryNode .prototype = Object .assign (Object .create (X3DNode .prototype)
          return false;
       };
    })(),
-   set_live__: function ()
+   set_live__ ()
    {
       if (this .getLive () .getValue ())
          this .getBrowser () .getBrowserOptions () ._Shading .addInterest ("set_shading__", this);
@@ -770,7 +770,7 @@ X3DGeometryNode .prototype = Object .assign (Object .create (X3DNode .prototype)
          }
       };
    })(),
-   requestRebuild: function ()
+   requestRebuild ()
    {
       this ._rebuild .addEvent ();
    },
@@ -840,7 +840,7 @@ X3DGeometryNode .prototype = Object .assign (Object .create (X3DNode .prototype)
          this .updateRenderFunctions ();
       };
    })(),
-   clear: function ()
+   clear ()
    {
       // BBox
 
@@ -874,7 +874,7 @@ X3DGeometryNode .prototype = Object .assign (Object .create (X3DNode .prototype)
       this .flatNormals    .length = 0;
       this .vertices       .length = 0;
    },
-   transfer: function ()
+   transfer ()
    {
       const gl = this .getBrowser () .getContext ();
 
@@ -939,7 +939,7 @@ X3DGeometryNode .prototype = Object .assign (Object .create (X3DNode .prototype)
 
       this .vertexCount = this .vertices .length / 4;
    },
-   updateGeometryKey: function ()
+   updateGeometryKey ()
    {
       this .geometryKey  = "";
       this .geometryKey += this .geometryType;
@@ -947,7 +947,7 @@ X3DGeometryNode .prototype = Object .assign (Object .create (X3DNode .prototype)
       this .geometryKey += this .colorMaterial ? "1" : "0";
       this .geometryKey += this .hasNormals    ? "1" : "0";
    },
-   updateRenderFunctions: function ()
+   updateRenderFunctions ()
    {
       if (this .vertexCount)
       {
@@ -968,9 +968,9 @@ X3DGeometryNode .prototype = Object .assign (Object .create (X3DNode .prototype)
          this .displayParticles       = Function .prototype;
       }
    },
-   traverse: function (type, renderObject)
+   traverse (type, renderObject)
    { },
-   displaySimple: function (gl, renderContext, shaderNode)
+   displaySimple (gl, renderContext, shaderNode)
    {
       if (this .vertexArrayObject .enable (shaderNode))
       {
@@ -985,7 +985,7 @@ X3DGeometryNode .prototype = Object .assign (Object .create (X3DNode .prototype)
 
       gl .drawArrays (this .primitiveMode, 0, this .vertexCount);
    },
-   display: function (gl, renderContext)
+   display (gl, renderContext)
    {
       const
          appearanceNode = renderContext .appearanceNode,
@@ -1003,7 +1003,7 @@ X3DGeometryNode .prototype = Object .assign (Object .create (X3DNode .prototype)
          this .displayGeometry (gl, renderContext, appearanceNode, shaderNode,     false, true);
       }
    },
-   displayGeometry: function (gl, renderContext, appearanceNode, shaderNode, back, front)
+   displayGeometry (gl, renderContext, appearanceNode, shaderNode, back, front)
    {
       const
          browser       = this .getBrowser (),
@@ -1085,7 +1085,7 @@ X3DGeometryNode .prototype = Object .assign (Object .create (X3DNode .prototype)
 
       blendModeNode ?.disable (gl);
    },
-   displaySimpleParticles: function (gl, shaderNode, particleSystem)
+   displaySimpleParticles (gl, shaderNode, particleSystem)
    {
       const outputParticles = particleSystem .outputParticles;
 
@@ -1104,7 +1104,7 @@ X3DGeometryNode .prototype = Object .assign (Object .create (X3DNode .prototype)
 
       gl .drawArraysInstanced (this .primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
    },
-   displayParticles: function (gl, renderContext, particleSystem)
+   displayParticles (gl, renderContext, particleSystem)
    {
       const
          appearanceNode = renderContext .appearanceNode,
@@ -1122,7 +1122,7 @@ X3DGeometryNode .prototype = Object .assign (Object .create (X3DNode .prototype)
          this .displayParticlesGeometry (gl, renderContext, appearanceNode, shaderNode,     false, true,  particleSystem);
       }
    },
-   displayParticlesGeometry: function (gl, renderContext, appearanceNode, shaderNode, back, front, particleSystem)
+   displayParticlesGeometry (gl, renderContext, appearanceNode, shaderNode, back, front, particleSystem)
    {
       const
          browser       = this .getBrowser (),

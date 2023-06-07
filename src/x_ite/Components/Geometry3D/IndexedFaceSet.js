@@ -66,7 +66,7 @@ function IndexedFaceSet (executionContext)
 IndexedFaceSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .prototype),
 {
    constructor: IndexedFaceSet,
-   initialize: function ()
+   initialize ()
    {
       X3DComposedGeometryNode .prototype .initialize .call (this);
 
@@ -75,42 +75,42 @@ IndexedFaceSet .prototype = Object .assign (Object .create (X3DComposedGeometryN
       this ._set_normalIndex   .addFieldInterest (this ._normalIndex);
       this ._set_coordIndex    .addFieldInterest (this ._coordIndex);
    },
-   getTexCoordPerVertexIndex: function (index)
+   getTexCoordPerVertexIndex (index)
    {
       if (index < this ._texCoordIndex .length)
          return this ._texCoordIndex [index];
 
       return this ._coordIndex [index];
    },
-   getColorPerVertexIndex: function (index)
+   getColorPerVertexIndex (index)
    {
       if (index < this ._colorIndex .length)
          return this ._colorIndex [index];
 
       return this ._coordIndex [index];
    },
-   getColorIndex: function (index)
+   getColorIndex (index)
    {
       if (index < this ._colorIndex .length)
          return this ._colorIndex [index];
 
       return index;
    },
-   getNormalPerVertexIndex: function (index)
+   getNormalPerVertexIndex (index)
    {
       if (index < this ._normalIndex .length)
          return this ._normalIndex [index];
 
       return this ._coordIndex [index];
    },
-   getNormalIndex: function (index)
+   getNormalIndex (index)
    {
       if (index < this ._normalIndex .length)
          return this ._normalIndex [index];
 
       return index;
    },
-   build: function ()
+   build ()
    {
       // Triangulate
 
@@ -189,7 +189,7 @@ IndexedFaceSet .prototype = Object .assign (Object .create (X3DComposedGeometryN
       this .setSolid (this ._solid .getValue ());
       this .setCCW (this ._ccw .getValue ());
    },
-   triangulate: function ()
+   triangulate ()
    {
       const
          convex      = this ._convex .getValue (),
@@ -312,7 +312,7 @@ IndexedFaceSet .prototype = Object .assign (Object .create (X3DComposedGeometryN
          Triangle3 .triangulatePolygon (polygon, triangles);
       };
    })(),
-   buildNormals: function (polygons)
+   buildNormals (polygons)
    {
       const
          normals     = this .createNormals (polygons),

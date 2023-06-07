@@ -71,7 +71,7 @@ function HAnimJoint (executionContext)
 HAnimJoint .prototype = Object .assign (Object .create (X3DTransformNode .prototype),
 {
    constructor: HAnimJoint,
-   initialize: function ()
+   initialize ()
    {
       X3DTransformNode .prototype .initialize .call (this);
 
@@ -80,23 +80,23 @@ HAnimJoint .prototype = Object .assign (Object .create (X3DTransformNode .protot
 
       this .set_displacers__ ();
    },
-   setCameraObject: function (value)
+   setCameraObject (value)
    {
       X3DTransformNode .prototype .setCameraObject .call (this, value || !! this ._skinCoordIndex .length);
    },
-   getModelMatrix: function ()
+   getModelMatrix ()
    {
       return this .modelMatrix;
    },
-   getDisplacers: function ()
+   getDisplacers ()
    {
       return this .displacerNodes;
    },
-   set_skinCoordIndex__: function ()
+   set_skinCoordIndex__ ()
    {
       this .set_cameraObjects__ ();
    },
-   set_displacers__: function ()
+   set_displacers__ ()
    {
       const displacerNodes = this .displacerNodes;
 
@@ -110,7 +110,7 @@ HAnimJoint .prototype = Object .assign (Object .create (X3DTransformNode .protot
             displacerNodes .push (displacerNode);
       }
    },
-   traverse: function traverse (type, renderObject)
+   traverse (type, renderObject)
    {
       if (type === TraverseType .CAMERA)
       {
@@ -120,7 +120,7 @@ HAnimJoint .prototype = Object .assign (Object .create (X3DTransformNode .protot
 
       X3DTransformNode .prototype .traverse .call (this, type, renderObject);
    },
-   groupTraverse: function (type, renderObject)
+   groupTraverse (type, renderObject)
    {
       if (type === TraverseType .CAMERA)
       {

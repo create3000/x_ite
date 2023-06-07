@@ -67,14 +67,14 @@ ImageTexture3D .prototype = Object .assign (Object .create (X3DTexture3DNode .pr
    X3DUrlObject .prototype,
 {
    constructor: ImageTexture3D,
-   initialize: function ()
+   initialize ()
    {
       X3DTexture3DNode .prototype .initialize .call (this);
       X3DUrlObject     .prototype .initialize .call (this);
 
       this .requestImmediateLoad () .catch (Function .prototype);
    },
-   getInternalType: function (components)
+   getInternalType (components)
    {
       const gl = this .getBrowser () .getContext ();
 
@@ -90,11 +90,11 @@ ImageTexture3D .prototype = Object .assign (Object .create (X3DTexture3DNode .pr
             return gl .RGBA;
       }
    },
-   unloadData: function ()
+   unloadData ()
    {
       this .clearTexture ();
    },
-   loadData: function ()
+   loadData ()
    {
       new FileLoader (this) .loadDocument (this ._url,
       function (data)
@@ -134,7 +134,7 @@ ImageTexture3D .prototype = Object .assign (Object .create (X3DTexture3DNode .pr
       }
       .bind (this));
    },
-   dispose: function ()
+   dispose ()
    {
       X3DUrlObject     .prototype .dispose .call (this);
       X3DTexture3DNode .prototype .dispose .call (this);

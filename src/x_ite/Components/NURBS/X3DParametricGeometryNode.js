@@ -59,7 +59,7 @@ function X3DParametricGeometryNode (executionContext)
 X3DParametricGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 {
    constructor: X3DParametricGeometryNode,
-   getKnots: function (result, closed, order, dimension, knot)
+   getKnots (result, closed, order, dimension, knot)
    {
       return NURBS .getKnots (result, closed, order, dimension, knot);
    },

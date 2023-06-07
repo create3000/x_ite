@@ -129,7 +129,7 @@ function Contour2D (executionContext)
 Contour2D .prototype = Object .assign (Object .create ((X3DNode_default()).prototype),
 {
    constructor: Contour2D,
-   initialize: function ()
+   initialize ()
    {
       X3DNode_default().prototype.initialize.call (this);
 
@@ -139,7 +139,7 @@ Contour2D .prototype = Object .assign (Object .create ((X3DNode_default()).proto
 
       this .set_children__ ();
    },
-   set_addChildren__: function ()
+   set_addChildren__ ()
    {
       this ._addChildren .setTainted (true);
       this ._addChildren .assign (filter (this ._addChildren, this ._children));
@@ -150,7 +150,7 @@ Contour2D .prototype = Object .assign (Object .create ((X3DNode_default()).proto
       this ._addChildren .length = 0;
       this ._addChildren .setTainted (false);
    },
-   set_removeChildren__: function ()
+   set_removeChildren__ ()
    {
       this ._removeChildren .setTainted (true);
       this ._children .assign (filter (this ._children, this ._removeChildren));
@@ -158,7 +158,7 @@ Contour2D .prototype = Object .assign (Object .create ((X3DNode_default()).proto
       this ._removeChildren .length = 0;
       this ._removeChildren .setTainted (false);
    },
-   set_children__: function ()
+   set_children__ ()
    {
       const childNodes = this .childNodes;
 
@@ -185,7 +185,7 @@ Contour2D .prototype = Object .assign (Object .create ((X3DNode_default()).proto
          }
       }
    },
-   addTrimmingContour: function (trimmingContours)
+   addTrimmingContour (trimmingContours)
    {
       for (const childNode of this .childNodes)
          trimmingContours .push (childNode .tessellate (2));
@@ -390,7 +390,7 @@ function ContourPolyline2D (executionContext)
 ContourPolyline2D .prototype = Object .assign (Object .create (NURBS_X3DNurbsControlCurveNode.prototype),
 {
    constructor: ContourPolyline2D,
-   tessellate: function (type)
+   tessellate (type)
    {
       switch (type)
       {
@@ -662,7 +662,7 @@ var Vector4_default = /*#__PURE__*/__webpack_require__.n(Vector4_namespaceObject
 
 
 const NURBS = {
-   getTessellation: function (tessellation, dimension)
+   getTessellation (tessellation, dimension)
    {
       if (tessellation > 0)
          return tessellation + 1;
@@ -672,7 +672,7 @@ const NURBS = {
 
       return 2 * dimension + 1;
    },
-   getClosed2D: function (order, knot, weight, controlPoint)
+   getClosed2D (order, knot, weight, controlPoint)
    {
       const
          dimension   = controlPoint .length,
@@ -807,7 +807,7 @@ const NURBS = {
          return true;
       };
    })(),
-   isPeriodic: function (order, dimension, knot)
+   isPeriodic (order, dimension, knot)
    {
       // Check if knots are periodic.
 
@@ -840,7 +840,7 @@ const NURBS = {
 
       return true;
    },
-   getKnots: function (result, closed, order, dimension, knot)
+   getKnots (result, closed, order, dimension, knot)
    {
       const knots = result || [ ];
 
@@ -889,7 +889,7 @@ const NURBS = {
 
       return knots;
    },
-   getWeights: function (result, dimension, weight)
+   getWeights (result, dimension, weight)
    {
       if (weight .length !== dimension)
          return undefined;
@@ -905,7 +905,7 @@ const NURBS = {
 
       return weights;
    },
-   getUVWeights: function (result, uDimension, vDimension, weight)
+   getUVWeights (result, uDimension, vDimension, weight)
    {
       const dimension = uDimension * vDimension;
 
@@ -926,7 +926,7 @@ const NURBS = {
 
       return weights;
    },
-   getControlPoints2D: function (result, closed, order, weights, controlPoint)
+   getControlPoints2D (result, closed, order, weights, controlPoint)
    {
       const
          controlPoints     = result || [ ],
@@ -960,7 +960,7 @@ const NURBS = {
 
       return controlPoints;
    },
-   getControlPoints: function (result, closed, order, weights, controlPointNode)
+   getControlPoints (result, closed, order, weights, controlPointNode)
    {
       const
          controlPoints = result || [ ],
@@ -992,7 +992,7 @@ const NURBS = {
 
       return controlPoints;
    },
-   getUVControlPoints: function (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, weights, controlPointNode)
+   getUVControlPoints (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, weights, controlPointNode)
    {
       const
          controlPoints = result || [ ],
@@ -1041,7 +1041,7 @@ const NURBS = {
 
       return controlPoints;
    },
-   getTexControlPoints: function (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, controlPointNode)
+   getTexControlPoints (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, controlPointNode)
    {
       const controlPoints = result || [ ];
 
@@ -1147,7 +1147,7 @@ function X3DParametricGeometryNode (executionContext)
 X3DParametricGeometryNode .prototype = Object .assign (Object .create ((X3DGeometryNode_default()).prototype),
 {
    constructor: X3DParametricGeometryNode,
-   getKnots: function (result, closed, order, dimension, knot)
+   getKnots (result, closed, order, dimension, knot)
    {
       return NURBS_NURBS.getKnots (result, closed, order, dimension, knot);
    },
@@ -2871,7 +2871,7 @@ NurbsCurve .prototype = Object .assign (Object .create (NURBS_X3DParametricGeome
    (X3DLineGeometryNode_default()).prototype,
 {
    constructor: NurbsCurve,
-   initialize: function ()
+   initialize ()
    {
       NURBS_X3DParametricGeometryNode.prototype.initialize.call (this);
 
@@ -2879,7 +2879,7 @@ NurbsCurve .prototype = Object .assign (Object .create (NURBS_X3DParametricGeome
 
       this .set_controlPoint__ ();
    },
-   set_controlPoint__: function ()
+   set_controlPoint__ ()
    {
       if (this .controlPointNode)
          this .controlPointNode .removeInterest ("requestRebuild", this);
@@ -2889,26 +2889,26 @@ NurbsCurve .prototype = Object .assign (Object .create (NURBS_X3DParametricGeome
       if (this .controlPointNode)
          this .controlPointNode .addInterest ("requestRebuild", this);
    },
-   getTessellation: function (numKnots)
+   getTessellation (numKnots)
    {
       return NURBS_NURBS.getTessellation (this ._tessellation .getValue (), numKnots - this ._order .getValue ());
    },
-   getClosed: function (order, knot, weight, controlPointNode)
+   getClosed (order, knot, weight, controlPointNode)
    {
       if (! this ._closed .getValue ())
          return false;
 
       return NURBS_NURBS.getClosed (order, knot, weight, controlPointNode);
    },
-   getWeights: function (result, dimension, weight)
+   getWeights (result, dimension, weight)
    {
       return NURBS_NURBS.getWeights (result, dimension, weight);
    },
-   getControlPoints: function (result, closed, order, weights, controlPointNode)
+   getControlPoints (result, closed, order, weights, controlPointNode)
    {
       return NURBS_NURBS.getControlPoints (result, closed, order, weights, controlPointNode);
    },
-   tessellate: function ()
+   tessellate ()
    {
       if (this ._order .getValue () < 2)
          return [ ];
@@ -2935,7 +2935,7 @@ NurbsCurve .prototype = Object .assign (Object .create (NURBS_X3DParametricGeome
 
       return array;
    },
-   build: function ()
+   build ()
    {
       if (this ._order .getValue () < 2)
          return;
@@ -2987,7 +2987,7 @@ NurbsCurve .prototype = Object .assign (Object .create (NURBS_X3DParametricGeome
          vertexArray .push (points [i2], points [i2 + 1], points [i2 + 2], 1);
       }
    },
-   dispose: function ()
+   dispose ()
    {
       NURBS_X3DParametricGeometryNode.prototype.dispose.call (this);
    },
@@ -3109,30 +3109,30 @@ function NurbsCurve2D (executionContext)
 NurbsCurve2D .prototype = Object .assign (Object .create (NURBS_X3DNurbsControlCurveNode.prototype),
 {
    constructor: NurbsCurve2D,
-   getTessellation: function (numKnots)
+   getTessellation (numKnots)
    {
       return NURBS_NURBS.getTessellation (this ._tessellation .getValue (), numKnots - this ._order .getValue ());
    },
-   getClosed: function (order, knot, weight, controlPoint)
+   getClosed (order, knot, weight, controlPoint)
    {
       if (! this ._closed .getValue ())
          return false;
 
       return NURBS_NURBS.getClosed2D (order, knot, weight, controlPoint);
    },
-   getKnots: function (result, closed, order, dimension, knot)
+   getKnots (result, closed, order, dimension, knot)
    {
       return NURBS_NURBS.getKnots (result, closed, order, dimension, knot);
    },
-   getWeights: function (result, dimension, weight)
+   getWeights (result, dimension, weight)
    {
       return NURBS_NURBS.getWeights (result, dimension, weight);
    },
-   getControlPoints: function (result, closed, order, weights, controlPoint)
+   getControlPoints (result, closed, order, weights, controlPoint)
    {
       return NURBS_NURBS.getControlPoints2D (result, closed, order, weights, controlPoint);
    },
-   tessellate: function (type)
+   tessellate (type)
    {
       const array = this .array;
 
@@ -3341,7 +3341,7 @@ function NurbsOrientationInterpolator (executionContext)
 NurbsOrientationInterpolator .prototype = Object .assign (Object .create ((X3DChildNode_default()).prototype),
 {
    constructor: NurbsOrientationInterpolator,
-   initialize: function ()
+   initialize ()
    {
       X3DChildNode_default().prototype.initialize.call (this);
 
@@ -3359,7 +3359,7 @@ NurbsOrientationInterpolator .prototype = Object .assign (Object .create ((X3DCh
 
       this .set_controlPoint__ ();
    },
-   set_controlPoint__: function ()
+   set_controlPoint__ ()
    {
       if (this .controlPointNode)
          this .controlPointNode .removeInterest ("requestRebuild", this);
@@ -3371,27 +3371,27 @@ NurbsOrientationInterpolator .prototype = Object .assign (Object .create ((X3DCh
 
       this .requestRebuild ();
    },
-   getClosed: function (order, knot, weight, controlPointNode)
+   getClosed (order, knot, weight, controlPointNode)
    {
       return  false && 0;
    },
-   getKnots: function (result, closed, order, dimension, knot)
+   getKnots (result, closed, order, dimension, knot)
    {
       return NURBS_NURBS.getKnots (result, closed, order, dimension, knot);
    },
-   getWeights: function (result, dimension, weight)
+   getWeights (result, dimension, weight)
    {
       return NURBS_NURBS.getWeights (result, dimension, weight);
    },
-   getControlPoints: function (result, closed, order, weights, controlPointNode)
+   getControlPoints (result, closed, order, weights, controlPointNode)
    {
       return NURBS_NURBS.getControlPoints (result, closed, order, weights, controlPointNode);
    },
-   requestRebuild: function ()
+   requestRebuild ()
    {
       this ._rebuild .addEvent ();
    },
-   build: function ()
+   build ()
    {
       if (this ._order .getValue () < 2)
          return;
@@ -3580,7 +3580,7 @@ function X3DNurbsSurfaceGeometryNode (executionContext)
 X3DNurbsSurfaceGeometryNode .prototype = Object .assign (Object .create (NURBS_X3DParametricGeometryNode.prototype),
 {
    constructor: X3DNurbsSurfaceGeometryNode,
-   initialize: function ()
+   initialize ()
    {
       NURBS_X3DParametricGeometryNode.prototype.initialize.call (this);
 
@@ -3590,7 +3590,7 @@ X3DNurbsSurfaceGeometryNode .prototype = Object .assign (Object .create (NURBS_X
       this .set_texCoord__ ();
       this .set_controlPoint__ ();
    },
-   set_texCoord__: function ()
+   set_texCoord__ ()
    {
       this .texCoordNode      ?.removeInterest ("requestRebuild", this);
       this .nurbsTexCoordNode ?.removeInterest ("requestRebuild", this);
@@ -3601,7 +3601,7 @@ X3DNurbsSurfaceGeometryNode .prototype = Object .assign (Object .create (NURBS_X
       this .texCoordNode      ?.addInterest ("requestRebuild", this);
       this .nurbsTexCoordNode ?.addInterest ("requestRebuild", this);
    },
-   set_controlPoint__: function ()
+   set_controlPoint__ ()
    {
       if (this .controlPointNode)
          this .controlPointNode .removeInterest ("requestRebuild", this);
@@ -3611,51 +3611,51 @@ X3DNurbsSurfaceGeometryNode .prototype = Object .assign (Object .create (NURBS_X
       if (this .controlPointNode)
          this .controlPointNode .addInterest ("requestRebuild", this);
    },
-   setTessellationScale: function (value)
+   setTessellationScale (value)
    {
       this .tessellationScale = value;
 
       this .requestRebuild ();
    },
-   getUTessellation: function (numKnots)
+   getUTessellation (numKnots)
    {
       return Math .floor (NURBS_NURBS.getTessellation (this ._uTessellation .getValue (), numKnots - this ._uOrder .getValue ()) * this .tessellationScale);
    },
-   getVTessellation: function (numKnots)
+   getVTessellation (numKnots)
    {
       return Math .floor (NURBS_NURBS.getTessellation (this ._vTessellation .getValue (), numKnots - this ._vOrder .getValue ()) * this .tessellationScale);
    },
-   getUClosed: function (uOrder, uDimension, vDimension, uKnot, weight, controlPointNode)
+   getUClosed (uOrder, uDimension, vDimension, uKnot, weight, controlPointNode)
    {
       if (this ._uClosed .getValue ())
          return NURBS_NURBS.getUClosed (uOrder, uDimension, vDimension, uKnot, weight, controlPointNode);
 
       return false;
    },
-   getVClosed: function (vOrder, uDimension, vDimension, vKnot, weight, controlPointNode)
+   getVClosed (vOrder, uDimension, vDimension, vKnot, weight, controlPointNode)
    {
       if (this ._vClosed .getValue ())
          return NURBS_NURBS.getVClosed (vOrder, uDimension, vDimension, vKnot, weight, controlPointNode);
 
       return false;
    },
-   getUVWeights: function (result, uDimension, vDimension, weight)
+   getUVWeights (result, uDimension, vDimension, weight)
    {
       return NURBS_NURBS.getUVWeights (result, uDimension, vDimension, weight);
    },
-   getTexControlPoints: function (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, texCoordNode)
+   getTexControlPoints (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, texCoordNode)
    {
       return NURBS_NURBS.getTexControlPoints (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, texCoordNode);
    },
-   getUVControlPoints: function (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, weights, controlPointNode)
+   getUVControlPoints (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, weights, controlPointNode)
    {
       return NURBS_NURBS.getUVControlPoints (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, weights, controlPointNode);
    },
-   getTrimmingContours: function ()
+   getTrimmingContours ()
    {
       return undefined;
    },
-   build: function ()
+   build ()
    {
       if (this ._uOrder .getValue () < 2)
          return;
@@ -3812,7 +3812,7 @@ X3DNurbsSurfaceGeometryNode .prototype = Object .assign (Object .create (NURBS_X
          this .getMultiTexCoords () .push (this .getTexCoords ());
       };
    })(),
-   buildNormals: function (faces, points)
+   buildNormals (faces, points)
    {
       const
          normals     = this .createNormals (faces, points),
@@ -3821,7 +3821,7 @@ X3DNurbsSurfaceGeometryNode .prototype = Object .assign (Object .create (NURBS_X
       for (const normal of normals)
          normalArray .push (normal .x, normal .y, normal .z);
    },
-   createNormals: function (faces, points)
+   createNormals (faces, points)
    {
       const
          normals     = this .createFaceNormals (faces, points),
@@ -4094,7 +4094,7 @@ function NurbsPositionInterpolator (executionContext)
 NurbsPositionInterpolator .prototype = Object .assign (Object .create ((X3DChildNode_default()).prototype),
 {
    constructor: NurbsPositionInterpolator,
-   initialize: function ()
+   initialize ()
    {
       X3DChildNode_default().prototype.initialize.call (this);
 
@@ -4112,7 +4112,7 @@ NurbsPositionInterpolator .prototype = Object .assign (Object .create ((X3DChild
 
       this .set_controlPoint__ ();
    },
-   set_controlPoint__: function ()
+   set_controlPoint__ ()
    {
       if (this .controlPointNode)
          this .controlPointNode .removeInterest ("requestRebuild", this);
@@ -4124,27 +4124,27 @@ NurbsPositionInterpolator .prototype = Object .assign (Object .create ((X3DChild
 
       this .requestRebuild ();
    },
-   getClosed: function (order, knot, weight, controlPointNode)
+   getClosed (order, knot, weight, controlPointNode)
    {
       return  false && 0;
    },
-   getKnots: function (result, closed, order, dimension, knot)
+   getKnots (result, closed, order, dimension, knot)
    {
       return NURBS_NURBS.getKnots (result, closed, order, dimension, knot);
    },
-   getWeights: function (result, dimension, weight)
+   getWeights (result, dimension, weight)
    {
       return NURBS_NURBS.getWeights (result, dimension, weight);
    },
-   getControlPoints: function (result, closed, order, weights, controlPointNode)
+   getControlPoints (result, closed, order, weights, controlPointNode)
    {
       return NURBS_NURBS.getControlPoints (result, closed, order, weights, controlPointNode);
    },
-   requestRebuild: function ()
+   requestRebuild ()
    {
       this ._rebuild .addEvent ();
    },
-   build: function ()
+   build ()
    {
       if (this ._order .getValue () < 2)
          return;
@@ -4313,7 +4313,7 @@ NurbsSet .prototype = Object .assign (Object .create ((X3DChildNode_default()).p
    (X3DBoundedObject_default()).prototype,
 {
    constructor: NurbsSet,
-   initialize: function ()
+   initialize ()
    {
       X3DChildNode_default().prototype.initialize.call (this);
       X3DBoundedObject_default().prototype.initialize.call (this);
@@ -4325,7 +4325,7 @@ NurbsSet .prototype = Object .assign (Object .create ((X3DChildNode_default()).p
 
       this .set_geometry__ ();
    },
-   getBBox: function (bbox, shadows)
+   getBBox (bbox, shadows)
    {
       // Add bounding boxes
 
@@ -4334,14 +4334,14 @@ NurbsSet .prototype = Object .assign (Object .create ((X3DChildNode_default()).p
 
       return bbox;
    },
-   set_tessellationScale__: function ()
+   set_tessellationScale__ ()
    {
       const tessellationScale = Math .max (0, this ._tessellationScale .getValue ());
 
       for (const geometryNode of this .geometryNodes)
          geometryNode .setTessellationScale (tessellationScale);
    },
-   set_addGeometry__: function ()
+   set_addGeometry__ ()
    {
       this ._addGeometry .setTainted (true);
       this ._addGeometry .assign (NurbsSet_filter (this ._addGeometry, this ._geometry));
@@ -4352,7 +4352,7 @@ NurbsSet .prototype = Object .assign (Object .create ((X3DChildNode_default()).p
       this ._addGeometry .length = 0;
       this ._addGeometry .setTainted (false);
    },
-   set_removeGeometry__: function ()
+   set_removeGeometry__ ()
    {
       this ._removeGeometry .setTainted (true);
       this ._geometry .assign (NurbsSet_filter (this ._geometry, this ._removeGeometry));
@@ -4360,7 +4360,7 @@ NurbsSet .prototype = Object .assign (Object .create ((X3DChildNode_default()).p
       this ._removeGeometry .length = 0;
       this ._removeGeometry .setTainted (false);
    },
-   set_geometry__: function ()
+   set_geometry__ ()
    {
       for (const geometryNode of this .geometryNodes)
          geometryNode .setTessellationScale (1);
@@ -4377,7 +4377,7 @@ NurbsSet .prototype = Object .assign (Object .create ((X3DChildNode_default()).p
 
       this .set_tessellationScale__ ();
    },
-   dispose: function ()
+   dispose ()
    {
       X3DBoundedObject_default().prototype.dispose.call (this);
       X3DChildNode_default().prototype.dispose.call (this);
@@ -4487,7 +4487,7 @@ var Line3_default = /*#__PURE__*/__webpack_require__.n(Line3_namespaceObject);
  ******************************************************************************/
 
 const Trinagle2 = {
-   isPointInTriangle: function (a, b, c, point)
+   isPointInTriangle (a, b, c, point)
    {
       // https://en.wikipedia.org/wiki/Barycentric_coordinate_system
 
@@ -4590,7 +4590,7 @@ function NurbsSurfaceInterpolator (executionContext)
 NurbsSurfaceInterpolator .prototype = Object .assign (Object .create ((X3DChildNode_default()).prototype),
 {
    constructor: NurbsSurfaceInterpolator,
-   initialize: function ()
+   initialize ()
    {
       this ._set_fraction .addInterest ("set_fraction__", this);
 
@@ -4786,7 +4786,7 @@ function NurbsSweptSurface (executionContext)
 NurbsSweptSurface .prototype = Object .assign (Object .create (NURBS_X3DParametricGeometryNode.prototype),
 {
    constructor: NurbsSweptSurface,
-   initialize: function ()
+   initialize ()
    {
       NURBS_X3DParametricGeometryNode.prototype.initialize.call (this);
 
@@ -4810,7 +4810,7 @@ NurbsSweptSurface .prototype = Object .assign (Object .create (NURBS_X3DParametr
       this .set_crossSectionCurve__ ();
       this .set_trajectoryCurve__ ();
    },
-   set_crossSectionCurve__: function ()
+   set_crossSectionCurve__ ()
    {
       if (this .crossSectionCurveNode)
          this .crossSectionCurveNode .removeInterest ("requestRebuild", this);
@@ -4820,7 +4820,7 @@ NurbsSweptSurface .prototype = Object .assign (Object .create (NURBS_X3DParametr
       if (this .crossSectionCurveNode)
          this .crossSectionCurveNode .addInterest ("requestRebuild", this);
    },
-   set_trajectoryCurve__: function ()
+   set_trajectoryCurve__ ()
    {
       if (this .trajectoryCurveNode)
          this .trajectoryCurveNode ._rebuild .removeInterest ("requestRebuild", this);
@@ -4830,7 +4830,7 @@ NurbsSweptSurface .prototype = Object .assign (Object .create (NURBS_X3DParametr
       if (this .trajectoryCurveNode)
          this .trajectoryCurveNode ._rebuild .addInterest ("requestRebuild", this);
    },
-   build: function ()
+   build ()
    {
       if (! this .crossSectionCurveNode)
          return;
@@ -4973,7 +4973,7 @@ function NurbsSwungSurface (executionContext)
 NurbsSwungSurface .prototype = Object .assign (Object .create (NURBS_X3DParametricGeometryNode.prototype),
 {
    constructor: NurbsSwungSurface,
-   initialize: function ()
+   initialize ()
    {
       NURBS_X3DParametricGeometryNode.prototype.initialize.call (this);
 
@@ -4997,7 +4997,7 @@ NurbsSwungSurface .prototype = Object .assign (Object .create (NURBS_X3DParametr
       this .set_profileCurve__ ();
       this .set_trajectoryCurve__ ();
    },
-   set_profileCurve__: function ()
+   set_profileCurve__ ()
    {
       if (this .profileCurveNode)
          this .profileCurveNode .removeInterest ("requestRebuild", this);
@@ -5007,7 +5007,7 @@ NurbsSwungSurface .prototype = Object .assign (Object .create (NURBS_X3DParametr
       if (this .profileCurveNode)
          this .profileCurveNode .addInterest ("requestRebuild", this);
    },
-   set_trajectoryCurve__: function ()
+   set_trajectoryCurve__ ()
    {
       if (this .trajectoryCurveNode)
          this .trajectoryCurveNode .removeInterest ("requestRebuild", this);
@@ -5017,7 +5017,7 @@ NurbsSwungSurface .prototype = Object .assign (Object .create (NURBS_X3DParametr
       if (this .trajectoryCurveNode)
          this .trajectoryCurveNode .addInterest ("requestRebuild", this);
    },
-   build: function ()
+   build ()
    {
       if (! this .profileCurveNode)
          return;
@@ -5159,11 +5159,11 @@ function NurbsTextureCoordinate (executionContext)
 NurbsTextureCoordinate .prototype = Object .assign (Object .create ((X3DNode_default()).prototype),
 {
    constructor: NurbsTextureCoordinate,
-   initialize: function ()
+   initialize ()
    {
       X3DNode_default().prototype.initialize.call (this);
    },
-   getControlPoints: function (texWeights)
+   getControlPoints (texWeights)
    {
       const
          controlPointArray = this ._controlPoint .getValue (),
@@ -5189,7 +5189,7 @@ NurbsTextureCoordinate .prototype = Object .assign (Object .create ((X3DNode_def
 
       return controlPoints;
    },
-   isValid: function ()
+   isValid ()
    {
       if (this ._uOrder .getValue () < 2)
          return false;
@@ -5321,7 +5321,7 @@ function NurbsTrimmedSurface (executionContext)
 NurbsTrimmedSurface .prototype = Object .assign (Object .create (NURBS_X3DNurbsSurfaceGeometryNode.prototype),
 {
    constructor: NurbsTrimmedSurface,
-   initialize: function ()
+   initialize ()
    {
       NURBS_X3DNurbsSurfaceGeometryNode.prototype.initialize.call (this);
 
@@ -5331,7 +5331,7 @@ NurbsTrimmedSurface .prototype = Object .assign (Object .create (NURBS_X3DNurbsS
 
       this .set_trimmingContour__ ();
    },
-   set_addTrimmingContour__: function ()
+   set_addTrimmingContour__ ()
    {
       this ._addTrimmingContour .setTainted (true);
       this ._addTrimmingContour .assign (NurbsTrimmedSurface_filter (this ._addTrimmingContour, this ._trimmingContour), this ._addTrimmingContour .length);
@@ -5342,7 +5342,7 @@ NurbsTrimmedSurface .prototype = Object .assign (Object .create (NURBS_X3DNurbsS
       this ._addTrimmingContour .length = 0;
       this ._addTrimmingContour .setTainted (false);
    },
-   set_removeTrimmingContour__: function ()
+   set_removeTrimmingContour__ ()
    {
       this ._removeTrimmingContour .setTainted (true);
       this ._trimmingContour .assign (NurbsTrimmedSurface_filter (this ._trimmingContour, this ._removeTrimmingContour));
@@ -5350,7 +5350,7 @@ NurbsTrimmedSurface .prototype = Object .assign (Object .create (NURBS_X3DNurbsS
       this ._removeTrimmingContour .length = 0;
       this ._removeTrimmingContour .setTainted (false);
    },
-   set_trimmingContour__: function ()
+   set_trimmingContour__ ()
    {
       const trimmingContourNodes = this .trimmingContourNodes;
 
@@ -5364,7 +5364,7 @@ NurbsTrimmedSurface .prototype = Object .assign (Object .create (NURBS_X3DNurbsS
             trimmingContourNodes .push (trimmingContourNode);
       }
    },
-   getTrimmingContours: function ()
+   getTrimmingContours ()
    {
       const
          trimmingContourNodes = this .trimmingContourNodes,

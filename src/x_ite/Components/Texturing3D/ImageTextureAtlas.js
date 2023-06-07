@@ -69,7 +69,7 @@ ImageTextureAtlas .prototype = Object .assign (Object .create (X3DTexture3DNode 
    X3DUrlObject .prototype,
 {
    constructor: ImageTextureAtlas,
-   initialize: function ()
+   initialize ()
    {
       X3DTexture3DNode .prototype .initialize .call (this);
       X3DUrlObject     .prototype .initialize .call (this);
@@ -80,16 +80,16 @@ ImageTextureAtlas .prototype = Object .assign (Object .create (X3DTexture3DNode 
 
       this .requestImmediateLoad () .catch (Function .prototype);
    },
-   unloadData: function ()
+   unloadData ()
    {
       this .clearTexture ();
    },
-   loadData: function ()
+   loadData ()
    {
       this .urlStack .setValue (this ._url);
       this .loadNext ();
    },
-   loadNext: function ()
+   loadNext ()
    {
       if (this .urlStack .length === 0)
       {
@@ -110,14 +110,14 @@ ImageTextureAtlas .prototype = Object .assign (Object .create (X3DTexture3DNode 
 
       this .image .attr ("src", this .URL .href);
    },
-   setError: function (event)
+   setError (event)
    {
       if (this .URL .protocol !== "data:")
          console .warn (`Error loading image '${decodeURI (this .URL .href)}'`, event .type);
 
       this .loadNext ();
    },
-   setImage: function ()
+   setImage ()
    {
       if (DEVELOPMENT)
       {
@@ -193,7 +193,7 @@ ImageTextureAtlas .prototype = Object .assign (Object .create (X3DTexture3DNode 
          this .setError ({ type: error .message });
       }
    },
-   dispose: function ()
+   dispose ()
    {
       X3DUrlObject     .prototype .dispose .call (this);
       X3DTexture3DNode .prototype .dispose .call (this);

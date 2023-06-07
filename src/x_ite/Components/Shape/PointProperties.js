@@ -65,7 +65,7 @@ function PointProperties (executionContext)
 PointProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
 {
    constructor: PointProperties,
-   initialize: function ()
+   initialize ()
    {
       X3DAppearanceChildNode .prototype .initialize .call (this);
 
@@ -87,31 +87,31 @@ PointProperties .prototype = Object .assign (Object .create (X3DAppearanceChildN
       this .set_pointSizeMaxValue__ ();
       this .set_attenuation__ ();
    },
-   set_contentScale__: function ()
+   set_contentScale__ ()
    {
       this .set_pointSizeScaleFactor__ ();
       this .set_pointSizeMinValue__ ();
       this .set_pointSizeMaxValue__ ();
    },
-   set_pointSizeScaleFactor__: function ()
+   set_pointSizeScaleFactor__ ()
    {
       const contentScale = this .getBrowser () .getRenderingProperty ("ContentScale");
 
       this .pointSizeScaleFactor = Math .max (this ._pointSizeScaleFactor .getValue (), 0) * contentScale;
    },
-   set_pointSizeMinValue__: function ()
+   set_pointSizeMinValue__ ()
    {
       const contentScale = this .getBrowser () .getRenderingProperty ("ContentScale");
 
       this .pointSizeMinValue = Algorithm .clamp (this ._pointSizeMinValue .getValue (), 0, this .pointSizeRange [1]) * contentScale;
    },
-   set_pointSizeMaxValue__: function ()
+   set_pointSizeMaxValue__ ()
    {
       const contentScale = this .getBrowser () .getRenderingProperty ("ContentScale");
 
       this .pointSizeMaxValue = Algorithm .clamp (this ._pointSizeMaxValue .getValue (), 0, this .pointSizeRange [1]) * contentScale;
    },
-   set_attenuation__: function ()
+   set_attenuation__ ()
    {
       const length = this ._attenuation .length;
 
@@ -119,7 +119,7 @@ PointProperties .prototype = Object .assign (Object .create (X3DAppearanceChildN
       this .attenuation [1] = length > 1 ? Math .max (0, this ._attenuation [1]) : 0;
       this .attenuation [2] = length > 2 ? Math .max (0, this ._attenuation [2]) : 0;
    },
-   setShaderUniforms: function (gl, shaderObject)
+   setShaderUniforms (gl, shaderObject)
    {
       gl .uniform1f  (shaderObject .x3d_PointPropertiesPointSizeScaleFactor, this .pointSizeScaleFactor);
       gl .uniform1f  (shaderObject .x3d_PointPropertiesPointSizeMinValue,    this .pointSizeMinValue);

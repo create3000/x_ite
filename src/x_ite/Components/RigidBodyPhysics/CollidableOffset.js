@@ -65,7 +65,7 @@ function CollidableOffset (executionContext)
 CollidableOffset .prototype = Object .assign (Object .create (X3DNBodyCollidableNode .prototype),
 {
    constructor: CollidableOffset,
-   initialize: function ()
+   initialize ()
    {
       X3DNBodyCollidableNode .prototype .initialize .call (this);
 
@@ -74,14 +74,14 @@ CollidableOffset .prototype = Object .assign (Object .create (X3DNBodyCollidable
 
       this .set_collidable__ ();
    },
-   getBBox: function (bbox, shadows)
+   getBBox (bbox, shadows)
    {
       if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
          return this .visibleNode ?.getBBox (bbox, shadows) .multRight (this .getMatrix ()) ?? bbox .set ();
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
-   set_collidable__: function ()
+   set_collidable__ ()
    {
       if (this .collidableNode)
       {
@@ -125,11 +125,11 @@ CollidableOffset .prototype = Object .assign (Object .create (X3DNBodyCollidable
       this .set_bboxDisplay__ ();
       this .set_collidableGeometry__ ();
    },
-   set_cameraObject__: function ()
+   set_cameraObject__ ()
    {
       this .setCameraObject (!!this .visibleNode ?.isCameraObject ());
    },
-   set_visible__: function ()
+   set_visible__ ()
    {
       if (this .collidableNode)
          this .visibleNode = this .collidableNode ._visible .getValue () ? this .collidableNode : null;
@@ -138,14 +138,14 @@ CollidableOffset .prototype = Object .assign (Object .create (X3DNBodyCollidable
 
       this .set_cameraObject__ ();
    },
-   set_bboxDisplay__: function ()
+   set_bboxDisplay__ ()
    {
       if (this .collidableNode)
          this .boundedObject = this .collidableNode ._bboxDisplay .getValue () ? this .collidableNode : null;
       else
          this .boundedObject = null;
    },
-   set_collidableGeometry__: function ()
+   set_collidableGeometry__ ()
    {
       if (this .getCompoundShape () .getNumChildShapes ())
          this .getCompoundShape () .removeChildShapeByIndex (0);
@@ -155,7 +155,7 @@ CollidableOffset .prototype = Object .assign (Object .create (X3DNBodyCollidable
 
       this ._compoundShape_changed = this .getBrowser () .getCurrentTime ();
    },
-   traverse: function (type, renderObject)
+   traverse (type, renderObject)
    {
       switch (type)
       {

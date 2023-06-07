@@ -66,7 +66,7 @@ function VolumeData (executionContext)
 VolumeData .prototype = Object .assign (Object .create (X3DVolumeDataNode .prototype),
 {
    constructor: VolumeData,
-   initialize: function ()
+   initialize ()
    {
       X3DVolumeDataNode .prototype .initialize .call (this);
 
@@ -87,7 +87,7 @@ VolumeData .prototype = Object .assign (Object .create (X3DVolumeDataNode .proto
 
       this .updateShader ();
    },
-   set_renderStyle__: function ()
+   set_renderStyle__ ()
    {
       if (this .renderStyleNode)
       {
@@ -103,7 +103,7 @@ VolumeData .prototype = Object .assign (Object .create (X3DVolumeDataNode .proto
          this .renderStyleNode .addVolumeData (this);
       }
    },
-   set_voxels__: function ()
+   set_voxels__ ()
    {
       this .voxelsNode = X3DCast (X3DConstants .X3DTexture3DNode, this ._voxels);
 
@@ -112,7 +112,7 @@ VolumeData .prototype = Object .assign (Object .create (X3DVolumeDataNode .proto
       else
          this .getAppearance () ._texture = this .getBrowser () .getDefaultVoxels ();
    },
-   createShader: function (options, vs, fs)
+   createShader (options, vs, fs)
    {
       // if (DEVELOPMENT)
       //    console .log ("Creating VolumeData Shader ...");

@@ -63,15 +63,15 @@ function X3DTimeContext ()
 
 X3DTimeContext .prototype =
 {
-   getCurrentTime: function ()
+   getCurrentTime ()
    {
       return this [_currentTime];
    },
-   getCurrentFrameRate: function ()
+   getCurrentFrameRate ()
    {
       return this [_currentFrameRate];
    },
-   getCurrentSpeed: function ()
+   getCurrentSpeed ()
    {
       return this [_currentSpeed];
    },

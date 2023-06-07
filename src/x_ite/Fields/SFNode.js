@@ -57,7 +57,7 @@ const
 
 const handler =
 {
-   get: function (target, key)
+   get (target, key)
    {
       try
       {
@@ -83,7 +83,7 @@ const handler =
          return undefined;
       }
    },
-   set: function (target, key, value)
+   set (target, key, value)
    {
       if (key in target)
       {
@@ -109,7 +109,7 @@ const handler =
          return false;
       }
    },
-   has: function (target, key)
+   has (target, key)
    {
       try
       {
@@ -120,7 +120,7 @@ const handler =
          return key in target;
       }
    },
-   ownKeys: function (target)
+   ownKeys (target)
    {
       const
          value   = target .getValue (),
@@ -134,7 +134,7 @@ const handler =
 
       return ownKeys;
    },
-   getOwnPropertyDescriptor: function (target, key)
+   getOwnPropertyDescriptor (target, key)
    {
       const value = target .getValue ();
 
@@ -184,7 +184,7 @@ SFNode .prototype = Object .assign (Object .create (X3DField .prototype),
    [_target]: null,
    [_proxy]: null,
    [_cloneCount]: 0,
-   copy: function (instance)
+   copy (instance)
    {
       const
          target = this [_target],
@@ -195,7 +195,7 @@ SFNode .prototype = Object .assign (Object .create (X3DField .prototype),
 
       return new SFNode ();
    },
-   equals: function (node)
+   equals (node)
    {
       const target = this [_target];
 
@@ -204,13 +204,13 @@ SFNode .prototype = Object .assign (Object .create (X3DField .prototype),
 
       return target .getValue () === null;
    },
-   isDefaultValue: function ()
+   isDefaultValue ()
    {
       const target = this [_target];
 
       return target .getValue () === null;
    },
-   set: function (value)
+   set (value)
    {
       const
          target  = this [_target],
@@ -236,7 +236,7 @@ SFNode .prototype = Object .assign (Object .create (X3DField .prototype),
          X3DField .prototype .set .call (target, null);
       }
    },
-   getNodeTypeName: function ()
+   getNodeTypeName ()
    {
       const
          target = this [_target],
@@ -247,7 +247,7 @@ SFNode .prototype = Object .assign (Object .create (X3DField .prototype),
 
       throw new Error ("SFNode.getNodeTypeName: node is null.");
    },
-   getNodeName: function ()
+   getNodeName ()
    {
       const
          target = this [_target],
@@ -258,7 +258,7 @@ SFNode .prototype = Object .assign (Object .create (X3DField .prototype),
 
       throw new Error ("SFNode.getNodeName: node is null.");
    },
-   getNodeDisplayName: function ()
+   getNodeDisplayName ()
    {
       const
          target = this [_target],
@@ -269,7 +269,7 @@ SFNode .prototype = Object .assign (Object .create (X3DField .prototype),
 
       throw new Error ("SFNode.getNodeDisplayName: node is null.");
    },
-   getNodeType: function ()
+   getNodeType ()
    {
       const
          target = this [_target],
@@ -280,7 +280,7 @@ SFNode .prototype = Object .assign (Object .create (X3DField .prototype),
 
       throw new Error ("SFNode.getNodeType: node is null.");
    },
-   getFieldDefinitions: function ()
+   getFieldDefinitions ()
    {
       const
          target = this [_target],
@@ -291,7 +291,7 @@ SFNode .prototype = Object .assign (Object .create (X3DField .prototype),
 
       throw new Error ("SFNode.getFieldDefinitions: node is null.");
    },
-   addFieldCallback: function (name, key, object)
+   addFieldCallback (name, key, object)
    {
       const target = this [_target];
 
@@ -312,7 +312,7 @@ SFNode .prototype = Object .assign (Object .create (X3DField .prototype),
          }
       }
    },
-   removeFieldCallback: function (name, key)
+   removeFieldCallback (name, key)
    {
       const target = this [_target];
 
@@ -333,7 +333,7 @@ SFNode .prototype = Object .assign (Object .create (X3DField .prototype),
          }
       }
    },
-   addCloneCount: function (count)
+   addCloneCount (count)
    {
       const target = this [_target];
 
@@ -341,7 +341,7 @@ SFNode .prototype = Object .assign (Object .create (X3DField .prototype),
 
       target .getValue () ?.addCloneCount (count);
    },
-   removeCloneCount: function (count)
+   removeCloneCount (count)
    {
       const target = this [_target];
 
@@ -349,19 +349,19 @@ SFNode .prototype = Object .assign (Object .create (X3DField .prototype),
 
       target .getValue () ?.removeCloneCount (count);
    },
-   getNodeUserData: function (key)
+   getNodeUserData (key)
    {
       return this [_target] .getValue () .getUserData (key);
    },
-   setNodeUserData: function (key, value)
+   setNodeUserData (key, value)
    {
       this [_target] .getValue () .setUserData (key, value);
    },
-   removeNodeUserData: function (key)
+   removeNodeUserData (key)
    {
       this [_target] .getValue () .removeUserData (key);
    },
-   valueOf: function ()
+   valueOf ()
    {
       const
          target = this [_target],
@@ -369,7 +369,7 @@ SFNode .prototype = Object .assign (Object .create (X3DField .prototype),
 
       return value ? SFNodeCache .get (value) : null;
    },
-   toStream: function (generator)
+   toStream (generator)
    {
       const
          target = this [_target],
@@ -380,7 +380,7 @@ SFNode .prototype = Object .assign (Object .create (X3DField .prototype),
       else
          generator .string += "NULL";
    },
-   toVRMLStream: function (generator)
+   toVRMLStream (generator)
    {
       const
          target = this [_target],
@@ -391,7 +391,7 @@ SFNode .prototype = Object .assign (Object .create (X3DField .prototype),
       else
          generator .string += "NULL";
    },
-   toXMLStream: function (generator)
+   toXMLStream (generator)
    {
       const
          target = this [_target],
@@ -402,11 +402,11 @@ SFNode .prototype = Object .assign (Object .create (X3DField .prototype),
       else
          generator .string += "<!-- NULL -->";
    },
-   toJSONStream: function (generator)
+   toJSONStream (generator)
    {
       this .toJSONStreamValue (generator);
    },
-   toJSONStreamValue: function (generator)
+   toJSONStreamValue (generator)
    {
       const
          target = this [_target],
@@ -417,7 +417,7 @@ SFNode .prototype = Object .assign (Object .create (X3DField .prototype),
       else
          generator .string += "null";
    },
-   dispose: function ()
+   dispose ()
    {
       const target = this [_target];
 

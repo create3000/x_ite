@@ -69,7 +69,7 @@ ImageTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
    X3DUrlObject .prototype,
 {
    constructor: ImageTexture,
-   initialize: function ()
+   initialize ()
    {
       X3DTexture2DNode .prototype .initialize .call (this);
       X3DUrlObject     .prototype .initialize .call (this);
@@ -80,20 +80,20 @@ ImageTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
 
       this .requestImmediateLoad () .catch (Function .prototype);
    },
-   getElement: function ()
+   getElement ()
    {
       return this .image [0];
    },
-   unloadData: function ()
+   unloadData ()
    {
       this .clearTexture ();
    },
-   loadData: function ()
+   loadData ()
    {
       this .urlStack .setValue (this ._url);
       this .loadNext ();
    },
-   loadNext: function ()
+   loadNext ()
    {
       if (this .urlStack .length === 0)
       {
@@ -114,7 +114,7 @@ ImageTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
 
       this .image .attr ("src", this .URL .href);
    },
-   setError: function (event)
+   setError (event)
    {
       if (this .URL .protocol !== "data:")
          console .warn (`Error loading image '${decodeURI (this .URL .href)}'`, event .type);
@@ -216,7 +216,7 @@ ImageTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
 
       return data;
    },
-   isImageTransparent: function (data)
+   isImageTransparent (data)
    {
       for (let i = 3, length = data .length; i < length; i += 4)
       {
@@ -246,7 +246,7 @@ ImageTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
 
       return data;
    },
-   dispose: function ()
+   dispose ()
    {
       X3DUrlObject     .prototype .dispose .call (this);
       X3DTexture2DNode .prototype .dispose .call (this);

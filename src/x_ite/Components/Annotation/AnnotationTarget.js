@@ -61,7 +61,7 @@ function AnnotationTarget (executionContext)
 AnnotationTarget .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 {
    constructor: AnnotationTarget,
-   initialize: function ()
+   initialize ()
    {
       X3DChildNode .prototype .initialize .call (this);
    },

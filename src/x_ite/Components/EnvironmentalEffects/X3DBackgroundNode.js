@@ -89,7 +89,7 @@ function X3DBackgroundNode (executionContext)
 X3DBackgroundNode .prototype = Object .assign (Object .create (X3DBindableNode .prototype),
 {
    constructor: X3DBackgroundNode,
-   initialize: function ()
+   initialize ()
    {
       X3DBindableNode .prototype .initialize .call (this);
 
@@ -112,17 +112,17 @@ X3DBackgroundNode .prototype = Object .assign (Object .create (X3DBindableNode .
       this .build ();
       this .transferRectangle ();
    },
-   isHidden: function ()
+   isHidden ()
    {
       return this .hidden;
    },
-   setHidden: function (value)
+   setHidden (value)
    {
       this .hidden = value;
 
       this .getBrowser () .addBrowserEvent ();
    },
-   isTransparent: function ()
+   isTransparent ()
    {
       if (this .hidden)
          return true;
@@ -141,7 +141,7 @@ X3DBackgroundNode .prototype = Object .assign (Object .create (X3DBindableNode .
 
       return false;
    },
-   set_texture__: function (textureNode, index)
+   set_texture__ (textureNode, index)
    {
       this .textureNodes [index] ?._loadState .removeInterest ("set_loadState__", this);
 
@@ -151,21 +151,21 @@ X3DBackgroundNode .prototype = Object .assign (Object .create (X3DBindableNode .
 
       this .set_loadState__ (textureNode, index);
    },
-   set_loadState__: function (textureNode, index)
+   set_loadState__ (textureNode, index)
    {
       this .setTextureBit (index, textureNode, textureNode ?.checkLoadState () ?? X3DConstants .NOT_STARTED);
    },
-   setTextureBit: function (bit, textureNode, loadState)
+   setTextureBit (bit, textureNode, loadState)
    {
       this .textureBits .set (bit, loadState === X3DConstants .COMPLETE_STATE || textureNode ?.getWidth ());
    },
-   getColor: function (theta, color, angle)
+   getColor (theta, color, angle)
    {
       const index = Algorithm .upperBound (angle, 0, angle .length, theta);
 
       return color [index];
    },
-   build: function ()
+   build ()
    {
       const s = SIZE;
 
@@ -310,7 +310,7 @@ X3DBackgroundNode .prototype = Object .assign (Object .create (X3DBindableNode .
          }
       };
    })(),
-   transferSphere: function ()
+   transferSphere ()
    {
       const gl = this .getBrowser () .getContext ();
 
@@ -420,7 +420,7 @@ X3DBackgroundNode .prototype = Object .assign (Object .create (X3DBindableNode .
          }
       };
    })(),
-   traverse: function (type, renderObject)
+   traverse (type, renderObject)
    {
       switch (type)
       {
@@ -495,7 +495,7 @@ X3DBackgroundNode .prototype = Object .assign (Object .create (X3DBindableNode .
             this .drawCube (renderObject);
       };
    })(),
-   drawSphere: function (renderObject)
+   drawSphere (renderObject)
    {
       const transparency = Algorithm .clamp (this ._transparency .getValue (), 0, 1);
 
@@ -570,7 +570,7 @@ X3DBackgroundNode .prototype = Object .assign (Object .create (X3DBindableNode .
          }
       };
    })(),
-   drawRectangle: function (gl, browser, shaderNode, renderObject, textureNode, buffer, vertexArray)
+   drawRectangle (gl, browser, shaderNode, renderObject, textureNode, buffer, vertexArray)
    {
       textureNode .setShaderUniforms (gl, shaderNode, renderObject);
 

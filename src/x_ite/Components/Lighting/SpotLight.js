@@ -92,7 +92,7 @@ function SpotLightContainer ()
 SpotLightContainer .prototype =
 {
    constructor: SpotLightContainer,
-   set: function (lightNode, groupNode, modelViewMatrix)
+   set (lightNode, groupNode, modelViewMatrix)
    {
       const shadowMapSize = lightNode .getShadowMapSize ();
 
@@ -115,7 +115,7 @@ SpotLightContainer .prototype =
             console .warn ("Couldn't create shadow buffer.");
       }
    },
-   renderShadowMap: function (renderObject)
+   renderShadowMap (renderObject)
    {
       if (! this .shadowBuffer)
          return;
@@ -160,7 +160,7 @@ SpotLightContainer .prototype =
 
       this .invLightSpaceProjectionMatrix .assign (invLightSpaceMatrix) .multRight (projectionMatrix) .multRight (lightNode .getBiasMatrix ());
    },
-   setGlobalVariables: function (renderObject)
+   setGlobalVariables (renderObject)
    {
       const
          lightNode       = this .lightNode,
@@ -175,7 +175,7 @@ SpotLightContainer .prototype =
       this .shadowMatrix .assign (renderObject .getCameraSpaceMatrix () .get ()) .multRight (this .invLightSpaceProjectionMatrix);
       this .shadowMatrixArray .set (this .shadowMatrix);
    },
-   setShaderUniforms: function (gl, shaderObject)
+   setShaderUniforms (gl, shaderObject)
    {
       const i = shaderObject .numLights ++;
 
@@ -241,7 +241,7 @@ SpotLightContainer .prototype =
          gl .uniform1f (shaderObject .x3d_ShadowIntensity [i], 0);
       }
    },
-   dispose: function ()
+   dispose ()
    {
       this .browser .pushShadowBuffer (this .shadowBuffer);
       this .browser .pushTexture2DUnit (this .textureUnit);
@@ -278,19 +278,19 @@ function SpotLight (executionContext)
 SpotLight .prototype = Object .assign (Object .create (X3DLightNode .prototype),
 {
    constructor: SpotLight,
-   getAttenuation: function ()
+   getAttenuation ()
    {
       return this ._attenuation .getValue ();
    },
-   getLocation: function ()
+   getLocation ()
    {
       return this ._location .getValue ();
    },
-   getRadius: function ()
+   getRadius ()
    {
       return Math .max (0, this ._radius .getValue ());
    },
-   getBeamWidth: function ()
+   getBeamWidth ()
    {
       // If the beamWidth is greater than the cutOffAngle, beamWidth is defined to be equal to the cutOffAngle.
 
@@ -303,11 +303,11 @@ SpotLight .prototype = Object .assign (Object .create (X3DLightNode .prototype),
 
       return Algorithm .clamp (beamWidth, 0, Math .PI / 2);
    },
-   getCutOffAngle: function ()
+   getCutOffAngle ()
    {
       return Algorithm .clamp (this ._cutOffAngle .getValue (), 0, Math .PI / 2);
    },
-   getLights: function ()
+   getLights ()
    {
       return SpotLights;
    },

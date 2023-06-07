@@ -63,11 +63,11 @@ function STLBParser (scene)
 STLBParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 {
    constructor: STLBParser,
-   getEncoding: function ()
+   getEncoding ()
    {
       return "ARRAY_BUFFER";
    },
-   isValid: function ()
+   isValid ()
    {
       if (!(this .arrayBuffer instanceof ArrayBuffer))
          return false;
@@ -81,12 +81,12 @@ STLBParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return byteLength === this .dataView .byteLength;
    },
-   setInput: function (input)
+   setInput (input)
    {
       this .arrayBuffer = input;
       this .dataView    = new DataView (input);
    },
-   parseIntoScene: function (resolve, reject)
+   parseIntoScene (resolve, reject)
    {
       this .stl ()
          .then (resolve)
@@ -119,7 +119,7 @@ STLBParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return this .getScene ();
    },
-   shape: function ()
+   shape ()
    {
       const
          scene      = this .getExecutionContext (),

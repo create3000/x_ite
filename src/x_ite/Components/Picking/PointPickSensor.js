@@ -72,7 +72,7 @@ function PointPickSensor (executionContext)
 PointPickSensor .prototype = Object .assign (Object .create (X3DPickSensorNode .prototype),
 {
    constructor: PointPickSensor,
-   initialize: function ()
+   initialize ()
    {
       X3DPickSensorNode .prototype .initialize .call (this);
 
@@ -80,7 +80,7 @@ PointPickSensor .prototype = Object .assign (Object .create (X3DPickSensorNode .
 
       this .set_pickingGeometry__ ();
    },
-   set_pickingGeometry__: function ()
+   set_pickingGeometry__ ()
    {
       if (this .pickingGeometryNode)
          this .pickingGeometryNode ._rebuild .removeInterest ("set_geometry__", this);

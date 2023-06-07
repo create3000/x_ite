@@ -75,7 +75,7 @@ function ExplosionEmitter (executionContext)
 ExplosionEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),
 {
    constructor: ExplosionEmitter,
-   initialize: function ()
+   initialize ()
    {
       X3DParticleEmitterNode .prototype .initialize .call (this);
 
@@ -86,11 +86,11 @@ ExplosionEmitter .prototype = Object .assign (Object .create (X3DParticleEmitter
 
       this .set_position__ ();
    },
-   isExplosive: function ()
+   isExplosive ()
    {
       return true;
    },
-   set_position__: function ()
+   set_position__ ()
    {
       const position = this ._position .getValue ();
 

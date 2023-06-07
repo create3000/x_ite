@@ -55,38 +55,38 @@ function SFFloat (value)
 SFFloat .prototype = Object .assign (Object .create (X3DField .prototype),
 {
    constructor: SFFloat,
-   copy: function ()
+   copy ()
    {
       return new SFFloat (this .getValue ());
    },
-   isDefaultValue: function ()
+   isDefaultValue ()
    {
       return this .getValue () === 0;
    },
-   set: function (value)
+   set (value)
    {
       X3DField .prototype .set .call (this, +value);
    },
    valueOf: X3DField .prototype .getValue,
-   toStream: function (generator)
+   toStream (generator)
    {
       const category = generator .Unit (this .getUnit ());
 
       generator .string += generator .FloatFormat (generator .ToUnit (category, this .getValue ()));
    },
-   toVRMLStream: function (generator)
+   toVRMLStream (generator)
    {
       this .toStream (generator);
    },
-   toXMLStream: function (generator)
+   toXMLStream (generator)
    {
       this .toStream (generator);
    },
-   toJSONStream: function (generator)
+   toJSONStream (generator)
    {
       this .toJSONStreamValue (generator);
    },
-   toJSONStreamValue: function (generator)
+   toJSONStreamValue (generator)
    {
       const category = generator .Unit (this .getUnit ());
 

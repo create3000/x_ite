@@ -95,7 +95,7 @@ function X3DViewpointNode (executionContext)
 X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .prototype),
 {
    constructor: X3DViewpointNode,
-   initialize: function ()
+   initialize ()
    {
       X3DBindableNode .prototype .initialize .call (this);
 
@@ -142,19 +142,19 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
       this .set_farDistance__ ();
       this .set_navigationInfo__ ();
    },
-   set_nearDistance__: function ()
+   set_nearDistance__ ()
    {
       const nearDistance = this ._nearDistance .getValue ();
 
       this .nearDistance = nearDistance >= 0 ? nearDistance : undefined;
    },
-   set_farDistance__: function ()
+   set_farDistance__ ()
    {
       const farDistance = this ._farDistance .getValue ();
 
       this .farDistance = farDistance >= 0 ? farDistance : undefined;
    },
-   set_viewAll__: function ()
+   set_viewAll__ ()
    {
       if (! this ._viewAll .getValue ())
          return;
@@ -164,7 +164,7 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
 
       this ._set_bind = true;
    },
-   set_navigationInfo__: function ()
+   set_navigationInfo__ ()
    {
       if (this .navigationInfoNode)
          this ._isBound .removeFieldInterest (this .navigationInfoNode ._set_bind);
@@ -174,7 +174,7 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
       if (this .navigationInfoNode)
          this ._isBound .addFieldInterest (this .navigationInfoNode ._set_bind);
    },
-   set_bound__: function ()
+   set_bound__ ()
    {
       const browser = this .getBrowser ();
 
@@ -183,7 +183,7 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
       else
          this .timeSensor ._stopTime = browser .getCurrentTime ();
    },
-   set_active__: function (navigationInfoNode, active)
+   set_active__ (navigationInfoNode, active)
    {
       if (active .getValue ())
          return;
@@ -198,32 +198,32 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
 
       navigationInfoNode ._transitionComplete = true;
    },
-   setInterpolators: function () { },
-   getPosition: function ()
+   setInterpolators () { },
+   getPosition ()
    {
       return this ._position .getValue ();
    },
-   getUserPosition: function ()
+   getUserPosition ()
    {
       return this .userPosition .assign (this .getPosition ()) .add (this ._positionOffset .getValue ());
    },
-   getOrientation: function ()
+   getOrientation ()
    {
       return this ._orientation .getValue ();
    },
-   getUserOrientation: function ()
+   getUserOrientation ()
    {
       return this .userOrientation .assign (this .getOrientation ()) .multRight (this ._orientationOffset .getValue ());
    },
-   getCenterOfRotation: function ()
+   getCenterOfRotation ()
    {
       return this ._centerOfRotation .getValue ();
    },
-   getUserCenterOfRotation: function ()
+   getUserCenterOfRotation ()
    {
       return this .userCenterOfRotation .assign (this .getCenterOfRotation ()) .add (this ._centerOfRotationOffset .getValue ());
    },
-   getProjectionMatrix: function (renderObject)
+   getProjectionMatrix (renderObject)
    {
       const navigationInfo = renderObject .getNavigationInfo ();
 
@@ -231,43 +231,43 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
                                                   this .farDistance ?? navigationInfo .getFarValue (this),
                                                   renderObject .getLayer () .getViewport () .getRectangle ());
    },
-   getCameraSpaceMatrix: function ()
+   getCameraSpaceMatrix ()
    {
       return this .cameraSpaceMatrix;
    },
-   getViewMatrix: function ()
+   getViewMatrix ()
    {
       return this .viewMatrix;
    },
-   getModelMatrix: function ()
+   getModelMatrix ()
    {
       return this .modelMatrix;
    },
-   getMaxFarValue: function ()
+   getMaxFarValue ()
    {
       return this .getBrowser () .getRenderingProperty ("LogarithmicDepthBuffer") ? 1e10 : 1e5;
    },
-   getUpVector: function ()
+   getUpVector ()
    {
       // Local y-axis,
       // see https://www.web3d.org/documents/specifications/19775-1/V3.3/index.html#NavigationInfo.
       return Vector3 .yAxis;
    },
-   getSpeedFactor: function ()
+   getSpeedFactor ()
    {
       return 1;
    },
-   setVRMLTransition: function (value)
+   setVRMLTransition (value)
    {
       // VRML behavior support.
       this .VRMLTransition = value;
    },
-   getVRMLTransition: function ()
+   getVRMLTransition ()
    {
       // VRML behavior support.
       return this .VRMLTransition;
    },
-   transitionStart: function (layerNode, fromViewpointNode)
+   transitionStart (layerNode, fromViewpointNode)
    {
       if (this ._jump .getValue ())
       {
@@ -363,12 +363,12 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
          this .setInterpolators (fromViewpointNode, relative);
       }
    },
-   transitionStop: function ()
+   transitionStop ()
    {
       this .timeSensor ._stopTime = this .getBrowser () .getCurrentTime ();
       this .timeSensor ._isActive .removeInterest ("set_active__", this);
    },
-   resetUserOffsets: function ()
+   resetUserOffsets ()
    {
       this ._positionOffset         = Vector3   .Zero;
       this ._orientationOffset      = Rotation4 .Identity;
@@ -428,7 +428,7 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
          return r;
       };
    })(),
-   lookAtPoint: function (layerNode, point, factor, straighten)
+   lookAtPoint (layerNode, point, factor, straighten)
    {
       this .getCameraSpaceMatrix () .multVecMatrix (point);
       this .getModelMatrix () .copy () .inverse () .multVecMatrix (point);
@@ -437,7 +437,7 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
 
       this .lookAt (layerNode, point, minDistance, factor, straighten);
    },
-   lookAtBBox: function (layerNode, bbox, factor, straighten)
+   lookAtBBox (layerNode, bbox, factor, straighten)
    {
       bbox = bbox .copy () .multRight (this .getModelMatrix () .copy () .inverse ());
 
@@ -445,7 +445,7 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
 
       this .lookAt (layerNode, bbox .center, minDistance, factor, straighten);
    },
-   lookAt: function (layerNode, point, distance, factor, straighten)
+   lookAt (layerNode, point, distance, factor, straighten)
    {
       const
          offset = point .copy () .add (this .getUserOrientation () .multVecRot (new Vector3 (0, 0, distance))) .subtract (this .getPosition ());
@@ -485,7 +485,7 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
 
       this .setInterpolators (this, relative);
    },
-   straightenView: function (layerNode)
+   straightenView (layerNode)
    {
       layerNode .getNavigationInfo () ._transitionStart = true;
 
@@ -536,7 +536,7 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
          return orientation .multRight (rotation);
       };
    })(),
-   viewAll: function (bbox)
+   viewAll (bbox)
    {
       bbox .multRight (this .modelMatrix .copy () .inverse ());
 
@@ -553,7 +553,7 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
       this .nearDistance            = Math .min ((distance - bbox .size .magnitude ()) / 2, 0.125);
       this .farDistance             = this .nearDistance * this .getMaxFarValue () / 0.125;
    },
-   traverse: function (type, renderObject)
+   traverse (type, renderObject)
    {
       if (type !== TraverseType .CAMERA)
          return;
@@ -565,7 +565,7 @@ X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .p
 
       this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ());
    },
-   update: function ()
+   update ()
    {
       this .cameraSpaceMatrix .set (this .getUserPosition (),
                                     this .getUserOrientation (),

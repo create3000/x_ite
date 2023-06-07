@@ -140,7 +140,7 @@ function X3DTextureProjectorNode (executionContext)
 X3DTextureProjectorNode .prototype = Object .assign (Object .create ((X3DChildNode_default()).prototype),
 {
    constructor: X3DTextureProjectorNode,
-   initialize: function ()
+   initialize ()
    {
       X3DChildNode_default().prototype.initialize.call (this);
 
@@ -149,27 +149,27 @@ X3DTextureProjectorNode .prototype = Object .assign (Object .create ((X3DChildNo
 
       this .set_texture__ ();
    },
-   getGlobal: function ()
+   getGlobal ()
    {
       return this ._global .getValue ();
    },
-   getLocation: function ()
+   getLocation ()
    {
       return this ._location .getValue ();
    },
-   getDirection: function ()
+   getDirection ()
    {
       return this ._direction .getValue ();
    },
-   getNearDistance: function ()
+   getNearDistance ()
    {
       return this ._nearDistance .getValue ();
    },
-   getFarDistance: function ()
+   getFarDistance ()
    {
       return this ._farDistance .getValue ();
    },
-   getTexture: function ()
+   getTexture ()
    {
       return this .textureNode;
    },
@@ -214,7 +214,7 @@ X3DTextureProjectorNode .prototype = Object .assign (Object .create ((X3DChildNo
          return orientation .multRight (rotation);
       };
    })(),
-   set_on__: function ()
+   set_on__ ()
    {
       if (this ._on .getValue () && this .textureNode)
       {
@@ -227,7 +227,7 @@ X3DTextureProjectorNode .prototype = Object .assign (Object .create ((X3DChildNo
          this .pop  = Function .prototype;
       }
    },
-   set_texture__: function ()
+   set_texture__ ()
    {
       if (this .textureNode)
          this .textureNode .removeInterest ("set_aspectRatio__", this);
@@ -240,14 +240,14 @@ X3DTextureProjectorNode .prototype = Object .assign (Object .create ((X3DChildNo
       this .set_aspectRatio__ ();
       this .set_on__ ();
    },
-   set_aspectRatio__: function ()
+   set_aspectRatio__ ()
    {
       if (this .textureNode)
          this ._aspectRatio = this .textureNode .getWidth () / this .textureNode .getHeight ();
       else
          this ._aspectRatio = 0;
    },
-   push: function (renderObject)
+   push (renderObject)
    {
       const textureProjectorContainer = this .getTextureProjectors () .pop ();
 
@@ -267,7 +267,7 @@ X3DTextureProjectorNode .prototype = Object .assign (Object .create ((X3DChildNo
          ++ renderObject .getLocalObjectsCount () [2];
       }
    },
-   pop: function (renderObject)
+   pop (renderObject)
    {
       if (this ._global .getValue ())
          return;
@@ -382,14 +382,14 @@ function TextureProjectorContainer ()
 TextureProjectorContainer .prototype =
 {
    constructor: TextureProjectorContainer,
-   set: function (textureProjectorNode, modelViewMatrix)
+   set (textureProjectorNode, modelViewMatrix)
    {
       this .browser              = textureProjectorNode .getBrowser ();
       this .textureProjectorNode = textureProjectorNode;
 
       this .modelViewMatrix .assign (modelViewMatrix);
    },
-   setGlobalVariables: function (renderObject)
+   setGlobalVariables (renderObject)
    {
       const
          textureProjectorNode  = this .textureProjectorNode,
@@ -424,7 +424,7 @@ TextureProjectorContainer .prototype =
       this .modelViewMatrix .multVecMatrix (this .location .assign (textureProjectorNode ._location .getValue ()));
       this .locationArray .set (this .location);
    },
-   setShaderUniforms: function (gl, shaderObject, renderObject)
+   setShaderUniforms (gl, shaderObject, renderObject)
    {
       const i = shaderObject .numProjectiveTextures ++;
 
@@ -442,7 +442,7 @@ TextureProjectorContainer .prototype =
       gl .uniformMatrix4fv (shaderObject .x3d_ProjectiveTextureMatrix [i], false, this .projectiveTextureMatrixArray);
       gl .uniform3fv (shaderObject .x3d_ProjectiveTextureLocation [i], this .locationArray);
    },
-   dispose: function ()
+   dispose ()
    {
       TextureProjectorCache .push (this);
    },
@@ -460,17 +460,17 @@ function TextureProjector (executionContext)
 TextureProjector .prototype = Object .assign (Object .create (TextureProjector_X3DTextureProjectorNode.prototype),
 {
    constructor: TextureProjector,
-   initialize: function ()
+   initialize ()
    {
       TextureProjector_X3DTextureProjectorNode.prototype.initialize.call (this);
    },
-   getFieldOfView: function ()
+   getFieldOfView ()
    {
       const fov = this ._fieldOfView .getValue ();
 
       return fov > 0 && fov < Math .PI ? fov : Math .PI / 4;
    },
-   getTextureProjectors: function ()
+   getTextureProjectors ()
    {
       return TextureProjectorCache;
    },
@@ -602,14 +602,14 @@ function TextureProjectorParallelContainer ()
 TextureProjectorParallelContainer .prototype =
 {
    constructor: TextureProjectorParallelContainer,
-   set: function (textureProjectorNode, modelViewMatrix)
+   set (textureProjectorNode, modelViewMatrix)
    {
       this .browser              = textureProjectorNode .getBrowser ();
       this .textureProjectorNode = textureProjectorNode;
 
       this .modelViewMatrix .assign (modelViewMatrix);
    },
-   setGlobalVariables: function (renderObject)
+   setGlobalVariables (renderObject)
    {
       const
          textureProjectorNode  = this .textureProjectorNode,
@@ -665,7 +665,7 @@ TextureProjectorParallelContainer .prototype =
       this .modelViewMatrix .multVecMatrix (this .location .assign (textureProjectorNode ._location .getValue ()));
       this .locationArray .set (this .location);
    },
-   setShaderUniforms: function (gl, shaderObject, renderObject)
+   setShaderUniforms (gl, shaderObject, renderObject)
    {
       const i = shaderObject .numProjectiveTextures ++;
 
@@ -683,7 +683,7 @@ TextureProjectorParallelContainer .prototype =
       gl .uniformMatrix4fv (shaderObject .x3d_ProjectiveTextureMatrix [i], false, this .projectiveTextureMatrixArray);
       gl .uniform3fv (shaderObject .x3d_ProjectiveTextureLocation [i], this .locationArray);
    },
-   dispose: function ()
+   dispose ()
    {
       TextureProjectorParallelCache .push (this);
    },
@@ -701,7 +701,7 @@ function TextureProjectorParallel (executionContext)
 TextureProjectorParallel .prototype = Object .assign (Object .create (TextureProjector_X3DTextureProjectorNode.prototype),
 {
    constructor: TextureProjectorParallel,
-   initialize: function ()
+   initialize ()
    {
       TextureProjector_X3DTextureProjectorNode.prototype.initialize.call (this);
 
@@ -709,7 +709,7 @@ TextureProjectorParallel .prototype = Object .assign (Object .create (TexturePro
 
       this .set_fieldOfView___ ();
    },
-   set_fieldOfView___: function ()
+   set_fieldOfView___ ()
    {
       const length = this ._fieldOfView .length;
 
@@ -721,31 +721,31 @@ TextureProjectorParallel .prototype = Object .assign (Object .create (TexturePro
       this .sizeX = this .maximumX - this .minimumX;
       this .sizeY = this .maximumY - this .minimumY;
    },
-   getMinimumX: function ()
+   getMinimumX ()
    {
       return this .minimumX;
    },
-   getMinimumY: function ()
+   getMinimumY ()
    {
       return this .minimumY;
    },
-   getMaximumX: function ()
+   getMaximumX ()
    {
       return this .maximumX;
    },
-   getMaximumY: function ()
+   getMaximumY ()
    {
       return this .maximumY;
    },
-   getSizeX: function ()
+   getSizeX ()
    {
       return this .sizeX;
    },
-   getSizeY: function ()
+   getSizeY ()
    {
       return this .sizeY;
    },
-   getTextureProjectors: function ()
+   getTextureProjectors ()
    {
       return TextureProjectorParallelCache;
    },

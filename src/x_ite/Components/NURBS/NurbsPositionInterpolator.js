@@ -74,7 +74,7 @@ function NurbsPositionInterpolator (executionContext)
 NurbsPositionInterpolator .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 {
    constructor: NurbsPositionInterpolator,
-   initialize: function ()
+   initialize ()
    {
       X3DChildNode .prototype .initialize .call (this);
 
@@ -92,7 +92,7 @@ NurbsPositionInterpolator .prototype = Object .assign (Object .create (X3DChildN
 
       this .set_controlPoint__ ();
    },
-   set_controlPoint__: function ()
+   set_controlPoint__ ()
    {
       if (this .controlPointNode)
          this .controlPointNode .removeInterest ("requestRebuild", this);
@@ -104,27 +104,27 @@ NurbsPositionInterpolator .prototype = Object .assign (Object .create (X3DChildN
 
       this .requestRebuild ();
    },
-   getClosed: function (order, knot, weight, controlPointNode)
+   getClosed (order, knot, weight, controlPointNode)
    {
       return false && NURBS .getClosed (order, knot, weight, controlPointNode);
    },
-   getKnots: function (result, closed, order, dimension, knot)
+   getKnots (result, closed, order, dimension, knot)
    {
       return NURBS .getKnots (result, closed, order, dimension, knot);
    },
-   getWeights: function (result, dimension, weight)
+   getWeights (result, dimension, weight)
    {
       return NURBS .getWeights (result, dimension, weight);
    },
-   getControlPoints: function (result, closed, order, weights, controlPointNode)
+   getControlPoints (result, closed, order, weights, controlPointNode)
    {
       return NURBS .getControlPoints (result, closed, order, weights, controlPointNode);
    },
-   requestRebuild: function ()
+   requestRebuild ()
    {
       this ._rebuild .addEvent ();
    },
-   build: function ()
+   build ()
    {
       if (this ._order .getValue () < 2)
          return;

@@ -98,7 +98,7 @@ function X3DFlyViewer (executionContext, navigationInfo)
 X3DFlyViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
 {
    constructor: X3DFlyViewer,
-   initialize: function ()
+   initialize ()
    {
       X3DViewer .prototype .initialize .call (this);
 
@@ -123,9 +123,9 @@ X3DFlyViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
       this .orientationChaser .setPrivate (true);
       this .orientationChaser .setup ();
    },
-   addCollision: function () { },
-   removeCollision: function () { },
-   set_controlKey__: function ()
+   addCollision () { },
+   removeCollision () { },
+   set_controlKey__ ()
    {
       if (this .event && this .event .button === 0)
       {
@@ -133,7 +133,7 @@ X3DFlyViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
          this .mousedown (this .event);
       }
    },
-   mousedown: function (event)
+   mousedown (event)
    {
       if (this .button >= 0)
          return;
@@ -222,7 +222,7 @@ X3DFlyViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
          }
       }
    },
-   mouseup: function (event)
+   mouseup (event)
    {
       event .preventDefault ();
 
@@ -240,7 +240,7 @@ X3DFlyViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
 
       this ._isActive = false;
    },
-   mousemove: function (event)
+   mousemove (event)
    {
       const browser = this .getBrowser ();
 
@@ -293,7 +293,7 @@ X3DFlyViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
          }
       }
    },
-   mousewheel: function (event)
+   mousewheel (event)
    {
       const [x, y] = this .getPointer (event);
 
@@ -317,7 +317,7 @@ X3DFlyViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
       else if (event .deltaY < 0)
          this .addRoll (ROLL_ANGLE);
    },
-   touchstart: function (event)
+   touchstart (event)
    {
       const touches = event .originalEvent .touches;
 
@@ -359,7 +359,7 @@ X3DFlyViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
          }
       }
    },
-   touchend: function (event)
+   touchend (event)
    {
       switch (this .button)
       {
@@ -374,7 +374,7 @@ X3DFlyViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
          }
       }
    },
-   touchmove: function (event)
+   touchmove (event)
    {
       const touches = event .originalEvent .touches;
 
@@ -513,13 +513,13 @@ X3DFlyViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
          this .startTime = now;
       };
    })(),
-   set_orientationOffset__: function (value)
+   set_orientationOffset__ (value)
    {
       const viewpoint = this .getActiveViewpoint ();
 
       viewpoint ._orientationOffset = value;
    },
-   addFly: function ()
+   addFly ()
    {
       if (this .startTime)
          return;
@@ -529,7 +529,7 @@ X3DFlyViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
 
       this .startTime = Date .now ();
    },
-   addPan: function ()
+   addPan ()
    {
       if (this .startTime)
          return;
@@ -696,7 +696,7 @@ X3DFlyViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
          gl .drawArrays (gl .LINES, 0, this .lineCount);
       };
    })(),
-   disconnect: function ()
+   disconnect ()
    {
       const browser = this .getBrowser ();
 
@@ -710,7 +710,7 @@ X3DFlyViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
 
       this .startTime = 0;
    },
-   dispose: function ()
+   dispose ()
    {
       const gl = this .getBrowser () .getContext ();
 

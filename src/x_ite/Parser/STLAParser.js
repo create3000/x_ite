@@ -104,22 +104,22 @@ STLAParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       ["INF", Infinity],
       ["INFINITY", Infinity],
    ]),
-   getEncoding: function ()
+   getEncoding ()
    {
       return "STRING";
    },
-   isValid: function ()
+   isValid ()
    {
       if (!(typeof this .input === "string"))
          return false;
 
       return !! this .input .match (/^(?:[\x20\n\t\r]+|;.*?[\r\n])*\b(?:solid)\b/);
    },
-   setInput: function (string)
+   setInput (string)
    {
       this .input = string;
    },
-   parseIntoScene: function (resolve, reject)
+   parseIntoScene (resolve, reject)
    {
       this .stl ()
          .then (resolve)
@@ -152,12 +152,12 @@ STLAParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return this .getScene ();
    },
-   comments: function ()
+   comments ()
    {
       while (this .comment ())
          ;
    },
-   comment: function ()
+   comment ()
    {
       this .whitespaces ();
 
@@ -166,20 +166,20 @@ STLAParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return false;
    },
-   whitespaces: function ()
+   whitespaces ()
    {
       Grammar .whitespaces .parse (this);
    },
-   whitespacesNoLineTerminator: function ()
+   whitespacesNoLineTerminator ()
    {
       Grammar .whitespacesNoLineTerminator .parse (this);
    },
-   statements: function ()
+   statements ()
    {
       while (this .solid ())
          ;
    },
-   solid: function ()
+   solid ()
    {
       this .comments ();
 
@@ -225,7 +225,7 @@ STLAParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return false;
    },
-   facets: function ()
+   facets ()
    {
       this .vector .length = 0;
       this .point  .length = 0;
@@ -233,7 +233,7 @@ STLAParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       while (this .facet ())
          ;
    },
-   facet: function ()
+   facet ()
    {
       this .comments ()
 
@@ -255,7 +255,7 @@ STLAParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return false;
    },
-   normal: function ()
+   normal ()
    {
       this .whitespacesNoLineTerminator ();
 
@@ -287,7 +287,7 @@ STLAParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       throw new Error ("Expected 'normal' statement.");
    },
-   loop: function ()
+   loop ()
    {
       this .comments ();
 
@@ -319,7 +319,7 @@ STLAParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       throw new Error ("Expected 'outer' statement.");
    },
-   vertex: function ()
+   vertex ()
    {
       this .comments ();
 
@@ -351,7 +351,7 @@ STLAParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       throw new Error ("Expected 'vertex' statement.");
    },
-   double: function ()
+   double ()
    {
       this .whitespacesNoLineTerminator ();
 

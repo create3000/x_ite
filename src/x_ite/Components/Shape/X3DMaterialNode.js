@@ -68,7 +68,7 @@ function X3DMaterialNode (executionContext)
 X3DMaterialNode .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
 {
    constructor: X3DMaterialNode,
-   initialize: function ()
+   initialize ()
    {
       X3DAppearanceChildNode .prototype .initialize .call (this);
 
@@ -76,35 +76,35 @@ X3DMaterialNode .prototype = Object .assign (Object .create (X3DAppearanceChildN
 
       this .set_logarithmicDepthBuffer__ ();
    },
-   set_logarithmicDepthBuffer__: function ()
+   set_logarithmicDepthBuffer__ ()
    {
       this .logarithmicDepthBuffer = this .getBrowser () .getRenderingProperty ("LogarithmicDepthBuffer");
    },
-   setTransparent: function (value)
+   setTransparent (value)
    {
       if (value !== this ._transparent .getValue ())
          this ._transparent = value;
    },
-   isTransparent: function ()
+   isTransparent ()
    {
       return this ._transparent .getValue ();
    },
-   getBaseTexture: function ()
+   getBaseTexture ()
    {
       return null;
    },
-   setTexture: function (index, textureNode)
+   setTexture (index, textureNode)
    {
       const textureType = textureNode ? textureNode .getTextureType () - 1 : 0;
 
       this .textureBits .set (index * 2 + 0, textureType & 0b01);
       this .textureBits .set (index * 2 + 1, textureType & 0b10);
    },
-   getTextureBits: function ()
+   getTextureBits ()
    {
       return this .textureBits;
    },
-   getShader: function (geometryContext, renderContext)
+   getShader (geometryContext, renderContext)
    {
       let key = "";
 
@@ -154,7 +154,7 @@ X3DMaterialNode .prototype = Object .assign (Object .create (X3DAppearanceChildN
 
       return this .shaderNodes .get (key) ?? this .createShader (key, geometryContext, renderContext);
    },
-   getShaderOptions: function (geometryContext, renderContext)
+   getShaderOptions (geometryContext, renderContext)
    {
       const
          browser = this .getBrowser (),

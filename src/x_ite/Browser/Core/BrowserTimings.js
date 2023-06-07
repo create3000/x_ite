@@ -60,7 +60,7 @@ function BrowserTimings (executionContext)
 BrowserTimings .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 {
    constructor: BrowserTimings,
-   initialize: function ()
+   initialize ()
    {
       X3DBaseNode .prototype .initialize .call (this);
 
@@ -164,7 +164,7 @@ BrowserTimings .prototype = Object .assign (Object .create (X3DBaseNode .prototy
 
       this .set_type__ ();
    },
-   set_enabled__: function ()
+   set_enabled__ ()
    {
       if (this .getBrowser () .getBrowserOption ("Timings"))
       {
@@ -180,7 +180,7 @@ BrowserTimings .prototype = Object .assign (Object .create (X3DBaseNode .prototy
          this .getBrowser () .prepareEvents () .removeInterest ("update", this);
       }
    },
-   set_type__: function ()
+   set_type__ ()
    {
       if (this .localStorage .type === "MORE")
       {
@@ -198,14 +198,14 @@ BrowserTimings .prototype = Object .assign (Object .create (X3DBaseNode .prototy
       this .set_button__ ();
       this .build ();
    },
-   set_button__: function ()
+   set_button__ ()
    {
       if (this .localStorage .type === "MORE")
          this .button .text (_("Less Properties"));
       else
          this .button .text (_("More Properties"));
    },
-   update: function ()
+   update ()
    {
       this .fps .stop ()
 
@@ -217,7 +217,7 @@ BrowserTimings .prototype = Object .assign (Object .create (X3DBaseNode .prototy
 
       this .fps .start ();
    },
-   build: function ()
+   build ()
    {
       const browser = this .getBrowser ();
 
@@ -259,14 +259,14 @@ BrowserTimings .prototype = Object .assign (Object .create (X3DBaseNode .prototy
 
       activeLayer ?.getCollisionTime () .reset ();
    },
-   getSpeed: function (speed)
+   getSpeed (speed)
    {
       if (speed < 15)
          return speed;
 
       return speed * 3.6;
    },
-   getSpeedUnit: function (speed)
+   getSpeedUnit (speed)
    {
       if (speed < 15)
          return _("m/s");

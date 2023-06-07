@@ -65,7 +65,7 @@ function WindPhysicsModel (executionContext)
 WindPhysicsModel .prototype = Object .assign (Object .create (X3DParticlePhysicsModelNode .prototype),
 {
    constructor: WindPhysicsModel,
-   getRandomSpeed: function (emitterNode)
+   getRandomSpeed (emitterNode)
    {
       const
          speed     = Math .max (0, this ._speed .getValue ()),

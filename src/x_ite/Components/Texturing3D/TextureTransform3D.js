@@ -66,7 +66,7 @@ function TextureTransform3D (executionContext)
 TextureTransform3D .prototype = Object .assign (Object .create (X3DSingleTextureTransformNode .prototype),
 {
    constructor: TextureTransform3D,
-   initialize: function ()
+   initialize ()
    {
       X3DSingleTextureTransformNode .prototype .initialize .call (this);
 
@@ -74,7 +74,7 @@ TextureTransform3D .prototype = Object .assign (Object .create (X3DSingleTexture
 
       this .eventsProcessed ();
    },
-   getMatrix: function ()
+   getMatrix ()
    {
       return this .matrix;
    },

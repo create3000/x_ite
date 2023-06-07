@@ -80,7 +80,7 @@ function DoubleAxisHingeJoint (executionContext)
 DoubleAxisHingeJoint .prototype = Object .assign (Object .create (X3DRigidJointNode .prototype),
 {
    constructor: DoubleAxisHingeJoint,
-   initialize: function ()
+   initialize ()
    {
       X3DRigidJointNode .prototype .initialize .call (this);
 
@@ -134,7 +134,7 @@ DoubleAxisHingeJoint .prototype = Object .assign (Object .create (X3DRigidJointN
          this .getCollection () .getDynamicsWorld () .addConstraint (this .joint, true);
       };
    })(),
-   removeJoint: function ()
+   removeJoint ()
    {
       if (! this .joint)
          return;
@@ -145,7 +145,7 @@ DoubleAxisHingeJoint .prototype = Object .assign (Object .create (X3DRigidJointN
       Ammo .destroy (this .joint);
       this .joint = null;
    },
-   set_forceOutput__: function ()
+   set_forceOutput__ ()
    {
       for (var key in this .outputs)
          delete this .outputs [key];

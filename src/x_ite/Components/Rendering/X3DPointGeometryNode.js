@@ -62,17 +62,17 @@ function X3DPointGeometryNode (executionContext)
 X3DPointGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 {
    constructor: X3DPointGeometryNode,
-   intersectsLine: function ()
+   intersectsLine ()
    {
       return false;
    },
-   intersectsBox: function ()
+   intersectsBox ()
    {
       return false;
    },
-   buildTexCoords: function ()
+   buildTexCoords ()
    { },
-   display: function (gl, renderContext)
+   display (gl, renderContext)
    {
       const
          appearanceNode = renderContext .appearanceNode,
@@ -111,7 +111,7 @@ X3DPointGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNod
 
       blendModeNode ?.disable (gl);
    },
-   displayParticles: function (gl, renderContext, particleSystem)
+   displayParticles (gl, renderContext, particleSystem)
    {
       const
          appearanceNode = renderContext .appearanceNode,

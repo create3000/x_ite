@@ -61,14 +61,14 @@ function TriangleSet (executionContext)
 TriangleSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .prototype),
 {
    constructor: TriangleSet,
-   build: function ()
+   build ()
    {
       if (! this .getCoord ())
          return;
 
       X3DComposedGeometryNode .prototype .build .call (this, 3, this .getCoord () .getSize (), 3, this .getCoord () .getSize ());
    },
-   createNormals: function (verticesPerPolygon, polygonsSize)
+   createNormals (verticesPerPolygon, polygonsSize)
    {
       return this .createFaceNormals (verticesPerPolygon, polygonsSize);
    },

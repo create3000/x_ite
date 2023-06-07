@@ -71,21 +71,21 @@ function X3DPrototypeInstance (executionContext, protoNode)
 X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .prototype),
 {
    constructor: X3DPrototypeInstance,
-   create: function (executionContext)
+   create (executionContext)
    {
       return new X3DPrototypeInstance (executionContext, this [_protoNode]);
    },
-   getTypeName: function ()
+   getTypeName ()
    {
       return this [_protoNode] .getName ();
    },
-   initialize: function ()
+   initialize ()
    {
       X3DNode .prototype .initialize .call (this);
 
       this .setProtoNode (this [_protoNode]);
    },
-   construct: function ()
+   construct ()
    {
       this [_body] ?.dispose ();
 
@@ -166,7 +166,7 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
       this [_protoNode] ._updateInstances .removeInterest ("construct", this);
       this [_protoNode] ._updateInstances .addInterest ("update", this);
    },
-   update: function ()
+   update ()
    {
       // Assign field definitions.
 
@@ -221,15 +221,15 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
 
       this .construct ();
    },
-   getExtendedEventHandling: function ()
+   getExtendedEventHandling ()
    {
       return false;
    },
-   getProtoNode: function ()
+   getProtoNode ()
    {
       return this [_protoNode];
    },
-   setProtoNode: function (protoNode)
+   setProtoNode (protoNode)
    {
       // Disconnect old proto node.
 
@@ -261,11 +261,11 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
          this .construct ();
       }
    },
-   getBody: function ()
+   getBody ()
    {
       return this [_body];
    },
-   getInnerNode: function ()
+   getInnerNode ()
    {
       const rootNodes = this [_body] .getRootNodes ();
 
@@ -279,28 +279,28 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
 
       throw new Error ("Root node not available.");
    },
-   importExternProtos: function (externprotos1)
+   importExternProtos (externprotos1)
    {
       const externprotos2 = this [_body] .externprotos;
 
       for (const externproto of externprotos1)
          externprotos2 .add (externproto .getName (), externproto);
    },
-   importProtos: function (protos1)
+   importProtos (protos1)
    {
       const protos2 = this [_body] .protos;
 
       for (const proto of protos1)
          protos2 .add (proto .getName (), proto);
    },
-   copyRootNodes: function (rootNodes1)
+   copyRootNodes (rootNodes1)
    {
       const rootNodes2 = this [_body] .getRootNodes ();
 
       for (const node of rootNodes1)
          rootNodes2 .push (node .copy (this));
    },
-   copyImportedNodes: function (executionContext, importedNodes)
+   copyImportedNodes (executionContext, importedNodes)
    {
       for (const importedNode of importedNodes)
       {
@@ -319,7 +319,7 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
          }
       }
    },
-   copyRoutes: function (executionContext, routes)
+   copyRoutes (executionContext, routes)
    {
       for (const route of routes)
       {
@@ -337,7 +337,7 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
          }
       }
    },
-   toXMLStream: function (generator)
+   toXMLStream (generator)
    {
       const sharedNode = generator .IsSharedNode (this);
 
@@ -592,7 +592,7 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
 
       generator .LeaveScope ();
    },
-   toJSONStream: function (generator)
+   toJSONStream (generator)
    {
       const sharedNode = generator .IsSharedNode (this);
 
@@ -978,7 +978,7 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
 
       generator .LeaveScope ();
    },
-   dispose: function ()
+   dispose ()
    {
       this [_protoNode] ._name_changed .removeFieldInterest (this ._typeName_changed);
       this [_protoNode] ._updateInstances .removeInterest ("construct", this);

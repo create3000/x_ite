@@ -66,7 +66,7 @@ function PixelTexture (executionContext)
 PixelTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prototype),
 {
    constructor: PixelTexture,
-   initialize: function ()
+   initialize ()
    {
       X3DTexture2DNode .prototype .initialize .call (this);
 
@@ -77,11 +77,11 @@ PixelTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
 
       this .set_image__ ();
    },
-   checkLoadState: function ()
+   checkLoadState ()
    {
       return this ._loadState .getValue ();
    },
-   convert: function (data, comp, array, length)
+   convert (data, comp, array, length)
    {
       switch (comp)
       {
@@ -143,7 +143,7 @@ PixelTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
          }
       }
    },
-   resize: function (input, inputWidth, inputHeight, outputWidth, outputHeight)
+   resize (input, inputWidth, inputHeight, outputWidth, outputHeight)
    {
       // Nearest neighbor scaling algorithm for very small images.
 
@@ -173,7 +173,7 @@ PixelTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
 
       return output;
    },
-   set_image__: function ()
+   set_image__ ()
    {
       const
          gl          = this .getBrowser () .getContext (),

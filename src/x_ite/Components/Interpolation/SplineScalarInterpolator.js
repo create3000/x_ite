@@ -64,7 +64,7 @@ function SplineScalarInterpolator (executionContext)
 SplineScalarInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
 {
    constructor: SplineScalarInterpolator,
-   initialize: function ()
+   initialize ()
    {
       X3DInterpolatorNode .prototype .initialize .call (this);
 
@@ -72,7 +72,7 @@ SplineScalarInterpolator .prototype = Object .assign (Object .create (X3DInterpo
       this ._keyVelocity       .addInterest ("set_keyVelocity__",       this);
       this ._normalizeVelocity .addInterest ("set_normalizeVelocity__", this);
    },
-   set_keyValue__: function ()
+   set_keyValue__ ()
    {
       const
          key      = this ._key,
@@ -83,7 +83,7 @@ SplineScalarInterpolator .prototype = Object .assign (Object .create (X3DInterpo
 
       this .set_keyVelocity__ ();
    },
-   set_keyVelocity__: function ()
+   set_keyVelocity__ ()
    {
       if (this ._keyVelocity .length)
       {
@@ -93,7 +93,7 @@ SplineScalarInterpolator .prototype = Object .assign (Object .create (X3DInterpo
 
       this .set_normalizeVelocity__ ();
    },
-   set_normalizeVelocity__: function ()
+   set_normalizeVelocity__ ()
    {
       this .spline .generate (this ._closed .getValue (),
                               this ._key,
@@ -101,7 +101,7 @@ SplineScalarInterpolator .prototype = Object .assign (Object .create (X3DInterpo
                               this ._keyVelocity,
                               this ._normalizeVelocity .getValue ());
    },
-   interpolate: function (index0, index1, weight)
+   interpolate (index0, index1, weight)
    {
       this ._value_changed = this .spline .interpolate (index0, index1, weight, this ._keyValue);
    },

@@ -66,7 +66,7 @@ GeoCoordinate .prototype = Object .assign (Object .create (X3DCoordinateNode .pr
    X3DGeospatialObject .prototype,
 {
    constructor: GeoCoordinate,
-   initialize: function ()
+   initialize ()
    {
       X3DCoordinateNode   .prototype .initialize .call (this);
       X3DGeospatialObject .prototype .initialize .call (this);
@@ -195,7 +195,7 @@ GeoCoordinate .prototype = Object .assign (Object .create (X3DCoordinateNode .pr
          return new Vector3 (0, 0, 0);
       };
    })(),
-   dispose: function ()
+   dispose ()
    {
       X3DGeospatialObject .prototype .dispose .call (this);
       X3DCoordinateNode   .prototype .dispose .call (this);

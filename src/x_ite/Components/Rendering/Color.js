@@ -61,7 +61,7 @@ function Color (executionContext)
 Color .prototype = Object .assign (Object .create (X3DColorNode .prototype),
 {
    constructor: Color,
-   initialize: function ()
+   initialize ()
    {
       X3DColorNode .prototype .initialize .call (this);
 
@@ -69,12 +69,12 @@ Color .prototype = Object .assign (Object .create (X3DColorNode .prototype),
 
       this .set_color__ ();
    },
-   set_color__: function ()
+   set_color__ ()
    {
       this .color  = this ._color .getValue ();
       this .length = this ._color .length;
    },
-   addColor: function (index, array)
+   addColor (index, array)
    {
       if (index >= 0 && index < this .length)
       {
@@ -97,7 +97,7 @@ Color .prototype = Object .assign (Object .create (X3DColorNode .prototype),
          array .push (1, 1, 1, 1);
       }
    },
-   addColors: function (array, min)
+   addColors (array, min)
    {
       if (this .length)
       {

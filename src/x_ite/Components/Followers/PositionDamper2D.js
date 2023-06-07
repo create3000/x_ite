@@ -62,7 +62,7 @@ function PositionDamper2D (executionContext)
 PositionDamper2D .prototype = Object .assign (Object .create (X3DDamperNode .prototype),
 {
    constructor: PositionDamper2D,
-   getVector: function ()
+   getVector ()
    {
       return new Vector2 (0, 0);
    },

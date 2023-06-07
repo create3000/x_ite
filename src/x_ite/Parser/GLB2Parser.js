@@ -59,11 +59,11 @@ function GLB2Parser (scene)
 GLB2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 {
    constructor: GLB2Parser,
-   getEncoding: function ()
+   getEncoding ()
    {
       return "ARRAY_BUFFER";
    },
-   isValid: function ()
+   isValid ()
    {
       if (!(this .arrayBuffer instanceof ArrayBuffer))
          return false;
@@ -82,12 +82,12 @@ GLB2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return true;
    },
-   setInput: function (input)
+   setInput (input)
    {
       this .arrayBuffer = input;
       this .dataView    = new DataView (input);
    },
-   parseIntoScene: function (resolve, reject)
+   parseIntoScene (resolve, reject)
    {
       this .glb ()
          .then (resolve)
@@ -113,7 +113,7 @@ GLB2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return this .getScene ();
    },
-   chunks: function ()
+   chunks ()
    {
       for (let i = 12; i < this .dataView .byteLength;)
       {

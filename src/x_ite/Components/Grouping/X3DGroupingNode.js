@@ -81,7 +81,7 @@ X3DGroupingNode .prototype = Object .assign (Object .create (X3DChildNode .proto
    X3DBoundedObject .prototype,
 {
    constructor: X3DGroupingNode,
-   initialize: function ()
+   initialize ()
    {
       X3DChildNode     .prototype .initialize .call (this);
       X3DBoundedObject .prototype .initialize .call (this);
@@ -94,22 +94,22 @@ X3DGroupingNode .prototype = Object .assign (Object .create (X3DChildNode .proto
 
       this .set_children__ ();
    },
-   getBBox: function (bbox, shadows)
+   getBBox (bbox, shadows)
    {
       return this .getSubBBox (bbox, shadows);
    },
-   getSubBBox: function (bbox, shadows)
+   getSubBBox (bbox, shadows)
    {
       if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
          return X3DBoundedObject .prototype .getBBox .call (this, this .visibleNodes, bbox, shadows);
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
-   isHidden: function ()
+   isHidden ()
    {
       return this .hidden;
    },
-   setHidden: function (value)
+   setHidden (value)
    {
       if (value === this .hidden)
          return;
@@ -119,7 +119,7 @@ X3DGroupingNode .prototype = Object .assign (Object .create (X3DChildNode .proto
       this .set_children__ ();
       this .getBrowser () .addBrowserEvent ();
    },
-   setAllowedTypes: function (/* type, ... */)
+   setAllowedTypes (/* type, ... */)
    {
       const allowedTypes = this .allowedTypes;
 
@@ -128,7 +128,7 @@ X3DGroupingNode .prototype = Object .assign (Object .create (X3DChildNode .proto
       for (const type of arguments)
          allowedTypes .add (type);
    },
-   set_addChildren__: function ()
+   set_addChildren__ ()
    {
       if (this ._addChildren .length === 0)
          return;
@@ -148,7 +148,7 @@ X3DGroupingNode .prototype = Object .assign (Object .create (X3DChildNode .proto
       this ._addChildren .length = 0;
       this ._addChildren .setTainted (false);
    },
-   set_removeChildren__: function ()
+   set_removeChildren__ ()
    {
       if (this ._removeChildren .length === 0)
          return;
@@ -170,17 +170,17 @@ X3DGroupingNode .prototype = Object .assign (Object .create (X3DChildNode .proto
       this ._removeChildren .length = 0;
       this ._removeChildren .setTainted (false);
    },
-   set_children__: function ()
+   set_children__ ()
    {
       this .clear ();
       this .add (this ._children);
    },
-   connectChildren: function ()
+   connectChildren ()
    {
       this ._children .removeInterest ("connectChildren", this);
       this ._children .addInterest ("set_children__", this);
    },
-   clear: function ()
+   clear ()
    {
       for (const maybePickableSensorNode of this .maybePickableSensorNodes)
          maybePickableSensorNode ._isPickableObject .removeInterest ("set_pickableObjects__", this);
@@ -206,7 +206,7 @@ X3DGroupingNode .prototype = Object .assign (Object .create (X3DChildNode .proto
       this .maybePickableSensorNodes  .length = 0;
       this .childNodes                .length = 0;
    },
-   add: function (children)
+   add (children)
    {
       if (this .hidden)
          return;
@@ -317,7 +317,7 @@ X3DGroupingNode .prototype = Object .assign (Object .create (X3DChildNode .proto
       this .set_visibles__ ()
       this .set_bboxDisplays__ ();
    },
-   remove: function (children)
+   remove (children)
    {
       for (const child of children)
       {
@@ -454,7 +454,7 @@ X3DGroupingNode .prototype = Object .assign (Object .create (X3DChildNode .proto
       this .set_visibles__ ();
       this .set_bboxDisplays__ ();
    },
-   set_cameraObjects__: function ()
+   set_cameraObjects__ ()
    {
       const cameraObjects = this .cameraObjects;
 
@@ -478,7 +478,7 @@ X3DGroupingNode .prototype = Object .assign (Object .create (X3DChildNode .proto
 
       this .setCameraObject (!!(cameraObjects .length));
    },
-   set_pickableObjects__: function ()
+   set_pickableObjects__ ()
    {
       const
          pickableSensorNodes = this .pickableSensorNodes,
@@ -501,11 +501,11 @@ X3DGroupingNode .prototype = Object .assign (Object .create (X3DChildNode .proto
 
       this .set_transformSensors__ ()
    },
-   set_transformSensors__: function ()
+   set_transformSensors__ ()
    {
       this .setPickableObject (!!(this .getTransformSensors () .size || this .pickableSensorNodes .length || this .pickableObjects .length));
    },
-   set_displayNodes__: function ()
+   set_displayNodes__ ()
    {
       const displayNodes = this .displayNodes;
 
@@ -523,7 +523,7 @@ X3DGroupingNode .prototype = Object .assign (Object .create (X3DChildNode .proto
       for (const node of this .textureProjectorNodes)
          displayNodes .push (node);
    },
-   set_visibles__: function ()
+   set_visibles__ ()
    {
       const visibleNodes = this .visibleNodes;
 
@@ -545,7 +545,7 @@ X3DGroupingNode .prototype = Object .assign (Object .create (X3DChildNode .proto
       this .set_cameraObjects__ ();
       this .set_pickableObjects__ ();
    },
-   set_bboxDisplays__: function ()
+   set_bboxDisplays__ ()
    {
       const boundedObjects = this .boundedObjects;
 
@@ -562,7 +562,7 @@ X3DGroupingNode .prototype = Object .assign (Object .create (X3DChildNode .proto
          }
       }
    },
-   traverse: function (type, renderObject)
+   traverse (type, renderObject)
    {
       switch (type)
       {
@@ -690,7 +690,7 @@ X3DGroupingNode .prototype = Object .assign (Object .create (X3DChildNode .proto
          }
       }
    },
-   dispose: function ()
+   dispose ()
    {
       X3DBoundedObject .prototype .dispose .call (this);
       X3DChildNode     .prototype .dispose .call (this);

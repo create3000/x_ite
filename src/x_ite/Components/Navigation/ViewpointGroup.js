@@ -71,7 +71,7 @@ function ViewpointGroup (executionContext)
 ViewpointGroup .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 {
    constructor: ViewpointGroup,
-   initialize: function ()
+   initialize ()
    {
       X3DChildNode .prototype .initialize .call (this);
 
@@ -90,11 +90,11 @@ ViewpointGroup .prototype = Object .assign (Object .create (X3DChildNode .protot
       this .set_displayed__ ();
       this .set_children__ ();
    },
-   isActive: function ()
+   isActive ()
    {
       return this .proximitySensor ._isActive .getValue ();
    },
-   set_displayed__: function ()
+   set_displayed__ ()
    {
       var
          proxy     = ! this ._size .getValue () .equals (Vector3 .Zero),
@@ -126,7 +126,7 @@ ViewpointGroup .prototype = Object .assign (Object .create (X3DChildNode .protot
             delete this .traverse;
       }
    },
-   set_children__: function ()
+   set_children__ ()
    {
       this .cameraObjects   .length = 0;
       this .viewpointGroups .length = 0;
@@ -163,7 +163,7 @@ ViewpointGroup .prototype = Object .assign (Object .create (X3DChildNode .protot
          { }
       }
    },
-   traverse: function () { },
+   traverse () { },
 });
 
 function traverseWithProximitySensor (type, renderObject)

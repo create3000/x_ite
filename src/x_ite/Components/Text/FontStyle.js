@@ -64,11 +64,11 @@ function FontStyle (executionContext)
 FontStyle .prototype = Object .assign (Object .create (X3DFontStyleNode .prototype),
 {
    constructor: FontStyle,
-   getTextGeometry: function (text)
+   getTextGeometry (text)
    {
       return new PolygonText (text, this);
    },
-   getScale: function ()
+   getScale ()
    {
       return this ._size .getValue ();
    },

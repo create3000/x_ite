@@ -65,7 +65,7 @@ function CollisionSpace (executionContext)
 CollisionSpace .prototype = Object .assign (Object .create (X3DNBodyCollisionSpaceNode .prototype),
 {
    constructor: CollisionSpace,
-   initialize: function ()
+   initialize ()
    {
       X3DNBodyCollisionSpaceNode .prototype .initialize .call (this);
 
@@ -73,7 +73,7 @@ CollisionSpace .prototype = Object .assign (Object .create (X3DNBodyCollisionSpa
 
       this .set_collidables__ ();
    },
-   getBBox: function (bbox, shadows)
+   getBBox (bbox, shadows)
    {
       // TODO: add space node.
       if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
@@ -81,11 +81,11 @@ CollisionSpace .prototype = Object .assign (Object .create (X3DNBodyCollisionSpa
 
       return bbox;
    },
-   getCollidables: function ()
+   getCollidables ()
    {
       return this .collidableNodes;
    },
-   set_collidables__: function ()
+   set_collidables__ ()
    {
       var collisionSpaceNodes = this .collisionSpaceNodes;
 
@@ -108,7 +108,7 @@ CollisionSpace .prototype = Object .assign (Object .create (X3DNBodyCollisionSpa
 
       this .collect ();
    },
-   collect: function ()
+   collect ()
    {
       var
          collidableNodes     = this .collidableNodes,

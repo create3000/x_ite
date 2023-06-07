@@ -63,7 +63,7 @@ function Polyline2D (executionContext)
 Polyline2D .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototype),
 {
    constructor: Polyline2D,
-   build: function ()
+   build ()
    {
       const
          lineSegments = this ._lineSegments .getValue (),

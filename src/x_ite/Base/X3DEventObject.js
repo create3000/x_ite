@@ -60,16 +60,16 @@ function X3DEventObject (browser)
 X3DEventObject .prototype = Object .assign (Object .create (X3DChildObject .prototype),
 {
    constructor: X3DEventObject,
-   getBrowser: function ()
+   getBrowser ()
    {
       return this [_browser];
    },
-   getExtendedEventHandling: function ()
+   getExtendedEventHandling ()
    {
       // Whether initializeOnly field are treated like inputOnly and inputOutput fields.
       return true;
    },
-   addEvent: function (field)
+   addEvent (field)
    {
       if (field .isTainted ())
          return;
@@ -78,7 +78,7 @@ X3DEventObject .prototype = Object .assign (Object .create (X3DChildObject .prot
 
       this .addEventObject (field, Events .create (field));
    },
-   addEventObject: function (field, event)
+   addEventObject (field, event)
    {
       const browser = this .getBrowser ();
 
@@ -97,7 +97,7 @@ X3DEventObject .prototype = Object .assign (Object .create (X3DChildObject .prot
          this .addNodeEvent ();
       }
    },
-   addNodeEvent: function ()
+   addNodeEvent ()
    {
       if (this .isTainted ())
          return;

@@ -65,20 +65,20 @@ function QuadSphereOptions (executionContext)
 QuadSphereOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 {
    constructor: QuadSphereOptions,
-   initialize: function ()
+   initialize ()
    {
       X3DBaseNode .prototype .initialize .call (this);
 
       this .addInterest ("eventsProcessed", this);
    },
-   getGeometry: function ()
+   getGeometry ()
    {
       if (! this .geometry)
          this .eventsProcessed ();
 
       return this .geometry;
    },
-   createTexCoordIndex: function ()
+   createTexCoordIndex ()
    {
       const
          xDimension    = this ._xDimension .getValue () + 1,
@@ -121,7 +121,7 @@ QuadSphereOptions .prototype = Object .assign (Object .create (X3DBaseNode .prot
          texCoordIndex .push (-1);
       }
    },
-   createTexCoord: function ()
+   createTexCoord ()
    {
       const
          xDimension = this ._xDimension .getValue () + 1,
@@ -162,7 +162,7 @@ QuadSphereOptions .prototype = Object .assign (Object .create (X3DBaseNode .prot
          point .push (new Vector2 (x, 0));
       }
    },
-   createCoordIndex: function ()
+   createCoordIndex ()
    {
       const
          xDimension = this ._xDimension .getValue () + 1,
@@ -225,7 +225,7 @@ QuadSphereOptions .prototype = Object .assign (Object .create (X3DBaseNode .prot
       coordIndex .push (p);
       coordIndex .push (-1);
    },
-   createPoints: function ()
+   createPoints ()
    {
       const
          xDimension = this ._xDimension .getValue () + 1,
@@ -251,7 +251,7 @@ QuadSphereOptions .prototype = Object .assign (Object .create (X3DBaseNode .prot
       // South pole
       point .push (new Vector3 (0, -1, 0));
    },
-   eventsProcessed: function ()
+   eventsProcessed ()
    {
       this .geometry            = new IndexedFaceSet (this .getExecutionContext ());
       this .geometry ._texCoord = new TextureCoordinate (this .getExecutionContext ());

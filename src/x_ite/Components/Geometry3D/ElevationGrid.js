@@ -76,7 +76,7 @@ function ElevationGrid (executionContext)
 ElevationGrid .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 {
    constructor: ElevationGrid,
-   initialize: function ()
+   initialize ()
    {
       X3DGeometryNode .prototype .initialize .call (this);
 
@@ -93,7 +93,7 @@ ElevationGrid .prototype = Object .assign (Object .create (X3DGeometryNode .prot
       this .set_texCoord__ ();
       this .set_normal__ ();
    },
-   set_attrib__: function ()
+   set_attrib__ ()
    {
       const attribNodes = this .getAttrib ();
 
@@ -121,7 +121,7 @@ ElevationGrid .prototype = Object .assign (Object .create (X3DGeometryNode .prot
 
       this .updateVertexArrays ();
    },
-   set_fogCoord__: function ()
+   set_fogCoord__ ()
    {
       this .fogCoordNode ?.removeInterest ("requestRebuild", this);
 
@@ -129,7 +129,7 @@ ElevationGrid .prototype = Object .assign (Object .create (X3DGeometryNode .prot
 
       this .fogCoordNode ?.addInterest ("requestRebuild", this);
    },
-   set_color__: function ()
+   set_color__ ()
    {
       this .colorNode ?.removeInterest ("requestRebuild", this);
 
@@ -139,7 +139,7 @@ ElevationGrid .prototype = Object .assign (Object .create (X3DGeometryNode .prot
 
       this .setTransparent (this .colorNode ?.isTransparent () ?? false);
    },
-   set_texCoord__: function ()
+   set_texCoord__ ()
    {
       this .texCoordNode ?.removeInterest ("requestRebuild", this);
 
@@ -149,7 +149,7 @@ ElevationGrid .prototype = Object .assign (Object .create (X3DGeometryNode .prot
 
       this .setTextureCoordinate (this .texCoordNode);
    },
-   set_normal__: function ()
+   set_normal__ ()
    {
       this .normalNode ?.removeInterest ("requestRebuild", this);
 
@@ -157,26 +157,26 @@ ElevationGrid .prototype = Object .assign (Object .create (X3DGeometryNode .prot
 
       this .normalNode ?.addInterest ("requestRebuild", this);
    },
-   getColor: function ()
+   getColor ()
    {
       return this .colorNode;
    },
-   getTexCoord: function ()
+   getTexCoord ()
    {
       return this .texCoordNode;
    },
-   getNormal: function ()
+   getNormal ()
    {
       return this .normalNode;
    },
-   getHeight: function (index)
+   getHeight (index)
    {
       if (index < this ._height .length)
          return this ._height [index];
 
       return 0;
    },
-   createTexCoords: function ()
+   createTexCoords ()
    {
       const
          texCoords  = [ ],
@@ -193,7 +193,7 @@ ElevationGrid .prototype = Object .assign (Object .create (X3DGeometryNode .prot
 
       return texCoords;
    },
-   createNormals: function (points, coordIndex, creaseAngle)
+   createNormals (points, coordIndex, creaseAngle)
    {
       const
          cw          = ! this ._ccw .getValue (),
@@ -226,7 +226,7 @@ ElevationGrid .prototype = Object .assign (Object .create (X3DGeometryNode .prot
 
       return this .refineNormals (normalIndex, normals, this ._creaseAngle .getValue ());
    },
-   createCoordIndex: function ()
+   createCoordIndex ()
    {
       // p1 - p4
       //  | \ |
@@ -261,7 +261,7 @@ ElevationGrid .prototype = Object .assign (Object .create (X3DGeometryNode .prot
 
       return coordIndex;
    },
-   createPoints: function ()
+   createPoints ()
    {
       const
          points     = [ ],
@@ -282,7 +282,7 @@ ElevationGrid .prototype = Object .assign (Object .create (X3DGeometryNode .prot
 
       return points;
    },
-   build: function ()
+   build ()
    {
       if (this ._xDimension .getValue () < 2 || this ._zDimension .getValue () < 2)
          return;

@@ -82,19 +82,19 @@ function X3DNetworkingContext ()
 
 X3DNetworkingContext .prototype =
 {
-   initialize: function ()
+   initialize ()
    {
       this ._loadCount .addInterest (_set_loadCount, this);
    },
-   getProviderUrl: function ()
+   getProviderUrl ()
    {
       return URLs .getProviderUrl ();
    },
-   getBaseURL: function ()
+   getBaseURL ()
    {
       return this [_baseURL];
    },
-   setBaseURL: function (value)
+   setBaseURL (value)
    {
       const
          base = getBaseURI (this .getElement ()),
@@ -102,7 +102,7 @@ X3DNetworkingContext .prototype =
 
       this [_baseURL] = url .protocol === "data:" ? base : url .href;
    },
-   getDefaultScene: function ()
+   getDefaultScene ()
    {
       // Inline node's empty scene.
 
@@ -117,11 +117,11 @@ X3DNetworkingContext .prototype =
 
       return this [_defaultScene];
    },
-   getBrowserLoading: function ()
+   getBrowserLoading ()
    {
       return this [_loading];
    },
-   setBrowserLoading: function (value)
+   setBrowserLoading (value)
    {
       this [_loading] = value;
 
@@ -148,11 +148,11 @@ X3DNetworkingContext .prototype =
          }
       }
    },
-   getLoadingObjects: function ()
+   getLoadingObjects ()
    {
       return this [_loadingObjects];
    },
-   addLoadingObject: function (object)
+   addLoadingObject (object)
    {
       if (this [_loadingObjects] .has (object))
          return;
@@ -164,7 +164,7 @@ X3DNetworkingContext .prototype =
       this .setLoadCount (this [_loadingObjects] .size);
       this .setCursor ("DEFAULT");
    },
-   removeLoadingObject: function (object)
+   removeLoadingObject (object)
    {
       if (!this [_loadingObjects] .has (object))
          return;
@@ -174,15 +174,15 @@ X3DNetworkingContext .prototype =
       this .setLoadCount (this [_loadingObjects] .size);
       this .setCursor (this .getCursor ());
    },
-   getDisplayLoadCount: function ()
+   getDisplayLoadCount ()
    {
       return [... this [_loadingObjects]] .reduce ((v, o) => v + !(o .isPrivate ?.() ?? true), 0);
    },
-   setLoadCount: function (value)
+   setLoadCount (value)
    {
       this ._loadCount = value;
    },
-   resetLoadCount: function ()
+   resetLoadCount ()
    {
       this ._loadCount       = 0;
       this [_loadingDisplay] = 0;
@@ -193,7 +193,7 @@ X3DNetworkingContext .prototype =
       for (const object of this .getPrivateScene () .getLoadingObjects ())
          this .addLoadingObject (object);
    },
-   [_set_loadCount]: function ()
+   [_set_loadCount] ()
    {
       const loadingDisplay = this .getDisplayLoadCount ();
 

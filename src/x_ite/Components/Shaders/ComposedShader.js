@@ -70,7 +70,7 @@ ComposedShader .prototype = Object .assign (Object .create (X3DShaderNode .proto
 {
    constructor: ComposedShader,
    wireframe: false,
-   initialize: function ()
+   initialize ()
    {
       X3DShaderNode               .prototype .initialize .call (this);
       X3DProgrammableShaderObject .prototype .initialize .call (this);
@@ -90,12 +90,12 @@ ComposedShader .prototype = Object .assign (Object .create (X3DShaderNode .proto
       else
          this .connectLoaded ();
    },
-   connectLoaded: function ()
+   connectLoaded ()
    {
       this .loadSensor ._isLoaded .removeInterest ("connectLoaded", this);
       this .loadSensor ._isLoaded .addInterest ("set_loaded__", this);
    },
-   addUserDefinedField: function (accessType, name, field)
+   addUserDefinedField (accessType, name, field)
    {
       const shaderFields = this .isInitialized () && this .isValid ();
 
@@ -107,7 +107,7 @@ ComposedShader .prototype = Object .assign (Object .create (X3DShaderNode .proto
       if (shaderFields)
          this .addShaderFields ();
    },
-   removeUserDefinedField: function (name)
+   removeUserDefinedField (name)
    {
       const shaderFields = this .isInitialized () && this .isValid ();
 
@@ -119,22 +119,22 @@ ComposedShader .prototype = Object .assign (Object .create (X3DShaderNode .proto
       if (shaderFields)
          this .addShaderFields ();
    },
-   setTransformFeedbackVaryings: function (value)
+   setTransformFeedbackVaryings (value)
    {
       this .transformFeedbackVaryings = value;
    },
-   getProgram: function ()
+   getProgram ()
    {
       return this .program;
    },
-   set_activate__: function ()
+   set_activate__ ()
    {
       if (!this ._activate .getValue ())
          return;
 
       this .set_loaded__ ();
    },
-   set_loaded__: function ()
+   set_loaded__ ()
    {
       if (this .loadSensor ._isLoaded .getValue () && this ._language .getValue () === "GLSL")
       {
@@ -183,7 +183,7 @@ ComposedShader .prototype = Object .assign (Object .create (X3DShaderNode .proto
          this .setValid (false);
       }
    },
-   dispose: function ()
+   dispose ()
    {
       X3DProgrammableShaderObject .prototype .dispose .call (this);
       X3DShaderNode               .prototype .dispose .call (this);

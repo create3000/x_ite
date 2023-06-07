@@ -62,7 +62,7 @@ function TextureBackground (executionContext)
 TextureBackground .prototype = Object .assign (Object .create (X3DBackgroundNode .prototype),
 {
    constructor: TextureBackground,
-   initialize: function ()
+   initialize ()
    {
       X3DBackgroundNode .prototype .initialize .call (this);
 
@@ -80,7 +80,7 @@ TextureBackground .prototype = Object .assign (Object .create (X3DBackgroundNode
       this .set_texture__ (4, this ._topTexture);
       this .set_texture__ (5, this ._bottomTexture);
    },
-   set_texture__: function (index, textureNode)
+   set_texture__ (index, textureNode)
    {
       X3DBackgroundNode .prototype .set_texture__ .call (this, X3DCast (X3DConstants .X3DTextureNode, textureNode), index);
    },

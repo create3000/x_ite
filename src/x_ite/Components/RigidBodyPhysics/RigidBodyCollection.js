@@ -88,7 +88,7 @@ function RigidBodyCollection (executionContext)
 RigidBodyCollection .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 {
    constructor: RigidBodyCollection,
-   initialize: function ()
+   initialize ()
    {
       X3DChildNode .prototype .initialize .call (this);
 
@@ -107,11 +107,11 @@ RigidBodyCollection .prototype = Object .assign (Object .create (X3DChildNode .p
       this .set_collider__ ();
       this .set_bodies__ ();
    },
-   getDynamicsWorld: function ()
+   getDynamicsWorld ()
    {
       return this .dynamicsWorld;
    },
-   getTimeStep: function ()
+   getTimeStep ()
    {
       const DELAY = 15; // Delay in frames when dt full applies.
 
@@ -121,14 +121,14 @@ RigidBodyCollection .prototype = Object .assign (Object .create (X3DChildNode .p
 
       return deltaTime;
    },
-   set_enabled__: function ()
+   set_enabled__ ()
    {
       if (this .getLive () .getValue () && this ._enabled .getValue ())
          this .getBrowser () .sensorEvents () .addInterest ("update", this);
       else
          this .getBrowser () .sensorEvents () .removeInterest ("update", this);
    },
-   set_contacts__: function ()
+   set_contacts__ ()
    {
    },
    set_gravity__: (function ()
@@ -144,16 +144,16 @@ RigidBodyCollection .prototype = Object .assign (Object .create (X3DChildNode .p
          this .dynamicsWorld .setGravity (gravity);
       };
    })(),
-   set_contactSurfaceThickness__: function ()
+   set_contactSurfaceThickness__ ()
    {
       for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
          this .bodyNodes [i] .getRigidBody () .getCollisionShape () .setMargin (this ._contactSurfaceThickness .getValue ());
    },
-   set_collider__: function ()
+   set_collider__ ()
    {
       this .colliderNode = X3DCast (X3DConstants .CollisionCollection, this ._collider);
    },
-   set_bounce__: function ()
+   set_bounce__ ()
    {
       var
          colliderNode = this .colliderNode,
@@ -180,7 +180,7 @@ RigidBodyCollection .prototype = Object .assign (Object .create (X3DChildNode .p
       for (var i = 0, length = bodyNodes .length; i < length; ++ i)
          bodyNodes [i] .getRigidBody () .setRestitution (0);
    },
-   set_frictionCoefficients__: function ()
+   set_frictionCoefficients__ ()
    {
       if (this .colliderNode && this .colliderNode ._enabled .getValue ())
       {
@@ -206,7 +206,7 @@ RigidBodyCollection .prototype = Object .assign (Object .create (X3DChildNode .p
          rigidBody .setRollingFriction (0);
       }
    },
-   set_bodies__: function ()
+   set_bodies__ ()
    {
       for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
       {
@@ -247,7 +247,7 @@ RigidBodyCollection .prototype = Object .assign (Object .create (X3DChildNode .p
       this .set_dynamicsWorld__ ();
       this .set_joints__ ();
    },
-   set_dynamicsWorld__: function ()
+   set_dynamicsWorld__ ()
    {
       for (var i = 0, length = this .rigidBodies .length; i < length; ++ i)
          this .dynamicsWorld .removeRigidBody (this .rigidBodies [i]);
@@ -267,7 +267,7 @@ RigidBodyCollection .prototype = Object .assign (Object .create (X3DChildNode .p
       for (var i = 0, length = this .rigidBodies .length; i < length; ++ i)
          this .dynamicsWorld .addRigidBody (this .rigidBodies [i]);
    },
-   set_joints__: function ()
+   set_joints__ ()
    {
       for (var i = 0, length = this .jointNodes .length; i < length; ++ i)
          this .jointNodes [i] .setCollection (null);
@@ -298,7 +298,7 @@ RigidBodyCollection .prototype = Object .assign (Object .create (X3DChildNode .p
          this .jointNodes .push (jointNode);
       }
    },
-   update: function ()
+   update ()
    {
       try
       {

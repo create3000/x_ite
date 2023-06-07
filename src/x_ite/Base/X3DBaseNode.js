@@ -100,13 +100,13 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
 {
    constructor: X3DBaseNode,
    [_fieldDefinitions]: new FieldDefinitionArray ([ ]),
-   setName: function (value)
+   setName (value)
    {
       X3DEventObject .prototype .setName .call (this, value)
 
       this ._name_changed = this .getBrowser () .getCurrentTime ();
    },
-   getMainScene: function ()
+   getMainScene ()
    {
       let scene = this [_executionContext] .getScene ();
 
@@ -115,7 +115,7 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
 
       return scene;
    },
-   getScene: function ()
+   getScene ()
    {
       let executionContext = this [_executionContext];
 
@@ -124,34 +124,34 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
 
       return executionContext;
    },
-   getExecutionContext: function ()
+   getExecutionContext ()
    {
       return this [_executionContext];
    },
-   setExecutionContext: function (value)
+   setExecutionContext (value)
    {
       // Currently only useful for Scene.
       this [_executionContext] = value;
    },
-   addType: function (value)
+   addType (value)
    {
       this [_type] .push (value);
    },
-   getType: function ()
+   getType ()
    {
       return this [_type];
    },
-   getInnerNode: function ()
+   getInnerNode ()
    {
       return this;
    },
-   isLive: function ()
+   isLive ()
    {
       ///  Returns the own live state of this node.
 
       return this [_live];
    },
-   setLive: function (value)
+   setLive (value)
    {
       ///  Sets the own live state of this node.  Setting the live state to false
       ///  temporarily disables this node completely.
@@ -195,7 +195,7 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
          return this ._live;
       };
    })(),
-   getLiveState: function ()
+   getLiveState ()
    {
       ///  Determines the live state of this node.
 
@@ -207,7 +207,7 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
 
       return this [_live];
    },
-   [_set_live__]: function ()
+   [_set_live__] ()
    {
       const live = this ._live;
 
@@ -231,11 +231,11 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
          }
       }
    },
-   create: function (executionContext = this [_executionContext])
+   create (executionContext = this [_executionContext])
    {
       return new (this .constructor) (executionContext);
    },
-   setup: function ()
+   setup ()
    {
       Object .freeze (this [_type]);
 
@@ -256,13 +256,13 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
 
       this [_initialized] = true;
    },
-   initialize: function ()
+   initialize ()
    { },
-   isInitialized: function ()
+   isInitialized ()
    {
       return this [_initialized];
    },
-   copy: function (executionContext)
+   copy (executionContext)
    {
       const copy = this .create (executionContext);
 
@@ -279,12 +279,12 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
 
       return copy;
    },
-   addChildObjects: function (/* name, field, ... */)
+   addChildObjects (/* name, field, ... */)
    {
       for (let i = 0, length = arguments .length; i < length; i += 2)
          this .addChildObject (arguments [i], arguments [i + 1]);
    },
-   addChildObject: function (name, field)
+   addChildObject (name, field)
    {
       this [_childObjects] .push (field);
 
@@ -294,15 +294,15 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
 
       Object .defineProperty (this, "_" + name,
       {
-         get: function () { return field; },
-         set: function (value) { field .setValue (value); },
+         get () { return field; },
+         set (value) { field .setValue (value); },
       });
    },
-   getFieldDefinitions: function ()
+   getFieldDefinitions ()
    {
       return this [_fieldDefinitions];
    },
-   getField: function (name)
+   getField (name)
    {
       const field = getFieldFromArray (this [_userDefinedFields], name)
          ?? getFieldFromArray (this [_predefinedFields], name);
@@ -312,11 +312,11 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
 
       throw new Error ("Unknown field '" + name + "' in node class " + this .getTypeName () + ".");
    },
-   getFields: function ()
+   getFields ()
    {
       return [... this [_predefinedFields], ... this [_userDefinedFields]];
    },
-   addPredefinedField: function ({ accessType, name, value })
+   addPredefinedField ({ accessType, name, value })
    {
       const field = value .copy ();
 
@@ -329,22 +329,22 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
 
       Object .defineProperty (this, "_" + name,
       {
-         get: function () { return field; },
-         set: function (value) { field .setValue (value); },
+         get () { return field; },
+         set (value) { field .setValue (value); },
 			configurable: true,
       });
 
       if (!this .isPrivate ())
          field .addCloneCount (1);
    },
-   addAlias: function (alias, field)
+   addAlias (alias, field)
    {
       this [_predefinedFields] .alias (alias, field .getName ());
 
       if (field .isInitializable ())
          HTMLSupport .addFieldName (alias);
    },
-   removePredefinedField: function (name)
+   removePredefinedField (name)
    {
       const field = this [_predefinedFields] .get (name);
 
@@ -360,7 +360,7 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
       if (!this .isPrivate ())
          field .removeCloneCount (1);
    },
-   getPredefinedField: function (name)
+   getPredefinedField (name)
    {
       const field = getFieldFromArray (this [_predefinedFields], name);
 
@@ -369,15 +369,15 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
 
       throw new Error ("Unknown field '" + name + "' in node class " + this .getTypeName () + ".");
    },
-   getPredefinedFields: function ()
+   getPredefinedFields ()
    {
       return this [_predefinedFields];
    },
-   canUserDefinedFields: function ()
+   canUserDefinedFields ()
    {
       return false;
    },
-   addUserDefinedField: function (accessType, name, field)
+   addUserDefinedField (accessType, name, field)
    {
       if (!this .canUserDefinedFields ())
          throw new Error ("Couldn't add user-defined field, node does not support this.");
@@ -398,7 +398,7 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
       if (!this .isPrivate ())
          field .addCloneCount (1);
    },
-   removeUserDefinedField: function (name)
+   removeUserDefinedField (name)
    {
       const field = this [_userDefinedFields] .get (name);
 
@@ -413,7 +413,7 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
       if (!this .isPrivate ())
          field .removeCloneCount (1);
    },
-   getUserDefinedField: function (name)
+   getUserDefinedField (name)
    {
       const field = getFieldFromArray (this [_userDefinedFields], name);
 
@@ -422,11 +422,11 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
 
       throw new Error ("Unknown field '" + name + "' in node class " + this .getTypeName () + ".");
    },
-   getUserDefinedFields: function ()
+   getUserDefinedFields ()
    {
       return this [_userDefinedFields];
    },
-   getChangedFields: function (extended)
+   getChangedFields (extended)
    {
       /* param routes: also return fields with routes */
 
@@ -463,7 +463,7 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
 
       return changedFields;
    },
-   isDefaultValue: function (field)
+   isDefaultValue (field)
    {
       const f = this [_userDefinedFields] .get (field .getName ()) ?? this [_predefinedFields] .get (field .getName ());
 
@@ -483,7 +483,7 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
 
       return !field .getModificationTime ();
    },
-   hasRoutes: function ()
+   hasRoutes ()
    {
       ///  Returns true if there are any routes from or to fields of this node, otherwise false.
 
@@ -501,11 +501,11 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
 
       return false;
    },
-   isPrivate: function ()
+   isPrivate ()
    {
       return this [_private];
    },
-   setPrivate: function (value)
+   setPrivate (value)
    {
       this [_private] = value;
 
@@ -526,11 +526,11 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
             field .addCloneCount (1);
       }
    },
-   getCloneCount: function ()
+   getCloneCount ()
    {
       return this [_cloneCount];
    },
-   addCloneCount: function (count)
+   addCloneCount (count)
    {
       if (count === 0)
          return;
@@ -542,7 +542,7 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
       this [_executionContext] ._sceneGraph_changed = time;
       this ._cloneCount_changed                     = time;
    },
-   removeCloneCount: function (count)
+   removeCloneCount (count)
    {
       if (count === 0)
          return;
@@ -554,7 +554,7 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
       this [_executionContext] ._sceneGraph_changed = time;
       this ._cloneCount_changed                     = time;
    },
-   dispose: function ()
+   dispose ()
    {
       this .setLive (false);
 
@@ -615,17 +615,17 @@ Object .defineProperties (X3DBaseNode .prototype,
 {
    name_changed:
    {
-      get: function () { return this ._name_changed; },
+      get () { return this ._name_changed; },
       enumerable: false,
    },
    typeName_changed:
    {
-      get: function () { return this ._typeName_changed; },
+      get () { return this ._typeName_changed; },
       enumerable: false,
    },
    cloneCount_changed:
    {
-      get: function () { return this ._cloneCount_changed; },
+      get () { return this ._cloneCount_changed; },
       enumerable: false,
    },
 });

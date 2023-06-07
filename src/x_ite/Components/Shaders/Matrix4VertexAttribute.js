@@ -61,7 +61,7 @@ function Matrix4VertexAttribute (executionContext)
 Matrix4VertexAttribute .prototype = Object .assign (Object .create (X3DVertexAttributeNode .prototype),
 {
    constructor: Matrix4VertexAttribute,
-   initialize: function ()
+   initialize ()
    {
       X3DVertexAttributeNode .prototype .initialize .call (this);
 
@@ -69,12 +69,12 @@ Matrix4VertexAttribute .prototype = Object .assign (Object .create (X3DVertexAtt
 
       this .set_value__ ();
    },
-   set_value__: function ()
+   set_value__ ()
    {
       this .value  = this ._value .getValue ();
       this .length = this ._value .length;
    },
-   addValue: function (index, array)
+   addValue (index, array)
    {
       if (index < this .length)
       {
@@ -100,7 +100,7 @@ Matrix4VertexAttribute .prototype = Object .assign (Object .create (X3DVertexAtt
             array .push (value [i]);
       }
    },
-   enable: function (gl, shaderNode, buffer)
+   enable (gl, shaderNode, buffer)
    {
       shaderNode .enableMatrix4Attrib (gl, this ._name .getValue (), buffer, 0, 0);
    },

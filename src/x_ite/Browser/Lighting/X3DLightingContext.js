@@ -67,11 +67,11 @@ function X3DLightingContext ()
 
 X3DLightingContext .prototype =
 {
-   getMaxLights: function ()
+   getMaxLights ()
    {
       return this [_maxLights];
    },
-   popShadowBuffer: function (shadowMapSize)
+   popShadowBuffer (shadowMapSize)
    {
       try
       {
@@ -95,7 +95,7 @@ X3DLightingContext .prototype =
          return null;
       }
    },
-   pushShadowBuffer: function (buffer)
+   pushShadowBuffer (buffer)
    {
       if (buffer)
          this [_shadowBuffers] [buffer .getWidth ()] .push (buffer);

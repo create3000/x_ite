@@ -66,25 +66,25 @@ function Disk2DOptions (executionContext)
 Disk2DOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 {
    constructor: Disk2DOptions,
-   initialize: function ()
+   initialize ()
    {
       this .addInterest ("build", this);
 
       this .build ();
    },
-   getCircleVertices: function ()
+   getCircleVertices ()
    {
       return this .circleVertices;
    },
-   getDiskTexCoords: function ()
+   getDiskTexCoords ()
    {
       return this .diskTexCoords;
    },
-   getDiskNormals: function ()
+   getDiskNormals ()
    {
       return this .diskNormals;
    },
-   getDiskVertices: function ()
+   getDiskVertices ()
    {
       return this .diskVertices;
    },

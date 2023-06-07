@@ -70,19 +70,19 @@ GeoPositionInterpolator .prototype = Object .assign (Object .create (X3DInterpol
    X3DGeospatialObject .prototype,
 {
    constructor: GeoPositionInterpolator,
-   setup: function ()
+   setup ()
    {
       X3DGeospatialObject .prototype .initialize .call (this);
 
       X3DInterpolatorNode .prototype .setup .call (this);
    },
-   initialize: function ()
+   initialize ()
    {
       X3DInterpolatorNode .prototype .initialize .call (this);
 
       this ._keyValue .addInterest ("set_keyValue__", this);
    },
-   set_keyValue__: function ()
+   set_keyValue__ ()
    {
       const
          key      = this ._key,
@@ -109,7 +109,7 @@ GeoPositionInterpolator .prototype = Object .assign (Object .create (X3DInterpol
          this ._value_changed    = coord;
       };
    })(),
-   dispose: function ()
+   dispose ()
    {
       X3DGeospatialObject .prototype .dispose .call (this);
       X3DInterpolatorNode .prototype .dispose .call (this);

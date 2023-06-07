@@ -72,7 +72,7 @@ function CollidableShape (executionContext)
 CollidableShape .prototype = Object .assign (Object .create (X3DNBodyCollidableNode .prototype),
 {
    constructor: CollidableShape,
-   initialize: function ()
+   initialize ()
    {
       X3DNBodyCollidableNode .prototype .initialize .call (this);
 
@@ -81,18 +81,18 @@ CollidableShape .prototype = Object .assign (Object .create (X3DNBodyCollidableN
 
       this .set_shape__ ();
    },
-   getBBox: function (bbox, shadows)
+   getBBox (bbox, shadows)
    {
       if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
          return this .visibleNode ?.getBBox (bbox, shadows) .multRight (this .getMatrix ()) ?? bbox .set ();
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
-   setConvex: function (value)
+   setConvex (value)
    {
       this .convex = value;
    },
-   getConvex: function ()
+   getConvex ()
    {
       return this .convex;
    },
@@ -148,7 +148,7 @@ CollidableShape .prototype = Object .assign (Object .create (X3DNBodyCollidableN
          return new Ammo .btBvhTriangleMeshShape (this .triangleMesh, false);
       };
    })(),
-   set_shape__: function ()
+   set_shape__ ()
    {
       if (this .shapeNode)
       {
@@ -190,11 +190,11 @@ CollidableShape .prototype = Object .assign (Object .create (X3DNBodyCollidableN
       this .set_bboxDisplay__ ();
       this .set_geometry__ ();
    },
-   set_cameraObject__: function ()
+   set_cameraObject__ ()
    {
       this .setCameraObject (!!this .visibleNode ?.isCameraObject ());
    },
-   set_visible__: function ()
+   set_visible__ ()
    {
       if (this .shapeNode)
          this .visibleNode = this .shapeNode ._visible .getValue () ? this .shapeNode : null;
@@ -203,14 +203,14 @@ CollidableShape .prototype = Object .assign (Object .create (X3DNBodyCollidableN
 
       this .set_cameraObject__ ();
    },
-   set_bboxDisplay__: function ()
+   set_bboxDisplay__ ()
    {
       if (this .shapeNode)
          this .boundedObject = this .shapeNode ._bboxDisplay .getValue () ? this .shapeNode : null;
       else
          this .boundedObject = null;
    },
-   set_geometry__: function ()
+   set_geometry__ ()
    {
       if (this .geometryNode)
          this .geometryNode ._rebuild .removeInterest ("set_collidableGeometry__", this);
@@ -364,7 +364,7 @@ CollidableShape .prototype = Object .assign (Object .create (X3DNBodyCollidableN
          this ._compoundShape_changed = this .getBrowser () .getCurrentTime ();
       };
    })(),
-   removeCollidableGeometry: function ()
+   removeCollidableGeometry ()
    {
       if (this .collisionShape)
       {
@@ -385,7 +385,7 @@ CollidableShape .prototype = Object .assign (Object .create (X3DNBodyCollidableN
          this .triangleMesh = null;
       }
    },
-   traverse: function (type, renderObject)
+   traverse (type, renderObject)
    {
       switch (type)
       {
@@ -448,7 +448,7 @@ CollidableShape .prototype = Object .assign (Object .create (X3DNBodyCollidableN
          }
       }
    },
-   dispose: function ()
+   dispose ()
    {
       this .removeCollidableGeometry ();
 

@@ -78,7 +78,7 @@ function SingleAxisHingeJoint (executionContext)
 SingleAxisHingeJoint .prototype = Object .assign (Object .create (X3DRigidJointNode .prototype),
 {
    constructor: SingleAxisHingeJoint,
-   initialize: function ()
+   initialize ()
    {
       X3DRigidJointNode .prototype .initialize .call (this);
 
@@ -133,7 +133,7 @@ SingleAxisHingeJoint .prototype = Object .assign (Object .create (X3DRigidJointN
          this .getCollection () .getDynamicsWorld () .addConstraint (this .joint, true);
       };
    })(),
-   removeJoint: function ()
+   removeJoint ()
    {
       if (this .joint)
       {
@@ -144,7 +144,7 @@ SingleAxisHingeJoint .prototype = Object .assign (Object .create (X3DRigidJointN
          this .joint = null;
       }
    },
-   set_forceOutput__: function ()
+   set_forceOutput__ ()
    {
       for (var key in this .outputs)
          delete this .outputs [key];

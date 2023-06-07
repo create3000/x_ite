@@ -106,7 +106,7 @@ Layout .prototype = Object .assign (Object .create (X3DLayoutNode .prototype),
    currentRotation: new Rotation4 (),
    currentScale: new Vector3 (0, 0, 0),
    modelViewMatrix: new Matrix4 (),
-   initialize: function ()
+   initialize ()
    {
       X3DLayoutNode .prototype .initialize .call (this);
 
@@ -124,7 +124,7 @@ Layout .prototype = Object .assign (Object .create (X3DLayoutNode .prototype),
       this .set_size__ ();
       this .set_scaleMode__ ();
    },
-   set_align__: function ()
+   set_align__ ()
    {
       // X
 
@@ -158,7 +158,7 @@ Layout .prototype = Object .assign (Object .create (X3DLayoutNode .prototype),
       else
          this .alignY = CENTER;
    },
-   set_offsetUnits__: function ()
+   set_offsetUnits__ ()
    {
       if (this ._offsetUnits .length > 0)
       {
@@ -195,7 +195,7 @@ Layout .prototype = Object .assign (Object .create (X3DLayoutNode .prototype),
          this .offsetUnitY = WORLD;
       }
    },
-   set_offset__: function ()
+   set_offset__ ()
    {
       if (this ._offset .length > 0)
       {
@@ -217,7 +217,7 @@ Layout .prototype = Object .assign (Object .create (X3DLayoutNode .prototype),
          this .offsetY = 0;
       }
    },
-   set_sizeUnits__: function ()
+   set_sizeUnits__ ()
    {
       if (this ._sizeUnits .length > 0)
       {
@@ -254,7 +254,7 @@ Layout .prototype = Object .assign (Object .create (X3DLayoutNode .prototype),
          this .sizeUnitY = WORLD;
       }
    },
-   set_size__: function ()
+   set_size__ ()
    {
       if (this ._size .length > 0)
       {
@@ -276,7 +276,7 @@ Layout .prototype = Object .assign (Object .create (X3DLayoutNode .prototype),
          this .sizeY = 0;
       }
    },
-   set_scaleMode__: function ()
+   set_scaleMode__ ()
    {
       if (this ._scaleMode .length > 0)
       {
@@ -319,23 +319,23 @@ Layout .prototype = Object .assign (Object .create (X3DLayoutNode .prototype),
          this .scaleModeY = NONE;
       }
    },
-   getRectangleCenter: function ()
+   getRectangleCenter ()
    {
       return this .rectangleCenter;
    },
-   getRectangleSize: function ()
+   getRectangleSize ()
    {
       return this .rectangleSize;
    },
-   getAlignX: function ()
+   getAlignX ()
    {
       return this .alignX;
    },
-   getAlignY: function ()
+   getAlignY ()
    {
       return this .alignY;
    },
-   getOffsetUnitX: function ()
+   getOffsetUnitX ()
    {
       if (this .offsetUnitX === WORLD)
       {
@@ -347,7 +347,7 @@ Layout .prototype = Object .assign (Object .create (X3DLayoutNode .prototype),
 
       return this .offsetUnitX;
    },
-   getOffsetUnitY: function ()
+   getOffsetUnitY ()
    {
       if (this .offsetUnitY === WORLD)
       {
@@ -359,15 +359,15 @@ Layout .prototype = Object .assign (Object .create (X3DLayoutNode .prototype),
 
       return this .offsetUnitY;
    },
-   getOffsetX: function ()
+   getOffsetX ()
    {
       return this .offsetX;
    },
-   getOffsetY: function ()
+   getOffsetY ()
    {
       return this .offsetY;
    },
-   getSizeUnitX: function ()
+   getSizeUnitX ()
    {
       if (this .sizeUnitX === WORLD)
       {
@@ -379,7 +379,7 @@ Layout .prototype = Object .assign (Object .create (X3DLayoutNode .prototype),
 
       return this .sizeUnitX;
    },
-   getSizeUnitY: function ()
+   getSizeUnitY ()
    {
       if (this .sizeUnitY === WORLD)
       {
@@ -391,15 +391,15 @@ Layout .prototype = Object .assign (Object .create (X3DLayoutNode .prototype),
 
       return this .sizeUnitY;
    },
-   getSizeX: function ()
+   getSizeX ()
    {
       return this .sizeX;
    },
-   getSizeY: function ()
+   getSizeY ()
    {
       return this .sizeY;
    },
-   getScaleModeX: function ()
+   getScaleModeX ()
    {
       if (this .parent)
          return this .scaleModeX;
@@ -409,7 +409,7 @@ Layout .prototype = Object .assign (Object .create (X3DLayoutNode .prototype),
 
       return this .scaleModeX;
    },
-   getScaleModeY: function ()
+   getScaleModeY ()
    {
       if (this .parent)
          return this .scaleModeY;
@@ -419,7 +419,7 @@ Layout .prototype = Object .assign (Object .create (X3DLayoutNode .prototype),
 
       return this .scaleModeY;
    },
-   transform: function (type, renderObject)
+   transform (type, renderObject)
    {
       const parent = this .parent = renderObject .getParentLayout ();
 

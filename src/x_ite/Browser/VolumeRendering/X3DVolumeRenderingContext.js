@@ -59,7 +59,7 @@ function X3DVolumeRenderingContext () { }
 
 X3DVolumeRenderingContext .prototype =
 {
-   getDefaultVoxels: function ()
+   getDefaultVoxels ()
    {
       this [_defaultVoxelsNode] = this .getPrivateScene () .createNode ("PixelTexture3D", false);
       this [_defaultVoxelsNode] ._image = [1, 1, 1, 1, 255];
@@ -75,7 +75,7 @@ X3DVolumeRenderingContext .prototype =
 
       return this [_defaultVoxelsNode];
    },
-   getDefaultVolumeStyle: function ()
+   getDefaultVolumeStyle ()
    {
       this [_defaultVolumeStyle] = new OpacityMapVolumeStyle (this .getPrivateScene ());
       this [_defaultVolumeStyle] .setPrivate (true);
@@ -87,7 +87,7 @@ X3DVolumeRenderingContext .prototype =
 
       return this [_defaultVolumeStyle];
    },
-   getDefaultBlendedVolumeStyle: function ()
+   getDefaultBlendedVolumeStyle ()
    {
       this [_defaultBlendedVolumeStyle] = new OpacityMapVolumeStyle (this .getPrivateScene ());
       this [_defaultBlendedVolumeStyle] .setPrivate (true);
@@ -99,7 +99,7 @@ X3DVolumeRenderingContext .prototype =
 
       return this [_defaultBlendedVolumeStyle];
    },
-   getDefaultTransferFunction: function ()
+   getDefaultTransferFunction ()
    {
       const textureProperties = new TextureProperties (this .getPrivateScene ());
       textureProperties ._boundaryModeS       = "CLAMP_TO_EDGE";

@@ -132,7 +132,7 @@ function X3D (callback, fallback)
 
 Object .assign (X3D,
 {
-   require: function (id)
+   require (id)
    {
       if (!Namespace .has (id))
          throw new Error ("Unknown module '" + id + "'.");
@@ -158,11 +158,11 @@ Object .assign (X3D,
          return X3D;
       };
    })(),
-   getBrowser: function (element)
+   getBrowser (element)
    {
       return $(element || "x3d-canvas, X3DCanvas") .prop ("browser");
    },
-   createBrowser: function (url, parameter)
+   createBrowser (url, parameter)
    {
       const element = document .createElement ("x3d-canvas");
 

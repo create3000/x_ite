@@ -68,31 +68,31 @@ function SFColor (r, g, b)
 SFColor .prototype = Object .assign (Object .create (X3DField .prototype),
 {
    constructor: SFColor,
-   [Symbol .iterator]: function* ()
+   *[Symbol .iterator] ()
    {
       yield* this .getValue ();
    },
-   copy: function ()
+   copy ()
    {
       return new SFColor (this .getValue () .copy ());
    },
-   equals: function (color)
+   equals (color)
    {
       return this .getValue () .equals (color .getValue ());
    },
-   isDefaultValue: function ()
+   isDefaultValue ()
    {
       return this .getValue () .equals (Color3 .Black);
    },
-   set: function (value)
+   set (value)
    {
       this .getValue () .assign (value);
    },
-   getHSV: function ()
+   getHSV ()
    {
       return this .getValue () .getHSV ([ ]);
    },
-   setHSV: function (h, s, v)
+   setHSV (h, s, v)
    {
       this .getValue () .setHSV (h, s, v);
       this .addEvent ();
@@ -117,7 +117,7 @@ SFColor .prototype = Object .assign (Object .create (X3DField .prototype),
          return result;
       };
    })(),
-   toStream: function (generator)
+   toStream (generator)
    {
       const
          value = this .getValue (),
@@ -131,15 +131,15 @@ SFColor .prototype = Object .assign (Object .create (X3DField .prototype),
 
       generator .string += generator .FloatFormat (value [last]);
    },
-   toVRMLStream: function (generator)
+   toVRMLStream (generator)
    {
       this .toStream (generator);
    },
-   toXMLStream: function (generator)
+   toXMLStream (generator)
    {
       this .toStream (generator);
    },
-   toJSONStream: function (generator)
+   toJSONStream (generator)
    {
       generator .string += '[';
       generator .string += generator .TidySpace ();
@@ -149,7 +149,7 @@ SFColor .prototype = Object .assign (Object .create (X3DField .prototype),
       generator .string += generator .TidySpace ();
       generator .string += ']';
    },
-   toJSONStreamValue: function (generator)
+   toJSONStreamValue (generator)
    {
       const
          value = this .getValue (),
@@ -170,11 +170,11 @@ for (const key of Reflect .ownKeys (SFColor .prototype))
    Object .defineProperty (SFColor .prototype, key, { enumerable: false });
 
 const r = {
-   get: function ()
+   get ()
    {
       return this .getValue () .r;
    },
-   set: function (value)
+   set (value)
    {
       this .getValue () .r = +value;
       this .addEvent ();
@@ -182,11 +182,11 @@ const r = {
 };
 
 const g = {
-   get: function ()
+   get ()
    {
       return this .getValue () .g;
    },
-   set: function (value)
+   set (value)
    {
       this .getValue () .g = +value;
       this .addEvent ();
@@ -194,11 +194,11 @@ const g = {
 };
 
 const b = {
-   get: function ()
+   get ()
    {
       return this .getValue () .b;
    },
-   set: function (value)
+   set (value)
    {
       this .getValue () .b = +value;
       this .addEvent ();

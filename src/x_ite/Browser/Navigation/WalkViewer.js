@@ -61,17 +61,17 @@ function WalkViewer (executionContext, navigationInfo)
 WalkViewer .prototype = Object .assign (Object .create (X3DFlyViewer .prototype),
 {
    constructor: WalkViewer,
-   initialize: function ()
+   initialize ()
    {
       X3DFlyViewer .prototype .initialize .call (this);
 
       this .getBrowser () .addCollision (this);
    },
-   getStraightenHorizon: function ()
+   getStraightenHorizon ()
    {
       return true;
    },
-   getFlyDirection: function (fromVector, toVector, direction)
+   getFlyDirection (fromVector, toVector, direction)
    {
       return direction .assign (toVector) .subtract (fromVector);
    },
@@ -97,14 +97,14 @@ WalkViewer .prototype = Object .assign (Object .create (X3DFlyViewer .prototype)
          return orientation .multVecRot (velocity);
       };
    })(),
-   constrainPanDirection: function (direction)
+   constrainPanDirection (direction)
    {
       if (direction .y < 0)
          direction .y = 0;
 
       return direction;
    },
-   dispose: function ()
+   dispose ()
    {
       this .getBrowser () .removeCollision (this);
 

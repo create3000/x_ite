@@ -95,7 +95,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
    X3DOptimizer .prototype,
 {
    constructor: GLTF2Parser,
-   getEncoding: function ()
+   getEncoding ()
    {
       return "JSON";
    },
@@ -139,7 +139,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          return true;
       };
    })(),
-   setInput: function (json)
+   setInput (json)
    {
       try
       {
@@ -153,11 +153,11 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          this .input = undefined;
       }
    },
-   setBuffers: function (buffers)
+   setBuffers (buffers)
    {
       this .buffers = buffers;
    },
-   parseIntoScene: function (resolve, reject)
+   parseIntoScene (resolve, reject)
    {
       this .rootObject (this .input)
          .then (resolve)
@@ -209,7 +209,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return this .getScene ();
    },
-   assetObject: function (asset)
+   assetObject (asset)
    {
       if (!(asset instanceof Object))
          return;
@@ -250,7 +250,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       scene .getRootNodes () .push (worldInfoNode);
    },
-   extensionsArray: function (extensions, set)
+   extensionsArray (extensions, set)
    {
       if (!(extensions instanceof Array))
          return;
@@ -271,7 +271,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          }
       }
    },
-   extensionsObject: function (extensions)
+   extensionsObject (extensions)
    {
       if (!(extensions instanceof Object))
          return;
@@ -285,21 +285,21 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          }
       }
    },
-   khrLightsPunctualObject: function (khrLightsPunctual)
+   khrLightsPunctualObject (khrLightsPunctual)
    {
       if (!(khrLightsPunctual instanceof Object))
          return;
 
       this .lightsArray (khrLightsPunctual .lights);
    },
-   lightsArray: function (lights)
+   lightsArray (lights)
    {
       if (!(lights instanceof Array))
          return;
 
       this .lights = lights;
    },
-   lightObject: function (light)
+   lightObject (light)
    {
       if (!(light instanceof Object))
          return null;
@@ -331,7 +331,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return lightNode;
    },
-   lightType: function (light)
+   lightType (light)
    {
       switch (light .type)
       {
@@ -343,7 +343,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
             return this .pointLight (light);
       }
    },
-   directionalLight: function (light)
+   directionalLight (light)
    {
       const
          scene     = this .getExecutionContext (),
@@ -351,7 +351,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return lightNode;
    },
-   spotLight: function (light)
+   spotLight (light)
    {
       const
          scene     = this .getExecutionContext (),
@@ -364,7 +364,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return lightNode;
    },
-   pointLight: function (light)
+   pointLight (light)
    {
       const
          scene     = this .getExecutionContext (),
@@ -398,7 +398,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return $.ungzip (arrayBuffer);
    },
-   bufferViewsArray: function (bufferViews)
+   bufferViewsArray (bufferViews)
    {
       if (!(bufferViews instanceof Array))
          return;
@@ -408,7 +408,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       for (const bufferView of bufferViews)
          bufferView .buffer = this .bufferViewObject (bufferView);
    },
-   bufferViewObject: function (bufferView)
+   bufferViewObject (bufferView)
    {
       if (!(bufferView instanceof Object))
          return;
@@ -424,7 +424,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return buffer .slice (byteOffset, byteOffset + byteLength);
    },
-   accessorsArray: function (accessors)
+   accessorsArray (accessors)
    {
       if (!(accessors instanceof Array))
          return;
@@ -551,7 +551,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          return array;
       };
    })(),
-   samplersArray: function (samplers)
+   samplersArray (samplers)
    {
       if (!(samplers instanceof Array))
          return;
@@ -660,7 +660,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return image;
    },
-   blobToDataUrl: function (blob)
+   blobToDataUrl (blob)
    {
       return new Promise ((resolve, reject) =>
       {
@@ -673,14 +673,14 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       })
       .then (event => event .target .result);
    },
-   texturesArray: function (textures)
+   texturesArray (textures)
    {
       if (!(textures instanceof Array))
          return;
 
       this .textures = textures;
    },
-   textureObject: function (texture)
+   textureObject (texture)
    {
       if (!(texture instanceof Object))
          return;
@@ -715,14 +715,14 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return texture .textureNode = textureNode;
    },
-   materialsArray: function (materials)
+   materialsArray (materials)
    {
       if (!(materials instanceof Array))
          return;
 
       this .materials = materials;
    },
-   materialObject: function (material)
+   materialObject (material)
    {
       if (!(material instanceof Object))
          return this .getDefaultAppearance ();
@@ -793,7 +793,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return material .appearanceNode = appearanceNode;
    },
-   texCoordIndices: function (key, object, indices = new Set ())
+   texCoordIndices (key, object, indices = new Set ())
    {
       if (!(object instanceof Object))
          return indices;
@@ -806,7 +806,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return indices;
    },
-   createMaterial: function (material)
+   createMaterial (material)
    {
       const materials = [
          this .pbrMetallicRoughnessObject .bind (this, material .pbrMetallicRoughness),
@@ -822,7 +822,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
             return materialNode;
       }
    },
-   pbrMetallicRoughnessObject: function (pbrMetallicRoughness)
+   pbrMetallicRoughnessObject (pbrMetallicRoughness)
    {
       if (!(pbrMetallicRoughness instanceof Object))
          return null;
@@ -851,7 +851,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return materialNode;
    },
-   pbrSpecularGlossinessObject: function (pbrSpecularGlossiness)
+   pbrSpecularGlossinessObject (pbrSpecularGlossiness)
    {
       if (!(pbrSpecularGlossiness instanceof Object))
          return null;
@@ -891,7 +891,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return materialNode;
    },
-   occlusionTextureInfo: function (occlusionTexture, materialNode)
+   occlusionTextureInfo (occlusionTexture, materialNode)
    {
       if (!(occlusionTexture instanceof Object))
          return null;
@@ -900,7 +900,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       materialNode ._occlusionTexture        = this .textureInfo (occlusionTexture);
       materialNode ._occlusionTextureMapping = this .textureMapping (occlusionTexture);
    },
-   normalTextureInfo: function (normalTexture, materialNode)
+   normalTextureInfo (normalTexture, materialNode)
    {
       if (!(normalTexture instanceof Object))
          return null;
@@ -909,7 +909,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       materialNode ._normalTexture        = this .textureInfo (normalTexture);
       materialNode ._normalTextureMapping = this .textureMapping (normalTexture);
    },
-   textureInfo: function (texture)
+   textureInfo (texture)
    {
       if (!(texture instanceof Object))
          return null;
@@ -921,14 +921,14 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return this .textureObject (this .textures [texture .index]);
    },
-   textureMapping: function (texture)
+   textureMapping (texture)
    {
       if (!(texture instanceof Object))
          return "";
 
       return texture .mapping;
    },
-   materialExtensions: function (extensions, materialNode)
+   materialExtensions (extensions, materialNode)
    {
       if (!(extensions instanceof Object))
          return;
@@ -946,7 +946,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          }
       }
    },
-   khrMaterialsUnlitObject: function (materialNode)
+   khrMaterialsUnlitObject (materialNode)
    {
       switch (materialNode .getTypeName ())
       {
@@ -972,7 +972,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          }
       }
    },
-   khrMaterialsEmissiveStrengthObject: function (KHR_materials_emissive_strength, materialNode)
+   khrMaterialsEmissiveStrengthObject (KHR_materials_emissive_strength, materialNode)
    {
       if (!(KHR_materials_emissive_strength instanceof Object))
          return;
@@ -983,7 +983,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       materialNode ._emissiveColor .g *= emissiveStrength;
       materialNode ._emissiveColor .b *= emissiveStrength;
    },
-   textureTransformObject: function (KHR_texture_transform, texCoord)
+   textureTransformObject (KHR_texture_transform, texCoord)
    {
       if (!(KHR_texture_transform instanceof Object))
          return;
@@ -1022,14 +1022,14 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return mapping;
    },
-   meshesArray: function (meshes)
+   meshesArray (meshes)
    {
       if (!(meshes instanceof Array))
          return;
 
       this .meshes = meshes;
    },
-   meshObject: function (mesh)
+   meshObject (mesh)
    {
       if (!(mesh instanceof Object))
          return;
@@ -1056,7 +1056,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return mesh .shapeNodes = shapeNodes;
    },
-   primitivesArray: function (primitives)
+   primitivesArray (primitives)
    {
       if (!(primitives instanceof Array))
          return [ ];
@@ -1068,7 +1068,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return shapeNodes;
    },
-   primitiveObject: function (primitive, shapeNodes)
+   primitiveObject (primitive, shapeNodes)
    {
       if (!(primitive instanceof Object))
          return;
@@ -1083,7 +1083,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       shapeNodes .push (this .createShape (primitive));
    },
-   attributesObject: function (attributes)
+   attributesObject (attributes)
    {
       if (!(attributes instanceof Object))
          return;
@@ -1108,12 +1108,12 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
       for (let i = 0; attributes ["WEIGHTS_" + i]; ++ i)
          attributes .WEIGHTS .push (attributes ["WEIGHTS_" + i]);
    },
-   targetsArray: function (targets)
+   targetsArray (targets)
    {
       if (!(targets instanceof Array))
          return;
    },
-   primitiveExtensionsObject: function (extensions, primitive)
+   primitiveExtensionsObject (extensions, primitive)
    {
       if (!(extensions instanceof Object))
          return;
@@ -1127,7 +1127,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          }
       }
    },
-   khrDracoMeshCompressionObject: function (draco, primitive)
+   khrDracoMeshCompressionObject (draco, primitive)
    {
       if (!(draco instanceof Object))
          return;
@@ -1152,7 +1152,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       this .dracoDecodeMesh (this .draco, dataView, draco .attributes, indicesCallback, attributeCallback);
    },
-   dracoDecodeMesh: function (draco, dataView, attributes, indicesCallback, attributeCallback)
+   dracoDecodeMesh (draco, dataView, attributes, indicesCallback, attributeCallback)
    {
       const
          buffer  = new draco .DecoderBuffer (),
@@ -1258,14 +1258,14 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          return this .constructor .draco = draco;
       }
    },
-   camerasArray: function (cameras)
+   camerasArray (cameras)
    {
       if (!(cameras instanceof Array))
          return;
 
       this .cameras = cameras;
    },
-   cameraObject: function (camera)
+   cameraObject (camera)
    {
       if (!(camera instanceof Object))
          return null;
@@ -1300,7 +1300,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return camera .viewpointNode = viewpointNode;
    },
-   cameraType: function (camera)
+   cameraType (camera)
    {
       switch (camera .type)
       {
@@ -1312,7 +1312,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
             return null;
       }
    },
-   orthographicCamera: function (camera)
+   orthographicCamera (camera)
    {
       const
          scene         = this .getExecutionContext (),
@@ -1340,7 +1340,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return viewpointNode;
    },
-   perspectiveCamera: function (camera)
+   perspectiveCamera (camera)
    {
       const
          scene         = this .getExecutionContext (),
@@ -1359,14 +1359,14 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return viewpointNode;
    },
-   nodesArray: function (nodes)
+   nodesArray (nodes)
    {
       if (!(nodes instanceof Array))
          return;
 
       this .nodes = nodes;
    },
-   nodeObject: function (node)
+   nodeObject (node)
    {
       if (!(node instanceof Object))
          return;
@@ -1451,14 +1451,14 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return node .childNode = transformNode;
    },
-   nodeExtensions: function (extensions, transformNode)
+   nodeExtensions (extensions, transformNode)
    {
       if (!(extensions instanceof Object))
          return;
 
       this .nodeLight (extensions .KHR_lights_punctual, transformNode);
    },
-   nodeLight: function (khrLightsPunctual, transformNode)
+   nodeLight (khrLightsPunctual, transformNode)
    {
       if (!(khrLightsPunctual instanceof Object))
          return;
@@ -1472,7 +1472,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       transformNode ._children .push (lightNode);
    },
-   nodeChildrenArray: function (children)
+   nodeChildrenArray (children)
    {
       if (!(children instanceof Array))
          return [ ];
@@ -1481,7 +1481,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          .map (index => this .nodeObject (this .nodes [index], index))
          .filter (node => node);
    },
-   scenesArray: function (scenes, sceneNumber)
+   scenesArray (scenes, sceneNumber)
    {
       if (!(scenes instanceof Array))
          return;
@@ -1533,7 +1533,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          }
       }
    },
-   sceneObject: function (sceneObject)
+   sceneObject (sceneObject)
    {
       if (!(sceneObject instanceof Object))
          return null;
@@ -1571,11 +1571,11 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          }
       }
    },
-   sceneNodesArray: function (nodes)
+   sceneNodesArray (nodes)
    {
       return this .nodeChildrenArray (nodes);
    },
-   animationsArray: function (animations)
+   animationsArray (animations)
    {
       if (!(animations instanceof Array))
          return;
@@ -1600,7 +1600,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       scene .getRootNodes () .push (groupNode);
    },
-   animationObject: function (animation)
+   animationObject (animation)
    {
       if (!(animation instanceof Object))
          return null;
@@ -1632,7 +1632,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return groupNode;
    },
-   animationChannelsArray: function (channels, samplers, timeSensorNode)
+   animationChannelsArray (channels, samplers, timeSensorNode)
    {
       if (!(channels instanceof Array))
          return [ ];
@@ -1652,7 +1652,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          .map (channel => this .animationChannelObject (channel, samplers, timeSensorNode))
          .filter (node => node);
    },
-   animationChannelObject: function (channel, samplers, timeSensorNode)
+   animationChannelObject (channel, samplers, timeSensorNode)
    {
       if (!(channel instanceof Object))
          return null;
@@ -1700,12 +1700,12 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return interpolatorNode;
    },
-   skinsArray: function (skins)
+   skinsArray (skins)
    {
       if (!(skins instanceof Array))
          return;
    },
-   createNavigationInfo: function ()
+   createNavigationInfo ()
    {
       const
          scene              = this .getExecutionContext (),
@@ -1717,7 +1717,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return navigationInfoNode;
    },
-   createShape: function (primitive)
+   createShape (primitive)
    {
       const
          scene          = this .getExecutionContext (),
@@ -1732,7 +1732,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return shapeNode;
    },
-   getDefaultAppearance: function ()
+   getDefaultAppearance ()
    {
       if (this .defaultAppearance)
          return this .defaultAppearance;
@@ -1752,7 +1752,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return appearanceNode;
    },
-   createMultiTextureTransform: function (materialNode)
+   createMultiTextureTransform (materialNode)
    {
       if (!+materialNode .getTextureBits ())
          return null;
@@ -1796,7 +1796,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          }
       }
    },
-   createGeometry: function (primitive)
+   createGeometry (primitive)
    {
       switch (primitive .mode)
       {
@@ -1843,7 +1843,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          }
       }
    },
-   createPointSet: function ({ attributes, material })
+   createPointSet ({ attributes, material })
    {
       const
          scene        = this .getExecutionContext (),
@@ -1857,7 +1857,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return geometryNode;
    },
-   createIndexedLineSet: function ({ attributes, indices, material }, mode)
+   createIndexedLineSet ({ attributes, indices, material }, mode)
    {
       const
          scene        = this .getExecutionContext (),
@@ -1928,7 +1928,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return geometryNode;
    },
-   createLineSet: function ({ attributes, material })
+   createLineSet ({ attributes, material })
    {
       const
          scene        = this .getExecutionContext (),
@@ -1942,7 +1942,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return geometryNode;
    },
-   createIndexedTriangleSet: function ({ attributes, indices, material })
+   createIndexedTriangleSet ({ attributes, indices, material })
    {
       const
          scene        = this .getExecutionContext (),
@@ -1960,7 +1960,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return geometryNode;
    },
-   createTriangleSet: function ({ attributes, material })
+   createTriangleSet ({ attributes, material })
    {
       const
          scene        = this .getExecutionContext (),
@@ -1977,7 +1977,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return geometryNode;
    },
-   createIndexedTriangleStripSet: function ({ attributes, indices, material })
+   createIndexedTriangleStripSet ({ attributes, indices, material })
    {
       const
          scene        = this .getExecutionContext (),
@@ -1995,7 +1995,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return geometryNode;
    },
-   createTriangleStripSet: function ({ attributes, material })
+   createTriangleStripSet ({ attributes, material })
    {
       const
          scene        = this .getExecutionContext (),
@@ -2020,7 +2020,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return geometryNode;
    },
-   createIndexedTriangleFanSet: function ({ attributes, indices, material })
+   createIndexedTriangleFanSet ({ attributes, indices, material })
    {
       const
          scene        = this .getExecutionContext (),
@@ -2038,7 +2038,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return geometryNode;
    },
-   createTriangleFanSet: function ({ attributes, material })
+   createTriangleFanSet ({ attributes, material })
    {
       const
          scene        = this .getExecutionContext (),
@@ -2098,7 +2098,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          return color .colorNode = colorNode;
       };
    })(),
-   createMultiTextureCoordinate: function (texCoords, material)
+   createMultiTextureCoordinate (texCoords, material)
    {
       const appearanceNode = this .materialObject (material);
 
@@ -2141,7 +2141,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          }
       }
    },
-   createTextureCoordinate: function (texCoord, mapping)
+   createTextureCoordinate (texCoord, mapping)
    {
       if (!(texCoord instanceof Object))
          return null;
@@ -2163,7 +2163,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return texCoord [mapping] = textureCoordinateNode;
    },
-   createNormal: function (normal)
+   createNormal (normal)
    {
       if (!(normal instanceof Object))
          return null;
@@ -2184,7 +2184,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return normal .normalNode = normalNode;
    },
-   createCoordinate: function (position)
+   createCoordinate (position)
    {
       if (!(position instanceof Object))
          return null;
@@ -2205,7 +2205,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return position .coordinateNode = coordinateNode;
    },
-   createInterpolator: function (path, interpolation, times, keyValues, cycleInterval)
+   createInterpolator (path, interpolation, times, keyValues, cycleInterval)
    {
       const scene = this .getExecutionContext ();
 
@@ -2242,7 +2242,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          }
       }
    },
-   createPositionInterpolator: function (interpolation, times, keyValues, cycleInterval)
+   createPositionInterpolator (interpolation, times, keyValues, cycleInterval)
    {
       const scene = this .getExecutionContext ();
 
@@ -2316,7 +2316,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       }
    },
-   createOrientationInterpolator: function (interpolation, times, keyValues, cycleInterval)
+   createOrientationInterpolator (interpolation, times, keyValues, cycleInterval)
    {
       const scene = this .getExecutionContext ();
 
@@ -2408,7 +2408,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
          }
       }
    },
-   cubicSpline: function (time, times, values)
+   cubicSpline (time, times, values)
    {
       const
          index1 = Algorithm .clamp (Algorithm .upperBound (times, 0, times .length, time), 1, times .length - 1),
@@ -2429,7 +2429,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return v0 .add (b0) .add (v1) .add (a1);
    },
-   vectorValue: function (array, vector)
+   vectorValue (array, vector)
    {
       if (!(array instanceof Array))
          return false;
@@ -2441,14 +2441,14 @@ GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return true;
    },
-   numberValue: function (value, defaultValue)
+   numberValue (value, defaultValue)
    {
       if (typeof value !== "number")
          return defaultValue;
 
       return value;
    },
-   stringValue: function (value, defaultValue)
+   stringValue (value, defaultValue)
    {
       if (typeof value !== "string")
          return defaultValue;

@@ -68,21 +68,21 @@ function X3DChildNode (executionContext)
 X3DChildNode .prototype = Object .assign (Object .create (X3DNode .prototype),
 {
    constructor: X3DChildNode,
-   setCameraObject: function (value)
+   setCameraObject (value)
    {
       if (value !== this ._isCameraObject .getValue ())
          this ._isCameraObject = value;
    },
-   isCameraObject: function ()
+   isCameraObject ()
    {
       return this ._isCameraObject .getValue ();
    },
-   setPickableObject: function (value)
+   setPickableObject (value)
    {
       if (value !== this ._isPickableObject .getValue ())
          this ._isPickableObject = value;
    },
-   isPickableObject: function ()
+   isPickableObject ()
    {
       return this ._isPickableObject .getValue ();
    },

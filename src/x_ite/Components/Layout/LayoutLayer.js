@@ -66,7 +66,7 @@ function LayoutLayer (executionContext)
 LayoutLayer .prototype = Object .assign (Object .create (X3DLayerNode .prototype),
 {
    constructor: LayoutLayer,
-   initialize: function ()
+   initialize ()
    {
       X3DLayerNode .prototype .initialize .call (this);
 

@@ -64,7 +64,7 @@ function Contour2D (executionContext)
 Contour2D .prototype = Object .assign (Object .create (X3DNode .prototype),
 {
    constructor: Contour2D,
-   initialize: function ()
+   initialize ()
    {
       X3DNode .prototype .initialize .call (this);
 
@@ -74,7 +74,7 @@ Contour2D .prototype = Object .assign (Object .create (X3DNode .prototype),
 
       this .set_children__ ();
    },
-   set_addChildren__: function ()
+   set_addChildren__ ()
    {
       this ._addChildren .setTainted (true);
       this ._addChildren .assign (filter (this ._addChildren, this ._children));
@@ -85,7 +85,7 @@ Contour2D .prototype = Object .assign (Object .create (X3DNode .prototype),
       this ._addChildren .length = 0;
       this ._addChildren .setTainted (false);
    },
-   set_removeChildren__: function ()
+   set_removeChildren__ ()
    {
       this ._removeChildren .setTainted (true);
       this ._children .assign (filter (this ._children, this ._removeChildren));
@@ -93,7 +93,7 @@ Contour2D .prototype = Object .assign (Object .create (X3DNode .prototype),
       this ._removeChildren .length = 0;
       this ._removeChildren .setTainted (false);
    },
-   set_children__: function ()
+   set_children__ ()
    {
       const childNodes = this .childNodes;
 
@@ -120,7 +120,7 @@ Contour2D .prototype = Object .assign (Object .create (X3DNode .prototype),
          }
       }
    },
-   addTrimmingContour: function (trimmingContours)
+   addTrimmingContour (trimmingContours)
    {
       for (const childNode of this .childNodes)
          trimmingContours .push (childNode .tessellate (2));

@@ -66,11 +66,11 @@ function Disk2D (executionContext)
 Disk2D .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 {
    constructor: Disk2D,
-   initialize: function ()
+   initialize ()
    {
       X3DGeometryNode .prototype .initialize .call (this);
    },
-   set_live__: function ()
+   set_live__ ()
    {
       X3DGeometryNode .prototype .set_live__ .call (this);
 
@@ -79,7 +79,7 @@ Disk2D .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
       else
          this .getBrowser () .getDisk2DOptions () .removeInterest ("requestRebuild", this);
    },
-   build: function ()
+   build ()
    {
       const
          browser     = this .getBrowser (),
@@ -208,7 +208,7 @@ Disk2D .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
       this .setSolid (this ._solid .getValue ());
       this .setBase (X3DGeometryNode);
    },
-   setBase: function (base)
+   setBase (base)
    {
       this .intersectsLine         = base .prototype .intersectsLine;
       this .intersectsBox          = base .prototype .intersectsBox;
@@ -217,7 +217,7 @@ Disk2D .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
       this .displaySimpleParticles = base .prototype .displaySimpleParticles;
       this .displayParticles       = base .prototype .displayParticles;
    },
-   updateRenderFunctions: function ()
+   updateRenderFunctions ()
    { },
 });
 

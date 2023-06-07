@@ -64,12 +64,12 @@ TransmitterPdu .prototype = Object .assign (Object .create (X3DSensorNode .proto
    X3DBoundedObject .prototype,
 {
    constructor: TransmitterPdu,
-   initialize: function ()
+   initialize ()
    {
       X3DSensorNode    .prototype .initialize .call (this);
       X3DBoundedObject .prototype .initialize .call (this);
    },
-   dispose: function ()
+   dispose ()
    {
       X3DBoundedObject .prototype .dispose .call (this);
       X3DSensorNode    .prototype .dispose .call (this);

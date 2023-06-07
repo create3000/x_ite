@@ -91,11 +91,11 @@ MFNode .prototype = Object .assign (Object .create (X3DObjectArrayField .prototy
 {
    constructor: MFNode,
    [_cloneCount]: 0,
-   getSingleType: function ()
+   getSingleType ()
    {
       return SFNode;
    },
-   copy: function (instance)
+   copy (instance)
    {
       if (instance)
       {
@@ -113,7 +113,7 @@ MFNode .prototype = Object .assign (Object .create (X3DObjectArrayField .prototy
          return X3DObjectArrayField .prototype .copy .call (this);
       }
    },
-   addCloneCount: function (count)
+   addCloneCount (count)
    {
       const target = this .getTarget ();
 
@@ -122,7 +122,7 @@ MFNode .prototype = Object .assign (Object .create (X3DObjectArrayField .prototy
       for (const element of target .getValue ())
          element .addCloneCount (count);
    },
-   removeCloneCount: function (count)
+   removeCloneCount (count)
    {
       const target = this .getTarget ();
 
@@ -131,7 +131,7 @@ MFNode .prototype = Object .assign (Object .create (X3DObjectArrayField .prototy
       for (const element of target .getValue ())
          element .removeCloneCount (count);
    },
-   addChildObject: function (value)
+   addChildObject (value)
    {
       const target = this .getTarget ();
 
@@ -139,7 +139,7 @@ MFNode .prototype = Object .assign (Object .create (X3DObjectArrayField .prototy
 
       value .addCloneCount (target [_cloneCount]);
    },
-   removeChildObject: function (value)
+   removeChildObject (value)
    {
       const target = this .getTarget ();
 
@@ -147,7 +147,7 @@ MFNode .prototype = Object .assign (Object .create (X3DObjectArrayField .prototy
 
       value .removeCloneCount (target [_cloneCount]);
    },
-   toStream: function (generator)
+   toStream (generator)
    {
       const
          target = this .getTarget (),
@@ -195,7 +195,7 @@ MFNode .prototype = Object .assign (Object .create (X3DObjectArrayField .prototy
          }
       }
    },
-   toVRMLStream: function (generator)
+   toVRMLStream (generator)
    {
       const
          target = this .getTarget (),
@@ -243,7 +243,7 @@ MFNode .prototype = Object .assign (Object .create (X3DObjectArrayField .prototy
          }
       }
    },
-   toXMLStream: function (generator)
+   toXMLStream (generator)
    {
       const
          target = this .getTarget (),
@@ -310,7 +310,7 @@ MFNode .prototype = Object .assign (Object .create (X3DObjectArrayField .prototy
          generator .LeaveScope ();
       }
    },
-   toJSONStream: function (generator)
+   toJSONStream (generator)
    {
       const
          target = this .getTarget (),
@@ -360,7 +360,7 @@ MFNode .prototype = Object .assign (Object .create (X3DObjectArrayField .prototy
 			generator .string += ']';
       }
    },
-   dispose: function ()
+   dispose ()
    {
       const target = this .getTarget ();
 
@@ -391,11 +391,11 @@ function MFString (... args)
 MFString .prototype = Object .assign (Object .create (X3DObjectArrayField .prototype),
 {
    constructor: MFString,
-   getSingleType: function ()
+   getSingleType ()
    {
       return SFString;
    },
-   toXMLStream: function (generator, sourceText = false)
+   toXMLStream (generator, sourceText = false)
    {
       const
          target = this .getTarget (),
@@ -445,7 +445,7 @@ function MFImage (... args)
 MFImage .prototype = Object .assign (Object .create (X3DObjectArrayField .prototype),
 {
    constructor: MFImage,
-   getSingleType: function ()
+   getSingleType ()
    {
       return SFImage;
    },
@@ -473,19 +473,19 @@ function TypedArrayTemplate (TypeName, SingleType, ValueType, ArrayType, Compone
    ArrayField .prototype = Object .assign (Object .create (X3DTypedArrayField .prototype),
    {
       constructor: ArrayField,
-      getSingleType: function ()
+      getSingleType ()
       {
          return SingleType;
       },
-      getValueType: function ()
+      getValueType ()
       {
          return ValueType;
       },
-      getArrayType: function ()
+      getArrayType ()
       {
          return ArrayType;
       },
-      getComponents: function ()
+      getComponents ()
       {
          return Components;
       },

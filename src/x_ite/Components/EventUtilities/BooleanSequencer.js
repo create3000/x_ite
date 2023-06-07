@@ -61,17 +61,17 @@ function BooleanSequencer (executionContext)
 BooleanSequencer .prototype = Object .assign (Object .create (X3DSequencerNode .prototype),
 {
    constructor: BooleanSequencer,
-   initialize: function ()
+   initialize ()
    {
       X3DSequencerNode .prototype .initialize .call (this);
 
       this ._keyValue .addInterest ("set_index__", this);
    },
-   getSize: function ()
+   getSize ()
    {
       return this ._keyValue .length;
    },
-   sequence: function (index)
+   sequence (index)
    {
       this ._value_changed = this ._keyValue [index];
    },

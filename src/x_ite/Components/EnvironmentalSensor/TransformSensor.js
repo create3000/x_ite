@@ -80,7 +80,7 @@ function TransformSensor (executionContext)
 TransformSensor .prototype = Object .assign (Object .create (X3DEnvironmentalSensorNode .prototype),
 {
    constructor: TransformSensor,
-   initialize: function ()
+   initialize ()
    {
       X3DEnvironmentalSensorNode .prototype .initialize .call (this);
 
@@ -95,9 +95,9 @@ TransformSensor .prototype = Object .assign (Object .create (X3DEnvironmentalSen
       this .set_extents__ ();
       this .set_targetObject__ ();
    },
-   set_live__: function ()
+   set_live__ ()
    { },
-   set_enabled__: function ()
+   set_enabled__ ()
    {
       if (this .getLive () .getValue () && this .targetObjectNode && this ._enabled .getValue () && !this ._size. getValue () .equals (Vector3 .Zero))
       {
@@ -120,7 +120,7 @@ TransformSensor .prototype = Object .assign (Object .create (X3DEnvironmentalSen
          }
       }
    },
-   set_extents__: function ()
+   set_extents__ ()
    {
       const
          s  = this ._size .getValue (),
@@ -135,7 +135,7 @@ TransformSensor .prototype = Object .assign (Object .create (X3DEnvironmentalSen
       this .min .set (cx - sx, cy - sy, cz - sz);
       this .max .set (cx + sx, cy + sy, cz + sz);
    },
-   set_targetObject__: function ()
+   set_targetObject__ ()
    {
       this .targetObjectNode = null;
 
@@ -167,7 +167,7 @@ TransformSensor .prototype = Object .assign (Object .create (X3DEnvironmentalSen
 
       this .set_enabled__ ();
    },
-   traverse: function (type, renderObject)
+   traverse (type, renderObject)
    {
       // TransformSensor nodes are sorted out and only traversed during PICKING, except if is child of a LOD or Switch node.
 
@@ -177,7 +177,7 @@ TransformSensor .prototype = Object .assign (Object .create (X3DEnvironmentalSen
       if (this .isPickableObject ())
          this .modelMatrices .push (ModelMatrixCache .pop () .assign (renderObject .getModelViewMatrix () .get ()));
    },
-   collect: function (targetMatrix)
+   collect (targetMatrix)
    {
       this .targetMatrices .push (TargetMatrixCache .pop () .assign (targetMatrix));
    },
@@ -262,7 +262,7 @@ TransformSensor .prototype = Object .assign (Object .create (X3DEnvironmentalSen
          return null;
       };
    })(),
-   containsPoint: function (point)
+   containsPoint (point)
    {
       const
          min = this .min,

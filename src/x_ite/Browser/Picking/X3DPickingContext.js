@@ -66,46 +66,46 @@ function X3DPickingContext ()
 
 X3DPickingContext .prototype =
 {
-   addTransformSensor: function (transformSensorNode)
+   addTransformSensor (transformSensorNode)
    {
       this [_transformSensorNodes] .add (transformSensorNode);
       this .enablePicking ();
    },
-   removeTransformSensor: function (transformSensorNode)
+   removeTransformSensor (transformSensorNode)
    {
       this [_transformSensorNodes] .delete (transformSensorNode);
       this .enablePicking ();
    },
-   addPickSensor: function (pickSensorNode)
+   addPickSensor (pickSensorNode)
    {
       this [_pickSensorNodes] [0] .add (pickSensorNode);
       this .enablePicking ();
    },
-   removePickSensor: function (pickSensorNode)
+   removePickSensor (pickSensorNode)
    {
       this [_pickSensorNodes] [0] .delete (pickSensorNode);
       this .enablePicking ();
    },
-   getPickSensors: function ()
+   getPickSensors ()
    {
       return this [_pickSensorNodes];
    },
-   getPickingHierarchy: function ()
+   getPickingHierarchy ()
    {
       return this [_pickingHierarchy];
    },
-   getPickable: function ()
+   getPickable ()
    {
       return this [_pickable];
    },
-   enablePicking: function ()
+   enablePicking ()
    {
       if (this [_transformSensorNodes] .size || this [_pickSensorNodes] [0] .size)
          this ._sensorEvents .addInterest ("picking", this);
       else
          this ._sensorEvents .removeInterest ("picking", this);
    },
-   picking: function ()
+   picking ()
    {
       this [_pickingTime] .start ();
 
@@ -123,7 +123,7 @@ X3DPickingContext .prototype =
 
       this [_pickingTime] .stop ();
    },
-   getPickingTime: function ()
+   getPickingTime ()
    {
       return this [_pickingTime];
    },

@@ -66,7 +66,7 @@ PickableGroup .prototype = Object .assign (Object .create (X3DGroupingNode .prot
    X3DPickableObject .prototype,
 {
    constructor: PickableGroup,
-   initialize: function ()
+   initialize ()
    {
       X3DGroupingNode   .prototype .initialize .call (this);
       X3DPickableObject .prototype .initialize .call (this);
@@ -75,11 +75,11 @@ PickableGroup .prototype = Object .assign (Object .create (X3DGroupingNode .prot
 
       this .set_pickable__ ();
    },
-   set_pickableObjects__: function ()
+   set_pickableObjects__ ()
    {
       this .set_pickable__ ();
    },
-   set_pickable__: function ()
+   set_pickable__ ()
    {
       this .setPickableObject (!!(this ._pickable .getValue () || this .getTransformSensors () .size));
    },
@@ -174,7 +174,7 @@ PickableGroup .prototype = Object .assign (Object .create (X3DGroupingNode .prot
          }
       };
    })(),
-   dispose: function ()
+   dispose ()
    {
       X3DPickableObject .prototype .dispose .call (this);
       X3DGroupingNode   .prototype .dispose .call (this);

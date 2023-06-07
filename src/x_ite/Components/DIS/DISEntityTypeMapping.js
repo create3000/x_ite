@@ -64,12 +64,12 @@ DISEntityTypeMapping .prototype = Object .assign (Object .create (X3DInfoNode .p
    X3DUrlObject .prototype,
 {
    constructor: DISEntityTypeMapping,
-   initialize: function ()
+   initialize ()
    {
       X3DInfoNode  .prototype .initialize .call (this);
       X3DUrlObject .prototype .initialize .call (this);
    },
-   dispose: function ()
+   dispose ()
    {
       X3DUrlObject .prototype .dispose .call (this);
       X3DInfoNode  .prototype .dispose .call (this);

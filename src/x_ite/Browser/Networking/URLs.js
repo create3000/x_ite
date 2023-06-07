@@ -62,7 +62,7 @@ const URLs = {
          return src;
       };
    })(),
-   getProviderUrl: function (component)
+   getProviderUrl (component)
    {
       if (component)
       {
@@ -74,19 +74,19 @@ const URLs = {
 
       return "https://create3000.github.io/x_ite/";
    },
-   getFontsUrl: function (file)
+   getFontsUrl (file)
    {
       return new URL ("assets/fonts/" + file, this .getScriptUrl ()) .href;
    },
-   getLinetypeUrl: function ()
+   getLinetypeUrl ()
    {
       return new URL ("assets/linetype/linetypes.png", this .getScriptUrl ()) .href;
    },
-   getHatchingUrl: function (index)
+   getHatchingUrl (index)
    {
       return new URL ("assets/hatching/" + index + ".png", this .getScriptUrl ()) .href;
    },
-   getLibUrl: function (file)
+   getLibUrl (file)
    {
       return new URL ("assets/lib/" + file, this .getScriptUrl ()) .href;
    },

@@ -61,18 +61,18 @@ function ProfileInfo (name, title, providerUrl, components)
 ProfileInfo .prototype = Object .assign (Object .create (X3DObject .prototype),
 {
    constructor: ProfileInfo,
-   toVRMLStream: function (generator)
+   toVRMLStream (generator)
    {
       generator .string += generator .Indent ();
       generator .string += "PROFILE";
       generator .string += generator .Space ();
       generator .string += this .name;
    },
-   toXMLStream: function (generator)
+   toXMLStream (generator)
    {
       generator .string += this .name;
    },
-   toJSONStream: function (generator)
+   toJSONStream (generator)
    {
       generator .string += this .name;
    },

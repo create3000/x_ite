@@ -59,7 +59,7 @@ function X3DSingleTextureNode (executionContext)
 X3DSingleTextureNode .prototype = Object .assign (Object .create (X3DTextureNode .prototype),
 {
    constructor: X3DSingleTextureNode,
-   initialize: function ()
+   initialize ()
    {
       X3DTextureNode .prototype .initialize .call (this);
 
@@ -71,7 +71,7 @@ X3DSingleTextureNode .prototype = Object .assign (Object .create (X3DTextureNode
 
       this .set_textureProperties__ (false);
    },
-   set_textureProperties__: function (update)
+   set_textureProperties__ (update)
    {
       if (this .texturePropertiesNode)
          this .texturePropertiesNode .removeInterest ("updateTextureParameters", this);
@@ -86,11 +86,11 @@ X3DSingleTextureNode .prototype = Object .assign (Object .create (X3DTextureNode
       if (update)
          this .updateTextureParameters ();
    },
-   getCount: function ()
+   getCount ()
    {
       return 1;
    },
-   getTexture: function ()
+   getTexture ()
    {
       return this .texture;
    },
@@ -157,7 +157,7 @@ X3DSingleTextureNode .prototype = Object .assign (Object .create (X3DTextureNode
          }
       };
    })(),
-   updateTextureBits: function (textureBits, channel = 0)
+   updateTextureBits (textureBits, channel = 0)
    {
       const textureType = this .getTextureType () - 1;
 

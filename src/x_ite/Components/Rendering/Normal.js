@@ -62,7 +62,7 @@ function Normal (executionContext)
 Normal .prototype = Object .assign (Object .create (X3DNormalNode .prototype),
 {
    constructor: Normal,
-   initialize: function ()
+   initialize ()
    {
       X3DNormalNode .prototype .initialize .call (this);
 
@@ -70,16 +70,16 @@ Normal .prototype = Object .assign (Object .create (X3DNormalNode .prototype),
 
       this .set_vector__ ();
    },
-   set_vector__: function ()
+   set_vector__ ()
    {
       this .vector = this ._vector .getValue ();
       this .length = this ._vector .length;
    },
-   set1Vector: function (index, vector)
+   set1Vector (index, vector)
    {
       this ._vector [index] = vector;
    },
-   get1Vector: function (index, result)
+   get1Vector (index, result)
    {
       if (index >= 0 && index < this .length)
       {
@@ -103,7 +103,7 @@ Normal .prototype = Object .assign (Object .create (X3DNormalNode .prototype),
          return result .set (0, 0, 0);
       }
    },
-   addVector: function (index, array)
+   addVector (index, array)
    {
       if (index >= 0 && index < this .length)
       {
@@ -127,7 +127,7 @@ Normal .prototype = Object .assign (Object .create (X3DNormalNode .prototype),
          return array .push (0, 0, 0);
       }
    },
-   addNormals: function (array, min)
+   addNormals (array, min)
    {
       if (this .length)
       {

@@ -67,7 +67,7 @@ CoordinateDamper .prototype = Object .assign (Object .create (X3DDamperNode .pro
    X3DArrayFollowerObject .prototype,
 {
    constructor: CoordinateDamper,
-   getVector: function ()
+   getVector ()
    {
       return new Vector3 (0, 0, 0);
    },

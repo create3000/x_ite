@@ -63,7 +63,7 @@ function TriangleFanSet (executionContext)
 TriangleFanSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .prototype),
 {
    constructor: TriangleFanSet,
-   initialize: function ()
+   initialize ()
    {
       X3DComposedGeometryNode .prototype .initialize .call (this);
 
@@ -71,7 +71,7 @@ TriangleFanSet .prototype = Object .assign (Object .create (X3DComposedGeometryN
 
       this .set_fanCount__ ();
    },
-   set_fanCount__: function ()
+   set_fanCount__ ()
    {
       // Build coordIndex
 
@@ -93,11 +93,11 @@ TriangleFanSet .prototype = Object .assign (Object .create (X3DComposedGeometryN
          index += vertexCount;
       }
    },
-   getPolygonIndex: function (index)
+   getPolygonIndex (index)
    {
       return this .triangleIndex [index];
    },
-   build: function ()
+   build ()
    {
       X3DComposedGeometryNode .prototype .build .call (this, 3, this .triangleIndex .length, 3, this .triangleIndex .length);
    },

@@ -67,7 +67,7 @@ function FillProperties (executionContext)
 FillProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
 {
    constructor: FillProperties,
-   initialize: function ()
+   initialize ()
    {
       X3DAppearanceChildNode .prototype .initialize .call (this);
 
@@ -84,23 +84,23 @@ FillProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNo
       // Preload texture.
       this .getBrowser () .getHatchStyleTexture (this .hatchStyle);
    },
-   set_filled__: function ()
+   set_filled__ ()
    {
       this .filled = this ._filled .getValue ();
 
       this .setTransparent (! this .filled);
    },
-   set_hatched__: function ()
+   set_hatched__ ()
    {
       this .hatched = this ._hatched .getValue ();
    },
-   set_hatchColor__: function ()
+   set_hatchColor__ ()
    {
       this .hatchColor [0] = this ._hatchColor [0];
       this .hatchColor [1] = this ._hatchColor [1];
       this .hatchColor [2] = this ._hatchColor [2];
    },
-   set_hatchStyle__: function ()
+   set_hatchStyle__ ()
    {
       let hatchStyle = this ._hatchStyle .getValue ();
 
@@ -109,16 +109,16 @@ FillProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNo
 
       this .hatchStyle = hatchStyle;
    },
-   setTransparent: function (value)
+   setTransparent (value)
    {
       if (value !== this ._transparent .getValue ())
          this ._transparent = value;
    },
-   isTransparent: function ()
+   isTransparent ()
    {
       return this ._transparent .getValue ();
    },
-   setShaderUniforms: function (gl, shaderObject)
+   setShaderUniforms (gl, shaderObject)
    {
       const hatched = this .hatched;
 

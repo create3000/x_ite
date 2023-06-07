@@ -70,25 +70,25 @@ function X3DProtoDeclaration (executionContext)
 X3DProtoDeclaration .prototype = Object .assign (Object .create (X3DProtoDeclarationNode .prototype),
 {
    constructor: X3DProtoDeclaration,
-   initialize: function ()
+   initialize ()
    {
       X3DProtoDeclarationNode .prototype .initialize .call (this);
 
       this [_body] .setup ();
    },
-   getProtoDeclaration: function ()
+   getProtoDeclaration ()
    {
       return this;
    },
-   getBody: function ()
+   getBody ()
    {
       return this [_body];
    },
-   canUserDefinedFields: function ()
+   canUserDefinedFields ()
    {
       return true;
    },
-   toVRMLStream: function (generator)
+   toVRMLStream (generator)
    {
       generator .string += generator .Indent ();
       generator .string += "PROTO";
@@ -151,7 +151,7 @@ X3DProtoDeclaration .prototype = Object .assign (Object .create (X3DProtoDeclara
       generator .string += generator .Indent ();
       generator .string += "}";
    },
-   toVRMLStreamUserDefinedField: function (generator, field, fieldTypeLength, accessTypeLength)
+   toVRMLStreamUserDefinedField (generator, field, fieldTypeLength, accessTypeLength)
    {
       generator .string += generator .Indent ();
       generator .string += generator .AccessType (field .getAccessType ()) .padEnd (accessTypeLength, " ");
@@ -167,7 +167,7 @@ X3DProtoDeclaration .prototype = Object .assign (Object .create (X3DProtoDeclara
          field .toVRMLStream (generator);
       }
    },
-   toXMLStream: function (generator)
+   toXMLStream (generator)
    {
       generator .string += generator .Indent ();
       generator .string += "<ProtoDeclare";
@@ -296,7 +296,7 @@ X3DProtoDeclaration .prototype = Object .assign (Object .create (X3DProtoDeclara
       generator .string += generator .Indent ();
       generator .string += "</ProtoDeclare>";
    },
-   toJSONStream: function (generator)
+   toJSONStream (generator)
    {
       generator .string += generator .Indent ();
       generator .string += '{';

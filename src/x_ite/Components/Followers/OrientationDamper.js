@@ -72,17 +72,17 @@ function OrientationDamper (executionContext)
 OrientationDamper .prototype = Object .assign (Object .create (X3DDamperNode .prototype),
 {
    constructor: OrientationDamper,
-   getVector: function ()
+   getVector ()
    {
       return new Rotation4 ();
    },
-   equals: function (lhs, rhs, tolerance)
+   equals (lhs, rhs, tolerance)
    {
       a .assign (lhs) .inverse () .multRight (rhs);
 
       return Math .abs (a .angle) < tolerance;
    },
-   interpolate: function (source, destination, weight)
+   interpolate (source, destination, weight)
    {
       return rotation .assign (source) .slerp (destination, weight);
    },

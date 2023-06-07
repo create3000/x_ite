@@ -97,11 +97,11 @@ function SFMatrix4Template (TypeName, SFVec3, double)
    {
       Object .defineProperty (SFMatrix4 .prototype, i,
       {
-         get: function ()
+         get ()
          {
             return this .getValue () [i];
          },
-         set: function (value)
+         set (value)
          {
             this .getValue () [i] = value;
             this .addEvent ();

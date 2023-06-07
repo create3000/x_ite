@@ -65,7 +65,7 @@ function X3DOneSidedMaterialNode (executionContext)
 X3DOneSidedMaterialNode .prototype = Object .assign (Object .create (X3DMaterialNode .prototype),
 {
    constructor: X3DOneSidedMaterialNode,
-   initialize: function ()
+   initialize ()
    {
       X3DMaterialNode .prototype .initialize .call (this);
 
@@ -80,7 +80,7 @@ X3DOneSidedMaterialNode .prototype = Object .assign (Object .create (X3DMaterial
       this .set_normalTexture__ ();
       this .set_transparency__ ();
    },
-   set_emissiveColor__: function ()
+   set_emissiveColor__ ()
    {
       //We cannot use this in Windows Edge:
       //this .emissiveColor .set (this ._emissiveColor .getValue ());
@@ -93,39 +93,39 @@ X3DOneSidedMaterialNode .prototype = Object .assign (Object .create (X3DMaterial
       emissiveColor [1] = emissiveColor_ .g;
       emissiveColor [2] = emissiveColor_ .b;
    },
-   set_emissiveTexture__: function ()
+   set_emissiveTexture__ ()
    {
       this .emissiveTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._emissiveTexture);
 
       this .setTexture (this .getTextureIndices () .EMISSIVE_TEXTURE, this .emissiveTextureNode);
    },
-   set_normalTexture__: function ()
+   set_normalTexture__ ()
    {
       this .normalTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._normalTexture);
 
       this .setTexture (this .getTextureIndices () .NORMAL_TEXTURE, this .normalTextureNode);
    },
-   set_transparency__: function ()
+   set_transparency__ ()
    {
       this .transparency = Algorithm .clamp (this ._transparency .getValue (), 0, 1);
    },
-   set_transparent__: function ()
+   set_transparent__ ()
    {
       this .setTransparent (!! this .transparency);
    },
-   getBaseTexture: function ()
+   getBaseTexture ()
    {
       return this .getEmissiveTexture ();
    },
-   getEmissiveTexture: function ()
+   getEmissiveTexture ()
    {
       return this .emissiveTextureNode;
    },
-   getNormalTexture: function ()
+   getNormalTexture ()
    {
       return this .normalTextureNode;
    },
-   getTransparency: function ()
+   getTransparency ()
    {
       return this .transparency;
    },
@@ -143,7 +143,7 @@ X3DOneSidedMaterialNode .prototype = Object .assign (Object .create (X3DMaterial
          return textureIndices;
       };
    })(),
-   getShaderOptions: function (geometryContext, renderContext)
+   getShaderOptions (geometryContext, renderContext)
    {
       const options = X3DMaterialNode .prototype .getShaderOptions .call (this, geometryContext, renderContext);
 
@@ -158,7 +158,7 @@ X3DOneSidedMaterialNode .prototype = Object .assign (Object .create (X3DMaterial
 
       return options;
    },
-   setShaderUniforms: function (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
+   setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
    {
       gl .uniform3fv (shaderObject .x3d_EmissiveColor, this .emissiveColor);
       gl .uniform1f  (shaderObject .x3d_Transparency,  this .transparency);

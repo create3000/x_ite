@@ -71,7 +71,7 @@ function Notification (executionContext)
 Notification .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 {
    constructor: Notification,
-   initialize: function ()
+   initialize ()
    {
       X3DBaseNode .prototype .initialize .call (this);
 
@@ -85,7 +85,7 @@ Notification .prototype = Object .assign (Object .create (X3DBaseNode .prototype
 
       this ._string .addInterest ("set_string__", this);
    },
-   set_string__: function ()
+   set_string__ ()
    {
       if (! this .getBrowser () .getBrowserOption ("Notifications"))
          return;

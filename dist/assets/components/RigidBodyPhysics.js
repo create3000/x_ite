@@ -186,7 +186,7 @@ function X3DRigidJointNode (executionContext)
 X3DRigidJointNode .prototype = Object .assign (Object .create ((X3DNode_default()).prototype),
 {
    constructor: X3DRigidJointNode,
-   initialize: function ()
+   initialize ()
    {
       X3DNode_default().prototype.initialize.call (this);
 
@@ -198,7 +198,7 @@ X3DRigidJointNode .prototype = Object .assign (Object .create ((X3DNode_default(
       this .set_body1__ ();
       this .set_body2__ ();
    },
-   setCollection: function (value)
+   setCollection (value)
    {
       this .removeJoint ();
 
@@ -206,27 +206,27 @@ X3DRigidJointNode .prototype = Object .assign (Object .create ((X3DNode_default(
 
       this .addJoint ();
    },
-   getCollection: function ()
+   getCollection ()
    {
       return this ._collection .getValue ();
    },
-   getBody1: function ()
+   getBody1 ()
    {
       return this .bodyNode1;
    },
-   getBody2: function ()
+   getBody2 ()
    {
       return this .bodyNode2;
    },
-   getInitialInverseMatrix1: function ()
+   getInitialInverseMatrix1 ()
    {
       return this .initialInverseMatrix1;
    },
-   getInitialInverseMatrix2: function ()
+   getInitialInverseMatrix2 ()
    {
       return this .initialInverseMatrix2;
    },
-   setOutput: function (value)
+   setOutput (value)
    {
       this .output = value;
 
@@ -247,18 +247,18 @@ X3DRigidJointNode .prototype = Object .assign (Object .create ((X3DNode_default(
             this .bodyNode2 .removeInterest ("update2", this);
       }
    },
-   addJoint: function ()
+   addJoint ()
    { },
-   removeJoint: function ()
+   removeJoint ()
    { },
-   set_forceOutput__: function ()
+   set_forceOutput__ ()
    { },
-   set_joint__: function ()
+   set_joint__ ()
    {
       this .removeJoint ();
       this .addJoint ();
    },
-   set_body1__: function ()
+   set_body1__ ()
    {
       this .removeJoint ();
 
@@ -279,7 +279,7 @@ X3DRigidJointNode .prototype = Object .assign (Object .create ((X3DNode_default(
          this .setOutput (this .output);
       }
    },
-   set_body2__: function ()
+   set_body2__ ()
    {
       this .removeJoint ();
 
@@ -300,21 +300,21 @@ X3DRigidJointNode .prototype = Object .assign (Object .create ((X3DNode_default(
          this .setOutput (this .output);
       }
    },
-   initialize1: function ()
+   initialize1 ()
    {
       this .initialInverseMatrix1 .set (this .bodyNode1 ._position .getValue (), this .bodyNode1 ._orientation .getValue ());
       this .initialInverseMatrix1 .inverse ();
    },
-   initialize2: function ()
+   initialize2 ()
    {
       this .initialInverseMatrix2 .set (this .bodyNode2 ._position .getValue (), this .bodyNode2 ._orientation .getValue ());
       this .initialInverseMatrix2 .inverse ();
    },
-   update1: function ()
+   update1 ()
    { },
-   update2: function ()
+   update2 ()
    { },
-   dispose: function ()
+   dispose ()
    {
       this .removeJoint ();
 
@@ -514,13 +514,13 @@ function BallJoint (executionContext)
 BallJoint .prototype = Object .assign (Object .create (RigidBodyPhysics_X3DRigidJointNode.prototype),
 {
    constructor: BallJoint,
-   initialize: function ()
+   initialize ()
    {
       RigidBodyPhysics_X3DRigidJointNode.prototype.initialize.call (this);
 
       this ._anchorPoint .addInterest ("set_anchorPoint__", this);
    },
-   addJoint: function ()
+   addJoint ()
    {
       if (!this .getCollection ())
          return;
@@ -546,7 +546,7 @@ BallJoint .prototype = Object .assign (Object .create (RigidBodyPhysics_X3DRigid
 
       this .getCollection () .getDynamicsWorld () .addConstraint (this .joint, true);
    },
-   removeJoint: function ()
+   removeJoint ()
    {
       if (!this .joint)
          return;
@@ -557,7 +557,7 @@ BallJoint .prototype = Object .assign (Object .create (RigidBodyPhysics_X3DRigid
       AmmoClass.destroy (this .joint);
       this .joint = null;
    },
-   set_forceOutput__: function ()
+   set_forceOutput__ ()
    {
       for (var key in this .outputs)
          delete this .outputs [key];
@@ -579,7 +579,7 @@ BallJoint .prototype = Object .assign (Object .create (RigidBodyPhysics_X3DRigid
 
       this .setOutput (!$.isEmptyObject (this .outputs));
    },
-   set_anchorPoint__: function ()
+   set_anchorPoint__ ()
    {
       if (this .joint)
       {
@@ -745,7 +745,7 @@ X3DNBodyCollidableNode .prototype = Object .assign (Object .create ((X3DChildNod
    (X3DBoundedObject_default()).prototype,
 {
    constructor: X3DNBodyCollidableNode,
-   initialize: function ()
+   initialize ()
    {
       X3DChildNode_default().prototype.initialize.call (this);
       X3DBoundedObject_default().prototype.initialize.call (this);
@@ -779,31 +779,31 @@ X3DNBodyCollidableNode .prototype = Object .assign (Object .create ((X3DChildNod
          return l;
       };
    })(),
-   setBody: function (value)
+   setBody (value)
    {
       this ._body = value;
    },
-   getBody: function ()
+   getBody ()
    {
       return this ._body .getValue ();
    },
-   getCompoundShape: function ()
+   getCompoundShape ()
    {
       return this .compoundShape;
    },
-   setOffset: function (x, y, z)
+   setOffset (x, y, z)
    {
       this .offset .set (x, y, z);
    },
-   getOffset: function ()
+   getOffset ()
    {
       return this .offset;
    },
-   getMatrix: function ()
+   getMatrix ()
    {
       return this .matrix;
    },
-   eventsProcessed: function ()
+   eventsProcessed ()
    {
       this .matrix .set (this ._translation .getValue (),
                          this ._rotation    .getValue ());
@@ -811,7 +811,7 @@ X3DNBodyCollidableNode .prototype = Object .assign (Object .create ((X3DChildNod
       if (this .compoundShape .getNumChildShapes ())
          this .compoundShape .updateChildTransform (0, this .getLocalTransform (), true);
    },
-   dispose: function ()
+   dispose ()
    {
       X3DBoundedObject_default().prototype.dispose.call (this);
       X3DChildNode_default().prototype.dispose.call (this);
@@ -908,7 +908,7 @@ function CollidableOffset (executionContext)
 CollidableOffset .prototype = Object .assign (Object .create (RigidBodyPhysics_X3DNBodyCollidableNode.prototype),
 {
    constructor: CollidableOffset,
-   initialize: function ()
+   initialize ()
    {
       RigidBodyPhysics_X3DNBodyCollidableNode.prototype.initialize.call (this);
 
@@ -917,14 +917,14 @@ CollidableOffset .prototype = Object .assign (Object .create (RigidBodyPhysics_X
 
       this .set_collidable__ ();
    },
-   getBBox: function (bbox, shadows)
+   getBBox (bbox, shadows)
    {
       if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
          return this .visibleNode ?.getBBox (bbox, shadows) .multRight (this .getMatrix ()) ?? bbox .set ();
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
-   set_collidable__: function ()
+   set_collidable__ ()
    {
       if (this .collidableNode)
       {
@@ -968,11 +968,11 @@ CollidableOffset .prototype = Object .assign (Object .create (RigidBodyPhysics_X
       this .set_bboxDisplay__ ();
       this .set_collidableGeometry__ ();
    },
-   set_cameraObject__: function ()
+   set_cameraObject__ ()
    {
       this .setCameraObject (!!this .visibleNode ?.isCameraObject ());
    },
-   set_visible__: function ()
+   set_visible__ ()
    {
       if (this .collidableNode)
          this .visibleNode = this .collidableNode ._visible .getValue () ? this .collidableNode : null;
@@ -981,14 +981,14 @@ CollidableOffset .prototype = Object .assign (Object .create (RigidBodyPhysics_X
 
       this .set_cameraObject__ ();
    },
-   set_bboxDisplay__: function ()
+   set_bboxDisplay__ ()
    {
       if (this .collidableNode)
          this .boundedObject = this .collidableNode ._bboxDisplay .getValue () ? this .collidableNode : null;
       else
          this .boundedObject = null;
    },
-   set_collidableGeometry__: function ()
+   set_collidableGeometry__ ()
    {
       if (this .getCompoundShape () .getNumChildShapes ())
          this .getCompoundShape () .removeChildShapeByIndex (0);
@@ -998,7 +998,7 @@ CollidableOffset .prototype = Object .assign (Object .create (RigidBodyPhysics_X
 
       this ._compoundShape_changed = this .getBrowser () .getCurrentTime ();
    },
-   traverse: function (type, renderObject)
+   traverse (type, renderObject)
    {
       switch (type)
       {
@@ -1182,7 +1182,7 @@ function CollidableShape (executionContext)
 CollidableShape .prototype = Object .assign (Object .create (RigidBodyPhysics_X3DNBodyCollidableNode.prototype),
 {
    constructor: CollidableShape,
-   initialize: function ()
+   initialize ()
    {
       RigidBodyPhysics_X3DNBodyCollidableNode.prototype.initialize.call (this);
 
@@ -1191,18 +1191,18 @@ CollidableShape .prototype = Object .assign (Object .create (RigidBodyPhysics_X3
 
       this .set_shape__ ();
    },
-   getBBox: function (bbox, shadows)
+   getBBox (bbox, shadows)
    {
       if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
          return this .visibleNode ?.getBBox (bbox, shadows) .multRight (this .getMatrix ()) ?? bbox .set ();
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
-   setConvex: function (value)
+   setConvex (value)
    {
       this .convex = value;
    },
-   getConvex: function ()
+   getConvex ()
    {
       return this .convex;
    },
@@ -1258,7 +1258,7 @@ CollidableShape .prototype = Object .assign (Object .create (RigidBodyPhysics_X3
          return new AmmoClass.btBvhTriangleMeshShape (this .triangleMesh, false);
       };
    })(),
-   set_shape__: function ()
+   set_shape__ ()
    {
       if (this .shapeNode)
       {
@@ -1300,11 +1300,11 @@ CollidableShape .prototype = Object .assign (Object .create (RigidBodyPhysics_X3
       this .set_bboxDisplay__ ();
       this .set_geometry__ ();
    },
-   set_cameraObject__: function ()
+   set_cameraObject__ ()
    {
       this .setCameraObject (!!this .visibleNode ?.isCameraObject ());
    },
-   set_visible__: function ()
+   set_visible__ ()
    {
       if (this .shapeNode)
          this .visibleNode = this .shapeNode ._visible .getValue () ? this .shapeNode : null;
@@ -1313,14 +1313,14 @@ CollidableShape .prototype = Object .assign (Object .create (RigidBodyPhysics_X3
 
       this .set_cameraObject__ ();
    },
-   set_bboxDisplay__: function ()
+   set_bboxDisplay__ ()
    {
       if (this .shapeNode)
          this .boundedObject = this .shapeNode ._bboxDisplay .getValue () ? this .shapeNode : null;
       else
          this .boundedObject = null;
    },
-   set_geometry__: function ()
+   set_geometry__ ()
    {
       if (this .geometryNode)
          this .geometryNode ._rebuild .removeInterest ("set_collidableGeometry__", this);
@@ -1474,7 +1474,7 @@ CollidableShape .prototype = Object .assign (Object .create (RigidBodyPhysics_X3
          this ._compoundShape_changed = this .getBrowser () .getCurrentTime ();
       };
    })(),
-   removeCollidableGeometry: function ()
+   removeCollidableGeometry ()
    {
       if (this .collisionShape)
       {
@@ -1495,7 +1495,7 @@ CollidableShape .prototype = Object .assign (Object .create (RigidBodyPhysics_X3
          this .triangleMesh = null;
       }
    },
-   traverse: function (type, renderObject)
+   traverse (type, renderObject)
    {
       switch (type)
       {
@@ -1558,7 +1558,7 @@ CollidableShape .prototype = Object .assign (Object .create (RigidBodyPhysics_X3
          }
       }
    },
-   dispose: function ()
+   dispose ()
    {
       this .removeCollidableGeometry ();
 
@@ -1752,7 +1752,7 @@ function CollisionCollection (executionContext)
 CollisionCollection .prototype = Object .assign (Object .create ((X3DChildNode_default()).prototype),
 {
    constructor: CollisionCollection,
-   initialize: function ()
+   initialize ()
    {
       X3DChildNode_default().prototype.initialize.call (this);
 
@@ -1762,11 +1762,11 @@ CollisionCollection .prototype = Object .assign (Object .create ((X3DChildNode_d
       this .set_appliedParameters__ ();
       this .set_collidables__ ();
    },
-   getAppliedParameters: function ()
+   getAppliedParameters ()
    {
       return this .appliedParameters;
    },
-   getCollidables: function ()
+   getCollidables ()
    {
       return this .collidableNodes;
    },
@@ -1797,7 +1797,7 @@ CollisionCollection .prototype = Object .assign (Object .create ((X3DChildNode_d
          }
       };
    })(),
-   set_collidables__: function ()
+   set_collidables__ ()
    {
       var collisionSpaceNodes = this .collisionSpaceNodes;
 
@@ -1820,7 +1820,7 @@ CollisionCollection .prototype = Object .assign (Object .create ((X3DChildNode_d
 
       this .collect ();
    },
-   collect: function ()
+   collect ()
    {
       var
          collidableNodes     = this .collidableNodes,
@@ -1970,7 +1970,7 @@ function CollisionSensor (executionContext)
 CollisionSensor .prototype = Object .assign (Object .create ((X3DSensorNode_default()).prototype),
 {
    constructor: CollisionSensor,
-   initialize: function ()
+   initialize ()
    {
       X3DSensorNode_default().prototype.initialize.call (this);
 
@@ -1980,7 +1980,7 @@ CollisionSensor .prototype = Object .assign (Object .create ((X3DSensorNode_defa
 
       this .set_collider__ ();
    },
-   set_live__: function ()
+   set_live__ ()
    {
       if (this .getLive () .getValue () && this ._enabled .getValue () && this .colliderNode)
       {
@@ -1991,7 +1991,7 @@ CollisionSensor .prototype = Object .assign (Object .create ((X3DSensorNode_defa
          this .getBrowser () .sensorEvents () .removeInterest ("update", this);
       }
    },
-   set_collider__: function ()
+   set_collider__ ()
    {
       this .colliderNode = X3DCast_default() ((X3DConstants_default()).CollisionCollection, this ._collider);
 
@@ -2137,7 +2137,7 @@ CollisionSensor .prototype = Object .assign (Object .create ((X3DSensorNode_defa
          }
       };
    })(),
-   getContact: function (index)
+   getContact (index)
    {
       const contactNode = this .contactCache [index];
 
@@ -2257,12 +2257,12 @@ X3DNBodyCollisionSpaceNode .prototype = Object .assign (Object .create ((X3DNode
    (X3DBoundedObject_default()).prototype,
 {
    constructor: X3DNBodyCollisionSpaceNode,
-   initialize: function ()
+   initialize ()
    {
       X3DNode_default().prototype.initialize.call (this);
       X3DBoundedObject_default().prototype.initialize.call (this);
    },
-   dispose: function ()
+   dispose ()
    {
       X3DBoundedObject_default().prototype.dispose.call (this);
       X3DNode_default().prototype.dispose.call (this);
@@ -2356,7 +2356,7 @@ function CollisionSpace (executionContext)
 CollisionSpace .prototype = Object .assign (Object .create (RigidBodyPhysics_X3DNBodyCollisionSpaceNode.prototype),
 {
    constructor: CollisionSpace,
-   initialize: function ()
+   initialize ()
    {
       RigidBodyPhysics_X3DNBodyCollisionSpaceNode.prototype.initialize.call (this);
 
@@ -2364,7 +2364,7 @@ CollisionSpace .prototype = Object .assign (Object .create (RigidBodyPhysics_X3D
 
       this .set_collidables__ ();
    },
-   getBBox: function (bbox, shadows)
+   getBBox (bbox, shadows)
    {
       // TODO: add space node.
       if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
@@ -2372,11 +2372,11 @@ CollisionSpace .prototype = Object .assign (Object .create (RigidBodyPhysics_X3D
 
       return bbox;
    },
-   getCollidables: function ()
+   getCollidables ()
    {
       return this .collidableNodes;
    },
-   set_collidables__: function ()
+   set_collidables__ ()
    {
       var collisionSpaceNodes = this .collisionSpaceNodes;
 
@@ -2399,7 +2399,7 @@ CollisionSpace .prototype = Object .assign (Object .create (RigidBodyPhysics_X3D
 
       this .collect ();
    },
-   collect: function ()
+   collect ()
    {
       var
          collidableNodes     = this .collidableNodes,
@@ -2687,7 +2687,7 @@ function DoubleAxisHingeJoint (executionContext)
 DoubleAxisHingeJoint .prototype = Object .assign (Object .create (RigidBodyPhysics_X3DRigidJointNode.prototype),
 {
    constructor: DoubleAxisHingeJoint,
-   initialize: function ()
+   initialize ()
    {
       RigidBodyPhysics_X3DRigidJointNode.prototype.initialize.call (this);
 
@@ -2741,7 +2741,7 @@ DoubleAxisHingeJoint .prototype = Object .assign (Object .create (RigidBodyPhysi
          this .getCollection () .getDynamicsWorld () .addConstraint (this .joint, true);
       };
    })(),
-   removeJoint: function ()
+   removeJoint ()
    {
       if (! this .joint)
          return;
@@ -2752,7 +2752,7 @@ DoubleAxisHingeJoint .prototype = Object .assign (Object .create (RigidBodyPhysi
       AmmoClass.destroy (this .joint);
       this .joint = null;
    },
-   set_forceOutput__: function ()
+   set_forceOutput__ ()
    {
       for (var key in this .outputs)
          delete this .outputs [key];
@@ -3139,7 +3139,7 @@ function RigidBody (executionContext)
 RigidBody .prototype = Object .assign (Object .create ((X3DNode_default()).prototype),
 {
    constructor: RigidBody,
-   initialize: function ()
+   initialize ()
    {
       X3DNode_default().prototype.initialize.call (this);
 
@@ -3169,28 +3169,28 @@ RigidBody .prototype = Object .assign (Object .create ((X3DNode_default()).proto
       this .set_torques__ ();
       this .set_geometry__ ();
    },
-   setCollection: function (value)
+   setCollection (value)
    {
       this ._collection = value;
    },
-   getCollection: function ()
+   getCollection ()
    {
       return this ._collection .getValue ();
    },
-   getRigidBody: function ()
+   getRigidBody ()
    {
       return this .rigidBody;
    },
-   getMatrix: function ()
+   getMatrix ()
    {
       return this .matrix;
    },
-   set_position__: function ()
+   set_position__ ()
    {
       for (var i = 0, length = this .geometryNodes .length; i < length; ++ i)
          this .geometryNodes [i] ._translation = this ._position;
    },
-   set_orientation__: function ()
+   set_orientation__ ()
    {
       for (var i = 0, length = this .geometryNodes .length; i < length; ++ i)
          this .geometryNodes [i] ._rotation = this ._orientation;
@@ -3290,7 +3290,7 @@ RigidBody .prototype = Object .assign (Object .create ((X3DNode_default()).proto
          this .rigidBody .setAngularFactor (angularFactor);
       };
    })(),
-   set_damping__: function ()
+   set_damping__ ()
    {
       if (this ._autoDamp .getValue ())
          this .rigidBody .setDamping (this ._linearDampingFactor .getValue (), this ._angularDampingFactor .getValue ());
@@ -3331,21 +3331,21 @@ RigidBody .prototype = Object .assign (Object .create ((X3DNode_default()).proto
          this .rigidBody .setMassProps (this ._fixed .getValue () ? 0 : this ._mass .getValue (), localInertia);
       };
    })(),
-   set_forces__: function ()
+   set_forces__ ()
    {
       this .force .set (0, 0, 0);
 
       for (var i = 0, length = this ._forces .length; i < length; ++ i)
          this .force .add (this ._forces [i] .getValue ());
    },
-   set_torques__: function ()
+   set_torques__ ()
    {
       this .torque .set (0, 0, 0);
 
       for (var i = 0, length = this ._torques .length; i < length; ++ i)
          this .torque .add (this ._torques [i] .getValue ());
    },
-   set_disable__: function ()
+   set_disable__ ()
    {
       if (this ._autoDisable .getValue ())
       {
@@ -3356,7 +3356,7 @@ RigidBody .prototype = Object .assign (Object .create ((X3DNode_default()).proto
          this .rigidBody .setSleepingThresholds (0, 0);
       }
    },
-   set_geometry__: function ()
+   set_geometry__ ()
    {
       var geometryNodes = this .geometryNodes;
 
@@ -3416,7 +3416,7 @@ RigidBody .prototype = Object .assign (Object .create ((X3DNode_default()).proto
 
       this .set_compoundShape__ ();
    },
-   set_body__: function ()
+   set_body__ ()
    {
       this ._otherGeometry .addEvent ();
    },
@@ -3500,7 +3500,7 @@ RigidBody .prototype = Object .assign (Object .create ((X3DNode_default()).proto
          this ._angularVelocity = angularVelocity .set (btAngularVelocity .x (), btAngularVelocity .y (), btAngularVelocity .z ());
       };
    })(),
-   dispose: function ()
+   dispose ()
    {
       AmmoClass.destroy (this .rigidBody);
       AmmoClass.destroy (this .constructionInfo);
@@ -3661,7 +3661,7 @@ function RigidBodyCollection (executionContext)
 RigidBodyCollection .prototype = Object .assign (Object .create ((X3DChildNode_default()).prototype),
 {
    constructor: RigidBodyCollection,
-   initialize: function ()
+   initialize ()
    {
       X3DChildNode_default().prototype.initialize.call (this);
 
@@ -3680,11 +3680,11 @@ RigidBodyCollection .prototype = Object .assign (Object .create ((X3DChildNode_d
       this .set_collider__ ();
       this .set_bodies__ ();
    },
-   getDynamicsWorld: function ()
+   getDynamicsWorld ()
    {
       return this .dynamicsWorld;
    },
-   getTimeStep: function ()
+   getTimeStep ()
    {
       const DELAY = 15; // Delay in frames when dt full applies.
 
@@ -3694,14 +3694,14 @@ RigidBodyCollection .prototype = Object .assign (Object .create ((X3DChildNode_d
 
       return deltaTime;
    },
-   set_enabled__: function ()
+   set_enabled__ ()
    {
       if (this .getLive () .getValue () && this ._enabled .getValue ())
          this .getBrowser () .sensorEvents () .addInterest ("update", this);
       else
          this .getBrowser () .sensorEvents () .removeInterest ("update", this);
    },
-   set_contacts__: function ()
+   set_contacts__ ()
    {
    },
    set_gravity__: (function ()
@@ -3717,16 +3717,16 @@ RigidBodyCollection .prototype = Object .assign (Object .create ((X3DChildNode_d
          this .dynamicsWorld .setGravity (gravity);
       };
    })(),
-   set_contactSurfaceThickness__: function ()
+   set_contactSurfaceThickness__ ()
    {
       for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
          this .bodyNodes [i] .getRigidBody () .getCollisionShape () .setMargin (this ._contactSurfaceThickness .getValue ());
    },
-   set_collider__: function ()
+   set_collider__ ()
    {
       this .colliderNode = X3DCast_default() ((X3DConstants_default()).CollisionCollection, this ._collider);
    },
-   set_bounce__: function ()
+   set_bounce__ ()
    {
       var
          colliderNode = this .colliderNode,
@@ -3753,7 +3753,7 @@ RigidBodyCollection .prototype = Object .assign (Object .create ((X3DChildNode_d
       for (var i = 0, length = bodyNodes .length; i < length; ++ i)
          bodyNodes [i] .getRigidBody () .setRestitution (0);
    },
-   set_frictionCoefficients__: function ()
+   set_frictionCoefficients__ ()
    {
       if (this .colliderNode && this .colliderNode ._enabled .getValue ())
       {
@@ -3779,7 +3779,7 @@ RigidBodyCollection .prototype = Object .assign (Object .create ((X3DChildNode_d
          rigidBody .setRollingFriction (0);
       }
    },
-   set_bodies__: function ()
+   set_bodies__ ()
    {
       for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
       {
@@ -3820,7 +3820,7 @@ RigidBodyCollection .prototype = Object .assign (Object .create ((X3DChildNode_d
       this .set_dynamicsWorld__ ();
       this .set_joints__ ();
    },
-   set_dynamicsWorld__: function ()
+   set_dynamicsWorld__ ()
    {
       for (var i = 0, length = this .rigidBodies .length; i < length; ++ i)
          this .dynamicsWorld .removeRigidBody (this .rigidBodies [i]);
@@ -3840,7 +3840,7 @@ RigidBodyCollection .prototype = Object .assign (Object .create ((X3DChildNode_d
       for (var i = 0, length = this .rigidBodies .length; i < length; ++ i)
          this .dynamicsWorld .addRigidBody (this .rigidBodies [i]);
    },
-   set_joints__: function ()
+   set_joints__ ()
    {
       for (var i = 0, length = this .jointNodes .length; i < length; ++ i)
          this .jointNodes [i] .setCollection (null);
@@ -3871,7 +3871,7 @@ RigidBodyCollection .prototype = Object .assign (Object .create ((X3DChildNode_d
          this .jointNodes .push (jointNode);
       }
    },
-   update: function ()
+   update ()
    {
       try
       {
@@ -4047,7 +4047,7 @@ function SingleAxisHingeJoint (executionContext)
 SingleAxisHingeJoint .prototype = Object .assign (Object .create (RigidBodyPhysics_X3DRigidJointNode.prototype),
 {
    constructor: SingleAxisHingeJoint,
-   initialize: function ()
+   initialize ()
    {
       RigidBodyPhysics_X3DRigidJointNode.prototype.initialize.call (this);
 
@@ -4102,7 +4102,7 @@ SingleAxisHingeJoint .prototype = Object .assign (Object .create (RigidBodyPhysi
          this .getCollection () .getDynamicsWorld () .addConstraint (this .joint, true);
       };
    })(),
-   removeJoint: function ()
+   removeJoint ()
    {
       if (this .joint)
       {
@@ -4113,7 +4113,7 @@ SingleAxisHingeJoint .prototype = Object .assign (Object .create (RigidBodyPhysi
          this .joint = null;
       }
    },
-   set_forceOutput__: function ()
+   set_forceOutput__ ()
    {
       for (var key in this .outputs)
          delete this .outputs [key];
@@ -4303,7 +4303,7 @@ function SliderJoint (executionContext)
 SliderJoint .prototype = Object .assign (Object .create (RigidBodyPhysics_X3DRigidJointNode.prototype),
 {
    constructor: SliderJoint,
-   initialize: function ()
+   initialize ()
    {
       RigidBodyPhysics_X3DRigidJointNode.prototype.initialize.call (this);
 
@@ -4373,7 +4373,7 @@ SliderJoint .prototype = Object .assign (Object .create (RigidBodyPhysics_X3DRig
          this .getCollection () .getDynamicsWorld () .addConstraint (this .joint, true);
       };
    })(),
-   removeJoint: function ()
+   removeJoint ()
    {
       if (! this .joint)
          return;
@@ -4384,7 +4384,7 @@ SliderJoint .prototype = Object .assign (Object .create (RigidBodyPhysics_X3DRig
       AmmoClass.destroy (this .joint);
       this .joint = null;
    },
-   set_forceOutput__: function ()
+   set_forceOutput__ ()
    {
       for (var key in this .outputs)
          delete this .outputs [key];
@@ -4406,7 +4406,7 @@ SliderJoint .prototype = Object .assign (Object .create (RigidBodyPhysics_X3DRig
 
       this .setOutput (! SliderJoint_$.isEmptyObject (this .outputs));
    },
-   set_separation__: function ()
+   set_separation__ ()
    {
       if (! this .joint)
          return;

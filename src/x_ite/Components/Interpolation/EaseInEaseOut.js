@@ -61,18 +61,18 @@ function EaseInEaseOut (executionContext)
 EaseInEaseOut .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
 {
    constructor: EaseInEaseOut,
-   initialize: function ()
+   initialize ()
    {
       X3DInterpolatorNode .prototype .initialize .call (this);
 
       this ._easeInEaseOut .addInterest ("set_keyValue__", this);
    },
-   set_keyValue__: function ()
+   set_keyValue__ ()
    {
       if (this ._easeInEaseOut .length < this ._key .length)
          this ._easeInEaseOut .resize (this ._key .length, this ._easeInEaseOut .length ? this ._easeInEaseOut [this ._easeInEaseOut .length - 1] : new Fields .SFVec2f ());
    },
-   interpolate: function (index0, index1, weight)
+   interpolate (index0, index1, weight)
    {
       let
          easeOut = this ._easeInEaseOut [index0] .y,

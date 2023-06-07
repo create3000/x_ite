@@ -134,7 +134,7 @@ const X3DConstants =
 
 Object .defineProperty (X3DConstants, "addNode",
 {
-   value: function ({ typeName })
+   value ({ typeName })
    {
       if (this [typeName])
          return;

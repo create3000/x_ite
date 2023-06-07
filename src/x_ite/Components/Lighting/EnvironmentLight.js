@@ -64,27 +64,27 @@ function EnvironmentLightContainer ()
 EnvironmentLightContainer .prototype =
 {
    constructor: EnvironmentLightContainer,
-   set: function (lightNode, groupNode, modelViewMatrix)
+   set (lightNode, groupNode, modelViewMatrix)
    {
    },
-   setGroup: function (groupNode)
+   setGroup (groupNode)
    {
       this .groupNode = groupNode;
    },
-   getModelViewMatrix: function ()
+   getModelViewMatrix ()
    {
       return this .modelViewMatrix;
    },
-   renderShadowMap: function (renderObject)
+   renderShadowMap (renderObject)
    {
    },
-   setGlobalVariables: function (renderObject)
+   setGlobalVariables (renderObject)
    {
    },
-   setShaderUniforms: function (gl, shaderObject)
+   setShaderUniforms (gl, shaderObject)
    {
    },
-   dispose: function ()
+   dispose ()
    {
       // Return container
 
@@ -102,7 +102,7 @@ function EnvironmentLight (executionContext)
 EnvironmentLight .prototype = Object .assign (Object .create (X3DLightNode .prototype),
 {
    constructor: EnvironmentLight,
-   getLights: function ()
+   getLights ()
    {
       return EnvironmentLights;
    },

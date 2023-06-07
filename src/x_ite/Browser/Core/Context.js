@@ -106,7 +106,7 @@ const extensions = [
 
 const Context =
 {
-   create: function (canvas, version, preserveDrawingBuffer)
+   create (canvas, version, preserveDrawingBuffer)
    {
       const options = { preserveDrawingBuffer: preserveDrawingBuffer };
 
@@ -199,7 +199,7 @@ const Context =
       }
       :
       {
-         clientWaitAsync: function (sync, flags, timeout)
+         clientWaitAsync (sync, flags, timeout)
          {
             return new Promise ((resolve, reject) =>
             {

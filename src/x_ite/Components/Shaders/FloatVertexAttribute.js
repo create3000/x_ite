@@ -62,7 +62,7 @@ function FloatVertexAttribute (executionContext)
 FloatVertexAttribute .prototype = Object .assign (Object .create (X3DVertexAttributeNode .prototype),
 {
    constructor: FloatVertexAttribute,
-   initialize: function ()
+   initialize ()
    {
       X3DVertexAttributeNode .prototype .initialize .call (this);
 
@@ -73,16 +73,16 @@ FloatVertexAttribute .prototype = Object .assign (Object .create (X3DVertexAttri
       this .set_numComponents__ ();
       this .set_value__ ();
    },
-   set_numComponents__: function ()
+   set_numComponents__ ()
    {
       this .numComponents = Algorithm .clamp (this ._numComponents .getValue (), 1, 4);
    },
-   set_value__: function ()
+   set_value__ ()
    {
       this .value  = this ._value .getValue ();
       this .length = this ._value .length;
    },
-   addValue: function (index, array)
+   addValue (index, array)
    {
       const value = this .value;
 
@@ -109,7 +109,7 @@ FloatVertexAttribute .prototype = Object .assign (Object .create (X3DVertexAttri
             array .push (0);
       }
    },
-   enable: function (gl, shaderNode, buffer)
+   enable (gl, shaderNode, buffer)
    {
       shaderNode .enableFloatAttrib (gl, this ._name .getValue (), buffer, this .numComponents, 0, 0);
    },

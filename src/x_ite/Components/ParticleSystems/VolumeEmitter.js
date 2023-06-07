@@ -131,7 +131,7 @@ function VolumeEmitter (executionContext)
 VolumeEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),
 {
    constructor: VolumeEmitter,
-   initialize: function ()
+   initialize ()
    {
       X3DParticleEmitterNode .prototype .initialize .call (this);
 
@@ -238,7 +238,7 @@ VolumeEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNod
          }
       };
    })(),
-   activateTextures: function (gl, program)
+   activateTextures (gl, program)
    {
       gl .activeTexture (gl .TEXTURE0 + program .volumeTextureUnit);
       gl .bindTexture (gl .TEXTURE_2D, this .volumeTexture);

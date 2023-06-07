@@ -76,14 +76,14 @@ function TextureProjectorContainer ()
 TextureProjectorContainer .prototype =
 {
    constructor: TextureProjectorContainer,
-   set: function (textureProjectorNode, modelViewMatrix)
+   set (textureProjectorNode, modelViewMatrix)
    {
       this .browser              = textureProjectorNode .getBrowser ();
       this .textureProjectorNode = textureProjectorNode;
 
       this .modelViewMatrix .assign (modelViewMatrix);
    },
-   setGlobalVariables: function (renderObject)
+   setGlobalVariables (renderObject)
    {
       const
          textureProjectorNode  = this .textureProjectorNode,
@@ -118,7 +118,7 @@ TextureProjectorContainer .prototype =
       this .modelViewMatrix .multVecMatrix (this .location .assign (textureProjectorNode ._location .getValue ()));
       this .locationArray .set (this .location);
    },
-   setShaderUniforms: function (gl, shaderObject, renderObject)
+   setShaderUniforms (gl, shaderObject, renderObject)
    {
       const i = shaderObject .numProjectiveTextures ++;
 
@@ -136,7 +136,7 @@ TextureProjectorContainer .prototype =
       gl .uniformMatrix4fv (shaderObject .x3d_ProjectiveTextureMatrix [i], false, this .projectiveTextureMatrixArray);
       gl .uniform3fv (shaderObject .x3d_ProjectiveTextureLocation [i], this .locationArray);
    },
-   dispose: function ()
+   dispose ()
    {
       TextureProjectorCache .push (this);
    },
@@ -154,17 +154,17 @@ function TextureProjector (executionContext)
 TextureProjector .prototype = Object .assign (Object .create (X3DTextureProjectorNode .prototype),
 {
    constructor: TextureProjector,
-   initialize: function ()
+   initialize ()
    {
       X3DTextureProjectorNode .prototype .initialize .call (this);
    },
-   getFieldOfView: function ()
+   getFieldOfView ()
    {
       const fov = this ._fieldOfView .getValue ();
 
       return fov > 0 && fov < Math .PI ? fov : Math .PI / 4;
    },
-   getTextureProjectors: function ()
+   getTextureProjectors ()
    {
       return TextureProjectorCache;
    },

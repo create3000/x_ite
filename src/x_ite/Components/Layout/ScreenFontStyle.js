@@ -62,17 +62,17 @@ function ScreenFontStyle (executionContext)
 ScreenFontStyle .prototype = Object .assign (Object .create (X3DFontStyleNode .prototype),
 {
    constructor: ScreenFontStyle,
-   initialize: function ()
+   initialize ()
    {
       X3DFontStyleNode .prototype .initialize .call (this);
 
       this .getBrowser () .getRenderingProperties () ._ContentScale .addInterest ("addNodeEvent", this);
    },
-   getTextGeometry: function (text)
+   getTextGeometry (text)
    {
       return new ScreenText (text, this);
    },
-   getScale: function ()
+   getScale ()
    {
       return this ._pointSize .getValue () * this .getBrowser () .getPixelPerPoint ();
    },

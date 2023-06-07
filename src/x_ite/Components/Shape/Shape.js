@@ -62,7 +62,7 @@ function Shape (executionContext)
 Shape .prototype = Object .assign (Object .create (X3DShapeNode .prototype),
 {
    constructor: Shape,
-   initialize: function ()
+   initialize ()
    {
       X3DShapeNode .prototype .initialize .call (this);
 
@@ -70,12 +70,12 @@ Shape .prototype = Object .assign (Object .create (X3DShapeNode .prototype),
 
       this .set_transformSensors__ ();
    },
-   getShapeKey: function ()
+   getShapeKey ()
    {
       return 0;
    },
    getGeometryContext: X3DShapeNode .prototype .getGeometry,
-   set_geometry__: function ()
+   set_geometry__ ()
    {
       X3DShapeNode .prototype .set_geometry__ .call (this);
 
@@ -84,15 +84,15 @@ Shape .prototype = Object .assign (Object .create (X3DShapeNode .prototype),
       else
          this .traverse = Function .prototype;
    },
-   set_transformSensors__: function ()
+   set_transformSensors__ ()
    {
       this .setPickableObject (this .getTransformSensors () .size);
    },
-   intersectsBox: function (box, clipPlanes, modelViewMatrix)
+   intersectsBox (box, clipPlanes, modelViewMatrix)
    {
       return this .getGeometry () .intersectsBox (box, clipPlanes, modelViewMatrix);
    },
-   traverse: function (type, renderObject)
+   traverse (type, renderObject)
    {
       // Always look at ParticleSystem if you do modify something here and there.
 
@@ -131,7 +131,7 @@ Shape .prototype = Object .assign (Object .create (X3DShapeNode .prototype),
 
       this .getGeometry () .traverse (type, renderObject); // Currently used for ScreenText.
    },
-   picking: function (renderObject)
+   picking (renderObject)
    {
       const modelMatrix = renderObject .getModelViewMatrix () .get ();
 
@@ -155,11 +155,11 @@ Shape .prototype = Object .assign (Object .create (X3DShapeNode .prototype),
 
       pickingHierarchy .pop ();
    },
-   displaySimple: function (gl, renderContext, shaderNode)
+   displaySimple (gl, renderContext, shaderNode)
    {
       this .getGeometry () .displaySimple (gl, renderContext, shaderNode);
    },
-   display: function (gl, renderContext)
+   display (gl, renderContext)
    {
       this .getGeometry () .display (gl, renderContext);
    },

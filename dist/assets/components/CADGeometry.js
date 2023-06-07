@@ -335,7 +335,7 @@ CADFace .prototype = Object .assign (Object .create (CADGeometry_X3DProductStruc
    (X3DBoundedObject_default()).prototype,
 {
    constructor: CADFace,
-   initialize: function ()
+   initialize ()
    {
       CADGeometry_X3DProductStructureChildNode.prototype.initialize.call (this);
       X3DBoundedObject_default().prototype.initialize.call (this);
@@ -344,14 +344,14 @@ CADFace .prototype = Object .assign (Object .create (CADGeometry_X3DProductStruc
 
       this .set_shape__ ();
    },
-   getBBox: function (bbox, shadows)
+   getBBox (bbox, shadows)
    {
       if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
          return this .visibleNode ?.getBBox (bbox, shadows) ?? bbox .set ();
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
-   set_shape__: function ()
+   set_shape__ ()
    {
       if (this .childNode)
       {
@@ -409,15 +409,15 @@ CADFace .prototype = Object .assign (Object .create (CADGeometry_X3DProductStruc
       this .set_visible__ ();
       this .set_bboxDisplay__ ();
    },
-   set_cameraObject__: function ()
+   set_cameraObject__ ()
    {
       this .setCameraObject (!!this .visibleNode ?.isCameraObject ());
    },
-   set_transformSensors__: function ()
+   set_transformSensors__ ()
    {
       this .setPickableObject (!!this .visibleNode ?.isPickableObject ());
    },
-   set_visible__: function ()
+   set_visible__ ()
    {
       if (this .childNode)
          this .visibleNode = this .childNode ._visible .getValue () ? this .childNode : null;
@@ -427,14 +427,14 @@ CADFace .prototype = Object .assign (Object .create (CADGeometry_X3DProductStruc
       this .set_cameraObject__ ();
       this .set_transformSensors__ ();
    },
-   set_bboxDisplay__: function ()
+   set_bboxDisplay__ ()
    {
       if (this .childNode)
          this .boundedObject = this .childNode ._bboxDisplay .getValue () ? this .childNode : null;
       else
          this .boundedObject = null;
    },
-   traverse: function (type, renderObject)
+   traverse (type, renderObject)
    {
       switch (type)
       {
@@ -472,7 +472,7 @@ CADFace .prototype = Object .assign (Object .create (CADGeometry_X3DProductStruc
          }
       }
    },
-   dispose: function ()
+   dispose ()
    {
       X3DBoundedObject_default().prototype.dispose.call (this);
       CADGeometry_X3DProductStructureChildNode.prototype.dispose.call (this);
@@ -819,7 +819,7 @@ function IndexedQuadSet (executionContext)
 IndexedQuadSet .prototype = Object .assign (Object .create ((X3DComposedGeometryNode_default()).prototype),
 {
    constructor: IndexedQuadSet,
-   initialize: function ()
+   initialize ()
    {
       X3DComposedGeometryNode_default().prototype.initialize.call (this);
 
@@ -837,11 +837,11 @@ IndexedQuadSet .prototype = Object .assign (Object .create ((X3DComposedGeometry
          return (i - mod) / 6 * 4 + indexMap [mod];
       };
    })(),
-   getPolygonIndex: function (i)
+   getPolygonIndex (i)
    {
       return this ._index [i];
    },
-   build: function ()
+   build ()
    {
       let length = this ._index .length;
 
@@ -975,7 +975,7 @@ QuadSet .prototype = Object .assign (Object .create ((X3DComposedGeometryNode_de
          return (i - mod) / 6 * 4 + indexMap [mod];
       };
    })(),
-   build: function ()
+   build ()
    {
       if (! this .getCoord ())
          return;
@@ -986,7 +986,7 @@ QuadSet .prototype = Object .assign (Object .create ((X3DComposedGeometryNode_de
 
       X3DComposedGeometryNode_default().prototype.build.call (this, 4, length, 6, length / 4 * 6);
    },
-   createNormals: function (verticesPerPolygon, polygonsSize)
+   createNormals (verticesPerPolygon, polygonsSize)
    {
       return this .createFaceNormals (verticesPerPolygon, polygonsSize);
    },

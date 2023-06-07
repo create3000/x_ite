@@ -84,84 +84,84 @@ X3DField .prototype = Object .assign (Object .create (X3DChildObject .prototype)
    [_outputRoutes]: new Set (),
    [_routeCallbacks]: new Map (),
    [_uniformLocation]: null,
-   create: function ()
+   create ()
    {
       return new (this .constructor) ();
    },
-   equals: function (field)
+   equals (field)
    {
       return this [_value] === field .valueOf ();
    },
-   assign: function (field)
+   assign (field)
    {
       // Assigns field to this field.
       this .set (field .getValue ());
       this .addEvent ();
    },
-   set: function (value)
+   set (value)
    {
       // Sets internal value without generating event.
       this [_value] = value;
    },
-   setValue: function (value)
+   setValue (value)
    {
       // Sets internal value and generates event.
       this .set (value instanceof this .constructor ? value .getValue () : value);
       this .addEvent ();
    },
-   getValue: function ()
+   getValue ()
    {
       return this [_value];
    },
-   getType: function ()
+   getType ()
    {
       return X3DConstants [this .constructor .typeName];
    },
-   setAccessType: function (value)
+   setAccessType (value)
    {
       this [_accessType] = value;
    },
-   getAccessType: function ()
+   getAccessType ()
    {
       return this [_accessType];
    },
-   isInitializable: function ()
+   isInitializable ()
    {
       return !! (this [_accessType] & X3DConstants .initializeOnly);
    },
-   isInput: function ()
+   isInput ()
    {
       return !! (this [_accessType] & X3DConstants .inputOnly);
    },
-   isOutput: function ()
+   isOutput ()
    {
       return !! (this [_accessType] & X3DConstants .outputOnly);
    },
-   isReadable: function ()
+   isReadable ()
    {
       return this [_accessType] !== X3DConstants .inputOnly;
    },
-   isWritable: function ()
+   isWritable ()
    {
       return this [_accessType] !== X3DConstants .outputOnly;
    },
-   setUnit: function (value)
+   setUnit (value)
    {
       this [_unit] = value;
    },
-   getUnit: function ()
+   getUnit ()
    {
       return this [_unit];
    },
-   hasReferences: function ()
+   hasReferences ()
    {
       return this [_references] .size !== 0;
    },
-   isReference: function (accessType)
+   isReference (accessType)
    {
       return accessType === this [_accessType] || accessType === X3DConstants .inputOutput;
    },
-   addReference: function (reference)
+   addReference (reference)
    {
       const references = this .getReferences ();
 
@@ -193,7 +193,7 @@ X3DField .prototype = Object .assign (Object .create (X3DChildObject .prototype)
 
       this .processReferencesCallbacks ();
    },
-   removeReference: function (reference)
+   removeReference (reference)
    {
       this .getReferences () .delete (reference);
 
@@ -218,25 +218,25 @@ X3DField .prototype = Object .assign (Object .create (X3DChildObject .prototype)
 
       this .processReferencesCallbacks ();
    },
-   getReferences: function ()
+   getReferences ()
    {
       if (this [_references] === X3DField .prototype [_references])
          this [_references] = new Set ();
 
       return this [_references];
    },
-   addReferencesCallback: function (key, object)
+   addReferencesCallback (key, object)
    {
       if (this [_referencesCallbacks] === X3DField .prototype [_referencesCallbacks])
          this [_referencesCallbacks] = new Map ();
 
       this [_referencesCallbacks] .set (key, object);
    },
-   removeReferencesCallback: function (key)
+   removeReferencesCallback (key)
    {
       this [_referencesCallbacks] .delete (key);
    },
-   getReferencesCallbacks: function ()
+   getReferencesCallbacks ()
    {
       return this [_referencesCallbacks];
    },
@@ -253,37 +253,37 @@ X3DField .prototype = Object .assign (Object .create (X3DChildObject .prototype)
          }
       };
    })(),
-   addFieldInterest: function (field)
+   addFieldInterest (field)
    {
       if (this [_fieldInterests] === X3DField .prototype [_fieldInterests])
          this [_fieldInterests] = new Set ();
 
       this [_fieldInterests] .add (field);
    },
-   removeFieldInterest: function (field)
+   removeFieldInterest (field)
    {
       this [_fieldInterests] .delete (field);
    },
-   getFieldInterests: function ()
+   getFieldInterests ()
    {
       return this [_fieldInterests];
    },
-   addFieldCallback: function (key, object)
+   addFieldCallback (key, object)
    {
       if (this [_fieldCallbacks] === X3DField .prototype [_fieldCallbacks])
          this [_fieldCallbacks] = new Map ();
 
       this [_fieldCallbacks] .set (key, object);
    },
-   removeFieldCallback: function (key)
+   removeFieldCallback (key)
    {
       this [_fieldCallbacks] .delete (key);
    },
-   getFieldCallbacks: function ()
+   getFieldCallbacks ()
    {
       return this [_fieldCallbacks];
    },
-   addInputRoute: function (route)
+   addInputRoute (route)
    {
       if (this [_inputRoutes] === X3DField .prototype [_inputRoutes])
          this [_inputRoutes] = new Set ();
@@ -292,17 +292,17 @@ X3DField .prototype = Object .assign (Object .create (X3DChildObject .prototype)
 
       this .processRouteCallbacks ();
    },
-   removeInputRoute: function (route)
+   removeInputRoute (route)
    {
       this [_inputRoutes] .delete (route);
 
       this .processRouteCallbacks ();
    },
-   getInputRoutes: function ()
+   getInputRoutes ()
    {
       return this [_inputRoutes];
    },
-   addOutputRoute: function (route)
+   addOutputRoute (route)
    {
       if (this [_outputRoutes] === X3DField .prototype [_outputRoutes])
          this [_outputRoutes] = new Set ();
@@ -311,17 +311,17 @@ X3DField .prototype = Object .assign (Object .create (X3DChildObject .prototype)
 
       this .processRouteCallbacks ();
    },
-   removeOutputRoute: function (route)
+   removeOutputRoute (route)
    {
       this [_outputRoutes] .delete (route);
 
       this .processRouteCallbacks ();
    },
-   getOutputRoutes: function ()
+   getOutputRoutes ()
    {
       return this [_outputRoutes];
    },
-   addRouteCallback: function (key, object)
+   addRouteCallback (key, object)
    {
       // Processed if routes are changed.
 
@@ -330,11 +330,11 @@ X3DField .prototype = Object .assign (Object .create (X3DChildObject .prototype)
 
       this [_routeCallbacks] .set (key, object);
    },
-   removeRouteCallback: function (key)
+   removeRouteCallback (key)
    {
       this [_routeCallbacks] .delete (key);
    },
-   getRouteCallbacks: function ()
+   getRouteCallbacks ()
    {
       return this [_routeCallbacks];
    },
@@ -404,11 +404,11 @@ X3DField .prototype = Object .assign (Object .create (X3DChildObject .prototype)
    })(),
    addCloneCount: Function .prototype,
    removeCloneCount: Function .prototype,
-   fromString: function (string, scene)
+   fromString (string, scene)
    {
       // Function will be overridden in VRMLParser.
    },
-   dispose: function ()
+   dispose ()
    {
       this [_references]          .clear ();
       this [_referencesCallbacks] .clear ();

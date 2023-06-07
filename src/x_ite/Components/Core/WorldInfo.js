@@ -61,13 +61,13 @@ function WorldInfo (executionContext)
 WorldInfo .prototype = Object .assign (Object .create (X3DInfoNode .prototype),
 {
    constructor: WorldInfo,
-   initialize: function ()
+   initialize ()
    {
       X3DInfoNode .prototype .initialize .call (this);
 
       this .getExecutionContext () .addWorldInfo (this);
    },
-   dispose: function ()
+   dispose ()
    {
       this .getExecutionContext () .removeWorldInfo (this);
 

@@ -62,17 +62,17 @@ function Circle2DOptions (executionContext)
 Circle2DOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 {
    constructor: Circle2DOptions,
-   initialize: function ()
+   initialize ()
    {
       this .addInterest ("build", this);
 
       this .build ();
    },
-   getVertices: function ()
+   getVertices ()
    {
       return this .vertices;
    },
-   build: function ()
+   build ()
    {
       const
          dimension = this ._dimension .getValue (),

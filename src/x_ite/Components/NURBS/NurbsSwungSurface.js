@@ -65,7 +65,7 @@ function NurbsSwungSurface (executionContext)
 NurbsSwungSurface .prototype = Object .assign (Object .create (X3DParametricGeometryNode .prototype),
 {
    constructor: NurbsSwungSurface,
-   initialize: function ()
+   initialize ()
    {
       X3DParametricGeometryNode .prototype .initialize .call (this);
 
@@ -89,7 +89,7 @@ NurbsSwungSurface .prototype = Object .assign (Object .create (X3DParametricGeom
       this .set_profileCurve__ ();
       this .set_trajectoryCurve__ ();
    },
-   set_profileCurve__: function ()
+   set_profileCurve__ ()
    {
       if (this .profileCurveNode)
          this .profileCurveNode .removeInterest ("requestRebuild", this);
@@ -99,7 +99,7 @@ NurbsSwungSurface .prototype = Object .assign (Object .create (X3DParametricGeom
       if (this .profileCurveNode)
          this .profileCurveNode .addInterest ("requestRebuild", this);
    },
-   set_trajectoryCurve__: function ()
+   set_trajectoryCurve__ ()
    {
       if (this .trajectoryCurveNode)
          this .trajectoryCurveNode .removeInterest ("requestRebuild", this);
@@ -109,7 +109,7 @@ NurbsSwungSurface .prototype = Object .assign (Object .create (X3DParametricGeom
       if (this .trajectoryCurveNode)
          this .trajectoryCurveNode .addInterest ("requestRebuild", this);
    },
-   build: function ()
+   build ()
    {
       if (! this .profileCurveNode)
          return;

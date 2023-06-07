@@ -53,7 +53,7 @@ import TextureCoordinateGeneratorModeType from "../Texturing/TextureCoordinateGe
 
 const ShaderSource =
 {
-   getSource: function (gl, browser, source, options)
+   getSource (gl, browser, source, options)
    {
 			const
 				COMMENTS     = "\\s+|/\\*[\\s\\S]*?\\*/|//.*?\\n",

@@ -73,7 +73,7 @@ NurbsCurve .prototype = Object .assign (Object .create (X3DParametricGeometryNod
    X3DLineGeometryNode .prototype,
 {
    constructor: NurbsCurve,
-   initialize: function ()
+   initialize ()
    {
       X3DParametricGeometryNode .prototype .initialize .call (this);
 
@@ -81,7 +81,7 @@ NurbsCurve .prototype = Object .assign (Object .create (X3DParametricGeometryNod
 
       this .set_controlPoint__ ();
    },
-   set_controlPoint__: function ()
+   set_controlPoint__ ()
    {
       if (this .controlPointNode)
          this .controlPointNode .removeInterest ("requestRebuild", this);
@@ -91,26 +91,26 @@ NurbsCurve .prototype = Object .assign (Object .create (X3DParametricGeometryNod
       if (this .controlPointNode)
          this .controlPointNode .addInterest ("requestRebuild", this);
    },
-   getTessellation: function (numKnots)
+   getTessellation (numKnots)
    {
       return NURBS .getTessellation (this ._tessellation .getValue (), numKnots - this ._order .getValue ());
    },
-   getClosed: function (order, knot, weight, controlPointNode)
+   getClosed (order, knot, weight, controlPointNode)
    {
       if (! this ._closed .getValue ())
          return false;
 
       return NURBS .getClosed (order, knot, weight, controlPointNode);
    },
-   getWeights: function (result, dimension, weight)
+   getWeights (result, dimension, weight)
    {
       return NURBS .getWeights (result, dimension, weight);
    },
-   getControlPoints: function (result, closed, order, weights, controlPointNode)
+   getControlPoints (result, closed, order, weights, controlPointNode)
    {
       return NURBS .getControlPoints (result, closed, order, weights, controlPointNode);
    },
-   tessellate: function ()
+   tessellate ()
    {
       if (this ._order .getValue () < 2)
          return [ ];
@@ -137,7 +137,7 @@ NurbsCurve .prototype = Object .assign (Object .create (X3DParametricGeometryNod
 
       return array;
    },
-   build: function ()
+   build ()
    {
       if (this ._order .getValue () < 2)
          return;
@@ -189,7 +189,7 @@ NurbsCurve .prototype = Object .assign (Object .create (X3DParametricGeometryNod
          vertexArray .push (points [i2], points [i2 + 1], points [i2 + 2], 1);
       }
    },
-   dispose: function ()
+   dispose ()
    {
       X3DParametricGeometryNode .prototype .dispose .call (this);
    },

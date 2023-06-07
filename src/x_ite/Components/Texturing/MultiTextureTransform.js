@@ -67,7 +67,7 @@ function MultiTextureTransform (executionContext)
 MultiTextureTransform .prototype = Object .assign (Object .create (X3DTextureTransformNode .prototype),
 {
    constructor: MultiTextureTransform,
-   initialize: function ()
+   initialize ()
    {
       X3DTextureTransformNode .prototype .initialize .call (this);
 
@@ -75,7 +75,7 @@ MultiTextureTransform .prototype = Object .assign (Object .create (X3DTextureTra
 
       this .set_textureTransform__ ();
    },
-   set_textureTransform__: function ()
+   set_textureTransform__ ()
    {
       const textureTransformNodes = this .textureTransformNodes;
 
@@ -92,11 +92,11 @@ MultiTextureTransform .prototype = Object .assign (Object .create (X3DTextureTra
       if (!textureTransformNodes .length)
          textureTransformNodes .push (this .getBrowser () .getDefaultTextureTransform ());
    },
-   getCount: function ()
+   getCount ()
    {
       return Math .min (this .maxTextureTransforms, this .textureTransformNodes .length);
    },
-   getTextureTransformMapping: function (textureTransformMapping)
+   getTextureTransformMapping (textureTransformMapping)
    {
       const
          textureTransformNodes = this .textureTransformNodes,
@@ -105,7 +105,7 @@ MultiTextureTransform .prototype = Object .assign (Object .create (X3DTextureTra
       for (let i = 0; i < length; ++ i)
          textureTransformNodes [i] .getTextureTransformMapping (textureTransformMapping, i);
    },
-   setShaderUniforms: function (gl, shaderObject)
+   setShaderUniforms (gl, shaderObject)
    {
       const
          textureTransformNodes = this .textureTransformNodes,
@@ -114,7 +114,7 @@ MultiTextureTransform .prototype = Object .assign (Object .create (X3DTextureTra
       for (let i = 0; i < length; ++ i)
          textureTransformNodes [i] .setShaderUniforms (gl, shaderObject, i);
    },
-   transformPoint: function (texCoord)
+   transformPoint (texCoord)
    {
       return this .textureTransformNodes [0] .transformPoint (texCoord);
    },

@@ -59,11 +59,11 @@ function X3DBindableNode (executionContext)
 X3DBindableNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 {
    constructor: X3DBindableNode,
-   isCameraObject: function ()
+   isCameraObject ()
    {
       return true;
    },
-   transitionStart: function ()
+   transitionStart ()
    { },
 });
 

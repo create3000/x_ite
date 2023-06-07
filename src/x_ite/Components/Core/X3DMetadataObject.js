@@ -55,8 +55,8 @@ function X3DMetadataObject (executionContext)
 X3DMetadataObject .prototype =
 {
    constructor: X3DMetadataObject,
-   initialize: function () { },
-   dispose: function () { },
+   initialize () { },
+   dispose () { },
 };
 
 Object .defineProperties (X3DMetadataObject,

@@ -54,11 +54,11 @@ function X3DScriptingContext ()
 
 X3DScriptingContext .prototype =
 {
-   isExternal: function ()
+   isExternal ()
    {
       return this [_scripts] .length === 1;
    },
-   getScriptStack: function ()
+   getScriptStack ()
    {
       return this [_scripts];
    },

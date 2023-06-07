@@ -60,19 +60,19 @@ function X3DNode (executionContext)
 X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 {
    constructor: X3DNode,
-   getComponentName: function ()
+   getComponentName ()
    {
       return this .constructor .componentName;
    },
-   getContainerField: function ()
+   getContainerField ()
    {
       return this .constructor .containerField;
    },
-   getSpecificationRange: function ()
+   getSpecificationRange ()
    {
       return this .constructor .specificationRange;
    },
-   copy: function (instance)
+   copy (instance)
    {
       if (!instance || instance .getType () .includes (X3DConstants .X3DExecutionContext))
       {
@@ -186,11 +186,11 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
          return copy;
       }
    },
-   getDisplayName: function ()
+   getDisplayName ()
    {
       return this .getName () .replace (/_\d+$/, "");
    },
-   getNeedsName: function ()
+   getNeedsName ()
    {
       if (this .getName () .length)
          return false;
@@ -220,16 +220,16 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 
       return false;
    },
-   getSourceText: function ()
+   getSourceText ()
    {
       return null;
    },
-   traverse: function () { },
-   toStream: function (generator)
+   traverse () { },
+   toStream (generator)
    {
       generator .string += this .getTypeName () + " { }";
    },
-   toVRMLStream: function (generator)
+   toVRMLStream (generator)
    {
       generator .EnterScope ();
 
@@ -336,7 +336,7 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 
       generator .LeaveScope ();
    },
-   toVRMLStreamUserDefinedField: function (generator, field, fieldTypeLength, accessTypeLength)
+   toVRMLStreamUserDefinedField (generator, field, fieldTypeLength, accessTypeLength)
    {
       const sharedNode = generator .IsSharedNode (this);
 
@@ -404,7 +404,7 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
          }
       }
    },
-   toVRMLStreamField: function (generator, field)
+   toVRMLStreamField (generator, field)
    {
       const sharedNode = generator .IsSharedNode (this);
 
@@ -457,7 +457,7 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
          }
       }
    },
-   toXMLStream: function (generator)
+   toXMLStream (generator)
    {
       const sharedNode = generator .IsSharedNode (this);
 
@@ -809,7 +809,7 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 
       generator .LeaveScope ();
    },
-   toJSONStream: function (generator)
+   toJSONStream (generator)
    {
       const sharedNode = generator .IsSharedNode (this);
 
@@ -1285,7 +1285,7 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 
       generator .LeaveScope ();
    },
-   dispose: function ()
+   dispose ()
    {
       const executionContext = this .getExecutionContext ();
 

@@ -81,11 +81,11 @@ function XMLParser (scene)
 XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 {
    constructor: XMLParser,
-   getEncoding: function ()
+   getEncoding ()
    {
       return "XML";
    },
-   isValid: function ()
+   isValid ()
    {
       return (this .input instanceof XMLDocument) || (this .input instanceof HTMLElement) || (this .input === null);
    },
@@ -107,14 +107,14 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          this .input = undefined;
       }
    },
-   isXML: function (element)
+   isXML (element)
    {
       if (element instanceof HTMLElement)
          return false;
       else
          return true;
    },
-   parseIntoScene: function (resolve, reject)
+   parseIntoScene (resolve, reject)
    {
       this .resolve = resolve;
       this .reject  = reject;
@@ -124,7 +124,7 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       this .xmlElement (this .input);
    },
-   xmlElement: function (xmlElement)
+   xmlElement (xmlElement)
    {
       if (xmlElement === null)
          return this .resolve ?.(this .getScene ());
@@ -203,7 +203,7 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          }
       }
    },
-   x3dElement: function (xmlElement)
+   x3dElement (xmlElement)
    {
       try
       {
@@ -254,7 +254,7 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             this .x3dElementChildScene (childNode)
       }
    },
-   x3dElementChildHead: function (xmlElement)
+   x3dElementChildHead (xmlElement)
    {
       switch (xmlElement .nodeName)
       {
@@ -264,7 +264,7 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             return;
       }
    },
-   x3dElementChildScene: function (xmlElement)
+   x3dElementChildScene (xmlElement)
    {
       switch (xmlElement .nodeName)
       {
@@ -274,12 +274,12 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             return;
       }
    },
-   headElement: function (xmlElement)
+   headElement (xmlElement)
    {
       for (const childNode of xmlElement .childNodes)
          this .headElementChild (childNode);
    },
-   headElementChild: function (xmlElement)
+   headElementChild (xmlElement)
    {
       switch (xmlElement .nodeName)
       {
@@ -297,7 +297,7 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             return;
       }
    },
-   componentElement: function (xmlElement)
+   componentElement (xmlElement)
    {
       try
       {
@@ -320,7 +320,7 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          console .log (error .message);
       }
    },
-   unitElement: function (xmlElement)
+   unitElement (xmlElement)
    {
       const
          category         = xmlElement .getAttribute ("category"),
@@ -338,7 +338,7 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       this .getScene () .updateUnit (category, name, parseFloat (conversionFactor));
    },
-   metaElement: function (xmlElement)
+   metaElement (xmlElement)
    {
       const
          metakey   = xmlElement .getAttribute ("name"),
@@ -352,18 +352,18 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       this .getScene () .addMetaData (metakey, metavalue);
    },
-   sceneElement: function (xmlElement)
+   sceneElement (xmlElement)
    {
       $.data (xmlElement, "node", this .scene);
 
       this .childrenElements (xmlElement);
    },
-   childrenElements: function (xmlElement)
+   childrenElements (xmlElement)
    {
       for (const childNode of xmlElement .childNodes)
          this .childElement (childNode);
    },
-   childElement: function (xmlElement)
+   childElement (xmlElement)
    {
       switch (xmlElement .nodeName)
       {
@@ -421,7 +421,7 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             return;
       }
    },
-   externProtoDeclareElement: function (xmlElement)
+   externProtoDeclareElement (xmlElement)
    {
       const name = xmlElement .getAttribute ("name");
 
@@ -458,7 +458,7 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          this .addProtoName (name);
       }
    },
-   protoDeclareElement: function (xmlElement)
+   protoDeclareElement (xmlElement)
    {
       const name = xmlElement .getAttribute ("name");
 
@@ -525,12 +525,12 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          this .addProtoName (name);
       }
    },
-   protoInterfaceElement: function (xmlElement)
+   protoInterfaceElement (xmlElement)
    {
       for (const childNode of xmlElement .childNodes)
          this .protoInterfaceElementChild (childNode);
    },
-   protoInterfaceElementChild: function (xmlElement)
+   protoInterfaceElementChild (xmlElement)
    {
       switch (xmlElement .nodeName)
       {
@@ -540,7 +540,7 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             return;
       }
    },
-   fieldElement: function (xmlElement)
+   fieldElement (xmlElement)
    {
       try
       {
@@ -585,11 +585,11 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          console .error (error);
       }
    },
-   protoBodyElement: function (xmlElement)
+   protoBodyElement (xmlElement)
    {
       this .childrenElements (xmlElement);
    },
-   isElement: function (xmlElement)
+   isElement (xmlElement)
    {
       if (this .isInsideProtoDefinition ())
       {
@@ -597,7 +597,7 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             this .isElementChild (childNode);
       }
    },
-   isElementChild: function (xmlElement)
+   isElementChild (xmlElement)
    {
       switch (xmlElement .nodeName)
       {
@@ -607,7 +607,7 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             return;
       }
    },
-   connectElement: function (xmlElement)
+   connectElement (xmlElement)
    {
       const
          nodeFieldName  = xmlElement .getAttribute ("nodeField"),
@@ -650,7 +650,7 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          console .warn ("XML Parser Error: Couldn't create IS reference. " + error .message);
       }
    },
-   protoInstanceElement: function (xmlElement)
+   protoInstanceElement (xmlElement)
    {
       try
       {
@@ -688,7 +688,7 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             console .error (error);
       }
    },
-   fieldValueElement: function (xmlElement)
+   fieldValueElement (xmlElement)
    {
       try
       {
@@ -728,7 +728,7 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          console .warn ("XML Parser Error: Couldn't assign field value. " + error .message);
       }
    },
-   nodeElement: function (xmlElement)
+   nodeElement (xmlElement)
    {
       try
       {
@@ -793,7 +793,7 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             element .appendChild (childNode);
 		}
 	},
-   routeElement: function (xmlElement)
+   routeElement (xmlElement)
    {
       try
       {
@@ -832,7 +832,7 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             console .error (error);
       }
    },
-   importElement: function (xmlElement)
+   importElement (xmlElement)
    {
       try
       {
@@ -856,7 +856,7 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          console .warn ("XML Parser Error: " + error .message);
       }
    },
-   exportElement: function (xmlElement)
+   exportElement (xmlElement)
    {
       try
       {
@@ -882,7 +882,7 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          console .warn ("XML Parser Error: " + error .message);
       }
    },
-   cdataNode: function (xmlElement)
+   cdataNode (xmlElement)
    {
       if (this .getParents () .length === 0)
          return;
@@ -892,7 +892,7 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (node instanceof X3DNode)
          node .getSourceText () ?.push (xmlElement .data);
    },
-   useAttribute: function (xmlElement)
+   useAttribute (xmlElement)
    {
       try
       {
@@ -913,7 +913,7 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return false;
    },
-   defAttribute: function (xmlElement, node)
+   defAttribute (xmlElement, node)
    {
       try
       {
@@ -938,12 +938,12 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          console .warn ("Invalid DEF name: " + error .message);
       }
    },
-   nodeAttributes: function (xmlElement, node)
+   nodeAttributes (xmlElement, node)
    {
       for (const xmlAttribute of xmlElement .attributes)
          this .nodeAttribute (xmlAttribute, node);
    },
-   nodeAttribute: function (xmlAttribute, node)
+   nodeAttribute (xmlAttribute, node)
    {
       try
       {
@@ -957,7 +957,7 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          //console .error (error);
       }
    },
-   fieldValue: function (field, value)
+   fieldValue (field, value)
    {
       if (value === null)
          return;
@@ -969,7 +969,7 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       this .parser .popExecutionContext ();
    },
-   id: function (string)
+   id (string)
    {
       if (string === null)
          return false;
@@ -979,23 +979,23 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return true;
    },
-   getParents: function ()
+   getParents ()
    {
       return this .parents;
    },
-   getParent: function ()
+   getParent ()
    {
       return this .parents .at (-1);
    },
-   pushParent: function (parent)
+   pushParent (parent)
    {
       return this .parents .push (parent);
    },
-   popParent: function ()
+   popParent ()
    {
       this .parents .pop ();
    },
-   addNode: function (xmlElement, node)
+   addNode (xmlElement, node)
    {
       if (this .parents .length === 0 || this .getParent () instanceof X3DProtoDeclaration)
       {
@@ -1049,19 +1049,19 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       }
    },
    // Overloaded by HTMLParser.
-   addProtoName: function (name)
+   addProtoName (name)
    { },
-   addProtoFieldNames: function (protoNode)
+   addProtoFieldNames (protoNode)
    { },
-   protoNameToCamelCase: function (typeName)
+   protoNameToCamelCase (typeName)
    {
       return typeName;
    },
-   nodeNameToCamelCase: function (typeName)
+   nodeNameToCamelCase (typeName)
    {
       return typeName;
    },
-   attributeToCamelCase: function (node, name)
+   attributeToCamelCase (node, name)
    {
       return name;
    },
@@ -1080,9 +1080,9 @@ Object .assign (XMLParser .prototype,
    [X3DConstants .SFMatrix3d]:  VRMLParser .prototype .sfmatrix3Value,
    [X3DConstants .SFMatrix4f]:  VRMLParser .prototype .sfmatrix4Value,
    [X3DConstants .SFMatrix4d]:  VRMLParser .prototype .sfmatrix4Value,
-   [X3DConstants .SFNode]:      function (field) { field .setValue (null); },
+   [X3DConstants .SFNode] (field) { field .setValue (null); },
    [X3DConstants .SFRotation]:  VRMLParser .prototype .sfrotationValue,
-   [X3DConstants .SFString]:    function (field) { field .setValue (Fields .SFString .unescape (this .input)); },
+   [X3DConstants .SFString] (field) { field .setValue (Fields .SFString .unescape (this .input)); },
    [X3DConstants .SFTime]:      VRMLParser .prototype .sfdoubleValue,
    [X3DConstants .SFVec2d]:     VRMLParser .prototype .sfvec2Value,
    [X3DConstants .SFVec2f]:     VRMLParser .prototype .sfvec2Value,
@@ -1102,7 +1102,7 @@ Object .assign (XMLParser .prototype,
    [X3DConstants .MFMatrix3f]:  VRMLParser .prototype .sfmatrix3Values,
    [X3DConstants .MFMatrix4d]:  VRMLParser .prototype .sfmatrix4Values,
    [X3DConstants .MFMatrix4f]:  VRMLParser .prototype .sfmatrix4Values,
-   [X3DConstants .MFNode]:      function (field) { field .length = 0; },
+   [X3DConstants .MFNode] (field) { field .length = 0; },
    [X3DConstants .MFRotation]:  VRMLParser .prototype .sfrotationValues,
    [X3DConstants .MFString]:    VRMLParser .prototype .sfstringValues,
    [X3DConstants .MFTime]:      VRMLParser .prototype .sfdoubleValues,
@@ -1118,7 +1118,7 @@ Object .assign (XMLParser .prototype,
 
 const HTMLParser =
 {
-   addProtoName: function (name)
+   addProtoName (name)
    {
       //DOMIntegration: add uppercase versions of proto name.
 
@@ -1158,17 +1158,17 @@ const HTMLParser =
          }
       };
    })(),
-   protoNameToCamelCase: function (typeName)
+   protoNameToCamelCase (typeName)
    {
       //DOMIntegration: handle uppercase versions of node names.
       return this .protoNames .get (typeName);
    },
-   nodeNameToCamelCase: function (typeName)
+   nodeNameToCamelCase (typeName)
    {
       //DOMIntegration: handle uppercase versions of node names.
       return HTMLSupport .getNodeTypeName (typeName);
    },
-   attributeToCamelCase: function (node, name)
+   attributeToCamelCase (node, name)
    {
       //DOMIntegration: handle lowercase versions of field names.
 

@@ -62,7 +62,7 @@ function BlendedVolumeStyle (executionContext)
 BlendedVolumeStyle .prototype = Object .assign (Object .create (X3DComposableVolumeRenderStyleNode .prototype),
 {
    constructor: BlendedVolumeStyle,
-   initialize: function ()
+   initialize ()
    {
       X3DComposableVolumeRenderStyleNode .prototype .initialize .call (this);
 
@@ -81,29 +81,29 @@ BlendedVolumeStyle .prototype = Object .assign (Object .create (X3DComposableVol
       this .set_renderStyle__ ();
       this .set_voxels__ ();
    },
-   addVolumeData: function (volumeDataNode)
+   addVolumeData (volumeDataNode)
    {
       X3DComposableVolumeRenderStyleNode .prototype .addVolumeData .call (this, volumeDataNode);
 
       if (this .renderStyleNode)
          this .renderStyleNode .addVolumeData (volumeDataNode);
    },
-   removeVolumeData: function (volumeDataNode)
+   removeVolumeData (volumeDataNode)
    {
       X3DComposableVolumeRenderStyleNode .prototype .removeVolumeData .call (this, volumeDataNode);
 
       if (this .renderStyleNode)
          this .renderStyleNode .removeVolumeData (volumeDataNode);
    },
-   set_weightTransferFunction1__: function ()
+   set_weightTransferFunction1__ ()
    {
       this .weightTransferFunction1Node = X3DCast (X3DConstants .X3DTexture2DNode, this ._weightTransferFunction1);
    },
-   set_weightTransferFunction2__: function ()
+   set_weightTransferFunction2__ ()
    {
       this .weightTransferFunction2Node = X3DCast (X3DConstants .X3DTexture2DNode, this ._weightTransferFunction2);
    },
-   set_renderStyle__: function ()
+   set_renderStyle__ ()
    {
       if (this .renderStyleNode)
       {
@@ -123,11 +123,11 @@ BlendedVolumeStyle .prototype = Object .assign (Object .create (X3DComposableVol
             this .renderStyleNode .addVolumeData (volumeDataNode);
       }
    },
-   set_voxels__: function ()
+   set_voxels__ ()
    {
       this .voxelsNode = X3DCast (X3DConstants .X3DTexture3DNode, this ._voxels);
    },
-   addShaderFields: function (shaderNode)
+   addShaderFields (shaderNode)
    {
       if (! this ._enabled .getValue ())
          return;
@@ -151,7 +151,7 @@ BlendedVolumeStyle .prototype = Object .assign (Object .create (X3DComposableVol
       if (this .renderStyleNode)
          this .renderStyleNode .addShaderFields (shaderNode);
    },
-   getUniformsText: function ()
+   getUniformsText ()
    {
       if (! this ._enabled .getValue ())
          return "";
@@ -294,7 +294,7 @@ BlendedVolumeStyle .prototype = Object .assign (Object .create (X3DComposableVol
 
       return string;
    },
-   getFunctionsText: function ()
+   getFunctionsText ()
    {
       if (! this ._enabled .getValue ())
          return "";

@@ -62,35 +62,35 @@ function ScalarChaser (executionContext)
 ScalarChaser .prototype = Object .assign (Object .create (X3DChaserNode .prototype),
 {
    constructor: ScalarChaser,
-   getVector: function ()
+   getVector ()
    {
       return 0;
    },
-   setPreviousValue: function (value)
+   setPreviousValue (value)
    {
       this .previousValue = value;
    },
-   setDestination: function (value)
+   setDestination (value)
    {
       this .destination = value;
    },
-   duplicate: function (value)
+   duplicate (value)
    {
       return value;
    },
-   assign: function (buffer, i, value)
+   assign (buffer, i, value)
    {
       buffer [i] = value;
    },
-   equals: function (lhs, rhs, tolerance)
+   equals (lhs, rhs, tolerance)
    {
       return Math .abs (lhs - rhs) < tolerance;
    },
-   interpolate: function (source, destination, weight)
+   interpolate (source, destination, weight)
    {
       return Algorithm .lerp (source, destination, weight);
    },
-   step: function (value1, value2, t)
+   step (value1, value2, t)
    {
       this .output += (value1 - value2) * t;
    },

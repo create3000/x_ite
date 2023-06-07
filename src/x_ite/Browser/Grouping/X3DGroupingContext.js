@@ -55,7 +55,7 @@ function X3DGroupingContext () { }
 
 X3DGroupingContext .prototype =
 {
-   getBBoxNode: function ()
+   getBBoxNode ()
    {
       const
          bboxShape      = new Shape (this .getPrivateScene ()),

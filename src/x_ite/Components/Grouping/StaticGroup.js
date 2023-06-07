@@ -81,7 +81,7 @@ StaticGroup .prototype = Object .assign (Object .create (X3DChildNode .prototype
    X3DBoundedObject .prototype,
 {
    constructor: StaticGroup,
-   initialize: function ()
+   initialize ()
    {
       X3DChildNode     .prototype .initialize .call (this);
       X3DBoundedObject .prototype .initialize .call (this);
@@ -106,11 +106,11 @@ StaticGroup .prototype = Object .assign (Object .create (X3DChildNode .prototype
 
       this .set_children__ ();
    },
-   getBBox: function (bbox, shadows)
+   getBBox (bbox, shadows)
    {
       return bbox .assign (shadows ? this .shadowBBox : this .bbox);
    },
-   set_children__: function ()
+   set_children__ ()
    {
       this .groupNode .getBBox (this .bbox);
       this .groupNode .getBBox (this .shadowBBox, true);
@@ -121,7 +121,7 @@ StaticGroup .prototype = Object .assign (Object .create (X3DChildNode .prototype
       this [_opaqueShapes]      = null;
       this [_transparentShapes] = null;
    },
-   traverse: function (type, renderObject)
+   traverse (type, renderObject)
    {
       switch (type)
       {
@@ -199,7 +199,7 @@ StaticGroup .prototype = Object .assign (Object .create (X3DChildNode .prototype
          }
       };
    })(),
-   dispose: function ()
+   dispose ()
    {
       X3DBoundedObject .prototype .dispose .call (this);
       X3DChildNode     .prototype .dispose .call (this);

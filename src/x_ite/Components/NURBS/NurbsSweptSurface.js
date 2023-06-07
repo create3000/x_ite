@@ -65,7 +65,7 @@ function NurbsSweptSurface (executionContext)
 NurbsSweptSurface .prototype = Object .assign (Object .create (X3DParametricGeometryNode .prototype),
 {
    constructor: NurbsSweptSurface,
-   initialize: function ()
+   initialize ()
    {
       X3DParametricGeometryNode .prototype .initialize .call (this);
 
@@ -89,7 +89,7 @@ NurbsSweptSurface .prototype = Object .assign (Object .create (X3DParametricGeom
       this .set_crossSectionCurve__ ();
       this .set_trajectoryCurve__ ();
    },
-   set_crossSectionCurve__: function ()
+   set_crossSectionCurve__ ()
    {
       if (this .crossSectionCurveNode)
          this .crossSectionCurveNode .removeInterest ("requestRebuild", this);
@@ -99,7 +99,7 @@ NurbsSweptSurface .prototype = Object .assign (Object .create (X3DParametricGeom
       if (this .crossSectionCurveNode)
          this .crossSectionCurveNode .addInterest ("requestRebuild", this);
    },
-   set_trajectoryCurve__: function ()
+   set_trajectoryCurve__ ()
    {
       if (this .trajectoryCurveNode)
          this .trajectoryCurveNode ._rebuild .removeInterest ("requestRebuild", this);
@@ -109,7 +109,7 @@ NurbsSweptSurface .prototype = Object .assign (Object .create (X3DParametricGeom
       if (this .trajectoryCurveNode)
          this .trajectoryCurveNode ._rebuild .addInterest ("requestRebuild", this);
    },
-   build: function ()
+   build ()
    {
       if (! this .crossSectionCurveNode)
          return;

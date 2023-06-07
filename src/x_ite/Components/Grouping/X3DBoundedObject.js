@@ -68,7 +68,7 @@ function X3DBoundedObject (executionContext)
 X3DBoundedObject .prototype =
 {
    constructor: X3DBoundedObject,
-   initialize: function () { },
+   initialize () { },
    getDefaultBBoxSize: (function ()
    {
       const defaultBBoxSize = new Vector3 (-1, -1, -1);
@@ -78,7 +78,7 @@ X3DBoundedObject .prototype =
          return defaultBBoxSize;
       };
    })(),
-   getBBox: function (nodes, bbox, shadows)
+   getBBox (nodes, bbox, shadows)
    {
       // Must be unique for each X3DBoundedObject.
       const childBBox = this .childBBox;
@@ -116,23 +116,23 @@ X3DBoundedObject .prototype =
          modelViewMatrix .pop ();
       };
    })(),
-   addTransformSensor: function (transformSensorNode)
+   addTransformSensor (transformSensorNode)
    {
       this .transformSensorNodes .add (transformSensorNode);
 
       this ._transformSensors_changed = this .getBrowser () .getCurrentTime ();
    },
-   removeTransformSensor: function (transformSensorNode)
+   removeTransformSensor (transformSensorNode)
    {
       this .transformSensorNodes .delete (transformSensorNode);
 
       this ._transformSensors_changed = this .getBrowser () .getCurrentTime ();
    },
-   getTransformSensors: function ()
+   getTransformSensors ()
    {
       return this .transformSensorNodes;
    },
-   dispose: function () { },
+   dispose () { },
 };
 
 Object .defineProperties (X3DBoundedObject,

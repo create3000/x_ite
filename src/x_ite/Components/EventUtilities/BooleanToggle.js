@@ -61,13 +61,13 @@ function BooleanToggle (executionContext)
 BooleanToggle .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 {
    constructor: BooleanToggle,
-   initialize: function ()
+   initialize ()
    {
       X3DChildNode .prototype .initialize .call (this);
 
       this ._set_boolean .addInterest ("set_boolean__", this);
    },
-   set_boolean__: function ()
+   set_boolean__ ()
    {
       if (this ._set_boolean .getValue ())
          this ._toggle = ! this ._toggle .getValue ();

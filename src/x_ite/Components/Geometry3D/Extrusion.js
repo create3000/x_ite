@@ -70,7 +70,7 @@ function Extrusion (executionContext)
 Extrusion .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 {
    constructor: Extrusion,
-   initialize: function ()
+   initialize ()
    {
       X3DGeometryNode .prototype .initialize .call (this);
 
@@ -79,7 +79,7 @@ Extrusion .prototype = Object .assign (Object .create (X3DGeometryNode .prototyp
       this ._set_scale        .addFieldInterest (this ._scale);
       this ._set_spine        .addFieldInterest (this ._spine);
    },
-   getClosedOrientation: function ()
+   getClosedOrientation ()
    {
       const orientation = this ._orientation;
 
@@ -642,7 +642,7 @@ Extrusion .prototype = Object .assign (Object .create (X3DGeometryNode .prototyp
          this .setCCW (this ._ccw .getValue ());
       };
    })(),
-   addCap: function (texCoordArray, texCoord, normal, vertices, triangles)
+   addCap (texCoordArray, texCoord, normal, vertices, triangles)
    {
       const
          normalArray = this .getNormals (),

@@ -76,7 +76,7 @@ function GeneratedCubeMapTexture (executionContext)
 GeneratedCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironmentTextureNode .prototype),
 {
    constructor: GeneratedCubeMapTexture,
-   initialize: function ()
+   initialize ()
    {
       X3DEnvironmentTextureNode .prototype .initialize .call (this);
 
@@ -86,7 +86,7 @@ GeneratedCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironm
 
       this .set_size__ ();
    },
-   set_size__: function ()
+   set_size__ ()
    {
       const
          browser = this .getBrowser (),
@@ -121,7 +121,7 @@ GeneratedCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironm
          this .frameBuffer = null;
       }
    },
-   traverse: function (type, renderObject)
+   traverse (type, renderObject)
    {
       // TraverseType .DISPLAY
 

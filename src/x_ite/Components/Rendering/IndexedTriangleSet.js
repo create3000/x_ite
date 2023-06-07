@@ -61,17 +61,17 @@ function IndexedTriangleSet (executionContext)
 IndexedTriangleSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .prototype),
 {
    constructor: IndexedTriangleSet,
-   getPolygonIndex: function (i)
+   getPolygonIndex (i)
    {
       return this ._index [i];
    },
-   initialize: function ()
+   initialize ()
    {
       X3DComposedGeometryNode .prototype .initialize .call (this);
 
       this ._set_index .addFieldInterest (this ._index);
    },
-   build: function ()
+   build ()
    {
       X3DComposedGeometryNode .prototype .build .call (this, 3, this ._index .length, 3, this ._index .length);
    },

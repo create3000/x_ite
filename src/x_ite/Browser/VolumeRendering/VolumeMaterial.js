@@ -60,11 +60,11 @@ function VolumeMaterial (executionContext, volumeDataNode)
 VolumeMaterial .prototype = Object .assign (Object .create (UnlitMaterial .prototype),
 {
    constructor: VolumeMaterial,
-   getVolumeShaders: function ()
+   getVolumeShaders ()
    {
       return this .volumeShaderNodes;
    },
-   getShader: function (geometryContext, renderContext)
+   getShader (geometryContext, renderContext)
    {
       const { fogNode, objectsCount } = renderContext;
 
@@ -78,7 +78,7 @@ VolumeMaterial .prototype = Object .assign (Object .create (UnlitMaterial .proto
 
       return this .volumeShaderNodes .get (key) || this .createShader (key, geometryContext, renderContext);
    },
-   createShader: function (key, geometryContext, renderContext)
+   createShader (key, geometryContext, renderContext)
    {
       const
          browser = this .getBrowser (),
@@ -107,7 +107,7 @@ VolumeMaterial .prototype = Object .assign (Object .create (UnlitMaterial .proto
 
       return shaderNode;
    },
-   setShaderUniforms: function (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
+   setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
    {
       this .volumeDataNode .setShaderUniforms (gl, shaderObject);
    },

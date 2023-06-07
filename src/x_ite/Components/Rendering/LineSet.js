@@ -67,7 +67,7 @@ function LineSet (executionContext)
 LineSet .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototype),
 {
    constructor: LineSet,
-   initialize: function ()
+   initialize ()
    {
       X3DLineGeometryNode .prototype .initialize .call (this);
 
@@ -83,7 +83,7 @@ LineSet .prototype = Object .assign (Object .create (X3DLineGeometryNode .protot
       this .set_normal__ ();
       this .set_coord__ ();
    },
-   set_attrib__: function ()
+   set_attrib__ ()
    {
       const attribNodes = this .getAttrib ();
 
@@ -111,7 +111,7 @@ LineSet .prototype = Object .assign (Object .create (X3DLineGeometryNode .protot
 
       this .updateVertexArrays ();
    },
-   set_fogCoord__: function ()
+   set_fogCoord__ ()
    {
       this .fogCoordNode ?.removeInterest ("requestRebuild", this);
 
@@ -119,7 +119,7 @@ LineSet .prototype = Object .assign (Object .create (X3DLineGeometryNode .protot
 
       this .fogCoordNode ?.addInterest ("requestRebuild", this);
    },
-   set_color__: function ()
+   set_color__ ()
    {
       this .colorNode ?.removeInterest ("requestRebuild", this);
 
@@ -129,7 +129,7 @@ LineSet .prototype = Object .assign (Object .create (X3DLineGeometryNode .protot
 
       this .setTransparent (this .colorNode ?.isTransparent () ?? false);
    },
-   set_normal__: function ()
+   set_normal__ ()
    {
       this .normalNode ?.removeInterest ("requestRebuild", this);
 
@@ -137,7 +137,7 @@ LineSet .prototype = Object .assign (Object .create (X3DLineGeometryNode .protot
 
       this .normalNode ?.addInterest ("requestRebuild", this);
    },
-   set_coord__: function ()
+   set_coord__ ()
    {
       this .coordNode ?.removeInterest ("requestRebuild", this);
 
@@ -145,7 +145,7 @@ LineSet .prototype = Object .assign (Object .create (X3DLineGeometryNode .protot
 
       this .coordNode ?.addInterest ("requestRebuild", this);
    },
-   build: function ()
+   build ()
    {
       if (! this .coordNode || this .coordNode .isEmpty ())
          return;

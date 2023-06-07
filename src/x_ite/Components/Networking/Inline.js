@@ -78,7 +78,7 @@ Inline .prototype = Object .assign (Object .create (X3DChildNode .prototype),
    X3DBoundedObject .prototype,
 {
    constructor: Inline,
-   initialize: function ()
+   initialize ()
    {
       X3DChildNode     .prototype .initialize .call (this);
       X3DUrlObject     .prototype .initialize .call (this);
@@ -92,14 +92,14 @@ Inline .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 
       this .requestImmediateLoad () .catch (Function .prototype);
    },
-   getBBox: function (bbox, shadows)
+   getBBox (bbox, shadows)
    {
       if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
          return this .groupNode .getBBox (bbox, shadows);
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
-   set_live__: function ()
+   set_live__ ()
    {
       X3DUrlObject .prototype .set_live__ .call (this);
 
@@ -108,24 +108,24 @@ Inline .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 
       this .scene .setLive (this .getLive () .getValue ());
    },
-   unloadData: function ()
+   unloadData ()
    {
       this .abortLoading ();
       this .setInternalScene (this .getBrowser () .getDefaultScene ());
    },
-   loadData: function ()
+   loadData ()
    {
       this .abortLoading ();
       this .fileLoader = new FileLoader (this) .createX3DFromURL (this ._url, null, this .setInternalSceneAsync .bind (this));
    },
-   abortLoading: function ()
+   abortLoading ()
    {
       this .scene ._loadCount .removeInterest ("checkLoadCount", this);
 
       if (this .fileLoader)
          this .fileLoader .abort ();
    },
-   setInternalSceneAsync: function (scene)
+   setInternalSceneAsync (scene)
    {
       if (scene)
       {
@@ -139,7 +139,7 @@ Inline .prototype = Object .assign (Object .create (X3DChildNode .prototype),
          this .setLoadState (X3DConstants .FAILED_STATE);
       }
    },
-   checkLoadCount: function (loadCount)
+   checkLoadCount (loadCount)
    {
       if (loadCount .getValue ())
          return;
@@ -148,7 +148,7 @@ Inline .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 
       this .setLoadState (X3DConstants .COMPLETE_STATE);
    },
-   setInternalScene: function (scene)
+   setInternalScene (scene)
    {
       this .scene .setLive (false);
       this .scene .rootNodes .removeFieldInterest (this .groupNode ._children);
@@ -166,7 +166,7 @@ Inline .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 
       this .getBrowser () .addBrowserEvent ();
    },
-   getInternalScene: function ()
+   getInternalScene ()
    {
       ///  Returns the internal X3DScene of this inline, that is loaded from the url given.
       ///  If the load field was false an empty scene is returned.  This empty scene is the same for all Inline
@@ -174,7 +174,7 @@ Inline .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 
       return this .scene;
    },
-   traverse: function (type, renderObject)
+   traverse (type, renderObject)
    {
       switch (type)
       {
@@ -267,7 +267,7 @@ Inline .prototype = Object .assign (Object .create (X3DChildNode .prototype),
          }
       }
    },
-   dispose: function ()
+   dispose ()
    {
       X3DBoundedObject .prototype .dispose .call (this);
       X3DUrlObject     .prototype .dispose .call (this);

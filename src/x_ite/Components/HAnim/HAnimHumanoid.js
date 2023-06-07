@@ -86,7 +86,7 @@ HAnimHumanoid .prototype = Object .assign (Object .create (X3DChildNode .prototy
    X3DBoundedObject .prototype,
 {
    constructor: HAnimHumanoid,
-   initialize: function ()
+   initialize ()
    {
       X3DChildNode     .prototype .initialize .call (this);
       X3DBoundedObject .prototype .initialize .call (this);
@@ -154,11 +154,11 @@ HAnimHumanoid .prototype = Object .assign (Object .create (X3DChildNode .prototy
       this .set_skinNormal__ ();
       this .set_skinCoord__ ();
    },
-   getBBox: function (bbox, shadows)
+   getBBox (bbox, shadows)
    {
       return this .transformNode .getBBox (bbox, shadows);
    },
-   set_joints__: function ()
+   set_joints__ ()
    {
       const jointNodes = this .jointNodes;
 
@@ -180,11 +180,11 @@ HAnimHumanoid .prototype = Object .assign (Object .create (X3DChildNode .prototy
 
       this .set_joint__ ();
    },
-   set_joint__: function ()
+   set_joint__ ()
    {
       this .changed = true;
    },
-   set_skinNormal__: function ()
+   set_skinNormal__ ()
    {
       this .restNormalNode = null;
 
@@ -195,7 +195,7 @@ HAnimHumanoid .prototype = Object .assign (Object .create (X3DChildNode .prototy
 
       this .changed = true;
    },
-   set_skinCoord__: function ()
+   set_skinCoord__ ()
    {
       this .restCoordNode = null;
 
@@ -214,7 +214,7 @@ HAnimHumanoid .prototype = Object .assign (Object .create (X3DChildNode .prototy
 
       this .changed = true;
    },
-   traverse: function (type, renderObject)
+   traverse (type, renderObject)
    {
       this .transformNode .traverse (type, renderObject);
 
@@ -318,7 +318,7 @@ HAnimHumanoid .prototype = Object .assign (Object .create (X3DChildNode .prototy
          }
       };
    })(),
-   toVRMLStream: function (generator)
+   toVRMLStream (generator)
    {
       if (this .skinCoordNode)
          this .skinCoordNode ._point = this .restCoordNode ._point;
@@ -328,7 +328,7 @@ HAnimHumanoid .prototype = Object .assign (Object .create (X3DChildNode .prototy
 
       X3DChildNode .prototype .toVRMLStream .call (this, generator);
    },
-   toXMLStream: function (generator)
+   toXMLStream (generator)
    {
       if (this .skinCoordNode)
          this .skinCoordNode ._point = this .restCoordNode ._point;
@@ -338,7 +338,7 @@ HAnimHumanoid .prototype = Object .assign (Object .create (X3DChildNode .prototy
 
       X3DChildNode .prototype .toXMLStream .call (this, generator);
    },
-   toJSONStream: function (generator)
+   toJSONStream (generator)
    {
       if (this .skinCoordNode)
          this .skinCoordNode ._point = this .restCoordNode ._point;
@@ -348,7 +348,7 @@ HAnimHumanoid .prototype = Object .assign (Object .create (X3DChildNode .prototy
 
       X3DChildNode .prototype .toJSONStream .call (this, generator);
    },
-   dispose: function ()
+   dispose ()
    {
       X3DBoundedObject .prototype .dispose .call (this);
       X3DChildNode     .prototype .dispose .call (this);

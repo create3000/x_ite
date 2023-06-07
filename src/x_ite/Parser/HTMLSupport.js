@@ -38,7 +38,7 @@ const
 
 const HTMLSupport =
 {
-   addConcreteNode: function ({ typeName, fieldDefinitions })
+   addConcreteNode ({ typeName, fieldDefinitions })
    {
       this .addNodeTypeName (typeName);
 
@@ -48,21 +48,21 @@ const HTMLSupport =
             this .addFieldName (name)
       }
    },
-   addNodeTypeName: function (typeName)
+   addNodeTypeName (typeName)
    {
       nodeTypeNames .set (typeName,                 typeName);
       nodeTypeNames .set (typeName .toUpperCase (), typeName);
    },
-   getNodeTypeName: function (typeName)
+   getNodeTypeName (typeName)
    {
       return nodeTypeNames .get (typeName);
    },
-   addFieldName: function (name)
+   addFieldName (name)
    {
       fieldNames .set (name,                 name);
       fieldNames .set (name .toLowerCase (), name);
    },
-   getFieldName: function (name)
+   getFieldName (name)
    {
       return fieldNames .get (name);
    },

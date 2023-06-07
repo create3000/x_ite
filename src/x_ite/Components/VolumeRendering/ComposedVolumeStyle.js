@@ -64,7 +64,7 @@ function ComposedVolumeStyle (executionContext)
 ComposedVolumeStyle .prototype = Object .assign (Object .create (X3DComposableVolumeRenderStyleNode .prototype),
 {
    constructor: ComposedVolumeStyle,
-   initialize: function ()
+   initialize ()
    {
       X3DComposableVolumeRenderStyleNode .prototype .initialize .call (this);
 
@@ -77,21 +77,21 @@ ComposedVolumeStyle .prototype = Object .assign (Object .create (X3DComposableVo
 
       this .set_renderStyle__ ();
    },
-   addVolumeData: function (volumeDataNode)
+   addVolumeData (volumeDataNode)
    {
       X3DComposableVolumeRenderStyleNode .prototype .addVolumeData .call (this, volumeDataNode);
 
       for (const renderStyleNode of this .renderStyleNodes)
          renderStyleNode .addVolumeData (volumeDataNode);
    },
-   removeVolumeData: function (volumeDataNode)
+   removeVolumeData (volumeDataNode)
    {
       X3DComposableVolumeRenderStyleNode .prototype .removeVolumeData .call (this, volumeDataNode);
 
       for (const renderStyleNode of this .renderStyleNodes)
          renderStyleNode .removeVolumeData (volumeDataNode);
    },
-   set_renderStyle__: function ()
+   set_renderStyle__ ()
    {
       const renderStyleNodes = this .renderStyleNodes;
 
@@ -121,7 +121,7 @@ ComposedVolumeStyle .prototype = Object .assign (Object .create (X3DComposableVo
             renderStyleNode .addVolumeData (volumeDataNode);
       }
    },
-   addShaderFields: function (shaderNode)
+   addShaderFields (shaderNode)
    {
       if (! this ._enabled .getValue ())
          return;
@@ -129,7 +129,7 @@ ComposedVolumeStyle .prototype = Object .assign (Object .create (X3DComposableVo
       for (const renderStyleNode of this .renderStyleNodes)
          renderStyleNode .addShaderFields (shaderNode);
    },
-   getUniformsText: function ()
+   getUniformsText ()
    {
       if (! this ._enabled .getValue ())
          return "";
@@ -153,7 +153,7 @@ ComposedVolumeStyle .prototype = Object .assign (Object .create (X3DComposableVo
 
       return string;
    },
-   getFunctionsText: function ()
+   getFunctionsText ()
    {
       if (! this ._enabled .getValue ())
          return "";

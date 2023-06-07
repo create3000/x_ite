@@ -63,20 +63,20 @@ function IcoSphereOptions (executionContext)
 IcoSphereOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 {
    constructor: IcoSphereOptions,
-   initialize: function ()
+   initialize ()
    {
       X3DBaseNode .prototype .initialize .call (this);
 
       this .addInterest ("eventsProcessed", this);
    },
-   getGeometry: function ()
+   getGeometry ()
    {
       if (! this .geometry)
          this .eventsProcessed ();
 
       return this .geometry;
    },
-   eventsProcessed: function ()
+   eventsProcessed ()
    {
       this .geometry            = new IndexedFaceSet (this .getExecutionContext ());
       this .geometry ._texCoord = new TextureCoordinate (this .getExecutionContext ());

@@ -62,11 +62,11 @@ function BindableList (executionContext, defaultNode)
 BindableList .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 {
    constructor: BindableList,
-   get: function ()
+   get ()
    {
       return this .nodes;
    },
-   getBound: function (name)
+   getBound (name)
    {
       const length = this .nodes .length;
 
@@ -124,11 +124,11 @@ BindableList .prototype = Object .assign (Object .create (X3DBaseNode .prototype
 
       return this .nodes [0]; // Return default viewpoint.
    },
-   push: function (node)
+   push (node)
    {
       return this .collectedNodes .push (node);
    },
-   update: function (layerNode, stack)
+   update (layerNode, stack)
    {
       const
          collectedNodes = this .collectedNodes,

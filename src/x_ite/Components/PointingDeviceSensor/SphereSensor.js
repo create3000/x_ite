@@ -68,7 +68,7 @@ function SphereSensor (executionContext)
 SphereSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .prototype),
 {
    constructor: SphereSensor,
-   initialize: function ()
+   initialize ()
    {
       X3DDragSensorNode .prototype .initialize .call (this);
 
@@ -82,7 +82,7 @@ SphereSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .pro
       this .startPoint  = new Vector3 (0, 0, 0);
       this .startOffset = new Rotation4 ();
    },
-   getTrackPoint: function (hitRay, trackPoint, behind)
+   getTrackPoint (hitRay, trackPoint, behind)
    {
       const exit = new Vector3 (0, 0, 0);
 
@@ -96,7 +96,7 @@ SphereSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .pro
 
       return false;
    },
-   set_active__: function (active, hit, modelViewMatrix, projectionMatrix, viewport)
+   set_active__ (active, hit, modelViewMatrix, projectionMatrix, viewport)
    {
       X3DDragSensorNode .prototype .set_active__ .call (this, active, hit, modelViewMatrix, projectionMatrix, viewport);
 
@@ -126,7 +126,7 @@ SphereSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .pro
             this ._offset = this ._rotation_changed;
       }
    },
-   set_motion__: function (hit)
+   set_motion__ (hit)
    {
       const
          hitRay     = hit .hitRay .copy () .multLineMatrix (this .invModelViewMatrix),

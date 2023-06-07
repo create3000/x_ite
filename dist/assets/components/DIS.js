@@ -244,12 +244,12 @@ DISEntityTypeMapping .prototype = Object .assign (Object .create ((X3DInfoNode_d
    (X3DUrlObject_default()).prototype,
 {
    constructor: DISEntityTypeMapping,
-   initialize: function ()
+   initialize ()
    {
       X3DInfoNode_default().prototype.initialize.call (this);
       X3DUrlObject_default().prototype.initialize.call (this);
    },
-   dispose: function ()
+   dispose ()
    {
       X3DUrlObject_default().prototype.dispose.call (this);
       X3DInfoNode_default().prototype.dispose.call (this);
@@ -376,7 +376,7 @@ EspduTransform .prototype = Object .assign (Object .create ((X3DGroupingNode_def
    (X3DSensorNode_default()).prototype,
 {
    constructor: EspduTransform,
-   initialize: function ()
+   initialize ()
    {
       X3DGroupingNode_default().prototype.initialize.call (this);
       X3DSensorNode_default().prototype.initialize.call (this);
@@ -579,12 +579,12 @@ ReceiverPdu .prototype = Object .assign (Object .create ((X3DSensorNode_default(
    (X3DBoundedObject_default()).prototype,
 {
    constructor: ReceiverPdu,
-   initialize: function ()
+   initialize ()
    {
       X3DSensorNode_default().prototype.initialize.call (this);
       X3DBoundedObject_default().prototype.initialize.call (this);
    },
-   dispose: function ()
+   dispose ()
    {
       X3DBoundedObject_default().prototype.dispose.call (this);
       X3DSensorNode_default().prototype.dispose.call (this);
@@ -724,12 +724,12 @@ SignalPdu .prototype = Object .assign (Object .create ((X3DSensorNode_default())
    (X3DBoundedObject_default()).prototype,
 {
    constructor: SignalPdu,
-   initialize: function ()
+   initialize ()
    {
       X3DSensorNode_default().prototype.initialize.call (this);
       X3DBoundedObject_default().prototype.initialize.call (this);
    },
-   dispose: function ()
+   dispose ()
    {
       X3DBoundedObject_default().prototype.dispose.call (this);
       X3DSensorNode_default().prototype.dispose.call (this);
@@ -869,12 +869,12 @@ TransmitterPdu .prototype = Object .assign (Object .create ((X3DSensorNode_defau
    (X3DBoundedObject_default()).prototype,
 {
    constructor: TransmitterPdu,
-   initialize: function ()
+   initialize ()
    {
       X3DSensorNode_default().prototype.initialize.call (this);
       X3DBoundedObject_default().prototype.initialize.call (this);
    },
-   dispose: function ()
+   dispose ()
    {
       X3DBoundedObject_default().prototype.dispose.call (this);
       X3DSensorNode_default().prototype.dispose.call (this);

@@ -64,11 +64,11 @@ function X3DProtoDeclarationNode (executionContext)
 X3DProtoDeclarationNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 {
    constructor: X3DProtoDeclarationNode,
-   canUserDefinedFields: function ()
+   canUserDefinedFields ()
    {
       return true;
    },
-   createInstance: function (executionContext, setup = true /* non-public argument */)
+   createInstance (executionContext, setup = true /* non-public argument */)
    {
       if (setup === false)
       {
@@ -83,15 +83,15 @@ X3DProtoDeclarationNode .prototype = Object .assign (Object .create (X3DBaseNode
          return SFNodeCache .get (instance);
       }
    },
-   newInstance: function ()
+   newInstance ()
    {
       return this .createInstance (this .getExecutionContext ());
    },
-   requestUpdateInstances: function ()
+   requestUpdateInstances ()
    {
       this ._updateInstances = this .getBrowser () .getCurrentTime ();
    },
-   updateInstances: function ()
+   updateInstances ()
    {
       this ._updateInstances .processEvent ();
    },

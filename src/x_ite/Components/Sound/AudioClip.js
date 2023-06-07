@@ -70,7 +70,7 @@ AudioClip .prototype = Object .assign (Object .create (X3DSoundSourceNode .proto
    X3DUrlObject .prototype,
 {
    constructor: AudioClip,
-   initialize: function ()
+   initialize ()
    {
       X3DSoundSourceNode .prototype .initialize .call (this);
       X3DUrlObject       .prototype .initialize .call (this);
@@ -84,27 +84,27 @@ AudioClip .prototype = Object .assign (Object .create (X3DSoundSourceNode .proto
 
       this .requestImmediateLoad () .catch (Function .prototype);
    },
-   getElement: function ()
+   getElement ()
    {
       return this .audio [0];
    },
-   set_live__: function ()
+   set_live__ ()
    {
       X3DSoundSourceNode .prototype .set_live__ .call (this);
       X3DUrlObject       .prototype .set_live__ .call (this);
    },
-   unloadData: function ()
+   unloadData ()
    {
       this .setMedia (null);
    },
-   loadData: function ()
+   loadData ()
    {
       this .setMedia (null);
       this .urlStack .setValue (this ._url);
       this .audio .on ("canplaythrough", this .setAudio .bind (this));
       this .loadNext ();
    },
-   loadNext: function ()
+   loadNext ()
    {
       if (this .urlStack .length === 0)
       {
@@ -127,7 +127,7 @@ AudioClip .prototype = Object .assign (Object .create (X3DSoundSourceNode .proto
       this .audio .attr ("src", this .URL .href);
       this .audio .get (0) .load ();
    },
-   setTimeout: function (event)
+   setTimeout (event)
    {
       setTimeout (() =>
       {
@@ -136,14 +136,14 @@ AudioClip .prototype = Object .assign (Object .create (X3DSoundSourceNode .proto
       },
       3000);
    },
-   setError: function (event)
+   setError (event)
    {
       if (this .URL .protocol !== "data:")
          console .warn (`Error loading audio '${decodeURI (this .URL .href)}'`, event .type);
 
       this .loadNext ();
    },
-   setAudio: function ()
+   setAudio ()
    {
       if (DEVELOPMENT)
       {
@@ -155,7 +155,7 @@ AudioClip .prototype = Object .assign (Object .create (X3DSoundSourceNode .proto
       this .setMedia (this .audio [0]);
       this .setLoadState (X3DConstants .COMPLETE_STATE);
    },
-   dispose: function ()
+   dispose ()
    {
       X3DUrlObject       .prototype .dispose .call (this);
       X3DSoundSourceNode .prototype .dispose .call (this);

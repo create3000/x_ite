@@ -60,7 +60,7 @@ function X3DTouchSensorNode (executionContext)
 X3DTouchSensorNode .prototype = Object .assign (Object .create (X3DPointingDeviceSensorNode .prototype),
 {
    constructor: X3DTouchSensorNode,
-   set_active__: function (active, hit)
+   set_active__ (active, hit)
    {
       X3DPointingDeviceSensorNode .prototype .set_active__ .call (this, active, hit);
 

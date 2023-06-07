@@ -130,17 +130,17 @@ function Spheroid3 (semiMajorAxis, semiMinorAxis)
 Spheroid3 .prototype =
 {
    constructor: Spheroid3,
-   getSemiMajorAxis: function ()
+   getSemiMajorAxis ()
    {
       // Returns the semi-major axis (a)
       return this .semiMajorAxis; // a
    },
-   getSemiMinorAxis: function ()
+   getSemiMinorAxis ()
    {
       // Returns the semi-minor axis (c)
       return this .semiMinorAxis; // c
    },
-   toString: function ()
+   toString ()
    {
       return this .semiMajorAxis + " " + this .semiMinorAxis;
    },
@@ -323,7 +323,7 @@ function Geodetic (spheroid, latitudeFirst, radians)
 Geodetic .prototype =
 {
    constructor: Geodetic,
-   convert: function (geodetic, result)
+   convert (geodetic, result)
    {
       const elevation = geodetic .z;
 
@@ -348,7 +348,7 @@ Geodetic .prototype =
 
       return this .convertRadians (latitude, longitude, elevation, result);
    },
-   convertRadians: function (latitude, longitude, elevation, result)
+   convertRadians (latitude, longitude, elevation, result)
    {
       const
          slat  = Math .sin (latitude),
@@ -361,7 +361,7 @@ Geodetic .prototype =
                           Nhl * Math .sin (longitude),
                           (N * this .c2a2 + elevation) * slat);
    },
-   apply: function (geocentric, result)
+   apply (geocentric, result)
    {
       this .applyRadians (geocentric, result);
 
@@ -381,7 +381,7 @@ Geodetic .prototype =
 
       return result;
    },
-   applyRadians: function (geocentric, result)
+   applyRadians (geocentric, result)
    {
       const
          x = geocentric .x,
@@ -423,7 +423,7 @@ Geodetic .prototype =
 
       return result .set (latitude, longitude, elevation);
    },
-   normal: function (geocentric, result)
+   normal (geocentric, result)
    {
       const geodetic = this .applyRadians (geocentric, result);
 
@@ -441,7 +441,7 @@ Geodetic .prototype =
       return result .set (nx, ny, nz);
    },
    /*
-   lerp: function (s, d, t)
+   lerp (s, d, t)
    {
       var
          source     =  this .source      .assign (s),
@@ -607,7 +607,7 @@ function UniversalTransverseMercator (spheroid, zone, northernHemisphere, northi
 UniversalTransverseMercator .prototype =
 {
    constructor: UniversalTransverseMercator,
-   convert: function (utm, result)
+   convert (utm, result)
    {
       // https://gist.github.com/duedal/840476
 
@@ -670,7 +670,7 @@ UniversalTransverseMercator .prototype =
 
       return this .geodeticConverter .convertRadians (latitude, longitude, utm .z, result);
    },
-   apply: function (geocentric, result)
+   apply (geocentric, result)
    {
       // https://gist.github.com/duedal/840476
 
@@ -783,15 +783,15 @@ function Geocentric () { }
 Geocentric .prototype =
 {
    constructor: Geocentric,
-   convert: function (geocentric, result)
+   convert (geocentric, result)
    {
       return result .assign (geocentric);
    },
-   apply: function (geocentric, result)
+   apply (geocentric, result)
    {
       return result .assign (geocentric);
    },
-   slerp: function (source, destination, t)
+   slerp (source, destination, t)
    {
       const
          sourceLength      = source      .magnitude (),
@@ -885,7 +885,7 @@ const Geospatial =
    GD: GD,
    UTM: UTM,
    GC: GC,
-   getReferenceFrame: function (geoSystem, radians)
+   getReferenceFrame (geoSystem, radians)
    {
       switch (this .getCoordinateSystem (geoSystem))
       {
@@ -910,11 +910,11 @@ const Geospatial =
 
       return new Geospatial_Geodetic (Geospatial_ReferenceEllipsoids.WE, true, radians);
    },
-   getElevationFrame: function (geoSystem, radians)
+   getElevationFrame (geoSystem, radians)
    {
       return new Geospatial_Geodetic (this .getEllipsoid (geoSystem), true, radians);
    },
-   getCoordinateSystem: function (geoSystem)
+   getCoordinateSystem (geoSystem)
    {
       for (const gs of geoSystem)
       {
@@ -926,7 +926,7 @@ const Geospatial =
 
       return GD;
    },
-   getEllipsoid: function (geoSystem)
+   getEllipsoid (geoSystem)
    {
       for (const gs of geoSystem)
       {
@@ -938,7 +938,7 @@ const Geospatial =
 
       return Geospatial_ReferenceEllipsoids.WE;
    },
-   getEllipsoidString: function (geoSystem)
+   getEllipsoidString (geoSystem)
    {
       for (const gs of geoSystem)
       {
@@ -950,7 +950,7 @@ const Geospatial =
 
       return "WE";
    },
-   isStandardOrder: function (geoSystem)
+   isStandardOrder (geoSystem)
    {
       switch (this .getCoordinateSystem (geoSystem))
       {
@@ -970,7 +970,7 @@ const Geospatial =
 
       return this .getLatitudeFirst (geoSystem);
    },
-   getLatitudeFirst: function (geoSystem)
+   getLatitudeFirst (geoSystem)
    {
       for (const gs of geoSystem)
       {
@@ -980,7 +980,7 @@ const Geospatial =
 
       return true;
    },
-   getNorthingFirst: function (geoSystem)
+   getNorthingFirst (geoSystem)
    {
       for (const gs of geoSystem)
       {
@@ -990,7 +990,7 @@ const Geospatial =
 
       return true;
    },
-   getZone: function (geoSystem)
+   getZone (geoSystem)
    {
       for (const gs of geoSystem)
       {
@@ -1002,7 +1002,7 @@ const Geospatial =
 
       return 1;
    },
-   getNorthernHemisphere: function (geoSystem)
+   getNorthernHemisphere (geoSystem)
    {
       for (const gs of geoSystem)
       {
@@ -1100,7 +1100,7 @@ function X3DGeospatialObject (executionContext)
 X3DGeospatialObject .prototype =
 {
    constructor: X3DGeospatialObject,
-   initialize: function ()
+   initialize ()
    {
       this ._geoSystem .addInterest ("set_geoSystem__", this);
       this ._geoOrigin .addInterest ("set_geoOrigin__", this);
@@ -1108,14 +1108,14 @@ X3DGeospatialObject .prototype =
       this .set_geoSystem__ ();
       this .set_geoOrigin__ ();
    },
-   set_geoSystem__: function ()
+   set_geoSystem__ ()
    {
       this .coordinateSystem = Geospatial_Geospatial.getCoordinateSystem (this ._geoSystem);
       this .referenceFrame   = Geospatial_Geospatial.getReferenceFrame   (this ._geoSystem, this .radians);
       this .elevationFrame   = Geospatial_Geospatial.getElevationFrame   (this ._geoSystem, this .radians);
       this .standardOrder    = Geospatial_Geospatial.isStandardOrder     (this ._geoSystem);
    },
-   set_geoOrigin__: function ()
+   set_geoOrigin__ ()
    {
       if (this .geoOriginNode)
       {
@@ -1136,7 +1136,7 @@ X3DGeospatialObject .prototype =
       this .set_origin__ ();
       this .set_rotateYUp__ ();
    },
-   set_origin__: function ()
+   set_origin__ ()
    {
       if (this .geoOriginNode)
          this .geoOriginNode .getOrigin (this .origin);
@@ -1145,7 +1145,7 @@ X3DGeospatialObject .prototype =
 
       this .set_originMatrix__ ();
    },
-   set_originMatrix__: function ()
+   set_originMatrix__ ()
    {
       if (this .geoOriginNode)
       {
@@ -1178,7 +1178,7 @@ X3DGeospatialObject .prototype =
          this .invOriginMatrix .assign (this .originMatrix) .inverse ();
       }
    },
-   set_rotateYUp__: function ()
+   set_rotateYUp__ ()
    {
       if (this .geoOriginNode && this .geoOriginNode ._rotateYUp .getValue ())
       {
@@ -1195,31 +1195,31 @@ X3DGeospatialObject .prototype =
          delete this .getLocationMatrix;
       }
    },
-   getReferenceFrame: function ()
+   getReferenceFrame ()
    {
       return this .referenceFrame;
    },
-   getStandardOrder: function ()
+   getStandardOrder ()
    {
       return this .standardOrder;
    },
-   getCoord: function (geoPoint, result)
+   getCoord (geoPoint, result)
    {
       return this .referenceFrame .convert (geoPoint, result) .subtract (this .origin);
    },
-   getGeoCoord: function (point, result)
+   getGeoCoord (point, result)
    {
       return this .referenceFrame .apply (vector .assign (point) .add (this .origin), result);
    },
-   getGeoElevation: function (point)
+   getGeoElevation (point)
    {
       return this .getGeoCoord (point, result) .z;
    },
-   getGeoUpVector: function (point, result)
+   getGeoUpVector (point, result)
    {
       return this .elevationFrame .normal (vector .assign (point) .add (this .origin), result);
    },
-   getLocationMatrix: function (geoPoint, result)
+   getLocationMatrix (geoPoint, result)
    {
       var
          origin         = this .origin,
@@ -1232,7 +1232,7 @@ X3DGeospatialObject .prototype =
 
       return locationMatrix;
    },
-   dispose: function () { },
+   dispose () { },
 };
 
 function getCoordRotateYUp (geoPoint, result)
@@ -1375,7 +1375,7 @@ GeoCoordinate .prototype = Object .assign (Object .create ((X3DCoordinateNode_de
    Geospatial_X3DGeospatialObject.prototype,
 {
    constructor: GeoCoordinate,
-   initialize: function ()
+   initialize ()
    {
       X3DCoordinateNode_default().prototype.initialize.call (this);
       Geospatial_X3DGeospatialObject.prototype.initialize.call (this);
@@ -1504,7 +1504,7 @@ GeoCoordinate .prototype = Object .assign (Object .create ((X3DCoordinateNode_de
          return new (Vector3_default()) (0, 0, 0);
       };
    })(),
-   dispose: function ()
+   dispose ()
    {
       Geospatial_X3DGeospatialObject.prototype.dispose.call (this);
       X3DCoordinateNode_default().prototype.dispose.call (this);
@@ -1634,7 +1634,7 @@ GeoElevationGrid .prototype = Object .assign (Object .create ((X3DGeometryNode_d
    Geospatial_X3DGeospatialObject.prototype,
 {
    constructor: GeoElevationGrid,
-   initialize: function ()
+   initialize ()
    {
       X3DGeometryNode_default().prototype.initialize.call (this);
       Geospatial_X3DGeospatialObject.prototype.initialize.call (this);
@@ -1647,7 +1647,7 @@ GeoElevationGrid .prototype = Object .assign (Object .create ((X3DGeometryNode_d
       this .set_texCoord__ ();
       this .set_normal__ ();
    },
-   set_color__: function ()
+   set_color__ ()
    {
       this .colorNode ?.removeInterest ("requestRebuild", this);
 
@@ -1657,7 +1657,7 @@ GeoElevationGrid .prototype = Object .assign (Object .create ((X3DGeometryNode_d
 
       this .setTransparent (this .colorNode ?.isTransparent () ?? false);
    },
-   set_texCoord__: function ()
+   set_texCoord__ ()
    {
       this .texCoordNode ?.removeInterest ("requestRebuild", this);
 
@@ -1667,7 +1667,7 @@ GeoElevationGrid .prototype = Object .assign (Object .create ((X3DGeometryNode_d
 
       this .setTextureCoordinate (this .texCoordNode);
    },
-   set_normal__: function ()
+   set_normal__ ()
    {
       this .normalNode ?.removeInterest ("requestRebuild", this);
 
@@ -1675,26 +1675,26 @@ GeoElevationGrid .prototype = Object .assign (Object .create ((X3DGeometryNode_d
 
       this .normalNode ?.addInterest ("requestRebuild", this);
    },
-   getColor: function ()
+   getColor ()
    {
       return this .colorNode;
    },
-   getTexCoord: function ()
+   getTexCoord ()
    {
       return this .texCoordNode;
    },
-   getNormal: function ()
+   getNormal ()
    {
       return this .normalNode;
    },
-   getHeight: function (index)
+   getHeight (index)
    {
       if (index < this ._height .length)
          return this ._height [index] * this ._yScale .getValue ();
 
       return 0;
    },
-   createTexCoords: function ()
+   createTexCoords ()
    {
       var
          texCoords  = [ ],
@@ -1711,7 +1711,7 @@ GeoElevationGrid .prototype = Object .assign (Object .create ((X3DGeometryNode_d
 
       return texCoords;
    },
-   createNormals: function (points, coordIndex, creaseAngle)
+   createNormals (points, coordIndex, creaseAngle)
    {
       var
          cw          = ! this ._ccw .getValue (),
@@ -1744,7 +1744,7 @@ GeoElevationGrid .prototype = Object .assign (Object .create ((X3DGeometryNode_d
 
       return this .refineNormals (normalIndex, normals, this ._creaseAngle .getValue ());
    },
-   createCoordIndex: function ()
+   createCoordIndex ()
    {
       // p1 - p4
       //  | \ |
@@ -1779,7 +1779,7 @@ GeoElevationGrid .prototype = Object .assign (Object .create ((X3DGeometryNode_d
 
       return coordIndex;
    },
-   createPoints: function ()
+   createPoints ()
    {
       var
          points     = [ ],
@@ -1830,7 +1830,7 @@ GeoElevationGrid .prototype = Object .assign (Object .create ((X3DGeometryNode_d
 
       return points;
    },
-   build: function ()
+   build ()
    {
       if (this ._xDimension .getValue () < 2 || this ._zDimension .getValue () < 2)
          return;
@@ -1931,7 +1931,7 @@ GeoElevationGrid .prototype = Object .assign (Object .create ((X3DGeometryNode_d
       this .setSolid (this ._solid .getValue ());
       this .setCCW (this ._ccw .getValue ());
    },
-   dispose: function ()
+   dispose ()
    {
       Geospatial_X3DGeospatialObject.prototype.dispose.call (this);
       X3DGeometryNode_default().prototype.dispose.call (this);
@@ -2101,7 +2101,7 @@ GeoLOD .prototype = Object .assign (Object .create ((X3DChildNode_default()).pro
    Geospatial_X3DGeospatialObject.prototype,
 {
    constructor: GeoLOD,
-   initialize: function ()
+   initialize ()
    {
       X3DChildNode_default().prototype.initialize.call (this);
       X3DBoundedObject_default().prototype.initialize.call (this);
@@ -2143,7 +2143,7 @@ GeoLOD .prototype = Object .assign (Object .create ((X3DChildNode_default()).pro
       this .child3Inline .setup ();
       this .child4Inline .setup ();
    },
-   getBBox: function (bbox, shadows)
+   getBBox (bbox, shadows)
    {
       if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
       {
@@ -2177,7 +2177,7 @@ GeoLOD .prototype = Object .assign (Object .create ((X3DChildNode_default()).pro
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
-   set_rootLoadState__: function ()
+   set_rootLoadState__ ()
    {
       if (this ._level_changed .getValue () !== 0)
          return;
@@ -2191,7 +2191,7 @@ GeoLOD .prototype = Object .assign (Object .create ((X3DChildNode_default()).pro
          this .childrenLoaded = false;
       }
    },
-   set_childLoadState__: function ()
+   set_childLoadState__ ()
    {
       if (this ._level_changed .getValue () !== 1)
          return;
@@ -2243,21 +2243,21 @@ GeoLOD .prototype = Object .assign (Object .create ((X3DChildNode_default()).pro
             children .push (rootNodes [i]);
       }
    },
-   set_childCameraObject__: function ()
+   set_childCameraObject__ ()
    {
       this .setCameraObject (this .child1Inline .isCameraObject () ||
                              this .child2Inline .isCameraObject () ||
                              this .child3Inline .isCameraObject () ||
                              this .child4Inline .isCameraObject ());
    },
-   set_childPickableObject__: function ()
+   set_childPickableObject__ ()
    {
       this .setPickableObject (this .child1Inline .isPickableObject () ||
                                this .child2Inline .isPickableObject () ||
                                this .child3Inline .isPickableObject () ||
                                this .child4Inline .isPickableObject ());
    },
-   getLevel: function (modelViewMatrix)
+   getLevel (modelViewMatrix)
    {
       var distance = this .getDistance (modelViewMatrix);
 
@@ -2266,13 +2266,13 @@ GeoLOD .prototype = Object .assign (Object .create ((X3DChildNode_default()).pro
 
       return 0;
    },
-   getDistance: function (modelViewMatrix)
+   getDistance (modelViewMatrix)
    {
       modelViewMatrix .translate (this .getCoord (this ._center .getValue (), center));
 
       return modelViewMatrix .origin .magnitude ();
    },
-   traverse: function (type, renderObject)
+   traverse (type, renderObject)
    {
       switch (type)
       {
@@ -2398,7 +2398,7 @@ GeoLOD .prototype = Object .assign (Object .create ((X3DChildNode_default()).pro
          }
       }
    },
-   traverseChildren: function (type, renderObject)
+   traverseChildren (type, renderObject)
    {
       switch (this .childrenLoaded ? this ._level_changed .getValue () : 0)
       {
@@ -2421,7 +2421,7 @@ GeoLOD .prototype = Object .assign (Object .create ((X3DChildNode_default()).pro
          }
       }
    },
-   dispose: function ()
+   dispose ()
    {
       Geospatial_X3DGeospatialObject.prototype.dispose.call (this);
       X3DBoundedObject_default().prototype.dispose.call (this);
@@ -2554,7 +2554,7 @@ GeoLocation .prototype = Object .assign (Object .create ((X3DTransformMatrix3DNo
    Geospatial_X3DGeospatialObject.prototype,
 {
    constructor: GeoLocation,
-   initialize: function ()
+   initialize ()
    {
       X3DTransformMatrix3DNode_default().prototype.initialize.call (this);
       Geospatial_X3DGeospatialObject.prototype.initialize.call (this);
@@ -2563,11 +2563,11 @@ GeoLocation .prototype = Object .assign (Object .create ((X3DTransformMatrix3DNo
 
       this .eventsProcessed ();
    },
-   eventsProcessed: function ()
+   eventsProcessed ()
    {
       this .setMatrix (this .getLocationMatrix (this ._geoCoords .getValue (), locationMatrix));
    },
-   dispose: function ()
+   dispose ()
    {
       Geospatial_X3DGeospatialObject.prototype.dispose.call (this);
       X3DTransformMatrix3DNode_default().prototype.dispose.call (this);
@@ -2693,14 +2693,14 @@ GeoMetadata .prototype = Object .assign (Object .create ((X3DInfoNode_default())
    (X3DUrlObject_default()).prototype,
 {
    constructor: GeoMetadata,
-   initialize: function ()
+   initialize ()
    {
       X3DInfoNode_default().prototype.initialize.call (this);
       X3DUrlObject_default().prototype.initialize.call (this);
    },
-   requestImmediateLoad: function (cache = true)
+   requestImmediateLoad (cache = true)
    { },
-   dispose: function ()
+   dispose ()
    {
       X3DUrlObject_default().prototype.dispose.call (this);
       X3DInfoNode_default().prototype.dispose.call (this);
@@ -2819,7 +2819,7 @@ function GeoOrigin (executionContext)
 GeoOrigin .prototype = Object .assign (Object .create ((X3DNode_default()).prototype),
 {
    constructor: GeoOrigin,
-   initialize: function ()
+   initialize ()
    {
       X3DNode_default().prototype.initialize.call (this);
 
@@ -2827,11 +2827,11 @@ GeoOrigin .prototype = Object .assign (Object .create ((X3DNode_default()).proto
 
       this .set_geoSystem__ ();
    },
-   set_geoSystem__: function ()
+   set_geoSystem__ ()
    {
       this .referenceFrame = Geospatial_Geospatial.getReferenceFrame (this ._geoSystem, this .radians);
    },
-   getOrigin: function (result)
+   getOrigin (result)
    {
       return this .referenceFrame .convert (this ._geoCoords .getValue (), result);
    },
@@ -2952,19 +2952,19 @@ GeoPositionInterpolator .prototype = Object .assign (Object .create ((X3DInterpo
    Geospatial_X3DGeospatialObject.prototype,
 {
    constructor: GeoPositionInterpolator,
-   setup: function ()
+   setup ()
    {
       Geospatial_X3DGeospatialObject.prototype.initialize.call (this);
 
       X3DInterpolatorNode_default().prototype.setup.call (this);
    },
-   initialize: function ()
+   initialize ()
    {
       X3DInterpolatorNode_default().prototype.initialize.call (this);
 
       this ._keyValue .addInterest ("set_keyValue__", this);
    },
-   set_keyValue__: function ()
+   set_keyValue__ ()
    {
       const
          key      = this ._key,
@@ -2991,7 +2991,7 @@ GeoPositionInterpolator .prototype = Object .assign (Object .create ((X3DInterpo
          this ._value_changed    = coord;
       };
    })(),
-   dispose: function ()
+   dispose ()
    {
       Geospatial_X3DGeospatialObject.prototype.dispose.call (this);
       X3DInterpolatorNode_default().prototype.dispose.call (this);
@@ -3126,7 +3126,7 @@ GeoProximitySensor .prototype = Object .assign (Object .create ((X3DEnvironmenta
    Geospatial_X3DGeospatialObject.prototype,
 {
    constructor: GeoProximitySensor,
-   initialize: function ()
+   initialize ()
    {
       X3DEnvironmentalSensorNode_default().prototype.initialize.call (this);
       Geospatial_X3DGeospatialObject.prototype.initialize.call (this);
@@ -3153,15 +3153,15 @@ GeoProximitySensor .prototype = Object .assign (Object .create ((X3DEnvironmenta
 
       this .proximitySensor .setup ();
    },
-   set_position__: function (position)
+   set_position__ (position)
    {
       this ._geoCoord_changed = this .getGeoCoord (this .proximitySensor ._position_changed .getValue (), geoCoord);
    },
-   traverse: function (type, renderObject)
+   traverse (type, renderObject)
    {
       this .proximitySensor .traverse (type, renderObject);
    },
-   dispose: function ()
+   dispose ()
    {
       Geospatial_X3DGeospatialObject.prototype.dispose.call (this);
       X3DEnvironmentalSensorNode_default().prototype.dispose.call (this);
@@ -3289,7 +3289,7 @@ GeoTouchSensor .prototype = Object .assign (Object .create ((X3DTouchSensorNode_
    Geospatial_X3DGeospatialObject.prototype,
 {
    constructor: GeoTouchSensor,
-   initialize: function ()
+   initialize ()
    {
       X3DTouchSensorNode_default().prototype.initialize.call (this);
       Geospatial_X3DGeospatialObject.prototype.initialize.call (this);
@@ -3306,7 +3306,7 @@ GeoTouchSensor .prototype = Object .assign (Object .create ((X3DTouchSensorNode_
             this ._hitGeoCoord_changed = this .getGeoCoord (this ._hitPoint_changed .getValue (), geoCoords);
       };
    })(),
-   dispose: function ()
+   dispose ()
    {
       Geospatial_X3DGeospatialObject.prototype.dispose.call (this);
       X3DTouchSensorNode_default().prototype.dispose.call (this);
@@ -3434,7 +3434,7 @@ GeoTransform .prototype = Object .assign (Object .create ((X3DTransformMatrix3DN
    Geospatial_X3DGeospatialObject.prototype,
 {
    constructor: GeoTransform,
-   initialize: function ()
+   initialize ()
    {
       X3DTransformMatrix3DNode_default().prototype.initialize.call (this);
       Geospatial_X3DGeospatialObject.prototype.initialize.call (this);
@@ -3443,7 +3443,7 @@ GeoTransform .prototype = Object .assign (Object .create ((X3DTransformMatrix3DN
 
       this .eventsProcessed ();
    },
-   eventsProcessed: function ()
+   eventsProcessed ()
    {
       this .getLocationMatrix (this ._geoCenter .getValue (), GeoTransform_locationMatrix);
 
@@ -3454,7 +3454,7 @@ GeoTransform .prototype = Object .assign (Object .create ((X3DTransformMatrix3DN
 
       this .setMatrix (matrix .multRight (GeoTransform_locationMatrix) .multLeft (GeoTransform_locationMatrix .inverse ()));
    },
-   dispose: function ()
+   dispose ()
    {
       Geospatial_X3DGeospatialObject.prototype.dispose.call (this);
       X3DTransformMatrix3DNode_default().prototype.dispose.call (this);
@@ -3605,7 +3605,7 @@ GeoViewpoint .prototype = Object .assign (Object .create ((X3DViewpointNode_defa
    Geospatial_X3DGeospatialObject.prototype,
 {
    constructor: GeoViewpoint,
-   initialize: function ()
+   initialize ()
    {
       X3DViewpointNode_default().prototype.initialize.call (this);
       Geospatial_X3DGeospatialObject.prototype.initialize.call (this);
@@ -3634,7 +3634,7 @@ GeoViewpoint .prototype = Object .assign (Object .create ((X3DViewpointNode_defa
    getViewportSize: (Viewpoint_default()).prototype.getViewportSize,
    getLookAtDistance: (Viewpoint_default()).prototype.getLookAtDistance,
    getProjectionMatrixWithLimits: (Viewpoint_default()).prototype.getProjectionMatrixWithLimits,
-   getLogarithmicDepthBuffer: function ()
+   getLogarithmicDepthBuffer ()
    {
       return this .logarithmicDepthBuffer;
    },
@@ -3710,7 +3710,7 @@ GeoViewpoint .prototype = Object .assign (Object .create ((X3DViewpointNode_defa
          return this .getCoord (this ._centerOfRotation .getValue (), centerOfRotation);
       };
    })(),
-   getMaxFarValue: function ()
+   getMaxFarValue ()
    {
       return 1e9;
    },
@@ -3734,11 +3734,11 @@ GeoViewpoint .prototype = Object .assign (Object .create ((X3DViewpointNode_defa
          }
       };
    })(),
-   getSpeedFactor: function ()
+   getSpeedFactor ()
    {
       return (Math .max (this .elevation, 0.0) + 10) / 10 * this ._speedFactor .getValue ();
    },
-   dispose: function ()
+   dispose ()
    {
       Geospatial_X3DGeospatialObject.prototype.dispose.call (this);
       X3DViewpointNode_default().prototype.dispose.call (this);

@@ -80,7 +80,7 @@ X3DVolumeDataNode .prototype = Object .assign (Object .create (X3DChildNode .pro
    X3DBoundedObject .prototype,
 {
    constructor: X3DVolumeDataNode,
-   initialize: function ()
+   initialize ()
    {
       X3DChildNode     .prototype .initialize .call (this);
       X3DBoundedObject .prototype .initialize .call (this);
@@ -140,26 +140,26 @@ X3DVolumeDataNode .prototype = Object .assign (Object .create (X3DChildNode .pro
 
       this .set_textureTransform__ ();
    },
-   getBBox: function (bbox, shadows)
+   getBBox (bbox, shadows)
    {
       if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
          return bbox .set (this ._dimensions .getValue (), Vector3 .Zero);
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
-   getAppearance: function ()
+   getAppearance ()
    {
       return this .appearanceNode;
    },
-   updateShader: function ()
+   updateShader ()
    {
       this .volumeMaterialNode .getVolumeShaders () .clear ();
    },
-   addShaderUniformNames: function (uniformNames)
+   addShaderUniformNames (uniformNames)
    {
       uniformNames .push ("x3d_TextureNormalMatrix");
    },
-   getNumPlanes: function ()
+   getNumPlanes ()
    {
       switch (this .getBrowser () .getBrowserOptions () .getTextureQuality ())
       {
@@ -179,7 +179,7 @@ X3DVolumeDataNode .prototype = Object .assign (Object .create (X3DChildNode .pro
 
       return 200;
    },
-   set_dimensions__: function ()
+   set_dimensions__ ()
    {
       const
          NUM_PLANES = this .getNumPlanes (),
@@ -205,11 +205,11 @@ X3DVolumeDataNode .prototype = Object .assign (Object .create (X3DChildNode .pro
                                                                  1 / this ._dimensions .y,
                                                                  1 / this ._dimensions .z);
    },
-   set_textureTransform__: function ()
+   set_textureTransform__ ()
    {
       this .textureNormalMatrixArray .set (this .textureTransformNode .getMatrix () .submatrix .inverse ());
    },
-   traverse: function (type, renderObject)
+   traverse (type, renderObject)
    {
       this .proximitySensorNode .traverse (type, renderObject);
       this .transformNode       .traverse (type, renderObject);
@@ -218,7 +218,7 @@ X3DVolumeDataNode .prototype = Object .assign (Object .create (X3DChildNode .pro
    {
       gl .uniformMatrix3fv (shaderObject .x3d_TextureNormalMatrix, true, this .textureNormalMatrixArray);
    },
-   dispose: function ()
+   dispose ()
    {
       X3DBoundedObject .prototype .dispose .call (this);
       X3DChildNode     .prototype .dispose .call (this);

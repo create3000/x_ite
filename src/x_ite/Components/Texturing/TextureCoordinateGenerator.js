@@ -65,7 +65,7 @@ function TextureCoordinateGenerator (executionContext)
 TextureCoordinateGenerator .prototype = Object .assign (Object .create (X3DSingleTextureCoordinateNode .prototype),
 {
    constructor: TextureCoordinateGenerator,
-   initialize: function ()
+   initialize ()
    {
       X3DSingleTextureCoordinateNode .prototype .initialize .call (this);
 
@@ -99,7 +99,7 @@ TextureCoordinateGenerator .prototype = Object .assign (Object .create (X3DSingl
             this .mode = ModeType .SPHERE;
       };
    })(),
-   set_parameter__: function ()
+   set_parameter__ ()
    {
       const length = Math .min (this .parameter .length, this ._parameter .length)
 
@@ -108,19 +108,19 @@ TextureCoordinateGenerator .prototype = Object .assign (Object .create (X3DSingl
 
       this .parameter .fill (0, length);
    },
-   get1Point: function (index, vector)
+   get1Point (index, vector)
    {
       return vector;
    },
-   getPoints: function (array)
+   getPoints (array)
    {
       return array;
    },
-   addPointToChannel: function (index, array)
+   addPointToChannel (index, array)
    {
       array .push (0, 0, 0, 1);
    },
-   setShaderUniforms: function (gl, shaderObject, channel = 0)
+   setShaderUniforms (gl, shaderObject, channel = 0)
    {
       gl .uniform1i  (shaderObject .x3d_TextureCoordinateGeneratorMode [channel],      this .mode);
       gl .uniform1fv (shaderObject .x3d_TextureCoordinateGeneratorParameter [channel], this .parameter);

@@ -72,21 +72,21 @@ function OrientationChaser (executionContext)
 OrientationChaser .prototype = Object .assign (Object .create (X3DChaserNode .prototype),
 {
    constructor: OrientationChaser,
-   getVector: function ()
+   getVector ()
    {
       return new Rotation4 ();
    },
-   equals: function (lhs, rhs, tolerance)
+   equals (lhs, rhs, tolerance)
    {
       a .assign (lhs) .inverse () .multRight (rhs);
 
       return Math .abs (a .angle) < tolerance;
    },
-   interpolate: function (source, destination, weight)
+   interpolate (source, destination, weight)
    {
       return rotation .assign (source) .slerp (destination, weight);
    },
-   step: function (value1, value2, t)
+   step (value1, value2, t)
    {
       this .deltaOut .assign (value2) .inverse () .multRight (value1) .multLeft (this .output);
 

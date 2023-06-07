@@ -86,7 +86,7 @@ function SFMatrix3Template (TypeName, SFVec2, double)
 
    SFMatrix3 .prototype = Object .assign (SFMatrixPrototypeTemplate (SFMatrix3, TypeName, Matrix3, SFVec2, double),
    {
-      setTransform: function (translation, rotation, scale, scaleOrientation, center)
+      setTransform (translation, rotation, scale, scaleOrientation, center)
       {
          translation      = translation      ? translation      .getValue () : null;
          rotation         = rotation         ? rotation                      : 0;
@@ -105,11 +105,11 @@ function SFMatrix3Template (TypeName, SFVec2, double)
    {
       Object .defineProperty (SFMatrix3 .prototype, i,
       {
-         get: function ()
+         get ()
          {
             return this .getValue () [i];
          },
-         set: function (value)
+         set (value)
          {
             this .getValue () [i] = +value;
             this .addEvent ();

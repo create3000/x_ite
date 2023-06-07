@@ -68,16 +68,16 @@ Fog .prototype = Object .assign (Object .create (X3DBindableNode .prototype),
    X3DFogObject .prototype,
 {
    constructor: Fog,
-   initialize: function ()
+   initialize ()
    {
       X3DBindableNode .prototype .initialize .call (this);
       X3DFogObject    .prototype .initialize .call (this);
    },
-   getModelMatrix: function ()
+   getModelMatrix ()
    {
       return this .modelMatrix;
    },
-   traverse: function (type, renderObject)
+   traverse (type, renderObject)
    {
       if (type !== TraverseType .CAMERA)
          return;
@@ -86,7 +86,7 @@ Fog .prototype = Object .assign (Object .create (X3DBindableNode .prototype),
 
       this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ());
    },
-   dispose: function ()
+   dispose ()
    {
       X3DFogObject    .prototype .dispose .call (this);
       X3DBindableNode .prototype .dispose .call (this);

@@ -73,7 +73,7 @@ QuadSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .pr
          return (i - mod) / 6 * 4 + indexMap [mod];
       };
    })(),
-   build: function ()
+   build ()
    {
       if (! this .getCoord ())
          return;
@@ -84,7 +84,7 @@ QuadSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .pr
 
       X3DComposedGeometryNode .prototype .build .call (this, 4, length, 6, length / 4 * 6);
    },
-   createNormals: function (verticesPerPolygon, polygonsSize)
+   createNormals (verticesPerPolygon, polygonsSize)
    {
       return this .createFaceNormals (verticesPerPolygon, polygonsSize);
    },

@@ -58,7 +58,7 @@ function X3DKeyDeviceSensorNode (executionContext)
 X3DKeyDeviceSensorNode .prototype = Object .assign (Object .create (X3DSensorNode .prototype),
 {
    constructor: X3DKeyDeviceSensorNode,
-   initialize: function ()
+   initialize ()
    {
       X3DSensorNode .prototype .initialize .call (this);
 
@@ -66,7 +66,7 @@ X3DKeyDeviceSensorNode .prototype = Object .assign (Object .create (X3DSensorNod
 
       this .set_live__ ();
    },
-   set_live__: function ()
+   set_live__ ()
    {
       if (this .getLive () .getValue ())
       {
@@ -82,26 +82,26 @@ X3DKeyDeviceSensorNode .prototype = Object .assign (Object .create (X3DSensorNod
          this .disable ();
       }
    },
-   set_enabled__: function ()
+   set_enabled__ ()
    {
       if (this ._enabled .getValue ())
          this .enable ();
       else
          this .disable ();
    },
-   enable: function ()
+   enable ()
    {
       this .getBrowser () .addKeyDeviceSensorNode (this);
    },
-   disable: function ()
+   disable ()
    {
       this .getBrowser () .removeKeyDeviceSensorNode (this);
 
       this .release ();
    },
-   keydown: function () { },
-   keyup: function () { },
-   release: function () { },
+   keydown () { },
+   keyup () { },
+   release () { },
 });
 
 Object .defineProperties (X3DKeyDeviceSensorNode,

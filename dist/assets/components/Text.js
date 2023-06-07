@@ -1,7 +1,7 @@
 /* X_ITE v8.7.8 */(() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 179:
+/***/ 515:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 /**
@@ -14761,7 +14761,7 @@ X3DFontStyleNode .prototype = Object .assign (Object .create ((X3DNode_default()
    (X3DUrlObject_default()).prototype,
 {
    constructor: X3DFontStyleNode,
-   initialize: function ()
+   initialize ()
    {
       X3DNode_default().prototype.initialize.call (this);
       X3DUrlObject_default().prototype.initialize.call (this);
@@ -14777,7 +14777,7 @@ X3DFontStyleNode .prototype = Object .assign (Object .create ((X3DNode_default()
 
       this .requestImmediateLoad () .catch (Function .prototype);
    },
-   set_style__: function ()
+   set_style__ ()
    {
       if (!this ._load .getValue ())
          return;
@@ -14786,7 +14786,7 @@ X3DFontStyleNode .prototype = Object .assign (Object .create ((X3DNode_default()
 
       this .requestImmediateLoad () .catch (Function .prototype);
    },
-   set_justify__: function ()
+   set_justify__ ()
    {
       const majorNormal = this ._horizontal .getValue () ? this ._leftToRight .getValue () : this ._topToBottom .getValue ();
 
@@ -14800,15 +14800,15 @@ X3DFontStyleNode .prototype = Object .assign (Object .create ((X3DNode_default()
                              ? this .getAlignment (1, minorNormal)
                              : minorNormal ? Text_TextAlignment.FIRST : Text_TextAlignment.END;
    },
-   getMajorAlignment: function ()
+   getMajorAlignment ()
    {
       return this .alignments [0];
    },
-   getMinorAlignment: function ()
+   getMinorAlignment ()
    {
       return this .alignments [1];
    },
-   getAlignment: function (index, normal)
+   getAlignment (index, normal)
    {
       if (normal)
       {
@@ -14837,7 +14837,7 @@ X3DFontStyleNode .prototype = Object .assign (Object .create ((X3DNode_default()
 
       return index ? Text_TextAlignment.FIRST : Text_TextAlignment.BEGIN;
    },
-   getDefaultFont: function (familyName)
+   getDefaultFont (familyName)
    {
       const family = Fonts [familyName];
 
@@ -14846,7 +14846,7 @@ X3DFontStyleNode .prototype = Object .assign (Object .create ((X3DNode_default()
 
       return;
    },
-   loadData: function ()
+   loadData ()
    {
       // Add default font to family array.
 
@@ -14863,7 +14863,7 @@ X3DFontStyleNode .prototype = Object .assign (Object .create ((X3DNode_default()
 
       this .loadNext ();
    },
-   loadNext: function ()
+   loadNext ()
    {
       try
       {
@@ -14892,25 +14892,25 @@ X3DFontStyleNode .prototype = Object .assign (Object .create ((X3DNode_default()
          this .setError (error .message);
       }
    },
-   setError: function (error)
+   setError (error)
    {
       if (this .URL .protocol !== "data:")
          console .warn ("Error loading font '" + decodeURI (this .URL .href) + "':", error);
 
       this .loadNext ();
    },
-   setFont: function (font)
+   setFont (font)
    {
       this .font = font;
 
       this .setLoadState ((X3DConstants_default()).COMPLETE_STATE);
       this .addNodeEvent ();
    },
-   getFont: function ()
+   getFont ()
    {
       return this .font;
    },
-   dispose: function ()
+   dispose ()
    {
       X3DUrlObject_default().prototype.dispose.call (this);
       X3DNode_default().prototype.dispose.call (this);
@@ -15042,43 +15042,43 @@ function X3DTextGeometry (text, fontStyle)
 X3DTextGeometry .prototype =
 {
    constructor: X3DTextGeometry,
-   getBrowser: function ()
+   getBrowser ()
    {
       return this .browser;
    },
-   getText: function ()
+   getText ()
    {
       return this .text;
    },
-   getFontStyle: function ()
+   getFontStyle ()
    {
       return this .fontStyle;
    },
-   getGlyphs: function ()
+   getGlyphs ()
    {
       return this .glyphs;
    },
-   getMinorAlignment: function ()
+   getMinorAlignment ()
    {
       return this .minorAlignment;
    },
-   getTranslations: function ()
+   getTranslations ()
    {
       return this .translations;
    },
-   getCharSpacings: function ()
+   getCharSpacings ()
    {
       return this .charSpacings;
    },
-   getBearing: function ()
+   getBearing ()
    {
       return this .bearing;
    },
-   getBBox: function ()
+   getBBox ()
    {
       return this .bbox;
    },
-   update: function ()
+   update ()
    {
       var
          text      = this .text,
@@ -15119,7 +15119,7 @@ X3DTextGeometry .prototype =
          this .vertical (text, fontStyle);
       }
    },
-   resizeArray: function (array, size)
+   resizeArray (array, size)
    {
       // Resize array in grow only fashion.
 
@@ -15128,7 +15128,7 @@ X3DTextGeometry .prototype =
 
       array .length = size;
    },
-   horizontal: function (text, fontStyle)
+   horizontal (text, fontStyle)
    {
       var
          font        = fontStyle .getFont (),
@@ -15253,7 +15253,7 @@ X3DTextGeometry .prototype =
       this .bbox .setExtents (min3 .set (min .x, min .y, 0),
                               max3 .set (max .x, max .y, 0));
    },
-   vertical: function (text, fontStyle)
+   vertical (text, fontStyle)
    {
       var
          font             = fontStyle .getFont (),
@@ -15493,7 +15493,7 @@ X3DTextGeometry .prototype =
       this .bbox .setExtents (min3 .set (min .x, min .y, 0),
                               max3 .set (max .x, max .y, 0));
    },
-   stringToGlyphs: function (font, line, normal, lineNumber)
+   stringToGlyphs (font, line, normal, lineNumber)
    {
       var glypes = this .glyphs [lineNumber];
 
@@ -15512,7 +15512,7 @@ X3DTextGeometry .prototype =
 
       return glypes;
    },
-   getHorizontalLineExtents: function (fontStyle, line, min, max, lineNumber)
+   getHorizontalLineExtents (fontStyle, line, min, max, lineNumber)
    {
       var
          font             = fontStyle .getFont (),
@@ -15562,7 +15562,7 @@ X3DTextGeometry .prototype =
 
       return glyphs;
    },
-   traverse: function (type, renderObject)
+   traverse (type, renderObject)
    { },
 };
 
@@ -15651,11 +15651,11 @@ function PolygonText (text, fontStyle)
 PolygonText .prototype = Object .assign (Object .create (Text_X3DTextGeometry.prototype),
 {
    constructor: PolygonText,
-   isTransparent: function ()
+   isTransparent ()
    {
       return false;
    },
-   getMatrix: function ()
+   getMatrix ()
    {
       return (Matrix4_default()).Identity;
    },
@@ -15777,7 +15777,7 @@ PolygonText .prototype = Object .assign (Object .create (Text_X3DTextGeometry.pr
          }
       };
    })(),
-   getGlyphExtents: function (font, glyph, primitiveQuality, min, max)
+   getGlyphExtents (font, glyph, primitiveQuality, min, max)
    {
       const
          glyphCache = this .getBrowser () .getGlyph (font, primitiveQuality, glyph .index),
@@ -15809,7 +15809,7 @@ PolygonText .prototype = Object .assign (Object .create (Text_X3DTextGeometry.pr
          extents .max = max .copy ();
       }
    },
-   getGlyphGeometry: function (font, glyph, primitiveQuality)
+   getGlyphGeometry (font, glyph, primitiveQuality)
    {
       const
          glyphCache    = this .getBrowser () .getGlyph (font, primitiveQuality, glyph .index),
@@ -15828,7 +15828,7 @@ PolygonText .prototype = Object .assign (Object .create (Text_X3DTextGeometry.pr
          return glyphGeometry;
       }
    },
-   createGlyphGeometry: function (glyph, vertices, primitiveQuality)
+   createGlyphGeometry (glyph, vertices, primitiveQuality)
    {
       // Get contours for the current glyph.
 
@@ -15884,7 +15884,7 @@ PolygonText .prototype = Object .assign (Object .create (Text_X3DTextGeometry.pr
 
       return this .triangulatePolygon (contours, vertices);
    },
-   getBezierSteps: function (primitiveQuality)
+   getBezierSteps (primitiveQuality)
    {
       switch (primitiveQuality)
       {
@@ -15936,11 +15936,11 @@ PolygonText .prototype = Object .assign (Object .create (Text_X3DTextGeometry.pr
          return triangles;
       };
    })(),
-   display: function (gl, renderContext)
+   display (gl, renderContext)
    { },
-   transformLine: function (line)
+   transformLine (line)
    { },
-   transformMatrix: function (matrix)
+   transformMatrix (matrix)
    { },
 });
 
@@ -16016,11 +16016,11 @@ function FontStyle (executionContext)
 FontStyle .prototype = Object .assign (Object .create (Text_X3DFontStyleNode.prototype),
 {
    constructor: FontStyle,
-   getTextGeometry: function (text)
+   getTextGeometry (text)
    {
       return new Text_PolygonText (text, this);
    },
-   getScale: function ()
+   getScale ()
    {
       return this ._size .getValue ();
    },
@@ -16073,7 +16073,7 @@ Namespace_default().set ("x_ite/Components/Text/FontStyle", FontStyle_default_);
 /* harmony default export */ const Text_FontStyle = (FontStyle_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Text/X3DTextContext.js
 /* provided dependency */ var $ = __webpack_require__(355);
-/* provided dependency */ var opentype = __webpack_require__(179);
+/* provided dependency */ var opentype = __webpack_require__(515);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -16136,7 +16136,7 @@ function X3DTextContext ()
 
 X3DTextContext .prototype =
 {
-   getDefaultFontStyle: function ()
+   getDefaultFontStyle ()
    {
       this [_defaultFontStyle] = new Text_FontStyle (this .getPrivateScene ());
       this [_defaultFontStyle] .setPrivate (true);
@@ -16148,7 +16148,7 @@ X3DTextContext .prototype =
 
       return this [_defaultFontStyle];
    },
-   getFont: function (url)
+   getFont (url)
    {
       url = url .toString ();
 
@@ -16163,14 +16163,14 @@ X3DTextContext .prototype =
 
       return deferred;
    },
-   setFont: function (deferred, error, font)
+   setFont (deferred, error, font)
    {
       if (error)
          deferred .reject (error);
       else
          deferred .resolve (font);
    },
-   getGlyph: function (font, primitiveQuality, glyphIndex)
+   getGlyph (font, primitiveQuality, glyphIndex)
    {
       let cachedFont = this [_glyphCache] .get (font);
 
@@ -16270,7 +16270,7 @@ function Text (executionContext)
 Text .prototype = Object .assign (Object .create ((X3DGeometryNode_default()).prototype),
 {
    constructor: Text,
-   initialize: function ()
+   initialize ()
    {
       X3DGeometryNode_default().prototype.initialize.call (this);
 
@@ -16278,18 +16278,18 @@ Text .prototype = Object .assign (Object .create ((X3DGeometryNode_default()).pr
 
       this .set_fontStyle__ ();
    },
-   getMatrix: function ()
+   getMatrix ()
    {
       return this .textGeometry .getMatrix ();
    },
-   getLength: function (index)
+   getLength (index)
    {
       if (index < this ._length .length)
          return Math .max (0, this ._length [index]);
 
       return 0;
    },
-   set_live__: function ()
+   set_live__ ()
    {
        X3DGeometryNode_default().prototype.set_live__.call (this);
 
@@ -16298,7 +16298,7 @@ Text .prototype = Object .assign (Object .create ((X3DGeometryNode_default()).pr
       else
          this .getBrowser () .getBrowserOptions () ._PrimitiveQuality .removeInterest ("requestRebuild", this);
    },
-   set_fontStyle__: function ()
+   set_fontStyle__ ()
    {
       this .fontStyleNode ?.removeInterest ("requestRebuild", this);
 
@@ -16313,20 +16313,20 @@ Text .prototype = Object .assign (Object .create ((X3DGeometryNode_default()).pr
 
       this .setTransparent (this .textGeometry .isTransparent ());
    },
-   build: function ()
+   build ()
    {
       this .textGeometry .update ();
       this .textGeometry .build ();
 
       this .setSolid (this ._solid .getValue ());
    },
-   traverse: function (type, renderObject)
+   traverse (type, renderObject)
    {
       this .textGeometry .traverse (type, renderObject);
 
       X3DGeometryNode_default().prototype.traverse.call (this, type, renderObject);
    },
-   display: function (gl, renderContext)
+   display (gl, renderContext)
    {
       this .textGeometry .display (gl, renderContext);
 
@@ -16334,12 +16334,12 @@ Text .prototype = Object .assign (Object .create ((X3DGeometryNode_default()).pr
 
       renderContext .textureNode = null;
    },
-   transformLine: function (line)
+   transformLine (line)
    {
       // Apply sceen nodes transformation in place here.
       return this .textGeometry .transformLine (line);
    },
-   transformMatrix: function (matrix)
+   transformMatrix (matrix)
    {
       // Apply sceen nodes transformation in place here.
       return this .textGeometry .transformMatrix (matrix);

@@ -63,27 +63,27 @@ function SFMatrixPrototypeTemplate (Constructor, TypeName, Matrix, SFVec, double
    return Object .assign (Object .create (X3DField .prototype),
    {
       constructor: Constructor,
-      [Symbol .iterator]: function* ()
+      *[Symbol .iterator] ()
       {
          yield* this .getValue ();
       },
-      copy: function ()
+      copy ()
       {
          return new (this .constructor) (this .getValue () .copy ());
       },
-      equals: function (matrix)
+      equals (matrix)
       {
          return this .getValue () .equals (matrix .getValue ());
       },
-      isDefaultValue: function ()
+      isDefaultValue ()
       {
          return this .getValue () .equals (Matrix .Identity);
       },
-      set: function (value)
+      set (value)
       {
          this .getValue () .assign (value);
       },
-      setTransform: function (translation, rotation, scale, scaleOrientation, center)
+      setTransform (translation, rotation, scale, scaleOrientation, center)
       {
          translation      = translation      ? translation      .getValue () : null;
          rotation         = rotation         ? rotation         .getValue () : null;
@@ -93,7 +93,7 @@ function SFMatrixPrototypeTemplate (Constructor, TypeName, Matrix, SFVec, double
 
          this .getValue () .set (translation, rotation, scale, scaleOrientation, center);
       },
-      getTransform: function (translation, rotation, scale, scaleOrientation, center)
+      getTransform (translation, rotation, scale, scaleOrientation, center)
       {
          translation      = translation      ? translation      .getValue () : null;
          rotation         = rotation         ? rotation         .getValue () : null;
@@ -103,43 +103,43 @@ function SFMatrixPrototypeTemplate (Constructor, TypeName, Matrix, SFVec, double
 
          this .getValue () .get (translation, rotation, scale, scaleOrientation, center);
       },
-      determinant: function ()
+      determinant ()
       {
          return this .getValue () .determinant ();
       },
-      transpose: function ()
+      transpose ()
       {
          return new (this .constructor) (this .getValue () .copy () .transpose ());
       },
-      inverse: function ()
+      inverse ()
       {
          return new (this .constructor) (this .getValue () .copy () .inverse ());
       },
-      multLeft: function (matrix)
+      multLeft (matrix)
       {
          return new (this .constructor) (this .getValue () .copy () .multLeft (matrix .getValue ()));
       },
-      multRight: function (matrix)
+      multRight (matrix)
       {
          return new (this .constructor) (this .getValue () .copy () .multRight (matrix .getValue ()));
       },
-      multVecMatrix: function (vector)
+      multVecMatrix (vector)
       {
          return new SFVec (this .getValue () .multVecMatrix (vector .getValue () .copy ()));
       },
-      multMatrixVec: function (vector)
+      multMatrixVec (vector)
       {
          return new SFVec (this .getValue () .multMatrixVec (vector .getValue () .copy ()));
       },
-      multDirMatrix: function (vector)
+      multDirMatrix (vector)
       {
          return new SFVec (this .getValue () .multDirMatrix (vector .getValue () .copy ()));
       },
-      multMatrixDir: function (vector)
+      multMatrixDir (vector)
       {
          return new SFVec (this .getValue () .multMatrixDir (vector .getValue () .copy ()));
       },
-      toStream: function (generator)
+      toStream (generator)
       {
          const
             value = this .getValue (),
@@ -153,15 +153,15 @@ function SFMatrixPrototypeTemplate (Constructor, TypeName, Matrix, SFVec, double
 
          generator .string += generator [_formatter] (value [last]);
       },
-      toVRMLStream: function (generator)
+      toVRMLStream (generator)
       {
          this .toStream (generator);
       },
-      toXMLStream: function (generator)
+      toXMLStream (generator)
       {
          this .toStream (generator);
       },
-      toJSONStream: function (generator)
+      toJSONStream (generator)
       {
          generator .string += '[';
          generator .string += generator .TidySpace ();
@@ -171,7 +171,7 @@ function SFMatrixPrototypeTemplate (Constructor, TypeName, Matrix, SFVec, double
          generator .string += generator .TidySpace ();
          generator .string += ']';
       },
-      toJSONStreamValue: function (generator)
+      toJSONStreamValue (generator)
       {
          const
             value = this .getValue (),

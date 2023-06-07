@@ -66,7 +66,7 @@ function IsoSurfaceVolumeData (executionContext)
 IsoSurfaceVolumeData .prototype = Object .assign (Object .create (X3DVolumeDataNode .prototype),
 {
    constructor: IsoSurfaceVolumeData,
-   initialize: function ()
+   initialize ()
    {
       X3DVolumeDataNode .prototype .initialize .call (this);
 
@@ -91,11 +91,11 @@ IsoSurfaceVolumeData .prototype = Object .assign (Object .create (X3DVolumeDataN
 
       this .updateShader ();
    },
-   set_gradients__: function ()
+   set_gradients__ ()
    {
       this .gradientsNode = X3DCast (X3DConstants .X3DTexture3DNode, this ._gradients);
    },
-   set_renderStyle__: function ()
+   set_renderStyle__ ()
    {
       const renderStyleNodes = this .renderStyleNodes;
 
@@ -121,7 +121,7 @@ IsoSurfaceVolumeData .prototype = Object .assign (Object .create (X3DVolumeDataN
          renderStyleNode .addVolumeData (this);
       }
    },
-   set_voxels__: function ()
+   set_voxels__ ()
    {
       this .voxelsNode = X3DCast (X3DConstants .X3DTexture3DNode, this ._voxels);
 
@@ -130,7 +130,7 @@ IsoSurfaceVolumeData .prototype = Object .assign (Object .create (X3DVolumeDataN
       else
          this .getAppearance () ._texture = this .getBrowser () .getDefaultVoxels ();
    },
-   createShader: function (options, vs, fs)
+   createShader (options, vs, fs)
    {
       // if (DEVELOPMENT)
       //    console .log ("Creating VolumeData Shader ...");

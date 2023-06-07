@@ -61,7 +61,7 @@ function RenderingProperties (executionContext)
 RenderingProperties .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 {
    constructor: RenderingProperties,
-   initialize: function ()
+   initialize ()
    {
       X3DBaseNode .prototype .initialize .call (this);
 

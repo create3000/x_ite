@@ -134,7 +134,7 @@ function AnnotationLayer (executionContext)
 AnnotationLayer .prototype = Object .assign (Object .create ((X3DLayerNode_default()).prototype),
 {
    constructor: AnnotationLayer,
-   initialize: function ()
+   initialize ()
    {
       X3DLayerNode_default().prototype.initialize.call (this);
    },
@@ -247,7 +247,7 @@ function AnnotationTarget (executionContext)
 AnnotationTarget .prototype = Object .assign (Object .create ((X3DChildNode_default()).prototype),
 {
    constructor: AnnotationTarget,
-   initialize: function ()
+   initialize ()
    {
       X3DChildNode_default().prototype.initialize.call (this);
    },
@@ -357,7 +357,7 @@ function X3DAnnotationNode (executionContext)
 X3DAnnotationNode .prototype = Object .assign (Object .create ((X3DChildNode_default()).prototype),
 {
    constructor: X3DAnnotationNode,
-   initialize: function ()
+   initialize ()
    {
       X3DChildNode_default().prototype.initialize.call (this);
    },
@@ -449,12 +449,12 @@ GroupAnnotation .prototype = Object .assign (Object .create ((X3DGroupingNode_de
    Annotation_X3DAnnotationNode.prototype,
 {
    constructor: GroupAnnotation,
-   initialize: function ()
+   initialize ()
    {
       X3DGroupingNode_default().prototype.initialize.call (this);
       Annotation_X3DAnnotationNode.prototype.initialize.call (this);
    },
-   dispose: function ()
+   dispose ()
    {
       Annotation_X3DAnnotationNode.prototype.dispose.call (this);
       X3DGroupingNode_default().prototype.dispose.call (this);
@@ -577,14 +577,14 @@ IconAnnotation .prototype = Object .assign (Object .create (Annotation_X3DAnnota
    (X3DUrlObject_default()).prototype,
 {
    constructor: IconAnnotation,
-   initialize: function ()
+   initialize ()
    {
       Annotation_X3DAnnotationNode.prototype.initialize.call (this);
       X3DUrlObject_default().prototype.initialize.call (this);
    },
-   requestImmediateLoad: function (cache = true)
+   requestImmediateLoad (cache = true)
    { },
-   dispose: function ()
+   dispose ()
    {
       X3DUrlObject_default().prototype.dispose.call (this);
       Annotation_X3DAnnotationNode.prototype.dispose.call (this);
@@ -697,7 +697,7 @@ function TextAnnotation (executionContext)
 TextAnnotation .prototype = Object .assign (Object .create (Annotation_X3DAnnotationNode.prototype),
 {
    constructor: TextAnnotation,
-   initialize: function ()
+   initialize ()
    {
       Annotation_X3DAnnotationNode.prototype.initialize.call (this);
    },
@@ -808,7 +808,7 @@ function URLAnnotation (executionContext)
 URLAnnotation .prototype = Object .assign (Object .create (Annotation_X3DAnnotationNode.prototype),
 {
    constructor: URLAnnotation,
-   initialize: function ()
+   initialize ()
    {
       Annotation_X3DAnnotationNode.prototype.initialize.call (this);
    },

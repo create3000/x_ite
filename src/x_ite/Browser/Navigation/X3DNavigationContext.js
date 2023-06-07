@@ -88,7 +88,7 @@ function X3DNavigationContext ()
 
 X3DNavigationContext .prototype =
 {
-   initialize: function ()
+   initialize ()
    {
       this ._viewer .addInterest ("set_viewer__", this);
 
@@ -98,53 +98,53 @@ X3DNavigationContext .prototype =
       this [_headlightContainer] = getHeadlight (this);
       this [_viewerNode] .setup ();
    },
-   getHeadlight: function ()
+   getHeadlight ()
    {
       return this [_headlightContainer];
    },
-   getActiveLayer: function ()
+   getActiveLayer ()
    {
       return this ._activeLayer .getValue ();
    },
-   getActiveNavigationInfo: function ()
+   getActiveNavigationInfo ()
    {
       return this ._activeNavigationInfo .getValue ();
    },
-   getActiveViewpoint: function ()
+   getActiveViewpoint ()
    {
       return this ._activeViewpoint .getValue ();
    },
-   getCurrentViewer: function ()
+   getCurrentViewer ()
    {
       return this ._viewer .getValue ();
    },
-   getViewer: function ()
+   getViewer ()
    {
       return this [_viewerNode];
    },
-   addCollision: function (object)
+   addCollision (object)
    {
       this [_activeCollisions] .add (object);
    },
-   removeCollision: function (object)
+   removeCollision (object)
    {
       this [_activeCollisions] .delete (object);
    },
-   getCollisionCount: function ()
+   getCollisionCount ()
    {
       return this [_activeCollisions] .size;
    },
-   remove_world__: function ()
+   remove_world__ ()
    {
       this .getWorld () ._activeLayer .removeInterest ("set_activeLayer__", this);
    },
-   set_world__: function ()
+   set_world__ ()
    {
       this .getWorld () ._activeLayer .addInterest ("set_activeLayer__", this);
 
       this .set_activeLayer__ ();
    },
-   set_activeLayer__: function ()
+   set_activeLayer__ ()
    {
       if (this ._activeLayer .getValue ())
       {
@@ -163,7 +163,7 @@ X3DNavigationContext .prototype =
       this .set_activeNavigationInfo__ ();
       this .set_activeViewpoint__ ();
    },
-   set_activeNavigationInfo__: function ()
+   set_activeNavigationInfo__ ()
    {
       this ._activeNavigationInfo .getValue () ?._viewer .removeFieldInterest (this ._viewer);
 
@@ -181,14 +181,14 @@ X3DNavigationContext .prototype =
          this ._viewer               = "NONE";
       }
    },
-   set_activeViewpoint__: function ()
+   set_activeViewpoint__ ()
    {
       if (this ._activeLayer .getValue ())
          this ._activeViewpoint = this ._activeLayer .getValue () .getViewpoint ();
       else
          this ._activeViewpoint = null;
    },
-   set_viewer__: function (viewer)
+   set_viewer__ (viewer)
    {
       const navigationInfo = this ._activeNavigationInfo .getValue ();
 
@@ -230,7 +230,7 @@ X3DNavigationContext .prototype =
 
       this [_viewerNode] .setup ();
    },
-   dispose: function ()
+   dispose ()
    {
       this [_viewerNode] ?.dispose ();
    },

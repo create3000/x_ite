@@ -62,7 +62,7 @@ function Background (executionContext)
 Background .prototype = Object .assign (Object .create (X3DBackgroundNode .prototype),
 {
    constructor: Background,
-   initialize: function ()
+   initialize ()
    {
       X3DBackgroundNode .prototype .initialize .call (this);
 

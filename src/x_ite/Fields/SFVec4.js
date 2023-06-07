@@ -74,11 +74,11 @@ function SFVec4Template (TypeName, double)
       Object .defineProperty (SFVec4 .prototype, key, { enumerable: false });
 
    const x = {
-      get: function ()
+      get ()
       {
          return this .getValue () .x;
       },
-      set: function (value)
+      set (value)
       {
          this .getValue () .x = +value;
          this .addEvent ();
@@ -86,11 +86,11 @@ function SFVec4Template (TypeName, double)
    };
 
    const y = {
-      get: function ()
+      get ()
       {
          return this .getValue () .y;
       },
-      set: function (value)
+      set (value)
       {
          this .getValue () .y = +value;
          this .addEvent ();
@@ -98,11 +98,11 @@ function SFVec4Template (TypeName, double)
    };
 
    const z = {
-      get: function ()
+      get ()
       {
          return this .getValue () .z;
       },
-      set: function (value)
+      set (value)
       {
          this .getValue () .z = +value;
          this .addEvent ();
@@ -110,11 +110,11 @@ function SFVec4Template (TypeName, double)
    };
 
    const w = {
-      get: function ()
+      get ()
       {
          return this .getValue () .w;
       },
-      set: function (value)
+      set (value)
       {
          this .getValue () .w = +value;
          this .addEvent ();

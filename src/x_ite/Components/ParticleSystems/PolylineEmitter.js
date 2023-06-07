@@ -112,7 +112,7 @@ function PolylineEmitter (executionContext)
 PolylineEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),
 {
    constructor: PolylineEmitter,
-   initialize: function ()
+   initialize ()
    {
       X3DParticleEmitterNode .prototype .initialize .call (this);
 
@@ -196,7 +196,7 @@ PolylineEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterN
          }
       };
    })(),
-   activateTextures: function (gl, program)
+   activateTextures (gl, program)
    {
       gl .activeTexture (gl .TEXTURE0 + program .polylinesTextureUnit);
       gl .bindTexture (gl .TEXTURE_2D, this .polylinesTexture);

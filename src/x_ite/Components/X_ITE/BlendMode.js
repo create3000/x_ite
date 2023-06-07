@@ -65,7 +65,7 @@ function BlendMode (executionContext)
 BlendMode .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
 {
    constructor: BlendMode,
-   initialize: function ()
+   initialize ()
    {
       X3DAppearanceChildNode .prototype .initialize .call (this);
 
@@ -109,49 +109,49 @@ BlendMode .prototype = Object .assign (Object .create (X3DAppearanceChildNode .p
       this .set_colorEquation__ ();
       this .set_alphaEquation__ ();
    },
-   set_sourceColorFactor__: function ()
+   set_sourceColorFactor__ ()
    {
       this .sourceColorFactorType = this .factorTypes .get (this ._sourceColorFactor .getValue ());
 
       if (this .sourceColorFactorType === undefined)
          this .sourceColorFactorType = this .factorTypes .get ("SRC_ALPHA");
    },
-   set_sourceAlphaFactor__: function ()
+   set_sourceAlphaFactor__ ()
    {
       this .sourceAlphaFactorType = this .factorTypes .get (this ._sourceAlphaFactor .getValue ());
 
       if (this .sourceAlphaFactorType === undefined)
          this .sourceAlphaFactorType = this .factorTypes .get ("ONE");
    },
-   set_destinationColorFactor__: function ()
+   set_destinationColorFactor__ ()
    {
       this .destinationColorFactorType = this .factorTypes .get (this ._destinationColorFactor .getValue ());
 
       if (this .destinationColorFactorType === undefined)
          this .destinationColorFactorType = this .factorTypes .get ("ONE_MINUS_SRC_ALPHA");
    },
-   set_destinationAlphaFactor__: function ()
+   set_destinationAlphaFactor__ ()
    {
       this .destinationAlphaFactorType = this .factorTypes .get (this ._destinationAlphaFactor .getValue ());
 
       if (this .destinationAlphaFactorType === undefined)
          this .destinationAlphaFactorType = this .factorTypes .get ("ONE_MINUS_SRC_ALPHA");
    },
-   set_colorEquation__: function ()
+   set_colorEquation__ ()
    {
       this .colorEquationType = this .equationTypes .get (this ._colorEquation .getValue ());
 
       if (this .colorEquationType === undefined)
          this .colorEquationType = this .equationTypes .get ("FUNC_ADD");
    },
-   set_alphaEquation__: function ()
+   set_alphaEquation__ ()
    {
       this .alphaEquationType = this .equationTypes .get (this ._alphaEquation .getValue ());
 
       if (this .alphaEquationType === undefined)
          this .alphaEquationType = this .equationTypes .get ("FUNC_ADD");
    },
-   enable: function (gl)
+   enable (gl)
    {
       const color = this ._blendColor .getValue ();
 
@@ -159,7 +159,7 @@ BlendMode .prototype = Object .assign (Object .create (X3DAppearanceChildNode .p
       gl .blendFuncSeparate (this .sourceColorFactorType, this .destinationColorFactorType, this .sourceAlphaFactorType, this .destinationAlphaFactorType);
       gl .blendEquationSeparate (this .colorEquationType, this .alphaEquationType);
    },
-   disable: function (gl)
+   disable (gl)
    {
       gl .blendFuncSeparate (gl .SRC_ALPHA, gl .ONE_MINUS_SRC_ALPHA, gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
       gl .blendEquationSeparate (gl .FUNC_ADD, gl .FUNC_ADD);

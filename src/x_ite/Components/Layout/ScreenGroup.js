@@ -65,15 +65,15 @@ function ScreenGroup (executionContext)
 ScreenGroup .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
 {
    constructor: ScreenGroup,
-   getBBox: function (bbox, shadows)
+   getBBox (bbox, shadows)
    {
       return this .getSubBBox (bbox, shadows) .multRight (this .matrix);
    },
-   getMatrix: function ()
+   getMatrix ()
    {
       return this .matrix;
    },
-   traverse: function (type, renderObject)
+   traverse (type, renderObject)
    {
       switch (type)
       {

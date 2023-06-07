@@ -102,7 +102,7 @@ X3DFontStyleNode .prototype = Object .assign (Object .create (X3DNode .prototype
    X3DUrlObject .prototype,
 {
    constructor: X3DFontStyleNode,
-   initialize: function ()
+   initialize ()
    {
       X3DNode      .prototype .initialize .call (this);
       X3DUrlObject .prototype .initialize .call (this);
@@ -118,7 +118,7 @@ X3DFontStyleNode .prototype = Object .assign (Object .create (X3DNode .prototype
 
       this .requestImmediateLoad () .catch (Function .prototype);
    },
-   set_style__: function ()
+   set_style__ ()
    {
       if (!this ._load .getValue ())
          return;
@@ -127,7 +127,7 @@ X3DFontStyleNode .prototype = Object .assign (Object .create (X3DNode .prototype
 
       this .requestImmediateLoad () .catch (Function .prototype);
    },
-   set_justify__: function ()
+   set_justify__ ()
    {
       const majorNormal = this ._horizontal .getValue () ? this ._leftToRight .getValue () : this ._topToBottom .getValue ();
 
@@ -141,15 +141,15 @@ X3DFontStyleNode .prototype = Object .assign (Object .create (X3DNode .prototype
                              ? this .getAlignment (1, minorNormal)
                              : minorNormal ? TextAlignment .FIRST : TextAlignment .END;
    },
-   getMajorAlignment: function ()
+   getMajorAlignment ()
    {
       return this .alignments [0];
    },
-   getMinorAlignment: function ()
+   getMinorAlignment ()
    {
       return this .alignments [1];
    },
-   getAlignment: function (index, normal)
+   getAlignment (index, normal)
    {
       if (normal)
       {
@@ -178,7 +178,7 @@ X3DFontStyleNode .prototype = Object .assign (Object .create (X3DNode .prototype
 
       return index ? TextAlignment .FIRST : TextAlignment .BEGIN;
    },
-   getDefaultFont: function (familyName)
+   getDefaultFont (familyName)
    {
       const family = Fonts [familyName];
 
@@ -187,7 +187,7 @@ X3DFontStyleNode .prototype = Object .assign (Object .create (X3DNode .prototype
 
       return;
    },
-   loadData: function ()
+   loadData ()
    {
       // Add default font to family array.
 
@@ -204,7 +204,7 @@ X3DFontStyleNode .prototype = Object .assign (Object .create (X3DNode .prototype
 
       this .loadNext ();
    },
-   loadNext: function ()
+   loadNext ()
    {
       try
       {
@@ -233,25 +233,25 @@ X3DFontStyleNode .prototype = Object .assign (Object .create (X3DNode .prototype
          this .setError (error .message);
       }
    },
-   setError: function (error)
+   setError (error)
    {
       if (this .URL .protocol !== "data:")
          console .warn ("Error loading font '" + decodeURI (this .URL .href) + "':", error);
 
       this .loadNext ();
    },
-   setFont: function (font)
+   setFont (font)
    {
       this .font = font;
 
       this .setLoadState (X3DConstants .COMPLETE_STATE);
       this .addNodeEvent ();
    },
-   getFont: function ()
+   getFont ()
    {
       return this .font;
    },
-   dispose: function ()
+   dispose ()
    {
       X3DUrlObject .prototype .dispose .call (this);
       X3DNode      .prototype .dispose .call (this);

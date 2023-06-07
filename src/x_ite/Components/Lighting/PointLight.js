@@ -111,7 +111,7 @@ function PointLightContainer ()
 PointLightContainer .prototype =
 {
    constructor: PointLightContainer,
-   set: function (lightNode, groupNode, modelViewMatrix)
+   set (lightNode, groupNode, modelViewMatrix)
    {
       const shadowMapSize = lightNode .getShadowMapSize ();
 
@@ -134,7 +134,7 @@ PointLightContainer .prototype =
             console .warn ("Couldn't create shadow buffer.");
       }
    },
-   renderShadowMap: function (renderObject)
+   renderShadowMap (renderObject)
    {
       if (! this .shadowBuffer)
          return;
@@ -178,7 +178,7 @@ PointLightContainer .prototype =
 
       this .invLightSpaceProjectionMatrix .assign (invLightSpaceMatrix);
    },
-   setGlobalVariables: function (renderObject)
+   setGlobalVariables (renderObject)
    {
       this .modelViewMatrix .get () .multVecMatrix (this .location .assign (this .lightNode ._location .getValue ()));
 
@@ -188,7 +188,7 @@ PointLightContainer .prototype =
       this .shadowMatrix .assign (renderObject .getCameraSpaceMatrix () .get ()) .multRight (this .invLightSpaceProjectionMatrix);
       this .shadowMatrixArray .set (this .shadowMatrix);
    },
-   setShaderUniforms: function (gl, shaderObject)
+   setShaderUniforms (gl, shaderObject)
    {
       const i = shaderObject .numLights ++;
 
@@ -250,7 +250,7 @@ PointLightContainer .prototype =
          gl .uniform1f (shaderObject .x3d_ShadowIntensity [i], 0);
       }
    },
-   dispose: function ()
+   dispose ()
    {
       this .browser .pushShadowBuffer (this .shadowBuffer);
       this .browser .pushTexture2DUnit (this .textureUnit);
@@ -279,19 +279,19 @@ function PointLight (executionContext)
 PointLight .prototype = Object .assign (Object .create (X3DLightNode .prototype),
 {
    constructor: PointLight,
-   getAttenuation: function ()
+   getAttenuation ()
    {
       return this ._attenuation .getValue ();
    },
-   getLocation: function ()
+   getLocation ()
    {
       return this ._location .getValue ();
    },
-   getRadius: function ()
+   getRadius ()
    {
       return Math .max (0, this ._radius .getValue ());
    },
-   getLights: function ()
+   getLights ()
    {
       return PointLights;
    },

@@ -64,12 +64,12 @@ LocalFog .prototype = Object .assign (Object .create (X3DChildNode .prototype),
    X3DFogObject .prototype,
 {
    constructor: LocalFog,
-   initialize: function ()
+   initialize ()
    {
       X3DChildNode .prototype .initialize .call (this);
       X3DFogObject .prototype .initialize .call (this);
    },
-   push: function (renderObject)
+   push (renderObject)
    {
       if (this ._enabled .getValue () && this .getFogType ())
       {
@@ -80,12 +80,12 @@ LocalFog .prototype = Object .assign (Object .create (X3DChildNode .prototype),
          renderObject .getLocalFogs () .push (fogContainer);
       }
    },
-   pop: function (renderObject)
+   pop (renderObject)
    {
       if (this ._enabled .getValue () && this .getFogType ())
          this .getBrowser () .getLocalObjects () .push (renderObject .getLocalFogs () .pop ());
    },
-   dispose: function ()
+   dispose ()
    {
       X3DFogObject .prototype .dispose .call (this);
       X3DChildNode .prototype .dispose .call (this);

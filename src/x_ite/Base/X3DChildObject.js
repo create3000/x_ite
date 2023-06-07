@@ -68,49 +68,49 @@ if (DEVELOPMENT)
       [_tainted]: false,
       [_parents]: new Map (),
       [_registry]: null,
-      isInitializable: function ()
+      isInitializable ()
       {
          return true;
       },
-      isInput: function ()
+      isInput ()
       {
          return false;
       },
-      isOutput: function ()
+      isOutput ()
       {
          return false;
       },
-      setModificationTime: function (value)
+      setModificationTime (value)
       {
          this [_modificationTime] = value;
       },
-      getModificationTime: function ()
+      getModificationTime ()
       {
          return this [_modificationTime];
       },
-      setTainted: function (value)
+      setTainted (value)
       {
          this [_tainted] = value;
       },
-      isTainted: function ()
+      isTainted ()
       {
          return this [_tainted];
       },
-      addEvent: function ()
+      addEvent ()
       {
          this .setModificationTime (Date .now ());
 
          for (const parent of this [_parents] .values ())
             parent .deref () .addEvent (this);
       },
-      addEventObject: function (field, event)
+      addEventObject (field, event)
       {
          this .setModificationTime (Date .now ());
 
          for (const parent of this [_parents] .values ())
             parent .deref () .addEventObject (this, event);
       },
-      addParent: function (parent)
+      addParent (parent)
       {
          if (this [_parents] === X3DChildObject .prototype [_parents])
          {
@@ -121,12 +121,12 @@ if (DEVELOPMENT)
          this [_parents] .set (parent .getId (), new WeakRef (parent));
          this [_registry] .register (parent, parent .getId (), parent);
       },
-      removeParent: function (parent)
+      removeParent (parent)
       {
          this [_parents] .delete (parent .getId ());
          this [_registry] ?.unregister (parent);
       },
-      getParents: function ()
+      getParents ()
       {
          const parents = new Set ();
 
@@ -135,12 +135,12 @@ if (DEVELOPMENT)
 
          return parents;
       },
-      processEvent: function ()
+      processEvent ()
       {
          this .setTainted (false);
          this .processInterests ();
       },
-      dispose: function ()
+      dispose ()
       {
          this [_parents] .clear ();
 
@@ -156,69 +156,69 @@ else
       [_modificationTime]: 0,
       [_tainted]: false,
       [_parents]: new Set (),
-      isInitializable: function ()
+      isInitializable ()
       {
          return true;
       },
-      isInput: function ()
+      isInput ()
       {
          return false;
       },
-      isOutput: function ()
+      isOutput ()
       {
          return false;
       },
-      setModificationTime: function (value)
+      setModificationTime (value)
       {
          this [_modificationTime] = value;
       },
-      getModificationTime: function ()
+      getModificationTime ()
       {
          return this [_modificationTime];
       },
-      setTainted: function (value)
+      setTainted (value)
       {
          this [_tainted] = value;
       },
-      isTainted: function ()
+      isTainted ()
       {
          return this [_tainted];
       },
-      addEvent: function ()
+      addEvent ()
       {
          this .setModificationTime (Date .now ());
 
          for (const parent of this [_parents])
             parent .addEvent (this);
       },
-      addEventObject: function (field, event)
+      addEventObject (field, event)
       {
          this .setModificationTime (Date .now ());
 
          for (const parent of this [_parents])
             parent .addEventObject (this, event);
       },
-      addParent: function (parent)
+      addParent (parent)
       {
          if (this [_parents] === X3DChildObject .prototype [_parents])
             this [_parents] = new Set ();
 
          this [_parents] .add (parent);
       },
-      removeParent: function (parent)
+      removeParent (parent)
       {
          this [_parents] .delete (parent);
       },
-      getParents: function ()
+      getParents ()
       {
          return this [_parents];
       },
-      processEvent: function ()
+      processEvent ()
       {
          this .setTainted (false);
          this .processInterests ();
       },
-      dispose: function ()
+      dispose ()
       {
          this [_parents] .clear ();
 
