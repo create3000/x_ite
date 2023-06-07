@@ -854,7 +854,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             {
                const
                   fieldId = this .result [1],
-                  field   = this [fieldType] .create ();
+                  field   = new (Fields [fieldType]) ();
 
                field .setAccessType (X3DConstants .inputOnly);
                field .setName (fieldId);
@@ -879,7 +879,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             {
                const
                   fieldId = this .result [1],
-                  field   = this [fieldType] .create ();
+                  field   = new (Fields [fieldType]) ();
 
                field .setAccessType (X3DConstants .outputOnly);
                field .setName (fieldId);
@@ -904,7 +904,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             {
                const
                   fieldId = this .result [1],
-                  field   = this [fieldType] .create ();
+                  field   = new (Fields [fieldType]) ();
 
                if (this .fieldValue (field))
                {
@@ -945,7 +945,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             {
                const
                   fieldId = this .result [1],
-                  field   = this [fieldType] .create ();
+                  field   = new (Fields [fieldType]) ();
 
                if (this .fieldValue (field))
                {
@@ -1048,7 +1048,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             {
                const
                   fieldId = this .result [1],
-                  field   = this [fieldType] .create ();
+                  field   = new (Fields [fieldType]) ();
 
                field .setAccessType (X3DConstants .inputOnly);
                field .setName (fieldId);
@@ -1073,7 +1073,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             {
                const
                   fieldId = this .result [1],
-                  field   = this [fieldType] .create ();
+                  field   = new (Fields [fieldType]) ();
 
                field .setAccessType (X3DConstants .outputOnly);
                field .setName (fieldId);
@@ -1098,7 +1098,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             {
                const
                   fieldId = this .result [1],
-                  field   = this [fieldType] .create ();
+                  field   = new (Fields [fieldType]) ();
 
                field .setAccessType (X3DConstants .initializeOnly);
                field .setName (fieldId);
@@ -1123,7 +1123,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             {
                const
                   fieldId = this .result [1],
-                  field   = this [fieldType] .create ();
+                  field   = new (Fields [fieldType]) ();
 
                field .setAccessType (X3DConstants .inputOutput);
                field .setName (fieldId);
@@ -1318,9 +1318,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                               return true;
                            }
 
-                           const supportedField = this [fieldType];
-
-                           if (supportedField .getType () === reference .getType ())
+                           if (X3DConstants [fieldType] === reference .getType ())
                            {
                               if (reference .isReference (accessType))
                               {
@@ -1328,7 +1326,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
                                  if (!field)
                                  {
-                                    field = supportedField .create ();
+                                    field = new (Fields [fieldType]) ();
 
                                     baseNode .addUserDefinedField (accessType, fieldId, field);
                                  }
@@ -1494,7 +1492,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    fieldValue: function (field)
    {
-      return this .fieldTypes [field .getType ()] .call (this, field, field .getUnit ());
+      return this [field .getType ()] (field, field .getUnit ());
    },
    bool: function ()
    {
@@ -1589,8 +1587,6 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       {
          this .sfboolValues (field);
 
-         this .comments ();
-
          if (Grammar .CloseBracket .parse (this))
             return true;
 
@@ -1662,8 +1658,6 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (Grammar .OpenBracket .parse (this))
       {
          this .sfcolorValues (field);
-
-         this .comments ();
 
          if (Grammar .CloseBracket .parse (this))
             return true;
@@ -1746,8 +1740,6 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       {
          this .sfcolorrgbaValues (field);
 
-         this .comments ();
-
          if (Grammar .CloseBracket .parse (this))
             return true;
 
@@ -1789,8 +1781,6 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (Grammar .OpenBracket .parse (this))
       {
          this .sfdoubleValues (field);
-
-         this .comments ();
 
          if (Grammar .CloseBracket .parse (this))
             return true;
@@ -1864,8 +1854,6 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       {
          this .sfimageValues (field);
 
-         this .comments ();
-
          if (Grammar .CloseBracket .parse (this))
             return true;
 
@@ -1907,8 +1895,6 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (Grammar .OpenBracket .parse (this))
       {
          this .sfint32Values (field);
-
-         this .comments ();
 
          if (Grammar .CloseBracket .parse (this))
             return true;
@@ -2000,8 +1986,6 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (Grammar .OpenBracket .parse (this))
       {
          this .sfmatrix3Values (field);
-
-         this .comments ();
 
          if (Grammar .CloseBracket .parse (this))
             return true;
@@ -2138,8 +2122,6 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       {
          this .sfmatrix4Values (field);
 
-         this .comments ();
-
          if (Grammar .CloseBracket .parse (this))
             return true;
 
@@ -2254,8 +2236,6 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       {
          this .sfrotationValues (field);
 
-         this .comments ();
-
          if (Grammar .CloseBracket .parse (this))
             return true;
 
@@ -2297,8 +2277,6 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (Grammar .OpenBracket .parse (this))
       {
          this .sfstringValues (field);
-
-         this .comments ();
 
          if (Grammar .CloseBracket .parse (this))
             return true;
@@ -2348,8 +2326,6 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (Grammar .OpenBracket .parse (this))
       {
          this .sfvec2Values (field);
-
-         this .comments ();
 
          if (Grammar .CloseBracket .parse (this))
             return true;
@@ -2409,8 +2385,6 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (Grammar .OpenBracket .parse (this))
       {
          this .sfvec3Values (field);
-
-         this .comments ();
 
          if (Grammar .CloseBracket .parse (this))
             return true;
@@ -2477,8 +2451,6 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       {
          this .sfvec4Values (field);
 
-         this .comments ();
-
          if (Grammar .CloseBracket .parse (this))
             return true;
 
@@ -2515,50 +2487,52 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
 });
 
-VRMLParser .prototype .fieldTypes = [ ];
-VRMLParser .prototype .fieldTypes [X3DConstants .SFBool]      = VRMLParser .prototype .sfboolValue;
-VRMLParser .prototype .fieldTypes [X3DConstants .SFColor]     = VRMLParser .prototype .sfcolorValue;
-VRMLParser .prototype .fieldTypes [X3DConstants .SFColorRGBA] = VRMLParser .prototype .sfcolorrgbaValue;
-VRMLParser .prototype .fieldTypes [X3DConstants .SFDouble]    = VRMLParser .prototype .sfdoubleValue;
-VRMLParser .prototype .fieldTypes [X3DConstants .SFFloat]     = VRMLParser .prototype .sfdoubleValue;
-VRMLParser .prototype .fieldTypes [X3DConstants .SFImage]     = VRMLParser .prototype .sfimageValue;
-VRMLParser .prototype .fieldTypes [X3DConstants .SFInt32]     = VRMLParser .prototype .sfint32Value;
-VRMLParser .prototype .fieldTypes [X3DConstants .SFMatrix3f]  = VRMLParser .prototype .sfmatrix3Value;
-VRMLParser .prototype .fieldTypes [X3DConstants .SFMatrix3d]  = VRMLParser .prototype .sfmatrix3Value;
-VRMLParser .prototype .fieldTypes [X3DConstants .SFMatrix4f]  = VRMLParser .prototype .sfmatrix4Value;
-VRMLParser .prototype .fieldTypes [X3DConstants .SFMatrix4d]  = VRMLParser .prototype .sfmatrix4Value;
-VRMLParser .prototype .fieldTypes [X3DConstants .SFNode]      = VRMLParser .prototype .sfnodeValue;
-VRMLParser .prototype .fieldTypes [X3DConstants .SFRotation]  = VRMLParser .prototype .sfrotationValue;
-VRMLParser .prototype .fieldTypes [X3DConstants .SFString]    = VRMLParser .prototype .sfstringValue;
-VRMLParser .prototype .fieldTypes [X3DConstants .SFTime]      = VRMLParser .prototype .sfdoubleValue;
-VRMLParser .prototype .fieldTypes [X3DConstants .SFVec2d]     = VRMLParser .prototype .sfvec2Value;
-VRMLParser .prototype .fieldTypes [X3DConstants .SFVec2f]     = VRMLParser .prototype .sfvec2Value;
-VRMLParser .prototype .fieldTypes [X3DConstants .SFVec3d]     = VRMLParser .prototype .sfvec3Value;
-VRMLParser .prototype .fieldTypes [X3DConstants .SFVec3f]     = VRMLParser .prototype .sfvec3Value;
-VRMLParser .prototype .fieldTypes [X3DConstants .SFVec4d]     = VRMLParser .prototype .sfvec4Value;
-VRMLParser .prototype .fieldTypes [X3DConstants .SFVec4f]     = VRMLParser .prototype .sfvec4Value;
+Object .assign (VRMLParser .prototype,
+{
+   [X3DConstants .SFBool]:      VRMLParser .prototype .sfboolValue,
+   [X3DConstants .SFColor]:     VRMLParser .prototype .sfcolorValue,
+   [X3DConstants .SFColorRGBA]: VRMLParser .prototype .sfcolorrgbaValue,
+   [X3DConstants .SFDouble]:    VRMLParser .prototype .sfdoubleValue,
+   [X3DConstants .SFFloat]:     VRMLParser .prototype .sfdoubleValue,
+   [X3DConstants .SFImage]:     VRMLParser .prototype .sfimageValue,
+   [X3DConstants .SFInt32]:     VRMLParser .prototype .sfint32Value,
+   [X3DConstants .SFMatrix3f]:  VRMLParser .prototype .sfmatrix3Value,
+   [X3DConstants .SFMatrix3d]:  VRMLParser .prototype .sfmatrix3Value,
+   [X3DConstants .SFMatrix4f]:  VRMLParser .prototype .sfmatrix4Value,
+   [X3DConstants .SFMatrix4d]:  VRMLParser .prototype .sfmatrix4Value,
+   [X3DConstants .SFNode]:      VRMLParser .prototype .sfnodeValue,
+   [X3DConstants .SFRotation]:  VRMLParser .prototype .sfrotationValue,
+   [X3DConstants .SFString]:    VRMLParser .prototype .sfstringValue,
+   [X3DConstants .SFTime]:      VRMLParser .prototype .sfdoubleValue,
+   [X3DConstants .SFVec2d]:     VRMLParser .prototype .sfvec2Value,
+   [X3DConstants .SFVec2f]:     VRMLParser .prototype .sfvec2Value,
+   [X3DConstants .SFVec3d]:     VRMLParser .prototype .sfvec3Value,
+   [X3DConstants .SFVec3f]:     VRMLParser .prototype .sfvec3Value,
+   [X3DConstants .SFVec4d]:     VRMLParser .prototype .sfvec4Value,
+   [X3DConstants .SFVec4f]:     VRMLParser .prototype .sfvec4Value,
 
-VRMLParser .prototype .fieldTypes [X3DConstants .MFBool]      = VRMLParser .prototype .mfboolValue;
-VRMLParser .prototype .fieldTypes [X3DConstants .MFColor]     = VRMLParser .prototype .mfcolorValue;
-VRMLParser .prototype .fieldTypes [X3DConstants .MFColorRGBA] = VRMLParser .prototype .mfcolorrgbaValue;
-VRMLParser .prototype .fieldTypes [X3DConstants .MFDouble]    = VRMLParser .prototype .mfdoubleValue;
-VRMLParser .prototype .fieldTypes [X3DConstants .MFFloat]     = VRMLParser .prototype .mffloatValue;
-VRMLParser .prototype .fieldTypes [X3DConstants .MFImage]     = VRMLParser .prototype .mfimageValue;
-VRMLParser .prototype .fieldTypes [X3DConstants .MFInt32]     = VRMLParser .prototype .mfint32Value;
-VRMLParser .prototype .fieldTypes [X3DConstants .MFMatrix3d]  = VRMLParser .prototype .mfmatrix3Value;
-VRMLParser .prototype .fieldTypes [X3DConstants .MFMatrix3f]  = VRMLParser .prototype .mfmatrix3Value;
-VRMLParser .prototype .fieldTypes [X3DConstants .MFMatrix4d]  = VRMLParser .prototype .mfmatrix4Value;
-VRMLParser .prototype .fieldTypes [X3DConstants .MFMatrix4f]  = VRMLParser .prototype .mfmatrix4Value;
-VRMLParser .prototype .fieldTypes [X3DConstants .MFNode]      = VRMLParser .prototype .mfnodeValue;
-VRMLParser .prototype .fieldTypes [X3DConstants .MFRotation]  = VRMLParser .prototype .mfrotationValue;
-VRMLParser .prototype .fieldTypes [X3DConstants .MFString]    = VRMLParser .prototype .mfstringValue;
-VRMLParser .prototype .fieldTypes [X3DConstants .MFTime]      = VRMLParser .prototype .mftimeValue;
-VRMLParser .prototype .fieldTypes [X3DConstants .MFVec2d]     = VRMLParser .prototype .mfvec2Value;
-VRMLParser .prototype .fieldTypes [X3DConstants .MFVec2f]     = VRMLParser .prototype .mfvec2Value;
-VRMLParser .prototype .fieldTypes [X3DConstants .MFVec3d]     = VRMLParser .prototype .mfvec3Value;
-VRMLParser .prototype .fieldTypes [X3DConstants .MFVec3f]     = VRMLParser .prototype .mfvec3Value;
-VRMLParser .prototype .fieldTypes [X3DConstants .MFVec4d]     = VRMLParser .prototype .mfvec4Value;
-VRMLParser .prototype .fieldTypes [X3DConstants .MFVec4f]     = VRMLParser .prototype .mfvec4Value;
+   [X3DConstants .MFBool]:      VRMLParser .prototype .mfboolValue,
+   [X3DConstants .MFColor]:     VRMLParser .prototype .mfcolorValue,
+   [X3DConstants .MFColorRGBA]: VRMLParser .prototype .mfcolorrgbaValue,
+   [X3DConstants .MFDouble]:    VRMLParser .prototype .mfdoubleValue,
+   [X3DConstants .MFFloat]:     VRMLParser .prototype .mfdoubleValue,
+   [X3DConstants .MFImage]:     VRMLParser .prototype .mfimageValue,
+   [X3DConstants .MFInt32]:     VRMLParser .prototype .mfint32Value,
+   [X3DConstants .MFMatrix3d]:  VRMLParser .prototype .mfmatrix3Value,
+   [X3DConstants .MFMatrix3f]:  VRMLParser .prototype .mfmatrix3Value,
+   [X3DConstants .MFMatrix4d]:  VRMLParser .prototype .mfmatrix4Value,
+   [X3DConstants .MFMatrix4f]:  VRMLParser .prototype .mfmatrix4Value,
+   [X3DConstants .MFNode]:      VRMLParser .prototype .mfnodeValue,
+   [X3DConstants .MFRotation]:  VRMLParser .prototype .mfrotationValue,
+   [X3DConstants .MFString]:    VRMLParser .prototype .mfstringValue,
+   [X3DConstants .MFTime]:      VRMLParser .prototype .mfdoubleValue,
+   [X3DConstants .MFVec2d]:     VRMLParser .prototype .mfvec2Value,
+   [X3DConstants .MFVec2f]:     VRMLParser .prototype .mfvec2Value,
+   [X3DConstants .MFVec3d]:     VRMLParser .prototype .mfvec3Value,
+   [X3DConstants .MFVec3f]:     VRMLParser .prototype .mfvec3Value,
+   [X3DConstants .MFVec4d]:     VRMLParser .prototype .mfvec4Value,
+   [X3DConstants .MFVec4f]:     VRMLParser .prototype .mfvec4Value,
+});
 
 X3DField .prototype .fromString = function (string, scene)
 {

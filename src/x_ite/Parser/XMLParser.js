@@ -965,7 +965,7 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       this .parser .pushExecutionContext (this .getExecutionContext ());
 
       this .parser .setInput (value);
-      this .fieldTypes [field .getType ()] .call (this .parser, field, field .getUnit ());
+      this [field .getType ()] .call (this .parser, field, field .getUnit ());
 
       this .parser .popExecutionContext ();
    },
@@ -1067,50 +1067,52 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
 });
 
-XMLParser .prototype .fieldTypes = [ ];
-XMLParser .prototype .fieldTypes [X3DConstants .SFBool]      = VRMLParser .prototype .sfboolValue;
-XMLParser .prototype .fieldTypes [X3DConstants .SFColor]     = VRMLParser .prototype .sfcolorValue;
-XMLParser .prototype .fieldTypes [X3DConstants .SFColorRGBA] = VRMLParser .prototype .sfcolorrgbaValue;
-XMLParser .prototype .fieldTypes [X3DConstants .SFDouble]    = VRMLParser .prototype .sfdoubleValue;
-XMLParser .prototype .fieldTypes [X3DConstants .SFFloat]     = VRMLParser .prototype .sfdoubleValue;
-XMLParser .prototype .fieldTypes [X3DConstants .SFImage]     = VRMLParser .prototype .sfimageValue;
-XMLParser .prototype .fieldTypes [X3DConstants .SFInt32]     = VRMLParser .prototype .sfint32Value;
-XMLParser .prototype .fieldTypes [X3DConstants .SFMatrix3f]  = VRMLParser .prototype .sfmatrix3Value;
-XMLParser .prototype .fieldTypes [X3DConstants .SFMatrix3d]  = VRMLParser .prototype .sfmatrix3Value;
-XMLParser .prototype .fieldTypes [X3DConstants .SFMatrix4f]  = VRMLParser .prototype .sfmatrix4Value;
-XMLParser .prototype .fieldTypes [X3DConstants .SFMatrix4d]  = VRMLParser .prototype .sfmatrix4Value;
-XMLParser .prototype .fieldTypes [X3DConstants .SFNode]      = function (field) { field .setValue (null); };
-XMLParser .prototype .fieldTypes [X3DConstants .SFRotation]  = VRMLParser .prototype .sfrotationValue;
-XMLParser .prototype .fieldTypes [X3DConstants .SFString]    = function (field) { field .setValue (Fields .SFString .unescape (this .input)); };
-XMLParser .prototype .fieldTypes [X3DConstants .SFTime]      = VRMLParser .prototype .sfdoubleValue;
-XMLParser .prototype .fieldTypes [X3DConstants .SFVec2d]     = VRMLParser .prototype .sfvec2Value;
-XMLParser .prototype .fieldTypes [X3DConstants .SFVec2f]     = VRMLParser .prototype .sfvec2Value;
-XMLParser .prototype .fieldTypes [X3DConstants .SFVec3d]     = VRMLParser .prototype .sfvec3Value;
-XMLParser .prototype .fieldTypes [X3DConstants .SFVec3f]     = VRMLParser .prototype .sfvec3Value;
-XMLParser .prototype .fieldTypes [X3DConstants .SFVec4d]     = VRMLParser .prototype .sfvec4Value;
-XMLParser .prototype .fieldTypes [X3DConstants .SFVec4f]     = VRMLParser .prototype .sfvec4Value;
+Object .assign (XMLParser .prototype,
+{
+   [X3DConstants .SFBool]:      VRMLParser .prototype .sfboolValue,
+   [X3DConstants .SFColor]:     VRMLParser .prototype .sfcolorValue,
+   [X3DConstants .SFColorRGBA]: VRMLParser .prototype .sfcolorrgbaValue,
+   [X3DConstants .SFDouble]:    VRMLParser .prototype .sfdoubleValue,
+   [X3DConstants .SFFloat]:     VRMLParser .prototype .sfdoubleValue,
+   [X3DConstants .SFImage]:     VRMLParser .prototype .sfimageValue,
+   [X3DConstants .SFInt32]:     VRMLParser .prototype .sfint32Value,
+   [X3DConstants .SFMatrix3f]:  VRMLParser .prototype .sfmatrix3Value,
+   [X3DConstants .SFMatrix3d]:  VRMLParser .prototype .sfmatrix3Value,
+   [X3DConstants .SFMatrix4f]:  VRMLParser .prototype .sfmatrix4Value,
+   [X3DConstants .SFMatrix4d]:  VRMLParser .prototype .sfmatrix4Value,
+   [X3DConstants .SFNode]:      function (field) { field .setValue (null); },
+   [X3DConstants .SFRotation]:  VRMLParser .prototype .sfrotationValue,
+   [X3DConstants .SFString]:    function (field) { field .setValue (Fields .SFString .unescape (this .input)); },
+   [X3DConstants .SFTime]:      VRMLParser .prototype .sfdoubleValue,
+   [X3DConstants .SFVec2d]:     VRMLParser .prototype .sfvec2Value,
+   [X3DConstants .SFVec2f]:     VRMLParser .prototype .sfvec2Value,
+   [X3DConstants .SFVec3d]:     VRMLParser .prototype .sfvec3Value,
+   [X3DConstants .SFVec3f]:     VRMLParser .prototype .sfvec3Value,
+   [X3DConstants .SFVec4d]:     VRMLParser .prototype .sfvec4Value,
+   [X3DConstants .SFVec4f]:     VRMLParser .prototype .sfvec4Value,
 
-XMLParser .prototype .fieldTypes [X3DConstants .MFBool]      = VRMLParser .prototype .sfboolValues;
-XMLParser .prototype .fieldTypes [X3DConstants .MFColor]     = VRMLParser .prototype .sfcolorValues;
-XMLParser .prototype .fieldTypes [X3DConstants .MFColorRGBA] = VRMLParser .prototype .sfcolorrgbaValues;
-XMLParser .prototype .fieldTypes [X3DConstants .MFDouble]    = VRMLParser .prototype .sfdoubleValues;
-XMLParser .prototype .fieldTypes [X3DConstants .MFFloat]     = VRMLParser .prototype .sfdoubleValues;
-XMLParser .prototype .fieldTypes [X3DConstants .MFImage]     = VRMLParser .prototype .sfimageValues;
-XMLParser .prototype .fieldTypes [X3DConstants .MFInt32]     = VRMLParser .prototype .sfint32Values;
-XMLParser .prototype .fieldTypes [X3DConstants .MFMatrix3d]  = VRMLParser .prototype .sfmatrix3Values;
-XMLParser .prototype .fieldTypes [X3DConstants .MFMatrix3f]  = VRMLParser .prototype .sfmatrix3Values;
-XMLParser .prototype .fieldTypes [X3DConstants .MFMatrix4d]  = VRMLParser .prototype .sfmatrix4Values;
-XMLParser .prototype .fieldTypes [X3DConstants .MFMatrix4f]  = VRMLParser .prototype .sfmatrix4Values;
-XMLParser .prototype .fieldTypes [X3DConstants .MFNode]      = function (field) { field .length = 0; };
-XMLParser .prototype .fieldTypes [X3DConstants .MFRotation]  = VRMLParser .prototype .sfrotationValues;
-XMLParser .prototype .fieldTypes [X3DConstants .MFString]    = VRMLParser .prototype .sfstringValues;
-XMLParser .prototype .fieldTypes [X3DConstants .MFTime]      = VRMLParser .prototype .sfdoubleValues;
-XMLParser .prototype .fieldTypes [X3DConstants .MFVec2d]     = VRMLParser .prototype .sfvec2Values;
-XMLParser .prototype .fieldTypes [X3DConstants .MFVec2f]     = VRMLParser .prototype .sfvec2Values;
-XMLParser .prototype .fieldTypes [X3DConstants .MFVec3d]     = VRMLParser .prototype .sfvec3Values;
-XMLParser .prototype .fieldTypes [X3DConstants .MFVec3f]     = VRMLParser .prototype .sfvec3Values;
-XMLParser .prototype .fieldTypes [X3DConstants .MFVec4d]     = VRMLParser .prototype .sfvec4Values;
-XMLParser .prototype .fieldTypes [X3DConstants .MFVec4f]     = VRMLParser .prototype .sfvec4Values;
+   [X3DConstants .MFBool]:      VRMLParser .prototype .sfboolValues,
+   [X3DConstants .MFColor]:     VRMLParser .prototype .sfcolorValues,
+   [X3DConstants .MFColorRGBA]: VRMLParser .prototype .sfcolorrgbaValues,
+   [X3DConstants .MFDouble]:    VRMLParser .prototype .sfdoubleValues,
+   [X3DConstants .MFFloat]:     VRMLParser .prototype .sfdoubleValues,
+   [X3DConstants .MFImage]:     VRMLParser .prototype .sfimageValues,
+   [X3DConstants .MFInt32]:     VRMLParser .prototype .sfint32Values,
+   [X3DConstants .MFMatrix3d]:  VRMLParser .prototype .sfmatrix3Values,
+   [X3DConstants .MFMatrix3f]:  VRMLParser .prototype .sfmatrix3Values,
+   [X3DConstants .MFMatrix4d]:  VRMLParser .prototype .sfmatrix4Values,
+   [X3DConstants .MFMatrix4f]:  VRMLParser .prototype .sfmatrix4Values,
+   [X3DConstants .MFNode]:      function (field) { field .length = 0; },
+   [X3DConstants .MFRotation]:  VRMLParser .prototype .sfrotationValues,
+   [X3DConstants .MFString]:    VRMLParser .prototype .sfstringValues,
+   [X3DConstants .MFTime]:      VRMLParser .prototype .sfdoubleValues,
+   [X3DConstants .MFVec2d]:     VRMLParser .prototype .sfvec2Values,
+   [X3DConstants .MFVec2f]:     VRMLParser .prototype .sfvec2Values,
+   [X3DConstants .MFVec3d]:     VRMLParser .prototype .sfvec3Values,
+   [X3DConstants .MFVec3f]:     VRMLParser .prototype .sfvec3Values,
+   [X3DConstants .MFVec4d]:     VRMLParser .prototype .sfvec4Values,
+   [X3DConstants .MFVec4f]:     VRMLParser .prototype .sfvec4Values,
+});
 
 // HTML Support
 

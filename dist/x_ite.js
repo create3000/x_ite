@@ -11,11 +11,11 @@
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 280:
+/***/ 415:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* provided dependency */ var jQuery = __webpack_require__(21);
+/* provided dependency */ var jQuery = __webpack_require__(674);
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;
 
 /**
@@ -387,10 +387,10 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;
 
 /***/ }),
 
-/***/ 587:
+/***/ 848:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var jQuery = __webpack_require__(21);
+/* provided dependency */ var jQuery = __webpack_require__(674);
 /**
  * @preserve jquery.fullscreen 1.1.5
  * https://github.com/code-lts/jquery-fullscreen-plugin
@@ -586,7 +586,7 @@ installFullScreenHandlers();
 
 /***/ }),
 
-/***/ 194:
+/***/ 216:
 /***/ ((module, exports, __webpack_require__) => {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -600,7 +600,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 (function (factory) {
     if ( true ) {
         // AMD. Register as an anonymous module.
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(21)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(674)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 		(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -811,7 +811,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 21:
+/***/ 674:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -11523,7 +11523,7 @@ return jQuery;
 
 /***/ }),
 
-/***/ 560:
+/***/ 385:
 /***/ ((module) => {
 
 /**
@@ -16302,7 +16302,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 914:
+/***/ 451:
 /***/ (function(__unused_webpack_module, exports) {
 
 
@@ -19547,7 +19547,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 393:
+/***/ 448:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -38827,7 +38827,7 @@ const X3DUrlObject_default_ = X3DUrlObject;
 x_ite_Namespace.set ("x_ite/Components/Networking/X3DUrlObject", X3DUrlObject_default_);
 /* harmony default export */ const Networking_X3DUrlObject = (X3DUrlObject_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/X3DParser.js
-/* provided dependency */ var $ = __webpack_require__(21);
+/* provided dependency */ var $ = __webpack_require__(674);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -39075,7 +39075,7 @@ const Expressions_default_ = Expressions;
 x_ite_Namespace.set ("x_ite/Parser/Expressions", Expressions_default_);
 /* harmony default export */ const Parser_Expressions = (Expressions_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/VRMLParser.js
-/* provided dependency */ var VRMLParser_$ = __webpack_require__(21);
+/* provided dependency */ var VRMLParser_$ = __webpack_require__(674);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -39122,6 +39122,14 @@ x_ite_Namespace.set ("x_ite/Parser/Expressions", Expressions_default_);
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
+
+
+
+
+
+
+
 
 
 
@@ -39219,48 +39227,17 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
       outputOnly:     Base_X3DConstants.outputOnly,
       inputOutput:    Base_X3DConstants.inputOutput,
    },
-   SFBool: new x_ite_Fields.SFBool (),
-   SFColor: new x_ite_Fields.SFColor (),
-   SFColorRGBA: new x_ite_Fields.SFColorRGBA (),
-   SFDouble: new x_ite_Fields.SFDouble (),
-   SFFloat: new x_ite_Fields.SFFloat (),
    SFImage: new x_ite_Fields.SFImage (),
-   SFInt32: new x_ite_Fields.SFInt32 (),
-   SFMatrix3f: new x_ite_Fields.SFMatrix3f (),
-   SFMatrix3d: new x_ite_Fields.SFMatrix3d (),
-   SFMatrix4f: new x_ite_Fields.SFMatrix4f (),
-   SFMatrix4d: new x_ite_Fields.SFMatrix4d (),
    SFNode: new x_ite_Fields.SFNode (),
-   SFRotation: new x_ite_Fields.SFRotation (),
-   SFString: new x_ite_Fields.SFString (),
-   SFTime: new x_ite_Fields.SFTime (),
-   SFVec2d: new x_ite_Fields.SFVec2d (),
-   SFVec2f: new x_ite_Fields.SFVec2f (),
-   SFVec3d: new x_ite_Fields.SFVec3d (),
-   SFVec3f: new x_ite_Fields.SFVec3f (),
-   SFVec4d: new x_ite_Fields.SFVec4d (),
-   SFVec4f: new x_ite_Fields.SFVec4f (),
-   MFBool: new x_ite_Fields.MFBool (),
-   MFColor: new x_ite_Fields.MFColor (),
-   MFColorRGBA: new x_ite_Fields.MFColorRGBA (),
-   MFDouble: new x_ite_Fields.MFDouble (),
-   MFFloat: new x_ite_Fields.MFFloat (),
-   MFImage: new x_ite_Fields.MFImage (),
-   MFInt32: new x_ite_Fields.MFInt32 (),
-   MFMatrix3d: new x_ite_Fields.MFMatrix3d (),
-   MFMatrix3f: new x_ite_Fields.MFMatrix3f (),
-   MFMatrix4d: new x_ite_Fields.MFMatrix4d (),
-   MFMatrix4f: new x_ite_Fields.MFMatrix4f  (),
-   MFNode: new x_ite_Fields.MFNode (),
-   MFRotation: new x_ite_Fields.MFRotation (),
    MFString: new x_ite_Fields.MFString (),
-   MFTime: new x_ite_Fields.MFTime (),
-   MFVec2d: new x_ite_Fields.MFVec2d (),
-   MFVec2f: new x_ite_Fields.MFVec2f (),
-   MFVec3d: new x_ite_Fields.MFVec3d (),
-   MFVec3f: new x_ite_Fields.MFVec3f (),
-   MFVec4d: new x_ite_Fields.MFVec4d (),
-   MFVec4f: new x_ite_Fields.MFVec4f (),
+   Color3: new Numbers_Color3 (0, 0, 0),
+   Color4: new Numbers_Color4 (0, 0, 0, 0),
+   Matrix3: new Numbers_Matrix3 (),
+   Matrix4: new Numbers_Matrix4 (),
+   Rotation4: new Numbers_Rotation4 (),
+   Vector2: new Numbers_Vector2 (0, 0),
+   Vector3: new Numbers_Vector3 (0, 0, 0),
+   Vector4: new Numbers_Vector4 (0, 0, 0, 0),
    CONSTANTS: {
       NAN: Number .NaN,
       INFINITY: Number .POSITIVE_INFINITY,
@@ -39955,7 +39932,7 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
             {
                const
                   fieldId = this .result [1],
-                  field   = this [fieldType] .create ();
+                  field   = new (x_ite_Fields [fieldType]) ();
 
                field .setAccessType (Base_X3DConstants.inputOnly);
                field .setName (fieldId);
@@ -39980,7 +39957,7 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
             {
                const
                   fieldId = this .result [1],
-                  field   = this [fieldType] .create ();
+                  field   = new (x_ite_Fields [fieldType]) ();
 
                field .setAccessType (Base_X3DConstants.outputOnly);
                field .setName (fieldId);
@@ -40005,7 +39982,7 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
             {
                const
                   fieldId = this .result [1],
-                  field   = this [fieldType] .create ();
+                  field   = new (x_ite_Fields [fieldType]) ();
 
                if (this .fieldValue (field))
                {
@@ -40046,7 +40023,7 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
             {
                const
                   fieldId = this .result [1],
-                  field   = this [fieldType] .create ();
+                  field   = new (x_ite_Fields [fieldType]) ();
 
                if (this .fieldValue (field))
                {
@@ -40149,7 +40126,7 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
             {
                const
                   fieldId = this .result [1],
-                  field   = this [fieldType] .create ();
+                  field   = new (x_ite_Fields [fieldType]) ();
 
                field .setAccessType (Base_X3DConstants.inputOnly);
                field .setName (fieldId);
@@ -40174,7 +40151,7 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
             {
                const
                   fieldId = this .result [1],
-                  field   = this [fieldType] .create ();
+                  field   = new (x_ite_Fields [fieldType]) ();
 
                field .setAccessType (Base_X3DConstants.outputOnly);
                field .setName (fieldId);
@@ -40199,7 +40176,7 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
             {
                const
                   fieldId = this .result [1],
-                  field   = this [fieldType] .create ();
+                  field   = new (x_ite_Fields [fieldType]) ();
 
                field .setAccessType (Base_X3DConstants.initializeOnly);
                field .setName (fieldId);
@@ -40224,7 +40201,7 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
             {
                const
                   fieldId = this .result [1],
-                  field   = this [fieldType] .create ();
+                  field   = new (x_ite_Fields [fieldType]) ();
 
                field .setAccessType (Base_X3DConstants.inputOutput);
                field .setName (fieldId);
@@ -40419,9 +40396,7 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
                               return true;
                            }
 
-                           const supportedField = this [fieldType];
-
-                           if (supportedField .getType () === reference .getType ())
+                           if (Base_X3DConstants [fieldType] === reference .getType ())
                            {
                               if (reference .isReference (accessType))
                               {
@@ -40429,7 +40404,7 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
 
                                  if (!field)
                                  {
-                                    field = supportedField .create ();
+                                    field = new (x_ite_Fields [fieldType]) ();
 
                                     baseNode .addUserDefinedField (accessType, fieldId, field);
                                  }
@@ -40595,7 +40570,25 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
    },
    fieldValue: function (field)
    {
-      return this .fieldTypes [field .getType ()] .call (this, field);
+      return this [field .getType ()] (field, field .getUnit ());
+   },
+   bool: function ()
+   {
+      this .comments ();
+
+      if (Grammar .TRUE .parse (this))
+      {
+         this .value = true;
+         return true;
+      }
+
+      if (Grammar .FALSE .parse (this))
+      {
+         this .value = false;
+         return true;
+      }
+
+      return false;
    },
    double: function ()
    {
@@ -40650,17 +40643,9 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
    },
    sfboolValue: function (field)
    {
-      this .comments ();
-
-      if (Grammar .TRUE .parse (this))
+      if (this .bool ())
       {
-         field .setValue (true);
-         return true;
-      }
-
-      if (Grammar .FALSE .parse (this))
-      {
-         field .setValue (false);
+         field .setValue (this .value);
          return true;
       }
 
@@ -40670,17 +40655,15 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
    {
       field .length = 0;
 
-      if (this .sfboolValue (this .SFBool))
+      if (this .bool ())
       {
-         field .push (this .SFBool);
+         field .push (this .value);
          return true;
       }
 
       if (Grammar .OpenBracket .parse (this))
       {
          this .sfboolValues (field);
-
-         this .comments ();
 
          if (Grammar .CloseBracket .parse (this))
             return true;
@@ -40695,10 +40678,8 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
       field .length = 0;
       field         = field .getTarget ();
 
-      const value = this .SFBool;
-
-      while (this .sfboolValue (value))
-         field .push (value);
+      while (this .bool ())
+         field .push (this .value);
    },
    sfcolorValue: function (field)
    {
@@ -40746,17 +40727,15 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
    {
       field .length = 0;
 
-      if (this .sfcolorValue (this .SFColor))
+      if (this .sfcolorValue (this .Color3))
       {
-         field .push (this .SFColor);
+         field .push (this .Color3);
          return true;
       }
 
       if (Grammar .OpenBracket .parse (this))
       {
          this .sfcolorValues (field);
-
-         this .comments ();
 
          if (Grammar .CloseBracket .parse (this))
             return true;
@@ -40771,7 +40750,7 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
       field .length = 0;
       field         = field .getTarget ();
 
-      const value = this .SFColor;
+      const value = this .Color3;
 
       while (this .sfcolorValue (value))
          field .push (value);
@@ -40829,17 +40808,15 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
    {
       field .length = 0;
 
-      if (this .sfcolorrgbaValue (this .SFColorRGBA))
+      if (this .sfcolorrgbaValue (this .Color4))
       {
-         field .push (this .SFColorRGBA);
+         field .push (this .Color4);
          return true;
       }
 
       if (Grammar .OpenBracket .parse (this))
       {
          this .sfcolorrgbaValues (field);
-
-         this .comments ();
 
          if (Grammar .CloseBracket .parse (this))
             return true;
@@ -40854,7 +40831,7 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
       field .length = 0;
       field         = field .getTarget ();
 
-      const value = this .SFColorRGBA;
+      const value = this .Color4;
 
       while (this .sfcolorrgbaValue (value))
          field .push (value);
@@ -40873,19 +40850,15 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
    {
       field .length = 0;
 
-      this .SFDouble .setUnit (field .getUnit ());
-
-      if (this .sfdoubleValue (this .SFDouble))
+      if (this .double ())
       {
-         field .push (this .SFDouble);
+         field .push (this .fromUnit (field .getUnit (), this .value));
          return true;
       }
 
       if (Grammar .OpenBracket .parse (this))
       {
          this .sfdoubleValues (field);
-
-         this .comments ();
 
          if (Grammar .CloseBracket .parse (this))
             return true;
@@ -40900,54 +40873,10 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
       field .length = 0;
       field         = field .getTarget ();
 
-      const value = this .SFDouble;
+      const unit = field .getUnit ();
 
-      value .setUnit (field .getUnit ());
-
-      while (this .sfdoubleValue (value))
-         field .push (value);
-   },
-   sffloatValue: function (field)
-   {
-      return this .sfdoubleValue (field);
-   },
-   mffloatValue: function (field)
-   {
-      field .length = 0;
-
-      this .SFFloat .setUnit (field .getUnit ());
-
-      if (this .sffloatValue (this .SFFloat))
-      {
-         field .push (this .SFFloat);
-         return true;
-      }
-
-      if (Grammar .OpenBracket .parse (this))
-      {
-         this .sffloatValues (field);
-
-         this .comments ();
-
-         if (Grammar .CloseBracket .parse (this))
-            return true;
-
-         throw new Error ("Expected ']'.");
-      }
-
-      return false;
-   },
-   sffloatValues: function (field)
-   {
-      field .length = 0;
-      field         = field .getTarget ();
-
-      const value = this .SFFloat;
-
-      value .setUnit (field .getUnit ());
-
-      while (this .sffloatValue (value))
-         field .push (value);
+      while (this .double ())
+         field .push (this .fromUnit (unit, this .value));
    },
    sfimageValue: function (field)
    {
@@ -41003,8 +40932,6 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
       {
          this .sfimageValues (field);
 
-         this .comments ();
-
          if (Grammar .CloseBracket .parse (this))
             return true;
 
@@ -41037,17 +40964,15 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
    {
       field .length = 0;
 
-      if (this .sfint32Value (this .SFInt32))
+      if (this .int32 ())
       {
-         field .push (this .SFInt32);
+         field .push (this .value);
          return true;
       }
 
       if (Grammar .OpenBracket .parse (this))
       {
          this .sfint32Values (field);
-
-         this .comments ();
 
          if (Grammar .CloseBracket .parse (this))
             return true;
@@ -41062,12 +40987,10 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
       field .length = 0;
       field         = field .getTarget ();
 
-      const value = this .SFInt32;
-
-      while (this .sfint32Value (value))
-         field .push (value);
+      while (this .int32 ())
+         field .push (this .value);
    },
-   sfmatrix3dValue: function (field)
+   sfmatrix3Value: function (field)
    {
       if (this .double ())
       {
@@ -41128,21 +41051,19 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
 
       return false;
    },
-   mfmatrix3dValue: function (field)
+   mfmatrix3Value: function (field)
    {
       field .length = 0;
 
-      if (this .sfmatrix3dValue (this .SFMatrix3d))
+      if (this .sfmatrix3Value (this .Matrix3))
       {
-         field .push (this .SFMatrix3d);
+         field .push (this .Matrix3);
          return true;
       }
 
       if (Grammar .OpenBracket .parse (this))
       {
-         this .sfmatrix3dValues (field);
-
-         this .comments ();
+         this .sfmatrix3Values (field);
 
          if (Grammar .CloseBracket .parse (this))
             return true;
@@ -41152,55 +41073,17 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
 
       return false;
    },
-   sfmatrix3dValues: function (field)
+   sfmatrix3Values: function (field)
    {
       field .length = 0;
       field         = field .getTarget ();
 
-      const value = this .SFMatrix3d;
+      const value = this .Matrix3;
 
-      while (this .sfmatrix3dValue (value))
+      while (this .sfmatrix3Value (value))
          field .push (value);
    },
-   sfmatrix3fValue: function (field)
-   {
-      return this .sfmatrix3dValue (field);
-   },
-   mfmatrix3fValue: function (field)
-   {
-      field .length = 0;
-
-      if (this .sfmatrix3fValue (this .SFMatrix3f))
-      {
-         field .push (this .SFMatrix3f);
-         return true;
-      }
-
-      if (Grammar .OpenBracket .parse (this))
-      {
-         this .sfmatrix3fValues (field);
-
-         this .comments ();
-
-         if (Grammar .CloseBracket .parse (this))
-            return true;
-
-         throw new Error ("Expected ']'.");
-      }
-
-      return false;
-   },
-   sfmatrix3fValues: function (field)
-   {
-      field .length = 0;
-      field         = field .getTarget ();
-
-      const value = this .SFMatrix3f;
-
-      while (this .sfmatrix3fValue (value))
-         field .push (value);
-   },
-   sfmatrix4dValue: function (field)
+   sfmatrix4Value: function (field)
    {
       if (this .double ())
       {
@@ -41303,21 +41186,19 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
 
       return false;
    },
-   mfmatrix4dValue: function (field)
+   mfmatrix4Value: function (field)
    {
       field .length = 0;
 
-      if (this .sfmatrix4dValue (this .SFMatrix4d))
+      if (this .sfmatrix4Value (this .Matrix4))
       {
-         field .push (this .SFMatrix4d);
+         field .push (this .Matrix4);
          return true;
       }
 
       if (Grammar .OpenBracket .parse (this))
       {
-         this .sfmatrix4dValues (field);
-
-         this .comments ();
+         this .sfmatrix4Values (field);
 
          if (Grammar .CloseBracket .parse (this))
             return true;
@@ -41327,52 +41208,14 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
 
       return false;
    },
-   sfmatrix4dValues: function (field)
+   sfmatrix4Values: function (field)
    {
       field .length = 0;
       field         = field .getTarget ();
 
-      const value = this .SFMatrix4d;
+      const value = this .Matrix4;
 
-      while (this .sfmatrix4dValue (value))
-         field .push (value);
-   },
-   sfmatrix4fValue: function (field)
-   {
-      return this .sfmatrix4dValue (field);
-   },
-   mfmatrix4fValue: function (field)
-   {
-      field .length = 0;
-
-      if (this .sfmatrix4fValue (this .SFMatrix4f))
-      {
-         field .push (this .SFMatrix4f);
-         return true;
-      }
-
-      if (Grammar .OpenBracket .parse (this))
-      {
-         this .sfmatrix4fValues (field);
-
-         this .comments ();
-
-         if (Grammar .CloseBracket .parse (this))
-            return true;
-
-         throw new Error ("Expected ']'.");
-      }
-
-      return false;
-   },
-   sfmatrix4fValues: function (field)
-   {
-      field .length = 0;
-      field         = field .getTarget ();
-
-      const value = this .SFMatrix4f;
-
-      while (this .sfmatrix4fValue (value))
+      while (this .sfmatrix4Value (value))
          field .push (value);
    },
    sfnodeValue: function (field)
@@ -41461,17 +41304,15 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
    {
       field .length = 0;
 
-      if (this .sfrotationValue (this .SFRotation))
+      if (this .sfrotationValue (this .Rotation4))
       {
-         field .push (this .SFRotation);
+         field .push (this .Rotation4);
          return true;
       }
 
       if (Grammar .OpenBracket .parse (this))
       {
          this .sfrotationValues (field);
-
-         this .comments ();
 
          if (Grammar .CloseBracket .parse (this))
             return true;
@@ -41486,7 +41327,7 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
       field .length = 0;
       field         = field .getTarget ();
 
-      const value = this .SFRotation;
+      const value = this .Rotation4;
 
       while (this .sfrotationValue (value))
          field .push (value);
@@ -41505,17 +41346,15 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
    {
       field .length = 0;
 
-      if (this .sfstringValue (this .SFString))
+      if (this .string ())
       {
-         field .push (this .SFString);
+         field .push (this .value);
          return true;
       }
 
       if (Grammar .OpenBracket .parse (this))
       {
          this .sfstringValues (field);
-
-         this .comments ();
 
          if (Grammar .CloseBracket .parse (this))
             return true;
@@ -41530,50 +41369,10 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
       field .length = 0;
       field         = field .getTarget ();
 
-      const value = this .SFString;
-
-      while (this .sfstringValue (value))
-         field .push (value);
+      while (this .string ())
+         field .push (this .value);
    },
-   sftimeValue: function (field)
-   {
-      return this .sfdoubleValue (field);
-   },
-   mftimeValue: function (field)
-   {
-      field .length = 0;
-
-      if (this .sftimeValue (this .SFTime))
-      {
-         field .push (this .SFTime);
-         return true;
-      }
-
-      if (Grammar .OpenBracket .parse (this))
-      {
-         this .sftimeValues (field);
-
-         this .comments ();
-
-         if (Grammar .CloseBracket .parse (this))
-            return true;
-
-         throw new Error ("Expected ']'.");
-      }
-
-      return false;
-   },
-   sftimeValues: function (field)
-   {
-      field .length = 0;
-      field         = field .getTarget ();
-
-      const value = this .SFTime;
-
-      while (this .sftimeValue (value))
-         field .push (value);
-   },
-   sfvec2dValue: function (field)
+   sfvec2Value: function (field, unit)
    {
       if (this .double ())
       {
@@ -41581,12 +41380,10 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
 
          if (this .double ())
          {
-            const
-               y        = this .value,
-               category = field .getUnit ();
+            const y = this .value;
 
-            field .x = this .fromUnit (category, x);
-            field .y = this .fromUnit (category, y);
+            field .x = this .fromUnit (unit, x);
+            field .y = this .fromUnit (unit, y);
 
             return true;
          }
@@ -41594,23 +41391,19 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
 
       return false;
    },
-   mfvec2dValue: function (field)
+   mfvec2Value: function (field)
    {
       field .length = 0;
 
-      this .SFVec2d .setUnit (field .getUnit ());
-
-      if (this .sfvec2dValue (this .SFVec2d))
+      if (this .sfvec2Value (this .Vector2, field .getUnit ()))
       {
-         field .push (this .SFVec2d);
+         field .push (this .Vector2);
          return true;
       }
 
       if (Grammar .OpenBracket .parse (this))
       {
-         this .sfvec2dValues (field);
-
-         this .comments ();
+         this .sfvec2Values (field);
 
          if (Grammar .CloseBracket .parse (this))
             return true;
@@ -41620,61 +41413,19 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
 
       return false;
    },
-   sfvec2dValues: function (field)
+   sfvec2Values: function (field)
    {
       field .length = 0;
       field         = field .getTarget ();
 
-      const value = this .SFVec2d;
+      const
+         value = this .Vector2,
+         unit  = field .getUnit ();
 
-      value .setUnit (field .getUnit ());
-
-      while (this .sfvec2dValue (value))
+      while (this .sfvec2Value (value, unit))
          field .push (value);
    },
-   sfvec2fValue: function (field)
-   {
-      return this .sfvec2dValue (field);
-   },
-   mfvec2fValue: function (field)
-   {
-      field .length = 0;
-
-      this .SFVec2f .setUnit (field .getUnit ());
-
-      if (this .sfvec2fValue (this .SFVec2f))
-      {
-         field .push (this .SFVec2f);
-         return true;
-      }
-
-      if (Grammar .OpenBracket .parse (this))
-      {
-         this .sfvec2fValues (field);
-
-         this .comments ();
-
-         if (Grammar .CloseBracket .parse (this))
-            return true;
-
-         throw new Error ("Expected ']'.");
-      }
-
-      return false;
-   },
-   sfvec2fValues: function (field)
-   {
-      field .length = 0;
-      field         = field .getTarget ();
-
-      const value = this .SFVec2f;
-
-      value .setUnit (field .getUnit ());
-
-      while (this .sfvec2fValue (value))
-         field .push (value);
-   },
-   sfvec3dValue: function (field)
+   sfvec3Value: function (field, unit)
    {
       if (this .double ())
       {
@@ -41686,13 +41437,11 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
 
             if (this .double ())
             {
-               const
-                  z        = this .value,
-                  category = field .getUnit ();
+               const z = this .value;
 
-               field .x = this .fromUnit (category, x);
-               field .y = this .fromUnit (category, y);
-               field .z = this .fromUnit (category, z);
+               field .x = this .fromUnit (unit, x);
+               field .y = this .fromUnit (unit, y);
+               field .z = this .fromUnit (unit, z);
 
                return true;
             }
@@ -41701,23 +41450,19 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
 
       return false;
    },
-   mfvec3dValue: function (field)
+   mfvec3Value: function (field)
    {
       field .length = 0;
 
-      this .SFVec3d .setUnit (field .getUnit ());
-
-      if (this .sfvec3dValue (this .SFVec3d))
+      if (this .sfvec3Value (this .Vector3, field .getUnit ()))
       {
-         field .push (this .SFVec3d);
+         field .push (this .Vector3);
          return true;
       }
 
       if (Grammar .OpenBracket .parse (this))
       {
-         this .sfvec3dValues (field);
-
-         this .comments ();
+         this .sfvec3Values (field);
 
          if (Grammar .CloseBracket .parse (this))
             return true;
@@ -41727,61 +41472,19 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
 
       return false;
    },
-   sfvec3dValues: function (field)
+   sfvec3Values: function (field)
    {
       field .length = 0;
       field         = field .getTarget ();
 
-      const value = this .SFVec3d;
+      const
+         value = this .Vector3,
+         unit  = field .getUnit ();
 
-      value .setUnit (field .getUnit ());
-
-      while (this .sfvec3dValue (value))
+      while (this .sfvec3Value (value, unit))
          field .push (value);
    },
-   sfvec3fValue: function (field)
-   {
-      return this .sfvec3dValue (field);
-   },
-   mfvec3fValue: function (field)
-   {
-      field .length = 0;
-
-      this .SFVec3f .setUnit (field .getUnit ());
-
-      if (this .sfvec3fValue (this .SFVec3f))
-      {
-         field .push (this .SFVec3f);
-         return true;
-      }
-
-      if (Grammar .OpenBracket .parse (this))
-      {
-         this .sfvec3fValues (field);
-
-         this .comments ();
-
-         if (Grammar .CloseBracket .parse (this))
-            return true;
-
-         throw new Error ("Expected ']'.");
-      }
-
-      return false;
-   },
-   sfvec3fValues: function (field)
-   {
-      field .length = 0;
-      field         = field .getTarget ();
-
-      const value = this .SFVec3f;
-
-      value .setUnit (field .getUnit ());
-
-      while (this .sfvec3fValue (value))
-         field .push (value);
-   },
-   sfvec4dValue: function (field)
+   sfvec4Value: function (field, unit)
    {
       if (this .double ())
       {
@@ -41797,14 +41500,12 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
 
                if (this .double ())
                {
-                  const
-                     w        = this .value,
-                     category = field .getUnit ();
+                  const w = this .value;
 
-                  field .x = this .fromUnit (category, x);
-                  field .y = this .fromUnit (category, y);
-                  field .z = this .fromUnit (category, z);
-                  field .w = this .fromUnit (category, w);
+                  field .x = this .fromUnit (unit, x);
+                  field .y = this .fromUnit (unit, y);
+                  field .z = this .fromUnit (unit, z);
+                  field .w = this .fromUnit (unit, w);
 
                   return true;
                }
@@ -41814,23 +41515,19 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
 
       return false;
    },
-   mfvec4dValue: function (field)
+   mfvec4Value: function (field)
    {
       field .length = 0;
 
-      this .SFVec4d .setUnit (field .getUnit ());
-
-      if (this .sfvec4dValue (this .SFVec4d))
+      if (this .sfvec4Value (this .Vector4, field .getUnit ()))
       {
-         field .push (this .SFVec4d);
+         field .push (this .Vector4);
          return true;
       }
 
       if (Grammar .OpenBracket .parse (this))
       {
-         this .sfvec4dValues (field);
-
-         this .comments ();
+         this .sfvec4Values (field);
 
          if (Grammar .CloseBracket .parse (this))
             return true;
@@ -41840,58 +41537,16 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
 
       return false;
    },
-   sfvec4dValues: function (field)
+   sfvec4Values: function (field)
    {
       field .length = 0;
       field         = field .getTarget ();
 
-      const value = this .SFVec4d;
+      const
+         value = this .Vector4,
+         unit  = field .getUnit ();
 
-      value .setUnit (field .getUnit ());
-
-      while (this .sfvec4dValue (value))
-         field .push (value);
-   },
-   sfvec4fValue: function (field)
-   {
-      return this .sfvec4dValue (field);
-   },
-   mfvec4fValue: function (field)
-   {
-      field .length = 0;
-
-      this .SFVec4f .setUnit (field .getUnit ());
-
-      if (this .sfvec4fValue (this .SFVec4f))
-      {
-         field .push (this .SFVec4f);
-         return true;
-      }
-
-      if (Grammar .OpenBracket .parse (this))
-      {
-         this .sfvec4fValues (field);
-
-         this .comments ();
-
-         if (Grammar .CloseBracket .parse (this))
-            return true;
-
-         throw new Error ("Expected ']'.");
-      }
-
-      return false;
-   },
-   sfvec4fValues: function (field)
-   {
-      field .length = 0;
-      field         = field .getTarget ();
-
-      const value = this .SFVec4f;
-
-      value .setUnit (field .getUnit ());
-
-      while (this .sfvec4fValue (value))
+      while (this .sfvec4Value (value, unit))
          field .push (value);
    },
    accessTypeToString: function (accessType)
@@ -41910,50 +41565,52 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
    },
 });
 
-VRMLParser .prototype .fieldTypes = [ ];
-VRMLParser .prototype .fieldTypes [Base_X3DConstants.SFBool]      = VRMLParser .prototype .sfboolValue;
-VRMLParser .prototype .fieldTypes [Base_X3DConstants.SFColor]     = VRMLParser .prototype .sfcolorValue;
-VRMLParser .prototype .fieldTypes [Base_X3DConstants.SFColorRGBA] = VRMLParser .prototype .sfcolorrgbaValue;
-VRMLParser .prototype .fieldTypes [Base_X3DConstants.SFDouble]    = VRMLParser .prototype .sfdoubleValue;
-VRMLParser .prototype .fieldTypes [Base_X3DConstants.SFFloat]     = VRMLParser .prototype .sffloatValue;
-VRMLParser .prototype .fieldTypes [Base_X3DConstants.SFImage]     = VRMLParser .prototype .sfimageValue;
-VRMLParser .prototype .fieldTypes [Base_X3DConstants.SFInt32]     = VRMLParser .prototype .sfint32Value;
-VRMLParser .prototype .fieldTypes [Base_X3DConstants.SFMatrix3f]  = VRMLParser .prototype .sfmatrix3dValue;
-VRMLParser .prototype .fieldTypes [Base_X3DConstants.SFMatrix3d]  = VRMLParser .prototype .sfmatrix3fValue;
-VRMLParser .prototype .fieldTypes [Base_X3DConstants.SFMatrix4f]  = VRMLParser .prototype .sfmatrix4dValue;
-VRMLParser .prototype .fieldTypes [Base_X3DConstants.SFMatrix4d]  = VRMLParser .prototype .sfmatrix4fValue;
-VRMLParser .prototype .fieldTypes [Base_X3DConstants.SFNode]      = VRMLParser .prototype .sfnodeValue;
-VRMLParser .prototype .fieldTypes [Base_X3DConstants.SFRotation]  = VRMLParser .prototype .sfrotationValue;
-VRMLParser .prototype .fieldTypes [Base_X3DConstants.SFString]    = VRMLParser .prototype .sfstringValue;
-VRMLParser .prototype .fieldTypes [Base_X3DConstants.SFTime]      = VRMLParser .prototype .sftimeValue;
-VRMLParser .prototype .fieldTypes [Base_X3DConstants.SFVec2d]     = VRMLParser .prototype .sfvec2dValue;
-VRMLParser .prototype .fieldTypes [Base_X3DConstants.SFVec2f]     = VRMLParser .prototype .sfvec2fValue;
-VRMLParser .prototype .fieldTypes [Base_X3DConstants.SFVec3d]     = VRMLParser .prototype .sfvec3dValue;
-VRMLParser .prototype .fieldTypes [Base_X3DConstants.SFVec3f]     = VRMLParser .prototype .sfvec3fValue;
-VRMLParser .prototype .fieldTypes [Base_X3DConstants.SFVec4d]     = VRMLParser .prototype .sfvec4dValue;
-VRMLParser .prototype .fieldTypes [Base_X3DConstants.SFVec4f]     = VRMLParser .prototype .sfvec4fValue;
+Object .assign (VRMLParser .prototype,
+{
+   [Base_X3DConstants.SFBool]:      VRMLParser .prototype .sfboolValue,
+   [Base_X3DConstants.SFColor]:     VRMLParser .prototype .sfcolorValue,
+   [Base_X3DConstants.SFColorRGBA]: VRMLParser .prototype .sfcolorrgbaValue,
+   [Base_X3DConstants.SFDouble]:    VRMLParser .prototype .sfdoubleValue,
+   [Base_X3DConstants.SFFloat]:     VRMLParser .prototype .sfdoubleValue,
+   [Base_X3DConstants.SFImage]:     VRMLParser .prototype .sfimageValue,
+   [Base_X3DConstants.SFInt32]:     VRMLParser .prototype .sfint32Value,
+   [Base_X3DConstants.SFMatrix3f]:  VRMLParser .prototype .sfmatrix3Value,
+   [Base_X3DConstants.SFMatrix3d]:  VRMLParser .prototype .sfmatrix3Value,
+   [Base_X3DConstants.SFMatrix4f]:  VRMLParser .prototype .sfmatrix4Value,
+   [Base_X3DConstants.SFMatrix4d]:  VRMLParser .prototype .sfmatrix4Value,
+   [Base_X3DConstants.SFNode]:      VRMLParser .prototype .sfnodeValue,
+   [Base_X3DConstants.SFRotation]:  VRMLParser .prototype .sfrotationValue,
+   [Base_X3DConstants.SFString]:    VRMLParser .prototype .sfstringValue,
+   [Base_X3DConstants.SFTime]:      VRMLParser .prototype .sfdoubleValue,
+   [Base_X3DConstants.SFVec2d]:     VRMLParser .prototype .sfvec2Value,
+   [Base_X3DConstants.SFVec2f]:     VRMLParser .prototype .sfvec2Value,
+   [Base_X3DConstants.SFVec3d]:     VRMLParser .prototype .sfvec3Value,
+   [Base_X3DConstants.SFVec3f]:     VRMLParser .prototype .sfvec3Value,
+   [Base_X3DConstants.SFVec4d]:     VRMLParser .prototype .sfvec4Value,
+   [Base_X3DConstants.SFVec4f]:     VRMLParser .prototype .sfvec4Value,
 
-VRMLParser .prototype .fieldTypes [Base_X3DConstants.MFBool]      = VRMLParser .prototype .mfboolValue;
-VRMLParser .prototype .fieldTypes [Base_X3DConstants.MFColor]     = VRMLParser .prototype .mfcolorValue;
-VRMLParser .prototype .fieldTypes [Base_X3DConstants.MFColorRGBA] = VRMLParser .prototype .mfcolorrgbaValue;
-VRMLParser .prototype .fieldTypes [Base_X3DConstants.MFDouble]    = VRMLParser .prototype .mfdoubleValue;
-VRMLParser .prototype .fieldTypes [Base_X3DConstants.MFFloat]     = VRMLParser .prototype .mffloatValue;
-VRMLParser .prototype .fieldTypes [Base_X3DConstants.MFImage]     = VRMLParser .prototype .mfimageValue;
-VRMLParser .prototype .fieldTypes [Base_X3DConstants.MFInt32]     = VRMLParser .prototype .mfint32Value;
-VRMLParser .prototype .fieldTypes [Base_X3DConstants.MFMatrix3d]  = VRMLParser .prototype .mfmatrix3dValue;
-VRMLParser .prototype .fieldTypes [Base_X3DConstants.MFMatrix3f]  = VRMLParser .prototype .mfmatrix3fValue;
-VRMLParser .prototype .fieldTypes [Base_X3DConstants.MFMatrix4d]  = VRMLParser .prototype .mfmatrix4dValue;
-VRMLParser .prototype .fieldTypes [Base_X3DConstants.MFMatrix4f]  = VRMLParser .prototype .mfmatrix4fValue;
-VRMLParser .prototype .fieldTypes [Base_X3DConstants.MFNode]      = VRMLParser .prototype .mfnodeValue;
-VRMLParser .prototype .fieldTypes [Base_X3DConstants.MFRotation]  = VRMLParser .prototype .mfrotationValue;
-VRMLParser .prototype .fieldTypes [Base_X3DConstants.MFString]    = VRMLParser .prototype .mfstringValue;
-VRMLParser .prototype .fieldTypes [Base_X3DConstants.MFTime]      = VRMLParser .prototype .mftimeValue;
-VRMLParser .prototype .fieldTypes [Base_X3DConstants.MFVec2d]     = VRMLParser .prototype .mfvec2dValue;
-VRMLParser .prototype .fieldTypes [Base_X3DConstants.MFVec2f]     = VRMLParser .prototype .mfvec2fValue;
-VRMLParser .prototype .fieldTypes [Base_X3DConstants.MFVec3d]     = VRMLParser .prototype .mfvec3dValue;
-VRMLParser .prototype .fieldTypes [Base_X3DConstants.MFVec3f]     = VRMLParser .prototype .mfvec3fValue;
-VRMLParser .prototype .fieldTypes [Base_X3DConstants.MFVec4d]     = VRMLParser .prototype .mfvec4dValue;
-VRMLParser .prototype .fieldTypes [Base_X3DConstants.MFVec4f]     = VRMLParser .prototype .mfvec4fValue;
+   [Base_X3DConstants.MFBool]:      VRMLParser .prototype .mfboolValue,
+   [Base_X3DConstants.MFColor]:     VRMLParser .prototype .mfcolorValue,
+   [Base_X3DConstants.MFColorRGBA]: VRMLParser .prototype .mfcolorrgbaValue,
+   [Base_X3DConstants.MFDouble]:    VRMLParser .prototype .mfdoubleValue,
+   [Base_X3DConstants.MFFloat]:     VRMLParser .prototype .mfdoubleValue,
+   [Base_X3DConstants.MFImage]:     VRMLParser .prototype .mfimageValue,
+   [Base_X3DConstants.MFInt32]:     VRMLParser .prototype .mfint32Value,
+   [Base_X3DConstants.MFMatrix3d]:  VRMLParser .prototype .mfmatrix3Value,
+   [Base_X3DConstants.MFMatrix3f]:  VRMLParser .prototype .mfmatrix3Value,
+   [Base_X3DConstants.MFMatrix4d]:  VRMLParser .prototype .mfmatrix4Value,
+   [Base_X3DConstants.MFMatrix4f]:  VRMLParser .prototype .mfmatrix4Value,
+   [Base_X3DConstants.MFNode]:      VRMLParser .prototype .mfnodeValue,
+   [Base_X3DConstants.MFRotation]:  VRMLParser .prototype .mfrotationValue,
+   [Base_X3DConstants.MFString]:    VRMLParser .prototype .mfstringValue,
+   [Base_X3DConstants.MFTime]:      VRMLParser .prototype .mfdoubleValue,
+   [Base_X3DConstants.MFVec2d]:     VRMLParser .prototype .mfvec2Value,
+   [Base_X3DConstants.MFVec2f]:     VRMLParser .prototype .mfvec2Value,
+   [Base_X3DConstants.MFVec3d]:     VRMLParser .prototype .mfvec3Value,
+   [Base_X3DConstants.MFVec3f]:     VRMLParser .prototype .mfvec3Value,
+   [Base_X3DConstants.MFVec4d]:     VRMLParser .prototype .mfvec4Value,
+   [Base_X3DConstants.MFVec4f]:     VRMLParser .prototype .mfvec4Value,
+});
 
 Base_X3DField.prototype.fromString = function (string, scene)
 {
@@ -41974,7 +41631,7 @@ const VRMLParser_default_ = VRMLParser;
 x_ite_Namespace.set ("x_ite/Parser/VRMLParser", VRMLParser_default_);
 /* harmony default export */ const Parser_VRMLParser = (VRMLParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/XMLParser.js
-/* provided dependency */ var XMLParser_$ = __webpack_require__(21);
+/* provided dependency */ var XMLParser_$ = __webpack_require__(674);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -42942,7 +42599,7 @@ XMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
       this .parser .pushExecutionContext (this .getExecutionContext ());
 
       this .parser .setInput (value);
-      this .fieldTypes [field .getType ()] .call (this .parser, field);
+      this [field .getType ()] .call (this .parser, field, field .getUnit ());
 
       this .parser .popExecutionContext ();
    },
@@ -43044,50 +42701,51 @@ XMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
    },
 });
 
-XMLParser .prototype .fieldTypes = [ ];
-XMLParser .prototype .fieldTypes [Base_X3DConstants.SFBool]      = Parser_VRMLParser.prototype.sfboolValue;
-XMLParser .prototype .fieldTypes [Base_X3DConstants.SFColor]     = Parser_VRMLParser.prototype.sfcolorValue;
-XMLParser .prototype .fieldTypes [Base_X3DConstants.SFColorRGBA] = Parser_VRMLParser.prototype.sfcolorrgbaValue;
-XMLParser .prototype .fieldTypes [Base_X3DConstants.SFDouble]    = Parser_VRMLParser.prototype.sfdoubleValue;
-XMLParser .prototype .fieldTypes [Base_X3DConstants.SFFloat]     = Parser_VRMLParser.prototype.sffloatValue;
-XMLParser .prototype .fieldTypes [Base_X3DConstants.SFImage]     = Parser_VRMLParser.prototype.sfimageValue;
-XMLParser .prototype .fieldTypes [Base_X3DConstants.SFInt32]     = Parser_VRMLParser.prototype.sfint32Value;
-XMLParser .prototype .fieldTypes [Base_X3DConstants.SFMatrix3f]  = Parser_VRMLParser.prototype.sfmatrix3dValue;
-XMLParser .prototype .fieldTypes [Base_X3DConstants.SFMatrix3d]  = Parser_VRMLParser.prototype.sfmatrix3fValue;
-XMLParser .prototype .fieldTypes [Base_X3DConstants.SFMatrix4f]  = Parser_VRMLParser.prototype.sfmatrix4dValue;
-XMLParser .prototype .fieldTypes [Base_X3DConstants.SFMatrix4d]  = Parser_VRMLParser.prototype.sfmatrix4fValue;
-XMLParser .prototype .fieldTypes [Base_X3DConstants.SFNode]      = function (field) { field .setValue (null); };
-XMLParser .prototype .fieldTypes [Base_X3DConstants.SFRotation]  = Parser_VRMLParser.prototype.sfrotationValue;
-XMLParser .prototype .fieldTypes [Base_X3DConstants.SFString]    = function (field) { field .setValue (x_ite_Fields.SFString.unescape (this .input)); };
-XMLParser .prototype .fieldTypes [Base_X3DConstants.SFTime]      = Parser_VRMLParser.prototype.sftimeValue;
-XMLParser .prototype .fieldTypes [Base_X3DConstants.SFVec2d]     = Parser_VRMLParser.prototype.sfvec2dValue;
-XMLParser .prototype .fieldTypes [Base_X3DConstants.SFVec2f]     = Parser_VRMLParser.prototype.sfvec2fValue;
-XMLParser .prototype .fieldTypes [Base_X3DConstants.SFVec3d]     = Parser_VRMLParser.prototype.sfvec3dValue;
-XMLParser .prototype .fieldTypes [Base_X3DConstants.SFVec3f]     = Parser_VRMLParser.prototype.sfvec3fValue;
-XMLParser .prototype .fieldTypes [Base_X3DConstants.SFVec4d]     = Parser_VRMLParser.prototype.sfvec4dValue;
-XMLParser .prototype .fieldTypes [Base_X3DConstants.SFVec4f]     = Parser_VRMLParser.prototype.sfvec4fValue;
-
-XMLParser .prototype .fieldTypes [Base_X3DConstants.MFBool]      = Parser_VRMLParser.prototype.sfboolValues;
-XMLParser .prototype .fieldTypes [Base_X3DConstants.MFColor]     = Parser_VRMLParser.prototype.sfcolorValues;
-XMLParser .prototype .fieldTypes [Base_X3DConstants.MFColorRGBA] = Parser_VRMLParser.prototype.sfcolorrgbaValues;
-XMLParser .prototype .fieldTypes [Base_X3DConstants.MFDouble]    = Parser_VRMLParser.prototype.sfdoubleValues;
-XMLParser .prototype .fieldTypes [Base_X3DConstants.MFFloat]     = Parser_VRMLParser.prototype.sffloatValues;
-XMLParser .prototype .fieldTypes [Base_X3DConstants.MFImage]     = Parser_VRMLParser.prototype.sfimageValues;
-XMLParser .prototype .fieldTypes [Base_X3DConstants.MFInt32]     = Parser_VRMLParser.prototype.sfint32Values;
-XMLParser .prototype .fieldTypes [Base_X3DConstants.MFMatrix3d]  = Parser_VRMLParser.prototype.sfmatrix3dValues;
-XMLParser .prototype .fieldTypes [Base_X3DConstants.MFMatrix3f]  = Parser_VRMLParser.prototype.sfmatrix3fValues;
-XMLParser .prototype .fieldTypes [Base_X3DConstants.MFMatrix4d]  = Parser_VRMLParser.prototype.sfmatrix4dValues;
-XMLParser .prototype .fieldTypes [Base_X3DConstants.MFMatrix4f]  = Parser_VRMLParser.prototype.sfmatrix4fValues;
-XMLParser .prototype .fieldTypes [Base_X3DConstants.MFNode]      = function (field) { field .length = 0; };
-XMLParser .prototype .fieldTypes [Base_X3DConstants.MFRotation]  = Parser_VRMLParser.prototype.sfrotationValues;
-XMLParser .prototype .fieldTypes [Base_X3DConstants.MFString]    = Parser_VRMLParser.prototype.sfstringValues;
-XMLParser .prototype .fieldTypes [Base_X3DConstants.MFTime]      = Parser_VRMLParser.prototype.sftimeValues;
-XMLParser .prototype .fieldTypes [Base_X3DConstants.MFVec2d]     = Parser_VRMLParser.prototype.sfvec2dValues;
-XMLParser .prototype .fieldTypes [Base_X3DConstants.MFVec2f]     = Parser_VRMLParser.prototype.sfvec2fValues;
-XMLParser .prototype .fieldTypes [Base_X3DConstants.MFVec3d]     = Parser_VRMLParser.prototype.sfvec3dValues;
-XMLParser .prototype .fieldTypes [Base_X3DConstants.MFVec3f]     = Parser_VRMLParser.prototype.sfvec3fValues;
-XMLParser .prototype .fieldTypes [Base_X3DConstants.MFVec4d]     = Parser_VRMLParser.prototype.sfvec4dValues;
-XMLParser .prototype .fieldTypes [Base_X3DConstants.MFVec4f]     = Parser_VRMLParser.prototype.sfvec4fValues;
+Object .assign (XMLParser .prototype,
+{
+   [Base_X3DConstants.SFBool]:      Parser_VRMLParser.prototype.sfboolValue,
+   [Base_X3DConstants.SFColor]:     Parser_VRMLParser.prototype.sfcolorValue,
+   [Base_X3DConstants.SFColorRGBA]: Parser_VRMLParser.prototype.sfcolorrgbaValue,
+   [Base_X3DConstants.SFDouble]:    Parser_VRMLParser.prototype.sfdoubleValue,
+   [Base_X3DConstants.SFFloat]:     Parser_VRMLParser.prototype.sfdoubleValue,
+   [Base_X3DConstants.SFImage]:     Parser_VRMLParser.prototype.sfimageValue,
+   [Base_X3DConstants.SFInt32]:     Parser_VRMLParser.prototype.sfint32Value,
+   [Base_X3DConstants.SFMatrix3f]:  Parser_VRMLParser.prototype.sfmatrix3Value,
+   [Base_X3DConstants.SFMatrix3d]:  Parser_VRMLParser.prototype.sfmatrix3Value,
+   [Base_X3DConstants.SFMatrix4f]:  Parser_VRMLParser.prototype.sfmatrix4Value,
+   [Base_X3DConstants.SFMatrix4d]:  Parser_VRMLParser.prototype.sfmatrix4Value,
+   [Base_X3DConstants.SFNode]:      function (field) { field .setValue (null); },
+   [Base_X3DConstants.SFRotation]:  Parser_VRMLParser.prototype.sfrotationValue,
+   [Base_X3DConstants.SFString]:    function (field) { field .setValue (x_ite_Fields.SFString.unescape (this .input)); },
+   [Base_X3DConstants.SFTime]:      Parser_VRMLParser.prototype.sfdoubleValue,
+   [Base_X3DConstants.SFVec2d]:     Parser_VRMLParser.prototype.sfvec2Value,
+   [Base_X3DConstants.SFVec2f]:     Parser_VRMLParser.prototype.sfvec2Value,
+   [Base_X3DConstants.SFVec3d]:     Parser_VRMLParser.prototype.sfvec3Value,
+   [Base_X3DConstants.SFVec3f]:     Parser_VRMLParser.prototype.sfvec3Value,
+   [Base_X3DConstants.SFVec4d]:     Parser_VRMLParser.prototype.sfvec4Value,
+   [Base_X3DConstants.SFVec4f]:     Parser_VRMLParser.prototype.sfvec4Value,
+   [Base_X3DConstants.MFBool]:      Parser_VRMLParser.prototype.sfboolValues,
+   [Base_X3DConstants.MFColor]:     Parser_VRMLParser.prototype.sfcolorValues,
+   [Base_X3DConstants.MFColorRGBA]: Parser_VRMLParser.prototype.sfcolorrgbaValues,
+   [Base_X3DConstants.MFDouble]:    Parser_VRMLParser.prototype.sfdoubleValues,
+   [Base_X3DConstants.MFFloat]:     Parser_VRMLParser.prototype.sfdoubleValues,
+   [Base_X3DConstants.MFImage]:     Parser_VRMLParser.prototype.sfimageValues,
+   [Base_X3DConstants.MFInt32]:     Parser_VRMLParser.prototype.sfint32Values,
+   [Base_X3DConstants.MFMatrix3d]:  Parser_VRMLParser.prototype.sfmatrix3Values,
+   [Base_X3DConstants.MFMatrix3f]:  Parser_VRMLParser.prototype.sfmatrix3Values,
+   [Base_X3DConstants.MFMatrix4d]:  Parser_VRMLParser.prototype.sfmatrix4Values,
+   [Base_X3DConstants.MFMatrix4f]:  Parser_VRMLParser.prototype.sfmatrix4Values,
+   [Base_X3DConstants.MFNode]:      function (field) { field .length = 0; },
+   [Base_X3DConstants.MFRotation]:  Parser_VRMLParser.prototype.sfrotationValues,
+   [Base_X3DConstants.MFString]:    Parser_VRMLParser.prototype.sfstringValues,
+   [Base_X3DConstants.MFTime]:      Parser_VRMLParser.prototype.sfdoubleValues,
+   [Base_X3DConstants.MFVec2d]:     Parser_VRMLParser.prototype.sfvec2Values,
+   [Base_X3DConstants.MFVec2f]:     Parser_VRMLParser.prototype.sfvec2Values,
+   [Base_X3DConstants.MFVec3d]:     Parser_VRMLParser.prototype.sfvec3Values,
+   [Base_X3DConstants.MFVec3f]:     Parser_VRMLParser.prototype.sfvec3Values,
+   [Base_X3DConstants.MFVec4d]:     Parser_VRMLParser.prototype.sfvec4Values,
+   [Base_X3DConstants.MFVec4f]:     Parser_VRMLParser.prototype.sfvec4Values,
+});
 
 // HTML Support
 
@@ -43933,7 +43591,7 @@ const URLs_default_ = URLs;
 x_ite_Namespace.set ("x_ite/Browser/Networking/URLs", URLs_default_);
 /* harmony default export */ const Networking_URLs = (URLs_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GLTF2Parser.js
-/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(21);
+/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(674);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -46399,7 +46057,7 @@ const GLTF2Parser_default_ = GLTF2Parser;
 x_ite_Namespace.set ("x_ite/Parser/GLTF2Parser", GLTF2Parser_default_);
 /* harmony default export */ const Parser_GLTF2Parser = (GLTF2Parser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GLB2Parser.js
-/* provided dependency */ var GLB2Parser_$ = __webpack_require__(21);
+/* provided dependency */ var GLB2Parser_$ = __webpack_require__(674);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -46552,7 +46210,7 @@ const GLB2Parser_default_ = GLB2Parser;
 x_ite_Namespace.set ("x_ite/Parser/GLB2Parser", GLB2Parser_default_);
 /* harmony default export */ const Parser_GLB2Parser = (GLB2Parser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/OBJParser.js
-/* provided dependency */ var OBJParser_$ = __webpack_require__(21);
+/* provided dependency */ var OBJParser_$ = __webpack_require__(674);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -49056,8 +48714,8 @@ const MatrixStack_default_ = MatrixStack;
 x_ite_Namespace.set ("standard/Math/Utility/MatrixStack", MatrixStack_default_);
 /* harmony default export */ const Utility_MatrixStack = (MatrixStack_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_$ = __webpack_require__(21);
-/* provided dependency */ var libtess = __webpack_require__(560);
+/* provided dependency */ var SVGParser_$ = __webpack_require__(674);
+/* provided dependency */ var libtess = __webpack_require__(385);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -51826,7 +51484,7 @@ const SVGParser_default_ = SVGParser;
 x_ite_Namespace.set ("x_ite/Parser/SVGParser", SVGParser_default_);
 /* harmony default export */ const Parser_SVGParser = (SVGParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GoldenGate.js
-/* provided dependency */ var GoldenGate_$ = __webpack_require__(21);
+/* provided dependency */ var GoldenGate_$ = __webpack_require__(674);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -52155,7 +51813,7 @@ const Plane3_default_ = Plane3;
 x_ite_Namespace.set ("standard/Math/Geometry/Plane3", Plane3_default_);
 /* harmony default export */ const Geometry_Plane3 = (Plane3_default_);
 ;// CONCATENATED MODULE: ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var Triangle3_libtess = __webpack_require__(560);
+/* provided dependency */ var Triangle3_libtess = __webpack_require__(385);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -59569,7 +59227,7 @@ const X3DTexture2DNode_default_ = X3DTexture2DNode;
 x_ite_Namespace.set ("x_ite/Components/Texturing/X3DTexture2DNode", X3DTexture2DNode_default_);
 /* harmony default export */ const Texturing_X3DTexture2DNode = (X3DTexture2DNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/ImageTexture.js
-/* provided dependency */ var ImageTexture_$ = __webpack_require__(21);
+/* provided dependency */ var ImageTexture_$ = __webpack_require__(674);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -64133,7 +63791,7 @@ const X3DWorld_default_ = X3DWorld;
 x_ite_Namespace.set ("x_ite/Execution/X3DWorld", X3DWorld_default_);
 /* harmony default export */ const Execution_X3DWorld = (X3DWorld_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/InputOutput/FileLoader.js
-/* provided dependency */ var FileLoader_$ = __webpack_require__(21);
+/* provided dependency */ var FileLoader_$ = __webpack_require__(674);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -87906,7 +87564,7 @@ const X3DShaderNode_default_ = X3DShaderNode;
 x_ite_Namespace.set ("x_ite/Components/Shaders/X3DShaderNode", X3DShaderNode_default_);
 /* harmony default export */ const Shaders_X3DShaderNode = (X3DShaderNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js
-/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(21);
+/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(674);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -96635,7 +96293,7 @@ const ShaderCompiler_default_ = ShaderCompiler;
 x_ite_Namespace.set ("x_ite/Browser/Shaders/ShaderCompiler", ShaderCompiler_default_);
 /* harmony default export */ const Shaders_ShaderCompiler = (ShaderCompiler_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shaders/ShaderPart.js
-/* provided dependency */ var ShaderPart_$ = __webpack_require__(21);
+/* provided dependency */ var ShaderPart_$ = __webpack_require__(674);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -97300,7 +96958,7 @@ const X3DAppearanceNode_default_ = X3DAppearanceNode;
 x_ite_Namespace.set ("x_ite/Components/Shape/X3DAppearanceNode", X3DAppearanceNode_default_);
 /* harmony default export */ const Shape_X3DAppearanceNode = (X3DAppearanceNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shape/Appearance.js
-/* provided dependency */ var Appearance_$ = __webpack_require__(21);
+/* provided dependency */ var Appearance_$ = __webpack_require__(674);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -101017,7 +100675,7 @@ const X3DSoundSourceNode_default_ = X3DSoundSourceNode;
 x_ite_Namespace.set ("x_ite/Components/Sound/X3DSoundSourceNode", X3DSoundSourceNode_default_);
 /* harmony default export */ const Sound_X3DSoundSourceNode = (X3DSoundSourceNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/AudioClip.js
-/* provided dependency */ var AudioClip_$ = __webpack_require__(21);
+/* provided dependency */ var AudioClip_$ = __webpack_require__(674);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -104191,8 +103849,8 @@ const GIFMedia_default_ = GifMedia;
 x_ite_Namespace.set ("x_ite/Browser/Texturing/GIFMedia", GIFMedia_default_);
 /* harmony default export */ const GIFMedia = (GIFMedia_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var MovieTexture_$ = __webpack_require__(21);
-/* provided dependency */ var SuperGif = __webpack_require__(393);
+/* provided dependency */ var MovieTexture_$ = __webpack_require__(674);
+/* provided dependency */ var SuperGif = __webpack_require__(448);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -105367,7 +105025,7 @@ const MultiTextureTransform_default_ = MultiTextureTransform;
 x_ite_Namespace.set ("x_ite/Components/Texturing/MultiTextureTransform", MultiTextureTransform_default_);
 /* harmony default export */ const Texturing_MultiTextureTransform = (MultiTextureTransform_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/PixelTexture.js
-/* provided dependency */ var PixelTexture_$ = __webpack_require__(21);
+/* provided dependency */ var PixelTexture_$ = __webpack_require__(674);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -107703,7 +107361,7 @@ const gettext_default_ = gettext;
 x_ite_Namespace.set ("locale/gettext", gettext_default_);
 /* harmony default export */ const locale_gettext = (gettext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserTimings.js
-/* provided dependency */ var BrowserTimings_$ = __webpack_require__(21);
+/* provided dependency */ var BrowserTimings_$ = __webpack_require__(674);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -108134,7 +107792,7 @@ const TextureQuality_default_ = TextureQuality;
 x_ite_Namespace.set ("x_ite/Browser/Core/TextureQuality", TextureQuality_default_);
 /* harmony default export */ const Core_TextureQuality = (TextureQuality_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserOptions.js
-/* provided dependency */ var BrowserOptions_$ = __webpack_require__(21);
+/* provided dependency */ var BrowserOptions_$ = __webpack_require__(674);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -108716,7 +108374,7 @@ const RenderingProperties_default_ = RenderingProperties;
 x_ite_Namespace.set ("x_ite/Browser/Core/RenderingProperties", RenderingProperties_default_);
 /* harmony default export */ const Core_RenderingProperties = (RenderingProperties_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/Notification.js
-/* provided dependency */ var Notification_$ = __webpack_require__(21);
+/* provided dependency */ var Notification_$ = __webpack_require__(674);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -108839,8 +108497,8 @@ const Notification_default_ = Notification;
 x_ite_Namespace.set ("x_ite/Browser/Core/Notification", Notification_default_);
 /* harmony default export */ const Core_Notification = (Notification_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/ContextMenu.js
-/* provided dependency */ var jquery_fullscreen = __webpack_require__(587);
-/* provided dependency */ var ContextMenu_$ = __webpack_require__(21);
+/* provided dependency */ var jquery_fullscreen = __webpack_require__(848);
+/* provided dependency */ var ContextMenu_$ = __webpack_require__(674);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -111597,7 +111255,7 @@ const DataStorage_default_ = DataStorage;
 x_ite_Namespace.set ("standard/Utility/DataStorage", DataStorage_default_);
 /* harmony default export */ const Utility_DataStorage = (DataStorage_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/X3DCoreContext.js
-/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(21);
+/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(674);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -113635,8 +113293,8 @@ const X3DViewer_default_ = X3DViewer;
 x_ite_Namespace.set ("x_ite/Browser/Navigation/X3DViewer", X3DViewer_default_);
 /* harmony default export */ const Navigation_X3DViewer = (X3DViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/ExamineViewer.js
-/* provided dependency */ var jquery_mousewheel = __webpack_require__(194);
-/* provided dependency */ var ExamineViewer_$ = __webpack_require__(21);
+/* provided dependency */ var jquery_mousewheel = __webpack_require__(216);
+/* provided dependency */ var ExamineViewer_$ = __webpack_require__(674);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -114513,8 +114171,8 @@ const ExamineViewer_default_ = ExamineViewer;
 x_ite_Namespace.set ("x_ite/Browser/Navigation/ExamineViewer", ExamineViewer_default_);
 /* harmony default export */ const Navigation_ExamineViewer = (ExamineViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/X3DFlyViewer.js
-/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(194);
-/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(21);
+/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(216);
+/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(674);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -115488,8 +115146,8 @@ const FlyViewer_default_ = FlyViewer;
 x_ite_Namespace.set ("x_ite/Browser/Navigation/FlyViewer", FlyViewer_default_);
 /* harmony default export */ const Navigation_FlyViewer = (FlyViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/PlaneViewer.js
-/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(194);
-/* provided dependency */ var PlaneViewer_$ = __webpack_require__(21);
+/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(216);
+/* provided dependency */ var PlaneViewer_$ = __webpack_require__(674);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -115824,8 +115482,8 @@ const NoneViewer_default_ = NoneViewer;
 x_ite_Namespace.set ("x_ite/Browser/Navigation/NoneViewer", NoneViewer_default_);
 /* harmony default export */ const Navigation_NoneViewer = (NoneViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/LookAtViewer.js
-/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(194);
-/* provided dependency */ var LookAtViewer_$ = __webpack_require__(21);
+/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(216);
+/* provided dependency */ var LookAtViewer_$ = __webpack_require__(674);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -116968,8 +116626,8 @@ const X3DPickingContext_default_ = X3DPickingContext;
 x_ite_Namespace.set ("x_ite/Browser/Picking/X3DPickingContext", X3DPickingContext_default_);
 /* harmony default export */ const Picking_X3DPickingContext = (X3DPickingContext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/PointingDeviceSensor/PointingDevice.js
-/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(194);
-/* provided dependency */ var PointingDevice_$ = __webpack_require__(21);
+/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(216);
+/* provided dependency */ var PointingDevice_$ = __webpack_require__(674);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -118012,8 +117670,8 @@ const MultiSampleFrameBuffer_default_ = MultiSampleFrameBuffer;
 x_ite_Namespace.set ("x_ite/Rendering/MultiSampleFrameBuffer", MultiSampleFrameBuffer_default_);
 /* harmony default export */ const Rendering_MultiSampleFrameBuffer = (MultiSampleFrameBuffer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Rendering/X3DRenderingContext.js
-/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(21);
-/* provided dependency */ var ResizeSensor = __webpack_require__(280);
+/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(674);
+/* provided dependency */ var ResizeSensor = __webpack_require__(415);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -119940,7 +119598,7 @@ const Components_default_ = Components;
 x_ite_Namespace.set ("x_ite/Components", Components_default_);
 /* harmony default export */ const x_ite_Components = ((/* unused pure expression or super */ null && (Components_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/DOMIntegration.js
-/* provided dependency */ var DOMIntegration_$ = __webpack_require__(21);
+/* provided dependency */ var DOMIntegration_$ = __webpack_require__(674);
 /*******************************************************************************
  * MIT License
  *
@@ -120341,7 +119999,7 @@ const DOMIntegration_default_ = DOMIntegration;
 x_ite_Namespace.set ("x_ite/Browser/DOMIntegration", DOMIntegration_default_);
 /* harmony default export */ const Browser_DOMIntegration = (DOMIntegration_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Legacy.js
-/* provided dependency */ var Legacy_$ = __webpack_require__(21);
+/* provided dependency */ var Legacy_$ = __webpack_require__(674);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -121176,7 +120834,7 @@ const SupportedProfiles_default_ = SupportedProfiles;
 x_ite_Namespace.set ("x_ite/Configuration/SupportedProfiles", SupportedProfiles_default_);
 /* harmony default export */ const Configuration_SupportedProfiles = (SupportedProfiles_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/X3DBrowser.js
-/* provided dependency */ var X3DBrowser_$ = __webpack_require__(21);
+/* provided dependency */ var X3DBrowser_$ = __webpack_require__(674);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -122215,8 +121873,8 @@ const MicroTime_default_ = undefined;
 x_ite_Namespace.set ("standard/Time/MicroTime", MicroTime_default_);
 /* harmony default export */ const MicroTime = ((/* unused pure expression or super */ null && (MicroTime_default_)));
 ;// CONCATENATED MODULE: ./src/lib/jquery.js
-/* provided dependency */ var jquery_$ = __webpack_require__(21);
-/* provided dependency */ var pako = __webpack_require__(914);
+/* provided dependency */ var jquery_$ = __webpack_require__(674);
+/* provided dependency */ var pako = __webpack_require__(451);
 jquery_$.decodeText = function (input)
 {
    if (typeof input === "string")
@@ -122268,14 +121926,14 @@ const jquery_default_ = jquery_$;
 x_ite_Namespace.set ("lib/jquery", jquery_default_);
 /* harmony default export */ const jquery = ((/* unused pure expression or super */ null && (jquery_default_)));
 ;// CONCATENATED MODULE: ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(560);
+/* provided dependency */ var libtess_libtess = __webpack_require__(385);
 const libtess_default_ = libtess_libtess;
 ;
 
 x_ite_Namespace.set ("lib/libtess", libtess_default_);
 /* harmony default export */ const lib_libtess = ((/* unused pure expression or super */ null && (libtess_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/X3D.js
-/* provided dependency */ var X3D_$ = __webpack_require__(21);
+/* provided dependency */ var X3D_$ = __webpack_require__(674);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -122532,7 +122190,7 @@ const X3D_default_ = X3D;
 x_ite_Namespace.set ("x_ite/X3D", X3D_default_);
 /* harmony default export */ const x_ite_X3D = (X3D_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/X3DCanvasElement.js
-/* provided dependency */ var X3DCanvasElement_$ = __webpack_require__(21);
+/* provided dependency */ var X3DCanvasElement_$ = __webpack_require__(674);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
