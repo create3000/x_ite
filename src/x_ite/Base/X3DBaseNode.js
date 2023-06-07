@@ -271,15 +271,15 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
       {
          for (const fieldDefinition of this [_fieldDefinitions])
          {
-            if (copy .getFields () .has (fieldDefinition .name))
+            if (copy .getPredefinedFields () .has (fieldDefinition .name))
                continue;
 
             copy .addUserDefinedField (fieldDefinition .accessType, fieldDefinition .name, fieldDefinition .value .copy ());
          }
       }
 
-      for (const field of this [_fields])
-         copy .getFields () .get (field .getName ()) .assign (field);
+      for (const field of this [_predefinedFields])
+         copy .getPredefinedFields () .get (field .getName ()) .assign (field);
 
       copy .setup ();
 

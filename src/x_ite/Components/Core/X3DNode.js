@@ -108,7 +108,7 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
          {
             try
             {
-               const destinationField = copy .getField (sourceField .getName ());
+               const destinationField = copy .getPredefinedField (sourceField .getName ());
 
                if (sourceField .hasReferences ())
                {
