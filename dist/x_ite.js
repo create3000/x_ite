@@ -11,11 +11,11 @@
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 294:
+/***/ 663:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* provided dependency */ var jQuery = __webpack_require__(56);
+/* provided dependency */ var jQuery = __webpack_require__(852);
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;
 
 /**
@@ -387,10 +387,10 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;
 
 /***/ }),
 
-/***/ 283:
+/***/ 257:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var jQuery = __webpack_require__(56);
+/* provided dependency */ var jQuery = __webpack_require__(852);
 /**
  * @preserve jquery.fullscreen 1.1.5
  * https://github.com/code-lts/jquery-fullscreen-plugin
@@ -586,7 +586,7 @@ installFullScreenHandlers();
 
 /***/ }),
 
-/***/ 687:
+/***/ 150:
 /***/ ((module, exports, __webpack_require__) => {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -600,7 +600,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 (function (factory) {
     if ( true ) {
         // AMD. Register as an anonymous module.
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(56)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(852)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 		(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -811,7 +811,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 56:
+/***/ 852:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -11523,7 +11523,7 @@ return jQuery;
 
 /***/ }),
 
-/***/ 689:
+/***/ 767:
 /***/ ((module) => {
 
 /**
@@ -16302,7 +16302,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 462:
+/***/ 574:
 /***/ (function(__unused_webpack_module, exports) {
 
 
@@ -19547,7 +19547,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 670:
+/***/ 778:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -33821,8 +33821,7 @@ X3DBaseNode .prototype = Object .assign (Object .create (Base_X3DEventObject.pro
    {
       Base_X3DEventObject.prototype.setName.call (this, value)
 
-      if (this [_initialized])
-         this ._name_changed = this .getBrowser () .getCurrentTime ();
+      this ._name_changed = this .getBrowser () .getCurrentTime ();
    },
    getMainScene: function ()
    {
@@ -34022,20 +34021,21 @@ X3DBaseNode .prototype = Object .assign (Object .create (Base_X3DEventObject.pro
    },
    getField: function (name)
    {
-      const field = getFieldFromArray .call (this, this [_userDefinedFields], name)
-         ?? getFieldFromArray .call (this, this [_predefinedFields], name);
+      const field = getFieldFromArray (this [_userDefinedFields], name)
+         ?? getFieldFromArray (this [_predefinedFields], name);
 
       if (field)
          return field;
 
       throw new Error ("Unknown field '" + name + "' in node class " + this .getTypeName () + ".");
    },
-   addPredefinedField: function (fieldDefinition)
+   getFields: function ()
    {
-      const
-         accessType = fieldDefinition .accessType,
-         name       = fieldDefinition .name,
-         field      = fieldDefinition .value .copy ();
+      return [... this [_predefinedFields], ... this [_userDefinedFields]];
+   },
+   addPredefinedField: function ({ accessType, name, value })
+   {
+      const field = value .copy ();
 
       field .setTainted (!this [_initialized]);
       field .addParent (this);
@@ -34079,7 +34079,7 @@ X3DBaseNode .prototype = Object .assign (Object .create (Base_X3DEventObject.pro
    },
    getPredefinedField: function (name)
    {
-      const field = getFieldFromArray .call (this, this [_predefinedFields], name);
+      const field = getFieldFromArray (this [_predefinedFields], name);
 
       if (field)
          return field;
@@ -34132,7 +34132,7 @@ X3DBaseNode .prototype = Object .assign (Object .create (Base_X3DEventObject.pro
    },
    getUserDefinedField: function (name)
    {
-      const field = getFieldFromArray .call (this, this [_userDefinedFields], name);
+      const field = getFieldFromArray (this [_userDefinedFields], name);
 
       if (field)
          return field;
@@ -34257,9 +34257,7 @@ X3DBaseNode .prototype = Object .assign (Object .create (Base_X3DEventObject.pro
       this [X3DBaseNode_cloneCount] += count;
 
       this [_executionContext] ._sceneGraph_changed = time;
-
-      if (this [_initialized])
-         this ._cloneCount_changed = time;
+      this ._cloneCount_changed                     = time;
    },
    removeCloneCount: function (count)
    {
@@ -34271,9 +34269,7 @@ X3DBaseNode .prototype = Object .assign (Object .create (Base_X3DEventObject.pro
       this [X3DBaseNode_cloneCount] -= count;
 
       this [_executionContext] ._sceneGraph_changed = time;
-
-      if (this [_initialized])
-         this ._cloneCount_changed = time;
+      this ._cloneCount_changed                     = time;
    },
    dispose: function ()
    {
@@ -38831,7 +38827,7 @@ const X3DUrlObject_default_ = X3DUrlObject;
 x_ite_Namespace.set ("x_ite/Components/Networking/X3DUrlObject", X3DUrlObject_default_);
 /* harmony default export */ const Networking_X3DUrlObject = (X3DUrlObject_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/X3DParser.js
-/* provided dependency */ var $ = __webpack_require__(56);
+/* provided dependency */ var $ = __webpack_require__(852);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -39079,7 +39075,7 @@ const Expressions_default_ = Expressions;
 x_ite_Namespace.set ("x_ite/Parser/Expressions", Expressions_default_);
 /* harmony default export */ const Parser_Expressions = (Expressions_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/VRMLParser.js
-/* provided dependency */ var VRMLParser_$ = __webpack_require__(56);
+/* provided dependency */ var VRMLParser_$ = __webpack_require__(852);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -39337,9 +39333,9 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
    {
       //console .error (error);
 
-      var string = error .message;
+      const string = error .message;
 
-      var
+      let
          rest     = this .getLine (),
          line     = this .getLastLine (),
          lastLine = this .getLastLine (),
@@ -39354,7 +39350,7 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
 
       // Format error
 
-      var message = "\n"
+      const message = "\n"
          + "********************************************************************************" + "\n"
          + "Parser error at line " + this .lineNumber + ":" + linePos  + "\n"
          + "in '" + this .getExecutionContext () .getWorldURL () + "'" + "\n"
@@ -39371,7 +39367,7 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
    },
    getLine: function ()
    {
-      var
+      let
          input     = this .input,
          lastIndex = this .lastIndex,
          line      = "";
@@ -39385,7 +39381,7 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
    },
    getLastLine: function ()
    {
-      var
+      let
          input     = this .input,
          lastIndex = this .lastIndex,
          line      = "";
@@ -39425,7 +39421,7 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
    },
    lines: function (string)
    {
-      var match = string .match (Grammar .Break);
+      const match = string .match (Grammar .Break);
 
       if (match)
          this .lineNumber += match .length;
@@ -39503,7 +39499,7 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
    {
       Grammar .Header .lastIndex = 0;
 
-      var result = Grammar .Header .exec (this .input);
+      const result = Grammar .Header .exec (this .input);
 
       if (result)
       {
@@ -39522,7 +39518,7 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
       {
          if (this .profileNameId ())
          {
-            var profile = this .getBrowser () .getProfile (this .result [1]);
+            const profile = this .getBrowser () .getProfile (this .result [1]);
 
             this .getScene () .setProfile (profile);
             return;
@@ -39533,14 +39529,10 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
    },
    componentStatements: function ()
    {
-      var component = this .componentStatement ();
+      let component;
 
-      while (component)
-      {
+      while (component = this .componentStatement ())
          this .getScene () .addComponent (component);
-
-         component = this .componentStatement ();
-      }
    },
    componentStatement: function ()
    {
@@ -39550,7 +39542,7 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
       {
          if (this .componentNameId ())
          {
-            var componentNameIdCharacters = this .result [1];
+            const componentNameIdCharacters = this .result [1];
 
             this .comments ();
 
@@ -39558,7 +39550,7 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
             {
                if (this .componentSupportLevel ())
                {
-                  var componentSupportLevel = this .value;
+                  const componentSupportLevel = this .value;
 
                   return this .getBrowser () .getComponent (componentNameIdCharacters, componentSupportLevel);
                }
@@ -39591,15 +39583,15 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
       {
          if (this .categoryNameId ())
          {
-            var categoryNameId = this .result [1];
+            const categoryNameId = this .result [1];
 
             if (this .unitNameId ())
             {
-               var unitNameId = this .result [1];
+               const unitNameId = this .result [1];
 
                if (this .unitConversionFactor ())
                {
-                  var unitConversionFactor = this .value;
+                  const unitConversionFactor = this .value;
 
                   try
                   {
@@ -39641,11 +39633,11 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
       {
          if (this .metakey ())
          {
-            var metakey = this .value;
+            const metakey = this .value;
 
             if (this .metavalue ())
             {
-               var metavalue = this .value;
+               const metavalue = this .value;
 
                this .getScene () .addMetaData (metakey, metavalue);
                return true;
@@ -39675,23 +39667,21 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
       {
          if (this .nodeNameId ())
          {
-            var
-               localNodeNameId    = this .result [1],
-               exportedNodeNameId = "";
+            const localNodeNameId = this .result [1];
 
             this .comments ();
 
-            var node = this .getScene () .getLocalNode (localNodeNameId);
+            const node = this .getScene () .getLocalNode (localNodeNameId);
 
             if (Grammar .AS .parse (this))
             {
                if (this .exportedNodeNameId ())
-                  exportedNodeNameId = this .result [1];
+                  var exportedNodeNameId = this .result [1];
                else
                   throw new Error ("No name given after AS.");
             }
             else
-               exportedNodeNameId = localNodeNameId;
+               var exportedNodeNameId = localNodeNameId;
 
             if (this .getScene () === this .getExecutionContext ())
             {
@@ -39715,7 +39705,7 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
       {
          if (this .nodeNameId ())
          {
-            var
+            const
                inlineNodeNameId = this .result [1],
                namedNode        = this .getExecutionContext () .getNamedNode (inlineNodeNameId);
 
@@ -39725,20 +39715,20 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
             {
                if (this .exportedNodeNameId ())
                {
-                  var
-                     exportedNodeNameId = this .result [1],
-                     nodeNameId         = exportedNodeNameId;
+                  const exportedNodeNameId = this .result [1];
 
                   this .comments ();
 
                   if (Grammar .AS .parse (this))
                   {
                      if (this .nodeNameId ())
-                        nodeNameId = this .result [1];
+                        var nodeNameId = this .result [1];
 
                      else
                         throw new Error ("No name given after AS.");
                   }
+                  else
+                     var nodeNameId = exportedNodeNameId;
 
                   this .getExecutionContext () .updateImportedNode (namedNode, exportedNodeNameId, nodeNameId);
                   return true;
@@ -39773,7 +39763,7 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
       if (this .exportStatement ())
          return true;
 
-      var node = this .nodeStatement ();
+      const node = this .nodeStatement ();
 
       if (node !== false)
       {
@@ -39831,13 +39821,13 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
       {
          if (this .nodeTypeId ())
          {
-            var nodeTypeId = this .result [1];
+            const nodeTypeId = this .result [1];
 
             this .comments ();
 
             if (Grammar .OpenBracket .parse (this))
             {
-               var interfaceDeclarations = this .interfaceDeclarations ();
+               const interfaceDeclarations = this .interfaceDeclarations ();
 
                this .comments ();
 
@@ -39847,14 +39837,10 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
 
                   if (Grammar .OpenBrace .parse (this))
                   {
-                     var proto = new Prototype_X3DProtoDeclaration (this .getExecutionContext ());
+                     const proto = new Prototype_X3DProtoDeclaration (this .getExecutionContext ());
 
-                     for (var i = 0, length = interfaceDeclarations .length; i < length; ++ i)
-                     {
-                        var field = interfaceDeclarations [i];
-
+                     for (const field of interfaceDeclarations)
                         proto .addUserDefinedField (field .getAccessType (), field .getName (), field);
-                     }
 
                      this .pushPrototype (proto);
                      this .pushExecutionContext (proto .getBody ());
@@ -39920,7 +39906,7 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
       {
          if (this .nodeNameId ())
          {
-            var
+            const
                nodeNameId = this .result [0],
                baseNode   = this .node (nodeNameId);
 
@@ -39933,7 +39919,7 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
          throw new Error ("No name given after DEF.");
       }
 
-      var baseNode = this .node ("");
+      const baseNode = this .node ("");
 
       if (baseNode !== false)
          return baseNode;
@@ -39942,16 +39928,12 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
    },
    interfaceDeclarations: function ()
    {
-      var
-         interfaceDeclarations = [ ],
-         field                 = this .interfaceDeclaration ();
+      const interfaceDeclarations = [ ];
 
-      while (field)
-      {
+      let field;
+
+      while (field = this .interfaceDeclaration ())
          interfaceDeclarations .push (field);
-
-         field = this .interfaceDeclaration ();
-      }
 
       return interfaceDeclarations;
    },
@@ -39963,11 +39945,11 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
       {
          if (this .fieldType ())
          {
-            var fieldType = this .result [1];
+            const fieldType = this .result [1];
 
             if (this .inputOnlyId ())
             {
-               var
+               const
                   fieldId = this .result [1],
                   field   = this [fieldType] .create ();
 
@@ -39988,11 +39970,11 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
       {
          if (this .fieldType ())
          {
-            var fieldType = this .result [1];
+            const fieldType = this .result [1];
 
             if (this .outputOnlyId ())
             {
-               var
+               const
                   fieldId = this .result [1],
                   field   = this [fieldType] .create ();
 
@@ -40013,11 +39995,11 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
       {
          if (this .fieldType ())
          {
-            var fieldType = this .result [1];
+            const fieldType = this .result [1];
 
             if (this .initializeOnlyId ())
             {
-               var
+               const
                   fieldId = this .result [1],
                   field   = this [fieldType] .create ();
 
@@ -40043,7 +40025,7 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
    },
    interfaceDeclaration: function ()
    {
-      var field = this .restrictedInterfaceDeclaration ();
+      const field = this .restrictedInterfaceDeclaration ();
 
       if (field)
          return field;
@@ -40054,11 +40036,11 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
       {
          if (this .fieldType ())
          {
-            var fieldType = this .result [1];
+            const fieldType = this .result [1];
 
             if (this .inputOutputId ())
             {
-               var
+               const
                   fieldId = this .result [1],
                   field   = this [fieldType] .create ();
 
@@ -40090,13 +40072,13 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
       {
          if (this .nodeTypeId ())
          {
-            var nodeTypeId = this .result [1];
+            const nodeTypeId = this .result [1];
 
             this .comments ();
 
             if (Grammar .OpenBracket .parse (this))
             {
-               var externInterfaceDeclarations = this .externInterfaceDeclarations ();
+               const externInterfaceDeclarations = this .externInterfaceDeclarations ();
 
                this .comments ();
 
@@ -40104,14 +40086,10 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
                {
                   if (this .URLList (this .MFString))
                   {
-                     var externproto = new Prototype_X3DExternProtoDeclaration (this .getExecutionContext (), this .MFString);
+                     const externproto = new Prototype_X3DExternProtoDeclaration (this .getExecutionContext (), this .MFString);
 
-                     for (var i = 0, length = externInterfaceDeclarations .length; i < length; ++ i)
-                     {
-                        var field = externInterfaceDeclarations [i];
-
+                     for (const field of externInterfaceDeclarations)
                         externproto .addUserDefinedField (field .getAccessType (), field .getName (), field);
-                     }
 
                      externproto .setup ();
 
@@ -40144,16 +40122,12 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
    },
    externInterfaceDeclarations: function ()
    {
-      var
-         externInterfaceDeclarations = [ ],
-         field                       = this .externInterfaceDeclaration ();
+      const externInterfaceDeclarations = [ ];
 
-      while (field)
-      {
+      let field;
+
+      while (field = this .externInterfaceDeclaration ())
          externInterfaceDeclarations .push (field);
-
-         field = this .externInterfaceDeclaration ();
-      }
 
       return externInterfaceDeclarations;
    },
@@ -40165,11 +40139,11 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
       {
          if (this .fieldType ())
          {
-            var fieldType = this .result [1];
+            const fieldType = this .result [1];
 
             if (this .inputOnlyId ())
             {
-               var
+               const
                   fieldId = this .result [1],
                   field   = this [fieldType] .create ();
 
@@ -40190,11 +40164,11 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
       {
          if (this .fieldType ())
          {
-            var fieldType = this .result [1];
+            const fieldType = this .result [1];
 
             if (this .outputOnlyId ())
             {
-               var
+               const
                   fieldId = this .result [1],
                   field   = this [fieldType] .create ();
 
@@ -40215,11 +40189,11 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
       {
          if (this .fieldType ())
          {
-            var fieldType = this .result [1];
+            const fieldType = this .result [1];
 
             if (this .initializeOnlyId ())
             {
-               var
+               const
                   fieldId = this .result [1],
                   field   = this [fieldType] .create ();
 
@@ -40240,11 +40214,11 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
       {
          if (this .fieldType ())
          {
-            var fieldType = this .result [1];
+            const fieldType = this .result [1];
 
             if (this .inputOutputId ())
             {
-               var
+               const
                   fieldId = this .result [1],
                   field   = this [fieldType] .create ();
 
@@ -40275,7 +40249,7 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
       {
          if (this .nodeNameId ())
          {
-            var
+            const
                fromNodeId = this .result [1],
                fromNode   = this .getExecutionContext () .getLocalNode (fromNodeId);
 
@@ -40285,7 +40259,7 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
             {
                if (this .outputOnlyId ())
                {
-                  var eventOutId = this .result [1];
+                  const eventOutId = this .result [1];
 
                   this .comments ();
 
@@ -40293,7 +40267,7 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
                   {
                      if (this .nodeNameId ())
                      {
-                        var
+                        const
                            toNodeId = this .result [1],
                            toNode   = this .getExecutionContext () .getLocalNode (toNodeId);
 
@@ -40305,7 +40279,7 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
                            {
                               try
                               {
-                                 var eventInId = this .result [1];
+                                 const eventInId = this .result [1];
 
                                  this .getExecutionContext () .addRoute (fromNode, eventOutId, toNode, eventInId);
                                  return true;
@@ -40345,23 +40319,19 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
    {
       if (this .nodeTypeId ())
       {
-         var
-            nodeTypeId = this .result [1],
-            baseNode   = this .getExecutionContext () .createNode (nodeTypeId, false);
+         const nodeTypeId = this .result [1];
 
-         if (! baseNode)
-         {
-            baseNode = this .getExecutionContext () .createProto (nodeTypeId, false);
+         const baseNode = this .getExecutionContext () .createNode (nodeTypeId, false)
+               ?? this .getExecutionContext () .createProto (nodeTypeId, false);
 
-            if (! baseNode)
-               throw new Error ("Unknown node type or proto '" + nodeTypeId + "', you probably have insufficient component/profile statements, and/or an inappropriate specification version.");
-         }
+         if (!baseNode)
+            throw new Error ("Unknown node type or proto '" + nodeTypeId + "', you probably have insufficient component/profile statements, and/or an inappropriate specification version.");
 
          if (nodeNameId .length)
          {
             try
             {
-               var namedNode = this .getExecutionContext () .getNamedNode (nodeNameId);
+               const namedNode = this .getExecutionContext () .getNamedNode (nodeNameId);
 
                this .getExecutionContext () .updateNamedNode (this .getExecutionContext () .getUniqueName (nodeNameId), namedNode);
             }
@@ -40385,7 +40355,7 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
 
             if (Grammar .CloseBrace .parse (this))
             {
-               if (! this .isInsideProtoDefinition ())
+               if (!this .isInsideProtoDefinition ())
                   baseNode .setup ();
 
                return baseNode;
@@ -40406,23 +40376,23 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
    },
    scriptBodyElement: function (baseNode)
    {
-      var
+      const
          lastIndex  = this .lastIndex,
          lineNumber = this .lineNumber;
 
       if (this .Id ())
       {
-         var accessType = this .accessTypes [this .result [1]];
+         const accessType = this .accessTypes [this .result [1]];
 
          if (accessType)
          {
             if (this .fieldType ())
             {
-               var fieldType = this .result [1];
+               const fieldType = this .result [1];
 
                if (this .Id ())
                {
-                  var fieldId = this .result [1];
+                  const fieldId = this .result [1];
 
                   this .comments ();
 
@@ -40432,7 +40402,7 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
                      {
                         if (this .Id ())
                         {
-                           var isId = this .result [1];
+                           const isId = this .result [1];
 
                            try
                            {
@@ -40445,17 +40415,17 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
                               return true;
                            }
 
-                           var supportedField = this [fieldType];
+                           const supportedField = this [fieldType];
 
                            if (supportedField .getType () === reference .getType ())
                            {
                               if (reference .isReference (accessType))
                               {
-                                 var field = VRMLParser_$.try (() => baseNode .getUserDefinedField (fieldId));
+                                 let field = VRMLParser_$.try (() => baseNode .getUserDefinedField (fieldId));
 
                                  if (!field)
                                  {
-                                    var field = supportedField .create ();
+                                    field = supportedField .create ();
 
                                     baseNode .addUserDefinedField (accessType, fieldId, field);
                                  }
@@ -40488,11 +40458,11 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
       this .lastIndex  = lastIndex;
       this .lineNumber = lineNumber;
 
-      var field = this .interfaceDeclaration ();
+      const field = this .interfaceDeclaration ();
 
       if (field)
       {
-         var existingField = VRMLParser_$.try (() => baseNode .getUserDefinedField (field .getName ()));
+         const existingField = VRMLParser_$.try (() => baseNode .getUserDefinedField (field .getName ()));
 
          if (existingField)
          {
@@ -40526,7 +40496,7 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
 
       if (this .Id ())
       {
-         var fieldId = this .result [1];
+         const fieldId = this .result [1];
 
          try
          {
@@ -40545,7 +40515,7 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
             {
                if (this .Id ())
                {
-                  var isId = this .result [1];
+                  const isId = this .result [1];
 
                   try
                   {
@@ -40721,10 +40691,10 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
       field .length = 0;
       field         = field .getTarget ();
 
-      while (this .sfboolValue (this .SFBool))
-      {
-         field .push (this .SFBool);
-      }
+      const value = this .SFBool;
+
+      while (this .sfboolValue (value))
+         field .push (value);
    },
    sfcolorValue: function (field)
    {
@@ -40732,15 +40702,15 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
 
       if (this .double ())
       {
-         var r = this .value;
+         const r = this .value;
 
          if (this .double ())
          {
-            var g = this .value;
+            const g = this .value;
 
             if (this .double ())
             {
-               var b = this .value;
+               const b = this .value;
 
                field .r = r;
                field .g = g;
@@ -40797,10 +40767,10 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
       field .length = 0;
       field         = field .getTarget ();
 
-      while (this .sfcolorValue (this .SFColor))
-      {
-         field .push (this .SFColor);
-      }
+      const value = this .SFColor;
+
+      while (this .sfcolorValue (value))
+         field .push (value);
    },
    sfcolorrgbaValue: function (field)
    {
@@ -40808,19 +40778,19 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
 
       if (this .double ())
       {
-         var r = this .value;
+         const r = this .value;
 
          if (this .double ())
          {
-            var g = this .value;
+            const g = this .value;
 
             if (this .double ())
             {
-               var b = this .value;
+               const b = this .value;
 
                if (this .double ())
                {
-                  var a = this .value;
+                  const a = this .value;
 
                   field .r = r;
                   field .g = g;
@@ -40880,10 +40850,10 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
       field .length = 0;
       field         = field .getTarget ();
 
-      while (this .sfcolorrgbaValue (this .SFColorRGBA))
-      {
-         field .push (this .SFColorRGBA);
-      }
+      const value = this .SFColorRGBA;
+
+      while (this .sfcolorrgbaValue (value))
+         field .push (value);
    },
    sfdoubleValue: function (field)
    {
@@ -40926,12 +40896,12 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
       field .length = 0;
       field         = field .getTarget ();
 
-      this .SFDouble .setUnit (field .getUnit ());
+      const value = this .SFDouble;
 
-      while (this .sfdoubleValue (this .SFDouble))
-      {
-         field .push (this .SFDouble);
-      }
+      value .setUnit (field .getUnit ());
+
+      while (this .sfdoubleValue (value))
+         field .push (value);
    },
    sffloatValue: function (field)
    {
@@ -40968,26 +40938,26 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
       field .length = 0;
       field         = field .getTarget ();
 
-      this .SFFloat .setUnit (field .getUnit ());
+      const value = this .SFFloat;
 
-      while (this .sffloatValue (this .SFFloat))
-      {
-         field .push (this .SFFloat);
-      }
+      value .setUnit (field .getUnit ());
+
+      while (this .sffloatValue (value))
+         field .push (value);
    },
    sfimageValue: function (field)
    {
       if (this .int32 ())
       {
-         var width = this .value;
+         const width = this .value;
 
          if (this .int32 ())
          {
-            var height = this .value;
+            const height = this .value;
 
             if (this .int32 ())
             {
-               var
+               const
                   comp  = this .value,
                   size  = width * height;
 
@@ -40995,9 +40965,9 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
                field .height = height;
                field .comp   = comp;
 
-               var array = field .array;
+               const array = field .array;
 
-               for (var i = 0; i < size; ++ i)
+               for (const i = 0; i < size; ++ i)
                {
                   if (this .int32 ())
                   {
@@ -41044,10 +41014,10 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
       field .length = 0;
       field         = field .getTarget ();
 
-      while (this .sfimageValue (this .SFImage))
-      {
-         field .push (this .SFImage);
-      }
+      const value = this .SFImage;
+
+      while (this .sfimageValue (value))
+         field .push (value);
    },
    sfint32Value: function (field)
    {
@@ -41088,48 +41058,48 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
       field .length = 0;
       field         = field .getTarget ();
 
-      while (this .sfint32Value (this .SFInt32))
-      {
-         field .push (this .SFInt32);
-      }
+      const value = this .SFInt32;
+
+      while (this .sfint32Value (value))
+         field .push (value);
    },
    sfmatrix3dValue: function (field)
    {
       if (this .double ())
       {
-         var m00 = this .value;
+         const m00 = this .value;
 
          if (this .double ())
          {
-            var m01 = this .value;
+            const m01 = this .value;
 
             if (this .double ())
             {
-               var m02 = this .value;
+               const m02 = this .value;
 
                   if (this .double ())
                   {
-                     var m10 = this .value;
+                     const m10 = this .value;
 
                      if (this .double ())
                      {
-                        var m11 = this .value;
+                        const m11 = this .value;
 
                         if (this .double ())
                         {
-                           var m12 = this .value;
+                           const m12 = this .value;
 
                            if (this .double ())
                            {
-                              var m20 = this .value;
+                              const m20 = this .value;
 
                               if (this .double ())
                               {
-                                 var m21 = this .value;
+                                 const m21 = this .value;
 
                                  if (this .double ())
                                  {
-                                    var m22 = this .value;
+                                    const m22 = this .value;
 
                                     field [0] = m00;
                                     field [1] = m01;
@@ -41183,10 +41153,10 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
       field .length = 0;
       field         = field .getTarget ();
 
-      while (this .sfmatrix3dValue (this .SFMatrix3d))
-      {
-         field .push (this .SFMatrix3d);
-      }
+      const value = this .SFMatrix3d;
+
+      while (this .sfmatrix3dValue (value))
+         field .push (value);
    },
    sfmatrix3fValue: function (field)
    {
@@ -41221,76 +41191,76 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
       field .length = 0;
       field         = field .getTarget ();
 
-      while (this .sfmatrix3fValue (this .SFMatrix3f))
-      {
-         field .push (this .SFMatrix3f);
-      }
+      const value = this .SFMatrix3f;
+
+      while (this .sfmatrix3fValue (value))
+         field .push (value);
    },
    sfmatrix4dValue: function (field)
    {
       if (this .double ())
       {
-         var m00 = this .value;
+         const m00 = this .value;
 
          if (this .double ())
          {
-            var m01 = this .value;
+            const m01 = this .value;
 
             if (this .double ())
             {
-               var m02 = this .value;
+               const m02 = this .value;
 
                if (this .double ())
                {
-                  var m03 = this .value;
+                  const m03 = this .value;
 
                   if (this .double ())
                   {
-                     var m10 = this .value;
+                     const m10 = this .value;
 
                      if (this .double ())
                      {
-                        var m11 = this .value;
+                        const m11 = this .value;
 
                         if (this .double ())
                         {
-                           var m12 = this .value;
+                           const m12 = this .value;
 
                            if (this .double ())
                            {
-                              var m13 = this .value;
+                              const m13 = this .value;
 
                               if (this .double ())
                               {
-                                 var m20 = this .value;
+                                 const m20 = this .value;
 
                                  if (this .double ())
                                  {
-                                    var m21 = this .value;
+                                    const m21 = this .value;
 
                                     if (this .double ())
                                     {
-                                       var m22 = this .value;
+                                       const m22 = this .value;
 
                                        if (this .double ())
                                        {
-                                          var m23 = this .value;
+                                          const m23 = this .value;
 
                                           if (this .double ())
                                           {
-                                             var m30 = this .value;
+                                             const m30 = this .value;
 
                                              if (this .double ())
                                              {
-                                                var m31 = this .value;
+                                                const m31 = this .value;
 
                                                 if (this .double ())
                                                 {
-                                                   var m32 = this .value;
+                                                   const m32 = this .value;
 
                                                    if (this .double ())
                                                    {
-                                                      var m33 = this .value;
+                                                      const m33 = this .value;
 
                                                       field [ 0] = m00;
                                                       field [ 1] = m01;
@@ -41358,10 +41328,10 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
       field .length = 0;
       field         = field .getTarget ();
 
-      while (this .sfmatrix4dValue (this .SFMatrix4d))
-      {
-         field .push (this .SFMatrix4d);
-      }
+      const value = this .SFMatrix4d;
+
+      while (this .sfmatrix4dValue (value))
+         field .push (value);
    },
    sfmatrix4fValue: function (field)
    {
@@ -41396,14 +41366,14 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
       field .length = 0;
       field         = field .getTarget ();
 
-      while (this .sfmatrix4fValue (this .SFMatrix4f))
-      {
-         field .push (this .SFMatrix4f);
-      }
+      const value = this .SFMatrix4f;
+
+      while (this .sfmatrix4fValue (value))
+         field .push (value);
    },
    sfnodeValue: function (field)
    {
-      var baseNode = this .nodeStatement ();
+      const baseNode = this .nodeStatement ();
 
       if (baseNode !== false)
       {
@@ -41417,7 +41387,7 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
    {
       field .length = 0;
 
-      var node = this .nodeStatement ();
+      const node = this .nodeStatement ();
 
       if (node !== false)
       {
@@ -41443,7 +41413,7 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
    {
       this .statements (field);
 
-      // var node = this .nodeStatement ();
+      // let node = this .nodeStatement ();
 
       // while (node !== false)
       // {
@@ -41456,19 +41426,19 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
    {
       if (this .double ())
       {
-         var x = this .value;
+         const x = this .value;
 
          if (this .double ())
          {
-            var y = this .value;
+            const y = this .value;
 
             if (this .double ())
             {
-               var z = this .value;
+               const z = this .value;
 
                if (this .double ())
                {
-                  var angle = this .value;
+                  const angle = this .value;
 
                   field .x     = x;
                   field .y     = y;
@@ -41512,10 +41482,10 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
       field .length = 0;
       field         = field .getTarget ();
 
-      while (this .sfrotationValue (this .SFRotation))
-      {
-         field .push (this .SFRotation);
-      }
+      const value = this .SFRotation;
+
+      while (this .sfrotationValue (value))
+         field .push (value);
    },
    sfstringValue: function (field)
    {
@@ -41556,10 +41526,10 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
       field .length = 0;
       field         = field .getTarget ();
 
-      while (this .sfstringValue (this .SFString))
-      {
-         field .push (this .SFString);
-      }
+      const value = this .SFString;
+
+      while (this .sfstringValue (value))
+         field .push (value);
    },
    sftimeValue: function (field)
    {
@@ -41594,20 +41564,20 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
       field .length = 0;
       field         = field .getTarget ();
 
-      while (this .sftimeValue (this .SFTime))
-      {
-         field .push (this .SFTime);
-      }
+      const value = this .SFTime;
+
+      while (this .sftimeValue (value))
+         field .push (value);
    },
    sfvec2dValue: function (field)
    {
       if (this .double ())
       {
-         var x = this .value;
+         const x = this .value;
 
          if (this .double ())
          {
-            var
+            const
                y        = this .value,
                category = field .getUnit ();
 
@@ -41651,12 +41621,12 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
       field .length = 0;
       field         = field .getTarget ();
 
-      this .SFVec2d .setUnit (field .getUnit ());
+      const value = this .SFVec2d;
 
-      while (this .sfvec2dValue (this .SFVec2d))
-      {
-         field .push (this .SFVec2d);
-      }
+      value .setUnit (field .getUnit ());
+
+      while (this .sfvec2dValue (value))
+         field .push (value);
    },
    sfvec2fValue: function (field)
    {
@@ -41693,26 +41663,26 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
       field .length = 0;
       field         = field .getTarget ();
 
-      this .SFVec2f .setUnit (field .getUnit ());
+      const value = this .SFVec2f;
 
-      while (this .sfvec2fValue (this .SFVec2f))
-      {
-         field .push (this .SFVec2f);
-      }
+      value .setUnit (field .getUnit ());
+
+      while (this .sfvec2fValue (value))
+         field .push (value);
    },
    sfvec3dValue: function (field)
    {
       if (this .double ())
       {
-         var x = this .value;
+         const x = this .value;
 
          if (this .double ())
          {
-            var y = this .value;
+            const y = this .value;
 
             if (this .double ())
             {
-               var
+               const
                   z        = this .value,
                   category = field .getUnit ();
 
@@ -41758,12 +41728,12 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
       field .length = 0;
       field         = field .getTarget ();
 
-      this .SFVec3d .setUnit (field .getUnit ());
+      const value = this .SFVec3d;
 
-      while (this .sfvec3dValue (this .SFVec3d))
-      {
-         field .push (this .SFVec3d);
-      }
+      value .setUnit (field .getUnit ());
+
+      while (this .sfvec3dValue (value))
+         field .push (value);
    },
    sfvec3fValue: function (field)
    {
@@ -41800,30 +41770,30 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
       field .length = 0;
       field         = field .getTarget ();
 
-      this .SFVec3f .setUnit (field .getUnit ());
+      const value = this .SFVec3f;
 
-      while (this .sfvec3fValue (this .SFVec3f))
-      {
-         field .push (this .SFVec3f);
-      }
+      value .setUnit (field .getUnit ());
+
+      while (this .sfvec3fValue (value))
+         field .push (value);
    },
    sfvec4dValue: function (field)
    {
       if (this .double ())
       {
-         var x = this .value;
+         const x = this .value;
 
          if (this .double ())
          {
-            var y = this .value;
+            const y = this .value;
 
             if (this .double ())
             {
-               var z = this .value;
+               const z = this .value;
 
                if (this .double ())
                {
-                  var
+                  const
                      w        = this .value,
                      category = field .getUnit ();
 
@@ -41871,12 +41841,12 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
       field .length = 0;
       field         = field .getTarget ();
 
-      this .SFVec4d .setUnit (field .getUnit ());
+      const value = this .SFVec4d;
 
-      while (this .sfvec4dValue (this .SFVec4d))
-      {
-         field .push (this .SFVec4d);
-      }
+      value .setUnit (field .getUnit ());
+
+      while (this .sfvec4dValue (value))
+         field .push (value);
    },
    sfvec4fValue: function (field)
    {
@@ -41913,12 +41883,12 @@ VRMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototy
       field .length = 0;
       field         = field .getTarget ();
 
-      this .SFVec4f .setUnit (field .getUnit ());
+      const value = this .SFVec4f;
 
-      while (this .sfvec4fValue (this .SFVec4f))
-      {
-         field .push (this .SFVec4f);
-      }
+      value .setUnit (field .getUnit ());
+
+      while (this .sfvec4fValue (value))
+         field .push (value);
    },
    accessTypeToString: function (accessType)
    {
@@ -42000,7 +41970,7 @@ const VRMLParser_default_ = VRMLParser;
 x_ite_Namespace.set ("x_ite/Parser/VRMLParser", VRMLParser_default_);
 /* harmony default export */ const Parser_VRMLParser = (VRMLParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/XMLParser.js
-/* provided dependency */ var XMLParser_$ = __webpack_require__(56);
+/* provided dependency */ var XMLParser_$ = __webpack_require__(852);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -42212,7 +42182,7 @@ XMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
       {
          // Profile
 
-         var
+         const
             profileNameId = xmlElement .getAttribute ("profile"),
             profile       = this .getBrowser () .getProfile (profileNameId || "Full");
 
@@ -42227,17 +42197,15 @@ XMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
 
       // Specification version
 
-      var specificationVersion = xmlElement .getAttribute ("version");
+      const specificationVersion = xmlElement .getAttribute ("version");
 
       if (specificationVersion)
          this .getScene () .setSpecificationVersion (specificationVersion);
 
       // Process child nodes
 
-      var childNodes = xmlElement .childNodes;
-
-      for (var i = 0; i < childNodes .length; ++ i)
-         this .x3dElementChildHead (childNodes [i])
+      for (const childNode of xmlElement .childNodes)
+         this .x3dElementChildHead (childNode)
 
       if (!this .xml)
          this .headElement (xmlElement);
@@ -42246,8 +42214,8 @@ XMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
       {
          this .loadComponents () .then (() =>
          {
-            for (var i = 0; i < childNodes .length; ++ i)
-               this .x3dElementChildScene (childNodes [i])
+            for (const childNode of xmlElement .childNodes)
+               this .x3dElementChildScene (childNode)
 
             this .resolve (this .getScene ());
          })
@@ -42255,8 +42223,8 @@ XMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
       }
       else
       {
-         for (var i = 0; i < childNodes .length; ++ i)
-            this .x3dElementChildScene (childNodes [i])
+         for (const childNode of xmlElement .childNodes)
+            this .x3dElementChildScene (childNode)
       }
    },
    x3dElementChildHead: function (xmlElement)
@@ -42281,10 +42249,8 @@ XMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
    },
    headElement: function (xmlElement)
    {
-      var childNodes = xmlElement .childNodes;
-
-      for (var i = 0; i < childNodes .length; ++ i)
-         this .headElementChild (childNodes [i]);
+      for (const childNode of xmlElement .childNodes)
+         this .headElementChild (childNode);
    },
    headElementChild: function (xmlElement)
    {
@@ -42308,7 +42274,7 @@ XMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
    {
       try
       {
-         var
+         const
             componentNameIdCharacters = xmlElement .getAttribute ("name"),
             componentSupportLevel = parseInt (xmlElement .getAttribute ("level"));
 
@@ -42318,7 +42284,7 @@ XMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
          if (componentSupportLevel === null)
             return console .warn ("XML Parser Error: Bad component statement. Expected level attribute.");
 
-         var component = this .getBrowser () .getComponent (componentNameIdCharacters, componentSupportLevel);
+         const component = this .getBrowser () .getComponent (componentNameIdCharacters, componentSupportLevel);
 
          this .getScene () .addComponent (component);
       }
@@ -42329,7 +42295,7 @@ XMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
    },
    unitElement: function (xmlElement)
    {
-      var
+      const
          category         = xmlElement .getAttribute ("category"),
          name             = xmlElement .getAttribute ("name"),
          conversionFactor = xmlElement .getAttribute ("conversionFactor"); //works for html5 as well
@@ -42347,7 +42313,7 @@ XMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
    },
    metaElement: function (xmlElement)
    {
-      var
+      const
          metakey   = xmlElement .getAttribute ("name"),
          metavalue = xmlElement .getAttribute ("content");
 
@@ -42367,10 +42333,8 @@ XMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
    },
    childrenElements: function (xmlElement)
    {
-      var childNodes = xmlElement .childNodes;
-
-      for (var i = 0; i < childNodes .length; ++ i)
-         this .childElement (childNodes [i]);
+      for (const childNode of xmlElement .childNodes)
+         this .childElement (childNode);
    },
    childElement: function (xmlElement)
    {
@@ -42469,25 +42433,21 @@ XMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
    },
    protoDeclareElement: function (xmlElement)
    {
-      var name = xmlElement .getAttribute ("name");
+      const name = xmlElement .getAttribute ("name");
 
       if (this .id (name))
       {
-         var
-            proto      = new Prototype_X3DProtoDeclaration (this .getExecutionContext ()),
-            childNodes = xmlElement .childNodes;
+         const proto = new Prototype_X3DProtoDeclaration (this .getExecutionContext ());
 
-         for (var i = 0; i < childNodes .length; ++ i)
+         for (const childNode of xmlElement .childNodes)
          {
-            var child = childNodes [i];
-
-            switch (child .nodeName)
+            switch (childNode .nodeName)
             {
                case "ProtoInterface":
                case "PROTOINTERFACE":
                {
                   this .pushParent (proto);
-                  this .protoInterfaceElement (child);
+                  this .protoInterfaceElement (childNode);
                   this .popParent ();
                   this .addProtoFieldNames (proto);
                   break;
@@ -42499,11 +42459,9 @@ XMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
             break;
          }
 
-         for (var i = 0; i < childNodes .length; ++ i)
+         for (const childNode of xmlElement .childNodes)
          {
-            var child = childNodes [i];
-
-            switch (child .nodeName)
+            switch (childNode .nodeName)
             {
                case "ProtoBody":
                case "PROTOBODY":
@@ -42511,7 +42469,7 @@ XMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
                   this .pushPrototype (proto);
                   this .pushExecutionContext (proto .getBody ());
                   this .pushParent (proto);
-                  this .protoBodyElement (child);
+                  this .protoBodyElement (childNode);
                   this .popParent ();
                   this .popExecutionContext ();
                   this .popPrototype ();
@@ -42542,10 +42500,8 @@ XMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
    },
    protoInterfaceElement: function (xmlElement)
    {
-      var childNodes = xmlElement .childNodes;
-
-      for (var i = 0; i < childNodes .length; ++ i)
-         this .protoInterfaceElementChild (childNodes [i]);
+      for (const childNode of xmlElement .childNodes)
+         this .protoInterfaceElementChild (childNode);
    },
    protoInterfaceElementChild: function (xmlElement)
    {
@@ -42564,30 +42520,27 @@ XMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
          if (this .getParents () .length === 0)
             return;
 
-         var node = this .getParent ();
+         const node = this .getParent ();
 
-         if (! (node instanceof Base_X3DBaseNode))
+         if (!(node instanceof Base_X3DBaseNode))
             return;
 
-         if (! node .canUserDefinedFields ())
+         if (!node .canUserDefinedFields ())
             return;
 
-         var accessType = AccessType [xmlElement .getAttribute ("accessType")];
+         const
+            accessType = AccessType [xmlElement .getAttribute ("accessType")] || Base_X3DConstants.initializeOnly,
+            Field      = x_ite_Fields [xmlElement .getAttribute ("type")];
 
-         if (accessType === undefined)
-            accessType = Base_X3DConstants.initializeOnly;
-
-         var Field = x_ite_Fields [xmlElement .getAttribute ("type")];
-
-         if (Field === undefined)
+         if (!Field)
             return;
 
-         var name = xmlElement .getAttribute ("name");
+         const name = xmlElement .getAttribute ("name");
 
-         if (! this .id (name))
+         if (!this .id (name))
             return;
 
-         var field = new Field ();
+         const field = new Field ();
 
          if (accessType & Base_X3DConstants.initializeOnly)
          {
@@ -42613,10 +42566,8 @@ XMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
    {
       if (this .isInsideProtoDefinition ())
       {
-         var childNodes = xmlElement .childNodes;
-
-         for (var i = 0; i < childNodes .length; ++ i)
-            this .isElementChild (childNodes [i]);
+         for (const childNode of xmlElement .childNodes)
+            this .isElementChild (childNode);
       }
    },
    isElementChild: function (xmlElement)
@@ -42631,7 +42582,7 @@ XMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
    },
    connectElement: function (xmlElement)
    {
-      var
+      const
          nodeFieldName  = xmlElement .getAttribute ("nodeField"),
          protoFieldName = xmlElement .getAttribute ("protoField");
 
@@ -42646,14 +42597,14 @@ XMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
          if (this .getParents () .length === 0)
             return;
 
-         var
+         const
             node  = this .getParent (),
             proto = this .getPrototype ();
 
-         if (! (node instanceof Core_X3DNode))
+         if (!(node instanceof Core_X3DNode))
             return;
 
-         var
+         const
             nodeField  = node .getField (nodeFieldName),
             protoField = proto .getField (protoFieldName);
 
@@ -42679,13 +42630,13 @@ XMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
          if (this .useAttribute (xmlElement))
             return;
 
-         var name = xmlElement .getAttribute ("name");
+         const name = xmlElement .getAttribute ("name");
 
          if (this .id (name))
          {
-            var node = this .getExecutionContext () .createProto (name, false);
+            const node = this .getExecutionContext () .createProto (name, false);
 
-            if (! node)
+            if (!node)
                throw new Error ("Unknown proto or externproto type '" + name + "'.");
 
             ///DOMIntegration: attach node to DOM xmlElement for access from DOM.
@@ -42696,7 +42647,7 @@ XMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
             this .pushParent (node);
             this .childrenElements (xmlElement);
 
-            if (! this .isInsideProtoDefinition ())
+            if (!this .isInsideProtoDefinition ())
                node .setup ();
 
             this .popParent ();
@@ -42717,17 +42668,17 @@ XMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
          if (this .getParents () .length === 0)
             return;
 
-         var
+         const
             node = this .getParent (),
             name = xmlElement .getAttribute ("name");
 
-         if (! (node instanceof Core_X3DPrototypeInstance))
+         if (!(node instanceof Core_X3DPrototypeInstance))
             return;
 
-         if (! this .id (name))
+         if (!this .id (name))
             return;
 
-         var
+         const
             field      = node .getField (name),
             accessType = field .getAccessType ();
 
@@ -42757,7 +42708,7 @@ XMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
          if (this .useAttribute (xmlElement))
             return;
 
-         var node = this .getExecutionContext () .createNode (this .nodeNameToCamelCase (xmlElement .nodeName), false);
+         const node = this .getExecutionContext () .createNode (this .nodeNameToCamelCase (xmlElement .nodeName), false);
 
          if (!node)
             node = this .getExecutionContext () .createProto (this .protoNameToCamelCase (xmlElement .nodeName), false);
@@ -42778,7 +42729,7 @@ XMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
          this .nodeAttributes (xmlElement, node);
          this .childrenElements (xmlElement);
 
-         if (! this .isInsideProtoDefinition ())
+         if (!this .isInsideProtoDefinition ())
             node .setup ();
 
          this .popParent ();
@@ -42819,7 +42770,7 @@ XMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
    {
       try
       {
-         var
+         const
             sourceNodeName      = xmlElement .getAttribute ("fromNode"),
             sourceField         = xmlElement .getAttribute ("fromField"),
             destinationNodeName = xmlElement .getAttribute ("toNode"),
@@ -42837,7 +42788,7 @@ XMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
          if (destinationField === null)
             throw new Error ("Bad ROUTE statement: Expected toField attribute.");
 
-         var
+         const
             executionContext = this .getExecutionContext (),
             sourceNode       = executionContext .getLocalNode (sourceNodeName),
             destinationNode  = executionContext .getLocalNode (destinationNodeName),
@@ -42858,10 +42809,10 @@ XMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
    {
       try
       {
-         var
+         const
             inlineNodeName   = xmlElement .getAttribute ("inlineDEF"),
             exportedNodeName = xmlElement .getAttribute ("importedDEF") || xmlElement .getAttribute ("exportedDEF"),
-            localNodeName    = xmlElement .getAttribute ("AS");
+            localNodeName    = xmlElement .getAttribute ("AS") || exportedNodeName;
 
          if (inlineNodeName === null)
             throw new Error ("Bad IMPORT statement: Expected inlineDEF attribute.");
@@ -42869,10 +42820,7 @@ XMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
          if (exportedNodeName === null)
             throw new Error ("Bad IMPORT statement: Expected importedDEF attribute.");
 
-         if (! localNodeName)
-            localNodeName = exportedNodeName;
-
-         var inlineNode = this .getExecutionContext () .getNamedNode (inlineNodeName);
+         const inlineNode = this .getExecutionContext () .getNamedNode (inlineNodeName);
 
          this .getExecutionContext () .updateImportedNode (inlineNode, exportedNodeName, localNodeName);
       }
@@ -42891,17 +42839,14 @@ XMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
             return;
          }
 
-         var
+         const
             localNodeName    = xmlElement .getAttribute ("localDEF"),
-            exportedNodeName = xmlElement .getAttribute ("AS");
+            exportedNodeName = xmlElement .getAttribute ("AS") || localNodeName;
 
          if (localNodeName === null)
             throw new Error ("Bad EXPORT statement: Expected localDEF attribute.");
 
-         if (! exportedNodeName)
-            exportedNodeName = localNodeName;
-
-         var localNode = this .getExecutionContext () .getLocalNode (localNodeName);
+         const localNode = this .getExecutionContext () .getLocalNode (localNodeName);
 
          this .getScene () .updateExportedNode (exportedNodeName, localNode);
       }
@@ -42924,11 +42869,11 @@ XMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
    {
       try
       {
-         var name = xmlElement .getAttribute ("USE");
+         const name = xmlElement .getAttribute ("USE");
 
          if (this .id (name))
          {
-            var node = this .getExecutionContext () .getNamedNode (name);
+            const node = this .getExecutionContext () .getNamedNode (name);
 
             this .addNode (xmlElement, node .getValue ());
             return true;
@@ -42945,13 +42890,13 @@ XMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
    {
       try
       {
-         var name = xmlElement .getAttribute ("DEF");
+         const name = xmlElement .getAttribute ("DEF");
 
          if (name)
          {
             try
             {
-               var namedNode = this .getExecutionContext () .getNamedNode (name);
+               const namedNode = this .getExecutionContext () .getNamedNode (name);
 
                this .getExecutionContext () .updateNamedNode (this .getExecutionContext () .getUniqueName (name), namedNode);
             }
@@ -42968,10 +42913,8 @@ XMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
    },
    nodeAttributes: function (xmlElement, node)
    {
-      var xmlAttributes = xmlElement .attributes;
-
-      for (var i = 0; i < xmlAttributes .length; ++ i)
-         this .nodeAttribute (xmlAttributes [i], node);
+      for (const xmlAttribute of xmlElement .attributes)
+         this .nodeAttribute (xmlAttribute, node);
    },
    nodeAttribute: function (xmlAttribute, node)
    {
@@ -43033,7 +42976,7 @@ XMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
          return;
       }
 
-      var parent = this .getParent ();
+      const parent = this .getParent ();
 
       if (parent instanceof Base_X3DField)
       {
@@ -43055,17 +42998,12 @@ XMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
 
       try
       {
-         var containerField = xmlElement .getAttribute ("containerField");
+         const containerField = xmlElement .getAttribute ("containerField") || node ?.getContainerField ();
 
-         if (! containerField)
-         {
-            if (node)
-               containerField = node .getContainerField ();
-            else
-               throw new Error ("NULL node must have a container field attribute.");
-         }
+         if (!containerField)
+            throw new Error ("Node must have a container field attribute.");
 
-         var field = parent .getField (containerField);
+         const field = parent .getField (containerField);
 
          switch (field .getType ())
          {
@@ -43080,7 +43018,7 @@ XMLParser .prototype = Object .assign (Object .create (Parser_X3DParser.prototyp
       }
       catch (error)
       {
-         //console .warn (error .message);
+         // console .error (error);
       }
    },
    // Overloaded by HTMLParser.
@@ -43991,7 +43929,7 @@ const URLs_default_ = URLs;
 x_ite_Namespace.set ("x_ite/Browser/Networking/URLs", URLs_default_);
 /* harmony default export */ const Networking_URLs = (URLs_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GLTF2Parser.js
-/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(56);
+/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(852);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -45942,7 +45880,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (Parser_X3DParser.protot
          scene        = this .getExecutionContext (),
          geometryNode = scene .createNode ("IndexedTriangleSet", false);
 
-      geometryNode ._solid           = material ? ! material .doubleSided : true;
+      geometryNode ._solid           = material ? !material .doubleSided : true;
       geometryNode ._index           = indices .array;
       geometryNode ._color           = this .createColor (attributes .COLOR [0], material);
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
@@ -45960,7 +45898,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (Parser_X3DParser.protot
          scene        = this .getExecutionContext (),
          geometryNode = scene .createNode ("TriangleSet", false);
 
-      geometryNode ._solid           = material ? ! material .doubleSided : true;
+      geometryNode ._solid           = material ? !material .doubleSided : true;
       geometryNode ._color           = this .createColor (attributes .COLOR [0], material);
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
       geometryNode ._normal          = this .createNormal (attributes .NORMAL);
@@ -45977,7 +45915,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (Parser_X3DParser.protot
          scene        = this .getExecutionContext (),
          geometryNode = scene .createNode ("IndexedTriangleStripSet", false);
 
-      geometryNode ._solid           = material ? ! material .doubleSided : true;
+      geometryNode ._solid           = material ? !material .doubleSided : true;
       geometryNode ._index           = indices .array;
       geometryNode ._color           = this .createColor (attributes .COLOR [0], material);
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
@@ -45995,7 +45933,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (Parser_X3DParser.protot
          scene        = this .getExecutionContext (),
          geometryNode = scene .createNode ("TriangleStripSet", false);
 
-      geometryNode ._solid           = material ? ! material .doubleSided : true;
+      geometryNode ._solid           = material ? !material .doubleSided : true;
       geometryNode ._color           = this .createColor (attributes .COLOR [0], material);
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
       geometryNode ._normal          = this .createNormal (attributes .NORMAL);
@@ -46020,7 +45958,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (Parser_X3DParser.protot
          scene        = this .getExecutionContext (),
          geometryNode = scene .createNode ("IndexedTriangleFanSet", false);
 
-      geometryNode ._solid           = material ? ! material .doubleSided : true;
+      geometryNode ._solid           = material ? !material .doubleSided : true;
       geometryNode ._index           = indices .array;
       geometryNode ._color           = this .createColor (attributes .COLOR [0], material);
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
@@ -46038,7 +45976,7 @@ GLTF2Parser .prototype = Object .assign (Object .create (Parser_X3DParser.protot
          scene        = this .getExecutionContext (),
          geometryNode = scene .createNode ("TriangleFanSet", false);
 
-      geometryNode ._solid           = material ? ! material .doubleSided : true;
+      geometryNode ._solid           = material ? !material .doubleSided : true;
       geometryNode ._color           = this .createColor (attributes .COLOR [0], material);
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
       geometryNode ._normal          = this .createNormal (attributes .NORMAL);
@@ -46457,7 +46395,7 @@ const GLTF2Parser_default_ = GLTF2Parser;
 x_ite_Namespace.set ("x_ite/Parser/GLTF2Parser", GLTF2Parser_default_);
 /* harmony default export */ const Parser_GLTF2Parser = (GLTF2Parser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GLB2Parser.js
-/* provided dependency */ var GLB2Parser_$ = __webpack_require__(56);
+/* provided dependency */ var GLB2Parser_$ = __webpack_require__(852);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -46610,7 +46548,7 @@ const GLB2Parser_default_ = GLB2Parser;
 x_ite_Namespace.set ("x_ite/Parser/GLB2Parser", GLB2Parser_default_);
 /* harmony default export */ const Parser_GLB2Parser = (GLB2Parser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/OBJParser.js
-/* provided dependency */ var OBJParser_$ = __webpack_require__(56);
+/* provided dependency */ var OBJParser_$ = __webpack_require__(852);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -49114,8 +49052,8 @@ const MatrixStack_default_ = MatrixStack;
 x_ite_Namespace.set ("standard/Math/Utility/MatrixStack", MatrixStack_default_);
 /* harmony default export */ const Utility_MatrixStack = (MatrixStack_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_$ = __webpack_require__(56);
-/* provided dependency */ var libtess = __webpack_require__(689);
+/* provided dependency */ var SVGParser_$ = __webpack_require__(852);
+/* provided dependency */ var libtess = __webpack_require__(767);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -51884,7 +51822,7 @@ const SVGParser_default_ = SVGParser;
 x_ite_Namespace.set ("x_ite/Parser/SVGParser", SVGParser_default_);
 /* harmony default export */ const Parser_SVGParser = (SVGParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GoldenGate.js
-/* provided dependency */ var GoldenGate_$ = __webpack_require__(56);
+/* provided dependency */ var GoldenGate_$ = __webpack_require__(852);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -52213,7 +52151,7 @@ const Plane3_default_ = Plane3;
 x_ite_Namespace.set ("standard/Math/Geometry/Plane3", Plane3_default_);
 /* harmony default export */ const Geometry_Plane3 = (Plane3_default_);
 ;// CONCATENATED MODULE: ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var Triangle3_libtess = __webpack_require__(689);
+/* provided dependency */ var Triangle3_libtess = __webpack_require__(767);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -59627,7 +59565,7 @@ const X3DTexture2DNode_default_ = X3DTexture2DNode;
 x_ite_Namespace.set ("x_ite/Components/Texturing/X3DTexture2DNode", X3DTexture2DNode_default_);
 /* harmony default export */ const Texturing_X3DTexture2DNode = (X3DTexture2DNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/ImageTexture.js
-/* provided dependency */ var ImageTexture_$ = __webpack_require__(56);
+/* provided dependency */ var ImageTexture_$ = __webpack_require__(852);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -64191,7 +64129,7 @@ const X3DWorld_default_ = X3DWorld;
 x_ite_Namespace.set ("x_ite/Execution/X3DWorld", X3DWorld_default_);
 /* harmony default export */ const Execution_X3DWorld = (X3DWorld_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/InputOutput/FileLoader.js
-/* provided dependency */ var FileLoader_$ = __webpack_require__(56);
+/* provided dependency */ var FileLoader_$ = __webpack_require__(852);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -87964,7 +87902,7 @@ const X3DShaderNode_default_ = X3DShaderNode;
 x_ite_Namespace.set ("x_ite/Components/Shaders/X3DShaderNode", X3DShaderNode_default_);
 /* harmony default export */ const Shaders_X3DShaderNode = (X3DShaderNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js
-/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(56);
+/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(852);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -96693,7 +96631,7 @@ const ShaderCompiler_default_ = ShaderCompiler;
 x_ite_Namespace.set ("x_ite/Browser/Shaders/ShaderCompiler", ShaderCompiler_default_);
 /* harmony default export */ const Shaders_ShaderCompiler = (ShaderCompiler_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shaders/ShaderPart.js
-/* provided dependency */ var ShaderPart_$ = __webpack_require__(56);
+/* provided dependency */ var ShaderPart_$ = __webpack_require__(852);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -97358,7 +97296,7 @@ const X3DAppearanceNode_default_ = X3DAppearanceNode;
 x_ite_Namespace.set ("x_ite/Components/Shape/X3DAppearanceNode", X3DAppearanceNode_default_);
 /* harmony default export */ const Shape_X3DAppearanceNode = (X3DAppearanceNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shape/Appearance.js
-/* provided dependency */ var Appearance_$ = __webpack_require__(56);
+/* provided dependency */ var Appearance_$ = __webpack_require__(852);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -101075,7 +101013,7 @@ const X3DSoundSourceNode_default_ = X3DSoundSourceNode;
 x_ite_Namespace.set ("x_ite/Components/Sound/X3DSoundSourceNode", X3DSoundSourceNode_default_);
 /* harmony default export */ const Sound_X3DSoundSourceNode = (X3DSoundSourceNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/AudioClip.js
-/* provided dependency */ var AudioClip_$ = __webpack_require__(56);
+/* provided dependency */ var AudioClip_$ = __webpack_require__(852);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -104249,8 +104187,8 @@ const GIFMedia_default_ = GifMedia;
 x_ite_Namespace.set ("x_ite/Browser/Texturing/GIFMedia", GIFMedia_default_);
 /* harmony default export */ const GIFMedia = (GIFMedia_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var MovieTexture_$ = __webpack_require__(56);
-/* provided dependency */ var SuperGif = __webpack_require__(670);
+/* provided dependency */ var MovieTexture_$ = __webpack_require__(852);
+/* provided dependency */ var SuperGif = __webpack_require__(778);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -105425,7 +105363,7 @@ const MultiTextureTransform_default_ = MultiTextureTransform;
 x_ite_Namespace.set ("x_ite/Components/Texturing/MultiTextureTransform", MultiTextureTransform_default_);
 /* harmony default export */ const Texturing_MultiTextureTransform = (MultiTextureTransform_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/PixelTexture.js
-/* provided dependency */ var PixelTexture_$ = __webpack_require__(56);
+/* provided dependency */ var PixelTexture_$ = __webpack_require__(852);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -107761,7 +107699,7 @@ const gettext_default_ = gettext;
 x_ite_Namespace.set ("locale/gettext", gettext_default_);
 /* harmony default export */ const locale_gettext = (gettext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserTimings.js
-/* provided dependency */ var BrowserTimings_$ = __webpack_require__(56);
+/* provided dependency */ var BrowserTimings_$ = __webpack_require__(852);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -108192,7 +108130,7 @@ const TextureQuality_default_ = TextureQuality;
 x_ite_Namespace.set ("x_ite/Browser/Core/TextureQuality", TextureQuality_default_);
 /* harmony default export */ const Core_TextureQuality = (TextureQuality_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserOptions.js
-/* provided dependency */ var BrowserOptions_$ = __webpack_require__(56);
+/* provided dependency */ var BrowserOptions_$ = __webpack_require__(852);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -108774,7 +108712,7 @@ const RenderingProperties_default_ = RenderingProperties;
 x_ite_Namespace.set ("x_ite/Browser/Core/RenderingProperties", RenderingProperties_default_);
 /* harmony default export */ const Core_RenderingProperties = (RenderingProperties_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/Notification.js
-/* provided dependency */ var Notification_$ = __webpack_require__(56);
+/* provided dependency */ var Notification_$ = __webpack_require__(852);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -108897,8 +108835,8 @@ const Notification_default_ = Notification;
 x_ite_Namespace.set ("x_ite/Browser/Core/Notification", Notification_default_);
 /* harmony default export */ const Core_Notification = (Notification_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/ContextMenu.js
-/* provided dependency */ var jquery_fullscreen = __webpack_require__(283);
-/* provided dependency */ var ContextMenu_$ = __webpack_require__(56);
+/* provided dependency */ var jquery_fullscreen = __webpack_require__(257);
+/* provided dependency */ var ContextMenu_$ = __webpack_require__(852);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -111655,7 +111593,7 @@ const DataStorage_default_ = DataStorage;
 x_ite_Namespace.set ("standard/Utility/DataStorage", DataStorage_default_);
 /* harmony default export */ const Utility_DataStorage = (DataStorage_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/X3DCoreContext.js
-/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(56);
+/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(852);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -113693,8 +113631,8 @@ const X3DViewer_default_ = X3DViewer;
 x_ite_Namespace.set ("x_ite/Browser/Navigation/X3DViewer", X3DViewer_default_);
 /* harmony default export */ const Navigation_X3DViewer = (X3DViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/ExamineViewer.js
-/* provided dependency */ var jquery_mousewheel = __webpack_require__(687);
-/* provided dependency */ var ExamineViewer_$ = __webpack_require__(56);
+/* provided dependency */ var jquery_mousewheel = __webpack_require__(150);
+/* provided dependency */ var ExamineViewer_$ = __webpack_require__(852);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -114571,8 +114509,8 @@ const ExamineViewer_default_ = ExamineViewer;
 x_ite_Namespace.set ("x_ite/Browser/Navigation/ExamineViewer", ExamineViewer_default_);
 /* harmony default export */ const Navigation_ExamineViewer = (ExamineViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/X3DFlyViewer.js
-/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(687);
-/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(56);
+/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(150);
+/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(852);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -115546,8 +115484,8 @@ const FlyViewer_default_ = FlyViewer;
 x_ite_Namespace.set ("x_ite/Browser/Navigation/FlyViewer", FlyViewer_default_);
 /* harmony default export */ const Navigation_FlyViewer = (FlyViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/PlaneViewer.js
-/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(687);
-/* provided dependency */ var PlaneViewer_$ = __webpack_require__(56);
+/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(150);
+/* provided dependency */ var PlaneViewer_$ = __webpack_require__(852);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -115882,8 +115820,8 @@ const NoneViewer_default_ = NoneViewer;
 x_ite_Namespace.set ("x_ite/Browser/Navigation/NoneViewer", NoneViewer_default_);
 /* harmony default export */ const Navigation_NoneViewer = (NoneViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/LookAtViewer.js
-/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(687);
-/* provided dependency */ var LookAtViewer_$ = __webpack_require__(56);
+/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(150);
+/* provided dependency */ var LookAtViewer_$ = __webpack_require__(852);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -117026,8 +116964,8 @@ const X3DPickingContext_default_ = X3DPickingContext;
 x_ite_Namespace.set ("x_ite/Browser/Picking/X3DPickingContext", X3DPickingContext_default_);
 /* harmony default export */ const Picking_X3DPickingContext = (X3DPickingContext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/PointingDeviceSensor/PointingDevice.js
-/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(687);
-/* provided dependency */ var PointingDevice_$ = __webpack_require__(56);
+/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(150);
+/* provided dependency */ var PointingDevice_$ = __webpack_require__(852);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -118070,8 +118008,8 @@ const MultiSampleFrameBuffer_default_ = MultiSampleFrameBuffer;
 x_ite_Namespace.set ("x_ite/Rendering/MultiSampleFrameBuffer", MultiSampleFrameBuffer_default_);
 /* harmony default export */ const Rendering_MultiSampleFrameBuffer = (MultiSampleFrameBuffer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Rendering/X3DRenderingContext.js
-/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(56);
-/* provided dependency */ var ResizeSensor = __webpack_require__(294);
+/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(852);
+/* provided dependency */ var ResizeSensor = __webpack_require__(663);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -119998,7 +119936,7 @@ const Components_default_ = Components;
 x_ite_Namespace.set ("x_ite/Components", Components_default_);
 /* harmony default export */ const x_ite_Components = ((/* unused pure expression or super */ null && (Components_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/DOMIntegration.js
-/* provided dependency */ var DOMIntegration_$ = __webpack_require__(56);
+/* provided dependency */ var DOMIntegration_$ = __webpack_require__(852);
 /*******************************************************************************
  * MIT License
  *
@@ -120399,7 +120337,7 @@ const DOMIntegration_default_ = DOMIntegration;
 x_ite_Namespace.set ("x_ite/Browser/DOMIntegration", DOMIntegration_default_);
 /* harmony default export */ const Browser_DOMIntegration = (DOMIntegration_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Legacy.js
-/* provided dependency */ var Legacy_$ = __webpack_require__(56);
+/* provided dependency */ var Legacy_$ = __webpack_require__(852);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -121234,7 +121172,7 @@ const SupportedProfiles_default_ = SupportedProfiles;
 x_ite_Namespace.set ("x_ite/Configuration/SupportedProfiles", SupportedProfiles_default_);
 /* harmony default export */ const Configuration_SupportedProfiles = (SupportedProfiles_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/X3DBrowser.js
-/* provided dependency */ var X3DBrowser_$ = __webpack_require__(56);
+/* provided dependency */ var X3DBrowser_$ = __webpack_require__(852);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -122273,8 +122211,8 @@ const MicroTime_default_ = undefined;
 x_ite_Namespace.set ("standard/Time/MicroTime", MicroTime_default_);
 /* harmony default export */ const MicroTime = ((/* unused pure expression or super */ null && (MicroTime_default_)));
 ;// CONCATENATED MODULE: ./src/lib/jquery.js
-/* provided dependency */ var jquery_$ = __webpack_require__(56);
-/* provided dependency */ var pako = __webpack_require__(462);
+/* provided dependency */ var jquery_$ = __webpack_require__(852);
+/* provided dependency */ var pako = __webpack_require__(574);
 jquery_$.decodeText = function (input)
 {
    if (typeof input === "string")
@@ -122326,14 +122264,14 @@ const jquery_default_ = jquery_$;
 x_ite_Namespace.set ("lib/jquery", jquery_default_);
 /* harmony default export */ const jquery = ((/* unused pure expression or super */ null && (jquery_default_)));
 ;// CONCATENATED MODULE: ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(689);
+/* provided dependency */ var libtess_libtess = __webpack_require__(767);
 const libtess_default_ = libtess_libtess;
 ;
 
 x_ite_Namespace.set ("lib/libtess", libtess_default_);
 /* harmony default export */ const lib_libtess = ((/* unused pure expression or super */ null && (libtess_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/X3D.js
-/* provided dependency */ var X3D_$ = __webpack_require__(56);
+/* provided dependency */ var X3D_$ = __webpack_require__(852);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -122590,7 +122528,7 @@ const X3D_default_ = X3D;
 x_ite_Namespace.set ("x_ite/X3D", X3D_default_);
 /* harmony default export */ const x_ite_X3D = (X3D_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/X3DCanvasElement.js
-/* provided dependency */ var X3DCanvasElement_$ = __webpack_require__(56);
+/* provided dependency */ var X3DCanvasElement_$ = __webpack_require__(852);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
