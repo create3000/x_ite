@@ -1884,8 +1884,8 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             if (this .int32 ())
             {
                const
-                  comp  = this .value,
-                  size  = width * height;
+                  comp = this .value,
+                  size = width * height;
 
                field .width  = width;
                field .height = height;
@@ -1893,7 +1893,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
                const array = field .array;
 
-               for (const i = 0; i < size; ++ i)
+               for (let i = 0; i < size; ++ i)
                {
                   if (this .int32 ())
                   {
