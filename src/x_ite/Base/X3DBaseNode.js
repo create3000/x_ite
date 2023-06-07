@@ -465,8 +465,6 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
          var fieldDefinition = this [_fieldDefinitions] .get (field .getName ());
       else if (this .constructor .fieldDefinitions)
          var fieldDefinition = this .constructor .fieldDefinitions .get (field .getName ());
-      else
-         var fieldDefinition = null;
 
       if (fieldDefinition)
       {
