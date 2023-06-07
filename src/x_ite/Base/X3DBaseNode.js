@@ -304,8 +304,8 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
    },
    getField: function (name)
    {
-      const field = getFieldFromArray .call (this, this [_userDefinedFields], name)
-         ?? getFieldFromArray .call (this, this [_predefinedFields], name);
+      const field = getFieldFromArray (this [_userDefinedFields], name)
+         ?? getFieldFromArray (this [_predefinedFields], name);
 
       if (field)
          return field;
@@ -358,7 +358,7 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
    },
    getPredefinedField: function (name)
    {
-      const field = getFieldFromArray .call (this, this [_predefinedFields], name);
+      const field = getFieldFromArray (this [_predefinedFields], name);
 
       if (field)
          return field;
@@ -411,7 +411,7 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
    },
    getUserDefinedField: function (name)
    {
-      const field = getFieldFromArray .call (this, this [_userDefinedFields], name);
+      const field = getFieldFromArray (this [_userDefinedFields], name);
 
       if (field)
          return field;
