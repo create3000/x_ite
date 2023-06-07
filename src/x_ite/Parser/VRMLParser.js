@@ -2168,8 +2168,6 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       {
          this .nodeStatements (field);
 
-         this .comments ();
-
          if (Grammar .CloseBracket .parse (this))
             return true;
 
