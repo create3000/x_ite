@@ -104,8 +104,7 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
    {
       X3DEventObject .prototype .setName .call (this, value)
 
-      if (this [_initialized])
-         this ._name_changed = this .getBrowser () .getCurrentTime ();
+      this ._name_changed = this .getBrowser () .getCurrentTime ();
    },
    getMainScene: function ()
    {
@@ -540,9 +539,7 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
       this [_cloneCount] += count;
 
       this [_executionContext] ._sceneGraph_changed = time;
-
-      if (this [_initialized])
-         this ._cloneCount_changed = time;
+      this ._cloneCount_changed                     = time;
    },
    removeCloneCount: function (count)
    {
@@ -554,9 +551,7 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
       this [_cloneCount] -= count;
 
       this [_executionContext] ._sceneGraph_changed = time;
-
-      if (this [_initialized])
-         this ._cloneCount_changed = time;
+      this ._cloneCount_changed                     = time;
    },
    dispose: function ()
    {
