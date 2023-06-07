@@ -57,7 +57,6 @@ const
    _executionContext  = Symbol (),
    _type              = Symbol (),
    _fieldDefinitions  = Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions"),
-   _fields            = Symbol (),
    _predefinedFields  = Symbol (),
    _userDefinedFields = Symbol (),
    _childObjects      = Symbol (),
@@ -77,7 +76,6 @@ function X3DBaseNode (executionContext)
    this [_executionContext]  = executionContext;
    this [_type]              = [ X3DConstants .X3DBaseNode ];
    this [_fieldDefinitions]  = this .constructor .fieldDefinitions ?? this [_fieldDefinitions];
-   this [_fields]            = new FieldArray ();
    this [_predefinedFields]  = new FieldArray ();
    this [_userDefinedFields] = new FieldArray ();
    this [_childObjects]      = [ ];
@@ -95,7 +93,7 @@ function X3DBaseNode (executionContext)
                           "cloneCount_changed", new Fields .SFTime ())
 
    for (const fieldDefinition of this [_fieldDefinitions])
-      this .addField (fieldDefinition);
+      this .addPredefinedField (fieldDefinition);
 }
 
 X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototype),
@@ -243,14 +241,16 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
       Object .freeze (this [_type]);
 
       this [_fieldDefinitions]  .addParent (this);
-      this [_fields]            .addParent (this);
       this [_predefinedFields]  .addParent (this);
       this [_userDefinedFields] .addParent (this);
 
       for (const field of this [_childObjects])
          field .setTainted (false);
 
-      for (const field of this [_fields])
+      for (const field of this [_predefinedFields])
+         field .setTainted (false);
+
+      for (const field of this [_userDefinedFields])
          field .setTainted (false);
 
       this .initialize ();
@@ -303,7 +303,18 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
    {
       return this [_fieldDefinitions];
    },
-   addField: function (fieldDefinition)
+   getField: function (name)
+   {
+      try
+      {
+         return this .getUserDefinedField (name);
+      }
+      catch (error)
+      {
+         return this .getPredefinedField (name);
+      }
+   },
+   addPredefinedField: function (fieldDefinition)
    {
       const
          accessType = fieldDefinition .accessType,
@@ -316,7 +327,6 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
       field .setAccessType (accessType);
 
       this [_predefinedFields] .add (name, field);
-      this [_fields]           .add (name, field);
 
       Object .defineProperty (this, "_" + name,
       {
@@ -331,12 +341,11 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
    addAlias: function (alias, field)
    {
       this [_predefinedFields] .alias (alias, field .getName ());
-      this [_fields]           .alias (alias, field .getName ());
 
       if (field .isInitializable ())
          HTMLSupport .addFieldName (alias);
    },
-   removeField: function (name)
+   removePredefinedField: function (name)
    {
       const field = this [_predefinedFields] .get (name);
 
@@ -347,21 +356,10 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
 
       this [_predefinedFields] .remove (name);
 
-      if (this [_fields] .get (name) === field)
-         this [_fields] .remove (name);
-
       delete this ["_" + field .getName ()];
 
       if (!this .isPrivate ())
          field .removeCloneCount (1);
-   },
-   getField: function (name)
-   {
-      return getFieldFromArray .call (this, this [_fields], name);
-   },
-   getFields: function ()
-   {
-      return this [_fields];
    },
    getPredefinedField: function (name)
    {
@@ -389,11 +387,9 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
       field .setAccessType (accessType);
 
       this [_fieldDefinitions] .remove (name);
-      this [_fields]           .remove (name);
 
       this [_fieldDefinitions]  .add (name, new X3DFieldDefinition (accessType, name, field));
       this [_userDefinedFields] .add (name, field);
-      this [_fields]            .add (name, field);
 
       if (!this .isPrivate ())
          field .addCloneCount (1);
@@ -409,7 +405,6 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
 
       this [_fieldDefinitions]  .remove (name);
       this [_userDefinedFields] .remove (name);
-      this [_fields]            .remove (name);
 
       if (!this .isPrivate ())
          field .removeCloneCount (1);
@@ -461,7 +456,9 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
    },
    isDefaultValue: function (field)
    {
-      if (this [_fields] .get (field .getName ()) === field)
+      const f = this [_userDefinedFields] .get (field .getName ()) ?? this [_predefinedFields] .get (field .getName ());
+
+      if (f === field)
          var fieldDefinition = this [_fieldDefinitions] .get (field .getName ());
       else if (this .constructor .fieldDefinitions)
          var fieldDefinition = this .constructor .fieldDefinitions .get (field .getName ());
@@ -481,7 +478,13 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
    {
       ///  Returns true if there are any routes from or to fields of this node, otherwise false.
 
-      for (const field of this [_fields])
+      for (const field of this [_predefinedFields])
+      {
+         if (field .getInputRoutes () .size || field .getOutputRoutes () .size)
+            return true;
+      }
+
+      for (const field of this [_userDefinedFields])
       {
          if (field .getInputRoutes () .size || field .getOutputRoutes () .size)
             return true;
@@ -499,12 +502,18 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
 
       if (value)
       {
-         for (const field of this [_fields])
+         for (const field of this [_predefinedFields])
+            field .removeCloneCount (1);
+
+         for (const field of this [_userDefinedFields])
             field .removeCloneCount (1);
       }
       else
       {
-         for (const field of this [_fields])
+         for (const field of this [_predefinedFields])
+            field .addCloneCount (1);
+
+         for (const field of this [_userDefinedFields])
             field .addCloneCount (1);
       }
    },
@@ -547,7 +556,10 @@ X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototy
       for (const field of this [_childObjects])
          field .dispose ();
 
-      for (const field of this [_fields])
+      for (const field of this [_predefinedFields])
+         field .dispose ();
+
+      for (const field of this [_userDefinedFields])
          field .dispose ();
 
       X3DEventObject .prototype .dispose .call (this);

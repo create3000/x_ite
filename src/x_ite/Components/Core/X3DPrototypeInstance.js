@@ -141,7 +141,7 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
             catch (error)
             {
                // Definition exists in proto but does not exist in extern proto.
-               this .addField (proto .getFieldDefinitions () .get (protoField .getName ()));
+               this .addPredefinedField (proto .getFieldDefinitions () .get (protoField .getName ()));
             }
          }
       }
@@ -176,17 +176,17 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
 
       const
          oldProtoFields = this [_protoFields],
-         oldFields      = new Map (Array .from (this .getFields (), f => [f .getName (), f]));
+         oldFields      = new Map (Array .from (this .getPredefinedFields (), f => [f .getName (), f]));
 
       for (const field of oldFields .values ())
-         this .removeField (field .getName ());
+         this .removePredefinedField (field .getName ());
 
       // Add new fields.
 
-      this [_protoFields] = new Map (Array .from (this [_protoNode] .getFields (), f => [f, f .getName ()]));
+      this [_protoFields] = new Map (Array .from (this [_protoNode] .getUserDefinedFields (), f => [f, f .getName ()]));
 
       for (const fieldDefinition of this .getFieldDefinitions ())
-         this .addField (fieldDefinition);
+         this .addPredefinedField (fieldDefinition);
 
       // Reuse old fields, and therefor routes.
 
@@ -198,7 +198,7 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
             continue;
 
          const
-            newField = this .getFields () .get (protoField .getName ()),
+            newField = this .getPredefinedFields () .get (protoField .getName ()),
             oldField = oldFields .get (oldFieldName);
 
          oldField .addParent (this);
@@ -206,7 +206,6 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
          oldField .setName (newField .getName ());
 
          this .getPredefinedFields () .update (newField .getName (), newField .getName (), oldField);
-         this .getFields ()           .update (newField .getName (), newField .getName (), oldField);
 
          if (!this .isPrivate ())
             oldField .addCloneCount (1);
@@ -241,7 +240,7 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
       // Get fields from new proto node.
 
       this [_protoNode]   = protoNode;
-      this [_protoFields] = new Map (Array .from (protoNode .getFields (), f => [f, f .getName ()]));
+      this [_protoFields] = new Map (Array .from (protoNode .getUserDefinedFields (), f => [f, f .getName ()]));
 
       protoNode ._name_changed .addFieldInterest (this ._typeName_changed);
 
