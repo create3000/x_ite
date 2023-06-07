@@ -89,7 +89,7 @@ function Triangle (tree, triangle)
 
 Triangle .prototype =
 {
-   intersectsLine: function (line, intersections, intersectionNormals)
+   intersectsLine (line, intersections, intersectionNormals)
    {
       const
          vertices = this .vertices,
@@ -132,7 +132,7 @@ Triangle .prototype =
          }
       }
    },
-   toArray: function (array)
+   toArray (array)
    {
       const index = array .length / 4;
 
@@ -212,7 +212,7 @@ function Node (tree, triangles, first, size)
 
 Node .prototype =
 {
-   intersectsLine: function (line, intersections, intersectionNormals)
+   intersectsLine (line, intersections, intersectionNormals)
    {
       if (this .intersectsBBox (line))
       {
@@ -220,7 +220,7 @@ Node .prototype =
          this .right .intersectsLine (line, intersections, intersectionNormals);
       }
    },
-   intersectsBBox: function (line)
+   intersectsBBox (line)
    {
       const
          planes       = this .planes,
@@ -276,7 +276,7 @@ Node .prototype =
 
       return false;
    },
-   getLongestAxis: function (min, max)
+   getLongestAxis (min, max)
    {
       const
          x = max .x - min .x,
@@ -298,7 +298,7 @@ Node .prototype =
          return 0;
       }
    },
-   toArray: function (array)
+   toArray (array)
    {
       const
          left  = this .left .toArray (array),
@@ -351,7 +351,7 @@ function BVH (vertices, normals)
 BVH .prototype =
 {
    constructor: BVH,
-   intersectsLine: function (line, intersections, intersectionNormals)
+   intersectsLine (line, intersections, intersectionNormals)
    {
       intersections .size = 0;
 
@@ -363,7 +363,7 @@ BVH .prototype =
 
       return 0;
    },
-   toArray: function (array)
+   toArray (array)
    {
       if (this .root)
       {

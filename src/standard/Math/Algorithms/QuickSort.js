@@ -55,16 +55,16 @@ function QuickSort (array, compare)
 
 QuickSort .prototype =
 {
-   compare: function (lhs, rhs)
+   compare (lhs, rhs)
    {
       return lhs < rhs;
    },
-   sort: function (first, last)
+   sort (first, last)
    {
       if (last - first > 1)
          this .quicksort (first, last - 1);
    },
-   quicksort: function (lo, hi)
+   quicksort (lo, hi)
    {
       let
          i = lo,

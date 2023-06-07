@@ -66,12 +66,12 @@ function Matrix3 ()
 Matrix3 .prototype =
 {
    constructor: Matrix3,
-   [Symbol .iterator]: function* ()
+   *[Symbol .iterator] ()
    {
       for (let i = 0; i < 9; ++ i)
          yield this [i];
    },
-   copy: function ()
+   copy ()
    {
       const copy = Object .create (Matrix3 .prototype);
 
@@ -80,14 +80,14 @@ Matrix3 .prototype =
 
       return copy;
    },
-   assign: function (matrix)
+   assign (matrix)
    {
       for (let i = 0; i < 9; ++ i)
          this [i] = matrix [i];
 
       return this;
    },
-   equals: function (matrix)
+   equals (matrix)
    {
       return this [0] === matrix [0] &&
              this [1] === matrix [1] &&
@@ -99,17 +99,17 @@ Matrix3 .prototype =
              this [7] === matrix [7] &&
              this [8] === matrix [8];
    },
-   rotation: function ()
+   rotation ()
    {
       return Math .atan2 (this [1], this [0]);
    },
-   set1: function (r, c, value)
+   set1 (r, c, value)
    {
       this [r * this .order + c] = value;
 
       return this;
    },
-   get1: function (r, c)
+   get1 (r, c)
    {
       return this [r * this .order + c];
    },
@@ -353,12 +353,12 @@ Matrix3 .prototype =
          rotation .assign (u .assign (scaleOrientation) .transpose () .multRight (si) .multRight (scaleOrientation) .multRight (a));
       };
    })(),
-   determinant2: function ()
+   determinant2 ()
    {
       return this [0] * this [4] -
              this [1] * this [3];
    },
-   determinant: function ()
+   determinant ()
    {
       const { 0: m0, 1: m1, 2: m2, 3: m3, 4: m4, 5: m5, 6: m6, 7: m7, 8: m8 } = this;
 
@@ -366,7 +366,7 @@ Matrix3 .prototype =
              m1 * (m3 * m8 - m5 * m6) +
              m2 * (m3 * m7 - m4 * m6);
    },
-   transpose: function ()
+   transpose ()
    {
       let tmp;
 
@@ -376,7 +376,7 @@ Matrix3 .prototype =
 
       return this;
    },
-   inverse: function ()
+   inverse ()
    {
       const
          { 0: m0, 1: m1, 2: m2, 3: m3, 4: m4, 5: m5, 6: m6, 7: m7, 8: m8 } = this,
@@ -413,7 +413,7 @@ Matrix3 .prototype =
 
       return this;
    },
-   multLeft: function (matrix)
+   multLeft (matrix)
    {
       const
          { 0: a0, 1: a1, 2: a2, 3: a3, 4: a4, 5: a5, 6: a6, 7: a7, 8: a8 } = this,
@@ -431,7 +431,7 @@ Matrix3 .prototype =
 
       return this;
    },
-   multRight: function (matrix)
+   multRight (matrix)
    {
       const
          { 0: a0, 1: a1, 2: a2, 3: a3, 4: a4, 5: a5, 6: a6, 7: a7, 8: a8 } = this,
@@ -449,7 +449,7 @@ Matrix3 .prototype =
 
       return this;
    },
-   multVecMatrix: function (vector)
+   multVecMatrix (vector)
    {
       if (vector .length === 2)
       {
@@ -473,7 +473,7 @@ Matrix3 .prototype =
          return vector;
       }
    },
-   multMatrixVec: function (vector)
+   multMatrixVec (vector)
    {
       if (vector .length === 2)
       {
@@ -497,7 +497,7 @@ Matrix3 .prototype =
          return vector;
       }
    },
-   multDirMatrix: function (vector)
+   multDirMatrix (vector)
    {
       const { x, y } = vector;
 
@@ -506,7 +506,7 @@ Matrix3 .prototype =
 
       return vector;
    },
-   multMatrixDir: function (vector)
+   multMatrixDir (vector)
    {
       const { x, y } = vector;
 
@@ -515,7 +515,7 @@ Matrix3 .prototype =
 
       return vector;
    },
-   identity: function ()
+   identity ()
    {
       this [0] = 1; this [1] = 0; this [2] = 0;
       this [3] = 0; this [4] = 1; this [5] = 0;
@@ -523,7 +523,7 @@ Matrix3 .prototype =
 
       return this;
    },
-   translate: function (translation)
+   translate (translation)
    {
       const { x, y } = translation;
 
@@ -532,11 +532,11 @@ Matrix3 .prototype =
 
       return this;
    },
-   rotate: function (rotation)
+   rotate (rotation)
    {
       return this .multLeft (Matrix3 .Rotation (rotation));
    },
-   scale: function (scale)
+   scale (scale)
    {
       const { x, y } = scale;
 
@@ -548,7 +548,7 @@ Matrix3 .prototype =
 
       return this;
    },
-   skewX: function (angle)
+   skewX (angle)
    {
       const a = Math .tan (angle);
 
@@ -558,7 +558,7 @@ Matrix3 .prototype =
 
       return this;
    },
-   skewY: function (angle)
+   skewY (angle)
    {
       const a = Math .tan (angle);
 
@@ -568,7 +568,7 @@ Matrix3 .prototype =
 
       return this;
    },
-   toString: function ()
+   toString ()
    {
       return Array .prototype .join .call (this, " ");
    },
@@ -651,7 +651,7 @@ Object .defineProperties (Matrix3 .prototype,
 Object .assign (Matrix3,
 {
    Identity: new Matrix3 (),
-   Rotation: function (rotation)
+   Rotation (rotation)
    {
       const
          sinAngle = Math .sin (rotation),
@@ -661,7 +661,7 @@ Object .assign (Matrix3,
                           -sinAngle, cosAngle, 0,
                            0, 0, 1);
    },
-   Matrix2: function (matrix)
+   Matrix2 (matrix)
    {
       return new Matrix3 (matrix [0], matrix [1], 0,
                           matrix [2], matrix [3], 0,

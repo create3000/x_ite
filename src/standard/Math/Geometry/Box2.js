@@ -58,22 +58,22 @@ function Box2 (/* size, center */)
 Box2 .prototype =
 {
    constructor: Box2,
-   copy: function ()
+   copy ()
    {
       const copy = Object .create (Box2 .prototype);
       copy .matrix = this .matrix .copy ();
       return copy;
    },
-   assign: function (box)
+   assign (box)
    {
       this .matrix .assign (box .matrix);
       return this;
    },
-   equals: function (box)
+   equals (box)
    {
       return this .matrix .equals (box .matrix);
    },
-   set: function (size, center)
+   set (size, center)
    {
       switch (arguments .length)
       {
@@ -100,7 +100,7 @@ Box2 .prototype =
          // }
       }
    },
-   setExtents: function (min, max)
+   setExtents (min, max)
    {
       const
          sx = (max .x - min .x) / 2,
@@ -114,7 +114,7 @@ Box2 .prototype =
 
       return this;
    },
-   isEmpty: function ()
+   isEmpty ()
    {
       return this .matrix [8] === 0;
    },
@@ -140,17 +140,17 @@ Box2 .prototype =
          return this .setExtents (lhs_min .min (rhs_min), lhs_max .max (rhs_max));
       };
    })(),
-   multLeft: function (matrix)
+   multLeft (matrix)
    {
       this .matrix .multLeft (matrix);
       return this;
    },
-   multRight: function (matrix)
+   multRight (matrix)
    {
       this .matrix .multRight (matrix);
       return this;
    },
-   getExtents: function (min, max)
+   getExtents (min, max)
    {
       this .getAbsoluteExtents (min, max);
 
@@ -198,7 +198,7 @@ Box2 .prototype =
                 max .y >= point .y;
       };
    })(),
-   toString: function ()
+   toString ()
    {
       return this .size + ", " + this .center;
    },
@@ -206,11 +206,11 @@ Box2 .prototype =
 
 Object .assign (Box2,
 {
-   Extents: function (min, max)
+   Extents (min, max)
    {
       return new Box2 () .setExtents (min, max);
    },
-   Points: function (... points)
+   Points (... points)
    {
       return new Box2 () .setExtents (points [0] .copy () .min (... points), points [0] .copy () .max (... points));
    },
@@ -237,7 +237,7 @@ Object .defineProperties (Box2 .prototype,
    },
    center:
    {
-      get: function ()
+      get ()
       {
          return this .matrix .origin;
       },

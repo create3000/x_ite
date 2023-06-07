@@ -87,7 +87,7 @@ function UniversalTransverseMercator (spheroid, zone, northernHemisphere, northi
 UniversalTransverseMercator .prototype =
 {
    constructor: UniversalTransverseMercator,
-   convert: function (utm, result)
+   convert (utm, result)
    {
       // https://gist.github.com/duedal/840476
 
@@ -150,7 +150,7 @@ UniversalTransverseMercator .prototype =
 
       return this .geodeticConverter .convertRadians (latitude, longitude, utm .z, result);
    },
-   apply: function (geocentric, result)
+   apply (geocentric, result)
    {
       // https://gist.github.com/duedal/840476
 

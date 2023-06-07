@@ -57,13 +57,13 @@ function Vector3 (x, y, z)
 Vector3 .prototype =
 {
    constructor: Vector3,
-   [Symbol .iterator]: function* ()
+   *[Symbol .iterator] ()
    {
       yield this .x;
       yield this .y;
       yield this .z;
    },
-   copy: function ()
+   copy ()
    {
       const copy = Object .create (Vector3 .prototype);
       copy .x = this .x;
@@ -71,83 +71,83 @@ Vector3 .prototype =
       copy .z = this .z;
       return copy;
    },
-   assign: function (vector)
+   assign (vector)
    {
       this .x = vector .x;
       this .y = vector .y;
       this .z = vector .z;
       return this;
    },
-   set: function (x, y, z)
+   set (x, y, z)
    {
       this .x = x;
       this .y = y;
       this .z = z;
       return this;
    },
-   equals: function (vector)
+   equals (vector)
    {
       return this .x === vector .x &&
              this .y === vector .y &&
              this .z === vector .z;
    },
-   negate: function ()
+   negate ()
    {
       this .x = -this .x;
       this .y = -this .y;
       this .z = -this .z;
       return this;
    },
-   inverse: function ()
+   inverse ()
    {
       this .x = 1 / this .x;
       this .y = 1 / this .y;
       this .z = 1 / this .z;
       return this;
    },
-   add: function (vector)
+   add (vector)
    {
       this .x += vector .x;
       this .y += vector .y;
       this .z += vector .z;
       return this;
    },
-   subtract: function (vector)
+   subtract (vector)
    {
       this .x -= vector .x;
       this .y -= vector .y;
       this .z -= vector .z;
       return this;
    },
-   multiply: function (value)
+   multiply (value)
    {
       this .x *= value;
       this .y *= value;
       this .z *= value;
       return this;
    },
-   multVec: function (vector)
+   multVec (vector)
    {
       this .x *= vector .x;
       this .y *= vector .y;
       this .z *= vector .z;
       return this;
    },
-   divide: function (value)
+   divide (value)
    {
       this .x /= value;
       this .y /= value;
       this .z /= value;
       return this;
    },
-   divVec: function (vector)
+   divVec (vector)
    {
       this .x /= vector .x;
       this .y /= vector .y;
       this .z /= vector .z;
       return this;
    },
-   cross: function (vector)
+   cross (vector)
    {
       const
          { x: ax, y: ay, z: az } = this,
@@ -159,7 +159,7 @@ Vector3 .prototype =
 
       return this;
    },
-   normalize: function ()
+   normalize ()
    {
       const length = Math .hypot (this .x, this .y, this .z);
 
@@ -172,13 +172,13 @@ Vector3 .prototype =
 
       return this;
    },
-   dot: function (vector)
+   dot (vector)
    {
       return this .x * vector .x +
              this .y * vector .y +
              this .z * vector .z;
    },
-   norm: function ()
+   norm ()
    {
       const { x, y, z } = this;
 
@@ -186,17 +186,17 @@ Vector3 .prototype =
              y * y +
              z * z;
    },
-   magnitude: function ()
+   magnitude ()
    {
       return Math .hypot (this .x, this .y, this .z);
    },
-   distance: function (vector)
+   distance (vector)
    {
       return Math .hypot (this .x - vector .x,
                           this .y - vector .y,
                           this .z - vector .z);
    },
-   lerp: function (destination, t)
+   lerp (destination, t)
    {
       const { x, y, z } = this;
 
@@ -214,14 +214,14 @@ Vector3 .prototype =
          return Algorithm .simpleSlerp (this, tmp .assign (destination), t);
       };
    })(),
-   abs: function ()
+   abs ()
    {
       this .x = Math .abs (this .x);
       this .y = Math .abs (this .y);
       this .z = Math .abs (this .z);
       return this;
    },
-   min: function (vector)
+   min (vector)
    {
       let { x, y, z } = this;
 
@@ -237,7 +237,7 @@ Vector3 .prototype =
       this .z = z;
       return this;
    },
-   max: function (vector)
+   max (vector)
    {
       let { x, y, z } = this;
 
@@ -253,7 +253,7 @@ Vector3 .prototype =
       this .z = z;
       return this;
    },
-   toString: function ()
+   toString ()
    {
       return this .x + " " +
              this .y + " " +
@@ -266,18 +266,18 @@ Object .defineProperties (Vector3 .prototype,
    length: { value: 3 },
    0:
    {
-      get: function () { return this .x; },
-      set: function (value) { this .x = value; },
+      get () { return this .x; },
+      set (value) { this .x = value; },
    },
    1:
    {
-      get: function () { return this .y; },
-      set: function (value) { this .y = value; },
+      get () { return this .y; },
+      set (value) { this .y = value; },
    },
    2:
    {
-      get: function () { return this .z; },
-      set: function (value) { this .z = value; },
+      get () { return this .z; },
+      set (value) { this .z = value; },
    },
 });
 

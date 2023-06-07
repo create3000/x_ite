@@ -59,7 +59,7 @@ const Triangle3 = {
          return B .assign (b) .subtract (a) .cross (C .assign (c) .subtract (a)) .magnitude () / 2;
       };
    })(),
-   normal: function (v1, v2, v3, normal)
+   normal (v1, v2, v3, normal)
    {
       const
          x1 = v3 .x - v2 .x,
@@ -75,7 +75,7 @@ const Triangle3 = {
 
       return normal .normalize ();
    },
-   quadNormal: function (v1, v2, v3, v4, normal)
+   quadNormal (v1, v2, v3, v4, normal)
    {
       const
          x1 = v3 .x - v1 .x,
@@ -128,7 +128,7 @@ const Triangle3 = {
          return triangles;
       };
    })(),
-   triangulateConvexPolygon: function (vertices, triangles)
+   triangulateConvexPolygon (vertices, triangles)
    {
       // Fallback: Very simple triangulation for convex polygons.
       for (let i = 1, length = vertices .length - 1; i < length; ++ i)

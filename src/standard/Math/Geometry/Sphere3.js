@@ -56,12 +56,12 @@ function Sphere3 (radius, center)
 Sphere3 .prototype =
 {
    constructor: Sphere3,
-   set: function (radius, center)
+   set (radius, center)
    {
       this .radius = radius;
       this .center .assign (center);
    },
-   intersectsLine: function (line, enterPoint, exitPoint)
+   intersectsLine (line, enterPoint, exitPoint)
    {
       // https://github.com/Alexpux/Coin3D/blob/master/src/base/SbSphere.cpp
 
@@ -183,7 +183,7 @@ Sphere3 .prototype =
          return true;
       };
    })(),
-   toString: function ()
+   toString ()
    {
       return this .radius + " " + this .center .toString ();
    },

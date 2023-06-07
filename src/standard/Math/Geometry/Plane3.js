@@ -62,26 +62,26 @@ function Plane3 (point, normal)
 Plane3 .prototype =
 {
    constructor: Plane3,
-   copy: function ()
+   copy ()
    {
       const copy = Object .create (Plane3 .prototype);
       copy .normal             = this .normal .copy ();
       copy .distanceFromOrigin = this .distanceFromOrigin;
       return copy;
    },
-   assign: function (plane)
+   assign (plane)
    {
       this .normal .assign (plane .normal);
       this .distanceFromOrigin = plane .distanceFromOrigin;
       return this;
    },
-   set: function (point, normal)
+   set (point, normal)
    {
       this .normal .assign (normal);
       this .distanceFromOrigin = normal .dot (point);
       return this;
    },
-   multRight: function (matrix)
+   multRight (matrix)
    {
       // Taken from Inventor:
 
@@ -106,7 +106,7 @@ Plane3 .prototype =
 
       return this;
    },
-   multLeft: function (matrix)
+   multLeft (matrix)
    {
       // Taken from Inventor:
 
@@ -131,11 +131,11 @@ Plane3 .prototype =
 
       return this;
    },
-   getDistanceToPoint: function (point)
+   getDistanceToPoint (point)
    {
       return point .dot (this .normal) - this .distanceFromOrigin;
    },
-   intersectsLine: function (line, intersection)
+   intersectsLine (line, intersection)
    {
       const { point, direction } = line;
 
@@ -155,7 +155,7 @@ Plane3 .prototype =
 
       return true;
    },
-   toString: function ()
+   toString ()
    {
       return this .normal .toString () + " " + this .distanceFromOrigin;
    },

@@ -50,15 +50,15 @@ function MatrixStack (Type)
    return Object .assign ([ new Type () ],
    {
       top: 0,
-      set: function (matrix)
+      set (matrix)
       {
          this [this .top] .assign (matrix);
       },
-      get: function ()
+      get ()
       {
          return this [this .top];
       },
-      push: function ()
+      push ()
       {
          const top = ++ this .top;
 
@@ -67,7 +67,7 @@ function MatrixStack (Type)
          else
             this [top] = this [top - 1] .copy ();
       },
-      pushMatrix: function (matrix)
+      pushMatrix (matrix)
       {
          const top = ++ this .top;
 
@@ -76,35 +76,35 @@ function MatrixStack (Type)
          else
             this [top] = matrix .copy ();
       },
-      pop: function ()
+      pop ()
       {
          -- this .top;
       },
-      clear: function ()
+      clear ()
       {
          this .top = 0;
       },
-      size: function ()
+      size ()
       {
          return this .top + 1;
       },
-      identity: function ()
+      identity ()
       {
          this [this .top] .identity ();
       },
-      multLeft: function (matrix)
+      multLeft (matrix)
       {
          this [this .top] .multLeft (matrix);
       },
-      translate: function (vector)
+      translate (vector)
       {
          this [this .top] .translate (vector);
       },
-      rotate: function (rotation)
+      rotate (rotation)
       {
          this [this .top] .rotate (rotation);
       },
-      scale: function (vector)
+      scale (vector)
       {
          this [this .top] .scale (vector);
       },

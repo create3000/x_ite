@@ -99,7 +99,7 @@ const Bezier =
          }
       };
    })(),
-   arc: function (ax, ay, rx, ry, xAxisRotation, largeArcFlag, sweepFlag, x, y, steps, points)
+   arc (ax, ay, rx, ry, xAxisRotation, largeArcFlag, sweepFlag, x, y, steps, points)
    {
       // https://ericeastwood.com/blog/25/curves-and-arcs-quadratic-cubic-elliptical-svg-implementations
       // See https://www.w3.org/TR/SVG/implnote.html#ArcImplementationNotes.

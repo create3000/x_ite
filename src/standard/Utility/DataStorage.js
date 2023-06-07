@@ -52,7 +52,7 @@ const
 
 const handler =
 {
-   get: function (target, key)
+   get (target, key)
    {
       const property = target [key];
 
@@ -68,7 +68,7 @@ const handler =
 
       return value;
    },
-   set: function (target, key, value)
+   set (target, key, value)
    {
       if (value === undefined)
          target .getStorage () .removeItem (target .getNameSpace () + key);
@@ -93,19 +93,19 @@ function DataStorage (storage, namespace)
 
 DataStorage .prototype = {
    constructor: DataStorage,
-   getStorage: function ()
+   getStorage ()
    {
       return storages .get (this .target);
    },
-   getNameSpace: function ()
+   getNameSpace ()
    {
       return namespaces .get (this .target);
    },
-   addNameSpace: function (namespace)
+   addNameSpace (namespace)
    {
       return new DataStorage (this .getStorage (), this .getNameSpace () + namespace);
    },
-   addDefaultValues: function (object)
+   addDefaultValues (object)
    {
       Object .assign (defaults .get (this .target), object);
    },
@@ -115,7 +115,7 @@ DataStorage .prototype = {
 
       return value === undefined ? undefined : JSON .parse (JSON .stringify (value));
    },
-   clear: function ()
+   clear ()
    {
       const
          storage   = this .getStorage (),

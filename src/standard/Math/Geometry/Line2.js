@@ -56,44 +56,44 @@ function Line2 (point, direction)
 Line2 .prototype =
 {
    constructor: Line2,
-   copy: function ()
+   copy ()
    {
       const copy = Object .create (Line2 .prototype);
       copy .point     = this .point .copy ();
       copy .direction = this .direction .copy ();
       return copy;
    },
-   assign: function (line)
+   assign (line)
    {
       this .point     .assign (line .point);
       this .direction .assign (line .direction);
       return this;
    },
-   set: function (point, direction)
+   set (point, direction)
    {
       this .point     .assign (point);
       this .direction .assign (direction);
       return this;
    },
-   setPoints: function (point1, point2)
+   setPoints (point1, point2)
    {
       this .point .assign (point1);
       this .direction .assign (point2) .subtract (point1) .normalize ();
       return this;
    },
-   multMatrixLine: function (matrix)
+   multMatrixLine (matrix)
    {
       matrix .multMatrixVec (this .point);
       matrix .multMatrixDir (this .direction) .normalize ();
       return this;
    },
-   multLineMatrix: function (matrix)
+   multLineMatrix (matrix)
    {
       matrix .multVecMatrix (this .point);
       matrix .multDirMatrix (this .direction) .normalize ();
       return this;
    },
-   getClosestPointToPoint: function (point, result)
+   getClosestPointToPoint (point, result)
    {
       const
          r = result .assign (point) .subtract (this .point),
@@ -136,7 +136,7 @@ Line2 .prototype =
          return true;
       };
    })(),
-   toString: function ()
+   toString ()
    {
       return this .point + ", " + this .direction;
    },
