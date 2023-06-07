@@ -553,15 +553,15 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       if (Grammar .META .parse (this))
       {
-         if (this .metakey ())
+         if (this .metaKey ())
          {
-            const metakey = this .value;
+            const metaKey = this .value;
 
-            if (this .metavalue ())
+            if (this .metaValue ())
             {
-               const metavalue = this .value;
+               const metaValue = this .value;
 
-               this .getScene () .addMetaData (metakey, metavalue);
+               this .getScene () .addMetaData (metaKey, metaValue);
                return true;
             }
 
@@ -573,11 +573,11 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return false;
    },
-   metakey: function ()
+   metaKey: function ()
    {
       return this .string ();
    },
-   metavalue: function ()
+   metaValue: function ()
    {
       return this .string ();
    },
@@ -603,7 +603,9 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                   throw new Error ("No name given after AS.");
             }
             else
+            {
                var exportedNodeNameId = localNodeNameId;
+            }
 
             if (this .getScene () === this .getExecutionContext ())
             {
@@ -650,7 +652,9 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                         throw new Error ("No name given after AS.");
                   }
                   else
+                  {
                      var nodeNameId = exportedNodeNameId;
+                  }
 
                   this .getExecutionContext () .updateImportedNode (namedNode, exportedNodeNameId, nodeNameId);
                   return true;
