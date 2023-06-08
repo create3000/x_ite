@@ -111,9 +111,10 @@ Object .assign (Object .setPrototypeOf (SFColor .prototype, X3DField .prototype)
       {
          const result = new SFColor ();
 
-         this .getValue () .getHSV (s),
-         destination .getValue () .getHSV (d),
-         Color3 .lerp (s, d, t, r),
+         this .getValue () .getHSV (s);
+         destination .getValue () .getHSV (d);
+
+         Color3 .lerp (s, d, t, r);
 
          result .setHSV (r [0], r [1], r [2]);
 
