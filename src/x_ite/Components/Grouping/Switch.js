@@ -67,7 +67,7 @@ function Switch (executionContext)
    this .boundedObject = null;
 }
 
-Switch .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
+Object .assign (Object .setPrototypeOf (Switch .prototype, X3DGroupingNode .prototype),
 {
    constructor: Switch,
    initialize ()

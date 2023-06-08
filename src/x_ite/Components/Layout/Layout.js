@@ -94,7 +94,7 @@ function Layout (executionContext)
    this .matrix          = new Matrix4 ();
 }
 
-Layout .prototype = Object .assign (Object .create (X3DLayoutNode .prototype),
+Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .prototype),
 {
    constructor: Layout,
    viewportPixel: new Vector2 (0, 0),

@@ -79,7 +79,7 @@ function ShaderPart (executionContext)
    this .options = [ ];
 }
 
-ShaderPart .prototype = Object .assign (Object .create (X3DNode .prototype),
+Object .assign (Object .setPrototypeOf (ShaderPart .prototype, X3DNode .prototype),
    X3DUrlObject .prototype,
 {
    constructor: ShaderPart,

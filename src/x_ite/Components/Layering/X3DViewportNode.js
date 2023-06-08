@@ -55,7 +55,7 @@ function X3DViewportNode (executionContext)
    this .addType (X3DConstants .X3DViewportNode);
 }
 
-X3DViewportNode .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DViewportNode .prototype, X3DGroupingNode .prototype),
 {
    constructor: X3DViewportNode,
 });

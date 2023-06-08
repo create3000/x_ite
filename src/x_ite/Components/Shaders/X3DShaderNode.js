@@ -59,7 +59,7 @@ function X3DShaderNode (executionContext)
    this .selected = 0;
 }
 
-X3DShaderNode .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DShaderNode .prototype, X3DAppearanceChildNode .prototype),
 {
    constructor: X3DShaderNode,
    setValid (value)

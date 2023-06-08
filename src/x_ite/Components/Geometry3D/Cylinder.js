@@ -64,7 +64,7 @@ function Cylinder (executionContext)
    this ._radius .setUnit ("length");
 }
 
-Cylinder .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
+Object .assign (Object .setPrototypeOf (Cylinder .prototype, X3DGeometryNode .prototype),
 {
    constructor: Cylinder,
    set_live__ ()

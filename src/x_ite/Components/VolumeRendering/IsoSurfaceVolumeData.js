@@ -63,7 +63,7 @@ function IsoSurfaceVolumeData (executionContext)
    this .renderStyleNodes = [ ];
 }
 
-IsoSurfaceVolumeData .prototype = Object .assign (Object .create (X3DVolumeDataNode .prototype),
+Object .assign (Object .setPrototypeOf (IsoSurfaceVolumeData .prototype, X3DVolumeDataNode .prototype),
 {
    constructor: IsoSurfaceVolumeData,
    initialize ()

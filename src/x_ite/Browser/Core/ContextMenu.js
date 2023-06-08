@@ -59,7 +59,7 @@ function ContextMenu (executionContext)
    this [_userMenu] = null;
 }
 
-ContextMenu .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .prototype),
 {
    constructor: ContextMenu,
    initialize ()

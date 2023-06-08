@@ -66,7 +66,7 @@ function Appearance (executionContext)
    this .shaderNodes             = [ ];
 }
 
-Appearance .prototype = Object .assign (Object .create (X3DAppearanceNode .prototype),
+Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode .prototype),
 {
    constructor: Appearance,
    initialize ()

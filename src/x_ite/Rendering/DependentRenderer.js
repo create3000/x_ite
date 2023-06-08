@@ -57,7 +57,7 @@ function DependentRenderer (executionContext)
    this .renderObject = null;
 }
 
-DependentRenderer .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+Object .assign (Object .setPrototypeOf (DependentRenderer .prototype, X3DBaseNode .prototype),
    X3DRenderObject .prototype,
 {
    constructor: DependentRenderer,

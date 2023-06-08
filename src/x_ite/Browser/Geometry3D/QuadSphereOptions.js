@@ -62,7 +62,7 @@ function QuadSphereOptions (executionContext)
                           "yDimension", new Fields .SFInt32 (15))
 }
 
-QuadSphereOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+Object .assign (Object .setPrototypeOf (QuadSphereOptions .prototype, X3DBaseNode .prototype),
 {
    constructor: QuadSphereOptions,
    initialize ()

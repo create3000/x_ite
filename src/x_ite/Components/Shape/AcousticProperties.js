@@ -58,7 +58,7 @@ function AcousticProperties (executionContext)
    this .addType (X3DConstants .AcousticProperties);
 }
 
-AcousticProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
+Object .assign (Object .setPrototypeOf (AcousticProperties .prototype, X3DAppearanceChildNode .prototype),
 {
    constructor: AcousticProperties,
 });

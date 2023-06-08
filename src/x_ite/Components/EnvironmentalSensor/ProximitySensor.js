@@ -75,7 +75,7 @@ function ProximitySensor (executionContext)
    this .inside        = false;
 }
 
-ProximitySensor .prototype = Object .assign (Object .create (X3DEnvironmentalSensorNode .prototype),
+Object .assign (Object .setPrototypeOf (ProximitySensor .prototype, X3DEnvironmentalSensorNode .prototype),
 {
    constructor: ProximitySensor,
    initialize ()

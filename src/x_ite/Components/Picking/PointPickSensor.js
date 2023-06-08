@@ -69,7 +69,7 @@ function PointPickSensor (executionContext)
    this .compoundShapes      = [ ];
 }
 
-PointPickSensor .prototype = Object .assign (Object .create (X3DPickSensorNode .prototype),
+Object .assign (Object .setPrototypeOf (PointPickSensor .prototype, X3DPickSensorNode .prototype),
 {
    constructor: PointPickSensor,
    initialize ()

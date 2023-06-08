@@ -73,7 +73,7 @@ function GeneratedCubeMapTexture (executionContext)
    this .viewVolume        = new ViewVolume ();
 }
 
-GeneratedCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironmentTextureNode .prototype),
+Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DEnvironmentTextureNode .prototype),
 {
    constructor: GeneratedCubeMapTexture,
    initialize ()

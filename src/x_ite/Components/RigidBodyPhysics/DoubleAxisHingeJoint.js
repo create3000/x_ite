@@ -77,7 +77,7 @@ function DoubleAxisHingeJoint (executionContext)
    this .localAxis2        = new Vector3 (0, 0, 0);
 }
 
-DoubleAxisHingeJoint .prototype = Object .assign (Object .create (X3DRigidJointNode .prototype),
+Object .assign (Object .setPrototypeOf (DoubleAxisHingeJoint .prototype, X3DRigidJointNode .prototype),
 {
    constructor: DoubleAxisHingeJoint,
    initialize ()

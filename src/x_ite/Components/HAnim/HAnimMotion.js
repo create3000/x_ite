@@ -58,7 +58,7 @@ function HAnimMotion (executionContext)
    this .addType (X3DConstants .HAnimMotion);
 }
 
-HAnimMotion .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .prototype),
 {
    constructor: HAnimMotion,
    initialize ()

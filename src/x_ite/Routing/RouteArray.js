@@ -53,7 +53,7 @@ function RouteArray (values = [ ])
    return X3DInfoArray .call (this, Array .from (values, value => [value .getId (), value]), X3DRoute);
 }
 
-RouteArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
+Object .assign (Object .setPrototypeOf (RouteArray .prototype, X3DInfoArray .prototype),
 {
    constructor: RouteArray,
 });

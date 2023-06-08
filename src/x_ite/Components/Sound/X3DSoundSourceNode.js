@@ -61,7 +61,7 @@ function X3DSoundSourceNode (executionContext)
    this .media  = null;
 }
 
-X3DSoundSourceNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, X3DChildNode .prototype),
    X3DTimeDependentNode .prototype,
 {
    constructor: X3DSoundSourceNode,

@@ -94,7 +94,7 @@ function X3DBrowser (element)
    this .setup ();
 };
 
-X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .prototype),
+Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext .prototype),
 {
    constructor: X3DBrowser,
    initialize ()

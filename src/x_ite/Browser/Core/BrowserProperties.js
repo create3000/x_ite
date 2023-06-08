@@ -56,7 +56,7 @@ function BrowserProperties (executionContext)
    X3DBaseNode .call (this, executionContext);
 }
 
-BrowserProperties .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+Object .assign (Object .setPrototypeOf (BrowserProperties .prototype, X3DBaseNode .prototype),
 {
    constructor: BrowserProperties,
 });

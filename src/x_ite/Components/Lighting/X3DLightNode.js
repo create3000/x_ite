@@ -57,7 +57,7 @@ function X3DLightNode (executionContext)
    this .addType (X3DConstants .X3DLightNode);
 }
 
-X3DLightNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DLightNode .prototype, X3DChildNode .prototype),
 {
    constructor: X3DLightNode,
    initialize ()

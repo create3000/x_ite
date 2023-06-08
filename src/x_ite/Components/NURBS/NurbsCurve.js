@@ -69,7 +69,7 @@ function NurbsCurve (executionContext)
    this .sampleOptions = { resolution: [ ] };
 }
 
-NurbsCurve .prototype = Object .assign (Object .create (X3DParametricGeometryNode .prototype),
+Object .assign (Object .setPrototypeOf (NurbsCurve .prototype, X3DParametricGeometryNode .prototype),
    X3DLineGeometryNode .prototype,
 {
    constructor: NurbsCurve,

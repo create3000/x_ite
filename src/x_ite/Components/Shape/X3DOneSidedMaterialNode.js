@@ -62,7 +62,7 @@ function X3DOneSidedMaterialNode (executionContext)
    this .emissiveColor = new Float32Array (3);
 }
 
-X3DOneSidedMaterialNode .prototype = Object .assign (Object .create (X3DMaterialNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DOneSidedMaterialNode .prototype, X3DMaterialNode .prototype),
 {
    constructor: X3DOneSidedMaterialNode,
    initialize ()

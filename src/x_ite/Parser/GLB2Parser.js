@@ -56,7 +56,7 @@ function GLB2Parser (scene)
    this .buffers = [ ];
 }
 
-GLB2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
+Object .assign (Object .setPrototypeOf (GLB2Parser .prototype, X3DParser .prototype),
 {
    constructor: GLB2Parser,
    getEncoding ()

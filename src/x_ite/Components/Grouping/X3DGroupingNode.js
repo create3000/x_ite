@@ -77,7 +77,7 @@ function X3DGroupingNode (executionContext)
    this .sensors                   = [ ];
 }
 
-X3DGroupingNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode .prototype),
    X3DBoundedObject .prototype,
 {
    constructor: X3DGroupingNode,

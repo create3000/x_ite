@@ -64,7 +64,7 @@ function Fog (executionContext)
    this .modelMatrix = new Matrix4 ();
 }
 
-Fog .prototype = Object .assign (Object .create (X3DBindableNode .prototype),
+Object .assign (Object .setPrototypeOf (Fog .prototype, X3DBindableNode .prototype),
    X3DFogObject .prototype,
 {
    constructor: Fog,

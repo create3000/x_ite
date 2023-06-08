@@ -78,7 +78,7 @@ function PlaneSensor (executionContext)
    this ._translation_changed .setUnit ("length");
 }
 
-PlaneSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .prototype),
+Object .assign (Object .setPrototypeOf (PlaneSensor .prototype, X3DDragSensorNode .prototype),
 {
    constructor: PlaneSensor,
    initialize ()

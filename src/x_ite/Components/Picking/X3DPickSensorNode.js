@@ -78,7 +78,7 @@ function X3DPickSensorNode (executionContext)
    this .pickedGeometries    = new Fields .MFNode (); // Must be unique for each X3DPickSensorNode.
 }
 
-X3DPickSensorNode .prototype = Object .assign (Object .create (X3DSensorNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, X3DSensorNode .prototype),
 {
    constructor: X3DPickSensorNode,
    initialize ()

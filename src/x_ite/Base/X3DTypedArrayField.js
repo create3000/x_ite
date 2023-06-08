@@ -184,7 +184,7 @@ function X3DTypedArrayField (args)
    return proxy;
 }
 
-X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .prototype),
+Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayField .prototype),
 {
    constructor: X3DTypedArrayField,
    [_target]: null,

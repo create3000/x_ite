@@ -63,7 +63,7 @@ function Layer (executionContext)
    this .addType (X3DConstants .Layer);
 }
 
-Layer .prototype = Object .assign (Object .create (X3DLayerNode .prototype),
+Object .assign (Object .setPrototypeOf (Layer .prototype, X3DLayerNode .prototype),
 {
    constructor: Layer,
    initialize ()

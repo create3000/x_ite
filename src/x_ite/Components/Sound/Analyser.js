@@ -58,7 +58,7 @@ function Analyser (executionContext)
    this .addType (X3DConstants .Analyser);
 }
 
-Analyser .prototype = Object .assign (Object .create (X3DSoundProcessingNode .prototype),
+Object .assign (Object .setPrototypeOf (Analyser .prototype, X3DSoundProcessingNode .prototype),
 {
    constructor: Analyser,
 });

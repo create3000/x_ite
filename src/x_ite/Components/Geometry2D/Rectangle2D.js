@@ -64,7 +64,7 @@ function Rectangle2D (executionContext)
    this ._size .setUnit ("length");
 }
 
-Rectangle2D .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
+Object .assign (Object .setPrototypeOf (Rectangle2D .prototype, X3DGeometryNode .prototype),
 {
    constructor: Rectangle2D,
    build: (function ()

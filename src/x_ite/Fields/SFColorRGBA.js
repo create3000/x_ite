@@ -66,7 +66,7 @@ function SFColorRGBA (r, g, b, a)
    throw new Error ("Invalid arguments.");
 }
 
-SFColorRGBA .prototype = Object .assign (Object .create (X3DField .prototype),
+Object .assign (Object .setPrototypeOf (SFColorRGBA .prototype, X3DField .prototype),
 {
    constructor: SFColorRGBA,
    *[Symbol .iterator] ()

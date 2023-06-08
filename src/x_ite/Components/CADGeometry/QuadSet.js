@@ -58,7 +58,7 @@ function QuadSet (executionContext)
    this .addType (X3DConstants .QuadSet);
 }
 
-QuadSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .prototype),
+Object .assign (Object .setPrototypeOf (QuadSet .prototype, X3DComposedGeometryNode .prototype),
 {
    constructor: QuadSet,
    getTriangleIndex: (function ()

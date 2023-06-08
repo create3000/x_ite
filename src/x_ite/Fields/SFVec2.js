@@ -68,7 +68,7 @@ function SFVec2Template (TypeName, double)
       throw new Error ("Invalid arguments.");
    }
 
-   SFVec2 .prototype = SFVecPrototypeTemplate (SFVec2, TypeName, Vector2, double);
+   SFVecPrototypeTemplate (SFVec2, TypeName, Vector2, double);
 
    for (const key of Reflect .ownKeys (SFVec2 .prototype))
       Object .defineProperty (SFVec2 .prototype, key, { enumerable: false });

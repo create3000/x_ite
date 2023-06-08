@@ -87,7 +87,7 @@ function SFRotation (x, y, z, angle)
    throw new Error ("Invalid arguments.");
 }
 
-SFRotation .prototype = Object .assign (Object .create (X3DField .prototype),
+Object .assign (Object .setPrototypeOf (SFRotation .prototype, X3DField .prototype),
 {
    constructor: SFRotation,
    *[Symbol .iterator] ()

@@ -53,7 +53,7 @@ function X3DArrayFollowerTemplate (Type)
       this .zero  = this .getVector ();
    }
 
-   X3DArrayFollowerObject .prototype =
+   Object .assign (X3DArrayFollowerObject .prototype,
    {
       getArray ()
       {
@@ -168,7 +168,7 @@ function X3DArrayFollowerTemplate (Type)
 
          Type .prototype .set_destination__ .call (this);
       },
-   };
+   });
 
    return X3DArrayFollowerObject;
 }

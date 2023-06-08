@@ -58,7 +58,7 @@ function TimeTrigger (executionContext)
    this .addType (X3DConstants .TimeTrigger);
 }
 
-TimeTrigger .prototype = Object .assign (Object .create (X3DTriggerNode .prototype),
+Object .assign (Object .setPrototypeOf (TimeTrigger .prototype, X3DTriggerNode .prototype),
 {
    constructor: TimeTrigger,
    initialize ()

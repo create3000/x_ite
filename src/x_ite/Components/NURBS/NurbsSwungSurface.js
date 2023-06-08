@@ -62,7 +62,7 @@ function NurbsSwungSurface (executionContext)
    this .extrusion = new Extrusion (executionContext);
 }
 
-NurbsSwungSurface .prototype = Object .assign (Object .create (X3DParametricGeometryNode .prototype),
+Object .assign (Object .setPrototypeOf (NurbsSwungSurface .prototype, X3DParametricGeometryNode .prototype),
 {
    constructor: NurbsSwungSurface,
    initialize ()

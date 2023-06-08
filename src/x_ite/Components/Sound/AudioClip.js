@@ -66,7 +66,7 @@ function AudioClip (executionContext)
    this .urlStack = new Fields .MFString ();
 }
 
-AudioClip .prototype = Object .assign (Object .create (X3DSoundSourceNode .prototype),
+Object .assign (Object .setPrototypeOf (AudioClip .prototype, X3DSoundSourceNode .prototype),
    X3DUrlObject .prototype,
 {
    constructor: AudioClip,

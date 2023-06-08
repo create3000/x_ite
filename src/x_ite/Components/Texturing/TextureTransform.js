@@ -65,7 +65,7 @@ function TextureTransform (executionContext)
    this .matrix = new Matrix4 ();
 }
 
-TextureTransform .prototype = Object .assign (Object .create (X3DSingleTextureTransformNode .prototype),
+Object .assign (Object .setPrototypeOf (TextureTransform .prototype, X3DSingleTextureTransformNode .prototype),
 {
    constructor: TextureTransform,
    initialize ()

@@ -57,7 +57,7 @@ function BrowserTimings (executionContext)
    this .fps           = new StopWatch ();
 }
 
-BrowserTimings .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+Object .assign (Object .setPrototypeOf (BrowserTimings .prototype, X3DBaseNode .prototype),
 {
    constructor: BrowserTimings,
    initialize ()

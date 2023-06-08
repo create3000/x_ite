@@ -63,7 +63,7 @@ function CoordinateChaser (executionContext)
    this .addType (X3DConstants .CoordinateChaser);
 }
 
-CoordinateChaser .prototype = Object .assign (Object .create (X3DChaserNode .prototype),
+Object .assign (Object .setPrototypeOf (CoordinateChaser .prototype, X3DChaserNode .prototype),
    X3DArrayChaserObject .prototype,
 {
    constructor: CoordinateChaser,

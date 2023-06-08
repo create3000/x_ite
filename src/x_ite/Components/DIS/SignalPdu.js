@@ -60,7 +60,7 @@ function SignalPdu (executionContext)
    this .addType (X3DConstants .SignalPdu);
 }
 
-SignalPdu .prototype = Object .assign (Object .create (X3DSensorNode .prototype),
+Object .assign (Object .setPrototypeOf (SignalPdu .prototype, X3DSensorNode .prototype),
    X3DBoundedObject .prototype,
 {
    constructor: SignalPdu,

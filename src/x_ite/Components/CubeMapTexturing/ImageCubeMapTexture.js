@@ -78,7 +78,7 @@ function ImageCubeMapTexture (executionContext)
    this .urlStack = new Fields .MFString ();
 }
 
-ImageCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironmentTextureNode .prototype),
+Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvironmentTextureNode .prototype),
    X3DUrlObject .prototype,
 {
    constructor: ImageCubeMapTexture,

@@ -58,7 +58,7 @@ function X3DVertexAttributeNode (executionContext)
    this .addChildObjects ("attribute_changed", new Fields .SFTime ());
 }
 
-X3DVertexAttributeNode .prototype = Object .assign (Object .create (X3DGeometricPropertyNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DVertexAttributeNode .prototype, X3DGeometricPropertyNode .prototype),
 {
    constructor: X3DVertexAttributeNode,
    initialize ()

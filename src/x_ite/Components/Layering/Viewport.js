@@ -66,7 +66,7 @@ function Viewport (executionContext)
    this .rectangle = new Vector4 (0, 0, 0, 0);
 }
 
-Viewport .prototype = Object .assign (Object .create (X3DViewportNode .prototype),
+Object .assign (Object .setPrototypeOf (Viewport .prototype, X3DViewportNode .prototype),
 {
    constructor: Viewport,
    getRectangle ()

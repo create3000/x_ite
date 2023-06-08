@@ -55,7 +55,7 @@ function X3DNetworkSensorNode (executionContext)
    this .addType (X3DConstants .X3DNetworkSensorNode);
 }
 
-X3DNetworkSensorNode .prototype = Object .assign (Object .create (X3DSensorNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DNetworkSensorNode .prototype, X3DSensorNode .prototype),
 {
    constructor: X3DNetworkSensorNode,
 });

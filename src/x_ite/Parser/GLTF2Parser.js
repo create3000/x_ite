@@ -91,7 +91,7 @@ function GLTF2Parser (scene)
    this .animations            = 0;
 }
 
-GLTF2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
+Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .prototype),
    X3DOptimizer .prototype,
 {
    constructor: GLTF2Parser,

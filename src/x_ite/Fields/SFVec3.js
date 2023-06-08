@@ -68,7 +68,7 @@ function SFVec3Template (TypeName, double)
       throw new Error ("Invalid arguments.");
    }
 
-   SFVec3 .prototype = Object .assign (SFVecPrototypeTemplate (SFVec3, TypeName, Vector3, double),
+   Object .assign (SFVecPrototypeTemplate (SFVec3, TypeName, Vector3, double),
    {
       cross (vector)
       {

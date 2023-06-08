@@ -62,7 +62,7 @@ function PointProperties (executionContext)
    this .attenuation = new Float32Array (3);
 }
 
-PointProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
+Object .assign (Object .setPrototypeOf (PointProperties .prototype, X3DAppearanceChildNode .prototype),
 {
    constructor: PointProperties,
    initialize ()

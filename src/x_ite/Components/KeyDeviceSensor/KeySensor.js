@@ -81,7 +81,7 @@ function KeySensor (executionContext)
    this .addType (X3DConstants .KeySensor);
 }
 
-KeySensor .prototype = Object .assign (Object .create (X3DKeyDeviceSensorNode .prototype),
+Object .assign (Object .setPrototypeOf (KeySensor .prototype, X3DKeyDeviceSensorNode .prototype),
 {
    constructor: KeySensor,
    keydown (event)

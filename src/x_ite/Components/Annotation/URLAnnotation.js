@@ -58,7 +58,7 @@ function URLAnnotation (executionContext)
    this .addType (X3DConstants .URLAnnotation);
 }
 
-URLAnnotation .prototype = Object .assign (Object .create (X3DAnnotationNode .prototype),
+Object .assign (Object .setPrototypeOf (URLAnnotation .prototype, X3DAnnotationNode .prototype),
 {
    constructor: URLAnnotation,
    initialize ()

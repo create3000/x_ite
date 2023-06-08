@@ -66,7 +66,7 @@ function Anchor (executionContext)
    this .anchorSensors   = [ ];
 }
 
-Anchor .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
+Object .assign (Object .setPrototypeOf (Anchor .prototype, X3DGroupingNode .prototype),
    X3DUrlObject .prototype,
 {
    constructor: Anchor,

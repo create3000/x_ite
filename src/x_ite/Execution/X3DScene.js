@@ -110,7 +110,7 @@ function X3DScene (browser)
    this .setLive (false);
 }
 
-X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .prototype),
+Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext .prototype),
 {
    constructor: X3DScene,
    isMainScene ()

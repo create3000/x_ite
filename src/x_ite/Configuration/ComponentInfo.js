@@ -61,7 +61,7 @@ function ComponentInfo (name, level, title, providerUrl, external = false, depen
    });
 }
 
-ComponentInfo .prototype = Object .assign (Object .create (X3DObject .prototype),
+Object .assign (Object .setPrototypeOf (ComponentInfo .prototype, X3DObject .prototype),
 {
    constructor: ComponentInfo,
    toVRMLStream (generator)

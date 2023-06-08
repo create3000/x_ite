@@ -58,7 +58,7 @@ function ChannelSelector (executionContext)
    this .addType (X3DConstants .ChannelSelector);
 }
 
-ChannelSelector .prototype = Object .assign (Object .create (X3DSoundChannelNode .prototype),
+Object .assign (Object .setPrototypeOf (ChannelSelector .prototype, X3DSoundChannelNode .prototype),
 {
    constructor: ChannelSelector,
 });

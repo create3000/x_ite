@@ -60,7 +60,7 @@ function HAnimSegment (executionContext)
    this ._mass .setUnit ("mass");
 }
 
-HAnimSegment .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
+Object .assign (Object .setPrototypeOf (HAnimSegment .prototype, X3DGroupingNode .prototype),
 {
    constructor: HAnimSegment,
 });

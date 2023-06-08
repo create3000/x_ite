@@ -60,7 +60,7 @@ function MetadataString (executionContext)
    this .addType (X3DConstants .MetadataString);
 }
 
-MetadataString .prototype = Object .assign (Object .create (X3DNode .prototype),
+Object .assign (Object .setPrototypeOf (MetadataString .prototype, X3DNode .prototype),
    X3DMetadataObject .prototype,
 {
    constructor: MetadataString,

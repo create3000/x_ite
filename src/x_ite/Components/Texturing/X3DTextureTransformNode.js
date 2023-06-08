@@ -55,7 +55,7 @@ function X3DTextureTransformNode (executionContext)
    this .addType (X3DConstants .X3DTextureTransformNode);
 }
 
-X3DTextureTransformNode .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DTextureTransformNode .prototype, X3DAppearanceChildNode .prototype),
 {
    constructor: X3DTextureTransformNode,
 });

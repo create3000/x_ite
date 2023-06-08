@@ -60,7 +60,7 @@ function CADAssembly (executionContext)
    this .addType (X3DConstants .CADAssembly);
 }
 
-CADAssembly .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
+Object .assign (Object .setPrototypeOf (CADAssembly .prototype, X3DGroupingNode .prototype),
    //X3DProductStructureChildNode .prototype,
 {
    constructor: CADAssembly,

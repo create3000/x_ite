@@ -76,7 +76,7 @@ function Sound (executionContext)
    this .currentTraversed = true;
 }
 
-Sound .prototype = Object .assign (Object .create (X3DSoundNode .prototype),
+Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototype),
 {
    constructor: Sound,
    initialize ()

@@ -52,7 +52,7 @@ function SFInt32 (value)
    return X3DField .call (this, value|0);
 }
 
-SFInt32 .prototype = Object .assign (Object .create (X3DField .prototype),
+Object .assign (Object .setPrototypeOf (SFInt32 .prototype, X3DField .prototype),
 {
    constructor: SFInt32,
    copy ()

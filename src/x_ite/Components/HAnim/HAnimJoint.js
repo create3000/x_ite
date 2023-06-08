@@ -68,7 +68,7 @@ function HAnimJoint (executionContext)
    this .modelMatrix    = new Matrix4 ();
 }
 
-HAnimJoint .prototype = Object .assign (Object .create (X3DTransformNode .prototype),
+Object .assign (Object .setPrototypeOf (HAnimJoint .prototype, X3DTransformNode .prototype),
 {
    constructor: HAnimJoint,
    initialize ()

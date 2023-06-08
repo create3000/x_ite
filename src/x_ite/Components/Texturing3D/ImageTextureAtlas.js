@@ -65,7 +65,7 @@ function ImageTextureAtlas (executionContext)
    this .urlStack = new Fields .MFString ();
 }
 
-ImageTextureAtlas .prototype = Object .assign (Object .create (X3DTexture3DNode .prototype),
+Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, X3DTexture3DNode .prototype),
    X3DUrlObject .prototype,
 {
    constructor: ImageTextureAtlas,

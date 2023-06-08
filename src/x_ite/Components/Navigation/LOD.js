@@ -74,7 +74,7 @@ function LOD (executionContext)
    this .boundedObject    = null;
 }
 
-LOD .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
+Object .assign (Object .setPrototypeOf (LOD .prototype, X3DGroupingNode .prototype),
 {
    constructor: LOD,
    initialize ()

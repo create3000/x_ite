@@ -65,7 +65,7 @@ function LayerSet (executionContext)
    this .activeLayerNode = null;
 }
 
-LayerSet .prototype = Object .assign (Object .create (X3DNode .prototype),
+Object .assign (Object .setPrototypeOf (LayerSet .prototype, X3DNode .prototype),
 {
    constructor: LayerSet,
    initialize ()

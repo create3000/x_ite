@@ -60,7 +60,7 @@ function MetadataSet (executionContext)
    this .addType (X3DConstants .MetadataSet);
 }
 
-MetadataSet .prototype = Object .assign (Object .create (X3DNode .prototype),
+Object .assign (Object .setPrototypeOf (MetadataSet .prototype, X3DNode .prototype),
    X3DMetadataObject .prototype,
 {
    constructor: MetadataSet,

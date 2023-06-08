@@ -87,7 +87,7 @@ function RigidBody (executionContext)
    this .torque             = new Vector3 (0, 0, 0);
 }
 
-RigidBody .prototype = Object .assign (Object .create (X3DNode .prototype),
+Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype),
 {
    constructor: RigidBody,
    initialize ()

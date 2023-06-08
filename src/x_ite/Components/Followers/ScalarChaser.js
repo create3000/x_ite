@@ -59,7 +59,7 @@ function ScalarChaser (executionContext)
    this .addType (X3DConstants .ScalarChaser);
 }
 
-ScalarChaser .prototype = Object .assign (Object .create (X3DChaserNode .prototype),
+Object .assign (Object .setPrototypeOf (ScalarChaser .prototype, X3DChaserNode .prototype),
 {
    constructor: ScalarChaser,
    getVector ()

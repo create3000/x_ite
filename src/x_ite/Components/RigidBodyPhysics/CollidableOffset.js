@@ -62,7 +62,7 @@ function CollidableOffset (executionContext)
    this .collidableNode = null;
 }
 
-CollidableOffset .prototype = Object .assign (Object .create (X3DNBodyCollidableNode .prototype),
+Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, X3DNBodyCollidableNode .prototype),
 {
    constructor: CollidableOffset,
    initialize ()

@@ -69,7 +69,7 @@ function BrowserOptions (executionContext)
    this .shading          = Shading .GOURAUD;
 }
 
-BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .prototype),
 {
    constructor: BrowserOptions,
    initialize ()

@@ -70,7 +70,7 @@ function ScreenText (text, fontStyle)
    this .textureNode .setup ();
 }
 
-ScreenText .prototype = Object .assign (Object .create (X3DTextGeometry .prototype),
+Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .prototype),
 {
    constructor: ScreenText,
    modelViewMatrix: new Matrix4 (),

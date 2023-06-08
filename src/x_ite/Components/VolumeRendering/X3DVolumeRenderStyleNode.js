@@ -57,7 +57,7 @@ function X3DVolumeRenderStyleNode (executionContext)
    this .volumeDataNodes = new Set ();
 }
 
-X3DVolumeRenderStyleNode .prototype = Object .assign (Object .create (X3DNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DVolumeRenderStyleNode .prototype, X3DNode .prototype),
 {
    constructor: X3DVolumeRenderStyleNode,
    addShaderFields (shaderNode)

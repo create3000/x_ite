@@ -58,7 +58,7 @@ function IndexedTriangleSet (executionContext)
    this .addType (X3DConstants .IndexedTriangleSet);
 }
 
-IndexedTriangleSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .prototype),
+Object .assign (Object .setPrototypeOf (IndexedTriangleSet .prototype, X3DComposedGeometryNode .prototype),
 {
    constructor: IndexedTriangleSet,
    getPolygonIndex (i)

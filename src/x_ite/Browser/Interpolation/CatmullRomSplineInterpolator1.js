@@ -52,7 +52,7 @@ function CatmullRomSplineInterpolator1 ()
    CatmullRomSplineInterpolator .call (this);
 }
 
-CatmullRomSplineInterpolator1 .prototype = Object .assign (Object .create (CatmullRomSplineInterpolator .prototype),
+Object .assign (Object .setPrototypeOf (CatmullRomSplineInterpolator1 .prototype, CatmullRomSplineInterpolator .prototype),
 {
    constructor: CatmullRomSplineInterpolator1,
    create ()

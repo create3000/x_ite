@@ -102,7 +102,7 @@ function ExamineViewer (executionContext, navigationInfo)
    this .timeSensor = new TimeSensor (executionContext);
 }
 
-ExamineViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
+Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .prototype),
 {
    constructor: ExamineViewer,
    initialize ()

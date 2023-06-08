@@ -59,7 +59,7 @@ function X3DPointGeometryNode (executionContext)
    this .setTransparent (true);
 }
 
-X3DPointGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeometryNode .prototype),
 {
    constructor: X3DPointGeometryNode,
    intersectsLine ()

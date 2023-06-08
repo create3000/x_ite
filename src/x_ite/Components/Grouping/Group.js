@@ -58,7 +58,7 @@ function Group (executionContext)
    this .addType (X3DConstants .Group);
 }
 
-Group .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
+Object .assign (Object .setPrototypeOf (Group .prototype, X3DGroupingNode .prototype),
 {
    constructor: Group,
 });

@@ -72,7 +72,7 @@ function GeoProximitySensor (executionContext)
    this .setPickableObject (this .proximitySensor .isPickableObject ());
 }
 
-GeoProximitySensor .prototype = Object .assign (Object .create (X3DEnvironmentalSensorNode .prototype),
+Object .assign (Object .setPrototypeOf (GeoProximitySensor .prototype, X3DEnvironmentalSensorNode .prototype),
    X3DGeospatialObject .prototype,
 {
    constructor: GeoProximitySensor,

@@ -63,7 +63,7 @@ function LayoutLayer (executionContext)
    this .addType (X3DConstants .LayoutLayer);
 }
 
-LayoutLayer .prototype = Object .assign (Object .create (X3DLayerNode .prototype),
+Object .assign (Object .setPrototypeOf (LayoutLayer .prototype, X3DLayerNode .prototype),
 {
    constructor: LayoutLayer,
    initialize ()

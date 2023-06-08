@@ -59,7 +59,7 @@ function BlendedVolumeStyle (executionContext)
    this .addType (X3DConstants .BlendedVolumeStyle);
 }
 
-BlendedVolumeStyle .prototype = Object .assign (Object .create (X3DComposableVolumeRenderStyleNode .prototype),
+Object .assign (Object .setPrototypeOf (BlendedVolumeStyle .prototype, X3DComposableVolumeRenderStyleNode .prototype),
 {
    constructor: BlendedVolumeStyle,
    initialize ()

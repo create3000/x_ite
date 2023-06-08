@@ -59,7 +59,7 @@ function ScreenFontStyle (executionContext)
    this .addType (X3DConstants .ScreenFontStyle);
 }
 
-ScreenFontStyle .prototype = Object .assign (Object .create (X3DFontStyleNode .prototype),
+Object .assign (Object .setPrototypeOf (ScreenFontStyle .prototype, X3DFontStyleNode .prototype),
 {
    constructor: ScreenFontStyle,
    initialize ()

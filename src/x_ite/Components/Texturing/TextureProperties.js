@@ -66,7 +66,7 @@ function TextureProperties (executionContext)
    }
 }
 
-TextureProperties .prototype = Object .assign (Object .create (X3DNode .prototype),
+Object .assign (Object .setPrototypeOf (TextureProperties .prototype, X3DNode .prototype),
 {
    constructor: TextureProperties,
    getBorderWidth ()

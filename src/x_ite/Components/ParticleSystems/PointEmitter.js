@@ -78,7 +78,7 @@ function PointEmitter (executionContext)
    }`);
 }
 
-PointEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),
+Object .assign (Object .setPrototypeOf (PointEmitter .prototype, X3DParticleEmitterNode .prototype),
 {
    constructor: PointEmitter,
    initialize ()

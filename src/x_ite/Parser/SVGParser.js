@@ -192,7 +192,7 @@ function SVGParser (scene)
    this .canvas .height = this .GRADIENT_SIZE;
 }
 
-SVGParser .prototype = Object .assign (Object .create (X3DParser .prototype),
+Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototype),
    X3DOptimizer .prototype,
 {
    constructor: SVGParser,

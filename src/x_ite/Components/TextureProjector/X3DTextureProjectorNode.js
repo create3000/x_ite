@@ -63,7 +63,7 @@ function X3DTextureProjectorNode (executionContext)
    this ._location    .setUnit ("length");
 }
 
-X3DTextureProjectorNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DTextureProjectorNode .prototype, X3DChildNode .prototype),
 {
    constructor: X3DTextureProjectorNode,
    initialize ()

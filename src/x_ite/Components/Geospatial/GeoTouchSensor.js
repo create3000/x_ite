@@ -63,7 +63,7 @@ function GeoTouchSensor (executionContext)
    this ._hitPoint_changed .setUnit ("length");
 }
 
-GeoTouchSensor .prototype = Object .assign (Object .create (X3DTouchSensorNode .prototype),
+Object .assign (Object .setPrototypeOf (GeoTouchSensor .prototype, X3DTouchSensorNode .prototype),
    X3DGeospatialObject .prototype,
 {
    constructor: GeoTouchSensor,

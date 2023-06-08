@@ -52,7 +52,7 @@ function SFString (value)
    return X3DField .call (this, arguments .length ? "" + value : "");
 }
 
-SFString .prototype = Object .assign (Object .create (X3DField .prototype),
+Object .assign (Object .setPrototypeOf (SFString .prototype, X3DField .prototype),
 {
    constructor: SFString,
    *[Symbol .iterator] ()

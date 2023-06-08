@@ -64,7 +64,7 @@ function Cone (executionContext)
    this ._bottomRadius .setUnit ("length");
 }
 
-Cone .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
+Object .assign (Object .setPrototypeOf (Cone .prototype, X3DGeometryNode .prototype),
 {
    constructor: Cone,
    set_live__ ()

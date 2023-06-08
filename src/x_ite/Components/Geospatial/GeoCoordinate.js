@@ -62,7 +62,7 @@ function GeoCoordinate (executionContext)
    this .addType (X3DConstants .GeoCoordinate);
 }
 
-GeoCoordinate .prototype = Object .assign (Object .create (X3DCoordinateNode .prototype),
+Object .assign (Object .setPrototypeOf (GeoCoordinate .prototype, X3DCoordinateNode .prototype),
    X3DGeospatialObject .prototype,
 {
    constructor: GeoCoordinate,

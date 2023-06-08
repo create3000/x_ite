@@ -59,7 +59,7 @@ function FloatVertexAttribute (executionContext)
    this .addType (X3DConstants .FloatVertexAttribute);
 }
 
-FloatVertexAttribute .prototype = Object .assign (Object .create (X3DVertexAttributeNode .prototype),
+Object .assign (Object .setPrototypeOf (FloatVertexAttribute .prototype, X3DVertexAttributeNode .prototype),
 {
    constructor: FloatVertexAttribute,
    initialize ()

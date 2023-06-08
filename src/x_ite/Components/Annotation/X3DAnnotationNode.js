@@ -55,7 +55,7 @@ function X3DAnnotationNode (executionContext)
    this .addType (X3DConstants .X3DAnnotationNode);
 }
 
-X3DAnnotationNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DAnnotationNode .prototype, X3DChildNode .prototype),
 {
    constructor: X3DAnnotationNode,
    initialize ()

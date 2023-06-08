@@ -61,7 +61,7 @@ function FontStyle (executionContext)
    this ._size .setUnit ("length");
 }
 
-FontStyle .prototype = Object .assign (Object .create (X3DFontStyleNode .prototype),
+Object .assign (Object .setPrototypeOf (FontStyle .prototype, X3DFontStyleNode .prototype),
 {
    constructor: FontStyle,
    getTextGeometry (text)

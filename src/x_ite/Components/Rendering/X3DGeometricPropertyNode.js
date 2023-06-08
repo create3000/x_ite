@@ -55,7 +55,7 @@ function X3DGeometricPropertyNode (executionContext)
    this .addType (X3DConstants .X3DGeometricPropertyNode);
 }
 
-X3DGeometricPropertyNode .prototype = Object .assign (Object .create (X3DNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DGeometricPropertyNode .prototype, X3DNode .prototype),
 {
    constructor: X3DGeometricPropertyNode,
 });

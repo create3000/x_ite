@@ -60,7 +60,7 @@ function MetadataDouble (executionContext)
    this .addType (X3DConstants .MetadataDouble);
 }
 
-MetadataDouble .prototype = Object .assign (Object .create (X3DNode .prototype),
+Object .assign (Object .setPrototypeOf (MetadataDouble .prototype, X3DNode .prototype),
    X3DMetadataObject .prototype,
 {
    constructor: MetadataDouble,

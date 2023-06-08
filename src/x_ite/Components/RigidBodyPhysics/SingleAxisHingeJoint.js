@@ -75,7 +75,7 @@ function SingleAxisHingeJoint (executionContext)
    this .localAnchorPoint2 = new Vector3 (0, 0, 0);
 }
 
-SingleAxisHingeJoint .prototype = Object .assign (Object .create (X3DRigidJointNode .prototype),
+Object .assign (Object .setPrototypeOf (SingleAxisHingeJoint .prototype, X3DRigidJointNode .prototype),
 {
    constructor: SingleAxisHingeJoint,
    initialize ()

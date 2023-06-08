@@ -77,7 +77,7 @@ function TransformSensor (executionContext)
    this .targetMatrices   = [ ];
 }
 
-TransformSensor .prototype = Object .assign (Object .create (X3DEnvironmentalSensorNode .prototype),
+Object .assign (Object .setPrototypeOf (TransformSensor .prototype, X3DEnvironmentalSensorNode .prototype),
 {
    constructor: TransformSensor,
    initialize ()

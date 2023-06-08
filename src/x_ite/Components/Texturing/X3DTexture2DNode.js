@@ -63,7 +63,7 @@ function X3DTexture2DNode (executionContext)
    this .height = 0;
 }
 
-X3DTexture2DNode .prototype = Object .assign (Object .create (X3DSingleTextureNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DTexture2DNode .prototype, X3DSingleTextureNode .prototype),
 {
    constructor: X3DTexture2DNode,
    initialize ()

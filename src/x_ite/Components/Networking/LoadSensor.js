@@ -66,7 +66,7 @@ function LoadSensor (executionContext)
    this .timeOutId  = undefined;
 }
 
-LoadSensor .prototype = Object .assign (Object .create (X3DNetworkSensorNode .prototype),
+Object .assign (Object .setPrototypeOf (LoadSensor .prototype, X3DNetworkSensorNode .prototype),
 {
    constructor: LoadSensor,
    initialize ()

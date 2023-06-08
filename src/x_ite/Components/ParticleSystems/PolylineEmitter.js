@@ -109,7 +109,7 @@ function PolylineEmitter (executionContext)
    }`);
 }
 
-PolylineEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),
+Object .assign (Object .setPrototypeOf (PolylineEmitter .prototype, X3DParticleEmitterNode .prototype),
 {
    constructor: PolylineEmitter,
    initialize ()

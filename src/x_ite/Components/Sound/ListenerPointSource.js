@@ -63,7 +63,7 @@ function ListenerPointSource (executionContext)
    this ._position .setUnit ("length");
 }
 
-ListenerPointSource .prototype = Object .assign (Object .create (X3DSoundSourceNode .prototype),
+Object .assign (Object .setPrototypeOf (ListenerPointSource .prototype, X3DSoundSourceNode .prototype),
 {
    constructor: ListenerPointSource,
 });

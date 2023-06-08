@@ -63,7 +63,7 @@ function GoldenGate (scene)
    this .inputs = new Map ();
 }
 
-GoldenGate .prototype = Object .assign (Object .create (X3DParser .prototype),
+Object .assign (Object .setPrototypeOf (GoldenGate .prototype, X3DParser .prototype),
 {
    constructor: GoldenGate,
    parseIntoScene (x3dSyntax, resolve, reject)

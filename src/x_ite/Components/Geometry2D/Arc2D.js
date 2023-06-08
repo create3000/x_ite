@@ -64,7 +64,7 @@ function Arc2D (executionContext)
    this ._radius     .setUnit ("length");
 }
 
-Arc2D .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototype),
+Object .assign (Object .setPrototypeOf (Arc2D .prototype, X3DLineGeometryNode .prototype),
 {
    constructor: Arc2D,
    set_live__ ()

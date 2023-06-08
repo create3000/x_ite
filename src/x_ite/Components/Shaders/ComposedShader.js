@@ -65,7 +65,7 @@ function ComposedShader (executionContext)
    this .transformFeedbackVaryings = [ ];
 }
 
-ComposedShader .prototype = Object .assign (Object .create (X3DShaderNode .prototype),
+Object .assign (Object .setPrototypeOf (ComposedShader .prototype, X3DShaderNode .prototype),
    X3DProgrammableShaderObject .prototype,
 {
    constructor: ComposedShader,

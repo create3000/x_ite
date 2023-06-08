@@ -86,7 +86,7 @@ function Script (executionContext)
    this .addType (X3DConstants .Script);
 }
 
-Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
+Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .prototype),
 {
    constructor: Script,
    initialize ()
@@ -223,7 +223,7 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
          throw new Error ("SFNode.new: invalid argument, must be 'string' is 'undefined'.");
       }
 
-      SFNode .prototype = Fields .SFNode .prototype;
+      Object .setPrototypeOf (SFNode .prototype, Fields .SFNode .prototype);
 
       const globalObject =
       {

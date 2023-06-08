@@ -73,7 +73,7 @@ function Inline (executionContext)
    this .localShadows = false;
 }
 
-Inline .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+Object .assign (Object .setPrototypeOf (Inline .prototype, X3DChildNode .prototype),
    X3DUrlObject .prototype,
    X3DBoundedObject .prototype,
 {

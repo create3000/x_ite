@@ -70,7 +70,7 @@ function MotorJoint (executionContext)
    this ._motor3AngleRate .setUnit ("angularRate");
 }
 
-MotorJoint .prototype = Object .assign (Object .create (X3DRigidJointNode .prototype),
+Object .assign (Object .setPrototypeOf (MotorJoint .prototype, X3DRigidJointNode .prototype),
 {
    constructor: MotorJoint,
 });

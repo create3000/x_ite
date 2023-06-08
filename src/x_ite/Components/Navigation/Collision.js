@@ -65,7 +65,7 @@ function Collision (executionContext)
       this .addAlias ("collide", this ._enabled); // VRML2
 }
 
-Collision .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
+Object .assign (Object .setPrototypeOf (Collision .prototype, X3DGroupingNode .prototype),
    X3DSensorNode .prototype,
 {
    constructor: Collision,

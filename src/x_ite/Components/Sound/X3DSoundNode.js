@@ -55,7 +55,7 @@ function X3DSoundNode (executionContext)
    this .addType (X3DConstants .X3DSoundNode);
 }
 
-X3DSoundNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DSoundNode .prototype, X3DChildNode .prototype),
 {
    constructor: X3DSoundNode,
 });

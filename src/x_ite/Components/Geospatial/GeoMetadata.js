@@ -60,7 +60,7 @@ function GeoMetadata (executionContext)
    this .addType (X3DConstants .GeoMetadata);
 }
 
-GeoMetadata .prototype = Object .assign (Object .create (X3DInfoNode .prototype),
+Object .assign (Object .setPrototypeOf (GeoMetadata .prototype, X3DInfoNode .prototype),
    X3DUrlObject .prototype,
 {
    constructor: GeoMetadata,

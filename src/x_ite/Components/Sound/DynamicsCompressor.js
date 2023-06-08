@@ -58,7 +58,7 @@ function DynamicsCompressor (executionContext)
    this .addType (X3DConstants .DynamicsCompressor);
 }
 
-DynamicsCompressor .prototype = Object .assign (Object .create (X3DSoundProcessingNode .prototype),
+Object .assign (Object .setPrototypeOf (DynamicsCompressor .prototype, X3DSoundProcessingNode .prototype),
 {
    constructor: DynamicsCompressor,
 });

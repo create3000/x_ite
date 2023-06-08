@@ -58,7 +58,7 @@ function PeriodicWave (executionContext)
    this .addType (X3DConstants .PeriodicWave);
 }
 
-PeriodicWave .prototype = Object .assign (Object .create (X3DSoundNode .prototype),
+Object .assign (Object .setPrototypeOf (PeriodicWave .prototype, X3DSoundNode .prototype),
 {
    constructor: PeriodicWave,
 });

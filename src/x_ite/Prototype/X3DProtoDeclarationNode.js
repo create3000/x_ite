@@ -61,7 +61,7 @@ function X3DProtoDeclarationNode (executionContext)
    this .addChildObjects ("updateInstances", new Fields .SFTime ());
 }
 
-X3DProtoDeclarationNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DProtoDeclarationNode .prototype, X3DBaseNode .prototype),
 {
    constructor: X3DProtoDeclarationNode,
    canUserDefinedFields ()

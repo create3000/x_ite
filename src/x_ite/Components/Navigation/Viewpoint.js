@@ -67,7 +67,7 @@ function Viewpoint (executionContext)
    this .projectionMatrix = new Matrix4 ();
 }
 
-Viewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prototype),
+Object .assign (Object .setPrototypeOf (Viewpoint .prototype, X3DViewpointNode .prototype),
 {
    constructor: Viewpoint,
    getRelativeTransformation (fromViewpointNode)

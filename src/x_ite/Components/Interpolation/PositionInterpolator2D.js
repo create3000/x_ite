@@ -59,7 +59,7 @@ function PositionInterpolator2D (executionContext)
    this .addType (X3DConstants .PositionInterpolator2D);
 }
 
-PositionInterpolator2D .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
+Object .assign (Object .setPrototypeOf (PositionInterpolator2D .prototype, X3DInterpolatorNode .prototype),
 {
    constructor: PositionInterpolator2D,
    initialize ()

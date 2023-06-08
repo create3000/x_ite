@@ -56,7 +56,7 @@ function BoxOptions (executionContext)
    X3DBaseNode .call (this, executionContext);
 }
 
-BoxOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+Object .assign (Object .setPrototypeOf (BoxOptions .prototype, X3DBaseNode .prototype),
 {
    constructor: BoxOptions,
    initialize ()

@@ -240,7 +240,7 @@ function DirectionalLight (executionContext)
       this ._global = true;
 }
 
-DirectionalLight .prototype = Object .assign (Object .create (X3DLightNode .prototype),
+Object .assign (Object .setPrototypeOf (DirectionalLight .prototype, X3DLightNode .prototype),
 {
    constructor: DirectionalLight,
    getLights ()

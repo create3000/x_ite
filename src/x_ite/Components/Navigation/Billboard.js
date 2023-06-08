@@ -64,7 +64,7 @@ function Billboard (executionContext)
    this .matrix = new Matrix4 ();
 }
 
-Billboard .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
+Object .assign (Object .setPrototypeOf (Billboard .prototype, X3DGroupingNode .prototype),
 {
    constructor: Billboard,
    getBBox (bbox, shadows)

@@ -96,7 +96,7 @@ function STLAParser (scene)
    this .point  = [ ];
 }
 
-STLAParser .prototype = Object .assign (Object .create (X3DParser .prototype),
+Object .assign (Object .setPrototypeOf (STLAParser .prototype, X3DParser .prototype),
 {
    constructor: STLAParser,
    CONSTANTS: new Map ([

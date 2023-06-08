@@ -61,7 +61,7 @@ function DISEntityManager (executionContext)
       this .addAlias ("mapping", this ._children);
 }
 
-DISEntityManager .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+Object .assign (Object .setPrototypeOf (DISEntityManager .prototype, X3DChildNode .prototype),
 {
    constructor: DISEntityManager,
 });

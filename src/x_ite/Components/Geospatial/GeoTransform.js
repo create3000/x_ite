@@ -67,7 +67,7 @@ function GeoTransform (executionContext)
    this ._translation .setUnit ("length");
 }
 
-GeoTransform .prototype = Object .assign (Object .create (X3DTransformMatrix3DNode .prototype),
+Object .assign (Object .setPrototypeOf (GeoTransform .prototype, X3DTransformMatrix3DNode .prototype),
    X3DGeospatialObject .prototype,
 {
    constructor: GeoTransform,

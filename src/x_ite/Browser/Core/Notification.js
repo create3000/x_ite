@@ -68,7 +68,7 @@ function Notification (executionContext)
    this .addChildObjects ("string", new SFString ());
 }
 
-Notification .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+Object .assign (Object .setPrototypeOf (Notification .prototype, X3DBaseNode .prototype),
 {
    constructor: Notification,
    initialize ()

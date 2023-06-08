@@ -72,7 +72,7 @@ function ExplosionEmitter (executionContext)
    }`);
 }
 
-ExplosionEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),
+Object .assign (Object .setPrototypeOf (ExplosionEmitter .prototype, X3DParticleEmitterNode .prototype),
 {
    constructor: ExplosionEmitter,
    initialize ()

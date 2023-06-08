@@ -63,7 +63,7 @@ function IndexedFaceSet (executionContext)
    this ._creaseAngle .setUnit ("angle");
 }
 
-IndexedFaceSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .prototype),
+Object .assign (Object .setPrototypeOf (IndexedFaceSet .prototype, X3DComposedGeometryNode .prototype),
 {
    constructor: IndexedFaceSet,
    initialize ()

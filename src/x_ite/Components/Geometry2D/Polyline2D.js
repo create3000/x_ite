@@ -60,7 +60,7 @@ function Polyline2D (executionContext)
    this ._lineSegments .setUnit ("length");
 }
 
-Polyline2D .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototype),
+Object .assign (Object .setPrototypeOf (Polyline2D .prototype, X3DLineGeometryNode .prototype),
 {
    constructor: Polyline2D,
    build ()

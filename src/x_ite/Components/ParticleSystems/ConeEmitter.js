@@ -85,7 +85,7 @@ function ConeEmitter (executionContext)
    }`);
 }
 
-ConeEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),
+Object .assign (Object .setPrototypeOf (ConeEmitter .prototype, X3DParticleEmitterNode .prototype),
 {
    constructor: ConeEmitter,
    initialize ()

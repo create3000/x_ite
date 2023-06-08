@@ -58,7 +58,7 @@ function BooleanFilter (executionContext)
    this .addType (X3DConstants .BooleanFilter);
 }
 
-BooleanFilter .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+Object .assign (Object .setPrototypeOf (BooleanFilter .prototype, X3DChildNode .prototype),
 {
    constructor: BooleanFilter,
    initialize ()

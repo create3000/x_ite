@@ -58,7 +58,7 @@ function TextureTransformMatrix3D (executionContext)
    this .addType (X3DConstants .TextureTransformMatrix3D);
 }
 
-TextureTransformMatrix3D .prototype = Object .assign (Object .create (X3DSingleTextureTransformNode .prototype),
+Object .assign (Object .setPrototypeOf (TextureTransformMatrix3D .prototype, X3DSingleTextureTransformNode .prototype),
 {
    constructor: TextureTransformMatrix3D,
    initialize ()

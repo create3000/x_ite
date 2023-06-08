@@ -59,7 +59,7 @@ function Matrix3VertexAttribute (executionContext)
    this .addType (X3DConstants .Matrix3VertexAttribute);
 }
 
-Matrix3VertexAttribute .prototype = Object .assign (Object .create (X3DVertexAttributeNode .prototype),
+Object .assign (Object .setPrototypeOf (Matrix3VertexAttribute .prototype, X3DVertexAttributeNode .prototype),
 {
    constructor: Matrix3VertexAttribute,
    initialize ()

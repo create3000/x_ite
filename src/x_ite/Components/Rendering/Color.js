@@ -58,7 +58,7 @@ function Color (executionContext)
    this .addType (X3DConstants .Color);
 }
 
-Color .prototype = Object .assign (Object .create (X3DColorNode .prototype),
+Object .assign (Object .setPrototypeOf (Color .prototype, X3DColorNode .prototype),
 {
    constructor: Color,
    initialize ()

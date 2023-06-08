@@ -58,7 +58,7 @@ function CADLayer (executionContext)
    this .addType (X3DConstants .CADLayer);
 }
 
-CADLayer .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
+Object .assign (Object .setPrototypeOf (CADLayer .prototype, X3DGroupingNode .prototype),
 {
    constructor: CADLayer,
 });

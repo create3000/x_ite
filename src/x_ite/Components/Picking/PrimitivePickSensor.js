@@ -65,7 +65,7 @@ function PrimitivePickSensor (executionContext)
    this .picker              = new VolumePicker ();
 }
 
-PrimitivePickSensor .prototype = Object .assign (Object .create (X3DPickSensorNode .prototype),
+Object .assign (Object .setPrototypeOf (PrimitivePickSensor .prototype, X3DPickSensorNode .prototype),
 {
    constructor: PrimitivePickSensor,
    initialize ()

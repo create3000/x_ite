@@ -63,7 +63,7 @@ function Disk2D (executionContext)
    this ._outerRadius .setUnit ("length");
 }
 
-Disk2D .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
+Object .assign (Object .setPrototypeOf (Disk2D .prototype, X3DGeometryNode .prototype),
 {
    constructor: Disk2D,
    initialize ()

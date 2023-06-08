@@ -58,7 +58,7 @@ function AnnotationTarget (executionContext)
    this .addType (X3DConstants .AnnotationTarget);
 }
 
-AnnotationTarget .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+Object .assign (Object .setPrototypeOf (AnnotationTarget .prototype, X3DChildNode .prototype),
 {
    constructor: AnnotationTarget,
    initialize ()

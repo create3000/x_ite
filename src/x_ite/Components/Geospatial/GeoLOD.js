@@ -84,7 +84,7 @@ function GeoLOD (executionContext)
    this .modelViewMatrix  = new Matrix4 ();
 }
 
-GeoLOD .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototype),
    X3DBoundedObject .prototype,
    X3DGeospatialObject .prototype,
 {

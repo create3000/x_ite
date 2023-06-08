@@ -64,7 +64,7 @@ function FillProperties (executionContext)
    this .hatchColor = new Float32Array (3);
 }
 
-FillProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
+Object .assign (Object .setPrototypeOf (FillProperties .prototype, X3DAppearanceChildNode .prototype),
 {
    constructor: FillProperties,
    initialize ()

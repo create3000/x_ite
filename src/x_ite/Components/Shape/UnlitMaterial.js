@@ -58,7 +58,7 @@ function UnlitMaterial (executionContext)
    this .addType (X3DConstants .UnlitMaterial);
 }
 
-UnlitMaterial .prototype = Object .assign (Object .create (X3DOneSidedMaterialNode .prototype),
+Object .assign (Object .setPrototypeOf (UnlitMaterial .prototype, X3DOneSidedMaterialNode .prototype),
 {
    constructor: UnlitMaterial,
    initialize ()

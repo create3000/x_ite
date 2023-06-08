@@ -58,7 +58,7 @@ function X3DSingleTextureTransformNode (executionContext)
    this .matrixArray = new Float32Array (Matrix4 .Identity);
 }
 
-X3DSingleTextureTransformNode .prototype = Object .assign (Object .create (X3DTextureTransformNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DSingleTextureTransformNode .prototype, X3DTextureTransformNode .prototype),
 {
    constructor: X3DSingleTextureTransformNode,
    getCount ()

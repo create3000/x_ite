@@ -59,7 +59,7 @@ function Normal (executionContext)
    this .addType (X3DConstants .Normal);
 }
 
-Normal .prototype = Object .assign (Object .create (X3DNormalNode .prototype),
+Object .assign (Object .setPrototypeOf (Normal .prototype, X3DNormalNode .prototype),
 {
    constructor: Normal,
    initialize ()

@@ -58,7 +58,7 @@ function Convolver (executionContext)
    this .addType (X3DConstants .Convolver);
 }
 
-Convolver .prototype = Object .assign (Object .create (X3DSoundProcessingNode .prototype),
+Object .assign (Object .setPrototypeOf (Convolver .prototype, X3DSoundProcessingNode .prototype),
 {
    constructor: Convolver,
 });

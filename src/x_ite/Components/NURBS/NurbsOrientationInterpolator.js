@@ -73,7 +73,7 @@ function NurbsOrientationInterpolator (executionContext)
    this .sampleOptions = { resolution: [ 128 ] };
 }
 
-NurbsOrientationInterpolator .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+Object .assign (Object .setPrototypeOf (NurbsOrientationInterpolator .prototype, X3DChildNode .prototype),
 {
    constructor: NurbsOrientationInterpolator,
    initialize ()

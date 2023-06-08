@@ -58,7 +58,7 @@ function TextAnnotation (executionContext)
    this .addType (X3DConstants .TextAnnotation);
 }
 
-TextAnnotation .prototype = Object .assign (Object .create (X3DAnnotationNode .prototype),
+Object .assign (Object .setPrototypeOf (TextAnnotation .prototype, X3DAnnotationNode .prototype),
 {
    constructor: TextAnnotation,
    initialize ()

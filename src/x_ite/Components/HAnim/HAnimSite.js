@@ -58,7 +58,7 @@ function HAnimSite (executionContext)
    this .addType (X3DConstants .HAnimSite);
 }
 
-HAnimSite .prototype = Object .assign (Object .create (X3DTransformNode .prototype),
+Object .assign (Object .setPrototypeOf (HAnimSite .prototype, X3DTransformNode .prototype),
 {
    constructor: HAnimSite,
 });

@@ -65,7 +65,7 @@ function X3DEnvironmentalSensorNode (executionContext)
    this .currentTraversed = true;
 }
 
-X3DEnvironmentalSensorNode .prototype = Object .assign (Object .create (X3DSensorNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DEnvironmentalSensorNode .prototype, X3DSensorNode .prototype),
 {
    constructor: X3DEnvironmentalSensorNode,
    initialize ()

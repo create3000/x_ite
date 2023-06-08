@@ -69,7 +69,7 @@ function OrientationChaser (executionContext)
    this ._value_changed      .setUnit ("angle");
 }
 
-OrientationChaser .prototype = Object .assign (Object .create (X3DChaserNode .prototype),
+Object .assign (Object .setPrototypeOf (OrientationChaser .prototype, X3DChaserNode .prototype),
 {
    constructor: OrientationChaser,
    getVector ()

@@ -66,7 +66,7 @@ function X3DRigidJointNode (executionContext)
    this .output                = false;
 }
 
-X3DRigidJointNode .prototype = Object .assign (Object .create (X3DNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DRigidJointNode .prototype, X3DNode .prototype),
 {
    constructor: X3DRigidJointNode,
    initialize ()

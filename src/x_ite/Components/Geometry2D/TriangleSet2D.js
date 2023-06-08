@@ -62,7 +62,7 @@ function TriangleSet2D (executionContext)
    this ._vertices .setUnit ("length");
 }
 
-TriangleSet2D .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
+Object .assign (Object .setPrototypeOf (TriangleSet2D .prototype, X3DGeometryNode .prototype),
 {
    constructor: TriangleSet2D,
    build ()

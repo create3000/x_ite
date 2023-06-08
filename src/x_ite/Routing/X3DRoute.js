@@ -74,7 +74,7 @@ function X3DRoute (executionContext, sourceNode, sourceField, destinationNode, d
    destinationField .addInputRoute (this);
 }
 
-X3DRoute .prototype = Object .assign (Object .create (X3DObject .prototype),
+Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototype),
 {
    constructor: X3DRoute,
    getExecutionContext ()

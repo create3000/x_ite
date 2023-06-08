@@ -123,7 +123,7 @@ function OBJParser (scene)
    this .lastIndex       = 0;
 }
 
-OBJParser .prototype = Object .assign (Object .create (X3DParser .prototype),
+Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototype),
    X3DOptimizer .prototype,
 {
    constructor: OBJParser,

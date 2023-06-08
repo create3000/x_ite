@@ -60,7 +60,7 @@ function ColorRGBA (executionContext)
    this .setTransparent (true);
 }
 
-ColorRGBA .prototype = Object .assign (Object .create (X3DColorNode .prototype),
+Object .assign (Object .setPrototypeOf (ColorRGBA .prototype, X3DColorNode .prototype),
 {
    constructor: ColorRGBA,
    initialize ()

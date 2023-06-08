@@ -96,7 +96,7 @@ function X3DBaseNode (executionContext)
       this .addPredefinedField (fieldDefinition);
 }
 
-X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototype),
+Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DEventObject .prototype),
 {
    constructor: X3DBaseNode,
    [_fieldDefinitions]: new FieldDefinitionArray ([ ]),

@@ -132,7 +132,7 @@ function X3DBrowserContext (element)
    this [_displayTime]    = new StopWatch ();
 };
 
-X3DBrowserContext .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNode .prototype),
    X3DCoreContext .prototype,
    X3DEnvironmentalEffectsContext .prototype,
    X3DGeometry3DContext .prototype,

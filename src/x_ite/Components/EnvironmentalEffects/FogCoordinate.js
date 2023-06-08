@@ -60,7 +60,7 @@ function FogCoordinate (executionContext)
    this ._depth .setUnit ("length");
 }
 
-FogCoordinate .prototype = Object .assign (Object .create (X3DGeometricPropertyNode .prototype),
+Object .assign (Object .setPrototypeOf (FogCoordinate .prototype, X3DGeometricPropertyNode .prototype),
 {
    constructor: FogCoordinate,
    initialize ()

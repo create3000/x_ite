@@ -53,7 +53,7 @@ function UnitInfoArray (values = [ ])
    return X3DInfoArray .call (this, Array .from (values, value => [value .category, value]), UnitInfo);
 }
 
-UnitInfoArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
+Object .assign (Object .setPrototypeOf (UnitInfoArray .prototype, X3DInfoArray .prototype),
 {
    constructor: UnitInfoArray,
 });

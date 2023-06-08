@@ -275,7 +275,7 @@ function SpotLight (executionContext)
    this ._cutOffAngle .setUnit ("angle");
 }
 
-SpotLight .prototype = Object .assign (Object .create (X3DLightNode .prototype),
+Object .assign (Object .setPrototypeOf (SpotLight .prototype, X3DLightNode .prototype),
 {
    constructor: SpotLight,
    getAttenuation ()

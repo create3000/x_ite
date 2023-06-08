@@ -61,7 +61,7 @@ function GeoOrigin (executionContext)
    this .radians = false;
 }
 
-GeoOrigin .prototype = Object .assign (Object .create (X3DNode .prototype),
+Object .assign (Object .setPrototypeOf (GeoOrigin .prototype, X3DNode .prototype),
 {
    constructor: GeoOrigin,
    initialize ()

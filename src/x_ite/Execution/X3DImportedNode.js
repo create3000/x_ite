@@ -69,7 +69,7 @@ function X3DImportedNode (executionContext, inlineNode, exportedName, importedNa
 }
 
 // Must be of type X3DNode, to get routes work.
-X3DImportedNode .prototype = Object .assign (Object .create (X3DNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DNode .prototype),
 {
    constructor: X3DImportedNode,
    getInlineNode ()

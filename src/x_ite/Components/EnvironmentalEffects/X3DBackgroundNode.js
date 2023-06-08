@@ -86,7 +86,7 @@ function X3DBackgroundNode (executionContext)
    this .texturesAlphaContext  = new GeometryContext ({ textureNode: true, alphaMode: AlphaMode .BLEND });
 }
 
-X3DBackgroundNode .prototype = Object .assign (Object .create (X3DBindableNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindableNode .prototype),
 {
    constructor: X3DBackgroundNode,
    initialize ()

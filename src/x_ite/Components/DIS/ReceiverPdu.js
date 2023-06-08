@@ -60,7 +60,7 @@ function ReceiverPdu (executionContext)
    this .addType (X3DConstants .ReceiverPdu);
 }
 
-ReceiverPdu .prototype = Object .assign (Object .create (X3DSensorNode .prototype),
+Object .assign (Object .setPrototypeOf (ReceiverPdu .prototype, X3DSensorNode .prototype),
    X3DBoundedObject .prototype,
 {
    constructor: ReceiverPdu,

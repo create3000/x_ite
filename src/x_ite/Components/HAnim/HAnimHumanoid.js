@@ -82,7 +82,7 @@ function HAnimHumanoid (executionContext)
    this .changed        = false;
 }
 
-HAnimHumanoid .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .prototype),
    X3DBoundedObject .prototype,
 {
    constructor: HAnimHumanoid,

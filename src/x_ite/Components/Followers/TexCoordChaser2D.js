@@ -63,7 +63,7 @@ function TexCoordChaser2D (executionContext)
    this .addType (X3DConstants .TexCoordChaser2D);
 }
 
-TexCoordChaser2D .prototype = Object .assign (Object .create (X3DChaserNode .prototype),
+Object .assign (Object .setPrototypeOf (TexCoordChaser2D .prototype, X3DChaserNode .prototype),
    X3DArrayChaserObject .prototype,
 {
    constructor: TexCoordChaser2D,

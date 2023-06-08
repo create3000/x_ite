@@ -59,7 +59,7 @@ function ScalarInterpolator (executionContext)
    this .addType (X3DConstants .ScalarInterpolator);
 }
 
-ScalarInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
+Object .assign (Object .setPrototypeOf (ScalarInterpolator .prototype, X3DInterpolatorNode .prototype),
 {
    constructor: ScalarInterpolator,
    initialize ()

@@ -70,7 +70,7 @@ function TwoSidedMaterial (executionContext)
    this .backEmissiveColor = new Float32Array (3);
 }
 
-TwoSidedMaterial .prototype = Object .assign (Object .create (X3DMaterialNode .prototype),
+Object .assign (Object .setPrototypeOf (TwoSidedMaterial .prototype, X3DMaterialNode .prototype),
 {
    constructor: TwoSidedMaterial,
    initialize ()

@@ -61,7 +61,7 @@ function MicrophoneSource (executionContext)
                           "speed", new Fields .SFFloat (1));
 }
 
-MicrophoneSource .prototype = Object .assign (Object .create (X3DSoundSourceNode .prototype),
+Object .assign (Object .setPrototypeOf (MicrophoneSource .prototype, X3DSoundSourceNode .prototype),
 {
    constructor: MicrophoneSource,
 });

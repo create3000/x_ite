@@ -78,7 +78,7 @@ function FileLoader (node)
    this .controller       = new AbortController ();
 }
 
-FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
+Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .prototype),
 {
    constructor: FileLoader,
    abort ()

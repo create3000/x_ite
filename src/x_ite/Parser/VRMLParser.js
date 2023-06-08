@@ -135,7 +135,7 @@ function VRMLParser (scene)
    X3DParser .call (this, scene);
 }
 
-VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
+Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .prototype),
 {
    constructor: VRMLParser,
    accessTypes:

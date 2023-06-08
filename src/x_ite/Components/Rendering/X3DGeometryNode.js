@@ -155,7 +155,7 @@ Object .defineProperty (X3DGeometryNode, "createArray",
    },
 })
 
-X3DGeometryNode .prototype = Object .assign (Object .create (X3DNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .prototype),
 {
    constructor: X3DGeometryNode,
    setup ()

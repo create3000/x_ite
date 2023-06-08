@@ -60,7 +60,7 @@ function DISEntityTypeMapping (executionContext)
    this .addType (X3DConstants .DISEntityTypeMapping);
 }
 
-DISEntityTypeMapping .prototype = Object .assign (Object .create (X3DInfoNode .prototype),
+Object .assign (Object .setPrototypeOf (DISEntityTypeMapping .prototype, X3DInfoNode .prototype),
    X3DUrlObject .prototype,
 {
    constructor: DISEntityTypeMapping,

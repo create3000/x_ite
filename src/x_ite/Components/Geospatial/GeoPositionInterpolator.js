@@ -66,7 +66,7 @@ function GeoPositionInterpolator (executionContext)
    this .geocentric = new Geocentric ();
 }
 
-GeoPositionInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
+Object .assign (Object .setPrototypeOf (GeoPositionInterpolator .prototype, X3DInterpolatorNode .prototype),
    X3DGeospatialObject .prototype,
 {
    constructor: GeoPositionInterpolator,

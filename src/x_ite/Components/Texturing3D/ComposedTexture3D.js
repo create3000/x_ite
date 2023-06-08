@@ -64,7 +64,7 @@ function ComposedTexture3D (executionContext)
    this .textureNodes = [ ];
 }
 
-ComposedTexture3D .prototype = Object .assign (Object .create (X3DTexture3DNode .prototype),
+Object .assign (Object .setPrototypeOf (ComposedTexture3D .prototype, X3DTexture3DNode .prototype),
 {
    constructor: ComposedTexture3D,
    initialize ()

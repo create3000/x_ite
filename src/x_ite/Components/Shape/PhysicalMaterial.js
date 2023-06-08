@@ -62,7 +62,7 @@ function PhysicalMaterial (executionContext)
    this .baseColor = new Float32Array (3);
 }
 
-PhysicalMaterial .prototype = Object .assign (Object .create (X3DOneSidedMaterialNode .prototype),
+Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSidedMaterialNode .prototype),
 {
    constructor: PhysicalMaterial,
    initialize ()

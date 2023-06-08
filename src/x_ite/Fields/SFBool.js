@@ -52,7 +52,7 @@ function SFBool (value)
    return X3DField .call (this, !! value);
 }
 
-SFBool .prototype = Object .assign (Object .create (X3DField .prototype),
+Object .assign (Object .setPrototypeOf (SFBool .prototype, X3DField .prototype),
 {
    constructor: SFBool,
    copy ()

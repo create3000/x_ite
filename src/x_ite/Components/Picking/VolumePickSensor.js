@@ -66,7 +66,7 @@ function VolumePickSensor (executionContext)
    this .picker              = new VolumePicker ();
 }
 
-VolumePickSensor .prototype = Object .assign (Object .create (X3DPickSensorNode .prototype),
+Object .assign (Object .setPrototypeOf (VolumePickSensor .prototype, X3DPickSensorNode .prototype),
 {
    constructor: VolumePickSensor,
    initialize ()

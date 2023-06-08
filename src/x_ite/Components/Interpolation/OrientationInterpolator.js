@@ -62,7 +62,7 @@ function OrientationInterpolator (executionContext)
    this ._value_changed .setUnit ("angle");
 }
 
-OrientationInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
+Object .assign (Object .setPrototypeOf (OrientationInterpolator .prototype, X3DInterpolatorNode .prototype),
 {
    constructor: OrientationInterpolator,
    initialize ()

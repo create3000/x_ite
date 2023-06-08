@@ -83,7 +83,7 @@ function LookAtViewer (executionContext, navigationInfo)
    this .orientationChaser      = new OrientationChaser (executionContext);
 }
 
-LookAtViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
+Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, X3DViewer .prototype),
 {
    constructor: LookAtViewer,
    initialize ()

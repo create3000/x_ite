@@ -57,7 +57,7 @@ function UnitInfo (category, name, conversionFactor)
    });
 }
 
-UnitInfo .prototype = Object .assign (Object .create (X3DObject .prototype),
+Object .assign (Object .setPrototypeOf (UnitInfo .prototype, X3DObject .prototype),
 {
    constructor: UnitInfo,
    toVRMLStream (generator)

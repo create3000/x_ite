@@ -61,7 +61,7 @@ function OscillatorSource (executionContext)
                           "speed", new Fields .SFFloat (1));
 }
 
-OscillatorSource .prototype = Object .assign (Object .create (X3DSoundSourceNode .prototype),
+Object .assign (Object .setPrototypeOf (OscillatorSource .prototype, X3DSoundSourceNode .prototype),
 {
    constructor: OscillatorSource,
 });

@@ -178,7 +178,7 @@ function SFNode (value)
    return proxy;
 }
 
-SFNode .prototype = Object .assign (Object .create (X3DField .prototype),
+Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
 {
    constructor: SFNode,
    [_target]: null,

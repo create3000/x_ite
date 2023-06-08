@@ -61,7 +61,7 @@ function X3DChildObject ()
 
 if (DEVELOPMENT)
 {
-   X3DChildObject .prototype = Object .assign (Object .create (X3DObject .prototype),
+   Object .assign (Object .setPrototypeOf (X3DChildObject .prototype, X3DObject .prototype),
    {
       constructor: X3DChildObject,
       [_modificationTime]: 0,
@@ -150,7 +150,7 @@ if (DEVELOPMENT)
 }
 else
 {
-   X3DChildObject .prototype = Object .assign (Object .create (X3DObject .prototype),
+   Object .assign (Object .setPrototypeOf (X3DChildObject .prototype, X3DObject .prototype),
    {
       constructor: X3DChildObject,
       [_modificationTime]: 0,

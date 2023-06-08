@@ -55,7 +55,7 @@ function X3DComposableVolumeRenderStyleNode (executionContext)
    this .addType (X3DConstants .X3DComposableVolumeRenderStyleNode);
 }
 
-X3DComposableVolumeRenderStyleNode .prototype = Object .assign (Object .create (X3DVolumeRenderStyleNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DComposableVolumeRenderStyleNode .prototype, X3DVolumeRenderStyleNode .prototype),
 {
    constructor: X3DComposableVolumeRenderStyleNode,
 });

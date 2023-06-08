@@ -68,7 +68,7 @@ function MovieTexture (executionContext)
    this .urlStack = new Fields .MFString ();
 }
 
-MovieTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prototype),
+Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNode .prototype),
    X3DSoundSourceNode .prototype,
    X3DUrlObject .prototype,
 {

@@ -59,7 +59,7 @@ function PositionChaser2D (executionContext)
    this .addType (X3DConstants .PositionChaser2D);
 }
 
-PositionChaser2D .prototype = Object .assign (Object .create (X3DChaserNode .prototype),
+Object .assign (Object .setPrototypeOf (PositionChaser2D .prototype, X3DChaserNode .prototype),
 {
    constructor: PositionChaser2D,
    getVector ()

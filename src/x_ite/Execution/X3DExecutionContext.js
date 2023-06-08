@@ -97,7 +97,7 @@ function X3DExecutionContext (executionContext, outerNode = null)
    this [_routes]         .addParent (this);
 }
 
-X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseNode .prototype),
 {
    constructor: X3DExecutionContext,
    initialize ()

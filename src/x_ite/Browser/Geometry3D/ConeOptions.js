@@ -56,7 +56,7 @@ function ConeOptions (executionContext)
                           "yDimension", new Fields .SFInt32 (1))
 }
 
-ConeOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+Object .assign (Object .setPrototypeOf (ConeOptions .prototype, X3DBaseNode .prototype),
 {
    constructor: ConeOptions,
 });

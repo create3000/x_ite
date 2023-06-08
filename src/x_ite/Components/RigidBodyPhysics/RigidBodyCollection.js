@@ -85,7 +85,7 @@ function RigidBodyCollection (executionContext)
    this .otherJointNodes        = [ ];
 }
 
-RigidBodyCollection .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChildNode .prototype),
 {
    constructor: RigidBodyCollection,
    initialize ()

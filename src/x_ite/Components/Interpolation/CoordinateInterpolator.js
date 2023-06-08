@@ -59,7 +59,7 @@ function CoordinateInterpolator (executionContext)
    this .addType (X3DConstants .CoordinateInterpolator);
 }
 
-CoordinateInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
+Object .assign (Object .setPrototypeOf (CoordinateInterpolator .prototype, X3DInterpolatorNode .prototype),
 {
    constructor: CoordinateInterpolator,
    set_keyValue__ () { },

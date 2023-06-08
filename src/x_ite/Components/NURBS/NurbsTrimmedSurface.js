@@ -61,7 +61,7 @@ function NurbsTrimmedSurface (executionContext)
    this .trimmingContourNodes = [ ];
 }
 
-NurbsTrimmedSurface .prototype = Object .assign (Object .create (X3DNurbsSurfaceGeometryNode .prototype),
+Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbsSurfaceGeometryNode .prototype),
 {
    constructor: NurbsTrimmedSurface,
    initialize ()

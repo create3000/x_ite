@@ -74,7 +74,7 @@ function OrthoViewpoint (executionContext)
    this .fieldOfViewOffsetInterpolator3 = new ScalarInterpolator (this .getBrowser () .getPrivateScene ());
 }
 
-OrthoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prototype),
+Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, X3DViewpointNode .prototype),
 {
    constructor: OrthoViewpoint,
    initialize ()

@@ -61,7 +61,7 @@ function X3DFollowerNode (executionContext)
    this .vector = this .getVector ();
 }
 
-X3DFollowerNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DFollowerNode .prototype, X3DChildNode .prototype),
 {
    constructor: X3DFollowerNode,
    initialize ()

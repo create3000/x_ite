@@ -98,7 +98,7 @@ function X3DFontStyleNode (executionContext)
    this .loader      = new FileLoader (this);
 }
 
-X3DFontStyleNode .prototype = Object .assign (Object .create (X3DNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .prototype),
    X3DUrlObject .prototype,
 {
    constructor: X3DFontStyleNode,

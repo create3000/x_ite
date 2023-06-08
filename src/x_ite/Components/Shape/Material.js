@@ -67,7 +67,7 @@ function Material (executionContext)
    this .specularColor = new Float32Array (3);
 }
 
-Material .prototype = Object .assign (Object .create (X3DOneSidedMaterialNode .prototype),
+Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterialNode .prototype),
 {
    constructor: Material,
    initialize ()

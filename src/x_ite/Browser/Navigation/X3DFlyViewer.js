@@ -95,7 +95,7 @@ function X3DFlyViewer (executionContext, navigationInfo)
    this .geometryContext   = new GeometryContext ({ geometryType: 1 });
 }
 
-X3DFlyViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
+Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prototype),
 {
    constructor: X3DFlyViewer,
    initialize ()

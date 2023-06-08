@@ -62,7 +62,7 @@ function CollisionSpace (executionContext)
    this .collisionSpaceNodes = [ ];
 }
 
-CollisionSpace .prototype = Object .assign (Object .create (X3DNBodyCollisionSpaceNode .prototype),
+Object .assign (Object .setPrototypeOf (CollisionSpace .prototype, X3DNBodyCollisionSpaceNode .prototype),
 {
    constructor: CollisionSpace,
    initialize ()

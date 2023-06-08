@@ -64,7 +64,7 @@ function NurbsSurfaceInterpolator (executionContext)
    this .geometry = new NurbsPatchSurface (executionContext);
 }
 
-NurbsSurfaceInterpolator .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+Object .assign (Object .setPrototypeOf (NurbsSurfaceInterpolator .prototype, X3DChildNode .prototype),
 {
    constructor: NurbsSurfaceInterpolator,
    initialize ()

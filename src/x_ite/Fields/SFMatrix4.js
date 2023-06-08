@@ -88,7 +88,7 @@ function SFMatrix4Template (TypeName, SFVec3, double)
       throw new Error ("Invalid arguments.");
    }
 
-   SFMatrix4 .prototype = SFMatrixPrototypeTemplate (SFMatrix4, TypeName, Matrix4, SFVec3, double);
+   SFMatrixPrototypeTemplate (SFMatrix4, TypeName, Matrix4, SFVec3, double);
 
    for (const key of Reflect .ownKeys (SFMatrix4 .prototype))
       Object .defineProperty (SFMatrix4 .prototype, key, { enumerable: false });

@@ -61,7 +61,7 @@ function Box (executionContext)
    this ._size .setUnit ("length");
 }
 
-Box .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
+Object .assign (Object .setPrototypeOf (Box .prototype, X3DGeometryNode .prototype),
 {
    constructor: Box,
    build: (function ()

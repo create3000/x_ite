@@ -58,7 +58,7 @@ function TriangleSet (executionContext)
    this .addType (X3DConstants .TriangleSet);
 }
 
-TriangleSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .prototype),
+Object .assign (Object .setPrototypeOf (TriangleSet .prototype, X3DComposedGeometryNode .prototype),
 {
    constructor: TriangleSet,
    build ()

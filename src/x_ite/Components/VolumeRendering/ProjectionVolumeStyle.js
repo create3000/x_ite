@@ -58,7 +58,7 @@ function ProjectionVolumeStyle (executionContext)
    this .addType (X3DConstants .ProjectionVolumeStyle);
 }
 
-ProjectionVolumeStyle .prototype = Object .assign (Object .create (X3DVolumeRenderStyleNode .prototype),
+Object .assign (Object .setPrototypeOf (ProjectionVolumeStyle .prototype, X3DVolumeRenderStyleNode .prototype),
 {
    constructor: ProjectionVolumeStyle,
    addShaderFields (shaderNode)

@@ -60,7 +60,7 @@ function HAnimDisplacer (executionContext)
    this ._displacements .setUnit ("length");
 }
 
-HAnimDisplacer .prototype = Object .assign (Object .create (X3DGeometricPropertyNode .prototype),
+Object .assign (Object .setPrototypeOf (HAnimDisplacer .prototype, X3DGeometricPropertyNode .prototype),
 {
    constructor: HAnimDisplacer,
 });

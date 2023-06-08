@@ -58,7 +58,7 @@ function BooleanTrigger (executionContext)
    this .addType (X3DConstants .BooleanTrigger);
 }
 
-BooleanTrigger .prototype = Object .assign (Object .create (X3DTriggerNode .prototype),
+Object .assign (Object .setPrototypeOf (BooleanTrigger .prototype, X3DTriggerNode .prototype),
 {
    constructor: BooleanTrigger,
    initialize ()

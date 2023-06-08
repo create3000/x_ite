@@ -58,7 +58,7 @@ function WorldInfo (executionContext)
    this .addType (X3DConstants .WorldInfo);
 }
 
-WorldInfo .prototype = Object .assign (Object .create (X3DInfoNode .prototype),
+Object .assign (Object .setPrototypeOf (WorldInfo .prototype, X3DInfoNode .prototype),
 {
    constructor: WorldInfo,
    initialize ()

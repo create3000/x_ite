@@ -55,7 +55,7 @@ function X3DInfoNode (executionContext)
    this .addType (X3DConstants .X3DInfoNode);
 }
 
-X3DInfoNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DInfoNode .prototype, X3DChildNode .prototype),
 {
    constructor: X3DInfoNode,
 });

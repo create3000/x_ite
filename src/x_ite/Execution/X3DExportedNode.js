@@ -60,7 +60,7 @@ function X3DExportedNode (exportedName, localNode)
    this [_localNode]    = localNode;
 }
 
-X3DExportedNode .prototype = Object .assign (Object .create (X3DObject .prototype),
+Object .assign (Object .setPrototypeOf (X3DExportedNode .prototype, X3DObject .prototype),
 {
    constructor: X3DExportedNode,
    getExportedName ()

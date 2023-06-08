@@ -63,7 +63,7 @@ function CollisionSensor (executionContext)
    this .contactCache = [ ];
 }
 
-CollisionSensor .prototype = Object .assign (Object .create (X3DSensorNode .prototype),
+Object .assign (Object .setPrototypeOf (CollisionSensor .prototype, X3DSensorNode .prototype),
 {
    constructor: CollisionSensor,
    initialize ()

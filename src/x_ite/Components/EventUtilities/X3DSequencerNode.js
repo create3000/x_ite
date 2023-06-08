@@ -58,7 +58,7 @@ function X3DSequencerNode (executionContext)
    this .index = -1;
 }
 
-X3DSequencerNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DSequencerNode .prototype, X3DChildNode .prototype),
 {
    constructor: X3DSequencerNode,
    initialize ()

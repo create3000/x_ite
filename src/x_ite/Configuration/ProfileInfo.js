@@ -58,7 +58,7 @@ function ProfileInfo (name, title, providerUrl, components)
    });
 }
 
-ProfileInfo .prototype = Object .assign (Object .create (X3DObject .prototype),
+Object .assign (Object .setPrototypeOf (ProfileInfo .prototype, X3DObject .prototype),
 {
    constructor: ProfileInfo,
    toVRMLStream (generator)

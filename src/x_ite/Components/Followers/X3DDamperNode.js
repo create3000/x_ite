@@ -56,7 +56,7 @@ function X3DDamperNode (executionContext)
    this .addType (X3DConstants .X3DDamperNode);
 }
 
-X3DDamperNode .prototype = Object .assign (Object .create (X3DFollowerNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DDamperNode .prototype, X3DFollowerNode .prototype),
 {
    constructor: X3DDamperNode,
    initialize ()

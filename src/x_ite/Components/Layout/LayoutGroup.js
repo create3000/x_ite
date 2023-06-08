@@ -68,7 +68,7 @@ function LayoutGroup (executionContext)
    this .screenMatrix    = new Matrix4 ();
 }
 
-LayoutGroup .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
+Object .assign (Object .setPrototypeOf (LayoutGroup .prototype, X3DGroupingNode .prototype),
 {
    constructor: LayoutGroup,
    initialize ()

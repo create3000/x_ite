@@ -59,7 +59,7 @@ function Shape (executionContext)
    this .addType (X3DConstants .Shape);
 }
 
-Shape .prototype = Object .assign (Object .create (X3DShapeNode .prototype),
+Object .assign (Object .setPrototypeOf (Shape .prototype, X3DShapeNode .prototype),
 {
    constructor: Shape,
    initialize ()

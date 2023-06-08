@@ -61,7 +61,7 @@ function Contour2D (executionContext)
    this .childNodes = [ ];
 }
 
-Contour2D .prototype = Object .assign (Object .create (X3DNode .prototype),
+Object .assign (Object .setPrototypeOf (Contour2D .prototype, X3DNode .prototype),
 {
    constructor: Contour2D,
    initialize ()

@@ -65,7 +65,7 @@ function X3DChildNode (executionContext)
    this ._isPickableObject .setAccessType (X3DConstants .outputOnly);
 }
 
-X3DChildNode .prototype = Object .assign (Object .create (X3DNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DChildNode .prototype, X3DNode .prototype),
 {
    constructor: X3DChildNode,
    setCameraObject (value)

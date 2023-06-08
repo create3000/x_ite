@@ -58,7 +58,7 @@ function LineProperties (executionContext)
    this .addType (X3DConstants .LineProperties);
 }
 
-LineProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
+Object .assign (Object .setPrototypeOf (LineProperties .prototype, X3DAppearanceChildNode .prototype),
 {
    constructor: LineProperties,
    initialize ()

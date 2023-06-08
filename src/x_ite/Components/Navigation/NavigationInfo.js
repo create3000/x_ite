@@ -75,7 +75,7 @@ function NavigationInfo (executionContext)
    this ._visibilityLimit .setUnit ("speed");
 }
 
-NavigationInfo .prototype = Object .assign (Object .create (X3DBindableNode .prototype),
+Object .assign (Object .setPrototypeOf (NavigationInfo .prototype, X3DBindableNode .prototype),
 {
    constructor: NavigationInfo,
    initialize ()

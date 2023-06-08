@@ -92,7 +92,7 @@ function X3DViewpointNode (executionContext)
    this .fieldOfViewScaleInterpolator = new ScalarInterpolator      (browser .getPrivateScene ());
 }
 
-X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindableNode .prototype),
 {
    constructor: X3DViewpointNode,
    initialize ()

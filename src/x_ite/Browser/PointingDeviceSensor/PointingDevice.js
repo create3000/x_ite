@@ -60,7 +60,7 @@ function PointingDevice (executionContext)
    this .motionTime = 0;
 }
 
-PointingDevice .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .prototype),
 {
    constructor: PointingDevice,
    initialize ()

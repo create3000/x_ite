@@ -58,7 +58,7 @@ function ChannelSplitter (executionContext)
    this .addType (X3DConstants .ChannelSplitter);
 }
 
-ChannelSplitter .prototype = Object .assign (Object .create (X3DSoundChannelNode .prototype),
+Object .assign (Object .setPrototypeOf (ChannelSplitter .prototype, X3DSoundChannelNode .prototype),
 {
    constructor: ChannelSplitter,
 });

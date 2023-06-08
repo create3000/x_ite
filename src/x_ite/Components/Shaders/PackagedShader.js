@@ -62,7 +62,7 @@ function PackagedShader (executionContext)
    this .addType (X3DConstants .PackagedShader);
 }
 
-PackagedShader .prototype = Object .assign (Object .create (X3DShaderNode .prototype),
+Object .assign (Object .setPrototypeOf (PackagedShader .prototype, X3DShaderNode .prototype),
    X3DUrlObject .prototype,
    X3DProgrammableShaderObject .prototype,
 {

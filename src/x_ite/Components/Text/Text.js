@@ -65,7 +65,7 @@ function Text (executionContext)
    this ._lineBounds .setUnit ("length");
 }
 
-Text .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
+Object .assign (Object .setPrototypeOf (Text .prototype, X3DGeometryNode .prototype),
 {
    constructor: Text,
    initialize ()

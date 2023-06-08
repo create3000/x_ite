@@ -58,7 +58,7 @@ function WalkViewer (executionContext, navigationInfo)
    X3DFlyViewer .call (this, executionContext, navigationInfo);
 }
 
-WalkViewer .prototype = Object .assign (Object .create (X3DFlyViewer .prototype),
+Object .assign (Object .setPrototypeOf (WalkViewer .prototype, X3DFlyViewer .prototype),
 {
    constructor: WalkViewer,
    initialize ()

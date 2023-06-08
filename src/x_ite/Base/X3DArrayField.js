@@ -52,7 +52,7 @@ function X3DArrayField (value)
    X3DField .call (this, value);
 }
 
-X3DArrayField .prototype = Object .assign (Object .create (X3DField .prototype),
+Object .assign (Object .setPrototypeOf (X3DArrayField .prototype, X3DField .prototype),
 {
    constructor: X3DArrayField,
    // Implement all function also in TypedArray, if possible.

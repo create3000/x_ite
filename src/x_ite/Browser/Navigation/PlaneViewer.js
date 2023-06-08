@@ -72,7 +72,7 @@ function PlaneViewer (executionContext, navigationInfo)
    this .toPoint   = new Vector3 (0, 0, 0);
 }
 
-PlaneViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
+Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, X3DViewer .prototype),
 {
    constructor: PlaneViewer,
    initialize ()

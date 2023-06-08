@@ -61,7 +61,7 @@ function ForcePhysicsModel (executionContext)
    this ._force .setUnit ("force");
 }
 
-ForcePhysicsModel .prototype = Object .assign (Object .create (X3DParticlePhysicsModelNode .prototype),
+Object .assign (Object .setPrototypeOf (ForcePhysicsModel .prototype, X3DParticlePhysicsModelNode .prototype),
 {
    constructor: ForcePhysicsModel,
    addForce: (function ()

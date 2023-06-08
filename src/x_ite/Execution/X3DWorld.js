@@ -66,7 +66,7 @@ function X3DWorld (executionContext)
    this .layer0          = new Layer (executionContext);
 }
 
-X3DWorld .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DWorld .prototype, X3DBaseNode .prototype),
 {
    constructor: X3DWorld,
    initialize ()

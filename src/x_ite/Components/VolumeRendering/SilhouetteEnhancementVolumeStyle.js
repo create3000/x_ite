@@ -59,7 +59,7 @@ function SilhouetteEnhancementVolumeStyle (executionContext)
    this .addType (X3DConstants .SilhouetteEnhancementVolumeStyle);
 }
 
-SilhouetteEnhancementVolumeStyle .prototype = Object .assign (Object .create (X3DComposableVolumeRenderStyleNode .prototype),
+Object .assign (Object .setPrototypeOf (SilhouetteEnhancementVolumeStyle .prototype, X3DComposableVolumeRenderStyleNode .prototype),
 {
    constructor: SilhouetteEnhancementVolumeStyle,
    initialize ()

@@ -57,7 +57,7 @@ function JSONParser (scene)
    this .namespace = "http://www.web3d.org/specifications/x3d-namespace";
 }
 
-JSONParser .prototype = Object .assign (Object .create (X3DParser .prototype),
+Object .assign (Object .setPrototypeOf (JSONParser .prototype, X3DParser .prototype),
 {
    constructor: JSONParser,
    getEncoding ()

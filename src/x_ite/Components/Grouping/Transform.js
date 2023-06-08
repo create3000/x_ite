@@ -58,7 +58,7 @@ function Transform (executionContext)
    this .addType (X3DConstants .Transform);
 }
 
-Transform .prototype = Object .assign (Object .create (X3DTransformNode .prototype),
+Object .assign (Object .setPrototypeOf (Transform .prototype, X3DTransformNode .prototype),
 {
    constructor: Transform,
 });

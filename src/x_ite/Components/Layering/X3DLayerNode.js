@@ -91,7 +91,7 @@ function X3DLayerNode (executionContext, defaultViewpoint, groupNode)
    this .defaultFog        .setHidden (true);
 }
 
-X3DLayerNode .prototype = Object .assign (Object .create (X3DNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .prototype),
    X3DRenderObject .prototype,
 {
    constructor: X3DLayerNode,

@@ -68,7 +68,7 @@ function CollisionCollection (executionContext)
    this .collisionSpaceNodes = [ ];
 }
 
-CollisionCollection .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+Object .assign (Object .setPrototypeOf (CollisionCollection .prototype, X3DChildNode .prototype),
 {
    constructor: CollisionCollection,
    initialize ()

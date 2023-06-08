@@ -63,7 +63,7 @@ function X3DComposedGeometryNode (executionContext)
    this .coordNode    = null;
 }
 
-X3DComposedGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, X3DGeometryNode .prototype),
 {
    constructor: X3DComposedGeometryNode,
    initialize ()

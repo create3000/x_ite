@@ -65,7 +65,7 @@ function X3DMaterialNode (executionContext)
    this .shaderNodes = this .getBrowser () .getShaders ();
 }
 
-X3DMaterialNode .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanceChildNode .prototype),
 {
    constructor: X3DMaterialNode,
    initialize ()

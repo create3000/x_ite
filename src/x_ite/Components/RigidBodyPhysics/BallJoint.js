@@ -67,7 +67,7 @@ function BallJoint (executionContext)
    this .localAnchorPoint2 = new Vector3 (0, 0, 0);
 }
 
-BallJoint .prototype = Object .assign (Object .create (X3DRigidJointNode .prototype),
+Object .assign (Object .setPrototypeOf (BallJoint .prototype, X3DRigidJointNode .prototype),
 {
    constructor: BallJoint,
    initialize ()

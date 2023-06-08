@@ -59,7 +59,7 @@ function TextureCoordinate (executionContext)
    this .addType (X3DConstants .TextureCoordinate);
 }
 
-TextureCoordinate .prototype = Object .assign (Object .create (X3DSingleTextureCoordinateNode .prototype),
+Object .assign (Object .setPrototypeOf (TextureCoordinate .prototype, X3DSingleTextureCoordinateNode .prototype),
 {
    constructor: TextureCoordinate,
    initialize ()

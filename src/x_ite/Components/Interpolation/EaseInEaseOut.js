@@ -58,7 +58,7 @@ function EaseInEaseOut (executionContext)
    this .addType (X3DConstants .EaseInEaseOut);
 }
 
-EaseInEaseOut .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
+Object .assign (Object .setPrototypeOf (EaseInEaseOut .prototype, X3DInterpolatorNode .prototype),
 {
    constructor: EaseInEaseOut,
    initialize ()

@@ -70,7 +70,7 @@ function CylinderSensor (executionContext)
    this ._offset    .setUnit ("angle");
 }
 
-CylinderSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .prototype),
+Object .assign (Object .setPrototypeOf (CylinderSensor .prototype, X3DDragSensorNode .prototype),
 {
    constructor: CylinderSensor,
    initialize ()

@@ -60,7 +60,7 @@ function SFVecPrototypeTemplate (Constructor, TypeName, Vector, double)
       },
    });
 
-   return Object .assign (Object .create (X3DField .prototype),
+   return Object .assign (Object .setPrototypeOf (Constructor .prototype, X3DField .prototype),
    {
       constructor: Constructor,
       *[Symbol .iterator] ()

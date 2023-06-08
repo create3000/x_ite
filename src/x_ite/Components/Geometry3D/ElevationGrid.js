@@ -73,7 +73,7 @@ function ElevationGrid (executionContext)
    this .coordNode    = null;
 }
 
-ElevationGrid .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
+Object .assign (Object .setPrototypeOf (ElevationGrid .prototype, X3DGeometryNode .prototype),
 {
    constructor: ElevationGrid,
    initialize ()

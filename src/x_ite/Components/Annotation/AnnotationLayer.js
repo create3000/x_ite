@@ -63,7 +63,7 @@ function AnnotationLayer (executionContext)
    this .addType (X3DConstants .AnnotationLayer);
 }
 
-AnnotationLayer .prototype = Object .assign (Object .create (X3DLayerNode .prototype),
+Object .assign (Object .setPrototypeOf (AnnotationLayer .prototype, X3DLayerNode .prototype),
 {
    constructor: AnnotationLayer,
    initialize ()

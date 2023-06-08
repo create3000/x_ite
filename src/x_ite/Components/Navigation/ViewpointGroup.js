@@ -68,7 +68,7 @@ function ViewpointGroup (executionContext)
    this .viewpointGroups  = [ ];
 }
 
-ViewpointGroup .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+Object .assign (Object .setPrototypeOf (ViewpointGroup .prototype, X3DChildNode .prototype),
 {
    constructor: ViewpointGroup,
    initialize ()

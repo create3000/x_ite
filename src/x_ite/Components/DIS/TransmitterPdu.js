@@ -60,7 +60,7 @@ function TransmitterPdu (executionContext)
    this .addType (X3DConstants .TransmitterPdu);
 }
 
-TransmitterPdu .prototype = Object .assign (Object .create (X3DSensorNode .prototype),
+Object .assign (Object .setPrototypeOf (TransmitterPdu .prototype, X3DSensorNode .prototype),
    X3DBoundedObject .prototype,
 {
    constructor: TransmitterPdu,

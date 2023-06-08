@@ -99,7 +99,7 @@ function EnvironmentLight (executionContext)
    this .addType (X3DConstants .EnvironmentLight);
 }
 
-EnvironmentLight .prototype = Object .assign (Object .create (X3DLightNode .prototype),
+Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNode .prototype),
 {
    constructor: EnvironmentLight,
    getLights ()

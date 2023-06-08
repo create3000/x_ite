@@ -59,7 +59,7 @@ function BindableList (executionContext, defaultNode)
    this .removedNodes   = [ ];
 }
 
-BindableList .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+Object .assign (Object .setPrototypeOf (BindableList .prototype, X3DBaseNode .prototype),
 {
    constructor: BindableList,
    get ()

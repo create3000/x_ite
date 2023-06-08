@@ -56,7 +56,7 @@ function X3DBindableNode (executionContext)
    this .addType (X3DConstants .X3DBindableNode);
 }
 
-X3DBindableNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DBindableNode .prototype, X3DChildNode .prototype),
 {
    constructor: X3DBindableNode,
    isCameraObject ()

@@ -66,7 +66,7 @@ function ColorChaser (executionContext)
    this .addType (X3DConstants .ColorChaser);
 }
 
-ColorChaser .prototype = Object .assign (Object .create (X3DChaserNode .prototype),
+Object .assign (Object .setPrototypeOf (ColorChaser .prototype, X3DChaserNode .prototype),
 {
    constructor: ColorChaser,
    getVector ()

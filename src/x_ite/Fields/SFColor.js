@@ -65,7 +65,7 @@ function SFColor (r, g, b)
    throw new Error ("Invalid arguments.");
 }
 
-SFColor .prototype = Object .assign (Object .create (X3DField .prototype),
+Object .assign (Object .setPrototypeOf (SFColor .prototype, X3DField .prototype),
 {
    constructor: SFColor,
    *[Symbol .iterator] ()

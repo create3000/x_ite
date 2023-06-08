@@ -60,7 +60,7 @@ function IconAnnotation (executionContext)
    this .addType (X3DConstants .IconAnnotation);
 }
 
-IconAnnotation .prototype = Object .assign (Object .create (X3DAnnotationNode .prototype),
+Object .assign (Object .setPrototypeOf (IconAnnotation .prototype, X3DAnnotationNode .prototype),
    X3DUrlObject .prototype,
 {
    constructor: IconAnnotation,

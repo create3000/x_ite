@@ -58,7 +58,7 @@ function NurbsPatchSurface (executionContext)
    this .addType (X3DConstants .NurbsPatchSurface);
 }
 
-NurbsPatchSurface .prototype = Object .assign (Object .create (X3DNurbsSurfaceGeometryNode .prototype),
+Object .assign (Object .setPrototypeOf (NurbsPatchSurface .prototype, X3DNurbsSurfaceGeometryNode .prototype),
 {
    constructor: NurbsPatchSurface,
 });

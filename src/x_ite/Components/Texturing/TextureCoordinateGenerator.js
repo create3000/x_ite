@@ -62,7 +62,7 @@ function TextureCoordinateGenerator (executionContext)
    this .parameter = new Float32Array (6);
 }
 
-TextureCoordinateGenerator .prototype = Object .assign (Object .create (X3DSingleTextureCoordinateNode .prototype),
+Object .assign (Object .setPrototypeOf (TextureCoordinateGenerator .prototype, X3DSingleTextureCoordinateNode .prototype),
 {
    constructor: TextureCoordinateGenerator,
    initialize ()

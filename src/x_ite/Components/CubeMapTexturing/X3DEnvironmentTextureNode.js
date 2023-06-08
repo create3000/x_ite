@@ -68,7 +68,7 @@ function X3DEnvironmentTextureNode (executionContext)
    ];
 }
 
-X3DEnvironmentTextureNode .prototype = Object .assign (Object .create (X3DSingleTextureNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DEnvironmentTextureNode .prototype, X3DSingleTextureNode .prototype),
 {
    constructor: X3DEnvironmentTextureNode,
    getTarget ()

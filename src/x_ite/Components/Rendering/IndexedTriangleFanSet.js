@@ -60,7 +60,7 @@ function IndexedTriangleFanSet (executionContext)
    this .triangleIndex = [ ];
 }
 
-IndexedTriangleFanSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .prototype),
+Object .assign (Object .setPrototypeOf (IndexedTriangleFanSet .prototype, X3DComposedGeometryNode .prototype),
 {
    constructor: IndexedTriangleFanSet,
    initialize ()

@@ -58,7 +58,7 @@ function BooleanToggle (executionContext)
    this .addType (X3DConstants .BooleanToggle);
 }
 
-BooleanToggle .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+Object .assign (Object .setPrototypeOf (BooleanToggle .prototype, X3DChildNode .prototype),
 {
    constructor: BooleanToggle,
    initialize ()

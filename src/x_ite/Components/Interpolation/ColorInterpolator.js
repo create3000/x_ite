@@ -61,7 +61,7 @@ function ColorInterpolator (executionContext)
    this .hsv = [ ];
 }
 
-ColorInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
+Object .assign (Object .setPrototypeOf (ColorInterpolator .prototype, X3DInterpolatorNode .prototype),
 {
    constructor: ColorInterpolator,
    initialize ()

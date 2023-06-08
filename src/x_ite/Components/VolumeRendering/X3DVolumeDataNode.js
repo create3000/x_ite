@@ -76,7 +76,7 @@ function X3DVolumeDataNode (executionContext)
    this .setCameraObject (true);
 }
 
-X3DVolumeDataNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, X3DChildNode .prototype),
    X3DBoundedObject .prototype,
 {
    constructor: X3DVolumeDataNode,

@@ -60,7 +60,7 @@ function IcoSphereOptions (executionContext)
                           "order", new Fields .SFInt32 (2))
 }
 
-IcoSphereOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+Object .assign (Object .setPrototypeOf (IcoSphereOptions .prototype, X3DBaseNode .prototype),
 {
    constructor: IcoSphereOptions,
    initialize ()

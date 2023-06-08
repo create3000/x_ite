@@ -276,7 +276,7 @@ function PointLight (executionContext)
    this ._radius   .setUnit ("length");
 }
 
-PointLight .prototype = Object .assign (Object .create (X3DLightNode .prototype),
+Object .assign (Object .setPrototypeOf (PointLight .prototype, X3DLightNode .prototype),
 {
    constructor: PointLight,
    getAttenuation ()

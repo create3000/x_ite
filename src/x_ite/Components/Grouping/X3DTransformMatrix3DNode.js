@@ -60,7 +60,7 @@ function X3DTransformMatrix3DNode (executionContext)
    this .matrix = new Matrix4 ();
 }
 
-X3DTransformMatrix3DNode .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DTransformMatrix3DNode .prototype, X3DGroupingNode .prototype),
 {
    constructor: X3DTransformMatrix3DNode,
    setMatrix (matrix)

@@ -57,7 +57,7 @@ function X3DScriptNode (executionContext)
    this .addType (X3DConstants .X3DScriptNode);
 }
 
-X3DScriptNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DScriptNode .prototype, X3DChildNode .prototype),
    X3DUrlObject .prototype,
 {
    constructor: X3DScriptNode,

@@ -64,7 +64,7 @@ function MultiTextureCoordinate (executionContext)
    this .textureCoordinateNodes = [ ];
 }
 
-MultiTextureCoordinate .prototype = Object .assign (Object .create (X3DTextureCoordinateNode .prototype),
+Object .assign (Object .setPrototypeOf (MultiTextureCoordinate .prototype, X3DTextureCoordinateNode .prototype),
 {
    constructor: MultiTextureCoordinate,
    initialize ()

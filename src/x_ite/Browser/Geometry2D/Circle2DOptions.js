@@ -59,7 +59,7 @@ function Circle2DOptions (executionContext)
    this .vertices = X3DGeometryNode .createArray ();
 }
 
-Circle2DOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+Object .assign (Object .setPrototypeOf (Circle2DOptions .prototype, X3DBaseNode .prototype),
 {
    constructor: Circle2DOptions,
    initialize ()

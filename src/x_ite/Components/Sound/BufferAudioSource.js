@@ -62,7 +62,7 @@ function BufferAudioSource (executionContext)
    this .addChildObjects ("speed", new Fields .SFFloat (1));
 }
 
-BufferAudioSource .prototype = Object .assign (Object .create (X3DSoundSourceNode .prototype),
+Object .assign (Object .setPrototypeOf (BufferAudioSource .prototype, X3DSoundSourceNode .prototype),
    X3DUrlObject .prototype,
 {
    constructor: BufferAudioSource,

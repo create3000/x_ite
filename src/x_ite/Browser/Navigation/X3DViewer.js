@@ -60,7 +60,7 @@ function X3DViewer (executionContext, navigationInfo)
    this .navigationInfo = navigationInfo;
 }
 
-X3DViewer .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DViewer .prototype, X3DBaseNode .prototype),
 {
    constructor: X3DViewer,
    getActiveLayer ()

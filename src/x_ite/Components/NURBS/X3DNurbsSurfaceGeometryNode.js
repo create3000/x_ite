@@ -74,7 +74,7 @@ function X3DNurbsSurfaceGeometryNode (executionContext)
    this .texMesh           = { };
 }
 
-X3DNurbsSurfaceGeometryNode .prototype = Object .assign (Object .create (X3DParametricGeometryNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, X3DParametricGeometryNode .prototype),
 {
    constructor: X3DNurbsSurfaceGeometryNode,
    initialize ()

@@ -70,7 +70,7 @@ function TimeSensor (executionContext)
    this .scale    = 1;
 }
 
-TimeSensor .prototype = Object .assign (Object .create (X3DSensorNode .prototype),
+Object .assign (Object .setPrototypeOf (TimeSensor .prototype, X3DSensorNode .prototype),
    X3DTimeDependentNode .prototype,
 {
    constructor: TimeSensor,

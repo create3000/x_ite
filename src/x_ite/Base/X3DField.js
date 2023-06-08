@@ -70,7 +70,7 @@ function X3DField (value)
    this [_value] = value;
 }
 
-X3DField .prototype = Object .assign (Object .create (X3DChildObject .prototype),
+Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .prototype),
 {
    constructor: X3DField,
    [_value]: null,

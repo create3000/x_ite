@@ -77,7 +77,7 @@ function StaticGroup (executionContext)
    this .shadowBBox = new Box3 ();
 }
 
-StaticGroup .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .prototype),
    X3DBoundedObject .prototype,
 {
    constructor: StaticGroup,

@@ -58,7 +58,7 @@ function RenderingProperties (executionContext)
    this .addAlias ("AntiAliased", this ._Antialiased);
 }
 
-RenderingProperties .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+Object .assign (Object .setPrototypeOf (RenderingProperties .prototype, X3DBaseNode .prototype),
 {
    constructor: RenderingProperties,
    initialize ()

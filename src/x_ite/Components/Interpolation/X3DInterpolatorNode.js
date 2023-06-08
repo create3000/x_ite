@@ -56,7 +56,7 @@ function X3DInterpolatorNode (executionContext)
    this .addType (X3DConstants .X3DInterpolatorNode);
 }
 
-X3DInterpolatorNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DInterpolatorNode .prototype, X3DChildNode .prototype),
 {
    constructor: X3DInterpolatorNode,
    setup ()

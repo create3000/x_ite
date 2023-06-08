@@ -75,7 +75,7 @@ function GeoViewpoint (executionContext)
    this .elevation             = 0;
 }
 
-GeoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prototype),
+Object .assign (Object .setPrototypeOf (GeoViewpoint .prototype, X3DViewpointNode .prototype),
    X3DGeospatialObject .prototype,
 {
    constructor: GeoViewpoint,

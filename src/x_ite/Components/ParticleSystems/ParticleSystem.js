@@ -135,7 +135,7 @@ function ParticleSystem (executionContext)
    this .texCoordOffset           = 0;
 }
 
-ParticleSystem .prototype = Object .assign (Object .create (X3DShapeNode .prototype),
+Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode .prototype),
 {
    constructor: ParticleSystem,
    initialize ()

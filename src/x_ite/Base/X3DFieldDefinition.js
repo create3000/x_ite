@@ -58,7 +58,7 @@ function X3DFieldDefinition (accessType, name, value)
    });
 }
 
-X3DFieldDefinition .prototype = Object .assign (Object .create (X3DObject .prototype),
+Object .assign (Object .setPrototypeOf (X3DFieldDefinition .prototype, X3DObject .prototype),
 {
    constructor: X3DFieldDefinition,
 });

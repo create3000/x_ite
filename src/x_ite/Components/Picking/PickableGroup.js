@@ -62,7 +62,7 @@ function PickableGroup (executionContext)
    this .addType (X3DConstants .PickableGroup);
 }
 
-PickableGroup .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
+Object .assign (Object .setPrototypeOf (PickableGroup .prototype, X3DGroupingNode .prototype),
    X3DPickableObject .prototype,
 {
    constructor: PickableGroup,

@@ -67,7 +67,7 @@ function X3DProtoDeclaration (executionContext)
    this .setLive (false);
 }
 
-X3DProtoDeclaration .prototype = Object .assign (Object .create (X3DProtoDeclarationNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProtoDeclarationNode .prototype),
 {
    constructor: X3DProtoDeclaration,
    initialize ()

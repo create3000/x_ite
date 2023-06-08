@@ -68,7 +68,7 @@ function NurbsCurve2D (executionContext)
    this .array         = [ ];
 }
 
-NurbsCurve2D .prototype = Object .assign (Object .create (X3DNurbsControlCurveNode .prototype),
+Object .assign (Object .setPrototypeOf (NurbsCurve2D .prototype, X3DNurbsControlCurveNode .prototype),
 {
    constructor: NurbsCurve2D,
    getTessellation (numKnots)

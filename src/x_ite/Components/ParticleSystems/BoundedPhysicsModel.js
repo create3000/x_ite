@@ -59,7 +59,7 @@ function BoundedPhysicsModel (executionContext)
    this .addType (X3DConstants .BoundedPhysicsModel);
 }
 
-BoundedPhysicsModel .prototype = Object .assign (Object .create (X3DParticlePhysicsModelNode .prototype),
+Object .assign (Object .setPrototypeOf (BoundedPhysicsModel .prototype, X3DParticlePhysicsModelNode .prototype),
 {
    constructor: BoundedPhysicsModel,
    initialize ()

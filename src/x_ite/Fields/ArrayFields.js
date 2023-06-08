@@ -87,7 +87,7 @@ function MFNode (... args)
    return X3DObjectArrayField .call (this, args);
 }
 
-MFNode .prototype = Object .assign (Object .create (X3DObjectArrayField .prototype),
+Object .assign (Object .setPrototypeOf (MFNode .prototype, X3DObjectArrayField .prototype),
 {
    constructor: MFNode,
    [_cloneCount]: 0,
@@ -388,7 +388,7 @@ function MFString (... args)
    return X3DObjectArrayField .call (this, args);
 }
 
-MFString .prototype = Object .assign (Object .create (X3DObjectArrayField .prototype),
+Object .assign (Object .setPrototypeOf (MFString .prototype, X3DObjectArrayField .prototype),
 {
    constructor: MFString,
    getSingleType ()
@@ -442,7 +442,7 @@ function MFImage (... args)
    return X3DObjectArrayField .call (this, args);
 }
 
-MFImage .prototype = Object .assign (Object .create (X3DObjectArrayField .prototype),
+Object .assign (Object .setPrototypeOf (MFImage .prototype, X3DObjectArrayField .prototype),
 {
    constructor: MFImage,
    getSingleType ()
@@ -470,7 +470,7 @@ function TypedArrayTemplate (TypeName, SingleType, ValueType, ArrayType, Compone
       return X3DTypedArrayField .call (this, args);
    }
 
-   ArrayField .prototype = Object .assign (Object .create (X3DTypedArrayField .prototype),
+   Object .assign (Object .setPrototypeOf (ArrayField .prototype, X3DTypedArrayField .prototype),
    {
       constructor: ArrayField,
       getSingleType ()

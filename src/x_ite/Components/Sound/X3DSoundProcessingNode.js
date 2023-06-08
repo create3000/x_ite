@@ -60,7 +60,7 @@ function X3DSoundProcessingNode (executionContext)
    this .addChildObjects ("loop", new Fields .SFBool ());
 }
 
-X3DSoundProcessingNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DSoundProcessingNode .prototype, X3DChildNode .prototype),
    X3DTimeDependentNode .prototype,
 {
    constructor: X3DSoundProcessingNode,

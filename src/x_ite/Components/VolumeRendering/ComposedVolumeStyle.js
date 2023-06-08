@@ -61,7 +61,7 @@ function ComposedVolumeStyle (executionContext)
    this .renderStyleNodes = [ ];
 }
 
-ComposedVolumeStyle .prototype = Object .assign (Object .create (X3DComposableVolumeRenderStyleNode .prototype),
+Object .assign (Object .setPrototypeOf (ComposedVolumeStyle .prototype, X3DComposableVolumeRenderStyleNode .prototype),
 {
    constructor: ComposedVolumeStyle,
    initialize ()

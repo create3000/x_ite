@@ -60,7 +60,7 @@ function TriangleFanSet (executionContext)
    this .triangleIndex = [ ];
 }
 
-TriangleFanSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .prototype),
+Object .assign (Object .setPrototypeOf (TriangleFanSet .prototype, X3DComposedGeometryNode .prototype),
 {
    constructor: TriangleFanSet,
    initialize ()

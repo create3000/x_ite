@@ -61,7 +61,7 @@ function SplineScalarInterpolator (executionContext)
    this .spline = new CatmullRomSplineInterpolator1 ();
 }
 
-SplineScalarInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
+Object .assign (Object .setPrototypeOf (SplineScalarInterpolator .prototype, X3DInterpolatorNode .prototype),
 {
    constructor: SplineScalarInterpolator,
    initialize ()

@@ -56,7 +56,7 @@ function Rectangle2DOptions (executionContext)
    X3DBaseNode .call (this, executionContext);
 }
 
-Rectangle2DOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+Object .assign (Object .setPrototypeOf (Rectangle2DOptions .prototype, X3DBaseNode .prototype),
 {
    constructor: Rectangle2DOptions,
    initialize ()

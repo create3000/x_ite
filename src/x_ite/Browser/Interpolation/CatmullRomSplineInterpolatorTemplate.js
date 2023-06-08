@@ -55,7 +55,7 @@ function CatmullRomSplineInterpolatorTemplate (Type)
       this .T1 = [ ];
    }
 
-   CatmullRomSplineInterpolatorInstance .prototype = Object .assign (Object .create (CatmullRomSplineInterpolator .prototype),
+   Object .assign (Object .setPrototypeOf (CatmullRomSplineInterpolatorInstance .prototype, CatmullRomSplineInterpolator .prototype),
    {
       constructor: CatmullRomSplineInterpolatorInstance,
       create ()

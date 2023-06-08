@@ -58,7 +58,7 @@ function IntegerSequencer (executionContext)
    this .addType (X3DConstants .IntegerSequencer);
 }
 
-IntegerSequencer .prototype = Object .assign (Object .create (X3DSequencerNode .prototype),
+Object .assign (Object .setPrototypeOf (IntegerSequencer .prototype, X3DSequencerNode .prototype),
 {
    constructor: IntegerSequencer,
    initialize ()

@@ -52,7 +52,7 @@ function SFTime (value)
    return X3DField .call (this, arguments .length ? +value : 0);
 }
 
-SFTime .prototype = Object .assign (Object .create (X3DField .prototype),
+Object .assign (Object .setPrototypeOf (SFTime .prototype, X3DField .prototype),
 {
    constructor: SFTime,
    copy ()

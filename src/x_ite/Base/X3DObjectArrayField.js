@@ -138,7 +138,7 @@ function X3DObjectArrayField (value)
    return proxy;
 }
 
-X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .prototype),
+Object .assign (Object .setPrototypeOf (X3DObjectArrayField .prototype, X3DArrayField .prototype),
 {
    constructor: X3DObjectArrayField,
    [_target]: null,

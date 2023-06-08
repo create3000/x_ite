@@ -68,7 +68,7 @@ function X3DPrototypeInstance (executionContext, protoNode)
    this .addType (X3DConstants .X3DPrototypeInstance);
 }
 
-X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode .prototype),
 {
    constructor: X3DPrototypeInstance,
    create (executionContext)

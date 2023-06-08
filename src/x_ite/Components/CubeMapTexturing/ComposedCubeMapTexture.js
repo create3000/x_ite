@@ -75,7 +75,7 @@ function ComposedCubeMapTexture (executionContext)
    this .textureBits  = new BitSet ();
 }
 
-ComposedCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironmentTextureNode .prototype),
+Object .assign (Object .setPrototypeOf (ComposedCubeMapTexture .prototype, X3DEnvironmentTextureNode .prototype),
 {
    constructor: ComposedCubeMapTexture,
    initialize ()

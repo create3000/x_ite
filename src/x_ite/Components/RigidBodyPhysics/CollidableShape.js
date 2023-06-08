@@ -69,7 +69,7 @@ function CollidableShape (executionContext)
    this .triangleMesh   = null;
 }
 
-CollidableShape .prototype = Object .assign (Object .create (X3DNBodyCollidableNode .prototype),
+Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyCollidableNode .prototype),
 {
    constructor: CollidableShape,
    initialize ()

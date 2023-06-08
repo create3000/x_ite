@@ -53,7 +53,7 @@ function AbstractNodesArray (values = [ ])
    return X3DInfoArray .call (this, Array .from (values, value => [value .typeName, value]), Function);
 }
 
-AbstractNodesArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
+Object .assign (Object .setPrototypeOf (AbstractNodesArray .prototype, X3DInfoArray .prototype),
 {
    constructor: AbstractNodesArray,
    add (typeName, AbstractNode)

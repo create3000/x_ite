@@ -60,7 +60,7 @@ function TriangleStripSet (executionContext)
    this .triangleIndex = [ ];
 }
 
-TriangleStripSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .prototype),
+Object .assign (Object .setPrototypeOf (TriangleStripSet .prototype, X3DComposedGeometryNode .prototype),
 {
    constructor: TriangleStripSet,
    initialize ()

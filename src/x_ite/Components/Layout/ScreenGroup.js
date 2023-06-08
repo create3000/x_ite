@@ -62,7 +62,7 @@ function ScreenGroup (executionContext)
    this .matrix = new Matrix4 ();
 }
 
-ScreenGroup .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
+Object .assign (Object .setPrototypeOf (ScreenGroup .prototype, X3DGroupingNode .prototype),
 {
    constructor: ScreenGroup,
    getBBox (bbox, shadows)

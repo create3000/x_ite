@@ -58,7 +58,7 @@ function X3DSingleTextureCoordinateNode (executionContext)
    this .texCoordArray = X3DGeometryNode .createArray ();
 }
 
-X3DSingleTextureCoordinateNode .prototype = Object .assign (Object .create (X3DTextureCoordinateNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DSingleTextureCoordinateNode .prototype, X3DTextureCoordinateNode .prototype),
 {
    constructor: X3DSingleTextureCoordinateNode,
    getCount ()

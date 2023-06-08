@@ -71,7 +71,7 @@ function X3DExternProtoDeclaration (executionContext, url)
                           "autoRefreshTimeLimit", new Fields .SFTime (3600));
 }
 
-X3DExternProtoDeclaration .prototype = Object .assign (Object .create (X3DProtoDeclarationNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3DProtoDeclarationNode .prototype),
    X3DUrlObject .prototype,
 {
    constructor: X3DExternProtoDeclaration,

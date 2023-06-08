@@ -58,7 +58,7 @@ function IndexedQuadSet (executionContext)
    this .addType (X3DConstants .IndexedQuadSet);
 }
 
-IndexedQuadSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .prototype),
+Object .assign (Object .setPrototypeOf (IndexedQuadSet .prototype, X3DComposedGeometryNode .prototype),
 {
    constructor: IndexedQuadSet,
    initialize ()

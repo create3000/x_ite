@@ -58,7 +58,7 @@ function StringSensor (executionContext)
    this .addType (X3DConstants .StringSensor);
 }
 
-StringSensor .prototype = Object .assign (Object .create (X3DKeyDeviceSensorNode .prototype),
+Object .assign (Object .setPrototypeOf (StringSensor .prototype, X3DKeyDeviceSensorNode .prototype),
 {
    constructor: StringSensor,
    keydown (event)

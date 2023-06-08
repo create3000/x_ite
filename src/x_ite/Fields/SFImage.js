@@ -160,7 +160,7 @@ function SFImage (width, height, comp, array)
    this .addInterest (_set_size, this);
 }
 
-SFImage .prototype = Object .assign (Object .create (X3DField .prototype),
+Object .assign (Object .setPrototypeOf (SFImage .prototype, X3DField .prototype),
 {
    constructor: SFImage,
    [_set_size] ()

@@ -58,7 +58,7 @@ function BooleanSequencer (executionContext)
    this .addType (X3DConstants .BooleanSequencer);
 }
 
-BooleanSequencer .prototype = Object .assign (Object .create (X3DSequencerNode .prototype),
+Object .assign (Object .setPrototypeOf (BooleanSequencer .prototype, X3DSequencerNode .prototype),
 {
    constructor: BooleanSequencer,
    initialize ()

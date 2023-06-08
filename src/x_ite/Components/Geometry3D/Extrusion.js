@@ -67,7 +67,7 @@ function Extrusion (executionContext)
    this ._spine        .setUnit ("length");
 }
 
-Extrusion .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
+Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .prototype),
 {
    constructor: Extrusion,
    initialize ()

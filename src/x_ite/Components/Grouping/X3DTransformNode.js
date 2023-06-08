@@ -58,7 +58,7 @@ function X3DTransformNode (executionContext)
    this ._center      .setUnit ("length");
 }
 
-X3DTransformNode .prototype = Object .assign (Object .create (X3DTransformMatrix3DNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DTransformNode .prototype, X3DTransformMatrix3DNode .prototype),
 {
    constructor: X3DTransformNode,
    initialize ()

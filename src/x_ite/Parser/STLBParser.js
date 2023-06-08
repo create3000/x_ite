@@ -60,7 +60,7 @@ function STLBParser (scene)
    X3DParser .call (this, scene);
 }
 
-STLBParser .prototype = Object .assign (Object .create (X3DParser .prototype),
+Object .assign (Object .setPrototypeOf (STLBParser .prototype, X3DParser .prototype),
 {
    constructor: STLBParser,
    getEncoding ()

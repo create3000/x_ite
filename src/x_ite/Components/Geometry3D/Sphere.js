@@ -60,7 +60,7 @@ function Sphere (executionContext)
    this ._radius .setUnit ("length");
 }
 
-Sphere .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
+Object .assign (Object .setPrototypeOf (Sphere .prototype, X3DGeometryNode .prototype),
 {
    constructor: Sphere,
    set_live__ ()

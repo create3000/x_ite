@@ -151,7 +151,7 @@ function TextureProjector (executionContext)
    this ._fieldOfView .setUnit ("angle");
 }
 
-TextureProjector .prototype = Object .assign (Object .create (X3DTextureProjectorNode .prototype),
+Object .assign (Object .setPrototypeOf (TextureProjector .prototype, X3DTextureProjectorNode .prototype),
 {
    constructor: TextureProjector,
    initialize ()

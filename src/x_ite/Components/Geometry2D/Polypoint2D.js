@@ -60,7 +60,7 @@ function Polypoint2D (executionContext)
    this ._point .setUnit ("length");
 }
 
-Polypoint2D .prototype = Object .assign (Object .create (X3DPointGeometryNode .prototype),
+Object .assign (Object .setPrototypeOf (Polypoint2D .prototype, X3DPointGeometryNode .prototype),
 {
    constructor: Polypoint2D,
    build ()

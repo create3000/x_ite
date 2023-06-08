@@ -67,7 +67,7 @@ function X3DTimeDependentNode (executionContext)
    this .disabled        = false;
 }
 
-X3DTimeDependentNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DTimeDependentNode .prototype, X3DChildNode .prototype),
 {
    constructor: X3DTimeDependentNode,
    initialize ()

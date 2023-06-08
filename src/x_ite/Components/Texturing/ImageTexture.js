@@ -65,7 +65,7 @@ function ImageTexture (executionContext)
    this .urlStack = new Fields .MFString ();
 }
 
-ImageTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prototype),
+Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNode .prototype),
    X3DUrlObject .prototype,
 {
    constructor: ImageTexture,

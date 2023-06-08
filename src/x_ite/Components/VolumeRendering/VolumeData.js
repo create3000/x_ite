@@ -63,7 +63,7 @@ function VolumeData (executionContext)
    this .renderStyleNode = null;
   }
 
-VolumeData .prototype = Object .assign (Object .create (X3DVolumeDataNode .prototype),
+Object .assign (Object .setPrototypeOf (VolumeData .prototype, X3DVolumeDataNode .prototype),
 {
    constructor: VolumeData,
    initialize ()

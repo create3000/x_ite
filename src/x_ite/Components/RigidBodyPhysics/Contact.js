@@ -66,7 +66,7 @@ function Contact (executionContext)
    this ._softnessConstantForceMix .setUnit ("force");
 }
 
-Contact .prototype = Object .assign (Object .create (X3DNode .prototype),
+Object .assign (Object .setPrototypeOf (Contact .prototype, X3DNode .prototype),
 {
    constructor: Contact,
 });

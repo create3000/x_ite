@@ -53,7 +53,7 @@ function ComponentInfoArray (values = [ ])
    return X3DInfoArray .call (this, Array .from (values, value => [value .name, value]), ComponentInfo);
 }
 
-ComponentInfoArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
+Object .assign (Object .setPrototypeOf (ComponentInfoArray .prototype, X3DInfoArray .prototype),
 {
    constructor: ComponentInfoArray,
    add (name, { level, title, providerUrl, external = false, dependencies = [ ] })

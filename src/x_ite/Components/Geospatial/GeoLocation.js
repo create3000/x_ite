@@ -63,7 +63,7 @@ function GeoLocation (executionContext)
    this .addType (X3DConstants .GeoLocation);
 }
 
-GeoLocation .prototype = Object .assign (Object .create (X3DTransformMatrix3DNode .prototype),
+Object .assign (Object .setPrototypeOf (GeoLocation .prototype, X3DTransformMatrix3DNode .prototype),
    X3DGeospatialObject .prototype,
 {
    constructor: GeoLocation,

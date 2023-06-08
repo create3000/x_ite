@@ -59,7 +59,7 @@ function ToneMappedVolumeStyle (executionContext)
    this .addType (X3DConstants .ToneMappedVolumeStyle);
 }
 
-ToneMappedVolumeStyle .prototype = Object .assign (Object .create (X3DComposableVolumeRenderStyleNode .prototype),
+Object .assign (Object .setPrototypeOf (ToneMappedVolumeStyle .prototype, X3DComposableVolumeRenderStyleNode .prototype),
 {
    constructor: ToneMappedVolumeStyle,
    initialize ()

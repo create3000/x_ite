@@ -64,7 +64,7 @@ function SegmentedVolumeData (executionContext)
    this .renderStyleNodes       = [ ];
 }
 
-SegmentedVolumeData .prototype = Object .assign (Object .create (X3DVolumeDataNode .prototype),
+Object .assign (Object .setPrototypeOf (SegmentedVolumeData .prototype, X3DVolumeDataNode .prototype),
 {
    constructor: SegmentedVolumeData,
    initialize ()

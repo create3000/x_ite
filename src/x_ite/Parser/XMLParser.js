@@ -78,7 +78,7 @@ function XMLParser (scene)
    this .protoFields       = new WeakMap ();
 }
 
-XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
+Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototype),
 {
    constructor: XMLParser,
    getEncoding ()

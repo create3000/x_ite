@@ -62,7 +62,7 @@ function ShaderProgram (executionContext)
    this .addType (X3DConstants .ShaderProgram);
 }
 
-ShaderProgram .prototype = Object .assign (Object .create (X3DNode .prototype),
+Object .assign (Object .setPrototypeOf (ShaderProgram .prototype, X3DNode .prototype),
    X3DUrlObject .prototype,
    X3DProgrammableShaderObject .prototype,
 {

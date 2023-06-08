@@ -60,7 +60,7 @@ function EspduTransform (executionContext)
    this .addType (X3DConstants .EspduTransform);
 }
 
-EspduTransform .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
+Object .assign (Object .setPrototypeOf (EspduTransform .prototype, X3DGroupingNode .prototype),
    X3DSensorNode .prototype,
 {
    constructor: EspduTransform,

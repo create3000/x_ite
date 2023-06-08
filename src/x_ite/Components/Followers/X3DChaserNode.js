@@ -63,7 +63,7 @@ function X3DChaserNode (executionContext)
    this .deltaOut = this .getVector ();
 }
 
-X3DChaserNode .prototype = Object .assign (Object .create (X3DFollowerNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DChaserNode .prototype, X3DFollowerNode .prototype),
 {
    constructor: X3DChaserNode,
    initialize ()

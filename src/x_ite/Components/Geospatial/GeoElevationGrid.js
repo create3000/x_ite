@@ -71,7 +71,7 @@ function GeoElevationGrid (executionContext)
    this .normalNode   = null;
 }
 
-GeoElevationGrid .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
+Object .assign (Object .setPrototypeOf (GeoElevationGrid .prototype, X3DGeometryNode .prototype),
    X3DGeospatialObject .prototype,
 {
    constructor: GeoElevationGrid,

@@ -57,7 +57,7 @@ function X3DNBodyCollisionSpaceNode (executionContext)
    this .addType (X3DConstants .X3DNBodyCollisionSpaceNode);
 }
 
-X3DNBodyCollisionSpaceNode .prototype = Object .assign (Object .create (X3DNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DNBodyCollisionSpaceNode .prototype, X3DNode .prototype),
    X3DBoundedObject .prototype,
 {
    constructor: X3DNBodyCollisionSpaceNode,

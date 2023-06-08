@@ -128,7 +128,7 @@ function VolumeEmitter (executionContext)
    }`);
 }
 
-VolumeEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),
+Object .assign (Object .setPrototypeOf (VolumeEmitter .prototype, X3DParticleEmitterNode .prototype),
 {
    constructor: VolumeEmitter,
    initialize ()

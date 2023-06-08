@@ -56,7 +56,7 @@ function FlyViewer (executionContext, navigationInfo)
    X3DFlyViewer .call (this, executionContext, navigationInfo);
 }
 
-FlyViewer .prototype = Object .assign (Object .create (X3DFlyViewer .prototype),
+Object .assign (Object .setPrototypeOf (FlyViewer .prototype, X3DFlyViewer .prototype),
 {
    constructor: FlyViewer,
    addCollision ()

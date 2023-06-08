@@ -66,7 +66,7 @@ function ColorDamper (executionContext)
    this .addType (X3DConstants .ColorDamper);
 }
 
-ColorDamper .prototype = Object .assign (Object .create (X3DDamperNode .prototype),
+Object .assign (Object .setPrototypeOf (ColorDamper .prototype, X3DDamperNode .prototype),
 {
    constructor: ColorDamper,
    getVector ()

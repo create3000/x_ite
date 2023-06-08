@@ -55,7 +55,7 @@ function Arc2DOptions (executionContext)
    this .addChildObjects ("dimension", new Fields .SFInt32 (40))
 }
 
-Arc2DOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+Object .assign (Object .setPrototypeOf (Arc2DOptions .prototype, X3DBaseNode .prototype),
 {
    constructor: Arc2DOptions,
 });

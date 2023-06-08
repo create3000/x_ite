@@ -63,7 +63,7 @@ function CoordinateDamper (executionContext)
    this .addType (X3DConstants .CoordinateDamper);
 }
 
-CoordinateDamper .prototype = Object .assign (Object .create (X3DDamperNode .prototype),
+Object .assign (Object .setPrototypeOf (CoordinateDamper .prototype, X3DDamperNode .prototype),
    X3DArrayFollowerObject .prototype,
 {
    constructor: CoordinateDamper,

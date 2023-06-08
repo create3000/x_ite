@@ -53,7 +53,7 @@ function FieldArray (values = [ ])
    return X3DInfoArray .call (this, Array .from (values, value => [value .getName (), value]), X3DField);
 }
 
-FieldArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
+Object .assign (Object .setPrototypeOf (FieldArray .prototype, X3DInfoArray .prototype),
 {
    constructor: FieldArray,
 });

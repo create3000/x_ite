@@ -172,7 +172,7 @@ function TextureProjectorParallel (executionContext)
    this ._fieldOfView .setUnit ("length");
 }
 
-TextureProjectorParallel .prototype = Object .assign (Object .create (X3DTextureProjectorNode .prototype),
+Object .assign (Object .setPrototypeOf (TextureProjectorParallel .prototype, X3DTextureProjectorNode .prototype),
 {
    constructor: TextureProjectorParallel,
    initialize ()

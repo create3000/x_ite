@@ -66,7 +66,7 @@ function ArcClose2D (executionContext)
    this ._radius     .setUnit ("length");
 }
 
-ArcClose2D .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
+Object .assign (Object .setPrototypeOf (ArcClose2D .prototype, X3DGeometryNode .prototype),
 {
    constructor: ArcClose2D,
    set_live__ ()

@@ -65,7 +65,7 @@ function CADFace (executionContext)
    this .boundedObject = null;
 }
 
-CADFace .prototype = Object .assign (Object .create (X3DProductStructureChildNode .prototype),
+Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureChildNode .prototype),
    X3DBoundedObject .prototype,
 {
    constructor: CADFace,

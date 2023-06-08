@@ -60,7 +60,7 @@ function Circle2D (executionContext)
    this ._radius .setUnit ("length");
 }
 
-Circle2D .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototype),
+Object .assign (Object .setPrototypeOf (Circle2D .prototype, X3DLineGeometryNode .prototype),
 {
    constructor: Circle2D,
    set_live__ ()

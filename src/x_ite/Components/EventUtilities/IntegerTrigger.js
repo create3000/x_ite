@@ -58,7 +58,7 @@ function IntegerTrigger (executionContext)
    this .addType (X3DConstants .IntegerTrigger);
 }
 
-IntegerTrigger .prototype = Object .assign (Object .create (X3DTriggerNode .prototype),
+Object .assign (Object .setPrototypeOf (IntegerTrigger .prototype, X3DTriggerNode .prototype),
 {
    constructor: IntegerTrigger,
    initialize ()

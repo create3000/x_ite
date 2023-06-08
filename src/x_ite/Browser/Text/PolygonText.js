@@ -62,7 +62,7 @@ function PolygonText (text, fontStyle)
    this .texCoordArray = X3DGeometryNode .createArray ();
 }
 
-PolygonText .prototype = Object .assign (Object .create (X3DTextGeometry .prototype),
+Object .assign (Object .setPrototypeOf (PolygonText .prototype, X3DTextGeometry .prototype),
 {
    constructor: PolygonText,
    isTransparent ()

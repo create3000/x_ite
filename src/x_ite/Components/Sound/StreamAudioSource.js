@@ -61,7 +61,7 @@ function StreamAudioSource (executionContext)
                           "speed", new Fields .SFFloat (1));
 }
 
-StreamAudioSource .prototype = Object .assign (Object .create (X3DSoundSourceNode .prototype),
+Object .assign (Object .setPrototypeOf (StreamAudioSource .prototype, X3DSoundSourceNode .prototype),
 {
    constructor: StreamAudioSource,
 });

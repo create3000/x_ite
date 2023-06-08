@@ -69,7 +69,7 @@ function OrientationDamper (executionContext)
    this ._value_changed      .setUnit ("angle");
 }
 
-OrientationDamper .prototype = Object .assign (Object .create (X3DDamperNode .prototype),
+Object .assign (Object .setPrototypeOf (OrientationDamper .prototype, X3DDamperNode .prototype),
 {
    constructor: OrientationDamper,
    getVector ()

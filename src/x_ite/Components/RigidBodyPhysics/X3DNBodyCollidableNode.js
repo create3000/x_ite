@@ -74,7 +74,7 @@ function X3DNBodyCollidableNode (executionContext)
    this .matrix         = new Matrix4 ();
 }
 
-X3DNBodyCollidableNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DChildNode .prototype),
    X3DBoundedObject .prototype,
 {
    constructor: X3DNBodyCollidableNode,
