@@ -126,9 +126,8 @@ function Contour2D (executionContext)
    this .childNodes = [ ];
 }
 
-Contour2D .prototype = Object .assign (Object .create ((X3DNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (Contour2D .prototype, (X3DNode_default()).prototype),
 {
-   constructor: Contour2D,
    initialize ()
    {
       X3DNode_default().prototype.initialize.call (this);
@@ -296,10 +295,7 @@ function X3DNurbsControlCurveNode (executionContext)
    this .addType ((X3DConstants_default()).X3DNurbsControlCurveNode);
 }
 
-X3DNurbsControlCurveNode .prototype = Object .assign (Object .create ((X3DNode_default()).prototype),
-{
-   constructor: X3DNurbsControlCurveNode,
-});
+Object .setPrototypeOf (X3DNurbsControlCurveNode .prototype, (X3DNode_default()).prototype);
 
 Object .defineProperties (X3DNurbsControlCurveNode,
 {
@@ -387,9 +383,8 @@ function ContourPolyline2D (executionContext)
    this .controlPoints = [ ];
 }
 
-ContourPolyline2D .prototype = Object .assign (Object .create (NURBS_X3DNurbsControlCurveNode.prototype),
+Object .assign (Object .setPrototypeOf (ContourPolyline2D .prototype, NURBS_X3DNurbsControlCurveNode.prototype),
 {
-   constructor: ContourPolyline2D,
    tessellate (type)
    {
       switch (type)
@@ -558,10 +553,7 @@ function CoordinateDouble (executionContext)
    this .addType ((X3DConstants_default()).CoordinateDouble);
 }
 
-CoordinateDouble .prototype = Object .assign (Object .create ((X3DCoordinateNode_default()).prototype),
-{
-   constructor: CoordinateDouble,
-});
+Object .setPrototypeOf (CoordinateDouble .prototype, (X3DCoordinateNode_default()).prototype);
 
 Object .defineProperties (CoordinateDouble,
 {
@@ -1144,9 +1136,8 @@ function X3DParametricGeometryNode (executionContext)
    this .addType ((X3DConstants_default()).X3DParametricGeometryNode);
 }
 
-X3DParametricGeometryNode .prototype = Object .assign (Object .create ((X3DGeometryNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (X3DParametricGeometryNode .prototype, (X3DGeometryNode_default()).prototype),
 {
-   constructor: X3DParametricGeometryNode,
    getKnots (result, closed, order, dimension, knot)
    {
       return NURBS_NURBS.getKnots (result, closed, order, dimension, knot);
@@ -2867,10 +2858,9 @@ function NurbsCurve (executionContext)
    this .sampleOptions = { resolution: [ ] };
 }
 
-NurbsCurve .prototype = Object .assign (Object .create (NURBS_X3DParametricGeometryNode.prototype),
+Object .assign (Object .setPrototypeOf (NurbsCurve .prototype, NURBS_X3DParametricGeometryNode.prototype),
    (X3DLineGeometryNode_default()).prototype,
 {
-   constructor: NurbsCurve,
    initialize ()
    {
       NURBS_X3DParametricGeometryNode.prototype.initialize.call (this);
@@ -3106,9 +3096,8 @@ function NurbsCurve2D (executionContext)
    this .array         = [ ];
 }
 
-NurbsCurve2D .prototype = Object .assign (Object .create (NURBS_X3DNurbsControlCurveNode.prototype),
+Object .assign (Object .setPrototypeOf (NurbsCurve2D .prototype, NURBS_X3DNurbsControlCurveNode.prototype),
 {
-   constructor: NurbsCurve2D,
    getTessellation (numKnots)
    {
       return NURBS_NURBS.getTessellation (this ._tessellation .getValue (), numKnots - this ._order .getValue ());
@@ -3338,9 +3327,8 @@ function NurbsOrientationInterpolator (executionContext)
    this .sampleOptions = { resolution: [ 128 ] };
 }
 
-NurbsOrientationInterpolator .prototype = Object .assign (Object .create ((X3DChildNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (NurbsOrientationInterpolator .prototype, (X3DChildNode_default()).prototype),
 {
-   constructor: NurbsOrientationInterpolator,
    initialize ()
    {
       X3DChildNode_default().prototype.initialize.call (this);
@@ -3577,9 +3565,8 @@ function X3DNurbsSurfaceGeometryNode (executionContext)
    this .texMesh           = { };
 }
 
-X3DNurbsSurfaceGeometryNode .prototype = Object .assign (Object .create (NURBS_X3DParametricGeometryNode.prototype),
+Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, NURBS_X3DParametricGeometryNode.prototype),
 {
-   constructor: X3DNurbsSurfaceGeometryNode,
    initialize ()
    {
       NURBS_X3DParametricGeometryNode.prototype.initialize.call (this);
@@ -3959,10 +3946,7 @@ function NurbsPatchSurface (executionContext)
    this .addType ((X3DConstants_default()).NurbsPatchSurface);
 }
 
-NurbsPatchSurface .prototype = Object .assign (Object .create (NURBS_X3DNurbsSurfaceGeometryNode.prototype),
-{
-   constructor: NurbsPatchSurface,
-});
+Object .setPrototypeOf (NurbsPatchSurface .prototype, NURBS_X3DNurbsSurfaceGeometryNode.prototype);
 
 Object .defineProperties (NurbsPatchSurface,
 {
@@ -4091,9 +4075,8 @@ function NurbsPositionInterpolator (executionContext)
    this .sampleOptions = { resolution: [ 128 ] };
 }
 
-NurbsPositionInterpolator .prototype = Object .assign (Object .create ((X3DChildNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (NurbsPositionInterpolator .prototype, (X3DChildNode_default()).prototype),
 {
-   constructor: NurbsPositionInterpolator,
    initialize ()
    {
       X3DChildNode_default().prototype.initialize.call (this);
@@ -4309,10 +4292,9 @@ function NurbsSet (executionContext)
    this .geometryNodes = [ ];
 }
 
-NurbsSet .prototype = Object .assign (Object .create ((X3DChildNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (NurbsSet .prototype, (X3DChildNode_default()).prototype),
    (X3DBoundedObject_default()).prototype,
 {
-   constructor: NurbsSet,
    initialize ()
    {
       X3DChildNode_default().prototype.initialize.call (this);
@@ -4486,7 +4468,8 @@ var Line3_default = /*#__PURE__*/__webpack_require__.n(Line3_namespaceObject);
  *
  ******************************************************************************/
 
-const Trinagle2 = {
+const Triangle2 =
+{
    isPointInTriangle (a, b, c, point)
    {
       // https://en.wikipedia.org/wiki/Barycentric_coordinate_system
@@ -4515,11 +4498,11 @@ const Trinagle2 = {
    },
 };
 
-const Triangle2_default_ = Trinagle2;
+const Triangle2_default_ = Triangle2;
 ;
 
 Namespace_default().set ("standard/Math/Geometry/Triangle2", Triangle2_default_);
-/* harmony default export */ const Triangle2 = (Triangle2_default_);
+/* harmony default export */ const Geometry_Triangle2 = (Triangle2_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/NURBS/NurbsSurfaceInterpolator.js
 /*******************************************************************************
  *
@@ -4587,9 +4570,8 @@ function NurbsSurfaceInterpolator (executionContext)
    this .geometry = new NURBS_NurbsPatchSurface (executionContext);
 }
 
-NurbsSurfaceInterpolator .prototype = Object .assign (Object .create ((X3DChildNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (NurbsSurfaceInterpolator .prototype, (X3DChildNode_default()).prototype),
 {
-   constructor: NurbsSurfaceInterpolator,
    initialize ()
    {
       this ._set_fraction .addInterest ("set_fraction__", this);
@@ -4640,7 +4622,7 @@ NurbsSurfaceInterpolator .prototype = Object .assign (Object .create ((X3DChildN
             b .set (texCoordsArray [i4 + 4], texCoordsArray [i4 + 5], 0);
             c .set (texCoordsArray [i4 + 7], texCoordsArray [i4 + 9], 0);
 
-            if (Triangle2.isPointInTriangle (a, b, c, fraction))
+            if (Geometry_Triangle2.isPointInTriangle (a, b, c, fraction))
             {
                line .set (point .set (fraction .x, fraction .y, 0), (Vector3_default()).zAxis);
 
@@ -4783,9 +4765,8 @@ function NurbsSweptSurface (executionContext)
    this .extrusion = new (Extrusion_default()) (executionContext);
 }
 
-NurbsSweptSurface .prototype = Object .assign (Object .create (NURBS_X3DParametricGeometryNode.prototype),
+Object .assign (Object .setPrototypeOf (NurbsSweptSurface .prototype, NURBS_X3DParametricGeometryNode.prototype),
 {
-   constructor: NurbsSweptSurface,
    initialize ()
    {
       NURBS_X3DParametricGeometryNode.prototype.initialize.call (this);
@@ -4970,9 +4951,8 @@ function NurbsSwungSurface (executionContext)
    this .extrusion = new (Extrusion_default()) (executionContext);
 }
 
-NurbsSwungSurface .prototype = Object .assign (Object .create (NURBS_X3DParametricGeometryNode.prototype),
+Object .assign (Object .setPrototypeOf (NurbsSwungSurface .prototype, NURBS_X3DParametricGeometryNode.prototype),
 {
-   constructor: NurbsSwungSurface,
    initialize ()
    {
       NURBS_X3DParametricGeometryNode.prototype.initialize.call (this);
@@ -5156,9 +5136,8 @@ function NurbsTextureCoordinate (executionContext)
    this .controlPoints = [ ];
 }
 
-NurbsTextureCoordinate .prototype = Object .assign (Object .create ((X3DNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (NurbsTextureCoordinate .prototype, (X3DNode_default()).prototype),
 {
-   constructor: NurbsTextureCoordinate,
    initialize ()
    {
       X3DNode_default().prototype.initialize.call (this);
@@ -5318,9 +5297,8 @@ function NurbsTrimmedSurface (executionContext)
    this .trimmingContourNodes = [ ];
 }
 
-NurbsTrimmedSurface .prototype = Object .assign (Object .create (NURBS_X3DNurbsSurfaceGeometryNode.prototype),
+Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, NURBS_X3DNurbsSurfaceGeometryNode.prototype),
 {
-   constructor: NurbsTrimmedSurface,
    initialize ()
    {
       NURBS_X3DNurbsSurfaceGeometryNode.prototype.initialize.call (this);

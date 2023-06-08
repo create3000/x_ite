@@ -125,9 +125,8 @@ function X3DVolumeRenderStyleNode (executionContext)
    this .volumeDataNodes = new Set ();
 }
 
-X3DVolumeRenderStyleNode .prototype = Object .assign (Object .create ((X3DNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (X3DVolumeRenderStyleNode .prototype, (X3DNode_default()).prototype),
 {
-   constructor: X3DVolumeRenderStyleNode,
    addShaderFields (shaderNode)
    { },
    getUniformsText ()
@@ -267,10 +266,7 @@ function X3DComposableVolumeRenderStyleNode (executionContext)
    this .addType ((X3DConstants_default()).X3DComposableVolumeRenderStyleNode);
 }
 
-X3DComposableVolumeRenderStyleNode .prototype = Object .assign (Object .create (VolumeRendering_X3DVolumeRenderStyleNode.prototype),
-{
-   constructor: X3DComposableVolumeRenderStyleNode,
-});
+Object .setPrototypeOf (X3DComposableVolumeRenderStyleNode .prototype, VolumeRendering_X3DVolumeRenderStyleNode.prototype);
 
 Object .defineProperties (X3DComposableVolumeRenderStyleNode,
 {
@@ -356,9 +352,8 @@ function OpacityMapVolumeStyle (executionContext)
    this .addType ((X3DConstants_default()).OpacityMapVolumeStyle);
 }
 
-OpacityMapVolumeStyle .prototype = Object .assign (Object .create (VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype),
+Object .assign (Object .setPrototypeOf (OpacityMapVolumeStyle .prototype, VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype),
 {
-   constructor: OpacityMapVolumeStyle,
    initialize ()
    {
       VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype.initialize.call (this);
@@ -539,7 +534,7 @@ const
 
 function X3DVolumeRenderingContext () { }
 
-X3DVolumeRenderingContext .prototype =
+Object .assign (X3DVolumeRenderingContext .prototype,
 {
    getDefaultVoxels ()
    {
@@ -608,7 +603,7 @@ X3DVolumeRenderingContext .prototype =
 
       return this [_defaultTransferFunction];
    },
-};
+});
 
 const X3DVolumeRenderingContext_default_ = X3DVolumeRenderingContext;
 ;
@@ -677,9 +672,8 @@ function BlendedVolumeStyle (executionContext)
    this .addType ((X3DConstants_default()).BlendedVolumeStyle);
 }
 
-BlendedVolumeStyle .prototype = Object .assign (Object .create (VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype),
+Object .assign (Object .setPrototypeOf (BlendedVolumeStyle .prototype, VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype),
 {
-   constructor: BlendedVolumeStyle,
    initialize ()
    {
       VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype.initialize.call (this);
@@ -1037,9 +1031,8 @@ function BoundaryEnhancementVolumeStyle (executionContext)
    this .addType ((X3DConstants_default()).BoundaryEnhancementVolumeStyle);
 }
 
-BoundaryEnhancementVolumeStyle .prototype = Object .assign (Object .create (VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype),
+Object .assign (Object .setPrototypeOf (BoundaryEnhancementVolumeStyle .prototype, VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype),
 {
-   constructor: BoundaryEnhancementVolumeStyle,
    addShaderFields (shaderNode)
    {
       if (! this ._enabled .getValue ())
@@ -1198,9 +1191,8 @@ function CartoonVolumeStyle (executionContext)
    this .addType ((X3DConstants_default()).CartoonVolumeStyle);
 }
 
-CartoonVolumeStyle .prototype = Object .assign (Object .create (VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype),
+Object .assign (Object .setPrototypeOf (CartoonVolumeStyle .prototype, VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype),
 {
-   constructor: CartoonVolumeStyle,
    initialize ()
    {
       VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype.initialize.call (this);
@@ -1517,9 +1509,8 @@ function ComposedVolumeStyle (executionContext)
    this .renderStyleNodes = [ ];
 }
 
-ComposedVolumeStyle .prototype = Object .assign (Object .create (VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype),
+Object .assign (Object .setPrototypeOf (ComposedVolumeStyle .prototype, VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype),
 {
-   constructor: ComposedVolumeStyle,
    initialize ()
    {
       VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype.initialize.call (this);
@@ -1725,9 +1716,8 @@ function EdgeEnhancementVolumeStyle (executionContext)
    this .addType ((X3DConstants_default()).EdgeEnhancementVolumeStyle);
 }
 
-EdgeEnhancementVolumeStyle .prototype = Object .assign (Object .create (VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype),
+Object .assign (Object .setPrototypeOf (EdgeEnhancementVolumeStyle .prototype, VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype),
 {
-   constructor: EdgeEnhancementVolumeStyle,
    initialize ()
    {
       VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype.initialize.call (this);
@@ -2017,9 +2007,8 @@ function VolumeMaterial (executionContext, volumeDataNode)
    this .volumeShaderNodes = new Map ();
 }
 
-VolumeMaterial .prototype = Object .assign (Object .create ((UnlitMaterial_default()).prototype),
+Object .assign (Object .setPrototypeOf (VolumeMaterial .prototype, (UnlitMaterial_default()).prototype),
 {
-   constructor: VolumeMaterial,
    getVolumeShaders ()
    {
       return this .volumeShaderNodes;
@@ -2183,10 +2172,9 @@ function X3DVolumeDataNode (executionContext)
    this .setCameraObject (true);
 }
 
-X3DVolumeDataNode .prototype = Object .assign (Object .create ((X3DChildNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, (X3DChildNode_default()).prototype),
    (X3DBoundedObject_default()).prototype,
 {
-   constructor: X3DVolumeDataNode,
    initialize ()
    {
       X3DChildNode_default().prototype.initialize.call (this);
@@ -2423,9 +2411,8 @@ function IsoSurfaceVolumeData (executionContext)
    this .renderStyleNodes = [ ];
 }
 
-IsoSurfaceVolumeData .prototype = Object .assign (Object .create (VolumeRendering_X3DVolumeDataNode.prototype),
+Object .assign (Object .setPrototypeOf (IsoSurfaceVolumeData .prototype, VolumeRendering_X3DVolumeDataNode.prototype),
 {
-   constructor: IsoSurfaceVolumeData,
    initialize ()
    {
       VolumeRendering_X3DVolumeDataNode.prototype.initialize.call (this);
@@ -2790,9 +2777,8 @@ function ProjectionVolumeStyle (executionContext)
    this .addType ((X3DConstants_default()).ProjectionVolumeStyle);
 }
 
-ProjectionVolumeStyle .prototype = Object .assign (Object .create (VolumeRendering_X3DVolumeRenderStyleNode.prototype),
+Object .assign (Object .setPrototypeOf (ProjectionVolumeStyle .prototype, VolumeRendering_X3DVolumeRenderStyleNode.prototype),
 {
-   constructor: ProjectionVolumeStyle,
    addShaderFields (shaderNode)
    {
       if (! this ._enabled .getValue ())
@@ -3032,9 +3018,8 @@ function SegmentedVolumeData (executionContext)
    this .renderStyleNodes       = [ ];
 }
 
-SegmentedVolumeData .prototype = Object .assign (Object .create (VolumeRendering_X3DVolumeDataNode.prototype),
+Object .assign (Object .setPrototypeOf (SegmentedVolumeData .prototype, VolumeRendering_X3DVolumeDataNode.prototype),
 {
-   constructor: SegmentedVolumeData,
    initialize ()
    {
       VolumeRendering_X3DVolumeDataNode.prototype.initialize.call (this);
@@ -3312,9 +3297,8 @@ function ShadedVolumeStyle (executionContext)
    this .addType ((X3DConstants_default()).ShadedVolumeStyle);
 }
 
-ShadedVolumeStyle .prototype = Object .assign (Object .create (VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype),
+Object .assign (Object .setPrototypeOf (ShadedVolumeStyle .prototype, VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype),
 {
-   constructor: ShadedVolumeStyle,
    initialize ()
    {
       VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype.initialize.call (this);
@@ -3598,9 +3582,8 @@ function SilhouetteEnhancementVolumeStyle (executionContext)
    this .addType ((X3DConstants_default()).SilhouetteEnhancementVolumeStyle);
 }
 
-SilhouetteEnhancementVolumeStyle .prototype = Object .assign (Object .create (VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype),
+Object .assign (Object .setPrototypeOf (SilhouetteEnhancementVolumeStyle .prototype, VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype),
 {
-   constructor: SilhouetteEnhancementVolumeStyle,
    initialize ()
    {
       VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype.initialize.call (this);
@@ -3783,9 +3766,8 @@ function ToneMappedVolumeStyle (executionContext)
    this .addType ((X3DConstants_default()).ToneMappedVolumeStyle);
 }
 
-ToneMappedVolumeStyle .prototype = Object .assign (Object .create (VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype),
+Object .assign (Object .setPrototypeOf (ToneMappedVolumeStyle .prototype, VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype),
 {
-   constructor: ToneMappedVolumeStyle,
    initialize ()
    {
       VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype.initialize.call (this);
@@ -3979,9 +3961,8 @@ function VolumeData (executionContext)
    this .renderStyleNode = null;
   }
 
-VolumeData .prototype = Object .assign (Object .create (VolumeRendering_X3DVolumeDataNode.prototype),
+Object .assign (Object .setPrototypeOf (VolumeData .prototype, VolumeRendering_X3DVolumeDataNode.prototype),
 {
-   constructor: VolumeData,
    initialize ()
    {
       VolumeRendering_X3DVolumeDataNode.prototype.initialize.call (this);

@@ -127,9 +127,8 @@ function Spheroid3 (semiMajorAxis, semiMinorAxis)
    }
 }
 
-Spheroid3 .prototype =
+Object .assign (Spheroid3 .prototype,
 {
-   constructor: Spheroid3,
    getSemiMajorAxis ()
    {
       // Returns the semi-major axis (a)
@@ -144,7 +143,7 @@ Spheroid3 .prototype =
    {
       return this .semiMajorAxis + " " + this .semiMinorAxis;
    },
-};
+});
 
 const __default__ = Spheroid3;
 ;
@@ -320,9 +319,8 @@ function Geodetic (spheroid, latitudeFirst, radians)
    this .ecc2           = 1 - this .c2a2;
 }
 
-Geodetic .prototype =
+Object .assign (Geodetic .prototype,
 {
-   constructor: Geodetic,
    convert (geodetic, result)
    {
       const elevation = geodetic .z;
@@ -510,7 +508,7 @@ Geodetic .prototype =
    source: new Vector3 (0, 0, 0),
    destination: new Vector3 (0, 0, 0),
    */
-};
+});
 
 const Geodetic_default_ = Geodetic;
 ;
@@ -604,9 +602,8 @@ function UniversalTransverseMercator (spheroid, zone, northernHemisphere, northi
    this .geodeticConverter  = new Geospatial_Geodetic (spheroid, true, true);
 }
 
-UniversalTransverseMercator .prototype =
+Object .assign (UniversalTransverseMercator .prototype,
 {
-   constructor: UniversalTransverseMercator,
    convert (utm, result)
    {
       // https://gist.github.com/duedal/840476
@@ -721,7 +718,7 @@ UniversalTransverseMercator .prototype =
 
       return result .set (northing, easting, geodetic .z);
    },
-};
+});
 
 const UniversalTransverseMercator_default_ = UniversalTransverseMercator;
 ;
@@ -780,9 +777,8 @@ Namespace_default().set ("standard/Geospatial/UniversalTransverseMercator", Univ
 
 function Geocentric () { }
 
-Geocentric .prototype =
+Object .assign (Geocentric .prototype,
 {
-   constructor: Geocentric,
    convert (geocentric, result)
    {
       return result .assign (geocentric);
@@ -802,7 +798,7 @@ Geocentric .prototype =
 
       return Algorithm_default().simpleSlerp (source, destination, t) .multiply (Algorithm_default().lerp (sourceLength, destinationLength, t));
    },
-};
+});
 
 const Geocentric_default_ = Geocentric;
 ;
@@ -1097,9 +1093,8 @@ function X3DGeospatialObject (executionContext)
    this .invOriginMatrix = new (Matrix4_default()) ();
 }
 
-X3DGeospatialObject .prototype =
+Object .assign (X3DGeospatialObject .prototype,
 {
-   constructor: X3DGeospatialObject,
    initialize ()
    {
       this ._geoSystem .addInterest ("set_geoSystem__", this);
@@ -1233,7 +1228,7 @@ X3DGeospatialObject .prototype =
       return locationMatrix;
    },
    dispose () { },
-};
+});
 
 function getCoordRotateYUp (geoPoint, result)
 {
@@ -1371,10 +1366,9 @@ function GeoCoordinate (executionContext)
    this .addType ((X3DConstants_default()).GeoCoordinate);
 }
 
-GeoCoordinate .prototype = Object .assign (Object .create ((X3DCoordinateNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (GeoCoordinate .prototype, (X3DCoordinateNode_default()).prototype),
    Geospatial_X3DGeospatialObject.prototype,
 {
-   constructor: GeoCoordinate,
    initialize ()
    {
       X3DCoordinateNode_default().prototype.initialize.call (this);
@@ -1630,10 +1624,9 @@ function GeoElevationGrid (executionContext)
    this .normalNode   = null;
 }
 
-GeoElevationGrid .prototype = Object .assign (Object .create ((X3DGeometryNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (GeoElevationGrid .prototype, (X3DGeometryNode_default()).prototype),
    Geospatial_X3DGeospatialObject.prototype,
 {
-   constructor: GeoElevationGrid,
    initialize ()
    {
       X3DGeometryNode_default().prototype.initialize.call (this);
@@ -2096,11 +2089,10 @@ function GeoLOD (executionContext)
    this .modelViewMatrix  = new (Matrix4_default()) ();
 }
 
-GeoLOD .prototype = Object .assign (Object .create ((X3DChildNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (GeoLOD .prototype, (X3DChildNode_default()).prototype),
    (X3DBoundedObject_default()).prototype,
    Geospatial_X3DGeospatialObject.prototype,
 {
-   constructor: GeoLOD,
    initialize ()
    {
       X3DChildNode_default().prototype.initialize.call (this);
@@ -2550,10 +2542,9 @@ function GeoLocation (executionContext)
    this .addType ((X3DConstants_default()).GeoLocation);
 }
 
-GeoLocation .prototype = Object .assign (Object .create ((X3DTransformMatrix3DNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (GeoLocation .prototype, (X3DTransformMatrix3DNode_default()).prototype),
    Geospatial_X3DGeospatialObject.prototype,
 {
-   constructor: GeoLocation,
    initialize ()
    {
       X3DTransformMatrix3DNode_default().prototype.initialize.call (this);
@@ -2689,10 +2680,9 @@ function GeoMetadata (executionContext)
    this .addType ((X3DConstants_default()).GeoMetadata);
 }
 
-GeoMetadata .prototype = Object .assign (Object .create ((X3DInfoNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (GeoMetadata .prototype, (X3DInfoNode_default()).prototype),
    (X3DUrlObject_default()).prototype,
 {
-   constructor: GeoMetadata,
    initialize ()
    {
       X3DInfoNode_default().prototype.initialize.call (this);
@@ -2816,9 +2806,8 @@ function GeoOrigin (executionContext)
    this .radians = false;
 }
 
-GeoOrigin .prototype = Object .assign (Object .create ((X3DNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (GeoOrigin .prototype, (X3DNode_default()).prototype),
 {
-   constructor: GeoOrigin,
    initialize ()
    {
       X3DNode_default().prototype.initialize.call (this);
@@ -2948,10 +2937,9 @@ function GeoPositionInterpolator (executionContext)
    this .geocentric = new Geospatial_Geocentric ();
 }
 
-GeoPositionInterpolator .prototype = Object .assign (Object .create ((X3DInterpolatorNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (GeoPositionInterpolator .prototype, (X3DInterpolatorNode_default()).prototype),
    Geospatial_X3DGeospatialObject.prototype,
 {
-   constructor: GeoPositionInterpolator,
    setup ()
    {
       Geospatial_X3DGeospatialObject.prototype.initialize.call (this);
@@ -3122,10 +3110,9 @@ function GeoProximitySensor (executionContext)
    this .setPickableObject (this .proximitySensor .isPickableObject ());
 }
 
-GeoProximitySensor .prototype = Object .assign (Object .create ((X3DEnvironmentalSensorNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (GeoProximitySensor .prototype, (X3DEnvironmentalSensorNode_default()).prototype),
    Geospatial_X3DGeospatialObject.prototype,
 {
-   constructor: GeoProximitySensor,
    initialize ()
    {
       X3DEnvironmentalSensorNode_default().prototype.initialize.call (this);
@@ -3285,10 +3272,9 @@ function GeoTouchSensor (executionContext)
    this ._hitPoint_changed .setUnit ("length");
 }
 
-GeoTouchSensor .prototype = Object .assign (Object .create ((X3DTouchSensorNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (GeoTouchSensor .prototype, (X3DTouchSensorNode_default()).prototype),
    Geospatial_X3DGeospatialObject.prototype,
 {
-   constructor: GeoTouchSensor,
    initialize ()
    {
       X3DTouchSensorNode_default().prototype.initialize.call (this);
@@ -3430,10 +3416,9 @@ function GeoTransform (executionContext)
    this ._translation .setUnit ("length");
 }
 
-GeoTransform .prototype = Object .assign (Object .create ((X3DTransformMatrix3DNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (GeoTransform .prototype, (X3DTransformMatrix3DNode_default()).prototype),
    Geospatial_X3DGeospatialObject.prototype,
 {
-   constructor: GeoTransform,
    initialize ()
    {
       X3DTransformMatrix3DNode_default().prototype.initialize.call (this);
@@ -3601,10 +3586,9 @@ function GeoViewpoint (executionContext)
    this .elevation             = 0;
 }
 
-GeoViewpoint .prototype = Object .assign (Object .create ((X3DViewpointNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (GeoViewpoint .prototype, (X3DViewpointNode_default()).prototype),
    Geospatial_X3DGeospatialObject.prototype,
 {
-   constructor: GeoViewpoint,
    initialize ()
    {
       X3DViewpointNode_default().prototype.initialize.call (this);

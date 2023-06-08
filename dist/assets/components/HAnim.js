@@ -122,10 +122,7 @@ function HAnimDisplacer (executionContext)
    this ._displacements .setUnit ("length");
 }
 
-HAnimDisplacer .prototype = Object .assign (Object .create ((X3DGeometricPropertyNode_default()).prototype),
-{
-   constructor: HAnimDisplacer,
-});
+Object .setPrototypeOf (HAnimDisplacer .prototype, (X3DGeometricPropertyNode_default()).prototype);
 
 Object .defineProperties (HAnimDisplacer,
 {
@@ -277,10 +274,9 @@ function HAnimHumanoid (executionContext)
    this .changed        = false;
 }
 
-HAnimHumanoid .prototype = Object .assign (Object .create ((X3DChildNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (X3DChildNode_default()).prototype),
    (X3DBoundedObject_default()).prototype,
 {
-   constructor: HAnimHumanoid,
    initialize ()
    {
       X3DChildNode_default().prototype.initialize.call (this);
@@ -690,9 +686,8 @@ function HAnimJoint (executionContext)
    this .modelMatrix    = new (Matrix4_default()) ();
 }
 
-HAnimJoint .prototype = Object .assign (Object .create ((X3DTransformNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (HAnimJoint .prototype, (X3DTransformNode_default()).prototype),
 {
-   constructor: HAnimJoint,
    initialize ()
    {
       X3DTransformNode_default().prototype.initialize.call (this);
@@ -872,9 +867,8 @@ function HAnimMotion (executionContext)
    this .addType ((X3DConstants_default()).HAnimMotion);
 }
 
-HAnimMotion .prototype = Object .assign (Object .create ((X3DChildNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, (X3DChildNode_default()).prototype),
 {
-   constructor: HAnimMotion,
    initialize ()
    {
       X3DChildNode_default().prototype.initialize.call (this);
@@ -1001,10 +995,7 @@ function HAnimSegment (executionContext)
    this ._mass .setUnit ("mass");
 }
 
-HAnimSegment .prototype = Object .assign (Object .create ((X3DGroupingNode_default()).prototype),
-{
-   constructor: HAnimSegment,
-});
+Object .setPrototypeOf (HAnimSegment .prototype, (X3DGroupingNode_default()).prototype);
 
 Object .defineProperties (HAnimSegment,
 {
@@ -1117,10 +1108,7 @@ function HAnimSite (executionContext)
    this .addType ((X3DConstants_default()).HAnimSite);
 }
 
-HAnimSite .prototype = Object .assign (Object .create ((X3DTransformNode_default()).prototype),
-{
-   constructor: HAnimSite,
-});
+Object .setPrototypeOf (HAnimSite .prototype, (X3DTransformNode_default()).prototype);
 
 Object .defineProperties (HAnimSite,
 {

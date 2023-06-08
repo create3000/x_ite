@@ -120,10 +120,7 @@ function X3DProductStructureChildNode (executionContext)
    this .addType ((X3DConstants_default()).X3DProductStructureChildNode);
 }
 
-X3DProductStructureChildNode .prototype = Object .assign (Object .create ((X3DChildNode_default()).prototype),
-{
-   constructor: X3DProductStructureChildNode,
-});
+Object .setPrototypeOf (X3DProductStructureChildNode .prototype, (X3DChildNode_default()).prototype);
 
 Object .defineProperties (X3DProductStructureChildNode,
 {
@@ -207,10 +204,9 @@ function CADAssembly (executionContext)
    this .addType ((X3DConstants_default()).CADAssembly);
 }
 
-CADAssembly .prototype = Object .assign (Object .create ((X3DGroupingNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (CADAssembly .prototype, (X3DGroupingNode_default()).prototype),
    //X3DProductStructureChildNode .prototype,
 {
-   constructor: CADAssembly,
 });
 
 Object .defineProperties (CADAssembly,
@@ -331,10 +327,9 @@ function CADFace (executionContext)
    this .boundedObject = null;
 }
 
-CADFace .prototype = Object .assign (Object .create (CADGeometry_X3DProductStructureChildNode.prototype),
+Object .assign (Object .setPrototypeOf (CADFace .prototype, CADGeometry_X3DProductStructureChildNode.prototype),
    (X3DBoundedObject_default()).prototype,
 {
-   constructor: CADFace,
    initialize ()
    {
       CADGeometry_X3DProductStructureChildNode.prototype.initialize.call (this);
@@ -582,10 +577,7 @@ function CADLayer (executionContext)
    this .addType ((X3DConstants_default()).CADLayer);
 }
 
-CADLayer .prototype = Object .assign (Object .create ((X3DGroupingNode_default()).prototype),
-{
-   constructor: CADLayer,
-});
+Object .setPrototypeOf (CADLayer .prototype, (X3DGroupingNode_default()).prototype);
 
 Object .defineProperties (CADLayer,
 {
@@ -697,10 +689,9 @@ function CADPart (executionContext)
    this .addType ((X3DConstants_default()).CADPart);
 }
 
-CADPart .prototype = Object .assign (Object .create ((X3DTransformNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (CADPart .prototype, (X3DTransformNode_default()).prototype),
    //X3DProductStructureChildNode .prototype,
 {
-   constructor: CADPart,
 });
 
 Object .defineProperties (CADPart,
@@ -816,9 +807,8 @@ function IndexedQuadSet (executionContext)
    this .addType ((X3DConstants_default()).IndexedQuadSet);
 }
 
-IndexedQuadSet .prototype = Object .assign (Object .create ((X3DComposedGeometryNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (IndexedQuadSet .prototype, (X3DComposedGeometryNode_default()).prototype),
 {
-   constructor: IndexedQuadSet,
    initialize ()
    {
       X3DComposedGeometryNode_default().prototype.initialize.call (this);
@@ -960,9 +950,8 @@ function QuadSet (executionContext)
    this .addType ((X3DConstants_default()).QuadSet);
 }
 
-QuadSet .prototype = Object .assign (Object .create ((X3DComposedGeometryNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (QuadSet .prototype, (X3DComposedGeometryNode_default()).prototype),
 {
-   constructor: QuadSet,
    getTriangleIndex: (function ()
    {
       // Define two triangles.

@@ -715,9 +715,8 @@ function X3DParticleEmitterNode (executionContext)
    this .addFunction (BVH_glsl);
 }
 
-X3DParticleEmitterNode .prototype = Object .assign (Object .create ((X3DNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, (X3DNode_default()).prototype),
 {
-   constructor: X3DParticleEmitterNode,
    initialize ()
    {
       X3DNode_default().prototype.initialize.call (this);
@@ -1718,9 +1717,8 @@ function PointEmitter (executionContext)
    }`);
 }
 
-PointEmitter .prototype = Object .assign (Object .create (ParticleSystems_X3DParticleEmitterNode.prototype),
+Object .assign (Object .setPrototypeOf (PointEmitter .prototype, ParticleSystems_X3DParticleEmitterNode.prototype),
 {
-   constructor: PointEmitter,
    initialize ()
    {
       ParticleSystems_X3DParticleEmitterNode.prototype.initialize.call (this);
@@ -1852,7 +1850,7 @@ const
 
 function X3DParticleSystemsContext () { }
 
-X3DParticleSystemsContext .prototype =
+Object .assign (X3DParticleSystemsContext .prototype,
 {
    getDefaultEmitter ()
    {
@@ -1866,7 +1864,7 @@ X3DParticleSystemsContext .prototype =
 
       return this [_defaultEmitter];
    },
-};
+});
 
 const X3DParticleSystemsContext_default_ = X3DParticleSystemsContext;
 ;
@@ -1931,9 +1929,8 @@ function X3DParticlePhysicsModelNode (executionContext)
    this .addType ((X3DConstants_default()).X3DParticlePhysicsModelNode);
 }
 
-X3DParticlePhysicsModelNode .prototype = Object .assign (Object .create ((X3DNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (X3DParticlePhysicsModelNode .prototype, (X3DNode_default()).prototype),
 {
-   constructor: X3DParticlePhysicsModelNode,
    addForce ()
    { },
 });
@@ -2022,9 +2019,8 @@ function BoundedPhysicsModel (executionContext)
    this .addType ((X3DConstants_default()).BoundedPhysicsModel);
 }
 
-BoundedPhysicsModel .prototype = Object .assign (Object .create (ParticleSystems_X3DParticlePhysicsModelNode.prototype),
+Object .assign (Object .setPrototypeOf (BoundedPhysicsModel .prototype, ParticleSystems_X3DParticlePhysicsModelNode.prototype),
 {
-   constructor: BoundedPhysicsModel,
    initialize ()
    {
       ParticleSystems_X3DParticlePhysicsModelNode.prototype.initialize.call (this);
@@ -2186,9 +2182,8 @@ function ConeEmitter (executionContext)
    }`);
 }
 
-ConeEmitter .prototype = Object .assign (Object .create (ParticleSystems_X3DParticleEmitterNode.prototype),
+Object .assign (Object .setPrototypeOf (ConeEmitter .prototype, ParticleSystems_X3DParticleEmitterNode.prototype),
 {
-   constructor: ConeEmitter,
    initialize ()
    {
       ParticleSystems_X3DParticleEmitterNode.prototype.initialize.call (this);
@@ -2341,9 +2336,8 @@ function ExplosionEmitter (executionContext)
    }`);
 }
 
-ExplosionEmitter .prototype = Object .assign (Object .create (ParticleSystems_X3DParticleEmitterNode.prototype),
+Object .assign (Object .setPrototypeOf (ExplosionEmitter .prototype, ParticleSystems_X3DParticleEmitterNode.prototype),
 {
-   constructor: ExplosionEmitter,
    initialize ()
    {
       ParticleSystems_X3DParticleEmitterNode.prototype.initialize.call (this);
@@ -2473,9 +2467,8 @@ function ForcePhysicsModel (executionContext)
    this ._force .setUnit ("force");
 }
 
-ForcePhysicsModel .prototype = Object .assign (Object .create (ParticleSystems_X3DParticlePhysicsModelNode.prototype),
+Object .assign (Object .setPrototypeOf (ForcePhysicsModel .prototype, ParticleSystems_X3DParticlePhysicsModelNode.prototype),
 {
-   constructor: ForcePhysicsModel,
    addForce: (function ()
    {
       const force = new (Vector3_default()) (0, 0, 0);
@@ -2615,7 +2608,7 @@ function QuickSort (array, compare)
       this .compare = compare;
 }
 
-QuickSort .prototype =
+Object .assign (QuickSort .prototype,
 {
    compare (lhs, rhs)
    {
@@ -2663,7 +2656,7 @@ QuickSort .prototype =
       if (lo < j) this .quicksort (lo, j);
       if (i < hi) this .quicksort (i, hi);
    },
-};
+});
 
 const QuickSort_default_ = QuickSort;
 ;
@@ -2760,7 +2753,7 @@ function Triangle (tree, triangle)
    this .i3       = triangle * 9;
 }
 
-Triangle .prototype =
+Object .assign (Triangle .prototype,
 {
    intersectsLine (line, intersections, intersectionNormals)
    {
@@ -2813,7 +2806,7 @@ Triangle .prototype =
 
       return index;
    },
-};
+});
 
 function Node (tree, triangles, first, size)
 {
@@ -2883,7 +2876,7 @@ function Node (tree, triangles, first, size)
       this .right = new Triangle (tree, triangles [first + leftSize]);
 }
 
-Node .prototype =
+Object .assign (Node .prototype,
 {
    intersectsLine (line, intersections, intersectionNormals)
    {
@@ -2986,7 +2979,7 @@ Node .prototype =
 
       return index;
    },
-};
+});
 
 function BVH (vertices, normals)
 {
@@ -3021,9 +3014,8 @@ function BVH (vertices, normals)
    }
 }
 
-BVH .prototype =
+Object .assign (BVH .prototype,
 {
-   constructor: BVH,
    intersectsLine (line, intersections, intersectionNormals)
    {
       intersections .size = 0;
@@ -3047,7 +3039,7 @@ BVH .prototype =
 
       return array;
    },
-};
+});
 
 const BVH_default_ = BVH;
 ;
@@ -3193,9 +3185,8 @@ function ParticleSystem (executionContext)
    this .texCoordOffset           = 0;
 }
 
-ParticleSystem .prototype = Object .assign (Object .create ((X3DShapeNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (X3DShapeNode_default()).prototype),
 {
-   constructor: ParticleSystem,
    initialize ()
    {
       X3DShapeNode_default().prototype.initialize.call (this);
@@ -4262,9 +4253,8 @@ function PolylineEmitter (executionContext)
    }`);
 }
 
-PolylineEmitter .prototype = Object .assign (Object .create (ParticleSystems_X3DParticleEmitterNode.prototype),
+Object .assign (Object .setPrototypeOf (PolylineEmitter .prototype, ParticleSystems_X3DParticleEmitterNode.prototype),
 {
-   constructor: PolylineEmitter,
    initialize ()
    {
       ParticleSystems_X3DParticleEmitterNode.prototype.initialize.call (this);
@@ -4501,9 +4491,8 @@ function SurfaceEmitter (executionContext)
    }`);
 }
 
-SurfaceEmitter .prototype = Object .assign (Object .create (ParticleSystems_X3DParticleEmitterNode.prototype),
+Object .assign (Object .setPrototypeOf (SurfaceEmitter .prototype, ParticleSystems_X3DParticleEmitterNode.prototype),
 {
-   constructor: SurfaceEmitter,
    initialize ()
    {
       ParticleSystems_X3DParticleEmitterNode.prototype.initialize.call (this);
@@ -4795,9 +4784,8 @@ function VolumeEmitter (executionContext)
    }`);
 }
 
-VolumeEmitter .prototype = Object .assign (Object .create (ParticleSystems_X3DParticleEmitterNode.prototype),
+Object .assign (Object .setPrototypeOf (VolumeEmitter .prototype, ParticleSystems_X3DParticleEmitterNode.prototype),
 {
-   constructor: VolumeEmitter,
    initialize ()
    {
       ParticleSystems_X3DParticleEmitterNode.prototype.initialize.call (this);
@@ -5025,9 +5013,8 @@ function WindPhysicsModel (executionContext)
    this ._speed .setUnit ("speed");
 }
 
-WindPhysicsModel .prototype = Object .assign (Object .create (ParticleSystems_X3DParticlePhysicsModelNode.prototype),
+Object .assign (Object .setPrototypeOf (WindPhysicsModel .prototype, ParticleSystems_X3DParticlePhysicsModelNode.prototype),
 {
-   constructor: WindPhysicsModel,
    getRandomSpeed (emitterNode)
    {
       const

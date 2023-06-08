@@ -164,9 +164,8 @@ function X3DEnvironmentTextureNode (executionContext)
    ];
 }
 
-X3DEnvironmentTextureNode .prototype = Object .assign (Object .create ((X3DSingleTextureNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (X3DEnvironmentTextureNode .prototype, (X3DSingleTextureNode_default()).prototype),
 {
-   constructor: X3DEnvironmentTextureNode,
    getTarget ()
    {
       return this .target;
@@ -324,9 +323,8 @@ function ComposedCubeMapTexture (executionContext)
    this .textureBits  = new (BitSet_default()) ();
 }
 
-ComposedCubeMapTexture .prototype = Object .assign (Object .create (CubeMapTexturing_X3DEnvironmentTextureNode.prototype),
+Object .assign (Object .setPrototypeOf (ComposedCubeMapTexture .prototype, CubeMapTexturing_X3DEnvironmentTextureNode.prototype),
 {
-   constructor: ComposedCubeMapTexture,
    initialize ()
    {
       CubeMapTexturing_X3DEnvironmentTextureNode.prototype.initialize.call (this);
@@ -571,10 +569,9 @@ function DependentRenderer (executionContext)
    this .renderObject = null;
 }
 
-DependentRenderer .prototype = Object .assign (Object .create ((X3DBaseNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (DependentRenderer .prototype, (X3DBaseNode_default()).prototype),
    (X3DRenderObject_default()).prototype,
 {
-   constructor: DependentRenderer,
    initialize ()
    {
       X3DBaseNode_default().prototype.initialize.call (this);
@@ -749,9 +746,8 @@ function GeneratedCubeMapTexture (executionContext)
    this .viewVolume        = new (ViewVolume_default()) ();
 }
 
-GeneratedCubeMapTexture .prototype = Object .assign (Object .create (CubeMapTexturing_X3DEnvironmentTextureNode.prototype),
+Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, CubeMapTexturing_X3DEnvironmentTextureNode.prototype),
 {
-   constructor: GeneratedCubeMapTexture,
    initialize ()
    {
       CubeMapTexturing_X3DEnvironmentTextureNode.prototype.initialize.call (this);
@@ -1065,10 +1061,9 @@ function ImageCubeMapTexture (executionContext)
    this .urlStack = new (Fields_default()).MFString ();
 }
 
-ImageCubeMapTexture .prototype = Object .assign (Object .create (CubeMapTexturing_X3DEnvironmentTextureNode.prototype),
+Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapTexturing_X3DEnvironmentTextureNode.prototype),
    (X3DUrlObject_default()).prototype,
 {
-   constructor: ImageCubeMapTexture,
    initialize ()
    {
       CubeMapTexturing_X3DEnvironmentTextureNode.prototype.initialize.call (this);

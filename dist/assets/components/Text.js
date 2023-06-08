@@ -1,7 +1,7 @@
 /* X_ITE v8.7.8 */(() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 515:
+/***/ 841:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 /**
@@ -14757,10 +14757,9 @@ function X3DFontStyleNode (executionContext)
    this .loader      = new (FileLoader_default()) (this);
 }
 
-X3DFontStyleNode .prototype = Object .assign (Object .create ((X3DNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, (X3DNode_default()).prototype),
    (X3DUrlObject_default()).prototype,
 {
-   constructor: X3DFontStyleNode,
    initialize ()
    {
       X3DNode_default().prototype.initialize.call (this);
@@ -15039,9 +15038,8 @@ function X3DTextGeometry (text, fontStyle)
    this .bbox           = new (Box3_default()) ();
 }
 
-X3DTextGeometry .prototype =
+Object .assign (X3DTextGeometry .prototype,
 {
-   constructor: X3DTextGeometry,
    getBrowser ()
    {
       return this .browser;
@@ -15564,7 +15562,7 @@ X3DTextGeometry .prototype =
    },
    traverse (type, renderObject)
    { },
-};
+});
 
 const X3DTextGeometry_default_ = X3DTextGeometry;
 ;
@@ -15648,9 +15646,8 @@ function PolygonText (text, fontStyle)
    this .texCoordArray = X3DGeometryNode_default().createArray ();
 }
 
-PolygonText .prototype = Object .assign (Object .create (Text_X3DTextGeometry.prototype),
+Object .assign (Object .setPrototypeOf (PolygonText .prototype, Text_X3DTextGeometry.prototype),
 {
-   constructor: PolygonText,
    isTransparent ()
    {
       return false;
@@ -16013,9 +16010,8 @@ function FontStyle (executionContext)
    this ._size .setUnit ("length");
 }
 
-FontStyle .prototype = Object .assign (Object .create (Text_X3DFontStyleNode.prototype),
+Object .assign (Object .setPrototypeOf (FontStyle .prototype, Text_X3DFontStyleNode.prototype),
 {
-   constructor: FontStyle,
    getTextGeometry (text)
    {
       return new Text_PolygonText (text, this);
@@ -16073,7 +16069,7 @@ Namespace_default().set ("x_ite/Components/Text/FontStyle", FontStyle_default_);
 /* harmony default export */ const Text_FontStyle = (FontStyle_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Text/X3DTextContext.js
 /* provided dependency */ var $ = __webpack_require__(355);
-/* provided dependency */ var opentype = __webpack_require__(515);
+/* provided dependency */ var opentype = __webpack_require__(841);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -16134,7 +16130,7 @@ function X3DTextContext ()
    this [_glyphCache] = new Map (); // [font] [primitiveQuality] [glyphIndex]
 }
 
-X3DTextContext .prototype =
+Object .assign (X3DTextContext .prototype,
 {
    getDefaultFontStyle ()
    {
@@ -16189,7 +16185,7 @@ X3DTextContext .prototype =
 
       return cachedGlyph;
    },
-};
+});
 
 const X3DTextContext_default_ = X3DTextContext;
 ;
@@ -16267,9 +16263,8 @@ function Text (executionContext)
    this ._lineBounds .setUnit ("length");
 }
 
-Text .prototype = Object .assign (Object .create ((X3DGeometryNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (Text .prototype, (X3DGeometryNode_default()).prototype),
 {
-   constructor: Text,
    initialize ()
    {
       X3DGeometryNode_default().prototype.initialize.call (this);

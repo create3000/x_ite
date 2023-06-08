@@ -137,9 +137,8 @@ function X3DTextureProjectorNode (executionContext)
    this ._location    .setUnit ("length");
 }
 
-X3DTextureProjectorNode .prototype = Object .assign (Object .create ((X3DChildNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (X3DTextureProjectorNode .prototype, (X3DChildNode_default()).prototype),
 {
-   constructor: X3DTextureProjectorNode,
    initialize ()
    {
       X3DChildNode_default().prototype.initialize.call (this);
@@ -379,9 +378,8 @@ function TextureProjectorContainer ()
    this .projectiveTextureMatrixArray    = new Float32Array (16);
 }
 
-TextureProjectorContainer .prototype =
+Object .assign (TextureProjectorContainer .prototype,
 {
-   constructor: TextureProjectorContainer,
    set (textureProjectorNode, modelViewMatrix)
    {
       this .browser              = textureProjectorNode .getBrowser ();
@@ -446,7 +444,7 @@ TextureProjectorContainer .prototype =
    {
       TextureProjectorCache .push (this);
    },
-};
+});
 
 function TextureProjector (executionContext)
 {
@@ -457,9 +455,8 @@ function TextureProjector (executionContext)
    this ._fieldOfView .setUnit ("angle");
 }
 
-TextureProjector .prototype = Object .assign (Object .create (TextureProjector_X3DTextureProjectorNode.prototype),
+Object .assign (Object .setPrototypeOf (TextureProjector .prototype, TextureProjector_X3DTextureProjectorNode.prototype),
 {
-   constructor: TextureProjector,
    initialize ()
    {
       TextureProjector_X3DTextureProjectorNode.prototype.initialize.call (this);
@@ -599,9 +596,8 @@ function TextureProjectorParallelContainer ()
    this .projectiveTextureMatrixArray    = new Float32Array (16);
 }
 
-TextureProjectorParallelContainer .prototype =
+Object .assign (TextureProjectorParallelContainer .prototype,
 {
-   constructor: TextureProjectorParallelContainer,
    set (textureProjectorNode, modelViewMatrix)
    {
       this .browser              = textureProjectorNode .getBrowser ();
@@ -687,7 +683,7 @@ TextureProjectorParallelContainer .prototype =
    {
       TextureProjectorParallelCache .push (this);
    },
-};
+});
 
 function TextureProjectorParallel (executionContext)
 {
@@ -698,9 +694,8 @@ function TextureProjectorParallel (executionContext)
    this ._fieldOfView .setUnit ("length");
 }
 
-TextureProjectorParallel .prototype = Object .assign (Object .create (TextureProjector_X3DTextureProjectorNode.prototype),
+Object .assign (Object .setPrototypeOf (TextureProjectorParallel .prototype, TextureProjector_X3DTextureProjectorNode.prototype),
 {
-   constructor: TextureProjectorParallel,
    initialize ()
    {
       TextureProjector_X3DTextureProjectorNode.prototype.initialize.call (this);

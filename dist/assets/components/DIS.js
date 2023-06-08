@@ -123,10 +123,7 @@ function DISEntityManager (executionContext)
       this .addAlias ("mapping", this ._children);
 }
 
-DISEntityManager .prototype = Object .assign (Object .create ((X3DChildNode_default()).prototype),
-{
-   constructor: DISEntityManager,
-});
+Object .setPrototypeOf (DISEntityManager .prototype, (X3DChildNode_default()).prototype);
 
 Object .defineProperties (DISEntityManager,
 {
@@ -240,10 +237,9 @@ function DISEntityTypeMapping (executionContext)
    this .addType ((X3DConstants_default()).DISEntityTypeMapping);
 }
 
-DISEntityTypeMapping .prototype = Object .assign (Object .create ((X3DInfoNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (DISEntityTypeMapping .prototype, (X3DInfoNode_default()).prototype),
    (X3DUrlObject_default()).prototype,
 {
-   constructor: DISEntityTypeMapping,
    initialize ()
    {
       X3DInfoNode_default().prototype.initialize.call (this);
@@ -372,10 +368,9 @@ function EspduTransform (executionContext)
    this .addType ((X3DConstants_default()).EspduTransform);
 }
 
-EspduTransform .prototype = Object .assign (Object .create ((X3DGroupingNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (EspduTransform .prototype, (X3DGroupingNode_default()).prototype),
    (X3DSensorNode_default()).prototype,
 {
-   constructor: EspduTransform,
    initialize ()
    {
       X3DGroupingNode_default().prototype.initialize.call (this);
@@ -575,10 +570,9 @@ function ReceiverPdu (executionContext)
    this .addType ((X3DConstants_default()).ReceiverPdu);
 }
 
-ReceiverPdu .prototype = Object .assign (Object .create ((X3DSensorNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (ReceiverPdu .prototype, (X3DSensorNode_default()).prototype),
    (X3DBoundedObject_default()).prototype,
 {
-   constructor: ReceiverPdu,
    initialize ()
    {
       X3DSensorNode_default().prototype.initialize.call (this);
@@ -720,10 +714,9 @@ function SignalPdu (executionContext)
    this .addType ((X3DConstants_default()).SignalPdu);
 }
 
-SignalPdu .prototype = Object .assign (Object .create ((X3DSensorNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (SignalPdu .prototype, (X3DSensorNode_default()).prototype),
    (X3DBoundedObject_default()).prototype,
 {
-   constructor: SignalPdu,
    initialize ()
    {
       X3DSensorNode_default().prototype.initialize.call (this);
@@ -865,10 +858,9 @@ function TransmitterPdu (executionContext)
    this .addType ((X3DConstants_default()).TransmitterPdu);
 }
 
-TransmitterPdu .prototype = Object .assign (Object .create ((X3DSensorNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (TransmitterPdu .prototype, (X3DSensorNode_default()).prototype),
    (X3DBoundedObject_default()).prototype,
 {
-   constructor: TransmitterPdu,
    initialize ()
    {
       X3DSensorNode_default().prototype.initialize.call (this);

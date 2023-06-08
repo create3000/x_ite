@@ -126,9 +126,8 @@ function BlendMode (executionContext)
    this .equationTypes = new Map ();
 }
 
-BlendMode .prototype = Object .assign (Object .create ((X3DAppearanceChildNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (BlendMode .prototype, (X3DAppearanceChildNode_default()).prototype),
 {
-   constructor: BlendMode,
    initialize ()
    {
       X3DAppearanceChildNode_default().prototype.initialize.call (this);

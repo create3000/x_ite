@@ -108,10 +108,7 @@ function Arc2DOptions (executionContext)
    this .addChildObjects ("dimension", new (Fields_default()).SFInt32 (40))
 }
 
-Arc2DOptions .prototype = Object .assign (Object .create ((X3DBaseNode_default()).prototype),
-{
-   constructor: Arc2DOptions,
-});
+Object .setPrototypeOf (Arc2DOptions .prototype, (X3DBaseNode_default()).prototype);
 
 Object .defineProperties (Arc2DOptions,
 {
@@ -185,10 +182,7 @@ function ArcClose2DOptions (executionContext)
    this .addChildObjects ("dimension", new (Fields_default()).SFInt32 (40))
 }
 
-ArcClose2DOptions .prototype = Object .assign (Object .create ((X3DBaseNode_default()).prototype),
-{
-   constructor: ArcClose2DOptions,
-});
+Object .setPrototypeOf (ArcClose2DOptions .prototype, (X3DBaseNode_default()).prototype);
 
 Object .defineProperties (ArcClose2DOptions,
 {
@@ -272,9 +266,8 @@ function Circle2DOptions (executionContext)
    this .vertices = X3DGeometryNode_default().createArray ();
 }
 
-Circle2DOptions .prototype = Object .assign (Object .create ((X3DBaseNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (Circle2DOptions .prototype, (X3DBaseNode_default()).prototype),
 {
-   constructor: Circle2DOptions,
    initialize ()
    {
       this .addInterest ("build", this);
@@ -390,9 +383,8 @@ function Disk2DOptions (executionContext)
    this .diskVertices   = X3DGeometryNode_default().createArray ();
 }
 
-Disk2DOptions .prototype = Object .assign (Object .create ((X3DBaseNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (Disk2DOptions .prototype, (X3DBaseNode_default()).prototype),
 {
-   constructor: Disk2DOptions,
    initialize ()
    {
       this .addInterest ("build", this);
@@ -558,9 +550,8 @@ function Rectangle2DOptions (executionContext)
    X3DBaseNode_default().call (this, executionContext);
 }
 
-Rectangle2DOptions .prototype = Object .assign (Object .create ((X3DBaseNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (Rectangle2DOptions .prototype, (X3DBaseNode_default()).prototype),
 {
-   constructor: Rectangle2DOptions,
    initialize ()
    {
       X3DBaseNode_default().prototype.initialize.call (this);
@@ -677,7 +668,7 @@ var PrimitiveQuality_default = /*#__PURE__*/__webpack_require__.n(PrimitiveQuali
 
 function X3DGeometry2DContext () { }
 
-X3DGeometry2DContext .prototype =
+Object .assign (X3DGeometry2DContext .prototype,
 {
    initialize ()
    {
@@ -739,7 +730,7 @@ X3DGeometry2DContext .prototype =
          }
       }
    },
-};
+});
 
 function getOptionNode (key, OptionNode)
 {
@@ -841,9 +832,8 @@ function Arc2D (executionContext)
    this ._radius     .setUnit ("length");
 }
 
-Arc2D .prototype = Object .assign (Object .create ((X3DLineGeometryNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (Arc2D .prototype, (X3DLineGeometryNode_default()).prototype),
 {
-   constructor: Arc2D,
    set_live__ ()
    {
       X3DLineGeometryNode_default().prototype.set_live__.call (this);
@@ -1011,9 +1001,8 @@ function ArcClose2D (executionContext)
    this ._radius     .setUnit ("length");
 }
 
-ArcClose2D .prototype = Object .assign (Object .create ((X3DGeometryNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (ArcClose2D .prototype, (X3DGeometryNode_default()).prototype),
 {
-   constructor: ArcClose2D,
    set_live__ ()
    {
       X3DGeometryNode_default().prototype.set_live__.call (this);
@@ -1238,9 +1227,8 @@ function Circle2D (executionContext)
    this ._radius .setUnit ("length");
 }
 
-Circle2D .prototype = Object .assign (Object .create ((X3DLineGeometryNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (Circle2D .prototype, (X3DLineGeometryNode_default()).prototype),
 {
-   constructor: Circle2D,
    set_live__ ()
    {
       X3DLineGeometryNode_default().prototype.set_live__.call (this);
@@ -1380,9 +1368,8 @@ function Disk2D (executionContext)
    this ._outerRadius .setUnit ("length");
 }
 
-Disk2D .prototype = Object .assign (Object .create ((X3DGeometryNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (Disk2D .prototype, (X3DGeometryNode_default()).prototype),
 {
-   constructor: Disk2D,
    initialize ()
    {
       X3DGeometryNode_default().prototype.initialize.call (this);
@@ -1640,9 +1627,8 @@ function Polyline2D (executionContext)
    this ._lineSegments .setUnit ("length");
 }
 
-Polyline2D .prototype = Object .assign (Object .create ((X3DLineGeometryNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (Polyline2D .prototype, (X3DLineGeometryNode_default()).prototype),
 {
-   constructor: Polyline2D,
    build ()
    {
       const
@@ -1757,9 +1743,8 @@ function Polypoint2D (executionContext)
    this ._point .setUnit ("length");
 }
 
-Polypoint2D .prototype = Object .assign (Object .create ((X3DPointGeometryNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (Polypoint2D .prototype, (X3DPointGeometryNode_default()).prototype),
 {
-   constructor: Polypoint2D,
    build ()
    {
       const
@@ -1880,9 +1865,8 @@ function Rectangle2D (executionContext)
    this ._size .setUnit ("length");
 }
 
-Rectangle2D .prototype = Object .assign (Object .create ((X3DGeometryNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (Rectangle2D .prototype, (X3DGeometryNode_default()).prototype),
 {
-   constructor: Rectangle2D,
    build: (function ()
    {
       const defaultSize = new (Vector2_default()) (2, 2);
@@ -2032,9 +2016,8 @@ function TriangleSet2D (executionContext)
    this ._vertices .setUnit ("length");
 }
 
-TriangleSet2D .prototype = Object .assign (Object .create ((X3DGeometryNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (TriangleSet2D .prototype, (X3DGeometryNode_default()).prototype),
 {
-   constructor: TriangleSet2D,
    build ()
    {
       const

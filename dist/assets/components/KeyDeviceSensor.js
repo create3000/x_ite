@@ -107,7 +107,7 @@ function X3DKeyDeviceSensorContext ()
    this [_keyDeviceSensorNodes] = new Set ();
 }
 
-X3DKeyDeviceSensorContext .prototype =
+Object .assign (X3DKeyDeviceSensorContext .prototype,
 {
    initialize ()
    {
@@ -142,7 +142,7 @@ X3DKeyDeviceSensorContext .prototype =
       for (const keyDeviceSensorNode of this [_keyDeviceSensorNodes])
          keyDeviceSensorNode .keyup (event);
    },
-};
+});
 
 const __default__ = X3DKeyDeviceSensorContext;
 ;
@@ -219,9 +219,8 @@ function X3DKeyDeviceSensorNode (executionContext)
    this .addType ((X3DConstants_default()).X3DKeyDeviceSensorNode);
 }
 
-X3DKeyDeviceSensorNode .prototype = Object .assign (Object .create ((X3DSensorNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (X3DKeyDeviceSensorNode .prototype, (X3DSensorNode_default()).prototype),
 {
-   constructor: X3DKeyDeviceSensorNode,
    initialize ()
    {
       X3DSensorNode_default().prototype.initialize.call (this);
@@ -371,9 +370,8 @@ function KeySensor (executionContext)
    this .addType ((X3DConstants_default()).KeySensor);
 }
 
-KeySensor .prototype = Object .assign (Object .create (KeyDeviceSensor_X3DKeyDeviceSensorNode.prototype),
+Object .assign (Object .setPrototypeOf (KeySensor .prototype, KeyDeviceSensor_X3DKeyDeviceSensorNode.prototype),
 {
-   constructor: KeySensor,
    keydown (event)
    {
       event .preventDefault ();
@@ -733,9 +731,8 @@ function StringSensor (executionContext)
    this .addType ((X3DConstants_default()).StringSensor);
 }
 
-StringSensor .prototype = Object .assign (Object .create (KeyDeviceSensor_X3DKeyDeviceSensorNode.prototype),
+Object .assign (Object .setPrototypeOf (StringSensor .prototype, KeyDeviceSensor_X3DKeyDeviceSensorNode.prototype),
 {
-   constructor: StringSensor,
    keydown (event)
    {
       event .preventDefault ();

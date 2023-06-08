@@ -307,7 +307,7 @@ function QuickSort (array, compare)
       this .compare = compare;
 }
 
-QuickSort .prototype =
+Object .assign (QuickSort .prototype,
 {
    compare (lhs, rhs)
    {
@@ -355,7 +355,7 @@ QuickSort .prototype =
       if (lo < j) this .quicksort (lo, j);
       if (i < hi) this .quicksort (i, hi);
    },
-};
+});
 
 const QuickSort_default_ = QuickSort;
 ;
@@ -446,9 +446,8 @@ function X3DPickSensorNode (executionContext)
    this .pickedGeometries    = new (Fields_default()).MFNode (); // Must be unique for each X3DPickSensorNode.
 }
 
-X3DPickSensorNode .prototype = Object .assign (Object .create ((X3DSensorNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, (X3DSensorNode_default()).prototype),
 {
-   constructor: X3DPickSensorNode,
    initialize ()
    {
       this .getLive () .addInterest ("set_live__", this);
@@ -892,9 +891,8 @@ function LinePickSensor (executionContext)
    this .pickingGeometryNode = null;
 }
 
-LinePickSensor .prototype = Object .assign (Object .create (Picking_X3DPickSensorNode.prototype),
+Object .assign (Object .setPrototypeOf (LinePickSensor .prototype, Picking_X3DPickSensorNode.prototype),
 {
-   constructor: LinePickSensor,
    initialize ()
    {
       Picking_X3DPickSensorNode.prototype.initialize.call (this);
@@ -1229,9 +1227,8 @@ function X3DPickableObject (executionContext)
    this .objectType = new Set ();
 }
 
-X3DPickableObject .prototype =
+Object .assign (X3DPickableObject .prototype,
 {
-   constructor: X3DPickableObject,
    initialize ()
    {
       this ._objectType .addInterest ("set_objectType__", this);
@@ -1252,7 +1249,7 @@ X3DPickableObject .prototype =
       }
    },
    dispose () { },
-};
+});
 
 Object .defineProperties (X3DPickableObject,
 {
@@ -1338,10 +1335,9 @@ function PickableGroup (executionContext)
    this .addType ((X3DConstants_default()).PickableGroup);
 }
 
-PickableGroup .prototype = Object .assign (Object .create ((X3DGroupingNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (PickableGroup .prototype, (X3DGroupingNode_default()).prototype),
    Picking_X3DPickableObject.prototype,
 {
-   constructor: PickableGroup,
    initialize ()
    {
       X3DGroupingNode_default().prototype.initialize.call (this);
@@ -1585,7 +1581,7 @@ function VolumePicker ()
    this .collisionWorld .addCollisionObject (this .rigidBody2);
 }
 
-VolumePicker .prototype =
+Object .assign (VolumePicker .prototype,
 {
    constuctor: VolumePicker,
    setChildShape1 (matrix, childShape)
@@ -1686,7 +1682,7 @@ VolumePicker .prototype =
          return t;
       };
    })(),
-};
+});
 
 const VolumePicker_default_ = VolumePicker;
 ;
@@ -1765,9 +1761,8 @@ function PointPickSensor (executionContext)
    this .compoundShapes      = [ ];
 }
 
-PointPickSensor .prototype = Object .assign (Object .create (Picking_X3DPickSensorNode.prototype),
+Object .assign (Object .setPrototypeOf (PointPickSensor .prototype, Picking_X3DPickSensorNode.prototype),
 {
-   constructor: PointPickSensor,
    initialize ()
    {
       Picking_X3DPickSensorNode.prototype.initialize.call (this);
@@ -2117,9 +2112,8 @@ function PrimitivePickSensor (executionContext)
    this .picker              = new Picking_VolumePicker ();
 }
 
-PrimitivePickSensor .prototype = Object .assign (Object .create (Picking_X3DPickSensorNode.prototype),
+Object .assign (Object .setPrototypeOf (PrimitivePickSensor .prototype, Picking_X3DPickSensorNode.prototype),
 {
-   constructor: PrimitivePickSensor,
    initialize ()
    {
       Picking_X3DPickSensorNode.prototype.initialize.call (this);
@@ -2394,9 +2388,8 @@ function VolumePickSensor (executionContext)
    this .picker              = new Picking_VolumePicker ();
 }
 
-VolumePickSensor .prototype = Object .assign (Object .create (Picking_X3DPickSensorNode.prototype),
+Object .assign (Object .setPrototypeOf (VolumePickSensor .prototype, Picking_X3DPickSensorNode.prototype),
 {
-   constructor: VolumePickSensor,
    initialize ()
    {
       Picking_X3DPickSensorNode.prototype.initialize.call (this);

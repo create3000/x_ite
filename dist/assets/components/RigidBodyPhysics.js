@@ -183,9 +183,8 @@ function X3DRigidJointNode (executionContext)
    this .output                = false;
 }
 
-X3DRigidJointNode .prototype = Object .assign (Object .create ((X3DNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (X3DRigidJointNode .prototype, (X3DNode_default()).prototype),
 {
-   constructor: X3DRigidJointNode,
    initialize ()
    {
       X3DNode_default().prototype.initialize.call (this);
@@ -511,9 +510,8 @@ function BallJoint (executionContext)
    this .localAnchorPoint2 = new (Vector3_default()) (0, 0, 0);
 }
 
-BallJoint .prototype = Object .assign (Object .create (RigidBodyPhysics_X3DRigidJointNode.prototype),
+Object .assign (Object .setPrototypeOf (BallJoint .prototype, RigidBodyPhysics_X3DRigidJointNode.prototype),
 {
-   constructor: BallJoint,
    initialize ()
    {
       RigidBodyPhysics_X3DRigidJointNode.prototype.initialize.call (this);
@@ -741,10 +739,9 @@ function X3DNBodyCollidableNode (executionContext)
    this .matrix         = new (Matrix4_default()) ();
 }
 
-X3DNBodyCollidableNode .prototype = Object .assign (Object .create ((X3DChildNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, (X3DChildNode_default()).prototype),
    (X3DBoundedObject_default()).prototype,
 {
-   constructor: X3DNBodyCollidableNode,
    initialize ()
    {
       X3DChildNode_default().prototype.initialize.call (this);
@@ -905,9 +902,8 @@ function CollidableOffset (executionContext)
    this .collidableNode = null;
 }
 
-CollidableOffset .prototype = Object .assign (Object .create (RigidBodyPhysics_X3DNBodyCollidableNode.prototype),
+Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, RigidBodyPhysics_X3DNBodyCollidableNode.prototype),
 {
-   constructor: CollidableOffset,
    initialize ()
    {
       RigidBodyPhysics_X3DNBodyCollidableNode.prototype.initialize.call (this);
@@ -1179,9 +1175,8 @@ function CollidableShape (executionContext)
    this .triangleMesh   = null;
 }
 
-CollidableShape .prototype = Object .assign (Object .create (RigidBodyPhysics_X3DNBodyCollidableNode.prototype),
+Object .assign (Object .setPrototypeOf (CollidableShape .prototype, RigidBodyPhysics_X3DNBodyCollidableNode.prototype),
 {
-   constructor: CollidableShape,
    initialize ()
    {
       RigidBodyPhysics_X3DNBodyCollidableNode.prototype.initialize.call (this);
@@ -1749,9 +1744,8 @@ function CollisionCollection (executionContext)
    this .collisionSpaceNodes = [ ];
 }
 
-CollisionCollection .prototype = Object .assign (Object .create ((X3DChildNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (CollisionCollection .prototype, (X3DChildNode_default()).prototype),
 {
-   constructor: CollisionCollection,
    initialize ()
    {
       X3DChildNode_default().prototype.initialize.call (this);
@@ -1967,9 +1961,8 @@ function CollisionSensor (executionContext)
    this .contactCache = [ ];
 }
 
-CollisionSensor .prototype = Object .assign (Object .create ((X3DSensorNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (CollisionSensor .prototype, (X3DSensorNode_default()).prototype),
 {
-   constructor: CollisionSensor,
    initialize ()
    {
       X3DSensorNode_default().prototype.initialize.call (this);
@@ -2253,10 +2246,9 @@ function X3DNBodyCollisionSpaceNode (executionContext)
    this .addType ((X3DConstants_default()).X3DNBodyCollisionSpaceNode);
 }
 
-X3DNBodyCollisionSpaceNode .prototype = Object .assign (Object .create ((X3DNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (X3DNBodyCollisionSpaceNode .prototype, (X3DNode_default()).prototype),
    (X3DBoundedObject_default()).prototype,
 {
-   constructor: X3DNBodyCollisionSpaceNode,
    initialize ()
    {
       X3DNode_default().prototype.initialize.call (this);
@@ -2353,9 +2345,8 @@ function CollisionSpace (executionContext)
    this .collisionSpaceNodes = [ ];
 }
 
-CollisionSpace .prototype = Object .assign (Object .create (RigidBodyPhysics_X3DNBodyCollisionSpaceNode.prototype),
+Object .assign (Object .setPrototypeOf (CollisionSpace .prototype, RigidBodyPhysics_X3DNBodyCollisionSpaceNode.prototype),
 {
-   constructor: CollisionSpace,
    initialize ()
    {
       RigidBodyPhysics_X3DNBodyCollisionSpaceNode.prototype.initialize.call (this);
@@ -2543,10 +2534,7 @@ function Contact (executionContext)
    this ._softnessConstantForceMix .setUnit ("force");
 }
 
-Contact .prototype = Object .assign (Object .create ((X3DNode_default()).prototype),
-{
-   constructor: Contact,
-});
+Object .setPrototypeOf (Contact .prototype, (X3DNode_default()).prototype);
 
 Object .defineProperties (Contact,
 {
@@ -2684,9 +2672,8 @@ function DoubleAxisHingeJoint (executionContext)
    this .localAxis2        = new (Vector3_default()) (0, 0, 0);
 }
 
-DoubleAxisHingeJoint .prototype = Object .assign (Object .create (RigidBodyPhysics_X3DRigidJointNode.prototype),
+Object .assign (Object .setPrototypeOf (DoubleAxisHingeJoint .prototype, RigidBodyPhysics_X3DRigidJointNode.prototype),
 {
-   constructor: DoubleAxisHingeJoint,
    initialize ()
    {
       RigidBodyPhysics_X3DRigidJointNode.prototype.initialize.call (this);
@@ -2976,10 +2963,7 @@ function MotorJoint (executionContext)
    this ._motor3AngleRate .setUnit ("angularRate");
 }
 
-MotorJoint .prototype = Object .assign (Object .create (RigidBodyPhysics_X3DRigidJointNode.prototype),
-{
-   constructor: MotorJoint,
-});
+Object .setPrototypeOf (MotorJoint .prototype, RigidBodyPhysics_X3DRigidJointNode.prototype);
 
 Object .defineProperties (MotorJoint,
 {
@@ -3136,9 +3120,8 @@ function RigidBody (executionContext)
    this .torque             = new (Vector3_default()) (0, 0, 0);
 }
 
-RigidBody .prototype = Object .assign (Object .create ((X3DNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (RigidBody .prototype, (X3DNode_default()).prototype),
 {
-   constructor: RigidBody,
    initialize ()
    {
       X3DNode_default().prototype.initialize.call (this);
@@ -3658,9 +3641,8 @@ function RigidBodyCollection (executionContext)
    this .otherJointNodes        = [ ];
 }
 
-RigidBodyCollection .prototype = Object .assign (Object .create ((X3DChildNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, (X3DChildNode_default()).prototype),
 {
-   constructor: RigidBodyCollection,
    initialize ()
    {
       X3DChildNode_default().prototype.initialize.call (this);
@@ -4044,9 +4026,8 @@ function SingleAxisHingeJoint (executionContext)
    this .localAnchorPoint2 = new (Vector3_default()) (0, 0, 0);
 }
 
-SingleAxisHingeJoint .prototype = Object .assign (Object .create (RigidBodyPhysics_X3DRigidJointNode.prototype),
+Object .assign (Object .setPrototypeOf (SingleAxisHingeJoint .prototype, RigidBodyPhysics_X3DRigidJointNode.prototype),
 {
-   constructor: SingleAxisHingeJoint,
    initialize ()
    {
       RigidBodyPhysics_X3DRigidJointNode.prototype.initialize.call (this);
@@ -4300,9 +4281,8 @@ function SliderJoint (executionContext)
    this .outputs = { };
 }
 
-SliderJoint .prototype = Object .assign (Object .create (RigidBodyPhysics_X3DRigidJointNode.prototype),
+Object .assign (Object .setPrototypeOf (SliderJoint .prototype, RigidBodyPhysics_X3DRigidJointNode.prototype),
 {
-   constructor: SliderJoint,
    initialize ()
    {
       RigidBodyPhysics_X3DRigidJointNode.prototype.initialize.call (this);
@@ -4530,10 +4510,7 @@ function UniversalJoint (executionContext)
    this ._body2AnchorPoint .setUnit ("length");
 }
 
-UniversalJoint .prototype = Object .assign (Object .create (RigidBodyPhysics_X3DRigidJointNode.prototype),
-{
-   constructor: UniversalJoint,
-});
+Object .setPrototypeOf (UniversalJoint .prototype, RigidBodyPhysics_X3DRigidJointNode.prototype);
 
 Object .defineProperties (UniversalJoint,
 {

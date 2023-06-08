@@ -149,7 +149,7 @@ const
 function X3DLayoutContext ()
 { }
 
-X3DLayoutContext .prototype =
+Object .assign (X3DLayoutContext .prototype,
 {
    getScreenTextureProperties ()
    {
@@ -219,7 +219,7 @@ X3DLayoutContext .prototype =
          matrix .assign (modelViewMatrix) .inverse () .multLeft (screenMatrix);
       };
    })(),
-};
+});
 
 const __default__ = X3DLayoutContext;
 ;
@@ -299,10 +299,7 @@ function X3DLayoutNode (executionContext)
    this .addType ((X3DConstants_default()).X3DLayoutNode);
 }
 
-X3DLayoutNode .prototype = Object .assign (Object .create ((X3DChildNode_default()).prototype),
-{
-   constructor: X3DLayoutNode,
-});
+Object .setPrototypeOf (X3DLayoutNode .prototype, (X3DChildNode_default()).prototype);
 
 Object .defineProperties (X3DLayoutNode,
 {
@@ -429,9 +426,8 @@ function Layout (executionContext)
    this .matrix          = new (Matrix4_default()) ();
 }
 
-Layout .prototype = Object .assign (Object .create (Layout_X3DLayoutNode.prototype),
+Object .assign (Object .setPrototypeOf (Layout .prototype, Layout_X3DLayoutNode.prototype),
 {
-   constructor: Layout,
    viewportPixel: new (Vector2_default()) (0, 0),
    pixelSize: new (Vector2_default()) (0, 0),
    translation: new (Vector3_default()) (0, 0, 0),
@@ -1057,9 +1053,8 @@ function LayoutGroup (executionContext)
    this .screenMatrix    = new (Matrix4_default()) ();
 }
 
-LayoutGroup .prototype = Object .assign (Object .create ((X3DGroupingNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (LayoutGroup .prototype, (X3DGroupingNode_default()).prototype),
 {
-   constructor: LayoutGroup,
    initialize ()
    {
       X3DGroupingNode_default().prototype.initialize.call (this);
@@ -1252,9 +1247,8 @@ function LayoutLayer (executionContext)
    this .addType ((X3DConstants_default()).LayoutLayer);
 }
 
-LayoutLayer .prototype = Object .assign (Object .create ((X3DLayerNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (LayoutLayer .prototype, (X3DLayerNode_default()).prototype),
 {
-   constructor: LayoutLayer,
    initialize ()
    {
       X3DLayerNode_default().prototype.initialize.call (this);
@@ -1411,9 +1405,8 @@ function ScreenText (text, fontStyle)
    this .textureNode .setup ();
 }
 
-ScreenText .prototype = Object .assign (Object .create ((X3DTextGeometry_default()).prototype),
+Object .assign (Object .setPrototypeOf (ScreenText .prototype, (X3DTextGeometry_default()).prototype),
 {
-   constructor: ScreenText,
    modelViewMatrix: new (Matrix4_default()) (),
    isTransparent ()
    {
@@ -1818,9 +1811,8 @@ function ScreenFontStyle (executionContext)
    this .addType ((X3DConstants_default()).ScreenFontStyle);
 }
 
-ScreenFontStyle .prototype = Object .assign (Object .create ((X3DFontStyleNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (ScreenFontStyle .prototype, (X3DFontStyleNode_default()).prototype),
 {
-   constructor: ScreenFontStyle,
    initialize ()
    {
       X3DFontStyleNode_default().prototype.initialize.call (this);
@@ -1947,9 +1939,8 @@ function ScreenGroup (executionContext)
    this .matrix = new (Matrix4_default()) ();
 }
 
-ScreenGroup .prototype = Object .assign (Object .create ((X3DGroupingNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (ScreenGroup .prototype, (X3DGroupingNode_default()).prototype),
 {
-   constructor: ScreenGroup,
    getBBox (bbox, shadows)
    {
       return this .getSubBBox (bbox, shadows) .multRight (this .matrix);

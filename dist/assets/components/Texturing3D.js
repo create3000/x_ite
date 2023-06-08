@@ -1,7 +1,7 @@
 /* X_ITE v8.7.8 */(() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 807:
+/***/ 971:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -38,7 +38,7 @@ var Ib=[cx,_q,cr,Yr,as,fs,hs,Hu,Su,cx,cx,cx,cx,cx,cx,cx];var Jb=[dx,si,gi,Wh,Kh,
 
 /***/ }),
 
-/***/ 207:
+/***/ 246:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -72,7 +72,7 @@ var _a=[yj,od,ef,yj];var $a=[zj,Li,di,bi,Kb,Lb,Mb,Nb,Rc,Sc,Uc,jd,xd,Ye,lf,yd,zd,
 
 /***/ }),
 
-/***/ 905:
+/***/ 994:
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 /*! dicom-parser - 1.8.12 - 2023-02-20 | (c) 2017 Chris Hafey | https://github.com/cornerstonejs/dicomParser */
@@ -4028,7 +4028,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_zlib__;
 
 /***/ }),
 
-/***/ 964:
+/***/ 543:
 /***/ ((module) => {
 
 /* -*- tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- /
@@ -5183,7 +5183,7 @@ function decode(jpegData, userOpts = {}) {
 
 /***/ }),
 
-/***/ 224:
+/***/ 778:
 /***/ ((module) => {
 
 (function(f){if(true){module.exports=f()}else { var g; }})(function(){var define,module,exports;return (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c=undefined;if(!f&&c)return require(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u=undefined,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
@@ -7144,9 +7144,8 @@ function X3DTexture3DNode (executionContext)
    this .data   = null;
 }
 
-X3DTexture3DNode .prototype = Object .assign (Object .create ((X3DSingleTextureNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (X3DTexture3DNode .prototype, (X3DSingleTextureNode_default()).prototype),
 {
-   constructor: X3DTexture3DNode,
    initialize ()
    {
       X3DSingleTextureNode_default().prototype.initialize.call (this);
@@ -7325,9 +7324,8 @@ function ComposedTexture3D (executionContext)
    this .textureNodes = [ ];
 }
 
-ComposedTexture3D .prototype = Object .assign (Object .create (Texturing3D_X3DTexture3DNode.prototype),
+Object .assign (Object .setPrototypeOf (ComposedTexture3D .prototype, Texturing3D_X3DTexture3DNode.prototype),
 {
-   constructor: ComposedTexture3D,
    initialize ()
    {
       Texturing3D_X3DTexture3DNode.prototype.initialize.call (this);
@@ -7548,7 +7546,7 @@ function NRRDParser ()
    ]);
 }
 
-NRRDParser .prototype =
+Object .assign (NRRDParser .prototype,
 {
    parse (input)
    {
@@ -7930,7 +7928,7 @@ NRRDParser .prototype =
          throw new Error (`Invalid NRRD data: ${error}.`);
       }
    },
-};
+});
 
 const NRRDParser_default_ = NRRDParser;
 ;
@@ -7938,11 +7936,11 @@ const NRRDParser_default_ = NRRDParser;
 Namespace_default().set ("x_ite/Browser/Texturing3D/NRRDParser", NRRDParser_default_);
 /* harmony default export */ const Texturing3D_NRRDParser = (NRRDParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Texturing3D/DICOMParser.js
-/* provided dependency */ var dicomParser = __webpack_require__(905);
-/* provided dependency */ var JpegImage = __webpack_require__(964);
-/* provided dependency */ var jpeg = __webpack_require__(224);
-/* provided dependency */ var CharLS = __webpack_require__(807);
-/* provided dependency */ var OpenJPEG = __webpack_require__(207);
+/* provided dependency */ var dicomParser = __webpack_require__(994);
+/* provided dependency */ var JpegImage = __webpack_require__(543);
+/* provided dependency */ var jpeg = __webpack_require__(778);
+/* provided dependency */ var CharLS = __webpack_require__(971);
+/* provided dependency */ var OpenJPEG = __webpack_require__(246);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -7995,7 +7993,7 @@ function DicomParser ()
    this .dicom = { dicom: false };
 }
 
-DicomParser .prototype =
+Object .assign (DicomParser .prototype,
 {
    parse (input)
    {
@@ -9035,7 +9033,7 @@ DicomParser .prototype =
 
       return lut;
    },
-};
+});
 
 // ftp://medical.nema.org/medical/dicom/DataSets/WG04/
 
@@ -9113,10 +9111,9 @@ function ImageTexture3D (executionContext)
    this .addType ((X3DConstants_default()).ImageTexture3D);
 }
 
-ImageTexture3D .prototype = Object .assign (Object .create (Texturing3D_X3DTexture3DNode.prototype),
+Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, Texturing3D_X3DTexture3DNode.prototype),
    (X3DUrlObject_default()).prototype,
 {
-   constructor: ImageTexture3D,
    initialize ()
    {
       Texturing3D_X3DTexture3DNode.prototype.initialize.call (this);
@@ -9308,10 +9305,9 @@ function ImageTextureAtlas (executionContext)
    this .urlStack = new (Fields_default()).MFString ();
 }
 
-ImageTextureAtlas .prototype = Object .assign (Object .create (Texturing3D_X3DTexture3DNode.prototype),
+Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, Texturing3D_X3DTexture3DNode.prototype),
    (X3DUrlObject_default()).prototype,
 {
-   constructor: ImageTextureAtlas,
    initialize ()
    {
       Texturing3D_X3DTexture3DNode.prototype.initialize.call (this);
@@ -9554,9 +9550,8 @@ function PixelTexture3D (executionContext)
    this .addChildObjects ("loadState", new (Fields_default()).SFInt32 ((X3DConstants_default()).NOT_STARTED_STATE));
 }
 
-PixelTexture3D .prototype = Object .assign (Object .create (Texturing3D_X3DTexture3DNode.prototype),
+Object .assign (Object .setPrototypeOf (PixelTexture3D .prototype, Texturing3D_X3DTexture3DNode.prototype),
 {
-   constructor: PixelTexture3D,
    initialize ()
    {
       Texturing3D_X3DTexture3DNode.prototype.initialize.call (this);
@@ -9785,9 +9780,8 @@ function TextureCoordinate3D (executionContext)
    this .addType ((X3DConstants_default()).TextureCoordinate3D);
 }
 
-TextureCoordinate3D .prototype = Object .assign (Object .create ((X3DSingleTextureCoordinateNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (TextureCoordinate3D .prototype, (X3DSingleTextureCoordinateNode_default()).prototype),
 {
-   constructor: TextureCoordinate3D,
    initialize ()
    {
       X3DSingleTextureCoordinateNode_default().prototype.initialize.call (this);
@@ -9970,9 +9964,8 @@ function TextureCoordinate4D (executionContext)
    this .addType ((X3DConstants_default()).TextureCoordinate4D);
 }
 
-TextureCoordinate4D .prototype = Object .assign (Object .create ((X3DSingleTextureCoordinateNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (TextureCoordinate4D .prototype, (X3DSingleTextureCoordinateNode_default()).prototype),
 {
-   constructor: TextureCoordinate4D,
    initialize ()
    {
       X3DSingleTextureCoordinateNode_default().prototype.initialize.call (this);
@@ -10171,9 +10164,8 @@ function TextureTransform3D (executionContext)
    this .matrix = new (Matrix4_default()) ();
 }
 
-TextureTransform3D .prototype = Object .assign (Object .create ((X3DSingleTextureTransformNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (TextureTransform3D .prototype, (X3DSingleTextureTransformNode_default()).prototype),
 {
-   constructor: TextureTransform3D,
    initialize ()
    {
       X3DSingleTextureTransformNode_default().prototype.initialize.call (this);
@@ -10323,9 +10315,8 @@ function TextureTransformMatrix3D (executionContext)
    this .addType ((X3DConstants_default()).TextureTransformMatrix3D);
 }
 
-TextureTransformMatrix3D .prototype = Object .assign (Object .create ((X3DSingleTextureTransformNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (TextureTransformMatrix3D .prototype, (X3DSingleTextureTransformNode_default()).prototype),
 {
-   constructor: TextureTransformMatrix3D,
    initialize ()
    {
       X3DSingleTextureTransformNode_default().prototype.initialize.call (this);

@@ -120,9 +120,8 @@ function BooleanFilter (executionContext)
    this .addType ((X3DConstants_default()).BooleanFilter);
 }
 
-BooleanFilter .prototype = Object .assign (Object .create ((X3DChildNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (BooleanFilter .prototype, (X3DChildNode_default()).prototype),
 {
-   constructor: BooleanFilter,
    initialize ()
    {
       X3DChildNode_default().prototype.initialize.call (this);
@@ -247,9 +246,8 @@ function X3DSequencerNode (executionContext)
    this .index = -1;
 }
 
-X3DSequencerNode .prototype = Object .assign (Object .create ((X3DChildNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (X3DSequencerNode .prototype, (X3DChildNode_default()).prototype),
 {
-   constructor: X3DSequencerNode,
    initialize ()
    {
       X3DChildNode_default().prototype.initialize.call (this);
@@ -406,9 +404,8 @@ function BooleanSequencer (executionContext)
    this .addType ((X3DConstants_default()).BooleanSequencer);
 }
 
-BooleanSequencer .prototype = Object .assign (Object .create (EventUtilities_X3DSequencerNode.prototype),
+Object .assign (Object .setPrototypeOf (BooleanSequencer .prototype, EventUtilities_X3DSequencerNode.prototype),
 {
-   constructor: BooleanSequencer,
    initialize ()
    {
       EventUtilities_X3DSequencerNode.prototype.initialize.call (this);
@@ -528,9 +525,8 @@ function BooleanToggle (executionContext)
    this .addType ((X3DConstants_default()).BooleanToggle);
 }
 
-BooleanToggle .prototype = Object .assign (Object .create ((X3DChildNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (BooleanToggle .prototype, (X3DChildNode_default()).prototype),
 {
-   constructor: BooleanToggle,
    initialize ()
    {
       X3DChildNode_default().prototype.initialize.call (this);
@@ -640,10 +636,7 @@ function X3DTriggerNode (executionContext)
    this .addType ((X3DConstants_default()).X3DTriggerNode);
 }
 
-X3DTriggerNode .prototype = Object .assign (Object .create ((X3DChildNode_default()).prototype),
-{
-   constructor: X3DTriggerNode,
-});
+Object .setPrototypeOf (X3DTriggerNode .prototype, (X3DChildNode_default()).prototype);
 
 Object .defineProperties (X3DTriggerNode,
 {
@@ -725,9 +718,8 @@ function BooleanTrigger (executionContext)
    this .addType ((X3DConstants_default()).BooleanTrigger);
 }
 
-BooleanTrigger .prototype = Object .assign (Object .create (EventUtilities_X3DTriggerNode.prototype),
+Object .assign (Object .setPrototypeOf (BooleanTrigger .prototype, EventUtilities_X3DTriggerNode.prototype),
 {
-   constructor: BooleanTrigger,
    initialize ()
    {
       EventUtilities_X3DTriggerNode.prototype.initialize.call (this);
@@ -839,9 +831,8 @@ function IntegerSequencer (executionContext)
    this .addType ((X3DConstants_default()).IntegerSequencer);
 }
 
-IntegerSequencer .prototype = Object .assign (Object .create (EventUtilities_X3DSequencerNode.prototype),
+Object .assign (Object .setPrototypeOf (IntegerSequencer .prototype, EventUtilities_X3DSequencerNode.prototype),
 {
-   constructor: IntegerSequencer,
    initialize ()
    {
       EventUtilities_X3DSequencerNode.prototype.initialize.call (this);
@@ -961,9 +952,8 @@ function IntegerTrigger (executionContext)
    this .addType ((X3DConstants_default()).IntegerTrigger);
 }
 
-IntegerTrigger .prototype = Object .assign (Object .create (EventUtilities_X3DTriggerNode.prototype),
+Object .assign (Object .setPrototypeOf (IntegerTrigger .prototype, EventUtilities_X3DTriggerNode.prototype),
 {
-   constructor: IntegerTrigger,
    initialize ()
    {
       EventUtilities_X3DTriggerNode.prototype.initialize.call (this);
@@ -1076,9 +1066,8 @@ function TimeTrigger (executionContext)
    this .addType ((X3DConstants_default()).TimeTrigger);
 }
 
-TimeTrigger .prototype = Object .assign (Object .create (EventUtilities_X3DTriggerNode.prototype),
+Object .assign (Object .setPrototypeOf (TimeTrigger .prototype, EventUtilities_X3DTriggerNode.prototype),
 {
-   constructor: TimeTrigger,
    initialize ()
    {
       EventUtilities_X3DTriggerNode.prototype.initialize.call (this);
