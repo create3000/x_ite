@@ -62,6 +62,11 @@ Object .assign (Object .setPrototypeOf (GLB2Parser .prototype, X3DParser .protot
    {
       return "ARRAY_BUFFER";
    },
+   setInput (input)
+   {
+      this .arrayBuffer = input;
+      this .dataView    = new DataView (input);
+   },
    isValid ()
    {
       if (!(this .arrayBuffer instanceof ArrayBuffer))
@@ -80,11 +85,6 @@ Object .assign (Object .setPrototypeOf (GLB2Parser .prototype, X3DParser .protot
          return false;
 
       return true;
-   },
-   setInput (input)
-   {
-      this .arrayBuffer = input;
-      this .dataView    = new DataView (input);
    },
    parseIntoScene (resolve, reject)
    {

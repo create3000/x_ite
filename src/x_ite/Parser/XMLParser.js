@@ -84,10 +84,6 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
    {
       return "XML";
    },
-   isValid ()
-   {
-      return (this .input instanceof XMLDocument) || (this .input instanceof HTMLElement) || (this .input === null);
-   },
    setInput (xmlElement)
    {
       try
@@ -105,6 +101,10 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
       {
          this .input = undefined;
       }
+   },
+   isValid ()
+   {
+      return (this .input instanceof XMLDocument) || (this .input instanceof HTMLElement) || (this .input === null);
    },
    isXML (element)
    {

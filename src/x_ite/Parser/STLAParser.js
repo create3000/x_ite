@@ -107,16 +107,16 @@ Object .assign (Object .setPrototypeOf (STLAParser .prototype, X3DParser .protot
    {
       return "STRING";
    },
+   setInput (string)
+   {
+      this .input = string;
+   },
    isValid ()
    {
       if (!(typeof this .input === "string"))
          return false;
 
       return !! this .input .match (/^(?:[\x20\n\t\r]+|;.*?[\r\n])*\b(?:solid)\b/);
-   },
-   setInput (string)
-   {
-      this .input = string;
    },
    parseIntoScene (resolve, reject)
    {

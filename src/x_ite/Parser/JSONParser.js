@@ -63,10 +63,6 @@ Object .assign (Object .setPrototypeOf (JSONParser .prototype, X3DParser .protot
    {
       return "JSON";
    },
-   isValid ()
-   {
-      return this .input instanceof Object;
-   },
    setInput (json)
    {
       try
@@ -80,6 +76,10 @@ Object .assign (Object .setPrototypeOf (JSONParser .prototype, X3DParser .protot
       {
          this .input = undefined;
       }
+   },
+   isValid ()
+   {
+      return this .input instanceof Object;
    },
    parseIntoScene (resolve, reject)
    {

@@ -98,6 +98,20 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    {
       return "JSON";
    },
+   setInput (json)
+   {
+      try
+      {
+         if (typeof json === "string")
+            json = JSON .parse (json);
+
+         this .input = json;
+      }
+      catch (error)
+      {
+         this .input = undefined;
+      }
+   },
    isValid: (function ()
    {
       const keys = new Set ([
@@ -138,20 +152,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          return true;
       };
    })(),
-   setInput (json)
-   {
-      try
-      {
-         if (typeof json === "string")
-            json = JSON .parse (json);
-
-         this .input = json;
-      }
-      catch (error)
-      {
-         this .input = undefined;
-      }
-   },
    setBuffers (buffers)
    {
       this .buffers = buffers;

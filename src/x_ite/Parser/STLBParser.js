@@ -66,6 +66,11 @@ Object .assign (Object .setPrototypeOf (STLBParser .prototype, X3DParser .protot
    {
       return "ARRAY_BUFFER";
    },
+   setInput (input)
+   {
+      this .arrayBuffer = input;
+      this .dataView    = new DataView (input);
+   },
    isValid ()
    {
       if (!(this .arrayBuffer instanceof ArrayBuffer))
@@ -79,11 +84,6 @@ Object .assign (Object .setPrototypeOf (STLBParser .prototype, X3DParser .protot
          byteLength = numFaces * 50 + 84;
 
       return byteLength === this .dataView .byteLength;
-   },
-   setInput (input)
-   {
-      this .arrayBuffer = input;
-      this .dataView    = new DataView (input);
    },
    parseIntoScene (resolve, reject)
    {

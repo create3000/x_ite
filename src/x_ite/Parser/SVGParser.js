@@ -204,19 +204,6 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
    {
       return "XML";
    },
-   isValid ()
-   {
-      if (!(this .input instanceof XMLDocument))
-         return false;
-
-      if ($(this .input) .children ("svg") .length)
-         return true;
-
-      if (this .input .nodeName === "svg")
-         return true;
-
-      return false;
-   },
    setInput (xmlElement)
    {
       try
@@ -230,6 +217,19 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
       {
          this .input = undefined;
       }
+   },
+   isValid ()
+   {
+      if (!(this .input instanceof XMLDocument))
+         return false;
+
+      if ($(this .input) .children ("svg") .length)
+         return true;
+
+      if (this .input .nodeName === "svg")
+         return true;
+
+      return false;
    },
    parseIntoScene (resolve, reject)
    {

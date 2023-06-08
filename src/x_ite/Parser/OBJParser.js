@@ -135,16 +135,16 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
    {
       return "STRING";
    },
+   setInput (string)
+   {
+      this .input = string;
+   },
    isValid ()
    {
       if (!(typeof this .input === "string"))
          return false;
 
       return !! this .input .match (/^(?:[\x20\n\t\r]+|#.*?[\r\n])*\b(?:mtllib|usemtl|o|g|s|vt|vn|v|f)\b/);
-   },
-   setInput (string)
-   {
-      this .input = string;
    },
    parseIntoScene (resolve, reject)
    {
