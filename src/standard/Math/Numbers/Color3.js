@@ -61,9 +61,8 @@ function Color3 (r, g, b)
    this [_b] = clamp (b, 0, 1);
 }
 
-Color3 .prototype =
+Object .assign (Color3 .prototype,
 {
-   constructor: Color3,
    *[Symbol .iterator] ()
    {
       yield this [_r];
@@ -174,7 +173,7 @@ Color3 .prototype =
              this [_g] + " " +
              this [_b];
    },
-};
+});
 
 const r = {
    get () { return this [_r]; },

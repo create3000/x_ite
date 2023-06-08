@@ -45,7 +45,8 @@
  *
  ******************************************************************************/
 
-const Trinagle2 = {
+const Triangle2 =
+{
    isPointInTriangle (a, b, c, point)
    {
       // https://en.wikipedia.org/wiki/Barycentric_coordinate_system
@@ -74,4 +75,4 @@ const Trinagle2 = {
    },
 };
 
-export default Trinagle2;
+export default Triangle2;

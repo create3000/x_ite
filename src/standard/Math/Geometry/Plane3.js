@@ -59,9 +59,8 @@ function Plane3 (point, normal)
    this .distanceFromOrigin = normal .dot (point);
 }
 
-Plane3 .prototype =
+Object .assign (Plane3 .prototype,
 {
-   constructor: Plane3,
    copy ()
    {
       const copy = Object .create (Plane3 .prototype);
@@ -159,6 +158,6 @@ Plane3 .prototype =
    {
       return this .normal .toString () + " " + this .distanceFromOrigin;
    },
-};
+});
 
 export default Plane3;

@@ -63,9 +63,8 @@ function Matrix3 ()
    }
 }
 
-Matrix3 .prototype =
+Object .assign (Matrix3 .prototype,
 {
-   constructor: Matrix3,
    *[Symbol .iterator] ()
    {
       for (let i = 0; i < 9; ++ i)
@@ -572,7 +571,7 @@ Matrix3 .prototype =
    {
       return Array .prototype .join .call (this, " ");
    },
-};
+});
 
 Object .defineProperties (Matrix3 .prototype,
 {

@@ -60,9 +60,8 @@ function Matrix2 ()
    }
 }
 
-Matrix2 .prototype =
+Object .assign (Matrix2 .prototype,
 {
-   constructor: Matrix2,
    *[Symbol .iterator] ()
    {
       for (let i = 0; i < 4; ++ i)
@@ -229,7 +228,7 @@ Matrix2 .prototype =
    {
       return Array .prototype .join .call (this, " ");
    },
-};
+});
 
 Object .defineProperties (Matrix2 .prototype,
 {

@@ -65,9 +65,8 @@ function Matrix4 ()
    }
 }
 
-Matrix4 .prototype =
+Object .assign (Matrix4 .prototype,
 {
-   constructor: Matrix4,
    *[Symbol .iterator] ()
    {
       for (let i = 0; i < 16; ++ i)
@@ -666,7 +665,7 @@ Matrix4 .prototype =
    {
       return Array .prototype .join .call (this, " ");
    },
-};
+});
 
 Object .defineProperties (Matrix4 .prototype,
 {

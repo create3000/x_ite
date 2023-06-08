@@ -53,9 +53,8 @@ function Line2 (point, direction)
    this .direction = direction .copy ();
 }
 
-Line2 .prototype =
+Object .assign (Line2 .prototype,
 {
-   constructor: Line2,
    copy ()
    {
       const copy = Object .create (Line2 .prototype);
@@ -140,14 +139,17 @@ Line2 .prototype =
    {
       return this .point + ", " + this .direction;
    },
-};
+});
 
-Line2 .Points = function (point1, point2)
+Object .assign (Line2,
 {
-   const line = Object .create (Line2 .prototype);
-   line .point     = point1 .copy ();
-   line .direction = point2 .copy () .subtract (point1) .normalize ();
-   return line;
-};
+   Points (point1, point2)
+   {
+      const line = Object .create (Line2 .prototype);
+      line .point     = point1 .copy ();
+      line .direction = point2 .copy () .subtract (point1) .normalize ();
+      return line;
+   },
+});
 
 export default Line2;

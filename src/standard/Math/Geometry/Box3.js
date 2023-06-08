@@ -57,9 +57,8 @@ function Box3 (/* size, center */)
    this .set (... arguments);
 }
 
-Box3 .prototype =
+Object .assign (Box3 .prototype,
 {
-   constructor: Box3,
    copy ()
    {
       const copy = Object .create (Box3 .prototype);
@@ -610,7 +609,7 @@ Box3 .prototype =
    {
       return this .size + ", " + this .center;
    },
-};
+});
 
 Object .assign (Box3,
 {

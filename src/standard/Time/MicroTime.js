@@ -47,7 +47,7 @@
 
 // Return a pseudo accurate timestamp.
 
-function micro_time (now)
+function microTime (now)
 {
    let
       offset = 0,
@@ -73,8 +73,9 @@ function micro_time (now)
 
 for (const object of [performance, Date])
 {
-   Object .defineProperty (object, "now", {
-      value: micro_time (object .now),
+   Object .defineProperty (object, "now",
+   {
+      value: microTime (object .now),
       configurable: true,
       writable: true,
    });

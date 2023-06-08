@@ -54,9 +54,8 @@ function Vector3 (x, y, z)
    this .z = z;
 }
 
-Vector3 .prototype =
+Object .assign (Vector3 .prototype,
 {
-   constructor: Vector3,
    *[Symbol .iterator] ()
    {
       yield this .x;
@@ -259,7 +258,7 @@ Vector3 .prototype =
              this .y + " " +
              this .z;
    }
-};
+});
 
 Object .defineProperties (Vector3 .prototype,
 {

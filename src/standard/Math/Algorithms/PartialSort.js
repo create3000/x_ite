@@ -55,7 +55,7 @@ function PartialSort (array, compare)
       this .compare = compare;
 }
 
-PartialSort .prototype =
+Object .assign (PartialSort .prototype,
 {
    compare (lhs, rhs)
    {
@@ -87,6 +87,6 @@ PartialSort .prototype =
          }
       }
    },
-};
+});
 
 export default PartialSort;

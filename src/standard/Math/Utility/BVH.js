@@ -87,7 +87,7 @@ function Triangle (tree, triangle)
    this .i3       = triangle * 9;
 }
 
-Triangle .prototype =
+Object .assign (Triangle .prototype,
 {
    intersectsLine (line, intersections, intersectionNormals)
    {
@@ -140,7 +140,7 @@ Triangle .prototype =
 
       return index;
    },
-};
+});
 
 function Node (tree, triangles, first, size)
 {
@@ -210,7 +210,7 @@ function Node (tree, triangles, first, size)
       this .right = new Triangle (tree, triangles [first + leftSize]);
 }
 
-Node .prototype =
+Object .assign (Node .prototype,
 {
    intersectsLine (line, intersections, intersectionNormals)
    {
@@ -313,7 +313,7 @@ Node .prototype =
 
       return index;
    },
-};
+});
 
 function BVH (vertices, normals)
 {
@@ -348,9 +348,8 @@ function BVH (vertices, normals)
    }
 }
 
-BVH .prototype =
+Object .assign (BVH .prototype,
 {
-   constructor: BVH,
    intersectsLine (line, intersections, intersectionNormals)
    {
       intersections .size = 0;
@@ -374,6 +373,6 @@ BVH .prototype =
 
       return array;
    },
-};
+});
 
 export default BVH;

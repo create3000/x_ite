@@ -54,7 +54,7 @@ function MergeSort (array, compare)
       this .compare = compare;
 }
 
-MergeSort .prototype =
+Object .assign (MergeSort .prototype,
 {
    compare (lhs, rhs)
    {
@@ -99,6 +99,6 @@ MergeSort .prototype =
       while (k < j)
          array [k++] = auxiliary [i++];
    }
-};
+});
 
 export default MergeSort;

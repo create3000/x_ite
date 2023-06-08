@@ -47,7 +47,8 @@
 
 import Vector3 from "../Numbers/Vector3.js";
 
-const Triangle3 = {
+const Triangle3 =
+{
    area: (function ()
    {
       const

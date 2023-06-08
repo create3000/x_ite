@@ -53,9 +53,8 @@ function Sphere3 (radius, center)
    this .center = center .copy ();
 }
 
-Sphere3 .prototype =
+Object .assign (Sphere3 .prototype,
 {
-   constructor: Sphere3,
    set (radius, center)
    {
       this .radius = radius;
@@ -187,6 +186,6 @@ Sphere3 .prototype =
    {
       return this .radius + " " + this .center .toString ();
    },
-};
+});
 
 export default Sphere3;

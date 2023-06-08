@@ -51,9 +51,8 @@ function Vector2 (x, y)
    this .y = y;
 }
 
-Vector2 .prototype =
+Object .assign (Vector2 .prototype,
 {
-   constructor: Vector2,
    *[Symbol .iterator] ()
    {
       yield this .x;
@@ -211,7 +210,7 @@ Vector2 .prototype =
       return this .x + " " +
              this .y;
    }
-};
+});
 
 Object .defineProperties (Vector2 .prototype,
 {

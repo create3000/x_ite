@@ -63,9 +63,8 @@ function Geodetic (spheroid, latitudeFirst, radians)
    this .ecc2           = 1 - this .c2a2;
 }
 
-Geodetic .prototype =
+Object .assign (Geodetic .prototype,
 {
-   constructor: Geodetic,
    convert (geodetic, result)
    {
       const elevation = geodetic .z;
@@ -253,6 +252,6 @@ Geodetic .prototype =
    source: new Vector3 (0, 0, 0),
    destination: new Vector3 (0, 0, 0),
    */
-};
+});
 
 export default Geodetic;

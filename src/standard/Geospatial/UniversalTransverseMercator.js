@@ -84,9 +84,8 @@ function UniversalTransverseMercator (spheroid, zone, northernHemisphere, northi
    this .geodeticConverter  = new Geodetic (spheroid, true, true);
 }
 
-UniversalTransverseMercator .prototype =
+Object .assign (UniversalTransverseMercator .prototype,
 {
-   constructor: UniversalTransverseMercator,
    convert (utm, result)
    {
       // https://gist.github.com/duedal/840476
@@ -201,6 +200,6 @@ UniversalTransverseMercator .prototype =
 
       return result .set (northing, easting, geodetic .z);
    },
-};
+});
 
 export default UniversalTransverseMercator;

@@ -51,9 +51,8 @@ function Complex (real, imag)
    this .imag = imag;
 }
 
-Complex .prototype =
+Object .assign (Complex .prototype,
 {
-   constructor: Complex,
    *[Symbol .iterator] ()
    {
       yield this .real;
@@ -173,7 +172,7 @@ Complex .prototype =
 
       return string;
    },
-};
+});
 
 Object .defineProperties (Complex .prototype,
 {

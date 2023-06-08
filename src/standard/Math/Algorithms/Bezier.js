@@ -226,7 +226,7 @@ const Bezier =
       }
 
       points .push (new Vector3 (x, y, 0));
-   }
+   },
 };
 
 export default Bezier;

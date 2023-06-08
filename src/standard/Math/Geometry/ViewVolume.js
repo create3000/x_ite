@@ -116,9 +116,8 @@ function ViewVolume (projectionMatrix, viewport, scissor)
       this .set (projectionMatrix, viewport, scissor);
 }
 
-ViewVolume .prototype =
+Object .assign (ViewVolume .prototype,
 {
-   constructor: ViewVolume,
    set: (function ()
    {
       const matrix = new Matrix4 ();
@@ -298,7 +297,7 @@ ViewVolume .prototype =
          return true;
       };
    })(),
-};
+});
 
 Object .assign (ViewVolume,
 {

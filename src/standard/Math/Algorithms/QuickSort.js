@@ -53,7 +53,7 @@ function QuickSort (array, compare)
       this .compare = compare;
 }
 
-QuickSort .prototype =
+Object .assign (QuickSort .prototype,
 {
    compare (lhs, rhs)
    {
@@ -101,6 +101,6 @@ QuickSort .prototype =
       if (lo < j) this .quicksort (lo, j);
       if (i < hi) this .quicksort (i, hi);
    },
-};
+});
 
 export default QuickSort;

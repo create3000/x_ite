@@ -47,7 +47,8 @@
 
 import Vector3 from "../Numbers/Vector3.js";
 
-const Camera = {
+const Camera =
+{
    frustum (l, r, b, t, n, f, matrix)
    {
       const

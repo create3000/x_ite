@@ -57,9 +57,8 @@ function Quaternion (x, y, z, w)
    this .w = w;
 }
 
-Quaternion .prototype =
+Object .assign (Quaternion .prototype,
 {
-   constructor: Quaternion,
    *[Symbol .iterator] ()
    {
       yield this .x;
@@ -397,7 +396,7 @@ Quaternion .prototype =
              this .z + " " +
              this .w;
    },
-};
+});
 
 Object .defineProperties (Quaternion .prototype,
 {

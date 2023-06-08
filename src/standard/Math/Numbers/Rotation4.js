@@ -105,9 +105,8 @@ function Rotation4 (x, y, z, angle)
    }
 }
 
-Rotation4 .prototype =
+Object .assign (Rotation4 .prototype,
 {
-   constructor: Rotation4,
    *[Symbol .iterator] ()
    {
       yield this [_x];
@@ -365,7 +364,7 @@ Rotation4 .prototype =
              this [_z] + " " +
              this [_angle];
    }
-};
+});
 
 const x = {
    get ()

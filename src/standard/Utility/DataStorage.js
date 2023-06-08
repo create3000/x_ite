@@ -91,8 +91,8 @@ function DataStorage (storage, namespace)
    return new Proxy (this, handler);
 }
 
-DataStorage .prototype = {
-   constructor: DataStorage,
+Object .assign (DataStorage .prototype,
+{
    getStorage ()
    {
       return storages .get (this .target);
@@ -127,6 +127,6 @@ DataStorage .prototype = {
             storage .removeItem (key)
       }
    },
-}
+});
 
 export default DataStorage;

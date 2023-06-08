@@ -53,9 +53,8 @@ function Vector4 (x, y, z, w)
    this .w = w;
 }
 
-Vector4 .prototype =
+Object .assign (Vector4 .prototype,
 {
-   constructor: Vector4,
    *[Symbol .iterator] ()
    {
       yield this .x;
@@ -268,7 +267,7 @@ Vector4 .prototype =
              this .z + " " +
              this .w;
    },
-};
+});
 
 Object .defineProperties (Vector4 .prototype,
 {

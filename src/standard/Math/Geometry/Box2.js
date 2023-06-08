@@ -55,9 +55,8 @@ function Box2 (/* size, center */)
    this .set (... arguments);
 }
 
-Box2 .prototype =
+Object .assign (Box2 .prototype,
 {
-   constructor: Box2,
    copy ()
    {
       const copy = Object .create (Box2 .prototype);
@@ -202,7 +201,7 @@ Box2 .prototype =
    {
       return this .size + ", " + this .center;
    },
-};
+});
 
 Object .assign (Box2,
 {

@@ -64,9 +64,8 @@ function Color4 (r, g, b, a)
    this [_a] = clamp (a, 0, 1);
 }
 
-Color4 .prototype =
+Object .assign (Color4 .prototype,
 {
-   constructor: Color4,
    *[Symbol .iterator] ()
    {
       yield this [_r];
@@ -129,7 +128,7 @@ Color4 .prototype =
              this [_b] + " " +
              this [_a];
    },
-};
+});
 
 const r = {
    get () { return this [_r]; },

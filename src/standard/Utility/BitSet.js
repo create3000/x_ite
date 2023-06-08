@@ -52,9 +52,8 @@ function BitSet (value = 0)
    this .value = value;
 }
 
-BitSet .prototype =
+Object .assign (BitSet .prototype,
 {
-   constructor: BitSet,
    *[Symbol .iterator] ()
    {
       let
@@ -102,7 +101,7 @@ BitSet .prototype =
    {
       return this .value .toString (radix);
    },
-};
+});
 
 BitSet .prototype .keys   = BitSet .prototype [Symbol .iterator];
 BitSet .prototype .values = BitSet .prototype [Symbol .iterator];
