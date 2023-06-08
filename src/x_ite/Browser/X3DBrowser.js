@@ -204,49 +204,47 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
    },
    loadComponents: (function ()
    {
-      function loadComponents (componentNames, seen)
+      function loadComponents (components, seen)
       {
-         return Promise .all (Array .from (componentNames, name => loadComponent (name, seen)))
+         return Promise .all (components .map (component => loadComponent (component, seen)))
       }
 
-      async function loadComponent (name, seen)
+      async function loadComponent ({ name, providerUrl, external, dependencies }, seen)
       {
          if (seen .has (name)) return; seen .add (name);
 
-         const component = SupportedComponents .get (name);
+         await loadComponents (dependencies .map (name => SupportedComponents .get (name)), seen);
 
-         await loadComponents (component .dependencies, seen);
-
-         if (!component .external)
+         if (!external)
             return;
 
          if (Features .NODE_ENV)
-            global .require (global .require ("url") .fileURLToPath (component .providerUrl))
+            global .require (global .require ("url") .fileURLToPath (providerUrl))
          else
-            await import (/* webpackIgnore: true */ component .providerUrl);
+            await import (/* webpackIgnore: true */ providerUrl);
       }
 
       return function (... args)
       {
-         const componentNames = [ ];
+         const component = [ ];
 
          for (const arg of args)
          {
             if (arg instanceof ProfileInfo)
-               componentNames .push (... Array .from (arg .components, ({name}) => name));
+               component .push (... arg .components);
 
             else if (arg instanceof ComponentInfoArray)
-               componentNames .push (... Array .from (arg, ({name}) => name));
+               component .push (... arg);
 
             else if (arg instanceof ComponentInfo)
-               componentNames .push (arg .name);
+               component .push (arg);
 
             else if (typeof arg === "string")
-               componentNames .push (arg)
+               component .push (SupportedComponents .get (arg))
          }
 
          // Load array of component names.
-         return loadComponents (componentNames, new Set ());
+         return loadComponents (component, new Set ());
       };
    })(),
    addConcreteNode (typeName, ConcreteNode)
