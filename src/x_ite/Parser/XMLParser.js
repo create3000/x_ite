@@ -312,7 +312,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
 
          const component = this .getBrowser () .getComponent (componentNameIdCharacters, componentSupportLevel);
 
-         this .getScene () .addComponent (component);
+         this .getScene () .updateComponent (component);
       }
       catch (error)
       {

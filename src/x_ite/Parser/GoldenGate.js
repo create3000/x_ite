@@ -85,7 +85,6 @@ Object .assign (Object .setPrototypeOf (GoldenGate .prototype, X3DParser .protot
 
             parser .pushExecutionContext (this .getExecutionContext ());
             parser .parseIntoScene (resolve, reject);
-            parser .popExecutionContext ();
             return;
          }
          catch (error)

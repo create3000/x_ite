@@ -430,7 +430,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
       let component;
 
       while (component = this .componentStatement ())
-         this .getScene () .addComponent (component);
+         this .getScene () .updateComponent (component);
    },
    componentStatement ()
    {

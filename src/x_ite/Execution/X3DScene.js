@@ -164,6 +164,12 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
 
       this ._components_changed = this .getBrowser () .getCurrentTime ();
    },
+   updateComponent (component)
+   {
+      this [_components] .update (component .name, component .name, component);
+
+      this ._components_changed = this .getBrowser () .getCurrentTime ();
+   },
    removeComponent (name)
    {
       this [_components] .remove (name);
