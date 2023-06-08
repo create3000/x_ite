@@ -49,7 +49,7 @@ import X3DField from "../Base/X3DField.js";
 
 function SFInt32 (value)
 {
-   return X3DField .call (this, value|0);
+   X3DField .call (this, value|0);
 }
 
 Object .assign (Object .setPrototypeOf (SFInt32 .prototype, X3DField .prototype),

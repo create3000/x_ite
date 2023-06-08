@@ -56,16 +56,20 @@ function SFVec3Template (TypeName, double)
       switch (arguments .length)
       {
          case 0:
-            return X3DField .call (this, new Vector3 (0, 0, 0));
+            X3DField .call (this, new Vector3 (0, 0, 0));
+            break;
 
          case 1:
-            return X3DField .call (this, arguments [0]);
+            X3DField .call (this, arguments [0]);
+            break;
 
          case 3:
-            return X3DField .call (this, new Vector3 (+x, +y, +z));
-      }
+            X3DField .call (this, new Vector3 (+x, +y, +z));
+            break;
 
-      throw new Error ("Invalid arguments.");
+         default:
+            throw new Error ("Invalid arguments.");
+      }
    }
 
    Object .assign (SFVecPrototypeTemplate (SFVec3, TypeName, Vector3, double),

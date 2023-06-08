@@ -142,15 +142,19 @@ function SFImage (width, height, comp, array)
       case 0:
          X3DField .call (this, new Image (0, 0, 0, new MFInt32 ()));
          break;
+
       case 1:
          X3DField .call (this, arguments [0]);
          break;
+
       case 3:
          X3DField .call (this, new Image (width, height, comp, new MFInt32 ()));
          break;
+
       case 4:
          X3DField .call (this, new Image (width, height, comp, array));
          break;
+         
       default:
          throw new Error ("Invalid arguments.");
    }

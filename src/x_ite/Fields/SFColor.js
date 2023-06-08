@@ -53,16 +53,20 @@ function SFColor (r, g, b)
    switch (arguments .length)
    {
       case 0:
-         return X3DField .call (this, new Color3 (0, 0, 0));
+         X3DField .call (this, new Color3 (0, 0, 0));
+         break;
 
       case 1:
-         return X3DField .call (this, arguments [0]);
+         X3DField .call (this, arguments [0]);
+         break;
 
       case 3:
-         return X3DField .call (this, new Color3 (+r, +g, +b));
-   }
+         X3DField .call (this, new Color3 (+r, +g, +b));
+         break;
 
-   throw new Error ("Invalid arguments.");
+      default:
+         throw new Error ("Invalid arguments.");
+   }
 }
 
 Object .assign (Object .setPrototypeOf (SFColor .prototype, X3DField .prototype),

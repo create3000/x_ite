@@ -59,10 +59,12 @@ function SFMatrix3Template (TypeName, SFVec2, double)
       switch (arguments .length)
       {
          case 0:
-            return X3DField .call (this, new Matrix3 ());
+            X3DField .call (this, new Matrix3 ());
+            break;
 
          case 1:
-            return X3DField .call (this, arguments [0]);
+            X3DField .call (this, arguments [0]);
+            break;
 
          case 3:
          {
@@ -71,17 +73,23 @@ function SFMatrix3Template (TypeName, SFVec2, double)
                r1 = arguments [1],
                r2 = arguments [2];
 
-            return X3DField .call (this, new Matrix3 (r0 .x, r0 .y, r0 .z,
+            X3DField .call (this, new Matrix3 (r0 .x, r0 .y, r0 .z,
                                                       r1 .x, r1 .y, r1 .z,
                                                       r2 .x, r2 .y, r2 .z));
+
+            break;
          }
          case 9:
-            return X3DField .call (this, new Matrix3 (+m00, +m01, +m02,
-                                                      +m10, +m11, +m12,
-                                                      +m20, +m21, +m22));
-      }
+         {
+            X3DField .call (this, new Matrix3 (+m00, +m01, +m02,
+                                               +m10, +m11, +m12,
+                                               +m20, +m21, +m22));
 
-      throw new Error ("Invalid arguments.");
+            break;
+         }
+         default:
+            throw new Error ("Invalid arguments.");
+      }
    }
 
    Object .assign (SFMatrixPrototypeTemplate (SFMatrix3, TypeName, Matrix3, SFVec2, double),

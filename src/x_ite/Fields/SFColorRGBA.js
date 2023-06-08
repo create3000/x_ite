@@ -54,16 +54,20 @@ function SFColorRGBA (r, g, b, a)
    switch (arguments .length)
    {
       case 0:
-         return X3DField .call (this, new Color4 (0, 0, 0, 0));
+         X3DField .call (this, new Color4 (0, 0, 0, 0));
+         break;
 
       case 1:
-         return X3DField .call (this, arguments [0]);
+         X3DField .call (this, arguments [0]);
+         break;
 
       case 4:
-         return X3DField .call (this, new Color4 (+r, +g, +b, +a));
-   }
+         X3DField .call (this, new Color4 (+r, +g, +b, +a));
+         break
 
-   throw new Error ("Invalid arguments.");
+      default:
+         throw new Error ("Invalid arguments.");
+   }
 }
 
 Object .assign (Object .setPrototypeOf (SFColorRGBA .prototype, X3DField .prototype),

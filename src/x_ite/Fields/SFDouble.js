@@ -49,7 +49,7 @@ import X3DField from "../Base/X3DField.js";
 
 function SFDouble (value)
 {
-   return X3DField .call (this, arguments .length ? +value : 0);
+   X3DField .call (this, arguments .length ? +value : 0);
 }
 
 Object .assign (Object .setPrototypeOf (SFDouble .prototype, X3DField .prototype),

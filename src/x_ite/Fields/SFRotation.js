@@ -62,29 +62,39 @@ function SFRotation (x, y, z, angle)
    {
       case 0:
       {
-         return X3DField .call (this, new Rotation4 ());
+         X3DField .call (this, new Rotation4 ());
+         break;
       }
       case 1:
       {
          if ((arguments [0] instanceof SFMatrix3d) || (arguments [0] instanceof SFMatrix3f))
-            return X3DField .call (this, new Rotation4 () .setMatrix (arguments [0] .getValue ()));
+         {
+            X3DField .call (this, new Rotation4 () .setMatrix (arguments [0] .getValue ()));
+            break;
+         }
 
-         return X3DField .call (this, arguments [0]);
+         X3DField .call (this, arguments [0]);
+         break;
       }
       case 2:
       {
          if ((arguments [1] instanceof SFVec3d) || (arguments [1] instanceof SFVec3f))
-            return X3DField .call (this, new Rotation4 (arguments [0] .getValue (), arguments [1] .getValue ()));
+         {
+            X3DField .call (this, new Rotation4 (arguments [0] .getValue (), arguments [1] .getValue ()));
+            break;
+         }
 
-         return X3DField .call (this, new Rotation4 (arguments [0] .getValue (), +arguments [1]));
+         X3DField .call (this, new Rotation4 (arguments [0] .getValue (), +arguments [1]));
+         break;
       }
       case 4:
       {
-         return X3DField .call (this, new Rotation4 (+x, +y, +z, +angle));
+         X3DField .call (this, new Rotation4 (+x, +y, +z, +angle));
+         break;
       }
+      default:
+         throw new Error ("Invalid arguments.");
    }
-
-   throw new Error ("Invalid arguments.");
 }
 
 Object .assign (Object .setPrototypeOf (SFRotation .prototype, X3DField .prototype),

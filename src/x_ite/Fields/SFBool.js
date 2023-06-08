@@ -49,7 +49,7 @@ import X3DField from "../Base/X3DField.js";
 
 function SFBool (value)
 {
-   return X3DField .call (this, !! value);
+   X3DField .call (this, !! value);
 }
 
 Object .assign (Object .setPrototypeOf (SFBool .prototype, X3DField .prototype),
