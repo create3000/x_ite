@@ -69,7 +69,6 @@ function Extrusion (executionContext)
 
 Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .prototype),
 {
-   constructor: Extrusion,
    initialize ()
    {
       X3DGeometryNode .prototype .initialize .call (this);

@@ -59,7 +59,6 @@ function BrowserTimings (executionContext)
 
 Object .assign (Object .setPrototypeOf (BrowserTimings .prototype, X3DBaseNode .prototype),
 {
-   constructor: BrowserTimings,
    initialize ()
    {
       X3DBaseNode .prototype .initialize .call (this);

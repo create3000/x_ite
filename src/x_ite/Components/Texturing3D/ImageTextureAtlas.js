@@ -68,7 +68,6 @@ function ImageTextureAtlas (executionContext)
 Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, X3DTexture3DNode .prototype),
    X3DUrlObject .prototype,
 {
-   constructor: ImageTextureAtlas,
    initialize ()
    {
       X3DTexture3DNode .prototype .initialize .call (this);

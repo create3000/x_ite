@@ -72,7 +72,6 @@ function NurbsCurve (executionContext)
 Object .assign (Object .setPrototypeOf (NurbsCurve .prototype, X3DParametricGeometryNode .prototype),
    X3DLineGeometryNode .prototype,
 {
-   constructor: NurbsCurve,
    initialize ()
    {
       X3DParametricGeometryNode .prototype .initialize .call (this);

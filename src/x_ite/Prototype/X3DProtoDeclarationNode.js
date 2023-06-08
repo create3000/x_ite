@@ -63,7 +63,6 @@ function X3DProtoDeclarationNode (executionContext)
 
 Object .assign (Object .setPrototypeOf (X3DProtoDeclarationNode .prototype, X3DBaseNode .prototype),
 {
-   constructor: X3DProtoDeclarationNode,
    canUserDefinedFields ()
    {
       return true;

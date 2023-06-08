@@ -58,10 +58,7 @@ function WaveShaper (executionContext)
    this .addType (X3DConstants .WaveShaper);
 }
 
-Object .assign (Object .setPrototypeOf (WaveShaper .prototype, X3DSoundProcessingNode .prototype),
-{
-   constructor: WaveShaper,
-});
+Object .setPrototypeOf (WaveShaper .prototype, X3DSoundProcessingNode .prototype);
 
 Object .defineProperties (WaveShaper,
 {

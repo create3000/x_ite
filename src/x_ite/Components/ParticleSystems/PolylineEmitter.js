@@ -111,7 +111,6 @@ function PolylineEmitter (executionContext)
 
 Object .assign (Object .setPrototypeOf (PolylineEmitter .prototype, X3DParticleEmitterNode .prototype),
 {
-   constructor: PolylineEmitter,
    initialize ()
    {
       X3DParticleEmitterNode .prototype .initialize .call (this);

@@ -63,7 +63,6 @@ function NurbsTrimmedSurface (executionContext)
 
 Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbsSurfaceGeometryNode .prototype),
 {
-   constructor: NurbsTrimmedSurface,
    initialize ()
    {
       X3DNurbsSurfaceGeometryNode .prototype .initialize .call (this);

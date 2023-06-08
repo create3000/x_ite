@@ -62,7 +62,6 @@ function IcoSphereOptions (executionContext)
 
 Object .assign (Object .setPrototypeOf (IcoSphereOptions .prototype, X3DBaseNode .prototype),
 {
-   constructor: IcoSphereOptions,
    initialize ()
    {
       X3DBaseNode .prototype .initialize .call (this);

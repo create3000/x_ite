@@ -64,7 +64,6 @@ function NurbsSwungSurface (executionContext)
 
 Object .assign (Object .setPrototypeOf (NurbsSwungSurface .prototype, X3DParametricGeometryNode .prototype),
 {
-   constructor: NurbsSwungSurface,
    initialize ()
    {
       X3DParametricGeometryNode .prototype .initialize .call (this);

@@ -59,7 +59,6 @@ function X3DEventObject (browser)
 
 Object .assign (Object .setPrototypeOf (X3DEventObject .prototype, X3DChildObject .prototype),
 {
-   constructor: X3DEventObject,
    getBrowser ()
    {
       return this [_browser];

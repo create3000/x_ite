@@ -63,7 +63,6 @@ function SplinePositionInterpolator (executionContext)
 
 Object .assign (Object .setPrototypeOf (SplinePositionInterpolator .prototype, X3DInterpolatorNode .prototype),
 {
-   constructor: SplinePositionInterpolator,
    initialize ()
    {
       X3DInterpolatorNode .prototype .initialize .call (this);

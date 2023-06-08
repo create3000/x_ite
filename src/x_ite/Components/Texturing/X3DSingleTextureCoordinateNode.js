@@ -60,7 +60,6 @@ function X3DSingleTextureCoordinateNode (executionContext)
 
 Object .assign (Object .setPrototypeOf (X3DSingleTextureCoordinateNode .prototype, X3DTextureCoordinateNode .prototype),
 {
-   constructor: X3DSingleTextureCoordinateNode,
    getCount ()
    {
       return 1;

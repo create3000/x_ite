@@ -72,7 +72,6 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
    X3DSoundSourceNode .prototype,
    X3DUrlObject .prototype,
 {
-   constructor: MovieTexture,
    initialize ()
    {
       X3DTexture2DNode   .prototype .initialize .call (this);

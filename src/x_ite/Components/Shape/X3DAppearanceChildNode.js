@@ -55,10 +55,7 @@ function X3DAppearanceChildNode (executionContext)
    this .addType (X3DConstants .X3DAppearanceChildNode);
 }
 
-Object .assign (Object .setPrototypeOf (X3DAppearanceChildNode .prototype, X3DNode .prototype),
-{
-   constructor: X3DAppearanceChildNode,
-});
+Object .setPrototypeOf (X3DAppearanceChildNode .prototype, X3DNode .prototype);
 
 Object .defineProperties (X3DAppearanceChildNode,
 {

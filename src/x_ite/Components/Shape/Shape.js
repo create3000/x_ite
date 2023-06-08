@@ -61,7 +61,6 @@ function Shape (executionContext)
 
 Object .assign (Object .setPrototypeOf (Shape .prototype, X3DShapeNode .prototype),
 {
-   constructor: Shape,
    initialize ()
    {
       X3DShapeNode .prototype .initialize .call (this);

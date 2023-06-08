@@ -70,7 +70,6 @@ function LayoutGroup (executionContext)
 
 Object .assign (Object .setPrototypeOf (LayoutGroup .prototype, X3DGroupingNode .prototype),
 {
-   constructor: LayoutGroup,
    initialize ()
    {
       X3DGroupingNode .prototype .initialize .call (this);

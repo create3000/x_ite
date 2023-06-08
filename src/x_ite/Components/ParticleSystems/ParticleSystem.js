@@ -137,7 +137,6 @@ function ParticleSystem (executionContext)
 
 Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode .prototype),
 {
-   constructor: ParticleSystem,
    initialize ()
    {
       X3DShapeNode .prototype .initialize .call (this);

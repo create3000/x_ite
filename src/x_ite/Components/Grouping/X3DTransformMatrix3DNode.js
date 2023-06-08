@@ -62,7 +62,6 @@ function X3DTransformMatrix3DNode (executionContext)
 
 Object .assign (Object .setPrototypeOf (X3DTransformMatrix3DNode .prototype, X3DGroupingNode .prototype),
 {
-   constructor: X3DTransformMatrix3DNode,
    setMatrix (matrix)
    {
       if (matrix .equals (Matrix4 .Identity))

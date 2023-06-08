@@ -98,7 +98,6 @@ function STLAParser (scene)
 
 Object .assign (Object .setPrototypeOf (STLAParser .prototype, X3DParser .prototype),
 {
-   constructor: STLAParser,
    CONSTANTS: new Map ([
       ["NAN", NaN],
       ["INF", Infinity],

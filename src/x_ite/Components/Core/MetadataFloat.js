@@ -63,7 +63,6 @@ function MetadataFloat (executionContext)
 Object .assign (Object .setPrototypeOf (MetadataFloat .prototype, X3DNode .prototype),
    X3DMetadataObject .prototype,
 {
-   constructor: MetadataFloat,
    initialize ()
    {
       X3DNode           .prototype .initialize .call (this);

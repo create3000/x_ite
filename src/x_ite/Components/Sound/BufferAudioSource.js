@@ -65,7 +65,6 @@ function BufferAudioSource (executionContext)
 Object .assign (Object .setPrototypeOf (BufferAudioSource .prototype, X3DSoundSourceNode .prototype),
    X3DUrlObject .prototype,
 {
-   constructor: BufferAudioSource,
    initialize ()
    {
       X3DSoundSourceNode .prototype .initialize .call (this);

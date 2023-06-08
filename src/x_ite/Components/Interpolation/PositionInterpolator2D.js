@@ -61,7 +61,6 @@ function PositionInterpolator2D (executionContext)
 
 Object .assign (Object .setPrototypeOf (PositionInterpolator2D .prototype, X3DInterpolatorNode .prototype),
 {
-   constructor: PositionInterpolator2D,
    initialize ()
    {
       X3DInterpolatorNode .prototype .initialize .call (this);

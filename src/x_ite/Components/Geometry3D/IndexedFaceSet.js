@@ -65,7 +65,6 @@ function IndexedFaceSet (executionContext)
 
 Object .assign (Object .setPrototypeOf (IndexedFaceSet .prototype, X3DComposedGeometryNode .prototype),
 {
-   constructor: IndexedFaceSet,
    initialize ()
    {
       X3DComposedGeometryNode .prototype .initialize .call (this);

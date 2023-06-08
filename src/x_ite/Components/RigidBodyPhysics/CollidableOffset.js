@@ -64,7 +64,6 @@ function CollidableOffset (executionContext)
 
 Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, X3DNBodyCollidableNode .prototype),
 {
-   constructor: CollidableOffset,
    initialize ()
    {
       X3DNBodyCollidableNode .prototype .initialize .call (this);

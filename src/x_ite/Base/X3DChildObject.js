@@ -63,7 +63,6 @@ if (DEVELOPMENT)
 {
    Object .assign (Object .setPrototypeOf (X3DChildObject .prototype, X3DObject .prototype),
    {
-      constructor: X3DChildObject,
       [_modificationTime]: 0,
       [_tainted]: false,
       [_parents]: new Map (),
@@ -152,7 +151,6 @@ else
 {
    Object .assign (Object .setPrototypeOf (X3DChildObject .prototype, X3DObject .prototype),
    {
-      constructor: X3DChildObject,
       [_modificationTime]: 0,
       [_tainted]: false,
       [_parents]: new Set (),

@@ -61,7 +61,6 @@ function OpacityMapVolumeStyle (executionContext)
 
 Object .assign (Object .setPrototypeOf (OpacityMapVolumeStyle .prototype, X3DComposableVolumeRenderStyleNode .prototype),
 {
-   constructor: OpacityMapVolumeStyle,
    initialize ()
    {
       X3DComposableVolumeRenderStyleNode .prototype .initialize .call (this);

@@ -64,7 +64,6 @@ function PhysicalMaterial (executionContext)
 
 Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSidedMaterialNode .prototype),
 {
-   constructor: PhysicalMaterial,
    initialize ()
    {
       X3DOneSidedMaterialNode .prototype .initialize .call (this);

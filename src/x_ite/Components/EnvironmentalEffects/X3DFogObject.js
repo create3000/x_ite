@@ -58,7 +58,6 @@ function FogContainer ()
 
 Object .assign (FogContainer .prototype,
 {
-   constructor: FogContainer,
    set (fogNode, modelViewMatrix)
    {
       this .fogNode = fogNode;
@@ -98,7 +97,6 @@ function X3DFogObject (executionContext)
 
 Object .assign (X3DFogObject .prototype,
 {
-   constructor: X3DFogObject,
    initialize ()
    {
       this ._fogType         .addInterest ("set_fogType__",         this);

@@ -85,7 +85,6 @@ function LookAtViewer (executionContext, navigationInfo)
 
 Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, X3DViewer .prototype),
 {
-   constructor: LookAtViewer,
    initialize ()
    {
       X3DViewer .prototype .initialize .call (this);

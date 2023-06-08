@@ -75,7 +75,6 @@ function TextureProjectorContainer ()
 
 Object .assign (TextureProjectorContainer .prototype,
 {
-   constructor: TextureProjectorContainer,
    set (textureProjectorNode, modelViewMatrix)
    {
       this .browser              = textureProjectorNode .getBrowser ();
@@ -153,7 +152,6 @@ function TextureProjector (executionContext)
 
 Object .assign (Object .setPrototypeOf (TextureProjector .prototype, X3DTextureProjectorNode .prototype),
 {
-   constructor: TextureProjector,
    initialize ()
    {
       X3DTextureProjectorNode .prototype .initialize .call (this);

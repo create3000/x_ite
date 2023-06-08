@@ -126,7 +126,6 @@ function OBJParser (scene)
 Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototype),
    X3DOptimizer .prototype,
 {
-   constructor: OBJParser,
    CONSTANTS: new Map ([
       ["NAN", NaN],
       ["INF", Infinity],

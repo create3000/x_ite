@@ -96,7 +96,6 @@ function Layout (executionContext)
 
 Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .prototype),
 {
-   constructor: Layout,
    viewportPixel: new Vector2 (0, 0),
    pixelSize: new Vector2 (0, 0),
    translation: new Vector3 (0, 0, 0),

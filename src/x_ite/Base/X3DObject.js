@@ -59,7 +59,6 @@ function X3DObject () { }
 
 Object .assign (X3DObject .prototype,
 {
-   constructor: X3DObject,
    [_name]: "",
    [_interests]: new Map (),
    [_values]: [ ],

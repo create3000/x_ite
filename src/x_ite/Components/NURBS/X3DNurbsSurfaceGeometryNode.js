@@ -76,7 +76,6 @@ function X3DNurbsSurfaceGeometryNode (executionContext)
 
 Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, X3DParametricGeometryNode .prototype),
 {
-   constructor: X3DNurbsSurfaceGeometryNode,
    initialize ()
    {
       X3DParametricGeometryNode .prototype .initialize .call (this);

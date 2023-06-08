@@ -62,7 +62,6 @@ function IndexedTriangleFanSet (executionContext)
 
 Object .assign (Object .setPrototypeOf (IndexedTriangleFanSet .prototype, X3DComposedGeometryNode .prototype),
 {
-   constructor: IndexedTriangleFanSet,
    initialize ()
    {
       X3DComposedGeometryNode .prototype .initialize .call (this);

@@ -58,10 +58,7 @@ function ChannelMerger (executionContext)
    this .addType (X3DConstants .ChannelMerger);
 }
 
-Object .assign (Object .setPrototypeOf (ChannelMerger .prototype, X3DSoundChannelNode .prototype),
-{
-   constructor: ChannelMerger,
-});
+Object .setPrototypeOf (ChannelMerger .prototype, X3DSoundChannelNode .prototype);
 
 Object .defineProperties (ChannelMerger,
 {

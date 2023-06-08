@@ -64,7 +64,6 @@ function X3DOneSidedMaterialNode (executionContext)
 
 Object .assign (Object .setPrototypeOf (X3DOneSidedMaterialNode .prototype, X3DMaterialNode .prototype),
 {
-   constructor: X3DOneSidedMaterialNode,
    initialize ()
    {
       X3DMaterialNode .prototype .initialize .call (this);

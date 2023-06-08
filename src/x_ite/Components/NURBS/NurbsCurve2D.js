@@ -70,7 +70,6 @@ function NurbsCurve2D (executionContext)
 
 Object .assign (Object .setPrototypeOf (NurbsCurve2D .prototype, X3DNurbsControlCurveNode .prototype),
 {
-   constructor: NurbsCurve2D,
    getTessellation (numKnots)
    {
       return NURBS .getTessellation (this ._tessellation .getValue (), numKnots - this ._order .getValue ());

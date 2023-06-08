@@ -137,7 +137,6 @@ function VRMLParser (scene)
 
 Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .prototype),
 {
-   constructor: VRMLParser,
    accessTypes:
    {
       field:          X3DConstants .initializeOnly,

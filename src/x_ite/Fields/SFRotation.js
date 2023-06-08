@@ -89,7 +89,6 @@ function SFRotation (x, y, z, angle)
 
 Object .assign (Object .setPrototypeOf (SFRotation .prototype, X3DField .prototype),
 {
-   constructor: SFRotation,
    *[Symbol .iterator] ()
    {
       yield* this .getValue ();

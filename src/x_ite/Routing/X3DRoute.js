@@ -76,7 +76,6 @@ function X3DRoute (executionContext, sourceNode, sourceField, destinationNode, d
 
 Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototype),
 {
-   constructor: X3DRoute,
    getExecutionContext ()
    {
       return this [_executionContext];

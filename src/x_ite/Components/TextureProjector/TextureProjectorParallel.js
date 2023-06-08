@@ -75,7 +75,6 @@ function TextureProjectorParallelContainer ()
 
 Object .assign (TextureProjectorParallelContainer .prototype,
 {
-   constructor: TextureProjectorParallelContainer,
    set (textureProjectorNode, modelViewMatrix)
    {
       this .browser              = textureProjectorNode .getBrowser ();
@@ -174,7 +173,6 @@ function TextureProjectorParallel (executionContext)
 
 Object .assign (Object .setPrototypeOf (TextureProjectorParallel .prototype, X3DTextureProjectorNode .prototype),
 {
-   constructor: TextureProjectorParallel,
    initialize ()
    {
       X3DTextureProjectorNode .prototype .initialize .call (this);

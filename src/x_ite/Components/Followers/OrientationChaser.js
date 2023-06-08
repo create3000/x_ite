@@ -71,7 +71,6 @@ function OrientationChaser (executionContext)
 
 Object .assign (Object .setPrototypeOf (OrientationChaser .prototype, X3DChaserNode .prototype),
 {
-   constructor: OrientationChaser,
    getVector ()
    {
       return new Rotation4 ();

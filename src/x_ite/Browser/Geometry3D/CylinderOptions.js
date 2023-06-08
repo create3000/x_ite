@@ -56,10 +56,7 @@ function CylinderOptions (executionContext)
                           "yDimension", new Fields .SFInt32 (1))
 }
 
-Object .assign (Object .setPrototypeOf (CylinderOptions .prototype, X3DBaseNode .prototype),
-{
-   constructor: CylinderOptions,
-});
+Object .setPrototypeOf (CylinderOptions .prototype, X3DBaseNode .prototype);
 
 Object .defineProperties (CylinderOptions,
 {

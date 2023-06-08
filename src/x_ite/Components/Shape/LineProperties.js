@@ -60,7 +60,6 @@ function LineProperties (executionContext)
 
 Object .assign (Object .setPrototypeOf (LineProperties .prototype, X3DAppearanceChildNode .prototype),
 {
-   constructor: LineProperties,
    initialize ()
    {
       X3DAppearanceChildNode .prototype .initialize .call (this);

@@ -87,7 +87,6 @@ function RigidBodyCollection (executionContext)
 
 Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChildNode .prototype),
 {
-   constructor: RigidBodyCollection,
    initialize ()
    {
       X3DChildNode .prototype .initialize .call (this);

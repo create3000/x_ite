@@ -101,7 +101,6 @@ function X3DFontStyleNode (executionContext)
 Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .prototype),
    X3DUrlObject .prototype,
 {
-   constructor: X3DFontStyleNode,
    initialize ()
    {
       X3DNode      .prototype .initialize .call (this);

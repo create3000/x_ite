@@ -152,7 +152,6 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
    X3DTexturingContext .prototype,
    X3DTimeContext .prototype,
 {
-   constructor: X3DBrowserContext,
    initialize ()
    {
       X3DBaseNode                    .prototype .initialize ?.call (this);

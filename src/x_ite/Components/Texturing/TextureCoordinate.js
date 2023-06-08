@@ -61,7 +61,6 @@ function TextureCoordinate (executionContext)
 
 Object .assign (Object .setPrototypeOf (TextureCoordinate .prototype, X3DSingleTextureCoordinateNode .prototype),
 {
-   constructor: TextureCoordinate,
    initialize ()
    {
       X3DSingleTextureCoordinateNode .prototype .initialize .call (this);

@@ -63,7 +63,6 @@ function ContourPolyline2D (executionContext)
 
 Object .assign (Object .setPrototypeOf (ContourPolyline2D .prototype, X3DNurbsControlCurveNode .prototype),
 {
-   constructor: ContourPolyline2D,
    tessellate (type)
    {
       switch (type)

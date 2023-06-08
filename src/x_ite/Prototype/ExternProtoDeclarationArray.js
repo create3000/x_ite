@@ -53,10 +53,7 @@ function ExternProtoDeclarationArray (values = [ ])
    return X3DInfoArray .call (this, Array .from (values, value => [value .name, value]), X3DExternProtoDeclaration);
 }
 
-Object .assign (Object .setPrototypeOf (ExternProtoDeclarationArray .prototype, X3DInfoArray .prototype),
-{
-   constructor: ExternProtoDeclarationArray,
-});
+Object .setPrototypeOf (ExternProtoDeclarationArray .prototype, X3DInfoArray .prototype);
 
 for (const key of Reflect .ownKeys (ExternProtoDeclarationArray .prototype))
    Object .defineProperty (ExternProtoDeclarationArray .prototype, key, { enumerable: false });

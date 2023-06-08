@@ -66,7 +66,6 @@ function ComposedTexture3D (executionContext)
 
 Object .assign (Object .setPrototypeOf (ComposedTexture3D .prototype, X3DTexture3DNode .prototype),
 {
-   constructor: ComposedTexture3D,
    initialize ()
    {
       X3DTexture3DNode .prototype .initialize .call (this);

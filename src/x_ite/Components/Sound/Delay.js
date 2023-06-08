@@ -58,10 +58,7 @@ function Delay (executionContext)
    this .addType (X3DConstants .Delay);
 }
 
-Object .assign (Object .setPrototypeOf (Delay .prototype, X3DSoundProcessingNode .prototype),
-{
-   constructor: Delay,
-});
+Object .setPrototypeOf (Delay .prototype, X3DSoundProcessingNode .prototype);
 
 Object .defineProperties (Delay,
 {

@@ -94,7 +94,6 @@ function GLTF2Parser (scene)
 Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .prototype),
    X3DOptimizer .prototype,
 {
-   constructor: GLTF2Parser,
    getEncoding ()
    {
       return "JSON";

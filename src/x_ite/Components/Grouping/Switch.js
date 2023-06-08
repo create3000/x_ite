@@ -69,7 +69,6 @@ function Switch (executionContext)
 
 Object .assign (Object .setPrototypeOf (Switch .prototype, X3DGroupingNode .prototype),
 {
-   constructor: Switch,
    initialize ()
    {
       X3DGroupingNode .prototype .initialize .call (this);

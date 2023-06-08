@@ -60,10 +60,7 @@ function Coordinate (executionContext)
    this ._point .setUnit ("length");
 }
 
-Object .assign (Object .setPrototypeOf (Coordinate .prototype, X3DCoordinateNode .prototype),
-{
-   constructor: Coordinate,
-});
+Object .setPrototypeOf (Coordinate .prototype, X3DCoordinateNode .prototype);
 
 Object .defineProperties (Coordinate,
 {

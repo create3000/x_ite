@@ -60,7 +60,6 @@ function TextAnnotation (executionContext)
 
 Object .assign (Object .setPrototypeOf (TextAnnotation .prototype, X3DAnnotationNode .prototype),
 {
-   constructor: TextAnnotation,
    initialize ()
    {
       X3DAnnotationNode .prototype .initialize .call (this);

@@ -66,7 +66,6 @@ Object .assign (Object .setPrototypeOf (PackagedShader .prototype, X3DShaderNode
    X3DUrlObject .prototype,
    X3DProgrammableShaderObject .prototype,
 {
-   constructor: PackagedShader,
    getSourceText ()
    {
       return this ._url;

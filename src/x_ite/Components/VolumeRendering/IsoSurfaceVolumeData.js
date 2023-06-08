@@ -65,7 +65,6 @@ function IsoSurfaceVolumeData (executionContext)
 
 Object .assign (Object .setPrototypeOf (IsoSurfaceVolumeData .prototype, X3DVolumeDataNode .prototype),
 {
-   constructor: IsoSurfaceVolumeData,
    initialize ()
    {
       X3DVolumeDataNode .prototype .initialize .call (this);

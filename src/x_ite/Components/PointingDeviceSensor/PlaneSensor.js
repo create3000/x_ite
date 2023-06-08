@@ -80,7 +80,6 @@ function PlaneSensor (executionContext)
 
 Object .assign (Object .setPrototypeOf (PlaneSensor .prototype, X3DDragSensorNode .prototype),
 {
-   constructor: PlaneSensor,
    initialize ()
    {
       X3DDragSensorNode .prototype .initialize .call (this);

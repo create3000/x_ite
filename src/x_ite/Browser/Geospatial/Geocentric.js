@@ -51,7 +51,6 @@ function Geocentric () { }
 
 Object .assign (Geocentric .prototype,
 {
-   constructor: Geocentric,
    convert (geocentric, result)
    {
       return result .assign (geocentric);

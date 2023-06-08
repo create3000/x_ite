@@ -60,7 +60,6 @@ function BooleanToggle (executionContext)
 
 Object .assign (Object .setPrototypeOf (BooleanToggle .prototype, X3DChildNode .prototype),
 {
-   constructor: BooleanToggle,
    initialize ()
    {
       X3DChildNode .prototype .initialize .call (this);

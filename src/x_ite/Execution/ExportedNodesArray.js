@@ -53,10 +53,7 @@ function ExportedNodesArray (values = [ ])
    return X3DInfoArray .call (this, Array .from (values, value => [value .getExportedName (), value]), X3DExportedNode);
 }
 
-Object .assign (Object .setPrototypeOf (ExportedNodesArray .prototype, X3DInfoArray .prototype),
-{
-   constructor: ExportedNodesArray,
-});
+Object .setPrototypeOf (ExportedNodesArray .prototype, X3DInfoArray .prototype);
 
 for (const key of Reflect .ownKeys (ExportedNodesArray .prototype))
    Object .defineProperty (ExportedNodesArray .prototype, key, { enumerable: false });

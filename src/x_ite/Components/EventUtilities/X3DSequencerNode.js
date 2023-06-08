@@ -60,7 +60,6 @@ function X3DSequencerNode (executionContext)
 
 Object .assign (Object .setPrototypeOf (X3DSequencerNode .prototype, X3DChildNode .prototype),
 {
-   constructor: X3DSequencerNode,
    initialize ()
    {
       X3DChildNode .prototype .initialize .call (this);

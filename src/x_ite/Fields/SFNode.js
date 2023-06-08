@@ -180,7 +180,6 @@ function SFNode (value)
 
 Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
 {
-   constructor: SFNode,
    [_target]: null,
    [_proxy]: null,
    [_cloneCount]: 0,

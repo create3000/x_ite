@@ -54,7 +54,6 @@ function SFFloat (value)
 
 Object .assign (Object .setPrototypeOf (SFFloat .prototype, X3DField .prototype),
 {
-   constructor: SFFloat,
    copy ()
    {
       return new SFFloat (this .getValue ());

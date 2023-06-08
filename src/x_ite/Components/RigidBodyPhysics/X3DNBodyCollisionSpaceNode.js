@@ -60,7 +60,6 @@ function X3DNBodyCollisionSpaceNode (executionContext)
 Object .assign (Object .setPrototypeOf (X3DNBodyCollisionSpaceNode .prototype, X3DNode .prototype),
    X3DBoundedObject .prototype,
 {
-   constructor: X3DNBodyCollisionSpaceNode,
    initialize ()
    {
       X3DNode          .prototype .initialize .call (this);

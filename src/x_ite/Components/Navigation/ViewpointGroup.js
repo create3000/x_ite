@@ -70,7 +70,6 @@ function ViewpointGroup (executionContext)
 
 Object .assign (Object .setPrototypeOf (ViewpointGroup .prototype, X3DChildNode .prototype),
 {
-   constructor: ViewpointGroup,
    initialize ()
    {
       X3DChildNode .prototype .initialize .call (this);

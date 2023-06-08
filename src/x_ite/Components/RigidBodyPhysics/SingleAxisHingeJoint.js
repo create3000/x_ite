@@ -77,7 +77,6 @@ function SingleAxisHingeJoint (executionContext)
 
 Object .assign (Object .setPrototypeOf (SingleAxisHingeJoint .prototype, X3DRigidJointNode .prototype),
 {
-   constructor: SingleAxisHingeJoint,
    initialize ()
    {
       X3DRigidJointNode .prototype .initialize .call (this);

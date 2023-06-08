@@ -58,7 +58,6 @@ function X3DBindableNode (executionContext)
 
 Object .assign (Object .setPrototypeOf (X3DBindableNode .prototype, X3DChildNode .prototype),
 {
-   constructor: X3DBindableNode,
    isCameraObject ()
    {
       return true;

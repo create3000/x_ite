@@ -53,10 +53,7 @@ function NamedNodesArray (values = [ ])
    return X3DInfoArray .call (this, Array .from (values, value => [value .getNodeName (), value]), SFNode);
 }
 
-Object .assign (Object .setPrototypeOf (NamedNodesArray .prototype, X3DInfoArray .prototype),
-{
-   constructor: NamedNodesArray,
-});
+Object .setPrototypeOf (NamedNodesArray .prototype, X3DInfoArray .prototype);
 
 for (const key of Reflect .ownKeys (NamedNodesArray .prototype))
    Object .defineProperty (NamedNodesArray .prototype, key, { enumerable: false });

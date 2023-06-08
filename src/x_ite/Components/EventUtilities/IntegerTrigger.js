@@ -60,7 +60,6 @@ function IntegerTrigger (executionContext)
 
 Object .assign (Object .setPrototypeOf (IntegerTrigger .prototype, X3DTriggerNode .prototype),
 {
-   constructor: IntegerTrigger,
    initialize ()
    {
       X3DTriggerNode .prototype .initialize .call (this);

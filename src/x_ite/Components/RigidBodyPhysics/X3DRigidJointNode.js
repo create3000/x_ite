@@ -68,7 +68,6 @@ function X3DRigidJointNode (executionContext)
 
 Object .assign (Object .setPrototypeOf (X3DRigidJointNode .prototype, X3DNode .prototype),
 {
-   constructor: X3DRigidJointNode,
    initialize ()
    {
       X3DNode .prototype .initialize .call (this);

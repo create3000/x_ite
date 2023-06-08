@@ -66,7 +66,6 @@ function Cone (executionContext)
 
 Object .assign (Object .setPrototypeOf (Cone .prototype, X3DGeometryNode .prototype),
 {
-   constructor: Cone,
    set_live__ ()
    {
       X3DGeometryNode .prototype .set_live__ .call (this);

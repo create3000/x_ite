@@ -56,7 +56,6 @@ function BindableStack (executionContext, defaultNode)
 
 Object .assign (Object .setPrototypeOf (BindableStack .prototype, X3DBaseNode .prototype),
 {
-   constructor: BindableStack,
    get ()
    {
       return this .nodes;

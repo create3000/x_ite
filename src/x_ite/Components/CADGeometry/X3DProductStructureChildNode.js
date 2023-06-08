@@ -55,10 +55,7 @@ function X3DProductStructureChildNode (executionContext)
    this .addType (X3DConstants .X3DProductStructureChildNode);
 }
 
-Object .assign (Object .setPrototypeOf (X3DProductStructureChildNode .prototype, X3DChildNode .prototype),
-{
-   constructor: X3DProductStructureChildNode,
-});
+Object .setPrototypeOf (X3DProductStructureChildNode .prototype, X3DChildNode .prototype);
 
 Object .defineProperties (X3DProductStructureChildNode,
 {

@@ -113,7 +113,6 @@ function X3DRenderObject (executionContext)
 
 Object .assign (X3DRenderObject .prototype,
 {
-   constructor: X3DRenderObject,
    initialize ()
    { },
    isIndependent ()

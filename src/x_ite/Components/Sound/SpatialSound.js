@@ -60,10 +60,7 @@ function SpatialSound (executionContext)
    this ._location .setUnit ("length");
 }
 
-Object .assign (Object .setPrototypeOf (SpatialSound .prototype, X3DSoundNode .prototype),
-{
-   constructor: SpatialSound,
-});
+Object .setPrototypeOf (SpatialSound .prototype, X3DSoundNode .prototype);
 
 Object .defineProperties (SpatialSound,
 {

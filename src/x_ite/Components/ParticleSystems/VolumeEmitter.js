@@ -130,7 +130,6 @@ function VolumeEmitter (executionContext)
 
 Object .assign (Object .setPrototypeOf (VolumeEmitter .prototype, X3DParticleEmitterNode .prototype),
 {
-   constructor: VolumeEmitter,
    initialize ()
    {
       X3DParticleEmitterNode .prototype .initialize .call (this);

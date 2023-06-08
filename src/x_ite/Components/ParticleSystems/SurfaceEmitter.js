@@ -97,7 +97,6 @@ function SurfaceEmitter (executionContext)
 
 Object .assign (Object .setPrototypeOf (SurfaceEmitter .prototype, X3DParticleEmitterNode .prototype),
 {
-   constructor: SurfaceEmitter,
    initialize ()
    {
       X3DParticleEmitterNode .prototype .initialize .call (this);

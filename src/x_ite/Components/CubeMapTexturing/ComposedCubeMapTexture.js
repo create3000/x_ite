@@ -77,7 +77,6 @@ function ComposedCubeMapTexture (executionContext)
 
 Object .assign (Object .setPrototypeOf (ComposedCubeMapTexture .prototype, X3DEnvironmentTextureNode .prototype),
 {
-   constructor: ComposedCubeMapTexture,
    initialize ()
    {
       X3DEnvironmentTextureNode .prototype .initialize .call (this);

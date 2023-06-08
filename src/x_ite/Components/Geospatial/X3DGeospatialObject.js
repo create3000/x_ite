@@ -71,7 +71,6 @@ function X3DGeospatialObject (executionContext)
 
 Object .assign (X3DGeospatialObject .prototype,
 {
-   constructor: X3DGeospatialObject,
    initialize ()
    {
       this ._geoSystem .addInterest ("set_geoSystem__", this);

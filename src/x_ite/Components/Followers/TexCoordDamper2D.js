@@ -66,7 +66,6 @@ function TexCoordDamper2D (executionContext)
 Object .assign (Object .setPrototypeOf (TexCoordDamper2D .prototype, X3DDamperNode .prototype),
    X3DArrayFollowerObject .prototype,
 {
-   constructor: TexCoordDamper2D,
    getVector ()
    {
       return new Vector2 (0, 0, 0);

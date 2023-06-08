@@ -68,7 +68,6 @@ function ColorChaser (executionContext)
 
 Object .assign (Object .setPrototypeOf (ColorChaser .prototype, X3DChaserNode .prototype),
 {
-   constructor: ColorChaser,
    getVector ()
    {
       return new Vector3 (0, 0, 0);

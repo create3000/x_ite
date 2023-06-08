@@ -71,7 +71,6 @@ function BrowserOptions (executionContext)
 
 Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .prototype),
 {
-   constructor: BrowserOptions,
    initialize ()
    {
       X3DBaseNode .prototype .initialize .call (this);

@@ -53,10 +53,7 @@ function ImportedNodesArray (values = [ ])
    return X3DInfoArray .call (this, Array .from (values, value => [value .getImportedName (), value]), X3DImportedNode);
 }
 
-Object .assign (Object .setPrototypeOf (ImportedNodesArray .prototype, X3DInfoArray .prototype),
-{
-   constructor: ImportedNodesArray,
-});
+Object .setPrototypeOf (ImportedNodesArray .prototype, X3DInfoArray .prototype);
 
 for (const key of Reflect .ownKeys (ImportedNodesArray .prototype))
    Object .defineProperty (ImportedNodesArray .prototype, key, { enumerable: false });

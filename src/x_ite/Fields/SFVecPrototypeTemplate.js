@@ -62,7 +62,6 @@ function SFVecPrototypeTemplate (Constructor, TypeName, Vector, double)
 
    return Object .assign (Object .setPrototypeOf (Constructor .prototype, X3DField .prototype),
    {
-      constructor: Constructor,
       *[Symbol .iterator] ()
       {
          yield* this .getValue ();

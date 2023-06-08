@@ -73,7 +73,6 @@ function TimeSensor (executionContext)
 Object .assign (Object .setPrototypeOf (TimeSensor .prototype, X3DSensorNode .prototype),
    X3DTimeDependentNode .prototype,
 {
-   constructor: TimeSensor,
    initialize ()
    {
       X3DSensorNode        .prototype .initialize .call (this);

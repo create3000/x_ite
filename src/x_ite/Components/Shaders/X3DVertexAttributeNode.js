@@ -60,7 +60,6 @@ function X3DVertexAttributeNode (executionContext)
 
 Object .assign (Object .setPrototypeOf (X3DVertexAttributeNode .prototype, X3DGeometricPropertyNode .prototype),
 {
-   constructor: X3DVertexAttributeNode,
    initialize ()
    {
       X3DGeometricPropertyNode .prototype .initialize .call (this);

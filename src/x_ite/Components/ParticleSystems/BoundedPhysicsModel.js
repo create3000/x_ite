@@ -61,7 +61,6 @@ function BoundedPhysicsModel (executionContext)
 
 Object .assign (Object .setPrototypeOf (BoundedPhysicsModel .prototype, X3DParticlePhysicsModelNode .prototype),
 {
-   constructor: BoundedPhysicsModel,
    initialize ()
    {
       X3DParticlePhysicsModelNode .prototype .initialize .call (this);

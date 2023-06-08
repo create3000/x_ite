@@ -63,7 +63,6 @@ function LocalFog (executionContext)
 Object .assign (Object .setPrototypeOf (LocalFog .prototype, X3DChildNode .prototype),
    X3DFogObject .prototype,
 {
-   constructor: LocalFog,
    initialize ()
    {
       X3DChildNode .prototype .initialize .call (this);

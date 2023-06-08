@@ -63,7 +63,6 @@ function Contour2D (executionContext)
 
 Object .assign (Object .setPrototypeOf (Contour2D .prototype, X3DNode .prototype),
 {
-   constructor: Contour2D,
    initialize ()
    {
       X3DNode .prototype .initialize .call (this);

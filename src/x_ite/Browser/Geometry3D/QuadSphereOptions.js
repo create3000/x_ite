@@ -64,7 +64,6 @@ function QuadSphereOptions (executionContext)
 
 Object .assign (Object .setPrototypeOf (QuadSphereOptions .prototype, X3DBaseNode .prototype),
 {
-   constructor: QuadSphereOptions,
    initialize ()
    {
       X3DBaseNode .prototype .initialize .call (this);

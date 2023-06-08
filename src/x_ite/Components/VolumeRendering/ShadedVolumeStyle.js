@@ -61,7 +61,6 @@ function ShadedVolumeStyle (executionContext)
 
 Object .assign (Object .setPrototypeOf (ShadedVolumeStyle .prototype, X3DComposableVolumeRenderStyleNode .prototype),
 {
-   constructor: ShadedVolumeStyle,
    initialize ()
    {
       X3DComposableVolumeRenderStyleNode .prototype .initialize .call (this);

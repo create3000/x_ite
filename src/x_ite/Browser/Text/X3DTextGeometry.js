@@ -87,7 +87,6 @@ function X3DTextGeometry (text, fontStyle)
 
 Object .assign (X3DTextGeometry .prototype,
 {
-   constructor: X3DTextGeometry,
    getBrowser ()
    {
       return this .browser;

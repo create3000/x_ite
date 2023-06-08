@@ -60,7 +60,6 @@ function EaseInEaseOut (executionContext)
 
 Object .assign (Object .setPrototypeOf (EaseInEaseOut .prototype, X3DInterpolatorNode .prototype),
 {
-   constructor: EaseInEaseOut,
    initialize ()
    {
       X3DInterpolatorNode .prototype .initialize .call (this);

@@ -65,7 +65,6 @@ function X3DTextureProjectorNode (executionContext)
 
 Object .assign (Object .setPrototypeOf (X3DTextureProjectorNode .prototype, X3DChildNode .prototype),
 {
-   constructor: X3DTextureProjectorNode,
    initialize ()
    {
       X3DChildNode .prototype .initialize .call (this);

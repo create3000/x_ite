@@ -58,10 +58,7 @@ function CoordinateDouble (executionContext)
    this .addType (X3DConstants .CoordinateDouble);
 }
 
-Object .assign (Object .setPrototypeOf (CoordinateDouble .prototype, X3DCoordinateNode .prototype),
-{
-   constructor: CoordinateDouble,
-});
+Object .setPrototypeOf (CoordinateDouble .prototype, X3DCoordinateNode .prototype);
 
 Object .defineProperties (CoordinateDouble,
 {

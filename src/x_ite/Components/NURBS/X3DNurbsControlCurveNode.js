@@ -55,10 +55,7 @@ function X3DNurbsControlCurveNode (executionContext)
    this .addType (X3DConstants .X3DNurbsControlCurveNode);
 }
 
-Object .assign (Object .setPrototypeOf (X3DNurbsControlCurveNode .prototype, X3DNode .prototype),
-{
-   constructor: X3DNurbsControlCurveNode,
-});
+Object .setPrototypeOf (X3DNurbsControlCurveNode .prototype, X3DNode .prototype);
 
 Object .defineProperties (X3DNurbsControlCurveNode,
 {

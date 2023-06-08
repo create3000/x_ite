@@ -80,7 +80,6 @@ function X3DGroupingNode (executionContext)
 Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode .prototype),
    X3DBoundedObject .prototype,
 {
-   constructor: X3DGroupingNode,
    initialize ()
    {
       X3DChildNode     .prototype .initialize .call (this);

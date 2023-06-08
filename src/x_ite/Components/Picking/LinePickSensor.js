@@ -67,7 +67,6 @@ function LinePickSensor (executionContext)
 
 Object .assign (Object .setPrototypeOf (LinePickSensor .prototype, X3DPickSensorNode .prototype),
 {
-   constructor: LinePickSensor,
    initialize ()
    {
       X3DPickSensorNode .prototype .initialize .call (this);

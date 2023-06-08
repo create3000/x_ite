@@ -64,7 +64,6 @@ function NurbsSweptSurface (executionContext)
 
 Object .assign (Object .setPrototypeOf (NurbsSweptSurface .prototype, X3DParametricGeometryNode .prototype),
 {
-   constructor: NurbsSweptSurface,
    initialize ()
    {
       X3DParametricGeometryNode .prototype .initialize .call (this);

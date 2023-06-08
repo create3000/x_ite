@@ -56,7 +56,6 @@ function ConcreteNodesArray (values = [ ])
 
 Object .assign (Object .setPrototypeOf (ConcreteNodesArray .prototype, X3DInfoArray .prototype),
 {
-   constructor: ConcreteNodesArray,
    add (typeName, ConcreteNode)
    {
       X3DConstants .addNode (ConcreteNode);

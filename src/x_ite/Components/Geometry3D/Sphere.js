@@ -62,7 +62,6 @@ function Sphere (executionContext)
 
 Object .assign (Object .setPrototypeOf (Sphere .prototype, X3DGeometryNode .prototype),
 {
-   constructor: Sphere,
    set_live__ ()
    {
       X3DGeometryNode .prototype .set_live__ .call (this);

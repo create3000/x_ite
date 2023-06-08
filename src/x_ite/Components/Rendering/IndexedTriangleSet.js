@@ -60,7 +60,6 @@ function IndexedTriangleSet (executionContext)
 
 Object .assign (Object .setPrototypeOf (IndexedTriangleSet .prototype, X3DComposedGeometryNode .prototype),
 {
-   constructor: IndexedTriangleSet,
    getPolygonIndex (i)
    {
       return this ._index [i];

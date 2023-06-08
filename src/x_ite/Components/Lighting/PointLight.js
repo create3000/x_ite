@@ -110,7 +110,6 @@ function PointLightContainer ()
 
 Object .assign (PointLightContainer .prototype,
 {
-   constructor: PointLightContainer,
    set (lightNode, groupNode, modelViewMatrix)
    {
       const shadowMapSize = lightNode .getShadowMapSize ();
@@ -278,7 +277,6 @@ function PointLight (executionContext)
 
 Object .assign (Object .setPrototypeOf (PointLight .prototype, X3DLightNode .prototype),
 {
-   constructor: PointLight,
    getAttenuation ()
    {
       return this ._attenuation .getValue ();

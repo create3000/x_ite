@@ -60,7 +60,6 @@ function TriangleSet (executionContext)
 
 Object .assign (Object .setPrototypeOf (TriangleSet .prototype, X3DComposedGeometryNode .prototype),
 {
-   constructor: TriangleSet,
    build ()
    {
       if (! this .getCoord ())

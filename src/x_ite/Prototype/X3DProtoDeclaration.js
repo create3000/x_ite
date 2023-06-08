@@ -69,7 +69,6 @@ function X3DProtoDeclaration (executionContext)
 
 Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProtoDeclarationNode .prototype),
 {
-   constructor: X3DProtoDeclaration,
    initialize ()
    {
       X3DProtoDeclarationNode .prototype .initialize .call (this);

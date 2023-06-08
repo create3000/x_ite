@@ -53,10 +53,7 @@ function UnitInfoArray (values = [ ])
    return X3DInfoArray .call (this, Array .from (values, value => [value .category, value]), UnitInfo);
 }
 
-Object .assign (Object .setPrototypeOf (UnitInfoArray .prototype, X3DInfoArray .prototype),
-{
-   constructor: UnitInfoArray,
-});
+Object .setPrototypeOf (UnitInfoArray .prototype, X3DInfoArray .prototype);
 
 for (const key of Reflect .ownKeys (UnitInfoArray .prototype))
    Object .defineProperty (UnitInfoArray .prototype, key, { enumerable: false });

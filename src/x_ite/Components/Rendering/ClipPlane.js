@@ -64,7 +64,6 @@ function ClipPlaneContainer ()
 
 Object .assign (ClipPlaneContainer .prototype,
 {
-   constructor: ClipPlaneContainer,
    isClipped (point)
    {
       return this .plane .getDistanceToPoint (point) < 0;
@@ -106,7 +105,6 @@ function ClipPlane (executionContext)
 
 Object .assign (Object .setPrototypeOf (ClipPlane .prototype, X3DChildNode .prototype),
 {
-   constructor: ClipPlane,
    initialize ()
    {
       X3DChildNode .prototype .initialize .call (this);

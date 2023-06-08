@@ -63,7 +63,6 @@ function DISEntityTypeMapping (executionContext)
 Object .assign (Object .setPrototypeOf (DISEntityTypeMapping .prototype, X3DInfoNode .prototype),
    X3DUrlObject .prototype,
 {
-   constructor: DISEntityTypeMapping,
    initialize ()
    {
       X3DInfoNode  .prototype .initialize .call (this);

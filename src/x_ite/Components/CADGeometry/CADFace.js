@@ -68,7 +68,6 @@ function CADFace (executionContext)
 Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureChildNode .prototype),
    X3DBoundedObject .prototype,
 {
-   constructor: CADFace,
    initialize ()
    {
       X3DProductStructureChildNode .prototype .initialize .call (this);

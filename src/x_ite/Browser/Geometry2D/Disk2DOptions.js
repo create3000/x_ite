@@ -65,7 +65,6 @@ function Disk2DOptions (executionContext)
 
 Object .assign (Object .setPrototypeOf (Disk2DOptions .prototype, X3DBaseNode .prototype),
 {
-   constructor: Disk2DOptions,
    initialize ()
    {
       this .addInterest ("build", this);

@@ -104,7 +104,6 @@ function ExamineViewer (executionContext, navigationInfo)
 
 Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .prototype),
 {
-   constructor: ExamineViewer,
    initialize ()
    {
       X3DViewer .prototype .initialize .call (this);

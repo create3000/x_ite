@@ -60,7 +60,6 @@ function ProfileInfo (name, title, providerUrl, components)
 
 Object .assign (Object .setPrototypeOf (ProfileInfo .prototype, X3DObject .prototype),
 {
-   constructor: ProfileInfo,
    toVRMLStream (generator)
    {
       generator .string += generator .Indent ();

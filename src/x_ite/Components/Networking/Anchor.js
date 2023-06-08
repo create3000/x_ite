@@ -69,7 +69,6 @@ function Anchor (executionContext)
 Object .assign (Object .setPrototypeOf (Anchor .prototype, X3DGroupingNode .prototype),
    X3DUrlObject .prototype,
 {
-   constructor: Anchor,
    initialize ()
    {
       X3DGroupingNode .prototype .initialize .call (this);

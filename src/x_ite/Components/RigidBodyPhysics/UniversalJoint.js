@@ -64,10 +64,7 @@ function UniversalJoint (executionContext)
    this ._body2AnchorPoint .setUnit ("length");
 }
 
-Object .assign (Object .setPrototypeOf (UniversalJoint .prototype, X3DRigidJointNode .prototype),
-{
-   constructor: UniversalJoint,
-});
+Object .setPrototypeOf (UniversalJoint .prototype, X3DRigidJointNode .prototype);
 
 Object .defineProperties (UniversalJoint,
 {

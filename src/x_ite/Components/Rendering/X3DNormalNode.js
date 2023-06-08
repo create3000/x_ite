@@ -55,10 +55,7 @@ function X3DNormalNode (executionContext)
    this .addType (X3DConstants .X3DNormalNode);
 }
 
-Object .assign (Object .setPrototypeOf (X3DNormalNode .prototype, X3DGeometricPropertyNode .prototype),
-{
-   constructor: X3DNormalNode,
-});
+Object .setPrototypeOf (X3DNormalNode .prototype, X3DGeometricPropertyNode .prototype);
 
 Object .defineProperties (X3DNormalNode,
 {

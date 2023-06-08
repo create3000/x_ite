@@ -58,10 +58,7 @@ function ProgramShader (executionContext)
    this .addType (X3DConstants .ProgramShader);
 }
 
-Object .assign (Object .setPrototypeOf (ProgramShader .prototype, X3DShaderNode .prototype),
-{
-   constructor: ProgramShader,
-});
+Object .setPrototypeOf (ProgramShader .prototype, X3DShaderNode .prototype);
 
 Object .defineProperties (ProgramShader,
 {

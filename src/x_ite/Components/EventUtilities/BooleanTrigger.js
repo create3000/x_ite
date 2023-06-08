@@ -60,7 +60,6 @@ function BooleanTrigger (executionContext)
 
 Object .assign (Object .setPrototypeOf (BooleanTrigger .prototype, X3DTriggerNode .prototype),
 {
-   constructor: BooleanTrigger,
    initialize ()
    {
       X3DTriggerNode .prototype .initialize .call (this);

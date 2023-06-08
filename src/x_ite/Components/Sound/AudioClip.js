@@ -69,7 +69,6 @@ function AudioClip (executionContext)
 Object .assign (Object .setPrototypeOf (AudioClip .prototype, X3DSoundSourceNode .prototype),
    X3DUrlObject .prototype,
 {
-   constructor: AudioClip,
    initialize ()
    {
       X3DSoundSourceNode .prototype .initialize .call (this);

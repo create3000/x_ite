@@ -58,10 +58,7 @@ function StreamAudioDestination (executionContext)
    this .addType (X3DConstants .StreamAudioDestination);
 }
 
-Object .assign (Object .setPrototypeOf (StreamAudioDestination .prototype, X3DSoundDestinationNode .prototype),
-{
-   constructor: StreamAudioDestination,
-});
+Object .setPrototypeOf (StreamAudioDestination .prototype, X3DSoundDestinationNode .prototype);
 
 Object .defineProperties (StreamAudioDestination,
 {

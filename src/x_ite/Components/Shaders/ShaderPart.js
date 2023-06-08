@@ -82,7 +82,6 @@ function ShaderPart (executionContext)
 Object .assign (Object .setPrototypeOf (ShaderPart .prototype, X3DNode .prototype),
    X3DUrlObject .prototype,
 {
-   constructor: ShaderPart,
    initialize ()
    {
       X3DNode      .prototype .initialize .call (this);

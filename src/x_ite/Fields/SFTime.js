@@ -54,7 +54,6 @@ function SFTime (value)
 
 Object .assign (Object .setPrototypeOf (SFTime .prototype, X3DField .prototype),
 {
-   constructor: SFTime,
    copy ()
    {
       return new SFTime (this .getValue ());

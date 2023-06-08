@@ -60,7 +60,6 @@ function Color (executionContext)
 
 Object .assign (Object .setPrototypeOf (Color .prototype, X3DColorNode .prototype),
 {
-   constructor: Color,
    initialize ()
    {
       X3DColorNode .prototype .initialize .call (this);

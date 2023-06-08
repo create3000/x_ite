@@ -69,7 +69,6 @@ function Viewpoint (executionContext)
 
 Object .assign (Object .setPrototypeOf (Viewpoint .prototype, X3DViewpointNode .prototype),
 {
-   constructor: Viewpoint,
    getRelativeTransformation (fromViewpointNode)
    {
       const relative = X3DViewpointNode .prototype .getRelativeTransformation .call (this, fromViewpointNode);

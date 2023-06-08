@@ -195,7 +195,6 @@ function SVGParser (scene)
 Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototype),
    X3DOptimizer .prototype,
 {
-   constructor: SVGParser,
    CONSTANTS: new Map ([
       ["NAN", NaN],
       ["INF", Infinity],

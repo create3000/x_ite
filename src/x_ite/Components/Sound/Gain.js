@@ -58,10 +58,7 @@ function Gain (executionContext)
    this .addType (X3DConstants .Gain);
 }
 
-Object .assign (Object .setPrototypeOf (Gain .prototype, X3DSoundProcessingNode .prototype),
-{
-   constructor: Gain,
-});
+Object .setPrototypeOf (Gain .prototype, X3DSoundProcessingNode .prototype);
 
 Object .defineProperties (Gain,
 {

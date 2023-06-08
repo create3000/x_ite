@@ -64,7 +64,6 @@ function PointProperties (executionContext)
 
 Object .assign (Object .setPrototypeOf (PointProperties .prototype, X3DAppearanceChildNode .prototype),
 {
-   constructor: PointProperties,
    initialize ()
    {
       X3DAppearanceChildNode .prototype .initialize .call (this);

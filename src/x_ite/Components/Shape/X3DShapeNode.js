@@ -68,7 +68,6 @@ function X3DShapeNode (executionContext)
 Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .prototype),
    X3DBoundedObject .prototype,
 {
-   constructor: X3DShapeNode,
    initialize ()
    {
       X3DChildNode     .prototype .initialize .call (this);

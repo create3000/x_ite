@@ -67,7 +67,6 @@ function Text (executionContext)
 
 Object .assign (Object .setPrototypeOf (Text .prototype, X3DGeometryNode .prototype),
 {
-   constructor: Text,
    initialize ()
    {
       X3DGeometryNode .prototype .initialize .call (this);

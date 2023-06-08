@@ -94,7 +94,6 @@ function X3DLayerNode (executionContext, defaultViewpoint, groupNode)
 Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .prototype),
    X3DRenderObject .prototype,
 {
-   constructor: X3DLayerNode,
    layer0: false,
    initialize ()
    {

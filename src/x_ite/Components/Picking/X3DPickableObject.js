@@ -56,7 +56,6 @@ function X3DPickableObject (executionContext)
 
 Object .assign (X3DPickableObject .prototype,
 {
-   constructor: X3DPickableObject,
    initialize ()
    {
       this ._objectType .addInterest ("set_objectType__", this);

@@ -60,7 +60,6 @@ function X3DScriptNode (executionContext)
 Object .assign (Object .setPrototypeOf (X3DScriptNode .prototype, X3DChildNode .prototype),
    X3DUrlObject .prototype,
 {
-   constructor: X3DScriptNode,
    initialize ()
    {
       X3DChildNode .prototype .initialize .call (this);

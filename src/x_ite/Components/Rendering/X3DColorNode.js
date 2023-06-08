@@ -62,7 +62,6 @@ function X3DColorNode (executionContext)
 
 Object .assign (Object .setPrototypeOf (X3DColorNode .prototype, X3DGeometricPropertyNode .prototype),
 {
-   constructor: X3DColorNode,
    setTransparent (value)
    {
       if (value !== this ._transparent .getValue ())

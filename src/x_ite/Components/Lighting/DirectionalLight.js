@@ -84,7 +84,6 @@ function DirectionalLightContainer ()
 
 Object .assign (DirectionalLightContainer .prototype,
 {
-   constructor: DirectionalLightContainer,
    set (lightNode, groupNode, modelViewMatrix)
    {
       const shadowMapSize = lightNode .getShadowMapSize ();
@@ -242,7 +241,6 @@ function DirectionalLight (executionContext)
 
 Object .assign (Object .setPrototypeOf (DirectionalLight .prototype, X3DLightNode .prototype),
 {
-   constructor: DirectionalLight,
    getLights ()
    {
       return DirectionalLights;

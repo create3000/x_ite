@@ -58,7 +58,6 @@ function GLB2Parser (scene)
 
 Object .assign (Object .setPrototypeOf (GLB2Parser .prototype, X3DParser .prototype),
 {
-   constructor: GLB2Parser,
    getEncoding ()
    {
       return "ARRAY_BUFFER";

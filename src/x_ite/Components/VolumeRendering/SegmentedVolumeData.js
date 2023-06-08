@@ -66,7 +66,6 @@ function SegmentedVolumeData (executionContext)
 
 Object .assign (Object .setPrototypeOf (SegmentedVolumeData .prototype, X3DVolumeDataNode .prototype),
 {
-   constructor: SegmentedVolumeData,
    initialize ()
    {
       X3DVolumeDataNode .prototype .initialize .call (this);

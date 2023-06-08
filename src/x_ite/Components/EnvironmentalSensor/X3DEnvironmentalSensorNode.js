@@ -67,7 +67,6 @@ function X3DEnvironmentalSensorNode (executionContext)
 
 Object .assign (Object .setPrototypeOf (X3DEnvironmentalSensorNode .prototype, X3DSensorNode .prototype),
 {
-   constructor: X3DEnvironmentalSensorNode,
    initialize ()
    {
       X3DSensorNode .prototype .initialize .call (this);

@@ -66,7 +66,6 @@ function NurbsSet (executionContext)
 Object .assign (Object .setPrototypeOf (NurbsSet .prototype, X3DChildNode .prototype),
    X3DBoundedObject .prototype,
 {
-   constructor: NurbsSet,
    initialize ()
    {
       X3DChildNode     .prototype .initialize .call (this);

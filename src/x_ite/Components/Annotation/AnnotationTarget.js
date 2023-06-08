@@ -60,7 +60,6 @@ function AnnotationTarget (executionContext)
 
 Object .assign (Object .setPrototypeOf (AnnotationTarget .prototype, X3DChildNode .prototype),
 {
-   constructor: AnnotationTarget,
    initialize ()
    {
       X3DChildNode .prototype .initialize .call (this);

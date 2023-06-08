@@ -68,7 +68,6 @@ function X3DWorld (executionContext)
 
 Object .assign (Object .setPrototypeOf (X3DWorld .prototype, X3DBaseNode .prototype),
 {
-   constructor: X3DWorld,
    initialize ()
    {
       X3DBaseNode .prototype .initialize .call (this);

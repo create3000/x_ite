@@ -61,7 +61,6 @@ function Normal (executionContext)
 
 Object .assign (Object .setPrototypeOf (Normal .prototype, X3DNormalNode .prototype),
 {
-   constructor: Normal,
    initialize ()
    {
       X3DNormalNode .prototype .initialize .call (this);

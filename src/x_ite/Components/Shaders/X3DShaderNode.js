@@ -61,7 +61,6 @@ function X3DShaderNode (executionContext)
 
 Object .assign (Object .setPrototypeOf (X3DShaderNode .prototype, X3DAppearanceChildNode .prototype),
 {
-   constructor: X3DShaderNode,
    setValid (value)
    {
       this ._isValid = this .valid = value;

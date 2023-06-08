@@ -54,7 +54,6 @@ function X3DArrayField (value)
 
 Object .assign (Object .setPrototypeOf (X3DArrayField .prototype, X3DField .prototype),
 {
-   constructor: X3DArrayField,
    // Implement all function also in TypedArray, if possible.
    at: Array .prototype .at,
    // concat: Array .prototype .concat,

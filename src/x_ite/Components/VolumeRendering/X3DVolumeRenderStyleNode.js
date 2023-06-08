@@ -59,7 +59,6 @@ function X3DVolumeRenderStyleNode (executionContext)
 
 Object .assign (Object .setPrototypeOf (X3DVolumeRenderStyleNode .prototype, X3DNode .prototype),
 {
-   constructor: X3DVolumeRenderStyleNode,
    addShaderFields (shaderNode)
    { },
    getUniformsText ()

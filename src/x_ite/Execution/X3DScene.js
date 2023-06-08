@@ -112,7 +112,6 @@ function X3DScene (browser)
 
 Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext .prototype),
 {
-   constructor: X3DScene,
    isMainScene ()
    {
       return this === this .getExecutionContext ();

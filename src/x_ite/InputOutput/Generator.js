@@ -103,7 +103,6 @@ function Generator ({ style = "TIDY", indent = "", precision = 7, doublePrecisio
 
 Object .assign (Generator .prototype,
 {
-   constructor: Generator,
    Style (style)
    {
       switch (style)

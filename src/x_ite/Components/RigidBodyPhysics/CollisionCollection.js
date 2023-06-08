@@ -70,7 +70,6 @@ function CollisionCollection (executionContext)
 
 Object .assign (Object .setPrototypeOf (CollisionCollection .prototype, X3DChildNode .prototype),
 {
-   constructor: CollisionCollection,
    initialize ()
    {
       X3DChildNode .prototype .initialize .call (this);

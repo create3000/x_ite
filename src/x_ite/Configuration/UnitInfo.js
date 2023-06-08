@@ -59,7 +59,6 @@ function UnitInfo (category, name, conversionFactor)
 
 Object .assign (Object .setPrototypeOf (UnitInfo .prototype, X3DObject .prototype),
 {
-   constructor: UnitInfo,
    toVRMLStream (generator)
    {
       generator .string += generator .Indent ();

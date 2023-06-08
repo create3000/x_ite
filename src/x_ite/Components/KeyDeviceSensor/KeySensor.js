@@ -83,7 +83,6 @@ function KeySensor (executionContext)
 
 Object .assign (Object .setPrototypeOf (KeySensor .prototype, X3DKeyDeviceSensorNode .prototype),
 {
-   constructor: KeySensor,
    keydown (event)
    {
       event .preventDefault ();

@@ -60,7 +60,6 @@ function WorldInfo (executionContext)
 
 Object .assign (Object .setPrototypeOf (WorldInfo .prototype, X3DInfoNode .prototype),
 {
-   constructor: WorldInfo,
    initialize ()
    {
       X3DInfoNode .prototype .initialize .call (this);

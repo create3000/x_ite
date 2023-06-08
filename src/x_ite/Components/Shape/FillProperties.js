@@ -66,7 +66,6 @@ function FillProperties (executionContext)
 
 Object .assign (Object .setPrototypeOf (FillProperties .prototype, X3DAppearanceChildNode .prototype),
 {
-   constructor: FillProperties,
    initialize ()
    {
       X3DAppearanceChildNode .prototype .initialize .call (this);

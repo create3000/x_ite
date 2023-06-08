@@ -67,7 +67,6 @@ function Fog (executionContext)
 Object .assign (Object .setPrototypeOf (Fog .prototype, X3DBindableNode .prototype),
    X3DFogObject .prototype,
 {
-   constructor: Fog,
    initialize ()
    {
       X3DBindableNode .prototype .initialize .call (this);

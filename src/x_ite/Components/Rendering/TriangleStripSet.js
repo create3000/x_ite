@@ -62,7 +62,6 @@ function TriangleStripSet (executionContext)
 
 Object .assign (Object .setPrototypeOf (TriangleStripSet .prototype, X3DComposedGeometryNode .prototype),
 {
-   constructor: TriangleStripSet,
    initialize ()
    {
       X3DComposedGeometryNode .prototype .initialize .call (this);

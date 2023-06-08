@@ -65,7 +65,6 @@ function AnnotationLayer (executionContext)
 
 Object .assign (Object .setPrototypeOf (AnnotationLayer .prototype, X3DLayerNode .prototype),
 {
-   constructor: AnnotationLayer,
    initialize ()
    {
       X3DLayerNode .prototype .initialize .call (this);

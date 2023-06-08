@@ -68,7 +68,6 @@ function LoadSensor (executionContext)
 
 Object .assign (Object .setPrototypeOf (LoadSensor .prototype, X3DNetworkSensorNode .prototype),
 {
-   constructor: LoadSensor,
    initialize ()
    {
       X3DNetworkSensorNode .prototype .initialize .call (this);

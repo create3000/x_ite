@@ -70,7 +70,6 @@ function X3DEnvironmentTextureNode (executionContext)
 
 Object .assign (Object .setPrototypeOf (X3DEnvironmentTextureNode .prototype, X3DSingleTextureNode .prototype),
 {
-   constructor: X3DEnvironmentTextureNode,
    getTarget ()
    {
       return this .target;

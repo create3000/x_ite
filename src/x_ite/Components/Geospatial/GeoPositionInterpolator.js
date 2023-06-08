@@ -69,7 +69,6 @@ function GeoPositionInterpolator (executionContext)
 Object .assign (Object .setPrototypeOf (GeoPositionInterpolator .prototype, X3DInterpolatorNode .prototype),
    X3DGeospatialObject .prototype,
 {
-   constructor: GeoPositionInterpolator,
    setup ()
    {
       X3DGeospatialObject .prototype .initialize .call (this);

@@ -62,7 +62,6 @@ function X3DViewer (executionContext, navigationInfo)
 
 Object .assign (Object .setPrototypeOf (X3DViewer .prototype, X3DBaseNode .prototype),
 {
-   constructor: X3DViewer,
    getActiveLayer ()
    {
       return this .getBrowser () .getActiveLayer ();

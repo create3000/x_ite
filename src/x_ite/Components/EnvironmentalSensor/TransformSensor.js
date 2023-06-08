@@ -79,7 +79,6 @@ function TransformSensor (executionContext)
 
 Object .assign (Object .setPrototypeOf (TransformSensor .prototype, X3DEnvironmentalSensorNode .prototype),
 {
-   constructor: TransformSensor,
    initialize ()
    {
       X3DEnvironmentalSensorNode .prototype .initialize .call (this);

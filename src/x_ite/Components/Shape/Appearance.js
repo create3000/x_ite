@@ -68,7 +68,6 @@ function Appearance (executionContext)
 
 Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode .prototype),
 {
-   constructor: Appearance,
    initialize ()
    {
       X3DAppearanceNode .prototype .initialize .call (this);

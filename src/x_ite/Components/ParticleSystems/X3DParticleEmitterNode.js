@@ -84,7 +84,6 @@ function X3DParticleEmitterNode (executionContext)
 
 Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNode .prototype),
 {
-   constructor: X3DParticleEmitterNode,
    initialize ()
    {
       X3DNode .prototype .initialize .call (this);

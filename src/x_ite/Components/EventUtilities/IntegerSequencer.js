@@ -60,7 +60,6 @@ function IntegerSequencer (executionContext)
 
 Object .assign (Object .setPrototypeOf (IntegerSequencer .prototype, X3DSequencerNode .prototype),
 {
-   constructor: IntegerSequencer,
    initialize ()
    {
       X3DSequencerNode .prototype .initialize .call (this);

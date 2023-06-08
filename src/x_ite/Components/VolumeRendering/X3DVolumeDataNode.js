@@ -79,7 +79,6 @@ function X3DVolumeDataNode (executionContext)
 Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, X3DChildNode .prototype),
    X3DBoundedObject .prototype,
 {
-   constructor: X3DVolumeDataNode,
    initialize ()
    {
       X3DChildNode     .prototype .initialize .call (this);

@@ -88,7 +88,6 @@ function X3DBackgroundNode (executionContext)
 
 Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindableNode .prototype),
 {
-   constructor: X3DBackgroundNode,
    initialize ()
    {
       X3DBindableNode .prototype .initialize .call (this);

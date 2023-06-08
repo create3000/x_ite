@@ -60,7 +60,6 @@ function HAnimMotion (executionContext)
 
 Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .prototype),
 {
-   constructor: HAnimMotion,
    initialize ()
    {
       X3DChildNode .prototype .initialize .call (this);

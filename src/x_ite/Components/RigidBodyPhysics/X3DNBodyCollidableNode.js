@@ -77,7 +77,6 @@ function X3DNBodyCollidableNode (executionContext)
 Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DChildNode .prototype),
    X3DBoundedObject .prototype,
 {
-   constructor: X3DNBodyCollidableNode,
    initialize ()
    {
       X3DChildNode     .prototype .initialize .call (this);

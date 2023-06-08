@@ -134,7 +134,6 @@ function TextureBuffer (browser, width, height, float = false)
 
 Object .assign (TextureBuffer .prototype,
 {
-   constructor: TextureBuffer,
    getWidth ()
    {
       return this .width;

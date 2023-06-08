@@ -68,7 +68,6 @@ function SFColorRGBA (r, g, b, a)
 
 Object .assign (Object .setPrototypeOf (SFColorRGBA .prototype, X3DField .prototype),
 {
-   constructor: SFColorRGBA,
    *[Symbol .iterator] ()
    {
       yield* this .getValue ();

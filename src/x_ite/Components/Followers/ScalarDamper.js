@@ -61,7 +61,6 @@ function ScalarDamper (executionContext)
 
 Object .assign (Object .setPrototypeOf (ScalarDamper .prototype, X3DDamperNode .prototype),
 {
-   constructor: ScalarDamper,
    getVector ()
    {
       return 0;

@@ -60,7 +60,6 @@ function StringSensor (executionContext)
 
 Object .assign (Object .setPrototypeOf (StringSensor .prototype, X3DKeyDeviceSensorNode .prototype),
 {
-   constructor: StringSensor,
    keydown (event)
    {
       event .preventDefault ();

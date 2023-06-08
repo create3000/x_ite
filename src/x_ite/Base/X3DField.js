@@ -72,7 +72,6 @@ function X3DField (value)
 
 Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .prototype),
 {
-   constructor: X3DField,
    [_value]: null,
    [_accessType]: X3DConstants .initializeOnly,
    [_unit]: null,

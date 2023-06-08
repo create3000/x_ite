@@ -72,7 +72,6 @@ function CylinderSensor (executionContext)
 
 Object .assign (Object .setPrototypeOf (CylinderSensor .prototype, X3DDragSensorNode .prototype),
 {
-   constructor: CylinderSensor,
    initialize ()
    {
       X3DDragSensorNode .prototype .initialize .call (this);

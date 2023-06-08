@@ -67,7 +67,6 @@ function SFColor (r, g, b)
 
 Object .assign (Object .setPrototypeOf (SFColor .prototype, X3DField .prototype),
 {
-   constructor: SFColor,
    *[Symbol .iterator] ()
    {
       yield* this .getValue ();

@@ -61,7 +61,6 @@ function ScalarInterpolator (executionContext)
 
 Object .assign (Object .setPrototypeOf (ScalarInterpolator .prototype, X3DInterpolatorNode .prototype),
 {
-   constructor: ScalarInterpolator,
    initialize ()
    {
       X3DInterpolatorNode .prototype .initialize .call (this);

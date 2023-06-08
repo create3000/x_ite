@@ -64,7 +64,6 @@ function OrientationInterpolator (executionContext)
 
 Object .assign (Object .setPrototypeOf (OrientationInterpolator .prototype, X3DInterpolatorNode .prototype),
 {
-   constructor: OrientationInterpolator,
    initialize ()
    {
       X3DInterpolatorNode .prototype .initialize .call (this);

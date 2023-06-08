@@ -68,7 +68,6 @@ function ArcClose2D (executionContext)
 
 Object .assign (Object .setPrototypeOf (ArcClose2D .prototype, X3DGeometryNode .prototype),
 {
-   constructor: ArcClose2D,
    set_live__ ()
    {
       X3DGeometryNode .prototype .set_live__ .call (this);

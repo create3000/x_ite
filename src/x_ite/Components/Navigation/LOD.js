@@ -76,7 +76,6 @@ function LOD (executionContext)
 
 Object .assign (Object .setPrototypeOf (LOD .prototype, X3DGroupingNode .prototype),
 {
-   constructor: LOD,
    initialize ()
    {
       X3DGroupingNode .prototype .initialize .call (this);

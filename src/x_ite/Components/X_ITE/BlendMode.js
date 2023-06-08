@@ -64,7 +64,6 @@ function BlendMode (executionContext)
 
 Object .assign (Object .setPrototypeOf (BlendMode .prototype, X3DAppearanceChildNode .prototype),
 {
-   constructor: BlendMode,
    initialize ()
    {
       X3DAppearanceChildNode .prototype .initialize .call (this);

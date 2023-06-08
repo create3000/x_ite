@@ -72,7 +72,6 @@ function ScreenText (text, fontStyle)
 
 Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .prototype),
 {
-   constructor: ScreenText,
    modelViewMatrix: new Matrix4 (),
    isTransparent ()
    {

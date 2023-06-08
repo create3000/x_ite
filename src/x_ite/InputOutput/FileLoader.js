@@ -80,7 +80,6 @@ function FileLoader (node)
 
 Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .prototype),
 {
-   constructor: FileLoader,
    abort ()
    {
       this .url .length = 0;

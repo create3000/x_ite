@@ -69,7 +69,6 @@ function X3DTimeDependentNode (executionContext)
 
 Object .assign (Object .setPrototypeOf (X3DTimeDependentNode .prototype, X3DChildNode .prototype),
 {
-   constructor: X3DTimeDependentNode,
    initialize ()
    {
       this .getLive ()  .addInterest ("set_live__", this);

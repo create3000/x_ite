@@ -69,7 +69,6 @@ function GeometryContext (options = { })
 
 Object .assign (GeometryContext .prototype,
 {
-   constructor: GeometryContext,
    updateGeometryKey: X3DGeometryNode .prototype .updateGeometryKey,
    getTextureCoordinateMapping ()
    {

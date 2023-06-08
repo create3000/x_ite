@@ -66,7 +66,6 @@ function GeoTouchSensor (executionContext)
 Object .assign (Object .setPrototypeOf (GeoTouchSensor .prototype, X3DTouchSensorNode .prototype),
    X3DGeospatialObject .prototype,
 {
-   constructor: GeoTouchSensor,
    initialize ()
    {
       X3DTouchSensorNode  .prototype .initialize .call (this);

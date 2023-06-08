@@ -58,10 +58,7 @@ function BiquadFilter (executionContext)
    this .addType (X3DConstants .BiquadFilter);
 }
 
-Object .assign (Object .setPrototypeOf (BiquadFilter .prototype, X3DSoundProcessingNode .prototype),
-{
-   constructor: BiquadFilter,
-});
+Object .setPrototypeOf (BiquadFilter .prototype, X3DSoundProcessingNode .prototype);
 
 Object .defineProperties (BiquadFilter,
 {

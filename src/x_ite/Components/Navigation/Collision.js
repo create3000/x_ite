@@ -68,7 +68,6 @@ function Collision (executionContext)
 Object .assign (Object .setPrototypeOf (Collision .prototype, X3DGroupingNode .prototype),
    X3DSensorNode .prototype,
 {
-   constructor: Collision,
    initialize ()
    {
       X3DGroupingNode .prototype .initialize .call (this);

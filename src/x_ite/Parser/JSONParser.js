@@ -59,7 +59,6 @@ function JSONParser (scene)
 
 Object .assign (Object .setPrototypeOf (JSONParser .prototype, X3DParser .prototype),
 {
-   constructor: JSONParser,
    getEncoding ()
    {
       return "JSON";

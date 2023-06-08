@@ -68,7 +68,6 @@ function ImageTexture (executionContext)
 Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNode .prototype),
    X3DUrlObject .prototype,
 {
-   constructor: ImageTexture,
    initialize ()
    {
       X3DTexture2DNode .prototype .initialize .call (this);

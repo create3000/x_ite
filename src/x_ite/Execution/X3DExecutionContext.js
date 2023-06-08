@@ -99,7 +99,6 @@ function X3DExecutionContext (executionContext, outerNode = null)
 
 Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseNode .prototype),
 {
-   constructor: X3DExecutionContext,
    initialize ()
    {
       X3DBaseNode .prototype .initialize .call (this);

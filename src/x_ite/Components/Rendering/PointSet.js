@@ -66,7 +66,6 @@ function PointSet (executionContext)
 
 Object .assign (Object .setPrototypeOf (PointSet .prototype, X3DPointGeometryNode .prototype),
 {
-   constructor: PointSet,
    initialize ()
    {
       X3DPointGeometryNode .prototype .initialize .call (this);

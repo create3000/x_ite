@@ -75,7 +75,6 @@ function GeoProximitySensor (executionContext)
 Object .assign (Object .setPrototypeOf (GeoProximitySensor .prototype, X3DEnvironmentalSensorNode .prototype),
    X3DGeospatialObject .prototype,
 {
-   constructor: GeoProximitySensor,
    initialize ()
    {
       X3DEnvironmentalSensorNode .prototype .initialize .call (this);

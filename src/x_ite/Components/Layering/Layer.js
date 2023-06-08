@@ -65,7 +65,6 @@ function Layer (executionContext)
 
 Object .assign (Object .setPrototypeOf (Layer .prototype, X3DLayerNode .prototype),
 {
-   constructor: Layer,
    initialize ()
    {
       X3DLayerNode .prototype .initialize .call (this);

@@ -98,7 +98,6 @@ function X3DBaseNode (executionContext)
 
 Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DEventObject .prototype),
 {
-   constructor: X3DBaseNode,
    [_fieldDefinitions]: new FieldDefinitionArray ([ ]),
    setName (value)
    {

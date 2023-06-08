@@ -67,7 +67,6 @@ function Image (width, height, comp, array)
 
 Object .assign (Image .prototype,
 {
-   constructor: Image,
    copy ()
    {
       return new Image (this .width, this .height, this .comp, this .array);
@@ -162,7 +161,6 @@ function SFImage (width, height, comp, array)
 
 Object .assign (Object .setPrototypeOf (SFImage .prototype, X3DField .prototype),
 {
-   constructor: SFImage,
    [_set_size] ()
    {
       this .getValue () .getArray () .length = this .width * this .height;

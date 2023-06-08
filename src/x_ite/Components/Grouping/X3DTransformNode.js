@@ -60,7 +60,6 @@ function X3DTransformNode (executionContext)
 
 Object .assign (Object .setPrototypeOf (X3DTransformNode .prototype, X3DTransformMatrix3DNode .prototype),
 {
-   constructor: X3DTransformNode,
    initialize ()
    {
       X3DTransformMatrix3DNode .prototype .initialize .call (this);

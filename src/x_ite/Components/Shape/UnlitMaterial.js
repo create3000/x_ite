@@ -60,7 +60,6 @@ function UnlitMaterial (executionContext)
 
 Object .assign (Object .setPrototypeOf (UnlitMaterial .prototype, X3DOneSidedMaterialNode .prototype),
 {
-   constructor: UnlitMaterial,
    initialize ()
    {
       X3DOneSidedMaterialNode .prototype .initialize .call (this);

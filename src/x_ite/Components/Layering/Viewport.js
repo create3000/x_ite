@@ -68,7 +68,6 @@ function Viewport (executionContext)
 
 Object .assign (Object .setPrototypeOf (Viewport .prototype, X3DViewportNode .prototype),
 {
-   constructor: Viewport,
    getRectangle ()
    {
       const

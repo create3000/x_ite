@@ -122,7 +122,6 @@ function PointingBuffer (browser)
 
 Object .assign (PointingBuffer .prototype,
 {
-   constructor: PointingBuffer,
    bind ()
    {
       const gl = this .browser .getContext ();

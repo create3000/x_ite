@@ -75,7 +75,6 @@ function GeneratedCubeMapTexture (executionContext)
 
 Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DEnvironmentTextureNode .prototype),
 {
-   constructor: GeneratedCubeMapTexture,
    initialize ()
    {
       X3DEnvironmentTextureNode .prototype .initialize .call (this);

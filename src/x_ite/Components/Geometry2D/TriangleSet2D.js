@@ -64,7 +64,6 @@ function TriangleSet2D (executionContext)
 
 Object .assign (Object .setPrototypeOf (TriangleSet2D .prototype, X3DGeometryNode .prototype),
 {
-   constructor: TriangleSet2D,
    build ()
    {
       const

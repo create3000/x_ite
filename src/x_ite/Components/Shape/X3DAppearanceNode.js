@@ -62,7 +62,6 @@ function X3DAppearanceNode (executionContext)
 
 Object .assign (Object .setPrototypeOf (X3DAppearanceNode .prototype, X3DNode .prototype),
 {
-   constructor: X3DAppearanceNode,
    setTransparent (value)
    {
       if (value !== this ._transparent .getValue ())

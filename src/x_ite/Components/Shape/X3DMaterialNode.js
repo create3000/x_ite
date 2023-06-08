@@ -67,7 +67,6 @@ function X3DMaterialNode (executionContext)
 
 Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanceChildNode .prototype),
 {
-   constructor: X3DMaterialNode,
    initialize ()
    {
       X3DAppearanceChildNode .prototype .initialize .call (this);

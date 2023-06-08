@@ -85,7 +85,6 @@ function HAnimHumanoid (executionContext)
 Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .prototype),
    X3DBoundedObject .prototype,
 {
-   constructor: HAnimHumanoid,
    initialize ()
    {
       X3DChildNode     .prototype .initialize .call (this);

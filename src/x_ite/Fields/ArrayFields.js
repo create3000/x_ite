@@ -89,7 +89,6 @@ function MFNode (... args)
 
 Object .assign (Object .setPrototypeOf (MFNode .prototype, X3DObjectArrayField .prototype),
 {
-   constructor: MFNode,
    [_cloneCount]: 0,
    getSingleType ()
    {
@@ -390,7 +389,6 @@ function MFString (... args)
 
 Object .assign (Object .setPrototypeOf (MFString .prototype, X3DObjectArrayField .prototype),
 {
-   constructor: MFString,
    getSingleType ()
    {
       return SFString;
@@ -444,7 +442,6 @@ function MFImage (... args)
 
 Object .assign (Object .setPrototypeOf (MFImage .prototype, X3DObjectArrayField .prototype),
 {
-   constructor: MFImage,
    getSingleType ()
    {
       return SFImage;
@@ -472,7 +469,6 @@ function TypedArrayTemplate (TypeName, SingleType, ValueType, ArrayType, Compone
 
    Object .assign (Object .setPrototypeOf (ArrayField .prototype, X3DTypedArrayField .prototype),
    {
-      constructor: ArrayField,
       getSingleType ()
       {
          return SingleType;

@@ -140,7 +140,6 @@ function X3DObjectArrayField (value)
 
 Object .assign (Object .setPrototypeOf (X3DObjectArrayField .prototype, X3DArrayField .prototype),
 {
-   constructor: X3DObjectArrayField,
    [_target]: null,
    [_proxy]: null,
    *[Symbol .iterator] ()

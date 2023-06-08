@@ -61,7 +61,6 @@ function BindableList (executionContext, defaultNode)
 
 Object .assign (Object .setPrototypeOf (BindableList .prototype, X3DBaseNode .prototype),
 {
-   constructor: BindableList,
    get ()
    {
       return this .nodes;

@@ -69,7 +69,6 @@ function BallJoint (executionContext)
 
 Object .assign (Object .setPrototypeOf (BallJoint .prototype, X3DRigidJointNode .prototype),
 {
-   constructor: BallJoint,
    initialize ()
    {
       X3DRigidJointNode .prototype .initialize .call (this);

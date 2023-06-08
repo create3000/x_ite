@@ -63,7 +63,6 @@ function X3DSoundProcessingNode (executionContext)
 Object .assign (Object .setPrototypeOf (X3DSoundProcessingNode .prototype, X3DChildNode .prototype),
    X3DTimeDependentNode .prototype,
 {
-   constructor: X3DSoundProcessingNode,
    initialize ()
    {
       X3DChildNode         .prototype .initialize .call (this);

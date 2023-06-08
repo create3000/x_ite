@@ -61,7 +61,6 @@ function X3DRoutingContext ()
 
 Object .assign (X3DRoutingContext .prototype,
 {
-   constructor: X3DRoutingContext,
    initialize () { },
    addTaintedField (field, event)
    {

@@ -65,7 +65,6 @@ function GeoCoordinate (executionContext)
 Object .assign (Object .setPrototypeOf (GeoCoordinate .prototype, X3DCoordinateNode .prototype),
    X3DGeospatialObject .prototype,
 {
-   constructor: GeoCoordinate,
    initialize ()
    {
       X3DCoordinateNode   .prototype .initialize .call (this);

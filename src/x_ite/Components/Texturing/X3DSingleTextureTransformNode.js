@@ -60,7 +60,6 @@ function X3DSingleTextureTransformNode (executionContext)
 
 Object .assign (Object .setPrototypeOf (X3DSingleTextureTransformNode .prototype, X3DTextureTransformNode .prototype),
 {
-   constructor: X3DSingleTextureTransformNode,
    getCount ()
    {
       return 1;

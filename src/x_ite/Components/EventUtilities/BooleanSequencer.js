@@ -60,7 +60,6 @@ function BooleanSequencer (executionContext)
 
 Object .assign (Object .setPrototypeOf (BooleanSequencer .prototype, X3DSequencerNode .prototype),
 {
-   constructor: BooleanSequencer,
    initialize ()
    {
       X3DSequencerNode .prototype .initialize .call (this);

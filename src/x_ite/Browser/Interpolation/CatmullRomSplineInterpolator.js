@@ -56,7 +56,6 @@ function CatmullRomSplineInterpolator ()
 
 Object .assign (CatmullRomSplineInterpolator .prototype,
 {
-   constructor: CatmullRomSplineInterpolator,
    generate: (function ()
    {
       const

@@ -54,7 +54,6 @@ function SFBool (value)
 
 Object .assign (Object .setPrototypeOf (SFBool .prototype, X3DField .prototype),
 {
-   constructor: SFBool,
    copy ()
    {
       return new SFBool (this .getValue ());

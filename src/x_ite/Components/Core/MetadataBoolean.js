@@ -63,7 +63,6 @@ function MetadataBoolean (executionContext)
 Object .assign (Object .setPrototypeOf (MetadataBoolean .prototype, X3DNode .prototype),
    X3DMetadataObject .prototype,
 {
-   constructor: MetadataBoolean,
    initialize ()
    {
       X3DNode           .prototype .initialize .call (this);

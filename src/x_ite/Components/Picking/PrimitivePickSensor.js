@@ -67,7 +67,6 @@ function PrimitivePickSensor (executionContext)
 
 Object .assign (Object .setPrototypeOf (PrimitivePickSensor .prototype, X3DPickSensorNode .prototype),
 {
-   constructor: PrimitivePickSensor,
    initialize ()
    {
       X3DPickSensorNode .prototype .initialize .call (this);

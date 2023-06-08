@@ -53,10 +53,7 @@ function ProtoDeclarationArray (values = [ ])
    return X3DInfoArray .call (this, Array .from (values, value => [value .name, value]), X3DProtoDeclaration);
 }
 
-Object .assign (Object .setPrototypeOf (ProtoDeclarationArray .prototype, X3DInfoArray .prototype),
-{
-   constructor: ProtoDeclarationArray,
-});
+Object .setPrototypeOf (ProtoDeclarationArray .prototype, X3DInfoArray .prototype);
 
 for (const key of Reflect .ownKeys (ProtoDeclarationArray .prototype))
    Object .defineProperty (ProtoDeclarationArray .prototype, key, { enumerable: false });

@@ -62,7 +62,6 @@ function NormalInterpolator (executionContext)
 
 Object .assign (Object .setPrototypeOf (NormalInterpolator .prototype, X3DInterpolatorNode .prototype),
 {
-   constructor: NormalInterpolator,
    initialize ()
    {
       X3DInterpolatorNode .prototype .initialize .call (this);

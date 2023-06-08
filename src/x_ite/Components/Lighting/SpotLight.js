@@ -91,7 +91,6 @@ function SpotLightContainer ()
 
 Object .assign (SpotLightContainer .prototype,
 {
-   constructor: SpotLightContainer,
    set (lightNode, groupNode, modelViewMatrix)
    {
       const shadowMapSize = lightNode .getShadowMapSize ();
@@ -277,7 +276,6 @@ function SpotLight (executionContext)
 
 Object .assign (Object .setPrototypeOf (SpotLight .prototype, X3DLightNode .prototype),
 {
-   constructor: SpotLight,
    getAttenuation ()
    {
       return this ._attenuation .getValue ();

@@ -76,7 +76,6 @@ function OrthoViewpoint (executionContext)
 
 Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, X3DViewpointNode .prototype),
 {
-   constructor: OrthoViewpoint,
    initialize ()
    {
       X3DViewpointNode .prototype .initialize .call (this);

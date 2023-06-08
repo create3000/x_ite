@@ -70,7 +70,6 @@ function GeoTransform (executionContext)
 Object .assign (Object .setPrototypeOf (GeoTransform .prototype, X3DTransformMatrix3DNode .prototype),
    X3DGeospatialObject .prototype,
 {
-   constructor: GeoTransform,
    initialize ()
    {
       X3DTransformMatrix3DNode .prototype .initialize .call (this);

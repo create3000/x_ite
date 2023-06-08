@@ -58,7 +58,6 @@ function X3DInterpolatorNode (executionContext)
 
 Object .assign (Object .setPrototypeOf (X3DInterpolatorNode .prototype, X3DChildNode .prototype),
 {
-   constructor: X3DInterpolatorNode,
    setup ()
    {
       // If an X3DInterpolatorNode value_changed outputOnly field is read before it receives any inputs,

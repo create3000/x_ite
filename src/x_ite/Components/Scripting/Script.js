@@ -88,7 +88,6 @@ function Script (executionContext)
 
 Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .prototype),
 {
-   constructor: Script,
    initialize ()
    {
       X3DScriptNode .prototype .initialize .call (this);

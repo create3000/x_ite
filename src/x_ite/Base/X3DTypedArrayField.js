@@ -186,7 +186,6 @@ function X3DTypedArrayField (args)
 
 Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayField .prototype),
 {
-   constructor: X3DTypedArrayField,
    [_target]: null,
    [_tmp]: null,
    [_length]: 0,

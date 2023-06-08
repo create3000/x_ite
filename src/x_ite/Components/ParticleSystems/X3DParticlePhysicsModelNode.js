@@ -57,7 +57,6 @@ function X3DParticlePhysicsModelNode (executionContext)
 
 Object .assign (Object .setPrototypeOf (X3DParticlePhysicsModelNode .prototype, X3DNode .prototype),
 {
-   constructor: X3DParticlePhysicsModelNode,
    addForce ()
    { },
 });

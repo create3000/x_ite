@@ -61,7 +61,6 @@ function PositionChaser2D (executionContext)
 
 Object .assign (Object .setPrototypeOf (PositionChaser2D .prototype, X3DChaserNode .prototype),
 {
-   constructor: PositionChaser2D,
    getVector ()
    {
       return new Vector2 (0, 0);

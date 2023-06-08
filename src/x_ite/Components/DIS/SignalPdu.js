@@ -63,7 +63,6 @@ function SignalPdu (executionContext)
 Object .assign (Object .setPrototypeOf (SignalPdu .prototype, X3DSensorNode .prototype),
    X3DBoundedObject .prototype,
 {
-   constructor: SignalPdu,
    initialize ()
    {
       X3DSensorNode    .prototype .initialize .call (this);

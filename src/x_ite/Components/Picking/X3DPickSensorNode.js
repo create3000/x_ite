@@ -80,7 +80,6 @@ function X3DPickSensorNode (executionContext)
 
 Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, X3DSensorNode .prototype),
 {
-   constructor: X3DPickSensorNode,
    initialize ()
    {
       this .getLive () .addInterest ("set_live__", this);

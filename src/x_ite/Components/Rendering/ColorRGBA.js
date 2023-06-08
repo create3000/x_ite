@@ -62,7 +62,6 @@ function ColorRGBA (executionContext)
 
 Object .assign (Object .setPrototypeOf (ColorRGBA .prototype, X3DColorNode .prototype),
 {
-   constructor: ColorRGBA,
    initialize ()
    {
       X3DColorNode .prototype .initialize .call (this);

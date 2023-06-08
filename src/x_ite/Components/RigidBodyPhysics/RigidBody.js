@@ -89,7 +89,6 @@ function RigidBody (executionContext)
 
 Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype),
 {
-   constructor: RigidBody,
    initialize ()
    {
       X3DNode .prototype .initialize .call (this);

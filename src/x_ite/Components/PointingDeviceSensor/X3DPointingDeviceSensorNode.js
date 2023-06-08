@@ -58,7 +58,6 @@ function X3DPointingDeviceSensorNode (executionContext)
 
 Object .assign (Object .setPrototypeOf (X3DPointingDeviceSensorNode .prototype, X3DSensorNode .prototype),
 {
-   constructor: X3DPointingDeviceSensorNode,
    initialize ()
    {
       X3DSensorNode .prototype .initialize .call (this);

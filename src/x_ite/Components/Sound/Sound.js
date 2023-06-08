@@ -78,7 +78,6 @@ function Sound (executionContext)
 
 Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototype),
 {
-   constructor: Sound,
    initialize ()
    {
       X3DSoundNode .prototype .initialize .call (this);

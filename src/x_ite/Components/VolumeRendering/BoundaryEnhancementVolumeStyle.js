@@ -60,7 +60,6 @@ function BoundaryEnhancementVolumeStyle (executionContext)
 
 Object .assign (Object .setPrototypeOf (BoundaryEnhancementVolumeStyle .prototype, X3DComposableVolumeRenderStyleNode .prototype),
 {
-   constructor: BoundaryEnhancementVolumeStyle,
    addShaderFields (shaderNode)
    {
       if (! this ._enabled .getValue ())

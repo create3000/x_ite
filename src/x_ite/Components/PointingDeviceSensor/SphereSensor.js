@@ -67,7 +67,6 @@ function SphereSensor (executionContext)
 
 Object .assign (Object .setPrototypeOf (SphereSensor .prototype, X3DDragSensorNode .prototype),
 {
-   constructor: SphereSensor,
    initialize ()
    {
       X3DDragSensorNode .prototype .initialize .call (this);

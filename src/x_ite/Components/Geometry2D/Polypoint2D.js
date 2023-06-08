@@ -62,7 +62,6 @@ function Polypoint2D (executionContext)
 
 Object .assign (Object .setPrototypeOf (Polypoint2D .prototype, X3DPointGeometryNode .prototype),
 {
-   constructor: Polypoint2D,
    build ()
    {
       const

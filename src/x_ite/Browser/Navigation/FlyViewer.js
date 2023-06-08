@@ -58,7 +58,6 @@ function FlyViewer (executionContext, navigationInfo)
 
 Object .assign (Object .setPrototypeOf (FlyViewer .prototype, X3DFlyViewer .prototype),
 {
-   constructor: FlyViewer,
    addCollision ()
    {
       this .getBrowser () .addCollision (this);

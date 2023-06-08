@@ -60,7 +60,6 @@ function Matrix4VertexAttribute (executionContext)
 
 Object .assign (Object .setPrototypeOf (Matrix4VertexAttribute .prototype, X3DVertexAttributeNode .prototype),
 {
-   constructor: Matrix4VertexAttribute,
    initialize ()
    {
       X3DVertexAttributeNode .prototype .initialize .call (this);

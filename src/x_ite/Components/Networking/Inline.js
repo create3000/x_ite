@@ -77,7 +77,6 @@ Object .assign (Object .setPrototypeOf (Inline .prototype, X3DChildNode .prototy
    X3DUrlObject .prototype,
    X3DBoundedObject .prototype,
 {
-   constructor: Inline,
    initialize ()
    {
       X3DChildNode     .prototype .initialize .call (this);

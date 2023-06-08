@@ -61,7 +61,6 @@ function CoordinateInterpolator2D (executionContext)
 
 Object .assign (Object .setPrototypeOf (CoordinateInterpolator2D .prototype, X3DInterpolatorNode .prototype),
 {
-   constructor: CoordinateInterpolator2D,
    set_keyValue__ () { },
    interpolate (index0, index1, weight)
    {

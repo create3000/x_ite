@@ -55,10 +55,7 @@ function X3DLayoutNode (executionContext)
    this .addType (X3DConstants .X3DLayoutNode);
 }
 
-Object .assign (Object .setPrototypeOf (X3DLayoutNode .prototype, X3DChildNode .prototype),
-{
-   constructor: X3DLayoutNode,
-});
+Object .setPrototypeOf (X3DLayoutNode .prototype, X3DChildNode .prototype);
 
 Object .defineProperties (X3DLayoutNode,
 {

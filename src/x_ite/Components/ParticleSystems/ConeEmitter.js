@@ -87,7 +87,6 @@ function ConeEmitter (executionContext)
 
 Object .assign (Object .setPrototypeOf (ConeEmitter .prototype, X3DParticleEmitterNode .prototype),
 {
-   constructor: ConeEmitter,
    initialize ()
    {
       X3DParticleEmitterNode .prototype .initialize .call (this);

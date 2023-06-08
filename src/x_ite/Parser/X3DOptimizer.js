@@ -53,7 +53,6 @@ function X3DOptimizer () { }
 
 Object .assign (X3DOptimizer .prototype,
 {
-   constructor: X3DOptimizer,
    removeGroups: false,
    removeEmptyGroups: false,
    combineGroupingNodes: false,

@@ -70,7 +70,6 @@ function X3DPrototypeInstance (executionContext, protoNode)
 
 Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode .prototype),
 {
-   constructor: X3DPrototypeInstance,
    create (executionContext)
    {
       return new X3DPrototypeInstance (executionContext, this [_protoNode]);

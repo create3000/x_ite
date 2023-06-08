@@ -63,7 +63,6 @@ function CADPart (executionContext)
 Object .assign (Object .setPrototypeOf (CADPart .prototype, X3DTransformNode .prototype),
    //X3DProductStructureChildNode .prototype,
 {
-   constructor: CADPart,
 });
 
 Object .defineProperties (CADPart,

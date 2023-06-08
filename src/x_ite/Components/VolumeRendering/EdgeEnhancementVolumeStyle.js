@@ -61,7 +61,6 @@ function EdgeEnhancementVolumeStyle (executionContext)
 
 Object .assign (Object .setPrototypeOf (EdgeEnhancementVolumeStyle .prototype, X3DComposableVolumeRenderStyleNode .prototype),
 {
-   constructor: EdgeEnhancementVolumeStyle,
    initialize ()
    {
       X3DComposableVolumeRenderStyleNode .prototype .initialize .call (this);

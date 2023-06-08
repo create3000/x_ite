@@ -66,7 +66,6 @@ function CoordinateChaser (executionContext)
 Object .assign (Object .setPrototypeOf (CoordinateChaser .prototype, X3DChaserNode .prototype),
    X3DArrayChaserObject .prototype,
 {
-   constructor: CoordinateChaser,
    getVector ()
    {
       return new Vector3 (0, 0, 0);

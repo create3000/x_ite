@@ -62,7 +62,6 @@ function PixelTexture3D (executionContext)
 
 Object .assign (Object .setPrototypeOf (PixelTexture3D .prototype, X3DTexture3DNode .prototype),
 {
-   constructor: PixelTexture3D,
    initialize ()
    {
       X3DTexture3DNode .prototype .initialize .call (this);

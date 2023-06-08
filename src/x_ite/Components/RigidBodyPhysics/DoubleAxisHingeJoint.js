@@ -79,7 +79,6 @@ function DoubleAxisHingeJoint (executionContext)
 
 Object .assign (Object .setPrototypeOf (DoubleAxisHingeJoint .prototype, X3DRigidJointNode .prototype),
 {
-   constructor: DoubleAxisHingeJoint,
    initialize ()
    {
       X3DRigidJointNode .prototype .initialize .call (this);

@@ -66,7 +66,6 @@ function LineSet (executionContext)
 
 Object .assign (Object .setPrototypeOf (LineSet .prototype, X3DLineGeometryNode .prototype),
 {
-   constructor: LineSet,
    initialize ()
    {
       X3DLineGeometryNode .prototype .initialize .call (this);

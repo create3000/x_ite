@@ -61,7 +61,6 @@ function TextureBackground (executionContext)
 
 Object .assign (Object .setPrototypeOf (TextureBackground .prototype, X3DBackgroundNode .prototype),
 {
-   constructor: TextureBackground,
    initialize ()
    {
       X3DBackgroundNode .prototype .initialize .call (this);

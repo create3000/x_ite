@@ -63,7 +63,6 @@ function EnvironmentLightContainer ()
 
 Object .assign (EnvironmentLightContainer .prototype,
 {
-   constructor: EnvironmentLightContainer,
    set (lightNode, groupNode, modelViewMatrix)
    {
    },
@@ -101,7 +100,6 @@ function EnvironmentLight (executionContext)
 
 Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNode .prototype),
 {
-   constructor: EnvironmentLight,
    getLights ()
    {
       return EnvironmentLights;

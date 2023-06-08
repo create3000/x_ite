@@ -60,10 +60,7 @@ function TouchSensor (executionContext)
    this ._hitPoint_changed .setUnit ("length");
 }
 
-Object .assign (Object .setPrototypeOf (TouchSensor .prototype, X3DTouchSensorNode .prototype),
-{
-   constructor: TouchSensor,
-});
+Object .setPrototypeOf (TouchSensor .prototype, X3DTouchSensorNode .prototype);
 
 Object .defineProperties (TouchSensor,
 {

@@ -73,7 +73,6 @@ function SliderJoint (executionContext)
 
 Object .assign (Object .setPrototypeOf (SliderJoint .prototype, X3DRigidJointNode .prototype),
 {
-   constructor: SliderJoint,
    initialize ()
    {
       X3DRigidJointNode .prototype .initialize .call (this);

@@ -59,7 +59,6 @@ function X3DNode (executionContext)
 
 Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototype),
 {
-   constructor: X3DNode,
    getComponentName ()
    {
       return this .constructor .componentName;

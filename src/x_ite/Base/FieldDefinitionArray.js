@@ -53,10 +53,7 @@ function FieldDefinitionArray (values = [ ])
    return X3DInfoArray .call (this, Array .from (values, value => [value .name, value]), X3DFieldDefinition);
 }
 
-Object .assign (Object .setPrototypeOf (FieldDefinitionArray .prototype, X3DInfoArray .prototype),
-{
-   constructor: FieldDefinitionArray,
-});
+Object .setPrototypeOf (FieldDefinitionArray .prototype, X3DInfoArray .prototype);
 
 for (const key of Reflect .ownKeys (FieldDefinitionArray .prototype))
    Object .defineProperty (FieldDefinitionArray .prototype, key, { enumerable: false });

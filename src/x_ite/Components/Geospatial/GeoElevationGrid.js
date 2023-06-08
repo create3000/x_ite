@@ -74,7 +74,6 @@ function GeoElevationGrid (executionContext)
 Object .assign (Object .setPrototypeOf (GeoElevationGrid .prototype, X3DGeometryNode .prototype),
    X3DGeospatialObject .prototype,
 {
-   constructor: GeoElevationGrid,
    initialize ()
    {
       X3DGeometryNode     .prototype .initialize .call (this);

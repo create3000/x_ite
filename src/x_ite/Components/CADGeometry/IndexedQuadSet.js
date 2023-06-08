@@ -60,7 +60,6 @@ function IndexedQuadSet (executionContext)
 
 Object .assign (Object .setPrototypeOf (IndexedQuadSet .prototype, X3DComposedGeometryNode .prototype),
 {
-   constructor: IndexedQuadSet,
    initialize ()
    {
       X3DComposedGeometryNode .prototype .initialize .call (this);

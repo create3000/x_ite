@@ -80,7 +80,6 @@ function XMLParser (scene)
 
 Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototype),
 {
-   constructor: XMLParser,
    getEncoding ()
    {
       return "XML";

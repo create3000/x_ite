@@ -61,7 +61,6 @@ function Circle2DOptions (executionContext)
 
 Object .assign (Object .setPrototypeOf (Circle2DOptions .prototype, X3DBaseNode .prototype),
 {
-   constructor: Circle2DOptions,
    initialize ()
    {
       this .addInterest ("build", this);

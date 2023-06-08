@@ -59,7 +59,6 @@ function X3DCoordinateNode (executionContext)
 
 Object .assign (Object .setPrototypeOf (X3DCoordinateNode .prototype, X3DGeometricPropertyNode .prototype),
 {
-   constructor: X3DCoordinateNode,
    initialize ()
    {
       X3DGeometricPropertyNode .prototype .initialize .call (this);

@@ -70,7 +70,6 @@ function HAnimJoint (executionContext)
 
 Object .assign (Object .setPrototypeOf (HAnimJoint .prototype, X3DTransformNode .prototype),
 {
-   constructor: HAnimJoint,
    initialize ()
    {
       X3DTransformNode .prototype .initialize .call (this);

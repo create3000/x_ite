@@ -62,7 +62,6 @@ function Circle2D (executionContext)
 
 Object .assign (Object .setPrototypeOf (Circle2D .prototype, X3DLineGeometryNode .prototype),
 {
-   constructor: Circle2D,
    set_live__ ()
    {
       X3DLineGeometryNode .prototype .set_live__ .call (this);

@@ -68,7 +68,6 @@ function X3DUrlObject (executionContext)
 
 Object .assign (X3DUrlObject .prototype,
 {
-   constructor: X3DUrlObject,
    initialize ()
    {
       this .getLive () .addInterest ("set_live__", this);

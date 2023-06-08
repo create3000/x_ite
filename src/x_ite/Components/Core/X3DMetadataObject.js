@@ -54,7 +54,6 @@ function X3DMetadataObject (executionContext)
 
 Object .assign (X3DMetadataObject .prototype,
 {
-   constructor: X3DMetadataObject,
    initialize () { },
    dispose () { },
 });

@@ -59,7 +59,6 @@ function VolumeMaterial (executionContext, volumeDataNode)
 
 Object .assign (Object .setPrototypeOf (VolumeMaterial .prototype, UnlitMaterial .prototype),
 {
-   constructor: VolumeMaterial,
    getVolumeShaders ()
    {
       return this .volumeShaderNodes;

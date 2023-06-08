@@ -78,7 +78,6 @@ function GeoViewpoint (executionContext)
 Object .assign (Object .setPrototypeOf (GeoViewpoint .prototype, X3DViewpointNode .prototype),
    X3DGeospatialObject .prototype,
 {
-   constructor: GeoViewpoint,
    initialize ()
    {
       X3DViewpointNode    .prototype .initialize .call (this);

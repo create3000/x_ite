@@ -63,7 +63,6 @@ function X3DFollowerNode (executionContext)
 
 Object .assign (Object .setPrototypeOf (X3DFollowerNode .prototype, X3DChildNode .prototype),
 {
-   constructor: X3DFollowerNode,
    initialize ()
    {
       X3DChildNode .prototype .initialize .call (this);

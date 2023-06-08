@@ -65,7 +65,6 @@ function PickableGroup (executionContext)
 Object .assign (Object .setPrototypeOf (PickableGroup .prototype, X3DGroupingNode .prototype),
    X3DPickableObject .prototype,
 {
-   constructor: PickableGroup,
    initialize ()
    {
       X3DGroupingNode   .prototype .initialize .call (this);

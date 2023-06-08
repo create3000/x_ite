@@ -54,7 +54,6 @@ function SFDouble (value)
 
 Object .assign (Object .setPrototypeOf (SFDouble .prototype, X3DField .prototype),
 {
-   constructor: SFDouble,
    copy ()
    {
       return new SFDouble (this .getValue ());

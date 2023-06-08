@@ -66,7 +66,6 @@ function CoordinateDamper (executionContext)
 Object .assign (Object .setPrototypeOf (CoordinateDamper .prototype, X3DDamperNode .prototype),
    X3DArrayFollowerObject .prototype,
 {
-   constructor: CoordinateDamper,
    getVector ()
    {
       return new Vector3 (0, 0, 0);

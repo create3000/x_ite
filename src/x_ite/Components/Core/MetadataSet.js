@@ -63,7 +63,6 @@ function MetadataSet (executionContext)
 Object .assign (Object .setPrototypeOf (MetadataSet .prototype, X3DNode .prototype),
    X3DMetadataObject .prototype,
 {
-   constructor: MetadataSet,
    initialize ()
    {
       X3DNode           .prototype .initialize .call (this);

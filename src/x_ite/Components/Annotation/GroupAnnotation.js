@@ -63,7 +63,6 @@ function GroupAnnotation (executionContext)
 Object .assign (Object .setPrototypeOf (GroupAnnotation .prototype, X3DGroupingNode .prototype),
    X3DAnnotationNode .prototype,
 {
-   constructor: GroupAnnotation,
    initialize ()
    {
       X3DGroupingNode   .prototype .initialize .call (this);

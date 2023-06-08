@@ -65,7 +65,6 @@ function X3DTexture2DNode (executionContext)
 
 Object .assign (Object .setPrototypeOf (X3DTexture2DNode .prototype, X3DSingleTextureNode .prototype),
 {
-   constructor: X3DTexture2DNode,
    initialize ()
    {
       X3DSingleTextureNode .prototype .initialize .call (this);

@@ -63,7 +63,6 @@ function ComponentInfo (name, level, title, providerUrl, external = false, depen
 
 Object .assign (Object .setPrototypeOf (ComponentInfo .prototype, X3DObject .prototype),
 {
-   constructor: ComponentInfo,
    toVRMLStream (generator)
    {
       generator .string += generator .Indent ();

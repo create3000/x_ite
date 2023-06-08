@@ -57,7 +57,6 @@ function X3DKeyDeviceSensorNode (executionContext)
 
 Object .assign (Object .setPrototypeOf (X3DKeyDeviceSensorNode .prototype, X3DSensorNode .prototype),
 {
-   constructor: X3DKeyDeviceSensorNode,
    initialize ()
    {
       X3DSensorNode .prototype .initialize .call (this);

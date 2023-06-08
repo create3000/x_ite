@@ -67,7 +67,6 @@ function LayerSet (executionContext)
 
 Object .assign (Object .setPrototypeOf (LayerSet .prototype, X3DNode .prototype),
 {
-   constructor: LayerSet,
    initialize ()
    {
       X3DNode .prototype .initialize .call (this);

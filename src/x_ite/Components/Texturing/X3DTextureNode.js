@@ -62,7 +62,6 @@ function X3DTextureNode (executionContext)
 
 Object .assign (Object .setPrototypeOf (X3DTextureNode .prototype, X3DAppearanceChildNode .prototype),
 {
-   constructor: X3DTextureNode,
    setTransparent (value)
    {
       if (value !== this ._transparent .getValue ())

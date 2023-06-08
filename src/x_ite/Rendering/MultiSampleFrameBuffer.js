@@ -92,7 +92,6 @@ function MultiSampleFrameBuffer (browser, width, height, samples)
 
 Object .assign (MultiSampleFrameBuffer .prototype,
 {
-   constructor: MultiSampleFrameBuffer,
    getWidth ()
    {
       return this .width;

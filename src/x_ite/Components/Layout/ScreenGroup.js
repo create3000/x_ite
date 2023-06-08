@@ -64,7 +64,6 @@ function ScreenGroup (executionContext)
 
 Object .assign (Object .setPrototypeOf (ScreenGroup .prototype, X3DGroupingNode .prototype),
 {
-   constructor: ScreenGroup,
    getBBox (bbox, shadows)
    {
       return this .getSubBBox (bbox, shadows) .multRight (this .matrix);

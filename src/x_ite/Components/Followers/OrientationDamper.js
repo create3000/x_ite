@@ -71,7 +71,6 @@ function OrientationDamper (executionContext)
 
 Object .assign (Object .setPrototypeOf (OrientationDamper .prototype, X3DDamperNode .prototype),
 {
-   constructor: OrientationDamper,
    getVector ()
    {
       return new Rotation4 ();

@@ -65,7 +65,6 @@ function Disk2D (executionContext)
 
 Object .assign (Object .setPrototypeOf (Disk2D .prototype, X3DGeometryNode .prototype),
 {
-   constructor: Disk2D,
    initialize ()
    {
       X3DGeometryNode .prototype .initialize .call (this);

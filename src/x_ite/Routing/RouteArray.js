@@ -53,10 +53,7 @@ function RouteArray (values = [ ])
    return X3DInfoArray .call (this, Array .from (values, value => [value .getId (), value]), X3DRoute);
 }
 
-Object .assign (Object .setPrototypeOf (RouteArray .prototype, X3DInfoArray .prototype),
-{
-   constructor: RouteArray,
-});
+Object .setPrototypeOf (RouteArray .prototype, X3DInfoArray .prototype);
 
 for (const key of Reflect .ownKeys (RouteArray .prototype))
    Object .defineProperty (RouteArray .prototype, key, { enumerable: false });

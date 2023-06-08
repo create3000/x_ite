@@ -74,7 +74,6 @@ function X3DExternProtoDeclaration (executionContext, url)
 Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3DProtoDeclarationNode .prototype),
    X3DUrlObject .prototype,
 {
-   constructor: X3DExternProtoDeclaration,
    initialize ()
    {
       X3DProtoDeclarationNode .prototype .initialize .call (this);

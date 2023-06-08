@@ -72,7 +72,6 @@ function TwoSidedMaterial (executionContext)
 
 Object .assign (Object .setPrototypeOf (TwoSidedMaterial .prototype, X3DMaterialNode .prototype),
 {
-   constructor: TwoSidedMaterial,
    initialize ()
    {
       X3DMaterialNode . prototype .initialize .call (this);

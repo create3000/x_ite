@@ -61,7 +61,6 @@ function ScalarChaser (executionContext)
 
 Object .assign (Object .setPrototypeOf (ScalarChaser .prototype, X3DChaserNode .prototype),
 {
-   constructor: ScalarChaser,
    getVector ()
    {
       return 0;

@@ -70,7 +70,6 @@ function Notification (executionContext)
 
 Object .assign (Object .setPrototypeOf (Notification .prototype, X3DBaseNode .prototype),
 {
-   constructor: Notification,
    initialize ()
    {
       X3DBaseNode .prototype .initialize .call (this);

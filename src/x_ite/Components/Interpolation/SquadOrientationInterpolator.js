@@ -66,7 +66,6 @@ function SquadOrientationInterpolator (executionContext)
 
 Object .assign (Object .setPrototypeOf (SquadOrientationInterpolator .prototype, X3DInterpolatorNode .prototype),
 {
-   constructor: SquadOrientationInterpolator,
    initialize ()
    {
       X3DInterpolatorNode .prototype .initialize .call (this);

@@ -60,7 +60,6 @@ function BooleanFilter (executionContext)
 
 Object .assign (Object .setPrototypeOf (BooleanFilter .prototype, X3DChildNode .prototype),
 {
-   constructor: BooleanFilter,
    initialize ()
    {
       X3DChildNode .prototype .initialize .call (this);

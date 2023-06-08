@@ -54,7 +54,6 @@ function X3DParser (scene)
 
 Object .assign (X3DParser .prototype,
 {
-   constructor: X3DParser,
    getBrowser ()
    {
       return this .scene .getBrowser ();

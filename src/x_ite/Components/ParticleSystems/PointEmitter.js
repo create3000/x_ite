@@ -80,7 +80,6 @@ function PointEmitter (executionContext)
 
 Object .assign (Object .setPrototypeOf (PointEmitter .prototype, X3DParticleEmitterNode .prototype),
 {
-   constructor: PointEmitter,
    initialize ()
    {
       X3DParticleEmitterNode .prototype .initialize .call (this);

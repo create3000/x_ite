@@ -61,7 +61,6 @@ function CartoonVolumeStyle (executionContext)
 
 Object .assign (Object .setPrototypeOf (CartoonVolumeStyle .prototype, X3DComposableVolumeRenderStyleNode .prototype),
 {
-   constructor: CartoonVolumeStyle,
    initialize ()
    {
       X3DComposableVolumeRenderStyleNode .prototype .initialize .call (this);

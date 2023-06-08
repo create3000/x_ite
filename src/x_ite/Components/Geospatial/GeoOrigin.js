@@ -63,7 +63,6 @@ function GeoOrigin (executionContext)
 
 Object .assign (Object .setPrototypeOf (GeoOrigin .prototype, X3DNode .prototype),
 {
-   constructor: GeoOrigin,
    initialize ()
    {
       X3DNode .prototype .initialize .call (this);

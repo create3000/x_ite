@@ -67,7 +67,6 @@ function X3DBoundedObject (executionContext)
 
 Object .assign (X3DBoundedObject .prototype,
 {
-   constructor: X3DBoundedObject,
    initialize () { },
    getDefaultBBoxSize: (function ()
    {

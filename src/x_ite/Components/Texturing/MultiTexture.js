@@ -76,7 +76,6 @@ function MultiTexture (executionContext)
 
 Object .assign (Object .setPrototypeOf (MultiTexture .prototype, X3DTextureNode .prototype),
 {
-   constructor: MultiTexture,
    initialize ()
    {
       X3DTextureNode .prototype .initialize .call (this);

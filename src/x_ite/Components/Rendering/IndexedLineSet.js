@@ -66,7 +66,6 @@ function IndexedLineSet (executionContext)
 
 Object .assign (Object .setPrototypeOf (IndexedLineSet .prototype, X3DLineGeometryNode .prototype),
 {
-   constructor: IndexedLineSet,
    initialize ()
    {
       X3DLineGeometryNode .prototype .initialize .call (this);

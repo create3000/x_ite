@@ -60,7 +60,6 @@ function DependentRenderer (executionContext)
 Object .assign (Object .setPrototypeOf (DependentRenderer .prototype, X3DBaseNode .prototype),
    X3DRenderObject .prototype,
 {
-   constructor: DependentRenderer,
    initialize ()
    {
       X3DBaseNode     .prototype .initialize .call (this);

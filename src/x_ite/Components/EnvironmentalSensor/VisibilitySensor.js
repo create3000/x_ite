@@ -67,7 +67,6 @@ function VisibilitySensor (executionContext)
 
 Object .assign (Object .setPrototypeOf (VisibilitySensor .prototype, X3DEnvironmentalSensorNode .prototype),
 {
-   constructor: VisibilitySensor,
    initialize ()
    {
       X3DEnvironmentalSensorNode .prototype .initialize .call (this);

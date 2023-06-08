@@ -71,7 +71,6 @@ function CollidableShape (executionContext)
 
 Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyCollidableNode .prototype),
 {
-   constructor: CollidableShape,
    initialize ()
    {
       X3DNBodyCollidableNode .prototype .initialize .call (this);

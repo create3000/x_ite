@@ -97,7 +97,6 @@ function X3DFlyViewer (executionContext, navigationInfo)
 
 Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prototype),
 {
-   constructor: X3DFlyViewer,
    initialize ()
    {
       X3DViewer .prototype .initialize .call (this);

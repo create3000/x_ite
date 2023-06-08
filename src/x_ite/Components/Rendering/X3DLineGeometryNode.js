@@ -73,7 +73,6 @@ function X3DLineGeometryNode (executionContext)
 
 Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeometryNode .prototype),
 {
-   constructor: X3DLineGeometryNode,
    intersectsLine ()
    {
       return false;

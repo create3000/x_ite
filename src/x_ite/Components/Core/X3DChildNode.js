@@ -67,7 +67,6 @@ function X3DChildNode (executionContext)
 
 Object .assign (Object .setPrototypeOf (X3DChildNode .prototype, X3DNode .prototype),
 {
-   constructor: X3DChildNode,
    setCameraObject (value)
    {
       if (value !== this ._isCameraObject .getValue ())

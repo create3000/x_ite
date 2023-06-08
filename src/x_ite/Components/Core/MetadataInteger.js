@@ -63,7 +63,6 @@ function MetadataInteger (executionContext)
 Object .assign (Object .setPrototypeOf (MetadataInteger .prototype, X3DNode .prototype),
    X3DMetadataObject .prototype,
 {
-   constructor: MetadataInteger,
    initialize ()
    {
       X3DNode           .prototype .initialize .call (this);

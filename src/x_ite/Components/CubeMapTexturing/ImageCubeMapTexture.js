@@ -81,7 +81,6 @@ function ImageCubeMapTexture (executionContext)
 Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvironmentTextureNode .prototype),
    X3DUrlObject .prototype,
 {
-   constructor: ImageCubeMapTexture,
    initialize ()
    {
       X3DEnvironmentTextureNode .prototype .initialize .call (this);

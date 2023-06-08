@@ -66,7 +66,6 @@ function MultiTextureTransform (executionContext)
 
 Object .assign (Object .setPrototypeOf (MultiTextureTransform .prototype, X3DTextureTransformNode .prototype),
 {
-   constructor: MultiTextureTransform,
    initialize ()
    {
       X3DTextureTransformNode .prototype .initialize .call (this);

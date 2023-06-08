@@ -77,7 +77,6 @@ function NavigationInfo (executionContext)
 
 Object .assign (Object .setPrototypeOf (NavigationInfo .prototype, X3DBindableNode .prototype),
 {
-   constructor: NavigationInfo,
    initialize ()
    {
       X3DBindableNode .prototype .initialize .call (this);

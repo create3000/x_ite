@@ -54,7 +54,6 @@ function SFString (value)
 
 Object .assign (Object .setPrototypeOf (SFString .prototype, X3DField .prototype),
 {
-   constructor: SFString,
    *[Symbol .iterator] ()
    {
       yield* this .getValue ();

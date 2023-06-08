@@ -127,7 +127,6 @@ function X3DInfoArray (values, valueType)
 
 Object .assign (Object .setPrototypeOf (X3DInfoArray .prototype, X3DChildObject .prototype),
 {
-   constructor: X3DInfoArray,
    *[Symbol .iterator] ()
    {
       yield* this [_array];

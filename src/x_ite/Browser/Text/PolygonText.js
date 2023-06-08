@@ -64,7 +64,6 @@ function PolygonText (text, fontStyle)
 
 Object .assign (Object .setPrototypeOf (PolygonText .prototype, X3DTextGeometry .prototype),
 {
-   constructor: PolygonText,
    isTransparent ()
    {
       return false;

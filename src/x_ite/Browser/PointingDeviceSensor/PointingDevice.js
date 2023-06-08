@@ -62,7 +62,6 @@ function PointingDevice (executionContext)
 
 Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .prototype),
 {
-   constructor: PointingDevice,
    initialize ()
    {
       const element = this .getBrowser () .getSurface ();

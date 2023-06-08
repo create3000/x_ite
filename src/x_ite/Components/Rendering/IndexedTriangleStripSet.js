@@ -62,7 +62,6 @@ function IndexedTriangleStripSet (executionContext)
 
 Object .assign (Object .setPrototypeOf (IndexedTriangleStripSet .prototype, X3DComposedGeometryNode .prototype),
 {
-   constructor: IndexedTriangleStripSet,
    initialize ()
    {
       X3DComposedGeometryNode .prototype .initialize .call (this);

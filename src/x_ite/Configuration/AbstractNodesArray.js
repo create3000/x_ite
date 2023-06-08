@@ -55,7 +55,6 @@ function AbstractNodesArray (values = [ ])
 
 Object .assign (Object .setPrototypeOf (AbstractNodesArray .prototype, X3DInfoArray .prototype),
 {
-   constructor: AbstractNodesArray,
    add (typeName, AbstractNode)
    {
       X3DConstants .addNode (AbstractNode);

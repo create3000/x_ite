@@ -75,7 +75,6 @@ function NurbsOrientationInterpolator (executionContext)
 
 Object .assign (Object .setPrototypeOf (NurbsOrientationInterpolator .prototype, X3DChildNode .prototype),
 {
-   constructor: NurbsOrientationInterpolator,
    initialize ()
    {
       X3DChildNode .prototype .initialize .call (this);

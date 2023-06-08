@@ -94,7 +94,6 @@ function X3DViewpointNode (executionContext)
 
 Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindableNode .prototype),
 {
-   constructor: X3DViewpointNode,
    initialize ()
    {
       X3DBindableNode .prototype .initialize .call (this);

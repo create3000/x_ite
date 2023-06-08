@@ -54,7 +54,6 @@ function SFInt32 (value)
 
 Object .assign (Object .setPrototypeOf (SFInt32 .prototype, X3DField .prototype),
 {
-   constructor: SFInt32,
    copy ()
    {
       return new SFInt32 (this .getValue ());

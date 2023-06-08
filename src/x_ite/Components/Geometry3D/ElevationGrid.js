@@ -75,7 +75,6 @@ function ElevationGrid (executionContext)
 
 Object .assign (Object .setPrototypeOf (ElevationGrid .prototype, X3DGeometryNode .prototype),
 {
-   constructor: ElevationGrid,
    initialize ()
    {
       X3DGeometryNode .prototype .initialize .call (this);

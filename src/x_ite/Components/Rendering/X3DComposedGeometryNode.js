@@ -65,7 +65,6 @@ function X3DComposedGeometryNode (executionContext)
 
 Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, X3DGeometryNode .prototype),
 {
-   constructor: X3DComposedGeometryNode,
    initialize ()
    {
       X3DGeometryNode .prototype .initialize .call (this);

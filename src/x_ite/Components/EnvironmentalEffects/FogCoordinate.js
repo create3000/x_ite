@@ -62,7 +62,6 @@ function FogCoordinate (executionContext)
 
 Object .assign (Object .setPrototypeOf (FogCoordinate .prototype, X3DGeometricPropertyNode .prototype),
 {
-   constructor: FogCoordinate,
    initialize ()
    {
       X3DGeometricPropertyNode .prototype .initialize .call (this);

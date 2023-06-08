@@ -66,7 +66,6 @@ function Billboard (executionContext)
 
 Object .assign (Object .setPrototypeOf (Billboard .prototype, X3DGroupingNode .prototype),
 {
-   constructor: Billboard,
    getBBox (bbox, shadows)
    {
       return X3DGroupingNode .prototype .getBBox .call (this, bbox, shadows) .multRight (this .matrix);

@@ -71,7 +71,6 @@ function PointPickSensor (executionContext)
 
 Object .assign (Object .setPrototypeOf (PointPickSensor .prototype, X3DPickSensorNode .prototype),
 {
-   constructor: PointPickSensor,
    initialize ()
    {
       X3DPickSensorNode .prototype .initialize .call (this);

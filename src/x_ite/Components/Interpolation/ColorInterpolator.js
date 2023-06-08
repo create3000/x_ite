@@ -63,7 +63,6 @@ function ColorInterpolator (executionContext)
 
 Object .assign (Object .setPrototypeOf (ColorInterpolator .prototype, X3DInterpolatorNode .prototype),
 {
-   constructor: ColorInterpolator,
    initialize ()
    {
       X3DInterpolatorNode .prototype .initialize .call (this);

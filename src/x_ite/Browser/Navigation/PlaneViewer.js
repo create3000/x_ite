@@ -74,7 +74,6 @@ function PlaneViewer (executionContext, navigationInfo)
 
 Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, X3DViewer .prototype),
 {
-   constructor: PlaneViewer,
    initialize ()
    {
       X3DViewer .prototype .initialize .call (this);

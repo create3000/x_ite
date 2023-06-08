@@ -77,7 +77,6 @@ function ProximitySensor (executionContext)
 
 Object .assign (Object .setPrototypeOf (ProximitySensor .prototype, X3DEnvironmentalSensorNode .prototype),
 {
-   constructor: ProximitySensor,
    initialize ()
    {
       X3DEnvironmentalSensorNode .prototype .initialize .call (this);

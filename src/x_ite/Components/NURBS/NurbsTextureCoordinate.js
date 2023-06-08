@@ -63,7 +63,6 @@ function NurbsTextureCoordinate (executionContext)
 
 Object .assign (Object .setPrototypeOf (NurbsTextureCoordinate .prototype, X3DNode .prototype),
 {
-   constructor: NurbsTextureCoordinate,
    initialize ()
    {
       X3DNode .prototype .initialize .call (this);

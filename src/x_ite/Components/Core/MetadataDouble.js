@@ -63,7 +63,6 @@ function MetadataDouble (executionContext)
 Object .assign (Object .setPrototypeOf (MetadataDouble .prototype, X3DNode .prototype),
    X3DMetadataObject .prototype,
 {
-   constructor: MetadataDouble,
    initialize ()
    {
       X3DNode           .prototype .initialize .call (this);

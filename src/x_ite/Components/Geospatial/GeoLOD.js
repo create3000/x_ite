@@ -88,7 +88,6 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototy
    X3DBoundedObject .prototype,
    X3DGeospatialObject .prototype,
 {
-   constructor: GeoLOD,
    initialize ()
    {
       X3DChildNode        .prototype .initialize .call (this);

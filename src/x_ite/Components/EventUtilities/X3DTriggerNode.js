@@ -55,10 +55,7 @@ function X3DTriggerNode (executionContext)
    this .addType (X3DConstants .X3DTriggerNode);
 }
 
-Object .assign (Object .setPrototypeOf (X3DTriggerNode .prototype, X3DChildNode .prototype),
-{
-   constructor: X3DTriggerNode,
-});
+Object .setPrototypeOf (X3DTriggerNode .prototype, X3DChildNode .prototype);
 
 Object .defineProperties (X3DTriggerNode,
 {

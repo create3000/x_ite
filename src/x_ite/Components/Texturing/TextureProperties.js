@@ -68,7 +68,6 @@ function TextureProperties (executionContext)
 
 Object .assign (Object .setPrototypeOf (TextureProperties .prototype, X3DNode .prototype),
 {
-   constructor: TextureProperties,
    getBorderWidth ()
    {
       // https://stackoverflow.com/questions/27760277/webgl-border-color-shader?lq=1

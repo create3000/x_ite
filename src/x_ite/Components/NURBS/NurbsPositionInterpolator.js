@@ -73,7 +73,6 @@ function NurbsPositionInterpolator (executionContext)
 
 Object .assign (Object .setPrototypeOf (NurbsPositionInterpolator .prototype, X3DChildNode .prototype),
 {
-   constructor: NurbsPositionInterpolator,
    initialize ()
    {
       X3DChildNode .prototype .initialize .call (this);

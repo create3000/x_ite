@@ -65,7 +65,6 @@ function CollisionSensor (executionContext)
 
 Object .assign (Object .setPrototypeOf (CollisionSensor .prototype, X3DSensorNode .prototype),
 {
-   constructor: CollisionSensor,
    initialize ()
    {
       X3DSensorNode .prototype .initialize .call (this);

@@ -60,7 +60,6 @@ function RenderingProperties (executionContext)
 
 Object .assign (Object .setPrototypeOf (RenderingProperties .prototype, X3DBaseNode .prototype),
 {
-   constructor: RenderingProperties,
    initialize ()
    {
       X3DBaseNode .prototype .initialize .call (this);

@@ -60,7 +60,6 @@ function ProjectionVolumeStyle (executionContext)
 
 Object .assign (Object .setPrototypeOf (ProjectionVolumeStyle .prototype, X3DVolumeRenderStyleNode .prototype),
 {
-   constructor: ProjectionVolumeStyle,
    addShaderFields (shaderNode)
    {
       if (! this ._enabled .getValue ())

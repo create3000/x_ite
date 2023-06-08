@@ -74,7 +74,6 @@ function ExplosionEmitter (executionContext)
 
 Object .assign (Object .setPrototypeOf (ExplosionEmitter .prototype, X3DParticleEmitterNode .prototype),
 {
-   constructor: ExplosionEmitter,
    initialize ()
    {
       X3DParticleEmitterNode .prototype .initialize .call (this);

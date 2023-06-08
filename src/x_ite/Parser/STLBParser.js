@@ -62,7 +62,6 @@ function STLBParser (scene)
 
 Object .assign (Object .setPrototypeOf (STLBParser .prototype, X3DParser .prototype),
 {
-   constructor: STLBParser,
    getEncoding ()
    {
       return "ARRAY_BUFFER";

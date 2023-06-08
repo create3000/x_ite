@@ -62,7 +62,6 @@ function Polyline2D (executionContext)
 
 Object .assign (Object .setPrototypeOf (Polyline2D .prototype, X3DLineGeometryNode .prototype),
 {
-   constructor: Polyline2D,
    build ()
    {
       const

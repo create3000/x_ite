@@ -102,7 +102,6 @@ function X3DProgrammableShaderObject (executionContext)
 
 Object .assign (X3DProgrammableShaderObject .prototype,
 {
-   constructor: X3DProgrammableShaderObject,
    initialize ()
    {
       const browser = this .getBrowser ();

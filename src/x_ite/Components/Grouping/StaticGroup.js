@@ -80,7 +80,6 @@ function StaticGroup (executionContext)
 Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .prototype),
    X3DBoundedObject .prototype,
 {
-   constructor: StaticGroup,
    initialize ()
    {
       X3DChildNode     .prototype .initialize .call (this);

@@ -65,7 +65,6 @@ function TextureTransform3D (executionContext)
 
 Object .assign (Object .setPrototypeOf (TextureTransform3D .prototype, X3DSingleTextureTransformNode .prototype),
 {
-   constructor: TextureTransform3D,
    initialize ()
    {
       X3DSingleTextureTransformNode .prototype .initialize .call (this);

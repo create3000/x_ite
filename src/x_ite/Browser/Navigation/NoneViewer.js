@@ -56,10 +56,7 @@ function NoneViewer (executionContext, navigationInfo)
    X3DViewer .call (this, executionContext, navigationInfo);
 }
 
-Object .assign (Object .setPrototypeOf (NoneViewer .prototype, X3DViewer .prototype),
-{
-   constructor: NoneViewer,
-});
+Object .setPrototypeOf (NoneViewer .prototype, X3DViewer .prototype);
 
 Object .defineProperties (NoneViewer,
 {
