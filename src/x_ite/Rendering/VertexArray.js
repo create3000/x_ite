@@ -51,7 +51,7 @@ function VertexArray (gl)
    this .vertexArrays = new Map ();
 }
 
-VertexArray .prototype =
+Object .assign (VertexArray .prototype,
 {
    update (value = true)
    {
@@ -90,6 +90,6 @@ VertexArray .prototype =
 
       this .vertexArrays .clear ();
    },
-};
+});
 
 export default VertexArray;

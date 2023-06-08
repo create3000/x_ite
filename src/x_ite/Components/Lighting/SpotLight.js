@@ -89,7 +89,7 @@ function SpotLightContainer ()
    this .textureUnit                   = undefined;
 }
 
-SpotLightContainer .prototype =
+Object .assign (SpotLightContainer .prototype,
 {
    constructor: SpotLightContainer,
    set (lightNode, groupNode, modelViewMatrix)
@@ -255,7 +255,7 @@ SpotLightContainer .prototype =
 
       SpotLights .push (this);
    },
-};
+});
 
 function SpotLight (executionContext)
 {

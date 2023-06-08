@@ -69,7 +69,7 @@ function X3DGeospatialObject (executionContext)
    this .invOriginMatrix = new Matrix4 ();
 }
 
-X3DGeospatialObject .prototype =
+Object .assign (X3DGeospatialObject .prototype,
 {
    constructor: X3DGeospatialObject,
    initialize ()
@@ -205,7 +205,7 @@ X3DGeospatialObject .prototype =
       return locationMatrix;
    },
    dispose () { },
-};
+});
 
 function getCoordRotateYUp (geoPoint, result)
 {

@@ -147,7 +147,7 @@ function X3DCoreContext (element)
                           "altGrKey",   new Fields .SFBool ());
 }
 
-X3DCoreContext .prototype =
+Object .assign (X3DCoreContext .prototype,
 {
    initialize ()
    {
@@ -741,6 +741,6 @@ X3DCoreContext .prototype =
    {
       this [_context] .getExtension ("WEBGL_lose_context") ?.loseContext ();
    },
-};
+});
 
 export default X3DCoreContext;

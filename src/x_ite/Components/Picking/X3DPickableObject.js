@@ -54,7 +54,7 @@ function X3DPickableObject (executionContext)
    this .objectType = new Set ();
 }
 
-X3DPickableObject .prototype =
+Object .assign (X3DPickableObject .prototype,
 {
    constructor: X3DPickableObject,
    initialize ()
@@ -77,7 +77,7 @@ X3DPickableObject .prototype =
       }
    },
    dispose () { },
-};
+});
 
 Object .defineProperties (X3DPickableObject,
 {

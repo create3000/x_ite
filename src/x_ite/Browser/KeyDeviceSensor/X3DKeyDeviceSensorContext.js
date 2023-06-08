@@ -57,7 +57,7 @@ function X3DKeyDeviceSensorContext ()
    this [_keyDeviceSensorNodes] = new Set ();
 }
 
-X3DKeyDeviceSensorContext .prototype =
+Object .assign (X3DKeyDeviceSensorContext .prototype,
 {
    initialize ()
    {
@@ -92,6 +92,6 @@ X3DKeyDeviceSensorContext .prototype =
       for (const keyDeviceSensorNode of this [_keyDeviceSensorNodes])
          keyDeviceSensorNode .keyup (event);
    },
-};
+});
 
 export default X3DKeyDeviceSensorContext;

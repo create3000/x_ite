@@ -108,7 +108,7 @@ function PointLightContainer ()
    this .textureUnit                   = undefined;
 }
 
-PointLightContainer .prototype =
+Object .assign (PointLightContainer .prototype,
 {
    constructor: PointLightContainer,
    set (lightNode, groupNode, modelViewMatrix)
@@ -264,7 +264,7 @@ PointLightContainer .prototype =
 
       PointLights .push (this);
    },
-};
+});
 
 function PointLight (executionContext)
 {

@@ -54,7 +54,7 @@ function X3DLayeringContext ()
    this [_defaultViewport] = new Viewport (this .getPrivateScene ());
 }
 
-X3DLayeringContext .prototype =
+Object .assign (X3DLayeringContext .prototype,
 {
    initialize ()
    {
@@ -65,6 +65,6 @@ X3DLayeringContext .prototype =
    {
       return this [_defaultViewport];
    },
-};
+});
 
 export default X3DLayeringContext;

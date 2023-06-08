@@ -132,7 +132,7 @@ function TextureBuffer (browser, width, height, float = false)
       throw new Error ("Couldn't create frame buffer.");
 }
 
-TextureBuffer .prototype =
+Object .assign (TextureBuffer .prototype,
 {
    constructor: TextureBuffer,
    getWidth ()
@@ -232,7 +232,7 @@ TextureBuffer .prototype =
       else
          gl .deleteRenderbuffer (this .depthBuffer);
     },
-};
+});
 
 for (const key of Reflect .ownKeys (TextureBuffer .prototype))
    Object .defineProperty (TextureBuffer .prototype, key, { enumerable: false });

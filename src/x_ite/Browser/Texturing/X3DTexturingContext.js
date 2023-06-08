@@ -78,7 +78,7 @@ function X3DTexturingContext ()
    this [_maxTextures] = maxTextureImageUnits > 8 ? 2 : 1;
 }
 
-X3DTexturingContext .prototype =
+Object .assign (X3DTexturingContext .prototype,
 {
    initialize ()
    {
@@ -335,6 +335,6 @@ X3DTexturingContext .prototype =
          }
       }
    },
-};
+});
 
 export default X3DTexturingContext;

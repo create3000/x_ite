@@ -59,7 +59,7 @@ function X3DRoutingContext ()
    this [_taintedNodesTemp]  = [ ];
 }
 
-X3DRoutingContext .prototype =
+Object .assign (X3DRoutingContext .prototype,
 {
    constructor: X3DRoutingContext,
    initialize () { },
@@ -112,6 +112,6 @@ X3DRoutingContext .prototype =
       while (this [_taintedFields] .length);
    },
    dispose () { },
-};
+});
 
 export default X3DRoutingContext;

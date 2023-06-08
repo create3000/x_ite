@@ -56,7 +56,7 @@ function FogContainer ()
    this .fogMatrix = new Float32Array (9);
 }
 
-FogContainer .prototype =
+Object .assign (FogContainer .prototype,
 {
    constructor: FogContainer,
    set (fogNode, modelViewMatrix)
@@ -84,7 +84,7 @@ FogContainer .prototype =
    {
       Fogs .push (this);
    },
-};
+});
 
 function X3DFogObject (executionContext)
 {
@@ -96,7 +96,7 @@ function X3DFogObject (executionContext)
    this .colorArray = new Float32Array (3);
 }
 
-X3DFogObject .prototype =
+Object .assign (X3DFogObject .prototype,
 {
    constructor: X3DFogObject,
    initialize ()
@@ -159,7 +159,7 @@ X3DFogObject .prototype =
       this .set_fogType__ ();
    },
    dispose () { },
-};
+});
 
 Object .defineProperties (X3DFogObject,
 {

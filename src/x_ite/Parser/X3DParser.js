@@ -52,7 +52,8 @@ function X3DParser (scene)
    this .prototypes        = [ ];
 }
 
-X3DParser .prototype = {
+Object .assign (X3DParser .prototype,
+{
    constructor: X3DParser,
    getBrowser ()
    {
@@ -147,6 +148,6 @@ X3DParser .prototype = {
 
       return name;
    },
-};
+});
 
 export default X3DParser;

@@ -96,7 +96,7 @@ function X3DPointingDeviceSensorContext ()
    };
 }
 
-X3DPointingDeviceSensorContext .prototype =
+Object .assign (X3DPointingDeviceSensorContext .prototype,
 {
    initialize ()
    {
@@ -378,6 +378,6 @@ X3DPointingDeviceSensorContext .prototype =
 
       return shaderNode;
    },
-};
+});
 
 export default X3DPointingDeviceSensorContext;

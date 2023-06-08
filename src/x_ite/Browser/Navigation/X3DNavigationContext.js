@@ -86,7 +86,7 @@ function X3DNavigationContext ()
    this [_viewerNode]       = new NoneViewer (this .getPrivateScene ());
 }
 
-X3DNavigationContext .prototype =
+Object .assign (X3DNavigationContext .prototype,
 {
    initialize ()
    {
@@ -234,6 +234,6 @@ X3DNavigationContext .prototype =
    {
       this [_viewerNode] ?.dispose ();
    },
-};
+});
 
 export default X3DNavigationContext;

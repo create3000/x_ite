@@ -71,7 +71,7 @@ function VolumePicker ()
    this .collisionWorld .addCollisionObject (this .rigidBody2);
 }
 
-VolumePicker .prototype =
+Object .assign (VolumePicker .prototype,
 {
    constuctor: VolumePicker,
    setChildShape1 (matrix, childShape)
@@ -172,6 +172,6 @@ VolumePicker .prototype =
          return t;
       };
    })(),
-};
+});
 
 export default VolumePicker;

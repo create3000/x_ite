@@ -58,7 +58,7 @@ function PointingDeviceSensorContainer (node, modelViewMatrix, projectionMatrix,
    this .set (node, modelViewMatrix, projectionMatrix, viewport);
 }
 
-PointingDeviceSensorContainer .prototype =
+Object .assign (PointingDeviceSensorContainer .prototype,
 {
    set (node, modelViewMatrix, projectionMatrix, viewport)
    {
@@ -80,6 +80,6 @@ PointingDeviceSensorContainer .prototype =
    {
       this .node .set_motion__ (hit, this .modelViewMatrix, this .projectionMatrix, this .viewport);
    },
-};
+});
 
 export default PointingDeviceSensorContainer;

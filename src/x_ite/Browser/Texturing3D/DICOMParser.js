@@ -50,7 +50,7 @@ function DicomParser ()
    this .dicom = { dicom: false };
 }
 
-DicomParser .prototype =
+Object .assign (DicomParser .prototype,
 {
    parse (input)
    {
@@ -1090,7 +1090,7 @@ DicomParser .prototype =
 
       return lut;
    },
-};
+});
 
 // ftp://medical.nema.org/medical/dicom/DataSets/WG04/
 

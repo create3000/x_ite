@@ -53,7 +53,7 @@ import PrimitiveQuality  from "../Core/PrimitiveQuality.js";
 
 function X3DGeometry3DContext () { }
 
-X3DGeometry3DContext .prototype =
+Object .assign (X3DGeometry3DContext .prototype,
 {
    initialize ()
    {
@@ -110,7 +110,7 @@ X3DGeometry3DContext .prototype =
          }
       }
    },
-};
+});
 
 function getOptionNode (key, OptionNode)
 {

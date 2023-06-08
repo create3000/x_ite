@@ -65,7 +65,7 @@ function X3DLightingContext ()
    this [_shadowBuffers] = [ ]; // Shadow buffer cache
 }
 
-X3DLightingContext .prototype =
+Object .assign (X3DLightingContext .prototype,
 {
    getMaxLights ()
    {
@@ -100,6 +100,6 @@ X3DLightingContext .prototype =
       if (buffer)
          this [_shadowBuffers] [buffer .getWidth ()] .push (buffer);
    },
-};
+});
 
 export default X3DLightingContext;

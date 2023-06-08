@@ -80,7 +80,7 @@ function X3DNetworkingContext ()
    this [_baseURL]        = getBaseURI (this .getElement ());
 }
 
-X3DNetworkingContext .prototype =
+Object .assign (X3DNetworkingContext .prototype,
 {
    initialize ()
    {
@@ -223,6 +223,6 @@ X3DNetworkingContext .prototype =
 
       this [_loadingDisplay] = loadingDisplay;
    },
-};
+});
 
 export default X3DNetworkingContext;

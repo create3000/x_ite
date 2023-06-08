@@ -100,7 +100,7 @@ function X3DProgrammableShaderObject (executionContext)
    this .textures                    = new Set ();
 }
 
-X3DProgrammableShaderObject .prototype =
+Object .assign (X3DProgrammableShaderObject .prototype,
 {
    constructor: X3DProgrammableShaderObject,
    initialize ()
@@ -1319,7 +1319,7 @@ X3DProgrammableShaderObject .prototype =
       console .log (this .getName (), "uniformCount", programInfo .uniformCount);
    },
    dispose () { },
-};
+});
 
 Object .defineProperties (X3DProgrammableShaderObject,
 {

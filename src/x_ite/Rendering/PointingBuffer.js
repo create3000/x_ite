@@ -120,7 +120,7 @@ function PointingBuffer (browser)
       throw new Error ("Couldn't create frame buffer.");
 }
 
-PointingBuffer .prototype =
+Object .assign (PointingBuffer .prototype,
 {
    constructor: PointingBuffer,
    bind ()
@@ -187,6 +187,6 @@ PointingBuffer .prototype =
       gl .deleteRenderbuffer (this .depthBuffer);
       gl .deleteTexture (this .depthTexture);
    },
-};
+});
 
 export default PointingBuffer;

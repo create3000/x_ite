@@ -49,7 +49,7 @@ import Algorithm from "../../../standard/Math/Algorithm.js";
 
 function Geocentric () { }
 
-Geocentric .prototype =
+Object .assign (Geocentric .prototype,
 {
    constructor: Geocentric,
    convert (geocentric, result)
@@ -71,6 +71,6 @@ Geocentric .prototype =
 
       return Algorithm .simpleSlerp (source, destination, t) .multiply (Algorithm .lerp (sourceLength, destinationLength, t));
    },
-};
+});
 
 export default Geocentric;

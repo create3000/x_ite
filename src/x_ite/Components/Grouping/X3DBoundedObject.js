@@ -65,7 +65,7 @@ function X3DBoundedObject (executionContext)
    this .transformSensorNodes = new Set ();
 }
 
-X3DBoundedObject .prototype =
+Object .assign (X3DBoundedObject .prototype,
 {
    constructor: X3DBoundedObject,
    initialize () { },
@@ -133,7 +133,7 @@ X3DBoundedObject .prototype =
       return this .transformSensorNodes;
    },
    dispose () { },
-};
+});
 
 Object .defineProperties (X3DBoundedObject,
 {

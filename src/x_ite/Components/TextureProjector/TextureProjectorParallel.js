@@ -73,7 +73,7 @@ function TextureProjectorParallelContainer ()
    this .projectiveTextureMatrixArray    = new Float32Array (16);
 }
 
-TextureProjectorParallelContainer .prototype =
+Object .assign (TextureProjectorParallelContainer .prototype,
 {
    constructor: TextureProjectorParallelContainer,
    set (textureProjectorNode, modelViewMatrix)
@@ -161,7 +161,7 @@ TextureProjectorParallelContainer .prototype =
    {
       TextureProjectorParallelCache .push (this);
    },
-};
+});
 
 function TextureProjectorParallel (executionContext)
 {

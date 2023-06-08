@@ -62,7 +62,7 @@ function ClipPlaneContainer ()
    this .plane = new Plane3 (Vector3 .Zero, Vector3 .Zero);
 }
 
-ClipPlaneContainer .prototype =
+Object .assign (ClipPlaneContainer .prototype,
 {
    constructor: ClipPlaneContainer,
    isClipped (point)
@@ -92,7 +92,7 @@ ClipPlaneContainer .prototype =
    {
       ClipPlanes .push (this);
    },
-};
+});
 
 function ClipPlane (executionContext)
 {

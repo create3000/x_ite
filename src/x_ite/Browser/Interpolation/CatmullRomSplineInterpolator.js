@@ -54,7 +54,7 @@ function CatmullRomSplineInterpolator ()
    this .T1 = [ ];
 }
 
-CatmullRomSplineInterpolator .prototype =
+Object .assign (CatmullRomSplineInterpolator .prototype,
 {
    constructor: CatmullRomSplineInterpolator,
    generate: (function ()
@@ -182,6 +182,6 @@ CatmullRomSplineInterpolator .prototype =
                            this .T1 [index1]);
       };
    })(),
-};
+});
 
 export default CatmullRomSplineInterpolator;

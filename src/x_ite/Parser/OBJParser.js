@@ -740,7 +740,7 @@ function MaterialParser (scene, input)
    this .id               = "";
 }
 
-MaterialParser .prototype =
+Object .assign (MaterialParser .prototype,
 {
    CONSTANTS: new Map ([
       ["NAN", NaN],
@@ -1087,6 +1087,6 @@ MaterialParser .prototype =
 
       return false;
    },
-};
+});
 
 export default OBJParser;

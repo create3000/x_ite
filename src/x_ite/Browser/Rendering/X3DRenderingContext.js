@@ -63,7 +63,7 @@ function X3DRenderingContext ()
    this [_depthShaders] = new Map ();
 }
 
-X3DRenderingContext .prototype =
+Object .assign (X3DRenderingContext .prototype,
 {
    initialize ()
    {
@@ -259,6 +259,6 @@ X3DRenderingContext .prototype =
       else
          element .removeClass ("x_ite-fullscreen");
    },
-};
+});
 
 export default X3DRenderingContext;

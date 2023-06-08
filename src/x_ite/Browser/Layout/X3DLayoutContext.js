@@ -56,7 +56,7 @@ const
 function X3DLayoutContext ()
 { }
 
-X3DLayoutContext .prototype =
+Object .assign (X3DLayoutContext .prototype,
 {
    getScreenTextureProperties ()
    {
@@ -126,6 +126,6 @@ X3DLayoutContext .prototype =
          matrix .assign (modelViewMatrix) .inverse () .multLeft (screenMatrix);
       };
    })(),
-};
+});
 
 export default X3DLayoutContext;

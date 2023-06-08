@@ -57,7 +57,7 @@ const
 
 function X3DObject () { }
 
-X3DObject .prototype =
+Object .assign (X3DObject .prototype,
 {
    constructor: X3DObject,
    [_name]: "",
@@ -186,7 +186,7 @@ X3DObject .prototype =
       this [_interests] .clear ();
       this [_userData]  .clear ();
    },
-};
+});
 
 for (const key of Reflect .ownKeys (X3DObject .prototype))
    Object .defineProperty (X3DObject .prototype, key, { enumerable: false });

@@ -51,7 +51,8 @@ import Matrix4   from "../../standard/Math/Numbers/Matrix4.js";
 
 function X3DOptimizer () { }
 
-X3DOptimizer .prototype = {
+Object .assign (X3DOptimizer .prototype,
+{
    constructor: X3DOptimizer,
    removeGroups: false,
    removeEmptyGroups: false,
@@ -186,6 +187,6 @@ X3DOptimizer .prototype = {
 
       removedNodes .push (child .getValue ());
    },
-};
+});
 
 export default X3DOptimizer;

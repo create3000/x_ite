@@ -65,7 +65,7 @@ function Image (width, height, comp, array)
    this .array .length = this .width * this .height;
 }
 
-Image .prototype =
+Object .assign (Image .prototype,
 {
    constructor: Image,
    copy ()
@@ -128,7 +128,7 @@ Image .prototype =
    {
       return this .array;
    },
-};
+});
 
 /*
  *  SFImage

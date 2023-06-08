@@ -61,7 +61,7 @@ function X3DTimeContext ()
    this [_currentSpeed]     = 0;
 }
 
-X3DTimeContext .prototype =
+Object .assign (X3DTimeContext .prototype,
 {
    getCurrentTime ()
    {
@@ -103,6 +103,6 @@ X3DTimeContext .prototype =
          }
       };
    })(),
-};
+});
 
 export default X3DTimeContext;

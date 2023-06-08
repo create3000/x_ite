@@ -73,7 +73,7 @@ function TextureProjectorContainer ()
    this .projectiveTextureMatrixArray    = new Float32Array (16);
 }
 
-TextureProjectorContainer .prototype =
+Object .assign (TextureProjectorContainer .prototype,
 {
    constructor: TextureProjectorContainer,
    set (textureProjectorNode, modelViewMatrix)
@@ -140,7 +140,7 @@ TextureProjectorContainer .prototype =
    {
       TextureProjectorCache .push (this);
    },
-};
+});
 
 function TextureProjector (executionContext)
 {

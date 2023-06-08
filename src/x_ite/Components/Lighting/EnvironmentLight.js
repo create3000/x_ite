@@ -61,7 +61,7 @@ function EnvironmentLightContainer ()
    this .modelViewMatrix = new MatrixStack (Matrix4);
 }
 
-EnvironmentLightContainer .prototype =
+Object .assign (EnvironmentLightContainer .prototype,
 {
    constructor: EnvironmentLightContainer,
    set (lightNode, groupNode, modelViewMatrix)
@@ -90,7 +90,7 @@ EnvironmentLightContainer .prototype =
 
       EnvironmentLights .push (this);
    },
-};
+});
 
 function EnvironmentLight (executionContext)
 {

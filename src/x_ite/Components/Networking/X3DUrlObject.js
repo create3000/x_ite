@@ -66,7 +66,7 @@ function X3DUrlObject (executionContext)
    this [_autoRefreshStartTime] = Date .now ();
 }
 
-X3DUrlObject .prototype =
+Object .assign (X3DUrlObject .prototype,
 {
    constructor: X3DUrlObject,
    initialize ()
@@ -272,7 +272,7 @@ X3DUrlObject .prototype =
       this .setAutoRefreshTimer (autoRefreshInterval);
    },
    dispose () { },
-};
+});
 
 Object .defineProperties (X3DUrlObject,
 {

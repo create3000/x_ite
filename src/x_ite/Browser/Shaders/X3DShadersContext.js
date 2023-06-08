@@ -62,7 +62,7 @@ function X3DShadersContext ()
    this [_shaderNodes]    = new Map ();
 }
 
-X3DShadersContext .prototype =
+Object .assign (X3DShadersContext .prototype,
 {
    initialize ()
    {
@@ -185,6 +185,6 @@ X3DShadersContext .prototype =
 
       return shaderNode;
    },
-};
+});
 
 export default X3DShadersContext;

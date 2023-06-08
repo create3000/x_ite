@@ -64,7 +64,7 @@ function X3DPickingContext ()
    this [_pickingTime]          = new StopWatch ();
 }
 
-X3DPickingContext .prototype =
+Object .assign (X3DPickingContext .prototype,
 {
    addTransformSensor (transformSensorNode)
    {
@@ -127,6 +127,6 @@ X3DPickingContext .prototype =
    {
       return this [_pickingTime];
    },
-};
+});
 
 export default X3DPickingContext;

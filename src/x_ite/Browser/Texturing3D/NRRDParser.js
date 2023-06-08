@@ -71,7 +71,7 @@ function NRRDParser ()
    ]);
 }
 
-NRRDParser .prototype =
+Object .assign (NRRDParser .prototype,
 {
    parse (input)
    {
@@ -453,6 +453,6 @@ NRRDParser .prototype =
          throw new Error (`Invalid NRRD data: ${error}.`);
       }
    },
-};
+});
 
 export default NRRDParser;

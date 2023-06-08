@@ -90,7 +90,7 @@ function MultiSampleFrameBuffer (browser, width, height, samples)
       throw new Error ("Couldn't create frame buffer.");
 }
 
-MultiSampleFrameBuffer .prototype =
+Object .assign (MultiSampleFrameBuffer .prototype,
 {
    constructor: MultiSampleFrameBuffer,
    getWidth ()
@@ -142,7 +142,7 @@ MultiSampleFrameBuffer .prototype =
       gl .deleteRenderbuffer (this .colorBuffer);
       gl .deleteRenderbuffer (this .depthBuffer);
    },
-};
+});
 
 const Fallback = {
    getWidth: Function .prototype,

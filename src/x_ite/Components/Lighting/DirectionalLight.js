@@ -82,7 +82,7 @@ function DirectionalLightContainer ()
    this .textureUnit                   = undefined;
 }
 
-DirectionalLightContainer .prototype =
+Object .assign (DirectionalLightContainer .prototype,
 {
    constructor: DirectionalLightContainer,
    set (lightNode, groupNode, modelViewMatrix)
@@ -228,7 +228,7 @@ DirectionalLightContainer .prototype =
 
       DirectionalLights .push (this);
    },
-};
+});
 
 function DirectionalLight (executionContext)
 {

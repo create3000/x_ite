@@ -58,7 +58,7 @@ function ShaderCompiler (gl)
       this .sourceFileNumbers [name] = i + 1;
 }
 
-ShaderCompiler .prototype =
+Object .assign (ShaderCompiler .prototype,
 {
    getSourceFileName (sourceFileNumber)
    {
@@ -92,6 +92,6 @@ ShaderCompiler .prototype =
 
       return source;
    },
-};
+});
 
 export default ShaderCompiler;

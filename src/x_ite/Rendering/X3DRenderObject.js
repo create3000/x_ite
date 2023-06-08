@@ -111,7 +111,7 @@ function X3DRenderObject (executionContext)
    }
 }
 
-X3DRenderObject .prototype =
+Object .assign (X3DRenderObject .prototype,
 {
    constructor: X3DRenderObject,
    initialize ()
@@ -1122,7 +1122,7 @@ X3DRenderObject .prototype =
       textureProjectors        .length = 0;
       generatedCubeMapTextures .length = 0;
    },
-};
+});
 
 function assign (lhs, rhs)
 {

@@ -101,7 +101,7 @@ function Generator ({ style = "TIDY", indent = "", precision = 7, doublePrecisio
    this .names .set (null, Object .assign (new Set (), { index: 0 }));
 }
 
-Generator .prototype =
+Object .assign (Generator .prototype,
 {
    constructor: Generator,
    Style (style)
@@ -585,7 +585,7 @@ Generator .prototype =
 
       this .string += this .TidyBreak ();
    },
-};
+});
 
 for (const key of Reflect .ownKeys (Generator .prototype))
    Object .defineProperty (Generator .prototype, key, { enumerable: false });

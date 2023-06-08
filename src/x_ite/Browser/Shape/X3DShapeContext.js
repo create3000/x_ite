@@ -69,7 +69,7 @@ function X3DShapeContext ()
    this [_hatchStyleTextures] = [ ];
 }
 
-X3DShapeContext .prototype =
+Object .assign (X3DShapeContext .prototype,
 {
    getDefaultAppearance ()
    {
@@ -204,6 +204,6 @@ X3DShapeContext .prototype =
 
       return this [_lineTransformFeedback];
    },
-};
+});
 
 export default X3DShapeContext;

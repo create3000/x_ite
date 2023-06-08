@@ -57,7 +57,7 @@ const
 
 function X3DVolumeRenderingContext () { }
 
-X3DVolumeRenderingContext .prototype =
+Object .assign (X3DVolumeRenderingContext .prototype,
 {
    getDefaultVoxels ()
    {
@@ -126,6 +126,6 @@ X3DVolumeRenderingContext .prototype =
 
       return this [_defaultTransferFunction];
    },
-};
+});
 
 export default X3DVolumeRenderingContext;

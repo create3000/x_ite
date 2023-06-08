@@ -85,7 +85,7 @@ function X3DTextGeometry (text, fontStyle)
    this .bbox           = new Box3 ();
 }
 
-X3DTextGeometry .prototype =
+Object .assign (X3DTextGeometry .prototype,
 {
    constructor: X3DTextGeometry,
    getBrowser ()
@@ -610,6 +610,6 @@ X3DTextGeometry .prototype =
    },
    traverse (type, renderObject)
    { },
-};
+});
 
 export default X3DTextGeometry;

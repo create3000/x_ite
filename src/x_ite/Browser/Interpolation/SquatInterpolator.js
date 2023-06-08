@@ -52,7 +52,7 @@ function SquatInterpolator ()
    this .s = [ ];
 }
 
-SquatInterpolator .prototype =
+Object .assign (SquatInterpolator .prototype,
 {
    constructor: SquatInterpolator,
    generate (closed, key, keyValue)
@@ -108,6 +108,6 @@ SquatInterpolator .prototype =
                                                                         keyValue [index1] .getValue (), weight);
       };
    })(),
-};
+});
 
 export default SquatInterpolator;

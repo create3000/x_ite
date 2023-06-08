@@ -58,7 +58,7 @@ function X3DTextContext ()
    this [_glyphCache] = new Map (); // [font] [primitiveQuality] [glyphIndex]
 }
 
-X3DTextContext .prototype =
+Object .assign (X3DTextContext .prototype,
 {
    getDefaultFontStyle ()
    {
@@ -113,6 +113,6 @@ X3DTextContext .prototype =
 
       return cachedGlyph;
    },
-};
+});
 
 export default X3DTextContext;
