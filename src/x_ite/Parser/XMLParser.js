@@ -734,10 +734,8 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
          if (this .useAttribute (xmlElement))
             return;
 
-         const node = this .getExecutionContext () .createNode (this .nodeNameToCamelCase (xmlElement .nodeName), false);
-
-         if (!node)
-            node = this .getExecutionContext () .createProto (this .protoNameToCamelCase (xmlElement .nodeName), false);
+         const node = this .getExecutionContext () .createNode (this .nodeNameToCamelCase (xmlElement .nodeName), false)
+            ?? this .getExecutionContext () .createProto (this .protoNameToCamelCase (xmlElement .nodeName), false);
 
          if (!node)
             throw new Error (`Unknown node type '${xmlElement .nodeName}', you probably have insufficient component/profile statements and/or an inappropriate specification version.`);
