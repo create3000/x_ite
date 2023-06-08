@@ -226,19 +226,27 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
             await import (/* webpackIgnore: true */ component .providerUrl);
       }
 
-      return function (arg)
+      return function (... args)
       {
-         if (arg instanceof ProfileInfo)
-            return this .loadComponents (arg .components);
+         const componentNames = [ ];
 
-         if (arg instanceof ComponentInfoArray)
-            return this .loadComponents (Array .from (arg, ({name}) => name));
+         for (const arg of args)
+         {
+            if (arg instanceof ProfileInfo)
+               componentNames .push (... Array .from (arg .components, ({name}) => name));
 
-         if (arg instanceof ComponentInfo)
-            return this .loadComponents ([arg .name]);
+            else if (arg instanceof ComponentInfoArray)
+               componentNames .push (... Array .from (arg, ({name}) => name));
+
+            else if (arg instanceof ComponentInfo)
+               componentNames .push (arg .name);
+
+            else if (typeof arg === "string")
+               componentNames .push (arg)
+         }
 
          // Load array of component names.
-         return loadComponents (arg, new Set ());
+         return loadComponents (componentNames, new Set ());
       };
    })(),
    addConcreteNode (typeName, ConcreteNode)
