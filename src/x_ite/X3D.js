@@ -135,7 +135,7 @@ Object .assign (X3D,
    require (id)
    {
       if (!Namespace .has (id))
-         throw new Error ("Unknown module '" + id + "'.");
+         throw new Error (`Unknown module '${id}'.`);
 
       return Namespace .get (id);
    },

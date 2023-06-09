@@ -79,7 +79,7 @@ Object .assign (Spheroid3 .prototype,
    },
    toString ()
    {
-      return this .semiMajorAxis + " " + this .semiMinorAxis;
+      return `${this .semiMajorAxis} ${this .semiMinorAxis}`;
    },
 });
 

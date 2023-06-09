@@ -607,7 +607,7 @@ Object .assign (Box3 .prototype,
    })(),
    toString ()
    {
-      return this .size + ", " + this .center;
+      return `${this .size}, ${this .center}`;
    },
 });
 

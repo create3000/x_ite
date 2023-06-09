@@ -137,7 +137,7 @@ Object .assign (Line2 .prototype,
    })(),
    toString ()
    {
-      return this .point + ", " + this .direction;
+      return `${this .point}, ${this .direction}`;
    },
 });
 

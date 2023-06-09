@@ -199,7 +199,7 @@ Object .assign (Box2 .prototype,
    })(),
    toString ()
    {
-      return this .size + ", " + this .center;
+      return `${this .size}, ${this .center}`;
    },
 });
 

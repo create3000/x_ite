@@ -288,7 +288,7 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
       {
          otherLength -= rest;
 
-         console .warn ("Array length must be multiple of components size, which is " + components + ".");
+         console .warn (`Array length must be multiple of components size, which is ${components}.`);
       }
 
       otherLength /= components;

@@ -184,7 +184,7 @@ Object .assign (Sphere3 .prototype,
    })(),
    toString ()
    {
-      return this .radius + " " + this .center .toString ();
+      return `${this .radius} ${this .center}`;
    },
 });
 

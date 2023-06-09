@@ -156,7 +156,7 @@ Object .assign (Plane3 .prototype,
    },
    toString ()
    {
-      return this .normal .toString () + " " + this .distanceFromOrigin;
+      return `${this .normal} ${this .distanceFromOrigin}`;
    },
 });
 
