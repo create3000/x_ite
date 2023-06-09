@@ -366,7 +366,7 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DEventObject .
       if (field)
          return field;
 
-      throw new Error (`Unknown field '${name}' in node class ${this .getTypeName ()}.`);
+      throw new Error (`Unknown predefined field '${name}' in node class ${this .getTypeName ()}.`);
    },
    getPredefinedFields ()
    {
@@ -419,7 +419,7 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DEventObject .
       if (field)
          return field;
 
-      throw new Error (`Unknown field '${name}' in node class ${this .getTypeName ()}.`);
+      throw new Error (`Unknown user-defined field '${name}' in node class ${this .getTypeName ()}.`);
    },
    getUserDefinedFields ()
    {
