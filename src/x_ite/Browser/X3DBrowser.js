@@ -122,26 +122,26 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    },
    printWelcomeMessage ()
    {
-      this .print ("Welcome to " + this .name + " X3D Browser v" + this .version + ":\n" +
-                   "   Current Graphics Renderer\n" +
-                   "      Name: " + this .getVendor () + " " + this .getRenderer () + "\n" +
-                   "      WebGL version: " + this .getWebGLVersion () + "\n" +
-                   "      Shading language: " + this .getShadingLanguageVersion () + "\n" +
-                   "   Rendering Properties\n" +
-                   "      Antialiased: " + this .getAntialiased () + "\n" +
-                   "      Max samples: " + this .getMaxSamples () + "\n" +
-                   "      Depth size: " + this .getDepthSize () + " bits\n" +
-                   "      Color depth: " + this .getColorDepth () + " bits\n" +
-                   "      Max clip planes per shape: " + this .getMaxClipPlanes () + "\n" +
-                   "      Max lights per shape: " + this .getMaxLights () + "\n" +
-                   "      Max multi textures per shape: " + this .getMaxTextures () + "\n" +
-                   "      Texture units: " + this .getMaxCombinedTextureUnits () + "\n" +
-                   "      Max texture size: " + this .getMaxTextureSize () + " × " + this .getMaxTextureSize () + " pixels\n" +
-                   "      Texture memory: " + this .getTextureMemory () + "\n" +
-                   "      Max vertex uniform vectors: " + this .getMaxVertexUniformVectors () + "\n" +
-                   "      Max fragment uniform vectors: " + this .getMaxFragmentUniformVectors () + "\n" +
-                   "      Max vertex attribs: " + this .getMaxVertexAttribs () + "\n" +
-                   "      Max varying vectors: " + this .getMaxVaryingVectors () + "\n");
+      this .print (`Welcome to ${this .name} X3D Browser v${this .version}:\n` +
+                   `   Current Graphics Renderer\n` +
+                   `      Name: ${this .getVendor ()} ${this .getRenderer ()}\n` +
+                   `      WebGL version: ${this .getWebGLVersion ()}\n` +
+                   `      Shading language: ${this .getShadingLanguageVersion ()}\n` +
+                   `   Rendering Properties\n` +
+                   `      Antialiased: ${this .getAntialiased ()}\n` +
+                   `      Max samples: ${this .getMaxSamples ()}\n` +
+                   `      Depth size: ${this .getDepthSize ()} bits\n` +
+                   `      Color depth: ${this .getColorDepth ()} bits\n` +
+                   `      Max clip planes per shape: ${this .getMaxClipPlanes ()}\n` +
+                   `      Max lights per shape: ${this .getMaxLights ()}\n` +
+                   `      Max multi textures per shape: ${this .getMaxTextures ()}\n` +
+                   `      Texture units: ${this .getMaxCombinedTextureUnits ()}\n` +
+                   `      Max texture size: ${this .getMaxTextureSize ()} × ${this .getMaxTextureSize ()} pixels\n` +
+                   `      Texture memory: ${this .getTextureMemory ()}\n` +
+                   `      Max vertex uniform vectors: ${this .getMaxVertexUniformVectors ()}\n` +
+                   `      Max fragment uniform vectors: ${this .getMaxFragmentUniformVectors ()}\n` +
+                   `      Max vertex attribs: ${this .getMaxVertexAttribs ()}\n` +
+                   `      Max varying vectors: ${this .getMaxVaryingVectors ()}\n`);
    },
    getName ()
    {
@@ -172,7 +172,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
       if (profile)
          return profile;
 
-      throw Error ("Profile '" + name + "' is not supported.");
+      throw Error (`Profile '${name}' is not supported.`);
    },
    getSupportedProfiles ()
    {
@@ -195,7 +195,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
             component .dependencies);
       }
 
-      throw Error ("Component '" + name + "' at level '" + level + "' is not supported.");
+      throw Error (`Component '${name}' at level '${level}' is not supported.`);
    },
    getSupportedComponents ()
    {
@@ -438,10 +438,10 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
       const field = node .getField (event);
 
       if (!field .isInput ())
-         throw new Error ("Browser.createVrmlFromURL: event named '" + event + "' must be a input field.");
+         throw new Error (`Browser.createVrmlFromURL: event named '${event}' must be a input field.`);
 
       if (field .getType () !== X3DConstants .MFNode)
-         throw new Error ("Browser.createVrmlFromURL: event named '" + event + "' must be of type MFNode.");
+         throw new Error (`Browser.createVrmlFromURL: event named '${event}' must be of type MFNode.`);
 
       const
          currentScene = this .currentScene,
@@ -853,7 +853,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
       console .log (string);
 
       for (const element of this [_console])
-         element .append (document .createTextNode (string + "\n"));
+         element .append (document .createTextNode (`${string}\n`));
    },
    toVRMLStream (generator)
    {
