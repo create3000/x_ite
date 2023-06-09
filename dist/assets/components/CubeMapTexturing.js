@@ -200,7 +200,7 @@ Object .assign (Object .setPrototypeOf (X3DEnvironmentTextureNode .prototype, (X
    })(),
    updateTextureParameters ()
    {
-      X3DSingleTextureNode_default().prototype.updateTextureParameters.call (this,
+      X3DSingleTextureNode_default().prototype .updateTextureParameters .call (this,
                                                                       this .target,
                                                                       this ._textureProperties .getValue (),
                                                                       this .texturePropertiesNode,
@@ -303,7 +303,7 @@ var BitSet_default = /*#__PURE__*/__webpack_require__.n(BitSet_namespaceObject);
 
 function ComposedCubeMapTexture (executionContext)
 {
-   CubeMapTexturing_X3DEnvironmentTextureNode.call (this, executionContext);
+   CubeMapTexturing_X3DEnvironmentTextureNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).ComposedCubeMapTexture);
 
@@ -323,11 +323,11 @@ function ComposedCubeMapTexture (executionContext)
    this .textureBits  = new (BitSet_default()) ();
 }
 
-Object .assign (Object .setPrototypeOf (ComposedCubeMapTexture .prototype, CubeMapTexturing_X3DEnvironmentTextureNode.prototype),
+Object .assign (Object .setPrototypeOf (ComposedCubeMapTexture .prototype, CubeMapTexturing_X3DEnvironmentTextureNode .prototype),
 {
    initialize ()
    {
-      CubeMapTexturing_X3DEnvironmentTextureNode.prototype.initialize.call (this);
+      CubeMapTexturing_X3DEnvironmentTextureNode .prototype .initialize .call (this);
 
       const gl = this .getBrowser () .getContext ();
 
@@ -574,8 +574,8 @@ Object .assign (Object .setPrototypeOf (DependentRenderer .prototype, (X3DBaseNo
 {
    initialize ()
    {
-      X3DBaseNode_default().prototype.initialize.call (this);
-      X3DRenderObject_default().prototype.initialize.call (this);
+      X3DBaseNode_default().prototype .initialize .call (this);
+      X3DRenderObject_default().prototype .initialize .call (this);
    },
    isIndependent ()
    {
@@ -615,19 +615,19 @@ Object .assign (Object .setPrototypeOf (DependentRenderer .prototype, (X3DBaseNo
       {
          case (TraverseType_default()).COLLISION:
          {
-            X3DRenderObject_default().prototype.render.call (this, type, callback, group);
+            X3DRenderObject_default().prototype .render .call (this, type, callback, group);
             break;
          }
          case (TraverseType_default()).SHADOW:
          {
-            X3DRenderObject_default().prototype.render.call (this, type, callback, group);
+            X3DRenderObject_default().prototype .render .call (this, type, callback, group);
             break;
          }
          case (TraverseType_default()).DISPLAY:
          {
             this .lightIndex = 0;
 
-            X3DRenderObject_default().prototype.render.call (this, type, callback, group);
+            X3DRenderObject_default().prototype .render .call (this, type, callback, group);
 
             for (const light of this .renderObject .getLights ())
                light .modelViewMatrix .pop ();
@@ -736,7 +736,7 @@ var Algorithm_default = /*#__PURE__*/__webpack_require__.n(Algorithm_namespaceOb
 
 function GeneratedCubeMapTexture (executionContext)
 {
-   CubeMapTexturing_X3DEnvironmentTextureNode.call (this, executionContext);
+   CubeMapTexturing_X3DEnvironmentTextureNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).GeneratedCubeMapTexture);
 
@@ -746,11 +746,11 @@ function GeneratedCubeMapTexture (executionContext)
    this .viewVolume        = new (ViewVolume_default()) ();
 }
 
-Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, CubeMapTexturing_X3DEnvironmentTextureNode.prototype),
+Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, CubeMapTexturing_X3DEnvironmentTextureNode .prototype),
 {
    initialize ()
    {
-      CubeMapTexturing_X3DEnvironmentTextureNode.prototype.initialize.call (this);
+      CubeMapTexturing_X3DEnvironmentTextureNode .prototype .initialize .call (this);
 
       this ._size .addInterest ("set_size__", this);
 
@@ -922,7 +922,7 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, Cube
 
       return function (gl, shaderObject, renderObject, channel)
       {
-         CubeMapTexturing_X3DEnvironmentTextureNode.prototype.setShaderUniforms.call (this, gl, shaderObject, renderObject, channel);
+         CubeMapTexturing_X3DEnvironmentTextureNode .prototype .setShaderUniforms .call (this, gl, shaderObject, renderObject, channel);
 
          if (renderObject === this .dependentRenderer)
             gl .uniformMatrix4fv (shaderObject .x3d_ModelViewMatrix, false, zeros);
@@ -1051,7 +1051,7 @@ const offsets = [
 
 function ImageCubeMapTexture (executionContext)
 {
-   CubeMapTexturing_X3DEnvironmentTextureNode.call (this, executionContext);
+   CubeMapTexturing_X3DEnvironmentTextureNode .call (this, executionContext);
    X3DUrlObject_default().call (this, executionContext);
 
    this .addType ((X3DConstants_default()).ImageCubeMapTexture);
@@ -1061,13 +1061,13 @@ function ImageCubeMapTexture (executionContext)
    this .urlStack = new (Fields_default()).MFString ();
 }
 
-Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapTexturing_X3DEnvironmentTextureNode.prototype),
+Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapTexturing_X3DEnvironmentTextureNode .prototype),
    (X3DUrlObject_default()).prototype,
 {
    initialize ()
    {
-      CubeMapTexturing_X3DEnvironmentTextureNode.prototype.initialize.call (this);
-      X3DUrlObject_default().prototype.initialize.call (this);
+      CubeMapTexturing_X3DEnvironmentTextureNode .prototype .initialize .call (this);
+      X3DUrlObject_default().prototype .initialize .call (this);
 
       // Upload default data.
 
@@ -1216,8 +1216,8 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapT
    },
    dispose ()
    {
-      X3DUrlObject_default().prototype.dispose.call (this);
-      CubeMapTexturing_X3DEnvironmentTextureNode.prototype.dispose.call (this);
+      X3DUrlObject_default().prototype .dispose .call (this);
+      CubeMapTexturing_X3DEnvironmentTextureNode .prototype .dispose .call (this);
    },
 });
 

@@ -303,13 +303,13 @@ Object .assign (Object .setPrototypeOf (X3DScriptNode .prototype, (X3DChildNode_
 {
    initialize ()
    {
-      X3DChildNode_default().prototype.initialize.call (this);
-      X3DUrlObject_default().prototype.initialize.call (this);
+      X3DChildNode_default().prototype .initialize .call (this);
+      X3DUrlObject_default().prototype .initialize .call (this);
    },
    dispose ()
    {
-      X3DUrlObject_default().prototype.dispose.call (this);
-      X3DChildNode_default().prototype.dispose.call (this);
+      X3DUrlObject_default().prototype .dispose .call (this);
+      X3DChildNode_default().prototype .dispose .call (this);
    },
 });
 
@@ -420,16 +420,16 @@ var FileLoader_default = /*#__PURE__*/__webpack_require__.n(FileLoader_namespace
 
 function Script (executionContext)
 {
-   Scripting_X3DScriptNode.call (this, executionContext);
+   Scripting_X3DScriptNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).Script);
 }
 
-Object .assign (Object .setPrototypeOf (Script .prototype, Scripting_X3DScriptNode.prototype),
+Object .assign (Object .setPrototypeOf (Script .prototype, Scripting_X3DScriptNode .prototype),
 {
    initialize ()
    {
-      Scripting_X3DScriptNode.prototype.initialize.call (this);
+      Scripting_X3DScriptNode .prototype .initialize .call (this);
 
       this .requestImmediateLoad () .catch (Function .prototype);
    },
@@ -443,7 +443,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, Scripting_X3DScriptNo
    },
    addUserDefinedField (accessType, name, field)
    {
-      Scripting_X3DScriptNode.prototype.addUserDefinedField.call (this, accessType, name, field);
+      Scripting_X3DScriptNode .prototype .addUserDefinedField .call (this, accessType, name, field);
 
       if (!this .isInitialized ())
          return;
@@ -455,7 +455,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, Scripting_X3DScriptNo
    {
       this .getUserDefinedFields () .get (name) ?.removeInterest ("set_field__", this);
 
-      Scripting_X3DScriptNode.prototype.removeUserDefinedField.call (this, name);
+      Scripting_X3DScriptNode .prototype .removeUserDefinedField .call (this, name);
 
       if (!this .isInitialized ())
          return;
@@ -561,7 +561,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, Scripting_X3DScriptNo
          throw new Error ("SFNode.new: invalid argument, must be 'string' is 'undefined'.");
       }
 
-      Object .setPrototypeOf (SFNode .prototype, (Fields_default()).SFNode.prototype);
+      Object .setPrototypeOf (SFNode .prototype, (Fields_default()).SFNode .prototype);
 
       const globalObject =
       {
@@ -810,7 +810,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, Scripting_X3DScriptNo
    {
       this .disconnect ();
 
-      Scripting_X3DScriptNode.prototype.dispose.call (this);
+      Scripting_X3DScriptNode .prototype .dispose .call (this);
    },
 });
 

@@ -279,8 +279,8 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (X3DChildNode_
 {
    initialize ()
    {
-      X3DChildNode_default().prototype.initialize.call (this);
-      X3DBoundedObject_default().prototype.initialize.call (this);
+      X3DChildNode_default().prototype .initialize .call (this);
+      X3DBoundedObject_default().prototype .initialize .call (this);
 
       // Groups
 
@@ -517,7 +517,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (X3DChildNode_
       if (this .skinNormalNode)
          this .skinNormalNode ._vector = this .restNormalNode ._vector;
 
-      X3DChildNode_default().prototype.toVRMLStream.call (this, generator);
+      X3DChildNode_default().prototype .toVRMLStream .call (this, generator);
    },
    toXMLStream (generator)
    {
@@ -527,7 +527,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (X3DChildNode_
       if (this .skinNormalNode)
          this .skinNormalNode ._vector = this .restNormalNode ._vector;
 
-      X3DChildNode_default().prototype.toXMLStream.call (this, generator);
+      X3DChildNode_default().prototype .toXMLStream .call (this, generator);
    },
    toJSONStream (generator)
    {
@@ -537,12 +537,12 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (X3DChildNode_
       if (this .skinNormalNode)
          this .skinNormalNode ._vector = this .restNormalNode ._vector;
 
-      X3DChildNode_default().prototype.toJSONStream.call (this, generator);
+      X3DChildNode_default().prototype .toJSONStream .call (this, generator);
    },
    dispose ()
    {
-      X3DBoundedObject_default().prototype.dispose.call (this);
-      X3DChildNode_default().prototype.dispose.call (this);
+      X3DBoundedObject_default().prototype .dispose .call (this);
+      X3DChildNode_default().prototype .dispose .call (this);
    },
 });
 
@@ -690,7 +690,7 @@ Object .assign (Object .setPrototypeOf (HAnimJoint .prototype, (X3DTransformNode
 {
    initialize ()
    {
-      X3DTransformNode_default().prototype.initialize.call (this);
+      X3DTransformNode_default().prototype .initialize .call (this);
 
       this ._skinCoordIndex .addInterest ("set_skinCoordIndex__", this);
       this ._displacers     .addInterest ("set_displacers__",     this);
@@ -699,7 +699,7 @@ Object .assign (Object .setPrototypeOf (HAnimJoint .prototype, (X3DTransformNode
    },
    setCameraObject (value)
    {
-      X3DTransformNode_default().prototype.setCameraObject.call (this, value || !! this ._skinCoordIndex .length);
+      X3DTransformNode_default().prototype .setCameraObject .call (this, value || !! this ._skinCoordIndex .length);
    },
    getModelMatrix ()
    {
@@ -735,7 +735,7 @@ Object .assign (Object .setPrototypeOf (HAnimJoint .prototype, (X3DTransformNode
             this .modelMatrix .assign (this .getMatrix ()) .multRight (renderObject .getModelViewMatrix () .get ());
       }
 
-      X3DTransformNode_default().prototype.traverse.call (this, type, renderObject);
+      X3DTransformNode_default().prototype .traverse .call (this, type, renderObject);
    },
    groupTraverse (type, renderObject)
    {
@@ -745,7 +745,7 @@ Object .assign (Object .setPrototypeOf (HAnimJoint .prototype, (X3DTransformNode
             this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ());
       }
 
-      X3DTransformNode_default().prototype.groupTraverse.call (this, type, renderObject);
+      X3DTransformNode_default().prototype .groupTraverse .call (this, type, renderObject);
    },
 });
 
@@ -871,7 +871,7 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, (X3DChildNode_de
 {
    initialize ()
    {
-      X3DChildNode_default().prototype.initialize.call (this);
+      X3DChildNode_default().prototype .initialize .call (this);
    },
 });
 

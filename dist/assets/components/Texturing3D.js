@@ -1,7 +1,7 @@
 /* X_ITE v8.7.8 */(() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 238:
+/***/ 166:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -38,7 +38,7 @@ var Ib=[cx,_q,cr,Yr,as,fs,hs,Hu,Su,cx,cx,cx,cx,cx,cx,cx];var Jb=[dx,si,gi,Wh,Kh,
 
 /***/ }),
 
-/***/ 510:
+/***/ 458:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -72,7 +72,7 @@ var _a=[yj,od,ef,yj];var $a=[zj,Li,di,bi,Kb,Lb,Mb,Nb,Rc,Sc,Uc,jd,xd,Ye,lf,yd,zd,
 
 /***/ }),
 
-/***/ 237:
+/***/ 249:
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 /*! dicom-parser - 1.8.12 - 2023-02-20 | (c) 2017 Chris Hafey | https://github.com/cornerstonejs/dicomParser */
@@ -4028,7 +4028,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_zlib__;
 
 /***/ }),
 
-/***/ 999:
+/***/ 186:
 /***/ ((module) => {
 
 /* -*- tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- /
@@ -5183,7 +5183,7 @@ function decode(jpegData, userOpts = {}) {
 
 /***/ }),
 
-/***/ 14:
+/***/ 893:
 /***/ ((module) => {
 
 (function(f){if(true){module.exports=f()}else { var g; }})(function(){var define,module,exports;return (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c=undefined;if(!f&&c)return require(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u=undefined,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
@@ -7148,7 +7148,7 @@ Object .assign (Object .setPrototypeOf (X3DTexture3DNode .prototype, (X3DSingleT
 {
    initialize ()
    {
-      X3DSingleTextureNode_default().prototype.initialize.call (this);
+      X3DSingleTextureNode_default().prototype .initialize .call (this);
 
       this ._repeatS .addInterest ("updateTextureParameters", this);
       this ._repeatT .addInterest ("updateTextureParameters", this);
@@ -7215,7 +7215,7 @@ Object .assign (Object .setPrototypeOf (X3DTexture3DNode .prototype, (X3DSingleT
    },
    updateTextureParameters ()
    {
-      X3DSingleTextureNode_default().prototype.updateTextureParameters.call (this,
+      X3DSingleTextureNode_default().prototype .updateTextureParameters .call (this,
                                                                       this .target,
                                                                       this ._textureProperties .getValue (),
                                                                       this .texturePropertiesNode,
@@ -7314,7 +7314,7 @@ var X3DCast_default = /*#__PURE__*/__webpack_require__.n(X3DCast_namespaceObject
 
 function ComposedTexture3D (executionContext)
 {
-   Texturing3D_X3DTexture3DNode.call (this, executionContext);
+   Texturing3D_X3DTexture3DNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).ComposedTexture3D);
 
@@ -7324,11 +7324,11 @@ function ComposedTexture3D (executionContext)
    this .textureNodes = [ ];
 }
 
-Object .assign (Object .setPrototypeOf (ComposedTexture3D .prototype, Texturing3D_X3DTexture3DNode.prototype),
+Object .assign (Object .setPrototypeOf (ComposedTexture3D .prototype, Texturing3D_X3DTexture3DNode .prototype),
 {
    initialize ()
    {
-      Texturing3D_X3DTexture3DNode.prototype.initialize.call (this);
+      Texturing3D_X3DTexture3DNode .prototype .initialize .call (this);
 
       const gl = this .getBrowser () .getContext ();
 
@@ -7936,11 +7936,11 @@ const NRRDParser_default_ = NRRDParser;
 Namespace_default().set ("x_ite/Browser/Texturing3D/NRRDParser", NRRDParser_default_);
 /* harmony default export */ const Texturing3D_NRRDParser = (NRRDParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Texturing3D/DICOMParser.js
-/* provided dependency */ var dicomParser = __webpack_require__(237);
-/* provided dependency */ var JpegImage = __webpack_require__(999);
-/* provided dependency */ var jpeg = __webpack_require__(14);
-/* provided dependency */ var CharLS = __webpack_require__(238);
-/* provided dependency */ var OpenJPEG = __webpack_require__(510);
+/* provided dependency */ var dicomParser = __webpack_require__(249);
+/* provided dependency */ var JpegImage = __webpack_require__(186);
+/* provided dependency */ var jpeg = __webpack_require__(893);
+/* provided dependency */ var CharLS = __webpack_require__(166);
+/* provided dependency */ var OpenJPEG = __webpack_require__(458);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -9105,19 +9105,19 @@ var FileLoader_default = /*#__PURE__*/__webpack_require__.n(FileLoader_namespace
 
 function ImageTexture3D (executionContext)
 {
-   Texturing3D_X3DTexture3DNode.call (this, executionContext);
+   Texturing3D_X3DTexture3DNode .call (this, executionContext);
    X3DUrlObject_default().call (this, executionContext);
 
    this .addType ((X3DConstants_default()).ImageTexture3D);
 }
 
-Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, Texturing3D_X3DTexture3DNode.prototype),
+Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, Texturing3D_X3DTexture3DNode .prototype),
    (X3DUrlObject_default()).prototype,
 {
    initialize ()
    {
-      Texturing3D_X3DTexture3DNode.prototype.initialize.call (this);
-      X3DUrlObject_default().prototype.initialize.call (this);
+      Texturing3D_X3DTexture3DNode .prototype .initialize .call (this);
+      X3DUrlObject_default().prototype .initialize .call (this);
 
       this .requestImmediateLoad () .catch (Function .prototype);
    },
@@ -9183,8 +9183,8 @@ Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, Texturing3D_X
    },
    dispose ()
    {
-      X3DUrlObject_default().prototype.dispose.call (this);
-      Texturing3D_X3DTexture3DNode.prototype.dispose.call (this);
+      X3DUrlObject_default().prototype .dispose .call (this);
+      Texturing3D_X3DTexture3DNode .prototype .dispose .call (this);
    },
 });
 
@@ -9295,7 +9295,7 @@ var DEVELOPMENT_default = /*#__PURE__*/__webpack_require__.n(DEVELOPMENT_namespa
 
 function ImageTextureAtlas (executionContext)
 {
-   Texturing3D_X3DTexture3DNode.call (this, executionContext);
+   Texturing3D_X3DTexture3DNode .call (this, executionContext);
    X3DUrlObject_default().call (this, executionContext);
 
    this .addType ((X3DConstants_default()).ImageTextureAtlas);
@@ -9305,13 +9305,13 @@ function ImageTextureAtlas (executionContext)
    this .urlStack = new (Fields_default()).MFString ();
 }
 
-Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, Texturing3D_X3DTexture3DNode.prototype),
+Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, Texturing3D_X3DTexture3DNode .prototype),
    (X3DUrlObject_default()).prototype,
 {
    initialize ()
    {
-      Texturing3D_X3DTexture3DNode.prototype.initialize.call (this);
-      X3DUrlObject_default().prototype.initialize.call (this);
+      Texturing3D_X3DTexture3DNode .prototype .initialize .call (this);
+      X3DUrlObject_default().prototype .initialize .call (this);
 
       this .image .on ("load",        this .setImage .bind (this));
       this .image .on ("abort error", this .setError .bind (this));
@@ -9434,8 +9434,8 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, Texturing3
    },
    dispose ()
    {
-      X3DUrlObject_default().prototype.dispose.call (this);
-      Texturing3D_X3DTexture3DNode.prototype.dispose.call (this);
+      X3DUrlObject_default().prototype .dispose .call (this);
+      Texturing3D_X3DTexture3DNode .prototype .dispose .call (this);
    },
 });
 
@@ -9543,18 +9543,18 @@ Namespace_default().set ("x_ite/Components/Texturing3D/ImageTextureAtlas", Image
 
 function PixelTexture3D (executionContext)
 {
-   Texturing3D_X3DTexture3DNode.call (this, executionContext);
+   Texturing3D_X3DTexture3DNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).PixelTexture3D);
 
    this .addChildObjects ("loadState", new (Fields_default()).SFInt32 ((X3DConstants_default()).NOT_STARTED_STATE));
 }
 
-Object .assign (Object .setPrototypeOf (PixelTexture3D .prototype, Texturing3D_X3DTexture3DNode.prototype),
+Object .assign (Object .setPrototypeOf (PixelTexture3D .prototype, Texturing3D_X3DTexture3DNode .prototype),
 {
    initialize ()
    {
-      Texturing3D_X3DTexture3DNode.prototype.initialize.call (this);
+      Texturing3D_X3DTexture3DNode .prototype .initialize .call (this);
 
       this ._image .addInterest ("set_image__", this);
 
@@ -9784,7 +9784,7 @@ Object .assign (Object .setPrototypeOf (TextureCoordinate3D .prototype, (X3DSing
 {
    initialize ()
    {
-      X3DSingleTextureCoordinateNode_default().prototype.initialize.call (this);
+      X3DSingleTextureCoordinateNode_default().prototype .initialize .call (this);
 
       this ._point .addInterest ("set_point__", this);
 
@@ -9968,7 +9968,7 @@ Object .assign (Object .setPrototypeOf (TextureCoordinate4D .prototype, (X3DSing
 {
    initialize ()
    {
-      X3DSingleTextureCoordinateNode_default().prototype.initialize.call (this);
+      X3DSingleTextureCoordinateNode_default().prototype .initialize .call (this);
 
       this ._point .addInterest ("set_point__", this);
 
@@ -10168,7 +10168,7 @@ Object .assign (Object .setPrototypeOf (TextureTransform3D .prototype, (X3DSingl
 {
    initialize ()
    {
-      X3DSingleTextureTransformNode_default().prototype.initialize.call (this);
+      X3DSingleTextureTransformNode_default().prototype .initialize .call (this);
 
       this .addInterest ("eventsProcessed", this);
 
@@ -10319,7 +10319,7 @@ Object .assign (Object .setPrototypeOf (TextureTransformMatrix3D .prototype, (X3
 {
    initialize ()
    {
-      X3DSingleTextureTransformNode_default().prototype.initialize.call (this);
+      X3DSingleTextureTransformNode_default().prototype .initialize .call (this);
 
       this .addInterest ("eventsProcessed", this);
 

@@ -554,7 +554,7 @@ Object .assign (Object .setPrototypeOf (Rectangle2DOptions .prototype, (X3DBaseN
 {
    initialize ()
    {
-      X3DBaseNode_default().prototype.initialize.call (this);
+      X3DBaseNode_default().prototype .initialize .call (this);
    },
    getGeometry ()
    {
@@ -836,7 +836,7 @@ Object .assign (Object .setPrototypeOf (Arc2D .prototype, (X3DLineGeometryNode_d
 {
    set_live__ ()
    {
-      X3DLineGeometryNode_default().prototype.set_live__.call (this);
+      X3DLineGeometryNode_default().prototype .set_live__ .call (this);
 
       if (this .getLive () .getValue ())
          this .getBrowser () .getArc2DOptions () .addInterest ("requestRebuild", this);
@@ -1005,7 +1005,7 @@ Object .assign (Object .setPrototypeOf (ArcClose2D .prototype, (X3DGeometryNode_
 {
    set_live__ ()
    {
-      X3DGeometryNode_default().prototype.set_live__.call (this);
+      X3DGeometryNode_default().prototype .set_live__ .call (this);
 
       if (this .getLive () .getValue ())
          this .getBrowser () .getArcClose2DOptions () .addInterest ("requestRebuild", this);
@@ -1231,7 +1231,7 @@ Object .assign (Object .setPrototypeOf (Circle2D .prototype, (X3DLineGeometryNod
 {
    set_live__ ()
    {
-      X3DLineGeometryNode_default().prototype.set_live__.call (this);
+      X3DLineGeometryNode_default().prototype .set_live__ .call (this);
 
       if (this .getLive () .getValue ())
          this .getBrowser () .getCircle2DOptions () .addInterest ("requestRebuild", this);
@@ -1372,11 +1372,11 @@ Object .assign (Object .setPrototypeOf (Disk2D .prototype, (X3DGeometryNode_defa
 {
    initialize ()
    {
-      X3DGeometryNode_default().prototype.initialize.call (this);
+      X3DGeometryNode_default().prototype .initialize .call (this);
    },
    set_live__ ()
    {
-      X3DGeometryNode_default().prototype.set_live__.call (this);
+      X3DGeometryNode_default().prototype .set_live__ .call (this);
 
       if (this .getLive () .getValue ())
          this .getBrowser () .getDisk2DOptions () .addInterest ("requestRebuild", this);

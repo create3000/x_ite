@@ -242,13 +242,13 @@ Object .assign (Object .setPrototypeOf (DISEntityTypeMapping .prototype, (X3DInf
 {
    initialize ()
    {
-      X3DInfoNode_default().prototype.initialize.call (this);
-      X3DUrlObject_default().prototype.initialize.call (this);
+      X3DInfoNode_default().prototype .initialize .call (this);
+      X3DUrlObject_default().prototype .initialize .call (this);
    },
    dispose ()
    {
-      X3DUrlObject_default().prototype.dispose.call (this);
-      X3DInfoNode_default().prototype.dispose.call (this);
+      X3DUrlObject_default().prototype .dispose .call (this);
+      X3DInfoNode_default().prototype .dispose .call (this);
    },
 });
 
@@ -373,8 +373,8 @@ Object .assign (Object .setPrototypeOf (EspduTransform .prototype, (X3DGroupingN
 {
    initialize ()
    {
-      X3DGroupingNode_default().prototype.initialize.call (this);
-      X3DSensorNode_default().prototype.initialize.call (this);
+      X3DGroupingNode_default().prototype .initialize .call (this);
+      X3DSensorNode_default().prototype .initialize .call (this);
    },
 });
 
@@ -575,13 +575,13 @@ Object .assign (Object .setPrototypeOf (ReceiverPdu .prototype, (X3DSensorNode_d
 {
    initialize ()
    {
-      X3DSensorNode_default().prototype.initialize.call (this);
-      X3DBoundedObject_default().prototype.initialize.call (this);
+      X3DSensorNode_default().prototype .initialize .call (this);
+      X3DBoundedObject_default().prototype .initialize .call (this);
    },
    dispose ()
    {
-      X3DBoundedObject_default().prototype.dispose.call (this);
-      X3DSensorNode_default().prototype.dispose.call (this);
+      X3DBoundedObject_default().prototype .dispose .call (this);
+      X3DSensorNode_default().prototype .dispose .call (this);
    },
 });
 
@@ -719,13 +719,13 @@ Object .assign (Object .setPrototypeOf (SignalPdu .prototype, (X3DSensorNode_def
 {
    initialize ()
    {
-      X3DSensorNode_default().prototype.initialize.call (this);
-      X3DBoundedObject_default().prototype.initialize.call (this);
+      X3DSensorNode_default().prototype .initialize .call (this);
+      X3DBoundedObject_default().prototype .initialize .call (this);
    },
    dispose ()
    {
-      X3DBoundedObject_default().prototype.dispose.call (this);
-      X3DSensorNode_default().prototype.dispose.call (this);
+      X3DBoundedObject_default().prototype .dispose .call (this);
+      X3DSensorNode_default().prototype .dispose .call (this);
    },
 });
 
@@ -863,13 +863,13 @@ Object .assign (Object .setPrototypeOf (TransmitterPdu .prototype, (X3DSensorNod
 {
    initialize ()
    {
-      X3DSensorNode_default().prototype.initialize.call (this);
-      X3DBoundedObject_default().prototype.initialize.call (this);
+      X3DSensorNode_default().prototype .initialize .call (this);
+      X3DBoundedObject_default().prototype .initialize .call (this);
    },
    dispose ()
    {
-      X3DBoundedObject_default().prototype.dispose.call (this);
-      X3DSensorNode_default().prototype.dispose.call (this);
+      X3DBoundedObject_default().prototype .dispose .call (this);
+      X3DSensorNode_default().prototype .dispose .call (this);
    },
 });
 

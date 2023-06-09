@@ -199,7 +199,7 @@ Namespace_default().set ("x_ite/Components/CADGeometry/X3DProductStructureChildN
 function CADAssembly (executionContext)
 {
    X3DGroupingNode_default().call (this, executionContext);
-   CADGeometry_X3DProductStructureChildNode.call (this, executionContext);
+   CADGeometry_X3DProductStructureChildNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).CADAssembly);
 }
@@ -317,7 +317,7 @@ var TraverseType_default = /*#__PURE__*/__webpack_require__.n(TraverseType_names
 
 function CADFace (executionContext)
 {
-   CADGeometry_X3DProductStructureChildNode.call (this, executionContext);
+   CADGeometry_X3DProductStructureChildNode .call (this, executionContext);
    X3DBoundedObject_default().call (this, executionContext);
 
    this .addType ((X3DConstants_default()).CADFace);
@@ -327,13 +327,13 @@ function CADFace (executionContext)
    this .boundedObject = null;
 }
 
-Object .assign (Object .setPrototypeOf (CADFace .prototype, CADGeometry_X3DProductStructureChildNode.prototype),
+Object .assign (Object .setPrototypeOf (CADFace .prototype, CADGeometry_X3DProductStructureChildNode .prototype),
    (X3DBoundedObject_default()).prototype,
 {
    initialize ()
    {
-      CADGeometry_X3DProductStructureChildNode.prototype.initialize.call (this);
-      X3DBoundedObject_default().prototype.initialize.call (this);
+      CADGeometry_X3DProductStructureChildNode .prototype .initialize .call (this);
+      X3DBoundedObject_default().prototype .initialize .call (this);
 
       this ._shape .addInterest ("set_shape__", this);
 
@@ -469,8 +469,8 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, CADGeometry_X3DProdu
    },
    dispose ()
    {
-      X3DBoundedObject_default().prototype.dispose.call (this);
-      CADGeometry_X3DProductStructureChildNode.prototype.dispose.call (this);
+      X3DBoundedObject_default().prototype .dispose .call (this);
+      CADGeometry_X3DProductStructureChildNode .prototype .dispose .call (this);
    },
 });
 
@@ -684,7 +684,7 @@ var X3DTransformNode_default = /*#__PURE__*/__webpack_require__.n(X3DTransformNo
 function CADPart (executionContext)
 {
    X3DTransformNode_default().call (this, executionContext);
-   CADGeometry_X3DProductStructureChildNode.call (this, executionContext);
+   CADGeometry_X3DProductStructureChildNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).CADPart);
 }
@@ -811,7 +811,7 @@ Object .assign (Object .setPrototypeOf (IndexedQuadSet .prototype, (X3DComposedG
 {
    initialize ()
    {
-      X3DComposedGeometryNode_default().prototype.initialize.call (this);
+      X3DComposedGeometryNode_default().prototype .initialize .call (this);
 
       this ._set_index .addFieldInterest (this ._index);
    },
@@ -837,7 +837,7 @@ Object .assign (Object .setPrototypeOf (IndexedQuadSet .prototype, (X3DComposedG
 
       length -= length % 4;
 
-      X3DComposedGeometryNode_default().prototype.build.call (this, 4, length, 6, length / 4 * 6);
+      X3DComposedGeometryNode_default().prototype .build .call (this, 4, length, 6, length / 4 * 6);
    },
 });
 
@@ -973,7 +973,7 @@ Object .assign (Object .setPrototypeOf (QuadSet .prototype, (X3DComposedGeometry
 
       length -= length % 4;
 
-      X3DComposedGeometryNode_default().prototype.build.call (this, 4, length, 6, length / 4 * 6);
+      X3DComposedGeometryNode_default().prototype .build .call (this, 4, length, 6, length / 4 * 6);
    },
    createNormals (verticesPerPolygon, polygonsSize)
    {

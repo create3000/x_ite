@@ -187,7 +187,7 @@ Object .assign (Object .setPrototypeOf (X3DRigidJointNode .prototype, (X3DNode_d
 {
    initialize ()
    {
-      X3DNode_default().prototype.initialize.call (this);
+      X3DNode_default().prototype .initialize .call (this);
 
       this ._forceOutput .addInterest ("set_forceOutput__", this);
       this ._body1       .addInterest ("set_body1__",       this);
@@ -317,7 +317,7 @@ Object .assign (Object .setPrototypeOf (X3DRigidJointNode .prototype, (X3DNode_d
    {
       this .removeJoint ();
 
-      X3DNode_default().prototype.dispose.call (this);
+      X3DNode_default().prototype .dispose .call (this);
    },
 });
 
@@ -498,7 +498,7 @@ Namespace_default().set ("lib/ammojs/AmmoClass", AmmoClass_default_);
 
 function BallJoint (executionContext)
 {
-   RigidBodyPhysics_X3DRigidJointNode.call (this, executionContext);
+   RigidBodyPhysics_X3DRigidJointNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).BallJoint);
 
@@ -510,11 +510,11 @@ function BallJoint (executionContext)
    this .localAnchorPoint2 = new (Vector3_default()) (0, 0, 0);
 }
 
-Object .assign (Object .setPrototypeOf (BallJoint .prototype, RigidBodyPhysics_X3DRigidJointNode.prototype),
+Object .assign (Object .setPrototypeOf (BallJoint .prototype, RigidBodyPhysics_X3DRigidJointNode .prototype),
 {
    initialize ()
    {
-      RigidBodyPhysics_X3DRigidJointNode.prototype.initialize.call (this);
+      RigidBodyPhysics_X3DRigidJointNode .prototype .initialize .call (this);
 
       this ._anchorPoint .addInterest ("set_anchorPoint__", this);
    },
@@ -535,10 +535,10 @@ Object .assign (Object .setPrototypeOf (BallJoint .prototype, RigidBodyPhysics_X
       if (this .getBody2 () .getCollection () !== this .getCollection ())
          return;
 
-      this .joint = new AmmoClass.btPoint2PointConstraint (this .getBody1 () .getRigidBody (),
+      this .joint = new AmmoClass .btPoint2PointConstraint (this .getBody1 () .getRigidBody (),
                                                        this .getBody2 () .getRigidBody (),
-                                                       new AmmoClass.btVector3 (),
-                                                       new AmmoClass.btVector3 ());
+                                                       new AmmoClass .btVector3 (),
+                                                       new AmmoClass .btVector3 ());
 
       this .set_anchorPoint__ ();
 
@@ -552,7 +552,7 @@ Object .assign (Object .setPrototypeOf (BallJoint .prototype, RigidBodyPhysics_X
       if (this .getCollection ())
          this .getCollection () .getDynamicsWorld () .removeConstraint (this .joint);
 
-      AmmoClass.destroy (this .joint);
+      AmmoClass .destroy (this .joint);
       this .joint = null;
    },
    set_forceOutput__ ()
@@ -588,8 +588,8 @@ Object .assign (Object .setPrototypeOf (BallJoint .prototype, RigidBodyPhysics_X
          this .getInitialInverseMatrix1 () .multVecMatrix (localAnchorPoint1 .assign (this ._anchorPoint .getValue ()));
          this .getInitialInverseMatrix2 () .multVecMatrix (localAnchorPoint2 .assign (this ._anchorPoint .getValue ()));
 
-         this .joint .setPivotA (new AmmoClass.btVector3 (localAnchorPoint1 .x, localAnchorPoint1 .y, localAnchorPoint1 .z));
-         this .joint .setPivotB (new AmmoClass.btVector3 (localAnchorPoint2 .x, localAnchorPoint2 .y, localAnchorPoint2 .z));
+         this .joint .setPivotA (new AmmoClass .btVector3 (localAnchorPoint1 .x, localAnchorPoint1 .y, localAnchorPoint1 .z));
+         this .joint .setPivotB (new AmmoClass .btVector3 (localAnchorPoint2 .x, localAnchorPoint2 .y, localAnchorPoint2 .z));
       }
    },
    update1: (function ()
@@ -734,7 +734,7 @@ function X3DNBodyCollidableNode (executionContext)
 
    // Members
 
-   this .compoundShape  = new AmmoClass.btCompoundShape ()
+   this .compoundShape  = new AmmoClass .btCompoundShape ()
    this .offset         = new (Vector3_default()) (0, 0, 0);
    this .matrix         = new (Matrix4_default()) ();
 }
@@ -744,8 +744,8 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, (X3DC
 {
    initialize ()
    {
-      X3DChildNode_default().prototype.initialize.call (this);
-      X3DBoundedObject_default().prototype.initialize.call (this);
+      X3DChildNode_default().prototype .initialize .call (this);
+      X3DBoundedObject_default().prototype .initialize .call (this);
 
       this .addInterest ("eventsProcessed", this);
 
@@ -755,8 +755,8 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, (X3DC
    {
       var
          m = new (Matrix4_default()) (),
-         o = new AmmoClass.btVector3 (0, 0, 0),
-         l = new AmmoClass.btTransform ();
+         o = new AmmoClass .btVector3 (0, 0, 0),
+         l = new AmmoClass .btTransform ();
 
       return function ()
       {
@@ -810,8 +810,8 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, (X3DC
    },
    dispose ()
    {
-      X3DBoundedObject_default().prototype.dispose.call (this);
-      X3DChildNode_default().prototype.dispose.call (this);
+      X3DBoundedObject_default().prototype .dispose .call (this);
+      X3DChildNode_default().prototype .dispose .call (this);
    },
 });
 
@@ -895,18 +895,18 @@ var TraverseType_default = /*#__PURE__*/__webpack_require__.n(TraverseType_names
 
 function CollidableOffset (executionContext)
 {
-   RigidBodyPhysics_X3DNBodyCollidableNode.call (this, executionContext);
+   RigidBodyPhysics_X3DNBodyCollidableNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).CollidableOffset);
 
    this .collidableNode = null;
 }
 
-Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, RigidBodyPhysics_X3DNBodyCollidableNode.prototype),
+Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, RigidBodyPhysics_X3DNBodyCollidableNode .prototype),
 {
    initialize ()
    {
-      RigidBodyPhysics_X3DNBodyCollidableNode.prototype.initialize.call (this);
+      RigidBodyPhysics_X3DNBodyCollidableNode .prototype .initialize .call (this);
 
       this ._enabled    .addInterest ("set_collidableGeometry__", this);
       this ._collidable .addInterest ("set_collidable__",         this);
@@ -1162,7 +1162,7 @@ Namespace_default().set ("x_ite/Components/RigidBodyPhysics/CollidableOffset", C
 
 function CollidableShape (executionContext)
 {
-   RigidBodyPhysics_X3DNBodyCollidableNode.call (this, executionContext);
+   RigidBodyPhysics_X3DNBodyCollidableNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).CollidableShape);
 
@@ -1175,11 +1175,11 @@ function CollidableShape (executionContext)
    this .triangleMesh   = null;
 }
 
-Object .assign (Object .setPrototypeOf (CollidableShape .prototype, RigidBodyPhysics_X3DNBodyCollidableNode.prototype),
+Object .assign (Object .setPrototypeOf (CollidableShape .prototype, RigidBodyPhysics_X3DNBodyCollidableNode .prototype),
 {
    initialize ()
    {
-      RigidBodyPhysics_X3DNBodyCollidableNode.prototype.initialize.call (this);
+      RigidBodyPhysics_X3DNBodyCollidableNode .prototype .initialize .call (this);
 
       this ._enabled .addInterest ("set_collidableGeometry__", this);
       this ._shape   .addInterest ("set_shape__",              this);
@@ -1203,7 +1203,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, RigidBodyPhy
    },
    createConvexGeometry: (function ()
    {
-      var p = new AmmoClass.btVector3 ();
+      var p = new AmmoClass .btVector3 ();
 
       return function ()
       {
@@ -1212,7 +1212,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, RigidBodyPhy
          if (vertices .length === 0)
             return null;
 
-         var convexHull = new AmmoClass.btConvexHullShape ();
+         var convexHull = new AmmoClass .btConvexHullShape ();
 
          for (var i = 0, length = vertices .length; i < length; i += 4)
          {
@@ -1228,9 +1228,9 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, RigidBodyPhy
    createConcaveGeometry: (function ()
    {
       var
-         p1 = new AmmoClass.btVector3 (),
-         p2 = new AmmoClass.btVector3 (),
-         p3 = new AmmoClass.btVector3 ();
+         p1 = new AmmoClass .btVector3 (),
+         p2 = new AmmoClass .btVector3 (),
+         p3 = new AmmoClass .btVector3 ();
 
       return function ()
       {
@@ -1239,7 +1239,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, RigidBodyPhy
          if (vertices .length === 0)
             return null;
 
-         this .triangleMesh = new AmmoClass.btTriangleMesh ();
+         this .triangleMesh = new AmmoClass .btTriangleMesh ();
 
          for (var i = 0, length = vertices .length; i < length; i += 12)
          {
@@ -1250,7 +1250,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, RigidBodyPhy
             this .triangleMesh .addTriangle (p1, p2, p3);
          }
 
-         return new AmmoClass.btBvhTriangleMeshShape (this .triangleMesh, false);
+         return new AmmoClass .btBvhTriangleMeshShape (this .triangleMesh, false);
       };
    })(),
    set_shape__ ()
@@ -1333,8 +1333,8 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, RigidBodyPhy
    set_collidableGeometry__: (function ()
    {
       var
-         localScaling   = new AmmoClass.btVector3 (),
-         defaultScaling = new AmmoClass.btVector3 (1, 1, 1);
+         localScaling   = new AmmoClass .btVector3 (),
+         defaultScaling = new AmmoClass .btVector3 (1, 1, 1);
 
       return function ()
       {
@@ -1359,7 +1359,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, RigidBodyPhy
                         box  = this .geometryNode,
                         size = box ._size .getValue ();
 
-                     this .collisionShape = new AmmoClass.btBoxShape (new AmmoClass.btVector3 (size .x / 2, size .y / 2, size .z / 2));
+                     this .collisionShape = new AmmoClass .btBoxShape (new AmmoClass .btVector3 (size .x / 2, size .y / 2, size .z / 2));
                      break;
                   }
                   case (X3DConstants_default()).Cone:
@@ -1367,7 +1367,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, RigidBodyPhy
                      var cone = this .geometryNode;
 
                      if (cone ._side .getValue () && cone ._bottom .getValue ())
-                        this .collisionShape = new AmmoClass.btConeShape (cone ._bottomRadius .getValue (), cone ._height .getValue ());
+                        this .collisionShape = new AmmoClass .btConeShape (cone ._bottomRadius .getValue (), cone ._height .getValue ());
                      else
                         this .collisionShape = this .createConcaveGeometry ();
 
@@ -1381,7 +1381,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, RigidBodyPhy
                         height1_2 = cylinder ._height .getValue () * 0.5;
 
                      if (cylinder ._side .getValue () && cylinder ._top .getValue () && cylinder ._bottom .getValue ())
-                        this .collisionShape = new AmmoClass.btCylinderShape (new AmmoClass.btVector3 (radius, height1_2, radius));
+                        this .collisionShape = new AmmoClass .btCylinderShape (new AmmoClass .btVector3 (radius, height1_2, radius));
                      else
                         this .collisionShape = this .createConcaveGeometry ();
 
@@ -1396,7 +1396,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, RigidBodyPhy
                         var
                            min         = Number .POSITIVE_INFINITY,
                            max         = Number .NEGATIVE_INFINITY,
-                           heightField = this .heightField = AmmoClass._malloc (4 * elevationGrid ._xDimension .getValue () * elevationGrid ._zDimension .getValue ()),
+                           heightField = this .heightField = AmmoClass ._malloc (4 * elevationGrid ._xDimension .getValue () * elevationGrid ._zDimension .getValue ()),
                            i4          = 0;
 
                         for (var i = 0, length = elevationGrid ._height .length; i < length; ++ i)
@@ -1406,12 +1406,12 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, RigidBodyPhy
                            min = Math .min (min, value);
                            max = Math .max (max, value);
 
-                           AmmoClass.HEAPF32 [heightField + i4 >>> 2] = elevationGrid ._height [i];
+                           AmmoClass .HEAPF32 [heightField + i4 >>> 2] = elevationGrid ._height [i];
 
                            i4 += 4;
                         }
 
-                        this .collisionShape = new AmmoClass.btHeightfieldTerrainShape (elevationGrid ._xDimension .getValue (),
+                        this .collisionShape = new AmmoClass .btHeightfieldTerrainShape (elevationGrid ._xDimension .getValue (),
                                                                                     elevationGrid ._zDimension .getValue (),
                                                                                     heightField,
                                                                                     1,
@@ -1421,7 +1421,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, RigidBodyPhy
                                                                                     "PHY_FLOAT",
                                                                                     true);
 
-                        this .collisionShape .setLocalScaling (new AmmoClass.btVector3 (elevationGrid ._xSpacing .getValue (), 1, elevationGrid ._zSpacing .getValue ()));
+                        this .collisionShape .setLocalScaling (new AmmoClass .btVector3 (elevationGrid ._xSpacing .getValue (), 1, elevationGrid ._zSpacing .getValue ()));
 
                         this .setOffset (elevationGrid ._xSpacing .getValue () * (elevationGrid ._xDimension .getValue () - 1) * 0.5,
                                          (min + max) * 0.5,
@@ -1434,7 +1434,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, RigidBodyPhy
                   {
                      var sphere = this .geometryNode;
 
-                     this .collisionShape = new AmmoClass.btSphereShape (sphere ._radius .getValue ());
+                     this .collisionShape = new AmmoClass .btSphereShape (sphere ._radius .getValue ());
                      break;
                   }
                   case (X3DConstants_default()).X3DGeometryNode:
@@ -1474,19 +1474,19 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, RigidBodyPhy
       if (this .collisionShape)
       {
          this .getCompoundShape () .removeChildShapeByIndex (0);
-         AmmoClass.destroy (this .collisionShape);
+         AmmoClass .destroy (this .collisionShape);
          this .collisionShape = null;
       }
 
       if (this .heightField)
       {
-         AmmoClass._free (this .heightField);
+         AmmoClass ._free (this .heightField);
          this .heightField = null;
       }
 
       if (this .triangleMesh)
       {
-         AmmoClass.destroy (this .triangleMesh);
+         AmmoClass .destroy (this .triangleMesh);
          this .triangleMesh = null;
       }
    },
@@ -1557,7 +1557,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, RigidBodyPhy
    {
       this .removeCollidableGeometry ();
 
-      RigidBodyPhysics_X3DNBodyCollidableNode.prototype.dispose.call (this);
+      RigidBodyPhysics_X3DNBodyCollidableNode .prototype .dispose .call (this);
    },
 });
 
@@ -1748,7 +1748,7 @@ Object .assign (Object .setPrototypeOf (CollisionCollection .prototype, (X3DChil
 {
    initialize ()
    {
-      X3DChildNode_default().prototype.initialize.call (this);
+      X3DChildNode_default().prototype .initialize .call (this);
 
       this ._appliedParameters .addInterest ("set_appliedParameters__", this);
       this ._collidables       .addInterest ("set_collidables__",       this);
@@ -1767,15 +1767,15 @@ Object .assign (Object .setPrototypeOf (CollisionCollection .prototype, (X3DChil
    set_appliedParameters__: (function ()
    {
       var appliedParametersIndex = new Map ([
-         ["BOUNCE",                 RigidBodyPhysics_AppliedParametersType.BOUNCE],
-         ["USER_FRICTION",          RigidBodyPhysics_AppliedParametersType.USER_FRICTION],
-         ["FRICTION_COEFFICIENT-2", RigidBodyPhysics_AppliedParametersType.FRICTION_COEFFICIENT_2],
-         ["ERROR_REDUCTION",        RigidBodyPhysics_AppliedParametersType.ERROR_REDUCTION],
-         ["CONSTANT_FORCE",         RigidBodyPhysics_AppliedParametersType.CONSTANT_FORCE],
-         ["SPEED-1",                RigidBodyPhysics_AppliedParametersType.SPEED_1],
-         ["SPEED-2",                RigidBodyPhysics_AppliedParametersType.SPEED_2],
-         ["SLIP-1",                 RigidBodyPhysics_AppliedParametersType.SLIP_1],
-         ["SLIP-2",                 RigidBodyPhysics_AppliedParametersType.SLIP_2],
+         ["BOUNCE",                 RigidBodyPhysics_AppliedParametersType .BOUNCE],
+         ["USER_FRICTION",          RigidBodyPhysics_AppliedParametersType .USER_FRICTION],
+         ["FRICTION_COEFFICIENT-2", RigidBodyPhysics_AppliedParametersType .FRICTION_COEFFICIENT_2],
+         ["ERROR_REDUCTION",        RigidBodyPhysics_AppliedParametersType .ERROR_REDUCTION],
+         ["CONSTANT_FORCE",         RigidBodyPhysics_AppliedParametersType .CONSTANT_FORCE],
+         ["SPEED-1",                RigidBodyPhysics_AppliedParametersType .SPEED_1],
+         ["SPEED-2",                RigidBodyPhysics_AppliedParametersType .SPEED_2],
+         ["SLIP-1",                 RigidBodyPhysics_AppliedParametersType .SLIP_1],
+         ["SLIP-2",                 RigidBodyPhysics_AppliedParametersType .SLIP_2],
       ]);
 
       return function ()
@@ -1965,7 +1965,7 @@ Object .assign (Object .setPrototypeOf (CollisionSensor .prototype, (X3DSensorNo
 {
    initialize ()
    {
-      X3DSensorNode_default().prototype.initialize.call (this);
+      X3DSensorNode_default().prototype .initialize .call (this);
 
       this .getLive () .addInterest ("set_live__", this);
 
@@ -2251,13 +2251,13 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollisionSpaceNode .prototype, (
 {
    initialize ()
    {
-      X3DNode_default().prototype.initialize.call (this);
-      X3DBoundedObject_default().prototype.initialize.call (this);
+      X3DNode_default().prototype .initialize .call (this);
+      X3DBoundedObject_default().prototype .initialize .call (this);
    },
    dispose ()
    {
-      X3DBoundedObject_default().prototype.dispose.call (this);
-      X3DNode_default().prototype.dispose.call (this);
+      X3DBoundedObject_default().prototype .dispose .call (this);
+      X3DNode_default().prototype .dispose .call (this);
    },
 });
 
@@ -2337,7 +2337,7 @@ Namespace_default().set ("x_ite/Components/RigidBodyPhysics/X3DNBodyCollisionSpa
 
 function CollisionSpace (executionContext)
 {
-   RigidBodyPhysics_X3DNBodyCollisionSpaceNode.call (this, executionContext);
+   RigidBodyPhysics_X3DNBodyCollisionSpaceNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).CollisionSpace);
 
@@ -2345,11 +2345,11 @@ function CollisionSpace (executionContext)
    this .collisionSpaceNodes = [ ];
 }
 
-Object .assign (Object .setPrototypeOf (CollisionSpace .prototype, RigidBodyPhysics_X3DNBodyCollisionSpaceNode.prototype),
+Object .assign (Object .setPrototypeOf (CollisionSpace .prototype, RigidBodyPhysics_X3DNBodyCollisionSpaceNode .prototype),
 {
    initialize ()
    {
-      RigidBodyPhysics_X3DNBodyCollisionSpaceNode.prototype.initialize.call (this);
+      RigidBodyPhysics_X3DNBodyCollisionSpaceNode .prototype .initialize .call (this);
 
       this ._collidables .addInterest ("set_collidables__", this);
 
@@ -2652,7 +2652,7 @@ var Rotation4_default = /*#__PURE__*/__webpack_require__.n(Rotation4_namespaceOb
 
 function DoubleAxisHingeJoint (executionContext)
 {
-   RigidBodyPhysics_X3DRigidJointNode.call (this, executionContext);
+   RigidBodyPhysics_X3DRigidJointNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).DoubleAxisHingeJoint);
 
@@ -2672,11 +2672,11 @@ function DoubleAxisHingeJoint (executionContext)
    this .localAxis2        = new (Vector3_default()) (0, 0, 0);
 }
 
-Object .assign (Object .setPrototypeOf (DoubleAxisHingeJoint .prototype, RigidBodyPhysics_X3DRigidJointNode.prototype),
+Object .assign (Object .setPrototypeOf (DoubleAxisHingeJoint .prototype, RigidBodyPhysics_X3DRigidJointNode .prototype),
 {
    initialize ()
    {
-      RigidBodyPhysics_X3DRigidJointNode.prototype.initialize.call (this);
+      RigidBodyPhysics_X3DRigidJointNode .prototype .initialize .call (this);
 
       this ._anchorPoint .addInterest ("set_joint__", this);
       this ._axis1       .addInterest ("set_joint__", this);
@@ -2717,12 +2717,12 @@ Object .assign (Object .setPrototypeOf (DoubleAxisHingeJoint .prototype, RigidBo
          this .getInitialInverseMatrix1 () .multDirMatrix (localAxis1) .normalize ();
          this .getInitialInverseMatrix2 () .multDirMatrix (localAxis2) .normalize ();
 
-         this .joint = new AmmoClass.btHingeConstraint (this .getBody1 () .getRigidBody (),
+         this .joint = new AmmoClass .btHingeConstraint (this .getBody1 () .getRigidBody (),
                                                     this .getBody2 () .getRigidBody (),
-                                                    new AmmoClass.btVector3 (localAnchorPoint1 .x, localAnchorPoint1 .y, localAnchorPoint1 .z),
-                                                    new AmmoClass.btVector3 (localAnchorPoint2 .x, localAnchorPoint2 .y, localAnchorPoint2 .z),
-                                                    new AmmoClass.btVector3 (localAxis1 .x, localAxis1 .y, localAxis1 .z),
-                                                    new AmmoClass.btVector3 (localAxis2 .x, localAxis2 .y, localAxis2 .z),
+                                                    new AmmoClass .btVector3 (localAnchorPoint1 .x, localAnchorPoint1 .y, localAnchorPoint1 .z),
+                                                    new AmmoClass .btVector3 (localAnchorPoint2 .x, localAnchorPoint2 .y, localAnchorPoint2 .z),
+                                                    new AmmoClass .btVector3 (localAxis1 .x, localAxis1 .y, localAxis1 .z),
+                                                    new AmmoClass .btVector3 (localAxis2 .x, localAxis2 .y, localAxis2 .z),
                                                     false);
 
          this .getCollection () .getDynamicsWorld () .addConstraint (this .joint, true);
@@ -2736,7 +2736,7 @@ Object .assign (Object .setPrototypeOf (DoubleAxisHingeJoint .prototype, RigidBo
       if (this .getCollection ())
          this .getCollection () .getDynamicsWorld () .removeConstraint (this .joint);
 
-      AmmoClass.destroy (this .joint);
+      AmmoClass .destroy (this .joint);
       this .joint = null;
    },
    set_forceOutput__ ()
@@ -2946,7 +2946,7 @@ Namespace_default().set ("x_ite/Components/RigidBodyPhysics/DoubleAxisHingeJoint
 
 function MotorJoint (executionContext)
 {
-   RigidBodyPhysics_X3DRigidJointNode.call (this, executionContext);
+   RigidBodyPhysics_X3DRigidJointNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).MotorJoint);
 
@@ -2963,7 +2963,7 @@ function MotorJoint (executionContext)
    this ._motor3AngleRate .setUnit ("angularRate");
 }
 
-Object .setPrototypeOf (MotorJoint .prototype, RigidBodyPhysics_X3DRigidJointNode.prototype);
+Object .setPrototypeOf (MotorJoint .prototype, RigidBodyPhysics_X3DRigidJointNode .prototype);
 
 Object .defineProperties (MotorJoint,
 {
@@ -3109,10 +3109,10 @@ function RigidBody (executionContext)
    this ._disableLinearSpeed  .setUnit ("speed");
    this ._disableAngularSpeed .setUnit ("angularRate");
 
-   this .compoundShape      = new AmmoClass.btCompoundShape ();
-   this .motionState        = new AmmoClass.btDefaultMotionState ();
-   this .constructionInfo   = new AmmoClass.btRigidBodyConstructionInfo (0, this .motionState, this .compoundShape);
-   this .rigidBody          = new AmmoClass.btRigidBody (this .constructionInfo);
+   this .compoundShape      = new AmmoClass .btCompoundShape ();
+   this .motionState        = new AmmoClass .btDefaultMotionState ();
+   this .constructionInfo   = new AmmoClass .btRigidBodyConstructionInfo (0, this .motionState, this .compoundShape);
+   this .rigidBody          = new AmmoClass .btRigidBody (this .constructionInfo);
    this .geometryNodes      = [ ];
    this .otherGeometryNodes = [ ];
    this .matrix             = new (Matrix4_default()) ();
@@ -3124,7 +3124,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, (X3DNode_default()
 {
    initialize ()
    {
-      X3DNode_default().prototype.initialize.call (this);
+      X3DNode_default().prototype .initialize .call (this);
 
       this ._linearVelocity       .addInterest ("set_linearVelocity__",     this);
       this ._angularVelocity      .addInterest ("set_angularVelocity__",    this);
@@ -3181,11 +3181,11 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, (X3DNode_default()
    set_transform__: (function ()
    {
       var
-         o  = new AmmoClass.btVector3 (0, 0, 0),
-         t  = new AmmoClass.btTransform (),
+         o  = new AmmoClass .btVector3 (0, 0, 0),
+         t  = new AmmoClass .btTransform (),
          im = new (Matrix4_default()) (),
-         it = new AmmoClass.btTransform (),
-         io = new AmmoClass.btVector3 (0, 0, 0);
+         it = new AmmoClass .btTransform (),
+         io = new AmmoClass .btVector3 (0, 0, 0);
 
       return function ()
       {
@@ -3231,7 +3231,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, (X3DNode_default()
    })(),
    set_linearVelocity__: (function ()
    {
-      var lv = new AmmoClass.btVector3 (0, 0, 0);
+      var lv = new AmmoClass .btVector3 (0, 0, 0);
 
       return function ()
       {
@@ -3246,7 +3246,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, (X3DNode_default()
    }) (),
    set_angularVelocity__: (function ()
    {
-      var av = new AmmoClass.btVector3 (0, 0, 0);
+      var av = new AmmoClass .btVector3 (0, 0, 0);
 
       return function ()
       {
@@ -3261,7 +3261,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, (X3DNode_default()
    })(),
    set_finiteRotationAxis__: (function ()
    {
-      var angularFactor = new AmmoClass.btVector3 (1, 1, 1);
+      var angularFactor = new AmmoClass .btVector3 (1, 1, 1);
 
       return function ()
       {
@@ -3285,9 +3285,9 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, (X3DNode_default()
    set_centerOfMass__: (function ()
    {
       var
-         rotation     = new AmmoClass.btQuaternion (0, 0, 0, 1),
-         origin       = new AmmoClass.btVector3 (0, 0, 0),
-         centerOfMass = new AmmoClass.btTransform (rotation, origin);
+         rotation     = new AmmoClass .btQuaternion (0, 0, 0, 1),
+         origin       = new AmmoClass .btVector3 (0, 0, 0),
+         centerOfMass = new AmmoClass .btTransform (rotation, origin);
 
       return function ()
       {
@@ -3299,7 +3299,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, (X3DNode_default()
    })(),
    set_massProps__: (function ()
    {
-      var localInertia = new AmmoClass.btVector3 (0, 0, 0);
+      var localInertia = new AmmoClass .btVector3 (0, 0, 0);
 
       return function ()
       {
@@ -3405,7 +3405,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, (X3DNode_default()
    },
    set_compoundShape__: (function ()
    {
-      var transform = new AmmoClass.btTransform ();
+      var transform = new AmmoClass .btTransform ();
 
       return function ()
       {
@@ -3432,10 +3432,10 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, (X3DNode_default()
    applyForces: (function ()
    {
       var
-         g = new AmmoClass.btVector3 (0, 0, 0),
-         f = new AmmoClass.btVector3 (0, 0, 0),
-         t = new AmmoClass.btVector3 (0, 0, 0),
-         z = new AmmoClass.btVector3 (0, 0, 0);
+         g = new AmmoClass .btVector3 (0, 0, 0),
+         f = new AmmoClass .btVector3 (0, 0, 0),
+         t = new AmmoClass .btVector3 (0, 0, 0),
+         z = new AmmoClass .btVector3 (0, 0, 0);
 
       return function (gravity)
       {
@@ -3458,7 +3458,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, (X3DNode_default()
    update: (function ()
    {
       var
-         transform       = new AmmoClass.btTransform (),
+         transform       = new AmmoClass .btTransform (),
          position        = new (Vector3_default()) (0, 0, 0),
          quaternion      = new (Quaternion_default()) (0, 0, 0, 1),
          orientation     = new (Rotation4_default()) (),
@@ -3485,12 +3485,12 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, (X3DNode_default()
    })(),
    dispose ()
    {
-      AmmoClass.destroy (this .rigidBody);
-      AmmoClass.destroy (this .constructionInfo);
-      AmmoClass.destroy (this .motionState);
-      AmmoClass.destroy (this .compoundShape);
+      AmmoClass .destroy (this .rigidBody);
+      AmmoClass .destroy (this .constructionInfo);
+      AmmoClass .destroy (this .motionState);
+      AmmoClass .destroy (this .compoundShape);
 
-      X3DNode_default().prototype.dispose.call (this);
+      X3DNode_default().prototype .dispose .call (this);
    },
 });
 
@@ -3627,11 +3627,11 @@ function RigidBodyCollection (executionContext)
 
    // Members
 
-   this .broadphase             = new AmmoClass.btDbvtBroadphase ();
-   this .collisionConfiguration = new AmmoClass.btDefaultCollisionConfiguration ();
-   this .dispatcher             = new AmmoClass.btCollisionDispatcher (this .collisionConfiguration);
-   this .solver                 = new AmmoClass.btSequentialImpulseConstraintSolver ();
-   this .dynamicsWorld          = new AmmoClass.btDiscreteDynamicsWorld (this .dispatcher, this .broadphase, this .solver, this .collisionConfiguration);
+   this .broadphase             = new AmmoClass .btDbvtBroadphase ();
+   this .collisionConfiguration = new AmmoClass .btDefaultCollisionConfiguration ();
+   this .dispatcher             = new AmmoClass .btCollisionDispatcher (this .collisionConfiguration);
+   this .solver                 = new AmmoClass .btSequentialImpulseConstraintSolver ();
+   this .dynamicsWorld          = new AmmoClass .btDiscreteDynamicsWorld (this .dispatcher, this .broadphase, this .solver, this .collisionConfiguration);
    this .deltaTime              = 0;
    this .colliderNode           = null;
    this .bodyNodes              = [ ];
@@ -3645,7 +3645,7 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, (X3DChil
 {
    initialize ()
    {
-      X3DChildNode_default().prototype.initialize.call (this);
+      X3DChildNode_default().prototype .initialize .call (this);
 
       this .getLive () .addInterest ("set_enabled__", this);
 
@@ -3688,7 +3688,7 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, (X3DChil
    },
    set_gravity__: (function ()
    {
-      var gravity = new AmmoClass.btVector3 (0, 0, 0);
+      var gravity = new AmmoClass .btVector3 (0, 0, 0);
 
       return function ()
       {
@@ -3716,7 +3716,7 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, (X3DChil
 
       if (colliderNode && colliderNode ._enabled .getValue ())
       {
-         if (colliderNode .getAppliedParameters () .has (RigidBodyPhysics_AppliedParametersType.BOUNCE))
+         if (colliderNode .getAppliedParameters () .has (RigidBodyPhysics_AppliedParametersType .BOUNCE))
          {
             for (var i = 0, length = bodyNodes .length; i < length; ++ i)
             {
@@ -3739,7 +3739,7 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, (X3DChil
    {
       if (this .colliderNode && this .colliderNode ._enabled .getValue ())
       {
-         if (this .colliderNode .getAppliedParameters () .has (RigidBodyPhysics_AppliedParametersType.FRICTION_COEFFICIENT_2))
+         if (this .colliderNode .getAppliedParameters () .has (RigidBodyPhysics_AppliedParametersType .FRICTION_COEFFICIENT_2))
          {
             for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
             {
@@ -4008,7 +4008,7 @@ Namespace_default().set ("x_ite/Components/RigidBodyPhysics/RigidBodyCollection"
 
 function SingleAxisHingeJoint (executionContext)
 {
-   RigidBodyPhysics_X3DRigidJointNode.call (this, executionContext);
+   RigidBodyPhysics_X3DRigidJointNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).SingleAxisHingeJoint);
 
@@ -4026,11 +4026,11 @@ function SingleAxisHingeJoint (executionContext)
    this .localAnchorPoint2 = new (Vector3_default()) (0, 0, 0);
 }
 
-Object .assign (Object .setPrototypeOf (SingleAxisHingeJoint .prototype, RigidBodyPhysics_X3DRigidJointNode.prototype),
+Object .assign (Object .setPrototypeOf (SingleAxisHingeJoint .prototype, RigidBodyPhysics_X3DRigidJointNode .prototype),
 {
    initialize ()
    {
-      RigidBodyPhysics_X3DRigidJointNode.prototype.initialize.call (this);
+      RigidBodyPhysics_X3DRigidJointNode .prototype .initialize .call (this);
 
       this ._anchorPoint .addInterest ("set_joint__", this);
       this ._axis        .addInterest ("set_joint__", this);
@@ -4072,12 +4072,12 @@ Object .assign (Object .setPrototypeOf (SingleAxisHingeJoint .prototype, RigidBo
          this .getInitialInverseMatrix1 () .multDirMatrix (localAxis1) .normalize ();
          this .getInitialInverseMatrix2 () .multDirMatrix (localAxis2) .normalize ();
 
-         this .joint = new AmmoClass.btHingeConstraint (this .getBody1 () .getRigidBody (),
+         this .joint = new AmmoClass .btHingeConstraint (this .getBody1 () .getRigidBody (),
                                                     this .getBody2 () .getRigidBody (),
-                                                    new AmmoClass.btVector3 (localAnchorPoint1 .x, localAnchorPoint1 .y, localAnchorPoint1 .z),
-                                                    new AmmoClass.btVector3 (localAnchorPoint2 .x, localAnchorPoint2 .y, localAnchorPoint2 .z),
-                                                    new AmmoClass.btVector3 (localAxis1 .x, localAxis1 .y, localAxis1 .z),
-                                                    new AmmoClass.btVector3 (localAxis2 .x, localAxis2 .y, localAxis2 .z),
+                                                    new AmmoClass .btVector3 (localAnchorPoint1 .x, localAnchorPoint1 .y, localAnchorPoint1 .z),
+                                                    new AmmoClass .btVector3 (localAnchorPoint2 .x, localAnchorPoint2 .y, localAnchorPoint2 .z),
+                                                    new AmmoClass .btVector3 (localAxis1 .x, localAxis1 .y, localAxis1 .z),
+                                                    new AmmoClass .btVector3 (localAxis2 .x, localAxis2 .y, localAxis2 .z),
                                                     false);
 
          this .getCollection () .getDynamicsWorld () .addConstraint (this .joint, true);
@@ -4090,7 +4090,7 @@ Object .assign (Object .setPrototypeOf (SingleAxisHingeJoint .prototype, RigidBo
          if (this .getCollection ())
             this .getCollection () .getDynamicsWorld () .removeConstraint (this .joint);
 
-         AmmoClass.destroy (this .joint);
+         AmmoClass .destroy (this .joint);
          this .joint = null;
       }
    },
@@ -4267,7 +4267,7 @@ Namespace_default().set ("x_ite/Components/RigidBodyPhysics/SingleAxisHingeJoint
 
 function SliderJoint (executionContext)
 {
-   RigidBodyPhysics_X3DRigidJointNode.call (this, executionContext);
+   RigidBodyPhysics_X3DRigidJointNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).SliderJoint);
 
@@ -4281,11 +4281,11 @@ function SliderJoint (executionContext)
    this .outputs = { };
 }
 
-Object .assign (Object .setPrototypeOf (SliderJoint .prototype, RigidBodyPhysics_X3DRigidJointNode.prototype),
+Object .assign (Object .setPrototypeOf (SliderJoint .prototype, RigidBodyPhysics_X3DRigidJointNode .prototype),
 {
    initialize ()
    {
-      RigidBodyPhysics_X3DRigidJointNode.prototype.initialize.call (this);
+      RigidBodyPhysics_X3DRigidJointNode .prototype .initialize .call (this);
 
       this ._axis          .addInterest ("set_joint__",       this);
       this ._minSeparation .addInterest ("set_separation__",  this);
@@ -4297,9 +4297,9 @@ Object .assign (Object .setPrototypeOf (SliderJoint .prototype, RigidBodyPhysics
          axisRotation = new (Rotation4_default()) (),
          matrixA      = new (Matrix4_default()) (),
          matrixB      = new (Matrix4_default()) (),
-         origin       = new AmmoClass.btVector3 (0, 0, 0),
-         frameInA     = new AmmoClass.btTransform (),
-         frameInB     = new AmmoClass.btTransform ();
+         origin       = new AmmoClass .btVector3 (0, 0, 0),
+         frameInA     = new AmmoClass .btTransform (),
+         frameInB     = new AmmoClass .btTransform ();
 
       return function ()
       {
@@ -4339,7 +4339,7 @@ Object .assign (Object .setPrototypeOf (SliderJoint .prototype, RigidBodyPhysics
 
          frameInB .setOrigin (origin);
 
-         this .joint = new AmmoClass.btSliderConstraint (this .getBody1 () .getRigidBody (),
+         this .joint = new AmmoClass .btSliderConstraint (this .getBody1 () .getRigidBody (),
                                                      this .getBody2 () .getRigidBody (),
                                                      frameInA,
                                                      frameInB,
@@ -4361,7 +4361,7 @@ Object .assign (Object .setPrototypeOf (SliderJoint .prototype, RigidBodyPhysics
       if (this .getCollection ())
          this .getCollection () .getDynamicsWorld () .removeConstraint (this .joint);
 
-      AmmoClass.destroy (this .joint);
+      AmmoClass .destroy (this .joint);
       this .joint = null;
    },
    set_forceOutput__ ()
@@ -4499,7 +4499,7 @@ Namespace_default().set ("x_ite/Components/RigidBodyPhysics/SliderJoint", Slider
 
 function UniversalJoint (executionContext)
 {
-   RigidBodyPhysics_X3DRigidJointNode.call (this, executionContext);
+   RigidBodyPhysics_X3DRigidJointNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).UniversalJoint);
 
@@ -4510,7 +4510,7 @@ function UniversalJoint (executionContext)
    this ._body2AnchorPoint .setUnit ("length");
 }
 
-Object .setPrototypeOf (UniversalJoint .prototype, RigidBodyPhysics_X3DRigidJointNode.prototype);
+Object .setPrototypeOf (UniversalJoint .prototype, RigidBodyPhysics_X3DRigidJointNode .prototype);
 
 Object .defineProperties (UniversalJoint,
 {

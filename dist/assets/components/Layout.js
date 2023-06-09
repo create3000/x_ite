@@ -404,7 +404,7 @@ const
 
 function Layout (executionContext)
 {
-   Layout_X3DLayoutNode.call (this, executionContext);
+   Layout_X3DLayoutNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).Layout);
 
@@ -426,7 +426,7 @@ function Layout (executionContext)
    this .matrix          = new (Matrix4_default()) ();
 }
 
-Object .assign (Object .setPrototypeOf (Layout .prototype, Layout_X3DLayoutNode.prototype),
+Object .assign (Object .setPrototypeOf (Layout .prototype, Layout_X3DLayoutNode .prototype),
 {
    viewportPixel: new (Vector2_default()) (0, 0),
    pixelSize: new (Vector2_default()) (0, 0),
@@ -439,7 +439,7 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, Layout_X3DLayoutNode.
    modelViewMatrix: new (Matrix4_default()) (),
    initialize ()
    {
-      Layout_X3DLayoutNode.prototype.initialize.call (this);
+      Layout_X3DLayoutNode .prototype .initialize .call (this);
 
       this ._align       .addInterest ("set_align__", this);
       this ._offsetUnits .addInterest ("set_offsetUnits__", this);
@@ -1057,7 +1057,7 @@ Object .assign (Object .setPrototypeOf (LayoutGroup .prototype, (X3DGroupingNode
 {
    initialize ()
    {
-      X3DGroupingNode_default().prototype.initialize.call (this);
+      X3DGroupingNode_default().prototype .initialize .call (this);
 
       this ._viewport .addInterest ("set_viewport__", this);
       this ._layout   .addInterest ("set_layout__", this);
@@ -1075,7 +1075,7 @@ Object .assign (Object .setPrototypeOf (LayoutGroup .prototype, (X3DGroupingNode
    },
    getBBox (bbox, shadows)
    {
-      return X3DGroupingNode_default().prototype.getBBox.call (this, bbox, shadows) .multRight (this .getMatrix ());
+      return X3DGroupingNode_default().prototype .getBBox .call (this, bbox, shadows) .multRight (this .getMatrix ());
    },
    getMatrix ()
    {
@@ -1111,14 +1111,14 @@ Object .assign (Object .setPrototypeOf (LayoutGroup .prototype, (X3DGroupingNode
                modelViewMatrix .pushMatrix (this .screenMatrix);
                renderObject .getLayouts () .push (this .layoutNode);
 
-               X3DGroupingNode_default().prototype.traverse.call (this, type, renderObject);
+               X3DGroupingNode_default().prototype .traverse .call (this, type, renderObject);
 
                renderObject .getLayouts () .pop ();
                modelViewMatrix .pop ();
             }
             else
             {
-               X3DGroupingNode_default().prototype.traverse.call (this, type, renderObject);
+               X3DGroupingNode_default().prototype .traverse .call (this, type, renderObject);
             }
 
             if (this .viewportNode)
@@ -1251,7 +1251,7 @@ Object .assign (Object .setPrototypeOf (LayoutLayer .prototype, (X3DLayerNode_de
 {
    initialize ()
    {
-      X3DLayerNode_default().prototype.initialize.call (this);
+      X3DLayerNode_default().prototype .initialize .call (this);
 
       this ._layout         .addFieldInterest (this .getGroup () ._layout);
       this ._addChildren    .addFieldInterest (this .getGroup () ._addChildren);
@@ -1424,7 +1424,7 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, (X3DTextGeometry_
 
       return function ()
       {
-         X3DTextGeometry_default().prototype.update.call (this);
+         X3DTextGeometry_default().prototype .update .call (this);
 
          const
             fontStyle = this .getFontStyle (),
@@ -1723,7 +1723,7 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, (X3DTextGeometry_
    })(),
    display (gl, renderContext)
    {
-      Matrix4_default().prototype.multLeft.call (renderContext .modelViewMatrix, this .matrix);
+      Matrix4_default().prototype .multLeft .call (renderContext .modelViewMatrix, this .matrix);
 
       renderContext .textureNode = this .textureNode;
    },
@@ -1815,7 +1815,7 @@ Object .assign (Object .setPrototypeOf (ScreenFontStyle .prototype, (X3DFontStyl
 {
    initialize ()
    {
-      X3DFontStyleNode_default().prototype.initialize.call (this);
+      X3DFontStyleNode_default().prototype .initialize .call (this);
 
       this .getBrowser () .getRenderingProperties () ._ContentScale .addInterest ("addNodeEvent", this);
    },
@@ -1968,7 +1968,7 @@ Object .assign (Object .setPrototypeOf (ScreenGroup .prototype, (X3DGroupingNode
       modelViewMatrix .push ();
       modelViewMatrix .multLeft (this .matrix);
 
-      X3DGroupingNode_default().prototype.traverse.call (this, type, renderObject);
+      X3DGroupingNode_default().prototype .traverse .call (this, type, renderObject);
 
       modelViewMatrix .pop ();
    },

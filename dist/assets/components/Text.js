@@ -1,7 +1,7 @@
 /* X_ITE v8.7.8 */(() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 35:
+/***/ 439:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 /**
@@ -14762,8 +14762,8 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, (X3DNode_de
 {
    initialize ()
    {
-      X3DNode_default().prototype.initialize.call (this);
-      X3DUrlObject_default().prototype.initialize.call (this);
+      X3DNode_default().prototype .initialize .call (this);
+      X3DUrlObject_default().prototype .initialize .call (this);
 
       this ._style   .addInterest ("set_style__",   this);
       this ._justify .addInterest ("set_justify__", this);
@@ -14791,13 +14791,13 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, (X3DNode_de
 
       this .alignments [0] = this ._justify .length > 0
                              ? this .getAlignment (0, majorNormal)
-                             : majorNormal ? Text_TextAlignment.BEGIN : Text_TextAlignment.END;
+                             : majorNormal ? Text_TextAlignment .BEGIN : Text_TextAlignment .END;
 
       const minorNormal = this ._horizontal .getValue () ? this ._topToBottom .getValue () : this ._leftToRight .getValue ();
 
       this .alignments [1] = this ._justify .length > 1
                              ? this .getAlignment (1, minorNormal)
-                             : minorNormal ? Text_TextAlignment.FIRST : Text_TextAlignment.END;
+                             : minorNormal ? Text_TextAlignment .FIRST : Text_TextAlignment .END;
    },
    getMajorAlignment ()
    {
@@ -14815,10 +14815,10 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, (X3DNode_de
 
          switch (this ._justify [index])
          {
-            case "FIRST":  return Text_TextAlignment.FIRST;
-            case "BEGIN":  return Text_TextAlignment.BEGIN;
-            case "MIDDLE": return Text_TextAlignment.MIDDLE;
-            case "END":    return Text_TextAlignment.END;
+            case "FIRST":  return Text_TextAlignment .FIRST;
+            case "BEGIN":  return Text_TextAlignment .BEGIN;
+            case "MIDDLE": return Text_TextAlignment .MIDDLE;
+            case "END":    return Text_TextAlignment .END;
          }
       }
       else
@@ -14827,14 +14827,14 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, (X3DNode_de
 
          switch (this ._justify [index])
          {
-            case "FIRST":  return Text_TextAlignment.END;
-            case "BEGIN":  return Text_TextAlignment.END;
-            case "MIDDLE": return Text_TextAlignment.MIDDLE;
-            case "END":    return Text_TextAlignment.BEGIN;
+            case "FIRST":  return Text_TextAlignment .END;
+            case "BEGIN":  return Text_TextAlignment .END;
+            case "MIDDLE": return Text_TextAlignment .MIDDLE;
+            case "END":    return Text_TextAlignment .BEGIN;
          }
       }
 
-      return index ? Text_TextAlignment.FIRST : Text_TextAlignment.BEGIN;
+      return index ? Text_TextAlignment .FIRST : Text_TextAlignment .BEGIN;
    },
    getDefaultFont (familyName)
    {
@@ -14911,8 +14911,8 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, (X3DNode_de
    },
    dispose ()
    {
-      X3DUrlObject_default().prototype.dispose.call (this);
-      X3DNode_default().prototype.dispose.call (this);
+      X3DUrlObject_default().prototype .dispose .call (this);
+      X3DNode_default().prototype .dispose .call (this);
    },
 });
 
@@ -15187,14 +15187,14 @@ Object .assign (X3DTextGeometry .prototype,
 
          switch (fontStyle .getMajorAlignment ())
          {
-            case Text_TextAlignment.BEGIN:
-            case Text_TextAlignment.FIRST:
+            case Text_TextAlignment .BEGIN:
+            case Text_TextAlignment .FIRST:
                this .translations [ll] .set (0, -ll * spacing);
                break;
-            case Text_TextAlignment.MIDDLE:
+            case Text_TextAlignment .MIDDLE:
                this .translations [ll] .set (-min .x - size .x / 2, -ll * spacing);
                break;
-            case Text_TextAlignment.END:
+            case Text_TextAlignment .END:
                this .translations [ll] .set (-min .x - size .x, -ll * spacing);
                break;
          }
@@ -15225,16 +15225,16 @@ Object .assign (X3DTextGeometry .prototype,
 
       switch (fontStyle .getMinorAlignment ())
       {
-         case Text_TextAlignment.BEGIN:
+         case Text_TextAlignment .BEGIN:
             this .minorAlignment .assign (this .bearing);
             break;
-         case Text_TextAlignment.FIRST:
+         case Text_TextAlignment .FIRST:
             this .minorAlignment .set (0, 0);
             break;
-         case Text_TextAlignment.MIDDLE:
+         case Text_TextAlignment .MIDDLE:
             this .minorAlignment .set (0, size .y / 2 - max .y);
             break;
-         case Text_TextAlignment.END:
+         case Text_TextAlignment .END:
             this .minorAlignment .set (0, (numLines - 1) * spacing * scale);
             break;
       }
@@ -15356,14 +15356,14 @@ Object .assign (X3DTextGeometry .prototype,
 
          switch (fontStyle .getMajorAlignment ())
          {
-            case Text_TextAlignment.BEGIN:
-            case Text_TextAlignment.FIRST:
+            case Text_TextAlignment .BEGIN:
+            case Text_TextAlignment .FIRST:
                translation .set (lineNumber * spacing, -1);
                break;
-            case Text_TextAlignment.MIDDLE:
+            case Text_TextAlignment .MIDDLE:
                translation .set (lineNumber * spacing, (size .y / 2 - max .y));
                break;
-            case Text_TextAlignment.END:
+            case Text_TextAlignment .END:
             {
                // This is needed to make maxExtend and charSpacing work.
                if (numChars)
@@ -15393,14 +15393,14 @@ Object .assign (X3DTextGeometry .prototype,
 
          switch (fontStyle .getMajorAlignment ())
          {
-            case Text_TextAlignment.BEGIN:
-            case Text_TextAlignment.FIRST:
+            case Text_TextAlignment .BEGIN:
+            case Text_TextAlignment .FIRST:
                yPad [l] = max .y + translation .y;
                break;
-            case Text_TextAlignment.MIDDLE:
+            case Text_TextAlignment .MIDDLE:
                yPad [l] = 0;
                break;
-            case Text_TextAlignment.END:
+            case Text_TextAlignment .END:
                yPad [l] = min .y + translation .y;
                break;
          }
@@ -15424,8 +15424,8 @@ Object .assign (X3DTextGeometry .prototype,
 
       switch (fontStyle .getMajorAlignment ())
       {
-         case Text_TextAlignment.BEGIN:
-         case Text_TextAlignment.FIRST:
+         case Text_TextAlignment .BEGIN:
+         case Text_TextAlignment .FIRST:
          {
             var lineBounds = text ._lineBounds;
 
@@ -15434,9 +15434,9 @@ Object .assign (X3DTextGeometry .prototype,
 
             break;
          }
-         case Text_TextAlignment.MIDDLE:
+         case Text_TextAlignment .MIDDLE:
             break;
-         case Text_TextAlignment.END:
+         case Text_TextAlignment .END:
          {
             var lineBounds = text ._lineBounds;
 
@@ -15453,28 +15453,28 @@ Object .assign (X3DTextGeometry .prototype,
 
       switch (fontStyle .getMajorAlignment ())
       {
-         case Text_TextAlignment.BEGIN:
-         case Text_TextAlignment.FIRST:
+         case Text_TextAlignment .BEGIN:
+         case Text_TextAlignment .FIRST:
             this .bearing .set (-min .x, max .y);
             break;
-         case Text_TextAlignment.MIDDLE:
+         case Text_TextAlignment .MIDDLE:
             this .bearing .set (-min .x, 0);
             break;
-         case Text_TextAlignment.END:
+         case Text_TextAlignment .END:
             this .bearing .set (-min .x, min .y);
             break;
       }
 
       switch (fontStyle .getMinorAlignment ())
       {
-         case Text_TextAlignment.BEGIN:
-         case Text_TextAlignment.FIRST:
+         case Text_TextAlignment .BEGIN:
+         case Text_TextAlignment .FIRST:
             this .minorAlignment .set (-min .x, 0);
             break;
-         case Text_TextAlignment.MIDDLE:
+         case Text_TextAlignment .MIDDLE:
             this .minorAlignment .set (-min .x - size .x / 2, 0);
             break;
-         case Text_TextAlignment.END:
+         case Text_TextAlignment .END:
             this .minorAlignment .set (-min .x - size .x, 0);
             break;
       }
@@ -15552,8 +15552,8 @@ Object .assign (X3DTextGeometry .prototype,
 
       switch (fontStyle .getMajorAlignment ())
       {
-         case Text_TextAlignment.BEGIN:
-         case Text_TextAlignment.FIRST:
+         case Text_TextAlignment .BEGIN:
+         case Text_TextAlignment .FIRST:
             min .x = 0;
             break;
       }
@@ -15639,14 +15639,14 @@ var libtess_default = /*#__PURE__*/__webpack_require__.n(libtess_namespaceObject
 
 function PolygonText (text, fontStyle)
 {
-   Text_X3DTextGeometry.call (this, text, fontStyle);
+   Text_X3DTextGeometry .call (this, text, fontStyle);
 
    text ._transparent = false;
 
    this .texCoordArray = X3DGeometryNode_default().createArray ();
 }
 
-Object .assign (Object .setPrototypeOf (PolygonText .prototype, Text_X3DTextGeometry.prototype),
+Object .assign (Object .setPrototypeOf (PolygonText .prototype, Text_X3DTextGeometry .prototype),
 {
    isTransparent ()
    {
@@ -15909,9 +15909,9 @@ Object .assign (Object .setPrototypeOf (PolygonText .prototype, Text_X3DTextGeom
 
       const tessy = new (libtess_default()).GluTesselator ();
 
-      tessy .gluTessCallback ((libtess_default()).gluEnum.GLU_TESS_VERTEX_DATA,  vertexCallback);
-      tessy .gluTessCallback ((libtess_default()).gluEnum.GLU_TESS_COMBINE,      combineCallback);
-      tessy .gluTessProperty ((libtess_default()).gluEnum.GLU_TESS_WINDING_RULE, (libtess_default()).windingRule.GLU_TESS_WINDING_ODD);
+      tessy .gluTessCallback ((libtess_default()).gluEnum .GLU_TESS_VERTEX_DATA,  vertexCallback);
+      tessy .gluTessCallback ((libtess_default()).gluEnum .GLU_TESS_COMBINE,      combineCallback);
+      tessy .gluTessProperty ((libtess_default()).gluEnum .GLU_TESS_WINDING_RULE, (libtess_default()).windingRule .GLU_TESS_WINDING_ODD);
       tessy .gluTessNormal (0, 0, 1);
 
       return function (contours, triangles)
@@ -16003,14 +16003,14 @@ Namespace_default().set ("x_ite/Browser/Text/PolygonText", PolygonText_default_)
 
 function FontStyle (executionContext)
 {
-   Text_X3DFontStyleNode.call (this, executionContext);
+   Text_X3DFontStyleNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).FontStyle);
 
    this ._size .setUnit ("length");
 }
 
-Object .assign (Object .setPrototypeOf (FontStyle .prototype, Text_X3DFontStyleNode.prototype),
+Object .assign (Object .setPrototypeOf (FontStyle .prototype, Text_X3DFontStyleNode .prototype),
 {
    getTextGeometry (text)
    {
@@ -16069,7 +16069,7 @@ Namespace_default().set ("x_ite/Components/Text/FontStyle", FontStyle_default_);
 /* harmony default export */ const Text_FontStyle = (FontStyle_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Text/X3DTextContext.js
 /* provided dependency */ var $ = __webpack_require__(355);
-/* provided dependency */ var opentype = __webpack_require__(35);
+/* provided dependency */ var opentype = __webpack_require__(439);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -16267,7 +16267,7 @@ Object .assign (Object .setPrototypeOf (Text .prototype, (X3DGeometryNode_defaul
 {
    initialize ()
    {
-      X3DGeometryNode_default().prototype.initialize.call (this);
+      X3DGeometryNode_default().prototype .initialize .call (this);
 
       this ._fontStyle .addInterest ("set_fontStyle__", this);
 
@@ -16286,7 +16286,7 @@ Object .assign (Object .setPrototypeOf (Text .prototype, (X3DGeometryNode_defaul
    },
    set_live__ ()
    {
-       X3DGeometryNode_default().prototype.set_live__.call (this);
+       X3DGeometryNode_default().prototype .set_live__ .call (this);
 
       if (this .getLive () .getValue ())
          this .getBrowser () .getBrowserOptions () ._PrimitiveQuality .addInterest ("requestRebuild", this);
@@ -16319,13 +16319,13 @@ Object .assign (Object .setPrototypeOf (Text .prototype, (X3DGeometryNode_defaul
    {
       this .textGeometry .traverse (type, renderObject);
 
-      X3DGeometryNode_default().prototype.traverse.call (this, type, renderObject);
+      X3DGeometryNode_default().prototype .traverse .call (this, type, renderObject);
    },
    display (gl, renderContext)
    {
       this .textGeometry .display (gl, renderContext);
 
-      X3DGeometryNode_default().prototype.display.call (this, gl, renderContext);
+      X3DGeometryNode_default().prototype .display .call (this, gl, renderContext);
 
       renderContext .textureNode = null;
    },

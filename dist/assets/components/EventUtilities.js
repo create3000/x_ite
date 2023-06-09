@@ -124,7 +124,7 @@ Object .assign (Object .setPrototypeOf (BooleanFilter .prototype, (X3DChildNode_
 {
    initialize ()
    {
-      X3DChildNode_default().prototype.initialize.call (this);
+      X3DChildNode_default().prototype .initialize .call (this);
 
       this ._set_boolean .addInterest ("set_boolean__", this);
    },
@@ -250,7 +250,7 @@ Object .assign (Object .setPrototypeOf (X3DSequencerNode .prototype, (X3DChildNo
 {
    initialize ()
    {
-      X3DChildNode_default().prototype.initialize.call (this);
+      X3DChildNode_default().prototype .initialize .call (this);
 
       this ._set_fraction .addInterest ("set_fraction__", this);
       this ._previous     .addInterest ("set_previous__", this);
@@ -399,16 +399,16 @@ Namespace_default().set ("x_ite/Components/EventUtilities/X3DSequencerNode", X3D
 
 function BooleanSequencer (executionContext)
 {
-   EventUtilities_X3DSequencerNode.call (this, executionContext);
+   EventUtilities_X3DSequencerNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).BooleanSequencer);
 }
 
-Object .assign (Object .setPrototypeOf (BooleanSequencer .prototype, EventUtilities_X3DSequencerNode.prototype),
+Object .assign (Object .setPrototypeOf (BooleanSequencer .prototype, EventUtilities_X3DSequencerNode .prototype),
 {
    initialize ()
    {
-      EventUtilities_X3DSequencerNode.prototype.initialize.call (this);
+      EventUtilities_X3DSequencerNode .prototype .initialize .call (this);
 
       this ._keyValue .addInterest ("set_index__", this);
    },
@@ -529,7 +529,7 @@ Object .assign (Object .setPrototypeOf (BooleanToggle .prototype, (X3DChildNode_
 {
    initialize ()
    {
-      X3DChildNode_default().prototype.initialize.call (this);
+      X3DChildNode_default().prototype .initialize .call (this);
 
       this ._set_boolean .addInterest ("set_boolean__", this);
    },
@@ -713,16 +713,16 @@ Namespace_default().set ("x_ite/Components/EventUtilities/X3DTriggerNode", X3DTr
 
 function BooleanTrigger (executionContext)
 {
-   EventUtilities_X3DTriggerNode.call (this, executionContext);
+   EventUtilities_X3DTriggerNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).BooleanTrigger);
 }
 
-Object .assign (Object .setPrototypeOf (BooleanTrigger .prototype, EventUtilities_X3DTriggerNode.prototype),
+Object .assign (Object .setPrototypeOf (BooleanTrigger .prototype, EventUtilities_X3DTriggerNode .prototype),
 {
    initialize ()
    {
-      EventUtilities_X3DTriggerNode.prototype.initialize.call (this);
+      EventUtilities_X3DTriggerNode .prototype .initialize .call (this);
 
       this ._set_triggerTime .addInterest ("set_triggerTime__", this);
    },
@@ -826,16 +826,16 @@ Namespace_default().set ("x_ite/Components/EventUtilities/BooleanTrigger", Boole
 
 function IntegerSequencer (executionContext)
 {
-   EventUtilities_X3DSequencerNode.call (this, executionContext);
+   EventUtilities_X3DSequencerNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).IntegerSequencer);
 }
 
-Object .assign (Object .setPrototypeOf (IntegerSequencer .prototype, EventUtilities_X3DSequencerNode.prototype),
+Object .assign (Object .setPrototypeOf (IntegerSequencer .prototype, EventUtilities_X3DSequencerNode .prototype),
 {
    initialize ()
    {
-      EventUtilities_X3DSequencerNode.prototype.initialize.call (this);
+      EventUtilities_X3DSequencerNode .prototype .initialize .call (this);
 
       this ._keyValue .addInterest ("set_index__", this);
    },
@@ -947,16 +947,16 @@ Namespace_default().set ("x_ite/Components/EventUtilities/IntegerSequencer", Int
 
 function IntegerTrigger (executionContext)
 {
-   EventUtilities_X3DTriggerNode.call (this, executionContext);
+   EventUtilities_X3DTriggerNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).IntegerTrigger);
 }
 
-Object .assign (Object .setPrototypeOf (IntegerTrigger .prototype, EventUtilities_X3DTriggerNode.prototype),
+Object .assign (Object .setPrototypeOf (IntegerTrigger .prototype, EventUtilities_X3DTriggerNode .prototype),
 {
    initialize ()
    {
-      EventUtilities_X3DTriggerNode.prototype.initialize.call (this);
+      EventUtilities_X3DTriggerNode .prototype .initialize .call (this);
 
       this ._set_boolean .addInterest ("set_boolean__", this);
    },
@@ -1061,16 +1061,16 @@ Namespace_default().set ("x_ite/Components/EventUtilities/IntegerTrigger", Integ
 
 function TimeTrigger (executionContext)
 {
-   EventUtilities_X3DTriggerNode.call (this, executionContext);
+   EventUtilities_X3DTriggerNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).TimeTrigger);
 }
 
-Object .assign (Object .setPrototypeOf (TimeTrigger .prototype, EventUtilities_X3DTriggerNode.prototype),
+Object .assign (Object .setPrototypeOf (TimeTrigger .prototype, EventUtilities_X3DTriggerNode .prototype),
 {
    initialize ()
    {
-      EventUtilities_X3DTriggerNode.prototype.initialize.call (this);
+      EventUtilities_X3DTriggerNode .prototype .initialize .call (this);
 
       this ._set_boolean .addInterest ("set_boolean__", this);
    },

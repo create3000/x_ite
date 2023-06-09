@@ -130,7 +130,7 @@ Object .assign (Object .setPrototypeOf (BlendMode .prototype, (X3DAppearanceChil
 {
    initialize ()
    {
-      X3DAppearanceChildNode_default().prototype.initialize.call (this);
+      X3DAppearanceChildNode_default().prototype .initialize .call (this);
 
       const
          gl  = this .getBrowser () .getContext (),

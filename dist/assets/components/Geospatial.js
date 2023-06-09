@@ -904,7 +904,7 @@ const Geospatial =
          }
       }
 
-      return new Geospatial_Geodetic (Geospatial_ReferenceEllipsoids.WE, true, radians);
+      return new Geospatial_Geodetic (Geospatial_ReferenceEllipsoids .WE, true, radians);
    },
    getElevationFrame (geoSystem, radians)
    {
@@ -932,7 +932,7 @@ const Geospatial =
             return ellipsoid;
       }
 
-      return Geospatial_ReferenceEllipsoids.WE;
+      return Geospatial_ReferenceEllipsoids .WE;
    },
    getEllipsoidString (geoSystem)
    {
@@ -1105,10 +1105,10 @@ Object .assign (X3DGeospatialObject .prototype,
    },
    set_geoSystem__ ()
    {
-      this .coordinateSystem = Geospatial_Geospatial.getCoordinateSystem (this ._geoSystem);
-      this .referenceFrame   = Geospatial_Geospatial.getReferenceFrame   (this ._geoSystem, this .radians);
-      this .elevationFrame   = Geospatial_Geospatial.getElevationFrame   (this ._geoSystem, this .radians);
-      this .standardOrder    = Geospatial_Geospatial.isStandardOrder     (this ._geoSystem);
+      this .coordinateSystem = Geospatial_Geospatial .getCoordinateSystem (this ._geoSystem);
+      this .referenceFrame   = Geospatial_Geospatial .getReferenceFrame   (this ._geoSystem, this .radians);
+      this .elevationFrame   = Geospatial_Geospatial .getElevationFrame   (this ._geoSystem, this .radians);
+      this .standardOrder    = Geospatial_Geospatial .isStandardOrder     (this ._geoSystem);
    },
    set_geoOrigin__ ()
    {
@@ -1361,18 +1361,18 @@ var Triangle3_default = /*#__PURE__*/__webpack_require__.n(Triangle3_namespaceOb
 function GeoCoordinate (executionContext)
 {
    X3DCoordinateNode_default().call (this, executionContext);
-   Geospatial_X3DGeospatialObject.call (this, executionContext);
+   Geospatial_X3DGeospatialObject .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).GeoCoordinate);
 }
 
 Object .assign (Object .setPrototypeOf (GeoCoordinate .prototype, (X3DCoordinateNode_default()).prototype),
-   Geospatial_X3DGeospatialObject.prototype,
+   Geospatial_X3DGeospatialObject .prototype,
 {
    initialize ()
    {
-      X3DCoordinateNode_default().prototype.initialize.call (this);
-      Geospatial_X3DGeospatialObject.prototype.initialize.call (this);
+      X3DCoordinateNode_default().prototype .initialize .call (this);
+      Geospatial_X3DGeospatialObject .prototype .initialize .call (this);
    },
    set1Point: (function ()
    {
@@ -1500,8 +1500,8 @@ Object .assign (Object .setPrototypeOf (GeoCoordinate .prototype, (X3DCoordinate
    })(),
    dispose ()
    {
-      Geospatial_X3DGeospatialObject.prototype.dispose.call (this);
-      X3DCoordinateNode_default().prototype.dispose.call (this);
+      Geospatial_X3DGeospatialObject .prototype .dispose .call (this);
+      X3DCoordinateNode_default().prototype .dispose .call (this);
    },
 });
 
@@ -1612,7 +1612,7 @@ var Vector2_default = /*#__PURE__*/__webpack_require__.n(Vector2_namespaceObject
 function GeoElevationGrid (executionContext)
 {
    X3DGeometryNode_default().call (this, executionContext);
-   Geospatial_X3DGeospatialObject.call (this, executionContext);
+   Geospatial_X3DGeospatialObject .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).GeoElevationGrid);
 
@@ -1625,12 +1625,12 @@ function GeoElevationGrid (executionContext)
 }
 
 Object .assign (Object .setPrototypeOf (GeoElevationGrid .prototype, (X3DGeometryNode_default()).prototype),
-   Geospatial_X3DGeospatialObject.prototype,
+   Geospatial_X3DGeospatialObject .prototype,
 {
    initialize ()
    {
-      X3DGeometryNode_default().prototype.initialize.call (this);
-      Geospatial_X3DGeospatialObject.prototype.initialize.call (this);
+      X3DGeometryNode_default().prototype .initialize .call (this);
+      Geospatial_X3DGeospatialObject .prototype .initialize .call (this);
 
       this ._color    .addInterest ("set_color__", this);
       this ._texCoord .addInterest ("set_texCoord__", this);
@@ -1926,8 +1926,8 @@ Object .assign (Object .setPrototypeOf (GeoElevationGrid .prototype, (X3DGeometr
    },
    dispose ()
    {
-      Geospatial_X3DGeospatialObject.prototype.dispose.call (this);
-      X3DGeometryNode_default().prototype.dispose.call (this);
+      Geospatial_X3DGeospatialObject .prototype .dispose .call (this);
+      X3DGeometryNode_default().prototype .dispose .call (this);
    },
 });
 
@@ -2070,7 +2070,7 @@ function GeoLOD (executionContext)
 {
    X3DChildNode_default().call (this, executionContext);
    X3DBoundedObject_default().call (this, executionContext);
-   Geospatial_X3DGeospatialObject.call (this, executionContext);
+   Geospatial_X3DGeospatialObject .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).GeoLOD);
 
@@ -2091,13 +2091,13 @@ function GeoLOD (executionContext)
 
 Object .assign (Object .setPrototypeOf (GeoLOD .prototype, (X3DChildNode_default()).prototype),
    (X3DBoundedObject_default()).prototype,
-   Geospatial_X3DGeospatialObject.prototype,
+   Geospatial_X3DGeospatialObject .prototype,
 {
    initialize ()
    {
-      X3DChildNode_default().prototype.initialize.call (this);
-      X3DBoundedObject_default().prototype.initialize.call (this);
-      Geospatial_X3DGeospatialObject.prototype.initialize.call (this);
+      X3DChildNode_default().prototype .initialize .call (this);
+      X3DBoundedObject_default().prototype .initialize .call (this);
+      Geospatial_X3DGeospatialObject .prototype .initialize .call (this);
 
       this ._rootNode .addFieldInterest (this .rootGroup ._children);
 
@@ -2415,9 +2415,9 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, (X3DChildNode_default
    },
    dispose ()
    {
-      Geospatial_X3DGeospatialObject.prototype.dispose.call (this);
-      X3DBoundedObject_default().prototype.dispose.call (this);
-      X3DChildNode_default().prototype.dispose.call (this);
+      Geospatial_X3DGeospatialObject .prototype .dispose .call (this);
+      X3DBoundedObject_default().prototype .dispose .call (this);
+      X3DChildNode_default().prototype .dispose .call (this);
    },
 });
 
@@ -2537,18 +2537,18 @@ var locationMatrix = new (Matrix4_default()) ();
 function GeoLocation (executionContext)
 {
    X3DTransformMatrix3DNode_default().call (this, executionContext);
-   Geospatial_X3DGeospatialObject.call (this, executionContext);
+   Geospatial_X3DGeospatialObject      .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).GeoLocation);
 }
 
 Object .assign (Object .setPrototypeOf (GeoLocation .prototype, (X3DTransformMatrix3DNode_default()).prototype),
-   Geospatial_X3DGeospatialObject.prototype,
+   Geospatial_X3DGeospatialObject .prototype,
 {
    initialize ()
    {
-      X3DTransformMatrix3DNode_default().prototype.initialize.call (this);
-      Geospatial_X3DGeospatialObject.prototype.initialize.call (this);
+      X3DTransformMatrix3DNode_default().prototype .initialize .call (this);
+      Geospatial_X3DGeospatialObject      .prototype .initialize .call (this);
 
       this .addInterest ("eventsProcessed", this);
 
@@ -2560,8 +2560,8 @@ Object .assign (Object .setPrototypeOf (GeoLocation .prototype, (X3DTransformMat
    },
    dispose ()
    {
-      Geospatial_X3DGeospatialObject.prototype.dispose.call (this);
-      X3DTransformMatrix3DNode_default().prototype.dispose.call (this);
+      Geospatial_X3DGeospatialObject      .prototype .dispose .call (this);
+      X3DTransformMatrix3DNode_default().prototype .dispose .call (this);
    },
 });
 
@@ -2685,15 +2685,15 @@ Object .assign (Object .setPrototypeOf (GeoMetadata .prototype, (X3DInfoNode_def
 {
    initialize ()
    {
-      X3DInfoNode_default().prototype.initialize.call (this);
-      X3DUrlObject_default().prototype.initialize.call (this);
+      X3DInfoNode_default().prototype .initialize .call (this);
+      X3DUrlObject_default().prototype .initialize .call (this);
    },
    requestImmediateLoad (cache = true)
    { },
    dispose ()
    {
-      X3DUrlObject_default().prototype.dispose.call (this);
-      X3DInfoNode_default().prototype.dispose.call (this);
+      X3DUrlObject_default().prototype .dispose .call (this);
+      X3DInfoNode_default().prototype .dispose .call (this);
    },
 });
 
@@ -2810,7 +2810,7 @@ Object .assign (Object .setPrototypeOf (GeoOrigin .prototype, (X3DNode_default()
 {
    initialize ()
    {
-      X3DNode_default().prototype.initialize.call (this);
+      X3DNode_default().prototype .initialize .call (this);
 
       this ._geoSystem .addInterest ("set_geoSystem__", this);
 
@@ -2818,7 +2818,7 @@ Object .assign (Object .setPrototypeOf (GeoOrigin .prototype, (X3DNode_default()
    },
    set_geoSystem__ ()
    {
-      this .referenceFrame = Geospatial_Geospatial.getReferenceFrame (this ._geoSystem, this .radians);
+      this .referenceFrame = Geospatial_Geospatial .getReferenceFrame (this ._geoSystem, this .radians);
    },
    getOrigin (result)
    {
@@ -2928,7 +2928,7 @@ var X3DInterpolatorNode_default = /*#__PURE__*/__webpack_require__.n(X3DInterpol
 function GeoPositionInterpolator (executionContext)
 {
    X3DInterpolatorNode_default().call (this, executionContext);
-   Geospatial_X3DGeospatialObject.call (this, executionContext);
+   Geospatial_X3DGeospatialObject .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).GeoPositionInterpolator);
 
@@ -2938,17 +2938,17 @@ function GeoPositionInterpolator (executionContext)
 }
 
 Object .assign (Object .setPrototypeOf (GeoPositionInterpolator .prototype, (X3DInterpolatorNode_default()).prototype),
-   Geospatial_X3DGeospatialObject.prototype,
+   Geospatial_X3DGeospatialObject .prototype,
 {
    setup ()
    {
-      Geospatial_X3DGeospatialObject.prototype.initialize.call (this);
+      Geospatial_X3DGeospatialObject .prototype .initialize .call (this);
 
-      X3DInterpolatorNode_default().prototype.setup.call (this);
+      X3DInterpolatorNode_default().prototype .setup .call (this);
    },
    initialize ()
    {
-      X3DInterpolatorNode_default().prototype.initialize.call (this);
+      X3DInterpolatorNode_default().prototype .initialize .call (this);
 
       this ._keyValue .addInterest ("set_keyValue__", this);
    },
@@ -2981,8 +2981,8 @@ Object .assign (Object .setPrototypeOf (GeoPositionInterpolator .prototype, (X3D
    })(),
    dispose ()
    {
-      Geospatial_X3DGeospatialObject.prototype.dispose.call (this);
-      X3DInterpolatorNode_default().prototype.dispose.call (this);
+      Geospatial_X3DGeospatialObject .prototype .dispose .call (this);
+      X3DInterpolatorNode_default().prototype .dispose .call (this);
    },
 });
 
@@ -3097,7 +3097,7 @@ var geoCoord = new (Vector3_default()) (0, 0, 0);
 function GeoProximitySensor (executionContext)
 {
    X3DEnvironmentalSensorNode_default().call (this, executionContext);
-   Geospatial_X3DGeospatialObject.call (this, executionContext);
+   Geospatial_X3DGeospatialObject        .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).GeoProximitySensor);
 
@@ -3111,12 +3111,12 @@ function GeoProximitySensor (executionContext)
 }
 
 Object .assign (Object .setPrototypeOf (GeoProximitySensor .prototype, (X3DEnvironmentalSensorNode_default()).prototype),
-   Geospatial_X3DGeospatialObject.prototype,
+   Geospatial_X3DGeospatialObject .prototype,
 {
    initialize ()
    {
-      X3DEnvironmentalSensorNode_default().prototype.initialize.call (this);
-      Geospatial_X3DGeospatialObject.prototype.initialize.call (this);
+      X3DEnvironmentalSensorNode_default().prototype .initialize .call (this);
+      Geospatial_X3DGeospatialObject        .prototype .initialize .call (this);
 
       this ._enabled .addFieldInterest (this .proximitySensor ._enabled);
       this ._size    .addFieldInterest (this .proximitySensor ._size);
@@ -3150,8 +3150,8 @@ Object .assign (Object .setPrototypeOf (GeoProximitySensor .prototype, (X3DEnvir
    },
    dispose ()
    {
-      Geospatial_X3DGeospatialObject.prototype.dispose.call (this);
-      X3DEnvironmentalSensorNode_default().prototype.dispose.call (this);
+      Geospatial_X3DGeospatialObject        .prototype .dispose .call (this);
+      X3DEnvironmentalSensorNode_default().prototype .dispose .call (this);
    },
 });
 
@@ -3265,7 +3265,7 @@ var X3DTouchSensorNode_default = /*#__PURE__*/__webpack_require__.n(X3DTouchSens
 function GeoTouchSensor (executionContext)
 {
    X3DTouchSensorNode_default().call (this, executionContext);
-   Geospatial_X3DGeospatialObject.call (this, executionContext);
+   Geospatial_X3DGeospatialObject .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).GeoTouchSensor);
 
@@ -3273,12 +3273,12 @@ function GeoTouchSensor (executionContext)
 }
 
 Object .assign (Object .setPrototypeOf (GeoTouchSensor .prototype, (X3DTouchSensorNode_default()).prototype),
-   Geospatial_X3DGeospatialObject.prototype,
+   Geospatial_X3DGeospatialObject .prototype,
 {
    initialize ()
    {
-      X3DTouchSensorNode_default().prototype.initialize.call (this);
-      Geospatial_X3DGeospatialObject.prototype.initialize.call (this);
+      X3DTouchSensorNode_default().prototype .initialize .call (this);
+      Geospatial_X3DGeospatialObject .prototype .initialize .call (this);
    },
    set_over__: (function ()
    {
@@ -3286,7 +3286,7 @@ Object .assign (Object .setPrototypeOf (GeoTouchSensor .prototype, (X3DTouchSens
 
       return function (over, hit, modelViewMatrix, projectionMatrix, viewport)
       {
-         X3DTouchSensorNode_default().prototype.set_over__.call (this, over, hit, modelViewMatrix, projectionMatrix, viewport);
+         X3DTouchSensorNode_default().prototype .set_over__ .call (this, over, hit, modelViewMatrix, projectionMatrix, viewport);
 
          if (this ._isOver .getValue ())
             this ._hitGeoCoord_changed = this .getGeoCoord (this ._hitPoint_changed .getValue (), geoCoords);
@@ -3294,8 +3294,8 @@ Object .assign (Object .setPrototypeOf (GeoTouchSensor .prototype, (X3DTouchSens
    })(),
    dispose ()
    {
-      Geospatial_X3DGeospatialObject.prototype.dispose.call (this);
-      X3DTouchSensorNode_default().prototype.dispose.call (this);
+      Geospatial_X3DGeospatialObject .prototype .dispose .call (this);
+      X3DTouchSensorNode_default().prototype .dispose .call (this);
    },
 });
 
@@ -3409,7 +3409,7 @@ var
 function GeoTransform (executionContext)
 {
    X3DTransformMatrix3DNode_default().call (this, executionContext);
-   Geospatial_X3DGeospatialObject.call (this, executionContext);
+   Geospatial_X3DGeospatialObject      .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).GeoTransform);
 
@@ -3417,12 +3417,12 @@ function GeoTransform (executionContext)
 }
 
 Object .assign (Object .setPrototypeOf (GeoTransform .prototype, (X3DTransformMatrix3DNode_default()).prototype),
-   Geospatial_X3DGeospatialObject.prototype,
+   Geospatial_X3DGeospatialObject .prototype,
 {
    initialize ()
    {
-      X3DTransformMatrix3DNode_default().prototype.initialize.call (this);
-      Geospatial_X3DGeospatialObject.prototype.initialize.call (this);
+      X3DTransformMatrix3DNode_default().prototype .initialize .call (this);
+      Geospatial_X3DGeospatialObject      .prototype .initialize .call (this);
 
       this .addInterest ("eventsProcessed", this);
 
@@ -3441,8 +3441,8 @@ Object .assign (Object .setPrototypeOf (GeoTransform .prototype, (X3DTransformMa
    },
    dispose ()
    {
-      Geospatial_X3DGeospatialObject.prototype.dispose.call (this);
-      X3DTransformMatrix3DNode_default().prototype.dispose.call (this);
+      Geospatial_X3DGeospatialObject      .prototype .dispose .call (this);
+      X3DTransformMatrix3DNode_default().prototype .dispose .call (this);
    },
 });
 
@@ -3571,7 +3571,7 @@ var Rotation4_default = /*#__PURE__*/__webpack_require__.n(Rotation4_namespaceOb
 function GeoViewpoint (executionContext)
 {
    X3DViewpointNode_default().call (this, executionContext);
-   Geospatial_X3DGeospatialObject.call (this, executionContext);
+   Geospatial_X3DGeospatialObject .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).GeoViewpoint);
 
@@ -3587,12 +3587,12 @@ function GeoViewpoint (executionContext)
 }
 
 Object .assign (Object .setPrototypeOf (GeoViewpoint .prototype, (X3DViewpointNode_default()).prototype),
-   Geospatial_X3DGeospatialObject.prototype,
+   Geospatial_X3DGeospatialObject .prototype,
 {
    initialize ()
    {
-      X3DViewpointNode_default().prototype.initialize.call (this);
-      Geospatial_X3DGeospatialObject.prototype.initialize.call (this);
+      X3DViewpointNode_default().prototype .initialize .call (this);
+      Geospatial_X3DGeospatialObject .prototype .initialize .call (this);
 
       // Logarithmic depth buffer support
 
@@ -3611,13 +3611,13 @@ Object .assign (Object .setPrototypeOf (GeoViewpoint .prototype, (X3DViewpointNo
 
       this .set_position__ ();
    },
-   getRelativeTransformation: (Viewpoint_default()).prototype.getRelativeTransformation,
-   setInterpolators: (Viewpoint_default()).prototype.setInterpolators,
-   getFieldOfView: (Viewpoint_default()).prototype.getFieldOfView,
-   getScreenScale: (Viewpoint_default()).prototype.getScreenScale,
-   getViewportSize: (Viewpoint_default()).prototype.getViewportSize,
-   getLookAtDistance: (Viewpoint_default()).prototype.getLookAtDistance,
-   getProjectionMatrixWithLimits: (Viewpoint_default()).prototype.getProjectionMatrixWithLimits,
+   getRelativeTransformation: (Viewpoint_default()).prototype .getRelativeTransformation,
+   setInterpolators: (Viewpoint_default()).prototype .setInterpolators,
+   getFieldOfView: (Viewpoint_default()).prototype .getFieldOfView,
+   getScreenScale: (Viewpoint_default()).prototype .getScreenScale,
+   getViewportSize: (Viewpoint_default()).prototype .getViewportSize,
+   getLookAtDistance: (Viewpoint_default()).prototype .getLookAtDistance,
+   getProjectionMatrixWithLimits: (Viewpoint_default()).prototype .getProjectionMatrixWithLimits,
    getLogarithmicDepthBuffer ()
    {
       return this .logarithmicDepthBuffer;
@@ -3724,14 +3724,14 @@ Object .assign (Object .setPrototypeOf (GeoViewpoint .prototype, (X3DViewpointNo
    },
    dispose ()
    {
-      Geospatial_X3DGeospatialObject.prototype.dispose.call (this);
-      X3DViewpointNode_default().prototype.dispose.call (this);
+      Geospatial_X3DGeospatialObject .prototype .dispose .call (this);
+      X3DViewpointNode_default().prototype .dispose .call (this);
    },
 });
 
 function traverse (type, renderObject)
 {
-   X3DViewpointNode_default().prototype.traverse.call (this, type, renderObject);
+   X3DViewpointNode_default().prototype .traverse .call (this, type, renderObject);
 
    this .geoNavigationInfoNode .traverse (type, renderObject);
 }

@@ -261,12 +261,12 @@ Namespace_default().set ("x_ite/Components/VolumeRendering/X3DVolumeRenderStyleN
 
 function X3DComposableVolumeRenderStyleNode (executionContext)
 {
-   VolumeRendering_X3DVolumeRenderStyleNode.call (this, executionContext);
+   VolumeRendering_X3DVolumeRenderStyleNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).X3DComposableVolumeRenderStyleNode);
 }
 
-Object .setPrototypeOf (X3DComposableVolumeRenderStyleNode .prototype, VolumeRendering_X3DVolumeRenderStyleNode.prototype);
+Object .setPrototypeOf (X3DComposableVolumeRenderStyleNode .prototype, VolumeRendering_X3DVolumeRenderStyleNode .prototype);
 
 Object .defineProperties (X3DComposableVolumeRenderStyleNode,
 {
@@ -347,16 +347,16 @@ var X3DCast_default = /*#__PURE__*/__webpack_require__.n(X3DCast_namespaceObject
 
 function OpacityMapVolumeStyle (executionContext)
 {
-   VolumeRendering_X3DComposableVolumeRenderStyleNode.call (this, executionContext);
+   VolumeRendering_X3DComposableVolumeRenderStyleNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).OpacityMapVolumeStyle);
 }
 
-Object .assign (Object .setPrototypeOf (OpacityMapVolumeStyle .prototype, VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype),
+Object .assign (Object .setPrototypeOf (OpacityMapVolumeStyle .prototype, VolumeRendering_X3DComposableVolumeRenderStyleNode .prototype),
 {
    initialize ()
    {
-      VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype.initialize.call (this);
+      VolumeRendering_X3DComposableVolumeRenderStyleNode .prototype .initialize .call (this);
 
       const gl = this .getBrowser () .getContext ();
 
@@ -667,16 +667,16 @@ Namespace_default().set ("x_ite/Browser/VolumeRendering/X3DVolumeRenderingContex
 
 function BlendedVolumeStyle (executionContext)
 {
-   VolumeRendering_X3DComposableVolumeRenderStyleNode.call (this, executionContext);
+   VolumeRendering_X3DComposableVolumeRenderStyleNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).BlendedVolumeStyle);
 }
 
-Object .assign (Object .setPrototypeOf (BlendedVolumeStyle .prototype, VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype),
+Object .assign (Object .setPrototypeOf (BlendedVolumeStyle .prototype, VolumeRendering_X3DComposableVolumeRenderStyleNode .prototype),
 {
    initialize ()
    {
-      VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype.initialize.call (this);
+      VolumeRendering_X3DComposableVolumeRenderStyleNode .prototype .initialize .call (this);
 
       const gl = this .getBrowser () .getContext ();
 
@@ -695,14 +695,14 @@ Object .assign (Object .setPrototypeOf (BlendedVolumeStyle .prototype, VolumeRen
    },
    addVolumeData (volumeDataNode)
    {
-      VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype.addVolumeData.call (this, volumeDataNode);
+      VolumeRendering_X3DComposableVolumeRenderStyleNode .prototype .addVolumeData .call (this, volumeDataNode);
 
       if (this .renderStyleNode)
          this .renderStyleNode .addVolumeData (volumeDataNode);
    },
    removeVolumeData (volumeDataNode)
    {
-      VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype.removeVolumeData.call (this, volumeDataNode);
+      VolumeRendering_X3DComposableVolumeRenderStyleNode .prototype .removeVolumeData .call (this, volumeDataNode);
 
       if (this .renderStyleNode)
          this .renderStyleNode .removeVolumeData (volumeDataNode);
@@ -1026,12 +1026,12 @@ Namespace_default().set ("x_ite/Components/VolumeRendering/BlendedVolumeStyle", 
 
 function BoundaryEnhancementVolumeStyle (executionContext)
 {
-   VolumeRendering_X3DComposableVolumeRenderStyleNode.call (this, executionContext);
+   VolumeRendering_X3DComposableVolumeRenderStyleNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).BoundaryEnhancementVolumeStyle);
 }
 
-Object .assign (Object .setPrototypeOf (BoundaryEnhancementVolumeStyle .prototype, VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype),
+Object .assign (Object .setPrototypeOf (BoundaryEnhancementVolumeStyle .prototype, VolumeRendering_X3DComposableVolumeRenderStyleNode .prototype),
 {
    addShaderFields (shaderNode)
    {
@@ -1186,16 +1186,16 @@ Namespace_default().set ("x_ite/Components/VolumeRendering/BoundaryEnhancementVo
 
 function CartoonVolumeStyle (executionContext)
 {
-   VolumeRendering_X3DComposableVolumeRenderStyleNode.call (this, executionContext);
+   VolumeRendering_X3DComposableVolumeRenderStyleNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).CartoonVolumeStyle);
 }
 
-Object .assign (Object .setPrototypeOf (CartoonVolumeStyle .prototype, VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype),
+Object .assign (Object .setPrototypeOf (CartoonVolumeStyle .prototype, VolumeRendering_X3DComposableVolumeRenderStyleNode .prototype),
 {
    initialize ()
    {
-      VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype.initialize.call (this);
+      VolumeRendering_X3DComposableVolumeRenderStyleNode .prototype .initialize .call (this);
 
       const gl = this .getBrowser () .getContext ();
 
@@ -1502,18 +1502,18 @@ Namespace_default().set ("x_ite/Components/VolumeRendering/CartoonVolumeStyle", 
 
 function ComposedVolumeStyle (executionContext)
 {
-   VolumeRendering_X3DComposableVolumeRenderStyleNode.call (this, executionContext);
+   VolumeRendering_X3DComposableVolumeRenderStyleNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).ComposedVolumeStyle);
 
    this .renderStyleNodes = [ ];
 }
 
-Object .assign (Object .setPrototypeOf (ComposedVolumeStyle .prototype, VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype),
+Object .assign (Object .setPrototypeOf (ComposedVolumeStyle .prototype, VolumeRendering_X3DComposableVolumeRenderStyleNode .prototype),
 {
    initialize ()
    {
-      VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype.initialize.call (this);
+      VolumeRendering_X3DComposableVolumeRenderStyleNode .prototype .initialize .call (this);
 
       const gl = this .getBrowser () .getContext ();
 
@@ -1526,14 +1526,14 @@ Object .assign (Object .setPrototypeOf (ComposedVolumeStyle .prototype, VolumeRe
    },
    addVolumeData (volumeDataNode)
    {
-      VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype.addVolumeData.call (this, volumeDataNode);
+      VolumeRendering_X3DComposableVolumeRenderStyleNode .prototype .addVolumeData .call (this, volumeDataNode);
 
       for (const renderStyleNode of this .renderStyleNodes)
          renderStyleNode .addVolumeData (volumeDataNode);
    },
    removeVolumeData (volumeDataNode)
    {
-      VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype.removeVolumeData.call (this, volumeDataNode);
+      VolumeRendering_X3DComposableVolumeRenderStyleNode .prototype .removeVolumeData .call (this, volumeDataNode);
 
       for (const renderStyleNode of this .renderStyleNodes)
          renderStyleNode .removeVolumeData (volumeDataNode);
@@ -1711,16 +1711,16 @@ Namespace_default().set ("x_ite/Components/VolumeRendering/ComposedVolumeStyle",
 
 function EdgeEnhancementVolumeStyle (executionContext)
 {
-   VolumeRendering_X3DComposableVolumeRenderStyleNode.call (this, executionContext);
+   VolumeRendering_X3DComposableVolumeRenderStyleNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).EdgeEnhancementVolumeStyle);
 }
 
-Object .assign (Object .setPrototypeOf (EdgeEnhancementVolumeStyle .prototype, VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype),
+Object .assign (Object .setPrototypeOf (EdgeEnhancementVolumeStyle .prototype, VolumeRendering_X3DComposableVolumeRenderStyleNode .prototype),
 {
    initialize ()
    {
-      VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype.initialize.call (this);
+      VolumeRendering_X3DComposableVolumeRenderStyleNode .prototype .initialize .call (this);
 
       const gl = this .getBrowser () .getContext ();
 
@@ -2177,8 +2177,8 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, (X3DChildN
 {
    initialize ()
    {
-      X3DChildNode_default().prototype.initialize.call (this);
-      X3DBoundedObject_default().prototype.initialize.call (this);
+      X3DChildNode_default().prototype .initialize .call (this);
+      X3DBoundedObject_default().prototype .initialize .call (this);
 
       const
          browser = this .getBrowser (),
@@ -2315,8 +2315,8 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, (X3DChildN
    },
    dispose ()
    {
-      X3DBoundedObject_default().prototype.dispose.call (this);
-      X3DChildNode_default().prototype.dispose.call (this);
+      X3DBoundedObject_default().prototype .dispose .call (this);
+      X3DChildNode_default().prototype .dispose .call (this);
    },
 });
 
@@ -2404,18 +2404,18 @@ var ShaderPart_default = /*#__PURE__*/__webpack_require__.n(ShaderPart_namespace
 
 function IsoSurfaceVolumeData (executionContext)
 {
-   VolumeRendering_X3DVolumeDataNode.call (this, executionContext);
+   VolumeRendering_X3DVolumeDataNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).IsoSurfaceVolumeData);
 
    this .renderStyleNodes = [ ];
 }
 
-Object .assign (Object .setPrototypeOf (IsoSurfaceVolumeData .prototype, VolumeRendering_X3DVolumeDataNode.prototype),
+Object .assign (Object .setPrototypeOf (IsoSurfaceVolumeData .prototype, VolumeRendering_X3DVolumeDataNode .prototype),
 {
    initialize ()
    {
-      VolumeRendering_X3DVolumeDataNode.prototype.initialize.call (this);
+      VolumeRendering_X3DVolumeDataNode .prototype .initialize .call (this);
 
       const gl = this .getBrowser () .getContext ();
 
@@ -2772,12 +2772,12 @@ Namespace_default().set ("x_ite/Components/VolumeRendering/IsoSurfaceVolumeData"
 
 function ProjectionVolumeStyle (executionContext)
 {
-   VolumeRendering_X3DVolumeRenderStyleNode.call (this, executionContext);
+   VolumeRendering_X3DVolumeRenderStyleNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).ProjectionVolumeStyle);
 }
 
-Object .assign (Object .setPrototypeOf (ProjectionVolumeStyle .prototype, VolumeRendering_X3DVolumeRenderStyleNode.prototype),
+Object .assign (Object .setPrototypeOf (ProjectionVolumeStyle .prototype, VolumeRendering_X3DVolumeRenderStyleNode .prototype),
 {
    addShaderFields (shaderNode)
    {
@@ -3010,7 +3010,7 @@ Namespace_default().set ("x_ite/Components/VolumeRendering/ProjectionVolumeStyle
 
 function SegmentedVolumeData (executionContext)
 {
-   VolumeRendering_X3DVolumeDataNode.call (this, executionContext);
+   VolumeRendering_X3DVolumeDataNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).SegmentedVolumeData);
 
@@ -3018,11 +3018,11 @@ function SegmentedVolumeData (executionContext)
    this .renderStyleNodes       = [ ];
 }
 
-Object .assign (Object .setPrototypeOf (SegmentedVolumeData .prototype, VolumeRendering_X3DVolumeDataNode.prototype),
+Object .assign (Object .setPrototypeOf (SegmentedVolumeData .prototype, VolumeRendering_X3DVolumeDataNode .prototype),
 {
    initialize ()
    {
-      VolumeRendering_X3DVolumeDataNode.prototype.initialize.call (this);
+      VolumeRendering_X3DVolumeDataNode .prototype .initialize .call (this);
 
       const gl = this .getBrowser () .getContext ();
 
@@ -3292,16 +3292,16 @@ Namespace_default().set ("x_ite/Components/VolumeRendering/SegmentedVolumeData",
 
 function ShadedVolumeStyle (executionContext)
 {
-   VolumeRendering_X3DComposableVolumeRenderStyleNode.call (this, executionContext);
+   VolumeRendering_X3DComposableVolumeRenderStyleNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).ShadedVolumeStyle);
 }
 
-Object .assign (Object .setPrototypeOf (ShadedVolumeStyle .prototype, VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype),
+Object .assign (Object .setPrototypeOf (ShadedVolumeStyle .prototype, VolumeRendering_X3DComposableVolumeRenderStyleNode .prototype),
 {
    initialize ()
    {
-      VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype.initialize.call (this);
+      VolumeRendering_X3DComposableVolumeRenderStyleNode .prototype .initialize .call (this);
 
       const gl = this .getBrowser () .getContext ();
 
@@ -3577,16 +3577,16 @@ Namespace_default().set ("x_ite/Components/VolumeRendering/ShadedVolumeStyle", S
 
 function SilhouetteEnhancementVolumeStyle (executionContext)
 {
-   VolumeRendering_X3DComposableVolumeRenderStyleNode.call (this, executionContext);
+   VolumeRendering_X3DComposableVolumeRenderStyleNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).SilhouetteEnhancementVolumeStyle);
 }
 
-Object .assign (Object .setPrototypeOf (SilhouetteEnhancementVolumeStyle .prototype, VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype),
+Object .assign (Object .setPrototypeOf (SilhouetteEnhancementVolumeStyle .prototype, VolumeRendering_X3DComposableVolumeRenderStyleNode .prototype),
 {
    initialize ()
    {
-      VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype.initialize.call (this);
+      VolumeRendering_X3DComposableVolumeRenderStyleNode .prototype .initialize .call (this);
 
       const gl = this .getBrowser () .getContext ();
 
@@ -3761,16 +3761,16 @@ Namespace_default().set ("x_ite/Components/VolumeRendering/SilhouetteEnhancement
 
 function ToneMappedVolumeStyle (executionContext)
 {
-   VolumeRendering_X3DComposableVolumeRenderStyleNode.call (this, executionContext);
+   VolumeRendering_X3DComposableVolumeRenderStyleNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).ToneMappedVolumeStyle);
 }
 
-Object .assign (Object .setPrototypeOf (ToneMappedVolumeStyle .prototype, VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype),
+Object .assign (Object .setPrototypeOf (ToneMappedVolumeStyle .prototype, VolumeRendering_X3DComposableVolumeRenderStyleNode .prototype),
 {
    initialize ()
    {
-      VolumeRendering_X3DComposableVolumeRenderStyleNode.prototype.initialize.call (this);
+      VolumeRendering_X3DComposableVolumeRenderStyleNode .prototype .initialize .call (this);
 
       const gl = this .getBrowser () .getContext ();
 
@@ -3954,18 +3954,18 @@ Namespace_default().set ("x_ite/Components/VolumeRendering/ToneMappedVolumeStyle
 
 function VolumeData (executionContext)
 {
-   VolumeRendering_X3DVolumeDataNode.call (this, executionContext);
+   VolumeRendering_X3DVolumeDataNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).VolumeData);
 
    this .renderStyleNode = null;
   }
 
-Object .assign (Object .setPrototypeOf (VolumeData .prototype, VolumeRendering_X3DVolumeDataNode.prototype),
+Object .assign (Object .setPrototypeOf (VolumeData .prototype, VolumeRendering_X3DVolumeDataNode .prototype),
 {
    initialize ()
    {
-      VolumeRendering_X3DVolumeDataNode.prototype.initialize.call (this);
+      VolumeRendering_X3DVolumeDataNode .prototype .initialize .call (this);
 
       const gl = this .getBrowser () .getContext ();
 

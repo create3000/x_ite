@@ -135,7 +135,7 @@ Object .assign (Object .setPrototypeOf (AnnotationLayer .prototype, (X3DLayerNod
 {
    initialize ()
    {
-      X3DLayerNode_default().prototype.initialize.call (this);
+      X3DLayerNode_default().prototype .initialize .call (this);
    },
 });
 
@@ -247,7 +247,7 @@ Object .assign (Object .setPrototypeOf (AnnotationTarget .prototype, (X3DChildNo
 {
    initialize ()
    {
-      X3DChildNode_default().prototype.initialize.call (this);
+      X3DChildNode_default().prototype .initialize .call (this);
    },
 });
 
@@ -356,7 +356,7 @@ Object .assign (Object .setPrototypeOf (X3DAnnotationNode .prototype, (X3DChildN
 {
    initialize ()
    {
-      X3DChildNode_default().prototype.initialize.call (this);
+      X3DChildNode_default().prototype .initialize .call (this);
    },
 });
 
@@ -437,23 +437,23 @@ Namespace_default().set ("x_ite/Components/Annotation/X3DAnnotationNode", X3DAnn
 function GroupAnnotation (executionContext)
 {
    X3DGroupingNode_default().call (this, executionContext);
-   Annotation_X3DAnnotationNode.call (this, executionContext);
+   Annotation_X3DAnnotationNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).GroupAnnotation);
 }
 
 Object .assign (Object .setPrototypeOf (GroupAnnotation .prototype, (X3DGroupingNode_default()).prototype),
-   Annotation_X3DAnnotationNode.prototype,
+   Annotation_X3DAnnotationNode .prototype,
 {
    initialize ()
    {
-      X3DGroupingNode_default().prototype.initialize.call (this);
-      Annotation_X3DAnnotationNode.prototype.initialize.call (this);
+      X3DGroupingNode_default().prototype .initialize .call (this);
+      Annotation_X3DAnnotationNode .prototype .initialize .call (this);
    },
    dispose ()
    {
-      Annotation_X3DAnnotationNode.prototype.dispose.call (this);
-      X3DGroupingNode_default().prototype.dispose.call (this);
+      Annotation_X3DAnnotationNode .prototype .dispose .call (this);
+      X3DGroupingNode_default().prototype .dispose .call (this);
    },
 });
 
@@ -563,26 +563,26 @@ var X3DUrlObject_default = /*#__PURE__*/__webpack_require__.n(X3DUrlObject_names
 
 function IconAnnotation (executionContext)
 {
-   Annotation_X3DAnnotationNode.call (this, executionContext);
+   Annotation_X3DAnnotationNode .call (this, executionContext);
    X3DUrlObject_default().call (this, executionContext);
 
    this .addType ((X3DConstants_default()).IconAnnotation);
 }
 
-Object .assign (Object .setPrototypeOf (IconAnnotation .prototype, Annotation_X3DAnnotationNode.prototype),
+Object .assign (Object .setPrototypeOf (IconAnnotation .prototype, Annotation_X3DAnnotationNode .prototype),
    (X3DUrlObject_default()).prototype,
 {
    initialize ()
    {
-      Annotation_X3DAnnotationNode.prototype.initialize.call (this);
-      X3DUrlObject_default().prototype.initialize.call (this);
+      Annotation_X3DAnnotationNode .prototype .initialize .call (this);
+      X3DUrlObject_default().prototype .initialize .call (this);
    },
    requestImmediateLoad (cache = true)
    { },
    dispose ()
    {
-      X3DUrlObject_default().prototype.dispose.call (this);
-      Annotation_X3DAnnotationNode.prototype.dispose.call (this);
+      X3DUrlObject_default().prototype .dispose .call (this);
+      Annotation_X3DAnnotationNode .prototype .dispose .call (this);
    },
 });
 
@@ -684,16 +684,16 @@ Namespace_default().set ("x_ite/Components/Annotation/IconAnnotation", IconAnnot
 
 function TextAnnotation (executionContext)
 {
-   Annotation_X3DAnnotationNode.call (this, executionContext);
+   Annotation_X3DAnnotationNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).TextAnnotation);
 }
 
-Object .assign (Object .setPrototypeOf (TextAnnotation .prototype, Annotation_X3DAnnotationNode.prototype),
+Object .assign (Object .setPrototypeOf (TextAnnotation .prototype, Annotation_X3DAnnotationNode .prototype),
 {
    initialize ()
    {
-      Annotation_X3DAnnotationNode.prototype.initialize.call (this);
+      Annotation_X3DAnnotationNode .prototype .initialize .call (this);
    },
 });
 
@@ -794,16 +794,16 @@ Namespace_default().set ("x_ite/Components/Annotation/TextAnnotation", TextAnnot
 
 function URLAnnotation (executionContext)
 {
-   Annotation_X3DAnnotationNode.call (this, executionContext);
+   Annotation_X3DAnnotationNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).URLAnnotation);
 }
 
-Object .assign (Object .setPrototypeOf (URLAnnotation .prototype, Annotation_X3DAnnotationNode.prototype),
+Object .assign (Object .setPrototypeOf (URLAnnotation .prototype, Annotation_X3DAnnotationNode .prototype),
 {
    initialize ()
    {
-      Annotation_X3DAnnotationNode.prototype.initialize.call (this);
+      Annotation_X3DAnnotationNode .prototype .initialize .call (this);
    },
 });
 

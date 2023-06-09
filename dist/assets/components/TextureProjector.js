@@ -141,7 +141,7 @@ Object .assign (Object .setPrototypeOf (X3DTextureProjectorNode .prototype, (X3D
 {
    initialize ()
    {
-      X3DChildNode_default().prototype.initialize.call (this);
+      X3DChildNode_default().prototype .initialize .call (this);
 
       this ._on      .addInterest ("set_on__",      this);
       this ._texture .addInterest ("set_texture__", this);
@@ -448,18 +448,18 @@ Object .assign (TextureProjectorContainer .prototype,
 
 function TextureProjector (executionContext)
 {
-   TextureProjector_X3DTextureProjectorNode.call (this, executionContext);
+   TextureProjector_X3DTextureProjectorNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).TextureProjector);
 
    this ._fieldOfView .setUnit ("angle");
 }
 
-Object .assign (Object .setPrototypeOf (TextureProjector .prototype, TextureProjector_X3DTextureProjectorNode.prototype),
+Object .assign (Object .setPrototypeOf (TextureProjector .prototype, TextureProjector_X3DTextureProjectorNode .prototype),
 {
    initialize ()
    {
-      TextureProjector_X3DTextureProjectorNode.prototype.initialize.call (this);
+      TextureProjector_X3DTextureProjectorNode .prototype .initialize .call (this);
    },
    getFieldOfView ()
    {
@@ -687,18 +687,18 @@ Object .assign (TextureProjectorParallelContainer .prototype,
 
 function TextureProjectorParallel (executionContext)
 {
-   TextureProjector_X3DTextureProjectorNode.call (this, executionContext);
+   TextureProjector_X3DTextureProjectorNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).TextureProjectorParallel);
 
    this ._fieldOfView .setUnit ("length");
 }
 
-Object .assign (Object .setPrototypeOf (TextureProjectorParallel .prototype, TextureProjector_X3DTextureProjectorNode.prototype),
+Object .assign (Object .setPrototypeOf (TextureProjectorParallel .prototype, TextureProjector_X3DTextureProjectorNode .prototype),
 {
    initialize ()
    {
-      TextureProjector_X3DTextureProjectorNode.prototype.initialize.call (this);
+      TextureProjector_X3DTextureProjectorNode .prototype .initialize .call (this);
 
       this ._fieldOfView .addInterest ("set_fieldOfView___", this);
 
