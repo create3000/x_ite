@@ -51,7 +51,7 @@ import Generator    from "../InputOutput/Generator.js";
 import SFNodeCache  from "./SFNodeCache.js";
 
 const
-   _target     = Symbol .for ("X_ITE.SFNode.target"),
+   _target     = Symbol (),
    _proxy      = Symbol (),
    _cloneCount = Symbol ();
 

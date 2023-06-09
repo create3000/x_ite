@@ -45,9 +45,9 @@
  *
  ******************************************************************************/
 
-class Legacy
+const Legacy =
 {
-   static elements (elements, X3DBrowser)
+   elements (elements, X3DBrowser)
    {
       if (elements .length)
       {
@@ -55,9 +55,8 @@ class Legacy
 
          $.map (elements, element => new X3DBrowser (element));
       }
-   }
-
-   static browser (browser)
+   },
+   browser (browser)
    {
       const element = browser .getElement ();
 
@@ -71,16 +70,15 @@ class Legacy
 
       // Make element focusable.
       element .attr ("tabindex", element .attr ("tabindex") ?? 0);
-   }
-
-   static error (elements, error)
+   },
+   error (elements, error)
    {
       console .error (error);
 
       // <X3DCanvas>
       elements .children (".x_ite-private-browser") .hide ();
       elements .children (":not(.x_ite-private-browser)") .show ();
-   }
-}
+   },
+};
 
 export default Legacy;

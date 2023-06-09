@@ -70,9 +70,9 @@ import DEVELOPMENT          from "./DEVELOPMENT.js";
 
 let external = false;
 
-class Components
+const Components =
 {
-   static add ({ name, concreteNodes, abstractNodes, browserContext })
+   add ({ name, concreteNodes, abstractNodes, browserContext })
    {
       if (concreteNodes)
       {
@@ -91,8 +91,8 @@ class Components
 
       if (DEVELOPMENT && external)
          console .info (`Done loading external component '${name}'.`);
-   }
-}
+   },
+};
 
 Components .add (Core);
 Components .add (EnvironmentalEffects);
