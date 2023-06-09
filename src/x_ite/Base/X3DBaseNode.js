@@ -291,7 +291,7 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DEventObject .
       field .addParent (this);
       field .setName (name);
 
-      Object .defineProperty (this, "_" + name,
+      Object .defineProperty (this, `_${name}`,
       {
          get () { return field; },
          set (value) { field .setValue (value); },
@@ -309,7 +309,7 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DEventObject .
       if (field)
          return field;
 
-      throw new Error ("Unknown field '" + name + "' in node class " + this .getTypeName () + ".");
+      throw new Error (`Unknown field '${name}' in node class ${this .getTypeName ()}.`);
    },
    getFields ()
    {
@@ -326,7 +326,7 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DEventObject .
 
       this [_predefinedFields] .add (name, field);
 
-      Object .defineProperty (this, "_" + name,
+      Object .defineProperty (this, `_${name}`,
       {
          get () { return field; },
          set (value) { field .setValue (value); },
@@ -354,7 +354,7 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DEventObject .
 
       this [_predefinedFields] .remove (name);
 
-      delete this ["_" + field .getName ()];
+      delete this [`_${field .getName ()}`];
 
       if (!this .isPrivate ())
          field .removeCloneCount (1);
@@ -366,7 +366,7 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DEventObject .
       if (field)
          return field;
 
-      throw new Error ("Unknown field '" + name + "' in node class " + this .getTypeName () + ".");
+      throw new Error (`Unknown field '${name}' in node class ${this .getTypeName ()}.`);
    },
    getPredefinedFields ()
    {
@@ -419,7 +419,7 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DEventObject .
       if (field)
          return field;
 
-      throw new Error ("Unknown field '" + name + "' in node class " + this .getTypeName () + ".");
+      throw new Error (`Unknown field '${name}' in node class ${this .getTypeName ()}.`);
    },
    getUserDefinedFields ()
    {
