@@ -152,7 +152,7 @@ Object .assign (Cylinder3 .prototype,
    },
    toString ()
    {
-      return `${this .axis} ${this .radius}`;
+      return `${this .axis}, ${this .radius}`;
    },
 });
 
