@@ -72,7 +72,7 @@ Object .assign (Object .setPrototypeOf (JSONParser .prototype, X3DParser .protot
 
          this .input = json;
       }
-      catch (error)
+      catch
       {
          this .input = undefined;
       }

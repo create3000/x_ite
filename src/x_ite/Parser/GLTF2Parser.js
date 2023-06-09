@@ -107,7 +107,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
          this .input = json;
       }
-      catch (error)
+      catch
       {
          this .input = undefined;
       }

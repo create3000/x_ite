@@ -307,7 +307,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
                break;
             }
          }
-         catch (error)
+         catch
          { }
       }
 
@@ -445,7 +445,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
                break;
             }
          }
-         catch (error)
+         catch
          { }
       }
 

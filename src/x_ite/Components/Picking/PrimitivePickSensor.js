@@ -102,7 +102,7 @@ Object .assign (Object .setPrototypeOf (PrimitivePickSensor .prototype, X3DPickS
             }
          }
       }
-      catch (error)
+      catch
       { }
    },
    process: (function ()

@@ -130,7 +130,7 @@ Object .assign (Object .setPrototypeOf (GoldenGate .prototype, X3DParser .protot
                return x3dSyntax instanceof ArrayBuffer ? x3dSyntax : undefined;
          }
       }
-      catch (error)
+      catch
       {
          return undefined;
       }

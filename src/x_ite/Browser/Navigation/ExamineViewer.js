@@ -584,7 +584,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
 
                this .rotationChaser ._set_destination = destination;
             }
-            catch (error)
+            catch
             {
                // Slide along critical angle.
 
@@ -609,7 +609,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
                this .rotationChaser ._set_value       = Rotation4 .Identity;
                this .rotationChaser ._set_destination = rotationChange;
             }
-            catch (error)
+            catch
             {
                // Slide along critical angle.
 

@@ -158,7 +158,7 @@ Object .assign (Object .setPrototypeOf (ViewpointGroup .prototype, X3DChildNode 
                }
             }
          }
-         catch (error)
+         catch
          { }
       }
    },

@@ -97,7 +97,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
          if (!this .xml)
             Object .assign (this, HTMLParser);
       }
-      catch (error)
+      catch
       {
          this .input = undefined;
       }
@@ -449,7 +449,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
 
             this .getExecutionContext () .updateExternProtoDeclaration (this .getExecutionContext () .getUniqueExternProtoName (name), existingExternProto);
          }
-         catch (error)
+         catch
          { }
 
          this .getExecutionContext () .updateExternProtoDeclaration (name, externproto);
@@ -516,7 +516,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
 
             this .getExecutionContext () .updateProtoDeclaration (this .getExecutionContext () .getUniqueProtoName (name), existingProto);
          }
-         catch (error)
+         catch
          { }
 
          this .getExecutionContext () .updateProtoDeclaration (name, proto);
@@ -924,7 +924,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
 
                this .getExecutionContext () .updateNamedNode (this .getExecutionContext () .getUniqueName (name), namedNode);
             }
-            catch (error)
+            catch
             { }
 
             this .getExecutionContext () .updateNamedNode (name, node);

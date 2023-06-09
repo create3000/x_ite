@@ -763,7 +763,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
                            this .getExecutionContext () .updateProtoDeclaration (this .getExecutionContext () .getUniqueProtoName (nodeTypeId), existingProto);
                         }
-                        catch (error)
+                        catch
                         { }
 
                         this .getExecutionContext () .updateProtoDeclaration (nodeTypeId, proto);
@@ -1000,7 +1000,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
                         this .getExecutionContext () .updateExternProtoDeclaration (this .getExecutionContext () .getUniqueExternProtoName (nodeTypeId), existingExternProto);
                      }
-                     catch (error)
+                     catch
                      { }
 
                      this .getExecutionContext () .updateExternProtoDeclaration (nodeTypeId, externproto);
@@ -1236,7 +1236,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
                this .getExecutionContext () .updateNamedNode (this .getExecutionContext () .getUniqueName (nodeNameId), namedNode);
             }
-            catch (error)
+            catch
             { }
 
             this .getExecutionContext () .updateNamedNode (nodeNameId, baseNode);
@@ -1309,7 +1309,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
                            {
                               var reference = this .getPrototype () .getField (isId);
                            }
-                           catch (error)
+                           catch
                            {
                               this .throwOrWarn (`No such event or field '${isId}' inside PROTO ${this .getPrototype () .getName ()} interface declaration.`);
 
@@ -1401,7 +1401,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
          {
             var field = baseNode .getPredefinedField (fieldId);
          }
-         catch (error)
+         catch
          {
             throw new Error (`Unknown field '${fieldId}' in class '${baseNode .getTypeName ()}'.`);
          }
@@ -1420,7 +1420,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
                   {
                      var reference = this .getPrototype () .getField (isId);
                   }
-                  catch (error)
+                  catch
                   {
                      this .throwOrWarn (`No such event or field '${isId}' inside PROTO ${this .getPrototype () .getName ()}`);
 

@@ -161,10 +161,8 @@ Object .assign (Object .setPrototypeOf (PlaneSensor .prototype, X3DDragSensorNod
                {
                   this .getLineTrackPoint (hit, new Line3 (this .line .direction, this .line .direction), trackPoint);
                }
-               catch (error)
+               catch
                {
-                  //console .error (error);
-
                   trackPoint .assign (this .startPoint);
                }
 
@@ -214,7 +212,7 @@ Object .assign (Object .setPrototypeOf (PlaneSensor .prototype, X3DDragSensorNod
                {
                   this .getLineTrackPoint (hit, new Line3 (Vector3 .Zero, this .line .direction), trackPoint);
                }
-               catch (error)
+               catch
                {
                   trackPoint .assign (endPoint);
                }
@@ -225,10 +223,8 @@ Object .assign (Object .setPrototypeOf (PlaneSensor .prototype, X3DDragSensorNod
                throw new Error ("Lines are parallel.");
          }
       }
-      catch (error)
+      catch
       {
-         // console .error (error);
-
          this ._trackPoint_changed  .addEvent ();
          this ._translation_changed .addEvent ();
       }

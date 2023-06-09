@@ -544,7 +544,7 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
             this .shape    = this .smoothingGroups .get (this .group .getNodeName ()) .get (this .smoothingGroup);
             this .geometry = this .shape .geometry;
          }
-         catch (error)
+         catch
          {
             const
                scene      = this .getExecutionContext (),

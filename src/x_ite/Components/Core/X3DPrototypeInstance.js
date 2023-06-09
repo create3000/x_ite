@@ -137,7 +137,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
                // If default value of protoField is different from field, thus update default value for field.
                field .assign (protoField);
             }
-            catch (error)
+            catch
             {
                // Definition exists in proto but does not exist in extern proto.
                this .addPredefinedField (proto .getFieldDefinitions () .get (protoField .getName ()));

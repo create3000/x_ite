@@ -161,7 +161,7 @@ Object .assign (Object .setPrototypeOf (TransformSensor .prototype, X3DEnvironme
             break;
          }
       }
-      catch (error)
+      catch
       { }
 
       this .set_enabled__ ();

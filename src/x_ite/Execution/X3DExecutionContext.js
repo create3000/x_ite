@@ -391,7 +391,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       {
          return this .getNamedNode (name);
       }
-      catch (error)
+      catch
       {
          const importedNode = this [_importedNodes] .get (name);
 
@@ -418,10 +418,8 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
             if (importedNode .getExportedNode () === node)
                return importedNode .getImportedName ();
          }
-         catch (error)
-         {
-            //console .error (error);
-         }
+         catch
+         { }
       }
 
       throw new Error ("Couldn't get local name: node is shared.");
@@ -602,7 +600,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
          if (sourceNode .getExecutionContext () !== this)
             importedSourceNode = this .getLocalNode (this .getLocalName (sourceNode)) .getValue ();
       }
-      catch (error)
+      catch
       {
          // Source node is shared but not imported.
       }
@@ -613,7 +611,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
          if (destinationNode .getExecutionContext () !== this)
             importedDestinationNode = this .getLocalNode (this .getLocalName (destinationNode)) .getValue ();
       }
-      catch (error)
+      catch
       {
          // Destination node is shared but not imported.
       }
@@ -720,7 +718,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
          if (sourceNode .getValue () .getExecutionContext () !== this)
             importedSourceNode = this .getLocalNode (this .getLocalName (sourceNode)) .getValue ();
       }
-      catch (error)
+      catch
       {
          // Source node is shared but not imported.
       }
@@ -731,7 +729,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
          if (destinationNode .getValue () .getExecutionContext () !== this)
             importedDestinationNode = this .getLocalNode (this .getLocalName (destinationNode)) .getValue ();
       }
-      catch (error)
+      catch
       {
          // Destination node is shared but not imported.
       }

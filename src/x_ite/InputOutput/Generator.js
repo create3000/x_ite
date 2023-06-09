@@ -314,7 +314,7 @@ Object .assign (Generator .prototype,
          {
             index .add (exportedNode .getLocalNode ())
          }
-         catch (error)
+         catch
          { }
       });
    },
@@ -328,7 +328,7 @@ Object .assign (Generator .prototype,
          {
             index .add (importedNode .getInlineNode ());
          }
-         catch (error)
+         catch
          { }
       });
    },

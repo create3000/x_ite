@@ -203,7 +203,7 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DNode .pro
             generator .AddRouteNode (this);
             generator .AddImportedNode (this .getExportedNode (), this .getImportedName ());
          }
-         catch (error)
+         catch
          {
             // Output unresolved routes.
 
@@ -278,7 +278,7 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DNode .pro
             generator .AddRouteNode (this);
             generator .AddImportedNode (this .getExportedNode (), this .getImportedName ());
          }
-         catch (error)
+         catch
          {
             // Output unresolved routes.
 
@@ -403,7 +403,7 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DNode .pro
             generator .AddRouteNode (this);
             generator .AddImportedNode (this .getExportedNode (), this .getImportedName ());
          }
-         catch (error)
+         catch
          {
             // Output unresolved routes.
 

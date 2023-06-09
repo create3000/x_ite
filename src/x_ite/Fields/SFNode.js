@@ -78,7 +78,7 @@ const handler =
 
          return field .valueOf ();
       }
-      catch (error)
+      catch
       {
          return undefined;
       }
@@ -115,7 +115,7 @@ const handler =
       {
          return !! target .getValue () .getField (key);
       }
-      catch (error)
+      catch
       {
          return key in target;
       }

@@ -213,7 +213,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
 
          this .input = xmlElement;
       }
-      catch (error)
+      catch
       {
          this .input = undefined;
       }

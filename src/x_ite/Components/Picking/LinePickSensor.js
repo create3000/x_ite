@@ -100,7 +100,7 @@ Object .assign (Object .setPrototypeOf (LinePickSensor .prototype, X3DPickSensor
             }
          }
       }
-      catch (error)
+      catch
       { }
    },
    process: (function ()
