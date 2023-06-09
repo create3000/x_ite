@@ -315,7 +315,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
       exportedName = String (exportedName);
 
       if (this [_exportedNodes] .has (exportedName))
-         throw new Error ("Couldn't add exported node: exported name '" + exportedName + "' already in use.");
+         throw new Error (`Couldn't add exported node: exported name '${exportedName}' already in use.`);
 
       this .updateExportedNode (exportedName, node);
 
@@ -360,7 +360,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
       if (exportedNode)
          return SFNodeCache .get (exportedNode .getLocalNode ());
 
-      throw new Error ("Exported node '" + exportedName + "' not found.");
+      throw new Error (`Exported node '${exportedName}' not found.`);
    },
    getExportedNodes ()
    {

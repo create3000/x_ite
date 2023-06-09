@@ -226,7 +226,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       if (setup === false)
          return null;
 
-      throw new Error ("Unknown proto or externproto type '" + name + "'.");
+      throw new Error (`Unknown proto or externproto type '${name}'.`);
    },
    addNamedNode (name, node)
    {
@@ -243,10 +243,10 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
          throw new Error ("Couldn't add named node: node name is empty.");
 
       if (this [_namedNodes] .has (name))
-         throw new Error ("Couldn't add named node: node named '" + name + "' is already in use.");
+         throw new Error (`Couldn't add named node: node named '${name}' is already in use.`);
 
       if (this [_namedNodes] .get (node .getName ()) ?.getValue () === node)
-         throw new Error ("Couldn't add named node: node named '" + node .getName () + "' is already added.");
+         throw new Error (`Couldn't add named node: node named '${node .getName ()}' is already added.`);
 
       // Add named node.
 
@@ -305,7 +305,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       if (node)
          return node;
 
-      throw new Error ("Named node '" + name + "' not found.");
+      throw new Error (`Named node '${name}' not found.`);
    },
    getNamedNodes ()
    {
@@ -321,7 +321,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       importedName = String (importedName);
 
       if (this [_importedNodes] .has (importedName))
-         throw new Error ("Couldn't add imported node: imported name '" + importedName + "' already in use.");
+         throw new Error (`Couldn't add imported node: imported name '${importedName}' already in use.`);
 
       this .updateImportedNode (inlineNode, exportedName, importedName);
    },
@@ -377,7 +377,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       if (importedNode)
          return SFNodeCache .get (importedNode .getExportedNode ());
 
-      throw new Error ("Imported node '" + importedName + "' not found.");
+      throw new Error (`Imported node '${importedName}' not found.`);
    },
    getImportedNodes ()
    {
@@ -398,7 +398,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
          if (importedNode)
             return SFNodeCache .get (importedNode);
 
-         throw new Error ("Unknown named or imported node '" + name + "'.");
+         throw new Error (`Unknown named or imported node '${name}'.`);
       }
    },
    getLocalName (node)
@@ -440,7 +440,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       if (proto)
          return proto;
 
-      throw new Error ("Proto declaration '" + name + "' not found.");
+      throw new Error (`Proto declaration '${name}' not found.`);
    },
    addProtoDeclaration (name, proto)
    {
@@ -453,10 +453,10 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
          throw new Error ("Couldn't add proto declaration: proto does not belong to this execution context.");
 
       if (this [_protos] .get (name))
-         throw new Error ("Couldn't add proto declaration: proto '" + name + "' already in use.");
+         throw new Error (`Couldn't add proto declaration: proto '${name}' already in use.`);
 
       if (this [_protos] .get (proto .getName ()) === proto)
-         throw new Error ("Couldn't add proto declaration: proto '" + proto .getName () + "' already added.");
+         throw new Error (`Couldn't add proto declaration: proto '${proto .getName ()}' already added.`);
 
       name = String (name);
 
@@ -513,7 +513,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       if (externproto)
          return externproto;
 
-      throw new Error ("Extern proto declaration '" + name + "' not found.");
+      throw new Error (`Extern proto declaration '${name}' not found.`);
    },
    addExternProtoDeclaration (name, externproto)
    {
@@ -526,10 +526,10 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
          throw new Error ("Couldn't add extern proto declaration: extern proto does not belong to this execution context.");
 
       if (this [_externprotos] .get (name))
-         throw new Error ("Couldn't add extern proto declaration: extern proto '" + name + "' already in use.");
+         throw new Error (`Couldn't add extern proto declaration: extern proto '${name}' already in use.`);
 
       if (this [_externprotos] .get (externproto .getName ()) === externproto)
-         throw new Error ("Couldn't add extern proto declaration: extern proto '" + externproto .getName () + "' already added.");
+         throw new Error (`Couldn't add extern proto declaration: extern proto '${externproto .getName ()}' already added.`);
 
       name = String (name);
 
@@ -653,13 +653,13 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
          destinationField = destinationNode .getField (destinationField);
 
          if (!sourceField .isOutput ())
-            throw new Error ("Field named '" + sourceField .getName () + "' in node named '" + sourceNode .getName () + "' of type " + sourceNode .getTypeName () + " is not an output field.");
+            throw new Error (`Field named '${sourceField .getName ()}' in node named '${sourceNode .getName ()}' of type ${sourceNode .getTypeName ()} is not an output field.`);
 
          if (!destinationField .isInput ())
-            throw new Error ("Field named '" + destinationField .getName () + "' in node named '" + destinationNode .getName () + "' of type " + destinationNode .getTypeName () + " is not an input field.");
+            throw new Error (`Field named '${destinationField .getName ()}' in node named '${destinationNode .getName ()}' of type ${destinationNode .getTypeName ()} is not an input field.`);
 
          if (sourceField .getType () !== destinationField .getType ())
-            throw new Error ("ROUTE types " + sourceField .getTypeName () + " and " + destinationField .getTypeName () + " do not match.");
+            throw new Error (`ROUTE types ${sourceField .getTypeName ()} and ${destinationField .getTypeName ()} do not match.`);
 
          const id = X3DRoute .getId (sourceField, destinationField);
 
@@ -678,7 +678,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       }
       catch (error)
       {
-         throw new Error ("Bad ROUTE specification: " + error .message);
+         throw new Error (`Bad ROUTE specification: ${error .message}`);
       }
    },
    deleteRoute (route)
