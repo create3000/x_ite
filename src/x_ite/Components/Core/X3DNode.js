@@ -1331,18 +1331,21 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
          if (!(firstParent instanceof Fields .SFNode))
             continue;
 
-         const firstParentValueOf = firstParent .valueOf ();
-
          for (const secondParent of new Set (firstParent .getParents ()))
          {
             if (!(secondParent instanceof Fields .MFNode))
                continue;
 
-            secondParent .assign (secondParent .filter (value => value !== firstParentValueOf))
+            secondParent .assign (secondParent .filter (node => node ?.getValue () !== this))
          }
+      }
 
-         if (firstParent .getValue () === this)
-            firstParent .setValue (null);
+      for (const firstParent of new Set (this .getParents ()))
+      {
+         if (!(firstParent instanceof Fields .SFNode))
+            continue;
+
+         firstParent .setValue (null);
       }
 
       // Call super.dispose, where fields get disposed.
