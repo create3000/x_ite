@@ -1,46 +1,51 @@
-$.decodeText = function (input)
+Object .assign ($,
 {
-   if (typeof input === "string")
-      return input;
-
-   return new TextDecoder () .decode (input);
-};
-
-$.ungzip = function (arrayBuffer)
-{
-   try
+   decodeText (input)
    {
-      return pako .ungzip (arrayBuffer, { to: "raw" }) .buffer;
-   }
-   catch (exception)
+      if (typeof input === "string")
+         return input;
+
+      return new TextDecoder () .decode (input);
+   },
+   ungzip (arrayBuffer)
    {
-      return arrayBuffer;
-   }
-};
+      try
+      {
+         return pako .ungzip (arrayBuffer, { to: "raw" }) .buffer;
+      }
+      catch (exception)
+      {
+         return arrayBuffer;
+      }
+   },
+   toLowerCaseFirst (string)
+   {
+      return string [0] .toLowerCase () + string .slice (1);
+   },
+   try (callback)
+   {
+      try { return callback () } catch { }
+   },
+   enum (object, property, defaultValue)
+   {
+      return object .hasOwnProperty (property) ? object [property] : defaultValue;
+   },
+});
 
-$.toLowerCaseFirst = function (string)
+Object .assign ($.fn,
 {
-   return string [0] .toLowerCase () + string .slice (1);
-};
+   isInViewport ()
+   {
+      const
+         $this          = $(this),
+         $window        = $(window),
+         elementTop     = $this .offset () .top,
+         elementBottom  = elementTop + $this .outerHeight (),
+         viewportTop    = $window .scrollTop (),
+         viewportBottom = viewportTop + $window .height ();
 
-$.try = callback => { try { return callback () } catch (error) { } };
-
-$.enum = function (object, property, defaultValue)
-{
-   return object .hasOwnProperty (property) ? object [property] : defaultValue;
-};
-
-$.fn.isInViewport = function ()
-{
-   const
-      $this          = $(this),
-      $window        = $(window),
-      elementTop     = $this .offset () .top,
-      elementBottom  = elementTop + $this .outerHeight (),
-      viewportTop    = $window .scrollTop (),
-      viewportBottom = viewportTop + $window .height ();
-
-   return elementBottom > viewportTop && elementTop < viewportBottom;
-};
+      return elementBottom > viewportTop && elementTop < viewportBottom;
+   },
+});
 
 export default $;
