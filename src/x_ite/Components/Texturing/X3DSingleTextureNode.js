@@ -173,7 +173,7 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, X3DText
 
       return function (options, channel = 0)
       {
-         options .push ("X3D_TEXTURE" + channel + "_" + textureTypes [this .getTextureType ()]);
+         options .push (`X3D_TEXTURE${channel}_${textureTypes [this .getTextureType ()]}`);
       };
    })(),
 });

@@ -309,7 +309,7 @@ Object .assign (X3DRoute,
 {
    getId (sourceField, destinationField)
    {
-      return sourceField .getId () + "." + destinationField .getId ();
+      return `${sourceField .getId ()}.${destinationField .getId ()}`;
    },
 });
 

@@ -325,7 +325,7 @@ Object .assign (Object .setPrototypeOf (JSONParser .prototype, X3DParser .protot
                }
                default:
                {
-                  console .error ("Unknown type found in array " + typeof object [key]);
+                  console .error (`Unknown type found in array ${typeof object [key]}`);
                }
             }
          }
@@ -377,7 +377,7 @@ Object .assign (Object .setPrototypeOf (JSONParser .prototype, X3DParser .protot
                }
                default:
                {
-                  console .error ("Unknown type found in object " + typeof object [key]);
+                  console .error (`Unknown type found in object ${typeof object [key]}`);
                   console .error (object);
                }
             }

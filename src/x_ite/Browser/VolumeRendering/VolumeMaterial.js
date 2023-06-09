@@ -91,13 +91,13 @@ Object .assign (Object .setPrototypeOf (VolumeMaterial .prototype, UnlitMaterial
       if (objectsCount [0])
       {
          options .push ("X3D_CLIP_PLANES")
-         options .push ("X3D_NUM_CLIP_PLANES " + Math .min (objectsCount [0], browser .getMaxClipPlanes ()));
+         options .push (`X3D_NUM_CLIP_PLANES ${Math .min (objectsCount [0], browser .getMaxClipPlanes ())}`);
       }
 
       if (objectsCount [1])
       {
          options .push ("X3D_LIGHTING")
-         options .push ("X3D_NUM_LIGHTS " + Math .min (objectsCount [1], browser .getMaxLights ()));
+         options .push (`X3D_NUM_LIGHTS ${Math .min (objectsCount [1], browser .getMaxLights ())}`);
       }
 
       const shaderNode = this .volumeDataNode .createShader (options, vs, fs);

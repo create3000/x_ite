@@ -496,7 +496,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
       anchorNode .url         = [href];
 
       if (target)
-         anchorNode .parameter = ["target=" + target];
+         anchorNode .parameter = [`target=${target}`];
 
       // Get child elements.
 

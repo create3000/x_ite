@@ -49,7 +49,7 @@ import X3DField from "../Base/X3DField.js";
 
 function SFString (value)
 {
-   X3DField .call (this, arguments .length ? "" + value : "");
+   X3DField .call (this, arguments .length ? String (value) : "");
 }
 
 Object .assign (Object .setPrototypeOf (SFString .prototype, X3DField .prototype),
@@ -68,7 +68,7 @@ Object .assign (Object .setPrototypeOf (SFString .prototype, X3DField .prototype
    },
    set (value)
    {
-      X3DField .prototype .set .call (this, "" + value);
+      X3DField .prototype .set .call (this, String (value));
    },
    valueOf: X3DField .prototype .getValue,
    toStream (generator)
