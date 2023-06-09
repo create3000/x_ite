@@ -389,7 +389,7 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, CADGeometry_X3DProdu
             break;
          }
       }
-      catch (error)
+      catch
       { }
 
       if (this .childNode)

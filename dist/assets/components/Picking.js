@@ -729,7 +729,7 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, (X3DSensor
                }
             }
          }
-         catch (error)
+         catch
          { }
       }
    },
@@ -926,7 +926,7 @@ Object .assign (Object .setPrototypeOf (LinePickSensor .prototype, Picking_X3DPi
             }
          }
       }
-      catch (error)
+      catch
       { }
    },
    process: (function ()
@@ -2149,7 +2149,7 @@ Object .assign (Object .setPrototypeOf (PrimitivePickSensor .prototype, Picking_
             }
          }
       }
-      catch (error)
+      catch
       { }
    },
    process: (function ()

@@ -2035,19 +2035,26 @@ Object .assign (Object .setPrototypeOf (VolumeMaterial .prototype, (UnlitMateria
 
       const { fogNode, objectsCount } = renderContext;
 
-      if (fogNode)
-         options .push ("X3D_FOG");
+      switch (fogNode ?.getFogType ())
+      {
+         case 1:
+            options .push ("X3D_FOG", "X3D_FOG_LINEAR");
+            break;
+         case 2:
+            options .push ("X3D_FOG", "X3D_FOG_EXPONENTIAL");
+            break;
+      }
 
       if (objectsCount [0])
       {
          options .push ("X3D_CLIP_PLANES")
-         options .push ("X3D_NUM_CLIP_PLANES " + Math .min (objectsCount [0], browser .getMaxClipPlanes ()));
+         options .push (`X3D_NUM_CLIP_PLANES ${Math .min (objectsCount [0], browser .getMaxClipPlanes ())}`);
       }
 
       if (objectsCount [1])
       {
          options .push ("X3D_LIGHTING")
-         options .push ("X3D_NUM_LIGHTS " + Math .min (objectsCount [1], browser .getMaxLights ()));
+         options .push (`X3D_NUM_LIGHTS ${Math .min (objectsCount [1], browser .getMaxLights ())}`);
       }
 
       const shaderNode = this .volumeDataNode .createShader (options, VolumeStyle_vs, VolumeStyle_fs);

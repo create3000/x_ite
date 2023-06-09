@@ -3524,7 +3524,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (X3DShapeNode
                break;
             }
          }
-         catch (error)
+         catch
          { }
       }
 
