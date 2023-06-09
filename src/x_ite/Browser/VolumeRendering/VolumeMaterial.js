@@ -88,6 +88,19 @@ Object .assign (Object .setPrototypeOf (VolumeMaterial .prototype, UnlitMaterial
       if (fogNode)
          options .push ("X3D_FOG");
 
+      if (fogNode)
+      {
+         switch (fogNode .getFogType ())
+         {
+            case 1:
+               options .push ("X3D_FOG", "X3D_FOG_LINEAR");
+               break;
+            case 2:
+               options .push ("X3D_FOG", "X3D_FOG_EXPONENTIAL");
+               break;
+         }
+      }
+
       if (objectsCount [0])
       {
          options .push ("X3D_CLIP_PLANES")

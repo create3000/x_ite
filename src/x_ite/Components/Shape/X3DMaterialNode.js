@@ -172,7 +172,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
 
       if (renderContext)
       {
-         const { renderObject, shapeNode, appearanceNode, objectsCount } = renderContext;
+         const { renderObject, fogNode, shapeNode, appearanceNode, objectsCount } = renderContext;
 
          if (this .logarithmicDepthBuffer || renderObject .getViewpoint () .getLogarithmicDepthBuffer ())
             options .push ("X3D_LOGARITHMIC_DEPTH_BUFFER");
@@ -193,17 +193,15 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
          if (renderContext .shadows)
             options .push ("X3D_SHADOWS", "X3D_PCF_FILTERING");
 
-         if (renderContext .fogNode)
+         if (fogNode)
          {
-            options .push ("X3D_FOG");
-
-            switch (renderContext .fogNode .getFogType ())
+            switch (fogNode .getFogType ())
             {
                case 1:
-                  options .push ("X3D_FOG_LINEAR");
+                  options .push ("X3D_FOG", "X3D_FOG_LINEAR");
                   break;
                case 2:
-                  options .push ("X3D_FOG_EXPONENTIAL");
+                  options .push ("X3D_FOG", "X3D_FOG_EXPONENTIAL");
                   break;
             }
          }
