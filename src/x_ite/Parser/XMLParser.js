@@ -639,14 +639,14 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
             if (protoField .isReference (nodeField .getAccessType ()))
                nodeField .addReference (protoField);
             else
-               throw new Error ("Field '" + nodeField .getName () + "' and '" + protoField .getName () + "' in PROTO " + proto .getName () + " are incompatible as an IS mapping.");
+               throw new Error (`Field '${nodeField .getName ()}' and '${protoField .getName ()}' in PROTO ${proto .getName ()} are incompatible as an IS mapping.`);
          }
          else
-            throw new Error ("Field '" + nodeField .getName () + "' and '" + protoField .getName () + "' in PROTO " + this .proto .getName () + " have different types.");
+            throw new Error (`Field '${nodeField .getName ()}' and '${protoField .getName ()}' in PROTO ${this .proto .getName()} have different types.`);
       }
       catch (error)
       {
-         console .warn ("XML Parser Error: Couldn't create IS reference. " + error .message);
+         console .warn (`XML Parser Error: Couldn't create IS reference. ${error .message}`);
       }
    },
    protoInstanceElement (xmlElement)
@@ -663,7 +663,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
             const node = this .getExecutionContext () .createProto (name, false);
 
             if (!node)
-               throw new Error ("Unknown proto or externproto type '" + name + "'.");
+               throw new Error (`Unknown proto or externproto type '${name}'.`);
 
             ///DOMIntegration: attach node to DOM xmlElement for access from DOM.
             $.data (xmlElement, "node", node);
@@ -724,7 +724,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
       }
       catch (error)
       {
-         console .warn ("XML Parser Error: Couldn't assign field value. " + error .message);
+         console .warn (`XML Parser Error: Couldn't assign field value. ${error .message}`);
       }
    },
    nodeElement (xmlElement)
@@ -771,7 +771,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
          if (DEVELOPMENT)
             console .error (error);
          else
-            console .error ("XML Parser Error: " + error .message);
+            console .error (`XML Parser Error: ${error .message}`);
       }
    },
    scriptElement (element)
@@ -823,7 +823,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
       }
       catch (error)
       {
-         console .warn ("XML Parser Error: " + error .message);
+         console .warn (`XML Parser Error: ${error .message}`);
 
          if (DEVELOPMENT)
             console .error (error);
@@ -850,7 +850,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
       }
       catch (error)
       {
-         console .warn ("XML Parser Error: " + error .message);
+         console .warn (`XML Parser Error: ${error .message}`);
       }
    },
    exportElement (xmlElement)
@@ -876,7 +876,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
       }
       catch (error)
       {
-         console .warn ("XML Parser Error: " + error .message);
+         console .warn (`XML Parser Error: ${error .message}`);
       }
    },
    cdataNode (xmlElement)
@@ -905,7 +905,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
       }
       catch (error)
       {
-         console .warn ("Invalid USE name: " + error .message);
+         console .warn (`Invalid USE name: ${error .message}`);
       }
 
       return false;
@@ -932,7 +932,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
       }
       catch (error)
       {
-         console .warn ("Invalid DEF name: " + error .message);
+         console .warn (`Invalid DEF name: ${error .message}`);
       }
    },
    nodeAttributes (xmlElement, node)

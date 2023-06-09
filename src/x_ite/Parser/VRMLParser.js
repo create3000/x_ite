@@ -249,16 +249,15 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
       // Format error
 
       const message = "\n"
-         + "********************************************************************************" + "\n"
-         + "Parser error at line " + this .lineNumber + ":" + linePos  + "\n"
-         + "in '" + this .getExecutionContext () .getWorldURL () + "'" + "\n"
-         + "\n"
-         + lastLine + "\n"
-         + line + "\n"
-         + Array (linePos) .join (" ") + "^" + "\n"
-         + string + "\n"
-         + "********************************************************************************"
-         + "\n"
+         + `********************************************************************************\n`
+         + `Parser error at line ${this .lineNumber}:${linePos}\n`
+         + `in '${this .getExecutionContext () .getWorldURL ()}'\n`
+         + `\n`
+         + `${lastLine}\n`
+         + `${line}\n`
+         + `${Array (linePos) .join (" ")}^\n`
+         + `${string}\n`
+         + `********************************************************************************\n`
       ;
 
       return message;
@@ -865,7 +864,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
          this .Id ()
 
-         throw new Error ("Unknown event or field type: '" + this .result [1] + "'.");
+         throw new Error (`Unknown event or field type: '${this .result [1]}'.`);
       }
 
       if (Grammar .outputOnly .parse (this) || Grammar .eventOut .parse (this))
@@ -890,7 +889,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
          this .Id ()
 
-         throw new Error ("Unknown event or field type: '" + this .result [1] + "'.");
+         throw new Error (`Unknown event or field type: '${this .result [1]}'.`);
       }
 
       if (Grammar .initializeOnly .parse (this) || Grammar .field .parse (this))
@@ -912,7 +911,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
                   return field;
                }
 
-               throw new Error ("Couldn't read value for field '" + fieldId + "'.");
+               throw new Error (`Couldn't read value for field '${fieldId}'.`);
             }
 
             throw new Error ("Expected a name for field.");
@@ -920,7 +919,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
          this .Id ()
 
-         throw new Error ("Unknown event or field type: '" + this .result [1] + "'.");
+         throw new Error (`Unknown event or field type: '${this .result [1]}'.`);
       }
 
       return null;
@@ -953,7 +952,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
                   return field;
                }
 
-               throw new Error ("Couldn't read value for field '" + fieldId + "'.");
+               throw new Error (`Couldn't read value for field '${fieldId}'.`);
             }
 
             throw new Error ("Expected a name for field.");
@@ -961,7 +960,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
          this .Id ();
 
-         throw new Error ("Unknown event or field type: '" + this .result [1] + "'.");
+         throw new Error (`Unknown event or field type: '${this .result [1]}'.`);
       }
 
       return null;
@@ -1008,7 +1007,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
                      return true;
                   }
 
-                  throw new Error ("Expected a URL list after EXTERNPROTO interface declaration '" + nodeTypeId + "'.");
+                  throw new Error (`Expected a URL list after EXTERNPROTO interface declaration '${nodeTypeId}'.`);
                }
 
                throw new Error ("Expected a ']' at the end of EXTERNPROTO interface declaration.");
@@ -1059,7 +1058,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
          this .Id ()
 
-         throw new Error ("Unknown event or field type: '" + this .result [1] + "'.");
+         throw new Error (`Unknown event or field type: '${this .result [1]}'.`);
       }
 
       if (Grammar .outputOnly .parse (this) || Grammar .eventOut .parse (this))
@@ -1084,7 +1083,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
          this .Id ()
 
-         throw new Error ("Unknown event or field type: '" + this .result [1] + "'.");
+         throw new Error (`Unknown event or field type: '${this .result [1]}'.`);
       }
 
       if (Grammar .initializeOnly .parse (this) || Grammar .field .parse (this))
@@ -1109,7 +1108,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
          this .Id ()
 
-         throw new Error ("Unknown event or field type: '" + this .result [1] + "'.");
+         throw new Error (`Unknown event or field type: '${this .result [1]}'.`);
       }
 
       if (Grammar .inputOutput .parse (this) || Grammar .exposedField .parse (this))
@@ -1134,7 +1133,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
          this .Id ()
 
-         throw new Error ("Unknown event or field type: '" + this .result [1] + "'.");
+         throw new Error (`Unknown event or field type: '${this .result [1]}'.`);
       }
 
       return null;
@@ -1312,7 +1311,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
                            }
                            catch (error)
                            {
-                              this .throwOrWarn ("No such event or field '" + isId + "' inside PROTO " + this .getPrototype () .getName () + " interface declaration.");
+                              this .throwOrWarn (`No such event or field '${isId}' inside PROTO ${this .getPrototype () .getName ()} interface declaration.`);
 
                               return true;
                            }
@@ -1336,13 +1335,13 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
                                     return true;
                                  }
 
-                                 throw new Error ("Couldn't add field '" + fieldId + "', field already exists with different access type or data type.");
+                                 throw new Error (`Couldn't add field '${fieldId}', field already exists with different access type or data type.`);
                               }
 
-                              throw new Error ("Field '" + fieldId + "' and '" + reference .getName () + "' in PROTO '" + this .getPrototype () .getName () + "' are incompatible as an IS mapping.");
+                              throw new Error (`Field '${fieldId}' and '${reference .getName ()}' in PROTO '${this .getPrototype () .getName ()}' are incompatible as an IS mapping.`);
                            }
 
-                           throw new Error ("Field '" + fieldId + "' and '" + reference .getName () + "' in PROTO '" + this .getPrototype () .getName () + "' have different types.");
+                           throw new Error (`Field '${fieldId}' and '${reference .getName ()}' in PROTO '${this .getPrototype () .getName ()}' have different types.`);
                         }
 
                         throw new Error ("No name give after IS statement.");
@@ -1372,7 +1371,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
                return true;
             }
 
-            throw new Error ("Couldn't set value for field '" + field .getName () + "', field already exists with different access type or data type.");
+            throw new Error (`Couldn't set value for field '${field .getName ()}', field already exists with different access type or data type.`);
          }
 
          baseNode .addUserDefinedField (field .getAccessType (), field .getName (), field);
@@ -1404,7 +1403,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
          }
          catch (error)
          {
-            throw new Error ("Unknown field '" + fieldId + "' in class '" + baseNode .getTypeName () + "'.");
+            throw new Error (`Unknown field '${fieldId}' in class '${baseNode .getTypeName ()}'.`);
          }
 
          this .comments ();
@@ -1423,7 +1422,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
                   }
                   catch (error)
                   {
-                     this .throwOrWarn ("No such event or field '" + isId + "' inside PROTO " + this .getPrototype () .getName ());
+                     this .throwOrWarn (`No such event or field '${isId}' inside PROTO ${this .getPrototype () .getName ()}`);
 
                      return true;
                   }
@@ -1436,10 +1435,10 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
                         return true;
                      }
 
-                     throw new Error ("Field '" + field .getName () + "' and '" + reference .getName () + "' in PROTO " + this .getPrototype () . getName () + " are incompatible as an IS mapping.");
+                     throw new Error (`Field '${field .getName ()}' and '${reference .getName ()}' in PROTO ${this .getPrototype () .getName ()} are incompatible as an IS mapping.`);
                   }
 
-                  throw new Error ("Field '" + field .getName () + "' and '" + reference .getName () + "' in PROTO " + this .getPrototype () .getName () + " have different types.");
+                  throw new Error (`Field '${field .getName ()}' and '${reference .getName ()}' in PROTO ${this .getPrototype () .getName ()} have different types.`);
                }
 
                throw new Error("No name give after IS statement.");
@@ -1453,10 +1452,10 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
             if (this .fieldValue (field))
                return true;
 
-            throw new Error ("Couldn't read value for field '" + fieldId + "'.");
+            throw new Error (`Couldn't read value for field '${fieldId}'.`);
          }
 
-         throw new Error ("Couldn't assign value to " + this .accessTypeToString (field .getAccessType ()) + " field '" + fieldId + "'.");
+         throw new Error (`Couldn't assign value to ${this .accessTypeToString (field .getAccessType ())} field '${fieldId}'.`);
       }
 
       return false;
@@ -2541,7 +2540,7 @@ X3DField .prototype .fromString = function (string, scene)
    if (parser .fieldValue (this))
       return;
 
-   throw new Error ("Couldn't read value for field '" + this .getName () + "'.");
+   throw new Error (`Couldn't read value for field '${this .getName ()}'.`);
 };
 
 export default VRMLParser;
