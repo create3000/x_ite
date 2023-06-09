@@ -85,17 +85,14 @@ Object .assign (Object .setPrototypeOf (VolumeMaterial .prototype, UnlitMaterial
 
       const { fogNode, objectsCount } = renderContext;
 
-      if (fogNode)
+      switch (fogNode ?.getFogType ())
       {
-         switch (fogNode .getFogType ())
-         {
-            case 1:
-               options .push ("X3D_FOG", "X3D_FOG_LINEAR");
-               break;
-            case 2:
-               options .push ("X3D_FOG", "X3D_FOG_EXPONENTIAL");
-               break;
-         }
+         case 1:
+            options .push ("X3D_FOG", "X3D_FOG_LINEAR");
+            break;
+         case 2:
+            options .push ("X3D_FOG", "X3D_FOG_EXPONENTIAL");
+            break;
       }
 
       if (objectsCount [0])

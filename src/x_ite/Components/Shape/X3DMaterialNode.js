@@ -193,17 +193,14 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
          if (renderContext .shadows)
             options .push ("X3D_SHADOWS", "X3D_PCF_FILTERING");
 
-         if (fogNode)
+         switch (fogNode ?.getFogType ())
          {
-            switch (fogNode .getFogType ())
-            {
-               case 1:
-                  options .push ("X3D_FOG", "X3D_FOG_LINEAR");
-                  break;
-               case 2:
-                  options .push ("X3D_FOG", "X3D_FOG_EXPONENTIAL");
-                  break;
-            }
+            case 1:
+               options .push ("X3D_FOG", "X3D_FOG_LINEAR");
+               break;
+            case 2:
+               options .push ("X3D_FOG", "X3D_FOG_EXPONENTIAL");
+               break;
          }
 
          if (objectsCount [0])
