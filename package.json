@@ -65,14 +65,14 @@
 		"jquery-mousewheel": "^3.1.13",
 		"libgif": "^0.0.3",
 		"libtess": "^1.2.2",
-		"madge": "^6.0.0",
+		"madge": "^6.1.0",
 		"node-sass": "^9.0.0",
 		"OpenJPEG.js": "^0.10.2",
 		"opentype.js": "^1.3.4",
 		"pako": "^2.1.0",
 		"string-replace-webpack-plugin": "^0.1.3",
-		"webpack": "^5.84.1",
-		"webpack-cli": "^5.1.1",
+		"webpack": "^5.86.0",
+		"webpack-cli": "^5.1.4",
 		"webpack-shell-plugin-next": "^2.3.1"
 	},
 	"scripts": {
