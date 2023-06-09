@@ -1224,7 +1224,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
          const nodeTypeId = this .result [1];
 
          const baseNode = this .getExecutionContext () .createNode (nodeTypeId, false)
-               ?? this .getExecutionContext () .createProto (nodeTypeId, false);
+            ?? this .getExecutionContext () .createProto (nodeTypeId, false);
 
          if (!baseNode)
             throw new Error ("Unknown node type or proto '" + nodeTypeId + "', you probably have insufficient component/profile statements, and/or an inappropriate specification version.");
