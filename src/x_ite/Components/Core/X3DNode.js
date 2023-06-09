@@ -1341,7 +1341,8 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
             secondParent .assign (secondParent .filter (value => value !== firstParentValueOf))
          }
 
-         firstParent .setValue (null);
+         if (firstParent .getValue () === this)
+            firstParent .setValue (null);
       }
 
       // Call super.dispose, where fields get disposed.
