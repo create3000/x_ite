@@ -1227,7 +1227,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
             ?? this .getExecutionContext () .createProto (nodeTypeId, false);
 
          if (!baseNode)
-            throw new Error ("Unknown node type or proto '" + nodeTypeId + "', you probably have insufficient component/profile statements, and/or an inappropriate specification version.");
+            throw new Error (`Unknown node type or proto '${nodeTypeId}', you probably have insufficient component/profile statements, and/or an inappropriate specification version.`);
 
          if (nodeNameId .length)
          {
