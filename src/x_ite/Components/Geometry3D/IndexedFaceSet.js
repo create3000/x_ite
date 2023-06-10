@@ -223,48 +223,46 @@ Object .assign (Object .setPrototypeOf (IndexedFaceSet .prototype, X3DComposedGe
             {
                // Negative index.
 
-               if (vertices .length)
+               switch (vertices .length)
                {
-                  switch (vertices .length)
+                  case 0:
+                  case 1:
+                  case 2:
                   {
-                     case 0:
-                     case 1:
-                     case 2:
+                     vertices .length = 0;
+                     break;
+                  }
+                  case 3:
+                  {
+                     // Add polygon with one triangle.
+                     polygons .push ({ vertices: vertices, triangles: vertices, face: face });
+                     vertices = [ ];
+                     break;
+                  }
+                  default:
+                  {
+                     // Triangulate polygon.
+
+                     const
+                        triangles = [ ],
+                        polygon   = { vertices: vertices, triangles: triangles, face: face };
+
+                     if (convex)
+                        Triangle3 .triangulateConvexPolygon (vertices, triangles);
+                     else
+                        this .triangulatePolygon (vertices, triangles);
+
+                     if (triangles .length < 3)
                      {
                         vertices .length = 0;
-                        break;
                      }
-                     case 3:
+                     else
                      {
-                        // Add polygon with one triangle.
-                        polygons .push ({ vertices: vertices, triangles: vertices, face: face });
+                        polygons .push (polygon);
                         vertices = [ ];
-                        break;
                      }
-                     default:
-                     {
-                        // Triangulate polygons.
-                        const
-                           triangles = [ ],
-                           polygon   = { vertices: vertices, triangles: triangles, face: face };
 
-                        if (convex)
-                           Triangle3 .triangulateConvexPolygon (vertices, triangles);
-                        else
-                           this .triangulatePolygon (vertices, triangles);
-
-                        if (triangles .length < 3)
-                        {
-                           vertices .length = 0;
-                        }
-                        else
-                        {
-                           polygons .push (polygon);
-                           vertices = [ ];
-                        }
-
-                        break;
-                     }
+                     break;
                   }
                }
 
