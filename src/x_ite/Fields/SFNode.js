@@ -362,7 +362,7 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
       const value = this [_target] .getValue ();
 
       if (value)
-         value .setUserData (key, data);
+         return value .setUserData (key, data);
 
       throw new Error ("SFNode.setNodeUserData: node is null.");
    },
@@ -371,7 +371,7 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
       const value = this [_target] .getValue ();
 
       if (value)
-         value .removeUserData (key);
+         return value .removeUserData (key);
 
       throw new Error ("SFNode.removeNodeUserData: node is null.");
    },
