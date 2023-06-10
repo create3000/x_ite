@@ -210,9 +210,7 @@ Object .assign (Object .setPrototypeOf (IndexedFaceSet .prototype, X3DComposedGe
 
          // Construct triangle array and determine the number of used points.
 
-         let vertices = [ ];
-
-         for (let i = 0, face = 0; i < coordLength; ++ i)
+         for (let i = 0, face = 0, vertices = [ ]; i < coordLength; ++ i)
          {
             const index = coordIndex [i];
 
@@ -223,14 +221,10 @@ Object .assign (Object .setPrototypeOf (IndexedFaceSet .prototype, X3DComposedGe
             }
             else
             {
-               // Negativ index.
+               // Negative index.
 
                if (vertices .length)
                {
-                  // Closed polygon.
-                  //if (coordIndex [vertices [0]] === coordIndex [vertices [vertices .length - 1]])
-                  //	vertices .pop ();
-
                   switch (vertices .length)
                   {
                      case 0:
