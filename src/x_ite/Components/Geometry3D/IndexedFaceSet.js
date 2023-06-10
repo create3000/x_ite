@@ -336,9 +336,9 @@ Object .assign (Object .setPrototypeOf (IndexedFaceSet .prototype, X3DComposedGe
       return function (polygons)
       {
          const
-            cw          = ! this ._ccw .getValue (),
-            coordIndex  = this ._coordIndex .getValue (),
-            coord       = this .getCoord ();
+            cw         = ! this ._ccw .getValue (),
+            coordIndex = this ._coordIndex .getValue (),
+            coord      = this .getCoord ();
 
          normals     .length = 0;
          normalIndex .length = 0;
