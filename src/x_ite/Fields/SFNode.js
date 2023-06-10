@@ -350,15 +350,30 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
    },
    getNodeUserData (key)
    {
-      return this [_target] .getValue () .getUserData (key);
+      const value = this [_target] .getValue ();
+
+      if (value)
+         return value .getUserData (key);
+
+      throw new Error ("SFNode.getNodeUserData: node is null.");
    },
-   setNodeUserData (key, value)
+   setNodeUserData (key, data)
    {
-      this [_target] .getValue () .setUserData (key, value);
+      const value = this [_target] .getValue ();
+
+      if (value)
+         value .setUserData (key, data);
+
+      throw new Error ("SFNode.setNodeUserData: node is null.");
    },
    removeNodeUserData (key)
    {
-      this [_target] .getValue () .removeUserData (key);
+      const value = this [_target] .getValue ();
+
+      if (value)
+         value .removeUserData (key);
+
+      throw new Error ("SFNode.removeNodeUserData: node is null.");
    },
    valueOf ()
    {
