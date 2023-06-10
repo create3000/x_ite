@@ -66,18 +66,12 @@ Object .assign (Object .setPrototypeOf (IndexedQuadSet .prototype, X3DComposedGe
 
       this ._set_index .addFieldInterest (this ._index);
    },
-   getTriangleIndex: (function ()
+   getTriangleIndex: function (i)
    {
-      // Define two triangles.
-      const indexMap = [0, 1, 2,   0, 2, 3];
+      const mod = i % 6;
 
-      return function (i)
-      {
-         const mod = i % 6;
-
-         return (i - mod) / 6 * 4 + indexMap [mod];
-      };
-   })(),
+      return Math .floor (i / 6) * 4 + mod % 3 + Math .floor (mod / 4);
+   },
    getPolygonIndex (i)
    {
       return this ._index [i];
