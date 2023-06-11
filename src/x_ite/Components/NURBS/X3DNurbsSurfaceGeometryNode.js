@@ -74,10 +74,9 @@ function X3DNurbsSurfaceGeometryNode (executionContext)
    this .texMesh           = { };
 }
 
-X3DNurbsSurfaceGeometryNode .prototype = Object .assign (Object .create (X3DParametricGeometryNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, X3DParametricGeometryNode .prototype),
 {
-   constructor: X3DNurbsSurfaceGeometryNode,
-   initialize: function ()
+   initialize ()
    {
       X3DParametricGeometryNode .prototype .initialize .call (this);
 
@@ -87,7 +86,7 @@ X3DNurbsSurfaceGeometryNode .prototype = Object .assign (Object .create (X3DPara
       this .set_texCoord__ ();
       this .set_controlPoint__ ();
    },
-   set_texCoord__: function ()
+   set_texCoord__ ()
    {
       this .texCoordNode      ?.removeInterest ("requestRebuild", this);
       this .nurbsTexCoordNode ?.removeInterest ("requestRebuild", this);
@@ -98,7 +97,7 @@ X3DNurbsSurfaceGeometryNode .prototype = Object .assign (Object .create (X3DPara
       this .texCoordNode      ?.addInterest ("requestRebuild", this);
       this .nurbsTexCoordNode ?.addInterest ("requestRebuild", this);
    },
-   set_controlPoint__: function ()
+   set_controlPoint__ ()
    {
       if (this .controlPointNode)
          this .controlPointNode .removeInterest ("requestRebuild", this);
@@ -108,51 +107,51 @@ X3DNurbsSurfaceGeometryNode .prototype = Object .assign (Object .create (X3DPara
       if (this .controlPointNode)
          this .controlPointNode .addInterest ("requestRebuild", this);
    },
-   setTessellationScale: function (value)
+   setTessellationScale (value)
    {
       this .tessellationScale = value;
 
       this .requestRebuild ();
    },
-   getUTessellation: function (numKnots)
+   getUTessellation (numKnots)
    {
       return Math .floor (NURBS .getTessellation (this ._uTessellation .getValue (), numKnots - this ._uOrder .getValue ()) * this .tessellationScale);
    },
-   getVTessellation: function (numKnots)
+   getVTessellation (numKnots)
    {
       return Math .floor (NURBS .getTessellation (this ._vTessellation .getValue (), numKnots - this ._vOrder .getValue ()) * this .tessellationScale);
    },
-   getUClosed: function (uOrder, uDimension, vDimension, uKnot, weight, controlPointNode)
+   getUClosed (uOrder, uDimension, vDimension, uKnot, weight, controlPointNode)
    {
       if (this ._uClosed .getValue ())
          return NURBS .getUClosed (uOrder, uDimension, vDimension, uKnot, weight, controlPointNode);
 
       return false;
    },
-   getVClosed: function (vOrder, uDimension, vDimension, vKnot, weight, controlPointNode)
+   getVClosed (vOrder, uDimension, vDimension, vKnot, weight, controlPointNode)
    {
       if (this ._vClosed .getValue ())
          return NURBS .getVClosed (vOrder, uDimension, vDimension, vKnot, weight, controlPointNode);
 
       return false;
    },
-   getUVWeights: function (result, uDimension, vDimension, weight)
+   getUVWeights (result, uDimension, vDimension, weight)
    {
       return NURBS .getUVWeights (result, uDimension, vDimension, weight);
    },
-   getTexControlPoints: function (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, texCoordNode)
+   getTexControlPoints (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, texCoordNode)
    {
       return NURBS .getTexControlPoints (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, texCoordNode);
    },
-   getUVControlPoints: function (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, weights, controlPointNode)
+   getUVControlPoints (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, weights, controlPointNode)
    {
       return NURBS .getUVControlPoints (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, weights, controlPointNode);
    },
-   getTrimmingContours: function ()
+   getTrimmingContours ()
    {
       return undefined;
    },
-   build: function ()
+   build ()
    {
       if (this ._uOrder .getValue () < 2)
          return;
@@ -309,7 +308,7 @@ X3DNurbsSurfaceGeometryNode .prototype = Object .assign (Object .create (X3DPara
          this .getMultiTexCoords () .push (this .getTexCoords ());
       };
    })(),
-   buildNormals: function (faces, points)
+   buildNormals (faces, points)
    {
       const
          normals     = this .createNormals (faces, points),
@@ -318,7 +317,7 @@ X3DNurbsSurfaceGeometryNode .prototype = Object .assign (Object .create (X3DPara
       for (const normal of normals)
          normalArray .push (normal .x, normal .y, normal .z);
    },
-   createNormals: function (faces, points)
+   createNormals (faces, points)
    {
       const
          normals     = this .createFaceNormals (faces, points),
@@ -374,6 +373,20 @@ X3DNurbsSurfaceGeometryNode .prototype = Object .assign (Object .create (X3DPara
          return normals;
       };
    })(),
+});
+
+Object .defineProperties (X3DNurbsSurfaceGeometryNode,
+{
+   typeName:
+   {
+      value: "X3DNurbsSurfaceGeometryNode",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "NURBS",
+      enumerable: true,
+   },
 });
 
 export default X3DNurbsSurfaceGeometryNode;

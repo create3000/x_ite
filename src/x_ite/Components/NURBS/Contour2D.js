@@ -61,32 +61,9 @@ function Contour2D (executionContext)
    this .childNodes = [ ];
 }
 
-Contour2D .prototype = Object .assign (Object .create (X3DNode .prototype),
+Object .assign (Object .setPrototypeOf (Contour2D .prototype, X3DNode .prototype),
 {
-   constructor: Contour2D,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",       new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,   "addChildren",    new Fields .MFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,   "removeChildren", new Fields .MFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "children",       new Fields .MFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "Contour2D";
-   },
-   getComponentName: function ()
-   {
-      return "NURBS";
-   },
-   getContainerField: function ()
-   {
-      return "trimmingContour";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DNode .prototype .initialize .call (this);
 
@@ -96,13 +73,10 @@ Contour2D .prototype = Object .assign (Object .create (X3DNode .prototype),
 
       this .set_children__ ();
    },
-   set_addChildren__: function ()
+   set_addChildren__ ()
    {
       this ._addChildren .setTainted (true);
-
-      this ._addChildren .erase (remove (this ._addChildren, 0, this ._addChildren .length,
-                                         this ._children,    0, this ._children .length),
-                                 this ._addChildren .length);
+      this ._addChildren .assign (filter (this ._addChildren, this ._children));
 
       for (const child of this ._addChildren)
          this ._children .push (child);
@@ -110,18 +84,15 @@ Contour2D .prototype = Object .assign (Object .create (X3DNode .prototype),
       this ._addChildren .length = 0;
       this ._addChildren .setTainted (false);
    },
-   set_removeChildren__: function ()
+   set_removeChildren__ ()
    {
       this ._removeChildren .setTainted (true);
-
-      this ._children .erase (remove (this ._children,       0, this ._children .length,
-                                      this ._removeChildren, 0, this ._removeChildren .length),
-                              this ._children .length);
+      this ._children .assign (filter (this ._children, this ._removeChildren));
 
       this ._removeChildren .length = 0;
       this ._removeChildren .setTainted (false);
    },
-   set_children__: function ()
+   set_children__ ()
    {
       const childNodes = this .childNodes;
 
@@ -148,21 +119,52 @@ Contour2D .prototype = Object .assign (Object .create (X3DNode .prototype),
          }
       }
    },
-   addTrimmingContour: function (trimmingContours)
+   addTrimmingContour (trimmingContours)
    {
       for (const childNode of this .childNodes)
          trimmingContours .push (childNode .tessellate (2));
    }
 });
 
-function remove (array, first, last, range, rfirst, rlast)
+function filter (array, remove)
 {
-   const set = new Set ();
+   const set = new Set (remove);
 
-   for (let i = rfirst; i < rlast; ++ i)
-      set .add (range [i]);
-
-   return array .remove (first, last, value => set .has (value));
+   return array .filter (value => !set .has (value));
 }
+
+Object .defineProperties (Contour2D,
+{
+   typeName:
+   {
+      value: "Contour2D",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "NURBS",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "trimmingContour",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",       new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,   "addChildren",    new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,   "removeChildren", new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "children",       new Fields .MFNode ()),
+      ]),
+      enumerable: true,
+   },
+});
 
 export default Contour2D;

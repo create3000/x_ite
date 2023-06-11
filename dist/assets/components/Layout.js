@@ -149,9 +149,9 @@ const
 function X3DLayoutContext ()
 { }
 
-X3DLayoutContext .prototype =
+Object .assign (X3DLayoutContext .prototype,
 {
-   getScreenTextureProperties: function ()
+   getScreenTextureProperties ()
    {
       this [_screenTextureProperties] = new (TextureProperties_default()) (this .getPrivateScene ());
 
@@ -219,7 +219,7 @@ X3DLayoutContext .prototype =
          matrix .assign (modelViewMatrix) .inverse () .multLeft (screenMatrix);
       };
    })(),
-};
+});
 
 const __default__ = X3DLayoutContext;
 ;
@@ -299,9 +299,20 @@ function X3DLayoutNode (executionContext)
    this .addType ((X3DConstants_default()).X3DLayoutNode);
 }
 
-X3DLayoutNode .prototype = Object .assign (Object .create ((X3DChildNode_default()).prototype),
+Object .setPrototypeOf (X3DLayoutNode .prototype, (X3DChildNode_default()).prototype);
+
+Object .defineProperties (X3DLayoutNode,
 {
-   constructor: X3DLayoutNode,
+   typeName:
+   {
+      value: "X3DLayoutNode",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Layout",
+      enumerable: true,
+   },
 });
 
 const X3DLayoutNode_default_ = X3DLayoutNode;
@@ -393,7 +404,7 @@ const
 
 function Layout (executionContext)
 {
-   Layout_X3DLayoutNode.call (this, executionContext);
+   Layout_X3DLayoutNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).Layout);
 
@@ -415,9 +426,8 @@ function Layout (executionContext)
    this .matrix          = new (Matrix4_default()) ();
 }
 
-Layout .prototype = Object .assign (Object .create (Layout_X3DLayoutNode.prototype),
+Object .assign (Object .setPrototypeOf (Layout .prototype, Layout_X3DLayoutNode .prototype),
 {
-   constructor: Layout,
    viewportPixel: new (Vector2_default()) (0, 0),
    pixelSize: new (Vector2_default()) (0, 0),
    translation: new (Vector3_default()) (0, 0, 0),
@@ -427,34 +437,9 @@ Layout .prototype = Object .assign (Object .create (Layout_X3DLayoutNode.prototy
    currentRotation: new (Rotation4_default()) (),
    currentScale: new (Vector3_default()) (0, 0, 0),
    modelViewMatrix: new (Matrix4_default()) (),
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",    new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "align",       new (Fields_default()).MFString ("CENTER", "CENTER")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "offsetUnits", new (Fields_default()).MFString ("WORLD", "WORLD")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "offset",      new (Fields_default()).MFFloat (0, 0)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "sizeUnits",   new (Fields_default()).MFString ("WORLD", "WORLD")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "size",        new (Fields_default()).MFFloat (1, 1)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "scaleMode",   new (Fields_default()).MFString ("NONE", "NONE")),
-   ]),
-   getTypeName: function ()
+   initialize ()
    {
-      return "Layout";
-   },
-   getComponentName: function ()
-   {
-      return "Layout";
-   },
-   getContainerField: function ()
-   {
-      return "layout";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
-   initialize: function ()
-   {
-      Layout_X3DLayoutNode.prototype.initialize.call (this);
+      Layout_X3DLayoutNode .prototype .initialize .call (this);
 
       this ._align       .addInterest ("set_align__", this);
       this ._offsetUnits .addInterest ("set_offsetUnits__", this);
@@ -470,7 +455,7 @@ Layout .prototype = Object .assign (Object .create (Layout_X3DLayoutNode.prototy
       this .set_size__ ();
       this .set_scaleMode__ ();
    },
-   set_align__: function ()
+   set_align__ ()
    {
       // X
 
@@ -504,7 +489,7 @@ Layout .prototype = Object .assign (Object .create (Layout_X3DLayoutNode.prototy
       else
          this .alignY = CENTER;
    },
-   set_offsetUnits__: function ()
+   set_offsetUnits__ ()
    {
       if (this ._offsetUnits .length > 0)
       {
@@ -541,7 +526,7 @@ Layout .prototype = Object .assign (Object .create (Layout_X3DLayoutNode.prototy
          this .offsetUnitY = WORLD;
       }
    },
-   set_offset__: function ()
+   set_offset__ ()
    {
       if (this ._offset .length > 0)
       {
@@ -563,7 +548,7 @@ Layout .prototype = Object .assign (Object .create (Layout_X3DLayoutNode.prototy
          this .offsetY = 0;
       }
    },
-   set_sizeUnits__: function ()
+   set_sizeUnits__ ()
    {
       if (this ._sizeUnits .length > 0)
       {
@@ -600,7 +585,7 @@ Layout .prototype = Object .assign (Object .create (Layout_X3DLayoutNode.prototy
          this .sizeUnitY = WORLD;
       }
    },
-   set_size__: function ()
+   set_size__ ()
    {
       if (this ._size .length > 0)
       {
@@ -622,7 +607,7 @@ Layout .prototype = Object .assign (Object .create (Layout_X3DLayoutNode.prototy
          this .sizeY = 0;
       }
    },
-   set_scaleMode__: function ()
+   set_scaleMode__ ()
    {
       if (this ._scaleMode .length > 0)
       {
@@ -665,23 +650,23 @@ Layout .prototype = Object .assign (Object .create (Layout_X3DLayoutNode.prototy
          this .scaleModeY = NONE;
       }
    },
-   getRectangleCenter: function ()
+   getRectangleCenter ()
    {
       return this .rectangleCenter;
    },
-   getRectangleSize: function ()
+   getRectangleSize ()
    {
       return this .rectangleSize;
    },
-   getAlignX: function ()
+   getAlignX ()
    {
       return this .alignX;
    },
-   getAlignY: function ()
+   getAlignY ()
    {
       return this .alignY;
    },
-   getOffsetUnitX: function ()
+   getOffsetUnitX ()
    {
       if (this .offsetUnitX === WORLD)
       {
@@ -693,7 +678,7 @@ Layout .prototype = Object .assign (Object .create (Layout_X3DLayoutNode.prototy
 
       return this .offsetUnitX;
    },
-   getOffsetUnitY: function ()
+   getOffsetUnitY ()
    {
       if (this .offsetUnitY === WORLD)
       {
@@ -705,15 +690,15 @@ Layout .prototype = Object .assign (Object .create (Layout_X3DLayoutNode.prototy
 
       return this .offsetUnitY;
    },
-   getOffsetX: function ()
+   getOffsetX ()
    {
       return this .offsetX;
    },
-   getOffsetY: function ()
+   getOffsetY ()
    {
       return this .offsetY;
    },
-   getSizeUnitX: function ()
+   getSizeUnitX ()
    {
       if (this .sizeUnitX === WORLD)
       {
@@ -725,7 +710,7 @@ Layout .prototype = Object .assign (Object .create (Layout_X3DLayoutNode.prototy
 
       return this .sizeUnitX;
    },
-   getSizeUnitY: function ()
+   getSizeUnitY ()
    {
       if (this .sizeUnitY === WORLD)
       {
@@ -737,15 +722,15 @@ Layout .prototype = Object .assign (Object .create (Layout_X3DLayoutNode.prototy
 
       return this .sizeUnitY;
    },
-   getSizeX: function ()
+   getSizeX ()
    {
       return this .sizeX;
    },
-   getSizeY: function ()
+   getSizeY ()
    {
       return this .sizeY;
    },
-   getScaleModeX: function ()
+   getScaleModeX ()
    {
       if (this .parent)
          return this .scaleModeX;
@@ -755,7 +740,7 @@ Layout .prototype = Object .assign (Object .create (Layout_X3DLayoutNode.prototy
 
       return this .scaleModeX;
    },
-   getScaleModeY: function ()
+   getScaleModeY ()
    {
       if (this .parent)
          return this .scaleModeY;
@@ -765,7 +750,7 @@ Layout .prototype = Object .assign (Object .create (Layout_X3DLayoutNode.prototy
 
       return this .scaleModeY;
    },
-   transform: function (type, renderObject)
+   transform (type, renderObject)
    {
       const parent = this .parent = renderObject .getParentLayout ();
 
@@ -949,6 +934,43 @@ Layout .prototype = Object .assign (Object .create (Layout_X3DLayoutNode.prototy
    },
 });
 
+Object .defineProperties (Layout,
+{
+   typeName:
+   {
+      value: "Layout",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Layout",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "layout",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",    new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "align",       new (Fields_default()).MFString ("CENTER", "CENTER")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "offsetUnits", new (Fields_default()).MFString ("WORLD", "WORLD")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "offset",      new (Fields_default()).MFFloat (0, 0)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "sizeUnits",   new (Fields_default()).MFString ("WORLD", "WORLD")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "size",        new (Fields_default()).MFFloat (1, 1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "scaleMode",   new (Fields_default()).MFString ("NONE", "NONE")),
+      ]),
+      enumerable: true,
+   },
+});
+
 const Layout_default_ = Layout;
 ;
 
@@ -1031,40 +1053,11 @@ function LayoutGroup (executionContext)
    this .screenMatrix    = new (Matrix4_default()) ();
 }
 
-LayoutGroup .prototype = Object .assign (Object .create ((X3DGroupingNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (LayoutGroup .prototype, (X3DGroupingNode_default()).prototype),
 {
-   constructor: LayoutGroup,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",       new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "layout",         new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "viewport",       new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "visible",        new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bboxDisplay",    new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxSize",       new (Fields_default()).SFVec3f (-1, -1, -1)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxCenter",     new (Fields_default()).SFVec3f ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "addChildren",    new (Fields_default()).MFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "removeChildren", new (Fields_default()).MFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "children",       new (Fields_default()).MFNode ()),
-   ]),
-   getTypeName: function ()
+   initialize ()
    {
-      return "LayoutGroup";
-   },
-   getComponentName: function ()
-   {
-      return "Layout";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
-   initialize: function ()
-   {
-      X3DGroupingNode_default().prototype.initialize.call (this);
+      X3DGroupingNode_default().prototype .initialize .call (this);
 
       this ._viewport .addInterest ("set_viewport__", this);
       this ._layout   .addInterest ("set_layout__", this);
@@ -1072,30 +1065,30 @@ LayoutGroup .prototype = Object .assign (Object .create ((X3DGroupingNode_defaul
       this .set_viewport__ ();
       this .set_layout__ ();
    },
-   set_viewport__: function ()
+   set_viewport__ ()
    {
       this .viewportNode = X3DCast_default() ((X3DConstants_default()).X3DViewportNode, this ._viewport);
    },
-   set_layout__: function ()
+   set_layout__ ()
    {
       this .layoutNode = X3DCast_default() ((X3DConstants_default()).X3DLayoutNode, this ._layout);
    },
-   getBBox: function (bbox, shadows)
+   getBBox (bbox, shadows)
    {
-      return X3DGroupingNode_default().prototype.getBBox.call (this, bbox, shadows) .multRight (this .getMatrix ());
+      return X3DGroupingNode_default().prototype .getBBox .call (this, bbox, shadows) .multRight (this .getMatrix ());
    },
-   getMatrix: function ()
+   getMatrix ()
    {
       if (this .layoutNode)
          return this .matrix .assign (this .modelViewMatrix) .inverse () .multLeft (this .screenMatrix);
 
       return this .matrix .identity ();
    },
-   getLayout: function ()
+   getLayout ()
    {
       return this .layoutNode;
    },
-   traverse: function (type, renderObject)
+   traverse (type, renderObject)
    {
       switch (type)
       {
@@ -1118,14 +1111,14 @@ LayoutGroup .prototype = Object .assign (Object .create ((X3DGroupingNode_defaul
                modelViewMatrix .pushMatrix (this .screenMatrix);
                renderObject .getLayouts () .push (this .layoutNode);
 
-               X3DGroupingNode_default().prototype.traverse.call (this, type, renderObject);
+               X3DGroupingNode_default().prototype .traverse .call (this, type, renderObject);
 
                renderObject .getLayouts () .pop ();
                modelViewMatrix .pop ();
             }
             else
             {
-               X3DGroupingNode_default().prototype.traverse.call (this, type, renderObject);
+               X3DGroupingNode_default().prototype .traverse .call (this, type, renderObject);
             }
 
             if (this .viewportNode)
@@ -1134,6 +1127,46 @@ LayoutGroup .prototype = Object .assign (Object .create ((X3DGroupingNode_defaul
             return;
          }
       }
+   },
+});
+
+Object .defineProperties (LayoutGroup,
+{
+   typeName:
+   {
+      value: "LayoutGroup",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Layout",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",       new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "layout",         new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "viewport",       new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "visible",        new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bboxDisplay",    new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxSize",       new (Fields_default()).SFVec3f (-1, -1, -1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxCenter",     new (Fields_default()).SFVec3f ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "addChildren",    new (Fields_default()).MFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "removeChildren", new (Fields_default()).MFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "children",       new (Fields_default()).MFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 
@@ -1214,39 +1247,11 @@ function LayoutLayer (executionContext)
    this .addType ((X3DConstants_default()).LayoutLayer);
 }
 
-LayoutLayer .prototype = Object .assign (Object .create ((X3DLayerNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (LayoutLayer .prototype, (X3DLayerNode_default()).prototype),
 {
-   constructor: LayoutLayer,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",       new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "pickable",       new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "objectType",     new (Fields_default()).MFString ("ALL")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "visible",        new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "layout",         new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "viewport",       new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,   "addChildren",    new (Fields_default()).MFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,   "removeChildren", new (Fields_default()).MFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "children",       new (Fields_default()).MFNode ()),
-   ]),
-   getTypeName: function ()
+   initialize ()
    {
-      return "LayoutLayer";
-   },
-   getComponentName: function ()
-   {
-      return "Layout";
-   },
-   getContainerField: function ()
-   {
-      return "layers";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
-   initialize: function ()
-   {
-      X3DLayerNode_default().prototype.initialize.call (this);
+      X3DLayerNode_default().prototype .initialize .call (this);
 
       this ._layout         .addFieldInterest (this .getGroup () ._layout);
       this ._addChildren    .addFieldInterest (this .getGroup () ._addChildren);
@@ -1258,6 +1263,45 @@ LayoutLayer .prototype = Object .assign (Object .create ((X3DLayerNode_default()
 
       this .getGroup () .setPrivate (true);
       this .getGroup () .setup ();
+   },
+});
+
+Object .defineProperties (LayoutLayer,
+{
+   typeName:
+   {
+      value: "LayoutLayer",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Layout",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "layers",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",       new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "pickable",       new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "objectType",     new (Fields_default()).MFString ("ALL")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "visible",        new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "layout",         new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "viewport",       new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,   "addChildren",    new (Fields_default()).MFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,   "removeChildren", new (Fields_default()).MFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "children",       new (Fields_default()).MFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 
@@ -1361,15 +1405,14 @@ function ScreenText (text, fontStyle)
    this .textureNode .setup ();
 }
 
-ScreenText .prototype = Object .assign (Object .create ((X3DTextGeometry_default()).prototype),
+Object .assign (Object .setPrototypeOf (ScreenText .prototype, (X3DTextGeometry_default()).prototype),
 {
-   constructor: ScreenText,
    modelViewMatrix: new (Matrix4_default()) (),
-   isTransparent: function ()
+   isTransparent ()
    {
       return true;
    },
-   getMatrix: function ()
+   getMatrix ()
    {
       return this .matrix;
    },
@@ -1381,7 +1424,7 @@ ScreenText .prototype = Object .assign (Object .create ((X3DTextGeometry_default
 
       return function ()
       {
-         X3DTextGeometry_default().prototype.update.call (this);
+         X3DTextGeometry_default().prototype .update .call (this);
 
          const
             fontStyle = this .getFontStyle (),
@@ -1601,7 +1644,7 @@ ScreenText .prototype = Object .assign (Object .create ((X3DTextGeometry_default
             this .textureNode .clear ();
       };
    })(),
-   drawGlyph: function (cx, font, glyph, x, y, size)
+   drawGlyph (cx, font, glyph, x, y, size)
    {
       //console .log (glyph .name, x, y);
 
@@ -1656,7 +1699,7 @@ ScreenText .prototype = Object .assign (Object .create ((X3DTextGeometry_default
          cx .stroke ();
       }
    },
-   getGlyphExtents: function (font, glyph, primitiveQuality, min, max)
+   getGlyphExtents (font, glyph, primitiveQuality, min, max)
    {
       const unitsPerEm = font .unitsPerEm;
 
@@ -1678,9 +1721,9 @@ ScreenText .prototype = Object .assign (Object .create ((X3DTextGeometry_default
          this .getText () .setBBox (bbox);
       };
    })(),
-   display: function (gl, renderContext)
+   display (gl, renderContext)
    {
-      Matrix4_default().prototype.multLeft.call (renderContext .modelViewMatrix, this .matrix);
+      Matrix4_default().prototype .multLeft .call (renderContext .modelViewMatrix, this .matrix);
 
       renderContext .textureNode = this .textureNode;
    },
@@ -1694,7 +1737,7 @@ ScreenText .prototype = Object .assign (Object .create ((X3DTextGeometry_default
          return line .multLineMatrix (invMatrix .assign (this .matrix) .inverse ());
       };
    })(),
-   transformMatrix: function (matrix)
+   transformMatrix (matrix)
    {
       // Apply screen nodes transformation in place here.
       return matrix .multLeft (this .matrix);
@@ -1768,50 +1811,61 @@ function ScreenFontStyle (executionContext)
    this .addType ((X3DConstants_default()).ScreenFontStyle);
 }
 
-ScreenFontStyle .prototype = Object .assign (Object .create ((X3DFontStyleNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (ScreenFontStyle .prototype, (X3DFontStyleNode_default()).prototype),
 {
-   constructor: ScreenFontStyle,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",    new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "language",    new (Fields_default()).SFString ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "family",      new (Fields_default()).MFString ("SERIF")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "style",       new (Fields_default()).SFString ("PLAIN")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "pointSize",   new (Fields_default()).SFFloat (12)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "spacing",     new (Fields_default()).SFFloat (1)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "horizontal",  new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "leftToRight", new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "topToBottom", new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "justify",     new (Fields_default()).MFString ("BEGIN")),
-   ]),
-   getTypeName: function ()
+   initialize ()
    {
-      return "ScreenFontStyle";
-   },
-   getComponentName: function ()
-   {
-      return "Layout";
-   },
-   getContainerField: function ()
-   {
-      return "fontStyle";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
-   initialize: function ()
-   {
-      X3DFontStyleNode_default().prototype.initialize.call (this);
+      X3DFontStyleNode_default().prototype .initialize .call (this);
 
       this .getBrowser () .getRenderingProperties () ._ContentScale .addInterest ("addNodeEvent", this);
    },
-   getTextGeometry: function (text)
+   getTextGeometry (text)
    {
       return new Layout_ScreenText (text, this);
    },
-   getScale: function ()
+   getScale ()
    {
       return this ._pointSize .getValue () * this .getBrowser () .getPixelPerPoint ();
+   },
+});
+
+Object .defineProperties (ScreenFontStyle,
+{
+   typeName:
+   {
+      value: "ScreenFontStyle",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Layout",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "fontStyle",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",    new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "language",    new (Fields_default()).SFString ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "family",      new (Fields_default()).MFString ("SERIF")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "style",       new (Fields_default()).SFString ("PLAIN")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "pointSize",   new (Fields_default()).SFFloat (12)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "spacing",     new (Fields_default()).SFFloat (1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "horizontal",  new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "leftToRight", new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "topToBottom", new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "justify",     new (Fields_default()).MFString ("BEGIN")),
+      ]),
+      enumerable: true,
    },
 });
 
@@ -1885,44 +1939,17 @@ function ScreenGroup (executionContext)
    this .matrix = new (Matrix4_default()) ();
 }
 
-ScreenGroup .prototype = Object .assign (Object .create ((X3DGroupingNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (ScreenGroup .prototype, (X3DGroupingNode_default()).prototype),
 {
-   constructor: ScreenGroup,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",       new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "visible",        new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bboxDisplay",    new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxSize",       new (Fields_default()).SFVec3f (-1, -1, -1)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxCenter",     new (Fields_default()).SFVec3f ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "addChildren",    new (Fields_default()).MFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "removeChildren", new (Fields_default()).MFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "children",       new (Fields_default()).MFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "ScreenGroup";
-   },
-   getComponentName: function ()
-   {
-      return "Layout";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
-   getBBox: function (bbox, shadows)
+   getBBox (bbox, shadows)
    {
       return this .getSubBBox (bbox, shadows) .multRight (this .matrix);
    },
-   getMatrix: function ()
+   getMatrix ()
    {
       return this .matrix;
    },
-   traverse: function (type, renderObject)
+   traverse (type, renderObject)
    {
       switch (type)
       {
@@ -1941,9 +1968,47 @@ ScreenGroup .prototype = Object .assign (Object .create ((X3DGroupingNode_defaul
       modelViewMatrix .push ();
       modelViewMatrix .multLeft (this .matrix);
 
-      X3DGroupingNode_default().prototype.traverse.call (this, type, renderObject);
+      X3DGroupingNode_default().prototype .traverse .call (this, type, renderObject);
 
       modelViewMatrix .pop ();
+   },
+});
+
+Object .defineProperties (ScreenGroup,
+{
+   typeName:
+   {
+      value: "ScreenGroup",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Layout",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",       new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "visible",        new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bboxDisplay",    new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxSize",       new (Fields_default()).SFVec3f (-1, -1, -1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxCenter",     new (Fields_default()).SFVec3f ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "addChildren",    new (Fields_default()).MFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "removeChildren", new (Fields_default()).MFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "children",       new (Fields_default()).MFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 
@@ -2009,20 +2074,20 @@ Namespace_default().set ("x_ite/Components/Layout/ScreenGroup", ScreenGroup_defa
 
 
 
-Components_default().addComponent ({
+Components_default().add ({
    name: "Layout",
-   types:
-   {
-      Layout:          Layout_Layout,
-      LayoutGroup:     Layout_LayoutGroup,
-      LayoutLayer:     Layout_LayoutLayer,
-      ScreenFontStyle: Layout_ScreenFontStyle,
-      ScreenGroup:     Layout_ScreenGroup,
-   },
-   abstractTypes:
-   {
-      X3DLayoutNode: Layout_X3DLayoutNode,
-   },
+   concreteNodes:
+   [
+      Layout_Layout,
+      Layout_LayoutGroup,
+      Layout_LayoutLayer,
+      Layout_ScreenFontStyle,
+      Layout_ScreenGroup,
+   ],
+   abstractNodes:
+   [
+      Layout_X3DLayoutNode,
+   ],
    browserContext: Layout_X3DLayoutContext,
 });
 

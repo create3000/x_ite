@@ -60,19 +60,32 @@ function X3DSoundProcessingNode (executionContext)
    this .addChildObjects ("loop", new Fields .SFBool ());
 }
 
-X3DSoundProcessingNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DSoundProcessingNode .prototype, X3DChildNode .prototype),
    X3DTimeDependentNode .prototype,
 {
-   constructor: X3DSoundProcessingNode,
-   initialize: function ()
+   initialize ()
    {
       X3DChildNode         .prototype .initialize .call (this);
       X3DTimeDependentNode .prototype .initialize .call (this);
    },
-   dispose: function ()
+   dispose ()
    {
       X3DTimeDependentNode .prototype .dispose .call (this);
       X3DChildNode         .prototype .dispose .call (this);
+   },
+});
+
+Object .defineProperties (X3DSoundProcessingNode,
+{
+   typeName:
+   {
+      value: "X3DSoundProcessingNode",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Sound",
+      enumerable: true,
    },
 });
 

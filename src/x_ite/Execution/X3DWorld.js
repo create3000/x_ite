@@ -45,15 +45,13 @@
  *
  ******************************************************************************/
 
-import SupportedNodes from "../Configuration/SupportedNodes.js";
+import AbstractNodes  from "../Configuration/AbstractNodes.js";
 import SFNode         from "../Fields/SFNode.js";
 import X3DBaseNode    from "../Base/X3DBaseNode.js";
 import LayerSet       from "../Components/Layering/LayerSet.js";
 import Layer          from "../Components/Layering/Layer.js";
 import X3DCast        from "../Base/X3DCast.js";
 import X3DConstants   from "../Base/X3DConstants.js";
-
-SupportedNodes .addAbstractNodeType ("X3DWorld", X3DWorld);
 
 function X3DWorld (executionContext)
 {
@@ -68,14 +66,9 @@ function X3DWorld (executionContext)
    this .layer0          = new Layer (executionContext);
 }
 
-X3DWorld .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DWorld .prototype, X3DBaseNode .prototype),
 {
-   constructor: X3DWorld,
-   getTypeName: function ()
-   {
-      return "X3DWorld";
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DBaseNode .prototype .initialize .call (this);
 
@@ -94,19 +87,19 @@ X3DWorld .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 
       this .set_activeLayer__ ();
    },
-   getCache: function ()
+   getCache ()
    {
       return this .getBrowser () .getBrowserOption ("Cache");
    },
-   getLayerSet: function ()
+   getLayerSet ()
    {
       return this .layerSet;
    },
-   getActiveLayer: function ()
+   getActiveLayer ()
    {
       return this ._activeLayer .getValue ();
    },
-   set_rootNodes__: function ()
+   set_rootNodes__ ()
    {
       const
          oldLayerSet = this .layerSet,
@@ -133,11 +126,11 @@ X3DWorld .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 
       this .set_activeLayer__ ();
    },
-   set_activeLayer__: function ()
+   set_activeLayer__ ()
    {
       this ._activeLayer = this .layerSet .getActiveLayer ();
    },
-   bindBindables: function ()
+   bindBindables ()
    {
       // Bind first X3DBindableNodes found in each layer.
 
@@ -145,7 +138,7 @@ X3DWorld .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 
       this .layerSet .bindBindables (decodeURIComponent (new URL (worldURL, worldURL) .hash .substr (1)));
    },
-   traverse: function (type, renderObject)
+   traverse (type, renderObject)
    {
       this .layerSet .traverse (type, renderObject);
    },
@@ -153,5 +146,16 @@ X3DWorld .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 
 for (const key of Reflect .ownKeys (X3DWorld .prototype))
    Object .defineProperty (X3DWorld .prototype, key, { enumerable: false });
+
+Object .defineProperties (X3DWorld,
+{
+   typeName:
+   {
+      value: "X3DWorld",
+      enumerable: true,
+   },
+});
+
+X3DConstants .addNode (X3DWorld);
 
 export default X3DWorld;

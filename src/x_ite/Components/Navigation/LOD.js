@@ -74,46 +74,15 @@ function LOD (executionContext)
    this .boundedObject    = null;
 }
 
-LOD .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
+Object .assign (Object .setPrototypeOf (LOD .prototype, X3DGroupingNode .prototype),
 {
-   constructor: LOD,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",         new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "forceTransitions", new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "center",           new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "range",            new Fields .MFFloat ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,     "level_changed",    new Fields .SFInt32 (-1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",          new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",      new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",         new Fields .SFVec3f (-1, -1, -1)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",       new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",      new Fields .MFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,      "removeChildren",   new Fields .MFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "children",         new Fields .MFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "LOD";
-   },
-   getComponentName: function ()
-   {
-      return "Navigation";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DGroupingNode .prototype .initialize .call (this);
 
       this ._children .addInterest ("set_child__", this);
    },
-   getSubBBox: function (bbox, shadows)
+   getSubBBox (bbox, shadows)
    {
       if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
       {
@@ -124,14 +93,14 @@ LOD .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
-   clear: function () { },
-   add: function () { },
-   remove: function () { },
-   set_child__: function ()
+   clear () { },
+   add () { },
+   remove () { },
+   set_child__ ()
    {
       this .set_level__ (Math .min (this ._level_changed .getValue (), this ._children .length - 1));
    },
-   set_level__: function (level)
+   set_level__ (level)
    {
       if (this .childNode)
       {
@@ -173,15 +142,15 @@ LOD .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
       this .set_visible__ ();
       this .set_bboxDisplay__ ();
    },
-   set_cameraObject__: function ()
+   set_cameraObject__ ()
    {
       this .setCameraObject (!!this .visibleNode ?.isCameraObject ());
    },
-   set_transformSensors__: function ()
+   set_transformSensors__ ()
    {
       this .setPickableObject (!!(this .getTransformSensors () .size || this .visibleNode ?.isPickableObject ()));
    },
-   set_visible__: function ()
+   set_visible__ ()
    {
       if (X3DCast (X3DConstants .X3DBoundedObject, this .childNode))
          this .visibleNode = this .childNode ._visible .getValue () ? this .childNode : null;
@@ -191,7 +160,7 @@ LOD .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
       this .set_cameraObject__ ();
       this .set_transformSensors__ ();
    },
-   set_bboxDisplay__: function ()
+   set_bboxDisplay__ ()
    {
       if (X3DCast (X3DConstants .X3DBoundedObject, this .childNode))
       {
@@ -319,6 +288,48 @@ LOD .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
          }
       };
    })(),
+});
+
+Object .defineProperties (LOD,
+{
+   typeName:
+   {
+      value: "LOD",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Navigation",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",         new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "forceTransitions", new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "center",           new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "range",            new Fields .MFFloat ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "level_changed",    new Fields .SFInt32 (-1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",          new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",      new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",         new Fields .SFVec3f (-1, -1, -1)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",       new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",      new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "removeChildren",   new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "children",         new Fields .MFNode ()),
+      ]),
+      enumerable: true,
+   },
 });
 
 export default LOD;

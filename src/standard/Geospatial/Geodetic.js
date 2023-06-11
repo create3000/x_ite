@@ -63,10 +63,9 @@ function Geodetic (spheroid, latitudeFirst, radians)
    this .ecc2           = 1 - this .c2a2;
 }
 
-Geodetic .prototype =
+Object .assign (Geodetic .prototype,
 {
-   constructor: Geodetic,
-   convert: function (geodetic, result)
+   convert (geodetic, result)
    {
       const elevation = geodetic .z;
 
@@ -91,7 +90,7 @@ Geodetic .prototype =
 
       return this .convertRadians (latitude, longitude, elevation, result);
    },
-   convertRadians: function (latitude, longitude, elevation, result)
+   convertRadians (latitude, longitude, elevation, result)
    {
       const
          slat  = Math .sin (latitude),
@@ -104,7 +103,7 @@ Geodetic .prototype =
                           Nhl * Math .sin (longitude),
                           (N * this .c2a2 + elevation) * slat);
    },
-   apply: function (geocentric, result)
+   apply (geocentric, result)
    {
       this .applyRadians (geocentric, result);
 
@@ -124,7 +123,7 @@ Geodetic .prototype =
 
       return result;
    },
-   applyRadians: function (geocentric, result)
+   applyRadians (geocentric, result)
    {
       const
          x = geocentric .x,
@@ -166,7 +165,7 @@ Geodetic .prototype =
 
       return result .set (latitude, longitude, elevation);
    },
-   normal: function (geocentric, result)
+   normal (geocentric, result)
    {
       const geodetic = this .applyRadians (geocentric, result);
 
@@ -184,7 +183,7 @@ Geodetic .prototype =
       return result .set (nx, ny, nz);
    },
    /*
-   lerp: function (s, d, t)
+   lerp (s, d, t)
    {
       var
          source     =  this .source      .assign (s),
@@ -253,6 +252,6 @@ Geodetic .prototype =
    source: new Vector3 (0, 0, 0),
    destination: new Vector3 (0, 0, 0),
    */
-};
+});
 
 export default Geodetic;

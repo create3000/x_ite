@@ -57,10 +57,9 @@ function X3DTouchSensorNode (executionContext)
    this .addType (X3DConstants .X3DTouchSensorNode);
 }
 
-X3DTouchSensorNode .prototype = Object .assign (Object .create (X3DPointingDeviceSensorNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DTouchSensorNode .prototype, X3DPointingDeviceSensorNode .prototype),
 {
-   constructor: X3DTouchSensorNode,
-   set_active__: function (active, hit)
+   set_active__ (active, hit)
    {
       X3DPointingDeviceSensorNode .prototype .set_active__ .call (this, active, hit);
 
@@ -88,6 +87,20 @@ X3DTouchSensorNode .prototype = Object .assign (Object .create (X3DPointingDevic
          }
       };
    })(),
+});
+
+Object .defineProperties (X3DTouchSensorNode,
+{
+   typeName:
+   {
+      value: "X3DTouchSensorNode",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "PointingDeviceSensor",
+      enumerable: true,
+   },
 });
 
 export default X3DTouchSensorNode;

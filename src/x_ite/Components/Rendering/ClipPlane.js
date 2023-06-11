@@ -62,14 +62,13 @@ function ClipPlaneContainer ()
    this .plane = new Plane3 (Vector3 .Zero, Vector3 .Zero);
 }
 
-ClipPlaneContainer .prototype =
+Object .assign (ClipPlaneContainer .prototype,
 {
-   constructor: ClipPlaneContainer,
-   isClipped: function (point)
+   isClipped (point)
    {
       return this .plane .getDistanceToPoint (point) < 0;
    },
-   set: function (clipPlane, modelViewMatrix)
+   set (clipPlane, modelViewMatrix)
    {
       const
          plane      = this .plane,
@@ -80,7 +79,7 @@ ClipPlaneContainer .prototype =
 
       plane .multRight (modelViewMatrix);
    },
-   setShaderUniforms: function (gl, shaderObject)
+   setShaderUniforms (gl, shaderObject)
    {
       const
          plane  = this .plane,
@@ -88,11 +87,11 @@ ClipPlaneContainer .prototype =
 
       gl .uniform4f (shaderObject .x3d_ClipPlane [shaderObject .numClipPlanes ++], normal .x, normal .y, normal .z, plane .distanceFromOrigin);
    },
-   dispose: function ()
+   dispose ()
    {
       ClipPlanes .push (this);
    },
-};
+});
 
 function ClipPlane (executionContext)
 {
@@ -104,31 +103,9 @@ function ClipPlane (executionContext)
    this .plane   = new Vector4 (0, 0, 0, 0);
 }
 
-ClipPlane .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+Object .assign (Object .setPrototypeOf (ClipPlane .prototype, X3DChildNode .prototype),
 {
-   constructor: ClipPlane,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",  new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "plane",    new Fields .SFVec4f (0, 1, 0, 0)),
-   ]),
-   getTypeName: function ()
-   {
-      return "ClipPlane";
-   },
-   getComponentName: function ()
-   {
-      return "Rendering";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DChildNode .prototype .initialize .call (this);
 
@@ -137,13 +114,13 @@ ClipPlane .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 
       this .set_enabled__ ();
    },
-   set_enabled__: function ()
+   set_enabled__ ()
    {
       this .plane .assign (this ._plane .getValue ());
 
       this .enabled = this ._enabled .getValue () && ! this .plane .equals (Vector4 .Zero);
    },
-   push: function (renderObject)
+   push (renderObject)
    {
       if (this .enabled)
       {
@@ -156,7 +133,7 @@ ClipPlane .prototype = Object .assign (Object .create (X3DChildNode .prototype),
          ++ renderObject .getLocalObjectsCount () [0];
       }
    },
-   pop: function (renderObject)
+   pop (renderObject)
    {
       if (this .enabled)
       {
@@ -164,6 +141,39 @@ ClipPlane .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 
          -- renderObject .getLocalObjectsCount () [0];
       }
+   },
+});
+
+Object .defineProperties (ClipPlane,
+{
+   typeName:
+   {
+      value: "ClipPlane",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Rendering",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",  new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "plane",    new Fields .SFVec4f (0, 1, 0, 0)),
+      ]),
+      enumerable: true,
    },
 });
 

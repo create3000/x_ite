@@ -63,10 +63,9 @@ function X3DTexture2DNode (executionContext)
    this .height = 0;
 }
 
-X3DTexture2DNode .prototype = Object .assign (Object .create (X3DSingleTextureNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DTexture2DNode .prototype, X3DSingleTextureNode .prototype),
 {
-   constructor: X3DTexture2DNode,
-   initialize: function ()
+   initialize ()
    {
       X3DSingleTextureNode .prototype .initialize .call (this);
 
@@ -78,31 +77,31 @@ X3DTexture2DNode .prototype = Object .assign (Object .create (X3DSingleTextureNo
       gl .bindTexture (gl .TEXTURE_2D, this .getTexture ());
       gl .texImage2D  (gl .TEXTURE_2D, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
    },
-   getTarget: function ()
+   getTarget ()
    {
       return this .target;
    },
-   getTextureType: function ()
+   getTextureType ()
    {
       return 2;
    },
-   getTextureTypeString: function ()
+   getTextureTypeString ()
    {
       return "2D";
    },
-   getWidth: function ()
+   getWidth ()
    {
       return this .width;
    },
-   getHeight: function ()
+   getHeight ()
    {
       return this .height;
    },
-   clearTexture: function ()
+   clearTexture ()
    {
       this .setTexture (1, 1, false, defaultData, false);
    },
-   setTexture: function (width, height, transparent, data, flipY)
+   setTexture (width, height, transparent, data, flipY)
    {
       this .width  = width;
       this .height = height;
@@ -120,7 +119,7 @@ X3DTexture2DNode .prototype = Object .assign (Object .create (X3DSingleTextureNo
       this .updateTextureParameters ();
       this .addNodeEvent ();
    },
-   updateTexture: function (data, flipY)
+   updateTexture (data, flipY)
    {
       const gl = this .getBrowser () .getContext ();
 
@@ -134,7 +133,7 @@ X3DTexture2DNode .prototype = Object .assign (Object .create (X3DSingleTextureNo
 
       this .addNodeEvent ();
    },
-   updateTextureParameters: function ()
+   updateTextureParameters ()
    {
       X3DSingleTextureNode .prototype .updateTextureParameters .call (this,
                                                                       this .target,
@@ -146,13 +145,27 @@ X3DTexture2DNode .prototype = Object .assign (Object .create (X3DSingleTextureNo
                                                                       this ._repeatT .getValue (),
                                                                       false);
    },
-   setShaderUniforms: function (gl, shaderObject, renderObject, channel = shaderObject .x3d_Texture [0])
+   setShaderUniforms (gl, shaderObject, renderObject, channel = shaderObject .x3d_Texture [0])
    {
       const textureUnit = this .getBrowser () .getTexture2DUnit ();
 
       gl .activeTexture (gl .TEXTURE0 + textureUnit);
       gl .bindTexture (gl .TEXTURE_2D, this .getTexture ());
       gl .uniform1i (channel .texture2D, textureUnit);
+   },
+});
+
+Object .defineProperties (X3DTexture2DNode,
+{
+   typeName:
+   {
+      value: "X3DTexture2DNode",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Texturing",
+      enumerable: true,
    },
 });
 

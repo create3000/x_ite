@@ -87,52 +87,9 @@ function RigidBody (executionContext)
    this .torque             = new Vector3 (0, 0, 0);
 }
 
-RigidBody .prototype = Object .assign (Object .create (X3DNode .prototype),
+Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype),
 {
-   constructor: RigidBody,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",             new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",              new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "fixed",                new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "position",             new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "orientation",          new Fields .SFRotation ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "linearVelocity",       new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "angularVelocity",      new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "useFiniteRotation",    new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "finiteRotationAxis",   new Fields .SFVec3f (0, 1, 0)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "autoDamp",             new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "linearDampingFactor",  new Fields .SFFloat (0.001)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "angularDampingFactor", new Fields .SFFloat (0.001)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "mass",                 new Fields .SFFloat (1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "centerOfMass",         new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "massDensityModel",     new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "useGlobalGravity",     new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "forces",               new Fields .MFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "torques",              new Fields .MFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "inertia",              new Fields .SFMatrix3f ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "autoDisable",          new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "disableTime",          new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "disableLinearSpeed",   new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "disableAngularSpeed",  new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "geometry",             new Fields .MFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "RigidBody";
-   },
-   getComponentName: function ()
-   {
-      return "RigidBodyPhysics";
-   },
-   getContainerField: function ()
-   {
-      return "bodies";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DNode .prototype .initialize .call (this);
 
@@ -162,28 +119,28 @@ RigidBody .prototype = Object .assign (Object .create (X3DNode .prototype),
       this .set_torques__ ();
       this .set_geometry__ ();
    },
-   setCollection: function (value)
+   setCollection (value)
    {
       this ._collection = value;
    },
-   getCollection: function ()
+   getCollection ()
    {
       return this ._collection .getValue ();
    },
-   getRigidBody: function ()
+   getRigidBody ()
    {
       return this .rigidBody;
    },
-   getMatrix: function ()
+   getMatrix ()
    {
       return this .matrix;
    },
-   set_position__: function ()
+   set_position__ ()
    {
       for (var i = 0, length = this .geometryNodes .length; i < length; ++ i)
          this .geometryNodes [i] ._translation = this ._position;
    },
-   set_orientation__: function ()
+   set_orientation__ ()
    {
       for (var i = 0, length = this .geometryNodes .length; i < length; ++ i)
          this .geometryNodes [i] ._rotation = this ._orientation;
@@ -283,7 +240,7 @@ RigidBody .prototype = Object .assign (Object .create (X3DNode .prototype),
          this .rigidBody .setAngularFactor (angularFactor);
       };
    })(),
-   set_damping__: function ()
+   set_damping__ ()
    {
       if (this ._autoDamp .getValue ())
          this .rigidBody .setDamping (this ._linearDampingFactor .getValue (), this ._angularDampingFactor .getValue ());
@@ -324,21 +281,21 @@ RigidBody .prototype = Object .assign (Object .create (X3DNode .prototype),
          this .rigidBody .setMassProps (this ._fixed .getValue () ? 0 : this ._mass .getValue (), localInertia);
       };
    })(),
-   set_forces__: function ()
+   set_forces__ ()
    {
       this .force .set (0, 0, 0);
 
       for (var i = 0, length = this ._forces .length; i < length; ++ i)
          this .force .add (this ._forces [i] .getValue ());
    },
-   set_torques__: function ()
+   set_torques__ ()
    {
       this .torque .set (0, 0, 0);
 
       for (var i = 0, length = this ._torques .length; i < length; ++ i)
          this .torque .add (this ._torques [i] .getValue ());
    },
-   set_disable__: function ()
+   set_disable__ ()
    {
       if (this ._autoDisable .getValue ())
       {
@@ -349,7 +306,7 @@ RigidBody .prototype = Object .assign (Object .create (X3DNode .prototype),
          this .rigidBody .setSleepingThresholds (0, 0);
       }
    },
-   set_geometry__: function ()
+   set_geometry__ ()
    {
       var geometryNodes = this .geometryNodes;
 
@@ -409,7 +366,7 @@ RigidBody .prototype = Object .assign (Object .create (X3DNode .prototype),
 
       this .set_compoundShape__ ();
    },
-   set_body__: function ()
+   set_body__ ()
    {
       this ._otherGeometry .addEvent ();
    },
@@ -493,7 +450,7 @@ RigidBody .prototype = Object .assign (Object .create (X3DNode .prototype),
          this ._angularVelocity = angularVelocity .set (btAngularVelocity .x (), btAngularVelocity .y (), btAngularVelocity .z ());
       };
    })(),
-   dispose: function ()
+   dispose ()
    {
       Ammo .destroy (this .rigidBody);
       Ammo .destroy (this .constructionInfo);
@@ -501,6 +458,60 @@ RigidBody .prototype = Object .assign (Object .create (X3DNode .prototype),
       Ammo .destroy (this .compoundShape);
 
       X3DNode .prototype .dispose .call (this);
+   },
+});
+
+Object .defineProperties (RigidBody,
+{
+   typeName:
+   {
+      value: "RigidBody",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "RigidBodyPhysics",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "bodies",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",             new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",              new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "fixed",                new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "position",             new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "orientation",          new Fields .SFRotation ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "linearVelocity",       new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "angularVelocity",      new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "useFiniteRotation",    new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "finiteRotationAxis",   new Fields .SFVec3f (0, 1, 0)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "autoDamp",             new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "linearDampingFactor",  new Fields .SFFloat (0.001)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "angularDampingFactor", new Fields .SFFloat (0.001)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "mass",                 new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "centerOfMass",         new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "massDensityModel",     new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "useGlobalGravity",     new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "forces",               new Fields .MFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "torques",              new Fields .MFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "inertia",              new Fields .SFMatrix3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "autoDisable",          new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "disableTime",          new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "disableLinearSpeed",   new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "disableAngularSpeed",  new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "geometry",             new Fields .MFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 

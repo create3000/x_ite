@@ -73,17 +73,16 @@ function TextureProjectorParallelContainer ()
    this .projectiveTextureMatrixArray    = new Float32Array (16);
 }
 
-TextureProjectorParallelContainer .prototype =
+Object .assign (TextureProjectorParallelContainer .prototype,
 {
-   constructor: TextureProjectorParallelContainer,
-   set: function (textureProjectorNode, modelViewMatrix)
+   set (textureProjectorNode, modelViewMatrix)
    {
       this .browser              = textureProjectorNode .getBrowser ();
       this .textureProjectorNode = textureProjectorNode;
 
       this .modelViewMatrix .assign (modelViewMatrix);
    },
-   setGlobalVariables: function (renderObject)
+   setGlobalVariables (renderObject)
    {
       const
          textureProjectorNode  = this .textureProjectorNode,
@@ -139,7 +138,7 @@ TextureProjectorParallelContainer .prototype =
       this .modelViewMatrix .multVecMatrix (this .location .assign (textureProjectorNode ._location .getValue ()));
       this .locationArray .set (this .location);
    },
-   setShaderUniforms: function (gl, shaderObject, renderObject)
+   setShaderUniforms (gl, shaderObject, renderObject)
    {
       const i = shaderObject .numProjectiveTextures ++;
 
@@ -157,11 +156,11 @@ TextureProjectorParallelContainer .prototype =
       gl .uniformMatrix4fv (shaderObject .x3d_ProjectiveTextureMatrix [i], false, this .projectiveTextureMatrixArray);
       gl .uniform3fv (shaderObject .x3d_ProjectiveTextureLocation [i], this .locationArray);
    },
-   dispose: function ()
+   dispose ()
    {
       TextureProjectorParallelCache .push (this);
    },
-};
+});
 
 function TextureProjectorParallel (executionContext)
 {
@@ -172,40 +171,9 @@ function TextureProjectorParallel (executionContext)
    this ._fieldOfView .setUnit ("length");
 }
 
-TextureProjectorParallel .prototype = Object .assign (Object .create (X3DTextureProjectorNode .prototype),
+Object .assign (Object .setPrototypeOf (TextureProjectorParallel .prototype, X3DTextureProjectorNode .prototype),
 {
-   constructor: TextureProjectorParallel,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",     new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "description",  new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "on",           new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "global",       new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "location",     new Fields .SFVec3f (0, 0, 1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "direction",    new Fields .SFVec3f (0, 0, 1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "upVector",     new Fields .SFVec3f (0, 1, 0)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "fieldOfView" , new Fields .MFFloat (-1, -1, 1, 1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "nearDistance", new Fields .SFFloat (1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "farDistance",  new Fields .SFFloat (10)),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "aspectRatio",  new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "texture",      new Fields .SFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "TextureProjectorParallel";
-   },
-   getComponentName: function ()
-   {
-      return "TextureProjector";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["4.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DTextureProjectorNode .prototype .initialize .call (this);
 
@@ -213,7 +181,7 @@ TextureProjectorParallel .prototype = Object .assign (Object .create (X3DTexture
 
       this .set_fieldOfView___ ();
    },
-   set_fieldOfView___: function ()
+   set_fieldOfView___ ()
    {
       const length = this ._fieldOfView .length;
 
@@ -225,33 +193,75 @@ TextureProjectorParallel .prototype = Object .assign (Object .create (X3DTexture
       this .sizeX = this .maximumX - this .minimumX;
       this .sizeY = this .maximumY - this .minimumY;
    },
-   getMinimumX: function ()
+   getMinimumX ()
    {
       return this .minimumX;
    },
-   getMinimumY: function ()
+   getMinimumY ()
    {
       return this .minimumY;
    },
-   getMaximumX: function ()
+   getMaximumX ()
    {
       return this .maximumX;
    },
-   getMaximumY: function ()
+   getMaximumY ()
    {
       return this .maximumY;
    },
-   getSizeX: function ()
+   getSizeX ()
    {
       return this .sizeX;
    },
-   getSizeY: function ()
+   getSizeY ()
    {
       return this .sizeY;
    },
-   getTextureProjectors: function ()
+   getTextureProjectors ()
    {
       return TextureProjectorParallelCache;
+   },
+});
+
+Object .defineProperties (TextureProjectorParallel,
+{
+   typeName:
+   {
+      value: "TextureProjectorParallel",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "TextureProjector",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["4.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",     new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "description",  new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "on",           new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "global",       new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "location",     new Fields .SFVec3f (0, 0, 1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "direction",    new Fields .SFVec3f (0, 0, 1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "upVector",     new Fields .SFVec3f (0, 1, 0)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "fieldOfView" , new Fields .MFFloat (-1, -1, 1, 1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "nearDistance", new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "farDistance",  new Fields .SFFloat (10)),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "aspectRatio",  new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "texture",      new Fields .SFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 

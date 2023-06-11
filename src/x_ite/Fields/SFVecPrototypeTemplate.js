@@ -47,106 +47,106 @@
 
 import X3DField from "../Base/X3DField.js";
 
-function SFVecPrototypeTemplate (Constructor, TypeName, Type, Vector, double)
+function SFVecPrototypeTemplate (Constructor, TypeName, Vector, double)
 {
    const _formatter = double ? "DoubleFormat" : "FloatFormat";
 
-   return Object .assign (Object .create (X3DField .prototype),
+   Object .defineProperties (Constructor,
    {
-      constructor: Constructor,
-      [Symbol .iterator]: function* ()
+      typeName:
+      {
+         value: TypeName,
+         enumerable: true,
+      },
+   });
+
+   return Object .assign (Object .setPrototypeOf (Constructor .prototype, X3DField .prototype),
+   {
+      *[Symbol .iterator] ()
       {
          yield* this .getValue ();
       },
-      getTypeName: function ()
-      {
-         return TypeName;
-      },
-      getType: function ()
-      {
-         return Type;
-      },
-      copy: function ()
+      copy ()
       {
          return new (this .constructor) (this .getValue () .copy ());
       },
-      equals: function (vector)
+      equals (vector)
       {
          return this .getValue () .equals (vector .getValue ());
       },
-      isDefaultValue: function ()
+      isDefaultValue ()
       {
          return this .getValue () .equals (Vector .Zero);
       },
-      set: function (value)
+      set (value)
       {
          this .getValue () .assign (value);
       },
-      abs: function ()
+      abs ()
       {
          return new (this .constructor) (this .getValue () .copy () .abs ());
       },
-      add: function (vector)
+      add (vector)
       {
          return new (this .constructor) (this .getValue () .copy () .add (vector .getValue ()));
       },
-      distance: function (vector)
+      distance (vector)
       {
          return this .getValue () .distance (vector .getValue ());
       },
-      divide: function (value)
+      divide (value)
       {
          return new (this .constructor) (this .getValue () .copy () .divide (value));
       },
-      divVec: function (vector)
+      divVec (vector)
       {
          return new (this .constructor) (this .getValue () .copy () .divVec (vector .getValue ()));
       },
-      dot: function (vector)
+      dot (vector)
       {
          return this .getValue () .dot (vector .getValue ());
       },
-      inverse: function ()
+      inverse ()
       {
          return new (this .constructor) (this .getValue () .copy () .inverse ());
       },
-      length: function ()
+      length ()
       {
          return this .getValue () .magnitude ();
       },
-      lerp: function (destination, t)
+      lerp (destination, t)
       {
          return new (this .constructor) (this .getValue () .copy () .lerp (destination, t));
       },
-      max: function (vector)
+      max (vector)
       {
          return new (this .constructor) (this .getValue () .copy () .max (vector .getValue ()));
       },
-      min: function (vector)
+      min (vector)
       {
          return new (this .constructor) (this .getValue () .copy () .min (vector .getValue ()));
       },
-      multiply: function (value)
+      multiply (value)
       {
          return new (this .constructor) (this .getValue () .copy () .multiply (value));
       },
-      multVec: function (vector)
+      multVec (vector)
       {
          return new (this .constructor) (this .getValue () .copy () .multVec (vector .getValue ()));
       },
-      negate: function ()
+      negate ()
       {
          return new (this .constructor) (this .getValue () .copy () .negate ());
       },
-      normalize: function (vector)
+      normalize (vector)
       {
          return new (this .constructor) (this .getValue () .copy () .normalize ());
       },
-      subtract: function (vector)
+      subtract (vector)
       {
          return new (this .constructor) (this .getValue () .copy () .subtract (vector .getValue ()));
       },
-      toStream: function (generator)
+      toStream (generator)
       {
          const
             value    = this .getValue (),
@@ -161,15 +161,15 @@ function SFVecPrototypeTemplate (Constructor, TypeName, Type, Vector, double)
 
          generator .string += generator [_formatter] (generator .ToUnit (category, value [last]));
       },
-      toVRMLStream: function (generator)
+      toVRMLStream (generator)
       {
          this .toStream (generator);
       },
-      toXMLStream: function (generator)
+      toXMLStream (generator)
       {
          this .toStream (generator);
       },
-      toJSONStream: function (generator)
+      toJSONStream (generator)
       {
          generator .string += '[';
          generator .string += generator .TidySpace ();
@@ -179,7 +179,7 @@ function SFVecPrototypeTemplate (Constructor, TypeName, Type, Vector, double)
          generator .string += generator .TidySpace ();
          generator .string += ']';
       },
-      toJSONStreamValue: function (generator)
+      toJSONStreamValue (generator)
       {
          const
             value    = this .getValue (),

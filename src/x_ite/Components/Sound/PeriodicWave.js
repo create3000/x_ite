@@ -58,32 +58,41 @@ function PeriodicWave (executionContext)
    this .addType (X3DConstants .PeriodicWave);
 }
 
-PeriodicWave .prototype = Object .assign (Object .create (X3DSoundNode .prototype),
+Object .setPrototypeOf (PeriodicWave .prototype, X3DSoundNode .prototype);
+
+Object .defineProperties (PeriodicWave,
 {
-   constructor: PeriodicWave,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "description",   new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",       new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "optionsReal",   new Fields .MFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "optionsImag",   new Fields .MFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "type",          new Fields .SFString ("square")),
-   ]),
-   getTypeName: function ()
+   typeName:
    {
-      return "PeriodicWave";
+      value: "PeriodicWave",
+      enumerable: true,
    },
-   getComponentName: function ()
+   componentName:
    {
-      return "Sound";
+      value: "Sound",
+      enumerable: true,
    },
-   getContainerField: function ()
+   containerField:
    {
-      return "periodicWave";
+      value: "periodicWave",
+      enumerable: true,
    },
-   getSpecificationRange: function ()
+   specificationRange:
    {
-      return ["4.0", "Infinity"];
+      value: Object .freeze (["4.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "description",   new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",       new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "optionsReal",   new Fields .MFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "optionsImag",   new Fields .MFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "type",          new Fields .SFString ("square")),
+      ]),
+      enumerable: true,
    },
 });
 

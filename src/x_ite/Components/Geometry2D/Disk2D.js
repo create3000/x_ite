@@ -63,36 +63,13 @@ function Disk2D (executionContext)
    this ._outerRadius .setUnit ("length");
 }
 
-Disk2D .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
+Object .assign (Object .setPrototypeOf (Disk2D .prototype, X3DGeometryNode .prototype),
 {
-   constructor: Disk2D,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "innerRadius", new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "outerRadius", new Fields .SFFloat (1)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",       new Fields .SFBool ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "Disk2D";
-   },
-   getComponentName: function ()
-   {
-      return "Geometry2D";
-   },
-   getContainerField: function ()
-   {
-      return "geometry";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DGeometryNode .prototype .initialize .call (this);
    },
-   set_live__: function ()
+   set_live__ ()
    {
       X3DGeometryNode .prototype .set_live__ .call (this);
 
@@ -101,7 +78,7 @@ Disk2D .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
       else
          this .getBrowser () .getDisk2DOptions () .removeInterest ("requestRebuild", this);
    },
-   build: function ()
+   build ()
    {
       const
          browser     = this .getBrowser (),
@@ -230,7 +207,7 @@ Disk2D .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
       this .setSolid (this ._solid .getValue ());
       this .setBase (X3DGeometryNode);
    },
-   setBase: function (base)
+   setBase (base)
    {
       this .intersectsLine         = base .prototype .intersectsLine;
       this .intersectsBox          = base .prototype .intersectsBox;
@@ -239,8 +216,42 @@ Disk2D .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
       this .displaySimpleParticles = base .prototype .displaySimpleParticles;
       this .displayParticles       = base .prototype .displayParticles;
    },
-   updateRenderFunctions: function ()
+   updateRenderFunctions ()
    { },
+});
+
+Object .defineProperties (Disk2D,
+{
+   typeName:
+   {
+      value: "Disk2D",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Geometry2D",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "geometry",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "innerRadius", new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "outerRadius", new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",       new Fields .SFBool ()),
+      ]),
+      enumerable: true,
+   },
 });
 
 export default Disk2D;

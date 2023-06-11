@@ -108,10 +108,9 @@ function PointLightContainer ()
    this .textureUnit                   = undefined;
 }
 
-PointLightContainer .prototype =
+Object .assign (PointLightContainer .prototype,
 {
-   constructor: PointLightContainer,
-   set: function (lightNode, groupNode, modelViewMatrix)
+   set (lightNode, groupNode, modelViewMatrix)
    {
       const shadowMapSize = lightNode .getShadowMapSize ();
 
@@ -134,7 +133,7 @@ PointLightContainer .prototype =
             console .warn ("Couldn't create shadow buffer.");
       }
    },
-   renderShadowMap: function (renderObject)
+   renderShadowMap (renderObject)
    {
       if (! this .shadowBuffer)
          return;
@@ -178,7 +177,7 @@ PointLightContainer .prototype =
 
       this .invLightSpaceProjectionMatrix .assign (invLightSpaceMatrix);
    },
-   setGlobalVariables: function (renderObject)
+   setGlobalVariables (renderObject)
    {
       this .modelViewMatrix .get () .multVecMatrix (this .location .assign (this .lightNode ._location .getValue ()));
 
@@ -188,7 +187,7 @@ PointLightContainer .prototype =
       this .shadowMatrix .assign (renderObject .getCameraSpaceMatrix () .get ()) .multRight (this .invLightSpaceProjectionMatrix);
       this .shadowMatrixArray .set (this .shadowMatrix);
    },
-   setShaderUniforms: function (gl, shaderObject)
+   setShaderUniforms (gl, shaderObject)
    {
       const i = shaderObject .numLights ++;
 
@@ -250,7 +249,7 @@ PointLightContainer .prototype =
          gl .uniform1f (shaderObject .x3d_ShadowIntensity [i], 0);
       }
    },
-   dispose: function ()
+   dispose ()
    {
       this .browser .pushShadowBuffer (this .shadowBuffer);
       this .browser .pushTexture2DUnit (this .textureUnit);
@@ -264,7 +263,7 @@ PointLightContainer .prototype =
 
       PointLights .push (this);
    },
-};
+});
 
 function PointLight (executionContext)
 {
@@ -276,57 +275,68 @@ function PointLight (executionContext)
    this ._radius   .setUnit ("length");
 }
 
-PointLight .prototype = Object .assign (Object .create (X3DLightNode .prototype),
+Object .assign (Object .setPrototypeOf (PointLight .prototype, X3DLightNode .prototype),
 {
-   constructor: PointLight,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",         new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "global",           new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "on",               new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "color",            new Fields .SFColor (1, 1, 1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "intensity",        new Fields .SFFloat (1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "ambientIntensity", new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "attenuation",      new Fields .SFVec3f (1, 0, 0)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "location",         new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "radius",           new Fields .SFFloat (100)),
-
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "shadows",         new  Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowColor",     new  Fields .SFColor ()),        // Color of shadows.
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowIntensity", new  Fields .SFFloat (1)),        // Intensity of shadow color in the range (0, 1).
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowBias",      new  Fields .SFFloat (0.005)),   // Bias of the shadow.
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "shadowMapSize",   new  Fields .SFInt32 (1024)),    // Size of the shadow map in pixels in the range (0, inf).
-   ]),
-   getTypeName: function ()
-   {
-      return "PointLight";
-   },
-   getComponentName: function ()
-   {
-      return "Lighting";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
-   getAttenuation: function ()
+   getAttenuation ()
    {
       return this ._attenuation .getValue ();
    },
-   getLocation: function ()
+   getLocation ()
    {
       return this ._location .getValue ();
    },
-   getRadius: function ()
+   getRadius ()
    {
       return Math .max (0, this ._radius .getValue ());
    },
-   getLights: function ()
+   getLights ()
    {
       return PointLights;
+   },
+});
+
+Object .defineProperties (PointLight,
+{
+   typeName:
+   {
+      value: "PointLight",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Lighting",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",         new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "global",           new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "on",               new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "color",            new Fields .SFColor (1, 1, 1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "intensity",        new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "ambientIntensity", new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "attenuation",      new Fields .SFVec3f (1, 0, 0)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "location",         new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "radius",           new Fields .SFFloat (100)),
+
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "shadows",         new  Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowColor",     new  Fields .SFColor ()),        // Color of shadows.
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowIntensity", new  Fields .SFFloat (1)),        // Intensity of shadow color in the range (0, 1).
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowBias",      new  Fields .SFFloat (0.005)),   // Bias of the shadow.
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "shadowMapSize",   new  Fields .SFInt32 (1024)),    // Size of the shadow map in pixels in the range (0, inf).
+      ]),
+      enumerable: true,
    },
 });
 

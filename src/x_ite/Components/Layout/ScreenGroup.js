@@ -62,44 +62,17 @@ function ScreenGroup (executionContext)
    this .matrix = new Matrix4 ();
 }
 
-ScreenGroup .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
+Object .assign (Object .setPrototypeOf (ScreenGroup .prototype, X3DGroupingNode .prototype),
 {
-   constructor: ScreenGroup,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",       new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",        new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",    new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",       new Fields .SFVec3f (-1, -1, -1)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",     new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",    new Fields .MFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,      "removeChildren", new Fields .MFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "children",       new Fields .MFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "ScreenGroup";
-   },
-   getComponentName: function ()
-   {
-      return "Layout";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
-   getBBox: function (bbox, shadows)
+   getBBox (bbox, shadows)
    {
       return this .getSubBBox (bbox, shadows) .multRight (this .matrix);
    },
-   getMatrix: function ()
+   getMatrix ()
    {
       return this .matrix;
    },
-   traverse: function (type, renderObject)
+   traverse (type, renderObject)
    {
       switch (type)
       {
@@ -121,6 +94,44 @@ ScreenGroup .prototype = Object .assign (Object .create (X3DGroupingNode .protot
       X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
 
       modelViewMatrix .pop ();
+   },
+});
+
+Object .defineProperties (ScreenGroup,
+{
+   typeName:
+   {
+      value: "ScreenGroup",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Layout",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",       new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",        new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",    new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",       new Fields .SFVec3f (-1, -1, -1)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",     new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",    new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "removeChildren", new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "children",       new Fields .MFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 

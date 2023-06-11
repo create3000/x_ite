@@ -61,36 +61,35 @@ function EnvironmentLightContainer ()
    this .modelViewMatrix = new MatrixStack (Matrix4);
 }
 
-EnvironmentLightContainer .prototype =
+Object .assign (EnvironmentLightContainer .prototype,
 {
-   constructor: EnvironmentLightContainer,
-   set: function (lightNode, groupNode, modelViewMatrix)
+   set (lightNode, groupNode, modelViewMatrix)
    {
    },
-   setGroup: function (groupNode)
+   setGroup (groupNode)
    {
       this .groupNode = groupNode;
    },
-   getModelViewMatrix: function ()
+   getModelViewMatrix ()
    {
       return this .modelViewMatrix;
    },
-   renderShadowMap: function (renderObject)
+   renderShadowMap (renderObject)
    {
    },
-   setGlobalVariables: function (renderObject)
+   setGlobalVariables (renderObject)
    {
    },
-   setShaderUniforms: function (gl, shaderObject)
+   setShaderUniforms (gl, shaderObject)
    {
    },
-   dispose: function ()
+   dispose ()
    {
       // Return container
 
       EnvironmentLights .push (this);
    },
-};
+});
 
 function EnvironmentLight (executionContext)
 {
@@ -99,48 +98,59 @@ function EnvironmentLight (executionContext)
    this .addType (X3DConstants .EnvironmentLight);
 }
 
-EnvironmentLight .prototype = Object .assign (Object .create (X3DLightNode .prototype),
+Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNode .prototype),
 {
-   constructor: EnvironmentLight,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",            new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "global",              new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "on",                  new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "rotation",            new Fields .SFRotation ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "color",               new Fields .SFColor (1, 1, 1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "intensity",           new Fields .SFFloat (1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "ambientIntensity",    new Fields .SFFloat ()),
-
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "diffuseCoefficients", new Fields .MFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "diffuse",             new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "diffuseTexture",      new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "specularTexture",     new Fields .SFNode ()),
-
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "shadows",             new  Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowColor",         new  Fields .SFColor ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowIntensity",     new  Fields .SFFloat (1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowBias",          new  Fields .SFFloat (0.005)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "shadowMapSize",       new  Fields .SFInt32 (1024)),
-   ]),
-   getTypeName: function ()
-   {
-      return "EnvironmentLight";
-   },
-   getComponentName: function ()
-   {
-      return "Lighting";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["4.0", "Infinity"];
-   },
-   getLights: function ()
+   getLights ()
    {
       return EnvironmentLights;
+   },
+});
+
+Object .defineProperties (EnvironmentLight,
+{
+   typeName:
+   {
+      value: "EnvironmentLight",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Lighting",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["4.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",            new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "global",              new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "on",                  new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "rotation",            new Fields .SFRotation ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "color",               new Fields .SFColor (1, 1, 1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "intensity",           new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "ambientIntensity",    new Fields .SFFloat ()),
+
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "diffuseCoefficients", new Fields .MFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "diffuse",             new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "diffuseTexture",      new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "specularTexture",     new Fields .SFNode ()),
+
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "shadows",             new  Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowColor",         new  Fields .SFColor ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowIntensity",     new  Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowBias",          new  Fields .SFFloat (0.005)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "shadowMapSize",       new  Fields .SFInt32 (1024)),
+      ]),
+      enumerable: true,
    },
 });
 

@@ -71,47 +71,10 @@ function GeoElevationGrid (executionContext)
    this .normalNode   = null;
 }
 
-GeoElevationGrid .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
+Object .assign (Object .setPrototypeOf (GeoElevationGrid .prototype, X3DGeometryNode .prototype),
    X3DGeospatialObject .prototype,
 {
-   constructor: GeoElevationGrid,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",        new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "geoOrigin",       new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "geoSystem",       new Fields .MFString ("GD", "WE")),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "geoGridOrigin",   new Fields .SFVec3d ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "xDimension",      new Fields .SFInt32 ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "zDimension",      new Fields .SFInt32 ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "xSpacing",        new Fields .SFDouble (1)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "zSpacing",        new Fields .SFDouble (1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "yScale",          new Fields .SFFloat (1)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",           new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "ccw",             new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "creaseAngle",     new Fields .SFDouble ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "colorPerVertex",  new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "normalPerVertex", new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "color",           new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "texCoord",        new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "normal",          new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "height",          new Fields .MFDouble (0, 0)),
-   ]),
-   getTypeName: function ()
-   {
-      return "GeoElevationGrid";
-   },
-   getComponentName: function ()
-   {
-      return "Geospatial";
-   },
-   getContainerField: function ()
-   {
-      return "geometry";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DGeometryNode     .prototype .initialize .call (this);
       X3DGeospatialObject .prototype .initialize .call (this);
@@ -124,7 +87,7 @@ GeoElevationGrid .prototype = Object .assign (Object .create (X3DGeometryNode .p
       this .set_texCoord__ ();
       this .set_normal__ ();
    },
-   set_color__: function ()
+   set_color__ ()
    {
       this .colorNode ?.removeInterest ("requestRebuild", this);
 
@@ -134,7 +97,7 @@ GeoElevationGrid .prototype = Object .assign (Object .create (X3DGeometryNode .p
 
       this .setTransparent (this .colorNode ?.isTransparent () ?? false);
    },
-   set_texCoord__: function ()
+   set_texCoord__ ()
    {
       this .texCoordNode ?.removeInterest ("requestRebuild", this);
 
@@ -144,7 +107,7 @@ GeoElevationGrid .prototype = Object .assign (Object .create (X3DGeometryNode .p
 
       this .setTextureCoordinate (this .texCoordNode);
    },
-   set_normal__: function ()
+   set_normal__ ()
    {
       this .normalNode ?.removeInterest ("requestRebuild", this);
 
@@ -152,26 +115,26 @@ GeoElevationGrid .prototype = Object .assign (Object .create (X3DGeometryNode .p
 
       this .normalNode ?.addInterest ("requestRebuild", this);
    },
-   getColor: function ()
+   getColor ()
    {
       return this .colorNode;
    },
-   getTexCoord: function ()
+   getTexCoord ()
    {
       return this .texCoordNode;
    },
-   getNormal: function ()
+   getNormal ()
    {
       return this .normalNode;
    },
-   getHeight: function (index)
+   getHeight (index)
    {
       if (index < this ._height .length)
          return this ._height [index] * this ._yScale .getValue ();
 
       return 0;
    },
-   createTexCoords: function ()
+   createTexCoords ()
    {
       var
          texCoords  = [ ],
@@ -188,7 +151,7 @@ GeoElevationGrid .prototype = Object .assign (Object .create (X3DGeometryNode .p
 
       return texCoords;
    },
-   createNormals: function (points, coordIndex, creaseAngle)
+   createNormals (points, coordIndex, creaseAngle)
    {
       var
          cw          = ! this ._ccw .getValue (),
@@ -221,7 +184,7 @@ GeoElevationGrid .prototype = Object .assign (Object .create (X3DGeometryNode .p
 
       return this .refineNormals (normalIndex, normals, this ._creaseAngle .getValue ());
    },
-   createCoordIndex: function ()
+   createCoordIndex ()
    {
       // p1 - p4
       //  | \ |
@@ -256,7 +219,7 @@ GeoElevationGrid .prototype = Object .assign (Object .create (X3DGeometryNode .p
 
       return coordIndex;
    },
-   createPoints: function ()
+   createPoints ()
    {
       var
          points     = [ ],
@@ -307,7 +270,7 @@ GeoElevationGrid .prototype = Object .assign (Object .create (X3DGeometryNode .p
 
       return points;
    },
-   build: function ()
+   build ()
    {
       if (this ._xDimension .getValue () < 2 || this ._zDimension .getValue () < 2)
          return;
@@ -408,10 +371,58 @@ GeoElevationGrid .prototype = Object .assign (Object .create (X3DGeometryNode .p
       this .setSolid (this ._solid .getValue ());
       this .setCCW (this ._ccw .getValue ());
    },
-   dispose: function ()
+   dispose ()
    {
       X3DGeospatialObject .prototype .dispose .call (this);
       X3DGeometryNode     .prototype .dispose .call (this);
+   },
+});
+
+Object .defineProperties (GeoElevationGrid,
+{
+   typeName:
+   {
+      value: "GeoElevationGrid",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Geospatial",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "geometry",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",        new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "geoOrigin",       new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "geoSystem",       new Fields .MFString ("GD", "WE")),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "geoGridOrigin",   new Fields .SFVec3d ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "xDimension",      new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "zDimension",      new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "xSpacing",        new Fields .SFDouble (1)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "zSpacing",        new Fields .SFDouble (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "yScale",          new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",           new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "ccw",             new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "creaseAngle",     new Fields .SFDouble ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "colorPerVertex",  new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "normalPerVertex", new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "color",           new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "texCoord",        new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "normal",          new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "height",          new Fields .MFDouble (0, 0)),
+      ]),
+      enumerable: true,
    },
 });
 

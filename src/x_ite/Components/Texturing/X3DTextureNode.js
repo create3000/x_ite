@@ -60,17 +60,30 @@ function X3DTextureNode (executionContext)
    this ._transparent .setAccessType (X3DConstants .outputOnly);
 }
 
-X3DTextureNode .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DTextureNode .prototype, X3DAppearanceChildNode .prototype),
 {
-   constructor: X3DTextureNode,
-   setTransparent: function (value)
+   setTransparent (value)
    {
       if (value !== this ._transparent .getValue ())
          this ._transparent = value;
    },
-   isTransparent: function ()
+   isTransparent ()
    {
       return this ._transparent .getValue ();
+   },
+});
+
+Object .defineProperties (X3DTextureNode,
+{
+   typeName:
+   {
+      value: "X3DTextureNode",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Texturing",
+      enumerable: true,
    },
 });
 

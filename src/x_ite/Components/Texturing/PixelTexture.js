@@ -63,34 +63,9 @@ function PixelTexture (executionContext)
    this .addChildObjects ("loadState", new Fields .SFInt32 (X3DConstants .NOT_STARTED_STATE));
 }
 
-PixelTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prototype),
+Object .assign (Object .setPrototypeOf (PixelTexture .prototype, X3DTexture2DNode .prototype),
 {
-   constructor: PixelTexture,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "description",       new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "image",             new Fields .SFImage (0, 0, 0, new Fields .MFInt32 ())),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatS",           new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatT",           new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties", new Fields .SFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "PixelTexture";
-   },
-   getComponentName: function ()
-   {
-      return "Texturing";
-   },
-   getContainerField: function ()
-   {
-      return "texture";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DTexture2DNode .prototype .initialize .call (this);
 
@@ -101,11 +76,11 @@ PixelTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
 
       this .set_image__ ();
    },
-   checkLoadState: function ()
+   checkLoadState ()
    {
       return this ._loadState .getValue ();
    },
-   convert: function (data, comp, array, length)
+   convert (data, comp, array, length)
    {
       switch (comp)
       {
@@ -167,7 +142,7 @@ PixelTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
          }
       }
    },
-   resize: function (input, inputWidth, inputHeight, outputWidth, outputHeight)
+   resize (input, inputWidth, inputHeight, outputWidth, outputHeight)
    {
       // Nearest neighbor scaling algorithm for very small images.
 
@@ -197,7 +172,7 @@ PixelTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
 
       return output;
    },
-   set_image__: function ()
+   set_image__ ()
    {
       const
          gl          = this .getBrowser () .getContext (),
@@ -267,6 +242,42 @@ PixelTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
          this .clearTexture ();
          this ._loadState = X3DConstants .FAILED_STATE;
       }
+   },
+});
+
+Object .defineProperties (PixelTexture,
+{
+   typeName:
+   {
+      value: "PixelTexture",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Texturing",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "texture",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "description",       new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "image",             new Fields .SFImage (0, 0, 0, new Fields .MFInt32 ())),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatS",           new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatT",           new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties", new Fields .SFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 

@@ -72,42 +72,10 @@ function GeoProximitySensor (executionContext)
    this .setPickableObject (this .proximitySensor .isPickableObject ());
 }
 
-GeoProximitySensor .prototype = Object .assign (Object .create (X3DEnvironmentalSensorNode .prototype),
+Object .assign (Object .setPrototypeOf (GeoProximitySensor .prototype, X3DEnvironmentalSensorNode .prototype),
    X3DGeospatialObject .prototype,
 {
-   constructor: GeoProximitySensor,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",                 new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "geoOrigin",                new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "geoSystem",                new Fields .MFString ("GD", "WE")),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",                  new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "size",                     new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "center",                   new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",                 new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,     "enterTime",                new Fields .SFTime ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,     "exitTime",                 new Fields .SFTime ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,     "geoCoord_changed",         new Fields .SFVec3d ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,     "position_changed",         new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,     "orientation_changed",      new Fields .SFRotation ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,     "centerOfRotation_changed", new Fields .SFVec3f ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "GeoProximitySensor";
-   },
-   getComponentName: function ()
-   {
-      return "Geospatial";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DEnvironmentalSensorNode .prototype .initialize .call (this);
       X3DGeospatialObject        .prototype .initialize .call (this);
@@ -134,18 +102,61 @@ GeoProximitySensor .prototype = Object .assign (Object .create (X3DEnvironmental
 
       this .proximitySensor .setup ();
    },
-   set_position__: function (position)
+   set_position__ (position)
    {
       this ._geoCoord_changed = this .getGeoCoord (this .proximitySensor ._position_changed .getValue (), geoCoord);
    },
-   traverse: function (type, renderObject)
+   traverse (type, renderObject)
    {
       this .proximitySensor .traverse (type, renderObject);
    },
-   dispose: function ()
+   dispose ()
    {
       X3DGeospatialObject        .prototype .dispose .call (this);
       X3DEnvironmentalSensorNode .prototype .dispose .call (this);
+   },
+});
+
+Object .defineProperties (GeoProximitySensor,
+{
+   typeName:
+   {
+      value: "GeoProximitySensor",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Geospatial",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",                 new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "geoOrigin",                new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "geoSystem",                new Fields .MFString ("GD", "WE")),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",                  new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "size",                     new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "center",                   new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",                 new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "enterTime",                new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "exitTime",                 new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "geoCoord_changed",         new Fields .SFVec3d ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "position_changed",         new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "orientation_changed",      new Fields .SFRotation ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "centerOfRotation_changed", new Fields .SFVec3f ()),
+      ]),
+      enumerable: true,
    },
 });
 

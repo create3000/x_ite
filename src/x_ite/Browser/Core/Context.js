@@ -45,7 +45,7 @@
  *
  ******************************************************************************/
 
-import DEBUG from "../../DEBUG.js";
+import DEVELOPMENT from "../../DEVELOPMENT.js";
 
 const extensions = [
    "ANGLE_instanced_arrays",
@@ -106,13 +106,13 @@ const extensions = [
 
 const Context =
 {
-   create: function (canvas, version, preserveDrawingBuffer)
+   create (canvas, version, preserveDrawingBuffer)
    {
       const options = { preserveDrawingBuffer: preserveDrawingBuffer };
 
       let gl = null;
 
-      if (version >= 2 && ! gl)
+      if (version >= 2 && !gl)
       {
          gl = canvas .getContext ("webgl2", { ... options, antialias: false });
 
@@ -120,7 +120,7 @@ const Context =
             gl .getVersion = function () { return 2; };
       }
 
-      if (version >= 1 && ! gl)
+      if (version >= 1 && !gl)
       {
          gl = canvas .getContext ("webgl",              options) ||
               canvas .getContext ("experimental-webgl", options);
@@ -140,7 +140,7 @@ const Context =
          }
       }
 
-      if (! gl)
+      if (!gl)
          throw new Error ("Couldn't create WebGL context.");
 
       // Feature detection:
@@ -155,7 +155,7 @@ const Context =
          gl .lineWidth                     = Function .prototype;
          gl .HAS_FEATURE_TRANSFORMED_LINES = gl .getVersion () >= 2;
 
-         if (DEBUG)
+         if (DEVELOPMENT)
             console .info ("Lines are transformed if necessary to obtain thick lines.");
       }
       else
@@ -199,7 +199,7 @@ const Context =
       }
       :
       {
-         clientWaitAsync: function (sync, flags, timeout)
+         clientWaitAsync (sync, flags, timeout)
          {
             return new Promise ((resolve, reject) =>
             {

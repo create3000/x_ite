@@ -307,18 +307,18 @@ function QuickSort (array, compare)
       this .compare = compare;
 }
 
-QuickSort .prototype =
+Object .assign (QuickSort .prototype,
 {
-   compare: function (lhs, rhs)
+   compare (lhs, rhs)
    {
       return lhs < rhs;
    },
-   sort: function (first, last)
+   sort (first, last)
    {
       if (last - first > 1)
          this .quicksort (first, last - 1);
    },
-   quicksort: function (lo, hi)
+   quicksort (lo, hi)
    {
       let
          i = lo,
@@ -355,7 +355,7 @@ QuickSort .prototype =
       if (lo < j) this .quicksort (lo, j);
       if (i < hi) this .quicksort (i, hi);
    },
-};
+});
 
 const QuickSort_default_ = QuickSort;
 ;
@@ -435,8 +435,8 @@ function X3DPickSensorNode (executionContext)
    this .addType ((X3DConstants_default()).X3DPickSensorNode);
 
    this .objectType          = new Set ();
-   this .intersectionType    = Picking_IntersectionType.BOUNDS;
-   this .sortOrder           = Picking_SortOrder.CLOSEST;
+   this .intersectionType    = Picking_IntersectionType .BOUNDS;
+   this .sortOrder           = Picking_SortOrder .CLOSEST;
    this .pickTargetNodes     = new Set ();
    this .modelMatrices       = [ ];
    this .targets             = [ ];
@@ -446,10 +446,9 @@ function X3DPickSensorNode (executionContext)
    this .pickedGeometries    = new (Fields_default()).MFNode (); // Must be unique for each X3DPickSensorNode.
 }
 
-X3DPickSensorNode .prototype = Object .assign (Object .create ((X3DSensorNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, (X3DSensorNode_default()).prototype),
 {
-   constructor: X3DPickSensorNode,
-   initialize: function ()
+   initialize ()
    {
       this .getLive () .addInterest ("set_live__", this);
 
@@ -466,27 +465,27 @@ X3DPickSensorNode .prototype = Object .assign (Object .create ((X3DSensorNode_de
       this .set_sortOrder__ ();
       this .set_pickTarget__ ();
    },
-   getObjectType: function ()
+   getObjectType ()
    {
       return this .objectType;
    },
-   getMatchCriterion: function ()
+   getMatchCriterion ()
    {
       return this .matchCriterion;
    },
-   getIntersectionType: function ()
+   getIntersectionType ()
    {
       return this .intersectionType;
    },
-   getSortOrder: function ()
+   getSortOrder ()
    {
       return this .sortOrder;
    },
-   getModelMatrices: function ()
+   getModelMatrices ()
    {
       return this .modelMatrices;
    },
-   getTargets: function ()
+   getTargets ()
    {
       return this .targets;
    },
@@ -556,14 +555,14 @@ X3DPickSensorNode .prototype = Object .assign (Object .create ((X3DSensorNode_de
 
          switch (this .sortOrder)
          {
-            case Picking_SortOrder.ANY:
+            case Picking_SortOrder .ANY:
             {
                pickedTargets .length    = 1;
                pickedGeometries [0]     = this .getPickedGeometry (pickedTargets [0]);
                pickedGeometries .length = 1;
                break;
             }
-            case Picking_SortOrder.CLOSEST:
+            case Picking_SortOrder .CLOSEST:
             {
                this .pickedTargetsSorter .sort (0, pickedTargets .length);
 
@@ -572,7 +571,7 @@ X3DPickSensorNode .prototype = Object .assign (Object .create ((X3DSensorNode_de
                pickedGeometries .length = 1;
                break;
             }
-            case Picking_SortOrder.ALL:
+            case Picking_SortOrder .ALL:
             {
                for (var i = 0, length = pickedTargets .length; i < length; ++ i)
                   pickedGeometries [i] = this .getPickedGeometry (pickedTargets [i]);
@@ -580,7 +579,7 @@ X3DPickSensorNode .prototype = Object .assign (Object .create ((X3DSensorNode_de
                pickedGeometries .length = length;
                break;
             }
-            case Picking_SortOrder.ALL_SORTED:
+            case Picking_SortOrder .ALL_SORTED:
             {
                this .pickedTargetsSorter .sort (0, pickedTargets .length);
 
@@ -595,7 +594,7 @@ X3DPickSensorNode .prototype = Object .assign (Object .create ((X3DSensorNode_de
          return pickedGeometries;
       };
    })(),
-   getPickedGeometry: function (target)
+   getPickedGeometry (target)
    {
       var
          executionContext = this .getExecutionContext (),
@@ -626,11 +625,11 @@ X3DPickSensorNode .prototype = Object .assign (Object .create ((X3DSensorNode_de
 
       return null;
    },
-   getPickedTargets: function ()
+   getPickedTargets ()
    {
       return this .pickedTargets;
    },
-   set_live__: function ()
+   set_live__ ()
    {
       if (this .getLive () .getValue () && this ._enabled .getValue () && ! this .objectType .has ("NONE"))
       {
@@ -643,7 +642,7 @@ X3DPickSensorNode .prototype = Object .assign (Object .create ((X3DSensorNode_de
          this .setPickableObject (false);
       }
    },
-   set_objectType__: function ()
+   set_objectType__ ()
    {
       this .objectType .clear ();
 
@@ -657,9 +656,9 @@ X3DPickSensorNode .prototype = Object .assign (Object .create ((X3DSensorNode_de
    set_matchCriterion__: (function ()
    {
       var matchCriterions = new Map ([
-         ["MATCH_ANY",      Picking_MatchCriterion.MATCH_ANY],
-         ["MATCH_EVERY",    Picking_MatchCriterion.MATCH_EVERY],
-         ["MATCH_ONLY_ONE", Picking_MatchCriterion.MATCH_ONLY_ONE],
+         ["MATCH_ANY",      Picking_MatchCriterion .MATCH_ANY],
+         ["MATCH_EVERY",    Picking_MatchCriterion .MATCH_EVERY],
+         ["MATCH_ONLY_ONE", Picking_MatchCriterion .MATCH_ONLY_ONE],
       ]);
 
       return function ()
@@ -673,8 +672,8 @@ X3DPickSensorNode .prototype = Object .assign (Object .create ((X3DSensorNode_de
    set_intersectionType__: (function ()
    {
       var intersectionTypes = new Map ([
-         ["BOUNDS",   Picking_IntersectionType.BOUNDS],
-         ["GEOMETRY", Picking_IntersectionType.GEOMETRY],
+         ["BOUNDS",   Picking_IntersectionType .BOUNDS],
+         ["GEOMETRY", Picking_IntersectionType .GEOMETRY],
       ]);
 
       return function ()
@@ -682,16 +681,16 @@ X3DPickSensorNode .prototype = Object .assign (Object .create ((X3DSensorNode_de
          this .intersectionType = intersectionTypes .get (this ._intersectionType .getValue ());
 
          if (this .intersectionType === undefined)
-            this .intersectionType = Picking_IntersectionType.BOUNDS;
+            this .intersectionType = Picking_IntersectionType .BOUNDS;
       };
    })(),
    set_sortOrder__: (function ()
    {
       var sortOrders = new Map ([
-         ["ANY",        Picking_SortOrder.ANY],
-         ["CLOSEST",    Picking_SortOrder.CLOSEST],
-         ["ALL",        Picking_SortOrder.ALL],
-         ["ALL_SORTED", Picking_SortOrder.ALL_SORTED],
+         ["ANY",        Picking_SortOrder .ANY],
+         ["CLOSEST",    Picking_SortOrder .CLOSEST],
+         ["ALL",        Picking_SortOrder .ALL],
+         ["ALL_SORTED", Picking_SortOrder .ALL_SORTED],
       ]);
 
       return function ()
@@ -699,10 +698,10 @@ X3DPickSensorNode .prototype = Object .assign (Object .create ((X3DSensorNode_de
          this .sortOrder = sortOrders .get (this ._sortOrder .getValue ());
 
          if (this .sortOrder === undefined)
-            this .sortOrder = Picking_SortOrder.CLOSEST;
+            this .sortOrder = Picking_SortOrder .CLOSEST;
       };
    })(),
-   set_pickTarget__: function ()
+   set_pickTarget__ ()
    {
       this .pickTargetNodes .clear ();
 
@@ -730,11 +729,11 @@ X3DPickSensorNode .prototype = Object .assign (Object .create ((X3DSensorNode_de
                }
             }
          }
-         catch (error)
+         catch
          { }
       }
    },
-   traverse: function (type, renderObject)
+   traverse (type, renderObject)
    {
       // X3DPickSensorNode nodes are sorted out and only traversed during PICKING, except if is child of a LOD or Switch node.
 
@@ -744,7 +743,7 @@ X3DPickSensorNode .prototype = Object .assign (Object .create ((X3DSensorNode_de
       if (this .isPickableObject ())
          this .modelMatrices .push (ModelMatrixCache .pop () .assign (renderObject .getModelViewMatrix () .get ()));
    },
-   collect: function (geometryNode, modelMatrix, pickingHierarchy)
+   collect (geometryNode, modelMatrix, pickingHierarchy)
    {
       var pickTargetNodes = this .pickTargetNodes;
 
@@ -784,7 +783,7 @@ X3DPickSensorNode .prototype = Object .assign (Object .create ((X3DSensorNode_de
          destPickingHierarchy .length = length;
       }
    },
-   process: function ()
+   process ()
    {
       var modelMatrices = this .modelMatrices;
 
@@ -793,6 +792,20 @@ X3DPickSensorNode .prototype = Object .assign (Object .create ((X3DSensorNode_de
 
       this .modelMatrices .length = 0;
       this .targets .size         = 0;
+   },
+});
+
+Object .defineProperties (X3DPickSensorNode,
+{
+   typeName:
+   {
+      value: "X3DPickSensorNode",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Picking",
+      enumerable: true,
    },
 });
 
@@ -871,56 +884,24 @@ var Line3_default = /*#__PURE__*/__webpack_require__.n(Line3_namespaceObject);
 
 function LinePickSensor (executionContext)
 {
-   Picking_X3DPickSensorNode.call (this, executionContext);
+   Picking_X3DPickSensorNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).LinePickSensor);
 
    this .pickingGeometryNode = null;
 }
 
-LinePickSensor .prototype = Object .assign (Object .create (Picking_X3DPickSensorNode.prototype),
+Object .assign (Object .setPrototypeOf (LinePickSensor .prototype, Picking_X3DPickSensorNode .prototype),
 {
-   constructor: LinePickSensor,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",                new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "enabled",                 new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "objectType",              new (Fields_default()).MFString ("ALL")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "matchCriterion",          new (Fields_default()).SFString ("MATCH_ANY")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "intersectionType",        new (Fields_default()).SFString ("BOUNDS")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "sortOrder",               new (Fields_default()).SFString ("CLOSEST")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isActive",                new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "pickedTextureCoordinate", new (Fields_default()).MFVec3f ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "pickedNormal",            new (Fields_default()).MFVec3f ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "pickedPoint",             new (Fields_default()).MFVec3f ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "pickingGeometry",         new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "pickTarget",              new (Fields_default()).MFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "pickedGeometry",          new (Fields_default()).MFNode ()),
-   ]),
-   getTypeName: function ()
+   initialize ()
    {
-      return "LinePickSensor";
-   },
-   getComponentName: function ()
-   {
-      return "Picking";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
-   initialize: function ()
-   {
-      Picking_X3DPickSensorNode.prototype.initialize.call (this);
+      Picking_X3DPickSensorNode .prototype .initialize .call (this);
 
       this ._pickingGeometry .addInterest ("set_pickingGeometry__", this);
 
       this .set_pickingGeometry__ ();
    },
-   set_pickingGeometry__: function ()
+   set_pickingGeometry__ ()
    {
       this .pickingGeometryNode = null;
 
@@ -945,7 +926,7 @@ LinePickSensor .prototype = Object .assign (Object .create (Picking_X3DPickSenso
             }
          }
       }
-      catch (error)
+      catch
       { }
    },
    process: (function ()
@@ -978,7 +959,7 @@ LinePickSensor .prototype = Object .assign (Object .create (Picking_X3DPickSenso
 
             switch (this .getIntersectionType ())
             {
-               case Picking_IntersectionType.BOUNDS:
+               case Picking_IntersectionType .BOUNDS:
                {
                   // Intersect bboxes.
 
@@ -1011,7 +992,7 @@ LinePickSensor .prototype = Object .assign (Object .create (Picking_X3DPickSenso
                      pickedGeometries = this .getPickedGeometries (),
                      active           = !! pickedGeometries .length;
 
-                  pickedGeometries .remove (0, pickedGeometries .length, null);
+                  pickedGeometries .assign (pickedGeometries .filter (node => node));
 
                   if (active !== this ._isActive .getValue ())
                      this ._isActive = active;
@@ -1021,7 +1002,7 @@ LinePickSensor .prototype = Object .assign (Object .create (Picking_X3DPickSenso
 
                   break;
                }
-               case Picking_IntersectionType.GEOMETRY:
+               case Picking_IntersectionType .GEOMETRY:
                {
                   // Intersect geometry.
 
@@ -1087,7 +1068,7 @@ LinePickSensor .prototype = Object .assign (Object .create (Picking_X3DPickSenso
                      pickedGeometries = this .getPickedGeometries (),
                      active           = !! pickedGeometries .length;
 
-                  pickedGeometries .remove (0, pickedGeometries .length, null);
+                  pickedGeometries .assign (pickedGeometries .filter (node => node));
 
                   if (active !== this ._isActive .getValue ())
                      this ._isActive = active;
@@ -1133,9 +1114,52 @@ LinePickSensor .prototype = Object .assign (Object .create (Picking_X3DPickSenso
             }
          }
 
-         Picking_X3DPickSensorNode.prototype.process.call (this);
+         Picking_X3DPickSensorNode .prototype .process .call (this);
       };
    })(),
+});
+
+Object .defineProperties (LinePickSensor,
+{
+   typeName:
+   {
+      value: "LinePickSensor",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Picking",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",                new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "enabled",                 new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "objectType",              new (Fields_default()).MFString ("ALL")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "matchCriterion",          new (Fields_default()).SFString ("MATCH_ANY")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "intersectionType",        new (Fields_default()).SFString ("BOUNDS")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "sortOrder",               new (Fields_default()).SFString ("CLOSEST")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isActive",                new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "pickedTextureCoordinate", new (Fields_default()).MFVec3f ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "pickedNormal",            new (Fields_default()).MFVec3f ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "pickedPoint",             new (Fields_default()).MFVec3f ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "pickingGeometry",         new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "pickTarget",              new (Fields_default()).MFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "pickedGeometry",          new (Fields_default()).MFNode ()),
+      ]),
+      enumerable: true,
+   },
 });
 
 const LinePickSensor_default_ = LinePickSensor;
@@ -1203,20 +1227,19 @@ function X3DPickableObject (executionContext)
    this .objectType = new Set ();
 }
 
-X3DPickableObject .prototype =
+Object .assign (X3DPickableObject .prototype,
 {
-   constructor: X3DPickableObject,
-   initialize: function ()
+   initialize ()
    {
       this ._objectType .addInterest ("set_objectType__", this);
 
       this .set_objectType__ ();
    },
-   getObjectType: function ()
+   getObjectType ()
    {
       return this .objectType;
    },
-   set_objectType__: function ()
+   set_objectType__ ()
    {
       this .objectType .clear ();
 
@@ -1225,8 +1248,22 @@ X3DPickableObject .prototype =
          this .objectType .add (this ._objectType [i]);
       }
    },
-   dispose: function () { },
-};
+   dispose () { },
+});
+
+Object .defineProperties (X3DPickableObject,
+{
+   typeName:
+   {
+      value: "X3DPickableObject",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Picking",
+      enumerable: true,
+   },
+});
 
 const X3DPickableObject_default_ = X3DPickableObject;
 ;
@@ -1293,57 +1330,28 @@ Namespace_default().set ("x_ite/Components/Picking/X3DPickableObject", X3DPickab
 function PickableGroup (executionContext)
 {
    X3DGroupingNode_default().call (this, executionContext);
-   Picking_X3DPickableObject.call (this, executionContext);
+   Picking_X3DPickableObject .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).PickableGroup);
 }
 
-PickableGroup .prototype = Object .assign (Object .create ((X3DGroupingNode_default()).prototype),
-   Picking_X3DPickableObject.prototype,
+Object .assign (Object .setPrototypeOf (PickableGroup .prototype, (X3DGroupingNode_default()).prototype),
+   Picking_X3DPickableObject .prototype,
 {
-   constructor: PickableGroup,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",       new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "pickable",       new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "objectType",     new (Fields_default()).MFString ("ALL")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "visible",        new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bboxDisplay",    new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxSize",       new (Fields_default()).SFVec3f (-1, -1, -1)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxCenter",     new (Fields_default()).SFVec3f ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "addChildren",    new (Fields_default()).MFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "removeChildren", new (Fields_default()).MFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "children",       new (Fields_default()).MFNode ()),
-   ]),
-   getTypeName: function ()
+   initialize ()
    {
-      return "PickableGroup";
-   },
-   getComponentName: function ()
-   {
-      return "Picking";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
-   initialize: function ()
-   {
-      X3DGroupingNode_default().prototype.initialize.call (this);
-      Picking_X3DPickableObject.prototype.initialize.call (this);
+      X3DGroupingNode_default().prototype .initialize .call (this);
+      Picking_X3DPickableObject .prototype .initialize .call (this);
 
       this ._pickable .addInterest ("set_pickable__", this);
 
       this .set_pickable__ ();
    },
-   set_pickableObjects__: function ()
+   set_pickableObjects__ ()
    {
       this .set_pickable__ ();
    },
-   set_pickable__: function ()
+   set_pickable__ ()
    {
       this .setPickableObject (!!(this ._pickable .getValue () || this .getTransformSensors () .size));
    },
@@ -1367,7 +1375,7 @@ PickableGroup .prototype = Object .assign (Object .create ((X3DGroupingNode_defa
                if (this .getObjectType () .has ("ALL"))
                {
                   pickableStack .push (true);
-                  X3DGroupingNode_default().prototype.traverse.call (this, type, renderObject);
+                  X3DGroupingNode_default().prototype .traverse .call (this, type, renderObject);
                   pickableStack .pop ();
                }
                else
@@ -1393,21 +1401,21 @@ PickableGroup .prototype = Object .assign (Object .create ((X3DGroupingNode_defa
 
                         switch (pickSensorNode .getMatchCriterion ())
                         {
-                           case Picking_MatchCriterion.MATCH_ANY:
+                           case Picking_MatchCriterion .MATCH_ANY:
                            {
                               if (intersection === 0)
                                  continue;
 
                               break;
                            }
-                           case Picking_MatchCriterion.MATCH_EVERY:
+                           case Picking_MatchCriterion .MATCH_EVERY:
                            {
                               if (intersection !== pickSensor .getObjectType () .size)
                                  continue;
 
                               break;
                            }
-                           case Picking_MatchCriterion.MATCH_ONLY_ONE:
+                           case Picking_MatchCriterion .MATCH_ONLY_ONE:
                            {
                               if (intersection !== 1)
                                  continue;
@@ -1423,7 +1431,7 @@ PickableGroup .prototype = Object .assign (Object .create ((X3DGroupingNode_defa
                   pickableStack   .push (true);
                   pickSensorStack .push (pickSensorNodes);
 
-                  X3DGroupingNode_default().prototype.traverse.call (this, type, renderObject);
+                  X3DGroupingNode_default().prototype .traverse .call (this, type, renderObject);
 
                   pickSensorStack .pop ();
                   pickableStack   .pop ();
@@ -1434,14 +1442,54 @@ PickableGroup .prototype = Object .assign (Object .create ((X3DGroupingNode_defa
          }
          else
          {
-            X3DGroupingNode_default().prototype.traverse.call (this, type, renderObject);
+            X3DGroupingNode_default().prototype .traverse .call (this, type, renderObject);
          }
       };
    })(),
-   dispose: function ()
+   dispose ()
    {
-      Picking_X3DPickableObject.prototype.dispose.call (this);
-      X3DGroupingNode_default().prototype.dispose.call (this);
+      Picking_X3DPickableObject .prototype .dispose .call (this);
+      X3DGroupingNode_default().prototype .dispose .call (this);
+   },
+});
+
+Object .defineProperties (PickableGroup,
+{
+   typeName:
+   {
+      value: "PickableGroup",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Picking",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",       new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "pickable",       new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "objectType",     new (Fields_default()).MFString ("ALL")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "visible",        new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bboxDisplay",    new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxSize",       new (Fields_default()).SFVec3f (-1, -1, -1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxCenter",     new (Fields_default()).SFVec3f ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "addChildren",    new (Fields_default()).MFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "removeChildren", new (Fields_default()).MFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "children",       new (Fields_default()).MFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 
@@ -1533,22 +1581,22 @@ function VolumePicker ()
    this .collisionWorld .addCollisionObject (this .rigidBody2);
 }
 
-VolumePicker .prototype =
+Object .assign (VolumePicker .prototype,
 {
    constuctor: VolumePicker,
-   setChildShape1: function (matrix, childShape)
+   setChildShape1 (matrix, childShape)
    {
       this .setChildShape (this .compoundShape1, matrix, childShape);
    },
-   setChildShape2: function (matrix, childShape)
+   setChildShape2 (matrix, childShape)
    {
       this .setChildShape (this .compoundShape2, matrix, childShape);
    },
-   setChildShape1Components: function (transform, localScaling, childShape)
+   setChildShape1Components (transform, localScaling, childShape)
    {
       this .setChildShapeComponents (this .compoundShape1, transform, localScaling, childShape);
    },
-   setChildShape2Components: function (transform, localScaling, childShape)
+   setChildShape2Components (transform, localScaling, childShape)
    {
       this .setChildShapeComponents (this .compoundShape2, transform, localScaling, childShape);
    },
@@ -1576,7 +1624,7 @@ VolumePicker .prototype =
          }
       };
    })(),
-   setChildShapeComponents: function (compoundShape, transform, localScaling, childShape)
+   setChildShapeComponents (compoundShape, transform, localScaling, childShape)
    {
       if (compoundShape .getNumChildShapes ())
          compoundShape .removeChildShapeByIndex (0);
@@ -1587,7 +1635,7 @@ VolumePicker .prototype =
          compoundShape .addChildShape (transform, childShape);
       }
    },
-   contactTest: function ()
+   contactTest ()
    {
       this .collisionWorld .performDiscreteCollisionDetection ();
 
@@ -1634,7 +1682,7 @@ VolumePicker .prototype =
          return t;
       };
    })(),
-};
+});
 
 const VolumePicker_default_ = VolumePicker;
 ;
@@ -1704,7 +1752,7 @@ Namespace_default().set ("x_ite/Browser/Picking/VolumePicker", VolumePicker_defa
 
 function PointPickSensor (executionContext)
 {
-   Picking_X3DPickSensorNode.call (this, executionContext);
+   Picking_X3DPickSensorNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).PointPickSensor);
 
@@ -1713,47 +1761,17 @@ function PointPickSensor (executionContext)
    this .compoundShapes      = [ ];
 }
 
-PointPickSensor .prototype = Object .assign (Object .create (Picking_X3DPickSensorNode.prototype),
+Object .assign (Object .setPrototypeOf (PointPickSensor .prototype, Picking_X3DPickSensorNode .prototype),
 {
-   constructor: PointPickSensor,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",         new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "enabled",          new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "objectType",       new (Fields_default()).MFString ("ALL")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "matchCriterion",   new (Fields_default()).SFString ("MATCH_ANY")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "intersectionType", new (Fields_default()).SFString ("BOUNDS")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "sortOrder",        new (Fields_default()).SFString ("CLOSEST")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isActive",         new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "pickedPoint",      new (Fields_default()).MFVec3f ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "pickingGeometry",  new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "pickTarget",       new (Fields_default()).MFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "pickedGeometry",   new (Fields_default()).MFNode ()),
-   ]),
-   getTypeName: function ()
+   initialize ()
    {
-      return "PointPickSensor";
-   },
-   getComponentName: function ()
-   {
-      return "Picking";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
-   initialize: function ()
-   {
-      Picking_X3DPickSensorNode.prototype.initialize.call (this);
+      Picking_X3DPickSensorNode .prototype .initialize .call (this);
 
       this ._pickingGeometry .addInterest ("set_pickingGeometry__", this);
 
       this .set_pickingGeometry__ ();
    },
-   set_pickingGeometry__: function ()
+   set_pickingGeometry__ ()
    {
       if (this .pickingGeometryNode)
          this .pickingGeometryNode ._rebuild .removeInterest ("set_geometry__", this);
@@ -1850,7 +1868,7 @@ PointPickSensor .prototype = Object .assign (Object .create (Picking_X3DPickSens
 
             switch (this .getIntersectionType ())
             {
-               case Picking_IntersectionType.BOUNDS:
+               case Picking_IntersectionType .BOUNDS:
                {
                   // Intersect bboxes.
 
@@ -1883,7 +1901,7 @@ PointPickSensor .prototype = Object .assign (Object .create (Picking_X3DPickSens
                      pickedGeometries = this .getPickedGeometries (),
                      active           = !! pickedGeometries .length;
 
-                  pickedGeometries .remove (0, pickedGeometries .length, null);
+                  pickedGeometries .assign (pickedGeometries .filter (node => node));
 
                   if (active !== this ._isActive .getValue ())
                      this ._isActive = active;
@@ -1893,7 +1911,7 @@ PointPickSensor .prototype = Object .assign (Object .create (Picking_X3DPickSens
 
                   break;
                }
-               case Picking_IntersectionType.GEOMETRY:
+               case Picking_IntersectionType .GEOMETRY:
                {
                   // Intersect geometry.
 
@@ -1947,7 +1965,7 @@ PointPickSensor .prototype = Object .assign (Object .create (Picking_X3DPickSens
                      pickedGeometries = this .getPickedGeometries (),
                      active           = !! pickedGeometries .length;
 
-                  pickedGeometries .remove (0, pickedGeometries .length, null);
+                  pickedGeometries .assign (pickedGeometries .filter (node => node));
 
                   if (active !== this ._isActive .getValue ())
                      this ._isActive = active;
@@ -1975,9 +1993,50 @@ PointPickSensor .prototype = Object .assign (Object .create (Picking_X3DPickSens
             }
          }
 
-         Picking_X3DPickSensorNode.prototype.process.call (this);
+         Picking_X3DPickSensorNode .prototype .process .call (this);
       };
    })(),
+});
+
+Object .defineProperties (PointPickSensor,
+{
+   typeName:
+   {
+      value: "PointPickSensor",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Picking",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",         new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "enabled",          new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "objectType",       new (Fields_default()).MFString ("ALL")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "matchCriterion",   new (Fields_default()).SFString ("MATCH_ANY")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "intersectionType", new (Fields_default()).SFString ("BOUNDS")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "sortOrder",        new (Fields_default()).SFString ("CLOSEST")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isActive",         new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "pickedPoint",      new (Fields_default()).MFVec3f ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "pickingGeometry",  new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "pickTarget",       new (Fields_default()).MFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "pickedGeometry",   new (Fields_default()).MFNode ()),
+      ]),
+      enumerable: true,
+   },
 });
 
 const PointPickSensor_default_ = PointPickSensor;
@@ -2045,7 +2104,7 @@ Namespace_default().set ("x_ite/Components/Picking/PointPickSensor", PointPickSe
 
 function PrimitivePickSensor (executionContext)
 {
-   Picking_X3DPickSensorNode.call (this, executionContext);
+   Picking_X3DPickSensorNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).PrimitivePickSensor);
 
@@ -2053,46 +2112,17 @@ function PrimitivePickSensor (executionContext)
    this .picker              = new Picking_VolumePicker ();
 }
 
-PrimitivePickSensor .prototype = Object .assign (Object .create (Picking_X3DPickSensorNode.prototype),
+Object .assign (Object .setPrototypeOf (PrimitivePickSensor .prototype, Picking_X3DPickSensorNode .prototype),
 {
-   constructor: PrimitivePickSensor,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",         new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "enabled",          new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "objectType",       new (Fields_default()).MFString ("ALL")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "matchCriterion",   new (Fields_default()).SFString ("MATCH_ANY")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "intersectionType", new (Fields_default()).SFString ("BOUNDS")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "sortOrder",        new (Fields_default()).SFString ("CLOSEST")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isActive",         new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "pickingGeometry",  new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "pickTarget",       new (Fields_default()).MFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "pickedGeometry",   new (Fields_default()).MFNode ()),
-   ]),
-   getTypeName: function ()
+   initialize ()
    {
-      return "PrimitivePickSensor";
-   },
-   getComponentName: function ()
-   {
-      return "Picking";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
-   initialize: function ()
-   {
-      Picking_X3DPickSensorNode.prototype.initialize.call (this);
+      Picking_X3DPickSensorNode .prototype .initialize .call (this);
 
       this ._pickingGeometry .addInterest ("set_pickingGeometry__", this);
 
       this .set_pickingGeometry__ ();
    },
-   set_pickingGeometry__: function ()
+   set_pickingGeometry__ ()
    {
       this .pickingGeometryNode = null;
 
@@ -2119,7 +2149,7 @@ PrimitivePickSensor .prototype = Object .assign (Object .create (Picking_X3DPick
             }
          }
       }
-      catch (error)
+      catch
       { }
    },
    process: (function ()
@@ -2140,7 +2170,7 @@ PrimitivePickSensor .prototype = Object .assign (Object .create (Picking_X3DPick
 
             switch (this .getIntersectionType ())
             {
-               case Picking_IntersectionType.BOUNDS:
+               case Picking_IntersectionType .BOUNDS:
                {
                   // Intersect bboxes.
 
@@ -2173,7 +2203,7 @@ PrimitivePickSensor .prototype = Object .assign (Object .create (Picking_X3DPick
                      pickedGeometries = this .getPickedGeometries (),
                      active           = !! pickedGeometries .length;
 
-                  pickedGeometries .remove (0, pickedGeometries .length, null);
+                  pickedGeometries .assign (pickedGeometries .filter (node => node));
 
                   if (active !== this ._isActive .getValue ())
                      this ._isActive = active;
@@ -2183,7 +2213,7 @@ PrimitivePickSensor .prototype = Object .assign (Object .create (Picking_X3DPick
 
                   break;
                }
-               case Picking_IntersectionType.GEOMETRY:
+               case Picking_IntersectionType .GEOMETRY:
                {
                   // Intersect geometry.
 
@@ -2226,7 +2256,7 @@ PrimitivePickSensor .prototype = Object .assign (Object .create (Picking_X3DPick
                      pickedGeometries = this .getPickedGeometries (),
                      active           = !! pickedGeometries .length;
 
-                  pickedGeometries .remove (0, pickedGeometries .length, null);
+                  pickedGeometries .assign (pickedGeometries .filter (node => node));
 
                   if (active !== this ._isActive .getValue ())
                      this ._isActive = active;
@@ -2239,9 +2269,49 @@ PrimitivePickSensor .prototype = Object .assign (Object .create (Picking_X3DPick
             }
          }
 
-         Picking_X3DPickSensorNode.prototype.process.call (this);
+         Picking_X3DPickSensorNode .prototype .process .call (this);
       };
    })(),
+});
+
+Object .defineProperties (PrimitivePickSensor,
+{
+   typeName:
+   {
+      value: "PrimitivePickSensor",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Picking",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",         new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "enabled",          new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "objectType",       new (Fields_default()).MFString ("ALL")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "matchCriterion",   new (Fields_default()).SFString ("MATCH_ANY")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "intersectionType", new (Fields_default()).SFString ("BOUNDS")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "sortOrder",        new (Fields_default()).SFString ("CLOSEST")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isActive",         new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "pickingGeometry",  new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "pickTarget",       new (Fields_default()).MFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "pickedGeometry",   new (Fields_default()).MFNode ()),
+      ]),
+      enumerable: true,
+   },
 });
 
 const PrimitivePickSensor_default_ = PrimitivePickSensor;
@@ -2310,7 +2380,7 @@ Namespace_default().set ("x_ite/Components/Picking/PrimitivePickSensor", Primiti
 
 function VolumePickSensor (executionContext)
 {
-   Picking_X3DPickSensorNode.call (this, executionContext);
+   Picking_X3DPickSensorNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).VolumePickSensor);
 
@@ -2318,46 +2388,17 @@ function VolumePickSensor (executionContext)
    this .picker              = new Picking_VolumePicker ();
 }
 
-VolumePickSensor .prototype = Object .assign (Object .create (Picking_X3DPickSensorNode.prototype),
+Object .assign (Object .setPrototypeOf (VolumePickSensor .prototype, Picking_X3DPickSensorNode .prototype),
 {
-   constructor: VolumePickSensor,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",         new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "enabled",          new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "objectType",       new (Fields_default()).MFString ("ALL")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "matchCriterion",   new (Fields_default()).SFString ("MATCH_ANY")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "intersectionType", new (Fields_default()).SFString ("BOUNDS")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "sortOrder",        new (Fields_default()).SFString ("CLOSEST")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isActive",         new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "pickingGeometry",  new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "pickTarget",       new (Fields_default()).MFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "pickedGeometry",   new (Fields_default()).MFNode ()),
-   ]),
-   getTypeName: function ()
+   initialize ()
    {
-      return "VolumePickSensor";
-   },
-   getComponentName: function ()
-   {
-      return "Picking";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
-   initialize: function ()
-   {
-      Picking_X3DPickSensorNode.prototype.initialize.call (this);
+      Picking_X3DPickSensorNode .prototype .initialize .call (this);
 
       this ._pickingGeometry .addInterest ("set_pickingGeometry__", this);
 
       this .set_pickingGeometry__ ();
    },
-   set_pickingGeometry__: function ()
+   set_pickingGeometry__ ()
    {
       this .pickingGeometryNode = X3DCast_default() ((X3DConstants_default()).X3DGeometryNode, this ._pickingGeometry);
    },
@@ -2379,7 +2420,7 @@ VolumePickSensor .prototype = Object .assign (Object .create (Picking_X3DPickSen
 
             switch (this .getIntersectionType ())
             {
-               case Picking_IntersectionType.BOUNDS:
+               case Picking_IntersectionType .BOUNDS:
                {
                   // Intersect bboxes.
 
@@ -2412,7 +2453,7 @@ VolumePickSensor .prototype = Object .assign (Object .create (Picking_X3DPickSen
                      pickedGeometries = this .getPickedGeometries (),
                      active           = !! pickedGeometries .length;
 
-                  pickedGeometries .remove (0, pickedGeometries .length, null);
+                  pickedGeometries .assign (pickedGeometries .filter (node => node));
 
                   if (active !== this ._isActive .getValue ())
                      this ._isActive = active;
@@ -2422,7 +2463,7 @@ VolumePickSensor .prototype = Object .assign (Object .create (Picking_X3DPickSen
 
                   break;
                }
-               case Picking_IntersectionType.GEOMETRY:
+               case Picking_IntersectionType .GEOMETRY:
                {
                   // Intersect geometry.
 
@@ -2465,7 +2506,7 @@ VolumePickSensor .prototype = Object .assign (Object .create (Picking_X3DPickSen
                      pickedGeometries = this .getPickedGeometries (),
                      active           = !! pickedGeometries .length;
 
-                  pickedGeometries .remove (0, pickedGeometries .length, null);
+                  pickedGeometries .assign (pickedGeometries .filter (node => node));
 
                   if (active !== this ._isActive .getValue ())
                      this ._isActive = active;
@@ -2478,9 +2519,49 @@ VolumePickSensor .prototype = Object .assign (Object .create (Picking_X3DPickSen
             }
          }
 
-         Picking_X3DPickSensorNode.prototype.process.call (this);
+         Picking_X3DPickSensorNode .prototype .process .call (this);
       };
    })(),
+});
+
+Object .defineProperties (VolumePickSensor,
+{
+   typeName:
+   {
+      value: "VolumePickSensor",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Picking",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",         new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "enabled",          new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "objectType",       new (Fields_default()).MFString ("ALL")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "matchCriterion",   new (Fields_default()).SFString ("MATCH_ANY")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "intersectionType", new (Fields_default()).SFString ("BOUNDS")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "sortOrder",        new (Fields_default()).SFString ("CLOSEST")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isActive",         new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "pickingGeometry",  new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "pickTarget",       new (Fields_default()).MFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "pickedGeometry",   new (Fields_default()).MFNode ()),
+      ]),
+      enumerable: true,
+   },
 });
 
 const VolumePickSensor_default_ = VolumePickSensor;
@@ -2545,21 +2626,21 @@ Namespace_default().set ("x_ite/Components/Picking/VolumePickSensor", VolumePick
 
 
 
-Components_default().addComponent ({
+Components_default().add ({
    name: "Picking",
-   types:
-   {
-      LinePickSensor:      Picking_LinePickSensor,
-      PickableGroup:       Picking_PickableGroup,
-      PointPickSensor:     Picking_PointPickSensor,
-      PrimitivePickSensor: Picking_PrimitivePickSensor,
-      VolumePickSensor:    Picking_VolumePickSensor,
-   },
-   abstractTypes:
-   {
-      X3DPickSensorNode: Picking_X3DPickSensorNode,
-      X3DPickableObject: Picking_X3DPickableObject,
-   },
+   concreteNodes:
+   [
+      Picking_LinePickSensor,
+      Picking_PickableGroup,
+      Picking_PointPickSensor,
+      Picking_PrimitivePickSensor,
+      Picking_VolumePickSensor,
+   ],
+   abstractNodes:
+   [
+      Picking_X3DPickSensorNode,
+      Picking_X3DPickableObject,
+   ],
 });
 
 const Picking_default_ = undefined;

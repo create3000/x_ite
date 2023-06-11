@@ -58,39 +58,50 @@ function TimeTrigger (executionContext)
    this .addType (X3DConstants .TimeTrigger);
 }
 
-TimeTrigger .prototype = Object .assign (Object .create (X3DTriggerNode .prototype),
+Object .assign (Object .setPrototypeOf (TimeTrigger .prototype, X3DTriggerNode .prototype),
 {
-   constructor: TimeTrigger,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,   "set_boolean", new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "triggerTime", new Fields .SFTime ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "TimeTrigger";
-   },
-   getComponentName: function ()
-   {
-      return "EventUtilities";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DTriggerNode .prototype .initialize .call (this);
 
       this ._set_boolean .addInterest ("set_boolean__", this);
    },
-   set_boolean__: function ()
+   set_boolean__ ()
    {
       this ._triggerTime = this .getBrowser () .getCurrentTime ();
+   },
+});
+
+Object .defineProperties (TimeTrigger,
+{
+   typeName:
+   {
+      value: "TimeTrigger",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "EventUtilities",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,   "set_boolean", new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "triggerTime", new Fields .SFTime ()),
+      ]),
+      enumerable: true,
    },
 });
 

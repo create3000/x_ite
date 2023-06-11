@@ -63,35 +63,46 @@ function AnnotationLayer (executionContext)
    this .addType (X3DConstants .AnnotationLayer);
 }
 
-AnnotationLayer .prototype = Object .assign (Object .create (X3DLayerNode .prototype),
+Object .assign (Object .setPrototypeOf (AnnotationLayer .prototype, X3DLayerNode .prototype),
 {
-   constructor: AnnotationLayer,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",     new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "isPickable",   new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "layoutPolicy", new Fields .MFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "shownGroupID", new Fields .MFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "viewport",     new Fields .SFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "AnnotationLayer";
-   },
-   getComponentName: function ()
-   {
-      return "Annotation";
-   },
-   getContainerField: function ()
-   {
-      return "layers";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["4.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DLayerNode .prototype .initialize .call (this);
+   },
+});
+
+Object .defineProperties (AnnotationLayer,
+{
+   typeName:
+   {
+      value: "AnnotationLayer",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Annotation",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "layers",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["4.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",     new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "isPickable",   new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "layoutPolicy", new Fields .MFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "shownGroupID", new Fields .MFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "viewport",     new Fields .SFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 

@@ -59,33 +59,9 @@ function EdgeEnhancementVolumeStyle (executionContext)
    this .addType (X3DConstants .EdgeEnhancementVolumeStyle);
 }
 
-EdgeEnhancementVolumeStyle .prototype = Object .assign (Object .create (X3DComposableVolumeRenderStyleNode .prototype),
+Object .assign (Object .setPrototypeOf (EdgeEnhancementVolumeStyle .prototype, X3DComposableVolumeRenderStyleNode .prototype),
 {
-   constructor: EdgeEnhancementVolumeStyle,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",          new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",           new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "edgeColor",         new Fields .SFColorRGBA (0, 0, 0, 1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "gradientThreshold", new Fields .SFFloat (0.4)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "surfaceNormals",    new Fields .SFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "EdgeEnhancementVolumeStyle";
-   },
-   getComponentName: function ()
-   {
-      return "VolumeRendering";
-   },
-   getContainerField: function ()
-   {
-      return "renderStyle";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.3", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DComposableVolumeRenderStyleNode .prototype .initialize .call (this);
 
@@ -98,11 +74,11 @@ EdgeEnhancementVolumeStyle .prototype = Object .assign (Object .create (X3DCompo
 
       this .set_surfaceNormals__ ();
    },
-   set_surfaceNormals__: function ()
+   set_surfaceNormals__ ()
    {
       this .surfaceNormalsNode = X3DCast (X3DConstants .X3DTexture3DNode, this ._surfaceNormals);
    },
-   addShaderFields: function (shaderNode)
+   addShaderFields (shaderNode)
    {
       if (! this ._enabled .getValue ())
          return;
@@ -113,7 +89,7 @@ EdgeEnhancementVolumeStyle .prototype = Object .assign (Object .create (X3DCompo
       if (this .surfaceNormalsNode)
          shaderNode .addUserDefinedField (X3DConstants .inputOutput, "surfaceNormals_" + this .getId (), new Fields .SFNode (this .surfaceNormalsNode));
    },
-   getUniformsText: function ()
+   getUniformsText ()
    {
       if (! this ._enabled .getValue ())
          return "";
@@ -150,7 +126,7 @@ EdgeEnhancementVolumeStyle .prototype = Object .assign (Object .create (X3DCompo
 
       return string;
    },
-   getFunctionsText: function ()
+   getFunctionsText ()
    {
       if (! this ._enabled .getValue ())
          return "";
@@ -163,6 +139,41 @@ EdgeEnhancementVolumeStyle .prototype = Object .assign (Object .create (X3DCompo
       string += "   textureColor = getEdgeEnhacementStyle_" + this .getId () + " (textureColor, texCoord);\n";
 
       return string;
+   },
+});
+
+Object .defineProperties (EdgeEnhancementVolumeStyle,
+{
+   typeName:
+   {
+      value: "EdgeEnhancementVolumeStyle",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "VolumeRendering",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "renderStyle",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.3", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",          new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",           new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "edgeColor",         new Fields .SFColorRGBA (0, 0, 0, 1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "gradientThreshold", new Fields .SFFloat (0.4)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "surfaceNormals",    new Fields .SFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 

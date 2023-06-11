@@ -63,38 +63,10 @@ function NurbsSet (executionContext)
    this .geometryNodes = [ ];
 }
 
-NurbsSet .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+Object .assign (Object .setPrototypeOf (NurbsSet .prototype, X3DChildNode .prototype),
    X3DBoundedObject .prototype,
 {
-   constructor: NurbsSet,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "tessellationScale", new Fields .SFFloat (1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",           new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",       new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",          new Fields .SFVec3f (-1, -1, -1)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",        new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,      "addGeometry",       new Fields .MFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,      "removeGeometry",    new Fields .MFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "geometry",          new Fields .MFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "NurbsSet";
-   },
-   getComponentName: function ()
-   {
-      return "NURBS";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DChildNode     .prototype .initialize .call (this);
       X3DBoundedObject .prototype .initialize .call (this);
@@ -106,7 +78,7 @@ NurbsSet .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 
       this .set_geometry__ ();
    },
-   getBBox: function (bbox, shadows)
+   getBBox (bbox, shadows)
    {
       // Add bounding boxes
 
@@ -115,20 +87,17 @@ NurbsSet .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 
       return bbox;
    },
-   set_tessellationScale__: function ()
+   set_tessellationScale__ ()
    {
       const tessellationScale = Math .max (0, this ._tessellationScale .getValue ());
 
       for (const geometryNode of this .geometryNodes)
          geometryNode .setTessellationScale (tessellationScale);
    },
-   set_addGeometry__: function ()
+   set_addGeometry__ ()
    {
       this ._addGeometry .setTainted (true);
-
-      this ._addGeometry .erase (remove (this ._addGeometry, 0, this ._addGeometry .length,
-                                         this ._geometry,    0, this ._geometry .length),
-                                 this ._addGeometry .length);
+      this ._addGeometry .assign (filter (this ._addGeometry, this ._geometry));
 
       for (const geometry of this ._addGeometry)
          this ._geometry .push (geometry);
@@ -136,18 +105,15 @@ NurbsSet .prototype = Object .assign (Object .create (X3DChildNode .prototype),
       this ._addGeometry .length = 0;
       this ._addGeometry .setTainted (false);
    },
-   set_removeGeometry__: function ()
+   set_removeGeometry__ ()
    {
       this ._removeGeometry .setTainted (true);
-
-      this ._geometry .erase (remove (this ._geometry,       0, this ._geometry .length,
-                                      this ._removeGeometry, 0, this ._removeGeometry .length),
-                              this ._geometry .length);
+      this ._geometry .assign (filter (this ._geometry, this ._removeGeometry));
 
       this ._removeGeometry .length = 0;
       this ._removeGeometry .setTainted (false);
    },
-   set_geometry__: function ()
+   set_geometry__ ()
    {
       for (const geometryNode of this .geometryNodes)
          geometryNode .setTessellationScale (1);
@@ -164,21 +130,57 @@ NurbsSet .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 
       this .set_tessellationScale__ ();
    },
-   dispose: function ()
+   dispose ()
    {
       X3DBoundedObject .prototype .dispose .call (this);
       X3DChildNode     .prototype .dispose .call (this);
    },
 });
 
-function remove (array, first, last, range, rfirst, rlast)
+function filter (array, remove)
 {
-   const set = new Set ();
+   const set = new Set (remove);
 
-   for (let i = rfirst; i < rlast; ++ i)
-      set .add (range [i]);
-
-   return array .remove (first, last, value => set .has (value));
+   return array .filter (value => !set .has (value));
 }
+
+Object .defineProperties (NurbsSet,
+{
+   typeName:
+   {
+      value: "NurbsSet",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "NURBS",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "tessellationScale", new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",           new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",       new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",          new Fields .SFVec3f (-1, -1, -1)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",        new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "addGeometry",       new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "removeGeometry",    new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "geometry",          new Fields .MFNode ()),
+      ]),
+      enumerable: true,
+   },
+});
 
 export default NurbsSet;

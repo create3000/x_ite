@@ -58,28 +58,41 @@ function X3DSingleTextureTransformNode (executionContext)
    this .matrixArray = new Float32Array (Matrix4 .Identity);
 }
 
-X3DSingleTextureTransformNode .prototype = Object .assign (Object .create (X3DTextureTransformNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DSingleTextureTransformNode .prototype, X3DTextureTransformNode .prototype),
 {
-   constructor: X3DSingleTextureTransformNode,
-   getCount: function ()
+   getCount ()
    {
       return 1;
    },
-   setMatrix: function (value)
+   setMatrix (value)
    {
       this .matrixArray .set (value);
    },
-   getTextureTransformMapping: function (textureTransformMapping, channel = 0)
+   getTextureTransformMapping (textureTransformMapping, channel = 0)
    {
       textureTransformMapping .set (this ._mapping .getValue () || channel, channel);
    },
-   setShaderUniforms: function (gl, shaderObject, channel = 0)
+   setShaderUniforms (gl, shaderObject, channel = 0)
    {
       gl .uniformMatrix4fv (shaderObject .x3d_TextureMatrix [channel], false, this .matrixArray);
    },
-   transformPoint: function (texCoord)
+   transformPoint (texCoord)
    {
       return Matrix4 .prototype .multVecMatrix .call (this .matrixArray, texCoord);
+   },
+});
+
+Object .defineProperties (X3DSingleTextureTransformNode,
+{
+   typeName:
+   {
+      value: "X3DSingleTextureTransformNode",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Texturing",
+      enumerable: true,
    },
 });
 

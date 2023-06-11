@@ -71,9 +71,9 @@ function NRRDParser ()
    ]);
 }
 
-NRRDParser .prototype =
+Object .assign (NRRDParser .prototype,
 {
-   parse: function (input)
+   parse (input)
    {
       this .setInput (input);
 
@@ -85,7 +85,7 @@ NRRDParser .prototype =
 
       return this .nrrd;
    },
-   setInput: function (value)
+   setInput (value)
    {
       this .dataView     = new DataView (value);
       this .input        = $.decodeText (value);
@@ -93,7 +93,7 @@ NRRDParser .prototype =
       this .nrrd         = { };
       this .littleEndian = true;
    },
-   getNRRD: function ()
+   getNRRD ()
    {
       if (Grammar .NRRD .parse (this))
       {
@@ -105,7 +105,7 @@ NRRDParser .prototype =
       this .nrrd .nrrd = false;
       return false;
    },
-   getFields: function ()
+   getFields ()
    {
       while (Grammar .comment .parse (this))
          ;
@@ -190,7 +190,7 @@ NRRDParser .prototype =
          this .encoding = encoding;
       };
    })(),
-   getDimension: function (value)
+   getDimension (value)
    {
       const result = value .match (/(\d+)/);
 
@@ -211,7 +211,7 @@ NRRDParser .prototype =
 
       throw new Error ("Unsupported NRRD dimension '" + result [1] + "', must be 1, 2, 3, or 4.");
    },
-   getSizes: function (value)
+   getSizes (value)
    {
       const
          num   = /\s*(\d+)/gy,
@@ -262,7 +262,7 @@ NRRDParser .prototype =
             throw new Error ("Unsupported NRRD sizes.");
       }
    },
-   getEndian: function (value)
+   getEndian (value)
    {
       if (value === "little")
       {
@@ -278,7 +278,7 @@ NRRDParser .prototype =
 
       throw new Error ("Unsupported NRRD endian, must be either 'little' or 'big'.");
    },
-   getData: function ()
+   getData ()
    {
       switch (this .encoding)
       {
@@ -304,7 +304,7 @@ NRRDParser .prototype =
          }
       }
    },
-   ascii: function ()
+   ascii ()
    {
       const
          dataLength = this .nrrd .components * this .nrrd .width * this .nrrd .height * this .nrrd .depth,
@@ -361,7 +361,7 @@ NRRDParser .prototype =
          }
       }
    },
-   raw: function ()
+   raw ()
    {
       const
          dataView   = this .dataView,
@@ -414,7 +414,7 @@ NRRDParser .prototype =
          }
       }
    },
-   hex: function ()
+   hex ()
    {
       if (Grammar .data .parse (this))
       {
@@ -433,7 +433,7 @@ NRRDParser .prototype =
 
       throw new Error ("Invalid NRRD data.");
    },
-   gzip: function ()
+   gzip ()
    {
       try
       {
@@ -453,6 +453,6 @@ NRRDParser .prototype =
          throw new Error (`Invalid NRRD data: ${error}.`);
       }
    },
-};
+});
 
 export default NRRDParser;

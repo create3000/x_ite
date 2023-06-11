@@ -58,40 +58,51 @@ function IntegerTrigger (executionContext)
    this .addType (X3DConstants .IntegerTrigger);
 }
 
-IntegerTrigger .prototype = Object .assign (Object .create (X3DTriggerNode .prototype),
+Object .assign (Object .setPrototypeOf (IntegerTrigger .prototype, X3DTriggerNode .prototype),
 {
-   constructor: IntegerTrigger,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",     new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,   "set_boolean",  new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "integerKey",   new Fields .SFInt32 (-1)),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "triggerValue", new Fields .SFInt32 ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "IntegerTrigger";
-   },
-   getComponentName: function ()
-   {
-      return "EventUtilities";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DTriggerNode .prototype .initialize .call (this);
 
       this ._set_boolean .addInterest ("set_boolean__", this);
    },
-   set_boolean__: function ()
+   set_boolean__ ()
    {
       this ._triggerValue = this ._integerKey;
+   },
+});
+
+Object .defineProperties (IntegerTrigger,
+{
+   typeName:
+   {
+      value: "IntegerTrigger",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "EventUtilities",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",     new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,   "set_boolean",  new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "integerKey",   new Fields .SFInt32 (-1)),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "triggerValue", new Fields .SFInt32 ()),
+      ]),
+      enumerable: true,
    },
 });
 

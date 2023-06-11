@@ -82,10 +82,9 @@ function X3DParticleEmitterNode (executionContext)
    this .addFunction (BVHSource);
 }
 
-X3DParticleEmitterNode .prototype = Object .assign (Object .create (X3DNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNode .prototype),
 {
-   constructor: X3DParticleEmitterNode,
-   initialize: function ()
+   initialize ()
    {
       X3DNode .prototype .initialize .call (this);
 
@@ -111,35 +110,35 @@ X3DParticleEmitterNode .prototype = Object .assign (Object .create (X3DNode .pro
       this .set_variation__ ();
       this .set_mass__ ();
    },
-   isExplosive: function ()
+   isExplosive ()
    {
       return false;
    },
-   getMass: function ()
+   getMass ()
    {
       return this .mass;
    },
-   set_on__: function ()
+   set_on__ ()
    {
       this .on = this ._on .getValue ();
    },
-   set_speed__: function ()
+   set_speed__ ()
    {
       this .setUniform ("uniform1f", "speed", this ._speed .getValue ());
    },
-   set_variation__: function ()
+   set_variation__ ()
    {
       this .setUniform ("uniform1f", "variation", this ._variation .getValue ());
    },
-   set_mass__: function ()
+   set_mass__ ()
    {
       this .mass = this ._mass .getValue ();
    },
-   getRandomValue: function (min, max)
+   getRandomValue (min, max)
    {
       return Math .random () * (max - min) + min;
    },
-   getRandomNormal: function (normal)
+   getRandomNormal (normal)
    {
       const
          theta = this .getRandomValue (-1, 1) * Math .PI,
@@ -151,7 +150,7 @@ X3DParticleEmitterNode .prototype = Object .assign (Object .create (X3DNode .pro
                           Math .cos (theta) * r,
                           cphi);
    },
-   animate: function (particleSystem, deltaTime)
+   animate (particleSystem, deltaTime)
    {
       const
          browser         = this .getBrowser (),
@@ -260,15 +259,15 @@ X3DParticleEmitterNode .prototype = Object .assign (Object .create (X3DNode .pro
       // gl .getBufferSubData (gl .ARRAY_BUFFER, 0, data);
       // console .log (data .slice (0, particleStride / 4));
    },
-   addSampler: function (name)
+   addSampler (name)
    {
       this .samplers .push (name);
    },
-   addUniform: function (name, uniform)
+   addUniform (name, uniform)
    {
       this .uniforms [name] = uniform;
    },
-   setUniform: function (func, name, value1, value2, value3)
+   setUniform (func, name, value1, value2, value3)
    {
       const
          gl      = this .getBrowser () .getContext (),
@@ -277,11 +276,11 @@ X3DParticleEmitterNode .prototype = Object .assign (Object .create (X3DNode .pro
       gl .useProgram (program);
       gl [func] (program [name], value1, value2, value3);
    },
-   addFunction: function (func)
+   addFunction (func)
    {
       this .functions .push (func);
    },
-   createProgram: function ()
+   createProgram ()
    {
       const
          browser = this .getBrowser (),
@@ -952,9 +951,9 @@ X3DParticleEmitterNode .prototype = Object .assign (Object .create (X3DNode .pro
 
       return program;
    },
-   activateTextures: function ()
+   activateTextures ()
    { },
-   createTexture: function ()
+   createTexture ()
    {
       const
          gl      = this .getBrowser () .getContext (),
@@ -971,7 +970,7 @@ X3DParticleEmitterNode .prototype = Object .assign (Object .create (X3DNode .pro
 
       return texture;
    },
-   getTexture2DUnit: function (browser, object, property)
+   getTexture2DUnit (browser, object, property)
    {
       const textureUnit = object [property];
 
@@ -979,6 +978,20 @@ X3DParticleEmitterNode .prototype = Object .assign (Object .create (X3DNode .pro
          return object [property] = browser .getTexture2DUnit ();
 
       return textureUnit;
+   },
+});
+
+Object .defineProperties (X3DParticleEmitterNode,
+{
+   typeName:
+   {
+      value: "X3DParticleEmitterNode",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "ParticleSystems",
+      enumerable: true,
    },
 });
 

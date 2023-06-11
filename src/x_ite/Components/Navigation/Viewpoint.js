@@ -67,43 +67,9 @@ function Viewpoint (executionContext)
    this .projectionMatrix = new Matrix4 ();
 }
 
-Viewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prototype),
+Object .assign (Object .setPrototypeOf (Viewpoint .prototype, X3DViewpointNode .prototype),
 {
-   constructor: Viewpoint,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",          new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,   "set_bind",          new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "description",       new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "position",          new Fields .SFVec3f (0, 0, 10)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "orientation",       new Fields .SFRotation ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "centerOfRotation",  new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "fieldOfView",       new Fields .SFFloat (0.7854)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "nearDistance",      new Fields .SFFloat (-1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "farDistance",       new Fields .SFFloat (-1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "viewAll",           new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "jump",              new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "retainUserOffsets", new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "isBound",           new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "bindTime",          new Fields .SFTime ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "navigationInfo",    new Fields .SFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "Viewpoint";
-   },
-   getComponentName: function ()
-   {
-      return "Navigation";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
-   getRelativeTransformation: function (fromViewpointNode)
+   getRelativeTransformation (fromViewpointNode)
    {
       const relative = X3DViewpointNode .prototype .getRelativeTransformation .call (this, fromViewpointNode);
 
@@ -112,7 +78,7 @@ Viewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prototy
 
       return relative;
    },
-   setInterpolators: function (fromViewpointNode, relative)
+   setInterpolators (fromViewpointNode, relative)
    {
       if (fromViewpointNode .constructor === this .constructor)
       {
@@ -129,17 +95,17 @@ Viewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prototy
          this ._fieldOfViewScale = this ._fieldOfViewScale .getValue ();
       }
    },
-   getLogarithmicDepthBuffer: function ()
+   getLogarithmicDepthBuffer ()
    {
       return false;
    },
-   getFieldOfView: function ()
+   getFieldOfView ()
    {
       const fov = this ._fieldOfView .getValue () * this ._fieldOfViewScale .getValue ();
 
       return fov > 0 && fov < Math .PI ? fov : Math .PI / 4;
    },
-   getScreenScale: function (point, viewport, screenScale)
+   getScreenScale (point, viewport, screenScale)
    {
       // Returns the screen scale in meter/pixel for on pixel.
 
@@ -176,13 +142,58 @@ Viewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prototy
          return viewportSize .set (size, size / aspect);
       };
    })(),
-   getLookAtDistance: function (bbox)
+   getLookAtDistance (bbox)
    {
       return (bbox .size .magnitude () / 2) / Math .tan (this .getFieldOfView () / 2);
    },
-   getProjectionMatrixWithLimits: function (nearValue, farValue, viewport)
+   getProjectionMatrixWithLimits (nearValue, farValue, viewport)
    {
       return Camera .perspective (this .getFieldOfView (), nearValue, farValue, viewport [2], viewport [3], this .projectionMatrix);
+   },
+});
+
+Object .defineProperties (Viewpoint,
+{
+   typeName:
+   {
+      value: "Viewpoint",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Navigation",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",          new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,   "set_bind",          new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "description",       new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "position",          new Fields .SFVec3f (0, 0, 10)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "orientation",       new Fields .SFRotation ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "centerOfRotation",  new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "fieldOfView",       new Fields .SFFloat (0.7854)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "nearDistance",      new Fields .SFFloat (-1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "farDistance",       new Fields .SFFloat (-1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "viewAll",           new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "jump",              new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "retainUserOffsets", new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "isBound",           new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "bindTime",          new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "navigationInfo",    new Fields .SFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 

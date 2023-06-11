@@ -56,11 +56,16 @@ import ComponentInfo               from "./Configuration/ComponentInfo.js";
 import ComponentInfoArray          from "./Configuration/ComponentInfoArray.js";
 import ProfileInfo                 from "./Configuration/ProfileInfo.js";
 import ProfileInfoArray            from "./Configuration/ProfileInfoArray.js";
+import ConcreteNodesArray          from "./Configuration/ConcreteNodesArray.js";
+import AbstractNodesArray          from "./Configuration/AbstractNodesArray.js";
 import UnitInfo                    from "./Configuration/UnitInfo.js";
 import UnitInfoArray               from "./Configuration/UnitInfoArray.js";
 import X3DExecutionContext         from "./Execution/X3DExecutionContext.js";
 import X3DScene                    from "./Execution/X3DScene.js";
+import NamedNodesArray             from "./Execution/NamedNodesArray.js";
+import ImportedNodesArray          from "./Execution/ImportedNodesArray.js";
 import X3DImportedNode             from "./Execution/X3DImportedNode.js";
+import ExportedNodesArray          from "./Execution/ExportedNodesArray.js";
 import X3DExportedNode             from "./Execution/X3DExportedNode.js";
 import ExternProtoDeclarationArray from "./Prototype/ExternProtoDeclarationArray.js";
 import ProtoDeclarationArray       from "./Prototype/ProtoDeclarationArray.js";
@@ -70,7 +75,7 @@ import X3DProtoDeclarationNode     from "./Prototype/X3DProtoDeclarationNode.js"
 import RouteArray                  from "./Routing/RouteArray.js";
 import X3DRoute                    from "./Routing/X3DRoute.js";
 import X3DConstants                from "./Base/X3DConstants.js";
-import Fallback                    from "./Fallback.js";
+import Legacy                      from "./Browser/Legacy.js";
 import MicroTime                   from "../standard/Time/MicroTime.js";
 import jQuery                      from "../lib/jquery.js";
 import libtess                     from "../lib/libtess.js";
@@ -89,7 +94,7 @@ let initialized = false;
  */
 function X3D (callback, fallback)
 {
-   return new Promise (function (resolve, reject)
+   return new Promise ((resolve, reject) =>
    {
       if (typeof callback === "function")
          callbacks .done (callback);
@@ -109,24 +114,16 @@ function X3D (callback, fallback)
       {
          try
          {
-            // Begin Legacy
+            Legacy .elements ($("X3DCanvas"), X3DBrowser);
 
-            const elements = $("X3DCanvas");
-
-            if (elements .length)
-            {
-               console .warn ("Use of <X3DCanvas> element is depreciated, please use <x3d-canvas> element instead. See https://create3000.github.io/x_ite/#embedding-x_ite-within-a-web-page.");
-
-               $.map (elements, element => new X3DBrowser (element));
-            }
-
-            // End Legacy
-
-            callbacks .resolve ();
+            if ([... $("x3d-canvas")] .every (canvas => canvas .browser))
+               callbacks .resolve ();
+            else
+               fallbacks .resolve (new Error ("Couldn't create browser."));
          }
          catch (error)
          {
-            Fallback .show ($("x3d-canvas, X3DCanvas"), error);
+            Legacy .error ($("X3DCanvas"), error);
             fallbacks .resolve (error);
          }
       });
@@ -135,10 +132,10 @@ function X3D (callback, fallback)
 
 Object .assign (X3D,
 {
-   require: function (id)
+   require (id)
    {
-      if (! Namespace .has (id))
-         throw new Error ("Unknown module '" + id + "'.");
+      if (!Namespace .has (id))
+         throw new Error (`Unknown module '${id}'.`);
 
       return Namespace .get (id);
    },
@@ -161,11 +158,11 @@ Object .assign (X3D,
          return X3D;
       };
    })(),
-   getBrowser: function (element)
+   getBrowser (element)
    {
       return $(element || "x3d-canvas, X3DCanvas") .prop ("browser");
    },
-   createBrowser: function (url, parameter)
+   createBrowser (url, parameter)
    {
       const element = document .createElement ("x3d-canvas");
 
@@ -186,20 +183,24 @@ Object .assign (X3D,
    ComponentInfoArray:          ComponentInfoArray,
    ProfileInfo:                 ProfileInfo,
    ProfileInfoArray:            ProfileInfoArray,
+   ConcreteNodesArray:          ConcreteNodesArray,          // non-standard
+   AbstractNodesArray:          AbstractNodesArray,          // non-standard
    UnitInfo:                    UnitInfo,
    UnitInfoArray:               UnitInfoArray,
+   NamedNodesArray:             NamedNodesArray,             // non-standard
+   ImportedNodesArray:          ImportedNodesArray,          // non-standard
+   X3DImportedNode:             X3DImportedNode,             // non-standard
+   ExportedNodesArray:          ExportedNodesArray,          // non-standard
+   X3DExportedNode:             X3DExportedNode,             // non-standard
    ExternProtoDeclarationArray: ExternProtoDeclarationArray,
    ProtoDeclarationArray:       ProtoDeclarationArray,
    X3DExternProtoDeclaration:   X3DExternProtoDeclaration,
    X3DProtoDeclaration:         X3DProtoDeclaration,
+   X3DProtoDeclarationNode:     X3DProtoDeclarationNode,     // non-standard
    RouteArray:                  RouteArray,
    X3DRoute:                    X3DRoute,
 
-   // Additional classes
-   X3DBaseNode:                 X3DBaseNode,
-   X3DExportedNode:             X3DExportedNode,
-   X3DImportedNode:             X3DImportedNode,
-   X3DProtoDeclarationNode:     X3DProtoDeclarationNode,
+   X3DBaseNode:                 X3DBaseNode,                 // non-standard
 
    X3DFieldDefinition:          X3DFieldDefinition,
    FieldDefinitionArray:        FieldDefinitionArray,

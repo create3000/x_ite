@@ -62,55 +62,55 @@ function X3DShadersContext ()
    this [_shaderNodes]    = new Map ();
 }
 
-X3DShadersContext .prototype =
+Object .assign (X3DShadersContext .prototype,
 {
-   initialize: function ()
+   initialize ()
    {
       this .setShading (this .getBrowserOptions () .getShading ());
    },
-   getShadingLanguageVersion: function ()
+   getShadingLanguageVersion ()
    {
       const gl = this .getContext ();
 
       return gl .getParameter (gl .SHADING_LANGUAGE_VERSION);
    },
-   getMaxVertexUniformVectors: function ()
+   getMaxVertexUniformVectors ()
    {
       const gl = this .getContext ();
 
       return gl .getParameter (gl .MAX_VERTEX_UNIFORM_VECTORS);
    },
-   getMaxFragmentUniformVectors: function ()
+   getMaxFragmentUniformVectors ()
    {
       const gl = this .getContext ();
 
       return gl .getParameter (gl .MAX_FRAGMENT_UNIFORM_VECTORS);
    },
-   getMaxVertexAttribs: function ()
+   getMaxVertexAttribs ()
    {
       const gl = this .getContext ();
 
       return gl .getParameter (gl .MAX_VERTEX_ATTRIBS);
    },
-   getMaxVaryingVectors: function ()
+   getMaxVaryingVectors ()
    {
       const gl = this .getContext ();
 
       return gl .getParameter (gl .MAX_VARYING_VECTORS);
    },
-   getWireframe: function ()
+   getWireframe ()
    {
       return this [_wireframe];
    },
-   getPrimitiveMode: function (primitiveMode)
+   getPrimitiveMode (primitiveMode)
    {
       return this [_primitiveModes] .get (primitiveMode);
    },
-   getShaders: function ()
+   getShaders ()
    {
       return this [_shaderNodes];
    },
-   setShading: function (type)
+   setShading (type)
    {
       const gl = this .getContext ();
 
@@ -149,7 +149,7 @@ X3DShadersContext .prototype =
          }
       }
    },
-   createShader: function (name, vs, fs = vs, options = [ ], uniformNames = [ ], transformFeedbackVaryings = [ ])
+   createShader (name, vs, fs = vs, options = [ ], uniformNames = [ ], transformFeedbackVaryings = [ ])
    {
       if (this .getBrowserOption ("Debug"))
          console .info ("Initializing " + name);
@@ -185,6 +185,6 @@ X3DShadersContext .prototype =
 
       return shaderNode;
    },
-};
+});
 
 export default X3DShadersContext;

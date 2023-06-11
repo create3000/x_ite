@@ -56,20 +56,14 @@ function CylinderOptions (executionContext)
                           "yDimension", new Fields .SFInt32 (1))
 }
 
-CylinderOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+Object .setPrototypeOf (CylinderOptions .prototype, X3DBaseNode .prototype);
+
+Object .defineProperties (CylinderOptions,
 {
-   constructor: CylinderOptions,
-   getTypeName: function ()
+   typeName:
    {
-      return "CylinderOptions";
-   },
-   getComponentName: function ()
-   {
-      return "X_ITE";
-   },
-   getContainerField: function ()
-   {
-      return "cylinderOptions";
+      value: "CylinderOptions",
+      enumerable: true,
    },
 });
 

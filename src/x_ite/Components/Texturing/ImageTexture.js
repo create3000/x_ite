@@ -52,7 +52,7 @@ import X3DTexture2DNode     from "./X3DTexture2DNode.js";
 import X3DUrlObject         from "../Networking/X3DUrlObject.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import Algorithm            from "../../../standard/Math/Algorithm.js";
-import DEBUG                from "../../DEBUG.js";
+import DEVELOPMENT          from "../../DEVELOPMENT.js";
 
 function ImageTexture (executionContext)
 {
@@ -65,38 +65,10 @@ function ImageTexture (executionContext)
    this .urlStack = new Fields .MFString ();
 }
 
-ImageTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prototype),
+Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNode .prototype),
    X3DUrlObject .prototype,
 {
-   constructor: ImageTexture,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "description",          new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatS",              new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatT",              new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties",    new Fields .SFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "ImageTexture";
-   },
-   getComponentName: function ()
-   {
-      return "Texturing";
-   },
-   getContainerField: function ()
-   {
-      return "texture";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DTexture2DNode .prototype .initialize .call (this);
       X3DUrlObject     .prototype .initialize .call (this);
@@ -107,20 +79,20 @@ ImageTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
 
       this .requestImmediateLoad () .catch (Function .prototype);
    },
-   getElement: function ()
+   getElement ()
    {
       return this .image [0];
    },
-   unloadData: function ()
+   unloadData ()
    {
       this .clearTexture ();
    },
-   loadData: function ()
+   loadData ()
    {
       this .urlStack .setValue (this ._url);
       this .loadNext ();
    },
-   loadNext: function ()
+   loadNext ()
    {
       if (this .urlStack .length === 0)
       {
@@ -141,7 +113,7 @@ ImageTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
 
       this .image .attr ("src", this .URL .href);
    },
-   setError: function (event)
+   setError (event)
    {
       if (this .URL .protocol !== "data:")
          console .warn (`Error loading image '${decodeURI (this .URL .href)}'`, event .type);
@@ -150,7 +122,7 @@ ImageTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
    },
    setImage: async function ()
    {
-      if (DEBUG)
+      if (DEVELOPMENT)
       {
          if (this .URL .protocol !== "data:")
             console .info (`Done loading image '${decodeURI (this .URL .href)}'`);
@@ -243,7 +215,7 @@ ImageTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
 
       return data;
    },
-   isImageTransparent: function (data)
+   isImageTransparent (data)
    {
       for (let i = 3, length = data .length; i < length; i += 4)
       {
@@ -273,10 +245,49 @@ ImageTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
 
       return data;
    },
-   dispose: function ()
+   dispose ()
    {
       X3DUrlObject     .prototype .dispose .call (this);
       X3DTexture2DNode .prototype .dispose .call (this);
+   },
+});
+
+Object .defineProperties (ImageTexture,
+{
+   typeName:
+   {
+      value: "ImageTexture",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Texturing",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "texture",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "description",          new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatS",              new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatT",              new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties",    new Fields .SFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 

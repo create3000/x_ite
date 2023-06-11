@@ -62,31 +62,9 @@ function TriangleSet2D (executionContext)
    this ._vertices .setUnit ("length");
 }
 
-TriangleSet2D .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
+Object .assign (Object .setPrototypeOf (TriangleSet2D .prototype, X3DGeometryNode .prototype),
 {
-   constructor: TriangleSet2D,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata", new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "vertices", new Fields .MFVec2f ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",    new Fields .SFBool ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "TriangleSet2D";
-   },
-   getComponentName: function ()
-   {
-      return "Geometry2D";
-   },
-   getContainerField: function ()
-   {
-      return "geometry";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   build: function ()
+   build ()
    {
       const
          vertices    = this ._vertices .getValue (),
@@ -101,7 +79,7 @@ TriangleSet2D .prototype = Object .assign (Object .create (X3DGeometryNode .prot
 
       this .setSolid (this ._solid .getValue ());
    },
-   buildTexCoords: function ()
+   buildTexCoords ()
    {
       const texCoordArray = this .getTexCoords ();
 
@@ -125,6 +103,39 @@ TriangleSet2D .prototype = Object .assign (Object .create (X3DGeometryNode .prot
       }
 
       this .getMultiTexCoords () .push (texCoordArray);
+   },
+});
+
+Object .defineProperties (TriangleSet2D,
+{
+   typeName:
+   {
+      value: "TriangleSet2D",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Geometry2D",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "geometry",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "vertices", new Fields .MFVec2f ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",    new Fields .SFBool ()),
+      ]),
+      enumerable: true,
    },
 });
 

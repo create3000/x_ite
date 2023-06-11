@@ -64,39 +64,9 @@ function IndexedLineSet (executionContext)
    this .coordNode    = null;
 }
 
-IndexedLineSet .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototype),
+Object .assign (Object .setPrototypeOf (IndexedLineSet .prototype, X3DLineGeometryNode .prototype),
 {
-   constructor: IndexedLineSet,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",       new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,      "set_colorIndex", new Fields .MFInt32 ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,      "set_coordIndex", new Fields .MFInt32 ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "colorPerVertex", new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "colorIndex",     new Fields .MFInt32 ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "coordIndex",     new Fields .MFInt32 ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "attrib",         new Fields .MFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "fogCoord",       new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "color",          new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "normal",         new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "coord",          new Fields .SFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "IndexedLineSet";
-   },
-   getComponentName: function ()
-   {
-      return "Rendering";
-   },
-   getContainerField: function ()
-   {
-      return "geometry";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DLineGeometryNode .prototype .initialize .call (this);
 
@@ -114,7 +84,7 @@ IndexedLineSet .prototype = Object .assign (Object .create (X3DLineGeometryNode 
       this .set_normal__ ();
       this .set_coord__ ();
    },
-   set_attrib__: function ()
+   set_attrib__ ()
    {
       const attribNodes = this .getAttrib ();
 
@@ -142,7 +112,7 @@ IndexedLineSet .prototype = Object .assign (Object .create (X3DLineGeometryNode 
 
       this .updateVertexArrays ();
    },
-   set_fogCoord__: function ()
+   set_fogCoord__ ()
    {
       this .fogCoordNode ?.removeInterest ("requestRebuild", this);
 
@@ -150,7 +120,7 @@ IndexedLineSet .prototype = Object .assign (Object .create (X3DLineGeometryNode 
 
       this .fogCoordNode ?.addInterest ("requestRebuild", this);
    },
-   set_color__: function ()
+   set_color__ ()
    {
       this .colorNode ?.removeInterest ("requestRebuild", this);
 
@@ -160,7 +130,7 @@ IndexedLineSet .prototype = Object .assign (Object .create (X3DLineGeometryNode 
 
       this .setTransparent (this .colorNode ?.isTransparent () ?? false);
    },
-   set_normal__: function ()
+   set_normal__ ()
    {
       this .normalNode ?.removeInterest ("requestRebuild", this);
 
@@ -168,7 +138,7 @@ IndexedLineSet .prototype = Object .assign (Object .create (X3DLineGeometryNode 
 
       this .normalNode ?.addInterest ("requestRebuild", this);
    },
-   set_coord__: function ()
+   set_coord__ ()
    {
       this .coordNode ?.removeInterest ("requestRebuild", this);
 
@@ -176,21 +146,21 @@ IndexedLineSet .prototype = Object .assign (Object .create (X3DLineGeometryNode 
 
       this .coordNode ?.addInterest ("requestRebuild", this);
    },
-   getColorPerVertexIndex: function (index)
+   getColorPerVertexIndex (index)
    {
       if (index < this ._colorIndex .length)
          return this ._colorIndex [index];
 
       return this ._coordIndex [index];
    },
-   getColorIndex: function (index)
+   getColorIndex (index)
    {
       if (index < this ._colorIndex .length)
          return this ._colorIndex [index];
 
       return index;
    },
-   getPolylineIndices: function ()
+   getPolylineIndices ()
    {
       const
          coordIndex = this ._coordIndex,
@@ -226,7 +196,7 @@ IndexedLineSet .prototype = Object .assign (Object .create (X3DLineGeometryNode 
 
       return polylines;
    },
-   build: function ()
+   build ()
    {
       if (! this .coordNode || this .coordNode .isEmpty ())
          return;
@@ -287,6 +257,47 @@ IndexedLineSet .prototype = Object .assign (Object .create (X3DLineGeometryNode 
 
          ++ face;
       }
+   },
+});
+
+Object .defineProperties (IndexedLineSet,
+{
+   typeName:
+   {
+      value: "IndexedLineSet",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Rendering",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "geometry",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",       new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "set_colorIndex", new Fields .MFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "set_coordIndex", new Fields .MFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "colorPerVertex", new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "colorIndex",     new Fields .MFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "coordIndex",     new Fields .MFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "attrib",         new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "fogCoord",       new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "color",          new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "normal",         new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "coord",          new Fields .SFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 

@@ -62,33 +62,10 @@ function GeoCoordinate (executionContext)
    this .addType (X3DConstants .GeoCoordinate);
 }
 
-GeoCoordinate .prototype = Object .assign (Object .create (X3DCoordinateNode .prototype),
+Object .assign (Object .setPrototypeOf (GeoCoordinate .prototype, X3DCoordinateNode .prototype),
    X3DGeospatialObject .prototype,
 {
-   constructor: GeoCoordinate,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",  new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "geoOrigin", new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "geoSystem", new Fields .MFString ("GD", "WE")),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "point",     new Fields .MFVec3d ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "GeoCoordinate";
-   },
-   getComponentName: function ()
-   {
-      return "Geospatial";
-   },
-   getContainerField: function ()
-   {
-      return "coord";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DCoordinateNode   .prototype .initialize .call (this);
       X3DGeospatialObject .prototype .initialize .call (this);
@@ -217,10 +194,44 @@ GeoCoordinate .prototype = Object .assign (Object .create (X3DCoordinateNode .pr
          return new Vector3 (0, 0, 0);
       };
    })(),
-   dispose: function ()
+   dispose ()
    {
       X3DGeospatialObject .prototype .dispose .call (this);
       X3DCoordinateNode   .prototype .dispose .call (this);
+   },
+});
+
+Object .defineProperties (GeoCoordinate,
+{
+   typeName:
+   {
+      value: "GeoCoordinate",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Geospatial",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "coord",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",  new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "geoOrigin", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "geoSystem", new Fields .MFString ("GD", "WE")),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "point",     new Fields .MFVec3d ()),
+      ]),
+      enumerable: true,
    },
 });
 

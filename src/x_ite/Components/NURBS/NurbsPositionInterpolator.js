@@ -71,35 +71,9 @@ function NurbsPositionInterpolator (executionContext)
    this .sampleOptions = { resolution: [ 128 ] };
 }
 
-NurbsPositionInterpolator .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+Object .assign (Object .setPrototypeOf (NurbsPositionInterpolator .prototype, X3DChildNode .prototype),
 {
-   constructor: NurbsPositionInterpolator,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "order",         new Fields .SFInt32 (3)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "knot",          new Fields .MFDouble ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "weight",        new Fields .MFDouble ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "controlPoint",  new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .SFVec3f ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "NurbsPositionInterpolator";
-   },
-   getComponentName: function ()
-   {
-      return "NURBS";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DChildNode .prototype .initialize .call (this);
 
@@ -117,7 +91,7 @@ NurbsPositionInterpolator .prototype = Object .assign (Object .create (X3DChildN
 
       this .set_controlPoint__ ();
    },
-   set_controlPoint__: function ()
+   set_controlPoint__ ()
    {
       if (this .controlPointNode)
          this .controlPointNode .removeInterest ("requestRebuild", this);
@@ -129,27 +103,27 @@ NurbsPositionInterpolator .prototype = Object .assign (Object .create (X3DChildN
 
       this .requestRebuild ();
    },
-   getClosed: function (order, knot, weight, controlPointNode)
+   getClosed (order, knot, weight, controlPointNode)
    {
       return false && NURBS .getClosed (order, knot, weight, controlPointNode);
    },
-   getKnots: function (result, closed, order, dimension, knot)
+   getKnots (result, closed, order, dimension, knot)
    {
       return NURBS .getKnots (result, closed, order, dimension, knot);
    },
-   getWeights: function (result, dimension, weight)
+   getWeights (result, dimension, weight)
    {
       return NURBS .getWeights (result, dimension, weight);
    },
-   getControlPoints: function (result, closed, order, weights, controlPointNode)
+   getControlPoints (result, closed, order, weights, controlPointNode)
    {
       return NURBS .getControlPoints (result, closed, order, weights, controlPointNode);
    },
-   requestRebuild: function ()
+   requestRebuild ()
    {
       this ._rebuild .addEvent ();
    },
-   build: function ()
+   build ()
    {
       if (this ._order .getValue () < 2)
          return;
@@ -200,6 +174,43 @@ NurbsPositionInterpolator .prototype = Object .assign (Object .create (X3DChildN
          interpolator ._key      .push (knots [0] + i / (length - 3) * scale);
          interpolator ._keyValue. push (new Fields .SFVec3f (points [i], points [i + 1], points [i + 2]));
       }
+   },
+});
+
+Object .defineProperties (NurbsPositionInterpolator,
+{
+   typeName:
+   {
+      value: "NurbsPositionInterpolator",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "NURBS",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "order",         new Fields .SFInt32 (3)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "knot",          new Fields .MFDouble ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "weight",        new Fields .MFDouble ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "controlPoint",  new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .SFVec3f ()),
+      ]),
+      enumerable: true,
    },
 });
 

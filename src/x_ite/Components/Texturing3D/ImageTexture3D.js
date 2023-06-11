@@ -63,46 +63,17 @@ function ImageTexture3D (executionContext)
    this .addType (X3DConstants .ImageTexture3D);
 }
 
-ImageTexture3D .prototype = Object .assign (Object .create (X3DTexture3DNode .prototype),
+Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, X3DTexture3DNode .prototype),
    X3DUrlObject .prototype,
 {
-   constructor: ImageTexture3D,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "description",          new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatS",              new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatT",              new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatR",              new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties",    new Fields .SFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "ImageTexture3D";
-   },
-   getComponentName: function ()
-   {
-      return "Texturing3D";
-   },
-   getContainerField: function ()
-   {
-      return "texture";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.1", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DTexture3DNode .prototype .initialize .call (this);
       X3DUrlObject     .prototype .initialize .call (this);
 
       this .requestImmediateLoad () .catch (Function .prototype);
    },
-   getInternalType: function (components)
+   getInternalType (components)
    {
       const gl = this .getBrowser () .getContext ();
 
@@ -118,11 +89,11 @@ ImageTexture3D .prototype = Object .assign (Object .create (X3DTexture3DNode .pr
             return gl .RGBA;
       }
    },
-   unloadData: function ()
+   unloadData ()
    {
       this .clearTexture ();
    },
-   loadData: function ()
+   loadData ()
    {
       new FileLoader (this) .loadDocument (this ._url,
       function (data)
@@ -162,10 +133,50 @@ ImageTexture3D .prototype = Object .assign (Object .create (X3DTexture3DNode .pr
       }
       .bind (this));
    },
-   dispose: function ()
+   dispose ()
    {
       X3DUrlObject     .prototype .dispose .call (this);
       X3DTexture3DNode .prototype .dispose .call (this);
+   },
+});
+
+Object .defineProperties (ImageTexture3D,
+{
+   typeName:
+   {
+      value: "ImageTexture3D",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Texturing3D",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "texture",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.1", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "description",          new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatS",              new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatT",              new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatR",              new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties",    new Fields .SFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 

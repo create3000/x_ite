@@ -63,36 +63,9 @@ function VolumeData (executionContext)
    this .renderStyleNode = null;
   }
 
-VolumeData .prototype = Object .assign (Object .create (X3DVolumeDataNode .prototype),
+Object .assign (Object .setPrototypeOf (VolumeData .prototype, X3DVolumeDataNode .prototype),
 {
-   constructor: VolumeData,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "dimensions",  new Fields .SFVec3f (1, 1, 1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",     new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay", new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",  new Fields .SFVec3f (0, 0, 0)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",    new Fields .SFVec3f (-1, -1, -1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "renderStyle", new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "voxels",      new Fields .SFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "VolumeData";
-   },
-   getComponentName: function ()
-   {
-      return "VolumeRendering";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.3", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DVolumeDataNode .prototype .initialize .call (this);
 
@@ -113,7 +86,7 @@ VolumeData .prototype = Object .assign (Object .create (X3DVolumeDataNode .proto
 
       this .updateShader ();
    },
-   set_renderStyle__: function ()
+   set_renderStyle__ ()
    {
       if (this .renderStyleNode)
       {
@@ -129,7 +102,7 @@ VolumeData .prototype = Object .assign (Object .create (X3DVolumeDataNode .proto
          this .renderStyleNode .addVolumeData (this);
       }
    },
-   set_voxels__: function ()
+   set_voxels__ ()
    {
       this .voxelsNode = X3DCast (X3DConstants .X3DTexture3DNode, this ._voxels);
 
@@ -138,9 +111,9 @@ VolumeData .prototype = Object .assign (Object .create (X3DVolumeDataNode .proto
       else
          this .getAppearance () ._texture = this .getBrowser () .getDefaultVoxels ();
    },
-   createShader: function (options, vs, fs)
+   createShader (options, vs, fs)
    {
-      // if (DEBUG)
+      // if (DEVELOPMENT)
       //    console .log ("Creating VolumeData Shader ...");
 
       const opacityMapVolumeStyle = this .getBrowser () .getDefaultVolumeStyle ();
@@ -158,7 +131,7 @@ VolumeData .prototype = Object .assign (Object .create (X3DVolumeDataNode .proto
       fs = fs .replace (/\/\/ VOLUME_STYLES_UNIFORMS\n/,  styleUniforms);
       fs = fs .replace (/\/\/ VOLUME_STYLES_FUNCTIONS\n/, styleFunctions);
 
-      // if (DEBUG)
+      // if (DEVELOPMENT)
       //    this .getBrowser () .print (fs);
 
       const vertexShader = new ShaderPart (this .getExecutionContext ());
@@ -196,6 +169,44 @@ VolumeData .prototype = Object .assign (Object .create (X3DVolumeDataNode .proto
       shaderNode .setup ();
 
       return shaderNode;
+   },
+});
+
+Object .defineProperties (VolumeData,
+{
+   typeName:
+   {
+      value: "VolumeData",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "VolumeRendering",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.3", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "dimensions",  new Fields .SFVec3f (1, 1, 1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",     new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay", new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",  new Fields .SFVec3f (0, 0, 0)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",    new Fields .SFVec3f (-1, -1, -1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "renderStyle", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "voxels",      new Fields .SFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 

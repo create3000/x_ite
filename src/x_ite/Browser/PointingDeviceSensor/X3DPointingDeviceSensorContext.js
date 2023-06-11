@@ -96,27 +96,27 @@ function X3DPointingDeviceSensorContext ()
    };
 }
 
-X3DPointingDeviceSensorContext .prototype =
+Object .assign (X3DPointingDeviceSensorContext .prototype,
 {
-   initialize: function ()
+   initialize ()
    {
       this .setCursor ("DEFAULT");
 
       this [_pointingDevice] .setup ();
    },
-   getPointingTime: function ()
+   getPointingTime ()
    {
       return this [_pointingTime];
    },
-   addPointingDeviceSensor: function (node)
+   addPointingDeviceSensor (node)
    {
       this [_pointingDeviceSensorNodes] .add (node);
    },
-   removePointingDeviceSensor: function (node)
+   removePointingDeviceSensor (node)
    {
       this [_pointingDeviceSensorNodes] .delete (node);
    },
-   setCursor: function (value)
+   setCursor (value)
    {
       const div = this .getSurface ();
 
@@ -145,30 +145,30 @@ X3DPointingDeviceSensorContext .prototype =
          }
       }
    },
-   getCursor: function ()
+   getCursor ()
    {
       return this [_cursorType];
    },
-   getPointer: function ()
+   getPointer ()
    {
       return this [_pointer];
    },
-   isPointerInRectangle: function (rectangle, pointer = this [_pointer])
+   isPointerInRectangle (rectangle, pointer = this [_pointer])
    {
       return pointer .x >= rectangle .x &&
              pointer .x <= rectangle .x + rectangle .z &&
              pointer .y >= rectangle .y &&
              pointer .y <= rectangle .y + rectangle .w;
    },
-   getPointingLayer: function ()
+   getPointingLayer ()
    {
       return this [_pointingLayer];
    },
-   getHit: function ()
+   getHit ()
    {
       return this [_hit];
    },
-   addPointingShape: function (pickingContext)
+   addPointingShape (pickingContext)
    {
       const id = ++ this [_id];
 
@@ -176,7 +176,7 @@ X3DPointingDeviceSensorContext .prototype =
 
       return id;
    },
-   buttonPressEvent: function (x, y)
+   buttonPressEvent (x, y)
    {
       if (!this [_pointingDeviceSensorNodes] .size)
          return false;
@@ -194,7 +194,7 @@ X3DPointingDeviceSensorContext .prototype =
 
       return !! hit .sensors .length;
    },
-   buttonReleaseEvent: function ()
+   buttonReleaseEvent ()
    {
       if (!this [_pointingDeviceSensorNodes] .size)
          return;
@@ -205,7 +205,7 @@ X3DPointingDeviceSensorContext .prototype =
       this [_activeSensors] = Array .prototype;
       this [_pointingLayer] = null;
    },
-   motionNotifyEvent: function (x, y)
+   motionNotifyEvent (x, y)
    {
       if (!this [_pointingDeviceSensorNodes] .size)
          return false;
@@ -215,9 +215,9 @@ X3DPointingDeviceSensorContext .prototype =
 
       return !! this [_hit] .sensors .length;
    },
-   leaveNotifyEvent: function ()
+   leaveNotifyEvent ()
    { },
-   touch: function (x, y)
+   touch (x, y)
    {
       this [_pointingTime] .start ();
 
@@ -283,7 +283,7 @@ X3DPointingDeviceSensorContext .prototype =
 
       return !! hit .id;
    },
-   motion: function ()
+   motion ()
    {
       const hit = this [_hit];
 
@@ -320,7 +320,7 @@ X3DPointingDeviceSensorContext .prototype =
       for (const sensor of this [_activeSensors])
          sensor .set_motion__ (hit);
    },
-   getPointingShader: function (numClipPlanes, shapeNode)
+   getPointingShader (numClipPlanes, shapeNode)
    {
       const geometryContext = shapeNode .getGeometryContext ();
 
@@ -348,7 +348,7 @@ X3DPointingDeviceSensorContext .prototype =
 
       return this [_pointingShaders] .get (key) || this .createPointingShader (key, numClipPlanes, shapeNode);
    },
-   createPointingShader: function (key, numClipPlanes, shapeNode)
+   createPointingShader (key, numClipPlanes, shapeNode)
    {
       const
          appearanceNode  = shapeNode .getAppearance (),
@@ -378,6 +378,6 @@ X3DPointingDeviceSensorContext .prototype =
 
       return shaderNode;
    },
-};
+});
 
 export default X3DPointingDeviceSensorContext;

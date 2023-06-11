@@ -58,35 +58,46 @@ function AnnotationTarget (executionContext)
    this .addType (X3DConstants .AnnotationTarget);
 }
 
-AnnotationTarget .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+Object .assign (Object .setPrototypeOf (AnnotationTarget .prototype, X3DChildNode .prototype),
 {
-   constructor: AnnotationTarget,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",       new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "referencePoint", new Fields .SFVec3f (0, 0, 0)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "leadLineStyle",  new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "marker",         new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "annotations",    new Fields .MFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "AnnotationTarget";
-   },
-   getComponentName: function ()
-   {
-      return "Annotation";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["4.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DChildNode .prototype .initialize .call (this);
+   },
+});
+
+Object .defineProperties (AnnotationTarget,
+{
+   typeName:
+   {
+      value: "AnnotationTarget",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Annotation",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["4.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",       new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "referencePoint", new Fields .SFVec3f (0, 0, 0)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "leadLineStyle",  new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "marker",         new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "annotations",    new Fields .MFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 

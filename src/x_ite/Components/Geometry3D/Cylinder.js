@@ -64,35 +64,9 @@ function Cylinder (executionContext)
    this ._radius .setUnit ("length");
 }
 
-Cylinder .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
+Object .assign (Object .setPrototypeOf (Cylinder .prototype, X3DGeometryNode .prototype),
 {
-   constructor: Cylinder,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata", new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "top",      new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "side",     new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "bottom",   new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "height",   new Fields .SFFloat (2)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "radius",   new Fields .SFFloat (1)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",    new Fields .SFBool (true)),
-   ]),
-   getTypeName: function ()
-   {
-      return "Cylinder";
-   },
-   getComponentName: function ()
-   {
-      return "Geometry3D";
-   },
-   getContainerField: function ()
-   {
-      return "geometry";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
-   set_live__: function ()
+   set_live__ ()
    {
       X3DGeometryNode .prototype .set_live__ .call (this);
 
@@ -101,7 +75,7 @@ Cylinder .prototype = Object .assign (Object .create (X3DGeometryNode .prototype
       else
          this .getBrowser () .getCylinderOptions () .removeInterest ("requestRebuild", this);
    },
-   build: function ()
+   build ()
    {
       const
          options       = this .getBrowser () .getCylinderOptions (),
@@ -262,7 +236,7 @@ Cylinder .prototype = Object .assign (Object .create (X3DGeometryNode .prototype
       this .setSolid (this ._solid .getValue ());
       this .setExtents ();
    },
-   setExtents: function ()
+   setExtents ()
    {
       const
          radius = this ._radius .getValue (),
@@ -292,6 +266,43 @@ Cylinder .prototype = Object .assign (Object .create (X3DGeometryNode .prototype
          this .getMin () .set (-radius, y2, -radius);
          this .getMax () .set ( radius, y1,  radius);
       }
+   },
+});
+
+Object .defineProperties (Cylinder,
+{
+   typeName:
+   {
+      value: "Cylinder",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Geometry3D",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "geometry",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "top",      new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "side",     new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "bottom",   new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "height",   new Fields .SFFloat (2)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "radius",   new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",    new Fields .SFBool (true)),
+      ]),
+      enumerable: true,
    },
 });
 

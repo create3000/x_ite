@@ -55,9 +55,20 @@ function X3DLayoutNode (executionContext)
    this .addType (X3DConstants .X3DLayoutNode);
 }
 
-X3DLayoutNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+Object .setPrototypeOf (X3DLayoutNode .prototype, X3DChildNode .prototype);
+
+Object .defineProperties (X3DLayoutNode,
 {
-   constructor: X3DLayoutNode,
+   typeName:
+   {
+      value: "X3DLayoutNode",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Layout",
+      enumerable: true,
+   },
 });
 
 export default X3DLayoutNode;

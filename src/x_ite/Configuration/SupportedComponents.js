@@ -49,295 +49,257 @@ import ComponentInfoArray from "./ComponentInfoArray.js";
 
 const SupportedComponents = new ComponentInfoArray ([ ]);
 
-SupportedComponents .addComponent (
+SupportedComponents .add ("Annotation",
 {
    title: "Annotation",
-   name: "Annotation",
    level: 2,
    external: true,
 });
 
-SupportedComponents .addComponent (
+SupportedComponents .add ("CADGeometry",
 {
    title: "CAD geometry",
-   name: "CADGeometry",
    level: 2,
    external: true,
 });
 
-SupportedComponents .addComponent (
+SupportedComponents .add ("Core",
 {
    title: "Core",
-   name: "Core",
    level: 2,
 });
 
-SupportedComponents .addComponent (
+SupportedComponents .add ("CubeMapTexturing",
 {
    title: "Cube map environmental texturing",
-   name: "CubeMapTexturing",
    level: 3,
    external: true,
 });
 
-SupportedComponents .addComponent (
+SupportedComponents .add ("DIS",
 {
    title: "Distributed interactive simulation",
-   name: "DIS",
    level: 2,
    external: true,
 });
 
-SupportedComponents .addComponent (
+SupportedComponents .add ("EnvironmentalEffects",
 {
    title: "Environmental effects",
-   name: "EnvironmentalEffects",
    level: 4,
 });
 
-SupportedComponents .addComponent (
+SupportedComponents .add ("EnvironmentalSensor",
 {
    title: "Environmental sensor",
-   name: "EnvironmentalSensor",
    level: 3,
 });
 
-SupportedComponents .addComponent (
+SupportedComponents .add ("EventUtilities",
 {
    title: "Event utilities",
-   name: "EventUtilities",
    level: 1,
    external: true,
 });
 
-SupportedComponents .addComponent (
+SupportedComponents .add ("Followers",
 {
    title: "Followers",
-   name: "Followers",
    level: 1,
 });
 
-SupportedComponents .addComponent (
+SupportedComponents .add ("Geometry2D",
 {
    title: "Geometry2D",
-   name: "Geometry2D",
    level: 2,
    external: true,
 });
 
-SupportedComponents .addComponent (
+SupportedComponents .add ("Geometry3D",
 {
    title: "Geometry3D",
-   name: "Geometry3D",
    level: 4,
 });
 
-SupportedComponents .addComponent (
+SupportedComponents .add ("Geospatial",
 {
    title: "Geospatial",
-   name: "Geospatial",
    level: 2,
    external: true,
 });
 
-SupportedComponents .addComponent (
+SupportedComponents .add ("Grouping",
 {
    title: "Grouping",
-   name: "Grouping",
    level: 3,
 });
 
-SupportedComponents .addComponent (
+SupportedComponents .add ("HAnim",
 {
    title: "Humanoid animation (HAnim)",
-   name: "HAnim",
    level: 3,
    external: true,
 });
 
-SupportedComponents .addAlias ("H-Anim", "HAnim");
+SupportedComponents .alias ("H-Anim", "HAnim");
 
-SupportedComponents .addComponent (
+SupportedComponents .add ("Interpolation",
 {
    title: "Interpolation",
-   name: "Interpolation",
    level: 5,
 });
 
-SupportedComponents .addComponent (
+SupportedComponents .add ("KeyDeviceSensor",
 {
    title: "Key device sensor",
-   name: "KeyDeviceSensor",
    level: 2,
    external: true,
 });
 
-SupportedComponents .addComponent (
+SupportedComponents .add ("Layering",
 {
    title: "Layering",
-   name: "Layering",
    level: 1,
 });
 
-SupportedComponents .addComponent (
+SupportedComponents .add ("Layout",
 {
    title: "Layout",
-   name: "Layout",
    level: 2,
    external: true,
    dependencies: ["Text"],
 });
 
-SupportedComponents .addComponent (
+SupportedComponents .add ("Lighting",
 {
    title: "Lighting",
-   name: "Lighting",
    level: 3,
 });
 
-SupportedComponents .addComponent (
+SupportedComponents .add ("Navigation",
 {
    title: "Navigation",
-   name: "Navigation",
    level: 3,
 });
 
-SupportedComponents .addComponent (
+SupportedComponents .add ("Networking",
 {
    title: "Networking",
-   name: "Networking",
    level: 4,
 });
 
-SupportedComponents .addComponent (
+SupportedComponents .add ("NURBS",
 {
    title: "NURBS",
-   name: "NURBS",
    level: 4,
    external: true,
 });
 
-SupportedComponents .addComponent (
+SupportedComponents .add ("ParticleSystems",
 {
    title: "Particle systems",
-   name: "ParticleSystems",
    level: 3,
    external: true,
 });
 
-SupportedComponents .addComponent (
+SupportedComponents .add ("Picking",
 {
    title: "Picking",
-   name: "Picking",
    level: 3,
    external: true,
    dependencies: ["RigidBodyPhysics"],
 });
 
-SupportedComponents .addComponent (
+SupportedComponents .add ("PointingDeviceSensor",
 {
    title: "Pointing device sensor",
-   name: "PointingDeviceSensor",
    level: 1,
 });
 
-SupportedComponents .addComponent (
+SupportedComponents .add ("Shaders",
 {
    title: "Programmable shaders",
-   name: "Shaders",
    level: 1,
 });
 
-SupportedComponents .addComponent (
+SupportedComponents .add ("TextureProjector",
 {
    title: "Texture Projector",
-   name: "TextureProjector",
    level: 2,
    external: true,
 });
 
-SupportedComponents .addAlias ("ProjectiveTextureMapping", "TextureProjector");
+SupportedComponents .alias ("ProjectiveTextureMapping", "TextureProjector");
 
-SupportedComponents .addComponent (
+SupportedComponents .add ("Rendering",
 {
    title: "Rendering",
-   name: "Rendering",
    level: 5,
 });
 
-SupportedComponents .addComponent (
+SupportedComponents .add ("RigidBodyPhysics",
 {
    title: "Rigid body physics",
-   name: "RigidBodyPhysics",
    level: 2,
    external: true,
 });
 
-SupportedComponents .addComponent (
+SupportedComponents .add ("Scripting",
 {
    title: "Scripting",
-   name: "Scripting",
    level: 1,
    external: true,
 });
 
-SupportedComponents .addComponent (
+SupportedComponents .add ("Shape",
 {
    title: "Shape",
-   name: "Shape",
    level: 4,
 });
 
-SupportedComponents .addComponent (
+SupportedComponents .add ("Sound",
 {
    title: "Sound",
-   name: "Sound",
    level: 3,
 });
 
-SupportedComponents .addComponent (
+SupportedComponents .add ("Text",
 {
    title: "Text",
-   name: "Text",
    level: 1,
    external: true,
 });
 
-SupportedComponents .addComponent (
+SupportedComponents .add ("Texturing",
 {
    title: "Texturing",
-   name: "Texturing",
    level: 4,
 });
 
-SupportedComponents .addComponent (
+SupportedComponents .add ("Texturing3D",
 {
    title: "Texturing3D",
-   name: "Texturing3D",
    level: 2,
    external: true,
 });
 
-SupportedComponents .addComponent (
+SupportedComponents .add ("Time",
 {
    title: "Time",
-   name: "Time",
    level: 2,
 });
 
-SupportedComponents .addComponent (
+SupportedComponents .add ("VolumeRendering",
 {
    title: "Volume rendering",
-   name: "VolumeRendering",
    level: 4,
    external: true,
    dependencies: ["CADGeometry", "Texturing3D"],
 });
 
-SupportedComponents .addComponent (
+SupportedComponents .add ("X_ITE",
 {
    title: "X_ITE",
-   name: "X_ITE",
    level: 1,
    external: true,
 });

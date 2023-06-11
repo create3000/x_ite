@@ -45,7 +45,6 @@
  *
  ******************************************************************************/
 
-import SupportedNodes    from "../Configuration/SupportedNodes.js";
 import Background        from "./EnvironmentalEffects/Background.js";
 import Fog               from "./EnvironmentalEffects/Fog.js";
 import FogCoordinate     from "./EnvironmentalEffects/FogCoordinate.js";
@@ -54,25 +53,19 @@ import TextureBackground from "./EnvironmentalEffects/TextureBackground.js";
 import X3DBackgroundNode from "./EnvironmentalEffects/X3DBackgroundNode.js";
 import X3DFogObject      from "./EnvironmentalEffects/X3DFogObject.js";
 
-const Types =
-{
-   Background:        Background,
-   Fog:               Fog,
-   FogCoordinate:     FogCoordinate,
-   LocalFog:          LocalFog,
-   TextureBackground: TextureBackground,
+export default {
+   name: "EnvironmentalEffects",
+   concreteNodes:
+   [
+      Background,
+      Fog,
+      FogCoordinate,
+      LocalFog,
+      TextureBackground,
+   ],
+   abstractNodes:
+   [
+      X3DBackgroundNode,
+      X3DFogObject,
+   ],
 };
-
-const AbstractTypes =
-{
-   X3DBackgroundNode: X3DBackgroundNode,
-   X3DFogObject:      X3DFogObject,
-};
-
-for (const typeName in Types)
-   SupportedNodes .addNodeType (typeName, Types [typeName]);
-
-for (const typeName in AbstractTypes)
-   SupportedNodes .addAbstractNodeType (typeName, AbstractTypes [typeName]);
-
-export default undefined;

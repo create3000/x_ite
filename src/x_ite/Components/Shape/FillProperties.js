@@ -64,33 +64,9 @@ function FillProperties (executionContext)
    this .hatchColor = new Float32Array (3);
 }
 
-FillProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
+Object .assign (Object .setPrototypeOf (FillProperties .prototype, X3DAppearanceChildNode .prototype),
 {
-   constructor: FillProperties,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",   new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "filled",     new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "hatched",    new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "hatchColor", new Fields .SFColor (1, 1, 1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "hatchStyle", new Fields .SFInt32 (1)),
-   ]),
-   getTypeName: function ()
-   {
-      return "FillProperties";
-   },
-   getComponentName: function ()
-   {
-      return "Shape";
-   },
-   getContainerField: function ()
-   {
-      return "fillProperties";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DAppearanceChildNode .prototype .initialize .call (this);
 
@@ -107,23 +83,23 @@ FillProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNo
       // Preload texture.
       this .getBrowser () .getHatchStyleTexture (this .hatchStyle);
    },
-   set_filled__: function ()
+   set_filled__ ()
    {
       this .filled = this ._filled .getValue ();
 
       this .setTransparent (! this .filled);
    },
-   set_hatched__: function ()
+   set_hatched__ ()
    {
       this .hatched = this ._hatched .getValue ();
    },
-   set_hatchColor__: function ()
+   set_hatchColor__ ()
    {
       this .hatchColor [0] = this ._hatchColor [0];
       this .hatchColor [1] = this ._hatchColor [1];
       this .hatchColor [2] = this ._hatchColor [2];
    },
-   set_hatchStyle__: function ()
+   set_hatchStyle__ ()
    {
       let hatchStyle = this ._hatchStyle .getValue ();
 
@@ -132,16 +108,16 @@ FillProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNo
 
       this .hatchStyle = hatchStyle;
    },
-   setTransparent: function (value)
+   setTransparent (value)
    {
       if (value !== this ._transparent .getValue ())
          this ._transparent = value;
    },
-   isTransparent: function ()
+   isTransparent ()
    {
       return this ._transparent .getValue ();
    },
-   setShaderUniforms: function (gl, shaderObject)
+   setShaderUniforms (gl, shaderObject)
    {
       const hatched = this .hatched;
 
@@ -162,6 +138,41 @@ FillProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNo
          gl .bindTexture (gl .TEXTURE_2D, texture .getTexture ());
          gl .uniform1i (shaderObject .x3d_FillPropertiesTexture, textureUnit);
       }
+   },
+});
+
+Object .defineProperties (FillProperties,
+{
+   typeName:
+   {
+      value: "FillProperties",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Shape",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "fillProperties",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",   new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "filled",     new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "hatched",    new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "hatchColor", new Fields .SFColor (1, 1, 1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "hatchStyle", new Fields .SFInt32 (1)),
+      ]),
+      enumerable: true,
    },
 });
 

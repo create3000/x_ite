@@ -45,15 +45,13 @@
  *
  ******************************************************************************/
 
-import SupportedNodes          from "../Configuration/SupportedNodes.js";
+import AbstractNodes           from "../Configuration/AbstractNodes.js";
 import Fields                  from "../Fields.js";
 import X3DFieldDefinition      from "../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray    from "../Base/FieldDefinitionArray.js";
 import X3DExecutionContext     from "../Execution/X3DExecutionContext.js";
 import X3DProtoDeclarationNode from "./X3DProtoDeclarationNode.js";
 import X3DConstants            from "../Base/X3DConstants.js";
-
-SupportedNodes .addAbstractNodeType ("X3DProtoDeclaration", X3DProtoDeclaration);
 
 const
    _body = Symbol ();
@@ -69,35 +67,27 @@ function X3DProtoDeclaration (executionContext)
    this .setLive (false);
 }
 
-X3DProtoDeclaration .prototype = Object .assign (Object .create (X3DProtoDeclarationNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProtoDeclarationNode .prototype),
 {
-   constructor: X3DProtoDeclaration,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "X3DProtoDeclaration";
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DProtoDeclarationNode .prototype .initialize .call (this);
 
       this [_body] .setup ();
    },
-   getProtoDeclaration: function ()
+   getProtoDeclaration ()
    {
       return this;
    },
-   getBody: function ()
+   getBody ()
    {
       return this [_body];
    },
-   canUserDefinedFields: function ()
+   canUserDefinedFields ()
    {
       return true;
    },
-   toVRMLStream: function (generator)
+   toVRMLStream (generator)
    {
       generator .string += generator .Indent ();
       generator .string += "PROTO";
@@ -160,7 +150,7 @@ X3DProtoDeclaration .prototype = Object .assign (Object .create (X3DProtoDeclara
       generator .string += generator .Indent ();
       generator .string += "}";
    },
-   toVRMLStreamUserDefinedField: function (generator, field, fieldTypeLength, accessTypeLength)
+   toVRMLStreamUserDefinedField (generator, field, fieldTypeLength, accessTypeLength)
    {
       generator .string += generator .Indent ();
       generator .string += generator .AccessType (field .getAccessType ()) .padEnd (accessTypeLength, " ");
@@ -176,7 +166,7 @@ X3DProtoDeclaration .prototype = Object .assign (Object .create (X3DProtoDeclara
          field .toVRMLStream (generator);
       }
    },
-   toXMLStream: function (generator)
+   toXMLStream (generator)
    {
       generator .string += generator .Indent ();
       generator .string += "<ProtoDeclare";
@@ -305,7 +295,7 @@ X3DProtoDeclaration .prototype = Object .assign (Object .create (X3DProtoDeclara
       generator .string += generator .Indent ();
       generator .string += "</ProtoDeclare>";
    },
-   toJSONStream: function (generator)
+   toJSONStream (generator)
    {
       generator .string += generator .Indent ();
       generator .string += '{';
@@ -560,5 +550,23 @@ Object .defineProperties (X3DProtoDeclaration .prototype,
       enumerable: true,
    },
 });
+
+Object .defineProperties (X3DProtoDeclaration,
+{
+   typeName:
+   {
+      value: "X3DProtoDeclaration",
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
+      ]),
+      enumerable: true,
+   },
+});
+
+X3DConstants .addNode (X3DProtoDeclaration);
 
 export default X3DProtoDeclaration;

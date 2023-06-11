@@ -116,9 +116,8 @@ function ViewVolume (projectionMatrix, viewport, scissor)
       this .set (projectionMatrix, viewport, scissor);
 }
 
-ViewVolume .prototype =
+Object .assign (ViewVolume .prototype,
 {
-   constructor: ViewVolume,
    set: (function ()
    {
       const matrix = new Matrix4 ();
@@ -170,15 +169,15 @@ ViewVolume .prototype =
          return this;
       };
    })(),
-   getViewport: function ()
+   getViewport ()
    {
       return this .viewport;
    },
-   getScissor: function ()
+   getScissor ()
    {
       return this .scissor;
    },
-   getEdges: function ()
+   getEdges ()
    {
       // Return suitable edges for SAT theorem.
 
@@ -205,7 +204,7 @@ ViewVolume .prototype =
 
       return edges;
    },
-   intersectsSphere: function (radius, center)
+   intersectsSphere (radius, center)
    {
       const [p0, p1 ,p2, p3, p4, p5, p6, p7] = this .planes;
 
@@ -298,7 +297,7 @@ ViewVolume .prototype =
          return true;
       };
    })(),
-};
+});
 
 Object .assign (ViewVolume,
 {

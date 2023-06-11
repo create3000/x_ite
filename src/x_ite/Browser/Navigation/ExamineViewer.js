@@ -102,13 +102,9 @@ function ExamineViewer (executionContext, navigationInfo)
    this .timeSensor = new TimeSensor (executionContext);
 }
 
-ExamineViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
+Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .prototype),
 {
-   constructor: ExamineViewer,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .outputOnly, "isActive", new Fields .SFBool ()),
-   ]),
-   initialize: function ()
+   initialize ()
    {
       X3DViewer .prototype .initialize .call (this);
 
@@ -155,7 +151,7 @@ ExamineViewer .prototype = Object .assign (Object .create (X3DViewer .prototype)
 
       this .set_activeViewpoint__ ();
    },
-   set_activeViewpoint__: function ()
+   set_activeViewpoint__ ()
    {
       if (this .getStraightenHorizon ())
       {
@@ -167,7 +163,7 @@ ExamineViewer .prototype = Object .assign (Object .create (X3DViewer .prototype)
 
       this .disconnect ();
    },
-   mousedown: function (event)
+   mousedown (event)
    {
       if (this .button >= 0)
          return;
@@ -234,7 +230,7 @@ ExamineViewer .prototype = Object .assign (Object .create (X3DViewer .prototype)
          }
       }
    },
-   mouseup: function (event)
+   mouseup (event)
    {
       if (event .button !== this .button)
          return;
@@ -276,7 +272,7 @@ ExamineViewer .prototype = Object .assign (Object .create (X3DViewer .prototype)
          }
       }
    },
-   dblclick: function (event)
+   dblclick (event)
    {
       // Stop event propagation.
       event .preventDefault ();
@@ -376,7 +372,7 @@ ExamineViewer .prototype = Object .assign (Object .create (X3DViewer .prototype)
             this .addMove (translation, Vector3 .Zero);
       };
    })(),
-   touchstart: function (event)
+   touchstart (event)
    {
       const touches = event .originalEvent .touches;
 
@@ -425,7 +421,7 @@ ExamineViewer .prototype = Object .assign (Object .create (X3DViewer .prototype)
          }
       }
    },
-   touchend: function (event)
+   touchend (event)
    {
       switch (this .button)
       {
@@ -549,19 +545,19 @@ ExamineViewer .prototype = Object .assign (Object .create (X3DViewer .prototype)
          }
       };
    })(),
-   set_positionOffset__: function (value)
+   set_positionOffset__ (value)
    {
       const viewpoint = this .getActiveViewpoint ();
 
       viewpoint ._positionOffset = value;
    },
-   set_centerOfRotationOffset__: function (value)
+   set_centerOfRotationOffset__ (value)
    {
       const viewpoint = this .getActiveViewpoint ();
 
       viewpoint ._centerOfRotationOffset = value;
    },
-   set_rotation__: function (value)
+   set_rotation__ (value)
    {
       const viewpoint = this .getActiveViewpoint ();
 
@@ -588,7 +584,7 @@ ExamineViewer .prototype = Object .assign (Object .create (X3DViewer .prototype)
 
                this .rotationChaser ._set_destination = destination;
             }
-            catch (error)
+            catch
             {
                // Slide along critical angle.
 
@@ -613,7 +609,7 @@ ExamineViewer .prototype = Object .assign (Object .create (X3DViewer .prototype)
                this .rotationChaser ._set_value       = Rotation4 .Identity;
                this .rotationChaser ._set_destination = rotationChange;
             }
-            catch (error)
+            catch
             {
                // Slide along critical angle.
 
@@ -626,7 +622,7 @@ ExamineViewer .prototype = Object .assign (Object .create (X3DViewer .prototype)
          this .rotationChaser ._value_changed .addInterest ("set_rotation__", this);
       };
    })(),
-   addSpinning: function (rotationChange)
+   addSpinning (rotationChange)
    {
       this .disconnect ();
 
@@ -829,7 +825,7 @@ ExamineViewer .prototype = Object .assign (Object .create (X3DViewer .prototype)
          return r;
       };
    })(),
-   disconnect: function ()
+   disconnect ()
    {
       const browser = this .getBrowser ();
 
@@ -840,7 +836,7 @@ ExamineViewer .prototype = Object .assign (Object .create (X3DViewer .prototype)
       this .timeSensor ._stopTime = browser .getCurrentTime ();
       browser .prepareEvents () .removeInterest ("spin", this);
    },
-   dispose: function ()
+   dispose ()
    {
       const browser = this .getBrowser ();
 
@@ -852,6 +848,22 @@ ExamineViewer .prototype = Object .assign (Object .create (X3DViewer .prototype)
 
       browser .getSurface () .off (".ExamineViewer");
       $(document) .off (".ExamineViewer" + this .getId ());
+   },
+});
+
+Object .defineProperties (ExamineViewer,
+{
+   typeName:
+   {
+      value: "ExamineViewer",
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .outputOnly, "isActive", new Fields .SFBool ()),
+      ]),
+      enumerable: true,
    },
 });
 

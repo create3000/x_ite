@@ -55,9 +55,20 @@ function X3DTextureCoordinateNode (executionContext)
    this .addType (X3DConstants .X3DTextureCoordinateNode);
 }
 
-X3DTextureCoordinateNode .prototype = Object .assign (Object .create (X3DGeometricPropertyNode .prototype),
+Object .setPrototypeOf (X3DTextureCoordinateNode .prototype, X3DGeometricPropertyNode .prototype);
+
+Object .defineProperties (X3DTextureCoordinateNode,
 {
-   constructor: X3DTextureCoordinateNode,
+   typeName:
+   {
+      value: "X3DTextureCoordinateNode",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Texturing",
+      enumerable: true,
+   },
 });
 
 export default X3DTextureCoordinateNode;

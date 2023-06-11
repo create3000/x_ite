@@ -58,18 +58,31 @@ function X3DVertexAttributeNode (executionContext)
    this .addChildObjects ("attribute_changed", new Fields .SFTime ());
 }
 
-X3DVertexAttributeNode .prototype = Object .assign (Object .create (X3DGeometricPropertyNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DVertexAttributeNode .prototype, X3DGeometricPropertyNode .prototype),
 {
-   constructor: X3DVertexAttributeNode,
-   initialize: function ()
+   initialize ()
    {
       X3DGeometricPropertyNode .prototype .initialize .call (this);
 
       this ._name .addInterest ("set_attribute__", this);
    },
-   set_attribute__: function ()
+   set_attribute__ ()
    {
       this ._attribute_changed = this .getBrowser () .getCurrentTime ();
+   },
+});
+
+Object .defineProperties (X3DVertexAttributeNode,
+{
+   typeName:
+   {
+      value: "X3DVertexAttributeNode",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Shaders",
+      enumerable: true,
    },
 });
 

@@ -70,15 +70,14 @@ function ScreenText (text, fontStyle)
    this .textureNode .setup ();
 }
 
-ScreenText .prototype = Object .assign (Object .create (X3DTextGeometry .prototype),
+Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .prototype),
 {
-   constructor: ScreenText,
    modelViewMatrix: new Matrix4 (),
-   isTransparent: function ()
+   isTransparent ()
    {
       return true;
    },
-   getMatrix: function ()
+   getMatrix ()
    {
       return this .matrix;
    },
@@ -310,7 +309,7 @@ ScreenText .prototype = Object .assign (Object .create (X3DTextGeometry .prototy
             this .textureNode .clear ();
       };
    })(),
-   drawGlyph: function (cx, font, glyph, x, y, size)
+   drawGlyph (cx, font, glyph, x, y, size)
    {
       //console .log (glyph .name, x, y);
 
@@ -365,7 +364,7 @@ ScreenText .prototype = Object .assign (Object .create (X3DTextGeometry .prototy
          cx .stroke ();
       }
    },
-   getGlyphExtents: function (font, glyph, primitiveQuality, min, max)
+   getGlyphExtents (font, glyph, primitiveQuality, min, max)
    {
       const unitsPerEm = font .unitsPerEm;
 
@@ -387,7 +386,7 @@ ScreenText .prototype = Object .assign (Object .create (X3DTextGeometry .prototy
          this .getText () .setBBox (bbox);
       };
    })(),
-   display: function (gl, renderContext)
+   display (gl, renderContext)
    {
       Matrix4 .prototype .multLeft .call (renderContext .modelViewMatrix, this .matrix);
 
@@ -403,7 +402,7 @@ ScreenText .prototype = Object .assign (Object .create (X3DTextGeometry .prototy
          return line .multLineMatrix (invMatrix .assign (this .matrix) .inverse ());
       };
    })(),
-   transformMatrix: function (matrix)
+   transformMatrix (matrix)
    {
       // Apply screen nodes transformation in place here.
       return matrix .multLeft (this .matrix);

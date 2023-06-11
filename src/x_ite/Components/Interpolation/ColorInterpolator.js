@@ -61,39 +61,15 @@ function ColorInterpolator (executionContext)
    this .hsv = [ ];
 }
 
-ColorInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
+Object .assign (Object .setPrototypeOf (ColorInterpolator .prototype, X3DInterpolatorNode .prototype),
 {
-   constructor: ColorInterpolator,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "key",           new Fields .MFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "keyValue",      new Fields .MFColor ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .SFColor ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "ColorInterpolator";
-   },
-   getComponentName: function ()
-   {
-      return "Interpolation";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DInterpolatorNode .prototype .initialize .call (this);
 
       this ._keyValue .addInterest ("set_keyValue__", this);
    },
-   set_keyValue__: function ()
+   set_keyValue__ ()
    {
       const keyValue = this ._keyValue;
 
@@ -116,6 +92,41 @@ ColorInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNo
          this ._value_changed .setHSV (value [0], value [1], value [2]);
       };
    })(),
+});
+
+Object .defineProperties (ColorInterpolator,
+{
+   typeName:
+   {
+      value: "ColorInterpolator",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Interpolation",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "key",           new Fields .MFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "keyValue",      new Fields .MFColor ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .SFColor ()),
+      ]),
+      enumerable: true,
+   },
 });
 
 export default ColorInterpolator;

@@ -68,39 +68,9 @@ function CollisionCollection (executionContext)
    this .collisionSpaceNodes = [ ];
 }
 
-CollisionCollection .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+Object .assign (Object .setPrototypeOf (CollisionCollection .prototype, X3DChildNode .prototype),
 {
-   constructor: CollisionCollection,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",                 new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",                  new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "appliedParameters",        new Fields .MFString ("BOUNCE")),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "bounce",                   new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "minBounceSpeed",           new Fields .SFFloat (0.1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "frictionCoefficients",     new Fields .SFVec2f ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "surfaceSpeed",             new Fields .SFVec2f ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "slipFactors",              new Fields .SFVec2f ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "softnessConstantForceMix", new Fields .SFFloat (0.0001)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "softnessErrorCorrection",  new Fields .SFFloat (0.8)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "collidables",              new Fields .MFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "CollisionCollection";
-   },
-   getComponentName: function ()
-   {
-      return "RigidBodyPhysics";
-   },
-   getContainerField: function ()
-   {
-      return "collider";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DChildNode .prototype .initialize .call (this);
 
@@ -110,11 +80,11 @@ CollisionCollection .prototype = Object .assign (Object .create (X3DChildNode .p
       this .set_appliedParameters__ ();
       this .set_collidables__ ();
    },
-   getAppliedParameters: function ()
+   getAppliedParameters ()
    {
       return this .appliedParameters;
    },
-   getCollidables: function ()
+   getCollidables ()
    {
       return this .collidableNodes;
    },
@@ -145,7 +115,7 @@ CollisionCollection .prototype = Object .assign (Object .create (X3DChildNode .p
          }
       };
    })(),
-   set_collidables__: function ()
+   set_collidables__ ()
    {
       var collisionSpaceNodes = this .collisionSpaceNodes;
 
@@ -168,7 +138,7 @@ CollisionCollection .prototype = Object .assign (Object .create (X3DChildNode .p
 
       this .collect ();
    },
-   collect: function ()
+   collect ()
    {
       var
          collidableNodes     = this .collidableNodes,
@@ -197,6 +167,47 @@ CollisionCollection .prototype = Object .assign (Object .create (X3DChildNode .p
       }
 
       this .addNodeEvent ();
+   },
+});
+
+Object .defineProperties (CollisionCollection,
+{
+   typeName:
+   {
+      value: "CollisionCollection",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "RigidBodyPhysics",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "collider",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",                 new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",                  new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "appliedParameters",        new Fields .MFString ("BOUNCE")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "bounce",                   new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "minBounceSpeed",           new Fields .SFFloat (0.1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "frictionCoefficients",     new Fields .SFVec2f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "surfaceSpeed",             new Fields .SFVec2f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "slipFactors",              new Fields .SFVec2f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "softnessConstantForceMix", new Fields .SFFloat (0.0001)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "softnessErrorCorrection",  new Fields .SFFloat (0.8)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "collidables",              new Fields .MFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 

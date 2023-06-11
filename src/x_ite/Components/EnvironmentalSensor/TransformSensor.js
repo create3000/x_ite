@@ -77,38 +77,9 @@ function TransformSensor (executionContext)
    this .targetMatrices   = [ ];
 }
 
-TransformSensor .prototype = Object .assign (Object .create (X3DEnvironmentalSensorNode .prototype),
+Object .assign (Object .setPrototypeOf (TransformSensor .prototype, X3DEnvironmentalSensorNode .prototype),
 {
-   constructor: TransformSensor,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",            new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",             new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "size",                new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "center",              new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "enterTime",           new Fields .SFTime ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "exitTime",            new Fields .SFTime ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",            new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "position_changed",    new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "orientation_changed", new Fields .SFRotation ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "targetObject",        new Fields .SFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "TransformSensor";
-   },
-   getComponentName: function ()
-   {
-      return "EnvironmentalSensor";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DEnvironmentalSensorNode .prototype .initialize .call (this);
 
@@ -123,9 +94,9 @@ TransformSensor .prototype = Object .assign (Object .create (X3DEnvironmentalSen
       this .set_extents__ ();
       this .set_targetObject__ ();
    },
-   set_live__: function ()
+   set_live__ ()
    { },
-   set_enabled__: function ()
+   set_enabled__ ()
    {
       if (this .getLive () .getValue () && this .targetObjectNode && this ._enabled .getValue () && !this ._size. getValue () .equals (Vector3 .Zero))
       {
@@ -148,7 +119,7 @@ TransformSensor .prototype = Object .assign (Object .create (X3DEnvironmentalSen
          }
       }
    },
-   set_extents__: function ()
+   set_extents__ ()
    {
       const
          s  = this ._size .getValue (),
@@ -163,7 +134,7 @@ TransformSensor .prototype = Object .assign (Object .create (X3DEnvironmentalSen
       this .min .set (cx - sx, cy - sy, cz - sz);
       this .max .set (cx + sx, cy + sy, cz + sz);
    },
-   set_targetObject__: function ()
+   set_targetObject__ ()
    {
       this .targetObjectNode = null;
 
@@ -190,12 +161,12 @@ TransformSensor .prototype = Object .assign (Object .create (X3DEnvironmentalSen
             break;
          }
       }
-      catch (error)
+      catch
       { }
 
       this .set_enabled__ ();
    },
-   traverse: function (type, renderObject)
+   traverse (type, renderObject)
    {
       // TransformSensor nodes are sorted out and only traversed during PICKING, except if is child of a LOD or Switch node.
 
@@ -205,7 +176,7 @@ TransformSensor .prototype = Object .assign (Object .create (X3DEnvironmentalSen
       if (this .isPickableObject ())
          this .modelMatrices .push (ModelMatrixCache .pop () .assign (renderObject .getModelViewMatrix () .get ()));
    },
-   collect: function (targetMatrix)
+   collect (targetMatrix)
    {
       this .targetMatrices .push (TargetMatrixCache .pop () .assign (targetMatrix));
    },
@@ -290,7 +261,7 @@ TransformSensor .prototype = Object .assign (Object .create (X3DEnvironmentalSen
          return null;
       };
    })(),
-   containsPoint: function (point)
+   containsPoint (point)
    {
       const
          min = this .min,
@@ -302,6 +273,46 @@ TransformSensor .prototype = Object .assign (Object .create (X3DEnvironmentalSen
              max .y >= point .y &&
              min .z <= point .z &&
              max .z >= point .z;
+   },
+});
+
+Object .defineProperties (TransformSensor,
+{
+   typeName:
+   {
+      value: "TransformSensor",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "EnvironmentalSensor",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",            new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",             new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "size",                new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "center",              new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "enterTime",           new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "exitTime",            new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",            new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "position_changed",    new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "orientation_changed", new Fields .SFRotation ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "targetObject",        new Fields .SFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 

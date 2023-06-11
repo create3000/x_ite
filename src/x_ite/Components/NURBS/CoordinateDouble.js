@@ -58,28 +58,37 @@ function CoordinateDouble (executionContext)
    this .addType (X3DConstants .CoordinateDouble);
 }
 
-CoordinateDouble .prototype = Object .assign (Object .create (X3DCoordinateNode .prototype),
+Object .setPrototypeOf (CoordinateDouble .prototype, X3DCoordinateNode .prototype);
+
+Object .defineProperties (CoordinateDouble,
 {
-   constructor: CoordinateDouble,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "point",    new Fields .MFVec3d ()),
-   ]),
-   getTypeName: function ()
+   typeName:
    {
-      return "CoordinateDouble";
+      value: "CoordinateDouble",
+      enumerable: true,
    },
-   getComponentName: function ()
+   componentName:
    {
-      return "NURBS";
+      value: "NURBS",
+      enumerable: true,
    },
-   getContainerField: function ()
+   containerField:
    {
-      return "coord";
+      value: "coord",
+      enumerable: true,
    },
-   getSpecificationRange: function ()
+   specificationRange:
    {
-      return ["3.0", "Infinity"];
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "point",    new Fields .MFVec3d ()),
+      ]),
+      enumerable: true,
    },
 });
 

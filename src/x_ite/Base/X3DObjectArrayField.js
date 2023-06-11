@@ -50,11 +50,13 @@ import X3DArrayField from "./X3DArrayField.js";
 
 const
    _target = Symbol (),
-   _proxy  = Symbol ();
+   _proxy  = Symbol (),
+   _insert = Symbol (),
+   _erase  = Symbol ();
 
 const handler =
 {
-   get: function (target, key)
+   get (target, key)
    {
       const value = target [key];
 
@@ -80,7 +82,7 @@ const handler =
          }
       }
    },
-   set: function (target, key, value)
+   set (target, key, value)
    {
       if (key in target)
       {
@@ -99,18 +101,18 @@ const handler =
 
       return true;
    },
-   has: function (target, key)
+   has (target, key)
    {
       if (Number .isInteger (+key))
          return key < target .getValue () .length;
 
       return key in target;
    },
-   ownKeys: function (target)
+   ownKeys (target)
    {
       return Object .keys (target .getValue ());
    },
-   getOwnPropertyDescriptor: function (target, key)
+   getOwnPropertyDescriptor (target, key)
    {
       if (typeof key !== "string")
          return;
@@ -124,27 +126,23 @@ const handler =
 
 function X3DObjectArrayField (value)
 {
-   X3DArrayField .call (this, [ ]);
-
    const proxy = new Proxy (this, handler);
+
+   X3DArrayField .call (this, [ ]);
 
    this [_target] = this;
    this [_proxy]  = proxy;
-
-   if (value [0] instanceof Array)
-      value = value [0];
 
    this .push (... value);
 
    return proxy;
 }
 
-X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .prototype),
+Object .assign (Object .setPrototypeOf (X3DObjectArrayField .prototype, X3DArrayField .prototype),
 {
-   constructor: X3DObjectArrayField,
    [_target]: null,
    [_proxy]: null,
-   [Symbol .iterator]: function* ()
+   *[Symbol .iterator] ()
    {
       const
          target = this [_target],
@@ -153,11 +151,11 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
       for (const value of array)
          yield value .valueOf ();
    },
-   getTarget: function ()
+   getTarget ()
    {
       return this [_target];
    },
-   copy: function ()
+   copy ()
    {
       const
          target = this [_target],
@@ -169,7 +167,7 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
 
       return copy;
    },
-   equals: function (array)
+   equals (array)
    {
       const
          target = this [_target],
@@ -191,11 +189,11 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
 
       return true;
    },
-   isDefaultValue: function ()
+   isDefaultValue ()
    {
       return this .length === 0;
    },
-   set: function (value)
+   set (value)
    {
       const
          target    = this [_target],
@@ -207,14 +205,14 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
       for (let i = 0; i < newLength; ++ i)
          array [i] .set (value [i] instanceof X3DField ? value [i] .getValue () : value [i]);
    },
-   setValue: function (value)
+   setValue (value)
    {
       const target = this [_target];
 
       target .set (value instanceof X3DObjectArrayField ? value .getValue () : value);
       target .addEvent ();
    },
-   unshift: function (value)
+   unshift (value)
    {
       const
          target = this [_target],
@@ -233,7 +231,7 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
 
       return array .length;
    },
-   shift: function ()
+   shift ()
    {
       const
          target = this [_target],
@@ -251,7 +249,7 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
          return result;
       }
    },
-   push: function (value)
+   push (value)
    {
       const
          target = this [_target],
@@ -270,7 +268,7 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
 
       return array .length;
    },
-   pop: function ()
+   pop ()
    {
       const
          target = this [_target],
@@ -288,36 +286,37 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
          return result;
       }
    },
-   splice: function (index, deleteCount, ... insertValues)
+   splice (index, deleteCount, ... insertValues)
    {
       const
          target = this [_target],
-         array  = target .getValue ();
+         array  = target .getValue (),
+         length = array .length;
 
-      if (index > array .length)
-         index = array .length;
+      if (arguments .length === 0)
+         return new (target .constructor) ();
 
-      if (index + deleteCount > array .length)
-         deleteCount = array .length - index;
+      if (arguments .length < 2)
+         deleteCount = length;
 
-      const result = target .erase (index, index + deleteCount);
+      const result = target [_erase] (index, deleteCount);
 
       if (insertValues .length)
-         target .insert (index, insertValues, 0, insertValues .length);
+         target [_insert] (index, insertValues);
 
       return result;
    },
-   insert: function (index, array, first, last)
+   [_insert] (index, array)
    {
       const
          target = this [_target],
          args   = [ ];
 
-      for (let i = first; i < last; ++ i)
+      for (const value of array)
       {
          const field = new (target .getSingleType ()) ();
 
-         field .setValue (array [i]);
+         field .setValue (value);
          target .addChildObject (field);
          args .push (field);
       }
@@ -325,46 +324,12 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
       target .getValue () .splice (index, 0, ... args);
       target .addEvent ();
    },
-   remove: function (first, last, value)
+   [_erase] (index, deleteCount)
    {
       const
          target = this [_target],
-         array  = target .getValue (),
-         cmp    = typeof value === "function" ? value : v => v === value;
-
-      first = array .findIndex ((current, index) => index >= first && cmp (current .valueOf ()));
-
-      if (first !== -1)
-      {
-         for (let i = first; ++ i < last; )
-         {
-            const current = array [i];
-
-            if (!cmp (current .valueOf ()))
-            {
-               const tmp = array [first];
-
-               array [first ++] = current;
-               array [i]        = tmp;
-            }
-         }
-      }
-      else
-      {
-         first = last;
-      }
-
-      if (first !== last)
-         target .addEvent ();
-
-      return first;
-   },
-   erase: function (first, last)
-   {
-      const
-         target = this [_target],
-         values = target .getValue () .splice (first, last - first),
-         result = new (target .constructor) (values);
+         values = target .getValue () .splice (index, deleteCount),
+         result = new (target .constructor) (... values);
 
       for (const value of values)
          target .removeChildObject (value);
@@ -373,7 +338,7 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
 
       return result;
    },
-   resize: function (size, value, silently)
+   resize (size, value, silently)
    {
       const
          target = this [_target],
@@ -407,16 +372,16 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
             target .addEvent ();
       }
    },
-   addChildObject: function (value)
+   addChildObject (value)
    {
       value .addParent (this [_proxy]);
    },
-   removeChildObject: function (value)
+   removeChildObject (value)
    {
       value .removeParent (this [_proxy]);
       value .dispose ();
    },
-   reverse: function ()
+   reverse ()
    {
       const target = this [_target];
 
@@ -425,7 +390,7 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
 
       return target [_proxy];
    },
-   sort: function (compareFn)
+   sort (compareFn)
    {
       const target = this [_target];
 
@@ -434,7 +399,7 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
 
       return target [_proxy];
    },
-   toStream: function (generator)
+   toStream (generator)
    {
       const
          target = this [_target],
@@ -487,11 +452,11 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
          }
       }
    },
-   toVRMLStream: function (generator)
+   toVRMLStream (generator)
    {
       this .toStream (generator);
    },
-   toXMLStream: function (generator)
+   toXMLStream (generator)
    {
       const
          target = this [_target],
@@ -515,7 +480,7 @@ X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .
          generator .PopUnitCategory ();
       }
    },
-   toJSONStream: function (generator)
+   toJSONStream (generator)
    {
       const
          target = this [_target],
@@ -566,8 +531,8 @@ for (const key of Reflect .ownKeys (X3DObjectArrayField .prototype))
 
 Object .defineProperty (X3DObjectArrayField .prototype, "length",
 {
-   get: function () { return this [_target] .getValue () .length; },
-   set: function (value) { this [_target] .resize (value); },
+   get () { return this [_target] .getValue () .length; },
+   set (value) { this [_target] .resize (value); },
 });
 
 export default X3DObjectArrayField;

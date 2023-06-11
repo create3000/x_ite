@@ -58,13 +58,13 @@ function ShaderCompiler (gl)
       this .sourceFileNumbers [name] = i + 1;
 }
 
-ShaderCompiler .prototype =
+Object .assign (ShaderCompiler .prototype,
 {
-   getSourceFileName: function (sourceFileNumber)
+   getSourceFileName (sourceFileNumber)
    {
       return Object .getOwnPropertyNames (this .includes) [sourceFileNumber - 1];
    },
-   process: function (source, parent = 0)
+   process (source, parent = 0)
    {
       const lines = source .split ("\n");
 
@@ -92,6 +92,6 @@ ShaderCompiler .prototype =
 
       return source;
    },
-};
+});
 
 export default ShaderCompiler;

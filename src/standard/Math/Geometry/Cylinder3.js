@@ -56,10 +56,9 @@ function Cylinder3 (axis, radius)
    this .radius = radius;
 }
 
-Cylinder3 .prototype =
+Object .assign (Cylinder3 .prototype,
 {
-   constructor: Cylinder3,
-   intersectsLine: function (line, enter, exit)
+   intersectsLine (line, enter, exit)
    {
       ////////////////////////////////////////////////////////////////////////
       //
@@ -112,7 +111,7 @@ Cylinder3 .prototype =
 
       return intersected;
    },
-   unitCylinderIntersectsLine: function (line, enter, exit)
+   unitCylinderIntersectsLine (line, enter, exit)
    {
       let t0, t1;
 
@@ -151,10 +150,10 @@ Cylinder3 .prototype =
 
       return true;
    },
-   toString: function ()
+   toString ()
    {
-      return this .axis .toString () + " " + this .radius;
+      return `${this .axis}, ${this .radius}`;
    },
-};
+});
 
 export default Cylinder3;

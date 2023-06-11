@@ -50,7 +50,7 @@ import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
 import Vector4 from "../../../standard/Math/Numbers/Vector4.js";
 
 const NURBS = {
-   getTessellation: function (tessellation, dimension)
+   getTessellation (tessellation, dimension)
    {
       if (tessellation > 0)
          return tessellation + 1;
@@ -60,7 +60,7 @@ const NURBS = {
 
       return 2 * dimension + 1;
    },
-   getClosed2D: function (order, knot, weight, controlPoint)
+   getClosed2D (order, knot, weight, controlPoint)
    {
       const
          dimension   = controlPoint .length,
@@ -195,7 +195,7 @@ const NURBS = {
          return true;
       };
    })(),
-   isPeriodic: function (order, dimension, knot)
+   isPeriodic (order, dimension, knot)
    {
       // Check if knots are periodic.
 
@@ -228,7 +228,7 @@ const NURBS = {
 
       return true;
    },
-   getKnots: function (result, closed, order, dimension, knot)
+   getKnots (result, closed, order, dimension, knot)
    {
       const knots = result || [ ];
 
@@ -277,7 +277,7 @@ const NURBS = {
 
       return knots;
    },
-   getWeights: function (result, dimension, weight)
+   getWeights (result, dimension, weight)
    {
       if (weight .length !== dimension)
          return undefined;
@@ -293,7 +293,7 @@ const NURBS = {
 
       return weights;
    },
-   getUVWeights: function (result, uDimension, vDimension, weight)
+   getUVWeights (result, uDimension, vDimension, weight)
    {
       const dimension = uDimension * vDimension;
 
@@ -314,7 +314,7 @@ const NURBS = {
 
       return weights;
    },
-   getControlPoints2D: function (result, closed, order, weights, controlPoint)
+   getControlPoints2D (result, closed, order, weights, controlPoint)
    {
       const
          controlPoints     = result || [ ],
@@ -348,7 +348,7 @@ const NURBS = {
 
       return controlPoints;
    },
-   getControlPoints: function (result, closed, order, weights, controlPointNode)
+   getControlPoints (result, closed, order, weights, controlPointNode)
    {
       const
          controlPoints = result || [ ],
@@ -380,7 +380,7 @@ const NURBS = {
 
       return controlPoints;
    },
-   getUVControlPoints: function (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, weights, controlPointNode)
+   getUVControlPoints (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, weights, controlPointNode)
    {
       const
          controlPoints = result || [ ],
@@ -429,7 +429,7 @@ const NURBS = {
 
       return controlPoints;
    },
-   getTexControlPoints: function (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, controlPointNode)
+   getTexControlPoints (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, controlPointNode)
    {
       const controlPoints = result || [ ];
 

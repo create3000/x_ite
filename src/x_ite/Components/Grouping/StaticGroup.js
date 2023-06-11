@@ -77,40 +77,13 @@ function StaticGroup (executionContext)
    this .shadowBBox = new Box3 ();
 }
 
-StaticGroup .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .prototype),
    X3DBoundedObject .prototype,
 {
-   constructor: StaticGroup,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",     new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay", new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",    new Fields .SFVec3f (-1, -1, -1)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",  new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "children",    new Fields .MFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "StaticGroup";
-   },
-   getComponentName: function ()
-   {
-      return "Grouping";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DChildNode     .prototype .initialize .call (this);
       X3DBoundedObject .prototype .initialize .call (this);
-
-      this .getBrowser () .getBrowserOptions () ._OptimizeStaticGroup .addInterest ("set_optimize__", this);
 
       this ._bboxSize   .addFieldInterest (this .groupNode ._bboxSize);
       this ._bboxCenter .addFieldInterest (this .groupNode ._bboxCenter);
@@ -130,25 +103,13 @@ StaticGroup .prototype = Object .assign (Object .create (X3DChildNode .prototype
       this .setCameraObject   (this .groupNode .isCameraObject ());
       this .setPickableObject (this .groupNode .isPickableObject ());
 
-      this .set_optimize__ ();
       this .set_children__ ();
    },
-   getBBox: function (bbox, shadows)
+   getBBox (bbox, shadows)
    {
       return bbox .assign (shadows ? this .shadowBBox : this .bbox);
    },
-   set_optimize__: function ()
-   {
-      if (this .getBrowser () .getBrowserOption ("OptimizeStaticGroup"))
-      {
-         delete this .traverse;
-      }
-      else
-      {
-         this .traverse = traverse;
-      }
-   },
-   set_children__: function ()
+   set_children__ ()
    {
       this .groupNode .getBBox (this .bbox);
       this .groupNode .getBBox (this .shadowBBox, true);
@@ -159,7 +120,7 @@ StaticGroup .prototype = Object .assign (Object .create (X3DChildNode .prototype
       this [_opaqueShapes]      = null;
       this [_transparentShapes] = null;
    },
-   traverse: function (type, renderObject)
+   traverse (type, renderObject)
    {
       switch (type)
       {
@@ -237,16 +198,47 @@ StaticGroup .prototype = Object .assign (Object .create (X3DChildNode .prototype
          }
       };
    })(),
-   dispose: function ()
+   dispose ()
    {
       X3DBoundedObject .prototype .dispose .call (this);
       X3DChildNode     .prototype .dispose .call (this);
    },
 });
 
-function traverse (type, renderObject)
+Object .defineProperties (StaticGroup,
 {
-   this .groupNode .traverse (type, renderObject);
-}
+   typeName:
+   {
+      value: "StaticGroup",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Grouping",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",     new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay", new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",    new Fields .SFVec3f (-1, -1, -1)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",  new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "children",    new Fields .MFNode ()),
+      ]),
+      enumerable: true,
+   },
+});
 
 export default StaticGroup;

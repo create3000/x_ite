@@ -57,17 +57,16 @@ function Quaternion (x, y, z, w)
    this .w = w;
 }
 
-Quaternion .prototype =
+Object .assign (Quaternion .prototype,
 {
-   constructor: Quaternion,
-   [Symbol .iterator]: function* ()
+   *[Symbol .iterator] ()
    {
       yield this .x;
       yield this .y;
       yield this .z;
       yield this .w;
    },
-   copy: function ()
+   copy ()
    {
       const copy = Object .create (Quaternion .prototype);
       copy .x = this .x;
@@ -76,7 +75,7 @@ Quaternion .prototype =
       copy .w = this .w;
       return copy;
    },
-   assign: function (quat)
+   assign (quat)
    {
       this .x = quat .x;
       this .y = quat .y;
@@ -84,7 +83,7 @@ Quaternion .prototype =
       this .w = quat .w;
       return this;
    },
-   set: function (x, y, z, w)
+   set (x, y, z, w)
    {
       this .x = x;
       this .y = y;
@@ -92,7 +91,7 @@ Quaternion .prototype =
       this .w = w;
       return this;
    },
-   setMatrix: function (matrix)
+   setMatrix (matrix)
    {
       // First, find largest diagonal in matrix:
       if (matrix [0] > matrix [4])
@@ -135,7 +134,7 @@ Quaternion .prototype =
 
       return this;
    },
-   getMatrix: function (matrix = new Matrix3 ())
+   getMatrix (matrix = new Matrix3 ())
    {
       const { x, y, z, w } = this;
 
@@ -164,22 +163,22 @@ Quaternion .prototype =
 
       return matrix;
    },
-   isReal: function ()
+   isReal ()
    {
       return !(this .x || this .y || this .z);
    },
-   isImag: function ()
+   isImag ()
    {
       return !this .w;
    },
-   equals: function (quat)
+   equals (quat)
    {
       return this .x === quat .x &&
              this .y === quat .y &&
              this .z === quat .z &&
              this .w === quat .w;
    },
-   negate: function ()
+   negate ()
    {
       this .x = -this .x;
       this .y = -this .y;
@@ -187,14 +186,14 @@ Quaternion .prototype =
       this .w = -this .w;
       return this;
    },
-   inverse: function ()
+   inverse ()
    {
       this .x = -this .x;
       this .y = -this .y;
       this .z = -this .z;
       return this;
    },
-   add: function (quat)
+   add (quat)
    {
       this .x += quat .x;
       this .y += quat .y;
@@ -202,7 +201,7 @@ Quaternion .prototype =
       this .w += quat .w;
       return this;
    },
-   subtract: function (quat)
+   subtract (quat)
    {
       this .x -= quat .x;
       this .y -= quat .y;
@@ -210,7 +209,7 @@ Quaternion .prototype =
       this .w -= quat .w;
       return this;
    },
-   multiply: function (value)
+   multiply (value)
    {
       this .x *= value;
       this .y *= value;
@@ -218,7 +217,7 @@ Quaternion .prototype =
       this .w *= value;
       return this;
    },
-   multLeft: function (quat)
+   multLeft (quat)
    {
       const
          { x: ax, y: ay, z: az, w: aw } = this,
@@ -231,7 +230,7 @@ Quaternion .prototype =
 
       return this;
    },
-   multRight: function (quat)
+   multRight (quat)
    {
       const
          { x: ax, y: ay, z: az, w: aw } = this,
@@ -244,7 +243,7 @@ Quaternion .prototype =
 
       return this;
    },
-   divide: function (value)
+   divide (value)
    {
       this .x /= value;
       this .y /= value;
@@ -252,7 +251,7 @@ Quaternion .prototype =
       this .w /= value;
       return this;
    },
-   multVecQuat: function (vector)
+   multVecQuat (vector)
    {
       const
          { x: qx, y: qy, z: qz, w: qw } = this,
@@ -267,7 +266,7 @@ Quaternion .prototype =
 
       return vector;
    },
-   multQuatVec: function (vector)
+   multQuatVec (vector)
    {
       const
          { x: qx, y: qy, z: qz, w: qw } = this,
@@ -282,7 +281,7 @@ Quaternion .prototype =
 
       return vector;
    },
-   normalize: function ()
+   normalize ()
    {
       const length = Math .hypot (this .x, this .y, this .z, this .w);
 
@@ -296,14 +295,14 @@ Quaternion .prototype =
 
       return this;
    },
-   dot: function (quat)
+   dot (quat)
    {
       return this .x * quat .x +
              this .y * quat .y +
              this .z * quat .z +
              this .w * quat .w;
    },
-   norm: function ()
+   norm ()
    {
       const { x, y, z, w } = this;
 
@@ -312,11 +311,11 @@ Quaternion .prototype =
              z * z +
              w * w;
    },
-   magnitude: function ()
+   magnitude ()
    {
       return Math .hypot (this .x, this .y, this .z, this .w);
    },
-   pow: function (exponent)
+   pow (exponent)
    {
       if (exponent instanceof Quaternion)
          return this .assign (e .assign (exponent) .multRight (this .log ()) .exp ());
@@ -338,7 +337,7 @@ Quaternion .prototype =
       this .w  = ltoe * Math .cos (et);
       return this;
    },
-   log: function ()
+   log ()
    {
       if (this .isReal ())
       {
@@ -360,7 +359,7 @@ Quaternion .prototype =
       this .w = w;
       return this;
    },
-   exp: function ()
+   exp ()
    {
       if (this .isReal ())
          return this .set (0, 0, 0, Math .exp (this .w));
@@ -378,11 +377,11 @@ Quaternion .prototype =
       this .w = w;
       return this;
    },
-   slerp: function (destination, t)
+   slerp (destination, t)
    {
       return Algorithm .slerp (this, t1 .assign (destination), t);
    },
-   squad: function (a, b, destination, t)
+   squad (a, b, destination, t)
    {
       // We must use shortest path slerp to prevent flipping.  Also see spline.
 
@@ -390,41 +389,41 @@ Quaternion .prototype =
                                Algorithm .slerp (t2 .assign (a), t3 .assign (b), t),
                                2 * t * (1 - t));
    },
-   toString: function ()
+   toString ()
    {
       return this .x + " " +
              this .y + " " +
              this .z + " " +
              this .w;
    },
-};
+});
 
 Object .defineProperties (Quaternion .prototype,
 {
    length: { value: 4 },
    0:
    {
-      get: function () { return this .x; },
-      set: function (value) { this .x = value; },
+      get () { return this .x; },
+      set (value) { this .x = value; },
    },
    1:
    {
-      get: function () { return this .y; },
-      set: function (value) { this .y = value; },
+      get () { return this .y; },
+      set (value) { this .y = value; },
    },
    2:
    {
-      get: function () { return this .z; },
-      set: function (value) { this .z = value; },
+      get () { return this .z; },
+      set (value) { this .z = value; },
    },
    3:
    {
-      get: function () { return this .w; },
-      set: function (value) { this .w = value; },
+      get () { return this .w; },
+      set (value) { this .w = value; },
    },
    real:
    {
-      get: function () { return this .w; },
+      get () { return this .w; },
    },
    imag:
    {

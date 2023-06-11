@@ -47,8 +47,9 @@
 
 import Vector3 from "../Numbers/Vector3.js";
 
-const Camera = {
-   frustum: function (l, r, b, t, n, f, matrix)
+const Camera =
+{
+   frustum (l, r, b, t, n, f, matrix)
    {
       const
          r_l = r - l,
@@ -68,7 +69,7 @@ const Camera = {
                           A, B, C, -1,
                           0, 0, D, 0);
    },
-   perspective: function (fieldOfView, zNear, zFar, width, height, matrix)
+   perspective (fieldOfView, zNear, zFar, width, height, matrix)
    {
       const ratio = Math .tan (fieldOfView / 2) * zNear;
 
@@ -83,13 +84,13 @@ const Camera = {
          return this .frustum (-ratio, ratio, -aspect, aspect, zNear, zFar, matrix);
       }
    },
-   perspective2: function (fieldOfView, zNear, zFar, width, height, matrix)
+   perspective2 (fieldOfView, zNear, zFar, width, height, matrix)
    {
       const ratio = Math .tan (fieldOfView / 2) * zNear;
 
       return this .frustum (-ratio, ratio, -ratio, ratio, zNear, zFar, matrix);
    },
-   ortho: function (l, r, b, t, n, f, matrix)
+   ortho (l, r, b, t, n, f, matrix)
    {
       const
          r_l = r - l,

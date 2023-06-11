@@ -48,21 +48,23 @@
 import X3DInfoArray    from "../Base/X3DInfoArray.js";
 import X3DImportedNode from "./X3DImportedNode.js"
 
-function ImportedNodesArray (values)
+function ImportedNodesArray (values = [ ])
 {
-   return X3DInfoArray .call (this, values, X3DImportedNode);
+   return X3DInfoArray .call (this, Array .from (values, value => [value .getImportedName (), value]), X3DImportedNode);
 }
 
-ImportedNodesArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
-{
-   constructor: ImportedNodesArray,
-   getTypeName: function ()
-   {
-      return "ImportedNodesArray";
-   },
-});
+Object .setPrototypeOf (ImportedNodesArray .prototype, X3DInfoArray .prototype);
 
 for (const key of Reflect .ownKeys (ImportedNodesArray .prototype))
    Object .defineProperty (ImportedNodesArray .prototype, key, { enumerable: false });
+
+Object .defineProperties (ImportedNodesArray,
+{
+   typeName:
+   {
+      value: "ImportedNodesArray",
+      enumerable: true,
+   },
+});
 
 export default ImportedNodesArray;

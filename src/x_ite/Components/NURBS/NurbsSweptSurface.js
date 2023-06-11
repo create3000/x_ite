@@ -62,33 +62,9 @@ function NurbsSweptSurface (executionContext)
    this .extrusion = new Extrusion (executionContext);
 }
 
-NurbsSweptSurface .prototype = Object .assign (Object .create (X3DParametricGeometryNode .prototype),
+Object .assign (Object .setPrototypeOf (NurbsSweptSurface .prototype, X3DParametricGeometryNode .prototype),
 {
-   constructor: NurbsSweptSurface,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",             new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "ccw",               new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "crossSectionCurve", new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "trajectoryCurve",   new Fields .SFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "NurbsSweptSurface";
-   },
-   getComponentName: function ()
-   {
-      return "NURBS";
-   },
-   getContainerField: function ()
-   {
-      return "geometry";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DParametricGeometryNode .prototype .initialize .call (this);
 
@@ -112,7 +88,7 @@ NurbsSweptSurface .prototype = Object .assign (Object .create (X3DParametricGeom
       this .set_crossSectionCurve__ ();
       this .set_trajectoryCurve__ ();
    },
-   set_crossSectionCurve__: function ()
+   set_crossSectionCurve__ ()
    {
       if (this .crossSectionCurveNode)
          this .crossSectionCurveNode .removeInterest ("requestRebuild", this);
@@ -122,7 +98,7 @@ NurbsSweptSurface .prototype = Object .assign (Object .create (X3DParametricGeom
       if (this .crossSectionCurveNode)
          this .crossSectionCurveNode .addInterest ("requestRebuild", this);
    },
-   set_trajectoryCurve__: function ()
+   set_trajectoryCurve__ ()
    {
       if (this .trajectoryCurveNode)
          this .trajectoryCurveNode ._rebuild .removeInterest ("requestRebuild", this);
@@ -132,7 +108,7 @@ NurbsSweptSurface .prototype = Object .assign (Object .create (X3DParametricGeom
       if (this .trajectoryCurveNode)
          this .trajectoryCurveNode ._rebuild .addInterest ("requestRebuild", this);
    },
-   build: function ()
+   build ()
    {
       if (! this .crossSectionCurveNode)
          return;
@@ -164,6 +140,41 @@ NurbsSweptSurface .prototype = Object .assign (Object .create (X3DParametricGeom
 
       this .setSolid (this ._solid .getValue ());
       this .setCCW (this ._ccw .getValue ());
+   },
+});
+
+Object .defineProperties (NurbsSweptSurface,
+{
+   typeName:
+   {
+      value: "NurbsSweptSurface",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "NURBS",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "geometry",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",             new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "ccw",               new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "crossSectionCurve", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "trajectoryCurve",   new Fields .SFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 

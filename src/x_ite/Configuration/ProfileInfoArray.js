@@ -49,28 +49,29 @@ import X3DInfoArray       from "../Base/X3DInfoArray.js";
 import ComponentInfoArray from "./ComponentInfoArray.js";
 import ProfileInfo        from "./ProfileInfo.js";
 
-function ProfileInfoArray (values)
+function ProfileInfoArray (values = [ ])
 {
-   return X3DInfoArray .call (this, values, X3DInfoArray);
+   return X3DInfoArray .call (this, Array .from (values, value => [value .name, value]), ProfileInfo);
 }
 
-ProfileInfoArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
+Object .assign (Object .setPrototypeOf (ProfileInfoArray .prototype, X3DInfoArray .prototype),
 {
-   constructor: ProfileInfoArray,
-   getTypeName: function ()
+   add (name, { title, providerUrl, components })
    {
-      return "ProfileInfoArray";
-   },
-   addProfile: function (profile)
-   {
-      this .add (profile .name, new ProfileInfo (profile .name,
-                                                 profile .title,
-                                                 profile .providerUrl,
-                                                 new ComponentInfoArray (profile .components)));
+      X3DInfoArray .prototype .add .call (this, name, new ProfileInfo (name, title, providerUrl, new ComponentInfoArray (components)));
    },
 });
 
 for (const key of Reflect .ownKeys (ProfileInfoArray .prototype))
    Object .defineProperty (ProfileInfoArray .prototype, key, { enumerable: false });
+
+Object .defineProperties (ProfileInfoArray,
+{
+   typeName:
+   {
+      value: "ProfileInfoArray",
+      enumerable: true,
+   },
+});
 
 export default ProfileInfoArray;

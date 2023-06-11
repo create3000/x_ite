@@ -56,7 +56,7 @@ const Bookmarks = (function ()
       this .element = element;
    }
 
-   Bookmarks .prototype =
+   Object .assign (Bookmarks .prototype,
    {
       setup: function (array)
       {
@@ -152,7 +152,7 @@ const Bookmarks = (function ()
 
          console .log (`Scene loaded in ${loadTime .toPrecision (3)}s.`)
       },
-   };
+   });
 
    return Bookmarks;
 }) ();

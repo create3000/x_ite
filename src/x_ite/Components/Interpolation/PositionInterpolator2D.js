@@ -59,39 +59,15 @@ function PositionInterpolator2D (executionContext)
    this .addType (X3DConstants .PositionInterpolator2D);
 }
 
-PositionInterpolator2D .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
+Object .assign (Object .setPrototypeOf (PositionInterpolator2D .prototype, X3DInterpolatorNode .prototype),
 {
-   constructor: PositionInterpolator2D,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "key",           new Fields .MFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "keyValue",      new Fields .MFVec2f ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .SFVec2f ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "PositionInterpolator2D";
-   },
-   getComponentName: function ()
-   {
-      return "Interpolation";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DInterpolatorNode .prototype .initialize .call (this);
 
       this ._keyValue .addInterest ("set_keyValue__", this);
    },
-   set_keyValue__: function ()
+   set_keyValue__ ()
    {
       const
          key      = this ._key,
@@ -109,6 +85,41 @@ PositionInterpolator2D .prototype = Object .assign (Object .create (X3DInterpola
          this ._value_changed = keyValue .assign (this ._keyValue [index0] .getValue ()) .lerp (this ._keyValue [index1] .getValue (), weight);
       };
    })(),
+});
+
+Object .defineProperties (PositionInterpolator2D,
+{
+   typeName:
+   {
+      value: "PositionInterpolator2D",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Interpolation",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "key",           new Fields .MFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "keyValue",      new Fields .MFVec2f ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .SFVec2f ()),
+      ]),
+      enumerable: true,
+   },
 });
 
 export default PositionInterpolator2D;

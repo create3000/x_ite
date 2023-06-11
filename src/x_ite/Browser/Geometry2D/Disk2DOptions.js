@@ -63,40 +63,27 @@ function Disk2DOptions (executionContext)
    this .diskVertices   = X3DGeometryNode .createArray ();
 }
 
-Disk2DOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+Object .assign (Object .setPrototypeOf (Disk2DOptions .prototype, X3DBaseNode .prototype),
 {
-   constructor: Disk2DOptions,
-   getTypeName: function ()
-   {
-      return "Disk2DOptions";
-   },
-   getComponentName: function ()
-   {
-      return "X_ITE";
-   },
-   getContainerField: function ()
-   {
-      return "circle2DOptions";
-   },
-   initialize: function ()
+   initialize ()
    {
       this .addInterest ("build", this);
 
       this .build ();
    },
-   getCircleVertices: function ()
+   getCircleVertices ()
    {
       return this .circleVertices;
    },
-   getDiskTexCoords: function ()
+   getDiskTexCoords ()
    {
       return this .diskTexCoords;
    },
-   getDiskNormals: function ()
+   getDiskNormals ()
    {
       return this .diskNormals;
    },
-   getDiskVertices: function ()
+   getDiskVertices ()
    {
       return this .diskVertices;
    },
@@ -159,6 +146,15 @@ Disk2DOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototyp
          diskVertices   .shrinkToFit ();
       };
    })(),
+});
+
+Object .defineProperties (Disk2DOptions,
+{
+   typeName:
+   {
+      value: "Disk2DOptions",
+      enumerable: true,
+   },
 });
 
 export default Disk2DOptions;

@@ -341,7 +341,10 @@ class DOMIntegration
 		if (!node)
 			return;
 
-		for (const field of node .getFields ())
+		for (const field of node .getPredefinedFields ())
+			this .bindFieldCallback (field, element);
+
+		for (const field of node .getUserDefinedFields ())
 			this .bindFieldCallback (field, element);
 	}
 

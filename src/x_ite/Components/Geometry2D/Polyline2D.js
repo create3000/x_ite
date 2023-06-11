@@ -60,30 +60,9 @@ function Polyline2D (executionContext)
    this ._lineSegments .setUnit ("length");
 }
 
-Polyline2D .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototype),
+Object .assign (Object .setPrototypeOf (Polyline2D .prototype, X3DLineGeometryNode .prototype),
 {
-   constructor: Polyline2D,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",     new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "lineSegments", new Fields .MFVec2f ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "Polyline2D";
-   },
-   getComponentName: function ()
-   {
-      return "Geometry2D";
-   },
-   getContainerField: function ()
-   {
-      return "geometry";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   build: function ()
+   build ()
    {
       const
          lineSegments = this ._lineSegments .getValue (),
@@ -94,6 +73,38 @@ Polyline2D .prototype = Object .assign (Object .create (X3DLineGeometryNode .pro
          vertexArray .push (lineSegments [i + 0], lineSegments [i + 1], 0, 1);
          vertexArray .push (lineSegments [i + 2], lineSegments [i + 3], 0, 1);
       }
+   },
+});
+
+Object .defineProperties (Polyline2D,
+{
+   typeName:
+   {
+      value: "Polyline2D",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Geometry2D",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "geometry",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",     new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "lineSegments", new Fields .MFVec2f ()),
+      ]),
+      enumerable: true,
    },
 });
 

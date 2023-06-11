@@ -56,12 +56,22 @@ function NoneViewer (executionContext, navigationInfo)
    X3DViewer .call (this, executionContext, navigationInfo);
 }
 
-NoneViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
+Object .setPrototypeOf (NoneViewer .prototype, X3DViewer .prototype);
+
+Object .defineProperties (NoneViewer,
 {
-   constructor: NoneViewer,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .outputOnly, "isActive", new Fields .SFBool ()),
-   ]),
+   typeName:
+   {
+      value: "NoneViewer",
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .outputOnly, "isActive", new Fields .SFBool ()),
+      ]),
+      enumerable: true,
+   },
 });
 
 export default NoneViewer;

@@ -63,39 +63,50 @@ function CoordinateChaser (executionContext)
    this .addType (X3DConstants .CoordinateChaser);
 }
 
-CoordinateChaser .prototype = Object .assign (Object .create (X3DChaserNode .prototype),
+Object .assign (Object .setPrototypeOf (CoordinateChaser .prototype, X3DChaserNode .prototype),
    X3DArrayChaserObject .prototype,
 {
-   constructor: CoordinateChaser,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",           new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,      "set_value",          new Fields .MFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,      "set_destination",    new Fields .MFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "initialValue",       new Fields .MFVec3f (new Vector3 (0, 0, 0))),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "initialDestination", new Fields .MFVec3f (new Vector3 (0, 0, 0))),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "duration",           new Fields .SFTime (1)),
-      new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",           new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,     "value_changed",      new Fields .MFVec3f ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "CoordinateChaser";
-   },
-   getComponentName: function ()
-   {
-      return "Followers";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.3", "Infinity"];
-   },
-   getVector: function ()
+   getVector ()
    {
       return new Vector3 (0, 0, 0);
+   },
+});
+
+Object .defineProperties (CoordinateChaser,
+{
+   typeName:
+   {
+      value: "CoordinateChaser",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Followers",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.3", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",           new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "set_value",          new Fields .MFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "set_destination",    new Fields .MFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "initialValue",       new Fields .MFVec3f (new Vector3 (0, 0, 0))),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "initialDestination", new Fields .MFVec3f (new Vector3 (0, 0, 0))),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "duration",           new Fields .SFTime (1)),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",           new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "value_changed",      new Fields .MFVec3f ()),
+      ]),
+      enumerable: true,
    },
 });
 

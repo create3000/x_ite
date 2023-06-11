@@ -53,29 +53,29 @@ import PrimitiveQuality  from "../Core/PrimitiveQuality.js";
 
 function X3DGeometry3DContext () { }
 
-X3DGeometry3DContext .prototype =
+Object .assign (X3DGeometry3DContext .prototype,
 {
-   initialize: function ()
+   initialize ()
    {
       this .setPrimitiveQuality3D (this .getBrowserOptions () .getPrimitiveQuality ());
    },
-   getBoxOptions: function ()
+   getBoxOptions ()
    {
       return getOptionNode .call (this, "getBoxOptions", BoxOptions);
    },
-   getConeOptions: function ()
+   getConeOptions ()
    {
       return getOptionNode .call (this, "getConeOptions", ConeOptions);
    },
-   getCylinderOptions: function ()
+   getCylinderOptions ()
    {
       return getOptionNode .call (this, "getCylinderOptions", CylinderOptions);
    },
-   getSphereOptions: function ()
+   getSphereOptions ()
    {
       return getOptionNode .call (this, "getSphereOptions", QuadSphereOptions);
    },
-   setPrimitiveQuality3D: function (primitiveQuality)
+   setPrimitiveQuality3D (primitiveQuality)
    {
       const
          cone     = this .getConeOptions (),
@@ -110,7 +110,7 @@ X3DGeometry3DContext .prototype =
          }
       }
    },
-};
+});
 
 function getOptionNode (key, OptionNode)
 {

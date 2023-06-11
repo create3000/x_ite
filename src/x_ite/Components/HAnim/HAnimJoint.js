@@ -68,50 +68,9 @@ function HAnimJoint (executionContext)
    this .modelMatrix    = new Matrix4 ();
 }
 
-HAnimJoint .prototype = Object .assign (Object .create (X3DTransformNode .prototype),
+Object .assign (Object .setPrototypeOf (HAnimJoint .prototype, X3DTransformNode .prototype),
 {
-   constructor: HAnimJoint,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",         new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "description",      new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "name",             new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "translation",      new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "rotation",         new Fields .SFRotation ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "scale",            new Fields .SFVec3f (1, 1, 1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "scaleOrientation", new Fields .SFRotation ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "center",           new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "llimit",           new Fields .MFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "ulimit",           new Fields .MFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "limitOrientation", new Fields .SFRotation ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "stiffness",        new Fields .MFFloat (0, 0, 0)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "skinCoordIndex",   new Fields .MFInt32 ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "skinCoordWeight",  new Fields .MFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "displacers",       new Fields .MFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",          new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",      new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",         new Fields .SFVec3f (-1, -1, -1)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",       new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",      new Fields .MFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,      "removeChildren",   new Fields .MFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "children",         new Fields .MFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "HAnimJoint";
-   },
-   getComponentName: function ()
-   {
-      return "HAnim";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DTransformNode .prototype .initialize .call (this);
 
@@ -120,23 +79,23 @@ HAnimJoint .prototype = Object .assign (Object .create (X3DTransformNode .protot
 
       this .set_displacers__ ();
    },
-   setCameraObject: function (value)
+   setCameraObject (value)
    {
       X3DTransformNode .prototype .setCameraObject .call (this, value || !! this ._skinCoordIndex .length);
    },
-   getModelMatrix: function ()
+   getModelMatrix ()
    {
       return this .modelMatrix;
    },
-   getDisplacers: function ()
+   getDisplacers ()
    {
       return this .displacerNodes;
    },
-   set_skinCoordIndex__: function ()
+   set_skinCoordIndex__ ()
    {
       this .set_cameraObjects__ ();
    },
-   set_displacers__: function ()
+   set_displacers__ ()
    {
       const displacerNodes = this .displacerNodes;
 
@@ -150,7 +109,7 @@ HAnimJoint .prototype = Object .assign (Object .create (X3DTransformNode .protot
             displacerNodes .push (displacerNode);
       }
    },
-   traverse: function traverse (type, renderObject)
+   traverse (type, renderObject)
    {
       if (type === TraverseType .CAMERA)
       {
@@ -160,7 +119,7 @@ HAnimJoint .prototype = Object .assign (Object .create (X3DTransformNode .protot
 
       X3DTransformNode .prototype .traverse .call (this, type, renderObject);
    },
-   groupTraverse: function (type, renderObject)
+   groupTraverse (type, renderObject)
    {
       if (type === TraverseType .CAMERA)
       {
@@ -169,6 +128,58 @@ HAnimJoint .prototype = Object .assign (Object .create (X3DTransformNode .protot
       }
 
       X3DTransformNode .prototype .groupTraverse .call (this, type, renderObject);
+   },
+});
+
+Object .defineProperties (HAnimJoint,
+{
+   typeName:
+   {
+      value: "HAnimJoint",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "HAnim",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",         new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "description",      new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "name",             new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "translation",      new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "rotation",         new Fields .SFRotation ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "scale",            new Fields .SFVec3f (1, 1, 1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "scaleOrientation", new Fields .SFRotation ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "center",           new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "llimit",           new Fields .MFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "ulimit",           new Fields .MFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "limitOrientation", new Fields .SFRotation ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "stiffness",        new Fields .MFFloat (0, 0, 0)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "skinCoordIndex",   new Fields .MFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "skinCoordWeight",  new Fields .MFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "displacers",       new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",          new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",      new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",         new Fields .SFVec3f (-1, -1, -1)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",       new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",      new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "removeChildren",   new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "children",         new Fields .MFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 

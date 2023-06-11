@@ -123,34 +123,43 @@ function DISEntityManager (executionContext)
       this .addAlias ("mapping", this ._children);
 }
 
-DISEntityManager .prototype = Object .assign (Object .create ((X3DChildNode_default()).prototype),
+Object .setPrototypeOf (DISEntityManager .prototype, (X3DChildNode_default()).prototype);
+
+Object .defineProperties (DISEntityManager,
 {
-   constructor: DISEntityManager,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",        new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "address",         new (Fields_default()).SFString ("localhost")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "applicationID",   new (Fields_default()).SFInt32 (1)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "children",        new (Fields_default()).MFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "port",            new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "siteID",          new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "addedEntities",   new (Fields_default()).MFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "removedEntities", new (Fields_default()).MFNode ()),
-   ]),
-   getTypeName: function ()
+   typeName:
    {
-      return "DISEntityManager";
+      value: "DISEntityManager",
+      enumerable: true,
    },
-   getComponentName: function ()
+   componentName:
    {
-      return "DIS";
+      value: "DIS",
+      enumerable: true,
    },
-   getContainerField: function ()
+   containerField:
    {
-      return "children";
+      value: "children",
+      enumerable: true,
    },
-   getSpecificationRange: function ()
+   specificationRange:
    {
-      return ["3.0", "Infinity"];
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",        new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "address",         new (Fields_default()).SFString ("localhost")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "applicationID",   new (Fields_default()).SFInt32 (1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "children",        new (Fields_default()).MFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "port",            new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "siteID",          new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "addedEntities",   new (Fields_default()).MFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "removedEntities", new (Fields_default()).MFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 
@@ -228,49 +237,60 @@ function DISEntityTypeMapping (executionContext)
    this .addType ((X3DConstants_default()).DISEntityTypeMapping);
 }
 
-DISEntityTypeMapping .prototype = Object .assign (Object .create ((X3DInfoNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (DISEntityTypeMapping .prototype, (X3DInfoNode_default()).prototype),
    (X3DUrlObject_default()).prototype,
 {
-   constructor: DISEntityTypeMapping,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",             new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "load",                 new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "url",                  new (Fields_default()).MFString ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "autoRefresh",          new (Fields_default()).SFTime ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "autoRefreshTimeLimit", new (Fields_default()).SFTime (3600)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "category",             new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "country",              new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "domain",               new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "extra",                new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "kind",                 new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "specific",             new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "subcategory",          new (Fields_default()).SFInt32 ()),
-   ]),
-   getTypeName: function ()
+   initialize ()
    {
-      return "DISEntityTypeMapping";
+      X3DInfoNode_default().prototype .initialize .call (this);
+      X3DUrlObject_default().prototype .initialize .call (this);
    },
-   getComponentName: function ()
+   dispose ()
    {
-      return "DIS";
+      X3DUrlObject_default().prototype .dispose .call (this);
+      X3DInfoNode_default().prototype .dispose .call (this);
    },
-   getContainerField: function ()
+});
+
+Object .defineProperties (DISEntityTypeMapping,
+{
+   typeName:
    {
-      return "mapping";
+      value: "DISEntityTypeMapping",
+      enumerable: true,
    },
-   getSpecificationRange: function ()
+   componentName:
    {
-      return ["3.0", "Infinity"];
+      value: "DIS",
+      enumerable: true,
    },
-   initialize: function ()
+   containerField:
    {
-      X3DInfoNode_default().prototype.initialize.call (this);
-      X3DUrlObject_default().prototype.initialize.call (this);
+      value: "mapping",
+      enumerable: true,
    },
-   dispose: function ()
+   specificationRange:
    {
-      X3DUrlObject_default().prototype.dispose.call (this);
-      X3DInfoNode_default().prototype.dispose.call (this);
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",             new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "load",                 new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "url",                  new (Fields_default()).MFString ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "autoRefresh",          new (Fields_default()).SFTime ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "autoRefreshTimeLimit", new (Fields_default()).SFTime (3600)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "category",             new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "country",              new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "domain",               new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "extra",                new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "kind",                 new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "specific",             new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "subcategory",          new (Fields_default()).SFInt32 ()),
+      ]),
+      enumerable: true,
    },
 });
 
@@ -348,123 +368,134 @@ function EspduTransform (executionContext)
    this .addType ((X3DConstants_default()).EspduTransform);
 }
 
-EspduTransform .prototype = Object .assign (Object .create ((X3DGroupingNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (EspduTransform .prototype, (X3DGroupingNode_default()).prototype),
    (X3DSensorNode_default()).prototype,
 {
-   constructor: EspduTransform,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",                                   new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "enabled",                                    new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "visible",                                    new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bboxDisplay",                                new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxSize",                                   new (Fields_default()).SFVec3f (-1, -1, -1)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxCenter",                                 new (Fields_default()).SFVec3f ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "addChildren",                                new (Fields_default()).MFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "removeChildren",                             new (Fields_default()).MFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "children",                                   new (Fields_default()).MFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isActive",                                   new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "set_articulationParameterValue0",            new (Fields_default()).SFFloat ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "set_articulationParameterValue1",            new (Fields_default()).SFFloat ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "set_articulationParameterValue2",            new (Fields_default()).SFFloat ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "set_articulationParameterValue3",            new (Fields_default()).SFFloat ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "set_articulationParameterValue4",            new (Fields_default()).SFFloat ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "set_articulationParameterValue5",            new (Fields_default()).SFFloat ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "set_articulationParameterValue6",            new (Fields_default()).SFFloat ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "set_articulationParameterValue7",            new (Fields_default()).SFFloat ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "address",                                    new (Fields_default()).SFString ("localhost")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "applicationID",                              new (Fields_default()).SFInt32 (1)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "articulationParameterCount",                 new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "articulationParameterDesignatorArray",       new (Fields_default()).MFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "articulationParameterChangeIndicatorArray",  new (Fields_default()).MFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "articulationParameterIdPartAttachedToArray", new (Fields_default()).MFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "articulationParameterTypeArray",             new (Fields_default()).MFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "articulationParameterArray",                 new (Fields_default()).MFFloat ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "center",                                     new (Fields_default()).SFVec3f ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "collisionType",                              new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "deadReckoning",                              new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "detonationLocation",                         new (Fields_default()).SFVec3f ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "detonationRelativeLocation",                 new (Fields_default()).SFVec3f ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "detonationResult",                           new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "entityCategory",                             new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "entityCountry",                              new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "entityDomain",                               new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "entityExtra",                                new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "entityID",                                   new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "entityKind",                                 new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "entitySpecific",                             new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "entitySubCategory",                          new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "eventApplicationID",                         new (Fields_default()).SFInt32 (1)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "eventEntityID",                              new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "eventNumber",                                new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "eventSiteID",                                new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "fired1",                                     new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "fired2",                                     new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "fireMissionIndex",                           new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "firingRange",                                new (Fields_default()).SFFloat ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "firingRate",                                 new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "forceID",                                    new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "fuse",                                       new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "linearVelocity",                             new (Fields_default()).SFVec3f ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "linearAcceleration",                         new (Fields_default()).SFVec3f ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "marking",                                    new (Fields_default()).SFString ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "multicastRelayHost",                         new (Fields_default()).SFString ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "multicastRelayPort",                         new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "munitionApplicationID",                      new (Fields_default()).SFInt32 (1)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "munitionEndPoint",                           new (Fields_default()).SFVec3f ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "munitionEntityID",                           new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "munitionQuantity",                           new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "munitionSiteID",                             new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "munitionStartPoint",                         new (Fields_default()).SFVec3f ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "networkMode",                                new (Fields_default()).SFString ("standAlone")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "port",                                       new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "readInterval",                               new (Fields_default()).SFTime (0.1)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "rotation",                                   new (Fields_default()).SFRotation ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "scale",                                      new (Fields_default()).SFVec3f (1, 1, 1)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "scaleOrientation",                           new (Fields_default()).SFRotation ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "siteID",                                     new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "translation",                                new (Fields_default()).SFVec3f ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "warhead",                                    new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "writeInterval",                              new (Fields_default()).SFTime (1)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "articulationParameterValue0_changed",        new (Fields_default()).SFFloat ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "articulationParameterValue1_changed",        new (Fields_default()).SFFloat ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "articulationParameterValue2_changed",        new (Fields_default()).SFFloat ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "articulationParameterValue3_changed",        new (Fields_default()).SFFloat ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "articulationParameterValue4_changed",        new (Fields_default()).SFFloat ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "articulationParameterValue5_changed",        new (Fields_default()).SFFloat ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "articulationParameterValue6_changed",        new (Fields_default()).SFFloat ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "articulationParameterValue7_changed",        new (Fields_default()).SFFloat ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "collideTime",                                new (Fields_default()).SFTime ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "detonateTime",                               new (Fields_default()).SFTime ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "firedTime",                                  new (Fields_default()).SFTime ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isCollided",                                 new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isDetonated",                                new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isNetworkReader",                            new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isNetworkWriter",                            new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isRtpHeaderHeard",                           new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isStandAlone",                               new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "timestamp",                                  new (Fields_default()).SFTime ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "rtpHeaderExpected",                          new (Fields_default()).SFBool ()),
-   ]),
-   getTypeName: function ()
+   initialize ()
    {
-      return "EspduTransform";
+      X3DGroupingNode_default().prototype .initialize .call (this);
+      X3DSensorNode_default().prototype .initialize .call (this);
    },
-   getComponentName: function ()
+});
+
+Object .defineProperties (EspduTransform,
+{
+   typeName:
    {
-      return "DIS";
+      value: "EspduTransform",
+      enumerable: true,
    },
-   getContainerField: function ()
+   componentName:
    {
-      return "children";
+      value: "DIS",
+      enumerable: true,
    },
-   getSpecificationRange: function ()
+   containerField:
    {
-      return ["3.0", "Infinity"];
+      value: "children",
+      enumerable: true,
    },
-   initialize: function ()
+   specificationRange:
    {
-      X3DGroupingNode_default().prototype.initialize.call (this);
-      X3DSensorNode_default().prototype.initialize.call (this);
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",                                   new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "enabled",                                    new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "visible",                                    new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bboxDisplay",                                new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxSize",                                   new (Fields_default()).SFVec3f (-1, -1, -1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxCenter",                                 new (Fields_default()).SFVec3f ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "addChildren",                                new (Fields_default()).MFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "removeChildren",                             new (Fields_default()).MFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "children",                                   new (Fields_default()).MFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isActive",                                   new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "set_articulationParameterValue0",            new (Fields_default()).SFFloat ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "set_articulationParameterValue1",            new (Fields_default()).SFFloat ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "set_articulationParameterValue2",            new (Fields_default()).SFFloat ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "set_articulationParameterValue3",            new (Fields_default()).SFFloat ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "set_articulationParameterValue4",            new (Fields_default()).SFFloat ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "set_articulationParameterValue5",            new (Fields_default()).SFFloat ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "set_articulationParameterValue6",            new (Fields_default()).SFFloat ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "set_articulationParameterValue7",            new (Fields_default()).SFFloat ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "address",                                    new (Fields_default()).SFString ("localhost")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "applicationID",                              new (Fields_default()).SFInt32 (1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "articulationParameterCount",                 new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "articulationParameterDesignatorArray",       new (Fields_default()).MFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "articulationParameterChangeIndicatorArray",  new (Fields_default()).MFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "articulationParameterIdPartAttachedToArray", new (Fields_default()).MFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "articulationParameterTypeArray",             new (Fields_default()).MFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "articulationParameterArray",                 new (Fields_default()).MFFloat ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "center",                                     new (Fields_default()).SFVec3f ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "collisionType",                              new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "deadReckoning",                              new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "detonationLocation",                         new (Fields_default()).SFVec3f ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "detonationRelativeLocation",                 new (Fields_default()).SFVec3f ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "detonationResult",                           new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "entityCategory",                             new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "entityCountry",                              new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "entityDomain",                               new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "entityExtra",                                new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "entityID",                                   new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "entityKind",                                 new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "entitySpecific",                             new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "entitySubCategory",                          new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "eventApplicationID",                         new (Fields_default()).SFInt32 (1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "eventEntityID",                              new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "eventNumber",                                new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "eventSiteID",                                new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "fired1",                                     new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "fired2",                                     new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "fireMissionIndex",                           new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "firingRange",                                new (Fields_default()).SFFloat ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "firingRate",                                 new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "forceID",                                    new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "fuse",                                       new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "linearVelocity",                             new (Fields_default()).SFVec3f ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "linearAcceleration",                         new (Fields_default()).SFVec3f ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "marking",                                    new (Fields_default()).SFString ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "multicastRelayHost",                         new (Fields_default()).SFString ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "multicastRelayPort",                         new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "munitionApplicationID",                      new (Fields_default()).SFInt32 (1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "munitionEndPoint",                           new (Fields_default()).SFVec3f ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "munitionEntityID",                           new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "munitionQuantity",                           new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "munitionSiteID",                             new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "munitionStartPoint",                         new (Fields_default()).SFVec3f ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "networkMode",                                new (Fields_default()).SFString ("standAlone")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "port",                                       new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "readInterval",                               new (Fields_default()).SFTime (0.1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "rotation",                                   new (Fields_default()).SFRotation ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "scale",                                      new (Fields_default()).SFVec3f (1, 1, 1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "scaleOrientation",                           new (Fields_default()).SFRotation ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "siteID",                                     new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "translation",                                new (Fields_default()).SFVec3f ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "warhead",                                    new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "writeInterval",                              new (Fields_default()).SFTime (1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "articulationParameterValue0_changed",        new (Fields_default()).SFFloat ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "articulationParameterValue1_changed",        new (Fields_default()).SFFloat ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "articulationParameterValue2_changed",        new (Fields_default()).SFFloat ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "articulationParameterValue3_changed",        new (Fields_default()).SFFloat ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "articulationParameterValue4_changed",        new (Fields_default()).SFFloat ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "articulationParameterValue5_changed",        new (Fields_default()).SFFloat ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "articulationParameterValue6_changed",        new (Fields_default()).SFFloat ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "articulationParameterValue7_changed",        new (Fields_default()).SFFloat ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "collideTime",                                new (Fields_default()).SFTime ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "detonateTime",                               new (Fields_default()).SFTime ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "firedTime",                                  new (Fields_default()).SFTime ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isCollided",                                 new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isDetonated",                                new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isNetworkReader",                            new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isNetworkWriter",                            new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isRtpHeaderHeard",                           new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isStandAlone",                               new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "timestamp",                                  new (Fields_default()).SFTime ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "rtpHeaderExpected",                          new (Fields_default()).SFBool ()),
+      ]),
+      enumerable: true,
    },
 });
 
@@ -539,68 +570,79 @@ function ReceiverPdu (executionContext)
    this .addType ((X3DConstants_default()).ReceiverPdu);
 }
 
-ReceiverPdu .prototype = Object .assign (Object .create ((X3DSensorNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (ReceiverPdu .prototype, (X3DSensorNode_default()).prototype),
    (X3DBoundedObject_default()).prototype,
 {
-   constructor: ReceiverPdu,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",                 new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "visible",                  new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bboxDisplay",              new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxSize",                 new (Fields_default()).SFVec3f (-1, -1, -1)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxCenter",               new (Fields_default()).SFVec3f ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "enabled",                  new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isActive",                 new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "address",                  new (Fields_default()).SFString ("localhost")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "applicationID",            new (Fields_default()).SFInt32 (1)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "entityID",                 new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "multicastRelayHost",       new (Fields_default()).SFString ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "multicastRelayPort",       new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "networkMode",              new (Fields_default()).SFString ("standAlone")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "port",                     new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "radioID",                  new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "readInterval",             new (Fields_default()).SFFloat (0.1)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "receivedPower",            new (Fields_default()).SFFloat ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "receiverState",            new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "rtpHeaderExpected",        new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "siteID",                   new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "transmitterApplicationID", new (Fields_default()).SFInt32 (1)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "transmitterEntityID",      new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "transmitterRadioID",       new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "transmitterSiteID",        new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "whichGeometry",            new (Fields_default()).SFInt32 (1)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "writeInterval",            new (Fields_default()).SFFloat (1)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isNetworkReader",          new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isNetworkWriter",          new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isRtpHeaderHeard",         new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isStandAlone",             new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "timestamp",                new (Fields_default()).SFTime ()),
-   ]),
-   getTypeName: function ()
+   initialize ()
    {
-      return "ReceiverPdu";
+      X3DSensorNode_default().prototype .initialize .call (this);
+      X3DBoundedObject_default().prototype .initialize .call (this);
    },
-   getComponentName: function ()
+   dispose ()
    {
-      return "DIS";
+      X3DBoundedObject_default().prototype .dispose .call (this);
+      X3DSensorNode_default().prototype .dispose .call (this);
    },
-   getContainerField: function ()
+});
+
+Object .defineProperties (ReceiverPdu,
+{
+   typeName:
    {
-      return "children";
+      value: "ReceiverPdu",
+      enumerable: true,
    },
-   getSpecificationRange: function ()
+   componentName:
    {
-      return ["3.0", "Infinity"];
+      value: "DIS",
+      enumerable: true,
    },
-   initialize: function ()
+   containerField:
    {
-      X3DSensorNode_default().prototype.initialize.call (this);
-      X3DBoundedObject_default().prototype.initialize.call (this);
+      value: "children",
+      enumerable: true,
    },
-   dispose: function ()
+   specificationRange:
    {
-      X3DBoundedObject_default().prototype.dispose.call (this);
-      X3DSensorNode_default().prototype.dispose.call (this);
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",                 new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "visible",                  new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bboxDisplay",              new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxSize",                 new (Fields_default()).SFVec3f (-1, -1, -1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxCenter",               new (Fields_default()).SFVec3f ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "enabled",                  new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isActive",                 new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "address",                  new (Fields_default()).SFString ("localhost")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "applicationID",            new (Fields_default()).SFInt32 (1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "entityID",                 new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "multicastRelayHost",       new (Fields_default()).SFString ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "multicastRelayPort",       new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "networkMode",              new (Fields_default()).SFString ("standAlone")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "port",                     new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "radioID",                  new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "readInterval",             new (Fields_default()).SFFloat (0.1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "receivedPower",            new (Fields_default()).SFFloat ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "receiverState",            new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "rtpHeaderExpected",        new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "siteID",                   new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "transmitterApplicationID", new (Fields_default()).SFInt32 (1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "transmitterEntityID",      new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "transmitterRadioID",       new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "transmitterSiteID",        new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "whichGeometry",            new (Fields_default()).SFInt32 (1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "writeInterval",            new (Fields_default()).SFFloat (1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isNetworkReader",          new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isNetworkWriter",          new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isRtpHeaderHeard",         new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isStandAlone",             new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "timestamp",                new (Fields_default()).SFTime ()),
+      ]),
+      enumerable: true,
    },
 });
 
@@ -672,68 +714,79 @@ function SignalPdu (executionContext)
    this .addType ((X3DConstants_default()).SignalPdu);
 }
 
-SignalPdu .prototype = Object .assign (Object .create ((X3DSensorNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (SignalPdu .prototype, (X3DSensorNode_default()).prototype),
    (X3DBoundedObject_default()).prototype,
 {
-   constructor: SignalPdu,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",           new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "visible",            new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bboxDisplay",        new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxSize",           new (Fields_default()).SFVec3f (-1, -1, -1)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxCenter",         new (Fields_default()).SFVec3f ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "enabled",            new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isActive",           new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "address",            new (Fields_default()).SFString ("localhost")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "applicationID",      new (Fields_default()).SFInt32 (1)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "data",               new (Fields_default()).MFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "dataLength",         new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "encodingScheme",     new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "entityID",           new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "multicastRelayHost", new (Fields_default()).SFString ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "multicastRelayPort", new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "networkMode",        new (Fields_default()).SFString ("standAlone")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "port",               new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "radioID",            new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "readInterval",       new (Fields_default()).SFFloat (0.1)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "rtpHeaderExpected",  new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "sampleRate",         new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "samples",            new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "siteID",             new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "tdlType",            new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "whichGeometry",      new (Fields_default()).SFInt32 (1)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "writeInterval",      new (Fields_default()).SFFloat (1)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isNetworkReader",    new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isNetworkWriter",    new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isRtpHeaderHeard",   new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isStandAlone",       new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "timestamp",          new (Fields_default()).SFTime ()),
-   ]),
-   getTypeName: function ()
+   initialize ()
    {
-      return "SignalPdu";
+      X3DSensorNode_default().prototype .initialize .call (this);
+      X3DBoundedObject_default().prototype .initialize .call (this);
    },
-   getComponentName: function ()
+   dispose ()
    {
-      return "DIS";
+      X3DBoundedObject_default().prototype .dispose .call (this);
+      X3DSensorNode_default().prototype .dispose .call (this);
    },
-   getContainerField: function ()
+});
+
+Object .defineProperties (SignalPdu,
+{
+   typeName:
    {
-      return "children";
+      value: "SignalPdu",
+      enumerable: true,
    },
-   getSpecificationRange: function ()
+   componentName:
    {
-      return ["3.0", "Infinity"];
+      value: "DIS",
+      enumerable: true,
    },
-   initialize: function ()
+   containerField:
    {
-      X3DSensorNode_default().prototype.initialize.call (this);
-      X3DBoundedObject_default().prototype.initialize.call (this);
+      value: "children",
+      enumerable: true,
    },
-   dispose: function ()
+   specificationRange:
    {
-      X3DBoundedObject_default().prototype.dispose.call (this);
-      X3DSensorNode_default().prototype.dispose.call (this);
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",           new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "visible",            new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bboxDisplay",        new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxSize",           new (Fields_default()).SFVec3f (-1, -1, -1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxCenter",         new (Fields_default()).SFVec3f ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "enabled",            new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isActive",           new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "address",            new (Fields_default()).SFString ("localhost")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "applicationID",      new (Fields_default()).SFInt32 (1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "data",               new (Fields_default()).MFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "dataLength",         new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "encodingScheme",     new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "entityID",           new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "multicastRelayHost", new (Fields_default()).SFString ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "multicastRelayPort", new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "networkMode",        new (Fields_default()).SFString ("standAlone")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "port",               new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "radioID",            new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "readInterval",       new (Fields_default()).SFFloat (0.1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "rtpHeaderExpected",  new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "sampleRate",         new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "samples",            new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "siteID",             new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "tdlType",            new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "whichGeometry",      new (Fields_default()).SFInt32 (1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "writeInterval",      new (Fields_default()).SFFloat (1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isNetworkReader",    new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isNetworkWriter",    new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isRtpHeaderHeard",   new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isStandAlone",       new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "timestamp",          new (Fields_default()).SFTime ()),
+      ]),
+      enumerable: true,
    },
 });
 
@@ -805,84 +858,95 @@ function TransmitterPdu (executionContext)
    this .addType ((X3DConstants_default()).TransmitterPdu);
 }
 
-TransmitterPdu .prototype = Object .assign (Object .create ((X3DSensorNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (TransmitterPdu .prototype, (X3DSensorNode_default()).prototype),
    (X3DBoundedObject_default()).prototype,
 {
-   constructor: TransmitterPdu,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",                           new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "visible",                            new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bboxDisplay",                        new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxSize",                           new (Fields_default()).SFVec3f (-1, -1, -1)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxCenter",                         new (Fields_default()).SFVec3f ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "enabled",                            new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isActive",                           new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "address",                            new (Fields_default()).SFString ("localhost")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "antennaLocation",                    new (Fields_default()).SFVec3f ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "antennaPatternLength",               new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "antennaPatternType",                 new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "applicationID",                      new (Fields_default()).SFInt32 (1)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "cryptoKeyID",                        new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "cryptoSystem",                       new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "entityID",                           new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "frequency",                          new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "inputSource",                        new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "lengthOfModulationParameters",       new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "modulationTypeDetail",               new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "modulationTypeMajor",                new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "modulationTypeSpreadSpectrum",       new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "modulationTypeSystem",               new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "multicastRelayHost",                 new (Fields_default()).SFString ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "multicastRelayPort",                 new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "networkMode",                        new (Fields_default()).SFString ("standAlone")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "port",                               new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "power",                              new (Fields_default()).SFFloat ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "radioEntityTypeCategory",            new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "radioEntityTypeCountry",             new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "radioEntityTypeDomain",              new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "radioEntityTypeKind",                new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "radioEntityTypeNomenclature",        new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "radioEntityTypeNomenclatureVersion", new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "radioID",                            new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "readInterval",                       new (Fields_default()).SFFloat (0.1)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "relativeAntennaLocation",            new (Fields_default()).SFVec3f ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "rtpHeaderExpected",                  new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "siteID",                             new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "transmitFrequencyBandwidth",         new (Fields_default()).SFFloat ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "transmitState",                      new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "whichGeometry",                      new (Fields_default()).SFInt32 (1)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "writeInterval",                      new (Fields_default()).SFFloat (1)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isNetworkReader",                    new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isNetworkWriter",                    new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isRtpHeaderHeard",                   new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isStandAlone",                       new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "timestamp",                          new (Fields_default()).SFTime ()),
-   ]),
-   getTypeName: function ()
+   initialize ()
    {
-      return "TransmitterPdu";
+      X3DSensorNode_default().prototype .initialize .call (this);
+      X3DBoundedObject_default().prototype .initialize .call (this);
    },
-   getComponentName: function ()
+   dispose ()
    {
-      return "DIS";
+      X3DBoundedObject_default().prototype .dispose .call (this);
+      X3DSensorNode_default().prototype .dispose .call (this);
    },
-   getContainerField: function ()
+});
+
+Object .defineProperties (TransmitterPdu,
+{
+   typeName:
    {
-      return "children";
+      value: "TransmitterPdu",
+      enumerable: true,
    },
-   getSpecificationRange: function ()
+   componentName:
    {
-      return ["3.0", "Infinity"];
+      value: "DIS",
+      enumerable: true,
    },
-   initialize: function ()
+   containerField:
    {
-      X3DSensorNode_default().prototype.initialize.call (this);
-      X3DBoundedObject_default().prototype.initialize.call (this);
+      value: "children",
+      enumerable: true,
    },
-   dispose: function ()
+   specificationRange:
    {
-      X3DBoundedObject_default().prototype.dispose.call (this);
-      X3DSensorNode_default().prototype.dispose.call (this);
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",                           new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "visible",                            new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bboxDisplay",                        new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxSize",                           new (Fields_default()).SFVec3f (-1, -1, -1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxCenter",                         new (Fields_default()).SFVec3f ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "enabled",                            new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isActive",                           new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "address",                            new (Fields_default()).SFString ("localhost")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "antennaLocation",                    new (Fields_default()).SFVec3f ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "antennaPatternLength",               new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "antennaPatternType",                 new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "applicationID",                      new (Fields_default()).SFInt32 (1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "cryptoKeyID",                        new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "cryptoSystem",                       new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "entityID",                           new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "frequency",                          new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "inputSource",                        new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "lengthOfModulationParameters",       new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "modulationTypeDetail",               new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "modulationTypeMajor",                new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "modulationTypeSpreadSpectrum",       new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "modulationTypeSystem",               new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "multicastRelayHost",                 new (Fields_default()).SFString ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "multicastRelayPort",                 new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "networkMode",                        new (Fields_default()).SFString ("standAlone")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "port",                               new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "power",                              new (Fields_default()).SFFloat ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "radioEntityTypeCategory",            new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "radioEntityTypeCountry",             new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "radioEntityTypeDomain",              new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "radioEntityTypeKind",                new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "radioEntityTypeNomenclature",        new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "radioEntityTypeNomenclatureVersion", new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "radioID",                            new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "readInterval",                       new (Fields_default()).SFFloat (0.1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "relativeAntennaLocation",            new (Fields_default()).SFVec3f ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "rtpHeaderExpected",                  new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "siteID",                             new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "transmitFrequencyBandwidth",         new (Fields_default()).SFFloat ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "transmitState",                      new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "whichGeometry",                      new (Fields_default()).SFInt32 (1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "writeInterval",                      new (Fields_default()).SFFloat (1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isNetworkReader",                    new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isNetworkWriter",                    new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isRtpHeaderHeard",                   new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isStandAlone",                       new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "timestamp",                          new (Fields_default()).SFTime ()),
+      ]),
+      enumerable: true,
    },
 });
 
@@ -947,20 +1011,20 @@ Namespace_default().set ("x_ite/Components/DIS/TransmitterPdu", TransmitterPdu_d
 
 
 
-Components_default().addComponent ({
+Components_default().add ({
    name: "DIS",
-   types:
-   {
-      DISEntityManager:     DIS_DISEntityManager,
-      DISEntityTypeMapping: DIS_DISEntityTypeMapping,
-      EspduTransform:       DIS_EspduTransform,
-      ReceiverPdu:          DIS_ReceiverPdu,
-      SignalPdu:            DIS_SignalPdu,
-      TransmitterPdu:       DIS_TransmitterPdu,
-   },
-   abstractTypes:
-   {
-   },
+   concreteNodes:
+   [
+      DIS_DISEntityManager,
+      DIS_DISEntityTypeMapping,
+      DIS_EspduTransform,
+      DIS_ReceiverPdu,
+      DIS_SignalPdu,
+      DIS_TransmitterPdu,
+   ],
+   abstractNodes:
+   [
+   ],
 });
 
 const DIS_default_ = undefined;

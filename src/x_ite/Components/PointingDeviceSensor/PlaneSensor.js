@@ -78,40 +78,9 @@ function PlaneSensor (executionContext)
    this ._translation_changed .setUnit ("length");
 }
 
-PlaneSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .prototype),
+Object .assign (Object .setPrototypeOf (PlaneSensor .prototype, X3DDragSensorNode .prototype),
 {
-   constructor: PlaneSensor,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",            new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "description",         new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",             new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "axisRotation",        new Fields .SFRotation ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "autoOffset",          new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "offset",              new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "minPosition",         new Fields .SFVec2f ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "maxPosition",         new Fields .SFVec2f (-1, -1)),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "trackPoint_changed",  new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "translation_changed", new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "isOver",              new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",            new Fields .SFBool ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "PlaneSensor";
-   },
-   getComponentName: function ()
-   {
-      return "PointingDeviceSensor";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DDragSensorNode .prototype .initialize .call (this);
 
@@ -126,7 +95,7 @@ PlaneSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .prot
       this .startOffset = new Vector3 (0, 0, 0);
       this .startPoint  = new Vector3 (0, 0, 0);
    },
-   getLineTrackPoint: function (hit, line, trackPoint)
+   getLineTrackPoint (hit, line, trackPoint)
    {
       ViewVolume .projectLine (line, this .modelViewMatrix, this .projectionMatrix, this .viewport, screenLine);
       screenLine .getClosestPointToPoint (hit .pointer, trackPoint1);
@@ -134,7 +103,7 @@ PlaneSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .prot
 
       return line .getClosestPointToLine (trackPointLine, trackPoint);
    },
-   set_active__: function (active, hit, modelViewMatrix, projectionMatrix, viewport)
+   set_active__ (active, hit, modelViewMatrix, projectionMatrix, viewport)
    {
       X3DDragSensorNode .prototype .set_active__ .call (this, active, hit, modelViewMatrix, projectionMatrix, viewport);
 
@@ -192,10 +161,8 @@ PlaneSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .prot
                {
                   this .getLineTrackPoint (hit, new Line3 (this .line .direction, this .line .direction), trackPoint);
                }
-               catch (error)
+               catch
                {
-                  //console .error (error);
-
                   trackPoint .assign (this .startPoint);
                }
 
@@ -209,14 +176,14 @@ PlaneSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .prot
             this ._offset = this ._translation_changed;
       }
    },
-   trackStart: function (trackPoint)
+   trackStart (trackPoint)
    {
       this .startOffset .assign (this ._offset .getValue ());
 
       this ._trackPoint_changed  = trackPoint;
       this ._translation_changed = this ._offset .getValue ();
    },
-   set_motion__: function (hit)
+   set_motion__ (hit)
    {
       try
       {
@@ -245,7 +212,7 @@ PlaneSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .prot
                {
                   this .getLineTrackPoint (hit, new Line3 (Vector3 .Zero, this .line .direction), trackPoint);
                }
-               catch (error)
+               catch
                {
                   trackPoint .assign (endPoint);
                }
@@ -256,15 +223,13 @@ PlaneSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .prot
                throw new Error ("Lines are parallel.");
          }
       }
-      catch (error)
+      catch
       {
-         // console .error (error);
-
          this ._trackPoint_changed  .addEvent ();
          this ._translation_changed .addEvent ();
       }
    },
-   track: function (endPoint, trackPoint)
+   track (endPoint, trackPoint)
    {
       const
          axisRotation = this ._axisRotation .getValue (),
@@ -287,6 +252,48 @@ PlaneSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .prot
 
       if (! this ._translation_changed .getValue () .equals (translation))
          this ._translation_changed = translation;
+   },
+});
+
+Object .defineProperties (PlaneSensor,
+{
+   typeName:
+   {
+      value: "PlaneSensor",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "PointingDeviceSensor",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",            new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "description",         new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",             new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "axisRotation",        new Fields .SFRotation ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "autoOffset",          new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "offset",              new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "minPosition",         new Fields .SFVec2f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "maxPosition",         new Fields .SFVec2f (-1, -1)),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "trackPoint_changed",  new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "translation_changed", new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "isOver",              new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",            new Fields .SFBool ()),
+      ]),
+      enumerable: true,
    },
 });
 

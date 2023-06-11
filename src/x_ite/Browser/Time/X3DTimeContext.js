@@ -61,17 +61,17 @@ function X3DTimeContext ()
    this [_currentSpeed]     = 0;
 }
 
-X3DTimeContext .prototype =
+Object .assign (X3DTimeContext .prototype,
 {
-   getCurrentTime: function ()
+   getCurrentTime ()
    {
       return this [_currentTime];
    },
-   getCurrentFrameRate: function ()
+   getCurrentFrameRate ()
    {
       return this [_currentFrameRate];
    },
-   getCurrentSpeed: function ()
+   getCurrentSpeed ()
    {
       return this [_currentSpeed];
    },
@@ -103,6 +103,6 @@ X3DTimeContext .prototype =
          }
       };
    })(),
-};
+});
 
 export default X3DTimeContext;

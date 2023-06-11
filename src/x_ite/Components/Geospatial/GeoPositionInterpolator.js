@@ -66,49 +66,22 @@ function GeoPositionInterpolator (executionContext)
    this .geocentric = new Geocentric ();
 }
 
-GeoPositionInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
+Object .assign (Object .setPrototypeOf (GeoPositionInterpolator .prototype, X3DInterpolatorNode .prototype),
    X3DGeospatialObject .prototype,
 {
-   constructor: GeoPositionInterpolator,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",         new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "geoOrigin",        new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "geoSystem",        new Fields .MFString ("GD", "WE")),
-      new X3DFieldDefinition (X3DConstants .inputOnly,      "set_fraction",     new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "key",              new Fields .MFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "keyValue",         new Fields .MFVec3d ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,     "value_changed",    new Fields .SFVec3d ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,     "geovalue_changed", new Fields .SFVec3d ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "GeoPositionInterpolator";
-   },
-   getComponentName: function ()
-   {
-      return "Geospatial";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   setup: function ()
+   setup ()
    {
       X3DGeospatialObject .prototype .initialize .call (this);
 
       X3DInterpolatorNode .prototype .setup .call (this);
    },
-   initialize: function ()
+   initialize ()
    {
       X3DInterpolatorNode .prototype .initialize .call (this);
 
       this ._keyValue .addInterest ("set_keyValue__", this);
    },
-   set_keyValue__: function ()
+   set_keyValue__ ()
    {
       const
          key      = this ._key,
@@ -135,10 +108,48 @@ GeoPositionInterpolator .prototype = Object .assign (Object .create (X3DInterpol
          this ._value_changed    = coord;
       };
    })(),
-   dispose: function ()
+   dispose ()
    {
       X3DGeospatialObject .prototype .dispose .call (this);
       X3DInterpolatorNode .prototype .dispose .call (this);
+   },
+});
+
+Object .defineProperties (GeoPositionInterpolator,
+{
+   typeName:
+   {
+      value: "GeoPositionInterpolator",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Geospatial",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",         new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "geoOrigin",        new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "geoSystem",        new Fields .MFString ("GD", "WE")),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "set_fraction",     new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "key",              new Fields .MFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "keyValue",         new Fields .MFVec3d ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "value_changed",    new Fields .SFVec3d ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "geovalue_changed", new Fields .SFVec3d ()),
+      ]),
+      enumerable: true,
    },
 });
 

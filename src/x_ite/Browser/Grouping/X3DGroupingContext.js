@@ -53,9 +53,9 @@ const _bboxShape = Symbol ();
 
 function X3DGroupingContext () { }
 
-X3DGroupingContext .prototype =
+Object .assign (X3DGroupingContext .prototype,
 {
-   getBBoxNode: function ()
+   getBBoxNode ()
    {
       const
          bboxShape      = new Shape (this .getPrivateScene ()),
@@ -79,6 +79,6 @@ X3DGroupingContext .prototype =
 
       return bboxShape;
    },
-};
+});
 
 export default X3DGroupingContext;

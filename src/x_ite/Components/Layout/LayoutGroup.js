@@ -68,38 +68,9 @@ function LayoutGroup (executionContext)
    this .screenMatrix    = new Matrix4 ();
 }
 
-LayoutGroup .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
+Object .assign (Object .setPrototypeOf (LayoutGroup .prototype, X3DGroupingNode .prototype),
 {
-   constructor: LayoutGroup,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",       new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "layout",         new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "viewport",       new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",        new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",    new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",       new Fields .SFVec3f (-1, -1, -1)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",     new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",    new Fields .MFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,      "removeChildren", new Fields .MFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "children",       new Fields .MFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "LayoutGroup";
-   },
-   getComponentName: function ()
-   {
-      return "Layout";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DGroupingNode .prototype .initialize .call (this);
 
@@ -109,30 +80,30 @@ LayoutGroup .prototype = Object .assign (Object .create (X3DGroupingNode .protot
       this .set_viewport__ ();
       this .set_layout__ ();
    },
-   set_viewport__: function ()
+   set_viewport__ ()
    {
       this .viewportNode = X3DCast (X3DConstants .X3DViewportNode, this ._viewport);
    },
-   set_layout__: function ()
+   set_layout__ ()
    {
       this .layoutNode = X3DCast (X3DConstants .X3DLayoutNode, this ._layout);
    },
-   getBBox: function (bbox, shadows)
+   getBBox (bbox, shadows)
    {
       return X3DGroupingNode .prototype .getBBox .call (this, bbox, shadows) .multRight (this .getMatrix ());
    },
-   getMatrix: function ()
+   getMatrix ()
    {
       if (this .layoutNode)
          return this .matrix .assign (this .modelViewMatrix) .inverse () .multLeft (this .screenMatrix);
 
       return this .matrix .identity ();
    },
-   getLayout: function ()
+   getLayout ()
    {
       return this .layoutNode;
    },
-   traverse: function (type, renderObject)
+   traverse (type, renderObject)
    {
       switch (type)
       {
@@ -171,6 +142,46 @@ LayoutGroup .prototype = Object .assign (Object .create (X3DGroupingNode .protot
             return;
          }
       }
+   },
+});
+
+Object .defineProperties (LayoutGroup,
+{
+   typeName:
+   {
+      value: "LayoutGroup",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Layout",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",       new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "layout",         new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "viewport",       new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",        new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",    new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",       new Fields .SFVec3f (-1, -1, -1)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",     new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",    new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "removeChildren", new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "children",       new Fields .MFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 

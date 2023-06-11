@@ -62,32 +62,9 @@ function TextureCoordinateGenerator (executionContext)
    this .parameter = new Float32Array (6);
 }
 
-TextureCoordinateGenerator .prototype = Object .assign (Object .create (X3DSingleTextureCoordinateNode .prototype),
+Object .assign (Object .setPrototypeOf (TextureCoordinateGenerator .prototype, X3DSingleTextureCoordinateNode .prototype),
 {
-   constructor: TextureCoordinateGenerator,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",  new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "mapping",   new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "mode",      new Fields .SFString ("SPHERE")),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "parameter", new Fields .MFFloat ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "TextureCoordinateGenerator";
-   },
-   getComponentName: function ()
-   {
-      return "Texturing";
-   },
-   getContainerField: function ()
-   {
-      return "texCoord";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DSingleTextureCoordinateNode .prototype .initialize .call (this);
 
@@ -121,7 +98,7 @@ TextureCoordinateGenerator .prototype = Object .assign (Object .create (X3DSingl
             this .mode = ModeType .SPHERE;
       };
    })(),
-   set_parameter__: function ()
+   set_parameter__ ()
    {
       const length = Math .min (this .parameter .length, this ._parameter .length)
 
@@ -130,22 +107,56 @@ TextureCoordinateGenerator .prototype = Object .assign (Object .create (X3DSingl
 
       this .parameter .fill (0, length);
    },
-   get1Point: function (index, vector)
+   get1Point (index, vector)
    {
       return vector;
    },
-   getPoints: function (array)
+   getPoints (array)
    {
       return array;
    },
-   addPointToChannel: function (index, array)
+   addPointToChannel (index, array)
    {
       array .push (0, 0, 0, 1);
    },
-   setShaderUniforms: function (gl, shaderObject, channel = 0)
+   setShaderUniforms (gl, shaderObject, channel = 0)
    {
       gl .uniform1i  (shaderObject .x3d_TextureCoordinateGeneratorMode [channel],      this .mode);
       gl .uniform1fv (shaderObject .x3d_TextureCoordinateGeneratorParameter [channel], this .parameter);
+   },
+});
+
+Object .defineProperties (TextureCoordinateGenerator,
+{
+   typeName:
+   {
+      value: "TextureCoordinateGenerator",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Texturing",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "texCoord",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",  new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "mapping",   new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "mode",      new Fields .SFString ("SPHERE")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "parameter", new Fields .MFFloat ()),
+      ]),
+      enumerable: true,
    },
 });
 

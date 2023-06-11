@@ -70,41 +70,9 @@ function CylinderSensor (executionContext)
    this ._offset    .setUnit ("angle");
 }
 
-CylinderSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .prototype),
+Object .assign (Object .setPrototypeOf (CylinderSensor .prototype, X3DDragSensorNode .prototype),
 {
-   constructor: CylinderSensor,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",           new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "description",        new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",            new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "axisRotation",       new Fields .SFRotation ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "diskAngle",          new Fields .SFFloat (0.261792)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "minAngle",           new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "maxAngle",           new Fields .SFFloat (-1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "offset",             new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "autoOffset",         new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "trackPoint_changed", new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "rotation_changed",   new Fields .SFRotation ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "isOver",             new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",           new Fields .SFBool ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "CylinderSensor";
-   },
-   getComponentName: function ()
-   {
-      return "PointingDeviceSensor";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DDragSensorNode .prototype .initialize .call (this);
 
@@ -121,7 +89,7 @@ CylinderSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .p
       this .fromVector  = new Vector3 (0, 0, 0);
       this .startOffset = new Rotation4 ();
    },
-   isBehind: function (hitRay, hitPoint)
+   isBehind (hitRay, hitPoint)
    {
       const
          enter = new Vector3 (0, 0 ,0),
@@ -131,7 +99,7 @@ CylinderSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .p
 
       return hitPoint .distance (enter) > hitPoint .distance (exit);
    },
-   getTrackPoint: function (hitRay, trackPoint)
+   getTrackPoint (hitRay, trackPoint)
    {
       const zPoint = new Vector3 (0, 0, 0);
 
@@ -153,7 +121,7 @@ CylinderSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .p
       rotation .multVecRot (trackPoint .assign (this .szNormal) .multiply (this .cylinder .radius));
       trackPoint .add (axisPoint);
    },
-   getAngle: function (rotation)
+   getAngle (rotation)
    {
       if (rotation .getAxis (new Vector3 (0, 0, 0)) .dot (this .cylinder .axis .direction) > 0)
          return rotation .angle;
@@ -161,7 +129,7 @@ CylinderSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .p
       else
          return -rotation .angle;
    },
-   set_active__: function (active, hit, modelViewMatrix, projectionMatrix, viewport)
+   set_active__ (active, hit, modelViewMatrix, projectionMatrix, viewport)
    {
       X3DDragSensorNode .prototype .set_active__ .call (this, active, hit, modelViewMatrix, projectionMatrix, viewport);
 
@@ -220,7 +188,7 @@ CylinderSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .p
             this ._offset = this .getAngle (this ._rotation_changed .getValue ());
       }
    },
-   set_motion__: function (hit)
+   set_motion__ (hit)
    {
       const
          hitRay     = hit .hitRay .copy () .multLineMatrix (this .invModelViewMatrix),
@@ -286,6 +254,49 @@ CylinderSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .p
          if (! this ._rotation_changed .getValue () .equals (rotation))
             this ._rotation_changed = rotation;
       }
+   },
+});
+
+Object .defineProperties (CylinderSensor,
+{
+   typeName:
+   {
+      value: "CylinderSensor",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "PointingDeviceSensor",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",           new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "description",        new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",            new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "axisRotation",       new Fields .SFRotation ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "diskAngle",          new Fields .SFFloat (0.261792)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "minAngle",           new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "maxAngle",           new Fields .SFFloat (-1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "offset",             new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "autoOffset",         new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "trackPoint_changed", new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "rotation_changed",   new Fields .SFRotation ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "isOver",             new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",           new Fields .SFBool ()),
+      ]),
+      enumerable: true,
    },
 });
 

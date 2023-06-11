@@ -45,7 +45,8 @@
  *
  ******************************************************************************/
 
-const MapUtilities = {
+const MapUtilities =
+{
    assign: (function ()
    {
       function callback (value, key)

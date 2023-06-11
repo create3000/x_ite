@@ -60,46 +60,57 @@ function IconAnnotation (executionContext)
    this .addType (X3DConstants .IconAnnotation);
 }
 
-IconAnnotation .prototype = Object .assign (Object .create (X3DAnnotationNode .prototype),
+Object .assign (Object .setPrototypeOf (IconAnnotation .prototype, X3DAnnotationNode .prototype),
    X3DUrlObject .prototype,
 {
-   constructor: IconAnnotation,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",             new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",              new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "annotationGroupID",    new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "displayPolicy",        new Fields .SFString ("NEVER")),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "url",                  new Fields .MFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "autoRefresh",          new Fields .SFTime ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "autoRefreshTimeLimit", new Fields .SFTime (3600)),
-   ]),
-   getTypeName: function ()
-   {
-      return "IconAnnotation";
-   },
-   getComponentName: function ()
-   {
-      return "Annotation";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["4.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DAnnotationNode .prototype .initialize .call (this);
       X3DUrlObject      .prototype .initialize .call (this);
    },
-   requestImmediateLoad: function (cache = true)
+   requestImmediateLoad (cache = true)
    { },
-   dispose: function ()
+   dispose ()
    {
       X3DUrlObject      .prototype .dispose .call (this);
       X3DAnnotationNode .prototype .dispose .call (this);
+   },
+});
+
+Object .defineProperties (IconAnnotation,
+{
+   typeName:
+   {
+      value: "IconAnnotation",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Annotation",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["4.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",             new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",              new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "annotationGroupID",    new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "displayPolicy",        new Fields .SFString ("NEVER")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "url",                  new Fields .MFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "autoRefresh",          new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "autoRefreshTimeLimit", new Fields .SFTime (3600)),
+      ]),
+      enumerable: true,
    },
 });
 

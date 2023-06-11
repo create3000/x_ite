@@ -79,36 +79,10 @@ function ShaderPart (executionContext)
    this .options = [ ];
 }
 
-ShaderPart .prototype = Object .assign (Object .create (X3DNode .prototype),
+Object .assign (Object .setPrototypeOf (ShaderPart .prototype, X3DNode .prototype),
    X3DUrlObject .prototype,
 {
-   constructor: ShaderPart,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "description",          new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "type",                 new Fields .SFString ("VERTEX")),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
-   ]),
-   getTypeName: function ()
-   {
-      return "ShaderPart";
-   },
-   getComponentName: function ()
-   {
-      return "Shaders";
-   },
-   getContainerField: function ()
-   {
-      return "parts";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DNode      .prototype .initialize .call (this);
       X3DUrlObject .prototype .initialize .call (this);
@@ -120,25 +94,25 @@ ShaderPart .prototype = Object .assign (Object .create (X3DNode .prototype),
 
       this .requestImmediateLoad () .catch (Function .prototype);
    },
-   set_type__: function ()
+   set_type__ ()
    {
       this .setLoadState (X3DConstants .NOT_STARTED_STATE);
 
       this .requestImmediateLoad () .catch (Function .prototype);
    },
-   getSourceText: function ()
+   getSourceText ()
    {
       return this ._url;
    },
-   getOptions: function ()
+   getOptions ()
    {
       return this .options;
    },
-   setOptions: function (value)
+   setOptions (value)
    {
       this .options = value;
    },
-   getShader: function ()
+   getShader ()
    {
       return this .shader;
    },
@@ -158,11 +132,11 @@ ShaderPart .prototype = Object .assign (Object .create (X3DNode .prototype),
          return shaderTypes .get (this ._type .getValue ()) || "VERTEX_SHADER";
       };
    })(),
-   unloadData: function ()
+   unloadData ()
    {
       this .valid = false;
    },
-   loadData: function ()
+   loadData ()
    {
       new FileLoader (this) .loadDocument (this ._url,
       function (data, url)
@@ -217,10 +191,47 @@ ShaderPart .prototype = Object .assign (Object .create (X3DNode .prototype),
       }
       .bind (this));
    },
-   dispose: function ()
+   dispose ()
    {
       X3DUrlObject .prototype .dispose .call (this);
       X3DNode      .prototype .dispose .call (this);
+   },
+});
+
+Object .defineProperties (ShaderPart,
+{
+   typeName:
+   {
+      value: "ShaderPart",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Shaders",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "parts",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "description",          new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "type",                 new Fields .SFString ("VERTEX")),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
+      ]),
+      enumerable: true,
    },
 });
 

@@ -65,34 +65,9 @@ function TextureTransform (executionContext)
    this .matrix = new Matrix4 ();
 }
 
-TextureTransform .prototype = Object .assign (Object .create (X3DSingleTextureTransformNode .prototype),
+Object .assign (Object .setPrototypeOf (TextureTransform .prototype, X3DSingleTextureTransformNode .prototype),
 {
-   constructor: TextureTransform,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "mapping",     new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "translation", new Fields .SFVec2f ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "rotation",    new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "scale",       new Fields .SFVec2f (1, 1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "center",      new Fields .SFVec2f ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "TextureTransform";
-   },
-   getComponentName: function ()
-   {
-      return "Texturing";
-   },
-   getContainerField: function ()
-   {
-      return "textureTransform";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DSingleTextureTransformNode .prototype .initialize .call (this);
 
@@ -100,7 +75,7 @@ TextureTransform .prototype = Object .assign (Object .create (X3DSingleTextureTr
 
       this .eventsProcessed ();
    },
-   getMatrix: function ()
+   getMatrix ()
    {
       return this .matrix;
    },
@@ -146,6 +121,42 @@ TextureTransform .prototype = Object .assign (Object .create (X3DSingleTextureTr
          this .setMatrix (matrix4);
       };
    })(),
+});
+
+Object .defineProperties (TextureTransform,
+{
+   typeName:
+   {
+      value: "TextureTransform",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Texturing",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "textureTransform",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "mapping",     new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "translation", new Fields .SFVec2f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "rotation",    new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "scale",       new Fields .SFVec2f (1, 1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "center",      new Fields .SFVec2f ()),
+      ]),
+      enumerable: true,
+   },
 });
 
 export default TextureTransform;

@@ -65,23 +65,22 @@ function Spheroid3 (semiMajorAxis, semiMinorAxis)
    }
 }
 
-Spheroid3 .prototype =
+Object .assign (Spheroid3 .prototype,
 {
-   constructor: Spheroid3,
-   getSemiMajorAxis: function ()
+   getSemiMajorAxis ()
    {
       // Returns the semi-major axis (a)
       return this .semiMajorAxis; // a
    },
-   getSemiMinorAxis: function ()
+   getSemiMinorAxis ()
    {
       // Returns the semi-minor axis (c)
       return this .semiMinorAxis; // c
    },
-   toString: function ()
+   toString ()
    {
-      return this .semiMajorAxis + " " + this .semiMinorAxis;
+      return `${this .semiMajorAxis} ${this .semiMinorAxis}`;
    },
-};
+});
 
 export default Spheroid3;

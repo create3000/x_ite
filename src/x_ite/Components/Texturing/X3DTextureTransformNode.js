@@ -55,9 +55,20 @@ function X3DTextureTransformNode (executionContext)
    this .addType (X3DConstants .X3DTextureTransformNode);
 }
 
-X3DTextureTransformNode .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
+Object .setPrototypeOf (X3DTextureTransformNode .prototype, X3DAppearanceChildNode .prototype);
+
+Object .defineProperties (X3DTextureTransformNode,
 {
-   constructor: X3DTextureTransformNode,
+   typeName:
+   {
+      value: "X3DTextureTransformNode",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Texturing",
+      enumerable: true,
+   },
 });
 
 export default X3DTextureTransformNode;

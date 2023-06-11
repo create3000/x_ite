@@ -65,36 +65,10 @@ function CADFace (executionContext)
    this .boundedObject = null;
 }
 
-CADFace .prototype = Object .assign (Object .create (X3DProductStructureChildNode .prototype),
+Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureChildNode .prototype),
    X3DBoundedObject .prototype,
 {
-   constructor: CADFace,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "name",        new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",     new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay", new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",    new Fields .SFVec3f (-1, -1, -1)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",  new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "shape",       new Fields .SFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "CADFace";
-   },
-   getComponentName: function ()
-   {
-      return "CADGeometry";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.1", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DProductStructureChildNode .prototype .initialize .call (this);
       X3DBoundedObject             .prototype .initialize .call (this);
@@ -103,14 +77,14 @@ CADFace .prototype = Object .assign (Object .create (X3DProductStructureChildNod
 
       this .set_shape__ ();
    },
-   getBBox: function (bbox, shadows)
+   getBBox (bbox, shadows)
    {
       if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
          return this .visibleNode ?.getBBox (bbox, shadows) ?? bbox .set ();
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
-   set_shape__: function ()
+   set_shape__ ()
    {
       if (this .childNode)
       {
@@ -153,7 +127,7 @@ CADFace .prototype = Object .assign (Object .create (X3DProductStructureChildNod
             break;
          }
       }
-      catch (error)
+      catch
       { }
 
       if (this .childNode)
@@ -168,15 +142,15 @@ CADFace .prototype = Object .assign (Object .create (X3DProductStructureChildNod
       this .set_visible__ ();
       this .set_bboxDisplay__ ();
    },
-   set_cameraObject__: function ()
+   set_cameraObject__ ()
    {
       this .setCameraObject (!!this .visibleNode ?.isCameraObject ());
    },
-   set_transformSensors__: function ()
+   set_transformSensors__ ()
    {
       this .setPickableObject (!!this .visibleNode ?.isPickableObject ());
    },
-   set_visible__: function ()
+   set_visible__ ()
    {
       if (this .childNode)
          this .visibleNode = this .childNode ._visible .getValue () ? this .childNode : null;
@@ -186,14 +160,14 @@ CADFace .prototype = Object .assign (Object .create (X3DProductStructureChildNod
       this .set_cameraObject__ ();
       this .set_transformSensors__ ();
    },
-   set_bboxDisplay__: function ()
+   set_bboxDisplay__ ()
    {
       if (this .childNode)
          this .boundedObject = this .childNode ._bboxDisplay .getValue () ? this .childNode : null;
       else
          this .boundedObject = null;
    },
-   traverse: function (type, renderObject)
+   traverse (type, renderObject)
    {
       switch (type)
       {
@@ -231,10 +205,47 @@ CADFace .prototype = Object .assign (Object .create (X3DProductStructureChildNod
          }
       }
    },
-   dispose: function ()
+   dispose ()
    {
       X3DBoundedObject             .prototype .dispose .call (this);
       X3DProductStructureChildNode .prototype .dispose .call (this);
+   },
+});
+
+Object .defineProperties (CADFace,
+{
+   typeName:
+   {
+      value: "CADFace",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "CADGeometry",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.1", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "name",        new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",     new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay", new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",    new Fields .SFVec3f (-1, -1, -1)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",  new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "shape",       new Fields .SFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 

@@ -45,14 +45,12 @@
  *
  ******************************************************************************/
 
-import SupportedNodes       from "../Configuration/SupportedNodes.js";
+import AbstractNodes        from "../Configuration/AbstractNodes.js";
 import Fields               from "../Fields.js";
 import X3DBaseNode          from "../Base/X3DBaseNode.js";
 import X3DPrototypeInstance from "../Components/Core/X3DPrototypeInstance.js";
 import SFNodeCache          from "../Fields/SFNodeCache.js";
 import X3DConstants         from "../Base/X3DConstants.js";
-
-SupportedNodes .addAbstractNodeType ("X3DProtoDeclarationNode", X3DProtoDeclarationNode);
 
 function X3DProtoDeclarationNode (executionContext)
 {
@@ -63,14 +61,13 @@ function X3DProtoDeclarationNode (executionContext)
    this .addChildObjects ("updateInstances", new Fields .SFTime ());
 }
 
-X3DProtoDeclarationNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DProtoDeclarationNode .prototype, X3DBaseNode .prototype),
 {
-   constructor: X3DProtoDeclarationNode,
-   canUserDefinedFields: function ()
+   canUserDefinedFields ()
    {
       return true;
    },
-   createInstance: function (executionContext, setup = true /* non-public argument */)
+   createInstance (executionContext, setup = true /* non-public argument */)
    {
       if (setup === false)
       {
@@ -85,15 +82,15 @@ X3DProtoDeclarationNode .prototype = Object .assign (Object .create (X3DBaseNode
          return SFNodeCache .get (instance);
       }
    },
-   newInstance: function ()
+   newInstance ()
    {
       return this .createInstance (this .getExecutionContext ());
    },
-   requestUpdateInstances: function ()
+   requestUpdateInstances ()
    {
       this ._updateInstances = this .getBrowser () .getCurrentTime ();
    },
-   updateInstances: function ()
+   updateInstances ()
    {
       this ._updateInstances .processEvent ();
    },
@@ -101,5 +98,16 @@ X3DProtoDeclarationNode .prototype = Object .assign (Object .create (X3DBaseNode
 
 for (const key of Reflect .ownKeys (X3DProtoDeclarationNode .prototype))
    Object .defineProperty (X3DProtoDeclarationNode .prototype, key, { enumerable: false });
+
+Object .defineProperties (X3DProtoDeclarationNode,
+{
+   typeName:
+   {
+      value: "X3DProtoDeclarationNode",
+      enumerable: true,
+   },
+});
+
+X3DConstants .addNode (X3DProtoDeclarationNode);
 
 export default X3DProtoDeclarationNode;

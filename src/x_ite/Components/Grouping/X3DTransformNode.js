@@ -58,10 +58,9 @@ function X3DTransformNode (executionContext)
    this ._center      .setUnit ("length");
 }
 
-X3DTransformNode .prototype = Object .assign (Object .create (X3DTransformMatrix3DNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DTransformNode .prototype, X3DTransformMatrix3DNode .prototype),
 {
-   constructor: X3DTransformNode,
-   initialize: function ()
+   initialize ()
    {
       X3DTransformMatrix3DNode .prototype .initialize .call (this);
 
@@ -69,13 +68,27 @@ X3DTransformNode .prototype = Object .assign (Object .create (X3DTransformMatrix
 
       this .eventsProcessed ();
    },
-   eventsProcessed: function ()
+   eventsProcessed ()
    {
       this .setTransform (this ._translation      .getValue (),
                           this ._rotation         .getValue (),
                           this ._scale            .getValue (),
                           this ._scaleOrientation .getValue (),
                           this ._center           .getValue ());
+   },
+});
+
+Object .defineProperties (X3DTransformNode,
+{
+   typeName:
+   {
+      value: "X3DTransformNode",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Grouping",
+      enumerable: true,
    },
 });
 

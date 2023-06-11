@@ -55,9 +55,20 @@ function X3DGeometricPropertyNode (executionContext)
    this .addType (X3DConstants .X3DGeometricPropertyNode);
 }
 
-X3DGeometricPropertyNode .prototype = Object .assign (Object .create (X3DNode .prototype),
+Object .setPrototypeOf (X3DGeometricPropertyNode .prototype, X3DNode .prototype);
+
+Object .defineProperties (X3DGeometricPropertyNode,
 {
-   constructor: X3DGeometricPropertyNode,
+   typeName:
+   {
+      value: "X3DGeometricPropertyNode",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Rendering",
+      enumerable: true,
+   },
 });
 
 export default X3DGeometricPropertyNode;

@@ -50,13 +50,14 @@ import Fields              from "../Fields.js";
 import Components          from "../Components.js";
 import X3DBrowserContext   from "./X3DBrowserContext.js";
 import DOMIntegration      from "./DOMIntegration.js";
-import legacy              from "./Legacy.js";
+import Legacy              from "./Legacy.js";
 import ProfileInfo         from "../Configuration/ProfileInfo.js";
 import ComponentInfo       from "../Configuration/ComponentInfo.js";
 import ComponentInfoArray  from "../Configuration/ComponentInfoArray.js";
 import SupportedProfiles   from "../Configuration/SupportedProfiles.js";
 import SupportedComponents from "../Configuration/SupportedComponents.js";
-import SupportedNodes      from "../Configuration/SupportedNodes.js";
+import AbstractNodes       from "../Configuration/AbstractNodes.js"
+import ConcreteNodes       from "../Configuration/ConcreteNodes.js"
 import X3DScene            from "../Execution/X3DScene.js";
 import FileLoader          from "../InputOutput/FileLoader.js";
 import XMLParser           from "../Parser/XMLParser.js";
@@ -85,28 +86,17 @@ function X3DBrowser (element)
 
    X3DBrowserContext .call (this, element);
 
+   this .addType (X3DConstants .X3DBrowser);
+
    this [_browserCallbacks] = new Map ();
    this [_console]          = document .getElementsByClassName ("x_ite-console");
 
    this .setup ();
 };
 
-X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .prototype),
+Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext .prototype),
 {
-   constructor: X3DBrowser,
-   getTypeName: function ()
-   {
-      return "X3DBrowser";
-   },
-   getComponentName: function ()
-   {
-      return "X_ITE";
-   },
-   getContainerField: function ()
-   {
-      return "browser";
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DBrowserContext .prototype .initialize .call (this);
 
@@ -114,7 +104,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
 
       this [_DOMIntegration] = new DOMIntegration (this);
 
-      legacy .call (this);
+      Legacy .browser (this);
 
       // Process events from context creation. This will setup nodes like
       // geometry option nodes before any node is created.
@@ -130,50 +120,50 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
 
       this .printWelcomeMessage ();
    },
-   printWelcomeMessage: function ()
+   printWelcomeMessage ()
    {
-      this .print ("Welcome to " + this .name + " X3D Browser v" + this .version + ":\n" +
-                   "   Current Graphics Renderer\n" +
-                   "      Name: " + this .getVendor () + " " + this .getRenderer () + "\n" +
-                   "      WebGL version: " + this .getWebGLVersion () + "\n" +
-                   "      Shading language: " + this .getShadingLanguageVersion () + "\n" +
-                   "   Rendering Properties\n" +
-                   "      Antialiased: " + this .getAntialiased () + "\n" +
-                   "      Max samples: " + this .getMaxSamples () + "\n" +
-                   "      Depth size: " + this .getDepthSize () + " bits\n" +
-                   "      Color depth: " + this .getColorDepth () + " bits\n" +
-                   "      Max clip planes per shape: " + this .getMaxClipPlanes () + "\n" +
-                   "      Max lights per shape: " + this .getMaxLights () + "\n" +
-                   "      Max multi textures per shape: " + this .getMaxTextures () + "\n" +
-                   "      Texture units: " + this .getMaxCombinedTextureUnits () + "\n" +
-                   "      Max texture size: " + this .getMaxTextureSize () + " × " + this .getMaxTextureSize () + " pixels\n" +
-                   "      Texture memory: " + this .getTextureMemory () + "\n" +
-                   "      Max vertex uniform vectors: " + this .getMaxVertexUniformVectors () + "\n" +
-                   "      Max fragment uniform vectors: " + this .getMaxFragmentUniformVectors () + "\n" +
-                   "      Max vertex attribs: " + this .getMaxVertexAttribs () + "\n" +
-                   "      Max varying vectors: " + this .getMaxVaryingVectors () + "\n");
+      this .print (`Welcome to ${this .name} X3D Browser v${this .version}:\n` +
+                   `   Current Graphics Renderer\n` +
+                   `      Name: ${this .getVendor ()} ${this .getRenderer ()}\n` +
+                   `      WebGL version: ${this .getWebGLVersion ()}\n` +
+                   `      Shading language: ${this .getShadingLanguageVersion ()}\n` +
+                   `   Rendering Properties\n` +
+                   `      Antialiased: ${this .getAntialiased ()}\n` +
+                   `      Max samples: ${this .getMaxSamples ()}\n` +
+                   `      Depth size: ${this .getDepthSize ()} bits\n` +
+                   `      Color depth: ${this .getColorDepth ()} bits\n` +
+                   `      Max clip planes per shape: ${this .getMaxClipPlanes ()}\n` +
+                   `      Max lights per shape: ${this .getMaxLights ()}\n` +
+                   `      Max multi textures per shape: ${this .getMaxTextures ()}\n` +
+                   `      Texture units: ${this .getMaxCombinedTextureUnits ()}\n` +
+                   `      Max texture size: ${this .getMaxTextureSize ()} × ${this .getMaxTextureSize ()} pixels\n` +
+                   `      Texture memory: ${this .getTextureMemory ()}\n` +
+                   `      Max vertex uniform vectors: ${this .getMaxVertexUniformVectors ()}\n` +
+                   `      Max fragment uniform vectors: ${this .getMaxFragmentUniformVectors ()}\n` +
+                   `      Max vertex attribs: ${this .getMaxVertexAttribs ()}\n` +
+                   `      Max varying vectors: ${this .getMaxVaryingVectors ()}\n`);
    },
-   getName: function ()
+   getName ()
    {
       return "X_ITE";
    },
-   getVersion: function ()
+   getVersion ()
    {
       return VERSION;
    },
-   getDescription: function ()
+   getDescription ()
    {
       return this .getNotification () ._string .getValue ()
    },
-   setDescription: function (value)
+   setDescription (value)
    {
       this .getNotification () ._string = value;
    },
-   getWorldURL: function ()
+   getWorldURL ()
    {
       return this .currentScene .worldURL;
    },
-   getProfile: function (name)
+   getProfile (name)
    {
       name = String (name);
 
@@ -182,13 +172,13 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
       if (profile)
          return profile;
 
-      throw Error ("Profile '" + name + "' is not supported.");
+      throw Error (`Profile '${name}' is not supported.`);
    },
-   getSupportedProfiles: function ()
+   getSupportedProfiles ()
    {
       return SupportedProfiles;
    },
-   getComponent: function (name, level = 0)
+   getComponent (name, level = 0)
    {
       name   = String (name);
       level |= 0;
@@ -197,78 +187,106 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
 
       if (component)
       {
-         return new ComponentInfo ({
-            name: name,
-            level: Algorithm .clamp (level || component .level, 1, component .level),
-            title: component .title,
-            providerUrl: component .providerUrl,
-            external: component .external,
-            dependencies: component .dependencies,
-         });
+         return new ComponentInfo (name,
+            Algorithm .clamp (level || component .level, 1, component .level),
+            component .title,
+            component .providerUrl,
+            component .external,
+            component .dependencies);
       }
 
-      throw Error ("Component '" + name + "' at level '" + level + "' is not supported.");
+      throw Error (`Component '${name}' at level '${level}' is not supported.`);
    },
-   getSupportedComponents: function ()
+   getSupportedComponents ()
    {
       return SupportedComponents;
    },
    loadComponents: (function ()
    {
-      function loadComponents (browser, componentNames, seen)
+      function loadComponents (components, seen)
       {
-         return Promise .all (componentNames .map (name => loadComponent (browser, name, seen)))
+         return Promise .all (components .map (component => loadComponent (component, seen)))
       }
 
-      async function loadComponent (browser, name, seen)
+      async function loadComponent ({ name, providerUrl, external, dependencies }, seen)
       {
          if (seen .has (name)) return; seen .add (name);
 
-         const component = browser .getSupportedComponents () .get (name);
+         await loadComponents (dependencies .map (name => SupportedComponents .get (name)), seen);
 
-         await loadComponents (browser, component .dependencies, seen);
-
-         if (!component .external)
+         if (!external)
             return;
 
          if (Features .NODE_ENV)
-            global .require (global .require ("url") .fileURLToPath (component .providerUrl))
+            global .require (global .require ("url") .fileURLToPath (providerUrl))
          else
-            await import (/* webpackIgnore: true */ component .providerUrl);
+            await import (/* webpackIgnore: true */ providerUrl);
       }
 
-      return function (argument)
+      return function (... args)
       {
-         if (argument instanceof ProfileInfo)
-            return this .loadComponents (argument .components);
+         const component = [ ];
 
-         if (argument instanceof ComponentInfoArray)
-            return this .loadComponents ([... argument] .map (({name}) => name));
+         for (const arg of args)
+         {
+            if (arg instanceof ProfileInfo)
+               component .push (... arg .components);
 
-         if (argument instanceof ComponentInfo)
-            return this .loadComponents ([argument .name]);
+            else if (arg instanceof ComponentInfoArray)
+               component .push (... arg);
+
+            else if (arg instanceof ComponentInfo)
+               component .push (arg);
+
+            else if (typeof arg === "string")
+               component .push (SupportedComponents .get (arg))
+         }
 
          // Load array of component names.
-         return loadComponents (this, [... argument], new Set ());
+         return loadComponents (component, new Set ());
       };
    })(),
-   getSupportedNode: function (typeName)
+   addConcreteNode (typeName, ConcreteNode)
    {
-      return SupportedNodes .getNodeTypes () .get (String (typeName));
+      ConcreteNodes .add (String (typeName), ConcreteNode);
    },
-   getSupportedNodes: function ()
+   updateConcreteNode (typeName, ConcreteNode)
    {
-      return SupportedNodes .getNodeTypes ();
+      ConcreteNodes .update (String (typeName), String (typeName), ConcreteNode);
    },
-   getAbstractNode: function (typeName)
+   removeConcreteNode (typeName)
    {
-      return SupportedNodes .getAbstractNodeTypes () .get (String (typeName));
+      ConcreteNodes .remove (String (typeName));
    },
-   getAbstractNodes: function ()
+   getConcreteNode (typeName)
    {
-      return SupportedNodes .getAbstractNodeTypes ();
+      return ConcreteNodes .get (String (typeName));
    },
-   createScene: function (profile, component1 /*, ...*/)
+   getConcreteNodes ()
+   {
+      return ConcreteNodes;
+   },
+   addAbstractNode (typeName, AbstractNode)
+   {
+      AbstractNodes .add (String (typeName), AbstractNode);
+   },
+   updateAbstractNode (typeName, AbstractNode)
+   {
+      AbstractNodes .update (String (typeName), String (typeName), AbstractNode);
+   },
+   removeAbstractNode (typeName)
+   {
+      AbstractNodes .remove (String (typeName));
+   },
+   getAbstractNode (typeName)
+   {
+      return AbstractNodes .get (String (typeName));
+   },
+   getAbstractNodes ()
+   {
+      return AbstractNodes;
+   },
+   createScene (profile, ... components)
    {
       const scene = new X3DScene (this);
 
@@ -279,10 +297,8 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
 
          scene .setProfile (profile);
 
-         for (let i = 1, length = arguments .length; i < length; ++ i)
+         for (const component of components)
          {
-            const component = arguments [i];
-
             if (!(component instanceof ComponentInfo))
                throw new Error ("Couldn't create scene: component must be of type ComponentInfo.");
 
@@ -294,7 +310,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
 
       return scene;
    },
-   replaceWorld: function (scene)
+   replaceWorld (scene)
    {
       return new Promise ((resolve, reject) =>
       {
@@ -353,7 +369,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
          scene .setLive (this .isLive ());
       });
    },
-   checkLoadCount: function (resolve, loadCount)
+   checkLoadCount (resolve, loadCount)
    {
       if (loadCount .getValue ())
          return;
@@ -366,7 +382,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
       this .callBrowserEventHandler ("initialized load");
       resolve ();
    },
-   createVrmlFromString: function (vrmlSyntax)
+   createVrmlFromString (vrmlSyntax)
    {
       vrmlSyntax = String (vrmlSyntax);
 
@@ -408,7 +424,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
 
       return scene;
    },
-   createVrmlFromURL: function (url, node, event)
+   createVrmlFromURL (url, node, event)
    {
       node  = X3DCast (X3DConstants .X3DNode, node, false);
       event = String (event);
@@ -422,10 +438,10 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
       const field = node .getField (event);
 
       if (!field .isInput ())
-         throw new Error ("Browser.createVrmlFromURL: event named '" + event + "' must be a input field.");
+         throw new Error (`Browser.createVrmlFromURL: event named '${event}' must be a input field.`);
 
       if (field .getType () !== X3DConstants .MFNode)
-         throw new Error ("Browser.createVrmlFromURL: event named '" + event + "' must be of type MFNode.");
+         throw new Error (`Browser.createVrmlFromURL: event named '${event}' must be of type MFNode.`);
 
       const
          currentScene = this .currentScene,
@@ -454,7 +470,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
          }
       });
    },
-   createX3DFromURL: function (url, node, event)
+   createX3DFromURL (url, node, event)
    {
       if (arguments .length === 3)
          return this .createVrmlFromURL (url, node, event);
@@ -495,7 +511,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
          })
       });
    },
-   loadURL: function (url, parameter = new Fields .MFString ())
+   loadURL (url, parameter = new Fields .MFString ())
    {
       return new Promise ((resolve, reject) =>
       {
@@ -575,23 +591,23 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
          }
       });
    },
-   addBrowserListener: function (callback, object)
+   addBrowserListener (callback, object)
    {
       // The string describes the name of the callback function to be called within the current ECMAScript context.
    },
-   removeBrowserListener: function (callback)
+   removeBrowserListener (callback)
    {
       // The string describes the name of the callback function to be called within the current ECMAScript context.
    },
-   addBrowserCallback: function (key, object)
+   addBrowserCallback (key, object)
    {
       this [_browserCallbacks] .set (key, object);
    },
-   removeBrowserCallback: function (key)
+   removeBrowserCallback (key)
    {
       this [_browserCallbacks] .delete (key);
    },
-   getBrowserCallbacks: function ()
+   getBrowserCallbacks ()
    {
       return this [_browserCallbacks];
    },
@@ -610,7 +626,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
          }
       };
    })(),
-   importDocument: function (dom)
+   importDocument (dom)
    {
       const
          currentScene = this .currentScene,
@@ -630,7 +646,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
 
       return new Promise (parser .parseIntoScene .bind (parser));
    },
-   importJS: function (json)
+   importJS (json)
    {
       const
          currentScene = this .currentScene,
@@ -650,23 +666,23 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
 
       return new Promise (parser .parseIntoScene .bind (parser));
    },
-   getBrowserProperty: function (name)
+   getBrowserProperty (name)
    {
       return this .getBrowserProperties () .getField (name) .getValue ();
    },
-   setBrowserOption: function (name, value)
+   setBrowserOption (name, value)
    {
       this .getBrowserOptions () .getField (name) .setValue (value);
    },
-   getBrowserOption: function (name)
+   getBrowserOption (name)
    {
       return this .getBrowserOptions () .getField (name) .getValue ();
    },
-   getRenderingProperty: function (name)
+   getRenderingProperty (name)
    {
       return this .getRenderingProperties () .getField (name) .getValue ();
    },
-   viewAll: function (layerNode)
+   viewAll (layerNode)
    {
       layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode) ?? this .getActiveLayer ();
 
@@ -675,7 +691,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
 
       layerNode .viewAll (1, this .getBrowserOption ("StraightenHorizon"));
    },
-   firstViewpoint: function (layerNode)
+   firstViewpoint (layerNode)
    {
       layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode) ?? this .getActiveLayer ();
 
@@ -684,7 +700,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
       if (viewpoints .length)
          this .bindViewpoint (layerNode, viewpoints [0]);
    },
-   previousViewpoint: function (layerNode)
+   previousViewpoint (layerNode)
    {
       layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode) ?? this .getActiveLayer ();
 
@@ -713,7 +729,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
       else
          this .bindViewpoint (layerNode, viewpoints .at (-1));
    },
-   nextViewpoint: function (layerNode)
+   nextViewpoint (layerNode)
    {
       layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode) ?? this .getActiveLayer ();
 
@@ -742,7 +758,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
       else
          this .bindViewpoint (layerNode, viewpoints [0]);
    },
-   lastViewpoint: function (layerNode)
+   lastViewpoint (layerNode)
    {
       layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode) ?? this .getActiveLayer ();
 
@@ -754,7 +770,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
       if (viewpoints .length)
          this .bindViewpoint (layerNode, viewpoints .at (-1));
    },
-   changeViewpoint: function (layerNode, name)
+   changeViewpoint (layerNode, name)
    {
       if (arguments .length === 1)
       {
@@ -776,7 +792,7 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
          break;
       }
    },
-   bindViewpoint: function (layerNode, viewpointNode)
+   bindViewpoint (layerNode, viewpointNode)
    {
       layerNode     = X3DCast (X3DConstants .X3DLayerNode,     layerNode);
       viewpointNode = X3DCast (X3DConstants .X3DViewpointNode, viewpointNode);
@@ -791,11 +807,11 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
 
       viewpointNode ._set_bind = true;
    },
-   addRoute: function (fromNode, fromEventOut, toNode, toEventIn)
+   addRoute (fromNode, fromEventOut, toNode, toEventIn)
    {
       this .currentScene .addRoute (fromNode, fromEventOut, toNode, toEventIn);
    },
-   deleteRoute: function (fromNode, fromEventOut, toNode, toEventIn)
+   deleteRoute (fromNode, fromEventOut, toNode, toEventIn)
    {
       try
       {
@@ -809,19 +825,19 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
          console .error (error);
       }
    },
-   beginUpdate: function ()
+   beginUpdate ()
    {
       this .setLive (true);
       this .getExecutionContext () .setLive (true);
       this .advanceTime ();
       this .addBrowserEvent ();
    },
-   endUpdate: function ()
+   endUpdate ()
    {
       this .setLive (false);
       this .getExecutionContext () .setLive (false);
    },
-   print: function (... args)
+   print (... args)
    {
       const string = args .join ("");
 
@@ -830,24 +846,24 @@ X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .proto
       for (const element of this [_console])
          element .append (document .createTextNode (string));
    },
-   println: function (... args)
+   println (... args)
    {
       const string = args .join ("");
 
       console .log (string);
 
       for (const element of this [_console])
-         element .append (document .createTextNode (string + "\n"));
+         element .append (document .createTextNode (`${string}\n`));
    },
-   toVRMLStream: function (generator)
+   toVRMLStream (generator)
    {
       this .currentScene .toVRMLStream (generator);
    },
-   toXMLStream: function (generator)
+   toXMLStream (generator)
    {
       this .currentScene .toXMLStream (generator);
    },
-   toJSONStream: function (generator)
+   toJSONStream (generator)
    {
       this .currentScene .toJSONStream (generator);
    },
@@ -865,12 +881,7 @@ Object .defineProperties (X3DBrowser .prototype,
    },
    version:
    {
-      get: X3DBrowser .prototype .getVersion,
-      enumerable: true,
-   },
-   providerUrl:
-   {
-      get: X3DBrowser .prototype .getProviderUrl,
+      value: VERSION,
       enumerable: true,
    },
    currentFrameRate:
@@ -897,7 +908,7 @@ Object .defineProperties (X3DBrowser .prototype,
    },
    currentScene:
    {
-      get: function ()
+      get ()
       {
          return this .getScriptStack () .at (-1) .getExecutionContext ();
       },
@@ -905,20 +916,35 @@ Object .defineProperties (X3DBrowser .prototype,
    },
    supportedProfiles:
    {
-      get: function ()
-      {
-         return SupportedProfiles;
-      },
+      value: SupportedProfiles,
       enumerable: true,
    },
    supportedComponents:
    {
-      get: function ()
-      {
-         return SupportedComponents;
-      },
+      value: SupportedComponents,
+      enumerable: true,
+   },
+   concreteNodes:
+   {
+      value: ConcreteNodes,
+      enumerable: true,
+   },
+   abstractNodes:
+   {
+      value: AbstractNodes,
       enumerable: true,
    },
 });
+
+Object .defineProperties (X3DBrowser,
+{
+   typeName:
+   {
+      value: "X3DBrowser",
+      enumerable: true,
+   },
+});
+
+X3DConstants .addNode (X3DBrowser);
 
 export default X3DBrowser;

@@ -55,18 +55,18 @@ function PartialSort (array, compare)
       this .compare = compare;
 }
 
-PartialSort .prototype =
+Object .assign (PartialSort .prototype,
 {
-   compare: function (lhs, rhs)
+   compare (lhs, rhs)
    {
       return lhs < rhs;
    },
-   sort: function (first, last)
+   sort (first, last)
    {
       if (last - first > 1)
          this .partialsort (first, last);
    },
-   partialsort: function (lo, hi)
+   partialsort (lo, hi)
    {
       const { array, compare } = this;
 
@@ -87,6 +87,6 @@ PartialSort .prototype =
          }
       }
    },
-};
+});
 
 export default PartialSort;

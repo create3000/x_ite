@@ -60,46 +60,57 @@ function GeoMetadata (executionContext)
    this .addType (X3DConstants .GeoMetadata);
 }
 
-GeoMetadata .prototype = Object .assign (Object .create (X3DInfoNode .prototype),
+Object .assign (Object .setPrototypeOf (GeoMetadata .prototype, X3DInfoNode .prototype),
    X3DUrlObject .prototype,
 {
-   constructor: GeoMetadata,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",             new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "load",                 new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "url",                  new Fields .MFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "autoRefresh",          new Fields .SFTime ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "autoRefreshTimeLimit", new Fields .SFTime (3600)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "summary",              new Fields .MFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "data",                 new Fields .MFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "GeoMetadata";
-   },
-   getComponentName: function ()
-   {
-      return "Geospatial";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DInfoNode  .prototype .initialize .call (this);
       X3DUrlObject .prototype .initialize .call (this);
    },
-   requestImmediateLoad: function (cache = true)
+   requestImmediateLoad (cache = true)
    { },
-   dispose: function ()
+   dispose ()
    {
       X3DUrlObject .prototype .dispose .call (this);
       X3DInfoNode  .prototype .dispose .call (this);
+   },
+});
+
+Object .defineProperties (GeoMetadata,
+{
+   typeName:
+   {
+      value: "GeoMetadata",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Geospatial",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",             new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "load",                 new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "url",                  new Fields .MFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "autoRefresh",          new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "autoRefreshTimeLimit", new Fields .SFTime (3600)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "summary",              new Fields .MFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "data",                 new Fields .MFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 

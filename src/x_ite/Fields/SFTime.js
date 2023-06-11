@@ -45,55 +45,45 @@
  *
  ******************************************************************************/
 
-import X3DField     from "../Base/X3DField.js";
-import X3DConstants from "../Base/X3DConstants.js";
+import X3DField from "../Base/X3DField.js";
 
 function SFTime (value)
 {
-   return X3DField .call (this, arguments .length ? +value : 0);
+   X3DField .call (this, arguments .length ? +value : 0);
 }
 
-SFTime .prototype = Object .assign (Object .create (X3DField .prototype),
+Object .assign (Object .setPrototypeOf (SFTime .prototype, X3DField .prototype),
 {
-   constructor: SFTime,
-   copy: function ()
+   copy ()
    {
       return new SFTime (this .getValue ());
    },
-   getTypeName: function ()
-   {
-      return "SFTime";
-   },
-   getType: function ()
-   {
-      return X3DConstants .SFTime;
-   },
-   isDefaultValue: function ()
+   isDefaultValue ()
    {
       return this .getValue () === 0;
    },
-   set: function (value)
+   set (value)
    {
       X3DField .prototype .set .call (this, +value);
    },
    valueOf: X3DField .prototype .getValue,
-   toStream: function (generator)
+   toStream (generator)
    {
       generator .string += this .getValue ();
    },
-   toVRMLStream: function (generator)
+   toVRMLStream (generator)
    {
       this .toStream (generator);
    },
-   toXMLStream: function (generator)
+   toXMLStream (generator)
    {
       this .toStream (generator);
    },
-   toJSONStream: function (generator)
+   toJSONStream (generator)
    {
       this .toJSONStreamValue (generator);
    },
-   toJSONStreamValue: function (generator)
+   toJSONStreamValue (generator)
    {
       generator .string += generator .JSONNumber (generator .DoubleFormat (this .getValue ()));
    },
@@ -101,5 +91,14 @@ SFTime .prototype = Object .assign (Object .create (X3DField .prototype),
 
 for (const key of Reflect .ownKeys (SFTime .prototype))
    Object .defineProperty (SFTime .prototype, key, { enumerable: false });
+
+Object .defineProperties (SFTime,
+{
+   typeName:
+   {
+      value: "SFTime",
+      enumerable: true,
+   },
+});
 
 export default SFTime;

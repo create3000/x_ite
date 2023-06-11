@@ -56,24 +56,21 @@ function X3DPointingDeviceSensorNode (executionContext)
    this .addType (X3DConstants .X3DPointingDeviceSensorNode);
 }
 
-X3DPointingDeviceSensorNode .prototype = Object .assign (Object .create (X3DSensorNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DPointingDeviceSensorNode .prototype, X3DSensorNode .prototype),
 {
-   constructor: X3DPointingDeviceSensorNode,
-   initialize: function ()
+   initialize ()
    {
       X3DSensorNode .prototype .initialize .call (this);
 
-      this .getBrowser () .getBrowserOptions () ._PrivateSensors .addInterest ("set_live__", this);
-      this .getScene () .getPrivate () .addInterest ("set_live__", this);
       this .getLive () .addInterest ("set_live__", this);
 
       this ._enabled .addInterest ("set_live__", this);
 
       this .set_live__ ();
    },
-   set_live__: function ()
+   set_live__ ()
    {
-      if (((this .getLive () .getValue () && !this .getBrowser () .getBrowserOption ("PrivateSensors")) || this .getScene () .isPrivate () && this .getBrowser () .getBrowserOption ("PrivateSensors")) && this ._enabled .getValue ())
+      if (this .getLive () .getValue () && this ._enabled .getValue ())
       {
          this .getBrowser () .addPointingDeviceSensor (this);
 
@@ -92,7 +89,7 @@ X3DPointingDeviceSensorNode .prototype = Object .assign (Object .create (X3DSens
          this .push = Function .prototype;
       }
    },
-   set_over__: function (over, hit)
+   set_over__ (over, hit)
    {
       if (over !== this ._isOver .getValue ())
       {
@@ -102,19 +99,33 @@ X3DPointingDeviceSensorNode .prototype = Object .assign (Object .create (X3DSens
             this .getBrowser () .getNotification () ._string = this ._description;
       }
    },
-   set_active__: function (active, hit)
+   set_active__ (active, hit)
    {
       if (active !== this ._isActive .getValue ())
          this ._isActive = active
    },
-   set_motion__: function (hit)
+   set_motion__ (hit)
    { },
-   push: function (renderObject, sensors)
+   push (renderObject, sensors)
    {
       sensors .push (new PointingDeviceSensorContainer (this,
                                                         renderObject .getModelViewMatrix  () .get (),
                                                         renderObject .getProjectionMatrix () .get (),
                                                         renderObject .getViewVolume () .getViewport ()));
+   },
+});
+
+Object .defineProperties (X3DPointingDeviceSensorNode,
+{
+   typeName:
+   {
+      value: "X3DPointingDeviceSensorNode",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "PointingDeviceSensor",
+      enumerable: true,
    },
 });
 

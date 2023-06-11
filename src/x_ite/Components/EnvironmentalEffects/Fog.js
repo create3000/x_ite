@@ -64,45 +64,19 @@ function Fog (executionContext)
    this .modelMatrix = new Matrix4 ();
 }
 
-Fog .prototype = Object .assign (Object .create (X3DBindableNode .prototype),
+Object .assign (Object .setPrototypeOf (Fog .prototype, X3DBindableNode .prototype),
    X3DFogObject .prototype,
 {
-   constructor: Fog,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",        new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,   "set_bind",        new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "fogType",         new Fields .SFString ("LINEAR")),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "color",           new Fields .SFColor (1, 1, 1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "visibilityRange", new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "isBound",         new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "bindTime",        new Fields .SFTime ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "Fog";
-   },
-   getComponentName: function ()
-   {
-      return "EnvironmentalEffects";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DBindableNode .prototype .initialize .call (this);
       X3DFogObject    .prototype .initialize .call (this);
    },
-   getModelMatrix: function ()
+   getModelMatrix ()
    {
       return this .modelMatrix;
    },
-   traverse: function (type, renderObject)
+   traverse (type, renderObject)
    {
       if (type !== TraverseType .CAMERA)
          return;
@@ -111,10 +85,47 @@ Fog .prototype = Object .assign (Object .create (X3DBindableNode .prototype),
 
       this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ());
    },
-   dispose: function ()
+   dispose ()
    {
       X3DFogObject    .prototype .dispose .call (this);
       X3DBindableNode .prototype .dispose .call (this);
+   },
+});
+
+Object .defineProperties (Fog,
+{
+   typeName:
+   {
+      value: "Fog",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "EnvironmentalEffects",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",        new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,   "set_bind",        new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "fogType",         new Fields .SFString ("LINEAR")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "color",           new Fields .SFColor (1, 1, 1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "visibilityRange", new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "isBound",         new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "bindTime",        new Fields .SFTime ()),
+      ]),
+      enumerable: true,
    },
 });
 

@@ -60,17 +60,30 @@ function X3DColorNode (executionContext)
    this ._transparent .setAccessType (X3DConstants .outputOnly);
 }
 
-X3DColorNode .prototype = Object .assign (Object .create (X3DGeometricPropertyNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DColorNode .prototype, X3DGeometricPropertyNode .prototype),
 {
-   constructor: X3DColorNode,
-   setTransparent: function (value)
+   setTransparent (value)
    {
       if (value !== this ._transparent .getValue ())
          this ._transparent = value;
    },
-   isTransparent: function ()
+   isTransparent ()
    {
       return this ._transparent .getValue ();
+   },
+});
+
+Object .defineProperties (X3DColorNode,
+{
+   typeName:
+   {
+      value: "X3DColorNode",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Rendering",
+      enumerable: true,
    },
 });
 

@@ -60,30 +60,9 @@ function FogCoordinate (executionContext)
    this ._depth .setUnit ("length");
 }
 
-FogCoordinate .prototype = Object .assign (Object .create (X3DGeometricPropertyNode .prototype),
+Object .assign (Object .setPrototypeOf (FogCoordinate .prototype, X3DGeometricPropertyNode .prototype),
 {
-   constructor: FogCoordinate,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "depth",    new Fields .MFFloat ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "FogCoordinate";
-   },
-   getComponentName: function ()
-   {
-      return "EnvironmentalEffects";
-   },
-   getContainerField: function ()
-   {
-      return "fogCoord";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DGeometricPropertyNode .prototype .initialize .call (this);
 
@@ -91,20 +70,20 @@ FogCoordinate .prototype = Object .assign (Object .create (X3DGeometricPropertyN
 
       this .set_depth__ ();
    },
-   set_depth__: function ()
+   set_depth__ ()
    {
       this .depth  = this ._depth .getValue ();
       this .length = this ._depth .length;
    },
-   isEmpty: function ()
+   isEmpty ()
    {
       return this .length === 0;
    },
-   getSize: function ()
+   getSize ()
    {
       return this .length;
    },
-   addDepth: function (index, array)
+   addDepth (index, array)
    {
       if (index < this .length)
          array .push (this .depth [index]);
@@ -115,7 +94,7 @@ FogCoordinate .prototype = Object .assign (Object .create (X3DGeometricPropertyN
       else
          array .push (0);
    },
-   addDepths: function (array, min)
+   addDepths (array, min)
    {
       const length = this .length;
 
@@ -136,6 +115,38 @@ FogCoordinate .prototype = Object .assign (Object .create (X3DGeometricPropertyN
          for (let index = 0; index < min; ++ index)
             array .push (0);
       }
+   },
+});
+
+Object .defineProperties (FogCoordinate,
+{
+   typeName:
+   {
+      value: "FogCoordinate",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "EnvironmentalEffects",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "fogCoord",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "depth",    new Fields .MFFloat ()),
+      ]),
+      enumerable: true,
    },
 });
 

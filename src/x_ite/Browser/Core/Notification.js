@@ -68,18 +68,9 @@ function Notification (executionContext)
    this .addChildObjects ("string", new SFString ());
 }
 
-Notification .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+Object .assign (Object .setPrototypeOf (Notification .prototype, X3DBaseNode .prototype),
 {
-   constructor: Notification,
-   getTypeName: function ()
-   {
-      return "Notification";
-   },
-   getComponentName: function ()
-   {
-      return "X_ITE";
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DBaseNode .prototype .initialize .call (this);
 
@@ -93,7 +84,7 @@ Notification .prototype = Object .assign (Object .create (X3DBaseNode .prototype
 
       this ._string .addInterest ("set_string__", this);
    },
-   set_string__: function ()
+   set_string__ ()
    {
       if (! this .getBrowser () .getBrowserOption ("Notifications"))
          return;
@@ -110,6 +101,15 @@ Notification .prototype = Object .assign (Object .create (X3DBaseNode .prototype
          .animate ({ "delay": 1 }, 5000)
          .animate ({ width: 0 })
          .fadeOut (0);
+   },
+});
+
+Object .defineProperties (Notification,
+{
+   typeName:
+   {
+      value: "Notification",
+      enumerable: true,
    },
 });
 

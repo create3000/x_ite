@@ -58,32 +58,9 @@ function LineProperties (executionContext)
    this .addType (X3DConstants .LineProperties);
 }
 
-LineProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
+Object .assign (Object .setPrototypeOf (LineProperties .prototype, X3DAppearanceChildNode .prototype),
 {
-   constructor: LineProperties,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",             new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "applied",              new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "linetype",             new Fields .SFInt32 (1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "linewidthScaleFactor", new Fields .SFFloat ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "LineProperties";
-   },
-   getComponentName: function ()
-   {
-      return "Shape";
-   },
-   getContainerField: function ()
-   {
-      return "lineProperties";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DAppearanceChildNode .prototype .initialize .call (this);
 
@@ -102,27 +79,27 @@ LineProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNo
       // Preload texture.
       this .getBrowser () .getLinetypeTexture ();
    },
-   getApplied: function ()
+   getApplied ()
    {
       return this .applied;
    },
-   getLinetype: function ()
+   getLinetype ()
    {
       return this .linetype;
    },
-   getLinewidthScaleFactor: function ()
+   getLinewidthScaleFactor ()
    {
       return this .linewidthScaleFactor;
    },
-   getTransformLines: function ()
+   getTransformLines ()
    {
       return this .transformLines;
    },
-   set_applied__: function ()
+   set_applied__ ()
    {
       this .applied = this ._applied .getValue ();
    },
-   set_linetype__: function ()
+   set_linetype__ ()
    {
       let linetype = this ._linetype .getValue ();
 
@@ -131,7 +108,7 @@ LineProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNo
 
       this .linetype = linetype;
    },
-   set_linewidthScaleFactor__: function ()
+   set_linewidthScaleFactor__ ()
    {
       const
          browser      = this .getBrowser (),
@@ -141,7 +118,7 @@ LineProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNo
       this .linewidthScaleFactor = Math .max (1, this ._linewidthScaleFactor .getValue ()) * contentScale;
       this .transformLines       = gl .HAS_FEATURE_TRANSFORMED_LINES && this .linewidthScaleFactor > 1;
    },
-   setShaderUniforms: function (gl, shaderObject)
+   setShaderUniforms (gl, shaderObject)
    {
       const browser = this .getBrowser ();
 
@@ -163,6 +140,40 @@ LineProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNo
          gl .uniform1i (shaderObject .x3d_LinePropertiesLinetype, 16);
          gl .uniform1f (shaderObject .x3d_LineStippleScale,       1);
       }
+   },
+});
+
+Object .defineProperties (LineProperties,
+{
+   typeName:
+   {
+      value: "LineProperties",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Shape",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "lineProperties",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",             new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "applied",              new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "linetype",             new Fields .SFInt32 (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "linewidthScaleFactor", new Fields .SFFloat ()),
+      ]),
+      enumerable: true,
    },
 });
 

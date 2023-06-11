@@ -105,17 +105,16 @@ function Rotation4 (x, y, z, angle)
    }
 }
 
-Rotation4 .prototype =
+Object .assign (Rotation4 .prototype,
 {
-   constructor: Rotation4,
-   [Symbol .iterator]: function* ()
+   *[Symbol .iterator] ()
    {
       yield this [_x];
       yield this [_y];
       yield this [_z];
       yield this [_angle];
    },
-   update: function ()
+   update ()
    {
       const rotation = this .get ();
 
@@ -126,7 +125,7 @@ Rotation4 .prototype =
 
       return this;
    },
-   copy: function ()
+   copy ()
    {
       const copy = Object .create (Rotation4 .prototype);
 
@@ -139,7 +138,7 @@ Rotation4 .prototype =
 
       return copy;
    },
-   assign: function (rotation)
+   assign (rotation)
    {
       this [_x]     = rotation [_x];
       this [_y]     = rotation [_y];
@@ -150,7 +149,7 @@ Rotation4 .prototype =
 
       return this;
    },
-   set: function (x, y, z, angle)
+   set (x, y, z, angle)
    {
       this [_x]     = x;
       this [_y]     = y;
@@ -211,7 +210,7 @@ Rotation4 .prototype =
          }
       };
    })(),
-   setAxisAngle: function (axis, angle)
+   setAxisAngle (axis, angle)
    {
       return this .set (axis .x, axis .y, axis .z, angle);
    },
@@ -276,103 +275,103 @@ Rotation4 .prototype =
          return this;
       };
    })(),
-   setAxis: function (vector)
+   setAxis (vector)
    {
       this .set (vector .x, vector .y, vector .z, this [_angle]);
    },
-   getAxis: function (axis = new Vector3 (0, 0, 0))
+   getAxis (axis = new Vector3 (0, 0, 0))
    {
       return axis .set (this [_x], this [_y], this [_z]);
    },
-   setQuaternion: function (quaternion)
+   setQuaternion (quaternion)
    {
       this [_quaternion] .assign (quaternion) .normalize ();
       this .update ();
       return this;
    },
-   getQuaternion: function (quaternion = new Quaternion (0, 0, 0, 1))
+   getQuaternion (quaternion = new Quaternion (0, 0, 0, 1))
    {
       return quaternion .assign (this [_quaternion]);
    },
-   setMatrix: function (matrix)
+   setMatrix (matrix)
    {
       this [_quaternion] .setMatrix (matrix) .normalize ();
       this .update ();
       return this;
    },
-   getMatrix: function (matrix = new Matrix3 ())
+   getMatrix (matrix = new Matrix3 ())
    {
       return this [_quaternion] .getMatrix (matrix);
    },
-   equals: function (rotation)
+   equals (rotation)
    {
       return this [_quaternion] .equals (rotation [_quaternion]);
    },
-   inverse: function ()
+   inverse ()
    {
       this [_quaternion] .inverse ();
       this .update ();
       return this;
    },
-   multLeft: function (rotation)
+   multLeft (rotation)
    {
       this [_quaternion] .multLeft (rotation [_quaternion]) .normalize ();
       this .update ();
       return this;
    },
-   multRight: function (rotation)
+   multRight (rotation)
    {
       this [_quaternion] .multRight (rotation [_quaternion]) .normalize ();
       this .update ();
       return this;
    },
-   multVecRot: function (vector)
+   multVecRot (vector)
    {
       return this [_quaternion] .multVecQuat (vector);
    },
-   multRotVec: function (vector)
+   multRotVec (vector)
    {
       return this [_quaternion] .multQuatVec (vector);
    },
-   normalize: function ()
+   normalize ()
    {
       this [_quaternion] .normalize ();
       this .update ();
       return this;
    },
-   pow: function (exponent)
+   pow (exponent)
    {
       this [_quaternion] .pow (exponent);
       this .update ();
       return this;
    },
-   slerp: function (dest, t)
+   slerp (dest, t)
    {
       this [_quaternion] .slerp (dest [_quaternion], t);
       this .update ();
       return this;
    },
-   squad: function (a, b, dest, t)
+   squad (a, b, dest, t)
    {
       this [_quaternion] .squad (a [_quaternion], b [_quaternion], dest [_quaternion], t);
       this .update ();
       return this;
    },
-   toString: function ()
+   toString ()
    {
       return this [_x] + " " +
              this [_y] + " " +
              this [_z] + " " +
              this [_angle];
    }
-};
+});
 
 const x = {
-   get: function ()
+   get ()
    {
       return this [_x];
    },
-   set: function (x)
+   set (x)
    {
       this [_x] = x;
       this .set (x, this [_y], this [_z], this [_angle]);
@@ -381,11 +380,11 @@ const x = {
 };
 
 const y = {
-   get: function ()
+   get ()
    {
       return this [_y];
    },
-   set: function (y)
+   set (y)
    {
       this [_y] = y;
       this .set (this [_x], y, this [_z], this [_angle]);
@@ -394,11 +393,11 @@ const y = {
 };
 
 const z = {
-   get: function ()
+   get ()
    {
       return this [_z];
    },
-   set: function (z)
+   set (z)
    {
       this [_z] = z;
       this .set (this [_x], this [_y], z, this [_angle]);
@@ -407,11 +406,11 @@ const z = {
 };
 
 const angle = {
-   get: function ()
+   get ()
    {
       return this [_angle];
    },
-   set: function (angle)
+   set (angle)
    {
       this [_angle] = angle;
       this .set (this [_x], this [_y], this [_z], angle);
@@ -444,7 +443,7 @@ Object .defineProperties (Rotation4 .prototype,
 Object .assign (Rotation4,
 {
    Identity: new Rotation4 (),
-   spline: function (r0, r1, r2)
+   spline (r0, r1, r2)
    {
       const copy = Object .create (this .prototype);
       copy [_quaternion] = Quaternion .spline (r0 [_quaternion], r1 [_quaternion], r2 [_quaternion]);

@@ -48,34 +48,23 @@
 import X3DInfoArray from "../Base/X3DInfoArray.js";
 import UnitInfo     from "./UnitInfo.js"
 
-function UnitInfoArray (values)
+function UnitInfoArray (values = [ ])
 {
-   const proxy = X3DInfoArray .call (this);
-
-   if (values)
-   {
-      for (const value of values)
-      {
-         if (!(value instanceof UnitInfo))
-            throw new TypeError (`Wrong type in construction of ${this .getTypeName ()}.`);
-
-         this .add (value .category, value);
-      }
-   }
-
-   return proxy;
+   return X3DInfoArray .call (this, Array .from (values, value => [value .category, value]), UnitInfo);
 }
 
-UnitInfoArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
-{
-   constructor: UnitInfoArray,
-   getTypeName: function ()
-   {
-      return "UnitInfoArray";
-   },
-});
+Object .setPrototypeOf (UnitInfoArray .prototype, X3DInfoArray .prototype);
 
 for (const key of Reflect .ownKeys (UnitInfoArray .prototype))
    Object .defineProperty (UnitInfoArray .prototype, key, { enumerable: false });
+
+Object .defineProperties (UnitInfoArray,
+{
+   typeName:
+   {
+      value: "UnitInfoArray",
+      enumerable: true,
+   },
+});
 
 export default UnitInfoArray;

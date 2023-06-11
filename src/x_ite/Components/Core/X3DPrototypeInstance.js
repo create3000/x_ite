@@ -45,22 +45,22 @@
  *
  ******************************************************************************/
 
-import X3DChildObject      from "../../Base/X3DChildObject.js";
-import X3DNode             from "./X3DNode.js";
-import X3DExecutionContext from "../../Execution/X3DExecutionContext.js";
-import X3DConstants        from "../../Base/X3DConstants.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DChildObject       from "../../Base/X3DChildObject.js";
+import X3DNode              from "./X3DNode.js";
+import X3DExecutionContext  from "../../Execution/X3DExecutionContext.js";
+import X3DConstants         from "../../Base/X3DConstants.js";
 
 const
+   _fieldDefinitions = Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions"),
    _protoNode        = Symbol (),
    _protoFields      = Symbol (),
-   _fieldDefinitions = Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions"),
    _body             = Symbol ();
 
 function X3DPrototypeInstance (executionContext, protoNode)
 {
    this [_protoNode]        = protoNode;
-   this [_protoFields]      = new Map ([... protoNode .getFields ()] .map (f => [f, f .getName ()]));
-   this [_fieldDefinitions] = protoNode .getFieldDefinitions ();
+   this [_fieldDefinitions] = new FieldDefinitionArray (protoNode .getFieldDefinitions ());
    this [_body]             = null;
 
    X3DNode .call (this, executionContext);
@@ -68,49 +68,23 @@ function X3DPrototypeInstance (executionContext, protoNode)
    this .addType (X3DConstants .X3DPrototypeInstance);
 }
 
-X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode .prototype),
 {
-   constructor: X3DPrototypeInstance,
-   create: function (executionContext)
+   create (executionContext)
    {
       return new X3DPrototypeInstance (executionContext, this [_protoNode]);
    },
-   getTypeName: function ()
+   getTypeName ()
    {
       return this [_protoNode] .getName ();
    },
-   getComponentName: function ()
-   {
-      return "Core";
-   },
-   getContainerField: function ()
-   {
-      // Determine container field from proto.
-
-      // const proto = this [_protoNode];
-
-      // if (!proto .isExternProto)
-      // {
-      //    const rootNodes = proto .getBody () .getRootNodes ();
-
-      //    if (rootNodes .length)
-      //    {
-      //       const rootNode = rootNodes [0];
-
-      //       if (rootNode)
-      //          return rootNode .getValue () .getContainerField ();
-      //    }
-      // }
-
-      return "children";
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DNode .prototype .initialize .call (this);
 
       this .setProtoNode (this [_protoNode]);
    },
-   construct: function ()
+   construct ()
    {
       this [_body] ?.dispose ();
 
@@ -163,10 +137,10 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
                // If default value of protoField is different from field, thus update default value for field.
                field .assign (protoField);
             }
-            catch (error)
+            catch
             {
                // Definition exists in proto but does not exist in extern proto.
-               this .addField (proto .getFieldDefinitions () .get (protoField .getName ()));
+               this .addPredefinedField (proto .getFieldDefinitions () .get (protoField .getName ()));
             }
          }
       }
@@ -191,23 +165,27 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
       this [_protoNode] ._updateInstances .removeInterest ("construct", this);
       this [_protoNode] ._updateInstances .addInterest ("update", this);
    },
-   update: function ()
+   update ()
    {
+      // Assign field definitions.
+
+      this [_fieldDefinitions] .assign (this [_protoNode] .getFieldDefinitions ());
+
       // Remove old fields.
 
       const
          oldProtoFields = this [_protoFields],
-         oldFields      = new Map ([... this .getFields ()] .map (f => [f .getName (), f]));
+         oldFields      = new Map (Array .from (this .getPredefinedFields (), f => [f .getName (), f]));
 
       for (const field of oldFields .values ())
-         this .removeField (field .getName ());
+         this .removePredefinedField (field .getName ());
 
       // Add new fields.
 
-      this [_protoFields] = new Map ([... this [_protoNode] .getFields ()] .map (f => [f, f .getName ()]));
+      this [_protoFields] = new Map (Array .from (this [_protoNode] .getUserDefinedFields (), f => [f, f .getName ()]));
 
       for (const fieldDefinition of this .getFieldDefinitions ())
-         this .addField (fieldDefinition);
+         this .addPredefinedField (fieldDefinition);
 
       // Reuse old fields, and therefor routes.
 
@@ -219,7 +197,7 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
             continue;
 
          const
-            newField = this .getFields () .get (protoField .getName ()),
+            newField = this .getPredefinedFields () .get (protoField .getName ()),
             oldField = oldFields .get (oldFieldName);
 
          oldField .addParent (this);
@@ -227,7 +205,6 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
          oldField .setName (newField .getName ());
 
          this .getPredefinedFields () .update (newField .getName (), newField .getName (), oldField);
-         this .getFields ()           .update (newField .getName (), newField .getName (), oldField);
 
          if (!this .isPrivate ())
             oldField .addCloneCount (1);
@@ -243,36 +220,26 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
 
       this .construct ();
    },
-   getExtendedEventHandling: function ()
+   getExtendedEventHandling ()
    {
       return false;
    },
-   getProtoNode: function ()
+   getProtoNode ()
    {
       return this [_protoNode];
    },
-   setProtoNode: function (protoNode)
+   setProtoNode (protoNode)
    {
-      if (protoNode !== this [_protoNode])
-      {
-         // Disconnect old proto node.
+      // Disconnect old proto node.
 
-         if (this [_protoNode])
-         {
-            const protoNode = this [_protoNode];
+      this [_protoNode] ._name_changed .removeFieldInterest (this ._typeName_changed);
+      this [_protoNode] ._updateInstances .removeInterest ("construct", this);
+      this [_protoNode] ._updateInstances .removeInterest ("update",    this);
 
-            protoNode ._name_changed .removeFieldInterest (this ._typeName_changed);
-            protoNode ._updateInstances .removeInterest ("construct", this);
-            protoNode ._updateInstances .removeInterest ("update",    this);
-         }
+      // Get fields from new proto node.
 
-         // Get field from new proto node.
-
-         this [_protoFields]      = new Map ([... protoNode .getFields ()] .map (f => [f, f .getName ()]));
-         this [_fieldDefinitions] = protoNode .getFieldDefinitions ();
-      }
-
-      this [_protoNode] = protoNode;
+      this [_protoNode]   = protoNode;
+      this [_protoFields] = new Map (Array .from (protoNode .getUserDefinedFields (), f => [f, f .getName ()]));
 
       protoNode ._name_changed .addFieldInterest (this ._typeName_changed);
 
@@ -293,11 +260,11 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
          this .construct ();
       }
    },
-   getBody: function ()
+   getBody ()
    {
       return this [_body];
    },
-   getInnerNode: function ()
+   getInnerNode ()
    {
       const rootNodes = this [_body] .getRootNodes ();
 
@@ -311,28 +278,28 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
 
       throw new Error ("Root node not available.");
    },
-   importExternProtos: function (externprotos1)
+   importExternProtos (externprotos1)
    {
       const externprotos2 = this [_body] .externprotos;
 
       for (const externproto of externprotos1)
          externprotos2 .add (externproto .getName (), externproto);
    },
-   importProtos: function (protos1)
+   importProtos (protos1)
    {
       const protos2 = this [_body] .protos;
 
       for (const proto of protos1)
          protos2 .add (proto .getName (), proto);
    },
-   copyRootNodes: function (rootNodes1)
+   copyRootNodes (rootNodes1)
    {
       const rootNodes2 = this [_body] .getRootNodes ();
 
       for (const node of rootNodes1)
          rootNodes2 .push (node .copy (this));
    },
-   copyImportedNodes: function (executionContext, importedNodes)
+   copyImportedNodes (executionContext, importedNodes)
    {
       for (const importedNode of importedNodes)
       {
@@ -351,7 +318,7 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
          }
       }
    },
-   copyRoutes: function (executionContext, routes)
+   copyRoutes (executionContext, routes)
    {
       for (const route of routes)
       {
@@ -369,7 +336,7 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
          }
       }
    },
-   toXMLStream: function (generator)
+   toXMLStream (generator)
    {
       const sharedNode = generator .IsSharedNode (this);
 
@@ -624,7 +591,7 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
 
       generator .LeaveScope ();
    },
-   toJSONStream: function (generator)
+   toJSONStream (generator)
    {
       const sharedNode = generator .IsSharedNode (this);
 
@@ -1010,7 +977,7 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
 
       generator .LeaveScope ();
    },
-   dispose: function ()
+   dispose ()
    {
       this [_protoNode] ._name_changed .removeFieldInterest (this ._typeName_changed);
       this [_protoNode] ._updateInstances .removeInterest ("construct", this);
@@ -1019,6 +986,30 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
       this [_body] ?.dispose ();
 
       X3DNode .prototype .dispose .call (this);
+   },
+});
+
+Object .defineProperties (X3DPrototypeInstance,
+{
+   typeName:
+   {
+      value: "X3DPrototypeInstance",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Core",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerable: true,
    },
 });
 

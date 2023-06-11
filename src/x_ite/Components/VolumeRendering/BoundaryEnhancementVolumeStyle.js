@@ -58,33 +58,9 @@ function BoundaryEnhancementVolumeStyle (executionContext)
    this .addType (X3DConstants .BoundaryEnhancementVolumeStyle);
 }
 
-BoundaryEnhancementVolumeStyle .prototype = Object .assign (Object .create (X3DComposableVolumeRenderStyleNode .prototype),
+Object .assign (Object .setPrototypeOf (BoundaryEnhancementVolumeStyle .prototype, X3DComposableVolumeRenderStyleNode .prototype),
 {
-   constructor: BoundaryEnhancementVolumeStyle,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",        new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",         new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "retainedOpacity", new Fields .SFFloat (0.2)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "boundaryOpacity", new Fields .SFFloat (0.9)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "opacityFactor",   new Fields .SFFloat (2)),
-   ]),
-   getTypeName: function ()
-   {
-      return "BoundaryEnhancementVolumeStyle";
-   },
-   getComponentName: function ()
-   {
-      return "VolumeRendering";
-   },
-   getContainerField: function ()
-   {
-      return "renderStyle";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.3", "Infinity"];
-   },
-   addShaderFields: function (shaderNode)
+   addShaderFields (shaderNode)
    {
       if (! this ._enabled .getValue ())
          return;
@@ -93,7 +69,7 @@ BoundaryEnhancementVolumeStyle .prototype = Object .assign (Object .create (X3DC
       shaderNode .addUserDefinedField (X3DConstants .inputOutput, "boundaryOpacity_" + this .getId (), this ._boundaryOpacity .copy ());
       shaderNode .addUserDefinedField (X3DConstants .inputOutput, "opacityFactor_"   + this .getId (), this ._opacityFactor   .copy ());
    },
-   getUniformsText: function ()
+   getUniformsText ()
    {
       if (! this ._enabled .getValue ())
          return "";
@@ -124,7 +100,7 @@ BoundaryEnhancementVolumeStyle .prototype = Object .assign (Object .create (X3DC
 
       return string;
    },
-   getFunctionsText: function ()
+   getFunctionsText ()
    {
       if (! this ._enabled .getValue ())
          return "";
@@ -137,6 +113,41 @@ BoundaryEnhancementVolumeStyle .prototype = Object .assign (Object .create (X3DC
       string += "   textureColor = getBoundaryEnhancementStyle_" + this .getId () + " (textureColor, texCoord);\n";
 
       return string;
+   },
+});
+
+Object .defineProperties (BoundaryEnhancementVolumeStyle,
+{
+   typeName:
+   {
+      value: "BoundaryEnhancementVolumeStyle",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "VolumeRendering",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "renderStyle",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.3", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",        new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",         new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "retainedOpacity", new Fields .SFFloat (0.2)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "boundaryOpacity", new Fields .SFFloat (0.9)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "opacityFactor",   new Fields .SFFloat (2)),
+      ]),
+      enumerable: true,
    },
 });
 

@@ -60,35 +60,44 @@ function TouchSensor (executionContext)
    this ._hitPoint_changed .setUnit ("length");
 }
 
-TouchSensor .prototype = Object .assign (Object .create (X3DTouchSensorNode .prototype),
+Object .setPrototypeOf (TouchSensor .prototype, X3DTouchSensorNode .prototype);
+
+Object .defineProperties (TouchSensor,
 {
-   constructor: TouchSensor,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",            new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "description",         new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",             new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "hitTexCoord_changed", new Fields .SFVec2f ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "hitNormal_changed",   new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "hitPoint_changed",    new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "isOver",              new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",            new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "touchTime",           new Fields .SFTime ()),
-   ]),
-   getTypeName: function ()
+   typeName:
    {
-      return "TouchSensor";
+      value: "TouchSensor",
+      enumerable: true,
    },
-   getComponentName: function ()
+   componentName:
    {
-      return "PointingDeviceSensor";
+      value: "PointingDeviceSensor",
+      enumerable: true,
    },
-   getContainerField: function ()
+   containerField:
    {
-      return "children";
+      value: "children",
+      enumerable: true,
    },
-   getSpecificationRange: function ()
+   specificationRange:
    {
-      return ["2.0", "Infinity"];
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",            new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "description",         new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",             new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "hitTexCoord_changed", new Fields .SFVec2f ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "hitNormal_changed",   new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "hitPoint_changed",    new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "isOver",              new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",            new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "touchTime",           new Fields .SFTime ()),
+      ]),
+      enumerable: true,
    },
 });
 

@@ -45,24 +45,17 @@
  *
  ******************************************************************************/
 
-import SupportedNodes       from "../Configuration/SupportedNodes.js";
 import TimeSensor           from "./Time/TimeSensor.js";
 import X3DTimeDependentNode from "./Time/X3DTimeDependentNode.js";
 
-const Types =
-{
-   TimeSensor: TimeSensor,
+export default {
+   name: "Time",
+   concreteNodes:
+   [
+      TimeSensor,
+   ],
+   abstractNodes:
+   [
+      X3DTimeDependentNode,
+   ],
 };
-
-const AbstractTypes =
-{
-   X3DTimeDependentNode: X3DTimeDependentNode,
-};
-
-for (const typeName in Types)
-   SupportedNodes .addNodeType (typeName, Types [typeName]);
-
-for (const typeName in AbstractTypes)
-   SupportedNodes .addAbstractNodeType (typeName, AbstractTypes [typeName]);
-
-export default undefined;

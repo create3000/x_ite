@@ -61,30 +61,8 @@ function Box (executionContext)
    this ._size .setUnit ("length");
 }
 
-Box .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
+Object .assign (Object .setPrototypeOf (Box .prototype, X3DGeometryNode .prototype),
 {
-   constructor: Box,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata", new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "size",     new Fields .SFVec3f (2, 2, 2)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",    new Fields .SFBool (true)),
-   ]),
-   getTypeName: function ()
-   {
-      return "Box";
-   },
-   getComponentName: function ()
-   {
-      return "Geometry3D";
-   },
-   getContainerField: function ()
-   {
-      return "geometry";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
    build: (function ()
    {
       const defaultSize = new Vector3 (2, 2, 2);
@@ -130,6 +108,39 @@ Box .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
          this .setSolid (this ._solid .getValue ());
       };
    })(),
+});
+
+Object .defineProperties (Box,
+{
+   typeName:
+   {
+      value: "Box",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Geometry3D",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "geometry",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "size",     new Fields .SFVec3f (2, 2, 2)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",    new Fields .SFBool (true)),
+      ]),
+      enumerable: true,
+   },
 });
 
 export default Box;

@@ -56,20 +56,19 @@ function FogContainer ()
    this .fogMatrix = new Float32Array (9);
 }
 
-FogContainer .prototype =
+Object .assign (FogContainer .prototype,
 {
-   constructor: FogContainer,
-   set: function (fogNode, modelViewMatrix)
+   set (fogNode, modelViewMatrix)
    {
       this .fogNode = fogNode;
 
       this .fogMatrix .set (modelViewMatrix .submatrix .inverse ());
    },
-   getFogType: function ()
+   getFogType ()
    {
       return this .fogNode .getFogType ();
    },
-   setShaderUniforms: function (gl, shaderObject)
+   setShaderUniforms (gl, shaderObject)
    {
       if (shaderObject .hasFog (this))
          return;
@@ -80,11 +79,11 @@ FogContainer .prototype =
       gl .uniform1f        (shaderObject .x3d_FogVisibilityRange, fogNode .visibilityRange);
       gl .uniformMatrix3fv (shaderObject .x3d_FogMatrix, false,   this .fogMatrix);
    },
-   dispose: function ()
+   dispose ()
    {
       Fogs .push (this);
    },
-};
+});
 
 function X3DFogObject (executionContext)
 {
@@ -96,10 +95,9 @@ function X3DFogObject (executionContext)
    this .colorArray = new Float32Array (3);
 }
 
-X3DFogObject .prototype =
+Object .assign (X3DFogObject .prototype,
 {
-   constructor: X3DFogObject,
-   initialize: function ()
+   initialize ()
    {
       this ._fogType         .addInterest ("set_fogType__",         this);
       this ._color           .addInterest ("set_color__",           this);
@@ -108,22 +106,22 @@ X3DFogObject .prototype =
       this .set_color__ ();
       this .set_visibilityRange__ ();
    },
-   isHidden: function ()
+   isHidden ()
    {
       return this .hidden;
    },
-   setHidden: function (value)
+   setHidden (value)
    {
       this .hidden = value;
 
       this .set_fogType__ ();
       this .getBrowser () .addBrowserEvent ();
    },
-   getFogType: function ()
+   getFogType ()
    {
       return this .fogType;
    },
-   getFogs: function ()
+   getFogs ()
    {
       return Fogs;
    },
@@ -142,7 +140,7 @@ X3DFogObject .prototype =
             this .fogType = fogTypes .get (this ._fogType .getValue ()) || 1;
       };
    })(),
-   set_color__: function ()
+   set_color__ ()
    {
       const
          color      = this ._color .getValue (),
@@ -152,13 +150,27 @@ X3DFogObject .prototype =
       colorArray [1] = color .g;
       colorArray [2] = color .b;
    },
-   set_visibilityRange__: function ()
+   set_visibilityRange__ ()
    {
       this .visibilityRange = Math .max (0, this ._visibilityRange .getValue ());
 
       this .set_fogType__ ();
    },
-   dispose: function () { },
-};
+   dispose () { },
+});
+
+Object .defineProperties (X3DFogObject,
+{
+   typeName:
+   {
+      value: "X3DFogObject",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "EnvironmentalEffects",
+      enumerable: true,
+   },
+});
 
 export default X3DFogObject;

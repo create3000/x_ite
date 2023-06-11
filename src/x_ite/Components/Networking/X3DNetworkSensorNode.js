@@ -55,9 +55,20 @@ function X3DNetworkSensorNode (executionContext)
    this .addType (X3DConstants .X3DNetworkSensorNode);
 }
 
-X3DNetworkSensorNode .prototype = Object .assign (Object .create (X3DSensorNode .prototype),
+Object .setPrototypeOf (X3DNetworkSensorNode .prototype, X3DSensorNode .prototype);
+
+Object .defineProperties (X3DNetworkSensorNode,
 {
-   constructor: X3DNetworkSensorNode,
+   typeName:
+   {
+      value: "X3DNetworkSensorNode",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Networking",
+      enumerable: true,
+   },
 });
 
 export default X3DNetworkSensorNode;

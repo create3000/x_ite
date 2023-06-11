@@ -51,56 +51,55 @@ function Complex (real, imag)
    this .imag = imag;
 }
 
-Complex .prototype =
+Object .assign (Complex .prototype,
 {
-   constructor: Complex,
-   [Symbol .iterator]: function* ()
+   *[Symbol .iterator] ()
    {
       yield this .real;
       yield this .imag;
    },
-   copy: function ()
+   copy ()
    {
       const copy = Object .create (Complex .prototype);
       copy .real = this .real;
       copy .imag = this .imag;
       return copy;
    },
-   assign: function (complex)
+   assign (complex)
    {
       this .real = complex .real;
       this .imag = complex .imag;
       return this;
    },
-   equals: function (complex)
+   equals (complex)
    {
       return this .real === complex .real &&
              this .imag === complex .imag;
    },
-   set: function (real, imag)
+   set (real, imag)
    {
       this .real = real;
       this .imag = imag;
       return this;
    },
-   setPolar: function (magnitude, angle)
+   setPolar (magnitude, angle)
    {
       this .real = magnitude * Math .cos (angle);
       this .imag = magnitude * Math .sin (angle);
       return this;
    },
-   conjugate: function ()
+   conjugate ()
    {
       this .imag = -this .imag;
       return this;
    },
-   negate: function ()
+   negate ()
    {
       this .real = -this .real;
       this .imag = -this .imag;
       return this;
    },
-   inverse: function ()
+   inverse ()
    {
       const d = this .real * this .real + this .imag * this .imag;
 
@@ -108,25 +107,25 @@ Complex .prototype =
       this .imag /= -d;
       return this;
    },
-   add: function (value)
+   add (value)
    {
       this .real += value .real;
       this .imag += value .imag;
       return this;
    },
-   subtract: function (value)
+   subtract (value)
    {
       this .real -= value .real;
       this .imag -= value .imag;
       return this;
    },
-   multiply: function (value)
+   multiply (value)
    {
       this .real *= value;
       this .imag *= value;
       return this;
    },
-   multComp: function (value)
+   multComp (value)
    {
       const
          { real: ar, imag: ai } = this,
@@ -136,13 +135,13 @@ Complex .prototype =
       this .imag = ar * bi + ai * br;
       return this;
    },
-   divide: function (value)
+   divide (value)
    {
       this .real /= value;
       this .imag /= value;
       return this;
    },
-   divComp: function (value)
+   divComp (value)
    {
       const
          { real: ar, imag: ai } = this,
@@ -153,7 +152,7 @@ Complex .prototype =
       this .imag = (ai * br - ar * bi) / d;
       return this;
    },
-   toString: function ()
+   toString ()
    {
       let string = "";
 
@@ -173,36 +172,36 @@ Complex .prototype =
 
       return string;
    },
-};
+});
 
 Object .defineProperties (Complex .prototype,
 {
    length: { value: 2 },
    0:
    {
-      get: function ()
+      get ()
       {
          return this .real;
       },
-      set: function (value)
+      set (value)
       {
          this .real = value;
       },
    },
    1:
    {
-      get: function ()
+      get ()
       {
          return this .imag;
       },
-      set: function (value)
+      set (value)
       {
          this .imag = value;
       },
    },
    magnitude:
    {
-      get: function ()
+      get ()
       {
          if (this .real)
          {
@@ -214,18 +213,18 @@ Object .defineProperties (Complex .prototype,
 
          return Math .abs (this .imag);
       },
-      set: function (magnitude)
+      set (magnitude)
       {
          this .setPolar (magnitude, this .angle);
       },
    },
    angle:
    {
-      get: function ()
+      get ()
       {
          return Math .atan2 (this .imag, this .real);
       },
-      set: function (angle)
+      set (angle)
       {
          this .setPolar (this .magnitude, angle);
       },
@@ -234,11 +233,11 @@ Object .defineProperties (Complex .prototype,
 
 Object .assign (Complex,
 {
-   Polar: function (magnitude, angle)
+   Polar (magnitude, angle)
    {
       return Object .create (Complex .prototype) .setPolar (magnitude, angle);
    },
-   multiply: function (lhs, rhs)
+   multiply (lhs, rhs)
    {
       return lhs .copy () .multiply (rhs);
    },

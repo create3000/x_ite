@@ -57,14 +57,9 @@ function UnitInfo (category, name, conversionFactor)
    });
 }
 
-UnitInfo .prototype = Object .assign (Object .create (X3DObject .prototype),
+Object .assign (Object .setPrototypeOf (UnitInfo .prototype, X3DObject .prototype),
 {
-   constructor: UnitInfo,
-   getTypeName: function ()
-   {
-      return "UnitInfo";
-   },
-   toVRMLStream: function (generator)
+   toVRMLStream (generator)
    {
       generator .string += generator .Indent ();
       generator .string += "UNIT";
@@ -75,7 +70,7 @@ UnitInfo .prototype = Object .assign (Object .create (X3DObject .prototype),
       generator .string += generator .Space ();
       generator .string += this .conversionFactor;
    },
-   toXMLStream: function (generator)
+   toXMLStream (generator)
    {
       generator .string += generator .Indent ();
       generator .string += "<unit";
@@ -93,7 +88,7 @@ UnitInfo .prototype = Object .assign (Object .create (X3DObject .prototype),
       generator .string += "'";
       generator .string += generator .closingTags ? "></unit>" : "/>";
    },
-   toJSONStream: function (generator, _throw)
+   toJSONStream (generator, _throw)
    {
       if (this .conversionFactor === 1)
          throw new Error ("conversionFactor is 1");
@@ -148,7 +143,16 @@ for (const key of Reflect .ownKeys (UnitInfo .prototype))
 
 Object .defineProperty (UnitInfo .prototype, "conversion_factor",
 {
-   get: function () { return this .conversionFactor; },
+   get () { return this .conversionFactor; },
+});
+
+Object .defineProperties (UnitInfo,
+{
+   typeName:
+   {
+      value: "UnitInfo",
+      enumerable: true,
+   },
 });
 
 export default UnitInfo;

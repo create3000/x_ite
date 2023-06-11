@@ -58,31 +58,9 @@ function TextureTransformMatrix3D (executionContext)
    this .addType (X3DConstants .TextureTransformMatrix3D);
 }
 
-TextureTransformMatrix3D .prototype = Object .assign (Object .create (X3DSingleTextureTransformNode .prototype),
+Object .assign (Object .setPrototypeOf (TextureTransformMatrix3D .prototype, X3DSingleTextureTransformNode .prototype),
 {
-   constructor: TextureTransformMatrix3D,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "mapping",  new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "matrix",   new Fields .SFMatrix4f ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "TextureTransformMatrix3D";
-   },
-   getComponentName: function ()
-   {
-      return "Texturing3D";
-   },
-   getContainerField: function ()
-   {
-      return "textureTransform";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.1", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DSingleTextureTransformNode .prototype .initialize .call (this);
 
@@ -90,13 +68,46 @@ TextureTransformMatrix3D .prototype = Object .assign (Object .create (X3DSingleT
 
       this .eventsProcessed ();
    },
-   getMatrix: function ()
+   getMatrix ()
    {
       return this ._matrix .getValue ();
    },
-   eventsProcessed: function ()
+   eventsProcessed ()
    {
       this .setMatrix (this ._matrix .getValue ());
+   },
+});
+
+Object .defineProperties (TextureTransformMatrix3D,
+{
+   typeName:
+   {
+      value: "TextureTransformMatrix3D",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Texturing3D",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "textureTransform",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.1", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "mapping",  new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "matrix",   new Fields .SFMatrix4f ()),
+      ]),
+      enumerable: true,
    },
 });
 

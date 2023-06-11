@@ -69,47 +69,9 @@ function BrowserOptions (executionContext)
    this .shading          = Shading .GOURAUD;
 }
 
-BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .prototype),
 {
-   constructor: BrowserOptions,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "SplashScreen",           new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "Dashboard",              new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "Rubberband",             new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "EnableInlineViewpoints", new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "Antialiased",            new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "TextureQuality",         new Fields .SFString ("MEDIUM")),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "PrimitiveQuality",       new Fields .SFString ("MEDIUM")),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "QualityWhenMoving",      new Fields .SFString ("SAME")),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "Shading",                new Fields .SFString ("GOURAUD")),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "MotionBlur",             new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "AutoUpdate",             new Fields .SFBool (false)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "Cache",                  new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "ContentScale",           new Fields .SFDouble (1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "ContextMenu",            new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "Debug",                  new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "Gravity",                new Fields .SFDouble (9.80665)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "LogarithmicDepthBuffer", new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "Notifications",          new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "Multisampling",          new Fields .SFInt32 (4)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "OptimizeStaticGroup",    new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "PrivateSensors",         new Fields .SFBool (false)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "StraightenHorizon",      new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "Timings",                new Fields .SFBool ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "BrowserOptions";
-   },
-   getComponentName: function ()
-   {
-      return "X_ITE";
-   },
-   getContainerField: function ()
-   {
-      return "browserOptions";
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DBaseNode .prototype .initialize .call (this);
 
@@ -205,34 +167,34 @@ BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototy
          }
       };
    })(),
-   getPrimitiveQuality: function ()
+   getPrimitiveQuality ()
    {
       return this .primitiveQuality;
    },
-   getShading: function ()
+   getShading ()
    {
       return this .shading;
    },
-   getTextureQuality: function ()
+   getTextureQuality ()
    {
       return this .textureQuality;
    },
-   set_rubberband__: function (rubberband)
+   set_rubberband__ (rubberband)
    {
       this .localStorage .Rubberband = rubberband .getValue ();
    },
-   set_antialiased__: function ()
+   set_antialiased__ ()
    {
       this .set_multisampling__ (this ._Multisampling);
    },
-   set_primitiveQuality__: function (value)
+   set_primitiveQuality__ (value)
    {
       const
          browser          = this .getBrowser (),
          primitiveQuality = value .getValue () .toUpperCase ();
 
       this .localStorage .PrimitiveQuality = primitiveQuality;
-      this .primitiveQuality               = this .getEnum (PrimitiveQuality, primitiveQuality, PrimitiveQuality .MEDIUM);
+      this .primitiveQuality               = $.enum (PrimitiveQuality, primitiveQuality, PrimitiveQuality .MEDIUM);
 
       if (typeof browser .setPrimitiveQuality2D === "function")
          browser .setPrimitiveQuality2D (this .primitiveQuality);
@@ -240,14 +202,14 @@ BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototy
       if (typeof browser .setPrimitiveQuality3D === "function")
          browser .setPrimitiveQuality3D (this .primitiveQuality);
    },
-   set_textureQuality__: function (value)
+   set_textureQuality__ (value)
    {
       const
          browser        = this .getBrowser (),
          textureQuality = value .getValue () .toUpperCase ();
 
       this .localStorage .TextureQuality = textureQuality;
-      this .textureQuality               = this .getEnum (TextureQuality, textureQuality, TextureQuality .MEDIUM);
+      this .textureQuality               = $.enum (TextureQuality, textureQuality, TextureQuality .MEDIUM);
 
       if (typeof browser .setTextureQuality === "function")
          browser .setTextureQuality (this .textureQuality);
@@ -268,20 +230,20 @@ BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototy
             browser = this .getBrowser (),
             shading = value .getValue () .toUpperCase () .replace ("POINTSET", "POINT");
 
-         this .shading = this .getEnum (Shading, shading, Shading .GOURAUD);
+         this .shading = $.enum (Shading, shading, Shading .GOURAUD);
 
          browser .getRenderingProperties () ._Shading = strings [this .shading];
          browser .setShading (this .shading);
       };
    })(),
-   set_straightenHorizon__: function (straightenHorizon)
+   set_straightenHorizon__ (straightenHorizon)
    {
       this .localStorage .StraightenHorizon = straightenHorizon .getValue ();
 
       if (straightenHorizon .getValue ())
          this .getBrowser () .getActiveLayer () ?.straightenView ();
    },
-   updateContentScale: function ()
+   updateContentScale ()
    {
       const
          browser = this .getBrowser (),
@@ -299,7 +261,7 @@ BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototy
 
       browser .reshape ();
    },
-   set_autoUpdate__: function (autoUpdate)
+   set_autoUpdate__ (autoUpdate)
    {
       const events = ["resize", "scroll", "load"]
          .map (event => `${event}.${this .getTypeName ()}${this .getId ()}`)
@@ -333,7 +295,7 @@ BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototy
          $(window) .off (events);
       }
    },
-   set_contentScale__: function (contentScale)
+   set_contentScale__ (contentScale)
    {
       const browser = this .getBrowser ();
 
@@ -347,7 +309,7 @@ BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototy
 
       browser .reshape ();
    },
-   set_logarithmicDepthBuffer__: function (logarithmicDepthBuffer)
+   set_logarithmicDepthBuffer__ (logarithmicDepthBuffer)
    {
       const
          browser = this .getBrowser (),
@@ -355,7 +317,7 @@ BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototy
 
       browser .getRenderingProperties () ._LogarithmicDepthBuffer = logarithmicDepthBuffer .getValue () && gl .HAS_FEATURE_FRAG_DEPTH;
    },
-   set_multisampling__: function (multisampling)
+   set_multisampling__ (multisampling)
    {
       const
          browser = this .getBrowser (),
@@ -366,9 +328,45 @@ BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototy
 
       browser .reshape ();
    },
-   set_timings__: function (timings)
+   set_timings__ (timings)
    {
       this .localStorage .Timings = timings .getValue ();
+   },
+});
+
+Object .defineProperties (BrowserOptions,
+{
+   typeName:
+   {
+      value: "BrowserOptions",
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "SplashScreen",           new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "Dashboard",              new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "Rubberband",             new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "EnableInlineViewpoints", new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "Antialiased",            new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "TextureQuality",         new Fields .SFString ("MEDIUM")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "PrimitiveQuality",       new Fields .SFString ("MEDIUM")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "QualityWhenMoving",      new Fields .SFString ("SAME")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "Shading",                new Fields .SFString ("GOURAUD")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "MotionBlur",             new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "AutoUpdate",             new Fields .SFBool (false)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "Cache",                  new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "ContentScale",           new Fields .SFDouble (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "ContextMenu",            new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "Debug",                  new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "Gravity",                new Fields .SFDouble (9.80665)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "LogarithmicDepthBuffer", new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "Notifications",          new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "Multisampling",          new Fields .SFInt32 (4)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "StraightenHorizon",      new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "Timings",                new Fields .SFBool ()),
+      ]),
+      enumerable: true,
    },
 });
 

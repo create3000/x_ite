@@ -57,22 +57,9 @@ function BrowserTimings (executionContext)
    this .fps           = new StopWatch ();
 }
 
-BrowserTimings .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+Object .assign (Object .setPrototypeOf (BrowserTimings .prototype, X3DBaseNode .prototype),
 {
-   constructor: BrowserTimings,
-   getTypeName: function ()
-   {
-      return "BrowserTimings";
-   },
-   getComponentName: function ()
-   {
-      return "X_ITE";
-   },
-   getContainerField: function ()
-   {
-      return "browserTimings";
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DBaseNode .prototype .initialize .call (this);
 
@@ -176,7 +163,7 @@ BrowserTimings .prototype = Object .assign (Object .create (X3DBaseNode .prototy
 
       this .set_type__ ();
    },
-   set_enabled__: function ()
+   set_enabled__ ()
    {
       if (this .getBrowser () .getBrowserOption ("Timings"))
       {
@@ -192,7 +179,7 @@ BrowserTimings .prototype = Object .assign (Object .create (X3DBaseNode .prototy
          this .getBrowser () .prepareEvents () .removeInterest ("update", this);
       }
    },
-   set_type__: function ()
+   set_type__ ()
    {
       if (this .localStorage .type === "MORE")
       {
@@ -210,14 +197,14 @@ BrowserTimings .prototype = Object .assign (Object .create (X3DBaseNode .prototy
       this .set_button__ ();
       this .build ();
    },
-   set_button__: function ()
+   set_button__ ()
    {
       if (this .localStorage .type === "MORE")
          this .button .text (_("Less Properties"));
       else
          this .button .text (_("More Properties"));
    },
-   update: function ()
+   update ()
    {
       this .fps .stop ()
 
@@ -229,12 +216,12 @@ BrowserTimings .prototype = Object .assign (Object .create (X3DBaseNode .prototy
 
       this .fps .start ();
    },
-   build: function ()
+   build ()
    {
       const browser = this .getBrowser ();
 
-      this .frameRate .text (f2(1000 / this .fps .averageTime) + " " + _("fps"));
-      this .speed .text (f2(this .getSpeed (browser .currentSpeed)) + " " + this .getSpeedUnit (browser .currentSpeed));
+      this .frameRate .text (`${f2 (1000 / this .fps .averageTime)} ${_("fps")}`);
+      this .speed .text (`${f2 (this .getSpeed (browser .currentSpeed))} ${this .getSpeedUnit (browser .currentSpeed)}`);
 
       if (this .localStorage .type !== "MORE" || !browser .getWorld ())
          return;
@@ -250,15 +237,15 @@ BrowserTimings .prototype = Object .assign (Object .create (X3DBaseNode .prototy
          opaqueShapes      = layers .reduce ((n, layer) => n + layer .getNumOpaqueShapes (), 0),
          transparentShapes = layers .reduce ((n, layer) => n + layer .getNumTransparentShapes (), 0);
 
-      this .browserTime     .text (f2(browser .getSystemTime () .averageTime) + " " + _("ms"));
-      this .x3dTotal        .text (f2(browser .getBrowserTime () .averageTime) + " " + _("ms"));
-      this .eventProcessing .text (f2(routingTime) + " " + _("ms"));
-      this .pointerTime     .text (f2(browser .getPointingTime () .averageTime) + " " + _("ms"));
-      this .cameraTime      .text (f2(browser .getCameraTime () .averageTime) + " " + _("ms"));
-      this .pickingTime     .text (f2(browser .getPickingTime () .averageTime) + " " + _("ms"));
-      this .collisionTime   .text (f2(collisionTime) + " " + _("ms"));
-      this .renderTime      .text (f2(browser .getDisplayTime () .averageTime) + " " + _("ms"));
-      this .numShapes       .text (opaqueShapes + " + " + transparentShapes);
+      this .browserTime     .text (`${f2 (browser .getSystemTime () .averageTime)} ${_("ms")}`);
+      this .x3dTotal        .text (`${f2 (browser .getBrowserTime () .averageTime)} ${_("ms")}`);
+      this .eventProcessing .text (`${f2 (routingTime)} ${_("ms")}`);
+      this .pointerTime     .text (`${f2 (browser .getPointingTime () .averageTime)} ${_("ms")}`);
+      this .cameraTime      .text (`${f2 (browser .getCameraTime () .averageTime)} ${_("ms")}`);
+      this .pickingTime     .text (`${f2 (browser .getPickingTime () .averageTime)} ${_("ms")}`);
+      this .collisionTime   .text (`${f2 (collisionTime)} ${_("ms")}`);
+      this .renderTime      .text (`${f2 (browser .getDisplayTime () .averageTime)} ${_("ms")}`);
+      this .numShapes       .text (`${opaqueShapes} + ${transparentShapes}`);
       this .sensors         .text (prepareEvents + sensors);
 
       browser .getSystemTime ()    .reset ();
@@ -271,19 +258,28 @@ BrowserTimings .prototype = Object .assign (Object .create (X3DBaseNode .prototy
 
       activeLayer ?.getCollisionTime () .reset ();
    },
-   getSpeed: function (speed)
+   getSpeed (speed)
    {
       if (speed < 15)
          return speed;
 
       return speed * 3.6;
    },
-   getSpeedUnit: function (speed)
+   getSpeedUnit (speed)
    {
       if (speed < 15)
          return _("m/s");
 
       return _("km/h");
+   },
+});
+
+Object .defineProperties (BrowserTimings,
+{
+   typeName:
+   {
+      value: "BrowserTimings",
+      enumerable: true,
    },
 });
 

@@ -66,34 +66,9 @@ function ArcClose2D (executionContext)
    this ._radius     .setUnit ("length");
 }
 
-ArcClose2D .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
+Object .assign (Object .setPrototypeOf (ArcClose2D .prototype, X3DGeometryNode .prototype),
 {
-   constructor: ArcClose2D,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "closureType", new Fields .SFString ("PIE")),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "startAngle",  new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "endAngle",    new Fields .SFFloat (1.5708)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "radius",      new Fields .SFFloat (1)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",       new Fields .SFBool ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "ArcClose2D";
-   },
-   getComponentName: function ()
-   {
-      return "Geometry2D";
-   },
-   getContainerField: function ()
-   {
-      return "geometry";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   set_live__: function ()
+   set_live__ ()
    {
       X3DGeometryNode .prototype .set_live__ .call (this);
 
@@ -102,7 +77,7 @@ ArcClose2D .prototype = Object .assign (Object .create (X3DGeometryNode .prototy
       else
          this .getBrowser () .getArcClose2DOptions () .removeInterest ("requestRebuild", this);
    },
-   getSweepAngle: function ()
+   getSweepAngle ()
    {
       const
          start = Algorithm .interval (this ._startAngle .getValue (), 0, Math .PI * 2),
@@ -211,6 +186,42 @@ ArcClose2D .prototype = Object .assign (Object .create (X3DGeometryNode .prototy
          this .setSolid (this ._solid .getValue ());
       };
    })(),
+});
+
+Object .defineProperties (ArcClose2D,
+{
+   typeName:
+   {
+      value: "ArcClose2D",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Geometry2D",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "geometry",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "closureType", new Fields .SFString ("PIE")),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "startAngle",  new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "endAngle",    new Fields .SFFloat (1.5708)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "radius",      new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",       new Fields .SFBool ()),
+      ]),
+      enumerable: true,
+   },
 });
 
 export default ArcClose2D;

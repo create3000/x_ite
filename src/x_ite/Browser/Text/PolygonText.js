@@ -62,14 +62,13 @@ function PolygonText (text, fontStyle)
    this .texCoordArray = X3DGeometryNode .createArray ();
 }
 
-PolygonText .prototype = Object .assign (Object .create (X3DTextGeometry .prototype),
+Object .assign (Object .setPrototypeOf (PolygonText .prototype, X3DTextGeometry .prototype),
 {
-   constructor: PolygonText,
-   isTransparent: function ()
+   isTransparent ()
    {
       return false;
    },
-   getMatrix: function ()
+   getMatrix ()
    {
       return Matrix4 .Identity;
    },
@@ -191,7 +190,7 @@ PolygonText .prototype = Object .assign (Object .create (X3DTextGeometry .protot
          }
       };
    })(),
-   getGlyphExtents: function (font, glyph, primitiveQuality, min, max)
+   getGlyphExtents (font, glyph, primitiveQuality, min, max)
    {
       const
          glyphCache = this .getBrowser () .getGlyph (font, primitiveQuality, glyph .index),
@@ -223,7 +222,7 @@ PolygonText .prototype = Object .assign (Object .create (X3DTextGeometry .protot
          extents .max = max .copy ();
       }
    },
-   getGlyphGeometry: function (font, glyph, primitiveQuality)
+   getGlyphGeometry (font, glyph, primitiveQuality)
    {
       const
          glyphCache    = this .getBrowser () .getGlyph (font, primitiveQuality, glyph .index),
@@ -242,7 +241,7 @@ PolygonText .prototype = Object .assign (Object .create (X3DTextGeometry .protot
          return glyphGeometry;
       }
    },
-   createGlyphGeometry: function (glyph, vertices, primitiveQuality)
+   createGlyphGeometry (glyph, vertices, primitiveQuality)
    {
       // Get contours for the current glyph.
 
@@ -298,7 +297,7 @@ PolygonText .prototype = Object .assign (Object .create (X3DTextGeometry .protot
 
       return this .triangulatePolygon (contours, vertices);
    },
-   getBezierSteps: function (primitiveQuality)
+   getBezierSteps (primitiveQuality)
    {
       switch (primitiveQuality)
       {
@@ -350,11 +349,11 @@ PolygonText .prototype = Object .assign (Object .create (X3DTextGeometry .protot
          return triangles;
       };
    })(),
-   display: function (gl, renderContext)
+   display (gl, renderContext)
    { },
-   transformLine: function (line)
+   transformLine (line)
    { },
-   transformMatrix: function (matrix)
+   transformMatrix (matrix)
    { },
 });
 

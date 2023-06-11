@@ -66,43 +66,10 @@ function Anchor (executionContext)
    this .anchorSensors   = [ ];
 }
 
-Anchor .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
+Object .assign (Object .setPrototypeOf (Anchor .prototype, X3DGroupingNode .prototype),
    X3DUrlObject .prototype,
 {
-   constructor: Anchor,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "description",          new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "parameter",            new Fields .MFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",              new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",          new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",             new Fields .SFVec3f (-1, -1, -1)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",           new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",          new Fields .MFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,      "removeChildren",       new Fields .MFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "children",             new Fields .MFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "Anchor";
-   },
-   getComponentName: function ()
-   {
-      return "Networking";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DGroupingNode .prototype .initialize .call (this);
       X3DUrlObject    .prototype .initialize .call (this);
@@ -125,11 +92,11 @@ Anchor .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
             this .requestImmediateLoad () .catch (Function .prototype);
       };
    },
-   set_load__: function ()
+   set_load__ ()
    { },
-   set_url__: function ()
+   set_url__ ()
    { },
-   requestImmediateLoad: function (cache = true)
+   requestImmediateLoad (cache = true)
    {
       this .setCache (cache);
       this .setLoadState (X3DConstants .IN_PROGRESS_STATE, false);
@@ -171,7 +138,7 @@ Anchor .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
    },
    requestUnload ()
    { },
-   traverse: function (type, renderObject)
+   traverse (type, renderObject)
    {
       if (type === TraverseType .POINTER)
       {
@@ -199,10 +166,54 @@ Anchor .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
          X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
       }
    },
-   dispose: function ()
+   dispose ()
    {
       X3DUrlObject    .prototype .dispose .call (this);
       X3DGroupingNode .prototype .dispose .call (this);
+   },
+});
+
+Object .defineProperties (Anchor,
+{
+   typeName:
+   {
+      value: "Anchor",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Networking",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "description",          new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "parameter",            new Fields .MFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",              new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",          new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",             new Fields .SFVec3f (-1, -1, -1)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",           new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",          new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "removeChildren",       new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "children",             new Fields .MFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 

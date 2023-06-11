@@ -66,68 +66,79 @@ function ColorDamper (executionContext)
    this .addType (X3DConstants .ColorDamper);
 }
 
-ColorDamper .prototype = Object .assign (Object .create (X3DDamperNode .prototype),
+Object .assign (Object .setPrototypeOf (ColorDamper .prototype, X3DDamperNode .prototype),
 {
-   constructor: ColorDamper,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",           new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,      "set_value",          new Fields .SFColor ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,      "set_destination",    new Fields .SFColor ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "initialValue",       new Fields .SFColor (0.8, 0.8, 0.8)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "initialDestination", new Fields .SFColor (0.8, 0.8, 0.8)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "order",              new Fields .SFInt32 (3)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "tau",                new Fields .SFTime (0.3)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "tolerance",          new Fields .SFFloat (-1)),
-      new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",           new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,     "value_changed",      new Fields .SFColor ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "ColorDamper";
-   },
-   getComponentName: function ()
-   {
-      return "Followers";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
-   getVector: function ()
+   getVector ()
    {
       return new Vector3 (0, 0, 0);
    },
-   getValue: function ()
+   getValue ()
    {
       return this ._set_value .getValue () .getHSV (vector);
    },
-   getDestination: function ()
+   getDestination ()
    {
       return this ._set_destination .getValue () .getHSV (vector);
    },
-   getInitialValue: function ()
+   getInitialValue ()
    {
       return this ._initialValue .getValue () .getHSV (initialValue);
    },
-   getInitialDestination: function ()
+   getInitialDestination ()
    {
       return this ._initialDestination .getValue () .getHSV (initialDestination);
    },
-   setValue: function (value)
+   setValue (value)
    {
       this ._value_changed .setHSV (value .x, value .y, value .z);
    },
-   equals: function (lhs, rhs, tolerance)
+   equals (lhs, rhs, tolerance)
    {
       return a .assign (lhs) .subtract (rhs) .magnitude () < tolerance;
    },
-   interpolate: function (source, destination, weight)
+   interpolate (source, destination, weight)
    {
       return Color3 .lerp (source, destination, weight, vector);
+   },
+});
+
+Object .defineProperties (ColorDamper,
+{
+   typeName:
+   {
+      value: "ColorDamper",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Followers",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",           new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "set_value",          new Fields .SFColor ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "set_destination",    new Fields .SFColor ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "initialValue",       new Fields .SFColor (0.8, 0.8, 0.8)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "initialDestination", new Fields .SFColor (0.8, 0.8, 0.8)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "order",              new Fields .SFInt32 (3)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "tau",                new Fields .SFTime (0.3)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "tolerance",          new Fields .SFFloat (-1)),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",           new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "value_changed",      new Fields .SFColor ()),
+      ]),
+      enumerable: true,
    },
 });
 

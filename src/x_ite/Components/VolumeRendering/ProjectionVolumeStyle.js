@@ -58,39 +58,16 @@ function ProjectionVolumeStyle (executionContext)
    this .addType (X3DConstants .ProjectionVolumeStyle);
 }
 
-ProjectionVolumeStyle .prototype = Object .assign (Object .create (X3DVolumeRenderStyleNode .prototype),
+Object .assign (Object .setPrototypeOf (ProjectionVolumeStyle .prototype, X3DVolumeRenderStyleNode .prototype),
 {
-   constructor: ProjectionVolumeStyle,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",           new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",            new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "type",               new Fields .SFString ("MAX")),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "intensityThreshold", new Fields .SFFloat (0)),
-   ]),
-   getTypeName: function ()
-   {
-      return "ProjectionVolumeStyle";
-   },
-   getComponentName: function ()
-   {
-      return "VolumeRendering";
-   },
-   getContainerField: function ()
-   {
-      return "renderStyle";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.3", "Infinity"];
-   },
-   addShaderFields: function (shaderNode)
+   addShaderFields (shaderNode)
    {
       if (! this ._enabled .getValue ())
          return;
 
       shaderNode .addUserDefinedField (X3DConstants .inputOutput, "intensityThreshold_" + this .getId (), this ._intensityThreshold .copy ());
    },
-   getUniformsText: function ()
+   getUniformsText ()
    {
       if (! this ._enabled .getValue ())
          return "";
@@ -200,7 +177,7 @@ ProjectionVolumeStyle .prototype = Object .assign (Object .create (X3DVolumeRend
 
       return string;
    },
-   getFunctionsText: function ()
+   getFunctionsText ()
    {
       if (! this ._enabled .getValue ())
          return "";
@@ -213,6 +190,40 @@ ProjectionVolumeStyle .prototype = Object .assign (Object .create (X3DVolumeRend
       string += "   textureColor = getProjectionStyle_" + this .getId () + " (textureColor, texCoord);\n";
 
       return string;
+   },
+});
+
+Object .defineProperties (ProjectionVolumeStyle,
+{
+   typeName:
+   {
+      value: "ProjectionVolumeStyle",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "VolumeRendering",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "renderStyle",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.3", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",           new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",            new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "type",               new Fields .SFString ("MAX")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "intensityThreshold", new Fields .SFFloat (0)),
+      ]),
+      enumerable: true,
    },
 });
 

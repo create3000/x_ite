@@ -69,36 +69,10 @@ function NurbsCurve (executionContext)
    this .sampleOptions = { resolution: [ ] };
 }
 
-NurbsCurve .prototype = Object .assign (Object .create (X3DParametricGeometryNode .prototype),
+Object .assign (Object .setPrototypeOf (NurbsCurve .prototype, X3DParametricGeometryNode .prototype),
    X3DLineGeometryNode .prototype,
 {
-   constructor: NurbsCurve,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",     new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "tessellation", new Fields .SFInt32 ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "closed",       new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "order",        new Fields .SFInt32 (3)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "knot",         new Fields .MFDouble ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "weight",       new Fields .MFDouble ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "controlPoint", new Fields .SFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "NurbsCurve";
-   },
-   getComponentName: function ()
-   {
-      return "NURBS";
-   },
-   getContainerField: function ()
-   {
-      return "geometry";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DParametricGeometryNode .prototype .initialize .call (this);
 
@@ -106,7 +80,7 @@ NurbsCurve .prototype = Object .assign (Object .create (X3DParametricGeometryNod
 
       this .set_controlPoint__ ();
    },
-   set_controlPoint__: function ()
+   set_controlPoint__ ()
    {
       if (this .controlPointNode)
          this .controlPointNode .removeInterest ("requestRebuild", this);
@@ -116,26 +90,26 @@ NurbsCurve .prototype = Object .assign (Object .create (X3DParametricGeometryNod
       if (this .controlPointNode)
          this .controlPointNode .addInterest ("requestRebuild", this);
    },
-   getTessellation: function (numKnots)
+   getTessellation (numKnots)
    {
       return NURBS .getTessellation (this ._tessellation .getValue (), numKnots - this ._order .getValue ());
    },
-   getClosed: function (order, knot, weight, controlPointNode)
+   getClosed (order, knot, weight, controlPointNode)
    {
       if (! this ._closed .getValue ())
          return false;
 
       return NURBS .getClosed (order, knot, weight, controlPointNode);
    },
-   getWeights: function (result, dimension, weight)
+   getWeights (result, dimension, weight)
    {
       return NURBS .getWeights (result, dimension, weight);
    },
-   getControlPoints: function (result, closed, order, weights, controlPointNode)
+   getControlPoints (result, closed, order, weights, controlPointNode)
    {
       return NURBS .getControlPoints (result, closed, order, weights, controlPointNode);
    },
-   tessellate: function ()
+   tessellate ()
    {
       if (this ._order .getValue () < 2)
          return [ ];
@@ -162,7 +136,7 @@ NurbsCurve .prototype = Object .assign (Object .create (X3DParametricGeometryNod
 
       return array;
    },
-   build: function ()
+   build ()
    {
       if (this ._order .getValue () < 2)
          return;
@@ -214,9 +188,46 @@ NurbsCurve .prototype = Object .assign (Object .create (X3DParametricGeometryNod
          vertexArray .push (points [i2], points [i2 + 1], points [i2 + 2], 1);
       }
    },
-   dispose: function ()
+   dispose ()
    {
       X3DParametricGeometryNode .prototype .dispose .call (this);
+   },
+});
+
+Object .defineProperties (NurbsCurve,
+{
+   typeName:
+   {
+      value: "NurbsCurve",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "NURBS",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "geometry",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",     new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "tessellation", new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "closed",       new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "order",        new Fields .SFInt32 (3)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "knot",         new Fields .MFDouble ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "weight",       new Fields .MFDouble ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "controlPoint", new Fields .SFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 

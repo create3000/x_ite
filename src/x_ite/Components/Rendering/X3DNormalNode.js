@@ -55,9 +55,20 @@ function X3DNormalNode (executionContext)
    this .addType (X3DConstants .X3DNormalNode);
 }
 
-X3DNormalNode .prototype = Object .assign (Object .create (X3DGeometricPropertyNode .prototype),
+Object .setPrototypeOf (X3DNormalNode .prototype, X3DGeometricPropertyNode .prototype);
+
+Object .defineProperties (X3DNormalNode,
 {
-   constructor: X3DNormalNode,
+   typeName:
+   {
+      value: "X3DNormalNode",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Rendering",
+      enumerable: true,
+   },
 });
 
 export default X3DNormalNode;

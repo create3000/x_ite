@@ -55,11 +55,24 @@ function X3DParticlePhysicsModelNode (executionContext)
    this .addType (X3DConstants .X3DParticlePhysicsModelNode);
 }
 
-X3DParticlePhysicsModelNode .prototype = Object .assign (Object .create (X3DNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DParticlePhysicsModelNode .prototype, X3DNode .prototype),
 {
-   constructor: X3DParticlePhysicsModelNode,
-   addForce: function ()
+   addForce ()
    { },
+});
+
+Object .defineProperties (X3DParticlePhysicsModelNode,
+{
+   typeName:
+   {
+      value: "X3DParticlePhysicsModelNode",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "ParticleSystems",
+      enumerable: true,
+   },
 });
 
 export default X3DParticlePhysicsModelNode;

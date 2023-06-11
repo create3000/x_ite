@@ -67,43 +67,9 @@ function Extrusion (executionContext)
    this ._spine        .setUnit ("length");
 }
 
-Extrusion .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
+Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .prototype),
 {
-   constructor: Extrusion,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",         new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,      "set_crossSection", new Fields .MFVec2f ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,      "set_orientation",  new Fields .MFRotation ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,      "set_scale",        new Fields .MFVec2f ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,      "set_spine",        new Fields .MFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "beginCap",         new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "endCap",           new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",            new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "ccw",              new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "convex",           new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "creaseAngle",      new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "crossSection",     new Fields .MFVec2f (new Vector2 (1, 1), new Vector2 (1, -1), new Vector2 (-1, -1), new Vector2 (-1, 1), new Vector2 (1, 1))),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "orientation",      new Fields .MFRotation (new Rotation4 ())),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "scale",            new Fields .MFVec2f (new Vector2 (1, 1))),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "spine",            new Fields .MFVec3f (new Vector3 (0, 0, 0), new Vector3 (0, 1, 0))),
-   ]),
-   getTypeName: function ()
-   {
-      return "Extrusion";
-   },
-   getComponentName: function ()
-   {
-      return "Geometry3D";
-   },
-   getContainerField: function ()
-   {
-      return "geometry";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DGeometryNode .prototype .initialize .call (this);
 
@@ -112,7 +78,7 @@ Extrusion .prototype = Object .assign (Object .create (X3DGeometryNode .prototyp
       this ._set_scale        .addFieldInterest (this ._scale);
       this ._set_spine        .addFieldInterest (this ._spine);
    },
-   getClosedOrientation: function ()
+   getClosedOrientation ()
    {
       const orientation = this ._orientation;
 
@@ -675,7 +641,7 @@ Extrusion .prototype = Object .assign (Object .create (X3DGeometryNode .prototyp
          this .setCCW (this ._ccw .getValue ());
       };
    })(),
-   addCap: function (texCoordArray, texCoord, normal, vertices, triangles)
+   addCap (texCoordArray, texCoord, normal, vertices, triangles)
    {
       const
          normalArray = this .getNormals (),
@@ -703,6 +669,51 @@ Extrusion .prototype = Object .assign (Object .create (X3DGeometryNode .prototyp
                             p1 .x, p1 .y, p1 .z, 1,
                             p2 .x, p2 .y, p2 .z, 1);
       }
+   },
+});
+
+Object .defineProperties (Extrusion,
+{
+   typeName:
+   {
+      value: "Extrusion",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Geometry3D",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "geometry",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",         new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "set_crossSection", new Fields .MFVec2f ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "set_orientation",  new Fields .MFRotation ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "set_scale",        new Fields .MFVec2f ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "set_spine",        new Fields .MFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "beginCap",         new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "endCap",           new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",            new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "ccw",              new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "convex",           new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "creaseAngle",      new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "crossSection",     new Fields .MFVec2f (new Vector2 (1, 1), new Vector2 (1, -1), new Vector2 (-1, -1), new Vector2 (-1, 1), new Vector2 (1, 1))),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "orientation",      new Fields .MFRotation (new Rotation4 ())),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "scale",            new Fields .MFVec2f (new Vector2 (1, 1))),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "spine",            new Fields .MFVec3f (new Vector3 (0, 0, 0), new Vector3 (0, 1, 0))),
+      ]),
+      enumerable: true,
    },
 });
 

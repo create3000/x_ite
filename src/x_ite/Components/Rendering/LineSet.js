@@ -64,35 +64,9 @@ function LineSet (executionContext)
    this .coordNode    = null;
 }
 
-LineSet .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototype),
+Object .assign (Object .setPrototypeOf (LineSet .prototype, X3DLineGeometryNode .prototype),
 {
-   constructor: LineSet,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "vertexCount", new Fields .MFInt32 ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "attrib",      new Fields .MFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "fogCoord",    new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "color",       new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "normal",      new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "coord",       new Fields .SFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "LineSet";
-   },
-   getComponentName: function ()
-   {
-      return "Rendering";
-   },
-   getContainerField: function ()
-   {
-      return "geometry";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DLineGeometryNode .prototype .initialize .call (this);
 
@@ -108,7 +82,7 @@ LineSet .prototype = Object .assign (Object .create (X3DLineGeometryNode .protot
       this .set_normal__ ();
       this .set_coord__ ();
    },
-   set_attrib__: function ()
+   set_attrib__ ()
    {
       const attribNodes = this .getAttrib ();
 
@@ -136,7 +110,7 @@ LineSet .prototype = Object .assign (Object .create (X3DLineGeometryNode .protot
 
       this .updateVertexArrays ();
    },
-   set_fogCoord__: function ()
+   set_fogCoord__ ()
    {
       this .fogCoordNode ?.removeInterest ("requestRebuild", this);
 
@@ -144,7 +118,7 @@ LineSet .prototype = Object .assign (Object .create (X3DLineGeometryNode .protot
 
       this .fogCoordNode ?.addInterest ("requestRebuild", this);
    },
-   set_color__: function ()
+   set_color__ ()
    {
       this .colorNode ?.removeInterest ("requestRebuild", this);
 
@@ -154,7 +128,7 @@ LineSet .prototype = Object .assign (Object .create (X3DLineGeometryNode .protot
 
       this .setTransparent (this .colorNode ?.isTransparent () ?? false);
    },
-   set_normal__: function ()
+   set_normal__ ()
    {
       this .normalNode ?.removeInterest ("requestRebuild", this);
 
@@ -162,7 +136,7 @@ LineSet .prototype = Object .assign (Object .create (X3DLineGeometryNode .protot
 
       this .normalNode ?.addInterest ("requestRebuild", this);
    },
-   set_coord__: function ()
+   set_coord__ ()
    {
       this .coordNode ?.removeInterest ("requestRebuild", this);
 
@@ -170,7 +144,7 @@ LineSet .prototype = Object .assign (Object .create (X3DLineGeometryNode .protot
 
       this .coordNode ?.addInterest ("requestRebuild", this);
    },
-   build: function ()
+   build ()
    {
       if (! this .coordNode || this .coordNode .isEmpty ())
          return;
@@ -220,6 +194,43 @@ LineSet .prototype = Object .assign (Object .create (X3DLineGeometryNode .protot
          else
             index += count;
       }
+   },
+});
+
+Object .defineProperties (LineSet,
+{
+   typeName:
+   {
+      value: "LineSet",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Rendering",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "geometry",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "vertexCount", new Fields .MFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "attrib",      new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "fogCoord",    new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "color",       new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "normal",      new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "coord",       new Fields .SFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 

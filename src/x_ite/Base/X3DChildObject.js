@@ -45,76 +45,185 @@
  *
  ******************************************************************************/
 
-import X3DObject from "./X3DObject.js";
+import X3DObject   from "./X3DObject.js";
+import DEVELOPMENT from "../DEVELOPMENT.js";
 
 const
    _modificationTime = Symbol (),
    _tainted          = Symbol (),
-   _parents          = Symbol ();
+   _parents          = Symbol (),
+   _registry         = Symbol ();
 
 function X3DChildObject ()
 {
    X3DObject .call (this);
 }
 
-X3DChildObject .prototype = Object .assign (Object .create (X3DObject .prototype),
+if (DEVELOPMENT)
 {
-   constructor: X3DChildObject,
-   [_modificationTime]: 0,
-   [_tainted]: false,
-   [_parents]: new Set (),
-   setModificationTime: function (value)
+   Object .assign (Object .setPrototypeOf (X3DChildObject .prototype, X3DObject .prototype),
    {
-      this [_modificationTime] = value;
-   },
-   getModificationTime: function ()
-   {
-      return this [_modificationTime];
-   },
-   setTainted: function (value)
-   {
-      this [_tainted] = value;
-   },
-   isTainted: function ()
-   {
-      return this [_tainted];
-   },
-   addEvent: function ()
-   {
-      this .setModificationTime (Date .now ());
+      [_modificationTime]: 0,
+      [_tainted]: false,
+      [_parents]: new Map (),
+      [_registry]: null,
+      isInitializable ()
+      {
+         return true;
+      },
+      isInput ()
+      {
+         return false;
+      },
+      isOutput ()
+      {
+         return false;
+      },
+      setModificationTime (value)
+      {
+         this [_modificationTime] = value;
+      },
+      getModificationTime ()
+      {
+         return this [_modificationTime];
+      },
+      setTainted (value)
+      {
+         this [_tainted] = value;
+      },
+      isTainted ()
+      {
+         return this [_tainted];
+      },
+      addEvent ()
+      {
+         this .setModificationTime (Date .now ());
 
-      for (const parent of this [_parents])
-         parent .addEvent (this);
-   },
-   addEventObject: function (field, event)
-   {
-      this .setModificationTime (Date .now ());
+         for (const parent of this [_parents] .values ())
+            parent .deref () .addEvent (this);
+      },
+      addEventObject (field, event)
+      {
+         this .setModificationTime (Date .now ());
 
-      for (const parent of this [_parents])
-         parent .addEventObject (this, event);
-   },
-   addParent: function (parent)
-   {
-      if (this [_parents] === X3DChildObject .prototype [_parents])
-         this [_parents] = new Set ();
+         for (const parent of this [_parents] .values ())
+            parent .deref () .addEventObject (this, event);
+      },
+      addParent (parent)
+      {
+         if (this [_parents] === X3DChildObject .prototype [_parents])
+         {
+            this [_parents]  = new Map ();
+            this [_registry] = new FinalizationRegistry (id => this [_parents] .delete (id));
+         }
 
-      this [_parents] .add (parent);
-   },
-   removeParent: function (parent)
-   {
-      this [_parents] .delete (parent);
-   },
-   getParents: function ()
-   {
-      return this [_parents];
-   },
-   dispose: function ()
-   {
-      this [_parents] .clear ();
+         this [_parents] .set (parent .getId (), new WeakRef (parent));
+         this [_registry] .register (parent, parent .getId (), parent);
+      },
+      removeParent (parent)
+      {
+         this [_parents] .delete (parent .getId ());
+         this [_registry] ?.unregister (parent);
+      },
+      getParents ()
+      {
+         const parents = new Set ();
 
-      X3DObject .prototype .dispose .call (this);
-   },
-});
+         for (const weakRef of this [_parents] .values ())
+            parents .add (weakRef .deref ())
+
+         return parents;
+      },
+      processEvent ()
+      {
+         this .setTainted (false);
+         this .processInterests ();
+      },
+      dispose ()
+      {
+         this [_parents] .clear ();
+
+         X3DObject .prototype .dispose .call (this);
+      },
+   });
+}
+else
+{
+   Object .assign (Object .setPrototypeOf (X3DChildObject .prototype, X3DObject .prototype),
+   {
+      [_modificationTime]: 0,
+      [_tainted]: false,
+      [_parents]: new Set (),
+      isInitializable ()
+      {
+         return true;
+      },
+      isInput ()
+      {
+         return false;
+      },
+      isOutput ()
+      {
+         return false;
+      },
+      setModificationTime (value)
+      {
+         this [_modificationTime] = value;
+      },
+      getModificationTime ()
+      {
+         return this [_modificationTime];
+      },
+      setTainted (value)
+      {
+         this [_tainted] = value;
+      },
+      isTainted ()
+      {
+         return this [_tainted];
+      },
+      addEvent ()
+      {
+         this .setModificationTime (Date .now ());
+
+         for (const parent of this [_parents])
+            parent .addEvent (this);
+      },
+      addEventObject (field, event)
+      {
+         this .setModificationTime (Date .now ());
+
+         for (const parent of this [_parents])
+            parent .addEventObject (this, event);
+      },
+      addParent (parent)
+      {
+         if (this [_parents] === X3DChildObject .prototype [_parents])
+            this [_parents] = new Set ();
+
+         this [_parents] .add (parent);
+      },
+      removeParent (parent)
+      {
+         this [_parents] .delete (parent);
+      },
+      getParents ()
+      {
+         return this [_parents];
+      },
+      processEvent ()
+      {
+         this .setTainted (false);
+         this .processInterests ();
+      },
+      dispose ()
+      {
+         this [_parents] .clear ();
+
+         X3DObject .prototype .dispose .call (this);
+      },
+   });
+}
 
 for (const key of Reflect .ownKeys (X3DChildObject .prototype))
    Object .defineProperty (X3DChildObject .prototype, key, { enumerable: false });

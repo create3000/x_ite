@@ -64,34 +64,9 @@ function PointSet (executionContext)
    this .coordNode    = null;
 }
 
-PointSet .prototype = Object .assign (Object .create (X3DPointGeometryNode .prototype),
+Object .assign (Object .setPrototypeOf (PointSet .prototype, X3DPointGeometryNode .prototype),
 {
-   constructor: PointSet,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "attrib",   new Fields .MFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "fogCoord", new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "color",    new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "normal",   new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "coord",    new Fields .SFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "PointSet";
-   },
-   getComponentName: function ()
-   {
-      return "Rendering";
-   },
-   getContainerField: function ()
-   {
-      return "geometry";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DPointGeometryNode .prototype .initialize .call (this);
 
@@ -107,11 +82,11 @@ PointSet .prototype = Object .assign (Object .create (X3DPointGeometryNode .prot
       this .set_normal__ ();
       this .set_coord__ ();
    },
-   getCoord: function ()
+   getCoord ()
    {
       return this .coordNode;
    },
-   set_attrib__: function ()
+   set_attrib__ ()
    {
       const attribNodes = this .getAttrib ();
 
@@ -139,7 +114,7 @@ PointSet .prototype = Object .assign (Object .create (X3DPointGeometryNode .prot
 
       this .updateVertexArrays ();
    },
-   set_fogCoord__: function ()
+   set_fogCoord__ ()
    {
       this .fogCoordNode ?.removeInterest ("requestRebuild", this);
 
@@ -147,7 +122,7 @@ PointSet .prototype = Object .assign (Object .create (X3DPointGeometryNode .prot
 
       this .fogCoordNode ?.addInterest ("requestRebuild", this);
    },
-   set_color__: function ()
+   set_color__ ()
    {
       this .colorNode ?.removeInterest ("requestRebuild", this);
 
@@ -155,7 +130,7 @@ PointSet .prototype = Object .assign (Object .create (X3DPointGeometryNode .prot
 
       this .colorNode ?.addInterest ("requestRebuild", this);
    },
-   set_normal__: function ()
+   set_normal__ ()
    {
       this .normalNode ?.removeInterest ("requestRebuild", this);
 
@@ -163,7 +138,7 @@ PointSet .prototype = Object .assign (Object .create (X3DPointGeometryNode .prot
 
       this .normalNode ?.addInterest ("requestRebuild", this);
    },
-   set_coord__: function ()
+   set_coord__ ()
    {
       this .coordNode ?.removeInterest ("requestRebuild", this);
 
@@ -171,7 +146,7 @@ PointSet .prototype = Object .assign (Object .create (X3DPointGeometryNode .prot
 
       this .coordNode ?.addInterest ("requestRebuild", this);
    },
-   build: function ()
+   build ()
    {
       if (! this .coordNode || this .coordNode .isEmpty ())
          return;
@@ -201,6 +176,42 @@ PointSet .prototype = Object .assign (Object .create (X3DPointGeometryNode .prot
       normalNode   ?.addNormals (normalArray,   numPoints);
 
       coordNode .addPoints (vertexArray, numPoints);
+   },
+});
+
+Object .defineProperties (PointSet,
+{
+   typeName:
+   {
+      value: "PointSet",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Rendering",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "geometry",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "attrib",   new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "fogCoord", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "color",    new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "normal",   new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "coord",    new Fields .SFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 

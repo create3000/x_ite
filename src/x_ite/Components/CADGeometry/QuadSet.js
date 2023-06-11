@@ -58,51 +58,15 @@ function QuadSet (executionContext)
    this .addType (X3DConstants .QuadSet);
 }
 
-QuadSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .prototype),
+Object .assign (Object .setPrototypeOf (QuadSet .prototype, X3DComposedGeometryNode .prototype),
 {
-   constructor: QuadSet,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",        new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",           new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "ccw",             new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "colorPerVertex",  new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "normalPerVertex", new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "attrib",          new Fields .MFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "fogCoord",        new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "color",           new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "texCoord",        new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "normal",          new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "coord",           new Fields .SFNode ()),
-   ]),
-   getTypeName: function ()
+   getTriangleIndex: function (i)
    {
-      return "QuadSet";
-   },
-   getComponentName: function ()
-   {
-      return "CADGeometry";
-   },
-   getContainerField: function ()
-   {
-      return "geometry";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.1", "Infinity"];
-   },
-   getTriangleIndex: (function ()
-   {
-      // Define two triangles.
-      const indexMap = [0, 1, 2,   0, 2, 3];
+      const mod = i % 6;
 
-      return function (i)
-      {
-         const mod = i % 6;
-
-         return (i - mod) / 6 * 4 + indexMap [mod];
-      };
-   })(),
-   build: function ()
+      return Math .floor (i / 6) * 4 + mod % 3 + Math .floor (mod / 4);
+   },
+   build ()
    {
       if (! this .getCoord ())
          return;
@@ -113,9 +77,50 @@ QuadSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .pr
 
       X3DComposedGeometryNode .prototype .build .call (this, 4, length, 6, length / 4 * 6);
    },
-   createNormals: function (verticesPerPolygon, polygonsSize)
+   createNormals (verticesPerPolygon, polygonsSize)
    {
       return this .createFaceNormals (verticesPerPolygon, polygonsSize);
+   },
+});
+
+Object .defineProperties (QuadSet,
+{
+   typeName:
+   {
+      value: "QuadSet",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "CADGeometry",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "geometry",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.1", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",        new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",           new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "ccw",             new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "colorPerVertex",  new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "normalPerVertex", new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "attrib",          new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "fogCoord",        new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "color",           new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "texCoord",        new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "normal",          new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "coord",           new Fields .SFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 

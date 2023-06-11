@@ -68,58 +68,32 @@ function NurbsCurve2D (executionContext)
    this .array         = [ ];
 }
 
-NurbsCurve2D .prototype = Object .assign (Object .create (X3DNurbsControlCurveNode .prototype),
+Object .assign (Object .setPrototypeOf (NurbsCurve2D .prototype, X3DNurbsControlCurveNode .prototype),
 {
-   constructor: NurbsCurve2D,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",     new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "tessellation", new Fields .SFInt32 ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "closed",       new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "order",        new Fields .SFInt32 (3)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "knot",         new Fields .MFDouble ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "weight",       new Fields .MFDouble ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "controlPoint", new Fields .MFVec2d ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "NurbsCurve2D";
-   },
-   getComponentName: function ()
-   {
-      return "NURBS";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   getTessellation: function (numKnots)
+   getTessellation (numKnots)
    {
       return NURBS .getTessellation (this ._tessellation .getValue (), numKnots - this ._order .getValue ());
    },
-   getClosed: function (order, knot, weight, controlPoint)
+   getClosed (order, knot, weight, controlPoint)
    {
       if (! this ._closed .getValue ())
          return false;
 
       return NURBS .getClosed2D (order, knot, weight, controlPoint);
    },
-   getKnots: function (result, closed, order, dimension, knot)
+   getKnots (result, closed, order, dimension, knot)
    {
       return NURBS .getKnots (result, closed, order, dimension, knot);
    },
-   getWeights: function (result, dimension, weight)
+   getWeights (result, dimension, weight)
    {
       return NURBS .getWeights (result, dimension, weight);
    },
-   getControlPoints: function (result, closed, order, weights, controlPoint)
+   getControlPoints (result, closed, order, weights, controlPoint)
    {
       return NURBS .getControlPoints2D (result, closed, order, weights, controlPoint);
    },
-   tessellate: function (type)
+   tessellate (type)
    {
       const array = this .array;
 
@@ -195,6 +169,43 @@ NurbsCurve2D .prototype = Object .assign (Object .create (X3DNurbsControlCurveNo
       }
 
       return array;
+   },
+});
+
+Object .defineProperties (NurbsCurve2D,
+{
+   typeName:
+   {
+      value: "NurbsCurve2D",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "NURBS",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",     new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "tessellation", new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "closed",       new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "order",        new Fields .SFInt32 (3)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "knot",         new Fields .MFDouble ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "weight",       new Fields .MFDouble ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "controlPoint", new Fields .MFVec2d ()),
+      ]),
+      enumerable: true,
    },
 });
 

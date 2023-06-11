@@ -66,40 +66,9 @@ function TextureProperties (executionContext)
    }
 }
 
-TextureProperties .prototype = Object .assign (Object .create (X3DNode .prototype),
+Object .assign (Object .setPrototypeOf (TextureProperties .prototype, X3DNode .prototype),
 {
-   constructor: TextureProperties,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",            new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "borderColor",         new Fields .SFColorRGBA ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "borderWidth",         new Fields .SFInt32 ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "anisotropicDegree",   new Fields .SFFloat (1)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "generateMipMaps",     new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "minificationFilter",  new Fields .SFString ("FASTEST")),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "magnificationFilter", new Fields .SFString ("FASTEST")),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "boundaryModeS",       new Fields .SFString ("REPEAT")),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "boundaryModeT",       new Fields .SFString ("REPEAT")),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "boundaryModeR",       new Fields .SFString ("REPEAT")),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "textureCompression",  new Fields .SFString ("FASTEST")),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "texturePriority",     new Fields .SFFloat ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "TextureProperties";
-   },
-   getComponentName: function ()
-   {
-      return "Texturing";
-   },
-   getContainerField: function ()
-   {
-      return "textureProperties";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   getBorderWidth: function ()
+   getBorderWidth ()
    {
       // https://stackoverflow.com/questions/27760277/webgl-border-color-shader?lq=1
       return Algorithm .clamp (this ._borderWidth .getValue (), 0, 1);
@@ -124,15 +93,15 @@ TextureProperties .prototype = Object .assign (Object .create (X3DNode .prototyp
          return "REPEAT";
       };
    })(),
-   getBoundaryModeS: function ()
+   getBoundaryModeS ()
    {
       return this .getBoundaryMode (this ._boundaryModeS .getValue ());
    },
-   getBoundaryModeT: function ()
+   getBoundaryModeT ()
    {
       return this .getBoundaryMode (this ._boundaryModeT .getValue ());
    },
-   getBoundaryModeR: function ()
+   getBoundaryModeR ()
    {
       return this .getBoundaryMode (this ._boundaryModeR .getValue ());
    },
@@ -210,6 +179,48 @@ TextureProperties .prototype = Object .assign (Object .create (X3DNode .prototyp
          return gl .RGBA;
       };
    })(),
+});
+
+Object .defineProperties (TextureProperties,
+{
+   typeName:
+   {
+      value: "TextureProperties",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Texturing",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "textureProperties",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",            new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "borderColor",         new Fields .SFColorRGBA ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "borderWidth",         new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "anisotropicDegree",   new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "generateMipMaps",     new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "minificationFilter",  new Fields .SFString ("FASTEST")),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "magnificationFilter", new Fields .SFString ("FASTEST")),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "boundaryModeS",       new Fields .SFString ("REPEAT")),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "boundaryModeT",       new Fields .SFString ("REPEAT")),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "boundaryModeR",       new Fields .SFString ("REPEAT")),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "textureCompression",  new Fields .SFString ("FASTEST")),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "texturePriority",     new Fields .SFFloat ()),
+      ]),
+      enumerable: true,
+   },
 });
 
 export default TextureProperties;

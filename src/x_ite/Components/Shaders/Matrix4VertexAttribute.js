@@ -58,31 +58,9 @@ function Matrix4VertexAttribute (executionContext)
    this .addType (X3DConstants .Matrix4VertexAttribute);
 }
 
-Matrix4VertexAttribute .prototype = Object .assign (Object .create (X3DVertexAttributeNode .prototype),
+Object .assign (Object .setPrototypeOf (Matrix4VertexAttribute .prototype, X3DVertexAttributeNode .prototype),
 {
-   constructor: Matrix4VertexAttribute,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata", new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "name",     new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "value",    new Fields .MFMatrix4f ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "Matrix4VertexAttribute";
-   },
-   getComponentName: function ()
-   {
-      return "Shaders";
-   },
-   getContainerField: function ()
-   {
-      return "attrib";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DVertexAttributeNode .prototype .initialize .call (this);
 
@@ -90,12 +68,12 @@ Matrix4VertexAttribute .prototype = Object .assign (Object .create (X3DVertexAtt
 
       this .set_value__ ();
    },
-   set_value__: function ()
+   set_value__ ()
    {
       this .value  = this ._value .getValue ();
       this .length = this ._value .length;
    },
-   addValue: function (index, array)
+   addValue (index, array)
    {
       if (index < this .length)
       {
@@ -121,9 +99,42 @@ Matrix4VertexAttribute .prototype = Object .assign (Object .create (X3DVertexAtt
             array .push (value [i]);
       }
    },
-   enable: function (gl, shaderNode, buffer)
+   enable (gl, shaderNode, buffer)
    {
       shaderNode .enableMatrix4Attrib (gl, this ._name .getValue (), buffer, 0, 0);
+   },
+});
+
+Object .defineProperties (Matrix4VertexAttribute,
+{
+   typeName:
+   {
+      value: "Matrix4VertexAttribute",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Shaders",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "attrib",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "name",     new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "value",    new Fields .MFMatrix4f ()),
+      ]),
+      enumerable: true,
    },
 });
 

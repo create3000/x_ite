@@ -61,36 +61,9 @@ function SplineScalarInterpolator (executionContext)
    this .spline = new CatmullRomSplineInterpolator1 ();
 }
 
-SplineScalarInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
+Object .assign (Object .setPrototypeOf (SplineScalarInterpolator .prototype, X3DInterpolatorNode .prototype),
 {
-   constructor: SplineScalarInterpolator,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",          new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",      new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "closed",            new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "key",               new Fields .MFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "keyValue",          new Fields .MFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "keyVelocity",       new Fields .MFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "normalizeVelocity", new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed",     new Fields .SFFloat ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "SplineScalarInterpolator";
-   },
-   getComponentName: function ()
-   {
-      return "Interpolation";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DInterpolatorNode .prototype .initialize .call (this);
 
@@ -98,7 +71,7 @@ SplineScalarInterpolator .prototype = Object .assign (Object .create (X3DInterpo
       this ._keyVelocity       .addInterest ("set_keyVelocity__",       this);
       this ._normalizeVelocity .addInterest ("set_normalizeVelocity__", this);
    },
-   set_keyValue__: function ()
+   set_keyValue__ ()
    {
       const
          key      = this ._key,
@@ -109,7 +82,7 @@ SplineScalarInterpolator .prototype = Object .assign (Object .create (X3DInterpo
 
       this .set_keyVelocity__ ();
    },
-   set_keyVelocity__: function ()
+   set_keyVelocity__ ()
    {
       if (this ._keyVelocity .length)
       {
@@ -119,7 +92,7 @@ SplineScalarInterpolator .prototype = Object .assign (Object .create (X3DInterpo
 
       this .set_normalizeVelocity__ ();
    },
-   set_normalizeVelocity__: function ()
+   set_normalizeVelocity__ ()
    {
       this .spline .generate (this ._closed .getValue (),
                               this ._key,
@@ -127,9 +100,47 @@ SplineScalarInterpolator .prototype = Object .assign (Object .create (X3DInterpo
                               this ._keyVelocity,
                               this ._normalizeVelocity .getValue ());
    },
-   interpolate: function (index0, index1, weight)
+   interpolate (index0, index1, weight)
    {
       this ._value_changed = this .spline .interpolate (index0, index1, weight, this ._keyValue);
+   },
+});
+
+Object .defineProperties (SplineScalarInterpolator,
+{
+   typeName:
+   {
+      value: "SplineScalarInterpolator",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Interpolation",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",          new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",      new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "closed",            new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "key",               new Fields .MFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "keyValue",          new Fields .MFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "keyVelocity",       new Fields .MFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "normalizeVelocity", new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed",     new Fields .SFFloat ()),
+      ]),
+      enumerable: true,
    },
 });
 

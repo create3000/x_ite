@@ -45,6 +45,7 @@
  *
  ******************************************************************************/
 
+import X3DBaseNode                 from "../../Base/X3DBaseNode.js";
 import X3DFieldDefinition          from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray        from "../../Base/FieldDefinitionArray.js";
 import X3DField                    from "../../Base/X3DField.js";
@@ -55,14 +56,22 @@ import ComponentInfo               from "../../Configuration/ComponentInfo.js";
 import ComponentInfoArray          from "../../Configuration/ComponentInfoArray.js";
 import ProfileInfo                 from "../../Configuration/ProfileInfo.js";
 import ProfileInfoArray            from "../../Configuration/ProfileInfoArray.js";
+import ConcreteNodesArray          from "../../Configuration/ConcreteNodesArray.js";
+import AbstractNodesArray          from "../../Configuration/AbstractNodesArray.js";
 import UnitInfo                    from "../../Configuration/UnitInfo.js";
 import UnitInfoArray               from "../../Configuration/UnitInfoArray.js";
+import NamedNodesArray             from "../../Execution/NamedNodesArray.js";
+import ImportedNodesArray          from "../../Execution/ImportedNodesArray.js";
+import X3DImportedNode             from "../../Execution/X3DImportedNode.js";
+import ExportedNodesArray          from "../../Execution/ExportedNodesArray.js";
+import X3DExportedNode             from "../../Execution/X3DExportedNode.js";
 import X3DExecutionContext         from "../../Execution/X3DExecutionContext.js";
 import X3DScene                    from "../../Execution/X3DScene.js";
 import ExternProtoDeclarationArray from "../../Prototype/ExternProtoDeclarationArray.js";
 import ProtoDeclarationArray       from "../../Prototype/ProtoDeclarationArray.js";
 import X3DExternProtoDeclaration   from "../../Prototype/X3DExternProtoDeclaration.js";
 import X3DProtoDeclaration         from "../../Prototype/X3DProtoDeclaration.js";
+import X3DProtoDeclarationNode     from "../../Prototype/X3DProtoDeclarationNode.js";
 import RouteArray                  from "../../Routing/RouteArray.js";
 import X3DRoute                    from "../../Routing/X3DRoute.js";
 import evaluate                    from "../../Browser/Scripting/evaluate.js";
@@ -77,50 +86,23 @@ function Script (executionContext)
    this .addType (X3DConstants .Script);
 }
 
-Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
+Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .prototype),
 {
-   constructor: Script,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "description",          new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "directOutput",         new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "mustEvaluate",         new Fields .SFBool ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "Script";
-   },
-   getComponentName: function ()
-   {
-      return "Scripting";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DScriptNode .prototype .initialize .call (this);
 
       this .requestImmediateLoad () .catch (Function .prototype);
    },
-   getExtendedEventHandling: function ()
+   getExtendedEventHandling ()
    {
       return false;
    },
-   canUserDefinedFields: function ()
+   canUserDefinedFields ()
    {
       return true;
    },
-   addUserDefinedField: function (accessType, name, field)
+   addUserDefinedField (accessType, name, field)
    {
       X3DScriptNode .prototype .addUserDefinedField .call (this, accessType, name, field);
 
@@ -130,7 +112,7 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
       this .setLoadState (X3DConstants .NOT_STARTED_STATE);
       this .requestImmediateLoad () .catch (Function .prototype);
    },
-   removeUserDefinedField: function (name)
+   removeUserDefinedField (name)
    {
       this .getUserDefinedFields () .get (name) ?.removeInterest ("set_field__", this);
 
@@ -142,15 +124,15 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
       this .setLoadState (X3DConstants .NOT_STARTED_STATE);
       this .requestImmediateLoad () .catch (Function .prototype);
    },
-   getSourceText: function ()
+   getSourceText ()
    {
       return this ._url;
    },
-   unloadData: function ()
+   unloadData ()
    {
       this .initialize__ ("");
    },
-   loadData: function ()
+   loadData ()
    {
       new FileLoader (this) .loadDocument (this ._url, (data) =>
       {
@@ -166,7 +148,7 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
          }
       });
    },
-   getContext: function (sourceText)
+   getContext (sourceText)
    {
       try
       {
@@ -209,11 +191,11 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
          return new Map ();
       }
    },
-   evaluate: function (sourceText)
+   evaluate (sourceText)
    {
       return evaluate (this .globalObject, `return (${sourceText})`);
    },
-   getGlobalObject: function ()
+   getGlobalObject ()
    {
       const
          browser          = this .getBrowser (),
@@ -240,7 +222,7 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
          throw new Error ("SFNode.new: invalid argument, must be 'string' is 'undefined'.");
       }
 
-      SFNode .prototype = Fields .SFNode .prototype;
+      Object .setPrototypeOf (SFNode .prototype, Fields .SFNode .prototype);
 
       const globalObject =
       {
@@ -260,14 +242,24 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
          ComponentInfoArray:          { value: ComponentInfoArray },
          ProfileInfo:                 { value: ProfileInfo },
          ProfileInfoArray:            { value: ProfileInfoArray },
+         ConcreteNodesArray:          { value: ConcreteNodesArray },          // non-standard
+         AbstractNodesArray:          { value: AbstractNodesArray },          // non-standard
          UnitInfo:                    { value: UnitInfo },
          UnitInfoArray:               { value: UnitInfoArray },
+         NamedNodesArray:             { value: NamedNodesArray },             // non-standard
+         ImportedNodesArray:          { value: ImportedNodesArray },          // non-standard
+         X3DImportedNode:             { value: X3DImportedNode },             // non-standard
+         ExportedNodesArray:          { value: ExportedNodesArray },          // non-standard
+         X3DExportedNode:             { value: X3DExportedNode },             // non-standard
          ExternProtoDeclarationArray: { value: ExternProtoDeclarationArray },
          ProtoDeclarationArray:       { value: ProtoDeclarationArray },
          X3DExternProtoDeclaration:   { value: X3DExternProtoDeclaration },
          X3DProtoDeclaration:         { value: X3DProtoDeclaration },
+         X3DProtoDeclarationNode:     { value: X3DProtoDeclarationNode },     // non-standard
          RouteArray:                  { value: RouteArray },
          X3DRoute:                    { value: X3DRoute },
+
+         X3DBaseNode: { value: X3DBaseNode },                                 // non-standard
 
          X3DFieldDefinition:   { value: X3DFieldDefinition },
          FieldDefinitionArray: { value: FieldDefinitionArray },
@@ -343,7 +335,7 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
 
       return Object .create (Object .prototype, globalObject);
    },
-   initialize__: function (sourceText)
+   initialize__ (sourceText)
    {
       this .disconnect ();
 
@@ -408,7 +400,7 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
       if (typeof initialize === "function")
          this .call__ (initialize, "initialize");
    },
-   call__: function (callback, name)
+   call__ (callback, name)
    {
       const browser = this .getBrowser ();
 
@@ -425,7 +417,7 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
 
       browser .getScriptStack () .pop ();
    },
-   set_field__: function (callback, field)
+   set_field__ (callback, field)
    {
       const browser = this .getBrowser ();
 
@@ -444,12 +436,12 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
       browser .getScriptStack () .pop ();
       field .setTainted (false);
    },
-   setError: function (reason, error)
+   setError (reason, error)
    {
       console .error ("JavaScript Error in Script '" + this .getName () + "', " + reason + "\nworld url is '" + this .getExecutionContext () .getWorldURL () + "':");
       console .error (error);
    },
-   disconnect: function ()
+   disconnect ()
    {
       // Call shutdown.
 
@@ -475,11 +467,49 @@ Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
       for (const field of this .getUserDefinedFields ())
          field .removeInterest ("set_field__", this);
    },
-   dispose: function ()
+   dispose ()
    {
       this .disconnect ();
 
       X3DScriptNode .prototype .dispose .call (this);
+   },
+});
+
+Object .defineProperties (Script,
+{
+   typeName:
+   {
+      value: "Script",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Scripting",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "description",          new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "directOutput",         new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "mustEvaluate",         new Fields .SFBool ()),
+      ]),
+      enumerable: true,
    },
 });
 

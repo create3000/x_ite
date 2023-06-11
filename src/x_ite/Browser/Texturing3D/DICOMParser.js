@@ -50,9 +50,9 @@ function DicomParser ()
    this .dicom = { dicom: false };
 }
 
-DicomParser .prototype =
+Object .assign (DicomParser .prototype,
 {
-   parse: function (input)
+   parse (input)
    {
       try
       {
@@ -78,30 +78,30 @@ DicomParser .prototype =
       this .getTansferSyntax ();
       this .getPixelData ();
 
-      // if (DEBUG)
+      // if (DEVELOPMENT)
       //    console .log (this);
 
       return this .dicom;
    },
-   getPhotometricInterpretation: function ()
+   getPhotometricInterpretation ()
    {
       // https://dicom.innolitics.com/ciods/ct-image/image-pixel/00280004
       this .photometricInterpretation = this .dataSet .string ("x00280004");
    },
-   getComponents: function ()
+   getComponents ()
    {
       // https://dicom.innolitics.com/ciods/ct-image/image-pixel/00280002
       this .dicom .components = this .dataSet .uint16 ("x00280002");
    },
-   getWidth: function ()
+   getWidth ()
    {
       this .dicom .width = this .dataSet .uint16 ("x00280011");
    },
-   getHeight: function ()
+   getHeight ()
    {
       this .dicom .height = this .dataSet .uint16 ("x00280010");
    },
-   getDepth: function ()
+   getDepth ()
    {
       if (this .dataSet .elements .x00280008)
       {
@@ -110,27 +110,27 @@ DicomParser .prototype =
       else
          this .dicom .depth = 1;
    },
-   getBitsAllocated: function ()
+   getBitsAllocated ()
    {
       this .bitsAllocated  = this .dataSet .uint16 ("x00280100");
    },
-   getBitsStored: function ()
+   getBitsStored ()
    {
       this .bitsStored  = this .dataSet .uint16 ("x00280101");
    },
-   getPixelRepresentation: function ()
+   getPixelRepresentation ()
    {
       this .pixelRepresentation = this .dataSet .uint16 ("x00280103") || 0;
    },
-   getPlanarConfiguration: function ()
+   getPlanarConfiguration ()
    {
       this .planarConfiguration = this .dataSet .uint16 ("x00280006") || 0;
    },
-   getTansferSyntax: function ()
+   getTansferSyntax ()
    {
       this .transferSyntax = this .dataSet .string ("x00020010");
    },
-   getPixelData: function ()
+   getPixelData ()
    {
       var
          dicom        = this .dicom,
@@ -295,7 +295,7 @@ DicomParser .prototype =
       dicom .components = components;
       dicom .data       = bytes;
    },
-   getFrames: function (pixelElement)
+   getFrames (pixelElement)
    {
       var frames = [ ];
 
@@ -359,7 +359,7 @@ DicomParser .prototype =
 
       return frames;
    },
-   getTypedArray: function (frame)
+   getTypedArray (frame)
    {
       switch (this .bitsAllocated)
       {
@@ -373,7 +373,7 @@ DicomParser .prototype =
             throw new Error ("DICOM: unsupported pixel format.");
       }
    },
-   flipImage: function (frame, components)
+   flipImage (frame, components)
    {
       var
          width  = this .dicom .width,
@@ -394,7 +394,7 @@ DicomParser .prototype =
 
       return out;
    },
-   getNormalizeOffsetAndFactor: function (data)
+   getNormalizeOffsetAndFactor (data)
    {
       var
          min = Number .POSITIVE_INFINITY,
@@ -410,7 +410,7 @@ DicomParser .prototype =
 
       return { offset: min, factor: diverence ? 1 / diverence * 255 : 0 };
    },
-   unpackBinaryFrame: function (byteArray, frameOffset, pixelsPerFrame)
+   unpackBinaryFrame (byteArray, frameOffset, pixelsPerFrame)
    {
       function isBitSet (byte, bitPos)
       {
@@ -437,7 +437,7 @@ DicomParser .prototype =
 
       return pixelData;
    },
-   decodeLittleEndian: function (pixelData)
+   decodeLittleEndian (pixelData)
    {
       var
          buffer = pixelData .buffer,
@@ -472,7 +472,7 @@ DicomParser .prototype =
 
       return pixelData;
    },
-   decodeBigEndian: function (pixelData)
+   decodeBigEndian (pixelData)
    {
       function swap16 (value)
       {
@@ -506,7 +506,7 @@ DicomParser .prototype =
 
       return pixelData;
    },
-   decodeRLE: function  (pixelData)
+   decodeRLE  (pixelData)
    {
       if (this .bitsAllocated === 8)
       {
@@ -521,7 +521,7 @@ DicomParser .prototype =
 
       throw new Error ("DICOM: unsupported pixel format for RLE.");
    },
-   decodeRLE8: function  (pixelData)
+   decodeRLE8  (pixelData)
    {
       const frameData  = pixelData;
       const frameSize  = this .dicom .width * this .dicom .height;
@@ -575,7 +575,7 @@ DicomParser .prototype =
 
       return out;
    },
-   decodeRLE8Planar: function  (pixelData)
+   decodeRLE8Planar  (pixelData)
    {
       const frameData = pixelData;
       const frameSize = this .dicom .width * this .dicom .height;
@@ -628,7 +628,7 @@ DicomParser .prototype =
 
       return out;
    },
-   decodeRLE16: function  (pixelData)
+   decodeRLE16  (pixelData)
    {
       const frameData = pixelData;
       const frameSize = this .dicom .width * this .dicom .height;
@@ -677,7 +677,7 @@ DicomParser .prototype =
 
       return out;
    },
-   decodeJPEGBaseline: function (pixelData)
+   decodeJPEGBaseline (pixelData)
    {
       var jpeg = new JpegImage ();
 
@@ -691,7 +691,7 @@ DicomParser .prototype =
 
       return data;
     },
-    decodeJPEGLossless: function (pixelData)
+    decodeJPEGLossless (pixelData)
     {
       const
          decoder = new jpeg .lossless .Decoder (),
@@ -699,7 +699,7 @@ DicomParser .prototype =
 
       return new Uint8Array (buffer);
    },
-   decodeJPEGLS: function (pixelData)
+   decodeJPEGLS (pixelData)
    {
       var image = this .jpegLSDecode (pixelData, this .pixelRepresentation === 1);
 
@@ -781,7 +781,7 @@ DicomParser .prototype =
          return image;
       };
    })(),
-   decodeJPEG2000: function (pixelData)
+   decodeJPEG2000 (pixelData)
    {
       var
          bytesPerPixel = this .bitsAllocated <= 8 ? 1 : 2,
@@ -885,7 +885,7 @@ DicomParser .prototype =
          return image;
       };
    })(),
-   convertRGBColorByPlane: function (pixelData)
+   convertRGBColorByPlane (pixelData)
    {
       if (pixelData .length % 3 !== 0)
          throw new Error ("DICOM: convertRGBColorByPlane: RGB buffer length must be divisble by 3.");
@@ -907,7 +907,7 @@ DicomParser .prototype =
 
       return out;
     },
-    convertYBRFullByPixel: function (pixelData)
+    convertYBRFullByPixel (pixelData)
     {
       if (pixelData .length % 3 !== 0)
          throw new Error ("DICOM: convertYBRFullByPixel: YBR buffer length must be divisble by 3.");
@@ -934,7 +934,7 @@ DicomParser .prototype =
 
       return out;
     },
-    convertYBRFullByPlane: function (pixelData)
+    convertYBRFullByPlane (pixelData)
     {
       if (pixelData .length % 3 !== 0)
          throw new Error ("DICOM: convertYBRFullByPlane: YBR buffer length must be divisble by 3.");
@@ -961,7 +961,7 @@ DicomParser .prototype =
 
       return out;
    },
-   convertPaletteColor: function (pixelData)
+   convertPaletteColor (pixelData)
    {
       function convertLUTto8Bit (lut, shift)
       {
@@ -1016,7 +1016,7 @@ DicomParser .prototype =
 
       return out;
    },
-   getLUT: function ()
+   getLUT ()
    {
       if (this .LUT)
           return this .LUT;
@@ -1027,7 +1027,7 @@ DicomParser .prototype =
 
       return this .LUT;
    },
-   populatePaletteColorLut: function (dataSet, imagePixelModule)
+   populatePaletteColorLut (dataSet, imagePixelModule)
    {
       imagePixelModule .redPaletteColorLookupTableDescriptor   = this .getLutDescriptor (dataSet, 'x00281101');
       imagePixelModule .greenPaletteColorLookupTableDescriptor = this .getLutDescriptor (dataSet, 'x00281102');
@@ -1067,14 +1067,14 @@ DicomParser .prototype =
       imagePixelModule .greenPaletteColorLookupTableData = this .getLutData (dataSet, 'x00281202', imagePixelModule .greenPaletteColorLookupTableDescriptor);
       imagePixelModule .bluePaletteColorLookupTableData  = this .getLutData (dataSet, 'x00281203', imagePixelModule .bluePaletteColorLookupTableDescriptor);
    },
-   getLutDescriptor: function  (dataSet, tag)
+   getLutDescriptor  (dataSet, tag)
    {
       if (! dataSet .elements [tag] || dataSet .elements [tag] .length !== 6)
          return;
 
       return [dataSet .uint16 (tag, 0), dataSet .uint16 (tag, 1), dataSet .uint16 (tag, 2)];
    },
-   getLutData: function  (lutDataSet, tag, lutDescriptor)
+   getLutData  (lutDataSet, tag, lutDescriptor)
    {
       const lut     = [];
       const lutData = lutDataSet .elements [tag];
@@ -1090,7 +1090,7 @@ DicomParser .prototype =
 
       return lut;
    },
-};
+});
 
 // ftp://medical.nema.org/medical/dicom/DataSets/WG04/
 

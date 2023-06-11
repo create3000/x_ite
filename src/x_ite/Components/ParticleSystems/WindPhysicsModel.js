@@ -62,34 +62,9 @@ function WindPhysicsModel (executionContext)
    this ._speed .setUnit ("speed");
 }
 
-WindPhysicsModel .prototype = Object .assign (Object .create (X3DParticlePhysicsModelNode .prototype),
+Object .assign (Object .setPrototypeOf (WindPhysicsModel .prototype, X3DParticlePhysicsModelNode .prototype),
 {
-   constructor: WindPhysicsModel,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",   new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",    new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "direction",  new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "speed",      new Fields .SFFloat (0.1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "gustiness",  new Fields .SFFloat (0.1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "turbulence", new Fields .SFFloat ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "WindPhysicsModel";
-   },
-   getComponentName: function ()
-   {
-      return "ParticleSystems";
-   },
-   getContainerField: function ()
-   {
-      return "physics";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
-   getRandomSpeed: function (emitterNode)
+   getRandomSpeed (emitterNode)
    {
       const
          speed     = Math .max (0, this ._speed .getValue ()),
@@ -126,6 +101,42 @@ WindPhysicsModel .prototype = Object .assign (Object .create (X3DParticlePhysics
          }
       }
    })(),
+});
+
+Object .defineProperties (WindPhysicsModel,
+{
+   typeName:
+   {
+      value: "WindPhysicsModel",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "ParticleSystems",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "physics",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",   new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",    new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "direction",  new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "speed",      new Fields .SFFloat (0.1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "gustiness",  new Fields .SFFloat (0.1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "turbulence", new Fields .SFFloat ()),
+      ]),
+      enumerable: true,
+   },
 });
 
 export default WindPhysicsModel;

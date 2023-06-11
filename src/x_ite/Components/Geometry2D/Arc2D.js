@@ -64,32 +64,9 @@ function Arc2D (executionContext)
    this ._radius     .setUnit ("length");
 }
 
-Arc2D .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototype),
+Object .assign (Object .setPrototypeOf (Arc2D .prototype, X3DLineGeometryNode .prototype),
 {
-   constructor: Arc2D,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",   new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "startAngle", new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "endAngle",   new Fields .SFFloat (1.5708)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "radius",     new Fields .SFFloat (1)),
-   ]),
-   getTypeName: function ()
-   {
-      return "Arc2D";
-   },
-   getComponentName: function ()
-   {
-      return "Geometry2D";
-   },
-   getContainerField: function ()
-   {
-      return "geometry";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   set_live__: function ()
+   set_live__ ()
    {
       X3DLineGeometryNode .prototype .set_live__ .call (this);
 
@@ -98,7 +75,7 @@ Arc2D .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototyp
       else
          this .getBrowser () .getArc2DOptions () .removeInterest ("requestRebuild", this);
    },
-   getSweepAngle: function ()
+   getSweepAngle ()
    {
       const
          start = Algorithm .interval (this ._startAngle .getValue (), 0, Math .PI * 2),
@@ -118,7 +95,7 @@ Arc2D .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototyp
       // We must test for NAN, as NAN to int is undefined.
       return 0;
    },
-   build: function ()
+   build ()
    {
       const
          options     = this .getBrowser () .getArc2DOptions (),
@@ -145,6 +122,40 @@ Arc2D .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototyp
 
       this .getMin () .set (-radius, -radius, 0);
       this .getMax () .set ( radius,  radius, 0);
+   },
+});
+
+Object .defineProperties (Arc2D,
+{
+   typeName:
+   {
+      value: "Arc2D",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Geometry2D",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "geometry",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",   new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "startAngle", new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "endAngle",   new Fields .SFFloat (1.5708)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "radius",     new Fields .SFFloat (1)),
+      ]),
+      enumerable: true,
    },
 });
 

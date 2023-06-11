@@ -60,41 +60,52 @@ function MetadataString (executionContext)
    this .addType (X3DConstants .MetadataString);
 }
 
-MetadataString .prototype = Object .assign (Object .create (X3DNode .prototype),
+Object .assign (Object .setPrototypeOf (MetadataString .prototype, X3DNode .prototype),
    X3DMetadataObject .prototype,
 {
-   constructor: MetadataString,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",  new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "name",      new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "reference", new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "value",     new Fields .MFString ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "MetadataString";
-   },
-   getComponentName: function ()
-   {
-      return "Core";
-   },
-   getContainerField: function ()
-   {
-      return "metadata";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DNode           .prototype .initialize .call (this);
       X3DMetadataObject .prototype .initialize .call (this);
    },
-   dispose: function ()
+   dispose ()
    {
       X3DMetadataObject .prototype .dispose .call (this);
       X3DNode           .prototype .dispose .call (this);
+   },
+});
+
+Object .defineProperties (MetadataString,
+{
+   typeName:
+   {
+      value: "MetadataString",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Core",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "metadata",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",  new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "name",      new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "reference", new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "value",     new Fields .MFString ()),
+      ]),
+      enumerable: true,
    },
 });
 

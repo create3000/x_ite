@@ -58,32 +58,41 @@ function ProgramShader (executionContext)
    this .addType (X3DConstants .ProgramShader);
 }
 
-ProgramShader .prototype = Object .assign (Object .create (X3DShaderNode .prototype),
+Object .setPrototypeOf (ProgramShader .prototype, X3DShaderNode .prototype);
+
+Object .defineProperties (ProgramShader,
 {
-   constructor: ProgramShader,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",   new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,      "activate",   new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,     "isSelected", new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,     "isValid",    new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "language",   new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "programs",   new Fields .MFNode ()),
-   ]),
-   getTypeName: function ()
+   typeName:
    {
-      return "ProgramShader";
+      value: "ProgramShader",
+      enumerable: true,
    },
-   getComponentName: function ()
+   componentName:
    {
-      return "Shaders";
+      value: "Shaders",
+      enumerable: true,
    },
-   getContainerField: function ()
+   containerField:
    {
-      return "shaders";
+      value: "shaders",
+      enumerable: true,
    },
-   getSpecificationRange: function ()
+   specificationRange:
    {
-      return ["3.0", "Infinity"];
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",   new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "activate",   new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "isSelected", new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "isValid",    new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "language",   new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "programs",   new Fields .MFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 

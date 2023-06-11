@@ -127,24 +127,23 @@ function Spheroid3 (semiMajorAxis, semiMinorAxis)
    }
 }
 
-Spheroid3 .prototype =
+Object .assign (Spheroid3 .prototype,
 {
-   constructor: Spheroid3,
-   getSemiMajorAxis: function ()
+   getSemiMajorAxis ()
    {
       // Returns the semi-major axis (a)
       return this .semiMajorAxis; // a
    },
-   getSemiMinorAxis: function ()
+   getSemiMinorAxis ()
    {
       // Returns the semi-minor axis (c)
       return this .semiMinorAxis; // c
    },
-   toString: function ()
+   toString ()
    {
-      return this .semiMajorAxis + " " + this .semiMinorAxis;
+      return `${this .semiMajorAxis} ${this .semiMinorAxis}`;
    },
-};
+});
 
 const __default__ = Spheroid3;
 ;
@@ -320,10 +319,9 @@ function Geodetic (spheroid, latitudeFirst, radians)
    this .ecc2           = 1 - this .c2a2;
 }
 
-Geodetic .prototype =
+Object .assign (Geodetic .prototype,
 {
-   constructor: Geodetic,
-   convert: function (geodetic, result)
+   convert (geodetic, result)
    {
       const elevation = geodetic .z;
 
@@ -348,7 +346,7 @@ Geodetic .prototype =
 
       return this .convertRadians (latitude, longitude, elevation, result);
    },
-   convertRadians: function (latitude, longitude, elevation, result)
+   convertRadians (latitude, longitude, elevation, result)
    {
       const
          slat  = Math .sin (latitude),
@@ -361,7 +359,7 @@ Geodetic .prototype =
                           Nhl * Math .sin (longitude),
                           (N * this .c2a2 + elevation) * slat);
    },
-   apply: function (geocentric, result)
+   apply (geocentric, result)
    {
       this .applyRadians (geocentric, result);
 
@@ -381,7 +379,7 @@ Geodetic .prototype =
 
       return result;
    },
-   applyRadians: function (geocentric, result)
+   applyRadians (geocentric, result)
    {
       const
          x = geocentric .x,
@@ -423,7 +421,7 @@ Geodetic .prototype =
 
       return result .set (latitude, longitude, elevation);
    },
-   normal: function (geocentric, result)
+   normal (geocentric, result)
    {
       const geodetic = this .applyRadians (geocentric, result);
 
@@ -441,7 +439,7 @@ Geodetic .prototype =
       return result .set (nx, ny, nz);
    },
    /*
-   lerp: function (s, d, t)
+   lerp (s, d, t)
    {
       var
          source     =  this .source      .assign (s),
@@ -510,7 +508,7 @@ Geodetic .prototype =
    source: new Vector3 (0, 0, 0),
    destination: new Vector3 (0, 0, 0),
    */
-};
+});
 
 const Geodetic_default_ = Geodetic;
 ;
@@ -604,10 +602,9 @@ function UniversalTransverseMercator (spheroid, zone, northernHemisphere, northi
    this .geodeticConverter  = new Geospatial_Geodetic (spheroid, true, true);
 }
 
-UniversalTransverseMercator .prototype =
+Object .assign (UniversalTransverseMercator .prototype,
 {
-   constructor: UniversalTransverseMercator,
-   convert: function (utm, result)
+   convert (utm, result)
    {
       // https://gist.github.com/duedal/840476
 
@@ -670,7 +667,7 @@ UniversalTransverseMercator .prototype =
 
       return this .geodeticConverter .convertRadians (latitude, longitude, utm .z, result);
    },
-   apply: function (geocentric, result)
+   apply (geocentric, result)
    {
       // https://gist.github.com/duedal/840476
 
@@ -721,7 +718,7 @@ UniversalTransverseMercator .prototype =
 
       return result .set (northing, easting, geodetic .z);
    },
-};
+});
 
 const UniversalTransverseMercator_default_ = UniversalTransverseMercator;
 ;
@@ -780,18 +777,17 @@ Namespace_default().set ("standard/Geospatial/UniversalTransverseMercator", Univ
 
 function Geocentric () { }
 
-Geocentric .prototype =
+Object .assign (Geocentric .prototype,
 {
-   constructor: Geocentric,
-   convert: function (geocentric, result)
+   convert (geocentric, result)
    {
       return result .assign (geocentric);
    },
-   apply: function (geocentric, result)
+   apply (geocentric, result)
    {
       return result .assign (geocentric);
    },
-   slerp: function (source, destination, t)
+   slerp (source, destination, t)
    {
       const
          sourceLength      = source      .magnitude (),
@@ -802,7 +798,7 @@ Geocentric .prototype =
 
       return Algorithm_default().simpleSlerp (source, destination, t) .multiply (Algorithm_default().lerp (sourceLength, destinationLength, t));
    },
-};
+});
 
 const Geocentric_default_ = Geocentric;
 ;
@@ -885,7 +881,7 @@ const Geospatial =
    GD: GD,
    UTM: UTM,
    GC: GC,
-   getReferenceFrame: function (geoSystem, radians)
+   getReferenceFrame (geoSystem, radians)
    {
       switch (this .getCoordinateSystem (geoSystem))
       {
@@ -908,13 +904,13 @@ const Geospatial =
          }
       }
 
-      return new Geospatial_Geodetic (Geospatial_ReferenceEllipsoids.WE, true, radians);
+      return new Geospatial_Geodetic (Geospatial_ReferenceEllipsoids .WE, true, radians);
    },
-   getElevationFrame: function (geoSystem, radians)
+   getElevationFrame (geoSystem, radians)
    {
       return new Geospatial_Geodetic (this .getEllipsoid (geoSystem), true, radians);
    },
-   getCoordinateSystem: function (geoSystem)
+   getCoordinateSystem (geoSystem)
    {
       for (const gs of geoSystem)
       {
@@ -926,7 +922,7 @@ const Geospatial =
 
       return GD;
    },
-   getEllipsoid: function (geoSystem)
+   getEllipsoid (geoSystem)
    {
       for (const gs of geoSystem)
       {
@@ -936,9 +932,9 @@ const Geospatial =
             return ellipsoid;
       }
 
-      return Geospatial_ReferenceEllipsoids.WE;
+      return Geospatial_ReferenceEllipsoids .WE;
    },
-   getEllipsoidString: function (geoSystem)
+   getEllipsoidString (geoSystem)
    {
       for (const gs of geoSystem)
       {
@@ -950,7 +946,7 @@ const Geospatial =
 
       return "WE";
    },
-   isStandardOrder: function (geoSystem)
+   isStandardOrder (geoSystem)
    {
       switch (this .getCoordinateSystem (geoSystem))
       {
@@ -970,7 +966,7 @@ const Geospatial =
 
       return this .getLatitudeFirst (geoSystem);
    },
-   getLatitudeFirst: function (geoSystem)
+   getLatitudeFirst (geoSystem)
    {
       for (const gs of geoSystem)
       {
@@ -980,7 +976,7 @@ const Geospatial =
 
       return true;
    },
-   getNorthingFirst: function (geoSystem)
+   getNorthingFirst (geoSystem)
    {
       for (const gs of geoSystem)
       {
@@ -990,7 +986,7 @@ const Geospatial =
 
       return true;
    },
-   getZone: function (geoSystem)
+   getZone (geoSystem)
    {
       for (const gs of geoSystem)
       {
@@ -1002,7 +998,7 @@ const Geospatial =
 
       return 1;
    },
-   getNorthernHemisphere: function (geoSystem)
+   getNorthernHemisphere (geoSystem)
    {
       for (const gs of geoSystem)
       {
@@ -1097,10 +1093,9 @@ function X3DGeospatialObject (executionContext)
    this .invOriginMatrix = new (Matrix4_default()) ();
 }
 
-X3DGeospatialObject .prototype =
+Object .assign (X3DGeospatialObject .prototype,
 {
-   constructor: X3DGeospatialObject,
-   initialize: function ()
+   initialize ()
    {
       this ._geoSystem .addInterest ("set_geoSystem__", this);
       this ._geoOrigin .addInterest ("set_geoOrigin__", this);
@@ -1108,14 +1103,14 @@ X3DGeospatialObject .prototype =
       this .set_geoSystem__ ();
       this .set_geoOrigin__ ();
    },
-   set_geoSystem__: function ()
+   set_geoSystem__ ()
    {
-      this .coordinateSystem = Geospatial_Geospatial.getCoordinateSystem (this ._geoSystem);
-      this .referenceFrame   = Geospatial_Geospatial.getReferenceFrame   (this ._geoSystem, this .radians);
-      this .elevationFrame   = Geospatial_Geospatial.getElevationFrame   (this ._geoSystem, this .radians);
-      this .standardOrder    = Geospatial_Geospatial.isStandardOrder     (this ._geoSystem);
+      this .coordinateSystem = Geospatial_Geospatial .getCoordinateSystem (this ._geoSystem);
+      this .referenceFrame   = Geospatial_Geospatial .getReferenceFrame   (this ._geoSystem, this .radians);
+      this .elevationFrame   = Geospatial_Geospatial .getElevationFrame   (this ._geoSystem, this .radians);
+      this .standardOrder    = Geospatial_Geospatial .isStandardOrder     (this ._geoSystem);
    },
-   set_geoOrigin__: function ()
+   set_geoOrigin__ ()
    {
       if (this .geoOriginNode)
       {
@@ -1136,7 +1131,7 @@ X3DGeospatialObject .prototype =
       this .set_origin__ ();
       this .set_rotateYUp__ ();
    },
-   set_origin__: function ()
+   set_origin__ ()
    {
       if (this .geoOriginNode)
          this .geoOriginNode .getOrigin (this .origin);
@@ -1145,7 +1140,7 @@ X3DGeospatialObject .prototype =
 
       this .set_originMatrix__ ();
    },
-   set_originMatrix__: function ()
+   set_originMatrix__ ()
    {
       if (this .geoOriginNode)
       {
@@ -1178,7 +1173,7 @@ X3DGeospatialObject .prototype =
          this .invOriginMatrix .assign (this .originMatrix) .inverse ();
       }
    },
-   set_rotateYUp__: function ()
+   set_rotateYUp__ ()
    {
       if (this .geoOriginNode && this .geoOriginNode ._rotateYUp .getValue ())
       {
@@ -1195,31 +1190,31 @@ X3DGeospatialObject .prototype =
          delete this .getLocationMatrix;
       }
    },
-   getReferenceFrame: function ()
+   getReferenceFrame ()
    {
       return this .referenceFrame;
    },
-   getStandardOrder: function ()
+   getStandardOrder ()
    {
       return this .standardOrder;
    },
-   getCoord: function (geoPoint, result)
+   getCoord (geoPoint, result)
    {
       return this .referenceFrame .convert (geoPoint, result) .subtract (this .origin);
    },
-   getGeoCoord: function (point, result)
+   getGeoCoord (point, result)
    {
       return this .referenceFrame .apply (vector .assign (point) .add (this .origin), result);
    },
-   getGeoElevation: function (point)
+   getGeoElevation (point)
    {
       return this .getGeoCoord (point, result) .z;
    },
-   getGeoUpVector: function (point, result)
+   getGeoUpVector (point, result)
    {
       return this .elevationFrame .normal (vector .assign (point) .add (this .origin), result);
    },
-   getLocationMatrix: function (geoPoint, result)
+   getLocationMatrix (geoPoint, result)
    {
       var
          origin         = this .origin,
@@ -1232,8 +1227,8 @@ X3DGeospatialObject .prototype =
 
       return locationMatrix;
    },
-   dispose: function () { },
-};
+   dispose () { },
+});
 
 function getCoordRotateYUp (geoPoint, result)
 {
@@ -1283,6 +1278,20 @@ function getStandardLocationMatrix (geoPoint, result)
                        z .x, z .y, z .z, 0,
                        t .x, t .y, t .z, 1);
 }
+
+Object .defineProperties (X3DGeospatialObject,
+{
+   typeName:
+   {
+      value: "X3DGeospatialObject",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Geospatial",
+      enumerable: true,
+   },
+});
 
 const X3DGeospatialObject_default_ = X3DGeospatialObject;
 ;
@@ -1352,41 +1361,18 @@ var Triangle3_default = /*#__PURE__*/__webpack_require__.n(Triangle3_namespaceOb
 function GeoCoordinate (executionContext)
 {
    X3DCoordinateNode_default().call (this, executionContext);
-   Geospatial_X3DGeospatialObject.call (this, executionContext);
+   Geospatial_X3DGeospatialObject .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).GeoCoordinate);
 }
 
-GeoCoordinate .prototype = Object .assign (Object .create ((X3DCoordinateNode_default()).prototype),
-   Geospatial_X3DGeospatialObject.prototype,
+Object .assign (Object .setPrototypeOf (GeoCoordinate .prototype, (X3DCoordinateNode_default()).prototype),
+   Geospatial_X3DGeospatialObject .prototype,
 {
-   constructor: GeoCoordinate,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",  new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geoOrigin", new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geoSystem", new (Fields_default()).MFString ("GD", "WE")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "point",     new (Fields_default()).MFVec3d ()),
-   ]),
-   getTypeName: function ()
+   initialize ()
    {
-      return "GeoCoordinate";
-   },
-   getComponentName: function ()
-   {
-      return "Geospatial";
-   },
-   getContainerField: function ()
-   {
-      return "coord";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
-   {
-      X3DCoordinateNode_default().prototype.initialize.call (this);
-      Geospatial_X3DGeospatialObject.prototype.initialize.call (this);
+      X3DCoordinateNode_default().prototype .initialize .call (this);
+      Geospatial_X3DGeospatialObject .prototype .initialize .call (this);
    },
    set1Point: (function ()
    {
@@ -1512,10 +1498,44 @@ GeoCoordinate .prototype = Object .assign (Object .create ((X3DCoordinateNode_de
          return new (Vector3_default()) (0, 0, 0);
       };
    })(),
-   dispose: function ()
+   dispose ()
    {
-      Geospatial_X3DGeospatialObject.prototype.dispose.call (this);
-      X3DCoordinateNode_default().prototype.dispose.call (this);
+      Geospatial_X3DGeospatialObject .prototype .dispose .call (this);
+      X3DCoordinateNode_default().prototype .dispose .call (this);
+   },
+});
+
+Object .defineProperties (GeoCoordinate,
+{
+   typeName:
+   {
+      value: "GeoCoordinate",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Geospatial",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "coord",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",  new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geoOrigin", new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geoSystem", new (Fields_default()).MFString ("GD", "WE")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "point",     new (Fields_default()).MFVec3d ()),
+      ]),
+      enumerable: true,
    },
 });
 
@@ -1592,7 +1612,7 @@ var Vector2_default = /*#__PURE__*/__webpack_require__.n(Vector2_namespaceObject
 function GeoElevationGrid (executionContext)
 {
    X3DGeometryNode_default().call (this, executionContext);
-   Geospatial_X3DGeospatialObject.call (this, executionContext);
+   Geospatial_X3DGeospatialObject .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).GeoElevationGrid);
 
@@ -1604,50 +1624,13 @@ function GeoElevationGrid (executionContext)
    this .normalNode   = null;
 }
 
-GeoElevationGrid .prototype = Object .assign (Object .create ((X3DGeometryNode_default()).prototype),
-   Geospatial_X3DGeospatialObject.prototype,
+Object .assign (Object .setPrototypeOf (GeoElevationGrid .prototype, (X3DGeometryNode_default()).prototype),
+   Geospatial_X3DGeospatialObject .prototype,
 {
-   constructor: GeoElevationGrid,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",        new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geoOrigin",       new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geoSystem",       new (Fields_default()).MFString ("GD", "WE")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geoGridOrigin",   new (Fields_default()).SFVec3d ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "xDimension",      new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "zDimension",      new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "xSpacing",        new (Fields_default()).SFDouble (1)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "zSpacing",        new (Fields_default()).SFDouble (1)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "yScale",          new (Fields_default()).SFFloat (1)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "solid",           new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "ccw",             new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "creaseAngle",     new (Fields_default()).SFDouble ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "colorPerVertex",  new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "normalPerVertex", new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "color",           new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "texCoord",        new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "normal",          new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "height",          new (Fields_default()).MFDouble (0, 0)),
-   ]),
-   getTypeName: function ()
+   initialize ()
    {
-      return "GeoElevationGrid";
-   },
-   getComponentName: function ()
-   {
-      return "Geospatial";
-   },
-   getContainerField: function ()
-   {
-      return "geometry";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
-   {
-      X3DGeometryNode_default().prototype.initialize.call (this);
-      Geospatial_X3DGeospatialObject.prototype.initialize.call (this);
+      X3DGeometryNode_default().prototype .initialize .call (this);
+      Geospatial_X3DGeospatialObject .prototype .initialize .call (this);
 
       this ._color    .addInterest ("set_color__", this);
       this ._texCoord .addInterest ("set_texCoord__", this);
@@ -1657,7 +1640,7 @@ GeoElevationGrid .prototype = Object .assign (Object .create ((X3DGeometryNode_d
       this .set_texCoord__ ();
       this .set_normal__ ();
    },
-   set_color__: function ()
+   set_color__ ()
    {
       this .colorNode ?.removeInterest ("requestRebuild", this);
 
@@ -1667,7 +1650,7 @@ GeoElevationGrid .prototype = Object .assign (Object .create ((X3DGeometryNode_d
 
       this .setTransparent (this .colorNode ?.isTransparent () ?? false);
    },
-   set_texCoord__: function ()
+   set_texCoord__ ()
    {
       this .texCoordNode ?.removeInterest ("requestRebuild", this);
 
@@ -1677,7 +1660,7 @@ GeoElevationGrid .prototype = Object .assign (Object .create ((X3DGeometryNode_d
 
       this .setTextureCoordinate (this .texCoordNode);
    },
-   set_normal__: function ()
+   set_normal__ ()
    {
       this .normalNode ?.removeInterest ("requestRebuild", this);
 
@@ -1685,26 +1668,26 @@ GeoElevationGrid .prototype = Object .assign (Object .create ((X3DGeometryNode_d
 
       this .normalNode ?.addInterest ("requestRebuild", this);
    },
-   getColor: function ()
+   getColor ()
    {
       return this .colorNode;
    },
-   getTexCoord: function ()
+   getTexCoord ()
    {
       return this .texCoordNode;
    },
-   getNormal: function ()
+   getNormal ()
    {
       return this .normalNode;
    },
-   getHeight: function (index)
+   getHeight (index)
    {
       if (index < this ._height .length)
          return this ._height [index] * this ._yScale .getValue ();
 
       return 0;
    },
-   createTexCoords: function ()
+   createTexCoords ()
    {
       var
          texCoords  = [ ],
@@ -1721,7 +1704,7 @@ GeoElevationGrid .prototype = Object .assign (Object .create ((X3DGeometryNode_d
 
       return texCoords;
    },
-   createNormals: function (points, coordIndex, creaseAngle)
+   createNormals (points, coordIndex, creaseAngle)
    {
       var
          cw          = ! this ._ccw .getValue (),
@@ -1754,7 +1737,7 @@ GeoElevationGrid .prototype = Object .assign (Object .create ((X3DGeometryNode_d
 
       return this .refineNormals (normalIndex, normals, this ._creaseAngle .getValue ());
    },
-   createCoordIndex: function ()
+   createCoordIndex ()
    {
       // p1 - p4
       //  | \ |
@@ -1789,7 +1772,7 @@ GeoElevationGrid .prototype = Object .assign (Object .create ((X3DGeometryNode_d
 
       return coordIndex;
    },
-   createPoints: function ()
+   createPoints ()
    {
       var
          points     = [ ],
@@ -1840,7 +1823,7 @@ GeoElevationGrid .prototype = Object .assign (Object .create ((X3DGeometryNode_d
 
       return points;
    },
-   build: function ()
+   build ()
    {
       if (this ._xDimension .getValue () < 2 || this ._zDimension .getValue () < 2)
          return;
@@ -1941,10 +1924,58 @@ GeoElevationGrid .prototype = Object .assign (Object .create ((X3DGeometryNode_d
       this .setSolid (this ._solid .getValue ());
       this .setCCW (this ._ccw .getValue ());
    },
-   dispose: function ()
+   dispose ()
    {
-      Geospatial_X3DGeospatialObject.prototype.dispose.call (this);
-      X3DGeometryNode_default().prototype.dispose.call (this);
+      Geospatial_X3DGeospatialObject .prototype .dispose .call (this);
+      X3DGeometryNode_default().prototype .dispose .call (this);
+   },
+});
+
+Object .defineProperties (GeoElevationGrid,
+{
+   typeName:
+   {
+      value: "GeoElevationGrid",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Geospatial",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "geometry",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",        new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geoOrigin",       new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geoSystem",       new (Fields_default()).MFString ("GD", "WE")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geoGridOrigin",   new (Fields_default()).SFVec3d ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "xDimension",      new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "zDimension",      new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "xSpacing",        new (Fields_default()).SFDouble (1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "zSpacing",        new (Fields_default()).SFDouble (1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "yScale",          new (Fields_default()).SFFloat (1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "solid",           new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "ccw",             new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "creaseAngle",     new (Fields_default()).SFDouble ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "colorPerVertex",  new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "normalPerVertex", new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "color",           new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "texCoord",        new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "normal",          new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "height",          new (Fields_default()).MFDouble (0, 0)),
+      ]),
+      enumerable: true,
    },
 });
 
@@ -2039,7 +2070,7 @@ function GeoLOD (executionContext)
 {
    X3DChildNode_default().call (this, executionContext);
    X3DBoundedObject_default().call (this, executionContext);
-   Geospatial_X3DGeospatialObject.call (this, executionContext);
+   Geospatial_X3DGeospatialObject .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).GeoLOD);
 
@@ -2058,51 +2089,15 @@ function GeoLOD (executionContext)
    this .modelViewMatrix  = new (Matrix4_default()) ();
 }
 
-GeoLOD .prototype = Object .assign (Object .create ((X3DChildNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (GeoLOD .prototype, (X3DChildNode_default()).prototype),
    (X3DBoundedObject_default()).prototype,
-   Geospatial_X3DGeospatialObject.prototype,
+   Geospatial_X3DGeospatialObject .prototype,
 {
-   constructor: GeoLOD,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",      new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geoOrigin",     new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geoSystem",     new (Fields_default()).MFString ("GD", "WE")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "rootUrl",       new (Fields_default()).MFString ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "child1Url",     new (Fields_default()).MFString ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "child2Url",     new (Fields_default()).MFString ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "child3Url",     new (Fields_default()).MFString ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "child4Url",     new (Fields_default()).MFString ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "center",        new (Fields_default()).SFVec3d ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "range",         new (Fields_default()).SFFloat (10)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "level_changed", new (Fields_default()).SFInt32 (-1)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "visible",       new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bboxDisplay",   new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxSize",      new (Fields_default()).SFVec3f (-1, -1, -1)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxCenter",    new (Fields_default()).SFVec3f ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "rootNode",      new (Fields_default()).MFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "children",      new (Fields_default()).MFNode ()),
-   ]),
-   getTypeName: function ()
+   initialize ()
    {
-      return "GeoLOD";
-   },
-   getComponentName: function ()
-   {
-      return "Geospatial";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
-   {
-      X3DChildNode_default().prototype.initialize.call (this);
-      X3DBoundedObject_default().prototype.initialize.call (this);
-      Geospatial_X3DGeospatialObject.prototype.initialize.call (this);
+      X3DChildNode_default().prototype .initialize .call (this);
+      X3DBoundedObject_default().prototype .initialize .call (this);
+      Geospatial_X3DGeospatialObject .prototype .initialize .call (this);
 
       this ._rootNode .addFieldInterest (this .rootGroup ._children);
 
@@ -2140,7 +2135,7 @@ GeoLOD .prototype = Object .assign (Object .create ((X3DChildNode_default()).pro
       this .child3Inline .setup ();
       this .child4Inline .setup ();
    },
-   getBBox: function (bbox, shadows)
+   getBBox (bbox, shadows)
    {
       if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
       {
@@ -2174,7 +2169,7 @@ GeoLOD .prototype = Object .assign (Object .create ((X3DChildNode_default()).pro
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
-   set_rootLoadState__: function ()
+   set_rootLoadState__ ()
    {
       if (this ._level_changed .getValue () !== 0)
          return;
@@ -2188,7 +2183,7 @@ GeoLOD .prototype = Object .assign (Object .create ((X3DChildNode_default()).pro
          this .childrenLoaded = false;
       }
    },
-   set_childLoadState__: function ()
+   set_childLoadState__ ()
    {
       if (this ._level_changed .getValue () !== 1)
          return;
@@ -2240,21 +2235,21 @@ GeoLOD .prototype = Object .assign (Object .create ((X3DChildNode_default()).pro
             children .push (rootNodes [i]);
       }
    },
-   set_childCameraObject__: function ()
+   set_childCameraObject__ ()
    {
       this .setCameraObject (this .child1Inline .isCameraObject () ||
                              this .child2Inline .isCameraObject () ||
                              this .child3Inline .isCameraObject () ||
                              this .child4Inline .isCameraObject ());
    },
-   set_childPickableObject__: function ()
+   set_childPickableObject__ ()
    {
       this .setPickableObject (this .child1Inline .isPickableObject () ||
                                this .child2Inline .isPickableObject () ||
                                this .child3Inline .isPickableObject () ||
                                this .child4Inline .isPickableObject ());
    },
-   getLevel: function (modelViewMatrix)
+   getLevel (modelViewMatrix)
    {
       var distance = this .getDistance (modelViewMatrix);
 
@@ -2263,13 +2258,13 @@ GeoLOD .prototype = Object .assign (Object .create ((X3DChildNode_default()).pro
 
       return 0;
    },
-   getDistance: function (modelViewMatrix)
+   getDistance (modelViewMatrix)
    {
       modelViewMatrix .translate (this .getCoord (this ._center .getValue (), center));
 
       return modelViewMatrix .origin .magnitude ();
    },
-   traverse: function (type, renderObject)
+   traverse (type, renderObject)
    {
       switch (type)
       {
@@ -2395,7 +2390,7 @@ GeoLOD .prototype = Object .assign (Object .create ((X3DChildNode_default()).pro
          }
       }
    },
-   traverseChildren: function (type, renderObject)
+   traverseChildren (type, renderObject)
    {
       switch (this .childrenLoaded ? this ._level_changed .getValue () : 0)
       {
@@ -2418,11 +2413,58 @@ GeoLOD .prototype = Object .assign (Object .create ((X3DChildNode_default()).pro
          }
       }
    },
-   dispose: function ()
+   dispose ()
    {
-      Geospatial_X3DGeospatialObject.prototype.dispose.call (this);
-      X3DBoundedObject_default().prototype.dispose.call (this);
-      X3DChildNode_default().prototype.dispose.call (this);
+      Geospatial_X3DGeospatialObject .prototype .dispose .call (this);
+      X3DBoundedObject_default().prototype .dispose .call (this);
+      X3DChildNode_default().prototype .dispose .call (this);
+   },
+});
+
+Object .defineProperties (GeoLOD,
+{
+   typeName:
+   {
+      value: "GeoLOD",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Geospatial",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",      new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geoOrigin",     new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geoSystem",     new (Fields_default()).MFString ("GD", "WE")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "rootUrl",       new (Fields_default()).MFString ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "child1Url",     new (Fields_default()).MFString ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "child2Url",     new (Fields_default()).MFString ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "child3Url",     new (Fields_default()).MFString ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "child4Url",     new (Fields_default()).MFString ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "center",        new (Fields_default()).SFVec3d ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "range",         new (Fields_default()).SFFloat (10)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "level_changed", new (Fields_default()).SFInt32 (-1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "visible",       new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bboxDisplay",   new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxSize",      new (Fields_default()).SFVec3f (-1, -1, -1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxCenter",    new (Fields_default()).SFVec3f ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "rootNode",      new (Fields_default()).MFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "children",      new (Fields_default()).MFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 
@@ -2495,61 +2537,72 @@ var locationMatrix = new (Matrix4_default()) ();
 function GeoLocation (executionContext)
 {
    X3DTransformMatrix3DNode_default().call (this, executionContext);
-   Geospatial_X3DGeospatialObject.call (this, executionContext);
+   Geospatial_X3DGeospatialObject      .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).GeoLocation);
 }
 
-GeoLocation .prototype = Object .assign (Object .create ((X3DTransformMatrix3DNode_default()).prototype),
-   Geospatial_X3DGeospatialObject.prototype,
+Object .assign (Object .setPrototypeOf (GeoLocation .prototype, (X3DTransformMatrix3DNode_default()).prototype),
+   Geospatial_X3DGeospatialObject .prototype,
 {
-   constructor: GeoLocation,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",       new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geoSystem",      new (Fields_default()).MFString ("GD", "WE")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "geoCoords",      new (Fields_default()).SFVec3d ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geoOrigin",      new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "visible",        new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bboxDisplay",    new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxSize",       new (Fields_default()).SFVec3f (-1, -1, -1)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxCenter",     new (Fields_default()).SFVec3f ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "addChildren",    new (Fields_default()).MFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "removeChildren", new (Fields_default()).MFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "children",       new (Fields_default()).MFNode ()),
-   ]),
-   getTypeName: function ()
+   initialize ()
    {
-      return "GeoLocation";
-   },
-   getComponentName: function ()
-   {
-      return "Geospatial";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
-   {
-      X3DTransformMatrix3DNode_default().prototype.initialize.call (this);
-      Geospatial_X3DGeospatialObject.prototype.initialize.call (this);
+      X3DTransformMatrix3DNode_default().prototype .initialize .call (this);
+      Geospatial_X3DGeospatialObject      .prototype .initialize .call (this);
 
       this .addInterest ("eventsProcessed", this);
 
       this .eventsProcessed ();
    },
-   eventsProcessed: function ()
+   eventsProcessed ()
    {
       this .setMatrix (this .getLocationMatrix (this ._geoCoords .getValue (), locationMatrix));
    },
-   dispose: function ()
+   dispose ()
    {
-      Geospatial_X3DGeospatialObject.prototype.dispose.call (this);
-      X3DTransformMatrix3DNode_default().prototype.dispose.call (this);
+      Geospatial_X3DGeospatialObject      .prototype .dispose .call (this);
+      X3DTransformMatrix3DNode_default().prototype .dispose .call (this);
+   },
+});
+
+Object .defineProperties (GeoLocation,
+{
+   typeName:
+   {
+      value: "GeoLocation",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Geospatial",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",       new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geoSystem",      new (Fields_default()).MFString ("GD", "WE")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "geoCoords",      new (Fields_default()).SFVec3d ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geoOrigin",      new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "visible",        new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bboxDisplay",    new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxSize",       new (Fields_default()).SFVec3f (-1, -1, -1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxCenter",     new (Fields_default()).SFVec3f ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "addChildren",    new (Fields_default()).MFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "removeChildren", new (Fields_default()).MFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "children",       new (Fields_default()).MFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 
@@ -2627,46 +2680,57 @@ function GeoMetadata (executionContext)
    this .addType ((X3DConstants_default()).GeoMetadata);
 }
 
-GeoMetadata .prototype = Object .assign (Object .create ((X3DInfoNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (GeoMetadata .prototype, (X3DInfoNode_default()).prototype),
    (X3DUrlObject_default()).prototype,
 {
-   constructor: GeoMetadata,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",             new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "load",                 new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "url",                  new (Fields_default()).MFString ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "autoRefresh",          new (Fields_default()).SFTime ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "autoRefreshTimeLimit", new (Fields_default()).SFTime (3600)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "summary",              new (Fields_default()).MFString ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "data",                 new (Fields_default()).MFNode ()),
-   ]),
-   getTypeName: function ()
+   initialize ()
    {
-      return "GeoMetadata";
+      X3DInfoNode_default().prototype .initialize .call (this);
+      X3DUrlObject_default().prototype .initialize .call (this);
    },
-   getComponentName: function ()
-   {
-      return "Geospatial";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
-   {
-      X3DInfoNode_default().prototype.initialize.call (this);
-      X3DUrlObject_default().prototype.initialize.call (this);
-   },
-   requestImmediateLoad: function (cache = true)
+   requestImmediateLoad (cache = true)
    { },
-   dispose: function ()
+   dispose ()
    {
-      X3DUrlObject_default().prototype.dispose.call (this);
-      X3DInfoNode_default().prototype.dispose.call (this);
+      X3DUrlObject_default().prototype .dispose .call (this);
+      X3DInfoNode_default().prototype .dispose .call (this);
+   },
+});
+
+Object .defineProperties (GeoMetadata,
+{
+   typeName:
+   {
+      value: "GeoMetadata",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Geospatial",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",             new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "load",                 new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "url",                  new (Fields_default()).MFString ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "autoRefresh",          new (Fields_default()).SFTime ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "autoRefreshTimeLimit", new (Fields_default()).SFTime (3600)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "summary",              new (Fields_default()).MFString ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "data",                 new (Fields_default()).MFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 
@@ -2742,46 +2806,57 @@ function GeoOrigin (executionContext)
    this .radians = false;
 }
 
-GeoOrigin .prototype = Object .assign (Object .create ((X3DNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (GeoOrigin .prototype, (X3DNode_default()).prototype),
 {
-   constructor: GeoOrigin,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",  new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geoSystem", new (Fields_default()).MFString ("GD", "WE")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "geoCoords", new (Fields_default()).SFVec3d ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "rotateYUp", new (Fields_default()).SFBool ()),
-   ]),
-   getTypeName: function ()
+   initialize ()
    {
-      return "GeoOrigin";
-   },
-   getComponentName: function ()
-   {
-      return "Geospatial";
-   },
-   getContainerField: function ()
-   {
-      return "geoOrigin";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
-   {
-      X3DNode_default().prototype.initialize.call (this);
+      X3DNode_default().prototype .initialize .call (this);
 
       this ._geoSystem .addInterest ("set_geoSystem__", this);
 
       this .set_geoSystem__ ();
    },
-   set_geoSystem__: function ()
+   set_geoSystem__ ()
    {
-      this .referenceFrame = Geospatial_Geospatial.getReferenceFrame (this ._geoSystem, this .radians);
+      this .referenceFrame = Geospatial_Geospatial .getReferenceFrame (this ._geoSystem, this .radians);
    },
-   getOrigin: function (result)
+   getOrigin (result)
    {
       return this .referenceFrame .convert (this ._geoCoords .getValue (), result);
+   },
+});
+
+Object .defineProperties (GeoOrigin,
+{
+   typeName:
+   {
+      value: "GeoOrigin",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Geospatial",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "geoOrigin",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",  new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geoSystem", new (Fields_default()).MFString ("GD", "WE")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "geoCoords", new (Fields_default()).SFVec3d ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "rotateYUp", new (Fields_default()).SFBool ()),
+      ]),
+      enumerable: true,
    },
 });
 
@@ -2853,7 +2928,7 @@ var X3DInterpolatorNode_default = /*#__PURE__*/__webpack_require__.n(X3DInterpol
 function GeoPositionInterpolator (executionContext)
 {
    X3DInterpolatorNode_default().call (this, executionContext);
-   Geospatial_X3DGeospatialObject.call (this, executionContext);
+   Geospatial_X3DGeospatialObject .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).GeoPositionInterpolator);
 
@@ -2862,49 +2937,22 @@ function GeoPositionInterpolator (executionContext)
    this .geocentric = new Geospatial_Geocentric ();
 }
 
-GeoPositionInterpolator .prototype = Object .assign (Object .create ((X3DInterpolatorNode_default()).prototype),
-   Geospatial_X3DGeospatialObject.prototype,
+Object .assign (Object .setPrototypeOf (GeoPositionInterpolator .prototype, (X3DInterpolatorNode_default()).prototype),
+   Geospatial_X3DGeospatialObject .prototype,
 {
-   constructor: GeoPositionInterpolator,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",         new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geoOrigin",        new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geoSystem",        new (Fields_default()).MFString ("GD", "WE")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "set_fraction",     new (Fields_default()).SFFloat ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "key",              new (Fields_default()).MFFloat ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "keyValue",         new (Fields_default()).MFVec3d ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "value_changed",    new (Fields_default()).SFVec3d ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "geovalue_changed", new (Fields_default()).SFVec3d ()),
-   ]),
-   getTypeName: function ()
+   setup ()
    {
-      return "GeoPositionInterpolator";
-   },
-   getComponentName: function ()
-   {
-      return "Geospatial";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   setup: function ()
-   {
-      Geospatial_X3DGeospatialObject.prototype.initialize.call (this);
+      Geospatial_X3DGeospatialObject .prototype .initialize .call (this);
 
-      X3DInterpolatorNode_default().prototype.setup.call (this);
+      X3DInterpolatorNode_default().prototype .setup .call (this);
    },
-   initialize: function ()
+   initialize ()
    {
-      X3DInterpolatorNode_default().prototype.initialize.call (this);
+      X3DInterpolatorNode_default().prototype .initialize .call (this);
 
       this ._keyValue .addInterest ("set_keyValue__", this);
    },
-   set_keyValue__: function ()
+   set_keyValue__ ()
    {
       const
          key      = this ._key,
@@ -2931,10 +2979,48 @@ GeoPositionInterpolator .prototype = Object .assign (Object .create ((X3DInterpo
          this ._value_changed    = coord;
       };
    })(),
-   dispose: function ()
+   dispose ()
    {
-      Geospatial_X3DGeospatialObject.prototype.dispose.call (this);
-      X3DInterpolatorNode_default().prototype.dispose.call (this);
+      Geospatial_X3DGeospatialObject .prototype .dispose .call (this);
+      X3DInterpolatorNode_default().prototype .dispose .call (this);
+   },
+});
+
+Object .defineProperties (GeoPositionInterpolator,
+{
+   typeName:
+   {
+      value: "GeoPositionInterpolator",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Geospatial",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",         new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geoOrigin",        new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geoSystem",        new (Fields_default()).MFString ("GD", "WE")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "set_fraction",     new (Fields_default()).SFFloat ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "key",              new (Fields_default()).MFFloat ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "keyValue",         new (Fields_default()).MFVec3d ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "value_changed",    new (Fields_default()).SFVec3d ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "geovalue_changed", new (Fields_default()).SFVec3d ()),
+      ]),
+      enumerable: true,
    },
 });
 
@@ -3011,7 +3097,7 @@ var geoCoord = new (Vector3_default()) (0, 0, 0);
 function GeoProximitySensor (executionContext)
 {
    X3DEnvironmentalSensorNode_default().call (this, executionContext);
-   Geospatial_X3DGeospatialObject.call (this, executionContext);
+   Geospatial_X3DGeospatialObject        .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).GeoProximitySensor);
 
@@ -3024,45 +3110,13 @@ function GeoProximitySensor (executionContext)
    this .setPickableObject (this .proximitySensor .isPickableObject ());
 }
 
-GeoProximitySensor .prototype = Object .assign (Object .create ((X3DEnvironmentalSensorNode_default()).prototype),
-   Geospatial_X3DGeospatialObject.prototype,
+Object .assign (Object .setPrototypeOf (GeoProximitySensor .prototype, (X3DEnvironmentalSensorNode_default()).prototype),
+   Geospatial_X3DGeospatialObject .prototype,
 {
-   constructor: GeoProximitySensor,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",                 new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geoOrigin",                new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geoSystem",                new (Fields_default()).MFString ("GD", "WE")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "enabled",                  new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "size",                     new (Fields_default()).SFVec3f ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "center",                   new (Fields_default()).SFVec3f ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isActive",                 new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "enterTime",                new (Fields_default()).SFTime ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "exitTime",                 new (Fields_default()).SFTime ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "geoCoord_changed",         new (Fields_default()).SFVec3d ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "position_changed",         new (Fields_default()).SFVec3f ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "orientation_changed",      new (Fields_default()).SFRotation ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "centerOfRotation_changed", new (Fields_default()).SFVec3f ()),
-   ]),
-   getTypeName: function ()
+   initialize ()
    {
-      return "GeoProximitySensor";
-   },
-   getComponentName: function ()
-   {
-      return "Geospatial";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
-   initialize: function ()
-   {
-      X3DEnvironmentalSensorNode_default().prototype.initialize.call (this);
-      Geospatial_X3DGeospatialObject.prototype.initialize.call (this);
+      X3DEnvironmentalSensorNode_default().prototype .initialize .call (this);
+      Geospatial_X3DGeospatialObject        .prototype .initialize .call (this);
 
       this ._enabled .addFieldInterest (this .proximitySensor ._enabled);
       this ._size    .addFieldInterest (this .proximitySensor ._size);
@@ -3086,18 +3140,61 @@ GeoProximitySensor .prototype = Object .assign (Object .create ((X3DEnvironmenta
 
       this .proximitySensor .setup ();
    },
-   set_position__: function (position)
+   set_position__ (position)
    {
       this ._geoCoord_changed = this .getGeoCoord (this .proximitySensor ._position_changed .getValue (), geoCoord);
    },
-   traverse: function (type, renderObject)
+   traverse (type, renderObject)
    {
       this .proximitySensor .traverse (type, renderObject);
    },
-   dispose: function ()
+   dispose ()
    {
-      Geospatial_X3DGeospatialObject.prototype.dispose.call (this);
-      X3DEnvironmentalSensorNode_default().prototype.dispose.call (this);
+      Geospatial_X3DGeospatialObject        .prototype .dispose .call (this);
+      X3DEnvironmentalSensorNode_default().prototype .dispose .call (this);
+   },
+});
+
+Object .defineProperties (GeoProximitySensor,
+{
+   typeName:
+   {
+      value: "GeoProximitySensor",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Geospatial",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",                 new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geoOrigin",                new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geoSystem",                new (Fields_default()).MFString ("GD", "WE")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "enabled",                  new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "size",                     new (Fields_default()).SFVec3f ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "center",                   new (Fields_default()).SFVec3f ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isActive",                 new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "enterTime",                new (Fields_default()).SFTime ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "exitTime",                 new (Fields_default()).SFTime ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "geoCoord_changed",         new (Fields_default()).SFVec3d ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "position_changed",         new (Fields_default()).SFVec3f ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "orientation_changed",      new (Fields_default()).SFRotation ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "centerOfRotation_changed", new (Fields_default()).SFVec3f ()),
+      ]),
+      enumerable: true,
    },
 });
 
@@ -3168,51 +3265,20 @@ var X3DTouchSensorNode_default = /*#__PURE__*/__webpack_require__.n(X3DTouchSens
 function GeoTouchSensor (executionContext)
 {
    X3DTouchSensorNode_default().call (this, executionContext);
-   Geospatial_X3DGeospatialObject.call (this, executionContext);
+   Geospatial_X3DGeospatialObject .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).GeoTouchSensor);
 
    this ._hitPoint_changed .setUnit ("length");
 }
 
-GeoTouchSensor .prototype = Object .assign (Object .create ((X3DTouchSensorNode_default()).prototype),
-   Geospatial_X3DGeospatialObject.prototype,
+Object .assign (Object .setPrototypeOf (GeoTouchSensor .prototype, (X3DTouchSensorNode_default()).prototype),
+   Geospatial_X3DGeospatialObject .prototype,
 {
-   constructor: GeoTouchSensor,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",            new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "description",         new (Fields_default()).SFString ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geoOrigin",           new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geoSystem",           new (Fields_default()).MFString ("GD", "WE")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "enabled",             new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "hitTexCoord_changed", new (Fields_default()).SFVec2f ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "hitNormal_changed",   new (Fields_default()).SFVec3f ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "hitPoint_changed",    new (Fields_default()).SFVec3f ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "hitGeoCoord_changed", new (Fields_default()).SFVec3d ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isOver",              new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isActive",            new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "touchTime",           new (Fields_default()).SFTime ()),
-   ]),
-   getTypeName: function ()
+   initialize ()
    {
-      return "GeoTouchSensor";
-   },
-   getComponentName: function ()
-   {
-      return "Geospatial";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
-   {
-      X3DTouchSensorNode_default().prototype.initialize.call (this);
-      Geospatial_X3DGeospatialObject.prototype.initialize.call (this);
+      X3DTouchSensorNode_default().prototype .initialize .call (this);
+      Geospatial_X3DGeospatialObject .prototype .initialize .call (this);
    },
    set_over__: (function ()
    {
@@ -3220,16 +3286,58 @@ GeoTouchSensor .prototype = Object .assign (Object .create ((X3DTouchSensorNode_
 
       return function (over, hit, modelViewMatrix, projectionMatrix, viewport)
       {
-         X3DTouchSensorNode_default().prototype.set_over__.call (this, over, hit, modelViewMatrix, projectionMatrix, viewport);
+         X3DTouchSensorNode_default().prototype .set_over__ .call (this, over, hit, modelViewMatrix, projectionMatrix, viewport);
 
          if (this ._isOver .getValue ())
             this ._hitGeoCoord_changed = this .getGeoCoord (this ._hitPoint_changed .getValue (), geoCoords);
       };
    })(),
-   dispose: function ()
+   dispose ()
    {
-      Geospatial_X3DGeospatialObject.prototype.dispose.call (this);
-      X3DTouchSensorNode_default().prototype.dispose.call (this);
+      Geospatial_X3DGeospatialObject .prototype .dispose .call (this);
+      X3DTouchSensorNode_default().prototype .dispose .call (this);
+   },
+});
+
+Object .defineProperties (GeoTouchSensor,
+{
+   typeName:
+   {
+      value: "GeoTouchSensor",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Geospatial",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",            new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "description",         new (Fields_default()).SFString ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geoOrigin",           new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geoSystem",           new (Fields_default()).MFString ("GD", "WE")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "enabled",             new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "hitTexCoord_changed", new (Fields_default()).SFVec2f ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "hitNormal_changed",   new (Fields_default()).SFVec3f ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "hitPoint_changed",    new (Fields_default()).SFVec3f ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "hitGeoCoord_changed", new (Fields_default()).SFVec3d ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isOver",              new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isActive",            new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "touchTime",           new (Fields_default()).SFTime ()),
+      ]),
+      enumerable: true,
    },
 });
 
@@ -3301,60 +3409,26 @@ var
 function GeoTransform (executionContext)
 {
    X3DTransformMatrix3DNode_default().call (this, executionContext);
-   Geospatial_X3DGeospatialObject.call (this, executionContext);
+   Geospatial_X3DGeospatialObject      .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).GeoTransform);
 
    this ._translation .setUnit ("length");
 }
 
-GeoTransform .prototype = Object .assign (Object .create ((X3DTransformMatrix3DNode_default()).prototype),
-   Geospatial_X3DGeospatialObject.prototype,
+Object .assign (Object .setPrototypeOf (GeoTransform .prototype, (X3DTransformMatrix3DNode_default()).prototype),
+   Geospatial_X3DGeospatialObject .prototype,
 {
-   constructor: GeoTransform,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",         new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "translation",      new (Fields_default()).SFVec3f ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "rotation",         new (Fields_default()).SFRotation ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "scale",            new (Fields_default()).SFVec3f (1, 1, 1)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "scaleOrientation", new (Fields_default()).SFRotation ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geoOrigin",        new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geoSystem",        new (Fields_default()).MFString ("GD", "WE")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "geoCenter",        new (Fields_default()).SFVec3d ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "visible",          new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bboxDisplay",      new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxSize",         new (Fields_default()).SFVec3f (-1, -1, -1)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxCenter",       new (Fields_default()).SFVec3f ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "addChildren",      new (Fields_default()).MFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "removeChildren",   new (Fields_default()).MFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "children",         new (Fields_default()).MFNode ()),
-   ]),
-   getTypeName: function ()
+   initialize ()
    {
-      return "GeoTransform";
-   },
-   getComponentName: function ()
-   {
-      return "Geospatial";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
-   {
-      X3DTransformMatrix3DNode_default().prototype.initialize.call (this);
-      Geospatial_X3DGeospatialObject.prototype.initialize.call (this);
+      X3DTransformMatrix3DNode_default().prototype .initialize .call (this);
+      Geospatial_X3DGeospatialObject      .prototype .initialize .call (this);
 
       this .addInterest ("eventsProcessed", this);
 
       this .eventsProcessed ();
    },
-   eventsProcessed: function ()
+   eventsProcessed ()
    {
       this .getLocationMatrix (this ._geoCenter .getValue (), GeoTransform_locationMatrix);
 
@@ -3365,10 +3439,55 @@ GeoTransform .prototype = Object .assign (Object .create ((X3DTransformMatrix3DN
 
       this .setMatrix (matrix .multRight (GeoTransform_locationMatrix) .multLeft (GeoTransform_locationMatrix .inverse ()));
    },
-   dispose: function ()
+   dispose ()
    {
-      Geospatial_X3DGeospatialObject.prototype.dispose.call (this);
-      X3DTransformMatrix3DNode_default().prototype.dispose.call (this);
+      Geospatial_X3DGeospatialObject      .prototype .dispose .call (this);
+      X3DTransformMatrix3DNode_default().prototype .dispose .call (this);
+   },
+});
+
+Object .defineProperties (GeoTransform,
+{
+   typeName:
+   {
+      value: "GeoTransform",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Geospatial",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",         new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "translation",      new (Fields_default()).SFVec3f ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "rotation",         new (Fields_default()).SFRotation ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "scale",            new (Fields_default()).SFVec3f (1, 1, 1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "scaleOrientation", new (Fields_default()).SFRotation ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geoOrigin",        new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geoSystem",        new (Fields_default()).MFString ("GD", "WE")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "geoCenter",        new (Fields_default()).SFVec3d ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "visible",          new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bboxDisplay",      new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxSize",         new (Fields_default()).SFVec3f (-1, -1, -1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxCenter",       new (Fields_default()).SFVec3f ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "addChildren",      new (Fields_default()).MFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "removeChildren",   new (Fields_default()).MFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "children",         new (Fields_default()).MFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 
@@ -3452,7 +3571,7 @@ var Rotation4_default = /*#__PURE__*/__webpack_require__.n(Rotation4_namespaceOb
 function GeoViewpoint (executionContext)
 {
    X3DViewpointNode_default().call (this, executionContext);
-   Geospatial_X3DGeospatialObject.call (this, executionContext);
+   Geospatial_X3DGeospatialObject .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).GeoViewpoint);
 
@@ -3467,52 +3586,13 @@ function GeoViewpoint (executionContext)
    this .elevation             = 0;
 }
 
-GeoViewpoint .prototype = Object .assign (Object .create ((X3DViewpointNode_default()).prototype),
-   Geospatial_X3DGeospatialObject.prototype,
+Object .assign (Object .setPrototypeOf (GeoViewpoint .prototype, (X3DViewpointNode_default()).prototype),
+   Geospatial_X3DGeospatialObject .prototype,
 {
-   constructor: GeoViewpoint,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",          new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geoOrigin",         new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geoSystem",         new (Fields_default()).MFString ("GD", "WE")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "set_bind",          new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "description",       new (Fields_default()).SFString ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "position",          new (Fields_default()).SFVec3d (0, 0, 100000)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "orientation",       new (Fields_default()).SFRotation ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "centerOfRotation",  new (Fields_default()).SFVec3d ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "fieldOfView",       new (Fields_default()).SFFloat (0.7854)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "nearDistance",      new (Fields_default()).SFFloat (-1)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "farDistance",       new (Fields_default()).SFFloat (-1)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "viewAll",           new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "jump",              new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "retainUserOffsets", new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "navType",           new (Fields_default()).MFString ("EXAMINE", "ANY")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "headlight",         new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "speedFactor",       new (Fields_default()).SFFloat (1)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isBound",           new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "bindTime",          new (Fields_default()).SFTime ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "navigationInfo",    new (Fields_default()).SFNode ()),
-   ]),
-   getTypeName: function ()
+   initialize ()
    {
-      return "GeoViewpoint";
-   },
-   getComponentName: function ()
-   {
-      return "Geospatial";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
-   {
-      X3DViewpointNode_default().prototype.initialize.call (this);
-      Geospatial_X3DGeospatialObject.prototype.initialize.call (this);
+      X3DViewpointNode_default().prototype .initialize .call (this);
+      Geospatial_X3DGeospatialObject .prototype .initialize .call (this);
 
       // Logarithmic depth buffer support
 
@@ -3531,14 +3611,14 @@ GeoViewpoint .prototype = Object .assign (Object .create ((X3DViewpointNode_defa
 
       this .set_position__ ();
    },
-   getRelativeTransformation: (Viewpoint_default()).prototype.getRelativeTransformation,
-   setInterpolators: (Viewpoint_default()).prototype.setInterpolators,
-   getFieldOfView: (Viewpoint_default()).prototype.getFieldOfView,
-   getScreenScale: (Viewpoint_default()).prototype.getScreenScale,
-   getViewportSize: (Viewpoint_default()).prototype.getViewportSize,
-   getLookAtDistance: (Viewpoint_default()).prototype.getLookAtDistance,
-   getProjectionMatrixWithLimits: (Viewpoint_default()).prototype.getProjectionMatrixWithLimits,
-   getLogarithmicDepthBuffer: function ()
+   getRelativeTransformation: (Viewpoint_default()).prototype .getRelativeTransformation,
+   setInterpolators: (Viewpoint_default()).prototype .setInterpolators,
+   getFieldOfView: (Viewpoint_default()).prototype .getFieldOfView,
+   getScreenScale: (Viewpoint_default()).prototype .getScreenScale,
+   getViewportSize: (Viewpoint_default()).prototype .getViewportSize,
+   getLookAtDistance: (Viewpoint_default()).prototype .getLookAtDistance,
+   getProjectionMatrixWithLimits: (Viewpoint_default()).prototype .getProjectionMatrixWithLimits,
+   getLogarithmicDepthBuffer ()
    {
       return this .logarithmicDepthBuffer;
    },
@@ -3614,7 +3694,7 @@ GeoViewpoint .prototype = Object .assign (Object .create ((X3DViewpointNode_defa
          return this .getCoord (this ._centerOfRotation .getValue (), centerOfRotation);
       };
    })(),
-   getMaxFarValue: function ()
+   getMaxFarValue ()
    {
       return 1e9;
    },
@@ -3638,23 +3718,73 @@ GeoViewpoint .prototype = Object .assign (Object .create ((X3DViewpointNode_defa
          }
       };
    })(),
-   getSpeedFactor: function ()
+   getSpeedFactor ()
    {
       return (Math .max (this .elevation, 0.0) + 10) / 10 * this ._speedFactor .getValue ();
    },
-   dispose: function ()
+   dispose ()
    {
-      Geospatial_X3DGeospatialObject.prototype.dispose.call (this);
-      X3DViewpointNode_default().prototype.dispose.call (this);
+      Geospatial_X3DGeospatialObject .prototype .dispose .call (this);
+      X3DViewpointNode_default().prototype .dispose .call (this);
    },
 });
 
 function traverse (type, renderObject)
 {
-   X3DViewpointNode_default().prototype.traverse.call (this, type, renderObject);
+   X3DViewpointNode_default().prototype .traverse .call (this, type, renderObject);
 
    this .geoNavigationInfoNode .traverse (type, renderObject);
 }
+
+Object .defineProperties (GeoViewpoint,
+{
+   typeName:
+   {
+      value: "GeoViewpoint",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Geospatial",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",          new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geoOrigin",         new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geoSystem",         new (Fields_default()).MFString ("GD", "WE")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "set_bind",          new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "description",       new (Fields_default()).SFString ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "position",          new (Fields_default()).SFVec3d (0, 0, 100000)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "orientation",       new (Fields_default()).SFRotation ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "centerOfRotation",  new (Fields_default()).SFVec3d ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "fieldOfView",       new (Fields_default()).SFFloat (0.7854)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "nearDistance",      new (Fields_default()).SFFloat (-1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "farDistance",       new (Fields_default()).SFFloat (-1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "viewAll",           new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "jump",              new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "retainUserOffsets", new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "navType",           new (Fields_default()).MFString ("EXAMINE", "ANY")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "headlight",         new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "speedFactor",       new (Fields_default()).SFFloat (1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isBound",           new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "bindTime",          new (Fields_default()).SFTime ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "navigationInfo",    new (Fields_default()).SFNode ()),
+      ]),
+      enumerable: true,
+   },
+});
 
 const GeoViewpoint_default_ = GeoViewpoint;
 ;
@@ -3723,26 +3853,26 @@ Namespace_default().set ("x_ite/Components/Geospatial/GeoViewpoint", GeoViewpoin
 
 
 
-Components_default().addComponent ({
+Components_default().add ({
    name: "Geospatial",
-   types:
-   {
-      GeoCoordinate:           Geospatial_GeoCoordinate,
-      GeoElevationGrid:        Geospatial_GeoElevationGrid,
-      GeoLOD:                  Geospatial_GeoLOD,
-      GeoLocation:             Geospatial_GeoLocation,
-      GeoMetadata:             Geospatial_GeoMetadata,
-      GeoOrigin:               Geospatial_GeoOrigin,
-      GeoPositionInterpolator: Geospatial_GeoPositionInterpolator,
-      GeoProximitySensor:      Geospatial_GeoProximitySensor,
-      GeoTouchSensor:          Geospatial_GeoTouchSensor,
-      GeoTransform:            Geospatial_GeoTransform,
-      GeoViewpoint:            Geospatial_GeoViewpoint,
-   },
-   abstractTypes:
-   {
-      X3DGeospatialObject: Geospatial_X3DGeospatialObject,
-   },
+   concreteNodes:
+   [
+      Geospatial_GeoCoordinate,
+      Geospatial_GeoElevationGrid,
+      Geospatial_GeoLOD,
+      Geospatial_GeoLocation,
+      Geospatial_GeoMetadata,
+      Geospatial_GeoOrigin,
+      Geospatial_GeoPositionInterpolator,
+      Geospatial_GeoProximitySensor,
+      Geospatial_GeoTouchSensor,
+      Geospatial_GeoTransform,
+      Geospatial_GeoViewpoint,
+   ],
+   abstractNodes:
+   [
+      Geospatial_X3DGeospatialObject,
+   ],
 });
 
 const components_Geospatial_default_ = undefined;

@@ -58,33 +58,42 @@ function AcousticProperties (executionContext)
    this .addType (X3DConstants .AcousticProperties);
 }
 
-AcousticProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
+Object .setPrototypeOf (AcousticProperties .prototype, X3DAppearanceChildNode .prototype);
+
+Object .defineProperties (AcousticProperties,
 {
-   constructor: AcousticProperties,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",   new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "description",new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",    new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "absorption", new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "refraction", new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "diffuse",    new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "specular",   new Fields .SFFloat ()),
-   ]),
-   getTypeName: function ()
+   typeName:
    {
-      return "AcousticProperties";
+      value: "AcousticProperties",
+      enumerable: true,
    },
-   getComponentName: function ()
+   componentName:
    {
-      return "Shape";
+      value: "Shape",
+      enumerable: true,
    },
-   getContainerField: function ()
+   containerField:
    {
-      return "AcousticProperties";
+      value: "AcousticProperties",
+      enumerable: true,
    },
-   getSpecificationRange: function ()
+   specificationRange:
    {
-      return ["4.0", "Infinity"];
+      value: Object .freeze (["4.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",   new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "description",new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",    new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "absorption", new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "refraction", new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "diffuse",    new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "specular",   new Fields .SFFloat ()),
+      ]),
+      enumerable: true,
    },
 });
 

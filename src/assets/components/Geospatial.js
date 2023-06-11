@@ -59,26 +59,26 @@ import GeoTransform            from "../../x_ite/Components/Geospatial/GeoTransf
 import GeoViewpoint            from "../../x_ite/Components/Geospatial/GeoViewpoint.js";
 import X3DGeospatialObject     from "../../x_ite/Components/Geospatial/X3DGeospatialObject.js";
 
-Components .addComponent ({
+Components .add ({
    name: "Geospatial",
-   types:
-   {
-      GeoCoordinate:           GeoCoordinate,
-      GeoElevationGrid:        GeoElevationGrid,
-      GeoLOD:                  GeoLOD,
-      GeoLocation:             GeoLocation,
-      GeoMetadata:             GeoMetadata,
-      GeoOrigin:               GeoOrigin,
-      GeoPositionInterpolator: GeoPositionInterpolator,
-      GeoProximitySensor:      GeoProximitySensor,
-      GeoTouchSensor:          GeoTouchSensor,
-      GeoTransform:            GeoTransform,
-      GeoViewpoint:            GeoViewpoint,
-   },
-   abstractTypes:
-   {
-      X3DGeospatialObject: X3DGeospatialObject,
-   },
+   concreteNodes:
+   [
+      GeoCoordinate,
+      GeoElevationGrid,
+      GeoLOD,
+      GeoLocation,
+      GeoMetadata,
+      GeoOrigin,
+      GeoPositionInterpolator,
+      GeoProximitySensor,
+      GeoTouchSensor,
+      GeoTransform,
+      GeoViewpoint,
+   ],
+   abstractNodes:
+   [
+      X3DGeospatialObject,
+   ],
 });
 
 export default undefined;

@@ -52,11 +52,24 @@ function X3DMetadataObject (executionContext)
    this .addType (X3DConstants .X3DMetadataObject);
 }
 
-X3DMetadataObject .prototype =
+Object .assign (X3DMetadataObject .prototype,
 {
-   constructor: X3DMetadataObject,
-   initialize: function () { },
-   dispose: function () { },
-};
+   initialize () { },
+   dispose () { },
+});
+
+Object .defineProperties (X3DMetadataObject,
+{
+   typeName:
+   {
+      value: "X3DMetadataObject",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Core",
+      enumerable: true,
+   },
+});
 
 export default X3DMetadataObject;

@@ -45,35 +45,30 @@
  *
  ******************************************************************************/
 
-export default class Algorithm
+const Algorithm =
 {
-   static radians (value)
+   radians (value)
    {
       return value * (Math .PI / 180);
-   }
-
-   static degrees (value)
+   },
+   degrees (value)
    {
       return value * (180 / Math .PI);
-   }
-
-   static random (min, max)
+   },
+   random (min, max)
    {
       return min + Math .random () * (max - min);
-   }
-
-   static fract (value)
+   },
+   fract (value)
    {
       return value % 1;
-   }
-
-   static clamp (value, min, max)
+   },
+   clamp (value, min, max)
    {
       // https://registry.khronos.org/OpenGL-Refpages/gl4/html/clamp.xhtml
       return Math .min (Math .max (value, min), max);
-   }
-
-   static interval (value, low, high)
+   },
+   interval (value, low, high)
    {
       if (value >= high)
          return ((value - low) % (high - low)) + low;
@@ -82,14 +77,12 @@ export default class Algorithm
          return ((value - high) % (high - low)) + high;
 
       return value;
-   }
-
-   static lerp (source, destination, t)
+   },
+   lerp (source, destination, t)
    {
       return source + t * (destination - source);
-   }
-
-   static slerp (source, destination, t)
+   },
+   slerp (source, destination, t)
    {
       let cosom = source .dot (destination);
 
@@ -117,9 +110,8 @@ export default class Algorithm
       source .w = source .w * scale0 + destination .w * scale1;
 
       return source;
-   }
-
-   static simpleSlerp (source, destination, t)
+   },
+   simpleSlerp (source, destination, t)
    {
       const cosom = source .dot (destination);
 
@@ -140,36 +132,31 @@ export default class Algorithm
       source .w = source .w * scale0 + destination .w * scale1;
 
       return source;
-   }
-
-   static isPowerOfTwo (n)
+   },
+   isPowerOfTwo (n)
    {
       return ((n - 1) & n) === 0;
-   }
-
-   static nextPowerOfTwo (n)
+   },
+   nextPowerOfTwo (n)
    {
       ///  Returns the next power of two of @a n. If n is a power of two, n is returned.
 
-      if (this .isPowerOfTwo (n))
+      if (Algorithm .isPowerOfTwo (n))
          return n;
 
       return 1 << (32 - Math .clz32 (n));
-   }
-
-   static bitCount (n)
+   },
+   bitCount (n)
    {
       n = n - ((n >>> 1) & 0x55555555);
       n = (n & 0x33333333) + ((n >>> 2) & 0x33333333);
       return ((n + (n >>> 4) & 0xF0F0F0F) * 0x1010101) >>> 24;
-   }
-
-   static cmp (lhs, rhs)
+   },
+   cmp (lhs, rhs)
    {
       return lhs > rhs ? 1 : lhs < rhs ? -1 : 0;
-   }
-
-   // static lexicographicallyCompare (lhs, rhs)
+   },
+   // lexicographicallyCompare (lhs, rhs)
    // {
    //    const
    //       length1 = lhs .length,
@@ -185,19 +172,16 @@ export default class Algorithm
    //    }
 
    //    return Algorithm .cmp (length1, length2);
-   // }
-
-   static less (lhs, rhs)
+   // },
+   less (lhs, rhs)
    {
       return lhs < rhs;
-   }
-
-   static greater (lhs, rhs)
+   },
+   greater (lhs, rhs)
    {
       return lhs > rhs;
-   }
-
-   static lowerBound (array, first, last, value, comp = this.less)
+   },
+   lowerBound (array, first, last, value, comp = Algorithm.less)
    {
       // https://en.cppreference.com/w/cpp/algorithm/lower_bound
 
@@ -221,9 +205,8 @@ export default class Algorithm
       }
 
       return first;
-   }
-
-   static upperBound (array, first, last, value, comp = this.less)
+   },
+   upperBound (array, first, last, value, comp = Algorithm.less)
    {
       // sen.cppreference.com/w/cpp/algorithm/upper_bound
 
@@ -248,5 +231,7 @@ export default class Algorithm
       }
 
       return first;
-   }
-}
+   },
+};
+
+export default Algorithm;

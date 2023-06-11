@@ -61,30 +61,8 @@ function ForcePhysicsModel (executionContext)
    this ._force .setUnit ("force");
 }
 
-ForcePhysicsModel .prototype = Object .assign (Object .create (X3DParticlePhysicsModelNode .prototype),
+Object .assign (Object .setPrototypeOf (ForcePhysicsModel .prototype, X3DParticlePhysicsModelNode .prototype),
 {
-   constructor: ForcePhysicsModel,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",  new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "force",    new Fields .SFVec3f (0, -9.8, 0)),
-   ]),
-   getTypeName: function ()
-   {
-      return "ForcePhysicsModel";
-   },
-   getComponentName: function ()
-   {
-      return "ParticleSystems";
-   },
-   getContainerField: function ()
-   {
-      return "physics";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
    addForce: (function ()
    {
       const force = new Vector3 (0, 0, 0);
@@ -104,6 +82,39 @@ ForcePhysicsModel .prototype = Object .assign (Object .create (X3DParticlePhysic
          }
      };
    })(),
+});
+
+Object .defineProperties (ForcePhysicsModel,
+{
+   typeName:
+   {
+      value: "ForcePhysicsModel",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "ParticleSystems",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "physics",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",  new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "force",    new Fields .SFVec3f (0, -9.8, 0)),
+      ]),
+      enumerable: true,
+   },
 });
 
 export default ForcePhysicsModel;

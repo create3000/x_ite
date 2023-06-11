@@ -59,19 +59,18 @@ function X3DRoutingContext ()
    this [_taintedNodesTemp]  = [ ];
 }
 
-X3DRoutingContext .prototype =
+Object .assign (X3DRoutingContext .prototype,
 {
-   constructor: X3DRoutingContext,
-   initialize: function () { },
-   addTaintedField: function (field, event)
+   initialize () { },
+   addTaintedField (field, event)
    {
       this [_taintedFields] .push (field, event);
    },
-   addTaintedNode: function (node)
+   addTaintedNode (node)
    {
       this [_taintedNodes] .push (node);
    },
-   [Symbol .for ("X_ITE.X3DRoutingContext.processEvents")]: function ()
+   [Symbol .for ("X_ITE.X3DRoutingContext.processEvents")] ()
    {
       do
       {
@@ -102,7 +101,7 @@ X3DRoutingContext .prototype =
             this [_taintedNodes] .length = 0;
 
             for (const taintedNode of taintedNodes)
-               taintedNode .processEvents ();
+               taintedNode .processEvent ();
 
             // Don't know why this must be done after the for loop, otherwise a fatal error could be thrown.
             this [_taintedNodesTemp] = taintedNodes;
@@ -111,7 +110,7 @@ X3DRoutingContext .prototype =
       }
       while (this [_taintedFields] .length);
    },
-   dispose: function () { },
-};
+   dispose () { },
+});
 
 export default X3DRoutingContext;

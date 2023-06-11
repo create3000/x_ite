@@ -107,42 +107,42 @@ function X3DKeyDeviceSensorContext ()
    this [_keyDeviceSensorNodes] = new Set ();
 }
 
-X3DKeyDeviceSensorContext .prototype =
+Object .assign (X3DKeyDeviceSensorContext .prototype,
 {
-   initialize: function ()
+   initialize ()
    {
       const element = this .getElement ();
 
       element .on ("keydown.X3DKeyDeviceSensorContext", this [_keydown] .bind (this));
       element .on ("keyup.X3DKeyDeviceSensorContext",   this [_keyup]   .bind (this));
    },
-   addKeyDeviceSensorNode: function (keyDeviceSensorNode)
+   addKeyDeviceSensorNode (keyDeviceSensorNode)
    {
       this [_keyDeviceSensorNodes] .add (keyDeviceSensorNode);
    },
-   removeKeyDeviceSensorNode: function (keyDeviceSensorNode)
+   removeKeyDeviceSensorNode (keyDeviceSensorNode)
    {
       this [_keyDeviceSensorNodes] .delete (keyDeviceSensorNode);
    },
-   getKeyDeviceSensorNodes: function ()
+   getKeyDeviceSensorNodes ()
    {
       return this [_keyDeviceSensorNodes];
    },
-   [_keydown]: function (event)
+   [_keydown] (event)
    {
       //console .log (event .keyCode);
 
       for (const keyDeviceSensorNode of this [_keyDeviceSensorNodes])
          keyDeviceSensorNode .keydown (event);
    },
-   [_keyup]: function (event)
+   [_keyup] (event)
    {
       //console .log (event .which);
 
       for (const keyDeviceSensorNode of this [_keyDeviceSensorNodes])
          keyDeviceSensorNode .keyup (event);
    },
-};
+});
 
 const __default__ = X3DKeyDeviceSensorContext;
 ;
@@ -219,18 +219,17 @@ function X3DKeyDeviceSensorNode (executionContext)
    this .addType ((X3DConstants_default()).X3DKeyDeviceSensorNode);
 }
 
-X3DKeyDeviceSensorNode .prototype = Object .assign (Object .create ((X3DSensorNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (X3DKeyDeviceSensorNode .prototype, (X3DSensorNode_default()).prototype),
 {
-   constructor: X3DKeyDeviceSensorNode,
-   initialize: function ()
+   initialize ()
    {
-      X3DSensorNode_default().prototype.initialize.call (this);
+      X3DSensorNode_default().prototype .initialize .call (this);
 
       this .getLive () .addInterest ("set_live__", this);
 
       this .set_live__ ();
    },
-   set_live__: function ()
+   set_live__ ()
    {
       if (this .getLive () .getValue ())
       {
@@ -246,26 +245,40 @@ X3DKeyDeviceSensorNode .prototype = Object .assign (Object .create ((X3DSensorNo
          this .disable ();
       }
    },
-   set_enabled__: function ()
+   set_enabled__ ()
    {
       if (this ._enabled .getValue ())
          this .enable ();
       else
          this .disable ();
    },
-   enable: function ()
+   enable ()
    {
       this .getBrowser () .addKeyDeviceSensorNode (this);
    },
-   disable: function ()
+   disable ()
    {
       this .getBrowser () .removeKeyDeviceSensorNode (this);
 
       this .release ();
    },
-   keydown: function () { },
-   keyup: function () { },
-   release: function () { },
+   keydown () { },
+   keyup () { },
+   release () { },
+});
+
+Object .defineProperties (X3DKeyDeviceSensorNode,
+{
+   typeName:
+   {
+      value: "X3DKeyDeviceSensorNode",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "KeyDeviceSensor",
+      enumerable: true,
+   },
 });
 
 const X3DKeyDeviceSensorNode_default_ = X3DKeyDeviceSensorNode;
@@ -352,43 +365,14 @@ var
 
 function KeySensor (executionContext)
 {
-   KeyDeviceSensor_X3DKeyDeviceSensorNode.call (this, executionContext);
+   KeyDeviceSensor_X3DKeyDeviceSensorNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).KeySensor);
 }
 
-KeySensor .prototype = Object .assign (Object .create (KeyDeviceSensor_X3DKeyDeviceSensorNode.prototype),
+Object .assign (Object .setPrototypeOf (KeySensor .prototype, KeyDeviceSensor_X3DKeyDeviceSensorNode .prototype),
 {
-   constructor: KeySensor,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",         new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "enabled",          new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "controlKey",       new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "shiftKey",         new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "altKey",           new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "actionKeyPress",   new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "actionKeyRelease", new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "keyPress",         new (Fields_default()).SFString ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "keyRelease",       new (Fields_default()).SFString ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "isActive",         new (Fields_default()).SFBool ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "KeySensor";
-   },
-   getComponentName: function ()
-   {
-      return "KeyDeviceSensor";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   keydown: function (event)
+   keydown (event)
    {
       event .preventDefault ();
 
@@ -505,7 +489,7 @@ KeySensor .prototype = Object .assign (Object .create (KeyDeviceSensor_X3DKeyDev
          }
       }
    },
-   keyup: function (event)
+   keyup (event)
    {
       event .preventDefault ();
 
@@ -628,7 +612,7 @@ KeySensor .prototype = Object .assign (Object .create (KeyDeviceSensor_X3DKeyDev
       if (this ._isActive .getValue ())
          this ._isActive = false;
    },
-   release: function ()
+   release ()
    {
       if (this ._shiftKey .getValue ())
          this ._shiftKey = false;
@@ -638,6 +622,46 @@ KeySensor .prototype = Object .assign (Object .create (KeyDeviceSensor_X3DKeyDev
 
       if (this ._altKey .getValue ())
          this ._altKey = false;
+   },
+});
+
+Object .defineProperties (KeySensor,
+{
+   typeName:
+   {
+      value: "KeySensor",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "KeyDeviceSensor",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",         new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "enabled",          new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "controlKey",       new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "shiftKey",         new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "altKey",           new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "actionKeyPress",   new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "actionKeyRelease", new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "keyPress",         new (Fields_default()).SFString ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "keyRelease",       new (Fields_default()).SFString ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "isActive",         new (Fields_default()).SFBool ()),
+      ]),
+      enumerable: true,
    },
 });
 
@@ -702,39 +726,14 @@ Namespace_default().set ("x_ite/Components/KeyDeviceSensor/KeySensor", KeySensor
 
 function StringSensor (executionContext)
 {
-   KeyDeviceSensor_X3DKeyDeviceSensorNode.call (this, executionContext);
+   KeyDeviceSensor_X3DKeyDeviceSensorNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).StringSensor);
 }
 
-StringSensor .prototype = Object .assign (Object .create (KeyDeviceSensor_X3DKeyDeviceSensorNode.prototype),
+Object .assign (Object .setPrototypeOf (StringSensor .prototype, KeyDeviceSensor_X3DKeyDeviceSensorNode .prototype),
 {
-   constructor: StringSensor,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",        new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "enabled",         new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "deletionAllowed", new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "enteredText",     new (Fields_default()).SFString ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "finalText",       new (Fields_default()).SFString ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "isActive",        new (Fields_default()).SFBool ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "StringSensor";
-   },
-   getComponentName: function ()
-   {
-      return "KeyDeviceSensor";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   keydown: function (event)
+   keydown (event)
    {
       event .preventDefault ();
 
@@ -799,6 +798,42 @@ StringSensor .prototype = Object .assign (Object .create (KeyDeviceSensor_X3DKey
    },
 });
 
+Object .defineProperties (StringSensor,
+{
+   typeName:
+   {
+      value: "StringSensor",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "KeyDeviceSensor",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",        new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "enabled",         new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "deletionAllowed", new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "enteredText",     new (Fields_default()).SFString ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "finalText",       new (Fields_default()).SFString ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "isActive",        new (Fields_default()).SFBool ()),
+      ]),
+      enumerable: true,
+   },
+});
+
 const StringSensor_default_ = StringSensor;
 ;
 
@@ -858,17 +893,17 @@ Namespace_default().set ("x_ite/Components/KeyDeviceSensor/StringSensor", String
 
 
 
-Components_default().addComponent ({
+Components_default().add ({
    name: "KeyDeviceSensor",
-   types:
-   {
-      KeySensor:    KeyDeviceSensor_KeySensor,
-      StringSensor: KeyDeviceSensor_StringSensor,
-   },
-   abstractTypes:
-   {
-      X3DKeyDeviceSensorNode: KeyDeviceSensor_X3DKeyDeviceSensorNode,
-   },
+   concreteNodes:
+   [
+      KeyDeviceSensor_KeySensor,
+      KeyDeviceSensor_StringSensor,
+   ],
+   abstractNodes:
+   [
+      KeyDeviceSensor_X3DKeyDeviceSensorNode,
+   ],
    browserContext: KeyDeviceSensor_X3DKeyDeviceSensorContext,
 });
 

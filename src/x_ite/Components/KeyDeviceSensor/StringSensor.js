@@ -58,34 +58,9 @@ function StringSensor (executionContext)
    this .addType (X3DConstants .StringSensor);
 }
 
-StringSensor .prototype = Object .assign (Object .create (X3DKeyDeviceSensorNode .prototype),
+Object .assign (Object .setPrototypeOf (StringSensor .prototype, X3DKeyDeviceSensorNode .prototype),
 {
-   constructor: StringSensor,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",        new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",         new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "deletionAllowed", new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "enteredText",     new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "finalText",       new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",        new Fields .SFBool ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "StringSensor";
-   },
-   getComponentName: function ()
-   {
-      return "KeyDeviceSensor";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   keydown: function (event)
+   keydown (event)
    {
       event .preventDefault ();
 
@@ -147,6 +122,42 @@ StringSensor .prototype = Object .assign (Object .create (X3DKeyDeviceSensorNode
             break;
          }
       }
+   },
+});
+
+Object .defineProperties (StringSensor,
+{
+   typeName:
+   {
+      value: "StringSensor",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "KeyDeviceSensor",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",        new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",         new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "deletionAllowed", new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "enteredText",     new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "finalText",       new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",        new Fields .SFBool ()),
+      ]),
+      enumerable: true,
    },
 });
 

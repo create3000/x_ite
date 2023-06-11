@@ -56,10 +56,9 @@ function X3DSingleTextureNode (executionContext)
    this .addType (X3DConstants .X3DSingleTextureNode);
 }
 
-X3DSingleTextureNode .prototype = Object .assign (Object .create (X3DTextureNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, X3DTextureNode .prototype),
 {
-   constructor: X3DSingleTextureNode,
-   initialize: function ()
+   initialize ()
    {
       X3DTextureNode .prototype .initialize .call (this);
 
@@ -71,7 +70,7 @@ X3DSingleTextureNode .prototype = Object .assign (Object .create (X3DTextureNode
 
       this .set_textureProperties__ (false);
    },
-   set_textureProperties__: function (update)
+   set_textureProperties__ (update)
    {
       if (this .texturePropertiesNode)
          this .texturePropertiesNode .removeInterest ("updateTextureParameters", this);
@@ -86,11 +85,11 @@ X3DSingleTextureNode .prototype = Object .assign (Object .create (X3DTextureNode
       if (update)
          this .updateTextureParameters ();
    },
-   getCount: function ()
+   getCount ()
    {
       return 1;
    },
-   getTexture: function ()
+   getTexture ()
    {
       return this .texture;
    },
@@ -157,7 +156,7 @@ X3DSingleTextureNode .prototype = Object .assign (Object .create (X3DTextureNode
          }
       };
    })(),
-   updateTextureBits: function (textureBits, channel = 0)
+   updateTextureBits (textureBits, channel = 0)
    {
       const textureType = this .getTextureType () - 1;
 
@@ -174,9 +173,23 @@ X3DSingleTextureNode .prototype = Object .assign (Object .create (X3DTextureNode
 
       return function (options, channel = 0)
       {
-         options .push ("X3D_TEXTURE" + channel + "_" + textureTypes [this .getTextureType ()]);
+         options .push (`X3D_TEXTURE${channel}_${textureTypes [this .getTextureType ()]}`);
       };
    })(),
+});
+
+Object .defineProperties (X3DSingleTextureNode,
+{
+   typeName:
+   {
+      value: "X3DSingleTextureNode",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Texturing",
+      enumerable: true,
+   },
 });
 
 export default X3DSingleTextureNode;

@@ -58,44 +58,20 @@ function EaseInEaseOut (executionContext)
    this .addType (X3DConstants .EaseInEaseOut);
 }
 
-EaseInEaseOut .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
+Object .assign (Object .setPrototypeOf (EaseInEaseOut .prototype, X3DInterpolatorNode .prototype),
 {
-   constructor: EaseInEaseOut,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",                 new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",             new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "key",                      new Fields .MFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "easeInEaseOut",            new Fields .MFVec2f ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "modifiedFraction_changed", new Fields .SFFloat ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "EaseInEaseOut";
-   },
-   getComponentName: function ()
-   {
-      return "Interpolation";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DInterpolatorNode .prototype .initialize .call (this);
 
       this ._easeInEaseOut .addInterest ("set_keyValue__", this);
    },
-   set_keyValue__: function ()
+   set_keyValue__ ()
    {
       if (this ._easeInEaseOut .length < this ._key .length)
          this ._easeInEaseOut .resize (this ._key .length, this ._easeInEaseOut .length ? this ._easeInEaseOut [this ._easeInEaseOut .length - 1] : new Fields .SFVec2f ());
    },
-   interpolate: function (index0, index1, weight)
+   interpolate (index0, index1, weight)
    {
       let
          easeOut = this ._easeInEaseOut [index0] .y,
@@ -132,6 +108,41 @@ EaseInEaseOut .prototype = Object .assign (Object .create (X3DInterpolatorNode .
             this ._modifiedFraction_changed = 1 - ((t * w * w) / easeIn);
          }
       }
+   },
+});
+
+Object .defineProperties (EaseInEaseOut,
+{
+   typeName:
+   {
+      value: "EaseInEaseOut",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Interpolation",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",                 new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",             new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "key",                      new Fields .MFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "easeInEaseOut",            new Fields .MFVec2f ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "modifiedFraction_changed", new Fields .SFFloat ()),
+      ]),
+      enumerable: true,
    },
 });
 

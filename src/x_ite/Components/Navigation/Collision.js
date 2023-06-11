@@ -65,41 +65,10 @@ function Collision (executionContext)
       this .addAlias ("collide", this ._enabled); // VRML2
 }
 
-Collision .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
+Object .assign (Object .setPrototypeOf (Collision .prototype, X3DGroupingNode .prototype),
    X3DSensorNode .prototype,
 {
-   constructor: Collision,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",       new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",        new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",       new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,     "collideTime",    new Fields .SFTime ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",        new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",    new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",       new Fields .SFVec3f (-1, -1, -1)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",     new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "proxy",          new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",    new Fields .MFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,      "removeChildren", new Fields .MFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "children",       new Fields .MFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "Collision";
-   },
-   getComponentName: function ()
-   {
-      return "Navigation";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DGroupingNode .prototype .initialize .call (this);
       // X3DSensorNode .prototype .initialize .call (this); // We can only call the base of a *Objects.
@@ -111,7 +80,7 @@ Collision .prototype = Object .assign (Object .create (X3DGroupingNode .prototyp
       this .set_live__ ();
       this .set_proxy__ ();
    },
-   set_live__: function ()
+   set_live__ ()
    {
       if (this .getLive () .getValue () && this ._enabled .getValue ())
          this .getBrowser () .addCollision (this);
@@ -119,7 +88,7 @@ Collision .prototype = Object .assign (Object .create (X3DGroupingNode .prototyp
       else
          this .getBrowser () .removeCollision (this);
    },
-   set_active: function (value)
+   set_active (value)
    {
       if (this ._isActive .getValue () !== value)
       {
@@ -129,11 +98,11 @@ Collision .prototype = Object .assign (Object .create (X3DGroupingNode .prototyp
             this ._collideTime = this .getBrowser () .getCurrentTime ();
       }
    },
-   set_proxy__: function ()
+   set_proxy__ ()
    {
       this .proxyNode = X3DCast (X3DConstants .X3DChildNode, this ._proxy);
    },
-   traverse: function (type, renderObject)
+   traverse (type, renderObject)
    {
       switch (type)
       {
@@ -163,10 +132,52 @@ Collision .prototype = Object .assign (Object .create (X3DGroupingNode .prototyp
          }
       }
    },
-   dispose: function ()
+   dispose ()
    {
       // X3DSensorNode .prototype .dispose .call (this); // We can only call the base of a *Objects.
       X3DGroupingNode .prototype .dispose .call (this);
+   },
+});
+
+Object .defineProperties (Collision,
+{
+   typeName:
+   {
+      value: "Collision",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Navigation",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",       new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",        new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",       new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "collideTime",    new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",        new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",    new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",       new Fields .SFVec3f (-1, -1, -1)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",     new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "proxy",          new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",    new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "removeChildren", new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "children",       new Fields .MFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 

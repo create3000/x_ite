@@ -65,15 +65,14 @@ function Matrix4 ()
    }
 }
 
-Matrix4 .prototype =
+Object .assign (Matrix4 .prototype,
 {
-   constructor: Matrix4,
-   [Symbol .iterator]: function* ()
+   *[Symbol .iterator] ()
    {
       for (let i = 0; i < 16; ++ i)
          yield this [i];
    },
-   copy: function ()
+   copy ()
    {
       const copy = Object .create (Matrix4 .prototype);
 
@@ -82,14 +81,14 @@ Matrix4 .prototype =
 
       return copy;
    },
-   assign: function (matrix)
+   assign (matrix)
    {
       for (let i = 0; i < 16; ++ i)
          this [i] = matrix [i];
 
       return this;
    },
-   equals: function (matrix)
+   equals (matrix)
    {
       return this [ 0] === matrix [ 0] &&
              this [ 1] === matrix [ 1] &&
@@ -108,13 +107,13 @@ Matrix4 .prototype =
              this [14] === matrix [14] &&
              this [15] === matrix [15];
    },
-   set1: function (r, c, value)
+   set1 (r, c, value)
    {
       this [r * this .order + c] = value;
 
       return this;
    },
-   get1: function (r, c)
+   get1 (r, c)
    {
       return this [r * this .order + c];
    },
@@ -306,11 +305,11 @@ Matrix4 .prototype =
          }
       };
    })(),
-   setRotation: function (rotation)
+   setRotation (rotation)
    {
       return this .setQuaternion (rotation .getQuaternion (q));
    },
-   setQuaternion: function (quaternion)
+   setQuaternion (quaternion)
    {
       const
          { x, y, z, w } = quaternion,
@@ -388,7 +387,7 @@ Matrix4 .prototype =
          rotation .assign (u .assign (scaleOrientation) .transpose () .multRight (si) .multRight (scaleOrientation) .multRight (a));
       };
    })(),
-   determinant3: function ()
+   determinant3 ()
    {
       const
          m00 = this [0], m01 = this [1], m02 = this [ 2],
@@ -399,7 +398,7 @@ Matrix4 .prototype =
              m01 * (m04 * m10 - m06 * m08) +
              m02 * (m04 * m09 - m05 * m08);
    },
-   determinant: function ()
+   determinant ()
    {
       const
          { 0: m00, 1: m01, 2: m02, 3: m03, 4: m04, 5: m05, 6: m06, 7: m07,
@@ -423,7 +422,7 @@ Matrix4 .prototype =
 
       return m00 * H + m04 * I + m08 * J + m12 * K;
    },
-   transpose: function ()
+   transpose ()
    {
       let tmp;
 
@@ -436,7 +435,7 @@ Matrix4 .prototype =
 
       return this;
    },
-   inverse: function ()
+   inverse ()
    {
       const
          { 0: m00, 1: m01, 2: m02, 3: m03, 4: m04, 5: m05, 6: m06, 7: m07,
@@ -495,7 +494,7 @@ Matrix4 .prototype =
 
       return this;
    },
-   multLeft: function (matrix)
+   multLeft (matrix)
    {
       const
          { 0: a00, 1: a01, 2: a02, 3: a03, 4: a04, 5: a05, 6: a06, 7: a07,
@@ -522,7 +521,7 @@ Matrix4 .prototype =
 
       return this;
    },
-   multRight: function (matrix)
+   multRight (matrix)
    {
       const
          { 0: a00, 1: a01, 2: a02, 3: a03, 4: a04, 5: a05, 6: a06, 7: a07,
@@ -549,7 +548,7 @@ Matrix4 .prototype =
 
       return this;
    },
-   multVecMatrix: function (vector)
+   multVecMatrix (vector)
    {
       if (vector .length === 3)
       {
@@ -575,7 +574,7 @@ Matrix4 .prototype =
          return vector;
       }
    },
-   multMatrixVec: function (vector)
+   multMatrixVec (vector)
    {
       if (vector .length === 3)
       {
@@ -601,7 +600,7 @@ Matrix4 .prototype =
          return vector;
       }
    },
-   multDirMatrix: function (vector)
+   multDirMatrix (vector)
    {
       const { x, y, z } = vector;
 
@@ -611,7 +610,7 @@ Matrix4 .prototype =
 
       return vector;
    },
-   multMatrixDir: function (vector)
+   multMatrixDir (vector)
    {
       const { x, y, z } = vector;
 
@@ -621,7 +620,7 @@ Matrix4 .prototype =
 
       return vector;
    },
-   identity: function ()
+   identity ()
    {
       this [ 0] = 1; this [ 1] = 0; this [ 2] = 0; this [ 3] = 0;
       this [ 4] = 0; this [ 5] = 1; this [ 6] = 0; this [ 7] = 0;
@@ -630,7 +629,7 @@ Matrix4 .prototype =
 
       return this;
    },
-   translate: function (translation)
+   translate (translation)
    {
       const { x, y, z } = translation;
 
@@ -640,11 +639,11 @@ Matrix4 .prototype =
 
       return this;
    },
-   rotate: function (rotation)
+   rotate (rotation)
    {
       return this .multLeft (m .setQuaternion (rotation .getQuaternion (q)));
    },
-   scale: function (scale)
+   scale (scale)
    {
       const { x, y, z } = scale;
 
@@ -662,11 +661,11 @@ Matrix4 .prototype =
 
       return this;
    },
-   toString: function ()
+   toString ()
    {
       return Array .prototype .join .call (this, " ");
    },
-};
+});
 
 Object .defineProperties (Matrix4 .prototype,
 {
@@ -764,22 +763,22 @@ Object .defineProperties (Matrix4 .prototype,
 Object .assign (Matrix4,
 {
    Identity: new Matrix4 (),
-   Rotation: function (rotation)
+   Rotation (rotation)
    {
       return Object .create (this .prototype) .setQuaternion (rotation .getQuaternion (q));
    },
-   Quaternion: function (quaternion)
+   Quaternion (quaternion)
    {
       return Object .create (this .prototype) .setQuaternion (quaternion);
    },
-   Matrix3: function (matrix)
+   Matrix3 (matrix)
    {
       return new Matrix4 (matrix [0], matrix [1], 0, 0,
                           matrix [3], matrix [4], 0, 0,
                           0, 0, 1, 0,
                           matrix [6], matrix [7], 0, 1);
    },
-   SubMatrix: function (matrix)
+   SubMatrix (matrix)
    {
       return new Matrix4 (matrix [0], matrix [1], matrix [2], 0,
                           matrix [3], matrix [4], matrix [5], 0,

@@ -85,46 +85,45 @@ function X3DTextGeometry (text, fontStyle)
    this .bbox           = new Box3 ();
 }
 
-X3DTextGeometry .prototype =
+Object .assign (X3DTextGeometry .prototype,
 {
-   constructor: X3DTextGeometry,
-   getBrowser: function ()
+   getBrowser ()
    {
       return this .browser;
    },
-   getText: function ()
+   getText ()
    {
       return this .text;
    },
-   getFontStyle: function ()
+   getFontStyle ()
    {
       return this .fontStyle;
    },
-   getGlyphs: function ()
+   getGlyphs ()
    {
       return this .glyphs;
    },
-   getMinorAlignment: function ()
+   getMinorAlignment ()
    {
       return this .minorAlignment;
    },
-   getTranslations: function ()
+   getTranslations ()
    {
       return this .translations;
    },
-   getCharSpacings: function ()
+   getCharSpacings ()
    {
       return this .charSpacings;
    },
-   getBearing: function ()
+   getBearing ()
    {
       return this .bearing;
    },
-   getBBox: function ()
+   getBBox ()
    {
       return this .bbox;
    },
-   update: function ()
+   update ()
    {
       var
          text      = this .text,
@@ -165,7 +164,7 @@ X3DTextGeometry .prototype =
          this .vertical (text, fontStyle);
       }
    },
-   resizeArray: function (array, size)
+   resizeArray (array, size)
    {
       // Resize array in grow only fashion.
 
@@ -174,7 +173,7 @@ X3DTextGeometry .prototype =
 
       array .length = size;
    },
-   horizontal: function (text, fontStyle)
+   horizontal (text, fontStyle)
    {
       var
          font        = fontStyle .getFont (),
@@ -299,7 +298,7 @@ X3DTextGeometry .prototype =
       this .bbox .setExtents (min3 .set (min .x, min .y, 0),
                               max3 .set (max .x, max .y, 0));
    },
-   vertical: function (text, fontStyle)
+   vertical (text, fontStyle)
    {
       var
          font             = fontStyle .getFont (),
@@ -539,7 +538,7 @@ X3DTextGeometry .prototype =
       this .bbox .setExtents (min3 .set (min .x, min .y, 0),
                               max3 .set (max .x, max .y, 0));
    },
-   stringToGlyphs: function (font, line, normal, lineNumber)
+   stringToGlyphs (font, line, normal, lineNumber)
    {
       var glypes = this .glyphs [lineNumber];
 
@@ -558,7 +557,7 @@ X3DTextGeometry .prototype =
 
       return glypes;
    },
-   getHorizontalLineExtents: function (fontStyle, line, min, max, lineNumber)
+   getHorizontalLineExtents (fontStyle, line, min, max, lineNumber)
    {
       var
          font             = fontStyle .getFont (),
@@ -608,8 +607,8 @@ X3DTextGeometry .prototype =
 
       return glyphs;
    },
-   traverse: function (type, renderObject)
+   traverse (type, renderObject)
    { },
-};
+});
 
 export default X3DTextGeometry;

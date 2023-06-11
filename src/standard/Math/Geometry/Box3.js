@@ -57,29 +57,28 @@ function Box3 (/* size, center */)
    this .set (... arguments);
 }
 
-Box3 .prototype =
+Object .assign (Box3 .prototype,
 {
-   constructor: Box3,
-   copy: function ()
+   copy ()
    {
       const copy = Object .create (Box3 .prototype);
       copy .matrix = this .matrix .copy ();
       return copy;
    },
-   assign: function (box)
+   assign (box)
    {
       this .matrix .assign (box .matrix);
       return this;
    },
-   equals: function (box)
+   equals (box)
    {
       return this .matrix .equals (box .matrix);
    },
-   getMatrix: function ()
+   getMatrix ()
    {
       return this .matrix;
    },
-   set: function (size, center)
+   set (size, center)
    {
       switch (arguments .length)
       {
@@ -108,7 +107,7 @@ Box3 .prototype =
          // }
       }
    },
-   setExtents: function (min, max)
+   setExtents (min, max)
    {
       const
          sx = (max .x - min .x) / 2,
@@ -125,7 +124,7 @@ Box3 .prototype =
 
       return this;
    },
-   getExtents: function (min, max)
+   getExtents (min, max)
    {
       this .getAbsoluteExtents (min, max);
 
@@ -227,7 +226,7 @@ Box3 .prototype =
          return points;
       };
    })(),
-   getAxes: function (axes)
+   getAxes (axes)
    {
       const m = this .matrix;
 
@@ -351,7 +350,7 @@ Box3 .prototype =
          return normals;
       };
    })(),
-   isEmpty: function ()
+   isEmpty ()
    {
       return this .matrix [15] === 0;
    },
@@ -377,12 +376,12 @@ Box3 .prototype =
          return this .setExtents (lhs_min .min (rhs_min), lhs_max .max (rhs_max));
       };
    })(),
-   multLeft: function (matrix)
+   multLeft (matrix)
    {
       this .matrix .multLeft (matrix);
       return this;
    },
-   multRight: function (matrix)
+   multRight (matrix)
    {
       this .matrix .multRight (matrix);
       return this;
@@ -606,19 +605,19 @@ Box3 .prototype =
          return true;
       };
    })(),
-   toString: function ()
+   toString ()
    {
-      return this .size + ", " + this .center;
+      return `${this .size}, ${this .center}`;
    },
-};
+});
 
 Object .assign (Box3,
 {
-   Extents: function (min, max)
+   Extents (min, max)
    {
       return new Box3 () .setExtents (min, max);
    },
-   Points: function (... points)
+   Points (... points)
    {
       return new Box3 () .setExtents (points [0] .copy () .min (... points), points [0] .copy () .max (... points));
    },
@@ -645,7 +644,7 @@ Object .defineProperties (Box3 .prototype,
    },
    center:
    {
-      get: function ()
+      get ()
       {
          return this .matrix .origin;
       },

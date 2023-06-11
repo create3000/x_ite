@@ -63,10 +63,9 @@ function GoldenGate (scene)
    this .inputs = new Map ();
 }
 
-GoldenGate .prototype = Object .assign (Object .create (X3DParser .prototype),
+Object .assign (Object .setPrototypeOf (GoldenGate .prototype, X3DParser .prototype),
 {
-   constructor: GoldenGate,
-   parseIntoScene: function (x3dSyntax, success, error)
+   parseIntoScene (x3dSyntax, resolve, reject)
    {
       for (const Parser of GoldenGate .Parser)
       {
@@ -85,16 +84,15 @@ GoldenGate .prototype = Object .assign (Object .create (X3DParser .prototype),
                continue;
 
             parser .pushExecutionContext (this .getExecutionContext ());
-            parser .parseIntoScene (success, error);
-            parser .popExecutionContext ();
+            parser .parseIntoScene (resolve, reject);
             return;
          }
-         catch (exception)
+         catch (error)
          {
-            if (error)
-               error (exception);
+            if (reject)
+               reject (error);
             else
-               throw exception;
+               throw error;
 
             return;
          }
@@ -103,9 +101,9 @@ GoldenGate .prototype = Object .assign (Object .create (X3DParser .prototype),
       if (this .getScene () .worldURL .startsWith ("data:"))
          throw new Error ("Couldn't parse X3D. No suitable file handler found for 'data:' URL.");
       else
-         throw new Error ("Couldn't parse X3D. No suitable file handler found for '" + this .getScene () .worldURL + "'.");
+         throw new Error (`Couldn't parse X3D. No suitable file handler found for '${this .getScene () .worldURL}'.`);
    },
-   getInput: function (encoding, x3dSyntax)
+   getInput (encoding, x3dSyntax)
    {
       if (this .inputs .has (encoding))
          return this .inputs .get (encoding);
@@ -116,7 +114,7 @@ GoldenGate .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return input;
    },
-   createInput: function (encoding, x3dSyntax)
+   createInput (encoding, x3dSyntax)
    {
       try
       {
@@ -132,7 +130,7 @@ GoldenGate .prototype = Object .assign (Object .create (X3DParser .prototype),
                return x3dSyntax instanceof ArrayBuffer ? x3dSyntax : undefined;
          }
       }
-      catch (error)
+      catch
       {
          return undefined;
       }

@@ -63,36 +63,9 @@ function Layer (executionContext)
    this .addType (X3DConstants .Layer);
 }
 
-Layer .prototype = Object .assign (Object .create (X3DLayerNode .prototype),
+Object .assign (Object .setPrototypeOf (Layer .prototype, X3DLayerNode .prototype),
 {
-   constructor: Layer,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",       new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "pickable",       new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "objectType",     new Fields .MFString ("ALL")),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "visible",        new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "viewport",       new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,   "addChildren",    new Fields .MFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,   "removeChildren", new Fields .MFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "children",       new Fields .MFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "Layer";
-   },
-   getComponentName: function ()
-   {
-      return "Layering";
-   },
-   getContainerField: function ()
-   {
-      return "layers";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DLayerNode .prototype .initialize .call (this);
 
@@ -103,6 +76,44 @@ Layer .prototype = Object .assign (Object .create (X3DLayerNode .prototype),
       this .getGroup () ._children = this ._children;
       this .getGroup () .setPrivate (true);
       this .getGroup () .setup ();
+   },
+});
+
+Object .defineProperties (Layer,
+{
+   typeName:
+   {
+      value: "Layer",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Layering",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "layers",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",       new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "pickable",       new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "objectType",     new Fields .MFString ("ALL")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "visible",        new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "viewport",       new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,   "addChildren",    new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,   "removeChildren", new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "children",       new Fields .MFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 

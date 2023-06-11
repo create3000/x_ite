@@ -57,19 +57,32 @@ function X3DNBodyCollisionSpaceNode (executionContext)
    this .addType (X3DConstants .X3DNBodyCollisionSpaceNode);
 }
 
-X3DNBodyCollisionSpaceNode .prototype = Object .assign (Object .create (X3DNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DNBodyCollisionSpaceNode .prototype, X3DNode .prototype),
    X3DBoundedObject .prototype,
 {
-   constructor: X3DNBodyCollisionSpaceNode,
-   initialize: function ()
+   initialize ()
    {
       X3DNode          .prototype .initialize .call (this);
       X3DBoundedObject .prototype .initialize .call (this);
    },
-   dispose: function ()
+   dispose ()
    {
       X3DBoundedObject .prototype .dispose .call (this);
       X3DNode          .prototype .dispose .call (this);
+   },
+});
+
+Object .defineProperties (X3DNBodyCollisionSpaceNode,
+{
+   typeName:
+   {
+      value: "X3DNBodyCollisionSpaceNode",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "RigidBodyPhysics",
+      enumerable: true,
    },
 });
 

@@ -60,26 +60,26 @@ import WindPhysicsModel            from "../../x_ite/Components/ParticleSystems/
 import X3DParticleEmitterNode      from "../../x_ite/Components/ParticleSystems/X3DParticleEmitterNode.js";
 import X3DParticlePhysicsModelNode from "../../x_ite/Components/ParticleSystems/X3DParticlePhysicsModelNode.js";
 
-Components .addComponent ({
+Components .add ({
    name: "ParticleSystems",
-   types:
-   {
-      BoundedPhysicsModel: BoundedPhysicsModel,
-      ConeEmitter:         ConeEmitter,
-      ExplosionEmitter:    ExplosionEmitter,
-      ForcePhysicsModel:   ForcePhysicsModel,
-      ParticleSystem:      ParticleSystem,
-      PointEmitter:        PointEmitter,
-      PolylineEmitter:     PolylineEmitter,
-      SurfaceEmitter:      SurfaceEmitter,
-      VolumeEmitter:       VolumeEmitter,
-      WindPhysicsModel:    WindPhysicsModel,
-   },
-   abstractTypes:
-   {
-      X3DParticleEmitterNode:      X3DParticleEmitterNode,
-      X3DParticlePhysicsModelNode: X3DParticlePhysicsModelNode,
-   },
+   concreteNodes:
+   [
+      BoundedPhysicsModel,
+      ConeEmitter,
+      ExplosionEmitter,
+      ForcePhysicsModel,
+      ParticleSystem,
+      PointEmitter,
+      PolylineEmitter,
+      SurfaceEmitter,
+      VolumeEmitter,
+      WindPhysicsModel,
+   ],
+   abstractNodes:
+   [
+      X3DParticleEmitterNode,
+      X3DParticlePhysicsModelNode,
+   ],
    browserContext: X3DParticleSystemsContext,
 });
 

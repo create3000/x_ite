@@ -45,57 +45,47 @@
  *
  ******************************************************************************/
 
-import X3DField     from "../Base/X3DField.js";
-import X3DConstants from "../Base/X3DConstants.js";
+import X3DField from "../Base/X3DField.js";
 
 function SFDouble (value)
 {
-   return X3DField .call (this, arguments .length ? +value : 0);
+   X3DField .call (this, arguments .length ? +value : 0);
 }
 
-SFDouble .prototype = Object .assign (Object .create (X3DField .prototype),
+Object .assign (Object .setPrototypeOf (SFDouble .prototype, X3DField .prototype),
 {
-   constructor: SFDouble,
-   copy: function ()
+   copy ()
    {
       return new SFDouble (this .getValue ());
    },
-   getTypeName: function ()
-   {
-      return "SFDouble";
-   },
-   getType: function ()
-   {
-      return X3DConstants .SFDouble;
-   },
-   isDefaultValue: function ()
+   isDefaultValue ()
    {
       return this .getValue () === 0;
    },
-   set: function (value)
+   set (value)
    {
       X3DField .prototype .set .call (this, +value);
    },
    valueOf: X3DField .prototype .getValue,
-   toStream: function (generator)
+   toStream (generator)
    {
       const category = generator .Unit (this .getUnit ());
 
       generator .string += generator .DoubleFormat (generator .ToUnit (category, this .getValue ()));
    },
-   toVRMLStream: function (generator)
+   toVRMLStream (generator)
    {
       this .toStream (generator);
    },
-   toXMLStream: function (generator)
+   toXMLStream (generator)
    {
       this .toStream (generator);
    },
-   toJSONStream: function (generator)
+   toJSONStream (generator)
    {
       this .toJSONStreamValue (generator);
    },
-   toJSONStreamValue: function (generator)
+   toJSONStreamValue (generator)
    {
       const category = generator .Unit (this .getUnit ());
 
@@ -105,5 +95,14 @@ SFDouble .prototype = Object .assign (Object .create (X3DField .prototype),
 
 for (const key of Reflect .ownKeys (SFDouble .prototype))
    Object .defineProperty (SFDouble .prototype, key, { enumerable: false });
+
+Object .defineProperties (SFDouble,
+{
+   typeName:
+   {
+      value: "SFDouble",
+      enumerable: true,
+   },
+});
 
 export default SFDouble;

@@ -60,49 +60,60 @@ function DISEntityTypeMapping (executionContext)
    this .addType (X3DConstants .DISEntityTypeMapping);
 }
 
-DISEntityTypeMapping .prototype = Object .assign (Object .create (X3DInfoNode .prototype),
+Object .assign (Object .setPrototypeOf (DISEntityTypeMapping .prototype, X3DInfoNode .prototype),
    X3DUrlObject .prototype,
 {
-   constructor: DISEntityTypeMapping,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "category",             new Fields .SFInt32 ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "country",              new Fields .SFInt32 ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "domain",               new Fields .SFInt32 ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "extra",                new Fields .SFInt32 ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "kind",                 new Fields .SFInt32 ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "specific",             new Fields .SFInt32 ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "subcategory",          new Fields .SFInt32 ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "DISEntityTypeMapping";
-   },
-   getComponentName: function ()
-   {
-      return "DIS";
-   },
-   getContainerField: function ()
-   {
-      return "mapping";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DInfoNode  .prototype .initialize .call (this);
       X3DUrlObject .prototype .initialize .call (this);
    },
-   dispose: function ()
+   dispose ()
    {
       X3DUrlObject .prototype .dispose .call (this);
       X3DInfoNode  .prototype .dispose .call (this);
+   },
+});
+
+Object .defineProperties (DISEntityTypeMapping,
+{
+   typeName:
+   {
+      value: "DISEntityTypeMapping",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "DIS",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "mapping",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "category",             new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "country",              new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "domain",               new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "extra",                new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "kind",                 new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "specific",             new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "subcategory",          new Fields .SFInt32 ()),
+      ]),
+      enumerable: true,
    },
 });
 

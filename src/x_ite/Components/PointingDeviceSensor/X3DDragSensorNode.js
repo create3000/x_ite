@@ -57,9 +57,20 @@ function X3DDragSensorNode (executionContext)
    this ._trackPoint_changed .setUnit ("length");
 }
 
-X3DDragSensorNode .prototype = Object .assign (Object .create (X3DPointingDeviceSensorNode .prototype),
+Object .setPrototypeOf (X3DDragSensorNode .prototype, X3DPointingDeviceSensorNode .prototype);
+
+Object .defineProperties (X3DDragSensorNode,
 {
-   constructor: X3DDragSensorNode,
+   typeName:
+   {
+      value: "X3DDragSensorNode",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "PointingDeviceSensor",
+      enumerable: true,
+   },
 });
 
 export default X3DDragSensorNode;

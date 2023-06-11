@@ -60,35 +60,9 @@ function PixelTexture3D (executionContext)
    this .addChildObjects ("loadState", new Fields .SFInt32 (X3DConstants .NOT_STARTED_STATE));
 }
 
-PixelTexture3D .prototype = Object .assign (Object .create (X3DTexture3DNode .prototype),
+Object .assign (Object .setPrototypeOf (PixelTexture3D .prototype, X3DTexture3DNode .prototype),
 {
-   constructor: PixelTexture3D,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "description",       new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "image",             new Fields .MFInt32 (0, 0, 0, 0)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatS",           new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatT",           new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatR",           new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties", new Fields .SFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "PixelTexture3D";
-   },
-   getComponentName: function ()
-   {
-      return "Texturing3D";
-   },
-   getContainerField: function ()
-   {
-      return "texture";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.1", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DTexture3DNode .prototype .initialize .call (this);
 
@@ -96,7 +70,7 @@ PixelTexture3D .prototype = Object .assign (Object .create (X3DTexture3DNode .pr
 
       this .set_image__ ();
    },
-   checkLoadState: function ()
+   checkLoadState ()
    {
       return this ._loadState .getValue ();
    },
@@ -205,6 +179,43 @@ PixelTexture3D .prototype = Object .assign (Object .create (X3DTexture3DNode .pr
          this ._loadState = X3DConstants .COMPLETE_STATE;
       };
    })(),
+});
+
+Object .defineProperties (PixelTexture3D,
+{
+   typeName:
+   {
+      value: "PixelTexture3D",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Texturing3D",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "texture",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.1", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "description",       new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "image",             new Fields .MFInt32 (0, 0, 0, 0)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatS",           new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatT",           new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatR",           new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties", new Fields .SFNode ()),
+      ]),
+      enumerable: true,
+   },
 });
 
 export default PixelTexture3D;

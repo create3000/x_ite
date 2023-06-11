@@ -57,18 +57,13 @@ function JSONParser (scene)
    this .namespace = "http://www.web3d.org/specifications/x3d-namespace";
 }
 
-JSONParser .prototype = Object .assign (Object .create (X3DParser .prototype),
+Object .assign (Object .setPrototypeOf (JSONParser .prototype, X3DParser .prototype),
 {
-   constructor: JSONParser,
-   getEncoding: function ()
+   getEncoding ()
    {
       return "JSON";
    },
-   isValid: function ()
-   {
-      return this .input instanceof Object;
-   },
-   setInput: function (json)
+   setInput (json)
    {
       try
       {
@@ -77,12 +72,16 @@ JSONParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
          this .input = json;
       }
-      catch (error)
+      catch
       {
          this .input = undefined;
       }
    },
-   parseIntoScene: function (success, error)
+   isValid ()
+   {
+      return this .input instanceof Object;
+   },
+   parseIntoScene (resolve, reject)
    {
       /**
        * Load X3D JSON into an element.
@@ -98,11 +97,11 @@ JSONParser .prototype = Object .assign (Object .create (X3DParser .prototype),
       const parser = new XMLParser (this .getScene ());
 
       parser .setInput (child);
-      parser .parseIntoScene (success, error);
+      parser .parseIntoScene (resolve, reject);
 
       this .getScene () .setEncoding ("JSON");
    },
-   elementSetAttribute: function (element, key, value)
+   elementSetAttribute (element, key, value)
    {
       /**
        * Yet another way to set an attribute on an element.  does not allow you to
@@ -130,7 +129,7 @@ JSONParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          }
       }
    },
-   convertChildren: function (parentkey, object, element)
+   convertChildren (parentkey, object, element)
    {
       /**
        * converts children of object to DOM.
@@ -148,7 +147,7 @@ JSONParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          }
       }
    },
-   createElement: function (key, containerField)
+   createElement (key, containerField)
    {
       /**
        * a method to create and element with tagnam key to DOM in a namespace.  If
@@ -176,7 +175,7 @@ JSONParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return child;
    },
-   createCDATA: function (document, element, str)
+   createCDATA (document, element, str)
    {
       const
          docu  = new DOMParser () .parseFromString ("<xml></xml>", "application/xml"),
@@ -184,7 +183,7 @@ JSONParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       element .appendChild (cdata);
    },
-   convertObject: function (key, object, element, containerField)
+   convertObject (key, object, element, containerField)
    {
       /**
        * convert the object at object[key] to DOM.
@@ -243,7 +242,7 @@ JSONParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          }
       }
    },
-   commentStringToXML: function (str)
+   commentStringToXML (str)
    {
       /**
        * convert a comment string in JavaScript to XML.  Pass the string
@@ -251,7 +250,7 @@ JSONParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return str .replace (/\\\\/g, "\\");
    },
-   SFStringToXML: function (str)
+   SFStringToXML (str)
    {
       /**
        * convert an SFString to XML.
@@ -259,7 +258,7 @@ JSONParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return str .replace (/([\\"])/g, "\\$1");
    },
-   JSONStringToXML: function (str)
+   JSONStringToXML (str)
    {
       /**
        * convert a JSON String to XML.
@@ -270,7 +269,7 @@ JSONParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return str;
    },
-   convertToDOM: function(object, parentkey, element, containerField)
+   convertToDOM(object, parentkey, element, containerField)
    {
       /**
        * main routine for converting a JavaScript object to DOM.
@@ -326,7 +325,7 @@ JSONParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                }
                default:
                {
-                  console .error ("Unknown type found in array " + typeof object [key]);
+                  console .error (`Unknown type found in array ${typeof object [key]}`);
                }
             }
          }
@@ -378,7 +377,7 @@ JSONParser .prototype = Object .assign (Object .create (X3DParser .prototype),
                }
                default:
                {
-                  console .error ("Unknown type found in object " + typeof object [key]);
+                  console .error (`Unknown type found in object ${typeof object [key]}`);
                   console .error (object);
                }
             }

@@ -85,45 +85,9 @@ function RigidBodyCollection (executionContext)
    this .otherJointNodes        = [ ];
 }
 
-RigidBodyCollection .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChildNode .prototype),
 {
-   constructor: RigidBodyCollection,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",                new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",                 new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOnly,      "set_contacts",            new Fields .MFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "gravity",                 new Fields .SFVec3f (0, -9.8, 0)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "preferAccuracy",          new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "errorCorrection",         new Fields .SFFloat (0.8)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "iterations",              new Fields .SFInt32 (10)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "constantForceMix",        new Fields .SFFloat (0.0001)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "maxCorrectionSpeed",      new Fields .SFFloat (-1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "contactSurfaceThickness", new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "autoDisable",             new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "disableTime",             new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "disableLinearSpeed",      new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "disableAngularSpeed",     new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "collider",                new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "bodies",                  new Fields .MFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "joints",                  new Fields .MFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "RigidBodyCollection";
-   },
-   getComponentName: function ()
-   {
-      return "RigidBodyPhysics";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DChildNode .prototype .initialize .call (this);
 
@@ -142,11 +106,11 @@ RigidBodyCollection .prototype = Object .assign (Object .create (X3DChildNode .p
       this .set_collider__ ();
       this .set_bodies__ ();
    },
-   getDynamicsWorld: function ()
+   getDynamicsWorld ()
    {
       return this .dynamicsWorld;
    },
-   getTimeStep: function ()
+   getTimeStep ()
    {
       const DELAY = 15; // Delay in frames when dt full applies.
 
@@ -156,14 +120,14 @@ RigidBodyCollection .prototype = Object .assign (Object .create (X3DChildNode .p
 
       return deltaTime;
    },
-   set_enabled__: function ()
+   set_enabled__ ()
    {
       if (this .getLive () .getValue () && this ._enabled .getValue ())
          this .getBrowser () .sensorEvents () .addInterest ("update", this);
       else
          this .getBrowser () .sensorEvents () .removeInterest ("update", this);
    },
-   set_contacts__: function ()
+   set_contacts__ ()
    {
    },
    set_gravity__: (function ()
@@ -179,16 +143,16 @@ RigidBodyCollection .prototype = Object .assign (Object .create (X3DChildNode .p
          this .dynamicsWorld .setGravity (gravity);
       };
    })(),
-   set_contactSurfaceThickness__: function ()
+   set_contactSurfaceThickness__ ()
    {
       for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
          this .bodyNodes [i] .getRigidBody () .getCollisionShape () .setMargin (this ._contactSurfaceThickness .getValue ());
    },
-   set_collider__: function ()
+   set_collider__ ()
    {
       this .colliderNode = X3DCast (X3DConstants .CollisionCollection, this ._collider);
    },
-   set_bounce__: function ()
+   set_bounce__ ()
    {
       var
          colliderNode = this .colliderNode,
@@ -215,7 +179,7 @@ RigidBodyCollection .prototype = Object .assign (Object .create (X3DChildNode .p
       for (var i = 0, length = bodyNodes .length; i < length; ++ i)
          bodyNodes [i] .getRigidBody () .setRestitution (0);
    },
-   set_frictionCoefficients__: function ()
+   set_frictionCoefficients__ ()
    {
       if (this .colliderNode && this .colliderNode ._enabled .getValue ())
       {
@@ -241,7 +205,7 @@ RigidBodyCollection .prototype = Object .assign (Object .create (X3DChildNode .p
          rigidBody .setRollingFriction (0);
       }
    },
-   set_bodies__: function ()
+   set_bodies__ ()
    {
       for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
       {
@@ -282,7 +246,7 @@ RigidBodyCollection .prototype = Object .assign (Object .create (X3DChildNode .p
       this .set_dynamicsWorld__ ();
       this .set_joints__ ();
    },
-   set_dynamicsWorld__: function ()
+   set_dynamicsWorld__ ()
    {
       for (var i = 0, length = this .rigidBodies .length; i < length; ++ i)
          this .dynamicsWorld .removeRigidBody (this .rigidBodies [i]);
@@ -302,7 +266,7 @@ RigidBodyCollection .prototype = Object .assign (Object .create (X3DChildNode .p
       for (var i = 0, length = this .rigidBodies .length; i < length; ++ i)
          this .dynamicsWorld .addRigidBody (this .rigidBodies [i]);
    },
-   set_joints__: function ()
+   set_joints__ ()
    {
       for (var i = 0, length = this .jointNodes .length; i < length; ++ i)
          this .jointNodes [i] .setCollection (null);
@@ -333,7 +297,7 @@ RigidBodyCollection .prototype = Object .assign (Object .create (X3DChildNode .p
          this .jointNodes .push (jointNode);
       }
    },
-   update: function ()
+   update ()
    {
       try
       {
@@ -372,6 +336,53 @@ RigidBodyCollection .prototype = Object .assign (Object .create (X3DChildNode .p
       {
          console .error (error);
       }
+   },
+});
+
+Object .defineProperties (RigidBodyCollection,
+{
+   typeName:
+   {
+      value: "RigidBodyCollection",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "RigidBodyPhysics",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",                new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",                 new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "set_contacts",            new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "gravity",                 new Fields .SFVec3f (0, -9.8, 0)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "preferAccuracy",          new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "errorCorrection",         new Fields .SFFloat (0.8)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "iterations",              new Fields .SFInt32 (10)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "constantForceMix",        new Fields .SFFloat (0.0001)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "maxCorrectionSpeed",      new Fields .SFFloat (-1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "contactSurfaceThickness", new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "autoDisable",             new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "disableTime",             new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "disableLinearSpeed",      new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "disableAngularSpeed",     new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "collider",                new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "bodies",                  new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "joints",                  new Fields .MFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 

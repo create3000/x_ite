@@ -60,32 +60,41 @@ function HAnimDisplacer (executionContext)
    this ._displacements .setUnit ("length");
 }
 
-HAnimDisplacer .prototype = Object .assign (Object .create (X3DGeometricPropertyNode .prototype),
+Object .setPrototypeOf (HAnimDisplacer .prototype, X3DGeometricPropertyNode .prototype);
+
+Object .defineProperties (HAnimDisplacer,
 {
-   constructor: HAnimDisplacer,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "description",   new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "name",          new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "coordIndex",    new Fields .MFInt32 ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "weight",        new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "displacements", new Fields .MFVec3f ()),
-   ]),
-   getTypeName: function ()
+   typeName:
    {
-      return "HAnimDisplacer";
+      value: "HAnimDisplacer",
+      enumerable: true,
    },
-   getComponentName: function ()
+   componentName:
    {
-      return "HAnim";
+      value: "HAnim",
+      enumerable: true,
    },
-   getContainerField: function ()
+   containerField:
    {
-      return "displacers";
+      value: "displacers",
+      enumerable: true,
    },
-   getSpecificationRange: function ()
+   specificationRange:
    {
-      return ["3.0", "Infinity"];
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "description",   new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "name",          new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "coordIndex",    new Fields .MFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "weight",        new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "displacements", new Fields .MFVec3f ()),
+      ]),
+      enumerable: true,
    },
 });
 

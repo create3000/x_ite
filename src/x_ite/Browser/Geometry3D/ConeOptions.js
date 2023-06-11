@@ -56,20 +56,14 @@ function ConeOptions (executionContext)
                           "yDimension", new Fields .SFInt32 (1))
 }
 
-ConeOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+Object .setPrototypeOf (ConeOptions .prototype, X3DBaseNode .prototype);
+
+Object .defineProperties (ConeOptions,
 {
-   constructor: ConeOptions,
-   getTypeName: function ()
+   typeName:
    {
-      return "ConeOptions";
-   },
-   getComponentName: function ()
-   {
-      return "X_ITE";
-   },
-   getContainerField: function ()
-   {
-      return "coneOptions";
+      value: "ConeOptions",
+      enumerable: true,
    },
 });
 

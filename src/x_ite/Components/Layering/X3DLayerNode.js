@@ -91,12 +91,11 @@ function X3DLayerNode (executionContext, defaultViewpoint, groupNode)
    this .defaultFog        .setHidden (true);
 }
 
-X3DLayerNode .prototype = Object .assign (Object .create (X3DNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .prototype),
    X3DRenderObject .prototype,
 {
-   constructor: X3DLayerNode,
    layer0: false,
-   initialize: function ()
+   initialize ()
    {
       X3DNode         .prototype .initialize .call (this);
       X3DRenderObject .prototype .initialize .call (this);
@@ -120,64 +119,64 @@ X3DLayerNode .prototype = Object .assign (Object .create (X3DNode .prototype),
 
       this .set_viewport__ ();
    },
-   isLayer0: function (value)
+   isLayer0 (value)
    {
       this .layer0 = value;
       this .defaultBackground .setHidden (! value);
    },
-   getLayer: function ()
+   getLayer ()
    {
       return this;
    },
-   getBBox: function (bbox, shadows)
+   getBBox (bbox, shadows)
    {
       return this .groupNode .getBBox (bbox, shadows);
    },
-   getGroup: function ()
+   getGroup ()
    {
       return this .groupNode;
    },
-   setGroup: function (groupNode)
+   setGroup (groupNode)
    {
       this .groupNode = groupNode;
    },
-   getViewport: function ()
+   getViewport ()
    {
       return this .viewportNode;
    },
-   getBackground: function ()
+   getBackground ()
    {
       return this .backgroundStack .top ();
    },
-   getFog: function ()
+   getFog ()
    {
       return this .fogStack .top ();
    },
-   getNavigationInfo: function ()
+   getNavigationInfo ()
    {
       return this .navigationInfoStack .top ();
    },
-   getViewpoint: function ()
+   getViewpoint ()
    {
       return this .viewpointStack .top ();
    },
-   getBackgrounds: function ()
+   getBackgrounds ()
    {
       return this .backgrounds;
    },
-   getFogs: function ()
+   getFogs ()
    {
       return this .fogs;
    },
-   getNavigationInfos: function ()
+   getNavigationInfos ()
    {
       return this .navigationInfos;
    },
-   getViewpoints: function ()
+   getViewpoints ()
    {
       return this .viewpoints;
    },
-   getUserViewpoints: function ()
+   getUserViewpoints ()
    {
       const userViewpoints = [ ];
 
@@ -189,27 +188,27 @@ X3DLayerNode .prototype = Object .assign (Object .create (X3DNode .prototype),
 
       return userViewpoints;
    },
-   getBackgroundStack: function ()
+   getBackgroundStack ()
    {
       return this .backgroundStack;
    },
-   getFogStack: function ()
+   getFogStack ()
    {
       return this .fogStack;
    },
-   getNavigationInfoStack: function ()
+   getNavigationInfoStack ()
    {
       return this .navigationInfoStack;
    },
-   getViewpointStack: function ()
+   getViewpointStack ()
    {
       return this .viewpointStack;
    },
-   getCollisionTime: function ()
+   getCollisionTime ()
    {
       return this .collisionTime;
    },
-   viewAll: function (factor = 1, straighten = false)
+   viewAll (factor = 1, straighten = false)
    {
       const
          viewpointNode = this .getViewpoint (),
@@ -217,18 +216,18 @@ X3DLayerNode .prototype = Object .assign (Object .create (X3DNode .prototype),
 
       viewpointNode .lookAt (this, bbox .center, viewpointNode .getLookAtDistance (bbox), factor, straighten);
    },
-   straightenView: function ()
+   straightenView ()
    {
       this .getViewpoint () .straightenView (this);
    },
-   set_viewport__: function ()
+   set_viewport__ ()
    {
       this .viewportNode = X3DCast (X3DConstants .X3DViewportNode, this ._viewport);
 
       if (! this .viewportNode)
          this .viewportNode = this .getBrowser () .getDefaultViewport ();
    },
-   bindBindables: function (viewpointName)
+   bindBindables (viewpointName)
    {
       this .traverse (TraverseType .CAMERA, this);
 
@@ -250,7 +249,7 @@ X3DLayerNode .prototype = Object .assign (Object .create (X3DNode .prototype),
       if (viewpointNode ._viewAll .getValue ())
          viewpointNode .viewAll (this .getBBox (new Box3 ()));
    },
-   traverse: function (type, renderObject = this)
+   traverse (type, renderObject = this)
    {
       const viewpointNode = this .getViewpoint ();
 
@@ -282,7 +281,7 @@ X3DLayerNode .prototype = Object .assign (Object .create (X3DNode .prototype),
       this .getCameraSpaceMatrix () .pop ();
       this .getProjectionMatrix ()  .pop ();
    },
-   pointer: function (type, renderObject)
+   pointer (type, renderObject)
    {
       const
          browser  = this .getBrowser (),
@@ -309,7 +308,7 @@ X3DLayerNode .prototype = Object .assign (Object .create (X3DNode .prototype),
 
       this .getModelViewMatrix () .pop ();
    },
-   camera: function (type, renderObject)
+   camera (type, renderObject)
    {
       if (this ._visible .getValue ())
       {
@@ -329,7 +328,7 @@ X3DLayerNode .prototype = Object .assign (Object .create (X3DNode .prototype),
          this .getViewpoint () .update ();
       }
    },
-   picking: function (type, renderObject)
+   picking (type, renderObject)
    {
       if (this ._pickable .getValue ())
       {
@@ -375,7 +374,7 @@ X3DLayerNode .prototype = Object .assign (Object .create (X3DNode .prototype),
          }
       };
    })(),
-   display: function (type, renderObject)
+   display (type, renderObject)
    {
       if (this ._visible .getValue ())
       {
@@ -388,6 +387,20 @@ X3DLayerNode .prototype = Object .assign (Object .create (X3DNode .prototype),
 
          this .getModelViewMatrix () .pop ();
       }
+   },
+});
+
+Object .defineProperties (X3DLayerNode,
+{
+   typeName:
+   {
+      value: "X3DLayerNode",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Layering",
+      enumerable: true,
    },
 });
 

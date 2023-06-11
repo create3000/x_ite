@@ -65,37 +65,9 @@ function Text (executionContext)
    this ._lineBounds .setUnit ("length");
 }
 
-Text .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
+Object .assign (Object .setPrototypeOf (Text .prototype, X3DGeometryNode .prototype),
 {
-   constructor: Text,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",   new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "string",     new Fields .MFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "length",     new Fields .MFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "maxExtent",  new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",      new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,     "origin",     new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,     "textBounds", new Fields .SFVec2f ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,     "lineBounds", new Fields .MFVec2f ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "fontStyle",  new Fields .SFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "Text";
-   },
-   getComponentName: function ()
-   {
-      return "Text";
-   },
-   getContainerField: function ()
-   {
-      return "geometry";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DGeometryNode .prototype .initialize .call (this);
 
@@ -103,18 +75,18 @@ Text .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 
       this .set_fontStyle__ ();
    },
-   getMatrix: function ()
+   getMatrix ()
    {
       return this .textGeometry .getMatrix ();
    },
-   getLength: function (index)
+   getLength (index)
    {
       if (index < this ._length .length)
          return Math .max (0, this ._length [index]);
 
       return 0;
    },
-   set_live__: function ()
+   set_live__ ()
    {
        X3DGeometryNode .prototype .set_live__ .call (this);
 
@@ -123,7 +95,7 @@ Text .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
       else
          this .getBrowser () .getBrowserOptions () ._PrimitiveQuality .removeInterest ("requestRebuild", this);
    },
-   set_fontStyle__: function ()
+   set_fontStyle__ ()
    {
       this .fontStyleNode ?.removeInterest ("requestRebuild", this);
 
@@ -138,20 +110,20 @@ Text .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 
       this .setTransparent (this .textGeometry .isTransparent ());
    },
-   build: function ()
+   build ()
    {
       this .textGeometry .update ();
       this .textGeometry .build ();
 
       this .setSolid (this ._solid .getValue ());
    },
-   traverse: function (type, renderObject)
+   traverse (type, renderObject)
    {
       this .textGeometry .traverse (type, renderObject);
 
       X3DGeometryNode .prototype .traverse .call (this, type, renderObject);
    },
-   display: function (gl, renderContext)
+   display (gl, renderContext)
    {
       this .textGeometry .display (gl, renderContext);
 
@@ -159,15 +131,54 @@ Text .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
 
       renderContext .textureNode = null;
    },
-   transformLine: function (line)
+   transformLine (line)
    {
       // Apply sceen nodes transformation in place here.
       return this .textGeometry .transformLine (line);
    },
-   transformMatrix: function (matrix)
+   transformMatrix (matrix)
    {
       // Apply sceen nodes transformation in place here.
       return this .textGeometry .transformMatrix (matrix);
+   },
+});
+
+Object .defineProperties (Text,
+{
+   typeName:
+   {
+      value: "Text",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Text",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "geometry",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",   new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "string",     new Fields .MFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "length",     new Fields .MFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "maxExtent",  new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",      new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "origin",     new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "textBounds", new Fields .SFVec2f ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "lineBounds", new Fields .MFVec2f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "fontStyle",  new Fields .SFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 

@@ -45,7 +45,6 @@
  *
  ******************************************************************************/
 
-import SupportedNodes          from "../Configuration/SupportedNodes.js";
 import AcousticProperties      from "./Shape/AcousticProperties.js";
 import Appearance              from "./Shape/Appearance.js";
 import FillProperties          from "./Shape/FillProperties.js";
@@ -62,33 +61,27 @@ import X3DMaterialNode         from "./Shape/X3DMaterialNode.js";
 import X3DOneSidedMaterialNode from "./Shape/X3DOneSidedMaterialNode.js";
 import X3DShapeNode            from "./Shape/X3DShapeNode.js";
 
-const Types =
-{
-   AcousticProperties: AcousticProperties,
-   Appearance:         Appearance,
-   FillProperties:     FillProperties,
-   LineProperties:     LineProperties,
-   Material:           Material,
-   PhysicalMaterial:   PhysicalMaterial,
-   PointProperties:    PointProperties,
-   Shape:              Shape,
-   TwoSidedMaterial:   TwoSidedMaterial,
-   UnlitMaterial:      UnlitMaterial,
+export default {
+   name: "Shape",
+   concreteNodes:
+   [
+      AcousticProperties,
+      Appearance,
+      FillProperties,
+      LineProperties,
+      Material,
+      PhysicalMaterial,
+      PointProperties,
+      Shape,
+      TwoSidedMaterial,
+      UnlitMaterial,
+   ],
+   abstractNodes:
+   [
+      X3DAppearanceChildNode,
+      X3DAppearanceNode,
+      X3DMaterialNode,
+      X3DOneSidedMaterialNode,
+      X3DShapeNode,
+   ],
 };
-
-const AbstractTypes =
-{
-   X3DAppearanceChildNode:  X3DAppearanceChildNode,
-   X3DAppearanceNode:       X3DAppearanceNode,
-   X3DMaterialNode:         X3DMaterialNode,
-   X3DOneSidedMaterialNode: X3DOneSidedMaterialNode,
-   X3DShapeNode:            X3DShapeNode,
-};
-
-for (const typeName in Types)
-   SupportedNodes .addNodeType (typeName, Types [typeName]);
-
-for (const typeName in AbstractTypes)
-   SupportedNodes .addAbstractNodeType (typeName, AbstractTypes [typeName]);
-
-export default undefined;

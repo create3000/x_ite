@@ -52,10 +52,9 @@ function BitSet (value = 0)
    this .value = value;
 }
 
-BitSet .prototype =
+Object .assign (BitSet .prototype,
 {
-   constructor: BitSet,
-   [Symbol .iterator]: function* ()
+   *[Symbol .iterator] ()
    {
       let
          value = this .value,
@@ -70,13 +69,13 @@ BitSet .prototype =
          index   += 1;
       }
    },
-   get: function (index)
+   get (index)
    {
       const mask = 1 << index;
 
       return !! (this .value & mask);
    },
-   set: function (index, value)
+   set (index, value)
    {
       const mask = 1 << index;
 
@@ -85,31 +84,31 @@ BitSet .prototype =
       else
          this .value &= ~mask;
    },
-   clear: function ()
+   clear ()
    {
       this .value = 0;
    },
-   entries: function* ()
+   *entries ()
    {
       for (const i of this)
          yield [i, i];
    },
-   valueOf: function ()
+   valueOf ()
    {
       return this .value;
    },
-   toString: function (radix)
+   toString (radix)
    {
       return this .value .toString (radix);
    },
-};
+});
 
 BitSet .prototype .keys   = BitSet .prototype [Symbol .iterator];
 BitSet .prototype .values = BitSet .prototype [Symbol .iterator];
 
 Object .defineProperty (BitSet .prototype, "size",
 {
-   get: function ()
+   get ()
    {
       return Algorithm .bitCount (this .value);
    },

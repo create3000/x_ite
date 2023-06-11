@@ -62,39 +62,15 @@ function OrientationInterpolator (executionContext)
    this ._value_changed .setUnit ("angle");
 }
 
-OrientationInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
+Object .assign (Object .setPrototypeOf (OrientationInterpolator .prototype, X3DInterpolatorNode .prototype),
 {
-   constructor: OrientationInterpolator,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "key",           new Fields .MFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "keyValue",      new Fields .MFRotation ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .SFRotation ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "OrientationInterpolator";
-   },
-   getComponentName: function ()
-   {
-      return "Interpolation";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DInterpolatorNode .prototype .initialize .call (this);
 
       this ._keyValue .addInterest ("set_keyValue__", this);
    },
-   set_keyValue__: function ()
+   set_keyValue__ ()
    {
       const
          key      = this ._key,
@@ -118,6 +94,41 @@ OrientationInterpolator .prototype = Object .assign (Object .create (X3DInterpol
          this ._value_changed = keyValue0 .slerp (keyValue1, weight);
       };
    }) (),
+});
+
+Object .defineProperties (OrientationInterpolator,
+{
+   typeName:
+   {
+      value: "OrientationInterpolator",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Interpolation",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "key",           new Fields .MFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "keyValue",      new Fields .MFRotation ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .SFRotation ()),
+      ]),
+      enumerable: true,
+   },
 });
 
 export default OrientationInterpolator;

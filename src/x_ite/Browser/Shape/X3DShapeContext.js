@@ -69,9 +69,9 @@ function X3DShapeContext ()
    this [_hatchStyleTextures] = [ ];
 }
 
-X3DShapeContext .prototype =
+Object .assign (X3DShapeContext .prototype,
 {
-   getDefaultAppearance: function ()
+   getDefaultAppearance ()
    {
       this [_defaultAppearance] = new Appearance (this .getPrivateScene ());
       this [_defaultAppearance] .setPrivate (true);
@@ -83,11 +83,11 @@ X3DShapeContext .prototype =
 
       return this [_defaultAppearance];
    },
-   getLineStippleScale: function ()
+   getLineStippleScale ()
    {
       return 1 / (this .getPixelPerPoint () * 32); // 32px
    },
-   getDefaultPointProperties: function ()
+   getDefaultPointProperties ()
    {
       this [_defaultPointProperties] = new PointProperties (this .getPrivateScene ());
       this [_defaultPointProperties] .setPrivate (true);
@@ -99,7 +99,7 @@ X3DShapeContext .prototype =
 
       return this [_defaultPointProperties];
    },
-   getDefaultLineProperties: function ()
+   getDefaultLineProperties ()
    {
       this [_defaultLineProperties] = new LineProperties (this .getPrivateScene ());
       this [_defaultLineProperties] ._applied = false;
@@ -112,7 +112,7 @@ X3DShapeContext .prototype =
 
       return this [_defaultLineProperties];
    },
-   getDefaultMaterial: function ()
+   getDefaultMaterial ()
    {
       this [_defaultMaterial] = new UnlitMaterial (this .getPrivateScene ());
       this [_defaultMaterial] .setPrivate (true);
@@ -124,7 +124,7 @@ X3DShapeContext .prototype =
 
       return this [_defaultMaterial];
    },
-   getLinetypeTexture: function ()
+   getLinetypeTexture ()
    {
       this [_linetypeTextures] = new ImageTexture (this .getPrivateScene ());
       this [_linetypeTextures] ._url [0]           = URLs .getLinetypeUrl ();
@@ -138,7 +138,7 @@ X3DShapeContext .prototype =
 
       return this [_linetypeTextures];
    },
-   getHatchStyleTexture: function (index)
+   getHatchStyleTexture (index)
    {
       let hatchStyleTexture = this [_hatchStyleTextures] [index];
 
@@ -154,7 +154,7 @@ X3DShapeContext .prototype =
 
       return hatchStyleTexture;
    },
-   getLineFillTextureProperties: function ()
+   getLineFillTextureProperties ()
    {
       this [_lineFillTextureProperties] = new TextureProperties (this .getPrivateScene ());
       this [_lineFillTextureProperties] ._minificationFilter  = "NEAREST_PIXEL";
@@ -169,7 +169,7 @@ X3DShapeContext .prototype =
 
       return this [_lineFillTextureProperties];
    },
-   getLineTransformShader: function ()
+   getLineTransformShader ()
    {
       const uniformNames = [
          "viewport",
@@ -192,7 +192,7 @@ X3DShapeContext .prototype =
 
       return this [_lineTransformShaderNode];
    },
-   getLineTransformFeedback: function ()
+   getLineTransformFeedback ()
    {
       const gl = this .getContext ();
 
@@ -204,6 +204,6 @@ X3DShapeContext .prototype =
 
       return this [_lineTransformFeedback];
    },
-};
+});
 
 export default X3DShapeContext;

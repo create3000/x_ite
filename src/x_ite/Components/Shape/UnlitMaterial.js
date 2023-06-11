@@ -58,42 +58,15 @@ function UnlitMaterial (executionContext)
    this .addType (X3DConstants .UnlitMaterial);
 }
 
-UnlitMaterial .prototype = Object .assign (Object .create (X3DOneSidedMaterialNode .prototype),
+Object .assign (Object .setPrototypeOf (UnlitMaterial .prototype, X3DOneSidedMaterialNode .prototype),
 {
-   constructor: UnlitMaterial,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",               new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "emissiveColor",          new Fields .SFColor (1, 1, 1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "emissiveTextureMapping", new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "emissiveTexture",        new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "normalScale",            new Fields .SFFloat (1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "normalTextureMapping",   new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "normalTexture",          new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "transparency",           new Fields .SFFloat ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "UnlitMaterial";
-   },
-   getComponentName: function ()
-   {
-      return "Shape";
-   },
-   getContainerField: function ()
-   {
-      return "material";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["4.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DOneSidedMaterialNode .prototype .initialize .call (this);
 
       this .set_transparent__ ();
    },
-   set_emissiveTexture__: function ()
+   set_emissiveTexture__ ()
    {
       if (this .getEmissiveTexture ())
          this .getEmissiveTexture () ._transparent .removeInterest ("set_transparent__", this);
@@ -103,16 +76,16 @@ UnlitMaterial .prototype = Object .assign (Object .create (X3DOneSidedMaterialNo
       if (this .getEmissiveTexture ())
          this .getEmissiveTexture () ._transparent .addInterest ("set_transparent__", this);
    },
-   set_transparent__: function ()
+   set_transparent__ ()
    {
       this .setTransparent (!!(this .getTransparency () ||
                                this .getEmissiveTexture () ?.isTransparent ()));
    },
-   getMaterialKey: function ()
+   getMaterialKey ()
    {
       return "0";
    },
-   createShader: function (key, geometryContext, renderContext)
+   createShader (key, geometryContext, renderContext)
    {
       const
          browser = this .getBrowser (),
@@ -125,6 +98,44 @@ UnlitMaterial .prototype = Object .assign (Object .create (X3DOneSidedMaterialNo
       browser .getShaders () .set (key, shaderNode);
 
       return shaderNode;
+   },
+});
+
+Object .defineProperties (UnlitMaterial,
+{
+   typeName:
+   {
+      value: "UnlitMaterial",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Shape",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "material",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["4.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",               new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "emissiveColor",          new Fields .SFColor (1, 1, 1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "emissiveTextureMapping", new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "emissiveTexture",        new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "normalScale",            new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "normalTextureMapping",   new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "normalTexture",          new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "transparency",           new Fields .SFFloat ()),
+      ]),
+      enumerable: true,
    },
 });
 

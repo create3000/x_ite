@@ -60,14 +60,9 @@ function PointingDevice (executionContext)
    this .motionTime = 0;
 }
 
-PointingDevice .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .prototype),
 {
-   constructor: PointingDevice,
-   getTypeName: function ()
-   {
-      return "PointingDevice";
-   },
-   initialize: function ()
+   initialize ()
    {
       const element = this .getBrowser () .getSurface ();
 
@@ -81,7 +76,7 @@ PointingDevice .prototype = Object .assign (Object .create (X3DBaseNode .prototy
       element .on ("touchstart.PointingDevice" + this .getId (), this .touchstart .bind (this));
       element .on ("touchend.PointingDevice"   + this .getId (), this .touchend   .bind (this));
    },
-   getPointer: function (event)
+   getPointer (event)
    {
       const
          browser      = this .getBrowser (),
@@ -92,11 +87,11 @@ PointingDevice .prototype = Object .assign (Object .create (X3DBaseNode .prototy
 
       return [x, y];
    },
-   mousewheel: function (event)
+   mousewheel (event)
    {
       // event .preventDefault () must be done in the all viewers.
    },
-   mousedown: function (event)
+   mousedown (event)
    {
       const
          browser = this .getBrowser (),
@@ -128,7 +123,7 @@ PointingDevice .prototype = Object .assign (Object .create (X3DBaseNode .prototy
          }
       }
    },
-   mouseup: function (event)
+   mouseup (event)
    {
       event .preventDefault ();
 
@@ -151,12 +146,12 @@ PointingDevice .prototype = Object .assign (Object .create (X3DBaseNode .prototy
          this .cursor = "DEFAULT";
       }
    },
-   dblclick: function (event)
+   dblclick (event)
    {
       if (this .isOver)
          event .stopImmediatePropagation ();
    },
-   mousemove: function (event)
+   mousemove (event)
    {
       event .preventDefault ();
 
@@ -171,7 +166,7 @@ PointingDevice .prototype = Object .assign (Object .create (X3DBaseNode .prototy
 
       this .onmotion (x, y);
    },
-   touchstart: function (event)
+   touchstart (event)
    {
       const touches = event .originalEvent .touches;
 
@@ -207,7 +202,7 @@ PointingDevice .prototype = Object .assign (Object .create (X3DBaseNode .prototy
          }
       }
    },
-   touchend: function (event)
+   touchend (event)
    {
       event .button = 0;
 
@@ -215,7 +210,7 @@ PointingDevice .prototype = Object .assign (Object .create (X3DBaseNode .prototy
 
       clearTimeout (this .touchTimeout);
    },
-   touchmove: function (event)
+   touchmove (event)
    {
       const touches = event .originalEvent .touches;
 
@@ -238,7 +233,7 @@ PointingDevice .prototype = Object .assign (Object .create (X3DBaseNode .prototy
          }
       }
    },
-   onmotion: function (x, y)
+   onmotion (x, y)
    {
       const browser = this .getBrowser ();
 
@@ -262,11 +257,11 @@ PointingDevice .prototype = Object .assign (Object .create (X3DBaseNode .prototy
          }
       }
    },
-   onmouseout: function (event)
+   onmouseout (event)
    {
       this .getBrowser () .leaveNotifyEvent ();
    },
-   onverifymotion: function (x, y)
+   onverifymotion (x, y)
    {
       // Verify isOver state. This is necessary if an Switch changes on buttonReleaseEvent
       // and the new child has a sensor node inside. This sensor node must be update to
@@ -276,9 +271,18 @@ PointingDevice .prototype = Object .assign (Object .create (X3DBaseNode .prototy
 
       this .onmotion (x, y);
    },
-   showContextMenu: function (event)
+   showContextMenu (event)
    {
       this .getBrowser () .getContextMenu () .show (event);
+   },
+});
+
+Object .defineProperties (PointingDevice,
+{
+   typeName:
+   {
+      value: "PointingDevice",
+      enumerable: true,
    },
 });
 

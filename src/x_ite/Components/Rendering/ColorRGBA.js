@@ -60,30 +60,9 @@ function ColorRGBA (executionContext)
    this .setTransparent (true);
 }
 
-ColorRGBA .prototype = Object .assign (Object .create (X3DColorNode .prototype),
+Object .assign (Object .setPrototypeOf (ColorRGBA .prototype, X3DColorNode .prototype),
 {
-   constructor: ColorRGBA,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "color",    new Fields .MFColorRGBA ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "ColorRGBA";
-   },
-   getComponentName: function ()
-   {
-      return "Rendering";
-   },
-   getContainerField: function ()
-   {
-      return "color";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DColorNode .prototype .initialize .call (this);
 
@@ -91,12 +70,12 @@ ColorRGBA .prototype = Object .assign (Object .create (X3DColorNode .prototype),
 
       this .set_color__ ();
    },
-   set_color__: function ()
+   set_color__ ()
    {
       this .color  = this ._color .getValue ();
       this .length = this ._color .length;
    },
-   addColor: function (index, array)
+   addColor (index, array)
    {
       if (index >= 0 && index < this .length)
       {
@@ -119,7 +98,7 @@ ColorRGBA .prototype = Object .assign (Object .create (X3DColorNode .prototype),
          array .push (1, 1, 1, 1);
       }
    },
-   addColors: function (array, min)
+   addColors (array, min)
    {
       if (this .length)
       {
@@ -149,6 +128,38 @@ ColorRGBA .prototype = Object .assign (Object .create (X3DColorNode .prototype),
       }
 
       return array;
+   },
+});
+
+Object .defineProperties (ColorRGBA,
+{
+   typeName:
+   {
+      value: "ColorRGBA",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Rendering",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "color",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "color",    new Fields .MFColorRGBA ()),
+      ]),
+      enumerable: true,
    },
 });
 

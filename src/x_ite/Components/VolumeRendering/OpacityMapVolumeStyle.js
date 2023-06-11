@@ -59,31 +59,9 @@ function OpacityMapVolumeStyle (executionContext)
    this .addType (X3DConstants .OpacityMapVolumeStyle);
 }
 
-OpacityMapVolumeStyle .prototype = Object .assign (Object .create (X3DComposableVolumeRenderStyleNode .prototype),
+Object .assign (Object .setPrototypeOf (OpacityMapVolumeStyle .prototype, X3DComposableVolumeRenderStyleNode .prototype),
 {
-   constructor: OpacityMapVolumeStyle,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",          new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",         new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "transferFunction", new Fields .SFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "OpacityMapVolumeStyle";
-   },
-   getComponentName: function ()
-   {
-      return "VolumeRendering";
-   },
-   getContainerField: function ()
-   {
-      return "renderStyle";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.3", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DComposableVolumeRenderStyleNode .prototype .initialize .call (this);
 
@@ -96,7 +74,7 @@ OpacityMapVolumeStyle .prototype = Object .assign (Object .create (X3DComposable
 
       this .set_transferFunction__ ();
    },
-   set_transferFunction__: function ()
+   set_transferFunction__ ()
    {
       this .transferFunctionNode = X3DCast (X3DConstants .X3DTexture2DNode, this ._transferFunction);
 
@@ -106,14 +84,14 @@ OpacityMapVolumeStyle .prototype = Object .assign (Object .create (X3DComposable
       if (! this .transferFunctionNode)
          this .transferFunctionNode = this .getBrowser () .getDefaultTransferFunction ();
    },
-   addShaderFields: function (shaderNode)
+   addShaderFields (shaderNode)
    {
       if (! this ._enabled .getValue ())
          return;
 
       shaderNode .addUserDefinedField (X3DConstants .inputOutput, "transferFunction_" + this .getId (), new Fields .SFNode (this .transferFunctionNode));
    },
-   getUniformsText: function ()
+   getUniformsText ()
    {
       if (! this ._enabled .getValue ())
          return "";
@@ -149,7 +127,7 @@ OpacityMapVolumeStyle .prototype = Object .assign (Object .create (X3DComposable
 
       return string;
    },
-   getFunctionsText: function ()
+   getFunctionsText ()
    {
       if (! this ._enabled .getValue ())
          return "";
@@ -162,6 +140,39 @@ OpacityMapVolumeStyle .prototype = Object .assign (Object .create (X3DComposable
       string += "   textureColor = getOpacityMapStyle_" + this .getId () + " (textureColor);\n";
 
       return string;
+   },
+});
+
+Object .defineProperties (OpacityMapVolumeStyle,
+{
+   typeName:
+   {
+      value: "OpacityMapVolumeStyle",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "VolumeRendering",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "renderStyle",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.3", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",          new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",         new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "transferFunction", new Fields .SFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 

@@ -61,16 +61,15 @@ function Color3 (r, g, b)
    this [_b] = clamp (b, 0, 1);
 }
 
-Color3 .prototype =
+Object .assign (Color3 .prototype,
 {
-   constructor: Color3,
-   [Symbol .iterator]: function* ()
+   *[Symbol .iterator] ()
    {
       yield this [_r];
       yield this [_g];
       yield this [_b];
    },
-   copy: function ()
+   copy ()
    {
       const copy = Object .create (Color3 .prototype);
       copy [_r] = this [_r];
@@ -78,27 +77,27 @@ Color3 .prototype =
       copy [_b] = this [_b];
       return copy;
    },
-   assign: function (color)
+   assign (color)
    {
       this [_r] = color [_r];
       this [_g] = color [_g];
       this [_b] = color [_b];
       return this;
    },
-   set: function (r, g, b)
+   set (r, g, b)
    {
       this [_r] = clamp (r, 0, 1);
       this [_g] = clamp (g, 0, 1);
       this [_b] = clamp (b, 0, 1);
       return this;
    },
-   equals: function (color)
+   equals (color)
    {
       return this [_r] === color [_r] &&
              this [_g] === color [_g] &&
              this [_b] === color [_b];
    },
-   getHSV: function (result)
+   getHSV (result)
    {
       let h, s, v;
 
@@ -132,7 +131,7 @@ Color3 .prototype =
 
       return result;
    },
-   setHSV: function (h, s, v)
+   setHSV (h, s, v)
    {
       s = clamp (s, 0, 1),
       v = clamp (v, 0, 1);
@@ -168,27 +167,27 @@ Color3 .prototype =
 
       return this;
    },
-   toString: function ()
+   toString ()
    {
       return this [_r] + " " +
              this [_g] + " " +
              this [_b];
    },
-};
+});
 
 const r = {
-   get: function () { return this [_r]; },
-   set: function (value) { this [_r] = clamp (value, 0, 1); },
+   get () { return this [_r]; },
+   set (value) { this [_r] = clamp (value, 0, 1); },
 };
 
 const g = {
-   get: function () { return this [_g]; },
-   set: function (value) { this [_g] = clamp (value, 0, 1); },
+   get () { return this [_g]; },
+   set (value) { this [_g] = clamp (value, 0, 1); },
 };
 
 const b = {
-   get: function () { return this [_b]; },
-   set: function (value) { this [_b] = clamp (value, 0, 1); },
+   get () { return this [_b]; },
+   set (value) { this [_b] = clamp (value, 0, 1); },
 };
 
 Object .defineProperties (Color3 .prototype,
@@ -206,13 +205,13 @@ Object .assign (Color3,
 {
    Black: new Color3 (0, 0, 0),
    White: new Color3 (1, 1, 1),
-   HSV: function (h, s, v)
+   HSV (h, s, v)
    {
       const color = Object .create (this .prototype);
       color .setHSV (h, s, v);
       return color;
    },
-   lerp: function (a, b, t, r)
+   lerp (a, b, t, r)
    {
       // Linearly interpolate in HSV space between source color @a a and destination color @a b by an amount of @a t.
       // Source and destination color must be in HSV space. The resulting HSV color is stored in @a r.

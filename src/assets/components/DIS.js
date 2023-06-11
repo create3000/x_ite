@@ -53,20 +53,20 @@ import ReceiverPdu          from "../../x_ite/Components/DIS/ReceiverPdu.js";
 import SignalPdu            from "../../x_ite/Components/DIS/SignalPdu.js";
 import TransmitterPdu       from "../../x_ite/Components/DIS/TransmitterPdu.js";
 
-Components .addComponent ({
+Components .add ({
    name: "DIS",
-   types:
-   {
-      DISEntityManager:     DISEntityManager,
-      DISEntityTypeMapping: DISEntityTypeMapping,
-      EspduTransform:       EspduTransform,
-      ReceiverPdu:          ReceiverPdu,
-      SignalPdu:            SignalPdu,
-      TransmitterPdu:       TransmitterPdu,
-   },
-   abstractTypes:
-   {
-   },
+   concreteNodes:
+   [
+      DISEntityManager,
+      DISEntityTypeMapping,
+      EspduTransform,
+      ReceiverPdu,
+      SignalPdu,
+      TransmitterPdu,
+   ],
+   abstractNodes:
+   [
+   ],
 });
 
 export default undefined;

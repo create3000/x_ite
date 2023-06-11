@@ -126,34 +126,11 @@ function Contour2D (executionContext)
    this .childNodes = [ ];
 }
 
-Contour2D .prototype = Object .assign (Object .create ((X3DNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (Contour2D .prototype, (X3DNode_default()).prototype),
 {
-   constructor: Contour2D,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",       new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,   "addChildren",    new (Fields_default()).MFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,   "removeChildren", new (Fields_default()).MFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "children",       new (Fields_default()).MFNode ()),
-   ]),
-   getTypeName: function ()
+   initialize ()
    {
-      return "Contour2D";
-   },
-   getComponentName: function ()
-   {
-      return "NURBS";
-   },
-   getContainerField: function ()
-   {
-      return "trimmingContour";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
-   {
-      X3DNode_default().prototype.initialize.call (this);
+      X3DNode_default().prototype .initialize .call (this);
 
       this ._addChildren    .addInterest ("set_addChildren__",    this);
       this ._removeChildren .addInterest ("set_removeChildren__", this);
@@ -161,13 +138,10 @@ Contour2D .prototype = Object .assign (Object .create ((X3DNode_default()).proto
 
       this .set_children__ ();
    },
-   set_addChildren__: function ()
+   set_addChildren__ ()
    {
       this ._addChildren .setTainted (true);
-
-      this ._addChildren .erase (remove (this ._addChildren, 0, this ._addChildren .length,
-                                         this ._children,    0, this ._children .length),
-                                 this ._addChildren .length);
+      this ._addChildren .assign (filter (this ._addChildren, this ._children));
 
       for (const child of this ._addChildren)
          this ._children .push (child);
@@ -175,18 +149,15 @@ Contour2D .prototype = Object .assign (Object .create ((X3DNode_default()).proto
       this ._addChildren .length = 0;
       this ._addChildren .setTainted (false);
    },
-   set_removeChildren__: function ()
+   set_removeChildren__ ()
    {
       this ._removeChildren .setTainted (true);
-
-      this ._children .erase (remove (this ._children,       0, this ._children .length,
-                                      this ._removeChildren, 0, this ._removeChildren .length),
-                              this ._children .length);
+      this ._children .assign (filter (this ._children, this ._removeChildren));
 
       this ._removeChildren .length = 0;
       this ._removeChildren .setTainted (false);
    },
-   set_children__: function ()
+   set_children__ ()
    {
       const childNodes = this .childNodes;
 
@@ -213,22 +184,53 @@ Contour2D .prototype = Object .assign (Object .create ((X3DNode_default()).proto
          }
       }
    },
-   addTrimmingContour: function (trimmingContours)
+   addTrimmingContour (trimmingContours)
    {
       for (const childNode of this .childNodes)
          trimmingContours .push (childNode .tessellate (2));
    }
 });
 
-function remove (array, first, last, range, rfirst, rlast)
+function filter (array, remove)
 {
-   const set = new Set ();
+   const set = new Set (remove);
 
-   for (let i = rfirst; i < rlast; ++ i)
-      set .add (range [i]);
-
-   return array .remove (first, last, value => set .has (value));
+   return array .filter (value => !set .has (value));
 }
+
+Object .defineProperties (Contour2D,
+{
+   typeName:
+   {
+      value: "Contour2D",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "NURBS",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "trimmingContour",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",       new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,   "addChildren",    new (Fields_default()).MFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,   "removeChildren", new (Fields_default()).MFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "children",       new (Fields_default()).MFNode ()),
+      ]),
+      enumerable: true,
+   },
+});
 
 const __default__ = Contour2D;
 ;
@@ -293,9 +295,20 @@ function X3DNurbsControlCurveNode (executionContext)
    this .addType ((X3DConstants_default()).X3DNurbsControlCurveNode);
 }
 
-X3DNurbsControlCurveNode .prototype = Object .assign (Object .create ((X3DNode_default()).prototype),
+Object .setPrototypeOf (X3DNurbsControlCurveNode .prototype, (X3DNode_default()).prototype);
+
+Object .defineProperties (X3DNurbsControlCurveNode,
 {
-   constructor: X3DNurbsControlCurveNode,
+   typeName:
+   {
+      value: "X3DNurbsControlCurveNode",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "NURBS",
+      enumerable: true,
+   },
 });
 
 const X3DNurbsControlCurveNode_default_ = X3DNurbsControlCurveNode;
@@ -363,37 +376,16 @@ var Vector3_default = /*#__PURE__*/__webpack_require__.n(Vector3_namespaceObject
 
 function ContourPolyline2D (executionContext)
 {
-   NURBS_X3DNurbsControlCurveNode.call (this, executionContext);
+   NURBS_X3DNurbsControlCurveNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).ContourPolyline2D);
 
    this .controlPoints = [ ];
 }
 
-ContourPolyline2D .prototype = Object .assign (Object .create (NURBS_X3DNurbsControlCurveNode.prototype),
+Object .assign (Object .setPrototypeOf (ContourPolyline2D .prototype, NURBS_X3DNurbsControlCurveNode .prototype),
 {
-   constructor: ContourPolyline2D,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",     new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "controlPoint", new (Fields_default()).MFVec2d ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "ContourPolyline2D";
-   },
-   getComponentName: function ()
-   {
-      return "NURBS";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   tessellate: function (type)
+   tessellate (type)
    {
       switch (type)
       {
@@ -457,6 +449,38 @@ ContourPolyline2D .prototype = Object .assign (Object .create (NURBS_X3DNurbsCon
             return controlPoints;
          }
       }
+   },
+});
+
+Object .defineProperties (ContourPolyline2D,
+{
+   typeName:
+   {
+      value: "ContourPolyline2D",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "NURBS",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",     new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "controlPoint", new (Fields_default()).MFVec2d ()),
+      ]),
+      enumerable: true,
    },
 });
 
@@ -529,28 +553,37 @@ function CoordinateDouble (executionContext)
    this .addType ((X3DConstants_default()).CoordinateDouble);
 }
 
-CoordinateDouble .prototype = Object .assign (Object .create ((X3DCoordinateNode_default()).prototype),
+Object .setPrototypeOf (CoordinateDouble .prototype, (X3DCoordinateNode_default()).prototype);
+
+Object .defineProperties (CoordinateDouble,
 {
-   constructor: CoordinateDouble,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata", new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "point",    new (Fields_default()).MFVec3d ()),
-   ]),
-   getTypeName: function ()
+   typeName:
    {
-      return "CoordinateDouble";
+      value: "CoordinateDouble",
+      enumerable: true,
    },
-   getComponentName: function ()
+   componentName:
    {
-      return "NURBS";
+      value: "NURBS",
+      enumerable: true,
    },
-   getContainerField: function ()
+   containerField:
    {
-      return "coord";
+      value: "coord",
+      enumerable: true,
    },
-   getSpecificationRange: function ()
+   specificationRange:
    {
-      return ["3.0", "Infinity"];
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata", new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "point",    new (Fields_default()).MFVec3d ()),
+      ]),
+      enumerable: true,
    },
 });
 
@@ -621,7 +654,7 @@ var Vector4_default = /*#__PURE__*/__webpack_require__.n(Vector4_namespaceObject
 
 
 const NURBS = {
-   getTessellation: function (tessellation, dimension)
+   getTessellation (tessellation, dimension)
    {
       if (tessellation > 0)
          return tessellation + 1;
@@ -631,7 +664,7 @@ const NURBS = {
 
       return 2 * dimension + 1;
    },
-   getClosed2D: function (order, knot, weight, controlPoint)
+   getClosed2D (order, knot, weight, controlPoint)
    {
       const
          dimension   = controlPoint .length,
@@ -766,7 +799,7 @@ const NURBS = {
          return true;
       };
    })(),
-   isPeriodic: function (order, dimension, knot)
+   isPeriodic (order, dimension, knot)
    {
       // Check if knots are periodic.
 
@@ -799,7 +832,7 @@ const NURBS = {
 
       return true;
    },
-   getKnots: function (result, closed, order, dimension, knot)
+   getKnots (result, closed, order, dimension, knot)
    {
       const knots = result || [ ];
 
@@ -848,7 +881,7 @@ const NURBS = {
 
       return knots;
    },
-   getWeights: function (result, dimension, weight)
+   getWeights (result, dimension, weight)
    {
       if (weight .length !== dimension)
          return undefined;
@@ -864,7 +897,7 @@ const NURBS = {
 
       return weights;
    },
-   getUVWeights: function (result, uDimension, vDimension, weight)
+   getUVWeights (result, uDimension, vDimension, weight)
    {
       const dimension = uDimension * vDimension;
 
@@ -885,7 +918,7 @@ const NURBS = {
 
       return weights;
    },
-   getControlPoints2D: function (result, closed, order, weights, controlPoint)
+   getControlPoints2D (result, closed, order, weights, controlPoint)
    {
       const
          controlPoints     = result || [ ],
@@ -919,7 +952,7 @@ const NURBS = {
 
       return controlPoints;
    },
-   getControlPoints: function (result, closed, order, weights, controlPointNode)
+   getControlPoints (result, closed, order, weights, controlPointNode)
    {
       const
          controlPoints = result || [ ],
@@ -951,7 +984,7 @@ const NURBS = {
 
       return controlPoints;
    },
-   getUVControlPoints: function (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, weights, controlPointNode)
+   getUVControlPoints (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, weights, controlPointNode)
    {
       const
          controlPoints = result || [ ],
@@ -1000,7 +1033,7 @@ const NURBS = {
 
       return controlPoints;
    },
-   getTexControlPoints: function (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, controlPointNode)
+   getTexControlPoints (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, controlPointNode)
    {
       const controlPoints = result || [ ];
 
@@ -1103,12 +1136,25 @@ function X3DParametricGeometryNode (executionContext)
    this .addType ((X3DConstants_default()).X3DParametricGeometryNode);
 }
 
-X3DParametricGeometryNode .prototype = Object .assign (Object .create ((X3DGeometryNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (X3DParametricGeometryNode .prototype, (X3DGeometryNode_default()).prototype),
 {
-   constructor: X3DParametricGeometryNode,
-   getKnots: function (result, closed, order, dimension, knot)
+   getKnots (result, closed, order, dimension, knot)
    {
-      return NURBS_NURBS.getKnots (result, closed, order, dimension, knot);
+      return NURBS_NURBS .getKnots (result, closed, order, dimension, knot);
+   },
+});
+
+Object .defineProperties (X3DParametricGeometryNode,
+{
+   typeName:
+   {
+      value: "X3DParametricGeometryNode",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "NURBS",
+      enumerable: true,
    },
 });
 
@@ -1321,7 +1367,7 @@ function wrapAccessor (callback)
       var dimAccessors = [ ];
 
       for (var j = 0; j < i .length; j ++)
-         dimAccessors .push (variable.sum (i [j]));
+         dimAccessors .push (variable .sum (i [j]));
 
       if (period)
       {
@@ -1344,7 +1390,7 @@ function createAccessor (name, data)
 
    switch (infer_type(data))
    {
-      case infer_type.ARRAY_OF_OBJECTS:
+      case infer_type .ARRAY_OF_OBJECTS:
       {
          return wrapAccessor (function (accessors)
          {
@@ -1353,21 +1399,21 @@ function createAccessor (name, data)
             return name + "[" + accessors .join ("][") + "]" + properties [e];
          });
       }
-      case infer_type.ARRAY_OF_ARRAYS:
+      case infer_type .ARRAY_OF_ARRAYS:
       {
          return wrapAccessor (function (accessors)
          {
             return name + "[" + accessors .join ("][") + "]";
          });
       }
-      case infer_type.GENERIC_NDARRAY:
+      case infer_type .GENERIC_NDARRAY:
       {
          return wrapAccessor(function (accessors)
          {
             return name + ".get(" + accessors.join(",") + ")";
          });
       }
-      case infer_type.NDARRAY:
+      case infer_type .NDARRAY:
       {
          return wrapAccessor(function (accessors)
          {
@@ -1499,7 +1545,7 @@ const accessor_preamble_default_ = function (nurbs, variableName, propertyName, 
 
    switch (infer_type (data))
    {
-      case infer_type.NDARRAY:
+      case infer_type .NDARRAY:
       {
          code .push ("  var " + variableName + " = " + propertyName + ".data;");
          code .push ("  var " + variableName + "Offset = " + propertyName + ".offset;");
@@ -1510,8 +1556,8 @@ const accessor_preamble_default_ = function (nurbs, variableName, propertyName, 
 
          break;
       }
-      case infer_type.ARRAY_OF_OBJECTS:
-      case infer_type.ARRAY_OF_ARRAYS:
+      case infer_type .ARRAY_OF_OBJECTS:
+      case infer_type .ARRAY_OF_ARRAYS:
          code .push ("  var " + variableName + " = " + propertyName + ";");
    }
 
@@ -2800,7 +2846,7 @@ Namespace_default().set ("lib/nurbs/nurbs", nurbs_default_);
 
 function NurbsCurve (executionContext)
 {
-   NURBS_X3DParametricGeometryNode.call (this, executionContext);
+   NURBS_X3DParametricGeometryNode .call (this, executionContext);
    X3DLineGeometryNode_default().call (this, executionContext);
 
    this .addType ((X3DConstants_default()).NurbsCurve);
@@ -2812,44 +2858,18 @@ function NurbsCurve (executionContext)
    this .sampleOptions = { resolution: [ ] };
 }
 
-NurbsCurve .prototype = Object .assign (Object .create (NURBS_X3DParametricGeometryNode.prototype),
+Object .assign (Object .setPrototypeOf (NurbsCurve .prototype, NURBS_X3DParametricGeometryNode .prototype),
    (X3DLineGeometryNode_default()).prototype,
 {
-   constructor: NurbsCurve,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",     new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "tessellation", new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "closed",       new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "order",        new (Fields_default()).SFInt32 (3)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "knot",         new (Fields_default()).MFDouble ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "weight",       new (Fields_default()).MFDouble ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "controlPoint", new (Fields_default()).SFNode ()),
-   ]),
-   getTypeName: function ()
+   initialize ()
    {
-      return "NurbsCurve";
-   },
-   getComponentName: function ()
-   {
-      return "NURBS";
-   },
-   getContainerField: function ()
-   {
-      return "geometry";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
-   {
-      NURBS_X3DParametricGeometryNode.prototype.initialize.call (this);
+      NURBS_X3DParametricGeometryNode .prototype .initialize .call (this);
 
       this ._controlPoint .addInterest ("set_controlPoint__", this);
 
       this .set_controlPoint__ ();
    },
-   set_controlPoint__: function ()
+   set_controlPoint__ ()
    {
       if (this .controlPointNode)
          this .controlPointNode .removeInterest ("requestRebuild", this);
@@ -2859,26 +2879,26 @@ NurbsCurve .prototype = Object .assign (Object .create (NURBS_X3DParametricGeome
       if (this .controlPointNode)
          this .controlPointNode .addInterest ("requestRebuild", this);
    },
-   getTessellation: function (numKnots)
+   getTessellation (numKnots)
    {
-      return NURBS_NURBS.getTessellation (this ._tessellation .getValue (), numKnots - this ._order .getValue ());
+      return NURBS_NURBS .getTessellation (this ._tessellation .getValue (), numKnots - this ._order .getValue ());
    },
-   getClosed: function (order, knot, weight, controlPointNode)
+   getClosed (order, knot, weight, controlPointNode)
    {
       if (! this ._closed .getValue ())
          return false;
 
-      return NURBS_NURBS.getClosed (order, knot, weight, controlPointNode);
+      return NURBS_NURBS .getClosed (order, knot, weight, controlPointNode);
    },
-   getWeights: function (result, dimension, weight)
+   getWeights (result, dimension, weight)
    {
-      return NURBS_NURBS.getWeights (result, dimension, weight);
+      return NURBS_NURBS .getWeights (result, dimension, weight);
    },
-   getControlPoints: function (result, closed, order, weights, controlPointNode)
+   getControlPoints (result, closed, order, weights, controlPointNode)
    {
-      return NURBS_NURBS.getControlPoints (result, closed, order, weights, controlPointNode);
+      return NURBS_NURBS .getControlPoints (result, closed, order, weights, controlPointNode);
    },
-   tessellate: function ()
+   tessellate ()
    {
       if (this ._order .getValue () < 2)
          return [ ];
@@ -2905,7 +2925,7 @@ NurbsCurve .prototype = Object .assign (Object .create (NURBS_X3DParametricGeome
 
       return array;
    },
-   build: function ()
+   build ()
    {
       if (this ._order .getValue () < 2)
          return;
@@ -2945,7 +2965,7 @@ NurbsCurve .prototype = Object .assign (Object .create (NURBS_X3DParametricGeome
       this .sampleOptions .haveWeights    = !! weights;
 
       const
-         mesh        = nurbs_nurbs.sample (this .mesh, surface, this .sampleOptions),
+         mesh        = nurbs_nurbs .sample (this .mesh, surface, this .sampleOptions),
          points      = mesh .points,
          vertexArray = this .getVertices ();
 
@@ -2957,9 +2977,46 @@ NurbsCurve .prototype = Object .assign (Object .create (NURBS_X3DParametricGeome
          vertexArray .push (points [i2], points [i2 + 1], points [i2 + 2], 1);
       }
    },
-   dispose: function ()
+   dispose ()
    {
-      NURBS_X3DParametricGeometryNode.prototype.dispose.call (this);
+      NURBS_X3DParametricGeometryNode .prototype .dispose .call (this);
+   },
+});
+
+Object .defineProperties (NurbsCurve,
+{
+   typeName:
+   {
+      value: "NurbsCurve",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "NURBS",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "geometry",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",     new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "tessellation", new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "closed",       new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "order",        new (Fields_default()).SFInt32 (3)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "knot",         new (Fields_default()).MFDouble ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "weight",       new (Fields_default()).MFDouble ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "controlPoint", new (Fields_default()).SFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 
@@ -3027,7 +3084,7 @@ Namespace_default().set ("x_ite/Components/NURBS/NurbsCurve", NurbsCurve_default
 
 function NurbsCurve2D (executionContext)
 {
-   NURBS_X3DNurbsControlCurveNode.call (this, executionContext);
+   NURBS_X3DNurbsControlCurveNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).NurbsCurve2D);
 
@@ -3039,58 +3096,32 @@ function NurbsCurve2D (executionContext)
    this .array         = [ ];
 }
 
-NurbsCurve2D .prototype = Object .assign (Object .create (NURBS_X3DNurbsControlCurveNode.prototype),
+Object .assign (Object .setPrototypeOf (NurbsCurve2D .prototype, NURBS_X3DNurbsControlCurveNode .prototype),
 {
-   constructor: NurbsCurve2D,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",     new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "tessellation", new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "closed",       new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "order",        new (Fields_default()).SFInt32 (3)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "knot",         new (Fields_default()).MFDouble ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "weight",       new (Fields_default()).MFDouble ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "controlPoint", new (Fields_default()).MFVec2d ()),
-   ]),
-   getTypeName: function ()
+   getTessellation (numKnots)
    {
-      return "NurbsCurve2D";
+      return NURBS_NURBS .getTessellation (this ._tessellation .getValue (), numKnots - this ._order .getValue ());
    },
-   getComponentName: function ()
-   {
-      return "NURBS";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   getTessellation: function (numKnots)
-   {
-      return NURBS_NURBS.getTessellation (this ._tessellation .getValue (), numKnots - this ._order .getValue ());
-   },
-   getClosed: function (order, knot, weight, controlPoint)
+   getClosed (order, knot, weight, controlPoint)
    {
       if (! this ._closed .getValue ())
          return false;
 
-      return NURBS_NURBS.getClosed2D (order, knot, weight, controlPoint);
+      return NURBS_NURBS .getClosed2D (order, knot, weight, controlPoint);
    },
-   getKnots: function (result, closed, order, dimension, knot)
+   getKnots (result, closed, order, dimension, knot)
    {
-      return NURBS_NURBS.getKnots (result, closed, order, dimension, knot);
+      return NURBS_NURBS .getKnots (result, closed, order, dimension, knot);
    },
-   getWeights: function (result, dimension, weight)
+   getWeights (result, dimension, weight)
    {
-      return NURBS_NURBS.getWeights (result, dimension, weight);
+      return NURBS_NURBS .getWeights (result, dimension, weight);
    },
-   getControlPoints: function (result, closed, order, weights, controlPoint)
+   getControlPoints (result, closed, order, weights, controlPoint)
    {
-      return NURBS_NURBS.getControlPoints2D (result, closed, order, weights, controlPoint);
+      return NURBS_NURBS .getControlPoints2D (result, closed, order, weights, controlPoint);
    },
-   tessellate: function (type)
+   tessellate (type)
    {
       const array = this .array;
 
@@ -3131,7 +3162,7 @@ NurbsCurve2D .prototype = Object .assign (Object .create (NURBS_X3DNurbsControlC
       this .sampleOptions .haveWeights    = !! weights;
 
       const
-         mesh   = nurbs_nurbs.sample (this .mesh, surface, this .sampleOptions),
+         mesh   = nurbs_nurbs .sample (this .mesh, surface, this .sampleOptions),
          points = mesh .points;
 
       switch (type)
@@ -3166,6 +3197,43 @@ NurbsCurve2D .prototype = Object .assign (Object .create (NURBS_X3DNurbsControlC
       }
 
       return array;
+   },
+});
+
+Object .defineProperties (NurbsCurve2D,
+{
+   typeName:
+   {
+      value: "NurbsCurve2D",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "NURBS",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",     new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "tessellation", new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "closed",       new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "order",        new (Fields_default()).SFInt32 (3)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "knot",         new (Fields_default()).MFDouble ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "weight",       new (Fields_default()).MFDouble ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "controlPoint", new (Fields_default()).MFVec2d ()),
+      ]),
+      enumerable: true,
    },
 });
 
@@ -3259,37 +3327,11 @@ function NurbsOrientationInterpolator (executionContext)
    this .sampleOptions = { resolution: [ 128 ] };
 }
 
-NurbsOrientationInterpolator .prototype = Object .assign (Object .create ((X3DChildNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (NurbsOrientationInterpolator .prototype, (X3DChildNode_default()).prototype),
 {
-   constructor: NurbsOrientationInterpolator,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",      new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,   "set_fraction",  new (Fields_default()).SFFloat ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "order",         new (Fields_default()).SFInt32 (3)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "knot",          new (Fields_default()).MFDouble ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "weight",        new (Fields_default()).MFDouble ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "controlPoint",  new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "value_changed", new (Fields_default()).SFRotation ()),
-   ]),
-   getTypeName: function ()
+   initialize ()
    {
-      return "NurbsOrientationInterpolator";
-   },
-   getComponentName: function ()
-   {
-      return "NURBS";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
-   {
-      X3DChildNode_default().prototype.initialize.call (this);
+      X3DChildNode_default().prototype .initialize .call (this);
 
       this ._order        .addInterest ("requestRebuild",     this);
       this ._knot         .addInterest ("requestRebuild",     this);
@@ -3305,7 +3347,7 @@ NurbsOrientationInterpolator .prototype = Object .assign (Object .create ((X3DCh
 
       this .set_controlPoint__ ();
    },
-   set_controlPoint__: function ()
+   set_controlPoint__ ()
    {
       if (this .controlPointNode)
          this .controlPointNode .removeInterest ("requestRebuild", this);
@@ -3317,27 +3359,27 @@ NurbsOrientationInterpolator .prototype = Object .assign (Object .create ((X3DCh
 
       this .requestRebuild ();
    },
-   getClosed: function (order, knot, weight, controlPointNode)
+   getClosed (order, knot, weight, controlPointNode)
    {
       return  false && 0;
    },
-   getKnots: function (result, closed, order, dimension, knot)
+   getKnots (result, closed, order, dimension, knot)
    {
-      return NURBS_NURBS.getKnots (result, closed, order, dimension, knot);
+      return NURBS_NURBS .getKnots (result, closed, order, dimension, knot);
    },
-   getWeights: function (result, dimension, weight)
+   getWeights (result, dimension, weight)
    {
-      return NURBS_NURBS.getWeights (result, dimension, weight);
+      return NURBS_NURBS .getWeights (result, dimension, weight);
    },
-   getControlPoints: function (result, closed, order, weights, controlPointNode)
+   getControlPoints (result, closed, order, weights, controlPointNode)
    {
-      return NURBS_NURBS.getControlPoints (result, closed, order, weights, controlPointNode);
+      return NURBS_NURBS .getControlPoints (result, closed, order, weights, controlPointNode);
    },
-   requestRebuild: function ()
+   requestRebuild ()
    {
       this ._rebuild .addEvent ();
    },
-   build: function ()
+   build ()
    {
       if (this ._order .getValue () < 2)
          return;
@@ -3376,7 +3418,7 @@ NurbsOrientationInterpolator .prototype = Object .assign (Object .create ((X3DCh
       this .sampleOptions .haveWeights = !! weights;
 
       const
-         mesh         = nurbs_nurbs.sample (this .mesh, surface, this .sampleOptions),
+         mesh         = nurbs_nurbs .sample (this .mesh, surface, this .sampleOptions),
          points       = mesh .points,
          interpolator = this .interpolator;
 
@@ -3398,6 +3440,43 @@ NurbsOrientationInterpolator .prototype = Object .assign (Object .create ((X3DCh
          interpolator ._key      .push (knots [0] + scale);
          interpolator ._keyValue. push (interpolator ._keyValue [0]);
       }
+   },
+});
+
+Object .defineProperties (NurbsOrientationInterpolator,
+{
+   typeName:
+   {
+      value: "NurbsOrientationInterpolator",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "NURBS",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",      new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,   "set_fraction",  new (Fields_default()).SFFloat ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "order",         new (Fields_default()).SFInt32 (3)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "knot",          new (Fields_default()).MFDouble ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "weight",        new (Fields_default()).MFDouble ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "controlPoint",  new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "value_changed", new (Fields_default()).SFRotation ()),
+      ]),
+      enumerable: true,
    },
 });
 
@@ -3468,7 +3547,7 @@ var Algorithm_default = /*#__PURE__*/__webpack_require__.n(Algorithm_namespaceOb
 
 function X3DNurbsSurfaceGeometryNode (executionContext)
 {
-   NURBS_X3DParametricGeometryNode.call (this, executionContext);
+   NURBS_X3DParametricGeometryNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).X3DNurbsSurfaceGeometryNode);
 
@@ -3486,12 +3565,11 @@ function X3DNurbsSurfaceGeometryNode (executionContext)
    this .texMesh           = { };
 }
 
-X3DNurbsSurfaceGeometryNode .prototype = Object .assign (Object .create (NURBS_X3DParametricGeometryNode.prototype),
+Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, NURBS_X3DParametricGeometryNode .prototype),
 {
-   constructor: X3DNurbsSurfaceGeometryNode,
-   initialize: function ()
+   initialize ()
    {
-      NURBS_X3DParametricGeometryNode.prototype.initialize.call (this);
+      NURBS_X3DParametricGeometryNode .prototype .initialize .call (this);
 
       this ._texCoord     .addInterest ("set_texCoord__",     this);
       this ._controlPoint .addInterest ("set_controlPoint__", this);
@@ -3499,7 +3577,7 @@ X3DNurbsSurfaceGeometryNode .prototype = Object .assign (Object .create (NURBS_X
       this .set_texCoord__ ();
       this .set_controlPoint__ ();
    },
-   set_texCoord__: function ()
+   set_texCoord__ ()
    {
       this .texCoordNode      ?.removeInterest ("requestRebuild", this);
       this .nurbsTexCoordNode ?.removeInterest ("requestRebuild", this);
@@ -3510,7 +3588,7 @@ X3DNurbsSurfaceGeometryNode .prototype = Object .assign (Object .create (NURBS_X
       this .texCoordNode      ?.addInterest ("requestRebuild", this);
       this .nurbsTexCoordNode ?.addInterest ("requestRebuild", this);
    },
-   set_controlPoint__: function ()
+   set_controlPoint__ ()
    {
       if (this .controlPointNode)
          this .controlPointNode .removeInterest ("requestRebuild", this);
@@ -3520,51 +3598,51 @@ X3DNurbsSurfaceGeometryNode .prototype = Object .assign (Object .create (NURBS_X
       if (this .controlPointNode)
          this .controlPointNode .addInterest ("requestRebuild", this);
    },
-   setTessellationScale: function (value)
+   setTessellationScale (value)
    {
       this .tessellationScale = value;
 
       this .requestRebuild ();
    },
-   getUTessellation: function (numKnots)
+   getUTessellation (numKnots)
    {
-      return Math .floor (NURBS_NURBS.getTessellation (this ._uTessellation .getValue (), numKnots - this ._uOrder .getValue ()) * this .tessellationScale);
+      return Math .floor (NURBS_NURBS .getTessellation (this ._uTessellation .getValue (), numKnots - this ._uOrder .getValue ()) * this .tessellationScale);
    },
-   getVTessellation: function (numKnots)
+   getVTessellation (numKnots)
    {
-      return Math .floor (NURBS_NURBS.getTessellation (this ._vTessellation .getValue (), numKnots - this ._vOrder .getValue ()) * this .tessellationScale);
+      return Math .floor (NURBS_NURBS .getTessellation (this ._vTessellation .getValue (), numKnots - this ._vOrder .getValue ()) * this .tessellationScale);
    },
-   getUClosed: function (uOrder, uDimension, vDimension, uKnot, weight, controlPointNode)
+   getUClosed (uOrder, uDimension, vDimension, uKnot, weight, controlPointNode)
    {
       if (this ._uClosed .getValue ())
-         return NURBS_NURBS.getUClosed (uOrder, uDimension, vDimension, uKnot, weight, controlPointNode);
+         return NURBS_NURBS .getUClosed (uOrder, uDimension, vDimension, uKnot, weight, controlPointNode);
 
       return false;
    },
-   getVClosed: function (vOrder, uDimension, vDimension, vKnot, weight, controlPointNode)
+   getVClosed (vOrder, uDimension, vDimension, vKnot, weight, controlPointNode)
    {
       if (this ._vClosed .getValue ())
-         return NURBS_NURBS.getVClosed (vOrder, uDimension, vDimension, vKnot, weight, controlPointNode);
+         return NURBS_NURBS .getVClosed (vOrder, uDimension, vDimension, vKnot, weight, controlPointNode);
 
       return false;
    },
-   getUVWeights: function (result, uDimension, vDimension, weight)
+   getUVWeights (result, uDimension, vDimension, weight)
    {
-      return NURBS_NURBS.getUVWeights (result, uDimension, vDimension, weight);
+      return NURBS_NURBS .getUVWeights (result, uDimension, vDimension, weight);
    },
-   getTexControlPoints: function (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, texCoordNode)
+   getTexControlPoints (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, texCoordNode)
    {
-      return NURBS_NURBS.getTexControlPoints (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, texCoordNode);
+      return NURBS_NURBS .getTexControlPoints (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, texCoordNode);
    },
-   getUVControlPoints: function (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, weights, controlPointNode)
+   getUVControlPoints (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, weights, controlPointNode)
    {
-      return NURBS_NURBS.getUVControlPoints (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, weights, controlPointNode);
+      return NURBS_NURBS .getUVControlPoints (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, weights, controlPointNode);
    },
-   getTrimmingContours: function ()
+   getTrimmingContours ()
    {
       return undefined;
    },
-   build: function ()
+   build ()
    {
       if (this ._uOrder .getValue () < 2)
          return;
@@ -3627,7 +3705,7 @@ X3DNurbsSurfaceGeometryNode .prototype = Object .assign (Object .create (NURBS_X
       sampleOptions .trimmingContours = this .getTrimmingContours ();
 
       const
-         mesh        = nurbs_nurbs.sample (this .mesh, surface, sampleOptions),
+         mesh        = nurbs_nurbs .sample (this .mesh, surface, sampleOptions),
          faces       = mesh .faces,
          points      = mesh .points,
          vertexArray = this .getVertices ();
@@ -3706,7 +3784,7 @@ X3DNurbsSurfaceGeometryNode .prototype = Object .assign (Object .create (NURBS_X
          sampleOptions .haveWeights = false;
 
          const
-            texMesh       = nurbs_nurbs.sample (this .texMesh, texSurface, sampleOptions),
+            texMesh       = nurbs_nurbs .sample (this .texMesh, texSurface, sampleOptions),
             faces         = texMesh .faces,
             points        = texMesh .points,
             texCoordArray = this .getTexCoords ();
@@ -3721,7 +3799,7 @@ X3DNurbsSurfaceGeometryNode .prototype = Object .assign (Object .create (NURBS_X
          this .getMultiTexCoords () .push (this .getTexCoords ());
       };
    })(),
-   buildNormals: function (faces, points)
+   buildNormals (faces, points)
    {
       const
          normals     = this .createNormals (faces, points),
@@ -3730,7 +3808,7 @@ X3DNurbsSurfaceGeometryNode .prototype = Object .assign (Object .create (NURBS_X
       for (const normal of normals)
          normalArray .push (normal .x, normal .y, normal .z);
    },
-   createNormals: function (faces, points)
+   createNormals (faces, points)
    {
       const
          normals     = this .createFaceNormals (faces, points),
@@ -3786,6 +3864,20 @@ X3DNurbsSurfaceGeometryNode .prototype = Object .assign (Object .create (NURBS_X
          return normals;
       };
    })(),
+});
+
+Object .defineProperties (X3DNurbsSurfaceGeometryNode,
+{
+   typeName:
+   {
+      value: "X3DNurbsSurfaceGeometryNode",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "NURBS",
+      enumerable: true,
+   },
 });
 
 const X3DNurbsSurfaceGeometryNode_default_ = X3DNurbsSurfaceGeometryNode;
@@ -3849,46 +3941,55 @@ Namespace_default().set ("x_ite/Components/NURBS/X3DNurbsSurfaceGeometryNode", X
 
 function NurbsPatchSurface (executionContext)
 {
-   NURBS_X3DNurbsSurfaceGeometryNode.call (this, executionContext);
+   NURBS_X3DNurbsSurfaceGeometryNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).NurbsPatchSurface);
 }
 
-NurbsPatchSurface .prototype = Object .assign (Object .create (NURBS_X3DNurbsSurfaceGeometryNode.prototype),
+Object .setPrototypeOf (NurbsPatchSurface .prototype, NURBS_X3DNurbsSurfaceGeometryNode .prototype);
+
+Object .defineProperties (NurbsPatchSurface,
 {
-   constructor: NurbsPatchSurface,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",      new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "solid",         new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "uTessellation", new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "vTessellation", new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "uClosed",       new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "vClosed",       new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "uOrder",        new (Fields_default()).SFInt32 (3)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "vOrder",        new (Fields_default()).SFInt32 (3)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "uDimension",    new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "vDimension",    new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "uKnot",         new (Fields_default()).MFDouble ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "vKnot",         new (Fields_default()).MFDouble ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "weight",        new (Fields_default()).MFDouble ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "texCoord",      new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "controlPoint",  new (Fields_default()).SFNode ()),
-   ]),
-   getTypeName: function ()
+   typeName:
    {
-      return "NurbsPatchSurface";
+      value: "NurbsPatchSurface",
+      enumerable: true,
    },
-   getComponentName: function ()
+   componentName:
    {
-      return "NURBS";
+      value: "NURBS",
+      enumerable: true,
    },
-   getContainerField: function ()
+   containerField:
    {
-      return "geometry";
+      value: "geometry",
+      enumerable: true,
    },
-   getSpecificationRange: function ()
+   specificationRange:
    {
-      return ["3.0", "Infinity"];
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",      new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "solid",         new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "uTessellation", new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "vTessellation", new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "uClosed",       new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "vClosed",       new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "uOrder",        new (Fields_default()).SFInt32 (3)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "vOrder",        new (Fields_default()).SFInt32 (3)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "uDimension",    new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "vDimension",    new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "uKnot",         new (Fields_default()).MFDouble ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "vKnot",         new (Fields_default()).MFDouble ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "weight",        new (Fields_default()).MFDouble ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "texCoord",      new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "controlPoint",  new (Fields_default()).SFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 
@@ -3974,37 +4075,11 @@ function NurbsPositionInterpolator (executionContext)
    this .sampleOptions = { resolution: [ 128 ] };
 }
 
-NurbsPositionInterpolator .prototype = Object .assign (Object .create ((X3DChildNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (NurbsPositionInterpolator .prototype, (X3DChildNode_default()).prototype),
 {
-   constructor: NurbsPositionInterpolator,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",      new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,   "set_fraction",  new (Fields_default()).SFFloat ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "order",         new (Fields_default()).SFInt32 (3)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "knot",          new (Fields_default()).MFDouble ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "weight",        new (Fields_default()).MFDouble ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "controlPoint",  new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "value_changed", new (Fields_default()).SFVec3f ()),
-   ]),
-   getTypeName: function ()
+   initialize ()
    {
-      return "NurbsPositionInterpolator";
-   },
-   getComponentName: function ()
-   {
-      return "NURBS";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
-   {
-      X3DChildNode_default().prototype.initialize.call (this);
+      X3DChildNode_default().prototype .initialize .call (this);
 
       this ._order        .addInterest ("requestRebuild",     this);
       this ._knot         .addInterest ("requestRebuild",     this);
@@ -4020,7 +4095,7 @@ NurbsPositionInterpolator .prototype = Object .assign (Object .create ((X3DChild
 
       this .set_controlPoint__ ();
    },
-   set_controlPoint__: function ()
+   set_controlPoint__ ()
    {
       if (this .controlPointNode)
          this .controlPointNode .removeInterest ("requestRebuild", this);
@@ -4032,27 +4107,27 @@ NurbsPositionInterpolator .prototype = Object .assign (Object .create ((X3DChild
 
       this .requestRebuild ();
    },
-   getClosed: function (order, knot, weight, controlPointNode)
+   getClosed (order, knot, weight, controlPointNode)
    {
       return  false && 0;
    },
-   getKnots: function (result, closed, order, dimension, knot)
+   getKnots (result, closed, order, dimension, knot)
    {
-      return NURBS_NURBS.getKnots (result, closed, order, dimension, knot);
+      return NURBS_NURBS .getKnots (result, closed, order, dimension, knot);
    },
-   getWeights: function (result, dimension, weight)
+   getWeights (result, dimension, weight)
    {
-      return NURBS_NURBS.getWeights (result, dimension, weight);
+      return NURBS_NURBS .getWeights (result, dimension, weight);
    },
-   getControlPoints: function (result, closed, order, weights, controlPointNode)
+   getControlPoints (result, closed, order, weights, controlPointNode)
    {
-      return NURBS_NURBS.getControlPoints (result, closed, order, weights, controlPointNode);
+      return NURBS_NURBS .getControlPoints (result, closed, order, weights, controlPointNode);
    },
-   requestRebuild: function ()
+   requestRebuild ()
    {
       this ._rebuild .addEvent ();
    },
-   build: function ()
+   build ()
    {
       if (this ._order .getValue () < 2)
          return;
@@ -4091,7 +4166,7 @@ NurbsPositionInterpolator .prototype = Object .assign (Object .create ((X3DChild
       this .sampleOptions .haveWeights = !! weights;
 
       const
-         mesh         = nurbs_nurbs.sample (this .mesh, surface, this .sampleOptions),
+         mesh         = nurbs_nurbs .sample (this .mesh, surface, this .sampleOptions),
          points       = mesh .points,
          interpolator = this .interpolator;
 
@@ -4103,6 +4178,43 @@ NurbsPositionInterpolator .prototype = Object .assign (Object .create ((X3DChild
          interpolator ._key      .push (knots [0] + i / (length - 3) * scale);
          interpolator ._keyValue. push (new (Fields_default()).SFVec3f (points [i], points [i + 1], points [i + 2]));
       }
+   },
+});
+
+Object .defineProperties (NurbsPositionInterpolator,
+{
+   typeName:
+   {
+      value: "NurbsPositionInterpolator",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "NURBS",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",      new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,   "set_fraction",  new (Fields_default()).SFFloat ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "order",         new (Fields_default()).SFInt32 (3)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "knot",          new (Fields_default()).MFDouble ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "weight",        new (Fields_default()).MFDouble ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "controlPoint",  new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "value_changed", new (Fields_default()).SFVec3f ()),
+      ]),
+      enumerable: true,
    },
 });
 
@@ -4180,41 +4292,13 @@ function NurbsSet (executionContext)
    this .geometryNodes = [ ];
 }
 
-NurbsSet .prototype = Object .assign (Object .create ((X3DChildNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (NurbsSet .prototype, (X3DChildNode_default()).prototype),
    (X3DBoundedObject_default()).prototype,
 {
-   constructor: NurbsSet,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",          new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "tessellationScale", new (Fields_default()).SFFloat (1)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "visible",           new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bboxDisplay",       new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxSize",          new (Fields_default()).SFVec3f (-1, -1, -1)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxCenter",        new (Fields_default()).SFVec3f ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "addGeometry",       new (Fields_default()).MFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "removeGeometry",    new (Fields_default()).MFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "geometry",          new (Fields_default()).MFNode ()),
-   ]),
-   getTypeName: function ()
+   initialize ()
    {
-      return "NurbsSet";
-   },
-   getComponentName: function ()
-   {
-      return "NURBS";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
-   {
-      X3DChildNode_default().prototype.initialize.call (this);
-      X3DBoundedObject_default().prototype.initialize.call (this);
+      X3DChildNode_default().prototype .initialize .call (this);
+      X3DBoundedObject_default().prototype .initialize .call (this);
 
       this ._tessellationScale .addInterest ("set_tessellationScale__", this);
       this ._addGeometry       .addInterest ("set_addGeometry__",       this);
@@ -4223,7 +4307,7 @@ NurbsSet .prototype = Object .assign (Object .create ((X3DChildNode_default()).p
 
       this .set_geometry__ ();
    },
-   getBBox: function (bbox, shadows)
+   getBBox (bbox, shadows)
    {
       // Add bounding boxes
 
@@ -4232,20 +4316,17 @@ NurbsSet .prototype = Object .assign (Object .create ((X3DChildNode_default()).p
 
       return bbox;
    },
-   set_tessellationScale__: function ()
+   set_tessellationScale__ ()
    {
       const tessellationScale = Math .max (0, this ._tessellationScale .getValue ());
 
       for (const geometryNode of this .geometryNodes)
          geometryNode .setTessellationScale (tessellationScale);
    },
-   set_addGeometry__: function ()
+   set_addGeometry__ ()
    {
       this ._addGeometry .setTainted (true);
-
-      this ._addGeometry .erase (NurbsSet_remove (this ._addGeometry, 0, this ._addGeometry .length,
-                                         this ._geometry,    0, this ._geometry .length),
-                                 this ._addGeometry .length);
+      this ._addGeometry .assign (NurbsSet_filter (this ._addGeometry, this ._geometry));
 
       for (const geometry of this ._addGeometry)
          this ._geometry .push (geometry);
@@ -4253,18 +4334,15 @@ NurbsSet .prototype = Object .assign (Object .create ((X3DChildNode_default()).p
       this ._addGeometry .length = 0;
       this ._addGeometry .setTainted (false);
    },
-   set_removeGeometry__: function ()
+   set_removeGeometry__ ()
    {
       this ._removeGeometry .setTainted (true);
-
-      this ._geometry .erase (NurbsSet_remove (this ._geometry,       0, this ._geometry .length,
-                                      this ._removeGeometry, 0, this ._removeGeometry .length),
-                              this ._geometry .length);
+      this ._geometry .assign (NurbsSet_filter (this ._geometry, this ._removeGeometry));
 
       this ._removeGeometry .length = 0;
       this ._removeGeometry .setTainted (false);
    },
-   set_geometry__: function ()
+   set_geometry__ ()
    {
       for (const geometryNode of this .geometryNodes)
          geometryNode .setTessellationScale (1);
@@ -4281,22 +4359,58 @@ NurbsSet .prototype = Object .assign (Object .create ((X3DChildNode_default()).p
 
       this .set_tessellationScale__ ();
    },
-   dispose: function ()
+   dispose ()
    {
-      X3DBoundedObject_default().prototype.dispose.call (this);
-      X3DChildNode_default().prototype.dispose.call (this);
+      X3DBoundedObject_default().prototype .dispose .call (this);
+      X3DChildNode_default().prototype .dispose .call (this);
    },
 });
 
-function NurbsSet_remove (array, first, last, range, rfirst, rlast)
+function NurbsSet_filter (array, remove)
 {
-   const set = new Set ();
+   const set = new Set (remove);
 
-   for (let i = rfirst; i < rlast; ++ i)
-      set .add (range [i]);
-
-   return array .remove (first, last, value => set .has (value));
+   return array .filter (value => !set .has (value));
 }
+
+Object .defineProperties (NurbsSet,
+{
+   typeName:
+   {
+      value: "NurbsSet",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "NURBS",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",          new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "tessellationScale", new (Fields_default()).SFFloat (1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "visible",           new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bboxDisplay",       new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxSize",          new (Fields_default()).SFVec3f (-1, -1, -1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxCenter",        new (Fields_default()).SFVec3f ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "addGeometry",       new (Fields_default()).MFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "removeGeometry",    new (Fields_default()).MFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "geometry",          new (Fields_default()).MFNode ()),
+      ]),
+      enumerable: true,
+   },
+});
 
 const NurbsSet_default_ = NurbsSet;
 ;
@@ -4354,8 +4468,9 @@ var Line3_default = /*#__PURE__*/__webpack_require__.n(Line3_namespaceObject);
  *
  ******************************************************************************/
 
-const Trinagle2 = {
-   isPointInTriangle: function (a, b, c, point)
+const Triangle2 =
+{
+   isPointInTriangle (a, b, c, point)
    {
       // https://en.wikipedia.org/wiki/Barycentric_coordinate_system
 
@@ -4383,11 +4498,11 @@ const Trinagle2 = {
    },
 };
 
-const Triangle2_default_ = Trinagle2;
+const Triangle2_default_ = Triangle2;
 ;
 
 Namespace_default().set ("standard/Math/Geometry/Triangle2", Triangle2_default_);
-/* harmony default export */ const Triangle2 = (Triangle2_default_);
+/* harmony default export */ const Geometry_Triangle2 = (Triangle2_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/NURBS/NurbsSurfaceInterpolator.js
 /*******************************************************************************
  *
@@ -4455,40 +4570,9 @@ function NurbsSurfaceInterpolator (executionContext)
    this .geometry = new NURBS_NurbsPatchSurface (executionContext);
 }
 
-NurbsSurfaceInterpolator .prototype = Object .assign (Object .create ((X3DChildNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (NurbsSurfaceInterpolator .prototype, (X3DChildNode_default()).prototype),
 {
-   constructor: NurbsSurfaceInterpolator,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",         new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "set_fraction",     new (Fields_default()).SFVec2f ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "uOrder",           new (Fields_default()).SFInt32 (3)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "vOrder",           new (Fields_default()).SFInt32 (3)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "uDimension",       new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "vDimension",       new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "uKnot",            new (Fields_default()).MFDouble ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "vKnot",            new (Fields_default()).MFDouble ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "weight",           new (Fields_default()).MFDouble ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "controlPoint",     new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "normal_changed",   new (Fields_default()).SFVec3f ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "position_changed", new (Fields_default()).SFVec3f ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "NurbsSurfaceInterpolator";
-   },
-   getComponentName: function ()
-   {
-      return "NURBS";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       this ._set_fraction .addInterest ("set_fraction__", this);
 
@@ -4538,7 +4622,7 @@ NurbsSurfaceInterpolator .prototype = Object .assign (Object .create ((X3DChildN
             b .set (texCoordsArray [i4 + 4], texCoordsArray [i4 + 5], 0);
             c .set (texCoordsArray [i4 + 7], texCoordsArray [i4 + 9], 0);
 
-            if (Triangle2.isPointInTriangle (a, b, c, fraction))
+            if (Geometry_Triangle2 .isPointInTriangle (a, b, c, fraction))
             {
                line .set (point .set (fraction .x, fraction .y, 0), (Vector3_default()).zAxis);
 
@@ -4564,6 +4648,48 @@ NurbsSurfaceInterpolator .prototype = Object .assign (Object .create ((X3DChildN
          }
       };
    })(),
+});
+
+Object .defineProperties (NurbsSurfaceInterpolator,
+{
+   typeName:
+   {
+      value: "NurbsSurfaceInterpolator",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "NURBS",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",         new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "set_fraction",     new (Fields_default()).SFVec2f ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "uOrder",           new (Fields_default()).SFInt32 (3)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "vOrder",           new (Fields_default()).SFInt32 (3)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "uDimension",       new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "vDimension",       new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "uKnot",            new (Fields_default()).MFDouble ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "vKnot",            new (Fields_default()).MFDouble ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "weight",           new (Fields_default()).MFDouble ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "controlPoint",     new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "normal_changed",   new (Fields_default()).SFVec3f ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "position_changed", new (Fields_default()).SFVec3f ()),
+      ]),
+      enumerable: true,
+   },
 });
 
 const NurbsSurfaceInterpolator_default_ = NurbsSurfaceInterpolator;
@@ -4632,42 +4758,18 @@ var Extrusion_default = /*#__PURE__*/__webpack_require__.n(Extrusion_namespaceOb
 
 function NurbsSweptSurface (executionContext)
 {
-   NURBS_X3DParametricGeometryNode.call (this, executionContext);
+   NURBS_X3DParametricGeometryNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).NurbsSweptSurface);
 
    this .extrusion = new (Extrusion_default()) (executionContext);
 }
 
-NurbsSweptSurface .prototype = Object .assign (Object .create (NURBS_X3DParametricGeometryNode.prototype),
+Object .assign (Object .setPrototypeOf (NurbsSweptSurface .prototype, NURBS_X3DParametricGeometryNode .prototype),
 {
-   constructor: NurbsSweptSurface,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",          new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "solid",             new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "ccw",               new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "crossSectionCurve", new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "trajectoryCurve",   new (Fields_default()).SFNode ()),
-   ]),
-   getTypeName: function ()
+   initialize ()
    {
-      return "NurbsSweptSurface";
-   },
-   getComponentName: function ()
-   {
-      return "NURBS";
-   },
-   getContainerField: function ()
-   {
-      return "geometry";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
-   {
-      NURBS_X3DParametricGeometryNode.prototype.initialize.call (this);
+      NURBS_X3DParametricGeometryNode .prototype .initialize .call (this);
 
       this ._crossSectionCurve .addInterest ("set_crossSectionCurve__", this);
       this ._trajectoryCurve   .addInterest ("set_trajectoryCurve__",   this);
@@ -4689,7 +4791,7 @@ NurbsSweptSurface .prototype = Object .assign (Object .create (NURBS_X3DParametr
       this .set_crossSectionCurve__ ();
       this .set_trajectoryCurve__ ();
    },
-   set_crossSectionCurve__: function ()
+   set_crossSectionCurve__ ()
    {
       if (this .crossSectionCurveNode)
          this .crossSectionCurveNode .removeInterest ("requestRebuild", this);
@@ -4699,7 +4801,7 @@ NurbsSweptSurface .prototype = Object .assign (Object .create (NURBS_X3DParametr
       if (this .crossSectionCurveNode)
          this .crossSectionCurveNode .addInterest ("requestRebuild", this);
    },
-   set_trajectoryCurve__: function ()
+   set_trajectoryCurve__ ()
    {
       if (this .trajectoryCurveNode)
          this .trajectoryCurveNode ._rebuild .removeInterest ("requestRebuild", this);
@@ -4709,7 +4811,7 @@ NurbsSweptSurface .prototype = Object .assign (Object .create (NURBS_X3DParametr
       if (this .trajectoryCurveNode)
          this .trajectoryCurveNode ._rebuild .addInterest ("requestRebuild", this);
    },
-   build: function ()
+   build ()
    {
       if (! this .crossSectionCurveNode)
          return;
@@ -4741,6 +4843,41 @@ NurbsSweptSurface .prototype = Object .assign (Object .create (NURBS_X3DParametr
 
       this .setSolid (this ._solid .getValue ());
       this .setCCW (this ._ccw .getValue ());
+   },
+});
+
+Object .defineProperties (NurbsSweptSurface,
+{
+   typeName:
+   {
+      value: "NurbsSweptSurface",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "NURBS",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "geometry",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",          new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "solid",             new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "ccw",               new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "crossSectionCurve", new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "trajectoryCurve",   new (Fields_default()).SFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 
@@ -4807,42 +4944,18 @@ Namespace_default().set ("x_ite/Components/NURBS/NurbsSweptSurface", NurbsSweptS
 
 function NurbsSwungSurface (executionContext)
 {
-   NURBS_X3DParametricGeometryNode.call (this, executionContext);
+   NURBS_X3DParametricGeometryNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).NurbsSwungSurface);
 
    this .extrusion = new (Extrusion_default()) (executionContext);
 }
 
-NurbsSwungSurface .prototype = Object .assign (Object .create (NURBS_X3DParametricGeometryNode.prototype),
+Object .assign (Object .setPrototypeOf (NurbsSwungSurface .prototype, NURBS_X3DParametricGeometryNode .prototype),
 {
-   constructor: NurbsSwungSurface,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",        new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "solid",           new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "ccw",             new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "profileCurve",    new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "trajectoryCurve", new (Fields_default()).SFNode ()),
-   ]),
-   getTypeName: function ()
+   initialize ()
    {
-      return "NurbsSwungSurface";
-   },
-   getComponentName: function ()
-   {
-      return "NURBS";
-   },
-   getContainerField: function ()
-   {
-      return "geometry";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
-   {
-      NURBS_X3DParametricGeometryNode.prototype.initialize.call (this);
+      NURBS_X3DParametricGeometryNode .prototype .initialize .call (this);
 
       this ._profileCurve    .addInterest ("set_profileCurve__",    this);
       this ._trajectoryCurve .addInterest ("set_trajectoryCurve__", this);
@@ -4864,7 +4977,7 @@ NurbsSwungSurface .prototype = Object .assign (Object .create (NURBS_X3DParametr
       this .set_profileCurve__ ();
       this .set_trajectoryCurve__ ();
    },
-   set_profileCurve__: function ()
+   set_profileCurve__ ()
    {
       if (this .profileCurveNode)
          this .profileCurveNode .removeInterest ("requestRebuild", this);
@@ -4874,7 +4987,7 @@ NurbsSwungSurface .prototype = Object .assign (Object .create (NURBS_X3DParametr
       if (this .profileCurveNode)
          this .profileCurveNode .addInterest ("requestRebuild", this);
    },
-   set_trajectoryCurve__: function ()
+   set_trajectoryCurve__ ()
    {
       if (this .trajectoryCurveNode)
          this .trajectoryCurveNode .removeInterest ("requestRebuild", this);
@@ -4884,7 +4997,7 @@ NurbsSwungSurface .prototype = Object .assign (Object .create (NURBS_X3DParametr
       if (this .trajectoryCurveNode)
          this .trajectoryCurveNode .addInterest ("requestRebuild", this);
    },
-   build: function ()
+   build ()
    {
       if (! this .profileCurveNode)
          return;
@@ -4916,6 +5029,41 @@ NurbsSwungSurface .prototype = Object .assign (Object .create (NURBS_X3DParametr
 
       this .setSolid (this ._solid .getValue ());
       this .setCCW (this ._ccw .getValue ());
+   },
+});
+
+Object .defineProperties (NurbsSwungSurface,
+{
+   typeName:
+   {
+      value: "NurbsSwungSurface",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "NURBS",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "geometry",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",        new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "solid",           new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "ccw",             new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "profileCurve",    new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "trajectoryCurve", new (Fields_default()).SFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 
@@ -4988,41 +5136,13 @@ function NurbsTextureCoordinate (executionContext)
    this .controlPoints = [ ];
 }
 
-NurbsTextureCoordinate .prototype = Object .assign (Object .create ((X3DNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (NurbsTextureCoordinate .prototype, (X3DNode_default()).prototype),
 {
-   constructor: NurbsTextureCoordinate,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",     new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "uOrder",       new (Fields_default()).SFInt32 (3)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "vOrder",       new (Fields_default()).SFInt32 (3)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "uDimension",   new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "vDimension",   new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "uKnot",        new (Fields_default()).MFDouble ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "vKnot",        new (Fields_default()).MFDouble ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "weight",       new (Fields_default()).MFDouble ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "controlPoint", new (Fields_default()).MFVec2f ()),
-   ]),
-   getTypeName: function ()
+   initialize ()
    {
-      return "NurbsTextureCoordinate";
+      X3DNode_default().prototype .initialize .call (this);
    },
-   getComponentName: function ()
-   {
-      return "NURBS";
-   },
-   getContainerField: function ()
-   {
-      return "texCoord";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
-   {
-      X3DNode_default().prototype.initialize.call (this);
-   },
-   getControlPoints: function (texWeights)
+   getControlPoints (texWeights)
    {
       const
          controlPointArray = this ._controlPoint .getValue (),
@@ -5048,7 +5168,7 @@ NurbsTextureCoordinate .prototype = Object .assign (Object .create ((X3DNode_def
 
       return controlPoints;
    },
-   isValid: function ()
+   isValid ()
    {
       if (this ._uOrder .getValue () < 2)
          return false;
@@ -5067,6 +5187,45 @@ NurbsTextureCoordinate .prototype = Object .assign (Object .create ((X3DNode_def
 
       return true;
    }
+});
+
+Object .defineProperties (NurbsTextureCoordinate,
+{
+   typeName:
+   {
+      value: "NurbsTextureCoordinate",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "NURBS",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "texCoord",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",     new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "uOrder",       new (Fields_default()).SFInt32 (3)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "vOrder",       new (Fields_default()).SFInt32 (3)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "uDimension",   new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "vDimension",   new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "uKnot",        new (Fields_default()).MFDouble ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "vKnot",        new (Fields_default()).MFDouble ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "weight",       new (Fields_default()).MFDouble ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "controlPoint", new (Fields_default()).MFVec2f ()),
+      ]),
+      enumerable: true,
+   },
 });
 
 const NurbsTextureCoordinate_default_ = NurbsTextureCoordinate;
@@ -5131,55 +5290,18 @@ Namespace_default().set ("x_ite/Components/NURBS/NurbsTextureCoordinate", NurbsT
 
 function NurbsTrimmedSurface (executionContext)
 {
-   NURBS_X3DNurbsSurfaceGeometryNode.call (this, executionContext);
+   NURBS_X3DNurbsSurfaceGeometryNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).NurbsTrimmedSurface);
 
    this .trimmingContourNodes = [ ];
 }
 
-NurbsTrimmedSurface .prototype = Object .assign (Object .create (NURBS_X3DNurbsSurfaceGeometryNode.prototype),
+Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, NURBS_X3DNurbsSurfaceGeometryNode .prototype),
 {
-   constructor: NurbsTrimmedSurface,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",              new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "solid",                 new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "uTessellation",         new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "vTessellation",         new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "uClosed",               new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "vClosed",               new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "uOrder",                new (Fields_default()).SFInt32 (3)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "vOrder",                new (Fields_default()).SFInt32 (3)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "uDimension",            new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "vDimension",            new (Fields_default()).SFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "uKnot",                 new (Fields_default()).MFDouble ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "vKnot",                 new (Fields_default()).MFDouble ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "weight",                new (Fields_default()).MFDouble ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "texCoord",              new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "controlPoint",          new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "addTrimmingContour",    new (Fields_default()).MFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "removeTrimmingContour", new (Fields_default()).MFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "trimmingContour",       new (Fields_default()).MFNode ()),
-   ]),
-   getTypeName: function ()
+   initialize ()
    {
-      return "NurbsTrimmedSurface";
-   },
-   getComponentName: function ()
-   {
-      return "NURBS";
-   },
-   getContainerField: function ()
-   {
-      return "geometry";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
-   {
-      NURBS_X3DNurbsSurfaceGeometryNode.prototype.initialize.call (this);
+      NURBS_X3DNurbsSurfaceGeometryNode .prototype .initialize .call (this);
 
       this ._addTrimmingContour    .addInterest ("set_addTrimmingContour__",    this);
       this ._removeTrimmingContour .addInterest ("set_removeTrimmingContour__", this);
@@ -5187,13 +5309,10 @@ NurbsTrimmedSurface .prototype = Object .assign (Object .create (NURBS_X3DNurbsS
 
       this .set_trimmingContour__ ();
    },
-   set_addTrimmingContour__: function ()
+   set_addTrimmingContour__ ()
    {
       this ._addTrimmingContour .setTainted (true);
-
-      this ._addTrimmingContour .erase (NurbsTrimmedSurface_remove (this ._addTrimmingContour, 0, this ._addTrimmingContour .length,
-                                                this ._trimmingContour,    0, this ._trimmingContour .length),
-                                        this ._addTrimmingContour .length);
+      this ._addTrimmingContour .assign (NurbsTrimmedSurface_filter (this ._addTrimmingContour, this ._trimmingContour), this ._addTrimmingContour .length);
 
       for (const trimmingContour of this ._addTrimmingContour)
          this ._trimmingContour .push (trimmingContour);
@@ -5201,18 +5320,15 @@ NurbsTrimmedSurface .prototype = Object .assign (Object .create (NURBS_X3DNurbsS
       this ._addTrimmingContour .length = 0;
       this ._addTrimmingContour .setTainted (false);
    },
-   set_removeTrimmingContour__: function ()
+   set_removeTrimmingContour__ ()
    {
       this ._removeTrimmingContour .setTainted (true);
-
-      this ._trimmingContour .erase (NurbsTrimmedSurface_remove (this ._trimmingContour,       0, this ._trimmingContour .length,
-                                             this ._removeTrimmingContour, 0, this ._removeTrimmingContour .length),
-                                     this ._trimmingContour .length);
+      this ._trimmingContour .assign (NurbsTrimmedSurface_filter (this ._trimmingContour, this ._removeTrimmingContour));
 
       this ._removeTrimmingContour .length = 0;
       this ._removeTrimmingContour .setTainted (false);
    },
-   set_trimmingContour__: function ()
+   set_trimmingContour__ ()
    {
       const trimmingContourNodes = this .trimmingContourNodes;
 
@@ -5226,7 +5342,7 @@ NurbsTrimmedSurface .prototype = Object .assign (Object .create (NURBS_X3DNurbsS
             trimmingContourNodes .push (trimmingContourNode);
       }
    },
-   getTrimmingContours: function ()
+   getTrimmingContours ()
    {
       const
          trimmingContourNodes = this .trimmingContourNodes,
@@ -5239,15 +5355,60 @@ NurbsTrimmedSurface .prototype = Object .assign (Object .create (NURBS_X3DNurbsS
    },
 });
 
-function NurbsTrimmedSurface_remove (array, first, last, range, rfirst, rlast)
+function NurbsTrimmedSurface_filter (array, remove)
 {
-   const set = new Set ();
+   const set = new Set (remove);
 
-   for (let i = rfirst; i < rlast; ++ i)
-      set .add (range [i]);
-
-   return array .remove (first, last, value => set .has (value));
+   return array .filter (value => !set .has (value));
 }
+
+Object .defineProperties (NurbsTrimmedSurface,
+{
+   typeName:
+   {
+      value: "NurbsTrimmedSurface",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "NURBS",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "geometry",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",              new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "solid",                 new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "uTessellation",         new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "vTessellation",         new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "uClosed",               new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "vClosed",               new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "uOrder",                new (Fields_default()).SFInt32 (3)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "vOrder",                new (Fields_default()).SFInt32 (3)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "uDimension",            new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "vDimension",            new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "uKnot",                 new (Fields_default()).MFDouble ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "vKnot",                 new (Fields_default()).MFDouble ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "weight",                new (Fields_default()).MFDouble ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "texCoord",              new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "controlPoint",          new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "addTrimmingContour",    new (Fields_default()).MFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "removeTrimmingContour", new (Fields_default()).MFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "trimmingContour",       new (Fields_default()).MFNode ()),
+      ]),
+      enumerable: true,
+   },
+});
 
 const NurbsTrimmedSurface_default_ = NurbsTrimmedSurface;
 ;
@@ -5321,31 +5482,31 @@ Namespace_default().set ("x_ite/Components/NURBS/NurbsTrimmedSurface", NurbsTrim
 
 
 
-Components_default().addComponent ({
+Components_default().add ({
    name: "NURBS",
-   types:
-   {
-      Contour2D:                    NURBS_Contour2D,
-      ContourPolyline2D:            NURBS_ContourPolyline2D,
-      CoordinateDouble:             NURBS_CoordinateDouble,
-      NurbsCurve:                   NURBS_NurbsCurve,
-      NurbsCurve2D:                 NURBS_NurbsCurve2D,
-      NurbsOrientationInterpolator: NURBS_NurbsOrientationInterpolator,
-      NurbsPatchSurface:            NURBS_NurbsPatchSurface,
-      NurbsPositionInterpolator:    NURBS_NurbsPositionInterpolator,
-      NurbsSet:                     NURBS_NurbsSet,
-      NurbsSurfaceInterpolator:     NURBS_NurbsSurfaceInterpolator,
-      NurbsSweptSurface:            NURBS_NurbsSweptSurface,
-      NurbsSwungSurface:            NURBS_NurbsSwungSurface,
-      NurbsTextureCoordinate:       NURBS_NurbsTextureCoordinate,
-      NurbsTrimmedSurface:          NURBS_NurbsTrimmedSurface,
-   },
-   abstractTypes:
-   {
-      X3DNurbsControlCurveNode:    NURBS_X3DNurbsControlCurveNode,
-      X3DNurbsSurfaceGeometryNode: NURBS_X3DNurbsSurfaceGeometryNode,
-      X3DParametricGeometryNode:   NURBS_X3DParametricGeometryNode,
-   },
+   concreteNodes:
+   [
+      NURBS_Contour2D,
+      NURBS_ContourPolyline2D,
+      NURBS_CoordinateDouble,
+      NURBS_NurbsCurve,
+      NURBS_NurbsCurve2D,
+      NURBS_NurbsOrientationInterpolator,
+      NURBS_NurbsPatchSurface,
+      NURBS_NurbsPositionInterpolator,
+      NURBS_NurbsSet,
+      NURBS_NurbsSurfaceInterpolator,
+      NURBS_NurbsSweptSurface,
+      NURBS_NurbsSwungSurface,
+      NURBS_NurbsTextureCoordinate,
+      NURBS_NurbsTrimmedSurface,
+   ],
+   abstractNodes:
+   [
+      NURBS_X3DNurbsControlCurveNode,
+      NURBS_X3DNurbsSurfaceGeometryNode,
+      NURBS_X3DParametricGeometryNode,
+   ],
 });
 
 const components_NURBS_default_ = undefined;

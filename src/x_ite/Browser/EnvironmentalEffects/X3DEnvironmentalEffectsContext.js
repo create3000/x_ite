@@ -51,9 +51,9 @@ const _backgroundTextureProperties = Symbol ();
 
 function X3DEnvironmentalEffectsContext () { }
 
-X3DEnvironmentalEffectsContext .prototype =
+Object .assign (X3DEnvironmentalEffectsContext .prototype,
 {
-   getBackgroundTextureProperties: function ()
+   getBackgroundTextureProperties ()
    {
       this [_backgroundTextureProperties] = new TextureProperties (this .getPrivateScene ());
 
@@ -71,6 +71,6 @@ X3DEnvironmentalEffectsContext .prototype =
 
       return this [_backgroundTextureProperties];
    },
-};
+});
 
 export default X3DEnvironmentalEffectsContext;

@@ -56,14 +56,18 @@ function GLB2Parser (scene)
    this .buffers = [ ];
 }
 
-GLB2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
+Object .assign (Object .setPrototypeOf (GLB2Parser .prototype, X3DParser .prototype),
 {
-   constructor: GLB2Parser,
-   getEncoding: function ()
+   getEncoding ()
    {
       return "ARRAY_BUFFER";
    },
-   isValid: function ()
+   setInput (input)
+   {
+      this .arrayBuffer = input;
+      this .dataView    = new DataView (input);
+   },
+   isValid ()
    {
       if (!(this .arrayBuffer instanceof ArrayBuffer))
          return false;
@@ -82,16 +86,11 @@ GLB2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return true;
    },
-   setInput: function (input)
-   {
-      this .arrayBuffer = input;
-      this .dataView    = new DataView (input);
-   },
-   parseIntoScene: function (success, error)
+   parseIntoScene (resolve, reject)
    {
       this .glb ()
-         .then (success)
-         .catch (error);
+         .then (resolve)
+         .catch (reject);
    },
    glb: async function ()
    {
@@ -113,7 +112,7 @@ GLB2Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       return this .getScene ();
    },
-   chunks: function ()
+   chunks ()
    {
       for (let i = 12; i < this .dataView .byteLength;)
       {

@@ -70,53 +70,62 @@ function MotorJoint (executionContext)
    this ._motor3AngleRate .setUnit ("angularRate");
 }
 
-MotorJoint .prototype = Object .assign (Object .create (X3DRigidJointNode .prototype),
+Object .setPrototypeOf (MotorJoint .prototype, X3DRigidJointNode .prototype);
+
+Object .defineProperties (MotorJoint,
 {
-   constructor: MotorJoint,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "body1",                new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "body2",                new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "forceOutput",          new Fields .MFString ("NONE")),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "axis1Angle",           new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "axis1Torque",          new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "axis2Angle",           new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "axis2Torque",          new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "axis3Angle",           new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "axis3Torque",          new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "enabledAxes",          new Fields .SFInt32 (1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "motor1Axis",           new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "motor2Axis",           new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "motor3Axis",           new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "stop1Bounce",          new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "stop1ErrorCorrection", new Fields .SFFloat (0.8)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "stop2Bounce",          new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "stop2ErrorCorrection", new Fields .SFFloat (0.8)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "stop3Bounce",          new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "stop3ErrorCorrection", new Fields .SFFloat (0.8)),
-      new X3DFieldDefinition (X3DConstants .outputOnly,     "motor1Angle",          new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,     "motor1AngleRate",      new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,     "motor2Angle",          new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,     "motor2AngleRate",      new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,     "motor3Angle",          new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,     "motor3AngleRate",      new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "autoCalc",             new Fields .SFBool ()),
-   ]),
-   getTypeName: function ()
+   typeName:
    {
-      return "MotorJoint";
+      value: "MotorJoint",
+      enumerable: true,
    },
-   getComponentName: function ()
+   componentName:
    {
-      return "RigidBodyPhysics";
+      value: "RigidBodyPhysics",
+      enumerable: true,
    },
-   getContainerField: function ()
+   containerField:
    {
-      return "joints";
+      value: "joints",
+      enumerable: true,
    },
-   getSpecificationRange: function ()
+   specificationRange:
    {
-      return ["3.2", "Infinity"];
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "autoCalc",             new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "forceOutput",          new Fields .MFString ("NONE")),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "axis1Angle",           new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "axis1Torque",          new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "axis2Angle",           new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "axis2Torque",          new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "axis3Angle",           new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "axis3Torque",          new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "enabledAxes",          new Fields .SFInt32 (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "motor1Axis",           new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "motor2Axis",           new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "motor3Axis",           new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "stop1Bounce",          new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "stop1ErrorCorrection", new Fields .SFFloat (0.8)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "stop2Bounce",          new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "stop2ErrorCorrection", new Fields .SFFloat (0.8)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "stop3Bounce",          new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "stop3ErrorCorrection", new Fields .SFFloat (0.8)),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "motor1Angle",          new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "motor1AngleRate",      new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "motor2Angle",          new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "motor2AngleRate",      new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "motor3Angle",          new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "motor3AngleRate",      new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "body1",                new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "body2",                new Fields .SFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 

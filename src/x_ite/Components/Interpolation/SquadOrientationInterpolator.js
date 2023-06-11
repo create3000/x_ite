@@ -64,40 +64,15 @@ function SquadOrientationInterpolator (executionContext)
    this .squad = new SquatInterpolator ();
 }
 
-SquadOrientationInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
+Object .assign (Object .setPrototypeOf (SquadOrientationInterpolator .prototype, X3DInterpolatorNode .prototype),
 {
-   constructor: SquadOrientationInterpolator,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "closed",        new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "key",           new Fields .MFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "keyValue",      new Fields .MFRotation ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .SFRotation ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "SquadOrientationInterpolator";
-   },
-   getComponentName: function ()
-   {
-      return "Interpolation";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DInterpolatorNode .prototype .initialize .call (this);
 
       this ._keyValue .addInterest ("set_keyValue__", this);
    },
-   set_keyValue__: function ()
+   set_keyValue__ ()
    {
       const
          key      = this ._key,
@@ -110,7 +85,7 @@ SquadOrientationInterpolator .prototype = Object .assign (Object .create (X3DInt
                              this ._key,
                              this ._keyValue);
    },
-   interpolate: function (index0, index1, weight)
+   interpolate (index0, index1, weight)
    {
       try
       {
@@ -120,6 +95,42 @@ SquadOrientationInterpolator .prototype = Object .assign (Object .create (X3DInt
       {
          console .error (error);
       }
+   },
+});
+
+Object .defineProperties (SquadOrientationInterpolator,
+{
+   typeName:
+   {
+      value: "SquadOrientationInterpolator",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Interpolation",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "closed",        new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "key",           new Fields .MFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "keyValue",      new Fields .MFRotation ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .SFRotation ()),
+      ]),
+      enumerable: true,
    },
 });
 

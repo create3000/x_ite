@@ -60,30 +60,9 @@ function Circle2D (executionContext)
    this ._radius .setUnit ("length");
 }
 
-Circle2D .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototype),
+Object .assign (Object .setPrototypeOf (Circle2D .prototype, X3DLineGeometryNode .prototype),
 {
-   constructor: Circle2D,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata", new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "radius",   new Fields .SFFloat (1)),
-   ]),
-   getTypeName: function ()
-   {
-      return "Circle2D";
-   },
-   getComponentName: function ()
-   {
-      return "Geometry2D";
-   },
-   getContainerField: function ()
-   {
-      return "geometry";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   set_live__: function ()
+   set_live__ ()
    {
       X3DLineGeometryNode .prototype .set_live__ .call (this);
 
@@ -92,7 +71,7 @@ Circle2D .prototype = Object .assign (Object .create (X3DLineGeometryNode .proto
       else
          this .getBrowser () .getCircle2DOptions () .removeInterest ("requestRebuild", this);
    },
-   build: function ()
+   build ()
    {
       const
          options     = this .getBrowser () .getCircle2DOptions (),
@@ -113,6 +92,38 @@ Circle2D .prototype = Object .assign (Object .create (X3DLineGeometryNode .proto
 
       this .getMin () .set (-radius, -radius, 0);
       this .getMax () .set ( radius,  radius, 0);
+   },
+});
+
+Object .defineProperties (Circle2D,
+{
+   typeName:
+   {
+      value: "Circle2D",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Geometry2D",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "geometry",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "radius",   new Fields .SFFloat (1)),
+      ]),
+      enumerable: true,
    },
 });
 

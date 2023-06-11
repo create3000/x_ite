@@ -45,7 +45,7 @@
  *
  ******************************************************************************/
 
-import SupportedNodes      from "../Configuration/SupportedNodes.js";
+import AbstractNodes       from "../Configuration/AbstractNodes.js";
 import Fields              from "../Fields.js";
 import X3DExecutionContext from "./X3DExecutionContext.js";
 import { getUniqueName }   from "./NamedNodesHandling.js";
@@ -57,8 +57,6 @@ import ExportedNodesArray  from "./ExportedNodesArray.js";
 import X3DCast             from "../Base/X3DCast.js";
 import X3DConstants        from "../Base/X3DConstants.js";
 import SFNodeCache         from "../Fields/SFNodeCache.js";
-
-SupportedNodes .addAbstractNodeType ("X3DScene", X3DScene);
 
 const
    _browser              = Symbol .for ("X_ITE.X3DEventObject.browser"),
@@ -82,13 +80,10 @@ function X3DScene (browser)
 
    this .addType (X3DConstants .X3DScene)
 
-   this .addChildObjects ("profile_changed",       new Fields .SFTime (),
-                          "components_changed",    new Fields .SFTime (),
-                          "units_changed",         new Fields .SFTime (),
-                          "metadata_changed",      new Fields .SFTime (),
-                          "exportedNodes_changed", new Fields .SFTime (),
-                          "initLoadCount",         new Fields .SFInt32 (),
-                          "loadCount",             new Fields .SFInt32 ())
+   this .addChildObjects ("profile_changed",  new Fields .SFTime (),
+                          "metadata_changed", new Fields .SFTime (),
+                          "initLoadCount",    new Fields .SFInt32 (),
+                          "loadCount",        new Fields .SFInt32 ())
 
    this [_specificationVersion] = X3D_LATEST_VERSION;
    this [_encoding]             = "SCRIPTED";
@@ -106,81 +101,86 @@ function X3DScene (browser)
    this [_exportedNodes]  = new ExportedNodesArray ();
    this [_loadingObjects] = new Set ();
 
+   this [_components]    .addParent (this);
+   this [_units]         .addParent (this);
+   this [_exportedNodes] .addParent (this);
+
    this .getRootNodes () .setAccessType (X3DConstants .inputOutput);
 
    this .setLive (false);
 }
 
-X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .prototype),
+Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext .prototype),
 {
-   constructor: X3DScene,
-   getTypeName: function ()
-   {
-      return "X3DScene";
-   },
-   isMainScene: function ()
+   isMainScene ()
    {
       return this === this .getExecutionContext ();
    },
-   isScene: function ()
+   isScene ()
    {
       return true;
    },
-   setSpecificationVersion: function (specificationVersion)
+   setSpecificationVersion (specificationVersion)
    {
       this [_specificationVersion] = String (specificationVersion);
    },
-   getSpecificationVersion: function ()
+   getSpecificationVersion ()
    {
       return this [_specificationVersion];
    },
-   setEncoding: function (encoding)
+   setEncoding (encoding)
    {
       this [_encoding] = String (encoding);
    },
-   getEncoding: function ()
+   getEncoding ()
    {
       return this [_encoding];
    },
-   setWorldURL: function (url)
+   setWorldURL (url)
    {
       this [_worldURL] = String (url);
    },
-   getWorldURL: function ()
+   getWorldURL ()
    {
       return this [_worldURL];
    },
-   setProfile: function (profile)
+   setProfile (profile)
    {
       this [_profile] = profile;
 
       this ._profile_changed = this .getBrowser () .getCurrentTime ();
    },
-   getProfile: function ()
+   getProfile ()
    {
       return this [_profile];
    },
-   hasComponent: function (name)
+   hasComponent (name)
    {
       return (this [_profile] ?.components .has (name) ?? true) || this [_components] .has (name);
    },
-   addComponent: function (component)
+   addComponent (component)
    {
       this [_components] .add (component .name, component);
 
       this ._components_changed = this .getBrowser () .getCurrentTime ();
    },
-   removeComponent: function (name)
+   updateComponent (component)
+   {
+      this [_components] .update (component .name, component .name, component);
+
+      this ._components_changed = this .getBrowser () .getCurrentTime ();
+   },
+   removeComponent (name)
    {
       this [_components] .remove (name);
 
       this ._components_changed = this .getBrowser () .getCurrentTime ();
    },
-   getComponents: function ()
+   getComponents ()
    {
       return this [_components];
    },
-   updateUnit: function (category, name, conversionFactor)
+   updateUnit (category, name, conversionFactor)
    {
       // Private function.
 
@@ -191,15 +191,15 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
 
       this ._units_changed = this .getBrowser () .getCurrentTime ();
    },
-   getUnit: function (category)
+   getUnit (category)
    {
       return this [_units] .get (category);
    },
-   getUnits: function ()
+   getUnits ()
    {
       return this [_units];
    },
-   fromUnit: function (category, value)
+   fromUnit (category, value)
    {
       switch (category)
       {
@@ -227,7 +227,7 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
 
       return value;
    },
-   toUnit: function (category, value)
+   toUnit (category, value)
    {
       switch (category)
       {
@@ -255,7 +255,7 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
 
       return value;
    },
-   setMetaData: function (name, values)
+   setMetaData (name, values)
    {
       name = String (name);
 
@@ -272,7 +272,7 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
 
       this ._metadata_changed = this .getBrowser () .getCurrentTime ();
    },
-   addMetaData: function (name, value)
+   addMetaData (name, value)
    {
       name  = String (name);
       value = String (value);
@@ -287,7 +287,7 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
 
       values .push (value);
    },
-   removeMetaData: function (name)
+   removeMetaData (name)
    {
       name = String (name);
 
@@ -295,7 +295,7 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
 
       this ._metadata_changed = this .getBrowser () .getCurrentTime ();
    },
-   getMetaData: function (name)
+   getMetaData (name)
    {
       name = String (name);
 
@@ -306,22 +306,22 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
 
       return undefined;
    },
-   getMetaDatas: function ()
+   getMetaDatas ()
    {
       return new Map (this [_metadata]);
    },
-   addExportedNode: function (exportedName, node)
+   addExportedNode (exportedName, node)
    {
       exportedName = String (exportedName);
 
       if (this [_exportedNodes] .has (exportedName))
-         throw new Error ("Couldn't add exported node: exported name '" + exportedName + "' already in use.");
+         throw new Error (`Couldn't add exported node: exported name '${exportedName}' already in use.`);
 
       this .updateExportedNode (exportedName, node);
 
       this ._exportedNodes_changed = this .getBrowser () .getCurrentTime ();
    },
-   updateExportedNode: function (exportedName, node)
+   updateExportedNode (exportedName, node)
    {
       exportedName = String (exportedName);
       node         = X3DCast (X3DConstants .X3DNode, node, false);
@@ -343,7 +343,7 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
 
       this ._exportedNodes_changed = this .getBrowser () .getCurrentTime ();
    },
-   removeExportedNode: function (exportedName)
+   removeExportedNode (exportedName)
    {
       exportedName = String (exportedName);
 
@@ -351,7 +351,7 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
 
       this ._exportedNodes_changed = this .getBrowser () .getCurrentTime ();
    },
-   getExportedNode: function (exportedName)
+   getExportedNode (exportedName)
    {
       exportedName = String (exportedName);
 
@@ -360,17 +360,17 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
       if (exportedNode)
          return SFNodeCache .get (exportedNode .getLocalNode ());
 
-      throw new Error ("Exported node '" + exportedName + "' not found.");
+      throw new Error (`Exported node '${exportedName}' not found.`);
    },
-   getExportedNodes: function ()
+   getExportedNodes ()
    {
       return this [_exportedNodes];
    },
-   getUniqueExportName: function (name)
+   getUniqueExportName (name)
    {
       return getUniqueName (this [_exportedNodes], name);
    },
-   addRootNode: function (node)
+   addRootNode (node)
    {
       node = SFNodeCache .get (X3DCast (X3DConstants .X3DNode, node, false));
 
@@ -384,24 +384,22 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
 
       rootNodes .push (node);
    },
-   removeRootNode: function (node)
+   removeRootNode (node)
    {
       node = SFNodeCache .get (X3DCast (X3DConstants .X3DNode, node, false));
 
-      const
-         rootNodes = this .getRootNodes (),
-         length    = rootNodes .length;
+      const rootNodes = this .getRootNodes ();
 
-      rootNodes .erase (rootNodes .remove (0, length, node), length);
+      rootNodes .assign (rootNodes .filter (rootNode => rootNode !== node));
    },
-   setRootNodes: function (value)
+   setRootNodes (value)
    {
       if (!(value instanceof Fields .MFNode))
          throw new Error ("Value must be of type MFNode.");
 
       this .getRootNodes () .assign (value);
    },
-   toVRMLStream: function (generator)
+   toVRMLStream (generator)
    {
       generator .string += generator .Indent ();
       generator .string += "#X3D V";
@@ -488,7 +486,7 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
       generator .LeaveScope ();
       generator .PopExecutionContext ();
    },
-   toXMLStream: function (generator)
+   toXMLStream (generator)
    {
       if (!generator .html)
       {
@@ -621,7 +619,7 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
       generator .string += generator .Indent ();
       generator .string += "</X3D>";
    },
-   toJSONStream: function (generator)
+   toJSONStream (generator)
    {
       // X3D
 
@@ -967,7 +965,7 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
    },
 },
 {
-   setExecutionContext: function (value)
+   setExecutionContext (value)
    {
       if (!this .isMainScene ())
       {
@@ -987,19 +985,19 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
             scene .addLoadingObject (object);
       }
    },
-   addInitLoadCount: function (node)
+   addInitLoadCount (node)
    {
       this ._initLoadCount = this ._initLoadCount .getValue () + 1;
    },
-   removeInitLoadCount: function (node)
+   removeInitLoadCount (node)
    {
       this ._initLoadCount = this ._initLoadCount .getValue () - 1;
    },
-   getLoadingObjects: function ()
+   getLoadingObjects ()
    {
       return this [_loadingObjects];
    },
-   addLoadingObject: function (node)
+   addLoadingObject (node)
    {
       if (this [_loadingObjects] .has (node))
          return;
@@ -1018,7 +1016,7 @@ X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .proto
       if (!this .isMainScene ())
          scene .addLoadingObject (node);
    },
-   removeLoadingObject: function (node)
+   removeLoadingObject (node)
    {
       if (!this [_loadingObjects] .has (node))
          return;
@@ -1059,6 +1057,11 @@ Object .defineProperties (X3DScene .prototype,
       get: X3DScene .prototype .getProfile,
       enumerable: true,
    },
+   profile_changed:
+   {
+      get () { return this ._profile_changed; },
+      enumerable: false,
+   },
    components:
    {
       get: X3DScene .prototype .getComponents,
@@ -1074,12 +1077,38 @@ Object .defineProperties (X3DScene .prototype,
       get: X3DScene .prototype .getUnits,
       enumerable: true,
    },
+   metadata_changed:
+   {
+      get () { return this ._metadata_changed; },
+      enumerable: false,
+   },
    rootNodes:
    {
       get: X3DScene .prototype .getRootNodes,
       set: X3DScene .prototype .setRootNodes,
       enumerable: true,
    },
+   exportedNodes:
+   {
+      get: X3DScene .prototype .getExportedNodes,
+      enumerable: true,
+   },
+   sceneGraph_changed:
+   {
+      get () { return this ._sceneGraph_changed; },
+      enumerable: false,
+   },
 });
+
+Object .defineProperties (X3DScene,
+{
+   typeName:
+   {
+      value: "X3DScene",
+      enumerable: true,
+   },
+});
+
+X3DConstants .addNode (X3DScene);
 
 export default X3DScene;

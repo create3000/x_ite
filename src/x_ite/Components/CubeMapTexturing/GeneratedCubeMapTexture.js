@@ -73,33 +73,9 @@ function GeneratedCubeMapTexture (executionContext)
    this .viewVolume        = new ViewVolume ();
 }
 
-GeneratedCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironmentTextureNode .prototype),
+Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DEnvironmentTextureNode .prototype),
 {
-   constructor: GeneratedCubeMapTexture,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "description",       new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "update",            new Fields .SFString ("NONE")),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "size",              new Fields .SFInt32 (128)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties", new Fields .SFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "GeneratedCubeMapTexture";
-   },
-   getComponentName: function ()
-   {
-      return "CubeMapTexturing";
-   },
-   getContainerField: function ()
-   {
-      return "texture";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DEnvironmentTextureNode .prototype .initialize .call (this);
 
@@ -109,7 +85,7 @@ GeneratedCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironm
 
       this .set_size__ ();
    },
-   set_size__: function ()
+   set_size__ ()
    {
       const
          browser = this .getBrowser (),
@@ -144,7 +120,7 @@ GeneratedCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironm
          this .frameBuffer = null;
       }
    },
-   traverse: function (type, renderObject)
+   traverse (type, renderObject)
    {
       // TraverseType .DISPLAY
 
@@ -279,6 +255,41 @@ GeneratedCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironm
             gl .uniformMatrix4fv (shaderObject .x3d_ModelViewMatrix, false, zeros);
       };
    })(),
+});
+
+Object .defineProperties (GeneratedCubeMapTexture,
+{
+   typeName:
+   {
+      value: "GeneratedCubeMapTexture",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "CubeMapTexturing",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "texture",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "description",       new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "update",            new Fields .SFString ("NONE")),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "size",              new Fields .SFInt32 (128)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties", new Fields .SFNode ()),
+      ]),
+      enumerable: true,
+   },
 });
 
 export default GeneratedCubeMapTexture;

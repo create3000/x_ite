@@ -65,38 +65,9 @@ function PrimitivePickSensor (executionContext)
    this .picker              = new VolumePicker ();
 }
 
-PrimitivePickSensor .prototype = Object .assign (Object .create (X3DPickSensorNode .prototype),
+Object .assign (Object .setPrototypeOf (PrimitivePickSensor .prototype, X3DPickSensorNode .prototype),
 {
-   constructor: PrimitivePickSensor,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",         new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",          new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "objectType",       new Fields .MFString ("ALL")),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "matchCriterion",   new Fields .SFString ("MATCH_ANY")),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "intersectionType", new Fields .SFString ("BOUNDS")),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "sortOrder",        new Fields .SFString ("CLOSEST")),
-      new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",         new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "pickingGeometry",  new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "pickTarget",       new Fields .MFNode ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,     "pickedGeometry",   new Fields .MFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "PrimitivePickSensor";
-   },
-   getComponentName: function ()
-   {
-      return "Picking";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DPickSensorNode .prototype .initialize .call (this);
 
@@ -104,7 +75,7 @@ PrimitivePickSensor .prototype = Object .assign (Object .create (X3DPickSensorNo
 
       this .set_pickingGeometry__ ();
    },
-   set_pickingGeometry__: function ()
+   set_pickingGeometry__ ()
    {
       this .pickingGeometryNode = null;
 
@@ -131,7 +102,7 @@ PrimitivePickSensor .prototype = Object .assign (Object .create (X3DPickSensorNo
             }
          }
       }
-      catch (error)
+      catch
       { }
    },
    process: (function ()
@@ -185,7 +156,7 @@ PrimitivePickSensor .prototype = Object .assign (Object .create (X3DPickSensorNo
                      pickedGeometries = this .getPickedGeometries (),
                      active           = !! pickedGeometries .length;
 
-                  pickedGeometries .remove (0, pickedGeometries .length, null);
+                  pickedGeometries .assign (pickedGeometries .filter (node => node));
 
                   if (active !== this ._isActive .getValue ())
                      this ._isActive = active;
@@ -238,7 +209,7 @@ PrimitivePickSensor .prototype = Object .assign (Object .create (X3DPickSensorNo
                      pickedGeometries = this .getPickedGeometries (),
                      active           = !! pickedGeometries .length;
 
-                  pickedGeometries .remove (0, pickedGeometries .length, null);
+                  pickedGeometries .assign (pickedGeometries .filter (node => node));
 
                   if (active !== this ._isActive .getValue ())
                      this ._isActive = active;
@@ -254,6 +225,46 @@ PrimitivePickSensor .prototype = Object .assign (Object .create (X3DPickSensorNo
          X3DPickSensorNode .prototype .process .call (this);
       };
    })(),
+});
+
+Object .defineProperties (PrimitivePickSensor,
+{
+   typeName:
+   {
+      value: "PrimitivePickSensor",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Picking",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",         new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",          new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "objectType",       new Fields .MFString ("ALL")),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "matchCriterion",   new Fields .SFString ("MATCH_ANY")),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "intersectionType", new Fields .SFString ("BOUNDS")),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "sortOrder",        new Fields .SFString ("CLOSEST")),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",         new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "pickingGeometry",  new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "pickTarget",       new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "pickedGeometry",   new Fields .MFNode ()),
+      ]),
+      enumerable: true,
+   },
 });
 
 export default PrimitivePickSensor;

@@ -59,25 +59,24 @@ function X3DShaderNode (executionContext)
    this .selected = 0;
 }
 
-X3DShaderNode .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DShaderNode .prototype, X3DAppearanceChildNode .prototype),
 {
-   constructor: X3DShaderNode,
-   setValid: function (value)
+   setValid (value)
    {
       this ._isValid = this .valid = value;
    },
-   isValid: function ()
+   isValid ()
    {
       return this .valid;
    },
-   select: function ()
+   select ()
    {
       ++ this .selected;
 
       if (! this ._isSelected .getValue ())
          this ._isSelected = true;
    },
-   deselect: function ()
+   deselect ()
    {
       -- this .selected;
 
@@ -86,6 +85,20 @@ X3DShaderNode .prototype = Object .assign (Object .create (X3DAppearanceChildNod
          if (this ._isSelected .getValue ())
             this ._isSelected = false;
       }
+   },
+});
+
+Object .defineProperties (X3DShaderNode,
+{
+   typeName:
+   {
+      value: "X3DShaderNode",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Shaders",
+      enumerable: true,
    },
 });
 

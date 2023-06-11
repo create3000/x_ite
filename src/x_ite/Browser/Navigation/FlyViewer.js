@@ -56,31 +56,43 @@ function FlyViewer (executionContext, navigationInfo)
    X3DFlyViewer .call (this, executionContext, navigationInfo);
 }
 
-FlyViewer .prototype = Object .assign (Object .create (X3DFlyViewer .prototype),
+Object .assign (Object .setPrototypeOf (FlyViewer .prototype, X3DFlyViewer .prototype),
 {
-   constructor: FlyViewer,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .outputOnly, "isActive", new Fields .SFBool ()),
-   ]),
-   addCollision: function ()
+   addCollision ()
    {
       this .getBrowser () .addCollision (this);
    },
-   removeCollision: function ()
+   removeCollision ()
    {
       this .getBrowser () .removeCollision (this);
    },
-   getFlyDirection: function (fromVector, toVector, direction)
+   getFlyDirection (fromVector, toVector, direction)
    {
       return direction .assign (toVector) .subtract (fromVector);
    },
-   getTranslationOffset: function (velocity)
+   getTranslationOffset (velocity)
    {
       return this .getActiveViewpoint () .getUserOrientation () .multVecRot (velocity);
    },
-   constrainPanDirection: function (direction)
+   constrainPanDirection (direction)
    {
       return direction;
+   },
+});
+
+Object .defineProperties (FlyViewer,
+{
+   typeName:
+   {
+      value: "FlyViewer",
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .outputOnly, "isActive", new Fields .SFBool ()),
+      ]),
+      enumerable: true,
    },
 });
 

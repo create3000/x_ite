@@ -58,41 +58,52 @@ function WorldInfo (executionContext)
    this .addType (X3DConstants .WorldInfo);
 }
 
-WorldInfo .prototype = Object .assign (Object .create (X3DInfoNode .prototype),
+Object .assign (Object .setPrototypeOf (WorldInfo .prototype, X3DInfoNode .prototype),
 {
-   constructor: WorldInfo,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata", new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "title",    new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "info",     new Fields .MFString ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "WorldInfo";
-   },
-   getComponentName: function ()
-   {
-      return "Core";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DInfoNode .prototype .initialize .call (this);
 
       this .getExecutionContext () .addWorldInfo (this);
    },
-   dispose: function ()
+   dispose ()
    {
       this .getExecutionContext () .removeWorldInfo (this);
 
       X3DInfoNode .prototype .dispose .call (this);
+   },
+});
+
+Object .defineProperties (WorldInfo,
+{
+   typeName:
+   {
+      value: "WorldInfo",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Core",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "title",    new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "info",     new Fields .MFString ()),
+      ]),
+      enumerable: true,
    },
 });
 

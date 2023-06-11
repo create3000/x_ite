@@ -126,38 +126,11 @@ function BlendMode (executionContext)
    this .equationTypes = new Map ();
 }
 
-BlendMode .prototype = Object .assign (Object .create ((X3DAppearanceChildNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (BlendMode .prototype, (X3DAppearanceChildNode_default()).prototype),
 {
-   constructor: BlendMode,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",                new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "blendColor",              new (Fields_default()).SFColorRGBA ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "sourceColorFactor",       new (Fields_default()).SFString ("SRC_ALPHA")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "sourceAlphaFactor",       new (Fields_default()).SFString ("ONE")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "destinationColorFactor",  new (Fields_default()).SFString ("ONE_MINUS_SRC_ALPHA")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "destinationAlphaFactor",  new (Fields_default()).SFString ("ONE_MINUS_SRC_ALPHA")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "colorEquation",           new (Fields_default()).SFString ("FUNC_ADD")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "alphaEquation",           new (Fields_default()).SFString ("FUNC_ADD")),
-   ]),
-   getTypeName: function ()
+   initialize ()
    {
-      return "BlendMode";
-   },
-   getComponentName: function ()
-   {
-      return "X_ITE";
-   },
-   getContainerField: function ()
-   {
-      return "blendMode";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.3", "Infinity"];
-   },
-   initialize: function ()
-   {
-      X3DAppearanceChildNode_default().prototype.initialize.call (this);
+      X3DAppearanceChildNode_default().prototype .initialize .call (this);
 
       const
          gl  = this .getBrowser () .getContext (),
@@ -199,49 +172,49 @@ BlendMode .prototype = Object .assign (Object .create ((X3DAppearanceChildNode_d
       this .set_colorEquation__ ();
       this .set_alphaEquation__ ();
    },
-   set_sourceColorFactor__: function ()
+   set_sourceColorFactor__ ()
    {
       this .sourceColorFactorType = this .factorTypes .get (this ._sourceColorFactor .getValue ());
 
       if (this .sourceColorFactorType === undefined)
          this .sourceColorFactorType = this .factorTypes .get ("SRC_ALPHA");
    },
-   set_sourceAlphaFactor__: function ()
+   set_sourceAlphaFactor__ ()
    {
       this .sourceAlphaFactorType = this .factorTypes .get (this ._sourceAlphaFactor .getValue ());
 
       if (this .sourceAlphaFactorType === undefined)
          this .sourceAlphaFactorType = this .factorTypes .get ("ONE");
    },
-   set_destinationColorFactor__: function ()
+   set_destinationColorFactor__ ()
    {
       this .destinationColorFactorType = this .factorTypes .get (this ._destinationColorFactor .getValue ());
 
       if (this .destinationColorFactorType === undefined)
          this .destinationColorFactorType = this .factorTypes .get ("ONE_MINUS_SRC_ALPHA");
    },
-   set_destinationAlphaFactor__: function ()
+   set_destinationAlphaFactor__ ()
    {
       this .destinationAlphaFactorType = this .factorTypes .get (this ._destinationAlphaFactor .getValue ());
 
       if (this .destinationAlphaFactorType === undefined)
          this .destinationAlphaFactorType = this .factorTypes .get ("ONE_MINUS_SRC_ALPHA");
    },
-   set_colorEquation__: function ()
+   set_colorEquation__ ()
    {
       this .colorEquationType = this .equationTypes .get (this ._colorEquation .getValue ());
 
       if (this .colorEquationType === undefined)
          this .colorEquationType = this .equationTypes .get ("FUNC_ADD");
    },
-   set_alphaEquation__: function ()
+   set_alphaEquation__ ()
    {
       this .alphaEquationType = this .equationTypes .get (this ._alphaEquation .getValue ());
 
       if (this .alphaEquationType === undefined)
          this .alphaEquationType = this .equationTypes .get ("FUNC_ADD");
    },
-   enable: function (gl)
+   enable (gl)
    {
       const color = this ._blendColor .getValue ();
 
@@ -249,10 +222,48 @@ BlendMode .prototype = Object .assign (Object .create ((X3DAppearanceChildNode_d
       gl .blendFuncSeparate (this .sourceColorFactorType, this .destinationColorFactorType, this .sourceAlphaFactorType, this .destinationAlphaFactorType);
       gl .blendEquationSeparate (this .colorEquationType, this .alphaEquationType);
    },
-   disable: function (gl)
+   disable (gl)
    {
       gl .blendFuncSeparate (gl .SRC_ALPHA, gl .ONE_MINUS_SRC_ALPHA, gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
       gl .blendEquationSeparate (gl .FUNC_ADD, gl .FUNC_ADD);
+   },
+});
+
+Object .defineProperties (BlendMode,
+{
+   typeName:
+   {
+      value: "BlendMode",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "X_ITE",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "blendMode",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.3", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",                new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "blendColor",              new (Fields_default()).SFColorRGBA ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "sourceColorFactor",       new (Fields_default()).SFString ("SRC_ALPHA")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "sourceAlphaFactor",       new (Fields_default()).SFString ("ONE")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "destinationColorFactor",  new (Fields_default()).SFString ("ONE_MINUS_SRC_ALPHA")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "destinationAlphaFactor",  new (Fields_default()).SFString ("ONE_MINUS_SRC_ALPHA")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "colorEquation",           new (Fields_default()).SFString ("FUNC_ADD")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "alphaEquation",           new (Fields_default()).SFString ("FUNC_ADD")),
+      ]),
+      enumerable: true,
    },
 });
 
@@ -312,14 +323,15 @@ Namespace_default().set ("x_ite/Components/X_ITE/BlendMode", __default__);
 
 
 
-Components_default().addComponent ({
+Components_default().add ({
    name: "X_ITE",
-   types:
-   {
-      BlendMode: X_ITE_BlendMode,
-   },
-   abstractTypes:
-   { },
+   concreteNodes:
+   [
+      X_ITE_BlendMode,
+   ],
+   abstractNodes:
+   [
+   ],
 });
 
 const X_ITE_default_ = undefined;

@@ -56,23 +56,23 @@ import TimeTrigger      from "../../x_ite/Components/EventUtilities/TimeTrigger.
 import X3DSequencerNode from "../../x_ite/Components/EventUtilities/X3DSequencerNode.js";
 import X3DTriggerNode   from "../../x_ite/Components/EventUtilities/X3DTriggerNode.js";
 
-Components .addComponent ({
+Components .add ({
    name: "EventUtilities",
-   types:
-   {
-      BooleanFilter:    BooleanFilter,
-      BooleanSequencer: BooleanSequencer,
-      BooleanToggle:    BooleanToggle,
-      BooleanTrigger:   BooleanTrigger,
-      IntegerSequencer: IntegerSequencer,
-      IntegerTrigger:   IntegerTrigger,
-      TimeTrigger:      TimeTrigger,
-   },
-   abstractTypes:
-   {
-      X3DSequencerNode: X3DSequencerNode,
-      X3DTriggerNode:   X3DTriggerNode,
-   },
+   concreteNodes:
+   [
+      BooleanFilter,
+      BooleanSequencer,
+      BooleanToggle,
+      BooleanTrigger,
+      IntegerSequencer,
+      IntegerTrigger,
+      TimeTrigger,
+   ],
+   abstractNodes:
+   [
+      X3DSequencerNode,
+      X3DTriggerNode,
+   ],
 });
 
 export default undefined;

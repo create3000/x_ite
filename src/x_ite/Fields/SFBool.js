@@ -45,58 +45,45 @@
  *
  ******************************************************************************/
 
-import X3DField     from "../Base/X3DField.js";
-import X3DConstants from "../Base/X3DConstants.js";
+import X3DField from "../Base/X3DField.js";
 
 function SFBool (value)
 {
-   return X3DField .call (this, !! value);
+   X3DField .call (this, !! value);
 }
 
-SFBool .prototype = Object .assign (Object .create (X3DField .prototype),
+Object .assign (Object .setPrototypeOf (SFBool .prototype, X3DField .prototype),
 {
-   constructor: SFBool,
-   copy: function ()
+   copy ()
    {
       return new SFBool (this .getValue ());
    },
-   isDefaultValue: function ()
+   isDefaultValue ()
    {
       return this .getValue () === false;
    },
-   set: function (value)
+   set (value)
    {
       X3DField .prototype .set .call (this, !! value);
    },
-   getTypeName: function ()
-   {
-      return "SFBool";
-   },
-   getType: function ()
-   {
-      return X3DConstants .SFBool;
-   },
-   valueOf: function ()
-   {
-      return this .getValue ();
-   },
-   toStream: function (generator)
+   valueOf: X3DField .prototype .getValue,
+   toStream (generator)
    {
       generator .string += this .getValue () ? "TRUE" : "FALSE";
    },
-   toVRMLStream: function (generator)
+   toVRMLStream (generator)
    {
       this .toStream (generator);
    },
-   toXMLStream: function (generator)
+   toXMLStream (generator)
    {
       generator .string += this .getValue () ? "true" : "false";
    },
-   toJSONStream: function (generator)
+   toJSONStream (generator)
    {
       this .toJSONStreamValue (generator);
    },
-   toJSONStreamValue: function (generator)
+   toJSONStreamValue (generator)
    {
       generator .string += this .getValue () ? "true" : "false";
    },
@@ -104,5 +91,14 @@ SFBool .prototype = Object .assign (Object .create (X3DField .prototype),
 
 for (const key of Reflect .ownKeys (SFBool .prototype))
    Object .defineProperty (SFBool .prototype, key, { enumerable: false });
+
+Object .defineProperties (SFBool,
+{
+   typeName:
+   {
+      value: "SFBool",
+      enumerable: true,
+   },
+});
 
 export default SFBool;

@@ -59,22 +59,9 @@ function ContextMenu (executionContext)
    this [_userMenu] = null;
 }
 
-ContextMenu .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .prototype),
 {
-   constructor: ContextMenu,
-   getTypeName: function ()
-   {
-      return "ContextMenu";
-   },
-   getComponentName: function ()
-   {
-      return "X_ITE";
-   },
-   getContainerField: function ()
-   {
-      return "contextMenu";
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DBaseNode .prototype .initialize .call (this);
 
@@ -87,15 +74,15 @@ ContextMenu .prototype = Object .assign (Object .create (X3DBaseNode .prototype)
          animation: {duration: 500, show: "fadeIn", hide: "fadeOut"},
       });
    },
-   getUserMenu: function ()
+   getUserMenu ()
    {
       return this [_userMenu];
    },
-   setUserMenu: function (userMenu)
+   setUserMenu (userMenu)
    {
       this [_userMenu] = userMenu;
    },
-   createUserMenu: function ()
+   createUserMenu ()
    {
       const userMenu = { };
 
@@ -112,7 +99,7 @@ ContextMenu .prototype = Object .assign (Object .create (X3DBaseNode .prototype)
 
       return userMenu;
    },
-   build: function (event)
+   build (event)
    {
       const
          browser    = this .getBrowser (),
@@ -143,7 +130,7 @@ ContextMenu .prototype = Object .assign (Object .create (X3DBaseNode .prototype)
                type: "checkbox",
                selected: browser .getBrowserOption ("StraightenHorizon"),
                events: {
-                  click: function (event)
+                  click: (event) =>
                   {
                      const straightenHorizon = $(event .target) .is (":checked");
 
@@ -153,8 +140,7 @@ ContextMenu .prototype = Object .assign (Object .create (X3DBaseNode .prototype)
                         browser .getNotification () ._string = _("Straighten Horizon") + ": " + _("on");
                      else
                         browser .getNotification () ._string = _("Straighten Horizon") + ": " + _("off");
-                  }
-                  .bind (this),
+                  },
                },
             },
             "display-rubberband": {
@@ -162,7 +148,7 @@ ContextMenu .prototype = Object .assign (Object .create (X3DBaseNode .prototype)
                type: "checkbox",
                selected: browser .getBrowserOption ("Rubberband"),
                events: {
-                  click: function (event)
+                  click: (event) =>
                   {
                      const rubberband = $(event .target) .is (":checked");
 
@@ -172,8 +158,7 @@ ContextMenu .prototype = Object .assign (Object .create (X3DBaseNode .prototype)
                         browser .getNotification () ._string = _("Rubberband") + ": " + _("on");
                      else
                         browser .getNotification () ._string = _("Rubberband") + ": " + _("off");
-                  }
-                  .bind (this),
+                  },
                },
             },
             "separator1": "--------",
@@ -187,12 +172,11 @@ ContextMenu .prototype = Object .assign (Object .create (X3DBaseNode .prototype)
                      radio: "primitive-quality",
                      selected: browser .getBrowserOption ("PrimitiveQuality") === "HIGH",
                      events: {
-                        click: function ()
+                        click: () =>
                         {
                            browser .setBrowserOption ("PrimitiveQuality", "HIGH");
                            browser .getNotification () ._string = _("Primitive Quality") + ": " + _("high");
-                        }
-                        .bind (this),
+                        },
                      },
                   },
                   "medium": {
@@ -201,12 +185,11 @@ ContextMenu .prototype = Object .assign (Object .create (X3DBaseNode .prototype)
                      radio: "primitive-quality",
                      selected: browser .getBrowserOption ("PrimitiveQuality") === "MEDIUM",
                      events: {
-                        click: function ()
+                        click: () =>
                         {
                            browser .setBrowserOption ("PrimitiveQuality", "MEDIUM");
                            browser .getNotification () ._string = _("Primitive Quality") + ": " + _("medium");
-                        }
-                        .bind (this),
+                        },
                      },
                   },
                   "low": {
@@ -215,12 +198,11 @@ ContextMenu .prototype = Object .assign (Object .create (X3DBaseNode .prototype)
                      radio: "primitive-quality",
                      selected: browser .getBrowserOption ("PrimitiveQuality") === "LOW",
                      events: {
-                        click: function ()
+                        click: () =>
                         {
                            browser .setBrowserOption ("PrimitiveQuality", "LOW");
                            browser .getNotification () ._string = _("Primitive Quality") + ": " + _("low");
-                        }
-                        .bind (this),
+                        },
                      },
                   },
                },
@@ -235,12 +217,11 @@ ContextMenu .prototype = Object .assign (Object .create (X3DBaseNode .prototype)
                      radio: "texture-quality",
                      selected: browser .getBrowserOption ("TextureQuality") === "HIGH",
                      events: {
-                        click: function ()
+                        click: () =>
                         {
                            browser .setBrowserOption ("TextureQuality", "HIGH");
                            browser .getNotification () ._string = _("Texture Quality") + ": " + _("high");
-                        }
-                        .bind (this),
+                        },
                      },
                   },
                   "medium": {
@@ -249,12 +230,11 @@ ContextMenu .prototype = Object .assign (Object .create (X3DBaseNode .prototype)
                      radio: "texture-quality",
                      selected: browser .getBrowserOption ("TextureQuality") === "MEDIUM",
                      events: {
-                        click: function ()
+                        click: () =>
                         {
                            browser .setBrowserOption ("TextureQuality", "MEDIUM");
                            browser .getNotification () ._string = _("Texture Quality") + ": " + _("medium");
-                        }
-                        .bind (this),
+                        },
                      },
                   },
                   "low": {
@@ -263,12 +243,11 @@ ContextMenu .prototype = Object .assign (Object .create (X3DBaseNode .prototype)
                      radio: "texture-quality",
                      selected: browser .getBrowserOption ("TextureQuality") === "LOW",
                      events: {
-                        click: function ()
+                        click: () =>
                         {
                            browser .setBrowserOption ("TextureQuality", "LOW");
                            browser .getNotification () ._string = _("Texture Quality") + ": " + _("low");
-                        }
-                        .bind (this),
+                        },
                      },
                   },
                },
@@ -283,12 +262,11 @@ ContextMenu .prototype = Object .assign (Object .create (X3DBaseNode .prototype)
                      radio: "shading",
                      selected: browser .getBrowserOption ("Shading") === "POINT",
                      events: {
-                        click: function ()
+                        click: () =>
                         {
                            browser .setBrowserOption ("Shading", "POINT");
                            browser .getNotification () ._string = _("Shading") + ": " + _("Points");
-                        }
-                        .bind (this),
+                        },
                      },
                   },
                   "wireframe": {
@@ -297,12 +275,11 @@ ContextMenu .prototype = Object .assign (Object .create (X3DBaseNode .prototype)
                      radio: "shading",
                      selected: browser .getBrowserOption ("Shading") === "WIREFRAME",
                      events: {
-                        click: function ()
+                        click: () =>
                         {
                            browser .setBrowserOption ("Shading", "WIREFRAME");
                            browser .getNotification () ._string = _("Shading") + ": " + _("Wireframe");
-                        }
-                        .bind (this),
+                        },
                      },
                   },
                   "flat": {
@@ -311,12 +288,11 @@ ContextMenu .prototype = Object .assign (Object .create (X3DBaseNode .prototype)
                      radio: "shading",
                      selected: browser .getBrowserOption ("Shading") === "FLAT",
                      events: {
-                        click: function ()
+                        click: () =>
                         {
                            browser .setBrowserOption ("Shading", "FLAT");
                            browser .getNotification () ._string = _("Shading") + ": " + _("Flat");
-                        }
-                        .bind (this),
+                        },
                      },
                   },
                   "gouraud": {
@@ -325,12 +301,11 @@ ContextMenu .prototype = Object .assign (Object .create (X3DBaseNode .prototype)
                      radio: "shading",
                      selected: browser .getBrowserOption ("Shading") === "GOURAUD",
                      events: {
-                        click: function ()
+                        click: () =>
                         {
                            browser .setBrowserOption ("Shading", "GOURAUD");
                            browser .getNotification () ._string = _("Shading") + ": " + _("Gouraud");
-                        }
-                        .bind (this),
+                        },
                      },
                   },
                   "phong": {
@@ -339,12 +314,11 @@ ContextMenu .prototype = Object .assign (Object .create (X3DBaseNode .prototype)
                      radio: "shading",
                      selected: browser .getBrowserOption ("Shading") === "PHONG",
                      events: {
-                        click: function ()
+                        click: () =>
                         {
                            browser .setBrowserOption ("Shading", "PHONG");
                            browser .getNotification () ._string = _("Shading") + ": " + _("Phong");
-                        }
-                        .bind (this),
+                        },
                      },
                   },
                },
@@ -355,12 +329,11 @@ ContextMenu .prototype = Object .assign (Object .create (X3DBaseNode .prototype)
                type: "checkbox",
                selected: browser .getBrowserOption ("Timings"),
                events: {
-                  click: function (event)
+                  click: (event) =>
                   {
                      browser .setBrowserOption ("Timings", $(event .target) .is (":checked"));
                      browser .getSurface () .focus ();
-                  }
-                  .bind (this),
+                  },
                },
             },
             "fullscreen": {
@@ -368,11 +341,10 @@ ContextMenu .prototype = Object .assign (Object .create (X3DBaseNode .prototype)
                className: "context-menu-icon " + (fullscreen
                   ? "x_ite-private-icon-leave-fullscreen"
                   : "x_ite-private-icon-enter-fullscreen"),
-               callback: function ()
+               callback: () =>
                {
                   browser .getElement () .toggleFullScreen ();
-               }
-               .bind (this),
+               },
             },
             "separator3": "--------",
          },
@@ -385,7 +357,7 @@ ContextMenu .prototype = Object .assign (Object .create (X3DBaseNode .prototype)
          "world-info": {
             name: _("Show World Info"),
             className: "context-menu-icon x_ite-private-icon-world-info",
-            callback: function ()
+            callback ()
             {
                browser .getShadow () .find (".x_ite-private-world-info") .remove ();
 
@@ -426,7 +398,7 @@ ContextMenu .prototype = Object .assign (Object .create (X3DBaseNode .prototype)
          "about": {
             name: _("About X_ITE"),
             className: "context-menu-icon x_ite-private-icon-help-about",
-            callback: function ()
+            callback ()
             {
                window .open (browser .getProviderUrl ());
             },
@@ -460,7 +432,7 @@ ContextMenu .prototype = Object .assign (Object .create (X3DBaseNode .prototype)
 
       return menu;
    },
-   getViewpoints: function ()
+   getViewpoints ()
    {
       const
          browser     = this .getBrowser (),
@@ -488,12 +460,11 @@ ContextMenu .prototype = Object .assign (Object .create (X3DBaseNode .prototype)
 
          const item = {
             name: description,
-            callback: function (viewpoint)
+            callback: () =>
             {
                browser .bindViewpoint (browser .getActiveLayer (), viewpoint);
                browser .getSurface () .focus ();
-            }
-            .bind (this, viewpoint),
+            },
          };
 
          if (viewpoint === currentViewpoint)
@@ -504,7 +475,7 @@ ContextMenu .prototype = Object .assign (Object .create (X3DBaseNode .prototype)
 
       return menu;
    },
-   getAvailableViewers: function ()
+   getAvailableViewers ()
    {
       const
          browser          = this .getBrowser (),
@@ -517,13 +488,12 @@ ContextMenu .prototype = Object .assign (Object .create (X3DBaseNode .prototype)
          menu [viewer] = {
             name: _(this .getViewerName (viewer)),
             className: "context-menu-icon x_ite-private-icon-" + viewer .toLowerCase () + "-viewer",
-            callback: function (viewer)
+            callback: () =>
             {
                browser ._viewer = viewer;
                browser .getNotification () ._string = _(this .getViewerName (viewer));
                browser .getSurface () .focus ();
-            }
-            .bind (this, viewer),
+            },
          };
 
          if (viewer === currentViewer)
@@ -532,7 +502,7 @@ ContextMenu .prototype = Object .assign (Object .create (X3DBaseNode .prototype)
 
       return menu;
    },
-   getViewerName: function (viewer)
+   getViewerName (viewer)
    {
       switch (viewer)
       {
@@ -550,17 +520,17 @@ ContextMenu .prototype = Object .assign (Object .create (X3DBaseNode .prototype)
             return _("None Viewer");
       }
    },
-   init: function (options)
+   init (options)
    {
       this .show = this .createRoot .bind (this, options);
 
       options .element .on ("contextmenu", this .show);
    },
-   show: function (event)
+   show (event)
    { },
-   hide: function (event)
+   hide (event)
    { },
-   createRoot: function (options, event)
+   createRoot (options, event)
    {
       const
          menu  = options .build (event),
@@ -575,7 +545,7 @@ ContextMenu .prototype = Object .assign (Object .create (X3DBaseNode .prototype)
          .addClass (menu .className)
          .appendTo (options .appendTo);
 
-      const hide = this .hide = function ()
+      const hide = this .hide = () =>
       {
          delete this .hide;
 
@@ -590,8 +560,7 @@ ContextMenu .prototype = Object .assign (Object .create (X3DBaseNode .prototype)
          });
 
          return false;
-      }
-      .bind (this);
+      };
 
       // Menu
 
@@ -669,7 +638,7 @@ ContextMenu .prototype = Object .assign (Object .create (X3DBaseNode .prototype)
 
       return false;
    },
-   createItem: function (item, parent, key, level, hide)
+   createItem (item, parent, key, level, hide)
    {
       const li = $("<li></li>") .addClass ("context-menu-item");
 
@@ -745,6 +714,15 @@ ContextMenu .prototype = Object .assign (Object .create (X3DBaseNode .prototype)
       }
 
       return li;
+   },
+});
+
+Object .defineProperties (ContextMenu,
+{
+   typeName:
+   {
+      value: "ContextMenu",
+      enumerable: true,
    },
 });
 

@@ -77,54 +77,9 @@ function DoubleAxisHingeJoint (executionContext)
    this .localAxis2        = new Vector3 (0, 0, 0);
 }
 
-DoubleAxisHingeJoint .prototype = Object .assign (Object .create (X3DRigidJointNode .prototype),
+Object .assign (Object .setPrototypeOf (DoubleAxisHingeJoint .prototype, X3DRigidJointNode .prototype),
 {
-   constructor: DoubleAxisHingeJoint,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",                  new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "forceOutput",               new Fields .MFString ("NONE")),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "anchorPoint",               new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "axis1",                     new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "axis2",                     new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "minAngle1",                 new Fields .SFFloat (-3.14159)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "maxAngle1",                 new Fields .SFFloat (3.14159)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "desiredAngularVelocity1",   new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "desiredAngularVelocity2",   new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "maxTorque1",                new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "maxTorque2",                new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "stopBounce1",               new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "stopConstantForceMix1",     new Fields .SFFloat (0.001)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "stopErrorCorrection1",      new Fields .SFFloat (0.8)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "suspensionForce",           new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "suspensionErrorCorrection", new Fields .SFFloat (0.8)),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "body1AnchorPoint",          new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "body2AnchorPoint",          new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "body1Axis",                 new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "body2Axis",                 new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "hinge1Angle",               new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "hinge2Angle",               new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "hinge1AngleRate",           new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "hinge2AngleRate",           new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "body1",                     new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "body2",                     new Fields .SFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "DoubleAxisHingeJoint";
-   },
-   getComponentName: function ()
-   {
-      return "RigidBodyPhysics";
-   },
-   getContainerField: function ()
-   {
-      return "joints";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DRigidJointNode .prototype .initialize .call (this);
 
@@ -178,7 +133,7 @@ DoubleAxisHingeJoint .prototype = Object .assign (Object .create (X3DRigidJointN
          this .getCollection () .getDynamicsWorld () .addConstraint (this .joint, true);
       };
    })(),
-   removeJoint: function ()
+   removeJoint ()
    {
       if (! this .joint)
          return;
@@ -189,7 +144,7 @@ DoubleAxisHingeJoint .prototype = Object .assign (Object .create (X3DRigidJointN
       Ammo .destroy (this .joint);
       this .joint = null;
    },
-   set_forceOutput__: function ()
+   set_forceOutput__ ()
    {
       for (var key in this .outputs)
          delete this .outputs [key];
@@ -277,6 +232,62 @@ DoubleAxisHingeJoint .prototype = Object .assign (Object .create (X3DRigidJointN
          }
       };
    })(),
+});
+
+Object .defineProperties (DoubleAxisHingeJoint,
+{
+   typeName:
+   {
+      value: "DoubleAxisHingeJoint",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "RigidBodyPhysics",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "joints",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",                  new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "forceOutput",               new Fields .MFString ("NONE")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "anchorPoint",               new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "axis1",                     new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "axis2",                     new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "minAngle1",                 new Fields .SFFloat (-3.14159)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "maxAngle1",                 new Fields .SFFloat (3.14159)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "desiredAngularVelocity1",   new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "desiredAngularVelocity2",   new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "maxTorque1",                new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "maxTorque2",                new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "stopBounce1",               new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "stopConstantForceMix1",     new Fields .SFFloat (0.001)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "stopErrorCorrection1",      new Fields .SFFloat (0.8)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "suspensionForce",           new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "suspensionErrorCorrection", new Fields .SFFloat (0.8)),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "body1AnchorPoint",          new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "body2AnchorPoint",          new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "body1Axis",                 new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "body2Axis",                 new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "hinge1Angle",               new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "hinge2Angle",               new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "hinge1AngleRate",           new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "hinge2AngleRate",           new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "body1",                     new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "body2",                     new Fields .SFNode ()),
+      ]),
+      enumerable: true,
+   },
 });
 
 export default DoubleAxisHingeJoint;

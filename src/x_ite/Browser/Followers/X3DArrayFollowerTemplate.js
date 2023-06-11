@@ -53,9 +53,9 @@ function X3DArrayFollowerTemplate (Type)
       this .zero  = this .getVector ();
    }
 
-   X3DArrayFollowerObject .prototype =
+   Object .assign (X3DArrayFollowerObject .prototype,
    {
-      getArray: function ()
+      getArray ()
       {
          const array = [ ];
 
@@ -85,23 +85,23 @@ function X3DArrayFollowerTemplate (Type)
 
          return array;
       },
-      getValue: function ()
+      getValue ()
       {
          return this ._set_value;
       },
-      getDestination: function ()
+      getDestination ()
       {
          return this ._set_destination;
       },
-      getInitialValue: function ()
+      getInitialValue ()
       {
          return this ._initialValue;
       },
-      getInitialDestination: function ()
+      getInitialDestination ()
       {
          return this ._initialDestination;
       },
-      setValue: function (value)
+      setValue (value)
       {
          if (Array .isArray (value))
          {
@@ -117,7 +117,7 @@ function X3DArrayFollowerTemplate (Type)
             this ._value_changed = value;
          }
       },
-      duplicate: function (value)
+      duplicate (value)
       {
          const array = this .getArray ();
 
@@ -125,7 +125,7 @@ function X3DArrayFollowerTemplate (Type)
 
          return array;
       },
-      equals: function (lhs, rhs, tolerance)
+      equals (lhs, rhs, tolerance)
       {
          if (lhs .length !== rhs .length)
             return false;
@@ -139,7 +139,7 @@ function X3DArrayFollowerTemplate (Type)
 
          return distance < tolerance;
       },
-      interpolate: function (source, destination, weight)
+      interpolate (source, destination, weight)
       {
          const array = this .array;
 
@@ -150,7 +150,7 @@ function X3DArrayFollowerTemplate (Type)
 
          return array;
       },
-      set_destination__: function ()
+      set_destination__ ()
       {
          const
             buffers = this .getBuffer (),
@@ -168,7 +168,7 @@ function X3DArrayFollowerTemplate (Type)
 
          Type .prototype .set_destination__ .call (this);
       },
-   };
+   });
 
    return X3DArrayFollowerObject;
 }

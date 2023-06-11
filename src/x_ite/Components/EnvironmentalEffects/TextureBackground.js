@@ -59,43 +59,9 @@ function TextureBackground (executionContext)
    this .addType (X3DConstants .TextureBackground);
 }
 
-TextureBackground .prototype = Object .assign (Object .create (X3DBackgroundNode .prototype),
+Object .assign (Object .setPrototypeOf (TextureBackground .prototype, X3DBackgroundNode .prototype),
 {
-   constructor: TextureBackground,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,   "set_bind",      new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "skyAngle",      new Fields .MFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "skyColor",      new Fields .MFColor (new Fields .SFColor ())),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "groundAngle",   new Fields .MFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "groundColor",   new Fields .MFColor ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "transparency",  new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "isBound",       new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "bindTime",      new Fields .SFTime ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "frontTexture",  new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "backTexture",   new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "leftTexture",   new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "rightTexture",  new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "topTexture",    new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "bottomTexture", new Fields .SFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "TextureBackground";
-   },
-   getComponentName: function ()
-   {
-      return "EnvironmentalEffects";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DBackgroundNode .prototype .initialize .call (this);
 
@@ -113,9 +79,54 @@ TextureBackground .prototype = Object .assign (Object .create (X3DBackgroundNode
       this .set_texture__ (4, this ._topTexture);
       this .set_texture__ (5, this ._bottomTexture);
    },
-   set_texture__: function (index, textureNode)
+   set_texture__ (index, textureNode)
    {
       X3DBackgroundNode .prototype .set_texture__ .call (this, X3DCast (X3DConstants .X3DTextureNode, textureNode), index);
+   },
+});
+
+Object .defineProperties (TextureBackground,
+{
+   typeName:
+   {
+      value: "TextureBackground",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "EnvironmentalEffects",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,   "set_bind",      new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "skyAngle",      new Fields .MFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "skyColor",      new Fields .MFColor (new Fields .SFColor ())),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "groundAngle",   new Fields .MFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "groundColor",   new Fields .MFColor ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "transparency",  new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "isBound",       new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "bindTime",      new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "frontTexture",  new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "backTexture",   new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "leftTexture",   new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "rightTexture",  new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "topTexture",    new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "bottomTexture", new Fields .SFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 

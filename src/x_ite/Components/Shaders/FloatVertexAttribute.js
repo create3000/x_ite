@@ -59,32 +59,9 @@ function FloatVertexAttribute (executionContext)
    this .addType (X3DConstants .FloatVertexAttribute);
 }
 
-FloatVertexAttribute .prototype = Object .assign (Object .create (X3DVertexAttributeNode .prototype),
+Object .assign (Object .setPrototypeOf (FloatVertexAttribute .prototype, X3DVertexAttributeNode .prototype),
 {
-   constructor: FloatVertexAttribute,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",      new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "name",          new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "numComponents", new Fields .SFInt32 (4)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "value",         new Fields .MFFloat ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "FloatVertexAttribute";
-   },
-   getComponentName: function ()
-   {
-      return "Shaders";
-   },
-   getContainerField: function ()
-   {
-      return "attrib";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DVertexAttributeNode .prototype .initialize .call (this);
 
@@ -95,16 +72,16 @@ FloatVertexAttribute .prototype = Object .assign (Object .create (X3DVertexAttri
       this .set_numComponents__ ();
       this .set_value__ ();
    },
-   set_numComponents__: function ()
+   set_numComponents__ ()
    {
       this .numComponents = Algorithm .clamp (this ._numComponents .getValue (), 1, 4);
    },
-   set_value__: function ()
+   set_value__ ()
    {
       this .value  = this ._value .getValue ();
       this .length = this ._value .length;
    },
-   addValue: function (index, array)
+   addValue (index, array)
    {
       const value = this .value;
 
@@ -131,9 +108,43 @@ FloatVertexAttribute .prototype = Object .assign (Object .create (X3DVertexAttri
             array .push (0);
       }
    },
-   enable: function (gl, shaderNode, buffer)
+   enable (gl, shaderNode, buffer)
    {
       shaderNode .enableFloatAttrib (gl, this ._name .getValue (), buffer, this .numComponents, 0, 0);
+   },
+});
+
+Object .defineProperties (FloatVertexAttribute,
+{
+   typeName:
+   {
+      value: "FloatVertexAttribute",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Shaders",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "attrib",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",      new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "name",          new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "numComponents", new Fields .SFInt32 (4)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "value",         new Fields .MFFloat ()),
+      ]),
+      enumerable: true,
    },
 });
 

@@ -63,10 +63,9 @@ function X3DChaserNode (executionContext)
    this .deltaOut = this .getVector ();
 }
 
-X3DChaserNode .prototype = Object .assign (Object .create (X3DFollowerNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DChaserNode .prototype, X3DFollowerNode .prototype),
 {
-   constructor: X3DChaserNode,
-   initialize: function ()
+   initialize ()
    {
       X3DFollowerNode .prototype .initialize .call (this);
 
@@ -98,27 +97,27 @@ X3DChaserNode .prototype = Object .assign (Object .create (X3DFollowerNode .prot
       else
          this .set_active (true);
    },
-   getNumBuffers: function ()
+   getNumBuffers ()
    {
       return 60;
    },
-   getTolerance: function ()
+   getTolerance ()
    {
       return 1e-8;
    },
-   getArray: function ()
+   getArray ()
    {
       return this .getVector ();
    },
-   setPreviousValue: function (value)
+   setPreviousValue (value)
    {
       this .previousValue .assign (value);
    },
-   step: function (value1, value2, t)
+   step (value1, value2, t)
    {
       this .output .add (this .deltaOut .assign (value1) .subtract (value2) .multiply (t));
    },
-   stepResponse: function (t)
+   stepResponse (t)
    {
       if (t <= 0)
          return 0;
@@ -130,7 +129,7 @@ X3DChaserNode .prototype = Object .assign (Object .create (X3DFollowerNode .prot
 
       return 0.5 - 0.5 * Math .cos ((t / duration) * Math .PI);
    },
-   set_value__: function ()
+   set_value__ ()
    {
       if (! this ._isActive .getValue ())
          this .bufferEndTime = this .getBrowser () .getCurrentTime ();
@@ -147,7 +146,7 @@ X3DChaserNode .prototype = Object .assign (Object .create (X3DFollowerNode .prot
 
       this .set_active (true);
    },
-   set_destination__: function ()
+   set_destination__ ()
    {
       this .setDestination (this .getDestination ());
 
@@ -156,11 +155,11 @@ X3DChaserNode .prototype = Object .assign (Object .create (X3DFollowerNode .prot
 
       this .set_active (true);
    },
-   set_duration__: function ()
+   set_duration__ ()
    {
       this .stepTime = this ._duration .getValue () / this .getNumBuffers ();
    },
-   prepareEvents: function ()
+   prepareEvents ()
    {
       var
          buffer     = this .getBuffer (),
@@ -181,7 +180,7 @@ X3DChaserNode .prototype = Object .assign (Object .create (X3DFollowerNode .prot
       if (this .equals (this .output, this .destination, this .getTolerance ()))
          this .set_active (false);
    },
-   updateBuffer: function ()
+   updateBuffer ()
    {
       var
          buffer     = this .getBuffer (),
@@ -222,6 +221,20 @@ X3DChaserNode .prototype = Object .assign (Object .create (X3DFollowerNode .prot
       }
 
       return fraction;
+   },
+});
+
+Object .defineProperties (X3DChaserNode,
+{
+   typeName:
+   {
+      value: "X3DChaserNode",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Followers",
+      enumerable: true,
    },
 });
 

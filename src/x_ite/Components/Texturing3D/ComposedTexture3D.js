@@ -64,35 +64,9 @@ function ComposedTexture3D (executionContext)
    this .textureNodes = [ ];
 }
 
-ComposedTexture3D .prototype = Object .assign (Object .create (X3DTexture3DNode .prototype),
+Object .assign (Object .setPrototypeOf (ComposedTexture3D .prototype, X3DTexture3DNode .prototype),
 {
-   constructor: ComposedTexture3D,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "description",       new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatS",           new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatT",           new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatR",           new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties", new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "texture",           new Fields .MFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "ComposedTexture3D";
-   },
-   getComponentName: function ()
-   {
-      return "Texturing3D";
-   },
-   getContainerField: function ()
-   {
-      return "texture";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.1", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DTexture3DNode .prototype .initialize .call (this);
 
@@ -105,11 +79,11 @@ ComposedTexture3D .prototype = Object .assign (Object .create (X3DTexture3DNode 
 
       this .set_texture__ ();
    },
-   checkLoadState: function ()
+   checkLoadState ()
    {
       return this ._loadState .getValue ();
    },
-   set_texture__: function ()
+   set_texture__ ()
    {
       const textureNodes = this .textureNodes;
 
@@ -131,15 +105,15 @@ ComposedTexture3D .prototype = Object .assign (Object .create (X3DTexture3DNode 
 
       this .set_update__ ();
    },
-   set_update__: function ()
+   set_update__ ()
    {
       this ._update .addEvent ();
    },
-   isComplete: function ()
+   isComplete ()
    {
       return this .textureNodes .every (textureNode => textureNode .checkLoadState () === X3DConstants .COMPLETE_STATE || textureNode .getWidth ());
    },
-   update: function ()
+   update ()
    {
       const textureNodes = this .textureNodes
 
@@ -184,6 +158,43 @@ ComposedTexture3D .prototype = Object .assign (Object .create (X3DTexture3DNode 
 
          this ._loadState = X3DConstants .COMPLETE_STATE;
       }
+   },
+});
+
+Object .defineProperties (ComposedTexture3D,
+{
+   typeName:
+   {
+      value: "ComposedTexture3D",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Texturing3D",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "texture",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.1", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "description",       new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatS",           new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatT",           new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatR",           new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "texture",           new Fields .MFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 

@@ -51,7 +51,6 @@ import FieldDefinitionArray               from "../../Base/FieldDefinitionArray.
 import X3DComposableVolumeRenderStyleNode from "./X3DComposableVolumeRenderStyleNode.js";
 import X3DConstants                       from "../../Base/X3DConstants.js";
 import X3DCast                            from "../../Base/X3DCast.js";
-import DEBUG                              from "../../DEBUG.js";
 
 function BlendedVolumeStyle (executionContext)
 {
@@ -60,38 +59,9 @@ function BlendedVolumeStyle (executionContext)
    this .addType (X3DConstants .BlendedVolumeStyle);
 }
 
-BlendedVolumeStyle .prototype = Object .assign (Object .create (X3DComposableVolumeRenderStyleNode .prototype),
+Object .assign (Object .setPrototypeOf (BlendedVolumeStyle .prototype, X3DComposableVolumeRenderStyleNode .prototype),
 {
-   constructor: BlendedVolumeStyle,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",                new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",                 new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "weightConstant1",         new Fields .SFFloat (0.5)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "weightConstant2",         new Fields .SFFloat (0.5)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "weightFunction1",         new Fields .SFString ("CONSTANT")),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "weightFunction2",         new Fields .SFString ("CONSTANT")),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "weightTransferFunction1", new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "weightTransferFunction2", new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "renderStyle",             new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "voxels",                  new Fields .SFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "BlendedVolumeStyle";
-   },
-   getComponentName: function ()
-   {
-      return "VolumeRendering";
-   },
-   getContainerField: function ()
-   {
-      return "renderStyle";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.3", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DComposableVolumeRenderStyleNode .prototype .initialize .call (this);
 
@@ -110,29 +80,29 @@ BlendedVolumeStyle .prototype = Object .assign (Object .create (X3DComposableVol
       this .set_renderStyle__ ();
       this .set_voxels__ ();
    },
-   addVolumeData: function (volumeDataNode)
+   addVolumeData (volumeDataNode)
    {
       X3DComposableVolumeRenderStyleNode .prototype .addVolumeData .call (this, volumeDataNode);
 
       if (this .renderStyleNode)
          this .renderStyleNode .addVolumeData (volumeDataNode);
    },
-   removeVolumeData: function (volumeDataNode)
+   removeVolumeData (volumeDataNode)
    {
       X3DComposableVolumeRenderStyleNode .prototype .removeVolumeData .call (this, volumeDataNode);
 
       if (this .renderStyleNode)
          this .renderStyleNode .removeVolumeData (volumeDataNode);
    },
-   set_weightTransferFunction1__: function ()
+   set_weightTransferFunction1__ ()
    {
       this .weightTransferFunction1Node = X3DCast (X3DConstants .X3DTexture2DNode, this ._weightTransferFunction1);
    },
-   set_weightTransferFunction2__: function ()
+   set_weightTransferFunction2__ ()
    {
       this .weightTransferFunction2Node = X3DCast (X3DConstants .X3DTexture2DNode, this ._weightTransferFunction2);
    },
-   set_renderStyle__: function ()
+   set_renderStyle__ ()
    {
       if (this .renderStyleNode)
       {
@@ -152,11 +122,11 @@ BlendedVolumeStyle .prototype = Object .assign (Object .create (X3DComposableVol
             this .renderStyleNode .addVolumeData (volumeDataNode);
       }
    },
-   set_voxels__: function ()
+   set_voxels__ ()
    {
       this .voxelsNode = X3DCast (X3DConstants .X3DTexture3DNode, this ._voxels);
    },
-   addShaderFields: function (shaderNode)
+   addShaderFields (shaderNode)
    {
       if (! this ._enabled .getValue ())
          return;
@@ -180,7 +150,7 @@ BlendedVolumeStyle .prototype = Object .assign (Object .create (X3DComposableVol
       if (this .renderStyleNode)
          this .renderStyleNode .addShaderFields (shaderNode);
    },
-   getUniformsText: function ()
+   getUniformsText ()
    {
       if (! this ._enabled .getValue ())
          return "";
@@ -323,7 +293,7 @@ BlendedVolumeStyle .prototype = Object .assign (Object .create (X3DComposableVol
 
       return string;
    },
-   getFunctionsText: function ()
+   getFunctionsText ()
    {
       if (! this ._enabled .getValue ())
          return "";
@@ -339,6 +309,46 @@ BlendedVolumeStyle .prototype = Object .assign (Object .create (X3DComposableVol
       string += "   textureColor = getBlendedStyle_" + this .getId () + " (textureColor, texCoord);\n";
 
       return string;
+   },
+});
+
+Object .defineProperties (BlendedVolumeStyle,
+{
+   typeName:
+   {
+      value: "BlendedVolumeStyle",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "VolumeRendering",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "renderStyle",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.3", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",                new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",                 new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "weightConstant1",         new Fields .SFFloat (0.5)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "weightConstant2",         new Fields .SFFloat (0.5)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "weightFunction1",         new Fields .SFString ("CONSTANT")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "weightFunction2",         new Fields .SFString ("CONSTANT")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "weightTransferFunction1", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "weightTransferFunction2", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "renderStyle",             new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "voxels",                  new Fields .SFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 

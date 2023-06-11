@@ -59,20 +59,19 @@ function X3DPointGeometryNode (executionContext)
    this .setTransparent (true);
 }
 
-X3DPointGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeometryNode .prototype),
 {
-   constructor: X3DPointGeometryNode,
-   intersectsLine: function ()
+   intersectsLine ()
    {
       return false;
    },
-   intersectsBox: function ()
+   intersectsBox ()
    {
       return false;
    },
-   buildTexCoords: function ()
+   buildTexCoords ()
    { },
-   display: function (gl, renderContext)
+   display (gl, renderContext)
    {
       const
          appearanceNode = renderContext .appearanceNode,
@@ -111,7 +110,7 @@ X3DPointGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNod
 
       blendModeNode ?.disable (gl);
    },
-   displayParticles: function (gl, renderContext, particleSystem)
+   displayParticles (gl, renderContext, particleSystem)
    {
       const
          appearanceNode = renderContext .appearanceNode,
@@ -160,6 +159,20 @@ X3DPointGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNod
       gl .drawArraysInstanced (this .primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
 
       blendModeNode ?.disable (gl);
+   },
+});
+
+Object .defineProperties (X3DPointGeometryNode,
+{
+   typeName:
+   {
+      value: "X3DPointGeometryNode",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Rendering",
+      enumerable: true,
    },
 });
 

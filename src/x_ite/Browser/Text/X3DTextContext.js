@@ -58,9 +58,9 @@ function X3DTextContext ()
    this [_glyphCache] = new Map (); // [font] [primitiveQuality] [glyphIndex]
 }
 
-X3DTextContext .prototype =
+Object .assign (X3DTextContext .prototype,
 {
-   getDefaultFontStyle: function ()
+   getDefaultFontStyle ()
    {
       this [_defaultFontStyle] = new FontStyle (this .getPrivateScene ());
       this [_defaultFontStyle] .setPrivate (true);
@@ -72,7 +72,7 @@ X3DTextContext .prototype =
 
       return this [_defaultFontStyle];
    },
-   getFont: function (url)
+   getFont (url)
    {
       url = url .toString ();
 
@@ -87,14 +87,14 @@ X3DTextContext .prototype =
 
       return deferred;
    },
-   setFont: function (deferred, error, font)
+   setFont (deferred, error, font)
    {
       if (error)
          deferred .reject (error);
       else
          deferred .resolve (font);
    },
-   getGlyph: function (font, primitiveQuality, glyphIndex)
+   getGlyph (font, primitiveQuality, glyphIndex)
    {
       let cachedFont = this [_glyphCache] .get (font);
 
@@ -113,6 +113,6 @@ X3DTextContext .prototype =
 
       return cachedGlyph;
    },
-};
+});
 
 export default X3DTextContext;

@@ -58,25 +58,20 @@ function ProfileInfo (name, title, providerUrl, components)
    });
 }
 
-ProfileInfo .prototype = Object .assign (Object .create (X3DObject .prototype),
+Object .assign (Object .setPrototypeOf (ProfileInfo .prototype, X3DObject .prototype),
 {
-   constructor: ProfileInfo,
-   getTypeName: function ()
-   {
-      return "ProfileInfo";
-   },
-   toVRMLStream: function (generator)
+   toVRMLStream (generator)
    {
       generator .string += generator .Indent ();
       generator .string += "PROFILE";
       generator .string += generator .Space ();
       generator .string += this .name;
    },
-   toXMLStream: function (generator)
+   toXMLStream (generator)
    {
       generator .string += this .name;
    },
-   toJSONStream: function (generator)
+   toJSONStream (generator)
    {
       generator .string += this .name;
    },
@@ -84,5 +79,14 @@ ProfileInfo .prototype = Object .assign (Object .create (X3DObject .prototype),
 
 for (const key of Reflect .ownKeys (ProfileInfo .prototype))
    Object .defineProperty (ProfileInfo .prototype, key, { enumerable: false });
+
+Object .defineProperties (ProfileInfo,
+{
+   typeName:
+   {
+      value: "ProfileInfo",
+      enumerable: true,
+   },
+});
 
 export default ProfileInfo;

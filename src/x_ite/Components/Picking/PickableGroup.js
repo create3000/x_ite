@@ -62,39 +62,10 @@ function PickableGroup (executionContext)
    this .addType (X3DConstants .PickableGroup);
 }
 
-PickableGroup .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
+Object .assign (Object .setPrototypeOf (PickableGroup .prototype, X3DGroupingNode .prototype),
    X3DPickableObject .prototype,
 {
-   constructor: PickableGroup,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",       new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "pickable",       new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "objectType",     new Fields .MFString ("ALL")),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",        new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",    new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",       new Fields .SFVec3f (-1, -1, -1)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",     new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",    new Fields .MFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,      "removeChildren", new Fields .MFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "children",       new Fields .MFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "PickableGroup";
-   },
-   getComponentName: function ()
-   {
-      return "Picking";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DGroupingNode   .prototype .initialize .call (this);
       X3DPickableObject .prototype .initialize .call (this);
@@ -103,11 +74,11 @@ PickableGroup .prototype = Object .assign (Object .create (X3DGroupingNode .prot
 
       this .set_pickable__ ();
    },
-   set_pickableObjects__: function ()
+   set_pickableObjects__ ()
    {
       this .set_pickable__ ();
    },
-   set_pickable__: function ()
+   set_pickable__ ()
    {
       this .setPickableObject (!!(this ._pickable .getValue () || this .getTransformSensors () .size));
    },
@@ -202,10 +173,50 @@ PickableGroup .prototype = Object .assign (Object .create (X3DGroupingNode .prot
          }
       };
    })(),
-   dispose: function ()
+   dispose ()
    {
       X3DPickableObject .prototype .dispose .call (this);
       X3DGroupingNode   .prototype .dispose .call (this);
+   },
+});
+
+Object .defineProperties (PickableGroup,
+{
+   typeName:
+   {
+      value: "PickableGroup",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Picking",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",       new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "pickable",       new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "objectType",     new Fields .MFString ("ALL")),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",        new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",    new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",       new Fields .SFVec3f (-1, -1, -1)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",     new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",    new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "removeChildren", new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "children",       new Fields .MFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 

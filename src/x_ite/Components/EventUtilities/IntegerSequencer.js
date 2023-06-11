@@ -58,47 +58,58 @@ function IntegerSequencer (executionContext)
    this .addType (X3DConstants .IntegerSequencer);
 }
 
-IntegerSequencer .prototype = Object .assign (Object .create (X3DSequencerNode .prototype),
+Object .assign (Object .setPrototypeOf (IntegerSequencer .prototype, X3DSequencerNode .prototype),
 {
-   constructor: IntegerSequencer,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,   "previous",      new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,   "next",          new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "key",           new Fields .MFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "keyValue",      new Fields .MFInt32 ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .SFInt32 ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "IntegerSequencer";
-   },
-   getComponentName: function ()
-   {
-      return "EventUtilities";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DSequencerNode .prototype .initialize .call (this);
 
       this ._keyValue .addInterest ("set_index__", this);
    },
-   getSize: function ()
+   getSize ()
    {
       return this ._keyValue .length;
    },
-   sequence: function (index)
+   sequence (index)
    {
       this ._value_changed = this ._keyValue [index];
+   },
+});
+
+Object .defineProperties (IntegerSequencer,
+{
+   typeName:
+   {
+      value: "IntegerSequencer",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "EventUtilities",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,   "previous",      new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,   "next",          new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "key",           new Fields .MFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "keyValue",      new Fields .MFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .SFInt32 ()),
+      ]),
+      enumerable: true,
    },
 });
 

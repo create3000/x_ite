@@ -59,36 +59,9 @@ function Shape (executionContext)
    this .addType (X3DConstants .Shape);
 }
 
-Shape .prototype = Object .assign (Object .create (X3DShapeNode .prototype),
+Object .assign (Object .setPrototypeOf (Shape .prototype, X3DShapeNode .prototype),
 {
-   constructor: Shape,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",     new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "castShadow",  new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay", new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",    new Fields .SFVec3f (-1, -1, -1)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",  new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "appearance",  new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "geometry",    new Fields .SFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "Shape";
-   },
-   getComponentName: function ()
-   {
-      return "Shape";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DShapeNode .prototype .initialize .call (this);
 
@@ -96,12 +69,12 @@ Shape .prototype = Object .assign (Object .create (X3DShapeNode .prototype),
 
       this .set_transformSensors__ ();
    },
-   getShapeKey: function ()
+   getShapeKey ()
    {
       return 0;
    },
    getGeometryContext: X3DShapeNode .prototype .getGeometry,
-   set_geometry__: function ()
+   set_geometry__ ()
    {
       X3DShapeNode .prototype .set_geometry__ .call (this);
 
@@ -110,15 +83,15 @@ Shape .prototype = Object .assign (Object .create (X3DShapeNode .prototype),
       else
          this .traverse = Function .prototype;
    },
-   set_transformSensors__: function ()
+   set_transformSensors__ ()
    {
       this .setPickableObject (this .getTransformSensors () .size);
    },
-   intersectsBox: function (box, clipPlanes, modelViewMatrix)
+   intersectsBox (box, clipPlanes, modelViewMatrix)
    {
       return this .getGeometry () .intersectsBox (box, clipPlanes, modelViewMatrix);
    },
-   traverse: function (type, renderObject)
+   traverse (type, renderObject)
    {
       // Always look at ParticleSystem if you do modify something here and there.
 
@@ -157,7 +130,7 @@ Shape .prototype = Object .assign (Object .create (X3DShapeNode .prototype),
 
       this .getGeometry () .traverse (type, renderObject); // Currently used for ScreenText.
    },
-   picking: function (renderObject)
+   picking (renderObject)
    {
       const modelMatrix = renderObject .getModelViewMatrix () .get ();
 
@@ -181,13 +154,51 @@ Shape .prototype = Object .assign (Object .create (X3DShapeNode .prototype),
 
       pickingHierarchy .pop ();
    },
-   displaySimple: function (gl, renderContext, shaderNode)
+   displaySimple (gl, renderContext, shaderNode)
    {
       this .getGeometry () .displaySimple (gl, renderContext, shaderNode);
    },
-   display: function (gl, renderContext)
+   display (gl, renderContext)
    {
       this .getGeometry () .display (gl, renderContext);
+   },
+});
+
+Object .defineProperties (Shape,
+{
+   typeName:
+   {
+      value: "Shape",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Shape",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",     new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "castShadow",  new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay", new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",    new Fields .SFVec3f (-1, -1, -1)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",  new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "appearance",  new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "geometry",    new Fields .SFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 

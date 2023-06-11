@@ -64,41 +64,50 @@ function UniversalJoint (executionContext)
    this ._body2AnchorPoint .setUnit ("length");
 }
 
-UniversalJoint .prototype = Object .assign (Object .create (X3DRigidJointNode .prototype),
+Object .setPrototypeOf (UniversalJoint .prototype, X3DRigidJointNode .prototype);
+
+Object .defineProperties (UniversalJoint,
 {
-   constructor: UniversalJoint,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",             new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "forceOutput",          new Fields .MFString ("NONE")),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "anchorPoint",          new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "axis1",                new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "axis2",                new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "stopBounce1",          new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "stop1ErrorCorrection", new Fields .SFFloat (0.8)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "stop2Bounce",          new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "stop2ErrorCorrection", new Fields .SFFloat (0.8)),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "body1AnchorPoint",     new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "body1Axis",            new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "body2AnchorPoint",     new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "body2Axis",            new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "body1",                new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "body2",                new Fields .SFNode ()),
-   ]),
-   getTypeName: function ()
+   typeName:
    {
-      return "UniversalJoint";
+      value: "UniversalJoint",
+      enumerable: true,
    },
-   getComponentName: function ()
+   componentName:
    {
-      return "RigidBodyPhysics";
+      value: "RigidBodyPhysics",
+      enumerable: true,
    },
-   getContainerField: function ()
+   containerField:
    {
-      return "joints";
+      value: "joints",
+      enumerable: true,
    },
-   getSpecificationRange: function ()
+   specificationRange:
    {
-      return ["3.2", "Infinity"];
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",             new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "forceOutput",          new Fields .MFString ("NONE")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "anchorPoint",          new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "axis1",                new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "axis2",                new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "stopBounce1",          new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "stop1ErrorCorrection", new Fields .SFFloat (0.8)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "stop2Bounce",          new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "stop2ErrorCorrection", new Fields .SFFloat (0.8)),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "body1AnchorPoint",     new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "body1Axis",            new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "body2AnchorPoint",     new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "body2Axis",            new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "body1",                new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "body2",                new Fields .SFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 

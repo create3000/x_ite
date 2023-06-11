@@ -45,15 +45,16 @@
  *
  ******************************************************************************/
 
-import Generator from "../InputOutput/Generator.js";
+import X3DChildObject from "./X3DChildObject.js";
 
 const
-   _array = Symbol (),
-   _index = Symbol ();
+   _array     = Symbol (),
+   _index     = Symbol (),
+   _valueType = Symbol ();
 
 const handler =
 {
-   get: function (target, key)
+   get (target, key)
    {
       const value = target [key];
 
@@ -70,7 +71,7 @@ const handler =
          return;
       }
    },
-   set: function (target, key, value)
+   set (target, key, value)
    {
       if (target [key] === undefined)
          return false;
@@ -78,18 +79,18 @@ const handler =
       target [key] = value;
       return true;
    },
-   has: function (target, key)
+   has (target, key)
    {
       if (Number .isInteger (+key))
          return key < target [_array] .length;
 
       return key in target;
    },
-   ownKeys: function (target)
+   ownKeys (target)
    {
       return Object .keys (target [_array]);
    },
-   getOwnPropertyDescriptor: function (target, key)
+   getOwnPropertyDescriptor (target, key)
    {
       if (typeof key !== "string")
          return;
@@ -108,36 +109,47 @@ const handler =
    },
 };
 
-function X3DInfoArray (values, ValueType)
+function X3DInfoArray (values, valueType)
 {
-   this [_array] = [ ];
-   this [_index] = new Map ();
+   const proxy = new Proxy (this, handler);
 
-   if (values)
-   {
-      for (const value of values)
-      {
-         if (!(value instanceof ValueType))
-            throw new TypeError (`Wrong type in construction of ${this .getTypeName ()}.`);
+   X3DChildObject .call (this);
 
-         this .add (value .name, value);
-      }
-   }
+   this [_array]     = [ ];
+   this [_index]     = new Map ();
+   this [_valueType] = valueType;
 
-   return new Proxy (this, handler);
+   for (const [key, value] of values)
+      this .add (key, value);
+
+   return proxy;
 }
 
-X3DInfoArray .prototype = {
-   constructor: X3DInfoArray,
-   [Symbol .iterator]: function* ()
+Object .assign (Object .setPrototypeOf (X3DInfoArray .prototype, X3DChildObject .prototype),
+{
+   *[Symbol .iterator] ()
    {
       yield* this [_array];
    },
-   copy: function ()
+   copy ()
    {
-      return new (this .constructor) (this [_array]);
+      const copy = new (this .constructor) ();
+
+      copy .assign (this);
+
+      return copy;
    },
-   equals: function (array)
+   assign (array)
+   {
+      if (!(array instanceof this .constructor))
+         throw new Error ("Couldn't assign info array, wrong type.");
+
+      this [_array] = Array .from (array [_array]);
+      this [_index] = new Map (array [_index]);
+
+      this .addEvent ();
+   },
+   equals (array)
    {
       const
          a      = this [_array],
@@ -158,26 +170,39 @@ X3DInfoArray .prototype = {
 
       return true;
    },
-   has: function (key)
+   has (key)
    {
       return this [_index] .has (key);
    },
-   get: function (key)
+   get (key)
    {
       return this [_index] .get (key);
    },
-   add: function (key, value)
+   add (key, value)
    {
+      if (this [_index] .has (key))
+         throw new Error (`Couldn't add value to ${this .getTypeName ()}, key '${key}' already exists.`);
+
+      if (!(value instanceof this [_valueType]))
+         throw new Error (`Couldn't add value to ${this .getTypeName ()}, value for key '${key}' has wrong type.`);
+
       this [_array] .push (value);
       this [_index] .set (key, value);
+
+      this .addEvent ();
    },
-   addAlias: function (alias, key)
+   alias (alias, key)
    {
       this [_index] .set (alias, this [_index] .get (key));
+
+      this .addEvent ();
    },
-   update: function (oldKey, newKey, value)
+   update (oldKey, newKey, value)
    {
       // TODO: update alias.
+
+      if (!(value instanceof this [_valueType]))
+         throw new Error (`Couldn't update value of ${this .getTypeName ()}, value for key '${key}' has wrong type.`);
 
       const oldValue = this [_index] .get (oldKey);
 
@@ -198,8 +223,10 @@ X3DInfoArray .prototype = {
       {
          this [_array] .push (value);
       }
+
+      this .addEvent ();
    },
-   remove: function (key)
+   remove (key)
    {
       // TODO: remove alias.
 
@@ -214,6 +241,8 @@ X3DInfoArray .prototype = {
 
       if (index > -1)
          this [_array] .splice (index, 1);
+
+      this .addEvent ();
    },
    at: Array .prototype .at,
    // concat: Array .prototype .concat,
@@ -221,7 +250,7 @@ X3DInfoArray .prototype = {
    entries: Array .prototype .entries,
    every: Array .prototype .every,
    // fill: Array .prototype .fill,
-   filter: function (callbackFn, thisArg)
+   filter (callbackFn, thisArg)
    {
       return new (this .constructor) (Array .prototype .filter .call (this, callbackFn, thisArg));
    },
@@ -237,28 +266,28 @@ X3DInfoArray .prototype = {
    join: Array .prototype .join,
    keys: Array .prototype .keys,
    lastIndexOf: Array .prototype .lastIndexOf,
-   map: function (callbackFn, thisArg)
+   map (callbackFn, thisArg)
    {
       return new (this .constructor) (Array .prototype .map .call (this, callbackFn, thisArg));
    },
    reduce: Array .prototype .reduce,
    reduceRight: Array .prototype .reduceRight,
    // reverse: Array .prototype .reverse,
-   slice: function (start, end)
+   slice (start, end)
    {
       return new (this .constructor) (Array .prototype .slice .call (this, start, end));
    },
    some: Array .prototype .some,
    // sort: Array .prototype .sort,
-   toReversed: function ()
+   toReversed ()
    {
       return new (this .constructor) ([... this] .reverse ());
    },
-   toSorted: function (compareFn)
+   toSorted (compareFn)
    {
       return new (this .constructor) ([... this] .sort (compareFn));
    },
-   toSpliced: function (start, deleteCount, ... insertValues)
+   toSpliced (start, deleteCount, ... insertValues)
    {
       const array = [... this];
 
@@ -267,7 +296,7 @@ X3DInfoArray .prototype = {
       return new (this .constructor) (array);
    },
    values: Array .prototype .values,
-   with: function (index, value)
+   with (index, value)
    {
       const array = [... this];
 
@@ -275,22 +304,7 @@ X3DInfoArray .prototype = {
 
       return new (this .constructor) (array);
    },
-   toString: function (options = Object .prototype)
-   {
-      const generator = new Generator (options);
-
-      if (options .scene)
-         generator .PushExecutionContext (options .scene);
-
-      this .toStream (generator);
-
-      return generator .string;
-   },
-   toStream: function (generator)
-   {
-      generator .string = "[object " + this .getTypeName () + "]";
-   },
-   toVRMLStream: function (generator)
+   toVRMLStream (generator)
    {
       for (const value of this [_array])
       {
@@ -309,7 +323,7 @@ X3DInfoArray .prototype = {
          }
       }
    },
-   toXMLStream: function (generator)
+   toXMLStream (generator)
    {
       for (const value of this [_array])
       {
@@ -325,11 +339,11 @@ X3DInfoArray .prototype = {
          }
       }
    },
-   toJSONStream: function (generator, comma)
+   toJSONStream (generator, comma)
    {
       let lastProperty = false;
 
-      for (const [i, value] of this [_array] .entries ())
+      for (const value of this [_array])
       {
          try
          {
@@ -351,7 +365,7 @@ X3DInfoArray .prototype = {
 
       return lastProperty;
    },
-};
+});
 
 for (const key of Reflect .ownKeys (X3DInfoArray .prototype))
    Object .defineProperty (X3DInfoArray .prototype, key, { enumerable: false });
@@ -360,11 +374,7 @@ Object .defineProperties (X3DInfoArray .prototype,
 {
    length:
    {
-      get: function () { return this [_array] .length; },
-   },
-   [Symbol .toStringTag]:
-   {
-      get: function () { return this .getTypeName (); },
+      get () { return this [_array] .length; },
    },
 });
 

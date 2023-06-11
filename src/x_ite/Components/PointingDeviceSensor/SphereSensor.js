@@ -65,37 +65,9 @@ function SphereSensor (executionContext)
    this .addType (X3DConstants .SphereSensor);
 }
 
-SphereSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .prototype),
+Object .assign (Object .setPrototypeOf (SphereSensor .prototype, X3DDragSensorNode .prototype),
 {
-   constructor: SphereSensor,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",           new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "description",        new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",            new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "autoOffset",         new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "offset",             new Fields .SFRotation ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "trackPoint_changed", new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "rotation_changed",   new Fields .SFRotation ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "isOver",             new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",           new Fields .SFBool ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "SphereSensor";
-   },
-   getComponentName: function ()
-   {
-      return "PointingDeviceSensor";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DDragSensorNode .prototype .initialize .call (this);
 
@@ -109,7 +81,7 @@ SphereSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .pro
       this .startPoint  = new Vector3 (0, 0, 0);
       this .startOffset = new Rotation4 ();
    },
-   getTrackPoint: function (hitRay, trackPoint, behind)
+   getTrackPoint (hitRay, trackPoint, behind)
    {
       const exit = new Vector3 (0, 0, 0);
 
@@ -123,7 +95,7 @@ SphereSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .pro
 
       return false;
    },
-   set_active__: function (active, hit, modelViewMatrix, projectionMatrix, viewport)
+   set_active__ (active, hit, modelViewMatrix, projectionMatrix, viewport)
    {
       X3DDragSensorNode .prototype .set_active__ .call (this, active, hit, modelViewMatrix, projectionMatrix, viewport);
 
@@ -153,7 +125,7 @@ SphereSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .pro
             this ._offset = this ._rotation_changed;
       }
    },
-   set_motion__: function (hit)
+   set_motion__ (hit)
    {
       const
          hitRay     = hit .hitRay .copy () .multLineMatrix (this .invModelViewMatrix),
@@ -203,6 +175,45 @@ SphereSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .pro
          rotation .inverse ();
 
       this ._rotation_changed = this .startOffset .copy () .multRight (rotation);
+   },
+});
+
+Object .defineProperties (SphereSensor,
+{
+   typeName:
+   {
+      value: "SphereSensor",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "PointingDeviceSensor",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",           new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "description",        new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",            new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "autoOffset",         new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "offset",             new Fields .SFRotation ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "trackPoint_changed", new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "rotation_changed",   new Fields .SFRotation ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "isOver",             new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",           new Fields .SFBool ()),
+      ]),
+      enumerable: true,
    },
 });
 

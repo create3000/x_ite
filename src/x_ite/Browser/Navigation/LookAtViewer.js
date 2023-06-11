@@ -83,13 +83,9 @@ function LookAtViewer (executionContext, navigationInfo)
    this .orientationChaser      = new OrientationChaser (executionContext);
 }
 
-LookAtViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
+Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, X3DViewer .prototype),
 {
-   constructor: LookAtViewer,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .outputOnly, "isActive", new Fields .SFBool ()),
-   ]),
-   initialize: function ()
+   initialize ()
    {
       X3DViewer .prototype .initialize .call (this);
 
@@ -121,7 +117,7 @@ LookAtViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
       this .orientationChaser .setPrivate (true);
       this .orientationChaser .setup ();
    },
-   mousedown: function (event)
+   mousedown (event)
    {
       if (this .button >= 0)
          return;
@@ -158,7 +154,7 @@ LookAtViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
          }
       }
    },
-   mouseup: function (event)
+   mouseup (event)
    {
       if (event .button !== this .button)
          return;
@@ -181,7 +177,7 @@ LookAtViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
          }
       }
    },
-   dblclick: function (event)
+   dblclick (event)
    {
       // Stop event propagation.
       event .preventDefault ();
@@ -192,7 +188,7 @@ LookAtViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
       this .disconnect ();
       this .lookAtPoint (x, y, this .getStraightenHorizon ());
    },
-   mousemove: function (event)
+   mousemove (event)
    {
       this .getBrowser () .addBrowserEvent ();
 
@@ -252,7 +248,7 @@ LookAtViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
             this .addMove (translation, Vector3 .Zero);
       };
    })(),
-   touchstart: function (event)
+   touchstart (event)
    {
       const touches = event .originalEvent .touches;
 
@@ -292,7 +288,7 @@ LookAtViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
          }
       }
    },
-   touchend: function (event)
+   touchend (event)
    {
       switch (this .button)
       {
@@ -384,19 +380,19 @@ LookAtViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
          }
       };
    })(),
-   set_positionOffset__: function (value)
+   set_positionOffset__ (value)
    {
       const viewpoint = this .getActiveViewpoint ();
 
       viewpoint ._positionOffset = value;
    },
-   set_centerOfRotationOffset__: function (value)
+   set_centerOfRotationOffset__ (value)
    {
       const viewpoint = this .getActiveViewpoint ();
 
       viewpoint ._centerOfRotationOffset = value;
    },
-   set_orientationOffset__: function (value)
+   set_orientationOffset__ (value)
    {
       const viewpoint = this .getActiveViewpoint ();
 
@@ -494,16 +490,32 @@ LookAtViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
          this .orientationChaser ._value_changed .addInterest ("set_orientationOffset__", this);
       };
    })(),
-   disconnect: function ()
+   disconnect ()
    {
       this .orientationChaser      ._value_changed .removeInterest ("set_orientationOffset__", this);
       this .positionChaser         ._value_changed .removeInterest ("set_positionOffset__",         this)
       this .centerOfRotationChaser ._value_changed .removeInterest ("set_centerOfRotationOffset__", this)
    },
-   dispose: function ()
+   dispose ()
    {
       this .getBrowser () .getSurface () .off (".LookAtViewer");
       $(document) .off (".LookAtViewer" + this .getId ());
+   },
+});
+
+Object .defineProperties (LookAtViewer,
+{
+   typeName:
+   {
+      value: "LookAtViewer",
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .outputOnly, "isActive", new Fields .SFBool ()),
+      ]),
+      enumerable: true,
    },
 });
 

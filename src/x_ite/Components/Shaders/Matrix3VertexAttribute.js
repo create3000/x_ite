@@ -59,31 +59,9 @@ function Matrix3VertexAttribute (executionContext)
    this .addType (X3DConstants .Matrix3VertexAttribute);
 }
 
-Matrix3VertexAttribute .prototype = Object .assign (Object .create (X3DVertexAttributeNode .prototype),
+Object .assign (Object .setPrototypeOf (Matrix3VertexAttribute .prototype, X3DVertexAttributeNode .prototype),
 {
-   constructor: Matrix3VertexAttribute,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata", new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "name",     new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "value",    new Fields .MFMatrix3f ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "Matrix3VertexAttribute";
-   },
-   getComponentName: function ()
-   {
-      return "Shaders";
-   },
-   getContainerField: function ()
-   {
-      return "attrib";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DVertexAttributeNode .prototype .initialize .call (this);
 
@@ -91,12 +69,12 @@ Matrix3VertexAttribute .prototype = Object .assign (Object .create (X3DVertexAtt
 
       this .set_value__ ();
    },
-   set_value__: function ()
+   set_value__ ()
    {
       this .value  = this ._value .getValue ();
       this .length = this ._value .length;
    },
-   addValue: function (index, array)
+   addValue (index, array)
    {
       if (index < this .length)
       {
@@ -122,9 +100,42 @@ Matrix3VertexAttribute .prototype = Object .assign (Object .create (X3DVertexAtt
             array .push (value [i]);
       }
    },
-   enable: function (gl, shaderNode, buffer)
+   enable (gl, shaderNode, buffer)
    {
       shaderNode .enableMatrix3Attrib (gl, this ._name .getValue (), buffer, 0, 0);
+   },
+});
+
+Object .defineProperties (Matrix3VertexAttribute,
+{
+   typeName:
+   {
+      value: "Matrix3VertexAttribute",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Shaders",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "attrib",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "name",     new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "value",    new Fields .MFMatrix3f ()),
+      ]),
+      enumerable: true,
    },
 });
 

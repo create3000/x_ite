@@ -65,32 +65,9 @@ function LayerSet (executionContext)
    this .activeLayerNode = null;
 }
 
-LayerSet .prototype = Object .assign (Object .create (X3DNode .prototype),
+Object .assign (Object .setPrototypeOf (LayerSet .prototype, X3DNode .prototype),
 {
-   constructor: LayerSet,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "activeLayer", new Fields .SFInt32 ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "order",       new Fields .MFInt32 (0)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "layers",      new Fields .MFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "LayerSet";
-   },
-   getComponentName: function ()
-   {
-      return "Layering";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DNode .prototype .initialize .call (this);
 
@@ -104,25 +81,25 @@ LayerSet .prototype = Object .assign (Object .create (X3DNode .prototype),
 
       this .set_layers__ ();
    },
-   getActiveLayer: function ()
+   getActiveLayer ()
    {
       return this .activeLayerNode;
    },
-   setLayer0: function (value)
+   setLayer0 (value)
    {
       this .layerNode0 = value;
 
       this .set_layers__ ();
    },
-   getLayer0: function ()
+   getLayer0 ()
    {
       return this .layerNode0;
    },
-   getLayers: function ()
+   getLayers ()
    {
       return this .layerNodes;
    },
-   set_activeLayer__: function ()
+   set_activeLayer__ ()
    {
       if (this ._activeLayer .getValue () === 0)
       {
@@ -145,7 +122,7 @@ LayerSet .prototype = Object .assign (Object .create (X3DNode .prototype),
          }
       }
    },
-   set_layers__: function ()
+   set_layers__ ()
    {
       const layers = this ._layers .getValue ();
 
@@ -173,7 +150,7 @@ LayerSet .prototype = Object .assign (Object .create (X3DNode .prototype),
 
       this .set_activeLayer__ ();
    },
-   bindBindables: function (viewpointName)
+   bindBindables (viewpointName)
    {
       const layers = this ._layers .getValue ();
 
@@ -187,10 +164,44 @@ LayerSet .prototype = Object .assign (Object .create (X3DNode .prototype),
             layerNode .bindBindables (viewpointName);
       }
    },
-   traverse: function (type, renderObject)
+   traverse (type, renderObject)
    {
       for (const layerNode of this .layerNodes)
          layerNode .traverse (type, renderObject);
+   },
+});
+
+Object .defineProperties (LayerSet,
+{
+   typeName:
+   {
+      value: "LayerSet",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Layering",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "activeLayer", new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "order",       new Fields .MFInt32 (0)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "layers",      new Fields .MFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 

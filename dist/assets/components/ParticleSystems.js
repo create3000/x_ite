@@ -1,7 +1,39 @@
 /* X_ITE v8.7.9 */(() => { // webpackBootstrap
 /******/ 	"use strict";
-/******/ 	// The require scope
-/******/ 	var __webpack_require__ = {};
+/******/ 	var __webpack_modules__ = ({
+
+/***/ 355:
+/***/ ((module) => {
+
+module.exports = window [Symbol .for ("X_ITE.X3D-8.7.8")] .require ("lib/jquery");
+
+/***/ })
+
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
 /******/ 	
 /************************************************************************/
 /******/ 	/* webpack/runtime/compat get default export */
@@ -35,6 +67,8 @@
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+(() => {
 
 // UNUSED EXPORTS: default
 
@@ -681,12 +715,11 @@ function X3DParticleEmitterNode (executionContext)
    this .addFunction (BVH_glsl);
 }
 
-X3DParticleEmitterNode .prototype = Object .assign (Object .create ((X3DNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, (X3DNode_default()).prototype),
 {
-   constructor: X3DParticleEmitterNode,
-   initialize: function ()
+   initialize ()
    {
-      X3DNode_default().prototype.initialize.call (this);
+      X3DNode_default().prototype .initialize .call (this);
 
       const gl = this .getBrowser () .getContext ();
 
@@ -710,35 +743,35 @@ X3DParticleEmitterNode .prototype = Object .assign (Object .create ((X3DNode_def
       this .set_variation__ ();
       this .set_mass__ ();
    },
-   isExplosive: function ()
+   isExplosive ()
    {
       return false;
    },
-   getMass: function ()
+   getMass ()
    {
       return this .mass;
    },
-   set_on__: function ()
+   set_on__ ()
    {
       this .on = this ._on .getValue ();
    },
-   set_speed__: function ()
+   set_speed__ ()
    {
       this .setUniform ("uniform1f", "speed", this ._speed .getValue ());
    },
-   set_variation__: function ()
+   set_variation__ ()
    {
       this .setUniform ("uniform1f", "variation", this ._variation .getValue ());
    },
-   set_mass__: function ()
+   set_mass__ ()
    {
       this .mass = this ._mass .getValue ();
    },
-   getRandomValue: function (min, max)
+   getRandomValue (min, max)
    {
       return Math .random () * (max - min) + min;
    },
-   getRandomNormal: function (normal)
+   getRandomNormal (normal)
    {
       const
          theta = this .getRandomValue (-1, 1) * Math .PI,
@@ -750,7 +783,7 @@ X3DParticleEmitterNode .prototype = Object .assign (Object .create ((X3DNode_def
                           Math .cos (theta) * r,
                           cphi);
    },
-   animate: function (particleSystem, deltaTime)
+   animate (particleSystem, deltaTime)
    {
       const
          browser         = this .getBrowser (),
@@ -859,15 +892,15 @@ X3DParticleEmitterNode .prototype = Object .assign (Object .create ((X3DNode_def
       // gl .getBufferSubData (gl .ARRAY_BUFFER, 0, data);
       // console .log (data .slice (0, particleStride / 4));
    },
-   addSampler: function (name)
+   addSampler (name)
    {
       this .samplers .push (name);
    },
-   addUniform: function (name, uniform)
+   addUniform (name, uniform)
    {
       this .uniforms [name] = uniform;
    },
-   setUniform: function (func, name, value1, value2, value3)
+   setUniform (func, name, value1, value2, value3)
    {
       const
          gl      = this .getBrowser () .getContext (),
@@ -876,11 +909,11 @@ X3DParticleEmitterNode .prototype = Object .assign (Object .create ((X3DNode_def
       gl .useProgram (program);
       gl [func] (program [name], value1, value2, value3);
    },
-   addFunction: function (func)
+   addFunction (func)
    {
       this .functions .push (func);
    },
-   createProgram: function ()
+   createProgram ()
    {
       const
          browser = this .getBrowser (),
@@ -1551,9 +1584,9 @@ X3DParticleEmitterNode .prototype = Object .assign (Object .create ((X3DNode_def
 
       return program;
    },
-   activateTextures: function ()
+   activateTextures ()
    { },
-   createTexture: function ()
+   createTexture ()
    {
       const
          gl      = this .getBrowser () .getContext (),
@@ -1570,7 +1603,7 @@ X3DParticleEmitterNode .prototype = Object .assign (Object .create ((X3DNode_def
 
       return texture;
    },
-   getTexture2DUnit: function (browser, object, property)
+   getTexture2DUnit (browser, object, property)
    {
       const textureUnit = object [property];
 
@@ -1578,6 +1611,20 @@ X3DParticleEmitterNode .prototype = Object .assign (Object .create ((X3DNode_def
          return object [property] = browser .getTexture2DUnit ();
 
       return textureUnit;
+   },
+});
+
+Object .defineProperties (X3DParticleEmitterNode,
+{
+   typeName:
+   {
+      value: "X3DParticleEmitterNode",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "ParticleSystems",
+      enumerable: true,
    },
 });
 
@@ -1646,7 +1693,7 @@ var Vector3_default = /*#__PURE__*/__webpack_require__.n(Vector3_namespaceObject
 
 function PointEmitter (executionContext)
 {
-   ParticleSystems_X3DParticleEmitterNode.call (this, executionContext);
+   ParticleSystems_X3DParticleEmitterNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).PointEmitter);
 
@@ -1670,38 +1717,11 @@ function PointEmitter (executionContext)
    }`);
 }
 
-PointEmitter .prototype = Object .assign (Object .create (ParticleSystems_X3DParticleEmitterNode.prototype),
+Object .assign (Object .setPrototypeOf (PointEmitter .prototype, ParticleSystems_X3DParticleEmitterNode .prototype),
 {
-   constructor: PointEmitter,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",    new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "on",          new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "position",    new (Fields_default()).SFVec3f ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "direction",   new (Fields_default()).SFVec3f (0, 1, 0)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "speed",       new (Fields_default()).SFFloat ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "variation",   new (Fields_default()).SFFloat (0.25)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "mass",        new (Fields_default()).SFFloat ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "surfaceArea", new (Fields_default()).SFFloat ()),
-   ]),
-   getTypeName: function ()
+   initialize ()
    {
-      return "PointEmitter";
-   },
-   getComponentName: function ()
-   {
-      return "ParticleSystems";
-   },
-   getContainerField: function ()
-   {
-      return "emitter";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
-   initialize: function ()
-   {
-      ParticleSystems_X3DParticleEmitterNode.prototype.initialize.call (this);
+      ParticleSystems_X3DParticleEmitterNode .prototype .initialize .call (this);
 
       if (this .getBrowser () .getContext () .getVersion () < 2)
          return;
@@ -1712,7 +1732,7 @@ PointEmitter .prototype = Object .assign (Object .create (ParticleSystems_X3DPar
       this .set_position__ ();
       this .set_direction__ ();
    },
-   set_position__: function ()
+   set_position__ ()
    {
       const position = this ._position .getValue ();
 
@@ -1729,6 +1749,44 @@ PointEmitter .prototype = Object .assign (Object .create (ParticleSystems_X3DPar
          this .setUniform ("uniform3f", "direction", direction .x, direction .y, direction .z);
       };
    })(),
+});
+
+Object .defineProperties (PointEmitter,
+{
+   typeName:
+   {
+      value: "PointEmitter",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "ParticleSystems",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "emitter",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",    new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "on",          new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "position",    new (Fields_default()).SFVec3f ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "direction",   new (Fields_default()).SFVec3f (0, 1, 0)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "speed",       new (Fields_default()).SFFloat ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "variation",   new (Fields_default()).SFFloat (0.25)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "mass",        new (Fields_default()).SFFloat ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "surfaceArea", new (Fields_default()).SFFloat ()),
+      ]),
+      enumerable: true,
+   },
 });
 
 const PointEmitter_default_ = PointEmitter;
@@ -1792,9 +1850,9 @@ const
 
 function X3DParticleSystemsContext () { }
 
-X3DParticleSystemsContext .prototype =
+Object .assign (X3DParticleSystemsContext .prototype,
 {
-   getDefaultEmitter: function ()
+   getDefaultEmitter ()
    {
       this [_defaultEmitter] = new ParticleSystems_PointEmitter (this .getPrivateScene ());
       this [_defaultEmitter] .setPrivate (true);
@@ -1806,7 +1864,7 @@ X3DParticleSystemsContext .prototype =
 
       return this [_defaultEmitter];
    },
-};
+});
 
 const X3DParticleSystemsContext_default_ = X3DParticleSystemsContext;
 ;
@@ -1871,11 +1929,24 @@ function X3DParticlePhysicsModelNode (executionContext)
    this .addType ((X3DConstants_default()).X3DParticlePhysicsModelNode);
 }
 
-X3DParticlePhysicsModelNode .prototype = Object .assign (Object .create ((X3DNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (X3DParticlePhysicsModelNode .prototype, (X3DNode_default()).prototype),
 {
-   constructor: X3DParticlePhysicsModelNode,
-   addForce: function ()
+   addForce ()
    { },
+});
+
+Object .defineProperties (X3DParticlePhysicsModelNode,
+{
+   typeName:
+   {
+      value: "X3DParticlePhysicsModelNode",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "ParticleSystems",
+      enumerable: true,
+   },
 });
 
 const X3DParticlePhysicsModelNode_default_ = X3DParticlePhysicsModelNode;
@@ -1943,44 +2014,22 @@ var X3DCast_default = /*#__PURE__*/__webpack_require__.n(X3DCast_namespaceObject
 
 function BoundedPhysicsModel (executionContext)
 {
-   ParticleSystems_X3DParticlePhysicsModelNode.call (this, executionContext);
+   ParticleSystems_X3DParticlePhysicsModelNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).BoundedPhysicsModel);
 }
 
-BoundedPhysicsModel .prototype = Object .assign (Object .create (ParticleSystems_X3DParticlePhysicsModelNode.prototype),
+Object .assign (Object .setPrototypeOf (BoundedPhysicsModel .prototype, ParticleSystems_X3DParticlePhysicsModelNode .prototype),
 {
-   constructor: BoundedPhysicsModel,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata", new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "enabled",  new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "geometry", new (Fields_default()).SFNode ()),
-   ]),
-   getTypeName: function ()
+   initialize ()
    {
-      return "BoundedPhysicsModel";
-   },
-   getComponentName: function ()
-   {
-      return "ParticleSystems";
-   },
-   getContainerField: function ()
-   {
-      return "physics";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
-   initialize: function ()
-   {
-      ParticleSystems_X3DParticlePhysicsModelNode.prototype.initialize.call (this);
+      ParticleSystems_X3DParticlePhysicsModelNode .prototype .initialize .call (this);
 
       this ._geometry .addInterest ("set_geometry__", this);
 
       this .set_geometry__ ();
    },
-   set_geometry__: function ()
+   set_geometry__ ()
    {
       if (this .geometryNode)
          this .geometryNode ._rebuild .removeInterest ("addNodeEvent", this);
@@ -1990,7 +2039,7 @@ BoundedPhysicsModel .prototype = Object .assign (Object .create (ParticleSystems
       if (this .geometryNode)
          this .geometryNode ._rebuild .addInterest ("addNodeEvent", this);
    },
-   addGeometry: function (boundedNormals, boundedVertices)
+   addGeometry (boundedNormals, boundedVertices)
    {
       if (this .geometryNode && this ._enabled .getValue ())
       {
@@ -2004,6 +2053,39 @@ BoundedPhysicsModel .prototype = Object .assign (Object .create (ParticleSystems
          for (const value of vertices)
             boundedVertices .push (value);
       }
+   },
+});
+
+Object .defineProperties (BoundedPhysicsModel,
+{
+   typeName:
+   {
+      value: "BoundedPhysicsModel",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "ParticleSystems",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "physics",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata", new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "enabled",  new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "geometry", new (Fields_default()).SFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 
@@ -2068,7 +2150,7 @@ Namespace_default().set ("x_ite/Components/ParticleSystems/BoundedPhysicsModel",
 
 function ConeEmitter (executionContext)
 {
-   ParticleSystems_X3DParticleEmitterNode.call (this, executionContext);
+   ParticleSystems_X3DParticleEmitterNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).ConeEmitter);
 
@@ -2100,39 +2182,11 @@ function ConeEmitter (executionContext)
    }`);
 }
 
-ConeEmitter .prototype = Object .assign (Object .create (ParticleSystems_X3DParticleEmitterNode.prototype),
+Object .assign (Object .setPrototypeOf (ConeEmitter .prototype, ParticleSystems_X3DParticleEmitterNode .prototype),
 {
-   constructor: ConeEmitter,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",    new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "on",          new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "position",    new (Fields_default()).SFVec3f ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "direction",   new (Fields_default()).SFVec3f (0, 1, 0)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "angle",       new (Fields_default()).SFFloat (0.7854)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "speed",       new (Fields_default()).SFFloat ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "variation",   new (Fields_default()).SFFloat (0.25)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "mass",        new (Fields_default()).SFFloat ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "surfaceArea", new (Fields_default()).SFFloat ()),
-   ]),
-   getTypeName: function ()
+   initialize ()
    {
-      return "ConeEmitter";
-   },
-   getComponentName: function ()
-   {
-      return "ParticleSystems";
-   },
-   getContainerField: function ()
-   {
-      return "emitter";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
-   initialize: function ()
-   {
-      ParticleSystems_X3DParticleEmitterNode.prototype.initialize.call (this);
+      ParticleSystems_X3DParticleEmitterNode .prototype .initialize .call (this);
 
       if (this .getBrowser () .getContext () .getVersion () < 2)
          return;
@@ -2145,21 +2199,60 @@ ConeEmitter .prototype = Object .assign (Object .create (ParticleSystems_X3DPart
       this .set_direction__ ();
       this .set_angle__ ();
    },
-   set_position__: function ()
+   set_position__ ()
    {
       const position = this ._position .getValue ();
 
       this .setUniform ("uniform3f", "position", position .x, position .y, position .z);
    },
-   set_direction__: function ()
+   set_direction__ ()
    {
       const direction = this ._direction .getValue ();
 
       this .setUniform ("uniform3f", "direction", direction .x, direction .y, direction .z);
    },
-   set_angle__: function ()
+   set_angle__ ()
    {
       this .setUniform ("uniform1f", "angle", this ._angle .getValue ());
+   },
+});
+
+Object .defineProperties (ConeEmitter,
+{
+   typeName:
+   {
+      value: "ConeEmitter",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "ParticleSystems",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "emitter",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",    new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "on",          new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "position",    new (Fields_default()).SFVec3f ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "direction",   new (Fields_default()).SFVec3f (0, 1, 0)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "angle",       new (Fields_default()).SFFloat (0.7854)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "speed",       new (Fields_default()).SFFloat ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "variation",   new (Fields_default()).SFFloat (0.25)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "mass",        new (Fields_default()).SFFloat ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "surfaceArea", new (Fields_default()).SFFloat ()),
+      ]),
+      enumerable: true,
    },
 });
 
@@ -2224,7 +2317,7 @@ Namespace_default().set ("x_ite/Components/ParticleSystems/ConeEmitter", ConeEmi
 
 function ExplosionEmitter (executionContext)
 {
-   ParticleSystems_X3DParticleEmitterNode.call (this, executionContext);
+   ParticleSystems_X3DParticleEmitterNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).ExplosionEmitter);
 
@@ -2243,37 +2336,11 @@ function ExplosionEmitter (executionContext)
    }`);
 }
 
-ExplosionEmitter .prototype = Object .assign (Object .create (ParticleSystems_X3DParticleEmitterNode.prototype),
+Object .assign (Object .setPrototypeOf (ExplosionEmitter .prototype, ParticleSystems_X3DParticleEmitterNode .prototype),
 {
-   constructor: ExplosionEmitter,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",    new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "on",          new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "position",    new (Fields_default()).SFVec3f ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "speed",       new (Fields_default()).SFFloat ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "variation",   new (Fields_default()).SFFloat (0.25)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "mass",        new (Fields_default()).SFFloat ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "surfaceArea", new (Fields_default()).SFFloat ()),
-   ]),
-   getTypeName: function ()
+   initialize ()
    {
-      return "ExplosionEmitter";
-   },
-   getComponentName: function ()
-   {
-      return "ParticleSystems";
-   },
-   getContainerField: function ()
-   {
-      return "emitter";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
-   initialize: function ()
-   {
-      ParticleSystems_X3DParticleEmitterNode.prototype.initialize.call (this);
+      ParticleSystems_X3DParticleEmitterNode .prototype .initialize .call (this);
 
       if (this .getBrowser () .getContext () .getVersion () < 2)
          return;
@@ -2282,15 +2349,52 @@ ExplosionEmitter .prototype = Object .assign (Object .create (ParticleSystems_X3
 
       this .set_position__ ();
    },
-   isExplosive: function ()
+   isExplosive ()
    {
       return true;
    },
-   set_position__: function ()
+   set_position__ ()
    {
       const position = this ._position .getValue ();
 
       this .setUniform ("uniform3f", "position", position .x, position .y, position .z);
+   },
+});
+
+Object .defineProperties (ExplosionEmitter,
+{
+   typeName:
+   {
+      value: "ExplosionEmitter",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "ParticleSystems",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "emitter",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",    new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "on",          new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "position",    new (Fields_default()).SFVec3f ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "speed",       new (Fields_default()).SFFloat ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "variation",   new (Fields_default()).SFFloat (0.25)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "mass",        new (Fields_default()).SFFloat ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "surfaceArea", new (Fields_default()).SFFloat ()),
+      ]),
+      enumerable: true,
    },
 });
 
@@ -2356,37 +2460,15 @@ Namespace_default().set ("x_ite/Components/ParticleSystems/ExplosionEmitter", Ex
 
 function ForcePhysicsModel (executionContext)
 {
-   ParticleSystems_X3DParticlePhysicsModelNode.call (this, executionContext);
+   ParticleSystems_X3DParticlePhysicsModelNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).ForcePhysicsModel);
 
    this ._force .setUnit ("force");
 }
 
-ForcePhysicsModel .prototype = Object .assign (Object .create (ParticleSystems_X3DParticlePhysicsModelNode.prototype),
+Object .assign (Object .setPrototypeOf (ForcePhysicsModel .prototype, ParticleSystems_X3DParticlePhysicsModelNode .prototype),
 {
-   constructor: ForcePhysicsModel,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata", new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "enabled",  new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "force",    new (Fields_default()).SFVec3f (0, -9.8, 0)),
-   ]),
-   getTypeName: function ()
-   {
-      return "ForcePhysicsModel";
-   },
-   getComponentName: function ()
-   {
-      return "ParticleSystems";
-   },
-   getContainerField: function ()
-   {
-      return "physics";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
    addForce: (function ()
    {
       const force = new (Vector3_default()) (0, 0, 0);
@@ -2406,6 +2488,39 @@ ForcePhysicsModel .prototype = Object .assign (Object .create (ParticleSystems_X
          }
      };
    })(),
+});
+
+Object .defineProperties (ForcePhysicsModel,
+{
+   typeName:
+   {
+      value: "ForcePhysicsModel",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "ParticleSystems",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "physics",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata", new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "enabled",  new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "force",    new (Fields_default()).SFVec3f (0, -9.8, 0)),
+      ]),
+      enumerable: true,
+   },
 });
 
 const ForcePhysicsModel_default_ = ForcePhysicsModel;
@@ -2493,18 +2608,18 @@ function QuickSort (array, compare)
       this .compare = compare;
 }
 
-QuickSort .prototype =
+Object .assign (QuickSort .prototype,
 {
-   compare: function (lhs, rhs)
+   compare (lhs, rhs)
    {
       return lhs < rhs;
    },
-   sort: function (first, last)
+   sort (first, last)
    {
       if (last - first > 1)
          this .quicksort (first, last - 1);
    },
-   quicksort: function (lo, hi)
+   quicksort (lo, hi)
    {
       let
          i = lo,
@@ -2541,7 +2656,7 @@ QuickSort .prototype =
       if (lo < j) this .quicksort (lo, j);
       if (i < hi) this .quicksort (i, hi);
    },
-};
+});
 
 const QuickSort_default_ = QuickSort;
 ;
@@ -2638,9 +2753,9 @@ function Triangle (tree, triangle)
    this .i3       = triangle * 9;
 }
 
-Triangle .prototype =
+Object .assign (Triangle .prototype,
 {
-   intersectsLine: function (line, intersections, intersectionNormals)
+   intersectsLine (line, intersections, intersectionNormals)
    {
       const
          vertices = this .vertices,
@@ -2683,7 +2798,7 @@ Triangle .prototype =
          }
       }
    },
-   toArray: function (array)
+   toArray (array)
    {
       const index = array .length / 4;
 
@@ -2691,7 +2806,7 @@ Triangle .prototype =
 
       return index;
    },
-};
+});
 
 function Node (tree, triangles, first, size)
 {
@@ -2761,9 +2876,9 @@ function Node (tree, triangles, first, size)
       this .right = new Triangle (tree, triangles [first + leftSize]);
 }
 
-Node .prototype =
+Object .assign (Node .prototype,
 {
-   intersectsLine: function (line, intersections, intersectionNormals)
+   intersectsLine (line, intersections, intersectionNormals)
    {
       if (this .intersectsBBox (line))
       {
@@ -2771,7 +2886,7 @@ Node .prototype =
          this .right .intersectsLine (line, intersections, intersectionNormals);
       }
    },
-   intersectsBBox: function (line)
+   intersectsBBox (line)
    {
       const
          planes       = this .planes,
@@ -2827,7 +2942,7 @@ Node .prototype =
 
       return false;
    },
-   getLongestAxis: function (min, max)
+   getLongestAxis (min, max)
    {
       const
          x = max .x - min .x,
@@ -2849,7 +2964,7 @@ Node .prototype =
          return 0;
       }
    },
-   toArray: function (array)
+   toArray (array)
    {
       const
          left  = this .left .toArray (array),
@@ -2864,7 +2979,7 @@ Node .prototype =
 
       return index;
    },
-};
+});
 
 function BVH (vertices, normals)
 {
@@ -2899,10 +3014,9 @@ function BVH (vertices, normals)
    }
 }
 
-BVH .prototype =
+Object .assign (BVH .prototype,
 {
-   constructor: BVH,
-   intersectsLine: function (line, intersections, intersectionNormals)
+   intersectsLine (line, intersections, intersectionNormals)
    {
       intersections .size = 0;
 
@@ -2914,7 +3028,7 @@ BVH .prototype =
 
       return 0;
    },
-   toArray: function (array)
+   toArray (array)
    {
       if (this .root)
       {
@@ -2925,7 +3039,7 @@ BVH .prototype =
 
       return array;
    },
-};
+});
 
 const BVH_default_ = BVH;
 ;
@@ -2933,6 +3047,7 @@ const BVH_default_ = BVH;
 Namespace_default().set ("standard/Math/Utility/BVH", BVH_default_);
 /* harmony default export */ const Utility_BVH = (BVH_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/ParticleSystems/ParticleSystem.js
+/* provided dependency */ var $ = __webpack_require__(355);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -3070,52 +3185,11 @@ function ParticleSystem (executionContext)
    this .texCoordOffset           = 0;
 }
 
-ParticleSystem .prototype = Object .assign (Object .create ((X3DShapeNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (X3DShapeNode_default()).prototype),
 {
-   constructor: ParticleSystem,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",          new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "enabled",           new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "createParticles",   new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geometryType",      new (Fields_default()).SFString ("QUAD")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "maxParticles",      new (Fields_default()).SFInt32 (200)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "particleLifetime",  new (Fields_default()).SFFloat (5)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "lifetimeVariation", new (Fields_default()).SFFloat (0.25)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "particleSize",      new (Fields_default()).SFVec2f (0.02, 0.02)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "emitter",           new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "physics",           new (Fields_default()).MFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "colorKey",          new (Fields_default()).MFFloat ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "color",             new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "texCoordKey",       new (Fields_default()).MFFloat ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "texCoord",          new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isActive",          new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "visible",           new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "castShadow",        new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bboxDisplay",       new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxSize",          new (Fields_default()).SFVec3f (-1, -1, -1)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxCenter",        new (Fields_default()).SFVec3f ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "appearance",        new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "geometry",          new (Fields_default()).SFNode ()),
-   ]),
-   getTypeName: function ()
+   initialize ()
    {
-      return "ParticleSystem";
-   },
-   getComponentName: function ()
-   {
-      return "ParticleSystems";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
-   initialize: function ()
-   {
-      X3DShapeNode_default().prototype.initialize.call (this);
+      X3DShapeNode_default().prototype .initialize .call (this);
 
       const
          browser = this .getBrowser (),
@@ -3177,21 +3251,21 @@ ParticleSystem .prototype = Object .assign (Object .create ((X3DShapeNode_defaul
       this .set_colorRamp__ ();
       this .set_texCoordRamp__ ();
    },
-   getShapeKey: function ()
+   getShapeKey ()
    {
       return this .numTexCoords ? 2 : 1;
    },
-   getGeometryContext: function ()
+   getGeometryContext ()
    {
       switch (this .geometryType)
       {
-         case ParticleSystems_GeometryTypes.GEOMETRY:
+         case ParticleSystems_GeometryTypes .GEOMETRY:
             return this .getGeometry ();
          default:
             return this .geometryContext;
       }
    },
-   set_bbox__: function ()
+   set_bbox__ ()
    {
       if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
          this .bbox .set ();
@@ -3201,13 +3275,13 @@ ParticleSystem .prototype = Object .assign (Object .create ((X3DShapeNode_defaul
       this .bboxSize   .assign (this .bbox .size);
       this .bboxCenter .assign (this .bbox .center);
    },
-   set_transparent__: function ()
+   set_transparent__ ()
    {
       if (this .getAppearance () .getAlphaMode () === (AlphaMode_default()).AUTO)
       {
          switch (this .geometryType)
          {
-            case ParticleSystems_GeometryTypes.POINT:
+            case ParticleSystems_GeometryTypes .POINT:
             {
                this .setTransparent (true);
                break;
@@ -3216,7 +3290,7 @@ ParticleSystem .prototype = Object .assign (Object .create ((X3DShapeNode_defaul
             {
                this .setTransparent (!!(this .getAppearance () .isTransparent () ||
                                         this .colorRampNode ?.isTransparent () ||
-                                        (this .geometryType === ParticleSystems_GeometryTypes.GEOMETRY &&
+                                        (this .geometryType === ParticleSystems_GeometryTypes .GEOMETRY &&
                                          this .geometryNode ?.isTransparent ())));
                break;
             }
@@ -3227,7 +3301,7 @@ ParticleSystem .prototype = Object .assign (Object .create ((X3DShapeNode_defaul
          this .setTransparent (this .getAppearance () .isTransparent ());
       }
    },
-   set_live__: function ()
+   set_live__ ()
    {
       if (this .getLive () .getValue ())
       {
@@ -3253,7 +3327,7 @@ ParticleSystem .prototype = Object .assign (Object .create ((X3DShapeNode_defaul
          }
       }
    },
-   set_enabled__: function ()
+   set_enabled__ ()
    {
       if (this ._enabled .getValue () && this ._maxParticles .getValue ())
       {
@@ -3291,11 +3365,11 @@ ParticleSystem .prototype = Object .assign (Object .create ((X3DShapeNode_defaul
 
       this .set_maxParticles__ ();
    },
-   set_createParticles__: function ()
+   set_createParticles__ ()
    {
       this .createParticles = this ._createParticles .getValue ();
    },
-   set_geometryType__: function ()
+   set_geometryType__ ()
    {
       const
          browser = this .getBrowser (),
@@ -3303,13 +3377,13 @@ ParticleSystem .prototype = Object .assign (Object .create ((X3DShapeNode_defaul
 
       // Get geometryType.
 
-      this .geometryType = this .getEnum (ParticleSystems_GeometryTypes, this ._geometryType .getValue (), ParticleSystems_GeometryTypes.QUAD);
+      this .geometryType = $.enum (ParticleSystems_GeometryTypes, this ._geometryType .getValue (), ParticleSystems_GeometryTypes .QUAD);
 
       // Create buffers.
 
       switch (this .geometryType)
       {
-         case ParticleSystems_GeometryTypes.POINT:
+         case ParticleSystems_GeometryTypes .POINT:
          {
             this .geometryContext .geometryType = 0;
             this .geometryContext .hasNormals   = false;
@@ -3325,7 +3399,7 @@ ParticleSystem .prototype = Object .assign (Object .create ((X3DShapeNode_defaul
 
             break;
          }
-         case ParticleSystems_GeometryTypes.LINE:
+         case ParticleSystems_GeometryTypes .LINE:
          {
             this .geometryContext .geometryType = 1;
             this .geometryContext .hasNormals   = false;
@@ -3342,9 +3416,9 @@ ParticleSystem .prototype = Object .assign (Object .create ((X3DShapeNode_defaul
 
             break;
          }
-         case ParticleSystems_GeometryTypes.TRIANGLE:
-         case ParticleSystems_GeometryTypes.QUAD:
-         case ParticleSystems_GeometryTypes.SPRITE:
+         case ParticleSystems_GeometryTypes .TRIANGLE:
+         case ParticleSystems_GeometryTypes .QUAD:
+         case ParticleSystems_GeometryTypes .SPRITE:
          {
             this .geometryContext .geometryType = 2;
             this .geometryContext .hasNormals   = true;
@@ -3362,7 +3436,7 @@ ParticleSystem .prototype = Object .assign (Object .create ((X3DShapeNode_defaul
 
             break;
          }
-         case ParticleSystems_GeometryTypes.GEOMETRY:
+         case ParticleSystems_GeometryTypes .GEOMETRY:
          {
             this .texCoordCount = 0;
             break;
@@ -3374,7 +3448,7 @@ ParticleSystem .prototype = Object .assign (Object .create ((X3DShapeNode_defaul
 
       this .set_transparent__ ();
    },
-   set_maxParticles__: function ()
+   set_maxParticles__ ()
    {
       const
          lastNumParticles = this .numParticles,
@@ -3389,15 +3463,15 @@ ParticleSystem .prototype = Object .assign (Object .create ((X3DShapeNode_defaul
       this .resizeBuffers (lastNumParticles);
       this .updateVertexArrays ();
    },
-   set_particleLifetime__: function ()
+   set_particleLifetime__ ()
    {
       this .particleLifetime = this ._particleLifetime .getValue ();
    },
-   set_lifetimeVariation__: function ()
+   set_lifetimeVariation__ ()
    {
       this .lifetimeVariation = this ._lifetimeVariation .getValue ();
    },
-   set_emitter__: function ()
+   set_emitter__ ()
    {
       this .emitterNode = X3DCast_default() ((X3DConstants_default()).X3DParticleEmitterNode, this ._emitter);
 
@@ -3406,7 +3480,7 @@ ParticleSystem .prototype = Object .assign (Object .create ((X3DShapeNode_defaul
 
       this .createParticles = this ._createParticles .getValue ();
    },
-   set_physics__: function ()
+   set_physics__ ()
    {
       const
          physics                  = this ._physics .getValue (),
@@ -3450,13 +3524,13 @@ ParticleSystem .prototype = Object .assign (Object .create ((X3DShapeNode_defaul
                break;
             }
          }
-         catch (error)
+         catch
          { }
       }
 
       this .set_boundedPhysics__ ();
    },
-   set_boundedPhysics__: function ()
+   set_boundedPhysics__ ()
    {
       const
          gl                       = this .getBrowser () .getContext (),
@@ -3504,7 +3578,7 @@ ParticleSystem .prototype = Object .assign (Object .create ((X3DShapeNode_defaul
          gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, boundedArraySize, boundedArraySize, 0, gl .RGBA, gl .FLOAT, boundedArray);
       }
     },
-   set_colorRamp__: function ()
+   set_colorRamp__ ()
    {
       if (this .colorRampNode)
          this .colorRampNode .removeInterest ("set_color__", this);
@@ -3517,7 +3591,7 @@ ParticleSystem .prototype = Object .assign (Object .create ((X3DShapeNode_defaul
       this .set_color__ ();
       this .set_transparent__ ();
    },
-   set_color__: function ()
+   set_color__ ()
    {
       const
          gl           = this .getBrowser () .getContext (),
@@ -3550,7 +3624,7 @@ ParticleSystem .prototype = Object .assign (Object .create ((X3DShapeNode_defaul
       this .geometryContext .updateGeometryKey ();
       this .updateVertexArrays ();
    },
-   set_texCoordRamp__: function ()
+   set_texCoordRamp__ ()
    {
       if (this .texCoordRampNode)
          this .texCoordRampNode .removeInterest ("set_texCoord__", this);
@@ -3562,7 +3636,7 @@ ParticleSystem .prototype = Object .assign (Object .create ((X3DShapeNode_defaul
 
       this .set_texCoord__ ();
    },
-   set_texCoord__: function ()
+   set_texCoord__ ()
    {
       const
          gl           = this .getBrowser () .getContext (),
@@ -3593,12 +3667,12 @@ ParticleSystem .prototype = Object .assign (Object .create ((X3DShapeNode_defaul
 
       this .updateVertexArrays ();
    },
-   updateVertexArrays: function ()
+   updateVertexArrays ()
    {
       this .inputParticles  .vertexArrayObject  .update ();
       this .outputParticles .vertexArrayObject  .update ();
    },
-   createTexture: function ()
+   createTexture ()
    {
       const
          gl      = this .getBrowser () .getContext (),
@@ -3615,7 +3689,7 @@ ParticleSystem .prototype = Object .assign (Object .create ((X3DShapeNode_defaul
 
       return texture;
    },
-   createBuffer: function ()
+   createBuffer ()
    {
       const
          gl     = this .getBrowser () .getContext (),
@@ -3626,7 +3700,7 @@ ParticleSystem .prototype = Object .assign (Object .create ((X3DShapeNode_defaul
 
       return buffer;
    },
-   resizeBuffers: function (lastNumParticles)
+   resizeBuffers (lastNumParticles)
    {
       const
          gl              = this .getBrowser () .getContext (),
@@ -3650,7 +3724,7 @@ ParticleSystem .prototype = Object .assign (Object .create ((X3DShapeNode_defaul
 
       this .outputParticles = outputParticles;
    },
-   animateParticles: function ()
+   animateParticles ()
    {
       const
          browser     = this .getBrowser (),
@@ -3793,9 +3867,9 @@ ParticleSystem .prototype = Object .assign (Object .create ((X3DShapeNode_defaul
          gl .bufferData (gl .ARRAY_BUFFER, data, gl .DYNAMIC_DRAW);
       };
    })(),
-   intersectsBox: function (box, clipPlanes)
+   intersectsBox (box, clipPlanes)
    { },
-   traverse: function (type, renderObject)
+   traverse (type, renderObject)
    {
       switch (type)
       {
@@ -3825,13 +3899,13 @@ ParticleSystem .prototype = Object .assign (Object .create ((X3DShapeNode_defaul
          }
       }
 
-      if (this .geometryType === ParticleSystems_GeometryTypes.GEOMETRY)
+      if (this .geometryType === ParticleSystems_GeometryTypes .GEOMETRY)
       {
          if (this .getGeometry ())
             this .getGeometry () .traverse (type, renderObject); // Currently used for ScreenText.
       }
    },
-   displaySimple: function (gl, renderContext, shaderNode)
+   displaySimple (gl, renderContext, shaderNode)
    {
       if (this .numParticles)
       {
@@ -3839,7 +3913,7 @@ ParticleSystem .prototype = Object .assign (Object .create ((X3DShapeNode_defaul
 
          switch (this .geometryType)
          {
-            case ParticleSystems_GeometryTypes.GEOMETRY:
+            case ParticleSystems_GeometryTypes .GEOMETRY:
             {
                const geometryNode = this .getGeometry ();
 
@@ -3848,7 +3922,7 @@ ParticleSystem .prototype = Object .assign (Object .create ((X3DShapeNode_defaul
 
                break;
             }
-            case ParticleSystems_GeometryTypes.SPRITE:
+            case ParticleSystems_GeometryTypes .SPRITE:
             {
                this .updateSprite (gl, this .getScreenAlignedRotation (renderContext .modelViewMatrix));
                // [fall trough]
@@ -3873,13 +3947,13 @@ ParticleSystem .prototype = Object .assign (Object .create ((X3DShapeNode_defaul
          }
       }
    },
-   display: function (gl, renderContext)
+   display (gl, renderContext)
    {
       // Display geometry.
 
       switch (this .geometryType)
       {
-         case ParticleSystems_GeometryTypes.GEOMETRY:
+         case ParticleSystems_GeometryTypes .GEOMETRY:
          {
             if (this .numParticles)
             {
@@ -3891,15 +3965,15 @@ ParticleSystem .prototype = Object .assign (Object .create ((X3DShapeNode_defaul
 
             break;
          }
-         case ParticleSystems_GeometryTypes.SPRITE:
+         case ParticleSystems_GeometryTypes .SPRITE:
          {
             this .updateSprite (gl, this .getScreenAlignedRotation (renderContext .modelViewMatrix));
             // [fall trough]
          }
-         case ParticleSystems_GeometryTypes.QUAD:
-         case ParticleSystems_GeometryTypes.TRIANGLE:
+         case ParticleSystems_GeometryTypes .QUAD:
+         case ParticleSystems_GeometryTypes .TRIANGLE:
          {
-            const positiveScale = Matrix4_default().prototype.determinant3.call (renderContext .modelViewMatrix) > 0;
+            const positiveScale = Matrix4_default().prototype .determinant3 .call (renderContext .modelViewMatrix) > 0;
 
             gl .frontFace (positiveScale ? gl .CCW : gl .CW);
             gl .enable (gl .CULL_FACE);
@@ -4007,6 +4081,58 @@ ParticleSystem .prototype = Object .assign (Object .create ((X3DShapeNode_defaul
    })(),
 });
 
+Object .defineProperties (ParticleSystem,
+{
+   typeName:
+   {
+      value: "ParticleSystem",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "ParticleSystems",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",          new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "enabled",           new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "createParticles",   new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geometryType",      new (Fields_default()).SFString ("QUAD")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "maxParticles",      new (Fields_default()).SFInt32 (200)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "particleLifetime",  new (Fields_default()).SFFloat (5)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "lifetimeVariation", new (Fields_default()).SFFloat (0.25)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "particleSize",      new (Fields_default()).SFVec2f (0.02, 0.02)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "emitter",           new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "physics",           new (Fields_default()).MFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "colorKey",          new (Fields_default()).MFFloat ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "color",             new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "texCoordKey",       new (Fields_default()).MFFloat ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "texCoord",          new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isActive",          new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "visible",           new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "castShadow",        new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bboxDisplay",       new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxSize",          new (Fields_default()).SFVec3f (-1, -1, -1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxCenter",        new (Fields_default()).SFVec3f ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "appearance",        new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "geometry",          new (Fields_default()).SFNode ()),
+      ]),
+      enumerable: true,
+   },
+});
+
 const ParticleSystem_default_ = ParticleSystem;
 ;
 
@@ -4073,7 +4199,7 @@ var IndexedLineSet_default = /*#__PURE__*/__webpack_require__.n(IndexedLineSet_n
 
 function PolylineEmitter (executionContext)
 {
-   ParticleSystems_X3DParticleEmitterNode.call (this, executionContext);
+   ParticleSystems_X3DParticleEmitterNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).PolylineEmitter);
 
@@ -4127,39 +4253,11 @@ function PolylineEmitter (executionContext)
    }`);
 }
 
-PolylineEmitter .prototype = Object .assign (Object .create (ParticleSystems_X3DParticleEmitterNode.prototype),
+Object .assign (Object .setPrototypeOf (PolylineEmitter .prototype, ParticleSystems_X3DParticleEmitterNode .prototype),
 {
-   constructor: PolylineEmitter,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",    new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "on",          new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "direction",   new (Fields_default()).SFVec3f (0, 1, 0)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "speed",       new (Fields_default()).SFFloat ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "variation",   new (Fields_default()).SFFloat (0.25)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "mass",        new (Fields_default()).SFFloat ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "surfaceArea", new (Fields_default()).SFFloat ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "coordIndex",  new (Fields_default()).MFInt32 (-1)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "coord",       new (Fields_default()).SFNode ()),
-   ]),
-   getTypeName: function ()
+   initialize ()
    {
-      return "PolylineEmitter";
-   },
-   getComponentName: function ()
-   {
-      return "ParticleSystems";
-   },
-   getContainerField: function ()
-   {
-      return "emitter";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
-   initialize: function ()
-   {
-      ParticleSystems_X3DParticleEmitterNode.prototype.initialize.call (this);
+      ParticleSystems_X3DParticleEmitterNode .prototype .initialize .call (this);
 
       const browser = this .getBrowser ();
 
@@ -4241,10 +4339,49 @@ PolylineEmitter .prototype = Object .assign (Object .create (ParticleSystems_X3D
          }
       };
    })(),
-   activateTextures: function (gl, program)
+   activateTextures (gl, program)
    {
       gl .activeTexture (gl .TEXTURE0 + program .polylinesTextureUnit);
       gl .bindTexture (gl .TEXTURE_2D, this .polylinesTexture);
+   },
+});
+
+Object .defineProperties (PolylineEmitter,
+{
+   typeName:
+   {
+      value: "PolylineEmitter",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "ParticleSystems",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "emitter",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",    new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "on",          new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "direction",   new (Fields_default()).SFVec3f (0, 1, 0)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "speed",       new (Fields_default()).SFFloat ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "variation",   new (Fields_default()).SFFloat (0.25)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "mass",        new (Fields_default()).SFFloat ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "surfaceArea", new (Fields_default()).SFFloat ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "coordIndex",  new (Fields_default()).MFInt32 (-1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "coord",       new (Fields_default()).SFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 
@@ -4315,7 +4452,7 @@ var Triangle3_default = /*#__PURE__*/__webpack_require__.n(Triangle3_namespaceOb
 
 function SurfaceEmitter (executionContext)
 {
-   ParticleSystems_X3DParticleEmitterNode.call (this, executionContext);
+   ParticleSystems_X3DParticleEmitterNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).SurfaceEmitter);
 
@@ -4354,37 +4491,11 @@ function SurfaceEmitter (executionContext)
    }`);
 }
 
-SurfaceEmitter .prototype = Object .assign (Object .create (ParticleSystems_X3DParticleEmitterNode.prototype),
+Object .assign (Object .setPrototypeOf (SurfaceEmitter .prototype, ParticleSystems_X3DParticleEmitterNode .prototype),
 {
-   constructor: SurfaceEmitter,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",    new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "on",          new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "speed",       new (Fields_default()).SFFloat ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "variation",   new (Fields_default()).SFFloat (0.25)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "mass",        new (Fields_default()).SFFloat ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "surfaceArea", new (Fields_default()).SFFloat ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "surface",     new (Fields_default()).SFNode ()),
-   ]),
-   getTypeName: function ()
+   initialize ()
    {
-      return "SurfaceEmitter";
-   },
-   getComponentName: function ()
-   {
-      return "ParticleSystems";
-   },
-   getContainerField: function ()
-   {
-      return "emitter";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
-   initialize: function ()
-   {
-      ParticleSystems_X3DParticleEmitterNode.prototype.initialize.call (this);
+      ParticleSystems_X3DParticleEmitterNode .prototype .initialize .call (this);
 
       const browser = this .getBrowser ();
 
@@ -4401,7 +4512,7 @@ SurfaceEmitter .prototype = Object .assign (Object .create (ParticleSystems_X3DP
 
       this .set_surface__ ();
    },
-   set_surface__: function ()
+   set_surface__ ()
    {
       if (this .surfaceNode)
       {
@@ -4420,7 +4531,7 @@ SurfaceEmitter .prototype = Object .assign (Object .create (ParticleSystems_X3DP
       this .set_solid__ ();
       this .set_geometry__ ();
    },
-   set_solid__: function ()
+   set_solid__ ()
    {
       if (this .surfaceNode)
          this .setUniform ("uniform1i", "solid", this .surfaceNode ._solid .getValue ());
@@ -4490,10 +4601,47 @@ SurfaceEmitter .prototype = Object .assign (Object .create (ParticleSystems_X3DP
          }
       };
    })(),
-   activateTextures: function (gl, program)
+   activateTextures (gl, program)
    {
       gl .activeTexture (gl .TEXTURE0 + program .surfaceTextureUnit);
       gl .bindTexture (gl .TEXTURE_2D, this .surfaceTexture);
+   },
+});
+
+Object .defineProperties (SurfaceEmitter,
+{
+   typeName:
+   {
+      value: "SurfaceEmitter",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "ParticleSystems",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "emitter",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",    new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "on",          new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "speed",       new (Fields_default()).SFFloat ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "variation",   new (Fields_default()).SFFloat (0.25)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "mass",        new (Fields_default()).SFFloat ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "surfaceArea", new (Fields_default()).SFFloat ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "surface",     new (Fields_default()).SFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 
@@ -4565,7 +4713,7 @@ var IndexedFaceSet_default = /*#__PURE__*/__webpack_require__.n(IndexedFaceSet_n
 
 function VolumeEmitter (executionContext)
 {
-   ParticleSystems_X3DParticleEmitterNode.call (this, executionContext);
+   ParticleSystems_X3DParticleEmitterNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).VolumeEmitter);
 
@@ -4636,40 +4784,11 @@ function VolumeEmitter (executionContext)
    }`);
 }
 
-VolumeEmitter .prototype = Object .assign (Object .create (ParticleSystems_X3DParticleEmitterNode.prototype),
+Object .assign (Object .setPrototypeOf (VolumeEmitter .prototype, ParticleSystems_X3DParticleEmitterNode .prototype),
 {
-   constructor: VolumeEmitter,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",    new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "on",          new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "internal",    new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "direction",   new (Fields_default()).SFVec3f (0, 1, 0)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "speed",       new (Fields_default()).SFFloat ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "variation",   new (Fields_default()).SFFloat (0.25)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "mass",        new (Fields_default()).SFFloat ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "surfaceArea", new (Fields_default()).SFFloat ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "coordIndex",  new (Fields_default()).MFInt32 (-1)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "coord",       new (Fields_default()).SFNode ()),
-   ]),
-   getTypeName: function ()
+   initialize ()
    {
-      return "VolumeEmitter";
-   },
-   getComponentName: function ()
-   {
-      return "ParticleSystems";
-   },
-   getContainerField: function ()
-   {
-      return "emitter";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
-   initialize: function ()
-   {
-      ParticleSystems_X3DParticleEmitterNode.prototype.initialize.call (this);
+      ParticleSystems_X3DParticleEmitterNode .prototype .initialize .call (this);
 
       const browser = this .getBrowser ();
 
@@ -4774,10 +4893,50 @@ VolumeEmitter .prototype = Object .assign (Object .create (ParticleSystems_X3DPa
          }
       };
    })(),
-   activateTextures: function (gl, program)
+   activateTextures (gl, program)
    {
       gl .activeTexture (gl .TEXTURE0 + program .volumeTextureUnit);
       gl .bindTexture (gl .TEXTURE_2D, this .volumeTexture);
+   },
+});
+
+Object .defineProperties (VolumeEmitter,
+{
+   typeName:
+   {
+      value: "VolumeEmitter",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "ParticleSystems",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "emitter",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",    new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "on",          new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "internal",    new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "direction",   new (Fields_default()).SFVec3f (0, 1, 0)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "speed",       new (Fields_default()).SFFloat ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "variation",   new (Fields_default()).SFFloat (0.25)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "mass",        new (Fields_default()).SFFloat ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "surfaceArea", new (Fields_default()).SFFloat ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "coordIndex",  new (Fields_default()).MFInt32 (-1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "coord",       new (Fields_default()).SFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 
@@ -4847,41 +5006,16 @@ var Algorithm_default = /*#__PURE__*/__webpack_require__.n(Algorithm_namespaceOb
 
 function WindPhysicsModel (executionContext)
 {
-   ParticleSystems_X3DParticlePhysicsModelNode.call (this, executionContext);
+   ParticleSystems_X3DParticlePhysicsModelNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).WindPhysicsModel);
 
    this ._speed .setUnit ("speed");
 }
 
-WindPhysicsModel .prototype = Object .assign (Object .create (ParticleSystems_X3DParticlePhysicsModelNode.prototype),
+Object .assign (Object .setPrototypeOf (WindPhysicsModel .prototype, ParticleSystems_X3DParticlePhysicsModelNode .prototype),
 {
-   constructor: WindPhysicsModel,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",   new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "enabled",    new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "direction",  new (Fields_default()).SFVec3f ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "speed",      new (Fields_default()).SFFloat (0.1)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "gustiness",  new (Fields_default()).SFFloat (0.1)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "turbulence", new (Fields_default()).SFFloat ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "WindPhysicsModel";
-   },
-   getComponentName: function ()
-   {
-      return "ParticleSystems";
-   },
-   getContainerField: function ()
-   {
-      return "physics";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
-   getRandomSpeed: function (emitterNode)
+   getRandomSpeed (emitterNode)
    {
       const
          speed     = Math .max (0, this ._speed .getValue ()),
@@ -4918,6 +5052,42 @@ WindPhysicsModel .prototype = Object .assign (Object .create (ParticleSystems_X3
          }
       }
    })(),
+});
+
+Object .defineProperties (WindPhysicsModel,
+{
+   typeName:
+   {
+      value: "WindPhysicsModel",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "ParticleSystems",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "physics",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",   new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "enabled",    new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "direction",  new (Fields_default()).SFVec3f ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "speed",      new (Fields_default()).SFFloat (0.1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "gustiness",  new (Fields_default()).SFFloat (0.1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "turbulence", new (Fields_default()).SFFloat ()),
+      ]),
+      enumerable: true,
+   },
 });
 
 const WindPhysicsModel_default_ = WindPhysicsModel;
@@ -4988,26 +5158,26 @@ Namespace_default().set ("x_ite/Components/ParticleSystems/WindPhysicsModel", Wi
 
 
 
-Components_default().addComponent ({
+Components_default().add ({
    name: "ParticleSystems",
-   types:
-   {
-      BoundedPhysicsModel: ParticleSystems_BoundedPhysicsModel,
-      ConeEmitter:         ParticleSystems_ConeEmitter,
-      ExplosionEmitter:    ParticleSystems_ExplosionEmitter,
-      ForcePhysicsModel:   ParticleSystems_ForcePhysicsModel,
-      ParticleSystem:      ParticleSystems_ParticleSystem,
-      PointEmitter:        ParticleSystems_PointEmitter,
-      PolylineEmitter:     ParticleSystems_PolylineEmitter,
-      SurfaceEmitter:      ParticleSystems_SurfaceEmitter,
-      VolumeEmitter:       ParticleSystems_VolumeEmitter,
-      WindPhysicsModel:    ParticleSystems_WindPhysicsModel,
-   },
-   abstractTypes:
-   {
-      X3DParticleEmitterNode:      ParticleSystems_X3DParticleEmitterNode,
-      X3DParticlePhysicsModelNode: ParticleSystems_X3DParticlePhysicsModelNode,
-   },
+   concreteNodes:
+   [
+      ParticleSystems_BoundedPhysicsModel,
+      ParticleSystems_ConeEmitter,
+      ParticleSystems_ExplosionEmitter,
+      ParticleSystems_ForcePhysicsModel,
+      ParticleSystems_ParticleSystem,
+      ParticleSystems_PointEmitter,
+      ParticleSystems_PolylineEmitter,
+      ParticleSystems_SurfaceEmitter,
+      ParticleSystems_VolumeEmitter,
+      ParticleSystems_WindPhysicsModel,
+   ],
+   abstractNodes:
+   [
+      ParticleSystems_X3DParticleEmitterNode,
+      ParticleSystems_X3DParticlePhysicsModelNode,
+   ],
    browserContext: ParticleSystems_X3DParticleSystemsContext,
 });
 
@@ -5016,5 +5186,7 @@ const ParticleSystems_default_ = undefined;
 
 Namespace_default().set ("assets/components/ParticleSystems", ParticleSystems_default_);
 /* harmony default export */ const ParticleSystems = ((/* unused pure expression or super */ null && (ParticleSystems_default_)));
+})();
+
 /******/ })()
 ;

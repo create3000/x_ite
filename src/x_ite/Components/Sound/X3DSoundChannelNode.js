@@ -55,9 +55,20 @@ function X3DSoundChannelNode (executionContext)
    this .addType (X3DConstants .X3DSoundChannelNode);
 }
 
-X3DSoundChannelNode .prototype = Object .assign (Object .create (X3DSoundNode .prototype),
+Object .setPrototypeOf (X3DSoundChannelNode .prototype, X3DSoundNode .prototype);
+
+Object .defineProperties (X3DSoundChannelNode,
 {
-   constructor: X3DSoundChannelNode,
+   typeName:
+   {
+      value: "X3DSoundChannelNode",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Sound",
+      enumerable: true,
+   },
 });
 
 export default X3DSoundChannelNode;

@@ -58,39 +58,50 @@ function BooleanTrigger (executionContext)
    this .addType (X3DConstants .BooleanTrigger);
 }
 
-BooleanTrigger .prototype = Object .assign (Object .create (X3DTriggerNode .prototype),
+Object .assign (Object .setPrototypeOf (BooleanTrigger .prototype, X3DTriggerNode .prototype),
 {
-   constructor: BooleanTrigger,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",        new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,   "set_triggerTime", new Fields .SFTime ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "triggerTrue",     new Fields .SFBool ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "BooleanTrigger";
-   },
-   getComponentName: function ()
-   {
-      return "EventUtilities";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DTriggerNode .prototype .initialize .call (this);
 
       this ._set_triggerTime .addInterest ("set_triggerTime__", this);
    },
-   set_triggerTime__: function ()
+   set_triggerTime__ ()
    {
       this ._triggerTrue = true;
+   },
+});
+
+Object .defineProperties (BooleanTrigger,
+{
+   typeName:
+   {
+      value: "BooleanTrigger",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "EventUtilities",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",        new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,   "set_triggerTime", new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "triggerTrue",     new Fields .SFBool ()),
+      ]),
+      enumerable: true,
    },
 });
 

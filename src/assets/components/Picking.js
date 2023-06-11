@@ -54,21 +54,21 @@ import VolumePickSensor    from "../../x_ite/Components/Picking/VolumePickSensor
 import X3DPickSensorNode   from "../../x_ite/Components/Picking/X3DPickSensorNode.js";
 import X3DPickableObject   from "../../x_ite/Components/Picking/X3DPickableObject.js";
 
-Components .addComponent ({
+Components .add ({
    name: "Picking",
-   types:
-   {
-      LinePickSensor:      LinePickSensor,
-      PickableGroup:       PickableGroup,
-      PointPickSensor:     PointPickSensor,
-      PrimitivePickSensor: PrimitivePickSensor,
-      VolumePickSensor:    VolumePickSensor,
-   },
-   abstractTypes:
-   {
-      X3DPickSensorNode: X3DPickSensorNode,
-      X3DPickableObject: X3DPickableObject,
-   },
+   concreteNodes:
+   [
+      LinePickSensor,
+      PickableGroup,
+      PointPickSensor,
+      PrimitivePickSensor,
+      VolumePickSensor,
+   ],
+   abstractNodes:
+   [
+      X3DPickSensorNode,
+      X3DPickableObject,
+   ],
 });
 
 export default undefined;

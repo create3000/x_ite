@@ -58,37 +58,46 @@ function ChannelMerger (executionContext)
    this .addType (X3DConstants .ChannelMerger);
 }
 
-ChannelMerger .prototype = Object .assign (Object .create (X3DSoundChannelNode .prototype),
+Object .setPrototypeOf (ChannelMerger .prototype, X3DSoundChannelNode .prototype);
+
+Object .defineProperties (ChannelMerger,
 {
-   constructor: ChannelMerger,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",             new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "description",          new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",              new Fields .SFBool (true)),
-
-      new X3DFieldDefinition (X3DConstants .inputOutput, "gain",                  new Fields .SFFloat (1)),
-
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "channelCount",          new Fields .SFInt32 ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "channelCountMode",      new Fields .SFString ("max")),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "channelInterpretation", new Fields .SFString ("speakers")),
-
-      new X3DFieldDefinition (X3DConstants .inputOutput, "children",              new Fields .MFNode ()),
-   ]),
-   getTypeName: function ()
+   typeName:
    {
-      return "ChannelMerger";
+      value: "ChannelMerger",
+      enumerable: true,
    },
-   getComponentName: function ()
+   componentName:
    {
-      return "Sound";
+      value: "Sound",
+      enumerable: true,
    },
-   getContainerField: function ()
+   containerField:
    {
-      return "children";
+      value: "children",
+      enumerable: true,
    },
-   getSpecificationRange: function ()
+   specificationRange:
    {
-      return ["4.0", "Infinity"];
+      value: Object .freeze (["4.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",             new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "description",          new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",              new Fields .SFBool (true)),
+
+         new X3DFieldDefinition (X3DConstants .inputOutput, "gain",                  new Fields .SFFloat (1)),
+
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "channelCount",          new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "channelCountMode",      new Fields .SFString ("max")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "channelInterpretation", new Fields .SFString ("speakers")),
+
+         new X3DFieldDefinition (X3DConstants .inputOutput, "children",              new Fields .MFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 

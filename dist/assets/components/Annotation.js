@@ -131,35 +131,46 @@ function AnnotationLayer (executionContext)
    this .addType ((X3DConstants_default()).AnnotationLayer);
 }
 
-AnnotationLayer .prototype = Object .assign (Object .create ((X3DLayerNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (AnnotationLayer .prototype, (X3DLayerNode_default()).prototype),
 {
-   constructor: AnnotationLayer,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",     new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "isPickable",   new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "layoutPolicy", new (Fields_default()).MFString ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "shownGroupID", new (Fields_default()).MFString ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "viewport",     new (Fields_default()).SFNode ()),
-   ]),
-   getTypeName: function ()
+   initialize ()
    {
-      return "AnnotationLayer";
+      X3DLayerNode_default().prototype .initialize .call (this);
    },
-   getComponentName: function ()
+});
+
+Object .defineProperties (AnnotationLayer,
+{
+   typeName:
    {
-      return "Annotation";
+      value: "AnnotationLayer",
+      enumerable: true,
    },
-   getContainerField: function ()
+   componentName:
    {
-      return "layers";
+      value: "Annotation",
+      enumerable: true,
    },
-   getSpecificationRange: function ()
+   containerField:
    {
-      return ["4.0", "Infinity"];
+      value: "layers",
+      enumerable: true,
    },
-   initialize: function ()
+   specificationRange:
    {
-      X3DLayerNode_default().prototype.initialize.call (this);
+      value: Object .freeze (["4.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",     new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "isPickable",   new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "layoutPolicy", new (Fields_default()).MFString ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "shownGroupID", new (Fields_default()).MFString ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "viewport",     new (Fields_default()).SFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 
@@ -232,35 +243,46 @@ function AnnotationTarget (executionContext)
    this .addType ((X3DConstants_default()).AnnotationTarget);
 }
 
-AnnotationTarget .prototype = Object .assign (Object .create ((X3DChildNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (AnnotationTarget .prototype, (X3DChildNode_default()).prototype),
 {
-   constructor: AnnotationTarget,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",       new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "referencePoint", new (Fields_default()).SFVec3f (0, 0, 0)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "leadLineStyle",  new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "marker",         new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "annotations",    new (Fields_default()).MFNode ()),
-   ]),
-   getTypeName: function ()
+   initialize ()
    {
-      return "AnnotationTarget";
+      X3DChildNode_default().prototype .initialize .call (this);
    },
-   getComponentName: function ()
+});
+
+Object .defineProperties (AnnotationTarget,
+{
+   typeName:
    {
-      return "Annotation";
+      value: "AnnotationTarget",
+      enumerable: true,
    },
-   getContainerField: function ()
+   componentName:
    {
-      return "children";
+      value: "Annotation",
+      enumerable: true,
    },
-   getSpecificationRange: function ()
+   containerField:
    {
-      return ["4.0", "Infinity"];
+      value: "children",
+      enumerable: true,
    },
-   initialize: function ()
+   specificationRange:
    {
-      X3DChildNode_default().prototype.initialize.call (this);
+      value: Object .freeze (["4.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",       new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "referencePoint", new (Fields_default()).SFVec3f (0, 0, 0)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "leadLineStyle",  new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "marker",         new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "annotations",    new (Fields_default()).MFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 
@@ -330,12 +352,25 @@ function X3DAnnotationNode (executionContext)
    this .addType ((X3DConstants_default()).X3DAnnotationNode);
 }
 
-X3DAnnotationNode .prototype = Object .assign (Object .create ((X3DChildNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (X3DAnnotationNode .prototype, (X3DChildNode_default()).prototype),
 {
-   constructor: X3DAnnotationNode,
-   initialize: function ()
+   initialize ()
    {
-      X3DChildNode_default().prototype.initialize.call (this);
+      X3DChildNode_default().prototype .initialize .call (this);
+   },
+});
+
+Object .defineProperties (X3DAnnotationNode,
+{
+   typeName:
+   {
+      value: "X3DAnnotationNode",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Annotation",
+      enumerable: true,
    },
 });
 
@@ -402,53 +437,64 @@ Namespace_default().set ("x_ite/Components/Annotation/X3DAnnotationNode", X3DAnn
 function GroupAnnotation (executionContext)
 {
    X3DGroupingNode_default().call (this, executionContext);
-   Annotation_X3DAnnotationNode.call (this, executionContext);
+   Annotation_X3DAnnotationNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).GroupAnnotation);
 }
 
-GroupAnnotation .prototype = Object .assign (Object .create ((X3DGroupingNode_default()).prototype),
-   Annotation_X3DAnnotationNode.prototype,
+Object .assign (Object .setPrototypeOf (GroupAnnotation .prototype, (X3DGroupingNode_default()).prototype),
+   Annotation_X3DAnnotationNode .prototype,
 {
-   constructor: GroupAnnotation,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",          new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "enabled",           new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "annotationGroupID", new (Fields_default()).SFString ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "displayPolicy",     new (Fields_default()).SFString ("NEVER")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "visible",           new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bboxDisplay",       new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxCenter",        new (Fields_default()).SFVec3f (0, 0, 0)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxSize",          new (Fields_default()).SFVec3f (-1, -1, -1)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "addChildren",       new (Fields_default()).MFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "removeChildren",    new (Fields_default()).MFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "children",          new (Fields_default()).MFNode ()),
-   ]),
-   getTypeName: function ()
+   initialize ()
    {
-      return "GroupAnnotation";
+      X3DGroupingNode_default().prototype .initialize .call (this);
+      Annotation_X3DAnnotationNode .prototype .initialize .call (this);
    },
-   getComponentName: function ()
+   dispose ()
    {
-      return "Annotation";
+      Annotation_X3DAnnotationNode .prototype .dispose .call (this);
+      X3DGroupingNode_default().prototype .dispose .call (this);
    },
-   getContainerField: function ()
+});
+
+Object .defineProperties (GroupAnnotation,
+{
+   typeName:
    {
-      return "children";
+      value: "GroupAnnotation",
+      enumerable: true,
    },
-   getSpecificationRange: function ()
+   componentName:
    {
-      return ["4.0", "Infinity"];
+      value: "Annotation",
+      enumerable: true,
    },
-   initialize: function ()
+   containerField:
    {
-      X3DGroupingNode_default().prototype.initialize.call (this);
-      Annotation_X3DAnnotationNode.prototype.initialize.call (this);
+      value: "children",
+      enumerable: true,
    },
-   dispose: function ()
+   specificationRange:
    {
-      Annotation_X3DAnnotationNode.prototype.dispose.call (this);
-      X3DGroupingNode_default().prototype.dispose.call (this);
+      value: Object .freeze (["4.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",          new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "enabled",           new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "annotationGroupID", new (Fields_default()).SFString ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "displayPolicy",     new (Fields_default()).SFString ("NEVER")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "visible",           new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bboxDisplay",       new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxCenter",        new (Fields_default()).SFVec3f (0, 0, 0)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxSize",          new (Fields_default()).SFVec3f (-1, -1, -1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "addChildren",       new (Fields_default()).MFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "removeChildren",    new (Fields_default()).MFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "children",          new (Fields_default()).MFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 
@@ -517,52 +563,63 @@ var X3DUrlObject_default = /*#__PURE__*/__webpack_require__.n(X3DUrlObject_names
 
 function IconAnnotation (executionContext)
 {
-   Annotation_X3DAnnotationNode.call (this, executionContext);
+   Annotation_X3DAnnotationNode .call (this, executionContext);
    X3DUrlObject_default().call (this, executionContext);
 
    this .addType ((X3DConstants_default()).IconAnnotation);
 }
 
-IconAnnotation .prototype = Object .assign (Object .create (Annotation_X3DAnnotationNode.prototype),
+Object .assign (Object .setPrototypeOf (IconAnnotation .prototype, Annotation_X3DAnnotationNode .prototype),
    (X3DUrlObject_default()).prototype,
 {
-   constructor: IconAnnotation,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",             new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "enabled",              new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "annotationGroupID",    new (Fields_default()).SFString ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "displayPolicy",        new (Fields_default()).SFString ("NEVER")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "url",                  new (Fields_default()).MFString ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "autoRefresh",          new (Fields_default()).SFTime ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "autoRefreshTimeLimit", new (Fields_default()).SFTime (3600)),
-   ]),
-   getTypeName: function ()
+   initialize ()
    {
-      return "IconAnnotation";
+      Annotation_X3DAnnotationNode .prototype .initialize .call (this);
+      X3DUrlObject_default().prototype .initialize .call (this);
    },
-   getComponentName: function ()
-   {
-      return "Annotation";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["4.0", "Infinity"];
-   },
-   initialize: function ()
-   {
-      Annotation_X3DAnnotationNode.prototype.initialize.call (this);
-      X3DUrlObject_default().prototype.initialize.call (this);
-   },
-   requestImmediateLoad: function (cache = true)
+   requestImmediateLoad (cache = true)
    { },
-   dispose: function ()
+   dispose ()
    {
-      X3DUrlObject_default().prototype.dispose.call (this);
-      Annotation_X3DAnnotationNode.prototype.dispose.call (this);
+      X3DUrlObject_default().prototype .dispose .call (this);
+      Annotation_X3DAnnotationNode .prototype .dispose .call (this);
+   },
+});
+
+Object .defineProperties (IconAnnotation,
+{
+   typeName:
+   {
+      value: "IconAnnotation",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Annotation",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["4.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",             new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "enabled",              new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "annotationGroupID",    new (Fields_default()).SFString ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "displayPolicy",        new (Fields_default()).SFString ("NEVER")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "url",                  new (Fields_default()).MFString ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "autoRefresh",          new (Fields_default()).SFTime ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "autoRefreshTimeLimit", new (Fields_default()).SFTime (3600)),
+      ]),
+      enumerable: true,
    },
 });
 
@@ -627,41 +684,52 @@ Namespace_default().set ("x_ite/Components/Annotation/IconAnnotation", IconAnnot
 
 function TextAnnotation (executionContext)
 {
-   Annotation_X3DAnnotationNode.call (this, executionContext);
+   Annotation_X3DAnnotationNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).TextAnnotation);
 }
 
-TextAnnotation .prototype = Object .assign (Object .create (Annotation_X3DAnnotationNode.prototype),
+Object .assign (Object .setPrototypeOf (TextAnnotation .prototype, Annotation_X3DAnnotationNode .prototype),
 {
-   constructor: TextAnnotation,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",          new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "enabled",           new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "annotationGroupID", new (Fields_default()).SFString ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "displayPolicy",     new (Fields_default()).SFString ("NEVER")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "contentType",       new (Fields_default()).SFString ("text/plain")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "text",              new (Fields_default()).SFString ()),
-   ]),
-   getTypeName: function ()
+   initialize ()
    {
-      return "TextAnnotation";
+      Annotation_X3DAnnotationNode .prototype .initialize .call (this);
    },
-   getComponentName: function ()
+});
+
+Object .defineProperties (TextAnnotation,
+{
+   typeName:
    {
-      return "Annotation";
+      value: "TextAnnotation",
+      enumerable: true,
    },
-   getContainerField: function ()
+   componentName:
    {
-      return "children";
+      value: "Annotation",
+      enumerable: true,
    },
-   getSpecificationRange: function ()
+   containerField:
    {
-      return ["4.0", "Infinity"];
+      value: "children",
+      enumerable: true,
    },
-   initialize: function ()
+   specificationRange:
    {
-      Annotation_X3DAnnotationNode.prototype.initialize.call (this);
+      value: Object .freeze (["4.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",          new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "enabled",           new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "annotationGroupID", new (Fields_default()).SFString ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "displayPolicy",     new (Fields_default()).SFString ("NEVER")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "contentType",       new (Fields_default()).SFString ("text/plain")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "text",              new (Fields_default()).SFString ()),
+      ]),
+      enumerable: true,
    },
 });
 
@@ -726,40 +794,51 @@ Namespace_default().set ("x_ite/Components/Annotation/TextAnnotation", TextAnnot
 
 function URLAnnotation (executionContext)
 {
-   Annotation_X3DAnnotationNode.call (this, executionContext);
+   Annotation_X3DAnnotationNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).URLAnnotation);
 }
 
-URLAnnotation .prototype = Object .assign (Object .create (Annotation_X3DAnnotationNode.prototype),
+Object .assign (Object .setPrototypeOf (URLAnnotation .prototype, Annotation_X3DAnnotationNode .prototype),
 {
-   constructor: URLAnnotation,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",          new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "enabled",           new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "annotationGroupID", new (Fields_default()).SFString ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "displayPolicy",     new (Fields_default()).SFString ("NEVER")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "url",               new (Fields_default()).MFString ()),
-   ]),
-   getTypeName: function ()
+   initialize ()
    {
-      return "URLAnnotation";
+      Annotation_X3DAnnotationNode .prototype .initialize .call (this);
    },
-   getComponentName: function ()
+});
+
+Object .defineProperties (URLAnnotation,
+{
+   typeName:
    {
-      return "Annotation";
+      value: "URLAnnotation",
+      enumerable: true,
    },
-   getContainerField: function ()
+   componentName:
    {
-      return "children";
+      value: "Annotation",
+      enumerable: true,
    },
-   getSpecificationRange: function ()
+   containerField:
    {
-      return ["4.0", "Infinity"];
+      value: "children",
+      enumerable: true,
    },
-   initialize: function ()
+   specificationRange:
    {
-      Annotation_X3DAnnotationNode.prototype.initialize.call (this);
+      value: Object .freeze (["4.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",          new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "enabled",           new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "annotationGroupID", new (Fields_default()).SFString ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "displayPolicy",     new (Fields_default()).SFString ("NEVER")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "url",               new (Fields_default()).MFString ()),
+      ]),
+      enumerable: true,
    },
 });
 
@@ -825,21 +904,21 @@ Namespace_default().set ("x_ite/Components/Annotation/URLAnnotation", URLAnnotat
 
 
 
-Components_default().addComponent ({
+Components_default().add ({
    name: "Annotation",
-   types:
-   {
-      AnnotationLayer:  Annotation_AnnotationLayer,
-      AnnotationTarget: Annotation_AnnotationTarget,
-      GroupAnnotation:  Annotation_GroupAnnotation,
-      IconAnnotation:   Annotation_IconAnnotation,
-      TextAnnotation:   Annotation_TextAnnotation,
-      URLAnnotation:    Annotation_URLAnnotation,
-   },
-   abstractTypes:
-   {
-      X3DAnnotationNode: Annotation_X3DAnnotationNode,
-   },
+   concreteNodes:
+   [
+      Annotation_AnnotationLayer,
+      Annotation_AnnotationTarget,
+      Annotation_GroupAnnotation,
+      Annotation_IconAnnotation,
+      Annotation_TextAnnotation,
+      Annotation_URLAnnotation,
+   ],
+   abstractNodes:
+   [
+      Annotation_X3DAnnotationNode,
+   ],
 });
 
 const Annotation_default_ = undefined;

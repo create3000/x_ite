@@ -62,33 +62,9 @@ function NurbsSwungSurface (executionContext)
    this .extrusion = new Extrusion (executionContext);
 }
 
-NurbsSwungSurface .prototype = Object .assign (Object .create (X3DParametricGeometryNode .prototype),
+Object .assign (Object .setPrototypeOf (NurbsSwungSurface .prototype, X3DParametricGeometryNode .prototype),
 {
-   constructor: NurbsSwungSurface,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",        new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",           new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "ccw",             new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "profileCurve",    new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "trajectoryCurve", new Fields .SFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "NurbsSwungSurface";
-   },
-   getComponentName: function ()
-   {
-      return "NURBS";
-   },
-   getContainerField: function ()
-   {
-      return "geometry";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DParametricGeometryNode .prototype .initialize .call (this);
 
@@ -112,7 +88,7 @@ NurbsSwungSurface .prototype = Object .assign (Object .create (X3DParametricGeom
       this .set_profileCurve__ ();
       this .set_trajectoryCurve__ ();
    },
-   set_profileCurve__: function ()
+   set_profileCurve__ ()
    {
       if (this .profileCurveNode)
          this .profileCurveNode .removeInterest ("requestRebuild", this);
@@ -122,7 +98,7 @@ NurbsSwungSurface .prototype = Object .assign (Object .create (X3DParametricGeom
       if (this .profileCurveNode)
          this .profileCurveNode .addInterest ("requestRebuild", this);
    },
-   set_trajectoryCurve__: function ()
+   set_trajectoryCurve__ ()
    {
       if (this .trajectoryCurveNode)
          this .trajectoryCurveNode .removeInterest ("requestRebuild", this);
@@ -132,7 +108,7 @@ NurbsSwungSurface .prototype = Object .assign (Object .create (X3DParametricGeom
       if (this .trajectoryCurveNode)
          this .trajectoryCurveNode .addInterest ("requestRebuild", this);
    },
-   build: function ()
+   build ()
    {
       if (! this .profileCurveNode)
          return;
@@ -164,6 +140,41 @@ NurbsSwungSurface .prototype = Object .assign (Object .create (X3DParametricGeom
 
       this .setSolid (this ._solid .getValue ());
       this .setCCW (this ._ccw .getValue ());
+   },
+});
+
+Object .defineProperties (NurbsSwungSurface,
+{
+   typeName:
+   {
+      value: "NurbsSwungSurface",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "NURBS",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "geometry",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",        new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",           new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "ccw",             new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "profileCurve",    new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "trajectoryCurve", new Fields .SFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 

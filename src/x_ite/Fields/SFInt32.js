@@ -45,55 +45,45 @@
  *
  ******************************************************************************/
 
-import X3DField     from "../Base/X3DField.js";
-import X3DConstants from "../Base/X3DConstants.js";
+import X3DField from "../Base/X3DField.js";
 
 function SFInt32 (value)
 {
-   return X3DField .call (this, value|0);
+   X3DField .call (this, value|0);
 }
 
-SFInt32 .prototype = Object .assign (Object .create (X3DField .prototype),
+Object .assign (Object .setPrototypeOf (SFInt32 .prototype, X3DField .prototype),
 {
-   constructor: SFInt32,
-   copy: function ()
+   copy ()
    {
       return new SFInt32 (this .getValue ());
    },
-   getTypeName: function ()
-   {
-      return "SFInt32";
-   },
-   getType: function ()
-   {
-      return X3DConstants .SFInt32;
-   },
-   isDefaultValue: function ()
+   isDefaultValue ()
    {
       return this .getValue () === 0;
    },
-   set: function (value)
+   set (value)
    {
       X3DField .prototype .set .call (this, value|0);
    },
    valueOf: X3DField .prototype .getValue,
-   toStream: function (generator)
+   toStream (generator)
    {
       generator .string += this .getValue () .toString ();
    },
-   toVRMLStream: function (generator)
+   toVRMLStream (generator)
    {
       this .toStream (generator);
    },
-   toXMLStream: function (generator)
+   toXMLStream (generator)
    {
       this .toStream (generator);
    },
-   toJSONStream: function (generator)
+   toJSONStream (generator)
    {
       this .toStream (generator);
    },
-   toJSONStreamValue: function (generator)
+   toJSONStreamValue (generator)
    {
       this .toStream (generator);
    },
@@ -101,5 +91,14 @@ SFInt32 .prototype = Object .assign (Object .create (X3DField .prototype),
 
 for (const key of Reflect .ownKeys (SFInt32 .prototype))
    Object .defineProperty (SFInt32 .prototype, key, { enumerable: false });
+
+Object .defineProperties (SFInt32,
+{
+   typeName:
+   {
+      value: "SFInt32",
+      enumerable: true,
+   },
+});
 
 export default SFInt32;

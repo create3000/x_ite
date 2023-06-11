@@ -60,28 +60,37 @@ function Coordinate (executionContext)
    this ._point .setUnit ("length");
 }
 
-Coordinate .prototype = Object .assign (Object .create (X3DCoordinateNode .prototype),
+Object .setPrototypeOf (Coordinate .prototype, X3DCoordinateNode .prototype);
+
+Object .defineProperties (Coordinate,
 {
-   constructor: Coordinate,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "point",    new Fields .MFVec3f ()),
-   ]),
-   getTypeName: function ()
+   typeName:
    {
-      return "Coordinate";
+      value: "Coordinate",
+      enumerable: true,
    },
-   getComponentName: function ()
+   componentName:
    {
-      return "Rendering";
+      value: "Rendering",
+      enumerable: true,
    },
-   getContainerField: function ()
+   containerField:
    {
-      return "coord";
+      value: "coord",
+      enumerable: true,
    },
-   getSpecificationRange: function ()
+   specificationRange:
    {
-      return ["2.0", "Infinity"];
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "point",    new Fields .MFVec3f ()),
+      ]),
+      enumerable: true,
    },
 });
 

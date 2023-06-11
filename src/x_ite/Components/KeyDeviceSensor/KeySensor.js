@@ -81,38 +81,9 @@ function KeySensor (executionContext)
    this .addType (X3DConstants .KeySensor);
 }
 
-KeySensor .prototype = Object .assign (Object .create (X3DKeyDeviceSensorNode .prototype),
+Object .assign (Object .setPrototypeOf (KeySensor .prototype, X3DKeyDeviceSensorNode .prototype),
 {
-   constructor: KeySensor,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",         new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",          new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "controlKey",       new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "shiftKey",         new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "altKey",           new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "actionKeyPress",   new Fields .SFInt32 ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "actionKeyRelease", new Fields .SFInt32 ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "keyPress",         new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "keyRelease",       new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",         new Fields .SFBool ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "KeySensor";
-   },
-   getComponentName: function ()
-   {
-      return "KeyDeviceSensor";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   keydown: function (event)
+   keydown (event)
    {
       event .preventDefault ();
 
@@ -229,7 +200,7 @@ KeySensor .prototype = Object .assign (Object .create (X3DKeyDeviceSensorNode .p
          }
       }
    },
-   keyup: function (event)
+   keyup (event)
    {
       event .preventDefault ();
 
@@ -352,7 +323,7 @@ KeySensor .prototype = Object .assign (Object .create (X3DKeyDeviceSensorNode .p
       if (this ._isActive .getValue ())
          this ._isActive = false;
    },
-   release: function ()
+   release ()
    {
       if (this ._shiftKey .getValue ())
          this ._shiftKey = false;
@@ -362,6 +333,46 @@ KeySensor .prototype = Object .assign (Object .create (X3DKeyDeviceSensorNode .p
 
       if (this ._altKey .getValue ())
          this ._altKey = false;
+   },
+});
+
+Object .defineProperties (KeySensor,
+{
+   typeName:
+   {
+      value: "KeySensor",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "KeyDeviceSensor",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",         new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",          new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "controlKey",       new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "shiftKey",         new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "altKey",           new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "actionKeyPress",   new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "actionKeyRelease", new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "keyPress",         new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "keyRelease",       new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",         new Fields .SFBool ()),
+      ]),
+      enumerable: true,
    },
 });
 

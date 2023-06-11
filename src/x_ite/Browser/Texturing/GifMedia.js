@@ -55,7 +55,7 @@ function GifMedia (gif, movieTexture)
    {
       currentTime:
       {
-         get: function ()
+         get ()
          {
             if (!loop && cycle < this .cycle)
                return this .duration;
@@ -66,18 +66,18 @@ function GifMedia (gif, movieTexture)
       },
       duration:
       {
-         get: function ()
+         get ()
          {
             return this .get_duration_ms () / 1000;
          },
       },
       loop:
       {
-         get: function ()
+         get ()
          {
             return loop;
          },
-         set: function (value)
+         set (value)
          {
             cycle = this .cycle;
             loop  = value;
@@ -85,14 +85,14 @@ function GifMedia (gif, movieTexture)
       },
       cycle:
       {
-         get: function ()
+         get ()
          {
             return Math .floor (movieTexture ._elapsedTime / this .duration);
          },
       },
       currentFrame:
       {
-         get: function ()
+         get ()
          {
             const length = this .get_length ();
 
@@ -101,7 +101,7 @@ function GifMedia (gif, movieTexture)
       },
       play:
       {
-         value: function ()
+         value ()
          {
             cycle = this .cycle;
             return Promise .resolve ();

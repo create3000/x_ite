@@ -60,15 +60,14 @@ function Matrix2 ()
    }
 }
 
-Matrix2 .prototype =
+Object .assign (Matrix2 .prototype,
 {
-   constructor: Matrix2,
-   [Symbol .iterator]: function* ()
+   *[Symbol .iterator] ()
    {
       for (let i = 0; i < 4; ++ i)
          yield this [i];
    },
-   copy: function ()
+   copy ()
    {
       const copy = Object .create (Matrix2 .prototype);
 
@@ -77,29 +76,29 @@ Matrix2 .prototype =
 
       return copy;
    },
-   assign: function (matrix)
+   assign (matrix)
    {
       for (let i = 0; i < 4; ++ i)
          this [i] = matrix [i];
 
       return this;
    },
-   equals: function (matrix)
+   equals (matrix)
    {
       return this [0] === matrix [0] &&
              this [1] === matrix [1] &&
              this [2] === matrix [2] &&
              this [3] === matrix [3];
    },
-   set1: function (r, c, value)
+   set1 (r, c, value)
    {
       this [r * this .order + c] = value;
    },
-   get1: function (r, c)
+   get1 (r, c)
    {
       return this [r * this .order + c];
    },
-   set: function ()
+   set ()
    {
       switch (arguments .length)
       {
@@ -119,16 +118,16 @@ Matrix2 .prototype =
 
       return this;
    },
-   determinant1: function ()
+   determinant1 ()
    {
       return this [0];
    },
-   determinant: function ()
+   determinant ()
    {
       return this [0] * this [3] -
              this [1] * this [2];
    },
-   transpose: function ()
+   transpose ()
    {
       const tmp = this [1];
 
@@ -137,7 +136,7 @@ Matrix2 .prototype =
 
       return this;
    },
-   inverse: function ()
+   inverse ()
    {
       const
          { 0: A, 1: B, 2: C, 3: D } = this,
@@ -152,7 +151,7 @@ Matrix2 .prototype =
 
       return this;
    },
-   multLeft: function (matrix)
+   multLeft (matrix)
    {
       const
          { 0: a0, 1: a1, 2: a2, 3: a3 } = this,
@@ -165,7 +164,7 @@ Matrix2 .prototype =
 
       return this;
    },
-   multRight: function (matrix)
+   multRight (matrix)
    {
       const
          { 0: a0, 1: a1, 2: a2, 3: a3 } = this,
@@ -178,7 +177,7 @@ Matrix2 .prototype =
 
       return this;
    },
-   multVecMatrix: function (vector)
+   multVecMatrix (vector)
    {
       if (typeof vector === "number")
       {
@@ -198,7 +197,7 @@ Matrix2 .prototype =
          return vector;
       }
    },
-   multMatrixVec: function (vector)
+   multMatrixVec (vector)
    {
       if (typeof vector === "number")
       {
@@ -218,18 +217,18 @@ Matrix2 .prototype =
          return vector;
       }
    },
-   identity: function ()
+   identity ()
    {
       this [0] = 1;
       this [1] = 0;
       this [2] = 0;
       this [3] = 1;
    },
-   toString: function ()
+   toString ()
    {
       return Array .prototype .join .call (this, " ");
    },
-};
+});
 
 Object .defineProperties (Matrix2 .prototype,
 {
@@ -255,15 +254,15 @@ Object .defineProperties (Matrix2 .prototype,
    },
    xAxis:
    {
-      get: function () { return this [0]; },
+      get () { return this [0]; },
    },
    origin:
    {
-      get: function () { return this [2]; },
+      get () { return this [2]; },
    },
    submatrix:
    {
-      get: function () { return this [0]; },
+      get () { return this [0]; },
    },
 });
 

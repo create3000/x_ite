@@ -45,10 +45,9 @@
  *
  ******************************************************************************/
 
-import X3DField     from "../Base/X3DField.js";
-import ArrayFields  from "./ArrayFields.js";
-import X3DConstants from "../Base/X3DConstants.js";
-import Algorithm    from "../../standard/Math/Algorithm.js";
+import X3DField    from "../Base/X3DField.js";
+import ArrayFields from "./ArrayFields.js";
+import Algorithm   from "../../standard/Math/Algorithm.js";
 
 const MFInt32 = ArrayFields .MFInt32;
 
@@ -66,70 +65,69 @@ function Image (width, height, comp, array)
    this .array .length = this .width * this .height;
 }
 
-Image .prototype =
+Object .assign (Image .prototype,
 {
-   constructor: Image,
-   copy: function ()
+   copy ()
    {
       return new Image (this .width, this .height, this .comp, this .array);
    },
-   equals: function (image)
+   equals (image)
    {
       return this .width  === image .width &&
              this .height === image .height &&
              this .comp   === image .comp &&
              this .array .equals (image .array);
    },
-   assign: function (image)
+   assign (image)
    {
       this .width  = image .width;
       this .height = image .height;
       this .comp   = image .comp;
       this .array .assign (image .array);
    },
-   set: function (width, height, comp, array)
+   set (width, height, comp, array)
    {
       this .width  = width|0;
       this .height = height|0;
       this .comp   = comp|0;
       this .array .assign (array);
    },
-   setWidth: function (value)
+   setWidth (value)
    {
       this .width = Math .max (value|0, 0);
       this .array .length = this .width * this .height;
    },
-   getWidth: function ()
+   getWidth ()
    {
       return this .width;
    },
-   setHeight: function (value)
+   setHeight (value)
    {
       this .height = Math .max (value|0, 0);
       this .array .length = this .width * this .height;
    },
-   getHeight: function ()
+   getHeight ()
    {
       return this .height;
    },
-   setComp: function (value)
+   setComp (value)
    {
       this .comp = Algorithm .clamp (value|0, 0, 4);
    },
-   getComp: function ()
+   getComp ()
    {
       return this .comp;
    },
-   setArray: function (value)
+   setArray (value)
    {
       this .array .setValue (value);
       this .array .length = this .width * this .height;
    },
-   getArray: function ()
+   getArray ()
    {
       return this .array;
    },
-};
+});
 
 /*
  *  SFImage
@@ -144,15 +142,19 @@ function SFImage (width, height, comp, array)
       case 0:
          X3DField .call (this, new Image (0, 0, 0, new MFInt32 ()));
          break;
+
       case 1:
          X3DField .call (this, arguments [0]);
          break;
+
       case 3:
          X3DField .call (this, new Image (width, height, comp, new MFInt32 ()));
          break;
+
       case 4:
          X3DField .call (this, new Image (width, height, comp, array));
          break;
+         
       default:
          throw new Error ("Invalid arguments.");
    }
@@ -161,48 +163,39 @@ function SFImage (width, height, comp, array)
    this .addInterest (_set_size, this);
 }
 
-SFImage .prototype = Object .assign (Object .create (X3DField .prototype),
+Object .assign (Object .setPrototypeOf (SFImage .prototype, X3DField .prototype),
 {
-   constructor: SFImage,
-   [_set_size]: function ()
+   [_set_size] ()
    {
       this .getValue () .getArray () .length = this .width * this .height;
    },
-   [Symbol .iterator]: function* ()
+   *[Symbol .iterator] ()
    {
       yield this .width;
       yield this .height;
       yield this .comp;
       yield this .array;
    },
-   copy: function ()
+   copy ()
    {
       return new SFImage (this .getValue () .copy ());
    },
-   equals: function (image)
+   equals (image)
    {
       return this .getValue () .equals (image .getValue ());
    },
-   isDefaultValue: function ()
+   isDefaultValue ()
    {
       return (
          this .width  === 0 &&
          this .height === 0 &&
          this .comp   === 0);
    },
-   set: function (image)
+   set (image)
    {
       this .getValue () .assign (image);
    },
-   getTypeName: function ()
-   {
-      return "SFImage";
-   },
-   getType: function ()
-   {
-      return X3DConstants .SFImage;
-   },
-   toStream: function (generator)
+   toStream (generator)
    {
       const array = this .array;
 
@@ -236,15 +229,15 @@ SFImage .prototype = Object .assign (Object .create (X3DField .prototype),
 
       generator .DecIndent ();
    },
-   toVRMLStream: function (generator)
+   toVRMLStream (generator)
    {
       this .toStream (generator);
    },
-   toXMLStream: function (generator)
+   toXMLStream (generator)
    {
       this .toStream (generator);
    },
-   toJSONStream: function (generator)
+   toJSONStream (generator)
    {
       generator .string += '[';
       generator .string += generator .ListBreak ();
@@ -258,7 +251,7 @@ SFImage .prototype = Object .assign (Object .create (X3DField .prototype),
       generator .string += generator .ListIndent ();
       generator .string += ']';
    },
-   toJSONStreamValue: function (generator)
+   toJSONStreamValue (generator)
    {
       const
          array  = this .array,
@@ -308,11 +301,11 @@ for (const key of Reflect .ownKeys (SFImage .prototype))
    Object .defineProperty (SFImage .prototype, key, { enumerable: false });
 
 const width = {
-   get: function ()
+   get ()
    {
       return this .getValue () .getWidth ();
    },
-   set: function (value)
+   set (value)
    {
       this .getValue () .setWidth (value);
       this .addEvent ();
@@ -320,11 +313,11 @@ const width = {
 };
 
 const height = {
-   get: function ()
+   get ()
    {
       return this .getValue () .getHeight ();
    },
-   set: function (value)
+   set (value)
    {
       this .getValue () .setHeight (value);
       this .addEvent ();
@@ -332,11 +325,11 @@ const height = {
 };
 
 const comp = {
-   get: function ()
+   get ()
    {
       return this .getValue () .getComp ();
    },
-   set: function (value)
+   set (value)
    {
       this .getValue () .setComp (value);
       this .addEvent ();
@@ -344,11 +337,11 @@ const comp = {
 };
 
 const array = {
-   get: function ()
+   get ()
    {
       return this .getValue () .getArray ();
    },
-   set: function (value)
+   set (value)
    {
       this .getValue () .setArray (value);
       this .addEvent ();
@@ -363,6 +356,15 @@ Object .defineProperties (SFImage .prototype,
    height: Object .assign ({ enumerable: true }, height),
    comp:   Object .assign ({ enumerable: true }, comp),
    array:  Object .assign ({ enumerable: true }, array),
+});
+
+Object .defineProperties (SFImage,
+{
+   typeName:
+   {
+      value: "SFImage",
+      enumerable: true,
+   },
 });
 
 export default SFImage;

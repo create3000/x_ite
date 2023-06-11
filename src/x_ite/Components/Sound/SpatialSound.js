@@ -60,47 +60,56 @@ function SpatialSound (executionContext)
    this ._location .setUnit ("length");
 }
 
-SpatialSound .prototype = Object .assign (Object .create (X3DSoundNode .prototype),
+Object .setPrototypeOf (SpatialSound .prototype, X3DSoundNode .prototype);
+
+Object .defineProperties (SpatialSound,
 {
-   constructor: SpatialSound,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "description", new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",     new Fields .SFBool (true)),
+   typeName:
+   {
+      value: "SpatialSound",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Sound",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["4.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "description", new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",     new Fields .SFBool (true)),
 
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "spatialize",        new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "coneInnerAngle",    new Fields .SFFloat (6.2832)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "coneOuterAngle",    new Fields .SFFloat (6.2832)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "coneOuterGain",     new Fields .SFFloat (0)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "direction",         new Fields .SFVec3f (0, 0, 1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "distanceModel",     new Fields .SFString ("INVERSE")),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "dopplerEnabled",    new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "enableHRTF",        new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "gain",              new Fields .SFFloat (1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "intensity",         new Fields .SFFloat (1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "location",          new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "maxDistance",       new Fields .SFFloat (10000)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "priority",          new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "referenceDistance", new Fields .SFFloat (1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "rolloffFactor",     new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "spatialize",        new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "coneInnerAngle",    new Fields .SFFloat (6.2832)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "coneOuterAngle",    new Fields .SFFloat (6.2832)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "coneOuterGain",     new Fields .SFFloat (0)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "direction",         new Fields .SFVec3f (0, 0, 1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "distanceModel",     new Fields .SFString ("INVERSE")),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "dopplerEnabled",    new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "enableHRTF",        new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "gain",              new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "intensity",         new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "location",          new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "maxDistance",       new Fields .SFFloat (10000)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "priority",          new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "referenceDistance", new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "rolloffFactor",     new Fields .SFFloat (1)),
 
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "children",    new Fields .MFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "SpatialSound";
-   },
-   getComponentName: function ()
-   {
-      return "Sound";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["4.0", "Infinity"];
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "children",    new Fields .MFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 

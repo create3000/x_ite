@@ -59,31 +59,9 @@ function BoundedPhysicsModel (executionContext)
    this .addType (X3DConstants .BoundedPhysicsModel);
 }
 
-BoundedPhysicsModel .prototype = Object .assign (Object .create (X3DParticlePhysicsModelNode .prototype),
+Object .assign (Object .setPrototypeOf (BoundedPhysicsModel .prototype, X3DParticlePhysicsModelNode .prototype),
 {
-   constructor: BoundedPhysicsModel,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",  new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "geometry", new Fields .SFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "BoundedPhysicsModel";
-   },
-   getComponentName: function ()
-   {
-      return "ParticleSystems";
-   },
-   getContainerField: function ()
-   {
-      return "physics";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DParticlePhysicsModelNode .prototype .initialize .call (this);
 
@@ -91,7 +69,7 @@ BoundedPhysicsModel .prototype = Object .assign (Object .create (X3DParticlePhys
 
       this .set_geometry__ ();
    },
-   set_geometry__: function ()
+   set_geometry__ ()
    {
       if (this .geometryNode)
          this .geometryNode ._rebuild .removeInterest ("addNodeEvent", this);
@@ -101,7 +79,7 @@ BoundedPhysicsModel .prototype = Object .assign (Object .create (X3DParticlePhys
       if (this .geometryNode)
          this .geometryNode ._rebuild .addInterest ("addNodeEvent", this);
    },
-   addGeometry: function (boundedNormals, boundedVertices)
+   addGeometry (boundedNormals, boundedVertices)
    {
       if (this .geometryNode && this ._enabled .getValue ())
       {
@@ -115,6 +93,39 @@ BoundedPhysicsModel .prototype = Object .assign (Object .create (X3DParticlePhys
          for (const value of vertices)
             boundedVertices .push (value);
       }
+   },
+});
+
+Object .defineProperties (BoundedPhysicsModel,
+{
+   typeName:
+   {
+      value: "BoundedPhysicsModel",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "ParticleSystems",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "physics",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",  new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "geometry", new Fields .SFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 

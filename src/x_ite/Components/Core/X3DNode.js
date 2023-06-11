@@ -57,10 +57,21 @@ function X3DNode (executionContext)
    this .addType (X3DConstants .X3DNode);
 }
 
-X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototype),
 {
-   constructor: X3DNode,
-   copy: function (instance)
+   getComponentName ()
+   {
+      return this .constructor .componentName;
+   },
+   getContainerField ()
+   {
+      return this .constructor .containerField;
+   },
+   getSpecificationRange ()
+   {
+      return this .constructor .specificationRange;
+   },
+   copy (instance)
    {
       if (!instance || instance .getType () .includes (X3DConstants .X3DExecutionContext))
       {
@@ -96,7 +107,7 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
          {
             try
             {
-               const destinationField = copy .getField (sourceField .getName ());
+               const destinationField = copy .getPredefinedField (sourceField .getName ());
 
                if (sourceField .hasReferences ())
                {
@@ -161,7 +172,7 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
                   }
                   catch (error)
                   {
-                     console .error ("No reference '" + originalReference .getName () + "' inside execution context " + instance .getTypeName () + " '" + instance .getName () + "'.");
+                     console .error (`No reference '${originalReference .getName ()}' inside execution context ${instance .getTypeName ()} '${instance .getName ()}'.`);
                   }
                }
             }
@@ -174,11 +185,11 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
          return copy;
       }
    },
-   getDisplayName: function ()
+   getDisplayName ()
    {
       return this .getName () .replace (/_\d+$/, "");
    },
-   getNeedsName: function ()
+   getNeedsName ()
    {
       if (this .getName () .length)
          return false;
@@ -208,16 +219,16 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 
       return false;
    },
-   getSourceText: function ()
+   getSourceText ()
    {
       return null;
    },
-   traverse: function () { },
-   toStream: function (generator)
+   traverse () { },
+   toStream (generator)
    {
       generator .string += this .getTypeName () + " { }";
    },
-   toVRMLStream: function (generator)
+   toVRMLStream (generator)
    {
       generator .EnterScope ();
 
@@ -324,7 +335,7 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 
       generator .LeaveScope ();
    },
-   toVRMLStreamUserDefinedField: function (generator, field, fieldTypeLength, accessTypeLength)
+   toVRMLStreamUserDefinedField (generator, field, fieldTypeLength, accessTypeLength)
    {
       const sharedNode = generator .IsSharedNode (this);
 
@@ -392,7 +403,7 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
          }
       }
    },
-   toVRMLStreamField: function (generator, field)
+   toVRMLStreamField (generator, field)
    {
       const sharedNode = generator .IsSharedNode (this);
 
@@ -445,7 +456,7 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
          }
       }
    },
-   toXMLStream: function (generator)
+   toXMLStream (generator)
    {
       const sharedNode = generator .IsSharedNode (this);
 
@@ -660,7 +671,7 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
                   if (field .getAccessType () === X3DConstants .inputOutput && field .getReferences () .size !== 0)
                   {
                      if (![... field .getReferences ()] .some (reference => reference .isInitializable ()))
-                        mustOutputValue = !this .isDefaultValue (field);
+                        mustOutputValue = true;
                   }
                }
 
@@ -797,7 +808,7 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 
       generator .LeaveScope ();
    },
-   toJSONStream: function (generator)
+   toJSONStream (generator)
    {
       const sharedNode = generator .IsSharedNode (this);
 
@@ -1048,7 +1059,7 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
                if (field .getAccessType () === X3DConstants .inputOutput && field .getReferences () .size !== 0)
                {
                   if (![... field .getReferences ()] .some (reference => reference .isInitializable ()))
-                     mustOutputValue = !this .isDefaultValue (field);
+                     mustOutputValue = true;
                }
             }
 
@@ -1273,7 +1284,7 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 
       generator .LeaveScope ();
    },
-   dispose: function ()
+   dispose ()
    {
       const executionContext = this .getExecutionContext ();
 
@@ -1325,10 +1336,14 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
             if (!(secondParent instanceof Fields .MFNode))
                continue;
 
-            const length = secondParent .length;
-
-            secondParent .erase (secondParent .remove (0, length, firstParent .valueOf ()), length);
+            secondParent .assign (secondParent .filter (node => node ?.getValue () !== this))
          }
+      }
+
+      for (const firstParent of new Set (this .getParents ()))
+      {
+         if (!(firstParent instanceof Fields .SFNode))
+            continue;
 
          firstParent .setValue (null);
       }
@@ -1336,6 +1351,23 @@ X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
       // Call super.dispose, where fields get disposed.
 
       X3DBaseNode .prototype .dispose .call (this);
+   },
+});
+
+for (const key of Reflect .ownKeys (X3DNode .prototype))
+   Object .defineProperty (X3DNode .prototype, key, { enumerable: false });
+
+Object .defineProperties (X3DNode,
+{
+   typeName:
+   {
+      value: "X3DNode",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Core",
+      enumerable: true,
    },
 });
 

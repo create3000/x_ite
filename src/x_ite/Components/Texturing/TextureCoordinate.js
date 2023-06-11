@@ -59,31 +59,9 @@ function TextureCoordinate (executionContext)
    this .addType (X3DConstants .TextureCoordinate);
 }
 
-TextureCoordinate .prototype = Object .assign (Object .create (X3DSingleTextureCoordinateNode .prototype),
+Object .assign (Object .setPrototypeOf (TextureCoordinate .prototype, X3DSingleTextureCoordinateNode .prototype),
 {
-   constructor: TextureCoordinate,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "mapping",  new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "point",    new Fields .MFVec2f ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "TextureCoordinate";
-   },
-   getComponentName: function ()
-   {
-      return "Texturing";
-   },
-   getContainerField: function ()
-   {
-      return "texCoord";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DSingleTextureCoordinateNode .prototype .initialize .call (this);
 
@@ -91,20 +69,20 @@ TextureCoordinate .prototype = Object .assign (Object .create (X3DSingleTextureC
 
       this .set_point__ ();
    },
-   set_point__: function ()
+   set_point__ ()
    {
       this .point  = this ._point .getValue ();
       this .length = this ._point .length;
    },
-   isEmpty: function ()
+   isEmpty ()
    {
       return this .length === 0;
    },
-   getSize: function ()
+   getSize ()
    {
       return this .length;
    },
-   get1Point: function (index, vector)
+   get1Point (index, vector)
    {
       if (index >= 0 && index < this .length)
       {
@@ -128,7 +106,7 @@ TextureCoordinate .prototype = Object .assign (Object .create (X3DSingleTextureC
          return vector .set (0, 0, 0, 1);
       }
    },
-   getPoints: function (array)
+   getPoints (array)
    {
       const
          point  = this .point,
@@ -139,7 +117,7 @@ TextureCoordinate .prototype = Object .assign (Object .create (X3DSingleTextureC
 
       return array;
    },
-   addPointToChannel: function (index, array)
+   addPointToChannel (index, array)
    {
       if (index >= 0 && index < this .length)
       {
@@ -162,6 +140,39 @@ TextureCoordinate .prototype = Object .assign (Object .create (X3DSingleTextureC
       {
          array .push (0, 0, 0, 1);
       }
+   },
+});
+
+Object .defineProperties (TextureCoordinate,
+{
+   typeName:
+   {
+      value: "TextureCoordinate",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Texturing",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "texCoord",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "mapping",  new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "point",    new Fields .MFVec2f ()),
+      ]),
+      enumerable: true,
    },
 });
 

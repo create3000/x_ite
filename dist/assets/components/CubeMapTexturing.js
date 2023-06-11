@@ -164,22 +164,21 @@ function X3DEnvironmentTextureNode (executionContext)
    ];
 }
 
-X3DEnvironmentTextureNode .prototype = Object .assign (Object .create ((X3DSingleTextureNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (X3DEnvironmentTextureNode .prototype, (X3DSingleTextureNode_default()).prototype),
 {
-   constructor: X3DEnvironmentTextureNode,
-   getTarget: function ()
+   getTarget ()
    {
       return this .target;
    },
-   getTextureType: function ()
+   getTextureType ()
    {
       return 4;
    },
-   getTextureTypeString: function ()
+   getTextureTypeString ()
    {
       return "CUBE";
    },
-   getTargets: function ()
+   getTargets ()
    {
       return this .targets;
    },
@@ -199,9 +198,9 @@ X3DEnvironmentTextureNode .prototype = Object .assign (Object .create ((X3DSingl
          this .setTransparent (false);
       };
    })(),
-   updateTextureParameters: function ()
+   updateTextureParameters ()
    {
-      X3DSingleTextureNode_default().prototype.updateTextureParameters.call (this,
+      X3DSingleTextureNode_default().prototype .updateTextureParameters .call (this,
                                                                       this .target,
                                                                       this ._textureProperties .getValue (),
                                                                       this .texturePropertiesNode,
@@ -211,13 +210,27 @@ X3DEnvironmentTextureNode .prototype = Object .assign (Object .create ((X3DSingl
                                                                       false,
                                                                       false);
    },
-   setShaderUniforms: function (gl, shaderObject, renderObject, channel = shaderObject .x3d_Texture [0])
+   setShaderUniforms (gl, shaderObject, renderObject, channel = shaderObject .x3d_Texture [0])
    {
       const textureUnit = this .getBrowser () .getTextureCubeUnit ();
 
       gl .activeTexture (gl .TEXTURE0 + textureUnit);
       gl .bindTexture (gl .TEXTURE_CUBE_MAP, this .getTexture ());
       gl .uniform1i (channel .textureCube, textureUnit);
+   },
+});
+
+Object .defineProperties (X3DEnvironmentTextureNode,
+{
+   typeName:
+   {
+      value: "X3DEnvironmentTextureNode",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "CubeMapTexturing",
+      enumerable: true,
    },
 });
 
@@ -290,7 +303,7 @@ var BitSet_default = /*#__PURE__*/__webpack_require__.n(BitSet_namespaceObject);
 
 function ComposedCubeMapTexture (executionContext)
 {
-   CubeMapTexturing_X3DEnvironmentTextureNode.call (this, executionContext);
+   CubeMapTexturing_X3DEnvironmentTextureNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).ComposedCubeMapTexture);
 
@@ -310,39 +323,11 @@ function ComposedCubeMapTexture (executionContext)
    this .textureBits  = new (BitSet_default()) ();
 }
 
-ComposedCubeMapTexture .prototype = Object .assign (Object .create (CubeMapTexturing_X3DEnvironmentTextureNode.prototype),
+Object .assign (Object .setPrototypeOf (ComposedCubeMapTexture .prototype, CubeMapTexturing_X3DEnvironmentTextureNode .prototype),
 {
-   constructor: ComposedCubeMapTexture,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",          new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "description",       new (Fields_default()).SFString ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "frontTexture",      new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "backTexture",       new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "leftTexture",       new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "rightTexture",      new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bottomTexture",     new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "topTexture",        new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "textureProperties", new (Fields_default()).SFNode ()),
-   ]),
-   getTypeName: function ()
+   initialize ()
    {
-      return "ComposedCubeMapTexture";
-   },
-   getComponentName: function ()
-   {
-      return "CubeMapTexturing";
-   },
-   getContainerField: function ()
-   {
-      return "texture";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.1", "Infinity"];
-   },
-   initialize: function ()
-   {
-      CubeMapTexturing_X3DEnvironmentTextureNode.prototype.initialize.call (this);
+      CubeMapTexturing_X3DEnvironmentTextureNode .prototype .initialize .call (this);
 
       const gl = this .getBrowser () .getContext ();
 
@@ -369,7 +354,7 @@ ComposedCubeMapTexture .prototype = Object .assign (Object .create (CubeMapTextu
       this .set_texture__ (this ._topTexture,    4);
       this .set_texture__ (this ._bottomTexture, 5);
    },
-   set_texture__: function (node, index)
+   set_texture__ (node, index)
    {
       let textureNode = this .textureNodes [index];
 
@@ -381,17 +366,17 @@ ComposedCubeMapTexture .prototype = Object .assign (Object .create (CubeMapTextu
 
       this .set_loadState__ (textureNode, index);
    },
-   set_loadState__: function (textureNode, index)
+   set_loadState__ (textureNode, index)
    {
       this .setTextureBit (index, textureNode, textureNode ?.checkLoadState () ?? (X3DConstants_default()).NOT_STARTED);
 
       this ._update .addEvent ();
    },
-   setTextureBit: function (bit, textureNode, loadState)
+   setTextureBit (bit, textureNode, loadState)
    {
       this .textureBits .set (bit, loadState === (X3DConstants_default()).COMPLETE_STATE || textureNode ?.getWidth ());
    },
-   isComplete: function ()
+   isComplete ()
    {
       if (+this .textureBits !== 0b111111)
          return false;
@@ -411,7 +396,7 @@ ComposedCubeMapTexture .prototype = Object .assign (Object .create (CubeMapTextu
 
       return true;
    },
-   update: function ()
+   update ()
    {
       if (this .isComplete ())
       {
@@ -468,6 +453,45 @@ ComposedCubeMapTexture .prototype = Object .assign (Object .create (CubeMapTextu
       {
          this .clearTexture ();
       }
+   },
+});
+
+Object .defineProperties (ComposedCubeMapTexture,
+{
+   typeName:
+   {
+      value: "ComposedCubeMapTexture",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "CubeMapTexturing",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "texture",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.1", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",          new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "description",       new (Fields_default()).SFString ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "frontTexture",      new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "backTexture",       new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "leftTexture",       new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "rightTexture",      new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bottomTexture",     new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "topTexture",        new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "textureProperties", new (Fields_default()).SFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 
@@ -545,66 +569,65 @@ function DependentRenderer (executionContext)
    this .renderObject = null;
 }
 
-DependentRenderer .prototype = Object .assign (Object .create ((X3DBaseNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (DependentRenderer .prototype, (X3DBaseNode_default()).prototype),
    (X3DRenderObject_default()).prototype,
 {
-   constructor: DependentRenderer,
-   initialize: function ()
+   initialize ()
    {
-      X3DBaseNode_default().prototype.initialize.call (this);
-      X3DRenderObject_default().prototype.initialize.call (this);
+      X3DBaseNode_default().prototype .initialize .call (this);
+      X3DRenderObject_default().prototype .initialize .call (this);
    },
-   isIndependent: function ()
+   isIndependent ()
    {
       return false;
    },
-   setRenderer: function (value)
+   setRenderer (value)
    {
       this .renderObject = value;
    },
-   getLayer: function ()
+   getLayer ()
    {
       return this .renderObject .getLayer ();
    },
-   getBackground: function ()
+   getBackground ()
    {
       return this .renderObject .getBackground ();
    },
-   getFog: function ()
+   getFog ()
    {
       return this .renderObject .getFog ();
    },
-   getNavigationInfo: function ()
+   getNavigationInfo ()
    {
       return this .renderObject .getNavigationInfo ();
    },
-   getViewpoint: function ()
+   getViewpoint ()
    {
       return this .renderObject .getViewpoint ();
    },
-   getLightContainer: function ()
+   getLightContainer ()
    {
       return this .renderObject .getLights () [this .lightIndex ++];
    },
-   render: function (type, callback, group)
+   render (type, callback, group)
    {
       switch (type)
       {
          case (TraverseType_default()).COLLISION:
          {
-            X3DRenderObject_default().prototype.render.call (this, type, callback, group);
+            X3DRenderObject_default().prototype .render .call (this, type, callback, group);
             break;
          }
          case (TraverseType_default()).SHADOW:
          {
-            X3DRenderObject_default().prototype.render.call (this, type, callback, group);
+            X3DRenderObject_default().prototype .render .call (this, type, callback, group);
             break;
          }
          case (TraverseType_default()).DISPLAY:
          {
             this .lightIndex = 0;
 
-            X3DRenderObject_default().prototype.render.call (this, type, callback, group);
+            X3DRenderObject_default().prototype .render .call (this, type, callback, group);
 
             for (const light of this .renderObject .getLights ())
                light .modelViewMatrix .pop ();
@@ -713,7 +736,7 @@ var Algorithm_default = /*#__PURE__*/__webpack_require__.n(Algorithm_namespaceOb
 
 function GeneratedCubeMapTexture (executionContext)
 {
-   CubeMapTexturing_X3DEnvironmentTextureNode.call (this, executionContext);
+   CubeMapTexturing_X3DEnvironmentTextureNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).GeneratedCubeMapTexture);
 
@@ -723,35 +746,11 @@ function GeneratedCubeMapTexture (executionContext)
    this .viewVolume        = new (ViewVolume_default()) ();
 }
 
-GeneratedCubeMapTexture .prototype = Object .assign (Object .create (CubeMapTexturing_X3DEnvironmentTextureNode.prototype),
+Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, CubeMapTexturing_X3DEnvironmentTextureNode .prototype),
 {
-   constructor: GeneratedCubeMapTexture,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",          new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "description",       new (Fields_default()).SFString ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "update",            new (Fields_default()).SFString ("NONE")),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "size",              new (Fields_default()).SFInt32 (128)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "textureProperties", new (Fields_default()).SFNode ()),
-   ]),
-   getTypeName: function ()
+   initialize ()
    {
-      return "GeneratedCubeMapTexture";
-   },
-   getComponentName: function ()
-   {
-      return "CubeMapTexturing";
-   },
-   getContainerField: function ()
-   {
-      return "texture";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
-   {
-      CubeMapTexturing_X3DEnvironmentTextureNode.prototype.initialize.call (this);
+      CubeMapTexturing_X3DEnvironmentTextureNode .prototype .initialize .call (this);
 
       this ._size .addInterest ("set_size__", this);
 
@@ -759,7 +758,7 @@ GeneratedCubeMapTexture .prototype = Object .assign (Object .create (CubeMapText
 
       this .set_size__ ();
    },
-   set_size__: function ()
+   set_size__ ()
    {
       const
          browser = this .getBrowser (),
@@ -794,7 +793,7 @@ GeneratedCubeMapTexture .prototype = Object .assign (Object .create (CubeMapText
          this .frameBuffer = null;
       }
    },
-   traverse: function (type, renderObject)
+   traverse (type, renderObject)
    {
       // TraverseType .DISPLAY
 
@@ -923,12 +922,47 @@ GeneratedCubeMapTexture .prototype = Object .assign (Object .create (CubeMapText
 
       return function (gl, shaderObject, renderObject, channel)
       {
-         CubeMapTexturing_X3DEnvironmentTextureNode.prototype.setShaderUniforms.call (this, gl, shaderObject, renderObject, channel);
+         CubeMapTexturing_X3DEnvironmentTextureNode .prototype .setShaderUniforms .call (this, gl, shaderObject, renderObject, channel);
 
          if (renderObject === this .dependentRenderer)
             gl .uniformMatrix4fv (shaderObject .x3d_ModelViewMatrix, false, zeros);
       };
    })(),
+});
+
+Object .defineProperties (GeneratedCubeMapTexture,
+{
+   typeName:
+   {
+      value: "GeneratedCubeMapTexture",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "CubeMapTexturing",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "texture",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",          new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "description",       new (Fields_default()).SFString ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "update",            new (Fields_default()).SFString ("NONE")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "size",              new (Fields_default()).SFInt32 (128)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "textureProperties", new (Fields_default()).SFNode ()),
+      ]),
+      enumerable: true,
+   },
 });
 
 const GeneratedCubeMapTexture_default_ = GeneratedCubeMapTexture;
@@ -942,9 +976,15 @@ var X3DUrlObject_default = /*#__PURE__*/__webpack_require__.n(X3DUrlObject_names
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Vector2\")"
 const Vector2_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.7.9")] .require ("standard/Math/Numbers/Vector2");
 var Vector2_default = /*#__PURE__*/__webpack_require__.n(Vector2_namespaceObject);
+<<<<<<< HEAD
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/DEBUG\")"
 const DEBUG_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.7.9")] .require ("x_ite/DEBUG");
 var DEBUG_default = /*#__PURE__*/__webpack_require__.n(DEBUG_namespaceObject);
+=======
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/DEVELOPMENT\")"
+const DEVELOPMENT_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.7.8")] .require ("x_ite/DEVELOPMENT");
+var DEVELOPMENT_default = /*#__PURE__*/__webpack_require__.n(DEVELOPMENT_namespaceObject);
+>>>>>>> development
 ;// CONCATENATED MODULE: ./src/x_ite/Components/CubeMapTexturing/ImageCubeMapTexture.js
 /* provided dependency */ var $ = __webpack_require__(355);
 /*******************************************************************************
@@ -1017,7 +1057,7 @@ const offsets = [
 
 function ImageCubeMapTexture (executionContext)
 {
-   CubeMapTexturing_X3DEnvironmentTextureNode.call (this, executionContext);
+   CubeMapTexturing_X3DEnvironmentTextureNode .call (this, executionContext);
    X3DUrlObject_default().call (this, executionContext);
 
    this .addType ((X3DConstants_default()).ImageCubeMapTexture);
@@ -1027,39 +1067,13 @@ function ImageCubeMapTexture (executionContext)
    this .urlStack = new (Fields_default()).MFString ();
 }
 
-ImageCubeMapTexture .prototype = Object .assign (Object .create (CubeMapTexturing_X3DEnvironmentTextureNode.prototype),
+Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapTexturing_X3DEnvironmentTextureNode .prototype),
    (X3DUrlObject_default()).prototype,
 {
-   constructor: ImageCubeMapTexture,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",             new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "description",          new (Fields_default()).SFString ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "load",                 new (Fields_default()).SFBool (true)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "url",                  new (Fields_default()).MFString ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "autoRefresh",          new (Fields_default()).SFTime ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "autoRefreshTimeLimit", new (Fields_default()).SFTime (3600)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "textureProperties",    new (Fields_default()).SFNode ()),
-   ]),
-   getTypeName: function ()
+   initialize ()
    {
-      return "ImageCubeMapTexture";
-   },
-   getComponentName: function ()
-   {
-      return "CubeMapTexturing";
-   },
-   getContainerField: function ()
-   {
-      return "texture";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
-   {
-      CubeMapTexturing_X3DEnvironmentTextureNode.prototype.initialize.call (this);
-      X3DUrlObject_default().prototype.initialize.call (this);
+      CubeMapTexturing_X3DEnvironmentTextureNode .prototype .initialize .call (this);
+      X3DUrlObject_default().prototype .initialize .call (this);
 
       // Upload default data.
 
@@ -1078,16 +1092,16 @@ ImageCubeMapTexture .prototype = Object .assign (Object .create (CubeMapTexturin
 
       this .requestImmediateLoad () .catch (Function .prototype);
    },
-   unloadData: function ()
+   unloadData ()
    {
       this .clearTexture ();
    },
-   loadData: function ()
+   loadData ()
    {
       this .urlStack .setValue (this ._url);
       this .loadNext ();
    },
-   loadNext: function ()
+   loadNext ()
    {
       if (this .urlStack .length === 0)
       {
@@ -1108,16 +1122,16 @@ ImageCubeMapTexture .prototype = Object .assign (Object .create (CubeMapTexturin
 
       this .image .attr ("src", this .URL .href);
    },
-   setError: function ()
+   setError ()
    {
       if (this .URL .protocol !== "data:")
          console .warn (`Error loading image '${decodeURI (this .URL .href)}'`);
 
       this .loadNext ();
    },
-   setImage: function ()
+   setImage ()
    {
-      if ((DEBUG_default()))
+      if ((DEVELOPMENT_default()))
       {
           if (this .URL .protocol !== "data:")
             console .info (`Done loading image cube map texture '${decodeURI (this .URL .href)}'`);
@@ -1206,10 +1220,47 @@ ImageCubeMapTexture .prototype = Object .assign (Object .create (CubeMapTexturin
          this .setError ();
       }
    },
-   dispose: function ()
+   dispose ()
    {
-      X3DUrlObject_default().prototype.dispose.call (this);
-      CubeMapTexturing_X3DEnvironmentTextureNode.prototype.dispose.call (this);
+      X3DUrlObject_default().prototype .dispose .call (this);
+      CubeMapTexturing_X3DEnvironmentTextureNode .prototype .dispose .call (this);
+   },
+});
+
+Object .defineProperties (ImageCubeMapTexture,
+{
+   typeName:
+   {
+      value: "ImageCubeMapTexture",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "CubeMapTexturing",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "texture",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",             new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "description",          new (Fields_default()).SFString ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "load",                 new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "url",                  new (Fields_default()).MFString ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "autoRefresh",          new (Fields_default()).SFTime ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "autoRefreshTimeLimit", new (Fields_default()).SFTime (3600)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "textureProperties",    new (Fields_default()).SFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 
@@ -1272,18 +1323,18 @@ Namespace_default().set ("x_ite/Components/CubeMapTexturing/ImageCubeMapTexture"
 
 
 
-Components_default().addComponent ({
+Components_default().add ({
    name: "CubeMapTexturing",
-   types:
-   {
-      ComposedCubeMapTexture:  CubeMapTexturing_ComposedCubeMapTexture,
-      GeneratedCubeMapTexture: CubeMapTexturing_GeneratedCubeMapTexture,
-      ImageCubeMapTexture:     CubeMapTexturing_ImageCubeMapTexture,
-   },
-   abstractTypes:
-   {
-      X3DEnvironmentTextureNode: CubeMapTexturing_X3DEnvironmentTextureNode,
-   },
+   concreteNodes:
+   [
+      CubeMapTexturing_ComposedCubeMapTexture,
+      CubeMapTexturing_GeneratedCubeMapTexture,
+      CubeMapTexturing_ImageCubeMapTexture,
+   ],
+   abstractNodes:
+   [
+      CubeMapTexturing_X3DEnvironmentTextureNode,
+   ],
 });
 
 const CubeMapTexturing_default_ = undefined;

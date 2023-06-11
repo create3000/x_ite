@@ -63,49 +63,9 @@ function IndexedFaceSet (executionContext)
    this ._creaseAngle .setUnit ("angle");
 }
 
-IndexedFaceSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .prototype),
+Object .assign (Object .setPrototypeOf (IndexedFaceSet .prototype, X3DComposedGeometryNode .prototype),
 {
-   constructor: IndexedFaceSet,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,      "set_colorIndex",    new Fields .MFInt32 ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,      "set_texCoordIndex", new Fields .MFInt32 ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,      "set_normalIndex",   new Fields .MFInt32 ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,      "set_coordIndex",    new Fields .MFInt32 ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",             new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "ccw",               new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "convex",            new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "creaseAngle",       new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "colorPerVertex",    new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "normalPerVertex",   new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "colorIndex",        new Fields .MFInt32 ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "texCoordIndex",     new Fields .MFInt32 ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "normalIndex",       new Fields .MFInt32 ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "coordIndex",        new Fields .MFInt32 ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "attrib",            new Fields .MFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "fogCoord",          new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "color",             new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "texCoord",          new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "normal",            new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "coord",             new Fields .SFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "IndexedFaceSet";
-   },
-   getComponentName: function ()
-   {
-      return "Geometry3D";
-   },
-   getContainerField: function ()
-   {
-      return "geometry";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DComposedGeometryNode .prototype .initialize .call (this);
 
@@ -114,42 +74,42 @@ IndexedFaceSet .prototype = Object .assign (Object .create (X3DComposedGeometryN
       this ._set_normalIndex   .addFieldInterest (this ._normalIndex);
       this ._set_coordIndex    .addFieldInterest (this ._coordIndex);
    },
-   getTexCoordPerVertexIndex: function (index)
+   getTexCoordPerVertexIndex (index)
    {
       if (index < this ._texCoordIndex .length)
          return this ._texCoordIndex [index];
 
       return this ._coordIndex [index];
    },
-   getColorPerVertexIndex: function (index)
+   getColorPerVertexIndex (index)
    {
       if (index < this ._colorIndex .length)
          return this ._colorIndex [index];
 
       return this ._coordIndex [index];
    },
-   getColorIndex: function (index)
+   getColorIndex (index)
    {
       if (index < this ._colorIndex .length)
          return this ._colorIndex [index];
 
       return index;
    },
-   getNormalPerVertexIndex: function (index)
+   getNormalPerVertexIndex (index)
    {
       if (index < this ._normalIndex .length)
          return this ._normalIndex [index];
 
       return this ._coordIndex [index];
    },
-   getNormalIndex: function (index)
+   getNormalIndex (index)
    {
       if (index < this ._normalIndex .length)
          return this ._normalIndex [index];
 
       return index;
    },
-   build: function ()
+   build ()
    {
       // Triangulate
 
@@ -228,7 +188,7 @@ IndexedFaceSet .prototype = Object .assign (Object .create (X3DComposedGeometryN
       this .setSolid (this ._solid .getValue ());
       this .setCCW (this ._ccw .getValue ());
    },
-   triangulate: function ()
+   triangulate ()
    {
       const
          convex      = this ._convex .getValue (),
@@ -250,9 +210,7 @@ IndexedFaceSet .prototype = Object .assign (Object .create (X3DComposedGeometryN
 
          // Construct triangle array and determine the number of used points.
 
-         let vertices = [ ];
-
-         for (let i = 0, face = 0; i < coordLength; ++ i)
+         for (let i = 0, face = 0, vertices = [ ]; i < coordLength; ++ i)
          {
             const index = coordIndex [i];
 
@@ -263,54 +221,48 @@ IndexedFaceSet .prototype = Object .assign (Object .create (X3DComposedGeometryN
             }
             else
             {
-               // Negativ index.
+               // Negative index.
 
-               if (vertices .length)
+               switch (vertices .length)
                {
-                  // Closed polygon.
-                  //if (coordIndex [vertices [0]] === coordIndex [vertices [vertices .length - 1]])
-                  //	vertices .pop ();
-
-                  switch (vertices .length)
+                  case 0:
+                  case 1:
+                  case 2:
                   {
-                     case 0:
-                     case 1:
-                     case 2:
+                     vertices .length = 0;
+                     break;
+                  }
+                  case 3:
+                  {
+                     // Add polygon with one triangle.
+                     polygons .push ({ vertices: vertices, triangles: vertices, face: face });
+                     vertices = [ ];
+                     break;
+                  }
+                  default:
+                  {
+                     // Triangulate polygon.
+
+                     const
+                        triangles = [ ],
+                        polygon   = { vertices: vertices, triangles: triangles, face: face };
+
+                     if (convex)
+                        Triangle3 .triangulateConvexPolygon (vertices, triangles);
+                     else
+                        this .triangulatePolygon (vertices, triangles);
+
+                     if (triangles .length < 3)
                      {
                         vertices .length = 0;
-                        break;
                      }
-                     case 3:
+                     else
                      {
-                        // Add polygon with one triangle.
-                        polygons .push ({ vertices: vertices, triangles: vertices, face: face });
+                        polygons .push (polygon);
                         vertices = [ ];
-                        break;
                      }
-                     default:
-                     {
-                        // Triangulate polygons.
-                        const
-                           triangles = [ ],
-                           polygon   = { vertices: vertices, triangles: triangles, face: face };
 
-                        if (convex)
-                           Triangle3 .triangulateConvexPolygon (vertices, triangles);
-                        else
-                           this .triangulatePolygon (vertices, triangles);
-
-                        if (triangles .length < 3)
-                        {
-                           vertices .length = 0;
-                        }
-                        else
-                        {
-                           polygons .push (polygon);
-                           vertices = [ ];
-                        }
-
-                        break;
-                     }
+                     break;
                   }
                }
 
@@ -351,7 +303,7 @@ IndexedFaceSet .prototype = Object .assign (Object .create (X3DComposedGeometryN
          Triangle3 .triangulatePolygon (polygon, triangles);
       };
    })(),
-   buildNormals: function (polygons)
+   buildNormals (polygons)
    {
       const
          normals     = this .createNormals (polygons),
@@ -376,9 +328,9 @@ IndexedFaceSet .prototype = Object .assign (Object .create (X3DComposedGeometryN
       return function (polygons)
       {
          const
-            cw          = ! this ._ccw .getValue (),
-            coordIndex  = this ._coordIndex .getValue (),
-            coord       = this .getCoord ();
+            cw         = ! this ._ccw .getValue (),
+            coordIndex = this ._coordIndex .getValue (),
+            coord      = this .getCoord ();
 
          normals     .length = 0;
          normalIndex .length = 0;
@@ -472,6 +424,57 @@ IndexedFaceSet .prototype = Object .assign (Object .create (X3DComposedGeometryN
          return normal .normalize ();
       };
    })(),
+});
+
+Object .defineProperties (IndexedFaceSet,
+{
+   typeName:
+   {
+      value: "IndexedFaceSet",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Geometry3D",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "geometry",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "set_colorIndex",    new Fields .MFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "set_texCoordIndex", new Fields .MFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "set_normalIndex",   new Fields .MFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "set_coordIndex",    new Fields .MFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",             new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "ccw",               new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "convex",            new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "creaseAngle",       new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "colorPerVertex",    new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "normalPerVertex",   new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "colorIndex",        new Fields .MFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "texCoordIndex",     new Fields .MFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "normalIndex",       new Fields .MFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "coordIndex",        new Fields .MFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "attrib",            new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "fogCoord",          new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "color",             new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "texCoord",          new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "normal",            new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "coord",             new Fields .SFNode ()),
+      ]),
+      enumerable: true,
+   },
 });
 
 export default IndexedFaceSet;

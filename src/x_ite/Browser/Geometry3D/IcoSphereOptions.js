@@ -60,35 +60,22 @@ function IcoSphereOptions (executionContext)
                           "order", new Fields .SFInt32 (2))
 }
 
-IcoSphereOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+Object .assign (Object .setPrototypeOf (IcoSphereOptions .prototype, X3DBaseNode .prototype),
 {
-   constructor: IcoSphereOptions,
-   getTypeName: function ()
-   {
-      return "IcoSphereOptions";
-   },
-   getComponentName: function ()
-   {
-      return "X_ITE";
-   },
-   getContainerField: function ()
-   {
-      return "quadSphereOptions";
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DBaseNode .prototype .initialize .call (this);
 
       this .addInterest ("eventsProcessed", this);
    },
-   getGeometry: function ()
+   getGeometry ()
    {
       if (! this .geometry)
          this .eventsProcessed ();
 
       return this .geometry;
    },
-   eventsProcessed: function ()
+   eventsProcessed ()
    {
       this .geometry            = new IndexedFaceSet (this .getExecutionContext ());
       this .geometry ._texCoord = new TextureCoordinate (this .getExecutionContext ());
@@ -112,6 +99,15 @@ IcoSphereOptions .prototype = Object .assign (Object .create (X3DBaseNode .proto
       texCoord .setup ();
       coord    .setup ();
       geometry .setup ();
+   },
+});
+
+Object .defineProperties (IcoSphereOptions,
+{
+   typeName:
+   {
+      value: "IcoSphereOptions",
+      enumerable: true,
    },
 });
 

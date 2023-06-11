@@ -45,75 +45,53 @@
  *
  ******************************************************************************/
 
-import X3DField     from "../Base/X3DField.js";
-import X3DConstants from "../Base/X3DConstants.js";
+import X3DField from "../Base/X3DField.js";
 
 function SFString (value)
 {
-   return X3DField .call (this, arguments .length ? "" + value : "");
+   X3DField .call (this, arguments .length ? String (value) : "");
 }
 
-Object .assign (SFString,
+Object .assign (Object .setPrototypeOf (SFString .prototype, X3DField .prototype),
 {
-   unescape: function (string)
-   {
-      return string .replace (/\\([\\"])/g, "$1");
-   },
-   escape: function (string)
-   {
-      return string .replace (/([\\"])/g, "\\$1");
-   },
-});
-
-SFString .prototype = Object .assign (Object .create (X3DField .prototype),
-{
-   constructor: SFString,
-   [Symbol .iterator]: function* ()
+   *[Symbol .iterator] ()
    {
       yield* this .getValue ();
    },
-   copy: function ()
+   copy ()
    {
       return new SFString (this .getValue ());
    },
-   getTypeName: function ()
-   {
-      return "SFString";
-   },
-   getType: function ()
-   {
-      return X3DConstants .SFString;
-   },
-   isDefaultValue: function ()
+   isDefaultValue ()
    {
       return this .getValue () === "";
    },
-   set: function (value)
+   set (value)
    {
-      X3DField .prototype .set .call (this, "" + value);
+      X3DField .prototype .set .call (this, String (value));
    },
    valueOf: X3DField .prototype .getValue,
-   toStream: function (generator)
+   toStream (generator)
    {
       generator .string += '"';
       generator .string += SFString .escape (this .getValue ());
       generator .string += '"';
    },
-   toVRMLStream: function (generator)
+   toVRMLStream (generator)
    {
       this .toStream (generator);
    },
-   toXMLStream: function (generator, sourceText)
+   toXMLStream (generator, sourceText = false)
    {
       generator .string += sourceText
          ? generator .XMLEncodeSourceText (this .getValue ())
          : generator .XMLEncode (this .getValue ());
    },
-   toJSONStream: function (generator)
+   toJSONStream (generator)
    {
       this .toJSONStreamValue (generator)
    },
-   toJSONStreamValue: function (generator)
+   toJSONStreamValue (generator)
    {
       generator .string += '"';
       generator .string += generator .JSONEncode (this .getValue ());
@@ -126,9 +104,30 @@ for (const key of Reflect .ownKeys (SFString .prototype))
 
 Object .defineProperty (SFString .prototype, "length",
 {
-   get: function ()
+   get ()
    {
       return this .getValue () .length;
+   },
+});
+
+Object .defineProperties (SFString,
+{
+   typeName:
+   {
+      value: "SFString",
+      enumerable: true,
+   },
+});
+
+Object .assign (SFString,
+{
+   unescape (string)
+   {
+      return string .replace (/\\([\\"])/g, "$1");
+   },
+   escape (string)
+   {
+      return string .replace (/([\\"])/g, "\\$1");
    },
 });
 

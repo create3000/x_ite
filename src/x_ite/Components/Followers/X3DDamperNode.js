@@ -56,10 +56,9 @@ function X3DDamperNode (executionContext)
    this .addType (X3DConstants .X3DDamperNode);
 }
 
-X3DDamperNode .prototype = Object .assign (Object .create (X3DFollowerNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DDamperNode .prototype, X3DFollowerNode .prototype),
 {
-   constructor: X3DDamperNode,
-   initialize: function ()
+   initialize ()
    {
       X3DFollowerNode .prototype .initialize .call (this);
 
@@ -83,18 +82,18 @@ X3DDamperNode .prototype = Object .assign (Object .create (X3DFollowerNode .prot
       else
          this .set_active (true);
    },
-   getOrder: function ()
+   getOrder ()
    {
       return Algorithm .clamp (this ._order .getValue (), 0, 5);
    },
-   getTolerance: function ()
+   getTolerance ()
    {
       if (this ._tolerance .getValue () < 0)
          return 1e-4;
 
       return this ._tolerance .getValue ();
    },
-   prepareEvents: function ()
+   prepareEvents ()
    {
       var
          buffer = this .getBuffer (),
@@ -128,7 +127,7 @@ X3DDamperNode .prototype = Object .assign (Object .create (X3DFollowerNode .prot
 
       this .set_active (false);
    },
-   set_value__: function ()
+   set_value__ ()
    {
       var
          buffer = this .getBuffer (),
@@ -141,13 +140,13 @@ X3DDamperNode .prototype = Object .assign (Object .create (X3DFollowerNode .prot
 
       this .set_active (true);
    },
-   set_destination__: function ()
+   set_destination__ ()
    {
       this .assign (this .getBuffer (), 0, this .getDestination ());
 
       this .set_active (true);
    },
-   set_order__: function ()
+   set_order__ ()
    {
       var
          buffer = this .getBuffer (),
@@ -157,6 +156,20 @@ X3DDamperNode .prototype = Object .assign (Object .create (X3DFollowerNode .prot
          buffer [i] = this .duplicate (value);
 
       buffer .length = length;
+   },
+});
+
+Object .defineProperties (X3DDamperNode,
+{
+   typeName:
+   {
+      value: "X3DDamperNode",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Followers",
+      enumerable: true,
    },
 });
 

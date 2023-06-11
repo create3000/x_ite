@@ -65,35 +65,9 @@ function VisibilitySensor (executionContext)
    this .visible = false;
 }
 
-VisibilitySensor .prototype = Object .assign (Object .create (X3DEnvironmentalSensorNode .prototype),
+Object .assign (Object .setPrototypeOf (VisibilitySensor .prototype, X3DEnvironmentalSensorNode .prototype),
 {
-   constructor: VisibilitySensor,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",  new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",   new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "size",      new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "center",    new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "enterTime", new Fields .SFTime ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "exitTime",  new Fields .SFTime ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",  new Fields .SFBool ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "VisibilitySensor";
-   },
-   getComponentName: function ()
-   {
-      return "EnvironmentalSensor";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DEnvironmentalSensorNode .prototype .initialize .call (this);
 
@@ -101,14 +75,14 @@ VisibilitySensor .prototype = Object .assign (Object .create (X3DEnvironmentalSe
 
       this .set_enabled__ ();
    },
-   set_enabled__: function ()
+   set_enabled__ ()
    {
       if (this ._enabled .getValue ())
          delete this .traverse;
       else
          this .traverse = Function .prototype;
    },
-   update: function ()
+   update ()
    {
       if (this .visible && this .getTraversed ())
       {
@@ -161,6 +135,43 @@ VisibilitySensor .prototype = Object .assign (Object .create (X3DEnvironmentalSe
          }
       };
    })(),
+});
+
+Object .defineProperties (VisibilitySensor,
+{
+   typeName:
+   {
+      value: "VisibilitySensor",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "EnvironmentalSensor",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",  new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",   new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "size",      new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "center",    new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "enterTime", new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "exitTime",  new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",  new Fields .SFBool ()),
+      ]),
+      enumerable: true,
+   },
 });
 
 export default VisibilitySensor;

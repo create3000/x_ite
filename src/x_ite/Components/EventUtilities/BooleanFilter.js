@@ -58,39 +58,15 @@ function BooleanFilter (executionContext)
    this .addType (X3DConstants .BooleanFilter);
 }
 
-BooleanFilter .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+Object .assign (Object .setPrototypeOf (BooleanFilter .prototype, X3DChildNode .prototype),
 {
-   constructor: BooleanFilter,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,   "set_boolean", new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "inputTrue",   new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "inputFalse",  new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "inputNegate", new Fields .SFBool ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "BooleanFilter";
-   },
-   getComponentName: function ()
-   {
-      return "EventUtilities";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DChildNode .prototype .initialize .call (this);
 
       this ._set_boolean .addInterest ("set_boolean__", this);
    },
-   set_boolean__: function ()
+   set_boolean__ ()
    {
       const value = this ._set_boolean .getValue ();
 
@@ -101,6 +77,41 @@ BooleanFilter .prototype = Object .assign (Object .create (X3DChildNode .prototy
          this ._inputFalse = false;
 
       this ._inputNegate = ! value;
+   },
+});
+
+Object .defineProperties (BooleanFilter,
+{
+   typeName:
+   {
+      value: "BooleanFilter",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "EventUtilities",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,   "set_boolean", new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "inputTrue",   new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "inputFalse",  new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "inputNegate", new Fields .SFBool ()),
+      ]),
+      enumerable: true,
    },
 });
 

@@ -59,7 +59,7 @@ function TextureBuffer (browser, width, height, float = false)
 
    Object .defineProperty (this, "array",
    {
-      get: function ()
+      get ()
       {
          const value = float ? new Float32Array (width * height * 4) : new Uint8Array (width * height * 4);
 
@@ -132,26 +132,25 @@ function TextureBuffer (browser, width, height, float = false)
       throw new Error ("Couldn't create frame buffer.");
 }
 
-TextureBuffer .prototype =
+Object .assign (TextureBuffer .prototype,
 {
-   constructor: TextureBuffer,
-   getWidth: function ()
+   getWidth ()
    {
       return this .width;
    },
-   getHeight: function ()
+   getHeight ()
    {
       return this .height;
    },
-   getColorTexture: function ()
+   getColorTexture ()
    {
       return this .colorTexture;
    },
-   getDepthTexture: function ()
+   getDepthTexture ()
    {
       return this .depthTexture;
    },
-   readPixels: function ()
+   readPixels ()
    {
       const
          gl     = this .browser .getContext (),
@@ -206,7 +205,7 @@ TextureBuffer .prototype =
          return point .z;
       };
    })(),
-   bind: function ()
+   bind ()
    {
       const gl = this .browser .getContext ();
 
@@ -214,13 +213,13 @@ TextureBuffer .prototype =
 
       gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffer);
    },
-   unbind: function ()
+   unbind ()
    {
       const gl = this .browser .getContext ();
 
       gl .bindFramebuffer (gl .FRAMEBUFFER, this .lastBuffer);
    },
-   delete: function ()
+   delete ()
    {
       const gl = this .browser .getContext ();
 
@@ -232,7 +231,7 @@ TextureBuffer .prototype =
       else
          gl .deleteRenderbuffer (this .depthBuffer);
     },
-};
+});
 
 for (const key of Reflect .ownKeys (TextureBuffer .prototype))
    Object .defineProperty (TextureBuffer .prototype, key, { enumerable: false });

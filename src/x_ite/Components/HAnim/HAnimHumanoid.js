@@ -82,60 +82,10 @@ function HAnimHumanoid (executionContext)
    this .changed        = false;
 }
 
-HAnimHumanoid .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .prototype),
    X3DBoundedObject .prototype,
 {
-   constructor: HAnimHumanoid,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",              new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "description",           new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "name",                  new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "version",               new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "info",                  new Fields .MFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "translation",           new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "rotation",              new Fields .SFRotation ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "scale",                 new Fields .SFVec3f (1, 1, 1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "scaleOrientation",      new Fields .SFRotation ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "center",                new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "jointBindingPositions", new Fields .MFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "jointBindingRotations", new Fields .MFRotation ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "jointBindingScales",    new Fields .MFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "motionsEnabled",        new Fields .MFBool ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "loa",                   new Fields .SFInt32 (-1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "skeletalConfiguration", new Fields .SFString ("BASIC")),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",               new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",           new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",              new Fields .SFVec3f (-1, -1, -1)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",            new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "skeleton",              new Fields .MFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "viewpoints",            new Fields .MFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "sites",                 new Fields .MFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "segments",              new Fields .MFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "joints",                new Fields .MFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "motions",               new Fields .MFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "skinBindingNormal",     new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "skinBindingCoord",      new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "skinNormal",            new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "skinCoord",             new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "skin",                  new Fields .MFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "HAnimHumanoid";
-   },
-   getComponentName: function ()
-   {
-      return "HAnim";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DChildNode     .prototype .initialize .call (this);
       X3DBoundedObject .prototype .initialize .call (this);
@@ -203,11 +153,11 @@ HAnimHumanoid .prototype = Object .assign (Object .create (X3DChildNode .prototy
       this .set_skinNormal__ ();
       this .set_skinCoord__ ();
    },
-   getBBox: function (bbox, shadows)
+   getBBox (bbox, shadows)
    {
       return this .transformNode .getBBox (bbox, shadows);
    },
-   set_joints__: function ()
+   set_joints__ ()
    {
       const jointNodes = this .jointNodes;
 
@@ -229,11 +179,11 @@ HAnimHumanoid .prototype = Object .assign (Object .create (X3DChildNode .prototy
 
       this .set_joint__ ();
    },
-   set_joint__: function ()
+   set_joint__ ()
    {
       this .changed = true;
    },
-   set_skinNormal__: function ()
+   set_skinNormal__ ()
    {
       this .restNormalNode = null;
 
@@ -244,7 +194,7 @@ HAnimHumanoid .prototype = Object .assign (Object .create (X3DChildNode .prototy
 
       this .changed = true;
    },
-   set_skinCoord__: function ()
+   set_skinCoord__ ()
    {
       this .restCoordNode = null;
 
@@ -263,7 +213,7 @@ HAnimHumanoid .prototype = Object .assign (Object .create (X3DChildNode .prototy
 
       this .changed = true;
    },
-   traverse: function (type, renderObject)
+   traverse (type, renderObject)
    {
       this .transformNode .traverse (type, renderObject);
 
@@ -367,7 +317,7 @@ HAnimHumanoid .prototype = Object .assign (Object .create (X3DChildNode .prototy
          }
       };
    })(),
-   toVRMLStream: function (generator)
+   toVRMLStream (generator)
    {
       if (this .skinCoordNode)
          this .skinCoordNode ._point = this .restCoordNode ._point;
@@ -377,7 +327,7 @@ HAnimHumanoid .prototype = Object .assign (Object .create (X3DChildNode .prototy
 
       X3DChildNode .prototype .toVRMLStream .call (this, generator);
    },
-   toXMLStream: function (generator)
+   toXMLStream (generator)
    {
       if (this .skinCoordNode)
          this .skinCoordNode ._point = this .restCoordNode ._point;
@@ -387,7 +337,7 @@ HAnimHumanoid .prototype = Object .assign (Object .create (X3DChildNode .prototy
 
       X3DChildNode .prototype .toXMLStream .call (this, generator);
    },
-   toJSONStream: function (generator)
+   toJSONStream (generator)
    {
       if (this .skinCoordNode)
          this .skinCoordNode ._point = this .restCoordNode ._point;
@@ -397,10 +347,71 @@ HAnimHumanoid .prototype = Object .assign (Object .create (X3DChildNode .prototy
 
       X3DChildNode .prototype .toJSONStream .call (this, generator);
    },
-   dispose: function ()
+   dispose ()
    {
       X3DBoundedObject .prototype .dispose .call (this);
       X3DChildNode     .prototype .dispose .call (this);
+   },
+});
+
+Object .defineProperties (HAnimHumanoid,
+{
+   typeName:
+   {
+      value: "HAnimHumanoid",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "HAnim",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",              new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "description",           new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "name",                  new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "version",               new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "info",                  new Fields .MFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "translation",           new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "rotation",              new Fields .SFRotation ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "scale",                 new Fields .SFVec3f (1, 1, 1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "scaleOrientation",      new Fields .SFRotation ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "center",                new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "jointBindingPositions", new Fields .MFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "jointBindingRotations", new Fields .MFRotation ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "jointBindingScales",    new Fields .MFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "motionsEnabled",        new Fields .MFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "loa",                   new Fields .SFInt32 (-1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "skeletalConfiguration", new Fields .SFString ("BASIC")),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",               new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",           new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",              new Fields .SFVec3f (-1, -1, -1)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",            new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "skeleton",              new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "viewpoints",            new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "sites",                 new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "segments",              new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "joints",                new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "motions",               new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "skinBindingNormal",     new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "skinBindingCoord",      new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "skinNormal",            new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "skinCoord",             new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "skin",                  new Fields .MFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 

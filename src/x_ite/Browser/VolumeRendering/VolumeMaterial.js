@@ -57,26 +57,13 @@ function VolumeMaterial (executionContext, volumeDataNode)
    this .volumeShaderNodes = new Map ();
 }
 
-VolumeMaterial .prototype = Object .assign (Object .create (UnlitMaterial .prototype),
+Object .assign (Object .setPrototypeOf (VolumeMaterial .prototype, UnlitMaterial .prototype),
 {
-   constructor: VolumeMaterial,
-   getTypeName: function ()
-   {
-      return "VolumeMaterial";
-   },
-   getComponentName: function ()
-   {
-      return "Shape";
-   },
-   getContainerField: function ()
-   {
-      return "material";
-   },
-   getVolumeShaders: function ()
+   getVolumeShaders ()
    {
       return this .volumeShaderNodes;
    },
-   getShader: function (geometryContext, renderContext)
+   getShader (geometryContext, renderContext)
    {
       const { fogNode, objectsCount } = renderContext;
 
@@ -90,7 +77,7 @@ VolumeMaterial .prototype = Object .assign (Object .create (UnlitMaterial .proto
 
       return this .volumeShaderNodes .get (key) || this .createShader (key, geometryContext, renderContext);
    },
-   createShader: function (key, geometryContext, renderContext)
+   createShader (key, geometryContext, renderContext)
    {
       const
          browser = this .getBrowser (),
@@ -98,19 +85,26 @@ VolumeMaterial .prototype = Object .assign (Object .create (UnlitMaterial .proto
 
       const { fogNode, objectsCount } = renderContext;
 
-      if (fogNode)
-         options .push ("X3D_FOG");
+      switch (fogNode ?.getFogType ())
+      {
+         case 1:
+            options .push ("X3D_FOG", "X3D_FOG_LINEAR");
+            break;
+         case 2:
+            options .push ("X3D_FOG", "X3D_FOG_EXPONENTIAL");
+            break;
+      }
 
       if (objectsCount [0])
       {
          options .push ("X3D_CLIP_PLANES")
-         options .push ("X3D_NUM_CLIP_PLANES " + Math .min (objectsCount [0], browser .getMaxClipPlanes ()));
+         options .push (`X3D_NUM_CLIP_PLANES ${Math .min (objectsCount [0], browser .getMaxClipPlanes ())}`);
       }
 
       if (objectsCount [1])
       {
          options .push ("X3D_LIGHTING")
-         options .push ("X3D_NUM_LIGHTS " + Math .min (objectsCount [1], browser .getMaxLights ()));
+         options .push (`X3D_NUM_LIGHTS ${Math .min (objectsCount [1], browser .getMaxLights ())}`);
       }
 
       const shaderNode = this .volumeDataNode .createShader (options, vs, fs);
@@ -119,9 +113,32 @@ VolumeMaterial .prototype = Object .assign (Object .create (UnlitMaterial .proto
 
       return shaderNode;
    },
-   setShaderUniforms: function (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
+   setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
    {
       this .volumeDataNode .setShaderUniforms (gl, shaderObject);
+   },
+});
+
+Object .defineProperties (VolumeMaterial,
+{
+   typeName:
+   {
+      value: "VolumeMaterial",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Shape",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "material",
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: UnlitMaterial .fieldDefinitions,
    },
 });
 

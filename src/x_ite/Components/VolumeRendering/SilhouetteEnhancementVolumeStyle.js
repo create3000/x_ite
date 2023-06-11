@@ -59,34 +59,9 @@ function SilhouetteEnhancementVolumeStyle (executionContext)
    this .addType (X3DConstants .SilhouetteEnhancementVolumeStyle);
 }
 
-SilhouetteEnhancementVolumeStyle .prototype = Object .assign (Object .create (X3DComposableVolumeRenderStyleNode .prototype),
+Object .assign (Object .setPrototypeOf (SilhouetteEnhancementVolumeStyle .prototype, X3DComposableVolumeRenderStyleNode .prototype),
 {
-   constructor: SilhouetteEnhancementVolumeStyle,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",                  new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",                   new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "silhouetteRetainedOpacity", new Fields .SFFloat (1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "silhouetteBoundaryOpacity", new Fields .SFFloat (0)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "silhouetteSharpness",       new Fields .SFFloat (0.5)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "surfaceNormals",            new Fields .SFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "SilhouetteEnhancementVolumeStyle";
-   },
-   getComponentName: function ()
-   {
-      return "VolumeRendering";
-   },
-   getContainerField: function ()
-   {
-      return "renderStyle";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.3", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DComposableVolumeRenderStyleNode .prototype .initialize .call (this);
 
@@ -99,11 +74,11 @@ SilhouetteEnhancementVolumeStyle .prototype = Object .assign (Object .create (X3
 
       this .set_surfaceNormals__ ();
    },
-   set_surfaceNormals__: function ()
+   set_surfaceNormals__ ()
    {
       this .surfaceNormalsNode = X3DCast (X3DConstants .X3DTexture3DNode, this ._surfaceNormals);
    },
-   addShaderFields: function (shaderNode)
+   addShaderFields (shaderNode)
    {
       if (! this ._enabled .getValue ())
          return;
@@ -115,7 +90,7 @@ SilhouetteEnhancementVolumeStyle .prototype = Object .assign (Object .create (X3
       if (this .surfaceNormalsNode)
          shaderNode .addUserDefinedField (X3DConstants .inputOutput, "surfaceNormals_" + this .getId (), new Fields .SFNode (this .surfaceNormalsNode));
    },
-   getUniformsText: function ()
+   getUniformsText ()
    {
       if (! this ._enabled .getValue ())
          return "";
@@ -149,7 +124,7 @@ SilhouetteEnhancementVolumeStyle .prototype = Object .assign (Object .create (X3
 
       return string;
    },
-   getFunctionsText: function ()
+   getFunctionsText ()
    {
       if (! this ._enabled .getValue ())
          return "";
@@ -162,6 +137,42 @@ SilhouetteEnhancementVolumeStyle .prototype = Object .assign (Object .create (X3
       string += "   textureColor = getSilhouetteEnhancementStyle_" + this .getId () + " (textureColor, texCoord);\n";
 
       return string;
+   },
+});
+
+Object .defineProperties (SilhouetteEnhancementVolumeStyle,
+{
+   typeName:
+   {
+      value: "SilhouetteEnhancementVolumeStyle",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "VolumeRendering",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "renderStyle",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.3", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",                  new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",                   new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "silhouetteRetainedOpacity", new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "silhouetteBoundaryOpacity", new Fields .SFFloat (0)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "silhouetteSharpness",       new Fields .SFFloat (0.5)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "surfaceNormals",            new Fields .SFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 

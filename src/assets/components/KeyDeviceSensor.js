@@ -51,17 +51,17 @@ import KeySensor                 from "../../x_ite/Components/KeyDeviceSensor/Ke
 import StringSensor              from "../../x_ite/Components/KeyDeviceSensor/StringSensor.js";
 import X3DKeyDeviceSensorNode    from "../../x_ite/Components/KeyDeviceSensor/X3DKeyDeviceSensorNode.js";
 
-Components .addComponent ({
+Components .add ({
    name: "KeyDeviceSensor",
-   types:
-   {
-      KeySensor:    KeySensor,
-      StringSensor: StringSensor,
-   },
-   abstractTypes:
-   {
-      X3DKeyDeviceSensorNode: X3DKeyDeviceSensorNode,
-   },
+   concreteNodes:
+   [
+      KeySensor,
+      StringSensor,
+   ],
+   abstractNodes:
+   [
+      X3DKeyDeviceSensorNode,
+   ],
    browserContext: X3DKeyDeviceSensorContext,
 });
 

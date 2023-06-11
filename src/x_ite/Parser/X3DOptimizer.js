@@ -51,12 +51,12 @@ import Matrix4   from "../../standard/Math/Numbers/Matrix4.js";
 
 function X3DOptimizer () { }
 
-X3DOptimizer .prototype = {
-   constructor: X3DOptimizer,
+Object .assign (X3DOptimizer .prototype,
+{
    removeGroups: false,
    removeEmptyGroups: false,
    combineGroupingNodes: false,
-   optimizeSceneGraph: function (nodes)
+   optimizeSceneGraph (nodes)
    {
       const removedNodes = [ ];
 
@@ -64,11 +64,11 @@ X3DOptimizer .prototype = {
 
       removedNodes .forEach (node => node .dispose ());
    },
-   optimizeNodes: function (nodes, combine, removedNodes)
+   optimizeNodes (nodes, combine, removedNodes)
    {
       return [... nodes] .flatMap (node => this .optimizeNode (node, combine, removedNodes));
    },
-   optimizeNode: function (node, combine, removedNodes)
+   optimizeNode (node, combine, removedNodes)
    {
       if (!node)
          return [ ];
@@ -141,7 +141,7 @@ X3DOptimizer .prototype = {
 
       return [... node .children];
    },
-   combineSingleChild: function (node, removedNodes)
+   combineSingleChild (node, removedNodes)
    {
       if (node .children .length !== 1)
          return;
@@ -186,6 +186,6 @@ X3DOptimizer .prototype = {
 
       removedNodes .push (child .getValue ());
    },
-};
+});
 
 export default X3DOptimizer;

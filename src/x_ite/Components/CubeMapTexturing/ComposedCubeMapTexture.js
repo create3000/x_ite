@@ -75,37 +75,9 @@ function ComposedCubeMapTexture (executionContext)
    this .textureBits  = new BitSet ();
 }
 
-ComposedCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironmentTextureNode .prototype),
+Object .assign (Object .setPrototypeOf (ComposedCubeMapTexture .prototype, X3DEnvironmentTextureNode .prototype),
 {
-   constructor: ComposedCubeMapTexture,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "description",       new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "frontTexture",      new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "backTexture",       new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "leftTexture",       new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "rightTexture",      new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "bottomTexture",     new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "topTexture",        new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties", new Fields .SFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "ComposedCubeMapTexture";
-   },
-   getComponentName: function ()
-   {
-      return "CubeMapTexturing";
-   },
-   getContainerField: function ()
-   {
-      return "texture";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.1", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DEnvironmentTextureNode .prototype .initialize .call (this);
 
@@ -134,7 +106,7 @@ ComposedCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironme
       this .set_texture__ (this ._topTexture,    4);
       this .set_texture__ (this ._bottomTexture, 5);
    },
-   set_texture__: function (node, index)
+   set_texture__ (node, index)
    {
       let textureNode = this .textureNodes [index];
 
@@ -146,17 +118,17 @@ ComposedCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironme
 
       this .set_loadState__ (textureNode, index);
    },
-   set_loadState__: function (textureNode, index)
+   set_loadState__ (textureNode, index)
    {
       this .setTextureBit (index, textureNode, textureNode ?.checkLoadState () ?? X3DConstants .NOT_STARTED);
 
       this ._update .addEvent ();
    },
-   setTextureBit: function (bit, textureNode, loadState)
+   setTextureBit (bit, textureNode, loadState)
    {
       this .textureBits .set (bit, loadState === X3DConstants .COMPLETE_STATE || textureNode ?.getWidth ());
    },
-   isComplete: function ()
+   isComplete ()
    {
       if (+this .textureBits !== 0b111111)
          return false;
@@ -176,7 +148,7 @@ ComposedCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironme
 
       return true;
    },
-   update: function ()
+   update ()
    {
       if (this .isComplete ())
       {
@@ -233,6 +205,45 @@ ComposedCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironme
       {
          this .clearTexture ();
       }
+   },
+});
+
+Object .defineProperties (ComposedCubeMapTexture,
+{
+   typeName:
+   {
+      value: "ComposedCubeMapTexture",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "CubeMapTexturing",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "texture",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.1", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "description",       new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "frontTexture",      new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "backTexture",       new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "leftTexture",       new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "rightTexture",      new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "bottomTexture",     new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "topTexture",        new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties", new Fields .SFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 

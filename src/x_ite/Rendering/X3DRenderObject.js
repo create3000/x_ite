@@ -111,92 +111,91 @@ function X3DRenderObject (executionContext)
    }
 }
 
-X3DRenderObject .prototype =
+Object .assign (X3DRenderObject .prototype,
 {
-   constructor: X3DRenderObject,
-   initialize: function ()
+   initialize ()
    { },
-   isIndependent: function ()
+   isIndependent ()
    {
       return true;
    },
-   getRenderTime: function ()
+   getRenderTime ()
    {
       return this .renderTime;
    },
-   getViewVolumes: function ()
+   getViewVolumes ()
    {
       return this .viewVolumes;
    },
-   getViewVolume: function ()
+   getViewVolume ()
    {
       return this .viewVolumes .at (-1);
    },
-   getCameraSpaceMatrix: function ()
+   getCameraSpaceMatrix ()
    {
       return this .cameraSpaceMatrix;
    },
-   getViewMatrix: function ()
+   getViewMatrix ()
    {
       return this .viewMatrix;
    },
-   getProjectionMatrix: function ()
+   getProjectionMatrix ()
    {
       return this .projectionMatrix;
    },
-   getModelViewMatrix: function ()
+   getModelViewMatrix ()
    {
       return this .modelViewMatrix;
    },
-   getViewportArray: function ()
+   getViewportArray ()
    {
       return this .viewportArray;
    },
-   getProjectionMatrixArray: function ()
+   getProjectionMatrixArray ()
    {
       return this .projectionMatrixArray;
    },
-   getCameraSpaceMatrixArray: function ()
+   getCameraSpaceMatrixArray ()
    {
       return this .cameraSpaceMatrixArray;
    },
-   getHitRay: function ()
+   getHitRay ()
    {
       return this .hitRay;
    },
-   getSensors: function ()
+   getSensors ()
    {
       return this .sensors;
    },
-   getGlobalObjects: function ()
+   getGlobalObjects ()
    {
       return this .globalObjects;
    },
-   getLocalObjects: function ()
+   getLocalObjects ()
    {
       return this .localObjects;
    },
-   getLocalObjectsCount: function ()
+   getLocalObjectsCount ()
    {
       return this .localObjectsCount;
    },
-   getLights: function ()
+   getLights ()
    {
       return this .lights;
    },
-   pushGlobalShadows: function (value)
+   pushGlobalShadows (value)
    {
       this .globalShadows .push (value || this .globalShadows .at (-1));
    },
-   getGlobalShadows: function ()
+   getGlobalShadows ()
    {
       return this .globalShadows;
    },
-   pushLocalShadows: function (value)
+   pushLocalShadows (value)
    {
       this .localShadows .push (value || this .localShadows .at (-1));
    },
-   popLocalShadows: function ()
+   popLocalShadows ()
    {
       this .localShadows .pop ();
    },
@@ -221,95 +220,95 @@ X3DRenderObject .prototype =
          }
       };
    })(),
-   getLocalFogs: function ()
+   getLocalFogs ()
    {
       return this .localFogs;
    },
-   getLayouts: function ()
+   getLayouts ()
    {
       return this .layouts;
    },
-   getParentLayout: function ()
+   getParentLayout ()
    {
       return this .layouts .at (-1);
    },
-   getTextureProjectors: function ()
+   getTextureProjectors ()
    {
       return this .textureProjectors;
    },
-   getGeneratedCubeMapTextures: function ()
+   getGeneratedCubeMapTextures ()
    {
       return this .generatedCubeMapTextures;
    },
-   getCollisions: function ()
+   getCollisions ()
    {
       return this .collisions;
    },
-   getCollisionTime: function ()
+   getCollisionTime ()
    {
       return this .collisionTime;
    },
-   setNumPointingShapes: function (value)
+   setNumPointingShapes (value)
    {
       this .numPointingShapes = value;
    },
-   getNumPointingShapes: function ()
+   getNumPointingShapes ()
    {
       return this .numPointingShapes;
    },
-   getPointingShapes: function ()
+   getPointingShapes ()
    {
       return this .pointingShapes;
    },
-   setNumCollisionShapes: function (value)
+   setNumCollisionShapes (value)
    {
       this .numCollisionShapes = value;
    },
-   getNumCollisionShapes: function ()
+   getNumCollisionShapes ()
    {
       return this .numCollisionShapes;
    },
-   getCollisionShapes: function ()
+   getCollisionShapes ()
    {
       return this .collisionShapes;
    },
-   setNumShadowShapes: function (value)
+   setNumShadowShapes (value)
    {
       this .numShadowShapes = value;
    },
-   getNumShadowShapes: function ()
+   getNumShadowShapes ()
    {
       return this .numShadowShapes;
    },
-   getShadowShapes: function ()
+   getShadowShapes ()
    {
       return this .shadowShapes;
    },
-   setNumOpaqueShapes: function (value)
+   setNumOpaqueShapes (value)
    {
       this .numOpaqueShapes = value;
    },
-   getNumOpaqueShapes: function ()
+   getNumOpaqueShapes ()
    {
       return this .numOpaqueShapes;
    },
-   getOpaqueShapes: function ()
+   getOpaqueShapes ()
    {
       return this .opaqueShapes;
    },
-   setNumTransparentShapes: function (value)
+   setNumTransparentShapes (value)
    {
       this .numTransparentShapes = value;
    },
-   getNumTransparentShapes: function ()
+   getNumTransparentShapes ()
    {
       return this .numTransparentShapes;
    },
-   getTransparentShapes: function ()
+   getTransparentShapes ()
    {
       return this .transparentShapes;
    },
-   constrainTranslation: function (translation, stepBack)
+   constrainTranslation (translation, stepBack)
    {
       ///  Contrains @a translation to a possible value the avatar can move.  If the avatar reaches and intersects with an
       ///  and obstacle and @a stepBack is true a translation in the opposite directiion is returned.  Future implementation will
@@ -428,7 +427,7 @@ X3DRenderObject .prototype =
          return depth;
       };
    })(),
-   render: function (type, callback, group)
+   render (type, callback, group)
    {
       switch (type)
       {
@@ -472,7 +471,7 @@ X3DRenderObject .prototype =
          }
       }
    },
-   setHitRay: function (projectionMatrix, viewport, pointer)
+   setHitRay (projectionMatrix, viewport, pointer)
    {
       ViewVolume .unProjectRay (pointer .x, pointer .y, Matrix4 .Identity, projectionMatrix, viewport, this .hitRay);
    },
@@ -665,7 +664,7 @@ X3DRenderObject .prototype =
          return false;
       };
    })(),
-   createRenderContext: function (transparent)
+   createRenderContext (transparent)
    {
       return {
          renderObject: this,
@@ -976,7 +975,7 @@ X3DRenderObject .prototype =
          }
       };
    })(),
-   draw: function ()
+   draw ()
    {
       const
          browser                    = this .getBrowser (),
@@ -1122,7 +1121,7 @@ X3DRenderObject .prototype =
       textureProjectors        .length = 0;
       generatedCubeMapTextures .length = 0;
    },
-};
+});
 
 function assign (lhs, rhs)
 {

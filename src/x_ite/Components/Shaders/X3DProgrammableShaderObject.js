@@ -100,10 +100,9 @@ function X3DProgrammableShaderObject (executionContext)
    this .textures                    = new Set ();
 }
 
-X3DProgrammableShaderObject .prototype =
+Object .assign (X3DProgrammableShaderObject .prototype,
 {
-   constructor: X3DProgrammableShaderObject,
-   initialize: function ()
+   initialize ()
    {
       const browser = this .getBrowser ();
 
@@ -111,23 +110,23 @@ X3DProgrammableShaderObject .prototype =
 
       this .set_logarithmicDepthBuffer__ ();
    },
-   set_logarithmicDepthBuffer__: function ()
+   set_logarithmicDepthBuffer__ ()
    {
       this .logarithmicDepthBuffer = this .getBrowser () .getRenderingProperty ("LogarithmicDepthBuffer");
    },
-   canUserDefinedFields: function ()
+   canUserDefinedFields ()
    {
       return true;
    },
-   getUniformNames: function ()
+   getUniformNames ()
    {
       return this .uniformNames;
    },
-   setUniformNames: function (value)
+   setUniformNames (value)
    {
       this .uniformNames = value;
    },
-   getDefaultUniformsAndAttributes: function ()
+   getDefaultUniformsAndAttributes ()
    {
       // Get uniforms and attributes.
 
@@ -360,7 +359,7 @@ X3DProgrammableShaderObject .prototype =
 
       gl .uniform1i (this .x3d_TexCoordRamp, browser .getDefaultTexture2DUnit ());
    },
-   getUniformLocation: function (gl, program, name, depreciated)
+   getUniformLocation (gl, program, name, depreciated)
    {
       // Legacy function to get uniform location.
 
@@ -385,7 +384,7 @@ X3DProgrammableShaderObject .prototype =
 
       return 0;
    },
-   getAttribLocation: function (gl, program, name, depreciated)
+   getAttribLocation (gl, program, name, depreciated)
    {
       // Legacy function to get uniform location.
 
@@ -410,7 +409,7 @@ X3DProgrammableShaderObject .prototype =
 
       return -1;
    },
-   addShaderFields: function ()
+   addShaderFields ()
    {
       const
          program = this .getProgram (),
@@ -530,7 +529,7 @@ X3DProgrammableShaderObject .prototype =
          }
       }
    },
-   removeShaderFields: function ()
+   removeShaderFields ()
    {
       for (const field of this .getUserDefinedFields ())
          field .removeInterest ("set_field__", this);
@@ -907,7 +906,7 @@ X3DProgrammableShaderObject .prototype =
          }
       };
    })(),
-   getImagesLength: function (field)
+   getImagesLength (field)
    {
       const images = field .getValue ();
 
@@ -918,7 +917,7 @@ X3DProgrammableShaderObject .prototype =
 
       return length;
    },
-   getLocationLength: function (gl, program, field)
+   getLocationLength (gl, program, field)
    {
       const name = field .getName ();
 
@@ -930,7 +929,7 @@ X3DProgrammableShaderObject .prototype =
             return i;
       }
    },
-   hasFog: function (fogNode)
+   hasFog (fogNode)
    {
       if (this .fogNode === fogNode)
          return true;
@@ -939,7 +938,7 @@ X3DProgrammableShaderObject .prototype =
 
       return false;
    },
-   hasLight: function (i, lightNode)
+   hasLight (i, lightNode)
    {
       if (this .lightNodes [i] === lightNode)
          return true;
@@ -948,7 +947,7 @@ X3DProgrammableShaderObject .prototype =
 
       return false;
    },
-   hasTextureProjector: function (i, textureProjectorNode)
+   hasTextureProjector (i, textureProjectorNode)
    {
       if (this .projectiveTextureNodes [i] === textureProjectorNode)
          return true;
@@ -957,7 +956,7 @@ X3DProgrammableShaderObject .prototype =
 
       return false;
    },
-   setClipPlanes: function (gl, clipPlanes)
+   setClipPlanes (gl, clipPlanes)
    {
       this .numClipPlanes = 0;
 
@@ -1075,7 +1074,7 @@ X3DProgrammableShaderObject .prototype =
          geometryContext .getTextureCoordinate () .setShaderUniforms (gl, this);
       };
    })(),
-   enable: function (gl)
+   enable (gl)
    {
       gl .useProgram (this .getProgram ());
 
@@ -1096,7 +1095,7 @@ X3DProgrammableShaderObject .prototype =
          gl .uniform1i (location, textureUnit);
       }
    },
-   enableFloatAttrib: function (gl, name, buffer, components, stride, offset)
+   enableFloatAttrib (gl, name, buffer, components, stride, offset)
    {
       const location = gl .getAttribLocation (this .getProgram (), name);
 
@@ -1107,7 +1106,7 @@ X3DProgrammableShaderObject .prototype =
       gl .enableVertexAttribArray (location);
       gl .vertexAttribPointer (location, components, gl .FLOAT, false, stride, offset);
    },
-   enableMatrix3Attrib: function (gl, name, buffer, stride, offset)
+   enableMatrix3Attrib (gl, name, buffer, stride, offset)
    {
       const location0 = gl .getAttribLocation (this .getProgram (), name);
 
@@ -1126,7 +1125,7 @@ X3DProgrammableShaderObject .prototype =
          gl .vertexAttribPointer (location, 3, gl .FLOAT, false, stride, offset + 12 * i);
       }
    },
-   enableMatrix4Attrib: function (gl, name, buffer, stride, offset)
+   enableMatrix4Attrib (gl, name, buffer, stride, offset)
    {
       const location0 = gl .getAttribLocation (this .getProgram (), name);
 
@@ -1145,7 +1144,7 @@ X3DProgrammableShaderObject .prototype =
          gl .vertexAttribPointer (location, 4, gl .FLOAT, false, stride, offset + 16 * i);
       }
    },
-   enableLineStippleAttribute: function (gl, buffer, stride, offset)
+   enableLineStippleAttribute (gl, buffer, stride, offset)
    {
       const location = this .x3d_LineStipple;
 
@@ -1153,7 +1152,7 @@ X3DProgrammableShaderObject .prototype =
       gl .enableVertexAttribArray (location);
       gl .vertexAttribPointer (location, 3, gl .FLOAT, false, stride, offset);
    },
-   enableFogDepthAttribute: function (gl, buffer, stride, offset)
+   enableFogDepthAttribute (gl, buffer, stride, offset)
    {
       const location = this .x3d_FogDepth;
 
@@ -1161,7 +1160,7 @@ X3DProgrammableShaderObject .prototype =
       gl .enableVertexAttribArray (location);
       gl .vertexAttribPointer (location, 1, gl .FLOAT, false, stride, offset);
    },
-   enableColorAttribute: function (gl, buffer, stride, offset)
+   enableColorAttribute (gl, buffer, stride, offset)
    {
       const location = this .x3d_Color;
 
@@ -1169,11 +1168,11 @@ X3DProgrammableShaderObject .prototype =
       gl .enableVertexAttribArray (location);
       gl .vertexAttribPointer (location, 4, gl .FLOAT, false, stride, offset);
    },
-   colorAttributeDivisor: function (gl, divisor)
+   colorAttributeDivisor (gl, divisor)
    {
       gl .vertexAttribDivisor (this .x3d_Color, divisor);
    },
-   enableTexCoordAttribute: function (gl, buffers, stride, offset)
+   enableTexCoordAttribute (gl, buffers, stride, offset)
    {
       for (const [i, location] of this .x3d_TexCoord)
       {
@@ -1182,14 +1181,14 @@ X3DProgrammableShaderObject .prototype =
          gl .vertexAttribPointer (location, 4, gl .FLOAT, false, stride, offset);
       }
    },
-   texCoordAttributeDivisor: function (gl, divisor)
+   texCoordAttributeDivisor (gl, divisor)
    {
       for (const [i, location] of this .x3d_TexCoord)
       {
          gl .vertexAttribDivisor (location, divisor);
       }
    },
-   enableNormalAttribute: function (gl, buffer, stride, offset)
+   enableNormalAttribute (gl, buffer, stride, offset)
    {
       const location = this .x3d_Normal;
 
@@ -1197,11 +1196,11 @@ X3DProgrammableShaderObject .prototype =
       gl .enableVertexAttribArray (location);
       gl .vertexAttribPointer (location, 3, gl .FLOAT, false, stride, offset);
    },
-   normalAttributeDivisor: function (gl, divisor)
+   normalAttributeDivisor (gl, divisor)
    {
       gl .vertexAttribDivisor (this .x3d_Normal, divisor);
    },
-   enableVertexAttribute: function (gl, buffer, stride, offset)
+   enableVertexAttribute (gl, buffer, stride, offset)
    {
       const location = this .x3d_Vertex;
 
@@ -1209,11 +1208,11 @@ X3DProgrammableShaderObject .prototype =
       gl .enableVertexAttribArray (location);
       gl .vertexAttribPointer (location, 4, gl .FLOAT, false, stride, offset);
    },
-   vertexAttributeDivisor: function (gl, divisor)
+   vertexAttributeDivisor (gl, divisor)
    {
       gl .vertexAttribDivisor (this .x3d_Vertex, divisor);
    },
-   enableParticleAttribute: function (gl, buffer, stride, offset, divisor)
+   enableParticleAttribute (gl, buffer, stride, offset, divisor)
    {
       const location = this .x3d_Particle;
 
@@ -1222,7 +1221,7 @@ X3DProgrammableShaderObject .prototype =
       gl .vertexAttribPointer (location, 4, gl .FLOAT, false, stride, offset);
       gl .vertexAttribDivisor (location, divisor);
    },
-   enableParticleMatrixAttribute: function (gl, buffer, stride, offset, divisor)
+   enableParticleMatrixAttribute (gl, buffer, stride, offset, divisor)
    {
       const location0 = this .x3d_ParticleMatrix;
 
@@ -1239,7 +1238,7 @@ X3DProgrammableShaderObject .prototype =
          gl .vertexAttribDivisor (location, divisor);
       }
    },
-   getProgramInfo: function ()
+   getProgramInfo ()
    {
       function cmp (lhs, rhs) { return lhs < rhs ? -1 : lhs > rhs ? 1 : 0; }
 
@@ -1307,7 +1306,7 @@ X3DProgrammableShaderObject .prototype =
 
       return result;
    },
-   printProgramInfo: function ()
+   printProgramInfo ()
    {
       const programInfo = this .getProgramInfo ();
 
@@ -1318,7 +1317,21 @@ X3DProgrammableShaderObject .prototype =
       console .table (programInfo .uniforms);
       console .log (this .getName (), "uniformCount", programInfo .uniformCount);
    },
-   dispose: function () { },
-};
+   dispose () { },
+});
+
+Object .defineProperties (X3DProgrammableShaderObject,
+{
+   typeName:
+   {
+      value: "X3DProgrammableShaderObject",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Shaders",
+      enumerable: true,
+   },
+});
 
 export default X3DProgrammableShaderObject;

@@ -45,41 +45,34 @@
  *
  ******************************************************************************/
 
-// Everything went wrong when the Error function is called.
+import X3DInfoArray from "../Base/X3DInfoArray.js";
+import X3DConstants from "../Base/X3DConstants.js";
 
-const Fallback =
+function AbstractNodesArray (values = [ ])
 {
-   error: function (error, fallbacks)
+   return X3DInfoArray .call (this, Array .from (values, value => [value .typeName, value]), Function);
+}
+
+Object .assign (Object .setPrototypeOf (AbstractNodesArray .prototype, X3DInfoArray .prototype),
+{
+   add (typeName, AbstractNode)
    {
-      $(function ()
-      {
-         const elements = $("x3d-canvas, X3DCanvas");
+      X3DConstants .addNode (AbstractNode);
 
-         this .show (elements, error);
-
-         for (const fallback of fallbacks)
-         {
-            if (typeof fallback === "function")
-               fallback (elements, error);
-         }
-      }
-      .bind (this));
+      X3DInfoArray .prototype .add .call (this, typeName, AbstractNode);
    },
-   show: function (elements, error)
+});
+
+for (const key of Reflect .ownKeys (AbstractNodesArray .prototype))
+   Object .defineProperty (AbstractNodesArray .prototype, key, { enumerable: false });
+
+Object .defineProperties (AbstractNodesArray,
+{
+   typeName:
    {
-      console .error (error);
-
-      // X3DCanvas
-      elements .children (".x_ite-private-browser") .hide ();
-      elements .children (":not(.x_ite-private-browser)") .show ();
-
-      // x3d-canvas
-      elements .each (function (i, e)
-      {
-         if (e .shadowRoot)
-            e .shadowRoot .appendChild (document .createElement ("slot"));
-      });
+      value: "AbstractNodesArray",
+      enumerable: true,
    },
-};
+});
 
-export default Fallback;
+export default AbstractNodesArray;

@@ -95,35 +95,9 @@ function SurfaceEmitter (executionContext)
    }`);
 }
 
-SurfaceEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),
+Object .assign (Object .setPrototypeOf (SurfaceEmitter .prototype, X3DParticleEmitterNode .prototype),
 {
-   constructor: SurfaceEmitter,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "on",          new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "speed",       new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "variation",   new Fields .SFFloat (0.25)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "mass",        new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "surfaceArea", new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "surface",     new Fields .SFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "SurfaceEmitter";
-   },
-   getComponentName: function ()
-   {
-      return "ParticleSystems";
-   },
-   getContainerField: function ()
-   {
-      return "emitter";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DParticleEmitterNode .prototype .initialize .call (this);
 
@@ -142,7 +116,7 @@ SurfaceEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNo
 
       this .set_surface__ ();
    },
-   set_surface__: function ()
+   set_surface__ ()
    {
       if (this .surfaceNode)
       {
@@ -161,7 +135,7 @@ SurfaceEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNo
       this .set_solid__ ();
       this .set_geometry__ ();
    },
-   set_solid__: function ()
+   set_solid__ ()
    {
       if (this .surfaceNode)
          this .setUniform ("uniform1i", "solid", this .surfaceNode ._solid .getValue ());
@@ -231,10 +205,47 @@ SurfaceEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNo
          }
       };
    })(),
-   activateTextures: function (gl, program)
+   activateTextures (gl, program)
    {
       gl .activeTexture (gl .TEXTURE0 + program .surfaceTextureUnit);
       gl .bindTexture (gl .TEXTURE_2D, this .surfaceTexture);
+   },
+});
+
+Object .defineProperties (SurfaceEmitter,
+{
+   typeName:
+   {
+      value: "SurfaceEmitter",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "ParticleSystems",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "emitter",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "on",          new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "speed",       new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "variation",   new Fields .SFFloat (0.25)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "mass",        new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "surfaceArea", new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "surface",     new Fields .SFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 

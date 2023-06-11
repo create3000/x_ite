@@ -56,30 +56,28 @@ function BrowserProperties (executionContext)
    X3DBaseNode .call (this, executionContext);
 }
 
-BrowserProperties .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+Object .setPrototypeOf (BrowserProperties .prototype, X3DBaseNode .prototype);
+
+Object .defineProperties (BrowserProperties,
 {
-   constructor: BrowserProperties,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "ABSTRACT_NODES",        new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "CONCRETE_NODES",        new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "EXTERNAL_INTERACTIONS", new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "PROTOTYPE_CREATE",      new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "DOM_IMPORT",            new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "XML_ENCODING",          new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "CLASSIC_VRML_ENCODING", new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "BINARY_ENCODING",       new Fields .SFBool ()),
-   ]),
-   getTypeName: function ()
+   typeName:
    {
-      return "BrowserProperties";
+      value: "BrowserProperties",
+      enumerable: true,
    },
-   getComponentName: function ()
+   fieldDefinitions:
    {
-      return "X_ITE";
-   },
-   getContainerField: function ()
-   {
-      return "browserProperties";
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "ABSTRACT_NODES",        new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "CONCRETE_NODES",        new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "EXTERNAL_INTERACTIONS", new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "PROTOTYPE_CREATE",      new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "DOM_IMPORT",            new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "XML_ENCODING",          new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "CLASSIC_VRML_ENCODING", new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "BINARY_ENCODING",       new Fields .SFBool ()),
+      ]),
+      enumerable: true,
    },
 });
 

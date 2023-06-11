@@ -47,31 +47,34 @@
 
 import X3DField               from "../Base/X3DField.js";
 import SFVecPrototypeTemplate from "./SFVecPrototypeTemplate.js";
-import X3DConstants           from "../Base/X3DConstants.js";
 import Vector3                from "../../standard/Math/Numbers/Vector3.js";
 
-function SFVec3Template (TypeName, Type, double)
+function SFVec3Template (TypeName, double)
 {
    function SFVec3 (x, y, z)
    {
       switch (arguments .length)
       {
          case 0:
-            return X3DField .call (this, new Vector3 (0, 0, 0));
+            X3DField .call (this, new Vector3 (0, 0, 0));
+            break;
 
          case 1:
-            return X3DField .call (this, arguments [0]);
+            X3DField .call (this, arguments [0]);
+            break;
 
          case 3:
-            return X3DField .call (this, new Vector3 (+x, +y, +z));
-      }
+            X3DField .call (this, new Vector3 (+x, +y, +z));
+            break;
 
-      throw new Error ("Invalid arguments.");
+         default:
+            throw new Error ("Invalid arguments.");
+      }
    }
 
-   SFVec3 .prototype = Object .assign (SFVecPrototypeTemplate (SFVec3, TypeName, Type, Vector3, double),
+   Object .assign (SFVecPrototypeTemplate (SFVec3, TypeName, Vector3, double),
    {
-      cross: function (vector)
+      cross (vector)
       {
          return new (this .constructor) (this .getValue () .copy () .cross (vector .getValue ()));
       },
@@ -81,11 +84,11 @@ function SFVec3Template (TypeName, Type, double)
       Object .defineProperty (SFVec3 .prototype, key, { enumerable: false });
 
    const x = {
-      get: function ()
+      get ()
       {
          return this .getValue () .x;
       },
-      set: function (value)
+      set (value)
       {
          this .getValue () .x = +value;
          this .addEvent ();
@@ -93,11 +96,11 @@ function SFVec3Template (TypeName, Type, double)
    };
 
    const y = {
-      get: function ()
+      get ()
       {
          return this .getValue () .y;
       },
-      set: function (value)
+      set (value)
       {
          this .getValue () .y = +value;
          this .addEvent ();
@@ -105,11 +108,11 @@ function SFVec3Template (TypeName, Type, double)
    };
 
    const z = {
-      get: function ()
+      get ()
       {
          return this .getValue () .z;
       },
-      set: function (value)
+      set (value)
       {
          this .getValue () .z = +value;
          this .addEvent ();
@@ -130,8 +133,8 @@ function SFVec3Template (TypeName, Type, double)
 }
 
 const SFVec3 = {
-   SFVec3d: SFVec3Template ("SFVec3d", X3DConstants .SFVec3d, true),
-   SFVec3f: SFVec3Template ("SFVec3f", X3DConstants .SFVec3f, false),
+   SFVec3d: SFVec3Template ("SFVec3d", true),
+   SFVec3f: SFVec3Template ("SFVec3f", false),
 };
 
 export default SFVec3;

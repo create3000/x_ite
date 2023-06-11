@@ -62,53 +62,64 @@ function ShaderProgram (executionContext)
    this .addType (X3DConstants .ShaderProgram);
 }
 
-ShaderProgram .prototype = Object .assign (Object .create (X3DNode .prototype),
+Object .assign (Object .setPrototypeOf (ShaderProgram .prototype, X3DNode .prototype),
    X3DUrlObject .prototype,
    X3DProgrammableShaderObject .prototype,
 {
-   constructor: ShaderProgram,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "description",          new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "type",                 new Fields .SFString ("VERTEX")),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
-   ]),
-   getTypeName: function ()
-   {
-      return "ShaderProgram";
-   },
-   getComponentName: function ()
-   {
-      return "Shaders";
-   },
-   getContainerField: function ()
-   {
-      return "programs";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   getSourceText: function ()
+   getSourceText ()
    {
       return this ._url;
    },
-   requestImmediateLoad: function (cache = true)
+   requestImmediateLoad (cache = true)
    { },
-   initialize: function ()
+   initialize ()
    {
       X3DNode                     .prototype .initialize .call (this);
       X3DUrlObject                .prototype .initialize .call (this);
       X3DProgrammableShaderObject .prototype .initialize .call (this);
    },
-   dispose: function ()
+   dispose ()
    {
       X3DProgrammableShaderObject .prototype .dispose .call (this);
       X3DUrlObject                .prototype .dispose .call (this);
       X3DNode                     .prototype .dispose .call (this);
+   },
+});
+
+Object .defineProperties (ShaderProgram,
+{
+   typeName:
+   {
+      value: "ShaderProgram",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Shaders",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "programs",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "description",          new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "type",                 new Fields .SFString ("VERTEX")),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
+      ]),
+      enumerable: true,
    },
 });
 

@@ -60,35 +60,29 @@ function X3DViewer (executionContext, navigationInfo)
    this .navigationInfo = navigationInfo;
 }
 
-X3DViewer .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DViewer .prototype, X3DBaseNode .prototype),
 {
-   constructor: X3DViewer,
-   getTypeName: function ()
-   {
-      return "X3DViewer";
-   },
-
-   getActiveLayer: function ()
+   getActiveLayer ()
    {
       return this .getBrowser () .getActiveLayer ();
    },
-   getViewport: function ()
+   getViewport ()
    {
       return this .getBrowser () .getActiveLayer () .getViewport () .getRectangle ();
    },
-   getNavigationInfo: function ()
+   getNavigationInfo ()
    {
       return this .navigationInfo;
    },
-   getActiveViewpoint: function ()
+   getActiveViewpoint ()
    {
       return this .getBrowser () .getActiveLayer () .getViewpoint ();
    },
-   getStraightenHorizon: function ()
+   getStraightenHorizon ()
    {
       return this .getBrowser () .getBrowserOption ("StraightenHorizon");
    },
-   getButton: function (button)
+   getButton (button)
    {
       // If Alt key is pressed and button 0, then emulate button 1 (middle).
       if (button === 0)
@@ -101,7 +95,7 @@ X3DViewer .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 
       return button;
    },
-   getPointer: function (event)
+   getPointer (event)
    {
       const
          browser      = this .getBrowser (),
@@ -151,7 +145,7 @@ X3DViewer .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
          return result .assign (direction) .multiply (this .getDistanceToCenter (distance) .magnitude () / direction .dot (axis));
       };
    })(),
-   getDistanceToCenter: function (distance, positionOffset)
+   getDistanceToCenter (distance, positionOffset)
    {
       const viewpoint = this .getActiveViewpoint ();
 
@@ -160,7 +154,7 @@ X3DViewer .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
          .add (positionOffset || viewpoint ._positionOffset .getValue ())
          .subtract (viewpoint .getUserCenterOfRotation ()));
    },
-   trackballProjectToSphere: function (x, y, vector)
+   trackballProjectToSphere (x, y, vector)
    {
       const viewport = this .getViewport ();
 
@@ -169,7 +163,7 @@ X3DViewer .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 
       return vector .set (x, y, tbProjectToSphere (0.5, x, y));
    },
-   lookAtPoint: function (x, y, straightenHorizon)
+   lookAtPoint (x, y, straightenHorizon)
    {
       if (! this .touch (x, y))
          return;
@@ -180,7 +174,7 @@ X3DViewer .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 
       viewpoint .lookAtPoint (this .getActiveLayer (), hit .point, 2 - 1.618034, straightenHorizon);
    },
-   lookAtBBox: function (x, y, straightenHorizon)
+   lookAtBBox (x, y, straightenHorizon)
    {
       if (! this .touch (x, y))
          return;
@@ -195,7 +189,7 @@ X3DViewer .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 
       viewpoint .lookAtBBox (this .getActiveLayer (), bbox, 2 - 1.618034, straightenHorizon);
    },
-   touch: function (x, y)
+   touch (x, y)
    {
       return this .getBrowser () .touch (x, y);
    },

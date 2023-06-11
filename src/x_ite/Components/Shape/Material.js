@@ -67,51 +67,9 @@ function Material (executionContext)
    this .specularColor = new Float32Array (3);
 }
 
-Material .prototype = Object .assign (Object .create (X3DOneSidedMaterialNode .prototype),
+Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterialNode .prototype),
 {
-   constructor: Material,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",                 new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "ambientIntensity",         new Fields .SFFloat (0.2)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "ambientTextureMapping",    new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "ambientTexture",           new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "diffuseColor",             new Fields .SFColor (0.8, 0.8, 0.8)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "diffuseTextureMapping",    new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "diffuseTexture",           new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "specularColor",            new Fields .SFColor ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "specularTextureMapping",   new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "specularTexture",          new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "emissiveColor",            new Fields .SFColor ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "emissiveTextureMapping",   new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "emissiveTexture",          new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "shininess",                new Fields .SFFloat (0.2)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "shininessTextureMapping",  new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "shininessTexture",         new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "occlusionStrength",        new Fields .SFFloat (1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "occlusionTextureMapping",  new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "occlusionTexture",         new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "normalScale",              new Fields .SFFloat (1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "normalTextureMapping",     new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "normalTexture",            new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "transparency",             new Fields .SFFloat ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "Material";
-   },
-   getComponentName: function ()
-   {
-      return "Shape";
-   },
-   getContainerField: function ()
-   {
-      return "material";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DOneSidedMaterialNode .prototype .initialize .call (this);
 
@@ -138,17 +96,17 @@ Material .prototype = Object .assign (Object .create (X3DOneSidedMaterialNode .p
       this .set_occlusionTexture__ ();
       this .set_transparent__ ();
    },
-   set_ambientIntensity__: function ()
+   set_ambientIntensity__ ()
    {
       this .ambientIntensity = Algorithm .clamp (this ._ambientIntensity .getValue (), 0, 1);
    },
-   set_ambientTexture__: function ()
+   set_ambientTexture__ ()
    {
       this .ambientTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._ambientTexture);
 
       this .setTexture (this .getTextureIndices () .AMBIENT_TEXTURE, this .ambientTextureNode);
    },
-   set_diffuseColor__: function ()
+   set_diffuseColor__ ()
    {
       //We cannot use this in Windows Edge:
       //this .diffuseColor .set (this ._diffuseColor .getValue ());
@@ -161,7 +119,7 @@ Material .prototype = Object .assign (Object .create (X3DOneSidedMaterialNode .p
       diffuseColor [1] = diffuseColor_ .g;
       diffuseColor [2] = diffuseColor_ .b;
    },
-   set_diffuseTexture__: function ()
+   set_diffuseTexture__ ()
    {
       if (this .diffuseTextureNode)
          this .diffuseTextureNode ._transparent .removeInterest ("set_transparent__", this);
@@ -173,7 +131,7 @@ Material .prototype = Object .assign (Object .create (X3DOneSidedMaterialNode .p
 
       this .setTexture (this .getTextureIndices () .DIFFUSE_TEXTURE, this .diffuseTextureNode);
    },
-   set_specularColor__: function ()
+   set_specularColor__ ()
    {
       //We cannot use this in Windows Edge:
       //this .specularColor .set (this ._specularColor .getValue ());
@@ -186,37 +144,37 @@ Material .prototype = Object .assign (Object .create (X3DOneSidedMaterialNode .p
       specularColor [1] = specularColor_ .g;
       specularColor [2] = specularColor_ .b;
    },
-   set_specularTexture__: function ()
+   set_specularTexture__ ()
    {
       this .specularTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._specularTexture);
 
       this .setTexture (this .getTextureIndices () .SPECULAR_TEXTURE, this .specularTextureNode);
    },
-   set_shininess__: function ()
+   set_shininess__ ()
    {
       this .shininess = Algorithm .clamp (this ._shininess .getValue (), 0, 1);
    },
-   set_shininessTexture__: function ()
+   set_shininessTexture__ ()
    {
       this .shininessTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._shininessTexture);
 
       this .setTexture (this .getTextureIndices () .SHININESS_TEXTURE, this .shininessTextureNode);
    },
-   set_occlusionStrength__: function ()
+   set_occlusionStrength__ ()
    {
       this .occlusionStrength = Algorithm .clamp (this ._occlusionStrength .getValue (), 0, 1);
    },
-   set_occlusionTexture__: function ()
+   set_occlusionTexture__ ()
    {
       this .occlusionTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._occlusionTexture);
 
       this .setTexture (this .getTextureIndices () .OCCLUSION_TEXTURE, this .occlusionTextureNode);
    },
-   set_transparent__: function ()
+   set_transparent__ ()
    {
       this .setTransparent (!!(this .getTransparency () || this .diffuseTextureNode ?.isTransparent ()));
    },
-   getBaseTexture: function ()
+   getBaseTexture ()
    {
       return this .diffuseTexture;
    },
@@ -239,11 +197,11 @@ Material .prototype = Object .assign (Object .create (X3DOneSidedMaterialNode .p
          return textureIndices;
       };
    })(),
-   getMaterialKey: function ()
+   getMaterialKey ()
    {
       return "2";
    },
-   createShader: function (key, geometryContext, renderContext)
+   createShader (key, geometryContext, renderContext)
    {
       const
          browser = this .getBrowser (),
@@ -256,19 +214,19 @@ Material .prototype = Object .assign (Object .create (X3DOneSidedMaterialNode .p
          if (+this .getTextureBits ())
          {
             if (this .ambientTextureNode)
-               options .push ("X3D_AMBIENT_TEXTURE", "X3D_AMBIENT_TEXTURE_" + this .ambientTextureNode .getTextureTypeString ());
+               options .push ("X3D_AMBIENT_TEXTURE", `X3D_AMBIENT_TEXTURE_${this .ambientTextureNode .getTextureTypeString ()}`);
 
             if (this .diffuseTextureNode)
-               options .push ("X3D_DIFFUSE_TEXTURE", "X3D_DIFFUSE_TEXTURE_" + this .diffuseTextureNode .getTextureTypeString ());
+               options .push ("X3D_DIFFUSE_TEXTURE", `X3D_DIFFUSE_TEXTURE_${this .diffuseTextureNode .getTextureTypeString ()}`);
 
             if (this .specularTextureNode)
-               options .push ("X3D_SPECULAR_TEXTURE", "X3D_SPECULAR_TEXTURE_" + this .specularTextureNode .getTextureTypeString ());
+               options .push ("X3D_SPECULAR_TEXTURE", `X3D_SPECULAR_TEXTURE_${this .specularTextureNode .getTextureTypeString ()}`);
 
             if (this .shininessTextureNode)
-               options .push ("X3D_SHININESS_TEXTURE", "X3D_SHININESS_TEXTURE_" + this .shininessTextureNode .getTextureTypeString ());
+               options .push ("X3D_SHININESS_TEXTURE", `X3D_SHININESS_TEXTURE_${this .shininessTextureNode .getTextureTypeString ()}`);
 
             if (this .occlusionTextureNode)
-               options .push ("X3D_OCCLUSION_TEXTURE", "X3D_OCCLUSION_TEXTURE_" + this .occlusionTextureNode .getTextureTypeString ());
+               options .push ("X3D_OCCLUSION_TEXTURE", `X3D_OCCLUSION_TEXTURE_${this .occlusionTextureNode .getTextureTypeString ()}`);
          }
 
          switch (this .getMaterialKey (renderContext && renderContext .shadows))
@@ -294,7 +252,7 @@ Material .prototype = Object .assign (Object .create (X3DOneSidedMaterialNode .p
 
       return shaderNode;
    },
-   setShaderUniforms: function (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
+   setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
    {
       X3DOneSidedMaterialNode .prototype .setShaderUniforms .call (this, gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping);
 
@@ -397,5 +355,58 @@ function getMaterialKey (shadows)
       }
    }
 }
+
+Object .defineProperties (Material,
+{
+   typeName:
+   {
+      value: "Material",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Shape",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "material",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",                 new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "ambientIntensity",         new Fields .SFFloat (0.2)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "ambientTextureMapping",    new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "ambientTexture",           new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "diffuseColor",             new Fields .SFColor (0.8, 0.8, 0.8)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "diffuseTextureMapping",    new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "diffuseTexture",           new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "specularColor",            new Fields .SFColor ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "specularTextureMapping",   new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "specularTexture",          new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "emissiveColor",            new Fields .SFColor ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "emissiveTextureMapping",   new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "emissiveTexture",          new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "shininess",                new Fields .SFFloat (0.2)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "shininessTextureMapping",  new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "shininessTexture",         new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "occlusionStrength",        new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "occlusionTextureMapping",  new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "occlusionTexture",         new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "normalScale",              new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "normalTextureMapping",     new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "normalTexture",            new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "transparency",             new Fields .SFFloat ()),
+      ]),
+      enumerable: true,
+   },
+});
 
 export default Material;

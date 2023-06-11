@@ -101,10 +101,9 @@ function Generator ({ style = "TIDY", indent = "", precision = 7, doublePrecisio
    this .names .set (null, Object .assign (new Set (), { index: 0 }));
 }
 
-Generator .prototype =
+Object .assign (Generator .prototype,
 {
-   constructor: Generator,
-   Style: function (style)
+   Style (style)
    {
       switch (style)
       {
@@ -169,69 +168,69 @@ Generator .prototype =
          }
       }
    },
-   Comma: function ()
+   Comma ()
    {
       return this .comma;
    },
-   Break: function ()
+   Break ()
    {
       return this .break;
    },
-   TidyBreak: function ()
+   TidyBreak ()
    {
       return this .tidyBreak;
    },
-   ForceBreak: function ()
+   ForceBreak ()
    {
       return "\n";
    },
-   Space: function ()
+   Space ()
    {
       return " ";
    },
-   TidySpace: function ()
+   TidySpace ()
    {
       return this .tidySpace;
    },
-   ListStart: function ()
+   ListStart ()
    {
       return this .listEnclosure;
    },
-   ListEnd: function ()
+   ListEnd ()
    {
       return this .listEnclosure;
    },
-   ListBreak: function ()
+   ListBreak ()
    {
       return this .listBreak;
    },
-   AttribBreak: function ()
+   AttribBreak ()
    {
       return this .attribBreak;
    },
-   Indent: function ()
+   Indent ()
    {
       return this .indent;
    },
-   ListIndent: function ()
+   ListIndent ()
    {
       return this .listIndent;
    },
-   IncIndent: function ()
+   IncIndent ()
    {
       this .indent     += this .indentChar;
       this .listIndent += this .listIndentChar;
 
       return "";
    },
-   DecIndent: function ()
+   DecIndent ()
    {
       this .indent     = this .indent     .slice (0, this .indent     .length - this .indentChar     .length);
       this .listIndent = this .listIndent .slice (0, this .listIndent .length - this .listIndentChar .length);
 
       return "";
    },
-   FloatFormat: function  (value)
+   FloatFormat  (value)
    {
       if (Number .isFinite (value))
       {
@@ -247,7 +246,7 @@ Generator .prototype =
          return String (value);
       }
    },
-   DoubleFormat: function  (value)
+   DoubleFormat  (value)
    {
       if (Number .isFinite (value))
       {
@@ -263,7 +262,7 @@ Generator .prototype =
          return String (value);
       }
    },
-   PushExecutionContext: function (executionContext)
+   PushExecutionContext (executionContext)
    {
       this .executionContextStack .push (executionContext);
 
@@ -276,7 +275,7 @@ Generator .prototype =
       if (!this .exportedNodesIndex .has (executionContext))
          this .exportedNodesIndex .set (executionContext, new Set ());
    },
-   PopExecutionContext: function ()
+   PopExecutionContext ()
    {
       this .executionContextStack .pop ();
 
@@ -286,15 +285,15 @@ Generator .prototype =
       this .importedNodesIndex .clear ();
       this .exportedNodesIndex .clear ();
    },
-   ExecutionContext: function ()
+   ExecutionContext ()
    {
       return this .executionContextStack .at (-1);
    },
-   EnterScope: function ()
+   EnterScope ()
    {
       ++ this .level;
    },
-   LeaveScope: function ()
+   LeaveScope ()
    {
       -- this .level;
 
@@ -305,7 +304,7 @@ Generator .prototype =
          this .importedNames .clear ();
       }
    },
-   ExportedNodes: function (exportedNodes)
+   ExportedNodes (exportedNodes)
    {
       const index = this .exportedNodesIndex .get (this .ExecutionContext ());
 
@@ -315,11 +314,11 @@ Generator .prototype =
          {
             index .add (exportedNode .getLocalNode ())
          }
-         catch (error)
+         catch
          { }
       });
    },
-   ImportedNodes: function (importedNodes)
+   ImportedNodes (importedNodes)
    {
       const index = this .importedNodesIndex .get (this .ExecutionContext ());
 
@@ -329,37 +328,37 @@ Generator .prototype =
          {
             index .add (importedNode .getInlineNode ());
          }
-         catch (error)
+         catch
          { }
       });
    },
-   AddImportedNode: function (exportedNode, importedName)
+   AddImportedNode (exportedNode, importedName)
    {
       this .importedNames .set (exportedNode, importedName);
    },
-   AddRouteNode: function (routeNode)
+   AddRouteNode (routeNode)
    {
       this .routeNodes .add (routeNode);
    },
-   ExistsRouteNode: function (routeNode)
+   ExistsRouteNode (routeNode)
    {
       return this .routeNodes .has (routeNode);
    },
-   IsSharedNode: function (baseNode)
+   IsSharedNode (baseNode)
    {
       return this .ExecutionContext () !== baseNode .getExecutionContext ();
    },
-   AddNode: function (baseNode)
+   AddNode (baseNode)
    {
       this .nodes .add (baseNode);
 
       this .AddRouteNode (baseNode);
    },
-   ExistsNode: function (baseNode)
+   ExistsNode (baseNode)
    {
       return this .nodes .has (baseNode);
    },
-   Name: function (baseNode)
+   Name (baseNode)
    {
       // Is the node already in index.
 
@@ -400,7 +399,7 @@ Generator .prototype =
          return newName;
       }
    },
-   NeedsName: function (baseNode)
+   NeedsName (baseNode)
    {
       if (baseNode .getCloneCount () > 1)
          return true;
@@ -430,7 +429,7 @@ Generator .prototype =
          return false;
       }
    },
-   LocalName: function (baseNode)
+   LocalName (baseNode)
    {
       const importedName = this .importedNames .get (baseNode);
 
@@ -440,24 +439,24 @@ Generator .prototype =
       if (this .ExistsNode (baseNode))
          return this .Name (baseNode);
 
-      throw new Error ("Couldn't get local name for node '" + baseNode .getTypeName () + "'.");
+      throw new Error (`Couldn't get local name for node '${baseNode .getTypeName ()}'.`);
    },
-   PushContainerField: function (field)
+   PushContainerField (field)
    {
       this .containerFields .push (field);
    },
-   PopContainerField: function ()
+   PopContainerField ()
    {
       this .containerFields .pop ();
    },
-   ContainerField: function ()
+   ContainerField ()
    {
       if (this .containerFields .length)
          return this .containerFields [this .containerFields .length - 1];
 
       return null;
    },
-   AccessType: function (accessType)
+   AccessType (accessType)
    {
       switch (accessType)
       {
@@ -471,30 +470,30 @@ Generator .prototype =
             return "inputOutput";
       }
    },
-   SetUnits: function (value)
+   SetUnits (value)
    {
       this .units = value;
    },
-   GetUnits: function ()
+   GetUnits ()
    {
       return this .units;
    },
-   PushUnitCategory: function (category)
+   PushUnitCategory (category)
    {
       this .unitCategories .push (category);
    },
-   PopUnitCategory: function ()
+   PopUnitCategory ()
    {
       this .unitCategories .pop ();
    },
-   Unit: function (category)
+   Unit (category)
    {
       if (this .unitCategories .length == 0)
          return category;
 
       return this .unitCategories .at (-1);
    },
-   ToUnit: function (category, value)
+   ToUnit (category, value)
    {
       if (this .units)
       {
@@ -562,7 +561,7 @@ Generator .prototype =
          return string .replace (regex, char => map [char]);
       };
    })(),
-   JSONNumber: function (value)
+   JSONNumber (value)
    {
       switch (value)
       {
@@ -574,7 +573,7 @@ Generator .prototype =
             return value;
       }
    },
-   JSONRemoveComma: function ()
+   JSONRemoveComma ()
    {
       // this .string = this .string .replace (/,(\s*)$/s, "$1");
 
@@ -585,7 +584,7 @@ Generator .prototype =
 
       this .string += this .TidyBreak ();
    },
-};
+});
 
 for (const key of Reflect .ownKeys (Generator .prototype))
    Object .defineProperty (Generator .prototype, key, { enumerable: false });

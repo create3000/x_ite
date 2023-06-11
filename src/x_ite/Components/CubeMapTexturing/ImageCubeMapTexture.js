@@ -53,7 +53,7 @@ import X3DUrlObject              from "../Networking/X3DUrlObject.js";
 import X3DConstants              from "../../Base/X3DConstants.js";
 import Vector2                   from "../../../standard/Math/Numbers/Vector2.js";
 import Algorithm                 from "../../../standard/Math/Algorithm.js";
-import DEBUG                     from "../../DEBUG.js";
+import DEVELOPMENT               from "../../DEVELOPMENT.js";
 
 const defaultData = new Uint8Array ([ 255, 255, 255, 255 ]);
 
@@ -78,36 +78,10 @@ function ImageCubeMapTexture (executionContext)
    this .urlStack = new Fields .MFString ();
 }
 
-ImageCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironmentTextureNode .prototype),
+Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvironmentTextureNode .prototype),
    X3DUrlObject .prototype,
 {
-   constructor: ImageCubeMapTexture,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "description",          new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties",    new Fields .SFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "ImageCubeMapTexture";
-   },
-   getComponentName: function ()
-   {
-      return "CubeMapTexturing";
-   },
-   getContainerField: function ()
-   {
-      return "texture";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DEnvironmentTextureNode .prototype .initialize .call (this);
       X3DUrlObject              .prototype .initialize .call (this);
@@ -129,16 +103,16 @@ ImageCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironmentT
 
       this .requestImmediateLoad () .catch (Function .prototype);
    },
-   unloadData: function ()
+   unloadData ()
    {
       this .clearTexture ();
    },
-   loadData: function ()
+   loadData ()
    {
       this .urlStack .setValue (this ._url);
       this .loadNext ();
    },
-   loadNext: function ()
+   loadNext ()
    {
       if (this .urlStack .length === 0)
       {
@@ -159,16 +133,16 @@ ImageCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironmentT
 
       this .image .attr ("src", this .URL .href);
    },
-   setError: function ()
+   setError ()
    {
       if (this .URL .protocol !== "data:")
          console .warn (`Error loading image '${decodeURI (this .URL .href)}'`);
 
       this .loadNext ();
    },
-   setImage: function ()
+   setImage ()
    {
-      if (DEBUG)
+      if (DEVELOPMENT)
       {
           if (this .URL .protocol !== "data:")
             console .info (`Done loading image cube map texture '${decodeURI (this .URL .href)}'`);
@@ -257,10 +231,47 @@ ImageCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironmentT
          this .setError ();
       }
    },
-   dispose: function ()
+   dispose ()
    {
       X3DUrlObject              .prototype .dispose .call (this);
       X3DEnvironmentTextureNode .prototype .dispose .call (this);
+   },
+});
+
+Object .defineProperties (ImageCubeMapTexture,
+{
+   typeName:
+   {
+      value: "ImageCubeMapTexture",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "CubeMapTexturing",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "texture",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "description",          new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties",    new Fields .SFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 

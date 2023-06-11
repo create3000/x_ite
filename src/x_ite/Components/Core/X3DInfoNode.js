@@ -55,9 +55,20 @@ function X3DInfoNode (executionContext)
    this .addType (X3DConstants .X3DInfoNode);
 }
 
-X3DInfoNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+Object .setPrototypeOf (X3DInfoNode .prototype, X3DChildNode .prototype);
+
+Object .defineProperties (X3DInfoNode,
 {
-   constructor: X3DInfoNode,
+   typeName:
+   {
+      value: "X3DInfoNode",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Core",
+      enumerable: true,
+   },
 });
 
 export default X3DInfoNode;

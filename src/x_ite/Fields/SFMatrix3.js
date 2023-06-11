@@ -48,10 +48,9 @@
 import X3DField                  from "../Base/X3DField.js";
 import SFMatrixPrototypeTemplate from "./SFMatrixPrototypeTemplate.js";
 import SFVec2                    from "./SFVec2.js";
-import X3DConstants              from "../Base/X3DConstants.js";
 import Matrix3                   from "../../standard/Math/Numbers/Matrix3.js";
 
-function SFMatrix3Template (TypeName, Type, SFVec2, double)
+function SFMatrix3Template (TypeName, SFVec2, double)
 {
    function SFMatrix3 (m00, m01, m02,
                        m10, m11, m12,
@@ -60,10 +59,12 @@ function SFMatrix3Template (TypeName, Type, SFVec2, double)
       switch (arguments .length)
       {
          case 0:
-            return X3DField .call (this, new Matrix3 ());
+            X3DField .call (this, new Matrix3 ());
+            break;
 
          case 1:
-            return X3DField .call (this, arguments [0]);
+            X3DField .call (this, arguments [0]);
+            break;
 
          case 3:
          {
@@ -72,22 +73,28 @@ function SFMatrix3Template (TypeName, Type, SFVec2, double)
                r1 = arguments [1],
                r2 = arguments [2];
 
-            return X3DField .call (this, new Matrix3 (r0 .x, r0 .y, r0 .z,
+            X3DField .call (this, new Matrix3 (r0 .x, r0 .y, r0 .z,
                                                       r1 .x, r1 .y, r1 .z,
                                                       r2 .x, r2 .y, r2 .z));
+
+            break;
          }
          case 9:
-            return X3DField .call (this, new Matrix3 (+m00, +m01, +m02,
-                                                      +m10, +m11, +m12,
-                                                      +m20, +m21, +m22));
-      }
+         {
+            X3DField .call (this, new Matrix3 (+m00, +m01, +m02,
+                                               +m10, +m11, +m12,
+                                               +m20, +m21, +m22));
 
-      throw new Error ("Invalid arguments.");
+            break;
+         }
+         default:
+            throw new Error ("Invalid arguments.");
+      }
    }
 
-   SFMatrix3 .prototype = Object .assign (SFMatrixPrototypeTemplate (SFMatrix3, TypeName, Type, Matrix3, SFVec2, double),
+   Object .assign (SFMatrixPrototypeTemplate (SFMatrix3, TypeName, Matrix3, SFVec2, double),
    {
-      setTransform: function (translation, rotation, scale, scaleOrientation, center)
+      setTransform (translation, rotation, scale, scaleOrientation, center)
       {
          translation      = translation      ? translation      .getValue () : null;
          rotation         = rotation         ? rotation                      : 0;
@@ -106,11 +113,11 @@ function SFMatrix3Template (TypeName, Type, SFVec2, double)
    {
       Object .defineProperty (SFMatrix3 .prototype, i,
       {
-         get: function ()
+         get ()
          {
             return this .getValue () [i];
          },
-         set: function (value)
+         set (value)
          {
             this .getValue () [i] = +value;
             this .addEvent ();
@@ -126,8 +133,8 @@ function SFMatrix3Template (TypeName, Type, SFVec2, double)
 }
 
 const SFMatrix3 = {
-   SFMatrix3d: SFMatrix3Template ("SFMatrix3d", X3DConstants .SFMatrix3d, SFVec2 .SFVec2d, true),
-   SFMatrix3f: SFMatrix3Template ("SFMatrix3f", X3DConstants .SFMatrix3f, SFVec2 .SFVec2f, false),
+   SFMatrix3d: SFMatrix3Template ("SFMatrix3d", SFVec2 .SFVec2d, true),
+   SFMatrix3f: SFMatrix3Template ("SFMatrix3f", SFVec2 .SFVec2f, false),
 };
 
 export default SFMatrix3;

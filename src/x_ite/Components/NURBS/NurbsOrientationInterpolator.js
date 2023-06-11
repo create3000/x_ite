@@ -73,35 +73,9 @@ function NurbsOrientationInterpolator (executionContext)
    this .sampleOptions = { resolution: [ 128 ] };
 }
 
-NurbsOrientationInterpolator .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+Object .assign (Object .setPrototypeOf (NurbsOrientationInterpolator .prototype, X3DChildNode .prototype),
 {
-   constructor: NurbsOrientationInterpolator,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "order",         new Fields .SFInt32 (3)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "knot",          new Fields .MFDouble ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "weight",        new Fields .MFDouble ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "controlPoint",  new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .SFRotation ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "NurbsOrientationInterpolator";
-   },
-   getComponentName: function ()
-   {
-      return "NURBS";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DChildNode .prototype .initialize .call (this);
 
@@ -119,7 +93,7 @@ NurbsOrientationInterpolator .prototype = Object .assign (Object .create (X3DChi
 
       this .set_controlPoint__ ();
    },
-   set_controlPoint__: function ()
+   set_controlPoint__ ()
    {
       if (this .controlPointNode)
          this .controlPointNode .removeInterest ("requestRebuild", this);
@@ -131,27 +105,27 @@ NurbsOrientationInterpolator .prototype = Object .assign (Object .create (X3DChi
 
       this .requestRebuild ();
    },
-   getClosed: function (order, knot, weight, controlPointNode)
+   getClosed (order, knot, weight, controlPointNode)
    {
       return false && NURBS .getClosed (order, knot, weight, controlPointNode);
    },
-   getKnots: function (result, closed, order, dimension, knot)
+   getKnots (result, closed, order, dimension, knot)
    {
       return NURBS .getKnots (result, closed, order, dimension, knot);
    },
-   getWeights: function (result, dimension, weight)
+   getWeights (result, dimension, weight)
    {
       return NURBS .getWeights (result, dimension, weight);
    },
-   getControlPoints: function (result, closed, order, weights, controlPointNode)
+   getControlPoints (result, closed, order, weights, controlPointNode)
    {
       return NURBS .getControlPoints (result, closed, order, weights, controlPointNode);
    },
-   requestRebuild: function ()
+   requestRebuild ()
    {
       this ._rebuild .addEvent ();
    },
-   build: function ()
+   build ()
    {
       if (this ._order .getValue () < 2)
          return;
@@ -212,6 +186,43 @@ NurbsOrientationInterpolator .prototype = Object .assign (Object .create (X3DChi
          interpolator ._key      .push (knots [0] + scale);
          interpolator ._keyValue. push (interpolator ._keyValue [0]);
       }
+   },
+});
+
+Object .defineProperties (NurbsOrientationInterpolator,
+{
+   typeName:
+   {
+      value: "NurbsOrientationInterpolator",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "NURBS",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "order",         new Fields .SFInt32 (3)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "knot",          new Fields .MFDouble ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "weight",        new Fields .MFDouble ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "controlPoint",  new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .SFRotation ()),
+      ]),
+      enumerable: true,
    },
 });
 

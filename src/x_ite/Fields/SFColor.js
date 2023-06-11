@@ -45,63 +45,57 @@
  *
  ******************************************************************************/
 
-import Color3       from "../../standard/Math/Numbers/Color3.js";
-import X3DField     from "../Base/X3DField.js";
-import X3DConstants from "../Base/X3DConstants.js";
+import Color3   from "../../standard/Math/Numbers/Color3.js";
+import X3DField from "../Base/X3DField.js";
 
 function SFColor (r, g, b)
 {
    switch (arguments .length)
    {
       case 0:
-         return X3DField .call (this, new Color3 (0, 0, 0));
+         X3DField .call (this, new Color3 (0, 0, 0));
+         break;
 
       case 1:
-         return X3DField .call (this, arguments [0]);
+         X3DField .call (this, arguments [0]);
+         break;
 
       case 3:
-         return X3DField .call (this, new Color3 (+r, +g, +b));
-   }
+         X3DField .call (this, new Color3 (+r, +g, +b));
+         break;
 
-   throw new Error ("Invalid arguments.");
+      default:
+         throw new Error ("Invalid arguments.");
+   }
 }
 
-SFColor .prototype = Object .assign (Object .create (X3DField .prototype),
+Object .assign (Object .setPrototypeOf (SFColor .prototype, X3DField .prototype),
 {
-   constructor: SFColor,
-   [Symbol .iterator]: function* ()
+   *[Symbol .iterator] ()
    {
       yield* this .getValue ();
    },
-   copy: function ()
+   copy ()
    {
       return new SFColor (this .getValue () .copy ());
    },
-   getTypeName: function ()
-   {
-      return "SFColor";
-   },
-   getType: function ()
-   {
-      return X3DConstants .SFColor;
-   },
-   equals: function (color)
+   equals (color)
    {
       return this .getValue () .equals (color .getValue ());
    },
-   isDefaultValue: function ()
+   isDefaultValue ()
    {
       return this .getValue () .equals (Color3 .Black);
    },
-   set: function (value)
+   set (value)
    {
       this .getValue () .assign (value);
    },
-   getHSV: function ()
+   getHSV ()
    {
       return this .getValue () .getHSV ([ ]);
    },
-   setHSV: function (h, s, v)
+   setHSV (h, s, v)
    {
       this .getValue () .setHSV (h, s, v);
       this .addEvent ();
@@ -117,16 +111,17 @@ SFColor .prototype = Object .assign (Object .create (X3DField .prototype),
       {
          const result = new SFColor ();
 
-         this .getValue () .getHSV (s),
-         destination .getValue () .getHSV (d),
-         Color3 .lerp (s, d, t, r),
+         this .getValue () .getHSV (s);
+         destination .getValue () .getHSV (d);
+
+         Color3 .lerp (s, d, t, r);
 
          result .setHSV (r [0], r [1], r [2]);
 
          return result;
       };
    })(),
-   toStream: function (generator)
+   toStream (generator)
    {
       const
          value = this .getValue (),
@@ -140,15 +135,15 @@ SFColor .prototype = Object .assign (Object .create (X3DField .prototype),
 
       generator .string += generator .FloatFormat (value [last]);
    },
-   toVRMLStream: function (generator)
+   toVRMLStream (generator)
    {
       this .toStream (generator);
    },
-   toXMLStream: function (generator)
+   toXMLStream (generator)
    {
       this .toStream (generator);
    },
-   toJSONStream: function (generator)
+   toJSONStream (generator)
    {
       generator .string += '[';
       generator .string += generator .TidySpace ();
@@ -158,7 +153,7 @@ SFColor .prototype = Object .assign (Object .create (X3DField .prototype),
       generator .string += generator .TidySpace ();
       generator .string += ']';
    },
-   toJSONStreamValue: function (generator)
+   toJSONStreamValue (generator)
    {
       const
          value = this .getValue (),
@@ -179,11 +174,11 @@ for (const key of Reflect .ownKeys (SFColor .prototype))
    Object .defineProperty (SFColor .prototype, key, { enumerable: false });
 
 const r = {
-   get: function ()
+   get ()
    {
       return this .getValue () .r;
    },
-   set: function (value)
+   set (value)
    {
       this .getValue () .r = +value;
       this .addEvent ();
@@ -191,11 +186,11 @@ const r = {
 };
 
 const g = {
-   get: function ()
+   get ()
    {
       return this .getValue () .g;
    },
-   set: function (value)
+   set (value)
    {
       this .getValue () .g = +value;
       this .addEvent ();
@@ -203,11 +198,11 @@ const g = {
 };
 
 const b = {
-   get: function ()
+   get ()
    {
       return this .getValue () .b;
    },
-   set: function (value)
+   set (value)
    {
       this .getValue () .b = +value;
       this .addEvent ();
@@ -222,6 +217,15 @@ Object .defineProperties (SFColor .prototype,
    r: Object .assign ({ enumerable: true }, r),
    g: Object .assign ({ enumerable: true }, g),
    b: Object .assign ({ enumerable: true }, b),
+});
+
+Object .defineProperties (SFColor,
+{
+   typeName:
+   {
+      value: "SFColor",
+      enumerable: true,
+   },
 });
 
 export default SFColor;

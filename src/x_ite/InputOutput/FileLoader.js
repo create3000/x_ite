@@ -45,11 +45,11 @@
  *
  ******************************************************************************/
 
-import X3DObject  from "../Base/X3DObject.js";
-import Fields     from "../Fields.js";
-import GoldenGate from "../Parser/GoldenGate.js";
-import X3DWorld   from "../Execution/X3DWorld.js";
-import DEBUG      from "../DEBUG.js";
+import X3DObject   from "../Base/X3DObject.js";
+import Fields      from "../Fields.js";
+import GoldenGate  from "../Parser/GoldenGate.js";
+import X3DWorld    from "../Execution/X3DWorld.js";
+import DEVELOPMENT from "../DEVELOPMENT.js";
 
 const
    ECMAScript = /^\s*(?:vrmlscript|javascript|ecmascript)\:(.*)$/s,
@@ -78,20 +78,19 @@ function FileLoader (node)
    this .controller       = new AbortController ();
 }
 
-FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
+Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .prototype),
 {
-   constructor: FileLoader,
-   abort: function ()
+   abort ()
    {
       this .url .length = 0;
 
       this .controller .abort ();
    },
-   getURL: function ()
+   getURL ()
    {
       return this .URL;
    },
-   getReferer: function ()
+   getReferer ()
    {
       if (this .node instanceof X3DWorld)
       {
@@ -101,7 +100,7 @@ FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
 
       return this .executionContext .getWorldURL ();
    },
-   getTarget: function (parameters)
+   getTarget (parameters)
    {
       for (const parameter of parameters)
       {
@@ -116,7 +115,7 @@ FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
 
       return "";
    },
-   createX3DFromString: function (worldURL, string = "", success, error)
+   createX3DFromString (worldURL, string = "", resolve, reject)
    {
       try
       {
@@ -129,27 +128,27 @@ FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
 
          scene .setWorldURL (new URL (worldURL, this .getReferer ()) .href);
 
-         if (success)
-            success = this .setScene .bind (this, scene, success, error);
+         if (resolve)
+            resolve = this .setScene .bind (this, scene, resolve, reject);
 
-         new GoldenGate (scene) .parseIntoScene (string, success, error);
+         new GoldenGate (scene) .parseIntoScene (string, resolve, reject);
 
          return scene;
       }
-      catch (exception)
+      catch (error)
       {
-         if (error)
-            error (exception);
+         if (reject)
+            reject (error);
          else
-            throw exception;
+            throw error;
       }
    },
-   setScene: function (scene, success, error)
+   setScene (scene, resolve, reject)
    {
-      scene ._initLoadCount .addInterest ("set_initLoadCount__", this, scene, success, error);
+      scene ._initLoadCount .addInterest ("set_initLoadCount__", this, scene, resolve, reject);
       scene ._initLoadCount .addEvent ();
    },
-   set_initLoadCount__: function (scene, success, error, field)
+   set_initLoadCount__ (scene, resolve, reject, field)
    {
       // Wait for extern protos to be loaded.
 
@@ -166,24 +165,24 @@ FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
       {
          try
          {
-            success (scene);
+            resolve (scene);
          }
-         catch (exception)
+         catch (error)
          {
-            if (error)
-               error (exception);
+            if (reject)
+               reject (error);
             else
-               throw exception;
+               throw error;
          }
       });
 
-      if (DEBUG)
+      if (DEVELOPMENT)
       {
          if (this .URL .protocol !== "data:")
             console .info (`Done loading scene '${decodeURI (this .URL .href)}'`);
       }
    },
-   createX3DFromURL: function (url, parameter, callback, bindViewpoint, foreign)
+   createX3DFromURL (url, parameter, callback, bindViewpoint, foreign)
    {
       this .bindViewpoint = bindViewpoint;
       this .foreign       = foreign;
@@ -191,14 +190,14 @@ FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
 
       return this .loadDocument (url, this .createX3DFromURLAsync .bind (this, callback));
    },
-   createX3DFromURLAsync: function (callback, data)
+   createX3DFromURLAsync (callback, data)
    {
       if (data === null)
          callback (null);
       else
          this .createX3DFromString (this .URL, data, callback, this .loadDocumentError .bind (this));
    },
-   loadDocument: function (url, callback)
+   loadDocument (url, callback)
    {
       this .url      = url .copy ();
       this .callback = callback;
@@ -297,18 +296,18 @@ FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
 
       this .callback ($.ungzip (await response .arrayBuffer ()), this .URL);
    },
-   handleErrors: function (response)
+   handleErrors (response)
    {
       if (response .ok)
          return response;
 
       throw Error (response .statusText || response .status);
    },
-   loadDocumentError: function (exception)
+   loadDocumentError (error)
    {
-      // Output exception.
+      // Output error.
 
-      this .error (exception);
+      this .setError (error);
 
       // Try to load next URL.
 
@@ -322,15 +321,12 @@ FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
          this .callback (null);
       }
    },
-   error: function (exception)
+   setError (error)
    {
       if (this .URL .protocol === "data:")
-         console .warn (`Couldn't load data URL: ${exception .message}`);
+         console .error (`Couldn't load data URL.`, error);
       else
-         console .warn (`Couldn't load URL '${decodeURI (this .URL .href)}': ${exception .message}`);
-
-      if (DEBUG)
-         console .error (exception);
+         console .error (`Couldn't load URL '${decodeURI (this .URL .href)}'.`, error);
    },
 });
 

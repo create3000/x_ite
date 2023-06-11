@@ -51,18 +51,18 @@ import GeneratedCubeMapTexture   from "../../x_ite/Components/CubeMapTexturing/G
 import ImageCubeMapTexture       from "../../x_ite/Components/CubeMapTexturing/ImageCubeMapTexture.js";
 import X3DEnvironmentTextureNode from "../../x_ite/Components/CubeMapTexturing/X3DEnvironmentTextureNode.js";
 
-Components .addComponent ({
+Components .add ({
    name: "CubeMapTexturing",
-   types:
-   {
-      ComposedCubeMapTexture:  ComposedCubeMapTexture,
-      GeneratedCubeMapTexture: GeneratedCubeMapTexture,
-      ImageCubeMapTexture:     ImageCubeMapTexture,
-   },
-   abstractTypes:
-   {
-      X3DEnvironmentTextureNode: X3DEnvironmentTextureNode,
-   },
+   concreteNodes:
+   [
+      ComposedCubeMapTexture,
+      GeneratedCubeMapTexture,
+      ImageCubeMapTexture,
+   ],
+   abstractNodes:
+   [
+      X3DEnvironmentTextureNode,
+   ],
 });
 
 export default undefined;

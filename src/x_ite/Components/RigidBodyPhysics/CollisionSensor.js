@@ -63,34 +63,9 @@ function CollisionSensor (executionContext)
    this .contactCache = [ ];
 }
 
-CollisionSensor .prototype = Object .assign (Object .create (X3DSensorNode .prototype),
+Object .assign (Object .setPrototypeOf (CollisionSensor .prototype, X3DSensorNode .prototype),
 {
-   constructor: CollisionSensor,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",       new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",      new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "intersections", new Fields .MFNode ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "contacts",      new Fields .MFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "collider",      new Fields .SFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "CollisionSensor";
-   },
-   getComponentName: function ()
-   {
-      return "RigidBodyPhysics";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DSensorNode .prototype .initialize .call (this);
 
@@ -100,7 +75,7 @@ CollisionSensor .prototype = Object .assign (Object .create (X3DSensorNode .prot
 
       this .set_collider__ ();
    },
-   set_live__: function ()
+   set_live__ ()
    {
       if (this .getLive () .getValue () && this ._enabled .getValue () && this .colliderNode)
       {
@@ -111,7 +86,7 @@ CollisionSensor .prototype = Object .assign (Object .create (X3DSensorNode .prot
          this .getBrowser () .sensorEvents () .removeInterest ("update", this);
       }
    },
-   set_collider__: function ()
+   set_collider__ ()
    {
       this .colliderNode = X3DCast (X3DConstants .CollisionCollection, this ._collider);
 
@@ -257,7 +232,7 @@ CollisionSensor .prototype = Object .assign (Object .create (X3DSensorNode .prot
          }
       };
    })(),
-   getContact: function (index)
+   getContact (index)
    {
       const contactNode = this .contactCache [index];
 
@@ -269,6 +244,42 @@ CollisionSensor .prototype = Object .assign (Object .create (X3DSensorNode .prot
       contactNode .setup ();
 
       return contactNode;
+   },
+});
+
+Object .defineProperties (CollisionSensor,
+{
+   typeName:
+   {
+      value: "CollisionSensor",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "RigidBodyPhysics",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",       new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",      new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "intersections", new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "contacts",      new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "collider",      new Fields .SFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 

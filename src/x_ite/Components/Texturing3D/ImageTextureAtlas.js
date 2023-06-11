@@ -51,7 +51,7 @@ import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DTexture3DNode     from "./X3DTexture3DNode.js";
 import X3DUrlObject         from "../Networking/X3DUrlObject.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
-import DEBUG                from "../../DEBUG.js";
+import DEVELOPMENT          from "../../DEVELOPMENT.js";
 
 function ImageTextureAtlas (executionContext)
 {
@@ -65,42 +65,10 @@ function ImageTextureAtlas (executionContext)
    this .urlStack = new Fields .MFString ();
 }
 
-ImageTextureAtlas .prototype = Object .assign (Object .create (X3DTexture3DNode .prototype),
+Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, X3DTexture3DNode .prototype),
    X3DUrlObject .prototype,
 {
-   constructor: ImageTextureAtlas,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "description",          new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "slicesOverX",          new Fields .SFInt32 ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "slicesOverY",          new Fields .SFInt32 ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "numberOfSlices",       new Fields .SFInt32 ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatS",              new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatT",              new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatR",              new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties",    new Fields .SFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "ImageTextureAtlas";
-   },
-   getComponentName: function ()
-   {
-      return "Texturing3D";
-   },
-   getContainerField: function ()
-   {
-      return "texture";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["4.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DTexture3DNode .prototype .initialize .call (this);
       X3DUrlObject     .prototype .initialize .call (this);
@@ -111,16 +79,16 @@ ImageTextureAtlas .prototype = Object .assign (Object .create (X3DTexture3DNode 
 
       this .requestImmediateLoad () .catch (Function .prototype);
    },
-   unloadData: function ()
+   unloadData ()
    {
       this .clearTexture ();
    },
-   loadData: function ()
+   loadData ()
    {
       this .urlStack .setValue (this ._url);
       this .loadNext ();
    },
-   loadNext: function ()
+   loadNext ()
    {
       if (this .urlStack .length === 0)
       {
@@ -141,16 +109,16 @@ ImageTextureAtlas .prototype = Object .assign (Object .create (X3DTexture3DNode 
 
       this .image .attr ("src", this .URL .href);
    },
-   setError: function (event)
+   setError (event)
    {
       if (this .URL .protocol !== "data:")
          console .warn (`Error loading image '${decodeURI (this .URL .href)}'`, event .type);
 
       this .loadNext ();
    },
-   setImage: function ()
+   setImage ()
    {
-      if (DEBUG)
+      if (DEVELOPMENT)
       {
          if (this .URL .protocol !== "data:")
             console .info (`Done loading image '${decodeURI (this .URL .href)}'`);
@@ -217,17 +185,60 @@ ImageTextureAtlas .prototype = Object .assign (Object .create (X3DTexture3DNode 
       }
       catch (error)
       {
-         if (DEBUG)
+         if (DEVELOPMENT)
             console .log (error)
 
          // Catch security error from cross origin requests.
          this .setError ({ type: error .message });
       }
    },
-   dispose: function ()
+   dispose ()
    {
       X3DUrlObject     .prototype .dispose .call (this);
       X3DTexture3DNode .prototype .dispose .call (this);
+   },
+});
+
+Object .defineProperties (ImageTextureAtlas,
+{
+   typeName:
+   {
+      value: "ImageTextureAtlas",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Texturing3D",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "texture",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["4.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "description",          new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "slicesOverX",          new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "slicesOverY",          new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "numberOfSlices",       new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatS",              new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatT",              new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatR",              new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties",    new Fields .SFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 

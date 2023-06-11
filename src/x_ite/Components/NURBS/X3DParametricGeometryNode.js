@@ -56,12 +56,25 @@ function X3DParametricGeometryNode (executionContext)
    this .addType (X3DConstants .X3DParametricGeometryNode);
 }
 
-X3DParametricGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DParametricGeometryNode .prototype, X3DGeometryNode .prototype),
 {
-   constructor: X3DParametricGeometryNode,
-   getKnots: function (result, closed, order, dimension, knot)
+   getKnots (result, closed, order, dimension, knot)
    {
       return NURBS .getKnots (result, closed, order, dimension, knot);
+   },
+});
+
+Object .defineProperties (X3DParametricGeometryNode,
+{
+   typeName:
+   {
+      value: "X3DParametricGeometryNode",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "NURBS",
+      enumerable: true,
    },
 });
 

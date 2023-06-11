@@ -56,10 +56,9 @@ function X3DInterpolatorNode (executionContext)
    this .addType (X3DConstants .X3DInterpolatorNode);
 }
 
-X3DInterpolatorNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DInterpolatorNode .prototype, X3DChildNode .prototype),
 {
-   constructor: X3DInterpolatorNode,
-   setup: function ()
+   setup ()
    {
       // If an X3DInterpolatorNode value_changed outputOnly field is read before it receives any inputs,
       // keyValue[0] is returned if keyValue is not empty. If keyValue is empty (i.e., [ ]), the initial
@@ -72,14 +71,14 @@ X3DInterpolatorNode .prototype = Object .assign (Object .create (X3DChildNode .p
 
       X3DChildNode .prototype .setup .call (this);
    },
-   initialize: function ()
+   initialize ()
    {
       X3DChildNode .prototype .initialize .call (this);
 
       this ._set_fraction .addInterest ("set_fraction__", this);
       this ._key          .addInterest ("set_key__", this);
    },
-   set_fraction__: function ()
+   set_fraction__ ()
    {
       const
          key      = this ._key,
@@ -113,12 +112,26 @@ X3DInterpolatorNode .prototype = Object .assign (Object .create (X3DChildNode .p
          }
       }
    },
-   set_key__: function ()
+   set_key__ ()
    {
       this .set_keyValue__ ();
    },
-   set_keyValue__: function () { },
-   interpolate: function () { },
+   set_keyValue__ () { },
+   interpolate () { },
+});
+
+Object .defineProperties (X3DInterpolatorNode,
+{
+   typeName:
+   {
+      value: "X3DInterpolatorNode",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Interpolation",
+      enumerable: true,
+   },
 });
 
 export default X3DInterpolatorNode;

@@ -62,56 +62,67 @@ function PackagedShader (executionContext)
    this .addType (X3DConstants .PackagedShader);
 }
 
-PackagedShader .prototype = Object .assign (Object .create (X3DShaderNode .prototype),
+Object .assign (Object .setPrototypeOf (PackagedShader .prototype, X3DShaderNode .prototype),
    X3DUrlObject .prototype,
    X3DProgrammableShaderObject .prototype,
 {
-   constructor: PackagedShader,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "description",          new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,      "activate",             new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,     "isSelected",           new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,     "isValid",              new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "language",             new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
-   ]),
-   getTypeName: function ()
-   {
-      return "PackagedShader";
-   },
-   getComponentName: function ()
-   {
-      return "Shaders";
-   },
-   getContainerField: function ()
-   {
-      return "shaders";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   getSourceText: function ()
+   getSourceText ()
    {
       return this ._url;
    },
-   requestImmediateLoad: function (cache = true)
+   requestImmediateLoad (cache = true)
    { },
-   initialize: function ()
+   initialize ()
    {
       X3DShaderNode               .prototype .initialize .call (this);
       X3DUrlObject                .prototype .initialize .call (this);
       X3DProgrammableShaderObject .prototype .initialize .call (this);
    },
-   dispose: function ()
+   dispose ()
    {
       X3DProgrammableShaderObject .prototype .dispose .call (this);
       X3DUrlObject                .prototype .dispose .call (this);
       X3DShaderNode               .prototype .dispose .call (this);
+   },
+});
+
+Object .defineProperties (PackagedShader,
+{
+   typeName:
+   {
+      value: "PackagedShader",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Shaders",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "shaders",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "description",          new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "activate",             new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "isSelected",           new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "isValid",              new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "language",             new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
+      ]),
+      enumerable: true,
    },
 });
 

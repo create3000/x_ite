@@ -46,23 +46,42 @@
  ******************************************************************************/
 
 import X3DInfoArray from "../Base/X3DInfoArray.js";
-import X3DNode      from "../Components/Core/X3DNode.js";
+import X3DConstants from "../Base/X3DConstants.js";
+import HTMLSupport  from "../Parser/HTMLSupport.js";
 
-function NodeTypeArray (values)
+function ConcreteNodesArray (values = [ ])
 {
-   return X3DInfoArray .call (this, values, X3DNode);
+   return X3DInfoArray .call (this, Array .from (values, value => [value .typeName, value]), Function);
 }
 
-NodeTypeArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
+Object .assign (Object .setPrototypeOf (ConcreteNodesArray .prototype, X3DInfoArray .prototype),
 {
-   constructor: NodeTypeArray,
-   getTypeName: function ()
+   add (typeName, ConcreteNode)
    {
-      return "NodeTypeArray";
+      X3DConstants .addNode (ConcreteNode);
+      HTMLSupport .addConcreteNode (ConcreteNode);
+
+      X3DInfoArray .prototype .add .call (this, typeName, ConcreteNode);
+   },
+   update (oldTypeName, typeName, ConcreteNode)
+   {
+      X3DConstants .addNode (ConcreteNode);
+      HTMLSupport .addConcreteNode (ConcreteNode);
+
+      X3DInfoArray .prototype .update .call (this, oldTypeName, typeName, ConcreteNode);
    },
 });
 
-for (const key of Reflect .ownKeys (NodeTypeArray .prototype))
-   Object .defineProperty (NodeTypeArray .prototype, key, { enumerable: false });
+for (const key of Reflect .ownKeys (ConcreteNodesArray .prototype))
+   Object .defineProperty (ConcreteNodesArray .prototype, key, { enumerable: false });
 
-export default NodeTypeArray;
+Object .defineProperties (ConcreteNodesArray,
+{
+   typeName:
+   {
+      value: "ConcreteNodesArray",
+      enumerable: true,
+   },
+});
+
+export default ConcreteNodesArray;

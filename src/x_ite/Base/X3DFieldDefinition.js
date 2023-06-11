@@ -58,16 +58,18 @@ function X3DFieldDefinition (accessType, name, value)
    });
 }
 
-X3DFieldDefinition .prototype = Object .assign (Object .create (X3DObject .prototype),
-{
-   constructor: X3DFieldDefinition,
-   getTypeName: function ()
-   {
-      return "X3DFieldDefinition";
-   },
-});
+Object .setPrototypeOf (X3DFieldDefinition .prototype, X3DObject .prototype);
 
 for (const key of Reflect .ownKeys (X3DFieldDefinition .prototype))
    Object .defineProperty (X3DFieldDefinition .prototype, key, { enumerable: false });
+
+Object .defineProperties (X3DFieldDefinition,
+{
+   typeName:
+   {
+      value: "X3DFieldDefinition",
+      enumerable: true,
+   },
+});
 
 export default X3DFieldDefinition;

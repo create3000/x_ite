@@ -57,19 +57,32 @@ function X3DScriptNode (executionContext)
    this .addType (X3DConstants .X3DScriptNode);
 }
 
-X3DScriptNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DScriptNode .prototype, X3DChildNode .prototype),
    X3DUrlObject .prototype,
 {
-   constructor: X3DScriptNode,
-   initialize: function ()
+   initialize ()
    {
       X3DChildNode .prototype .initialize .call (this);
       X3DUrlObject .prototype .initialize .call (this);
    },
-   dispose: function ()
+   dispose ()
    {
       X3DUrlObject .prototype .dispose .call (this);
       X3DChildNode .prototype .dispose .call (this);
+   },
+});
+
+Object .defineProperties (X3DScriptNode,
+{
+   typeName:
+   {
+      value: "X3DScriptNode",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Scripting",
+      enumerable: true,
    },
 });
 

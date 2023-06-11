@@ -46,36 +46,25 @@
  ******************************************************************************/
 
 import X3DInfoArray from "../Base/X3DInfoArray.js";
-import X3DBaseNode  from "../Base/X3DBaseNode.js"
+import SFNode       from "../Fields/SFNode.js";
 
-function NamedNodesArray (values)
+function NamedNodesArray (values = [ ])
 {
-   const proxy = X3DInfoArray .call (this);
-
-   if (values)
-   {
-      for (const value of values)
-      {
-         if (!(value instanceof X3DBaseNode))
-            throw new TypeError (`Wrong type in construction of ${this .getTypeName ()}.`);
-
-         this .add (value .getName (), value);
-      }
-   }
-
-   return proxy;
+   return X3DInfoArray .call (this, Array .from (values, value => [value .getNodeName (), value]), SFNode);
 }
 
-NamedNodesArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
-{
-   constructor: NamedNodesArray,
-   getTypeName: function ()
-   {
-      return "NamedNodesArray";
-   },
-});
+Object .setPrototypeOf (NamedNodesArray .prototype, X3DInfoArray .prototype);
 
 for (const key of Reflect .ownKeys (NamedNodesArray .prototype))
    Object .defineProperty (NamedNodesArray .prototype, key, { enumerable: false });
+
+Object .defineProperties (NamedNodesArray,
+{
+   typeName:
+   {
+      value: "NamedNodesArray",
+      enumerable: true,
+   },
+});
 
 export default NamedNodesArray;

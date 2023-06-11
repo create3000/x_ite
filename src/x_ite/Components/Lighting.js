@@ -45,30 +45,23 @@
  *
  ******************************************************************************/
 
-import SupportedNodes   from "../Configuration/SupportedNodes.js";
 import DirectionalLight from "./Lighting/DirectionalLight.js";
 import EnvironmentLight from "./Lighting/EnvironmentLight.js";
 import PointLight       from "./Lighting/PointLight.js";
 import SpotLight        from "./Lighting/SpotLight.js";
 import X3DLightNode     from "./Lighting/X3DLightNode.js";
 
-const Types =
-{
-   DirectionalLight: DirectionalLight,
-   EnvironmentLight: EnvironmentLight,
-   PointLight:       PointLight,
-   SpotLight:        SpotLight,
+export default {
+   name: "Lighting",
+   concreteNodes:
+   [
+      DirectionalLight,
+      EnvironmentLight,
+      PointLight,
+      SpotLight,
+   ],
+   abstractNodes:
+   [
+      X3DLightNode,
+   ],
 };
-
-const AbstractTypes =
-{
-   X3DLightNode: X3DLightNode,
-};
-
-for (const typeName in Types)
-   SupportedNodes .addNodeType (typeName, Types [typeName]);
-
-for (const typeName in AbstractTypes)
-   SupportedNodes .addAbstractNodeType (typeName, AbstractTypes [typeName]);
-
-export default undefined;

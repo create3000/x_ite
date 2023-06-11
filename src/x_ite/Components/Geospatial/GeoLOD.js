@@ -84,47 +84,11 @@ function GeoLOD (executionContext)
    this .modelViewMatrix  = new Matrix4 ();
 }
 
-GeoLOD .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototype),
    X3DBoundedObject .prototype,
    X3DGeospatialObject .prototype,
 {
-   constructor: GeoLOD,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",      new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "geoOrigin",     new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "geoSystem",     new Fields .MFString ("GD", "WE")),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "rootUrl",       new Fields .MFString ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "child1Url",     new Fields .MFString ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "child2Url",     new Fields .MFString ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "child3Url",     new Fields .MFString ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "child4Url",     new Fields .MFString ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "center",        new Fields .SFVec3d ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "range",         new Fields .SFFloat (10)),
-      new X3DFieldDefinition (X3DConstants .outputOnly,     "level_changed", new Fields .SFInt32 (-1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",       new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",   new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",      new Fields .SFVec3f (-1, -1, -1)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",    new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "rootNode",      new Fields .MFNode ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,     "children",      new Fields .MFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "GeoLOD";
-   },
-   getComponentName: function ()
-   {
-      return "Geospatial";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DChildNode        .prototype .initialize .call (this);
       X3DBoundedObject    .prototype .initialize .call (this);
@@ -166,7 +130,7 @@ GeoLOD .prototype = Object .assign (Object .create (X3DChildNode .prototype),
       this .child3Inline .setup ();
       this .child4Inline .setup ();
    },
-   getBBox: function (bbox, shadows)
+   getBBox (bbox, shadows)
    {
       if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
       {
@@ -200,7 +164,7 @@ GeoLOD .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
-   set_rootLoadState__: function ()
+   set_rootLoadState__ ()
    {
       if (this ._level_changed .getValue () !== 0)
          return;
@@ -214,7 +178,7 @@ GeoLOD .prototype = Object .assign (Object .create (X3DChildNode .prototype),
          this .childrenLoaded = false;
       }
    },
-   set_childLoadState__: function ()
+   set_childLoadState__ ()
    {
       if (this ._level_changed .getValue () !== 1)
          return;
@@ -266,21 +230,21 @@ GeoLOD .prototype = Object .assign (Object .create (X3DChildNode .prototype),
             children .push (rootNodes [i]);
       }
    },
-   set_childCameraObject__: function ()
+   set_childCameraObject__ ()
    {
       this .setCameraObject (this .child1Inline .isCameraObject () ||
                              this .child2Inline .isCameraObject () ||
                              this .child3Inline .isCameraObject () ||
                              this .child4Inline .isCameraObject ());
    },
-   set_childPickableObject__: function ()
+   set_childPickableObject__ ()
    {
       this .setPickableObject (this .child1Inline .isPickableObject () ||
                                this .child2Inline .isPickableObject () ||
                                this .child3Inline .isPickableObject () ||
                                this .child4Inline .isPickableObject ());
    },
-   getLevel: function (modelViewMatrix)
+   getLevel (modelViewMatrix)
    {
       var distance = this .getDistance (modelViewMatrix);
 
@@ -289,13 +253,13 @@ GeoLOD .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 
       return 0;
    },
-   getDistance: function (modelViewMatrix)
+   getDistance (modelViewMatrix)
    {
       modelViewMatrix .translate (this .getCoord (this ._center .getValue (), center));
 
       return modelViewMatrix .origin .magnitude ();
    },
-   traverse: function (type, renderObject)
+   traverse (type, renderObject)
    {
       switch (type)
       {
@@ -421,7 +385,7 @@ GeoLOD .prototype = Object .assign (Object .create (X3DChildNode .prototype),
          }
       }
    },
-   traverseChildren: function (type, renderObject)
+   traverseChildren (type, renderObject)
    {
       switch (this .childrenLoaded ? this ._level_changed .getValue () : 0)
       {
@@ -444,11 +408,58 @@ GeoLOD .prototype = Object .assign (Object .create (X3DChildNode .prototype),
          }
       }
    },
-   dispose: function ()
+   dispose ()
    {
       X3DGeospatialObject .prototype .dispose .call (this);
       X3DBoundedObject    .prototype .dispose .call (this);
       X3DChildNode        .prototype .dispose .call (this);
+   },
+});
+
+Object .defineProperties (GeoLOD,
+{
+   typeName:
+   {
+      value: "GeoLOD",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Geospatial",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",      new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "geoOrigin",     new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "geoSystem",     new Fields .MFString ("GD", "WE")),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "rootUrl",       new Fields .MFString ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "child1Url",     new Fields .MFString ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "child2Url",     new Fields .MFString ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "child3Url",     new Fields .MFString ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "child4Url",     new Fields .MFString ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "center",        new Fields .SFVec3d ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "range",         new Fields .SFFloat (10)),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "level_changed", new Fields .SFInt32 (-1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",       new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",   new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",      new Fields .SFVec3f (-1, -1, -1)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",    new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "rootNode",      new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "children",      new Fields .MFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 

@@ -62,46 +62,9 @@ function PhysicalMaterial (executionContext)
    this .baseColor = new Float32Array (3);
 }
 
-PhysicalMaterial .prototype = Object .assign (Object .create (X3DOneSidedMaterialNode .prototype),
+Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSidedMaterialNode .prototype),
 {
-   constructor: PhysicalMaterial,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",                        new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "baseColor",                       new Fields .SFColor (1, 1, 1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "baseTextureMapping",              new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "baseTexture",                     new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "emissiveColor",                   new Fields .SFColor (0, 0, 0)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "emissiveTextureMapping",          new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "emissiveTexture",                 new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metallic",                        new Fields .SFFloat (1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "roughness",                       new Fields .SFFloat (1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metallicRoughnessTextureMapping", new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metallicRoughnessTexture",        new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "occlusionStrength",               new Fields .SFFloat (1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "occlusionTextureMapping",         new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "occlusionTexture",                new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "normalScale",                     new Fields .SFFloat (1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "normalTextureMapping",            new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "normalTexture",                   new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "transparency",                    new Fields .SFFloat ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "PhysicalMaterial";
-   },
-   getComponentName: function ()
-   {
-      return "Shape";
-   },
-   getContainerField: function ()
-   {
-      return "material";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["4.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DOneSidedMaterialNode .prototype .initialize .call (this);
 
@@ -122,7 +85,7 @@ PhysicalMaterial .prototype = Object .assign (Object .create (X3DOneSidedMateria
       this .set_occlusionTexture__ ();
       this .set_transparent__ ();
    },
-   set_baseColor__: function ()
+   set_baseColor__ ()
    {
       //We cannot use this in Windows Edge:
       //this .baseColor .set (this ._baseColor .getValue ());
@@ -135,7 +98,7 @@ PhysicalMaterial .prototype = Object .assign (Object .create (X3DOneSidedMateria
       baseColor [1] = baseColor_ .g;
       baseColor [2] = baseColor_ .b;
    },
-   set_baseTexture__: function ()
+   set_baseTexture__ ()
    {
       if (this .baseTextureNode)
          this .baseTextureNode ._transparent .removeInterest ("set_transparent__", this);
@@ -147,35 +110,35 @@ PhysicalMaterial .prototype = Object .assign (Object .create (X3DOneSidedMateria
       if (this .baseTextureNode)
          this .baseTextureNode ._transparent .addInterest ("set_transparent__", this);
    },
-   set_metallic__: function ()
+   set_metallic__ ()
    {
       this .metallic = Algorithm .clamp (this ._metallic .getValue (), 0, 1);
    },
-   set_roughness__: function ()
+   set_roughness__ ()
    {
       this .roughness = Algorithm .clamp (this ._roughness .getValue (), 0, 1);
    },
-   set_metallicRoughnessTexture__: function ()
+   set_metallicRoughnessTexture__ ()
    {
       this .metallicRoughnessTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._metallicRoughnessTexture);
 
       this .setTexture (this .getTextureIndices () .METALLIC_ROUGHNESS_TEXTURE, this .metallicRoughnessTextureNode);
    },
-   set_occlusionStrength__: function ()
+   set_occlusionStrength__ ()
    {
       this .occlusionStrength = Algorithm .clamp (this ._occlusionStrength .getValue (), 0, 1);
    },
-   set_occlusionTexture__: function ()
+   set_occlusionTexture__ ()
    {
       this .occlusionTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._occlusionTexture);
 
       this .setTexture (this .getTextureIndices () .OCCLUSION_TEXTURE, this .occlusionTextureNode);
    },
-   set_transparent__: function ()
+   set_transparent__ ()
    {
       this .setTransparent (!!(this .getTransparency () || this .baseTextureNode ?.isTransparent ()));
    },
-   getBaseTexture: function ()
+   getBaseTexture ()
    {
       return this .baseTextureNode;
    },
@@ -196,11 +159,11 @@ PhysicalMaterial .prototype = Object .assign (Object .create (X3DOneSidedMateria
          return textureIndices;
       };
    })(),
-   getMaterialKey: function ()
+   getMaterialKey ()
    {
       return "3";
    },
-   createShader: function (key, geometryContext, renderContext)
+   createShader (key, geometryContext, renderContext)
    {
       const
          browser = this .getBrowser (),
@@ -213,13 +176,13 @@ PhysicalMaterial .prototype = Object .assign (Object .create (X3DOneSidedMateria
          if (+this .getTextureBits ())
          {
             if (this .baseTextureNode)
-               options .push ("X3D_BASE_TEXTURE", "X3D_BASE_TEXTURE_" + this .baseTextureNode .getTextureTypeString ());
+               options .push ("X3D_BASE_TEXTURE", `X3D_BASE_TEXTURE_${this .baseTextureNode .getTextureTypeString ()}`);
 
             if (this .metallicRoughnessTextureNode)
-               options .push ("X3D_METALLIC_ROUGHNESS_TEXTURE", "X3D_METALLIC_ROUGHNESS_TEXTURE_" + this .metallicRoughnessTextureNode .getTextureTypeString ());
+               options .push ("X3D_METALLIC_ROUGHNESS_TEXTURE", `X3D_METALLIC_ROUGHNESS_TEXTURE_${this .metallicRoughnessTextureNode .getTextureTypeString ()}`);
 
             if (this .occlusionTextureNode)
-               options .push ("X3D_OCCLUSION_TEXTURE", "X3D_OCCLUSION_TEXTURE_" + this .occlusionTextureNode .getTextureTypeString ());
+               options .push ("X3D_OCCLUSION_TEXTURE", `X3D_OCCLUSION_TEXTURE_${this .occlusionTextureNode .getTextureTypeString ()}`);
          }
 
          var shaderNode = browser .createShader ("PhysicalMaterialShader", "Default", "PBR", options);
@@ -237,7 +200,7 @@ PhysicalMaterial .prototype = Object .assign (Object .create (X3DOneSidedMateria
 
       return shaderNode;
    },
-   setShaderUniforms: function (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
+   setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
    {
       X3DOneSidedMaterialNode .prototype .setShaderUniforms .call (this, gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping);
 
@@ -291,6 +254,54 @@ PhysicalMaterial .prototype = Object .assign (Object .create (X3DOneSidedMateria
             gl .uniform1i (occlusionTexture .textureCoordinateMapping, textureCoordinateMapping .get (occlusionTextureMapping) ?? 0);
          }
       }
+   },
+});
+
+Object .defineProperties (PhysicalMaterial,
+{
+   typeName:
+   {
+      value: "PhysicalMaterial",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Shape",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "material",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["4.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",                        new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "baseColor",                       new Fields .SFColor (1, 1, 1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "baseTextureMapping",              new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "baseTexture",                     new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "emissiveColor",                   new Fields .SFColor (0, 0, 0)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "emissiveTextureMapping",          new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "emissiveTexture",                 new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metallic",                        new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "roughness",                       new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metallicRoughnessTextureMapping", new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metallicRoughnessTexture",        new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "occlusionStrength",               new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "occlusionTextureMapping",         new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "occlusionTexture",                new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "normalScale",                     new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "normalTextureMapping",            new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "normalTexture",                   new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "transparency",                    new Fields .SFFloat ()),
+      ]),
+      enumerable: true,
    },
 });
 

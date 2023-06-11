@@ -60,48 +60,59 @@ function GroupAnnotation (executionContext)
    this .addType (X3DConstants .GroupAnnotation);
 }
 
-GroupAnnotation .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
+Object .assign (Object .setPrototypeOf (GroupAnnotation .prototype, X3DGroupingNode .prototype),
    X3DAnnotationNode .prototype,
 {
-   constructor: GroupAnnotation,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",           new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "annotationGroupID", new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "displayPolicy",     new Fields .SFString ("NEVER")),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",           new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",       new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",        new Fields .SFVec3f (0, 0, 0)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",          new Fields .SFVec3f (-1, -1, -1)),
-      new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",       new Fields .MFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,      "removeChildren",    new Fields .MFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "children",          new Fields .MFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "GroupAnnotation";
-   },
-   getComponentName: function ()
-   {
-      return "Annotation";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["4.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DGroupingNode   .prototype .initialize .call (this);
       X3DAnnotationNode .prototype .initialize .call (this);
    },
-   dispose: function ()
+   dispose ()
    {
       X3DAnnotationNode .prototype .dispose .call (this);
       X3DGroupingNode   .prototype .dispose .call (this);
+   },
+});
+
+Object .defineProperties (GroupAnnotation,
+{
+   typeName:
+   {
+      value: "GroupAnnotation",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Annotation",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["4.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",           new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "annotationGroupID", new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "displayPolicy",     new Fields .SFString ("NEVER")),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",           new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",       new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",        new Fields .SFVec3f (0, 0, 0)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",          new Fields .SFVec3f (-1, -1, -1)),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",       new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "removeChildren",    new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "children",          new Fields .MFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 

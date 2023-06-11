@@ -52,16 +52,16 @@ function X3DScriptingContext ()
    this [_scripts] = [this];
 }
 
-X3DScriptingContext .prototype =
+Object .assign (X3DScriptingContext .prototype,
 {
-   isExternal: function ()
+   isExternal ()
    {
       return this [_scripts] .length === 1;
    },
-   getScriptStack: function ()
+   getScriptStack ()
    {
       return this [_scripts];
    },
-};
+});
 
 export default X3DScriptingContext;

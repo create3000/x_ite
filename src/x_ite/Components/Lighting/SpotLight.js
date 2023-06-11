@@ -89,10 +89,9 @@ function SpotLightContainer ()
    this .textureUnit                   = undefined;
 }
 
-SpotLightContainer .prototype =
+Object .assign (SpotLightContainer .prototype,
 {
-   constructor: SpotLightContainer,
-   set: function (lightNode, groupNode, modelViewMatrix)
+   set (lightNode, groupNode, modelViewMatrix)
    {
       const shadowMapSize = lightNode .getShadowMapSize ();
 
@@ -115,7 +114,7 @@ SpotLightContainer .prototype =
             console .warn ("Couldn't create shadow buffer.");
       }
    },
-   renderShadowMap: function (renderObject)
+   renderShadowMap (renderObject)
    {
       if (! this .shadowBuffer)
          return;
@@ -160,7 +159,7 @@ SpotLightContainer .prototype =
 
       this .invLightSpaceProjectionMatrix .assign (invLightSpaceMatrix) .multRight (projectionMatrix) .multRight (lightNode .getBiasMatrix ());
    },
-   setGlobalVariables: function (renderObject)
+   setGlobalVariables (renderObject)
    {
       const
          lightNode       = this .lightNode,
@@ -175,7 +174,7 @@ SpotLightContainer .prototype =
       this .shadowMatrix .assign (renderObject .getCameraSpaceMatrix () .get ()) .multRight (this .invLightSpaceProjectionMatrix);
       this .shadowMatrixArray .set (this .shadowMatrix);
    },
-   setShaderUniforms: function (gl, shaderObject)
+   setShaderUniforms (gl, shaderObject)
    {
       const i = shaderObject .numLights ++;
 
@@ -241,7 +240,7 @@ SpotLightContainer .prototype =
          gl .uniform1f (shaderObject .x3d_ShadowIntensity [i], 0);
       }
    },
-   dispose: function ()
+   dispose ()
    {
       this .browser .pushShadowBuffer (this .shadowBuffer);
       this .browser .pushTexture2DUnit (this .textureUnit);
@@ -255,7 +254,7 @@ SpotLightContainer .prototype =
 
       SpotLights .push (this);
    },
-};
+});
 
 function SpotLight (executionContext)
 {
@@ -275,58 +274,21 @@ function SpotLight (executionContext)
    this ._cutOffAngle .setUnit ("angle");
 }
 
-SpotLight .prototype = Object .assign (Object .create (X3DLightNode .prototype),
+Object .assign (Object .setPrototypeOf (SpotLight .prototype, X3DLightNode .prototype),
 {
-   constructor: SpotLight,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",         new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "global",           new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "on",               new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "color",            new Fields .SFColor (1, 1, 1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "intensity",        new Fields .SFFloat (1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "ambientIntensity", new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "attenuation",      new Fields .SFVec3f (1, 0, 0)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "location",         new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "direction",        new Fields .SFVec3f (0, 0, -1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "radius",           new Fields .SFFloat (100)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "beamWidth",        new Fields .SFFloat (0.785398)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "cutOffAngle",      new Fields .SFFloat (1.5708)),
-
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "shadows",         new  Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowColor",     new  Fields .SFColor ()),        // Color of shadows.
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowIntensity", new  Fields .SFFloat (1)),       // Intensity of shadow color in the range (0, 1).
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowBias",      new  Fields .SFFloat (0.005)),   // Bias of the shadow.
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "shadowMapSize",   new  Fields .SFInt32 (1024)),    // Size of the shadow map in pixels in the range (0, inf).
-   ]),
-   getTypeName: function ()
-   {
-      return "SpotLight";
-   },
-   getComponentName: function ()
-   {
-      return "Lighting";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
-   getAttenuation: function ()
+   getAttenuation ()
    {
       return this ._attenuation .getValue ();
    },
-   getLocation: function ()
+   getLocation ()
    {
       return this ._location .getValue ();
    },
-   getRadius: function ()
+   getRadius ()
    {
       return Math .max (0, this ._radius .getValue ());
    },
-   getBeamWidth: function ()
+   getBeamWidth ()
    {
       // If the beamWidth is greater than the cutOffAngle, beamWidth is defined to be equal to the cutOffAngle.
 
@@ -339,13 +301,61 @@ SpotLight .prototype = Object .assign (Object .create (X3DLightNode .prototype),
 
       return Algorithm .clamp (beamWidth, 0, Math .PI / 2);
    },
-   getCutOffAngle: function ()
+   getCutOffAngle ()
    {
       return Algorithm .clamp (this ._cutOffAngle .getValue (), 0, Math .PI / 2);
    },
-   getLights: function ()
+   getLights ()
    {
       return SpotLights;
+   },
+});
+
+Object .defineProperties (SpotLight,
+{
+   typeName:
+   {
+      value: "SpotLight",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Lighting",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",         new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "global",           new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "on",               new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "color",            new Fields .SFColor (1, 1, 1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "intensity",        new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "ambientIntensity", new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "attenuation",      new Fields .SFVec3f (1, 0, 0)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "location",         new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "direction",        new Fields .SFVec3f (0, 0, -1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "radius",           new Fields .SFFloat (100)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "beamWidth",        new Fields .SFFloat (0.785398)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "cutOffAngle",      new Fields .SFFloat (1.5708)),
+
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "shadows",         new  Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowColor",     new  Fields .SFColor ()),        // Color of shadows.
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowIntensity", new  Fields .SFFloat (1)),       // Intensity of shadow color in the range (0, 1).
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowBias",      new  Fields .SFFloat (0.005)),   // Bias of the shadow.
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "shadowMapSize",   new  Fields .SFInt32 (1024)),    // Size of the shadow map in pixels in the range (0, inf).
+      ]),
+      enumerable: true,
    },
 });
 

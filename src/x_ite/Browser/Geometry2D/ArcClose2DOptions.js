@@ -48,28 +48,22 @@
 import X3DBaseNode from "../../Base/X3DBaseNode.js";
 import Fields      from "../../Fields.js";
 
-function Arc2DOptions (executionContext)
+function ArcClose2DOptions (executionContext)
 {
    X3DBaseNode .call (this, executionContext);
 
    this .addChildObjects ("dimension", new Fields .SFInt32 (40))
 }
 
-Arc2DOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+Object .setPrototypeOf (ArcClose2DOptions .prototype, X3DBaseNode .prototype);
+
+Object .defineProperties (ArcClose2DOptions,
 {
-   constructor: Arc2DOptions,
-   getTypeName: function ()
+   typeName:
    {
-      return "Arc2DOptions";
-   },
-   getComponentName: function ()
-   {
-      return "X_ITE";
-   },
-   getContainerField: function ()
-   {
-      return "arc2DOptions";
+      value: "ArcClose2DOptions",
+      enumerable: true,
    },
 });
 
-export default Arc2DOptions;
+export default ArcClose2DOptions;

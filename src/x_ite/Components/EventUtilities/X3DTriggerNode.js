@@ -55,9 +55,20 @@ function X3DTriggerNode (executionContext)
    this .addType (X3DConstants .X3DTriggerNode);
 }
 
-X3DTriggerNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+Object .setPrototypeOf (X3DTriggerNode .prototype, X3DChildNode .prototype);
+
+Object .defineProperties (X3DTriggerNode,
 {
-   constructor: X3DTriggerNode,
+   typeName:
+   {
+      value: "X3DTriggerNode",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "EventUtilities",
+      enumerable: true,
+   },
 });
 
 export default X3DTriggerNode;

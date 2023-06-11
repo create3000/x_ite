@@ -54,20 +54,19 @@ function X3DPickableObject (executionContext)
    this .objectType = new Set ();
 }
 
-X3DPickableObject .prototype =
+Object .assign (X3DPickableObject .prototype,
 {
-   constructor: X3DPickableObject,
-   initialize: function ()
+   initialize ()
    {
       this ._objectType .addInterest ("set_objectType__", this);
 
       this .set_objectType__ ();
    },
-   getObjectType: function ()
+   getObjectType ()
    {
       return this .objectType;
    },
-   set_objectType__: function ()
+   set_objectType__ ()
    {
       this .objectType .clear ();
 
@@ -76,7 +75,21 @@ X3DPickableObject .prototype =
          this .objectType .add (this ._objectType [i]);
       }
    },
-   dispose: function () { },
-};
+   dispose () { },
+});
+
+Object .defineProperties (X3DPickableObject,
+{
+   typeName:
+   {
+      value: "X3DPickableObject",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Picking",
+      enumerable: true,
+   },
+});
 
 export default X3DPickableObject;

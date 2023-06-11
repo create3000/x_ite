@@ -48,25 +48,29 @@
 import X3DInfoArray  from "../Base/X3DInfoArray.js";
 import ComponentInfo from "./ComponentInfo.js";
 
-function ComponentInfoArray (values)
+function ComponentInfoArray (values = [ ])
 {
-   return X3DInfoArray .call (this, values, ComponentInfo);
+   return X3DInfoArray .call (this, Array .from (values, value => [value .name, value]), ComponentInfo);
 }
 
-ComponentInfoArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
+Object .assign (Object .setPrototypeOf (ComponentInfoArray .prototype, X3DInfoArray .prototype),
 {
-   constructor: ComponentInfoArray,
-   getTypeName: function ()
+   add (name, { level, title, providerUrl, external = false, dependencies = [ ] })
    {
-      return "ComponentInfoArray";
-   },
-   addComponent: function (value)
-   {
-      this .add (value .name, new ComponentInfo (value));
+      X3DInfoArray .prototype .add .call (this, name, new ComponentInfo (name, level, title, providerUrl, external, dependencies));
    },
 });
 
 for (const key of Reflect .ownKeys (ComponentInfoArray .prototype))
    Object .defineProperty (ComponentInfoArray .prototype, key, { enumerable: false });
+
+Object .defineProperties (ComponentInfoArray,
+{
+   typeName:
+   {
+      value: "ComponentInfoArray",
+      enumerable: true,
+   },
+});
 
 export default ComponentInfoArray;

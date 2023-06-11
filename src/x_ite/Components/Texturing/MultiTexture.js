@@ -74,36 +74,9 @@ function MultiTexture (executionContext)
    this .textureNodes = [ ];
 }
 
-MultiTexture .prototype = Object .assign (Object .create (X3DTextureNode .prototype),
+Object .assign (Object .setPrototypeOf (MultiTexture .prototype, X3DTextureNode .prototype),
 {
-   constructor: MultiTexture,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "description", new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "color",       new Fields .SFColor (1, 1, 1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "alpha",       new Fields .SFFloat (1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "mode",        new Fields .MFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "source",      new Fields .MFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "function",    new Fields .MFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "texture",     new Fields .MFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "MultiTexture";
-   },
-   getComponentName: function ()
-   {
-      return "Texturing";
-   },
-   getContainerField: function ()
-   {
-      return "texture";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DTextureNode .prototype .initialize .call (this);
 
@@ -123,45 +96,45 @@ MultiTexture .prototype = Object .assign (Object .create (X3DTextureNode .protot
 
       this ._loadState = X3DConstants .COMPLETE_STATE;
    },
-   getCount: function ()
+   getCount ()
    {
       return Math .min (this .maxTextures, this .textureNodes .length);
    },
-   getMode: function (index)
+   getMode (index)
    {
       if (index < this .modes .length)
          return this .modes [index];
 
       return ModeType .MODULATE;
    },
-   getAlphaMode: function (index)
+   getAlphaMode (index)
    {
       if (index < this .alphaModes .length)
          return this .alphaModes [index];
 
       return ModeType .MODULATE;
    },
-   getSource: function (index)
+   getSource (index)
    {
       if (index < this .sources .length)
          return this .sources [index];
 
       return SourceType .DEFAULT;
    },
-   getFunction: function (index)
+   getFunction (index)
    {
       if (index < this .functions .length)
          return this .functions [index];
 
       return FunctionType .DEFAULT;
    },
-   set_color__: function ()
+   set_color__ ()
    {
       this .color [0] = this ._color .r;
       this .color [1] = this ._color .g;
       this .color [2] = this ._color .b;
    },
-   set_alpha__: function ()
+   set_alpha__ ()
    {
       this .color [3] = this ._alpha;
    },
@@ -273,7 +246,7 @@ MultiTexture .prototype = Object .assign (Object .create (X3DTextureNode .protot
          }
       };
    })(),
-   set_texture__: function ()
+   set_texture__ ()
    {
       this .textureNodes .length = 0;
 
@@ -285,7 +258,7 @@ MultiTexture .prototype = Object .assign (Object .create (X3DTextureNode .protot
             this .textureNodes .push (textureNode);
       }
    },
-   updateTextureBits: function (textureBits)
+   updateTextureBits (textureBits)
    {
       const
          maxTextures  = this .maxTextures,
@@ -297,7 +270,7 @@ MultiTexture .prototype = Object .assign (Object .create (X3DTextureNode .protot
 
       textureBits .set (maxTextures * 2, 1);
    },
-   getShaderOptions: function (options)
+   getShaderOptions (options)
    {
       const
          textureNodes = this .textureNodes,
@@ -306,12 +279,12 @@ MultiTexture .prototype = Object .assign (Object .create (X3DTextureNode .protot
       for (let i = 0; i < channels; ++ i)
          textureNodes [i] .getShaderOptions (options, i);
    },
-   traverse: function (type, renderObject)
+   traverse (type, renderObject)
    {
       for (const textureNode of this .textureNodes)
          textureNode .traverse (type, renderObject);
    },
-   setShaderUniforms: function (gl, shaderObject, renderObject)
+   setShaderUniforms (gl, shaderObject, renderObject)
    {
       const
          textureNodes = this .textureNodes,
@@ -328,6 +301,44 @@ MultiTexture .prototype = Object .assign (Object .create (X3DTextureNode .protot
          gl .uniform1i  (shaderObject .x3d_MultiTextureSource [i],    this .getSource (i));
          gl .uniform1i  (shaderObject .x3d_MultiTextureFunction [i],  this .getFunction (i));
       }
+   },
+});
+
+Object .defineProperties (MultiTexture,
+{
+   typeName:
+   {
+      value: "MultiTexture",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Texturing",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "texture",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "description", new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "color",       new Fields .SFColor (1, 1, 1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "alpha",       new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "mode",        new Fields .MFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "source",      new Fields .MFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "function",    new Fields .MFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "texture",     new Fields .MFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 

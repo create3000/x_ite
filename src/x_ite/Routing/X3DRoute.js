@@ -74,45 +74,44 @@ function X3DRoute (executionContext, sourceNode, sourceField, destinationNode, d
    destinationField .addInputRoute (this);
 }
 
-X3DRoute .prototype = Object .assign (Object .create (X3DObject .prototype),
+Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototype),
 {
-   constructor: X3DRoute,
-   getTypeName: function ()
-   {
-      return "X3DRoute";
-   },
-   getExecutionContext: function ()
+   getExecutionContext ()
    {
       return this [_executionContext];
    },
-   getSourceNode: function ()
+   getId ()
+   {
+      return X3DRoute .getId (this [_sourceField], this [_destinationField]);
+   },
+   getSourceNode ()
    {
       ///  SAI
       return this [_sourceNode];
    },
-   getSourceField: function ()
+   getSourceField ()
    {
       ///  SAI
       return this [_sourceField];
    },
-   getDestinationNode: function ()
+   getDestinationNode ()
    {
       ///  SAI
       return this [_destinationNode];
    },
-   getDestinationField: function ()
+   getDestinationField ()
    {
       ///  SAI
       return this [_destinationField];
    },
-   disconnect: function ()
+   disconnect ()
    {
       this [_sourceField] .removeFieldInterest (this [_destinationField]);
 
       this [_sourceField]      .removeOutputRoute (this);
       this [_destinationField] .removeInputRoute (this);
    },
-   toVRMLStream: function (generator)
+   toVRMLStream (generator)
    {
       const
          sourceNodeName      = generator .LocalName (this [_sourceNode]),
@@ -139,7 +138,7 @@ X3DRoute .prototype = Object .assign (Object .create (X3DObject .prototype),
 
       generator .string += this [_destinationField] .getName ();
    },
-   toXMLStream: function (generator)
+   toXMLStream (generator)
    {
       const
          sourceNodeName      = generator .LocalName (this [_sourceNode]),
@@ -173,7 +172,7 @@ X3DRoute .prototype = Object .assign (Object .create (X3DObject .prototype),
       generator .string += "'";
       generator .string += generator .closingTags ? "></ROUTE>" : "/>";
    },
-   toJSONStream: function (generator)
+   toJSONStream (generator)
    {
       const
          sourceNodeName      = generator .LocalName (this [_sourceNode]),
@@ -248,7 +247,7 @@ X3DRoute .prototype = Object .assign (Object .create (X3DObject .prototype),
       generator .string += generator .Indent ();
       generator .string += '}';
    },
-   dispose: function ()
+   dispose ()
    {
       this .disconnect ();
 
@@ -265,7 +264,7 @@ Object .defineProperties (X3DRoute .prototype,
 {
    sourceNode:
    {
-      get: function ()
+      get ()
       {
          return SFNodeCache .get (this [_sourceNode]);
       },
@@ -273,7 +272,7 @@ Object .defineProperties (X3DRoute .prototype,
    },
    sourceField:
    {
-      get: function ()
+      get ()
       {
          return this [_sourceField] .getName ();
       },
@@ -281,7 +280,7 @@ Object .defineProperties (X3DRoute .prototype,
    },
    destinationNode:
    {
-      get: function ()
+      get ()
       {
          return SFNodeCache .get (this [_destinationNode]);
       },
@@ -289,7 +288,7 @@ Object .defineProperties (X3DRoute .prototype,
    },
    destinationField:
    {
-      get: function ()
+      get ()
       {
          return this [_destinationField] .getName ();
       },
@@ -297,11 +296,20 @@ Object .defineProperties (X3DRoute .prototype,
    },
 });
 
+Object .defineProperties (X3DRoute,
+{
+   typeName:
+   {
+      value: "X3DRoute",
+      enumerable: true,
+   },
+});
+
 Object .assign (X3DRoute,
 {
-   getId: function (sourceField, destinationField)
+   getId (sourceField, destinationField)
    {
-      return sourceField .getId () + "." + destinationField .getId ();
+      return `${sourceField .getId ()}.${destinationField .getId ()}`;
    },
 });
 

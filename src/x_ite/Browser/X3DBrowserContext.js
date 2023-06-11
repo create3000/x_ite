@@ -132,7 +132,7 @@ function X3DBrowserContext (element)
    this [_displayTime]    = new StopWatch ();
 };
 
-X3DBrowserContext .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNode .prototype),
    X3DCoreContext .prototype,
    X3DEnvironmentalEffectsContext .prototype,
    X3DGeometry3DContext .prototype,
@@ -152,8 +152,7 @@ X3DBrowserContext .prototype = Object .assign (Object .create (X3DBaseNode .prot
    X3DTexturingContext .prototype,
    X3DTimeContext .prototype,
 {
-   constructor: X3DBrowserContext,
-   initialize: function ()
+   initialize ()
    {
       X3DBaseNode                    .prototype .initialize ?.call (this);
       X3DRoutingContext              .prototype .initialize ?.call (this);
@@ -178,52 +177,52 @@ X3DBrowserContext .prototype = Object .assign (Object .create (X3DBaseNode .prot
       for (const browserContext of browserContexts)
          browserContext .prototype .initialize ?.call (this);
    },
-   initialized: function ()
+   initialized ()
    {
       return this ._initialized;
    },
-   shutdown: function ()
+   shutdown ()
    {
       return this ._shutdown;
    },
-   prepareEvents: function ()
+   prepareEvents ()
    {
       return this ._prepareEvents;
    },
-   timeEvents: function ()
+   timeEvents ()
    {
       return this ._timeEvents;
    },
-   sensorEvents: function ()
+   sensorEvents ()
    {
       return this ._sensorEvents;
    },
-   displayEvents: function ()
+   displayEvents ()
    {
       return this ._displayEvents;
    },
-   finishedEvents: function ()
+   finishedEvents ()
    {
       return this ._finishedEvents;
    },
-   getBrowser: function ()
+   getBrowser ()
    {
       return this;
    },
-   getWorld: function ()
+   getWorld ()
    {
       return this [_world];
    },
-   getExecutionContext: function ()
+   getExecutionContext ()
    {
       return this [_world] .getExecutionContext ();
    },
-   setExecutionContext: function (executionContext)
+   setExecutionContext (executionContext)
    {
       this [_world] = new X3DWorld (executionContext);
       this [_world] .setup ();
    },
-   addBrowserEvent: function ()
+   addBrowserEvent ()
    {
       if (this [_changedTime] === this .getCurrentTime ())
          return;
@@ -232,7 +231,7 @@ X3DBrowserContext .prototype = Object .assign (Object .create (X3DBaseNode .prot
 
       requestAnimationFrame (this [_renderCallback]);
    },
-   [_limitFrameRate]: function (now)
+   [_limitFrameRate] (now)
    {
       if (now === this [_previousTime])
       {
@@ -247,7 +246,7 @@ X3DBrowserContext .prototype = Object .assign (Object .create (X3DBaseNode .prot
          return false;
       }
    },
-   [_traverse]: function (now)
+   [_traverse] (now)
    {
       // Limit frame rate.
 
@@ -319,27 +318,27 @@ X3DBrowserContext .prototype = Object .assign (Object .create (X3DBaseNode .prot
       this [_browserTime] .stop ();
       this [_systemTime] .start ();
    },
-   getSystemTime: function ()
+   getSystemTime ()
    {
       return this [_systemTime];
    },
-   getBrowserTime: function ()
+   getBrowserTime ()
    {
       return this [_browserTime];
    },
-   getCameraTime: function ()
+   getCameraTime ()
    {
       return this [_cameraTime];
    },
-   getCollisionTime: function ()
+   getCollisionTime ()
    {
       return this [_collisionTime];
    },
-   getDisplayTime: function ()
+   getDisplayTime ()
    {
       return this [_displayTime];
    },
-   dispose: function ()
+   dispose ()
    {
       browsers .delete (this);
 
@@ -373,7 +372,7 @@ for (const key of Reflect .ownKeys (X3DBrowserContext .prototype))
 
 Object .assign (X3DBrowserContext,
 {
-   addBrowserContext: function (browserContext)
+   addBrowserContext (browserContext)
    {
       browserContexts .push (browserContext);
 

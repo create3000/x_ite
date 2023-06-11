@@ -69,10 +69,9 @@ function X3DGeospatialObject (executionContext)
    this .invOriginMatrix = new Matrix4 ();
 }
 
-X3DGeospatialObject .prototype =
+Object .assign (X3DGeospatialObject .prototype,
 {
-   constructor: X3DGeospatialObject,
-   initialize: function ()
+   initialize ()
    {
       this ._geoSystem .addInterest ("set_geoSystem__", this);
       this ._geoOrigin .addInterest ("set_geoOrigin__", this);
@@ -80,14 +79,14 @@ X3DGeospatialObject .prototype =
       this .set_geoSystem__ ();
       this .set_geoOrigin__ ();
    },
-   set_geoSystem__: function ()
+   set_geoSystem__ ()
    {
       this .coordinateSystem = Geospatial .getCoordinateSystem (this ._geoSystem);
       this .referenceFrame   = Geospatial .getReferenceFrame   (this ._geoSystem, this .radians);
       this .elevationFrame   = Geospatial .getElevationFrame   (this ._geoSystem, this .radians);
       this .standardOrder    = Geospatial .isStandardOrder     (this ._geoSystem);
    },
-   set_geoOrigin__: function ()
+   set_geoOrigin__ ()
    {
       if (this .geoOriginNode)
       {
@@ -108,7 +107,7 @@ X3DGeospatialObject .prototype =
       this .set_origin__ ();
       this .set_rotateYUp__ ();
    },
-   set_origin__: function ()
+   set_origin__ ()
    {
       if (this .geoOriginNode)
          this .geoOriginNode .getOrigin (this .origin);
@@ -117,7 +116,7 @@ X3DGeospatialObject .prototype =
 
       this .set_originMatrix__ ();
    },
-   set_originMatrix__: function ()
+   set_originMatrix__ ()
    {
       if (this .geoOriginNode)
       {
@@ -150,7 +149,7 @@ X3DGeospatialObject .prototype =
          this .invOriginMatrix .assign (this .originMatrix) .inverse ();
       }
    },
-   set_rotateYUp__: function ()
+   set_rotateYUp__ ()
    {
       if (this .geoOriginNode && this .geoOriginNode ._rotateYUp .getValue ())
       {
@@ -167,31 +166,31 @@ X3DGeospatialObject .prototype =
          delete this .getLocationMatrix;
       }
    },
-   getReferenceFrame: function ()
+   getReferenceFrame ()
    {
       return this .referenceFrame;
    },
-   getStandardOrder: function ()
+   getStandardOrder ()
    {
       return this .standardOrder;
    },
-   getCoord: function (geoPoint, result)
+   getCoord (geoPoint, result)
    {
       return this .referenceFrame .convert (geoPoint, result) .subtract (this .origin);
    },
-   getGeoCoord: function (point, result)
+   getGeoCoord (point, result)
    {
       return this .referenceFrame .apply (vector .assign (point) .add (this .origin), result);
    },
-   getGeoElevation: function (point)
+   getGeoElevation (point)
    {
       return this .getGeoCoord (point, result) .z;
    },
-   getGeoUpVector: function (point, result)
+   getGeoUpVector (point, result)
    {
       return this .elevationFrame .normal (vector .assign (point) .add (this .origin), result);
    },
-   getLocationMatrix: function (geoPoint, result)
+   getLocationMatrix (geoPoint, result)
    {
       var
          origin         = this .origin,
@@ -204,8 +203,8 @@ X3DGeospatialObject .prototype =
 
       return locationMatrix;
    },
-   dispose: function () { },
-};
+   dispose () { },
+});
 
 function getCoordRotateYUp (geoPoint, result)
 {
@@ -255,5 +254,19 @@ function getStandardLocationMatrix (geoPoint, result)
                        z .x, z .y, z .z, 0,
                        t .x, t .y, t .z, 1);
 }
+
+Object .defineProperties (X3DGeospatialObject,
+{
+   typeName:
+   {
+      value: "X3DGeospatialObject",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Geospatial",
+      enumerable: true,
+   },
+});
 
 export default X3DGeospatialObject;

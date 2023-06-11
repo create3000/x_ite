@@ -76,42 +76,9 @@ function Sound (executionContext)
    this .currentTraversed = true;
 }
 
-Sound .prototype = Object .assign (Object .create (X3DSoundNode .prototype),
+Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototype),
 {
-   constructor: Sound,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "description", new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",     new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "spatialize",  new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "intensity",   new Fields .SFFloat (1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "location",    new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "direction",   new Fields .SFVec3f (0, 0, 1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "minBack",     new Fields .SFFloat (1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "minFront",    new Fields .SFFloat (1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "maxBack",     new Fields .SFFloat (10)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "maxFront",    new Fields .SFFloat (10)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "priority",    new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "source",      new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "children",    new Fields .MFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "Sound";
-   },
-   getComponentName: function ()
-   {
-      return "Sound";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DSoundNode .prototype .initialize .call (this);
 
@@ -123,7 +90,7 @@ Sound .prototype = Object .assign (Object .create (X3DSoundNode .prototype),
       this .set_live__ ();
       this .set_source__ ();
    },
-   setTraversed: function (value)
+   setTraversed (value)
    {
       if (value)
       {
@@ -138,11 +105,11 @@ Sound .prototype = Object .assign (Object .create (X3DSoundNode .prototype),
 
       this .currentTraversed = value;
    },
-   getTraversed: function ()
+   getTraversed ()
    {
       return this .currentTraversed;
    },
-   set_live__: function ()
+   set_live__ ()
    {
       if (this .getLive () .getValue () && this ._traversed .getValue ())
       {
@@ -153,14 +120,14 @@ Sound .prototype = Object .assign (Object .create (X3DSoundNode .prototype),
          this .getBrowser () .sensorEvents () .removeInterest ("update", this);
       }
    },
-   set_source__: function ()
+   set_source__ ()
    {
       if (this .sourceNode)
          this .sourceNode .setVolume (0);
 
       this .sourceNode = X3DCast (X3DConstants .X3DSoundSourceNode, this ._source);
    },
-   update: function ()
+   update ()
    {
       if (! this .getTraversed ())
       {
@@ -286,6 +253,50 @@ Sound .prototype = Object .assign (Object .create (X3DSoundNode .prototype),
          value .distance = viewer .magnitude ();
       };
    })(),
+});
+
+Object .defineProperties (Sound,
+{
+   typeName:
+   {
+      value: "Sound",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Sound",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "description", new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",     new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "spatialize",  new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "intensity",   new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "location",    new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "direction",   new Fields .SFVec3f (0, 0, 1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "minBack",     new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "minFront",    new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "maxBack",     new Fields .SFFloat (10)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "maxFront",    new Fields .SFFloat (10)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "priority",    new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "source",      new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "children",    new Fields .MFNode ()),
+      ]),
+      enumerable: true,
+   },
 });
 
 export default Sound;

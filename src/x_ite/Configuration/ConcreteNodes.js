@@ -45,50 +45,6 @@
  *
  ******************************************************************************/
 
-import NodeTypeArray from "./NodeTypeArray.js";
-import X3DConstants  from "../Base/X3DConstants.js";
-import HTMLSupport   from "../Parser/HTMLSupport.js";
+import ConcreteNodesArray from "./ConcreteNodesArray.js"
 
-const _fieldDefinitions = Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions");
-
-const
-   nodeTypes         = new NodeTypeArray (),
-   abstractNodeTypes = new NodeTypeArray ();
-
-let nodeType = X3DConstants .X3DBaseNode;
-
-const SupportedNodes =
-{
-   addNodeType: function (typeName, Type)
-   {
-      X3DConstants [typeName] = ++ nodeType; // Start with 1, as X3DBaseNode is 0.
-
-      nodeTypes .add (typeName, Type);
-
-      HTMLSupport .addNodeTypeName (typeName);
-
-      // HTML Support
-
-      for (const { name, accessType } of Type .prototype [_fieldDefinitions])
-      {
-         if (accessType & X3DConstants .initializeOnly)
-            HTMLSupport .addFieldName (name)
-      }
-   },
-   getNodeTypes ()
-   {
-      return nodeTypes;
-   },
-   addAbstractNodeType: function (typeName, Type)
-   {
-      X3DConstants [typeName] = ++ nodeType;
-
-      abstractNodeTypes .add (typeName, Type);
-   },
-   getAbstractNodeTypes ()
-   {
-      return abstractNodeTypes;
-   },
-};
-
-export default SupportedNodes;
+export default new ConcreteNodesArray ();

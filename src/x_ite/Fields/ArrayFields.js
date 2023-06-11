@@ -63,7 +63,6 @@ import SFVec3              from "./SFVec3.js";
 import SFVec4              from "./SFVec4.js";
 import X3DObjectArrayField from "../Base/X3DObjectArrayField.js";
 import X3DTypedArrayField  from "../Base/X3DTypedArrayField.js";
-import X3DConstants        from "../Base/X3DConstants.js";
 
 const
    SFMatrix3d = SFMatrix3 .SFMatrix3d,
@@ -88,35 +87,14 @@ function MFNode (... args)
    return X3DObjectArrayField .call (this, args);
 }
 
-MFNode .prototype = Object .assign (Object .create (X3DObjectArrayField .prototype),
+Object .assign (Object .setPrototypeOf (MFNode .prototype, X3DObjectArrayField .prototype),
 {
-   constructor: MFNode,
    [_cloneCount]: 0,
-   getSingleType: function ()
+   getSingleType ()
    {
       return SFNode;
    },
-   getValueType: function ()
-   {
-      return SFNode;
-   },
-   getArrayType: function ()
-   {
-      return Array;
-   },
-   getComponents: function ()
-   {
-      return 1;
-   },
-   getTypeName: function ()
-   {
-      return "MFNode";
-   },
-   getType: function ()
-   {
-      return X3DConstants .MFNode;
-   },
-   copy: function (instance)
+   copy (instance)
    {
       if (instance)
       {
@@ -134,7 +112,7 @@ MFNode .prototype = Object .assign (Object .create (X3DObjectArrayField .prototy
          return X3DObjectArrayField .prototype .copy .call (this);
       }
    },
-   addCloneCount: function (count)
+   addCloneCount (count)
    {
       const target = this .getTarget ();
 
@@ -143,7 +121,7 @@ MFNode .prototype = Object .assign (Object .create (X3DObjectArrayField .prototy
       for (const element of target .getValue ())
          element .addCloneCount (count);
    },
-   removeCloneCount: function (count)
+   removeCloneCount (count)
    {
       const target = this .getTarget ();
 
@@ -152,7 +130,7 @@ MFNode .prototype = Object .assign (Object .create (X3DObjectArrayField .prototy
       for (const element of target .getValue ())
          element .removeCloneCount (count);
    },
-   addChildObject: function (value)
+   addChildObject (value)
    {
       const target = this .getTarget ();
 
@@ -160,7 +138,7 @@ MFNode .prototype = Object .assign (Object .create (X3DObjectArrayField .prototy
 
       value .addCloneCount (target [_cloneCount]);
    },
-   removeChildObject: function (value)
+   removeChildObject (value)
    {
       const target = this .getTarget ();
 
@@ -168,7 +146,7 @@ MFNode .prototype = Object .assign (Object .create (X3DObjectArrayField .prototy
 
       value .removeCloneCount (target [_cloneCount]);
    },
-   toStream: function (generator)
+   toStream (generator)
    {
       const
          target = this .getTarget (),
@@ -216,19 +194,7 @@ MFNode .prototype = Object .assign (Object .create (X3DObjectArrayField .prototy
          }
       }
    },
-   toVRMLString: function ()
-   {
-      const target = this .getTarget ();
-
-      target .addCloneCount (1);
-
-      const string = X3DObjectArrayField .prototype .toVRMLString .call (target);
-
-      target .removeCloneCount (1);
-
-      return string;
-   },
-   toVRMLStream: function (generator)
+   toVRMLStream (generator)
    {
       const
          target = this .getTarget (),
@@ -276,19 +242,7 @@ MFNode .prototype = Object .assign (Object .create (X3DObjectArrayField .prototy
          }
       }
    },
-   toXMLString: function ()
-   {
-      const target = this .getTarget ();
-
-      target .addCloneCount (1);
-
-      const string = X3DObjectArrayField .prototype .toXMLString .call (target);
-
-      target .removeCloneCount (1);
-
-      return string;
-   },
-   toXMLStream: function (generator)
+   toXMLStream (generator)
    {
       const
          target = this .getTarget (),
@@ -355,7 +309,7 @@ MFNode .prototype = Object .assign (Object .create (X3DObjectArrayField .prototy
          generator .LeaveScope ();
       }
    },
-   toJSONStream: function (generator)
+   toJSONStream (generator)
    {
       const
          target = this .getTarget (),
@@ -405,7 +359,7 @@ MFNode .prototype = Object .assign (Object .create (X3DObjectArrayField .prototy
 			generator .string += ']';
       }
    },
-   dispose: function ()
+   dispose ()
    {
       const target = this .getTarget ();
 
@@ -419,39 +373,27 @@ MFNode .prototype = Object .assign (Object .create (X3DObjectArrayField .prototy
 for (const key of Reflect .ownKeys (MFNode .prototype))
    Object .defineProperty (MFNode .prototype, key, { enumerable: false });
 
+Object .defineProperties (MFNode,
+{
+   typeName:
+   {
+      value: "MFNode",
+      enumerable: true,
+   },
+});
+
 function MFString (... args)
 {
    return X3DObjectArrayField .call (this, args);
 }
 
-MFString .prototype = Object .assign (Object .create (X3DObjectArrayField .prototype),
+Object .assign (Object .setPrototypeOf (MFString .prototype, X3DObjectArrayField .prototype),
 {
-   constructor: MFString,
-   getValueType: function ()
-   {
-      return String;
-   },
-   getSingleType: function ()
+   getSingleType ()
    {
       return SFString;
    },
-   getArrayType: function ()
-   {
-      return Array;
-   },
-   getComponents: function ()
-   {
-      return 1;
-   },
-   getTypeName: function ()
-   {
-      return "MFString";
-   },
-   getType: function ()
-   {
-      return X3DConstants .MFString;
-   },
-   toXMLStream: function (generator, sourceText)
+   toXMLStream (generator, sourceText = false)
    {
       const
          target = this .getTarget (),
@@ -480,119 +422,111 @@ MFString .prototype = Object .assign (Object .create (X3DObjectArrayField .proto
 for (const key of Reflect .ownKeys (MFString .prototype))
    Object .defineProperty (MFString .prototype, key, { enumerable: false });
 
+Object .defineProperties (MFString,
+{
+   typeName:
+   {
+      value: "MFString",
+      enumerable: true,
+   },
+});
+
 /**
  * MFImage
  */
 
-function MFImageTemplate (TypeName, Type, SingleType, ValueType, ArrayType, Components)
+function MFImage (... args)
 {
-   function ArrayField (... args)
-   {
-      return X3DObjectArrayField .call (this, args);
-   }
-
-   ArrayField .prototype = Object .assign (Object .create (X3DObjectArrayField .prototype),
-   {
-      constructor: ArrayField,
-      getSingleType: function ()
-      {
-         return SFImage;
-      },
-      getValueType: function ()
-      {
-         return SFImage;
-      },
-      getArrayType: function ()
-      {
-         return ArrayType;
-      },
-      getComponents: function ()
-      {
-         return Components;
-      },
-      getTypeName: function ()
-      {
-         return TypeName;
-      },
-      getType: function ()
-      {
-         return Type;
-      },
-   });
-
-   for (const key of Reflect .ownKeys (ArrayField .prototype))
-      Object .defineProperty (ArrayField .prototype, key, { enumerable: false });
-
-   return ArrayField;
+   return X3DObjectArrayField .call (this, args);
 }
 
-function TypedArrayTemplate (TypeName, Type, SingleType, ValueType, ArrayType, Components)
+Object .assign (Object .setPrototypeOf (MFImage .prototype, X3DObjectArrayField .prototype),
+{
+   getSingleType ()
+   {
+      return SFImage;
+   },
+});
+
+for (const key of Reflect .ownKeys (MFImage .prototype))
+   Object .defineProperty (MFImage .prototype, key, { enumerable: false });
+
+Object .defineProperties (MFImage,
+{
+   typeName:
+   {
+      value: "MFImage",
+      enumerable: true,
+   },
+});
+
+function TypedArrayTemplate (TypeName, SingleType, ValueType, ArrayType, Components)
 {
    function ArrayField (... args)
    {
       return X3DTypedArrayField .call (this, args);
    }
 
-   ArrayField .prototype = Object .assign (Object .create (X3DTypedArrayField .prototype),
+   Object .assign (Object .setPrototypeOf (ArrayField .prototype, X3DTypedArrayField .prototype),
    {
-      constructor: ArrayField,
-      getSingleType: function ()
+      getSingleType ()
       {
          return SingleType;
       },
-      getValueType: function ()
+      getValueType ()
       {
          return ValueType;
       },
-      getArrayType: function ()
+      getArrayType ()
       {
          return ArrayType;
       },
-      getComponents: function ()
+      getComponents ()
       {
          return Components;
-      },
-      getTypeName: function ()
-      {
-         return TypeName;
-      },
-      getType: function ()
-      {
-         return Type;
       },
    });
 
    for (const key of Reflect .ownKeys (ArrayField .prototype))
       Object .defineProperty (ArrayField .prototype, key, { enumerable: false });
 
+   Object .defineProperties (ArrayField,
+   {
+      typeName:
+      {
+         value: TypeName,
+         enumerable: true,
+      },
+   });
+
    return ArrayField;
 }
 
-const Value = (value) => value;
+const Value = value => value;
 
 const ArrayFields =
 {
-   MFBool:      TypedArrayTemplate ("MFBool",      X3DConstants .MFBool,      SFBool,      Boolean,     Uint8Array,   1),
-   MFColor:     TypedArrayTemplate ("MFColor",     X3DConstants .MFColor,     SFColor,     SFColor,     Float32Array, 3),
-   MFColorRGBA: TypedArrayTemplate ("MFColorRGBA", X3DConstants .MFColorRGBA, SFColorRGBA, SFColorRGBA, Float32Array, 4),
-   MFDouble:    TypedArrayTemplate ("MFDouble",    X3DConstants .MFDouble,    SFDouble,    Value,       Float64Array, 1),
-   MFFloat:     TypedArrayTemplate ("MFFloat",     X3DConstants .MFFloat,     SFFloat,     Value,       Float32Array, 1),
-   MFImage:     MFImageTemplate    ("MFImage",     X3DConstants .MFImage,     undefined,   undefined,   Array,        1),
-   MFInt32:     TypedArrayTemplate ("MFInt32",     X3DConstants .MFInt32,     SFInt32,     Value,       Int32Array,   1),
-   MFMatrix3d:  TypedArrayTemplate ("MFMatrix3d",  X3DConstants .MFMatrix3d,  SFMatrix3d,  SFMatrix3d,  Float64Array, 9),
-   MFMatrix3f:  TypedArrayTemplate ("MFMatrix3f",  X3DConstants .MFMatrix3f,  SFMatrix3f,  SFMatrix3f,  Float32Array, 9),
-   MFMatrix4d:  TypedArrayTemplate ("MFMatrix4d",  X3DConstants .MFMatrix4d,  SFMatrix4d,  SFMatrix4d,  Float64Array, 16),
-   MFMatrix4f:  TypedArrayTemplate ("MFMatrix4f",  X3DConstants .MFMatrix4f,  SFMatrix4f,  SFMatrix4f,  Float32Array, 16),
+   MFBool:      TypedArrayTemplate ("MFBool",      SFBool,      Boolean,     Uint8Array,   1),
+   MFColor:     TypedArrayTemplate ("MFColor",     SFColor,     SFColor,     Float32Array, 3),
+   MFColorRGBA: TypedArrayTemplate ("MFColorRGBA", SFColorRGBA, SFColorRGBA, Float32Array, 4),
+   MFDouble:    TypedArrayTemplate ("MFDouble",    SFDouble,    Value,       Float64Array, 1),
+   MFFloat:     TypedArrayTemplate ("MFFloat",     SFFloat,     Value,       Float32Array, 1),
+   MFImage:     MFImage,
+   MFInt32:     TypedArrayTemplate ("MFInt32",     SFInt32,     Value,       Int32Array,   1),
+   MFMatrix3d:  TypedArrayTemplate ("MFMatrix3d",  SFMatrix3d,  SFMatrix3d,  Float64Array, 9),
+   MFMatrix3f:  TypedArrayTemplate ("MFMatrix3f",  SFMatrix3f,  SFMatrix3f,  Float32Array, 9),
+   MFMatrix4d:  TypedArrayTemplate ("MFMatrix4d",  SFMatrix4d,  SFMatrix4d,  Float64Array, 16),
+   MFMatrix4f:  TypedArrayTemplate ("MFMatrix4f",  SFMatrix4f,  SFMatrix4f,  Float32Array, 16),
    MFNode:      MFNode,
-   MFRotation:  TypedArrayTemplate ("MFRotation",  X3DConstants .MFRotation,  SFRotation,  SFRotation,  Float64Array, 4),
+   MFRotation:  TypedArrayTemplate ("MFRotation",  SFRotation,  SFRotation,  Float64Array, 4),
    MFString:    MFString,
-   MFTime:      TypedArrayTemplate ("MFTime",      X3DConstants .MFTime,      SFTime,      Value,       Float64Array, 1),
-   MFVec2d:     TypedArrayTemplate ("MFVec2d",     X3DConstants .MFVec2d,     SFVec2d,     SFVec2d,     Float64Array, 2),
-   MFVec2f:     TypedArrayTemplate ("MFVec2f",     X3DConstants .MFVec2f,     SFVec2f,     SFVec2f,     Float32Array, 2),
-   MFVec3d:     TypedArrayTemplate ("MFVec3d",     X3DConstants .MFVec3d,     SFVec3d,     SFVec3d,     Float64Array, 3),
-   MFVec3f:     TypedArrayTemplate ("MFVec3f",     X3DConstants .MFVec3f,     SFVec3f,     SFVec3f,     Float32Array, 3),
-   MFVec4d:     TypedArrayTemplate ("MFVec4d",     X3DConstants .MFVec4d,     SFVec4d,     SFVec4d,     Float64Array, 4),
-   MFVec4f:     TypedArrayTemplate ("MFVec4f",     X3DConstants .MFVec4f,     SFVec4f,     SFVec4f,     Float32Array, 4),
+   MFTime:      TypedArrayTemplate ("MFTime",      SFTime,      Value,       Float64Array, 1),
+   MFVec2d:     TypedArrayTemplate ("MFVec2d",     SFVec2d,     SFVec2d,     Float64Array, 2),
+   MFVec2f:     TypedArrayTemplate ("MFVec2f",     SFVec2f,     SFVec2f,     Float32Array, 2),
+   MFVec3d:     TypedArrayTemplate ("MFVec3d",     SFVec3d,     SFVec3d,     Float64Array, 3),
+   MFVec3f:     TypedArrayTemplate ("MFVec3f",     SFVec3f,     SFVec3f,     Float32Array, 3),
+   MFVec4d:     TypedArrayTemplate ("MFVec4d",     SFVec4d,     SFVec4d,     Float64Array, 4),
+   MFVec4f:     TypedArrayTemplate ("MFVec4f",     SFVec4f,     SFVec4f,     Float32Array, 4),
 };
 
 export default ArrayFields;

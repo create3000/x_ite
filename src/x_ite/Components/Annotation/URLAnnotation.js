@@ -58,35 +58,46 @@ function URLAnnotation (executionContext)
    this .addType (X3DConstants .URLAnnotation);
 }
 
-URLAnnotation .prototype = Object .assign (Object .create (X3DAnnotationNode .prototype),
+Object .assign (Object .setPrototypeOf (URLAnnotation .prototype, X3DAnnotationNode .prototype),
 {
-   constructor: URLAnnotation,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",          new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",           new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "annotationGroupID", new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "displayPolicy",     new Fields .SFString ("NEVER")),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "url",               new Fields .MFString ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "URLAnnotation";
-   },
-   getComponentName: function ()
-   {
-      return "Annotation";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["4.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DAnnotationNode .prototype .initialize .call (this);
+   },
+});
+
+Object .defineProperties (URLAnnotation,
+{
+   typeName:
+   {
+      value: "URLAnnotation",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Annotation",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["4.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",          new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",           new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "annotationGroupID", new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "displayPolicy",     new Fields .SFString ("NEVER")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "url",               new Fields .MFString ()),
+      ]),
+      enumerable: true,
    },
 });
 

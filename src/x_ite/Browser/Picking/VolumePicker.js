@@ -71,22 +71,22 @@ function VolumePicker ()
    this .collisionWorld .addCollisionObject (this .rigidBody2);
 }
 
-VolumePicker .prototype =
+Object .assign (VolumePicker .prototype,
 {
    constuctor: VolumePicker,
-   setChildShape1: function (matrix, childShape)
+   setChildShape1 (matrix, childShape)
    {
       this .setChildShape (this .compoundShape1, matrix, childShape);
    },
-   setChildShape2: function (matrix, childShape)
+   setChildShape2 (matrix, childShape)
    {
       this .setChildShape (this .compoundShape2, matrix, childShape);
    },
-   setChildShape1Components: function (transform, localScaling, childShape)
+   setChildShape1Components (transform, localScaling, childShape)
    {
       this .setChildShapeComponents (this .compoundShape1, transform, localScaling, childShape);
    },
-   setChildShape2Components: function (transform, localScaling, childShape)
+   setChildShape2Components (transform, localScaling, childShape)
    {
       this .setChildShapeComponents (this .compoundShape2, transform, localScaling, childShape);
    },
@@ -114,7 +114,7 @@ VolumePicker .prototype =
          }
       };
    })(),
-   setChildShapeComponents: function (compoundShape, transform, localScaling, childShape)
+   setChildShapeComponents (compoundShape, transform, localScaling, childShape)
    {
       if (compoundShape .getNumChildShapes ())
          compoundShape .removeChildShapeByIndex (0);
@@ -125,7 +125,7 @@ VolumePicker .prototype =
          compoundShape .addChildShape (transform, childShape);
       }
    },
-   contactTest: function ()
+   contactTest ()
    {
       this .collisionWorld .performDiscreteCollisionDetection ();
 
@@ -172,6 +172,6 @@ VolumePicker .prototype =
          return t;
       };
    })(),
-};
+});
 
 export default VolumePicker;

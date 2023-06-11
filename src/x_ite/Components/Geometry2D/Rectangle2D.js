@@ -64,30 +64,8 @@ function Rectangle2D (executionContext)
    this ._size .setUnit ("length");
 }
 
-Rectangle2D .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
+Object .assign (Object .setPrototypeOf (Rectangle2D .prototype, X3DGeometryNode .prototype),
 {
-   constructor: Rectangle2D,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata", new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "size",     new Fields .SFVec2f (2, 2)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",    new Fields .SFBool ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "Rectangle2D";
-   },
-   getComponentName: function ()
-   {
-      return "Geometry2D";
-   },
-   getContainerField: function ()
-   {
-      return "geometry";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
    build: (function ()
    {
       const defaultSize = new Vector2 (2, 2);
@@ -132,6 +110,39 @@ Rectangle2D .prototype = Object .assign (Object .create (X3DGeometryNode .protot
          this .setSolid (this ._solid .getValue ());
       };
    })(),
+});
+
+Object .defineProperties (Rectangle2D,
+{
+   typeName:
+   {
+      value: "Rectangle2D",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Geometry2D",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "geometry",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "size",     new Fields .SFVec2f (2, 2)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",    new Fields .SFBool ()),
+      ]),
+      enumerable: true,
+   },
 });
 
 export default Rectangle2D;

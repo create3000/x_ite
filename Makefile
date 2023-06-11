@@ -68,3 +68,6 @@ docs-update:
 .PHONY: tests
 tests:
 	perl build/bin/tests.pl
+
+min-size:
+	gzip -5 dist/x_ite.min.js --stdout | wc -c

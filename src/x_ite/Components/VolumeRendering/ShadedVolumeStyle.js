@@ -59,35 +59,9 @@ function ShadedVolumeStyle (executionContext)
    this .addType (X3DConstants .ShadedVolumeStyle);
 }
 
-ShadedVolumeStyle .prototype = Object .assign (Object .create (X3DComposableVolumeRenderStyleNode .prototype),
+Object .assign (Object .setPrototypeOf (ShadedVolumeStyle .prototype, X3DComposableVolumeRenderStyleNode .prototype),
 {
-   constructor: ShadedVolumeStyle,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",       new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",        new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "lighting",       new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "shadows",        new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "phaseFunction",  new Fields .SFString ("Henyey-Greenstein")),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "material",       new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "surfaceNormals", new Fields .SFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "ShadedVolumeStyle";
-   },
-   getComponentName: function ()
-   {
-      return "VolumeRendering";
-   },
-   getContainerField: function ()
-   {
-      return "renderStyle";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.3", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DComposableVolumeRenderStyleNode .prototype .initialize .call (this);
 
@@ -102,7 +76,7 @@ ShadedVolumeStyle .prototype = Object .assign (Object .create (X3DComposableVolu
       this .set_material__ ();
       this .set_surfaceNormals__ ();
    },
-   set_material__: function ()
+   set_material__ ()
    {
       if (this .materialNode)
          this .materialNode .removeInterest ("addNodeEvent", this);
@@ -112,11 +86,11 @@ ShadedVolumeStyle .prototype = Object .assign (Object .create (X3DComposableVolu
       if (this .materialNode)
          this .materialNode .addInterest ("addNodeEvent", this);
    },
-   set_surfaceNormals__: function ()
+   set_surfaceNormals__ ()
    {
       this .surfaceNormalsNode = X3DCast (X3DConstants .X3DTexture3DNode, this ._surfaceNormals);
    },
-   addShaderFields: function (shaderNode)
+   addShaderFields (shaderNode)
    {
       if (! this ._enabled .getValue ())
          return;
@@ -134,7 +108,7 @@ ShadedVolumeStyle .prototype = Object .assign (Object .create (X3DComposableVolu
       if (this .surfaceNormalsNode)
          shaderNode .addUserDefinedField (X3DConstants .inputOutput, "surfaceNormals_" + this .getId (), new Fields .SFNode (this .surfaceNormalsNode));
    },
-   getUniformsText: function ()
+   getUniformsText ()
    {
       if (! this ._enabled .getValue ())
          return "";
@@ -250,7 +224,7 @@ ShadedVolumeStyle .prototype = Object .assign (Object .create (X3DComposableVolu
 
       return string;
    },
-   getFunctionsText: function ()
+   getFunctionsText ()
    {
       if (! this ._enabled .getValue ())
          return "";
@@ -263,6 +237,43 @@ ShadedVolumeStyle .prototype = Object .assign (Object .create (X3DComposableVolu
       string += "   textureColor = getShadedStyle_" + this .getId () + " (textureColor, texCoord);\n";
 
       return string;
+   },
+});
+
+Object .defineProperties (ShadedVolumeStyle,
+{
+   typeName:
+   {
+      value: "ShadedVolumeStyle",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "VolumeRendering",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "renderStyle",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.3", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",       new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",        new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "lighting",       new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "shadows",        new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "phaseFunction",  new Fields .SFString ("Henyey-Greenstein")),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "material",       new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "surfaceNormals", new Fields .SFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 

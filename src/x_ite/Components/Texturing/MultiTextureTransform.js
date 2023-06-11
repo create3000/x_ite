@@ -64,30 +64,9 @@ function MultiTextureTransform (executionContext)
    this .textureTransformNodes = [ ];
 }
 
-MultiTextureTransform .prototype = Object .assign (Object .create (X3DTextureTransformNode .prototype),
+Object .assign (Object .setPrototypeOf (MultiTextureTransform .prototype, X3DTextureTransformNode .prototype),
 {
-   constructor: MultiTextureTransform,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",         new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "textureTransform", new Fields .MFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "MultiTextureTransform";
-   },
-   getComponentName: function ()
-   {
-      return "Texturing";
-   },
-   getContainerField: function ()
-   {
-      return "textureTransform";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DTextureTransformNode .prototype .initialize .call (this);
 
@@ -95,7 +74,7 @@ MultiTextureTransform .prototype = Object .assign (Object .create (X3DTextureTra
 
       this .set_textureTransform__ ();
    },
-   set_textureTransform__: function ()
+   set_textureTransform__ ()
    {
       const textureTransformNodes = this .textureTransformNodes;
 
@@ -112,11 +91,11 @@ MultiTextureTransform .prototype = Object .assign (Object .create (X3DTextureTra
       if (!textureTransformNodes .length)
          textureTransformNodes .push (this .getBrowser () .getDefaultTextureTransform ());
    },
-   getCount: function ()
+   getCount ()
    {
       return Math .min (this .maxTextureTransforms, this .textureTransformNodes .length);
    },
-   getTextureTransformMapping: function (textureTransformMapping)
+   getTextureTransformMapping (textureTransformMapping)
    {
       const
          textureTransformNodes = this .textureTransformNodes,
@@ -125,7 +104,7 @@ MultiTextureTransform .prototype = Object .assign (Object .create (X3DTextureTra
       for (let i = 0; i < length; ++ i)
          textureTransformNodes [i] .getTextureTransformMapping (textureTransformMapping, i);
    },
-   setShaderUniforms: function (gl, shaderObject)
+   setShaderUniforms (gl, shaderObject)
    {
       const
          textureTransformNodes = this .textureTransformNodes,
@@ -134,9 +113,41 @@ MultiTextureTransform .prototype = Object .assign (Object .create (X3DTextureTra
       for (let i = 0; i < length; ++ i)
          textureTransformNodes [i] .setShaderUniforms (gl, shaderObject, i);
    },
-   transformPoint: function (texCoord)
+   transformPoint (texCoord)
    {
       return this .textureTransformNodes [0] .transformPoint (texCoord);
+   },
+});
+
+Object .defineProperties (MultiTextureTransform,
+{
+   typeName:
+   {
+      value: "MultiTextureTransform",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Texturing",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "textureTransform",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",         new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "textureTransform", new Fields .MFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 

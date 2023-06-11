@@ -58,23 +58,19 @@ function WalkViewer (executionContext, navigationInfo)
    X3DFlyViewer .call (this, executionContext, navigationInfo);
 }
 
-WalkViewer .prototype = Object .assign (Object .create (X3DFlyViewer .prototype),
+Object .assign (Object .setPrototypeOf (WalkViewer .prototype, X3DFlyViewer .prototype),
 {
-   constructor: WalkViewer,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .outputOnly, "isActive", new Fields .SFBool ()),
-   ]),
-   initialize: function ()
+   initialize ()
    {
       X3DFlyViewer .prototype .initialize .call (this);
 
       this .getBrowser () .addCollision (this);
    },
-   getStraightenHorizon: function ()
+   getStraightenHorizon ()
    {
       return true;
    },
-   getFlyDirection: function (fromVector, toVector, direction)
+   getFlyDirection (fromVector, toVector, direction)
    {
       return direction .assign (toVector) .subtract (fromVector);
    },
@@ -100,18 +96,34 @@ WalkViewer .prototype = Object .assign (Object .create (X3DFlyViewer .prototype)
          return orientation .multVecRot (velocity);
       };
    })(),
-   constrainPanDirection: function (direction)
+   constrainPanDirection (direction)
    {
       if (direction .y < 0)
          direction .y = 0;
 
       return direction;
    },
-   dispose: function ()
+   dispose ()
    {
       this .getBrowser () .removeCollision (this);
 
       X3DFlyViewer .prototype .dispose .call (this);
+   },
+});
+
+Object .defineProperties (WalkViewer,
+{
+   typeName:
+   {
+      value: "WalkViewer",
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .outputOnly, "isActive", new Fields .SFBool ()),
+      ]),
+      enumerable: true,
    },
 });
 

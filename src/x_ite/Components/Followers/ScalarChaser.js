@@ -59,66 +59,77 @@ function ScalarChaser (executionContext)
    this .addType (X3DConstants .ScalarChaser);
 }
 
-ScalarChaser .prototype = Object .assign (Object .create (X3DChaserNode .prototype),
+Object .assign (Object .setPrototypeOf (ScalarChaser .prototype, X3DChaserNode .prototype),
 {
-   constructor: ScalarChaser,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",           new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,      "set_value",          new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,      "set_destination",    new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "initialValue",       new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "initialDestination", new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "duration",           new Fields .SFTime (1)),
-      new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",           new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,     "value_changed",      new Fields .SFFloat ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "ScalarChaser";
-   },
-   getComponentName: function ()
-   {
-      return "Followers";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
-   getVector: function ()
+   getVector ()
    {
       return 0;
    },
-   setPreviousValue: function (value)
+   setPreviousValue (value)
    {
       this .previousValue = value;
    },
-   setDestination: function (value)
+   setDestination (value)
    {
       this .destination = value;
    },
-   duplicate: function (value)
+   duplicate (value)
    {
       return value;
    },
-   assign: function (buffer, i, value)
+   assign (buffer, i, value)
    {
       buffer [i] = value;
    },
-   equals: function (lhs, rhs, tolerance)
+   equals (lhs, rhs, tolerance)
    {
       return Math .abs (lhs - rhs) < tolerance;
    },
-   interpolate: function (source, destination, weight)
+   interpolate (source, destination, weight)
    {
       return Algorithm .lerp (source, destination, weight);
    },
-   step: function (value1, value2, t)
+   step (value1, value2, t)
    {
       this .output += (value1 - value2) * t;
+   },
+});
+
+Object .defineProperties (ScalarChaser,
+{
+   typeName:
+   {
+      value: "ScalarChaser",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Followers",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",           new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "set_value",          new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "set_destination",    new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "initialValue",       new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "initialDestination", new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "duration",           new Fields .SFTime (1)),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",           new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "value_changed",      new Fields .SFFloat ()),
+      ]),
+      enumerable: true,
    },
 });
 

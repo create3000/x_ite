@@ -61,16 +61,15 @@ function X3DSoundSourceNode (executionContext)
    this .media  = null;
 }
 
-X3DSoundSourceNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, X3DChildNode .prototype),
    X3DTimeDependentNode .prototype,
 {
-   constructor: X3DSoundSourceNode,
-   initialize: function ()
+   initialize ()
    {
       X3DChildNode         .prototype .initialize .call (this);
       X3DTimeDependentNode .prototype .initialize .call (this);
    },
-   set_live__: function ()
+   set_live__ ()
    {
       X3DTimeDependentNode .prototype .set_live__ .call (this);
 
@@ -87,7 +86,7 @@ X3DSoundSourceNode .prototype = Object .assign (Object .create (X3DChildNode .pr
          this .set_volume__ ();
       }
    },
-   setMedia: function (value)
+   setMedia (value)
    {
       if (this .media)
       {
@@ -128,18 +127,18 @@ X3DSoundSourceNode .prototype = Object .assign (Object .create (X3DChildNode .pr
          }
       }
    },
-   setVolume: function (volume)
+   setVolume (volume)
    {
       this .volume = Algorithm .clamp (volume, 0, 1);
 
       this .set_volume__ ();
    },
-   set_loop: function ()
+   set_loop ()
    {
       if (this .media)
          this .media .loop = this ._loop .getValue ();
    },
-   set_volume__: function ()
+   set_volume__ ()
    {
       if (! this .media)
          return;
@@ -152,11 +151,11 @@ X3DSoundSourceNode .prototype = Object .assign (Object .create (X3DChildNode .pr
       this .media .muted  = volume === 0;
       this .media .volume = volume;
    },
-   set_speed: function ()
+   set_speed ()
    { },
-   set_pitch: function ()
+   set_pitch ()
    { },
-   set_start: function ()
+   set_start ()
    {
       if (this .media)
       {
@@ -167,12 +166,12 @@ X3DSoundSourceNode .prototype = Object .assign (Object .create (X3DChildNode .pr
          }
       }
    },
-   set_pause: function ()
+   set_pause ()
    {
       if (this .media)
          this .media .pause ();
    },
-   set_resume: function ()
+   set_resume ()
    {
       if (this .media)
       {
@@ -180,19 +179,19 @@ X3DSoundSourceNode .prototype = Object .assign (Object .create (X3DChildNode .pr
             this .media .play () .catch (Function .prototype);
       }
    },
-   set_stop: function ()
+   set_stop ()
    {
       if (this .media)
          this .media .pause ();
    },
-   set_end: function ()
+   set_end ()
    {
       if (this ._loop .getValue ())
          return;
 
       this .stop ();
    },
-   set_time: function ()
+   set_time ()
    {
       if (! this .media)
          return;
@@ -204,10 +203,24 @@ X3DSoundSourceNode .prototype = Object .assign (Object .create (X3DChildNode .pr
 
       this .set_end ();
    },
-   dispose: function ()
+   dispose ()
    {
       X3DTimeDependentNode .prototype .dispose .call (this);
       X3DChildNode         .prototype .dispose .call (this);
+   },
+});
+
+Object .defineProperties (X3DSoundSourceNode,
+{
+   typeName:
+   {
+      value: "X3DSoundSourceNode",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Sound",
+      enumerable: true,
    },
 });
 

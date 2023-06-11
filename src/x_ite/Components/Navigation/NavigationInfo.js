@@ -75,40 +75,9 @@ function NavigationInfo (executionContext)
    this ._visibilityLimit .setUnit ("speed");
 }
 
-NavigationInfo .prototype = Object .assign (Object .create (X3DBindableNode .prototype),
+Object .assign (Object .setPrototypeOf (NavigationInfo .prototype, X3DBindableNode .prototype),
 {
-   constructor: NavigationInfo,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",           new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,   "set_bind",           new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "type",               new Fields .MFString ("EXAMINE", "ANY")),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "avatarSize",         new Fields .MFFloat (0.25, 1.6, 0.75)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "speed",              new Fields .SFFloat (1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "headlight",          new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "visibilityLimit",    new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "transitionType",     new Fields .MFString ("LINEAR")),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "transitionTime",     new Fields .SFTime (1)),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "transitionComplete", new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "isBound",            new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "bindTime",           new Fields .SFTime ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "NavigationInfo";
-   },
-   getComponentName: function ()
-   {
-      return "Navigation";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DBindableNode .prototype .initialize .call (this);
 
@@ -121,11 +90,11 @@ NavigationInfo .prototype = Object .assign (Object .create (X3DBindableNode .pro
       this .set_type__ ();
       this .set_headlight__ ();
    },
-   getViewer: function ()
+   getViewer ()
    {
       return this ._viewer .getValue ();
    },
-   getCollisionRadius: function ()
+   getCollisionRadius ()
    {
       if (this ._avatarSize .length > 0)
       {
@@ -135,21 +104,21 @@ NavigationInfo .prototype = Object .assign (Object .create (X3DBindableNode .pro
 
       return 0.25;
    },
-   getAvatarHeight: function ()
+   getAvatarHeight ()
    {
       if (this ._avatarSize .length > 1)
          return this ._avatarSize [1];
 
       return 1.6;
    },
-   getStepHeight: function ()
+   getStepHeight ()
    {
       if (this ._avatarSize .length > 2)
          return this ._avatarSize [2];
 
       return 0.75;
    },
-   getNearValue: function ()
+   getNearValue ()
    {
       const nearValue = this .getCollisionRadius ();
 
@@ -159,13 +128,13 @@ NavigationInfo .prototype = Object .assign (Object .create (X3DBindableNode .pro
       else
          return nearValue / 2;
    },
-   getFarValue: function (viewpoint)
+   getFarValue (viewpoint)
    {
       return this ._visibilityLimit .getValue ()
              ? this ._visibilityLimit .getValue ()
              : viewpoint .getMaxFarValue ();
    },
-   getTransitionType: function ()
+   getTransitionType ()
    {
       for (const value of this ._transitionType)
       {
@@ -177,7 +146,7 @@ NavigationInfo .prototype = Object .assign (Object .create (X3DBindableNode .pro
 
       return "LINEAR";
    },
-   set_type__: function ()
+   set_type__ ()
    {
       // Determine active viewer.
 
@@ -288,24 +257,24 @@ NavigationInfo .prototype = Object .assign (Object .create (X3DBindableNode .pro
       if (noneViewer)
          this ._availableViewers .push ("NONE");
    },
-   set_headlight__: function ()
+   set_headlight__ ()
    {
       if (this ._headlight .getValue ())
          delete this .enable;
       else
          this .enable = Function .prototype;
    },
-   set_transitionStart__: function ()
+   set_transitionStart__ ()
    {
       if (! this ._transitionActive .getValue ())
          this ._transitionActive = true;
    },
-   set_transitionComplete__: function ()
+   set_transitionComplete__ ()
    {
       if (this ._transitionActive .getValue ())
          this ._transitionActive = false;
    },
-   set_isBound__: function ()
+   set_isBound__ ()
    {
       if (this ._isBound .getValue ())
          return;
@@ -313,7 +282,7 @@ NavigationInfo .prototype = Object .assign (Object .create (X3DBindableNode .pro
       if (this ._transitionActive .getValue ())
          this ._transitionActive = false;
    },
-   enable: function (type, renderObject)
+   enable (type, renderObject)
    {
       if (type !== TraverseType .DISPLAY)
          return;
@@ -321,13 +290,55 @@ NavigationInfo .prototype = Object .assign (Object .create (X3DBindableNode .pro
       if (this ._headlight .getValue ())
          renderObject .getGlobalObjects () .push (this .getBrowser () .getHeadlight ());
    },
-   traverse: function (type, renderObject)
+   traverse (type, renderObject)
    {
       if (type !== TraverseType .CAMERA)
          return;
 
       renderObject .getLayer () .getNavigationInfos () .push (this);
    }
+});
+
+Object .defineProperties (NavigationInfo,
+{
+   typeName:
+   {
+      value: "NavigationInfo",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Navigation",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",           new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,   "set_bind",           new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "type",               new Fields .MFString ("EXAMINE", "ANY")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "avatarSize",         new Fields .MFFloat (0.25, 1.6, 0.75)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "speed",              new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "headlight",          new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "visibilityLimit",    new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "transitionType",     new Fields .MFString ("LINEAR")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "transitionTime",     new Fields .SFTime (1)),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "transitionComplete", new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "isBound",            new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "bindTime",           new Fields .SFTime ()),
+      ]),
+      enumerable: true,
+   },
 });
 
 export default NavigationInfo;

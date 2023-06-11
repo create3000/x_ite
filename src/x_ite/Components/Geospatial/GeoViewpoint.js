@@ -75,49 +75,10 @@ function GeoViewpoint (executionContext)
    this .elevation             = 0;
 }
 
-GeoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prototype),
+Object .assign (Object .setPrototypeOf (GeoViewpoint .prototype, X3DViewpointNode .prototype),
    X3DGeospatialObject .prototype,
 {
-   constructor: GeoViewpoint,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "geoOrigin",         new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "geoSystem",         new Fields .MFString ("GD", "WE")),
-      new X3DFieldDefinition (X3DConstants .inputOnly,      "set_bind",          new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "description",       new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "position",          new Fields .SFVec3d (0, 0, 100000)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "orientation",       new Fields .SFRotation ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "centerOfRotation",  new Fields .SFVec3d ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "fieldOfView",       new Fields .SFFloat (0.7854)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "nearDistance",      new Fields .SFFloat (-1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "farDistance",       new Fields .SFFloat (-1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "viewAll",           new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "jump",              new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "retainUserOffsets", new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "navType",           new Fields .MFString ("EXAMINE", "ANY")),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "headlight",         new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "speedFactor",       new Fields .SFFloat (1)),
-      new X3DFieldDefinition (X3DConstants .outputOnly,     "isBound",           new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,     "bindTime",          new Fields .SFTime ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "navigationInfo",    new Fields .SFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "GeoViewpoint";
-   },
-   getComponentName: function ()
-   {
-      return "Geospatial";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DViewpointNode    .prototype .initialize .call (this);
       X3DGeospatialObject .prototype .initialize .call (this);
@@ -146,7 +107,7 @@ GeoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prot
    getViewportSize: Viewpoint .prototype .getViewportSize,
    getLookAtDistance: Viewpoint .prototype .getLookAtDistance,
    getProjectionMatrixWithLimits: Viewpoint .prototype .getProjectionMatrixWithLimits,
-   getLogarithmicDepthBuffer: function ()
+   getLogarithmicDepthBuffer ()
    {
       return this .logarithmicDepthBuffer;
    },
@@ -222,7 +183,7 @@ GeoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prot
          return this .getCoord (this ._centerOfRotation .getValue (), centerOfRotation);
       };
    })(),
-   getMaxFarValue: function ()
+   getMaxFarValue ()
    {
       return 1e9;
    },
@@ -246,11 +207,11 @@ GeoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prot
          }
       };
    })(),
-   getSpeedFactor: function ()
+   getSpeedFactor ()
    {
       return (Math .max (this .elevation, 0.0) + 10) / 10 * this ._speedFactor .getValue ();
    },
-   dispose: function ()
+   dispose ()
    {
       X3DGeospatialObject .prototype .dispose .call (this);
       X3DViewpointNode    .prototype .dispose .call (this);
@@ -263,5 +224,55 @@ function traverse (type, renderObject)
 
    this .geoNavigationInfoNode .traverse (type, renderObject);
 }
+
+Object .defineProperties (GeoViewpoint,
+{
+   typeName:
+   {
+      value: "GeoViewpoint",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Geospatial",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "geoOrigin",         new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "geoSystem",         new Fields .MFString ("GD", "WE")),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "set_bind",          new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "description",       new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "position",          new Fields .SFVec3d (0, 0, 100000)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "orientation",       new Fields .SFRotation ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "centerOfRotation",  new Fields .SFVec3d ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "fieldOfView",       new Fields .SFFloat (0.7854)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "nearDistance",      new Fields .SFFloat (-1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "farDistance",       new Fields .SFFloat (-1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "viewAll",           new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "jump",              new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "retainUserOffsets", new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "navType",           new Fields .MFString ("EXAMINE", "ANY")),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "headlight",         new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "speedFactor",       new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "isBound",           new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "bindTime",          new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "navigationInfo",    new Fields .SFNode ()),
+      ]),
+      enumerable: true,
+   },
+});
 
 export default GeoViewpoint;

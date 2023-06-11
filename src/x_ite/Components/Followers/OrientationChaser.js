@@ -69,54 +69,65 @@ function OrientationChaser (executionContext)
    this ._value_changed      .setUnit ("angle");
 }
 
-OrientationChaser .prototype = Object .assign (Object .create (X3DChaserNode .prototype),
+Object .assign (Object .setPrototypeOf (OrientationChaser .prototype, X3DChaserNode .prototype),
 {
-   constructor: OrientationChaser,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",           new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,      "set_value",          new Fields .SFRotation ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,      "set_destination",    new Fields .SFRotation ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "initialValue",       new Fields .SFRotation ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "initialDestination", new Fields .SFRotation ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "duration",           new Fields .SFTime (1)),
-      new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",           new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,     "value_changed",      new Fields .SFRotation ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "OrientationChaser";
-   },
-   getComponentName: function ()
-   {
-      return "Followers";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
-   getVector: function ()
+   getVector ()
    {
       return new Rotation4 ();
    },
-   equals: function (lhs, rhs, tolerance)
+   equals (lhs, rhs, tolerance)
    {
       a .assign (lhs) .inverse () .multRight (rhs);
 
       return Math .abs (a .angle) < tolerance;
    },
-   interpolate: function (source, destination, weight)
+   interpolate (source, destination, weight)
    {
       return rotation .assign (source) .slerp (destination, weight);
    },
-   step: function (value1, value2, t)
+   step (value1, value2, t)
    {
       this .deltaOut .assign (value2) .inverse () .multRight (value1) .multLeft (this .output);
 
       this .output .slerp (this .deltaOut, t);
+   },
+});
+
+Object .defineProperties (OrientationChaser,
+{
+   typeName:
+   {
+      value: "OrientationChaser",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Followers",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",           new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "set_value",          new Fields .SFRotation ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "set_destination",    new Fields .SFRotation ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "initialValue",       new Fields .SFRotation ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "initialDestination", new Fields .SFRotation ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "duration",           new Fields .SFTime (1)),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",           new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "value_changed",      new Fields .SFRotation ()),
+      ]),
+      enumerable: true,
    },
 });
 

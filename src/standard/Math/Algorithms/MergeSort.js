@@ -54,17 +54,17 @@ function MergeSort (array, compare)
       this .compare = compare;
 }
 
-MergeSort .prototype =
+Object .assign (MergeSort .prototype,
 {
-   compare: function (lhs, rhs)
+   compare (lhs, rhs)
    {
       return lhs < rhs;
    },
-   sort: function (first, last)
+   sort (first, last)
    {
       this .mergeSort (first, last - 1);
    },
-   mergeSort: function (lo, hi)
+   mergeSort (lo, hi)
    {
       if (lo < hi)
       {
@@ -74,7 +74,7 @@ MergeSort .prototype =
          this .merge (lo, m, hi);
       }
    },
-   merge: function (lo, m, hi)
+   merge (lo, m, hi)
    {
       const { array, auxiliary, compare } = this;
 
@@ -99,6 +99,6 @@ MergeSort .prototype =
       while (k < j)
          array [k++] = auxiliary [i++];
    }
-};
+});
 
 export default MergeSort;

@@ -70,42 +70,9 @@ function TwoSidedMaterial (executionContext)
    this .backEmissiveColor = new Float32Array (3);
 }
 
-TwoSidedMaterial .prototype = Object .assign (Object .create (X3DMaterialNode .prototype),
+Object .assign (Object .setPrototypeOf (TwoSidedMaterial .prototype, X3DMaterialNode .prototype),
 {
-   constructor: TwoSidedMaterial,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",             new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "separateBackColor",    new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "ambientIntensity",     new Fields .SFFloat (0.2)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "diffuseColor",         new Fields .SFColor (0.8, 0.8, 0.8)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "specularColor",        new Fields .SFColor ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "emissiveColor",        new Fields .SFColor ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "shininess",            new Fields .SFFloat (0.2)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "transparency",         new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "backAmbientIntensity", new Fields .SFFloat (0.2)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "backDiffuseColor",     new Fields .SFColor (0.8, 0.8, 0.8)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "backSpecularColor",    new Fields .SFColor ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "backEmissiveColor",    new Fields .SFColor ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "backShininess",        new Fields .SFFloat (0.2)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "backTransparency",     new Fields .SFFloat ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "TwoSidedMaterial";
-   },
-   getComponentName: function ()
-   {
-      return "Shape";
-   },
-   getContainerField: function ()
-   {
-      return "material";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DMaterialNode . prototype .initialize .call (this);
 
@@ -143,11 +110,11 @@ TwoSidedMaterial .prototype = Object .assign (Object .create (X3DMaterialNode .p
 
       this .set_transparent__ ();
    },
-   set_ambientIntensity__: function ()
+   set_ambientIntensity__ ()
    {
       this .ambientIntensity = Math .max (this ._ambientIntensity .getValue (), 0);
    },
-   set_diffuseColor__: function ()
+   set_diffuseColor__ ()
    {
       //We cannot use this in Windows Edge:
       //this .diffuseColor .set (this ._diffuseColor .getValue ());
@@ -160,7 +127,7 @@ TwoSidedMaterial .prototype = Object .assign (Object .create (X3DMaterialNode .p
       diffuseColor [1] = diffuseColor_ .g;
       diffuseColor [2] = diffuseColor_ .b;
    },
-   set_specularColor__: function ()
+   set_specularColor__ ()
    {
       //We cannot use this in Windows Edge:
       //this .specularColor .set (this ._specularColor .getValue ());
@@ -173,7 +140,7 @@ TwoSidedMaterial .prototype = Object .assign (Object .create (X3DMaterialNode .p
       specularColor [1] = specularColor_ .g;
       specularColor [2] = specularColor_ .b;
    },
-   set_emissiveColor__: function ()
+   set_emissiveColor__ ()
    {
       //We cannot use this in Windows Edge:
       //this .emissiveColor .set (this ._emissiveColor .getValue ());
@@ -186,22 +153,22 @@ TwoSidedMaterial .prototype = Object .assign (Object .create (X3DMaterialNode .p
       emissiveColor [1] = emissiveColor_ .g;
       emissiveColor [2] = emissiveColor_ .b;
    },
-   set_shininess__: function ()
+   set_shininess__ ()
    {
       this .shininess = Algorithm .clamp (this ._shininess .getValue (), 0, 1);
    },
-   set_transparency__: function ()
+   set_transparency__ ()
    {
       this .transparency = Algorithm .clamp (this ._transparency .getValue (), 0, 1);
    },
    /*
     * Back Material
     */
-   set_backAmbientIntensity__: function ()
+   set_backAmbientIntensity__ ()
    {
       this .backAmbientIntensity = Math .max (this ._backAmbientIntensity .getValue (), 0);
    },
-   set_backDiffuseColor__: function ()
+   set_backDiffuseColor__ ()
    {
       //We cannot use this in Windows Edge:
       //this .backDiffuseColor .set (this ._backDiffuseColor .getValue ());
@@ -214,7 +181,7 @@ TwoSidedMaterial .prototype = Object .assign (Object .create (X3DMaterialNode .p
       backDiffuseColor [1] = backDiffuseColor_ .g;
       backDiffuseColor [2] = backDiffuseColor_ .b;
    },
-   set_backSpecularColor__: function ()
+   set_backSpecularColor__ ()
    {
       //We cannot use this in Windows Edge:
       //this .backSpecularColor .set (this ._backSpecularColor .getValue ());
@@ -227,7 +194,7 @@ TwoSidedMaterial .prototype = Object .assign (Object .create (X3DMaterialNode .p
       backSpecularColor [1] = backSpecularColor_ .g;
       backSpecularColor [2] = backSpecularColor_ .b;
    },
-   set_backEmissiveColor__: function ()
+   set_backEmissiveColor__ ()
    {
       //We cannot use this in Windows Edge:
       //this .backEmissiveColor .set (this ._backEmissiveColor .getValue ());
@@ -240,22 +207,22 @@ TwoSidedMaterial .prototype = Object .assign (Object .create (X3DMaterialNode .p
       backEmissiveColor [1] = backEmissiveColor_ .g;
       backEmissiveColor [2] = backEmissiveColor_ .b;
    },
-   set_backShininess__: function ()
+   set_backShininess__ ()
    {
       this .backShininess = Algorithm .clamp (this ._backShininess .getValue (), 0, 1);
    },
-   set_backTransparency__: function ()
+   set_backTransparency__ ()
    {
       this .backTransparency = Algorithm .clamp (this ._backTransparency .getValue (), 0, 1);
    },
-   set_transparent__: function ()
+   set_transparent__ ()
    {
       this .setTransparent (!!(this ._transparency .getValue () || (this ._separateBackColor .getValue () && this ._backTransparency .getValue ())));
    },
    getBaseTexture: Material .prototype .getBaseTexture,
    getMaterialKey: Material .prototype .getMaterialKey,
    createShader: Material .prototype .createShader,
-   setShaderUniforms: function (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping, front)
+   setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping, front)
    {
       if (! front && this ._separateBackColor .getValue ())
       {
@@ -275,6 +242,50 @@ TwoSidedMaterial .prototype = Object .assign (Object .create (X3DMaterialNode .p
          gl .uniform1f  (shaderObject .x3d_Shininess,        this .shininess);
          gl .uniform1f  (shaderObject .x3d_Transparency,     this .transparency);
       }
+   },
+});
+
+Object .defineProperties (TwoSidedMaterial,
+{
+   typeName:
+   {
+      value: "TwoSidedMaterial",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Shape",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "material",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",             new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "separateBackColor",    new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "ambientIntensity",     new Fields .SFFloat (0.2)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "diffuseColor",         new Fields .SFColor (0.8, 0.8, 0.8)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "specularColor",        new Fields .SFColor ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "emissiveColor",        new Fields .SFColor ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "shininess",            new Fields .SFFloat (0.2)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "transparency",         new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "backAmbientIntensity", new Fields .SFFloat (0.2)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "backDiffuseColor",     new Fields .SFColor (0.8, 0.8, 0.8)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "backSpecularColor",    new Fields .SFColor ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "backEmissiveColor",    new Fields .SFColor ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "backShininess",        new Fields .SFFloat (0.2)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "backTransparency",     new Fields .SFFloat ()),
+      ]),
+      enumerable: true,
    },
 });
 

@@ -63,9 +63,9 @@ function X3DRenderingContext ()
    this [_depthShaders] = new Map ();
 }
 
-X3DRenderingContext .prototype =
+Object .assign (X3DRenderingContext .prototype,
 {
-   initialize: function ()
+   initialize ()
    {
       // Configure context.
 
@@ -89,7 +89,7 @@ X3DRenderingContext .prototype =
 
       this .reshape ();
    },
-   getRenderer: function ()
+   getRenderer ()
    {
       const gl = this .getContext ();
 
@@ -103,7 +103,7 @@ X3DRenderingContext .prototype =
 
       return gl .getParameter (gl .RENDERER);
    },
-   getVendor: function ()
+   getVendor ()
    {
       const gl = this .getContext ();
 
@@ -117,35 +117,35 @@ X3DRenderingContext .prototype =
 
       return gl .getParameter (gl .VENDOR);
    },
-   getWebGLVersion: function ()
+   getWebGLVersion ()
    {
       const gl = this .getContext ();
 
       return gl .getParameter (gl .VERSION);
    },
-   getAntialiased: function ()
+   getAntialiased ()
    {
       const gl = this .getContext ();
 
       return gl .getParameter (gl .SAMPLES) > 0 || (gl .getVersion () > 1 && this .getRenderingProperty ("Multisampling") > 0);
    },
-   getMaxSamples: function ()
+   getMaxSamples ()
    {
       const gl = this .getContext ();
 
       return gl .getVersion () > 1 ? gl .getParameter (gl .MAX_SAMPLES) : 0;
    },
-   getMaxClipPlanes: function ()
+   getMaxClipPlanes ()
    {
       return 6;
    },
-   getDepthSize: function ()
+   getDepthSize ()
    {
       const gl = this .getContext ();
 
       return gl .getParameter (gl .DEPTH_BITS);
    },
-   getColorDepth: function ()
+   getColorDepth ()
    {
       const gl = this .getContext ();
 
@@ -154,19 +154,19 @@ X3DRenderingContext .prototype =
               gl .getParameter (gl .GREEN_BITS) +
               gl .getParameter (gl .ALPHA_BITS));
    },
-   getViewport: function ()
+   getViewport ()
    {
       return this [_viewport];
    },
-   getLocalObjects: function ()
+   getLocalObjects ()
    {
       return this [_localObjects];
    },
-   getFrameBuffer: function ()
+   getFrameBuffer ()
    {
       return this [_frameBuffer];
    },
-   getDepthShader: function (numClipPlanes, shapeNode)
+   getDepthShader (numClipPlanes, shapeNode)
    {
       const geometryContext = shapeNode .getGeometryContext ();
 
@@ -194,7 +194,7 @@ X3DRenderingContext .prototype =
 
       return this [_depthShaders] .get (key) || this .createDepthShader (key, numClipPlanes, shapeNode);
    },
-   createDepthShader: function (key, numClipPlanes, shapeNode)
+   createDepthShader (key, numClipPlanes, shapeNode)
    {
       const
          appearanceNode  = shapeNode .getAppearance (),
@@ -224,7 +224,7 @@ X3DRenderingContext .prototype =
 
       return shaderNode;
    },
-   reshape: function ()
+   reshape ()
    {
       const
          $canvas      = this .getCanvas (),
@@ -250,7 +250,7 @@ X3DRenderingContext .prototype =
 
       this .addBrowserEvent ();
    },
-   onfullscreen: function ()
+   onfullscreen ()
    {
       const element = this .getElement ();
 
@@ -259,6 +259,6 @@ X3DRenderingContext .prototype =
       else
          element .removeClass ("x_ite-fullscreen");
    },
-};
+});
 
 export default X3DRenderingContext;

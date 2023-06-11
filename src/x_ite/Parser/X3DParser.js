@@ -52,45 +52,45 @@ function X3DParser (scene)
    this .prototypes        = [ ];
 }
 
-X3DParser .prototype = {
-   constructor: X3DParser,
-   getBrowser: function ()
+Object .assign (X3DParser .prototype,
+{
+   getBrowser ()
    {
       return this .scene .getBrowser ();
    },
-   getScene: function ()
+   getScene ()
    {
       return this .scene;
    },
-   getExecutionContext: function ()
+   getExecutionContext ()
    {
       return this .executionContexts .at (-1);
    },
-   pushExecutionContext: function (executionContext)
+   pushExecutionContext (executionContext)
    {
       return this .executionContexts .push (executionContext);
    },
-   popExecutionContext: function ()
+   popExecutionContext ()
    {
       this .executionContexts .pop ();
    },
-   getPrototype: function ()
+   getPrototype ()
    {
       return this .prototypes .at (-1);
    },
-   pushPrototype: function (prototype)
+   pushPrototype (prototype)
    {
       return this .prototypes .push (prototype);
    },
-   popPrototype: function ()
+   popPrototype ()
    {
       this .prototypes .pop ();
    },
-   isInsideProtoDefinition: function ()
+   isInsideProtoDefinition ()
    {
       return !! this .prototypes .length;
    },
-   loadComponents: function ()
+   loadComponents ()
    {
       const
          browser = this .getBrowser (),
@@ -101,18 +101,18 @@ X3DParser .prototype = {
          browser .loadComponents (scene .getComponents ()),
       ]);
    },
-   setUnits: function (units)
+   setUnits (units)
    {
       if (units)
          delete this .fromUnit;
       else
          this .fromUnit = function (category, value) { return value; };
    },
-   fromUnit: function (category, value)
+   fromUnit (category, value)
    {
       return this .scene .fromUnit (category, value);
    },
-   convertColor: function (value, defaultColor = "white")
+   convertColor (value, defaultColor = "white")
    {
       const
          wrap   = $("<div></div>") .hide () .css ("color", defaultColor) .appendTo ($("body")),
@@ -131,7 +131,7 @@ X3DParser .prototype = {
 
       return values;
    },
-   sanitizeName: function (name = "")
+   sanitizeName (name = "")
    {
       // NonIdFirstChar
       name = name .replace (/^[\x30-\x39\x00-\x20\x22\x23\x27\x2b\x2c\x2d\x2e\x5b\x5c\x5d\x7b\x7d\x7f]*/, "");
@@ -147,6 +147,6 @@ X3DParser .prototype = {
 
       return name;
    },
-};
+});
 
 export default X3DParser;

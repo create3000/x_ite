@@ -73,41 +73,11 @@ function Inline (executionContext)
    this .localShadows = false;
 }
 
-Inline .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+Object .assign (Object .setPrototypeOf (Inline .prototype, X3DChildNode .prototype),
    X3DUrlObject .prototype,
    X3DBoundedObject .prototype,
 {
-   constructor: Inline,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "description",          new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "global",               new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",              new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",          new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",             new Fields .SFVec3f (-1, -1, -1)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",           new Fields .SFVec3f ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "Inline";
-   },
-   getComponentName: function ()
-   {
-      return "Networking";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DChildNode     .prototype .initialize .call (this);
       X3DUrlObject     .prototype .initialize .call (this);
@@ -121,14 +91,14 @@ Inline .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 
       this .requestImmediateLoad () .catch (Function .prototype);
    },
-   getBBox: function (bbox, shadows)
+   getBBox (bbox, shadows)
    {
       if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
          return this .groupNode .getBBox (bbox, shadows);
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
-   set_live__: function ()
+   set_live__ ()
    {
       X3DUrlObject .prototype .set_live__ .call (this);
 
@@ -137,24 +107,24 @@ Inline .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 
       this .scene .setLive (this .getLive () .getValue ());
    },
-   unloadData: function ()
+   unloadData ()
    {
       this .abortLoading ();
       this .setInternalScene (this .getBrowser () .getDefaultScene ());
    },
-   loadData: function ()
+   loadData ()
    {
       this .abortLoading ();
       this .fileLoader = new FileLoader (this) .createX3DFromURL (this ._url, null, this .setInternalSceneAsync .bind (this));
    },
-   abortLoading: function ()
+   abortLoading ()
    {
       this .scene ._loadCount .removeInterest ("checkLoadCount", this);
 
       if (this .fileLoader)
          this .fileLoader .abort ();
    },
-   setInternalSceneAsync: function (scene)
+   setInternalSceneAsync (scene)
    {
       if (scene)
       {
@@ -168,7 +138,7 @@ Inline .prototype = Object .assign (Object .create (X3DChildNode .prototype),
          this .setLoadState (X3DConstants .FAILED_STATE);
       }
    },
-   checkLoadCount: function (loadCount)
+   checkLoadCount (loadCount)
    {
       if (loadCount .getValue ())
          return;
@@ -177,7 +147,7 @@ Inline .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 
       this .setLoadState (X3DConstants .COMPLETE_STATE);
    },
-   setInternalScene: function (scene)
+   setInternalScene (scene)
    {
       this .scene .setLive (false);
       this .scene .rootNodes .removeFieldInterest (this .groupNode ._children);
@@ -195,7 +165,7 @@ Inline .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 
       this .getBrowser () .addBrowserEvent ();
    },
-   getInternalScene: function ()
+   getInternalScene ()
    {
       ///  Returns the internal X3DScene of this inline, that is loaded from the url given.
       ///  If the load field was false an empty scene is returned.  This empty scene is the same for all Inline
@@ -203,7 +173,7 @@ Inline .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 
       return this .scene;
    },
-   traverse: function (type, renderObject)
+   traverse (type, renderObject)
    {
       switch (type)
       {
@@ -296,11 +266,52 @@ Inline .prototype = Object .assign (Object .create (X3DChildNode .prototype),
          }
       }
    },
-   dispose: function ()
+   dispose ()
    {
       X3DBoundedObject .prototype .dispose .call (this);
       X3DUrlObject     .prototype .dispose .call (this);
       X3DChildNode     .prototype .dispose .call (this);
+   },
+});
+
+Object .defineProperties (Inline,
+{
+   typeName:
+   {
+      value: "Inline",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Networking",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "description",          new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "global",               new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",              new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",          new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",             new Fields .SFVec3f (-1, -1, -1)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",           new Fields .SFVec3f ()),
+      ]),
+      enumerable: true,
    },
 });
 

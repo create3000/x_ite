@@ -60,30 +60,9 @@ function Polypoint2D (executionContext)
    this ._point .setUnit ("length");
 }
 
-Polypoint2D .prototype = Object .assign (Object .create (X3DPointGeometryNode .prototype),
+Object .assign (Object .setPrototypeOf (Polypoint2D .prototype, X3DPointGeometryNode .prototype),
 {
-   constructor: Polypoint2D,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "point",    new Fields .MFVec2f ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "Polypoint2D";
-   },
-   getComponentName: function ()
-   {
-      return "Geometry2D";
-   },
-   getContainerField: function ()
-   {
-      return "geometry";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   build: function ()
+   build ()
    {
       const
          point       = this ._point .getValue (),
@@ -93,6 +72,38 @@ Polypoint2D .prototype = Object .assign (Object .create (X3DPointGeometryNode .p
       {
          vertexArray .push (point [i], point [i + 1], 0, 1);
       }
+   },
+});
+
+Object .defineProperties (Polypoint2D,
+{
+   typeName:
+   {
+      value: "Polypoint2D",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Geometry2D",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "geometry",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "point",    new Fields .MFVec2f ()),
+      ]),
+      enumerable: true,
    },
 });
 

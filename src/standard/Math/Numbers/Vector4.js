@@ -53,17 +53,16 @@ function Vector4 (x, y, z, w)
    this .w = w;
 }
 
-Vector4 .prototype =
+Object .assign (Vector4 .prototype,
 {
-   constructor: Vector4,
-   [Symbol .iterator]: function* ()
+   *[Symbol .iterator] ()
    {
       yield this .x;
       yield this .y;
       yield this .z;
       yield this .w;
    },
-   copy: function ()
+   copy ()
    {
       const copy = Object .create (Vector4 .prototype);
       copy .x = this .x;
@@ -72,7 +71,7 @@ Vector4 .prototype =
       copy .w = this .w;
       return copy;
    },
-   assign: function (vector)
+   assign (vector)
    {
       this .x = vector .x;
       this .y = vector .y;
@@ -80,7 +79,7 @@ Vector4 .prototype =
       this .w = vector .w;
       return this;
    },
-   set: function (x, y, z, w)
+   set (x, y, z, w)
    {
       this .x = x;
       this .y = y;
@@ -88,21 +87,21 @@ Vector4 .prototype =
       this .w = w;
       return this;
    },
-   equals: function (vector)
+   equals (vector)
    {
       return this .x === vector .x &&
              this .y === vector .y &&
              this .z === vector .z &&
              this .w === vector .w;
    },
-   getReal: function (vector)
+   getReal (vector)
    {
       vector .x = this .x / this .w;
       vector .y = this .y / this .w;
       vector .z = this .z / this .w;
       return vector;
    },
-   negate: function ()
+   negate ()
    {
       this .x = -this .x;
       this .y = -this .y;
@@ -110,7 +109,7 @@ Vector4 .prototype =
       this .w = -this .w;
       return this;
    },
-   inverse: function ()
+   inverse ()
    {
       this .x = 1 / this .x;
       this .y = 1 / this .y;
@@ -118,7 +117,7 @@ Vector4 .prototype =
       this .w = 1 / this .w;
       return this;
    },
-   add: function (vector)
+   add (vector)
    {
       this .x += vector .x;
       this .y += vector .y;
@@ -126,7 +125,7 @@ Vector4 .prototype =
       this .w += vector .w;
       return this;
    },
-   subtract: function (vector)
+   subtract (vector)
    {
       this .x -= vector .x;
       this .y -= vector .y;
@@ -134,7 +133,7 @@ Vector4 .prototype =
       this .w -= vector .w;
       return this;
    },
-   multiply: function (value)
+   multiply (value)
    {
       this .x *= value;
       this .y *= value;
@@ -142,7 +141,7 @@ Vector4 .prototype =
       this .w *= value;
       return this;
    },
-   multVec: function (vector)
+   multVec (vector)
    {
       this .x *= vector .x;
       this .y *= vector .y;
@@ -150,7 +149,7 @@ Vector4 .prototype =
       this .w *= vector .w;
       return this;
    },
-   divide: function (value)
+   divide (value)
    {
       this .x /= value;
       this .y /= value;
@@ -158,7 +157,7 @@ Vector4 .prototype =
       this .w /= value;
       return this;
    },
-   divVec: function (vector)
+   divVec (vector)
    {
       this .x /= vector .x;
       this .y /= vector .y;
@@ -166,7 +165,7 @@ Vector4 .prototype =
       this .w /= vector .w;
       return this;
    },
-   normalize: function ()
+   normalize ()
    {
       const length = Math .hypot (this .x, this .y, this .z, this .w);
 
@@ -180,14 +179,14 @@ Vector4 .prototype =
 
       return this;
    },
-   dot: function (vector)
+   dot (vector)
    {
       return this .x * vector .x +
              this .y * vector .y +
              this .z * vector .z +
              this .w * vector .w;
    },
-   norm: function ()
+   norm ()
    {
       const { x, y, z, w } = this;
 
@@ -196,18 +195,18 @@ Vector4 .prototype =
              z * z +
              w * w;
    },
-   magnitude: function ()
+   magnitude ()
    {
       return Math .hypot (this .x, this .y, this .z, this .w);
    },
-   distance: function (vector)
+   distance (vector)
    {
       return Math .hypot (this .x - vector .x,
                           this .y - vector .y,
                           this .z - vector .z,
                           this .w - vector .w);
    },
-   lerp: function (destination, t)
+   lerp (destination, t)
    {
       const { x, y, z, w } = this;
 
@@ -217,7 +216,7 @@ Vector4 .prototype =
       this .w = w + t * (destination .w - w);
       return this;
    },
-   abs: function ()
+   abs ()
    {
       this .x = Math .abs (this .x);
       this .y = Math .abs (this .y);
@@ -225,7 +224,7 @@ Vector4 .prototype =
       this .w = Math .abs (this .w);
       return this;
    },
-   min: function (vector)
+   min (vector)
    {
       let { x, y, z, w } = this;
 
@@ -243,7 +242,7 @@ Vector4 .prototype =
       this .w = w;
       return this;
    },
-   max: function (vector)
+   max (vector)
    {
       let { x, y, z, w } = this;
 
@@ -261,37 +260,37 @@ Vector4 .prototype =
       this .w = w;
       return this;
    },
-   toString: function ()
+   toString ()
    {
       return this .x + " " +
              this .y + " " +
              this .z + " " +
              this .w;
    },
-};
+});
 
 Object .defineProperties (Vector4 .prototype,
 {
    length: { value: 4 },
    0:
    {
-      get: function () { return this .x; },
-      set: function (value) { this .x = value; },
+      get () { return this .x; },
+      set (value) { this .x = value; },
    },
    1:
    {
-      get: function () { return this .y; },
-      set: function (value) { this .y = value; },
+      get () { return this .y; },
+      set (value) { this .y = value; },
    },
    2:
    {
-      get: function () { return this .z; },
-      set: function (value) { this .z = value; },
+      get () { return this .z; },
+      set (value) { this .z = value; },
    },
    3:
    {
-      get: function () { return this .w; },
-      set: function (value) { this .w = value; },
+      get () { return this .w; },
+      set (value) { this .w = value; },
    },
 });
 

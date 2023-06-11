@@ -48,21 +48,23 @@
 import X3DInfoArray from "./X3DInfoArray.js";
 import X3DField     from "./X3DField.js";
 
-function FieldArray (values)
+function FieldArray (values = [ ])
 {
-   return X3DInfoArray .call (this, values, X3DField);
+   return X3DInfoArray .call (this, Array .from (values, value => [value .getName (), value]), X3DField);
 }
 
-FieldArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
-{
-   constructor: FieldArray,
-   getTypeName: function ()
-   {
-      return "FieldArray";
-   },
-});
+Object .setPrototypeOf (FieldArray .prototype, X3DInfoArray .prototype);
 
 for (const key of Reflect .ownKeys (FieldArray .prototype))
    Object .defineProperty (FieldArray .prototype, key, { enumerable: false });
+
+Object .defineProperties (FieldArray,
+{
+   typeName:
+   {
+      value: "FieldArray",
+      enumerable: true,
+   },
+});
 
 export default FieldArray;

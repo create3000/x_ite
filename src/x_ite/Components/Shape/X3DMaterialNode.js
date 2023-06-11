@@ -65,10 +65,9 @@ function X3DMaterialNode (executionContext)
    this .shaderNodes = this .getBrowser () .getShaders ();
 }
 
-X3DMaterialNode .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanceChildNode .prototype),
 {
-   constructor: X3DMaterialNode,
-   initialize: function ()
+   initialize ()
    {
       X3DAppearanceChildNode .prototype .initialize .call (this);
 
@@ -76,35 +75,35 @@ X3DMaterialNode .prototype = Object .assign (Object .create (X3DAppearanceChildN
 
       this .set_logarithmicDepthBuffer__ ();
    },
-   set_logarithmicDepthBuffer__: function ()
+   set_logarithmicDepthBuffer__ ()
    {
       this .logarithmicDepthBuffer = this .getBrowser () .getRenderingProperty ("LogarithmicDepthBuffer");
    },
-   setTransparent: function (value)
+   setTransparent (value)
    {
       if (value !== this ._transparent .getValue ())
          this ._transparent = value;
    },
-   isTransparent: function ()
+   isTransparent ()
    {
       return this ._transparent .getValue ();
    },
-   getBaseTexture: function ()
+   getBaseTexture ()
    {
       return null;
    },
-   setTexture: function (index, textureNode)
+   setTexture (index, textureNode)
    {
       const textureType = textureNode ? textureNode .getTextureType () - 1 : 0;
 
       this .textureBits .set (index * 2 + 0, textureType & 0b01);
       this .textureBits .set (index * 2 + 1, textureType & 0b10);
    },
-   getTextureBits: function ()
+   getTextureBits ()
    {
       return this .textureBits;
    },
-   getShader: function (geometryContext, renderContext)
+   getShader (geometryContext, renderContext)
    {
       let key = "";
 
@@ -154,7 +153,7 @@ X3DMaterialNode .prototype = Object .assign (Object .create (X3DAppearanceChildN
 
       return this .shaderNodes .get (key) ?? this .createShader (key, geometryContext, renderContext);
    },
-   getShaderOptions: function (geometryContext, renderContext)
+   getShaderOptions (geometryContext, renderContext)
    {
       const
          browser = this .getBrowser (),
@@ -173,7 +172,7 @@ X3DMaterialNode .prototype = Object .assign (Object .create (X3DAppearanceChildN
 
       if (renderContext)
       {
-         const { renderObject, shapeNode, appearanceNode, objectsCount } = renderContext;
+         const { renderObject, fogNode, shapeNode, appearanceNode, objectsCount } = renderContext;
 
          if (this .logarithmicDepthBuffer || renderObject .getViewpoint () .getLogarithmicDepthBuffer ())
             options .push ("X3D_LOGARITHMIC_DEPTH_BUFFER");
@@ -194,37 +193,32 @@ X3DMaterialNode .prototype = Object .assign (Object .create (X3DAppearanceChildN
          if (renderContext .shadows)
             options .push ("X3D_SHADOWS", "X3D_PCF_FILTERING");
 
-         if (renderContext .fogNode)
+         switch (fogNode ?.getFogType ())
          {
-            options .push ("X3D_FOG");
-
-            switch (renderContext .fogNode .getFogType ())
-            {
-               case 1:
-                  options .push ("X3D_FOG_LINEAR");
-                  break;
-               case 2:
-                  options .push ("X3D_FOG_EXPONENTIAL");
-                  break;
-            }
+            case 1:
+               options .push ("X3D_FOG", "X3D_FOG_LINEAR");
+               break;
+            case 2:
+               options .push ("X3D_FOG", "X3D_FOG_EXPONENTIAL");
+               break;
          }
 
          if (objectsCount [0])
          {
             options .push ("X3D_CLIP_PLANES")
-            options .push ("X3D_NUM_CLIP_PLANES " + Math .min (objectsCount [0], browser .getMaxClipPlanes ()));
+            options .push (`X3D_NUM_CLIP_PLANES ${Math .min (objectsCount [0], browser .getMaxClipPlanes ())}`);
          }
 
          if (objectsCount [1])
          {
             options .push ("X3D_LIGHTING")
-            options .push ("X3D_NUM_LIGHTS " + Math .min (objectsCount [1], browser .getMaxLights ()));
+            options .push (`X3D_NUM_LIGHTS ${Math .min (objectsCount [1], browser .getMaxLights ())}`);
          }
 
          if (objectsCount [2])
          {
             options .push ("X3D_PROJECTIVE_TEXTURE_MAPPING")
-            options .push ("X3D_NUM_TEXTURE_PROJECTORS " + Math .min (objectsCount [2], browser .getMaxTextures ()));
+            options .push (`X3D_NUM_TEXTURE_PROJECTORS ${Math .min (objectsCount [2], browser .getMaxTextures ())}`);
          }
 
          if (appearanceNode .getStyleProperties (geometryContext .geometryType))
@@ -250,7 +244,7 @@ X3DMaterialNode .prototype = Object .assign (Object .create (X3DAppearanceChildN
                const textureNode = appearanceNode .getTexture ();
 
                options .push ("X3D_TEXTURE");
-               options .push ("X3D_NUM_TEXTURES " + textureNode .getCount ());
+               options .push (`X3D_NUM_TEXTURES ${textureNode .getCount ()}`);
 
                if (textureNode .getType () .includes (X3DConstants .MultiTexture))
                   options .push ("X3D_MULTI_TEXTURING");
@@ -258,8 +252,8 @@ X3DMaterialNode .prototype = Object .assign (Object .create (X3DAppearanceChildN
                textureNode .getShaderOptions (options);
             }
 
-            options .push ("X3D_NUM_TEXTURE_TRANSFORMS " + (appearanceNode .getTextureTransformMapping () .size || 1));
-            options .push ("X3D_NUM_TEXTURE_COORDINATES " + (geometryContext .textureCoordinateMapping .size || 1));
+            options .push (`X3D_NUM_TEXTURE_TRANSFORMS ${appearanceNode .getTextureTransformMapping () .size || 1}`);
+            options .push (`X3D_NUM_TEXTURE_COORDINATES ${geometryContext .textureCoordinateMapping .size || 1}`);
          }
 
          switch (shapeNode .getShapeKey ())
@@ -282,19 +276,19 @@ X3DMaterialNode .prototype = Object .assign (Object .create (X3DAppearanceChildN
          if (objectsCount [0])
          {
             options .push ("X3D_CLIP_PLANES")
-            options .push ("X3D_NUM_CLIP_PLANES " + Math .min (objectsCount [0], browser .getMaxClipPlanes ()));
+            options .push (`X3D_NUM_CLIP_PLANES ${Math .min (objectsCount [0], browser .getMaxClipPlanes ())}`);
          }
 
          if (objectsCount [1])
          {
             options .push ("X3D_LIGHTING")
-            options .push ("X3D_NUM_LIGHTS " + Math .min (objectsCount [1], browser .getMaxLights ()));
+            options .push (`X3D_NUM_LIGHTS ${Math .min (objectsCount [1], browser .getMaxLights ())}`);
          }
 
          if (objectsCount [2])
          {
             options .push ("X3D_PROJECTIVE_TEXTURE_MAPPING")
-            options .push ("X3D_NUM_TEXTURE_PROJECTORS " + Math .min (objectsCount [2], browser .getMaxTextures ()));
+            options .push (`X3D_NUM_TEXTURE_PROJECTORS ${Math .min (objectsCount [2], browser .getMaxTextures ())}`);
          }
 
          if (textureNode)
@@ -310,6 +304,20 @@ X3DMaterialNode .prototype = Object .assign (Object .create (X3DAppearanceChildN
       }
 
       return options;
+   },
+});
+
+Object .defineProperties (X3DMaterialNode,
+{
+   typeName:
+   {
+      value: "X3DMaterialNode",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Shape",
+      enumerable: true,
    },
 });
 

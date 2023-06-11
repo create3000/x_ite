@@ -61,30 +61,9 @@ function ContourPolyline2D (executionContext)
    this .controlPoints = [ ];
 }
 
-ContourPolyline2D .prototype = Object .assign (Object .create (X3DNurbsControlCurveNode .prototype),
+Object .assign (Object .setPrototypeOf (ContourPolyline2D .prototype, X3DNurbsControlCurveNode .prototype),
 {
-   constructor: ContourPolyline2D,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",     new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "controlPoint", new Fields .MFVec2d ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "ContourPolyline2D";
-   },
-   getComponentName: function ()
-   {
-      return "NURBS";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   tessellate: function (type)
+   tessellate (type)
    {
       switch (type)
       {
@@ -148,6 +127,38 @@ ContourPolyline2D .prototype = Object .assign (Object .create (X3DNurbsControlCu
             return controlPoints;
          }
       }
+   },
+});
+
+Object .defineProperties (ContourPolyline2D,
+{
+   typeName:
+   {
+      value: "ContourPolyline2D",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "NURBS",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",     new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "controlPoint", new Fields .MFVec2d ()),
+      ]),
+      enumerable: true,
    },
 });
 

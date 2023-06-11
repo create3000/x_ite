@@ -45,58 +45,52 @@
  *
  ******************************************************************************/
 
-import X3DField     from "../Base/X3DField.js";
-import SFColor      from "./SFColor.js";
-import X3DConstants from "../Base/X3DConstants.js";
-import Color4       from "../../standard/Math/Numbers/Color4.js";
+import X3DField from "../Base/X3DField.js";
+import SFColor  from "./SFColor.js";
+import Color4   from "../../standard/Math/Numbers/Color4.js";
 
 function SFColorRGBA (r, g, b, a)
 {
    switch (arguments .length)
    {
       case 0:
-         return X3DField .call (this, new Color4 (0, 0, 0, 0));
+         X3DField .call (this, new Color4 (0, 0, 0, 0));
+         break;
 
       case 1:
-         return X3DField .call (this, arguments [0]);
+         X3DField .call (this, arguments [0]);
+         break;
 
       case 4:
-         return X3DField .call (this, new Color4 (+r, +g, +b, +a));
-   }
+         X3DField .call (this, new Color4 (+r, +g, +b, +a));
+         break
 
-   throw new Error ("Invalid arguments.");
+      default:
+         throw new Error ("Invalid arguments.");
+   }
 }
 
-SFColorRGBA .prototype = Object .assign (Object .create (X3DField .prototype),
+Object .assign (Object .setPrototypeOf (SFColorRGBA .prototype, X3DField .prototype),
 {
-   constructor: SFColorRGBA,
-   [Symbol .iterator]: function* ()
+   *[Symbol .iterator] ()
    {
       yield* this .getValue ();
    },
-   copy: function ()
+   copy ()
    {
       return new SFColorRGBA (this .getValue () .copy ());
    },
-   getTypeName: function ()
-   {
-      return "SFColorRGBA";
-   },
-   getType: function ()
-   {
-      return X3DConstants .SFColorRGBA;
-   },
    equals: SFColor .prototype .equals,
-   isDefaultValue: function ()
+   isDefaultValue ()
    {
       return this .getValue () .equals (Color4 .Transparent);
    },
    set: SFColor .prototype .set,
-   getHSVA: function ()
+   getHSVA ()
    {
       return this .getValue () .getHSVA ([ ]);
    },
-   setHSVA: function (h, s, v, a)
+   setHSVA (h, s, v, a)
    {
       this .getValue () .setHSVA (h, s, v, a);
       this .addEvent ();
@@ -112,9 +106,10 @@ SFColorRGBA .prototype = Object .assign (Object .create (X3DField .prototype),
       {
          const result = new SFColorRGBA ();
 
-         this .getValue () .getHSVA (s),
-         destination .getValue () .getHSVA (d),
-         Color4 .lerp (s, d, t, r),
+         this .getValue () .getHSVA (s);
+         destination .getValue () .getHSVA (d);
+
+         Color4 .lerp (s, d, t, r);
 
          result .setHSVA (r [0], r [1], r [2], r [3]);
 
@@ -132,11 +127,11 @@ for (const key of Reflect .ownKeys (SFColorRGBA .prototype))
    Object .defineProperty (SFColorRGBA .prototype, key, { enumerable: false });
 
 const r = {
-   get: function ()
+   get ()
    {
       return this .getValue () .r;
    },
-   set: function (value)
+   set (value)
    {
       this .getValue () .r = +value;
       this .addEvent ();
@@ -144,11 +139,11 @@ const r = {
 };
 
 const g = {
-   get: function ()
+   get ()
    {
       return this .getValue () .g;
    },
-   set: function (value)
+   set (value)
    {
       this .getValue () .g = +value;
       this .addEvent ();
@@ -156,11 +151,11 @@ const g = {
 };
 
 const b = {
-   get: function ()
+   get ()
    {
       return this .getValue () .b;
    },
-   set: function (value)
+   set (value)
    {
       this .getValue () .b = +value;
       this .addEvent ();
@@ -168,11 +163,11 @@ const b = {
 };
 
 const a = {
-   get: function ()
+   get ()
    {
       return this .getValue () .a;
    },
-   set: function (value)
+   set (value)
    {
       this .getValue () .a = +value;
       this .addEvent ();
@@ -189,6 +184,15 @@ Object .defineProperties (SFColorRGBA .prototype,
    g: Object .assign ({ enumerable: true }, g),
    b: Object .assign ({ enumerable: true }, b),
    a: Object .assign ({ enumerable: true }, a),
+});
+
+Object .defineProperties (SFColorRGBA,
+{
+   typeName:
+   {
+      value: "SFColorRGBA",
+      enumerable: true,
+   },
 });
 
 export default SFColorRGBA;

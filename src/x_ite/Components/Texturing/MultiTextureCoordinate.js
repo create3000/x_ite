@@ -64,30 +64,9 @@ function MultiTextureCoordinate (executionContext)
    this .textureCoordinateNodes = [ ];
 }
 
-MultiTextureCoordinate .prototype = Object .assign (Object .create (X3DTextureCoordinateNode .prototype),
+Object .assign (Object .setPrototypeOf (MultiTextureCoordinate .prototype, X3DTextureCoordinateNode .prototype),
 {
-   constructor: MultiTextureCoordinate,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "texCoord", new Fields .MFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "MultiTextureCoordinate";
-   },
-   getComponentName: function ()
-   {
-      return "Texturing";
-   },
-   getContainerField: function ()
-   {
-      return "texCoord";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DTextureCoordinateNode .prototype .initialize .call (this);
 
@@ -95,7 +74,7 @@ MultiTextureCoordinate .prototype = Object .assign (Object .create (X3DTextureCo
 
       this .set_texCoord__ ();
    },
-   set_texCoord__: function ()
+   set_texCoord__ ()
    {
       const textureCoordinateNodes = this .textureCoordinateNodes;
 
@@ -115,33 +94,33 @@ MultiTextureCoordinate .prototype = Object .assign (Object .create (X3DTextureCo
       for (const textureCoordinateNode of textureCoordinateNodes)
          textureCoordinateNode .addInterest ("addNodeEvent", this);
    },
-   getCount: function ()
+   getCount ()
    {
       return Math .min (this .maxTexCoords, this .textureCoordinateNodes .length);
    },
-   isEmpty: function ()
+   isEmpty ()
    {
       return true;
    },
-   getSize: function ()
+   getSize ()
    {
       return 0;
    },
-   get1Point: function (index, vector)
+   get1Point (index, vector)
    {
       for (const textureCoordinateNode of this .textureCoordinateNodes)
          return textureCoordinateNode .get1Point (index, vector);
 
       return vector .set (0, 0, 0, 1);
    },
-   getPoints: function (array)
+   getPoints (array)
    {
       for (const textureCoordinateNode of this .textureCoordinateNodes)
          return textureCoordinateNode .getPoints (array);
 
       return array;
    },
-   init: function (multiArray)
+   init (multiArray)
    {
       const
          textureCoordinateNodes = this .textureCoordinateNodes,
@@ -150,7 +129,7 @@ MultiTextureCoordinate .prototype = Object .assign (Object .create (X3DTextureCo
       for (let i = 0; i < length; ++ i)
          textureCoordinateNodes [i] .init (multiArray);
    },
-   addPoint: function (index, multiArray)
+   addPoint (index, multiArray)
    {
       const
          textureCoordinateNodes = this .textureCoordinateNodes,
@@ -159,7 +138,7 @@ MultiTextureCoordinate .prototype = Object .assign (Object .create (X3DTextureCo
       for (let i = 0; i < length; ++ i)
          textureCoordinateNodes [i] .addPointToChannel (index, multiArray [i]);
    },
-   getTextureCoordinateMapping: function (textureCoordinateMapping)
+   getTextureCoordinateMapping (textureCoordinateMapping)
    {
       const
          textureCoordinateNodes = this .textureCoordinateNodes,
@@ -168,7 +147,7 @@ MultiTextureCoordinate .prototype = Object .assign (Object .create (X3DTextureCo
       for (let i = 0; i < length; ++ i)
          textureCoordinateNodes [i] .getTextureCoordinateMapping (textureCoordinateMapping, i);
    },
-   setShaderUniforms: function (gl, shaderObject)
+   setShaderUniforms (gl, shaderObject)
    {
       const
          textureCoordinateNodes = this .textureCoordinateNodes,
@@ -183,6 +162,38 @@ MultiTextureCoordinate .prototype = Object .assign (Object .create (X3DTextureCo
       {
          this .getBrowser () .getDefaultTextureCoordinate () .setShaderUniforms (gl, shaderObject, 0);
       }
+   },
+});
+
+Object .defineProperties (MultiTextureCoordinate,
+{
+   typeName:
+   {
+      value: "MultiTextureCoordinate",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Texturing",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "texCoord",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "texCoord", new Fields .MFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 

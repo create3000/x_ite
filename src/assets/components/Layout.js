@@ -54,20 +54,20 @@ import ScreenFontStyle  from "../../x_ite/Components/Layout/ScreenFontStyle.js";
 import ScreenGroup      from "../../x_ite/Components/Layout/ScreenGroup.js";
 import X3DLayoutNode    from "../../x_ite/Components/Layout/X3DLayoutNode.js";
 
-Components .addComponent ({
+Components .add ({
    name: "Layout",
-   types:
-   {
-      Layout:          Layout,
-      LayoutGroup:     LayoutGroup,
-      LayoutLayer:     LayoutLayer,
-      ScreenFontStyle: ScreenFontStyle,
-      ScreenGroup:     ScreenGroup,
-   },
-   abstractTypes:
-   {
-      X3DLayoutNode: X3DLayoutNode,
-   },
+   concreteNodes:
+   [
+      Layout,
+      LayoutGroup,
+      LayoutLayer,
+      ScreenFontStyle,
+      ScreenGroup,
+   ],
+   abstractNodes:
+   [
+      X3DLayoutNode,
+   ],
    browserContext: X3DLayoutContext,
 });
 

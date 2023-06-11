@@ -48,7 +48,7 @@
 import X3DObject from "../Base/X3DObject.js";
 import URLs      from "../Browser/Networking/URLs.js";
 
-function ComponentInfo ({ name, level, title, providerUrl, external = false, dependencies = [ ] })
+function ComponentInfo (name, level, title, providerUrl, external = false, dependencies = [ ])
 {
    Object .defineProperties (this,
    {
@@ -61,14 +61,9 @@ function ComponentInfo ({ name, level, title, providerUrl, external = false, dep
    });
 }
 
-ComponentInfo .prototype = Object .assign (Object .create (X3DObject .prototype),
+Object .assign (Object .setPrototypeOf (ComponentInfo .prototype, X3DObject .prototype),
 {
-   constructor: ComponentInfo,
-   getTypeName: function ()
-   {
-      return "ComponentInfo";
-   },
-   toVRMLStream: function (generator)
+   toVRMLStream (generator)
    {
       generator .string += generator .Indent ();
       generator .string += "COMPONENT";
@@ -79,7 +74,7 @@ ComponentInfo .prototype = Object .assign (Object .create (X3DObject .prototype)
       generator .string += generator .TidySpace ();
       generator .string += this .level;
    },
-   toXMLStream: function (generator)
+   toXMLStream (generator)
    {
       generator .string += generator .Indent ();
       generator .string += "<component";
@@ -93,7 +88,7 @@ ComponentInfo .prototype = Object .assign (Object .create (X3DObject .prototype)
       generator .string += "'";
       generator .string += generator .closingTags ? "></component>" : "/>";
    },
-   toJSONStream: function (generator)
+   toJSONStream (generator)
    {
       generator .string += generator .Indent ();
       generator .string += '{';
@@ -129,5 +124,14 @@ ComponentInfo .prototype = Object .assign (Object .create (X3DObject .prototype)
 
 for (const key of Reflect .ownKeys (ComponentInfo .prototype))
    Object .defineProperty (ComponentInfo .prototype, key, { enumerable: false });
+
+Object .defineProperties (ComponentInfo,
+{
+   typeName:
+   {
+      value: "ComponentInfo",
+      enumerable: true,
+   },
+});
 
 export default ComponentInfo;

@@ -45,7 +45,6 @@
  *
  ******************************************************************************/
 
-import SupportedNodes       from "../Configuration/SupportedNodes.js";
 import MetadataBoolean      from "./Core/MetadataBoolean.js";
 import MetadataDouble       from "./Core/MetadataDouble.js";
 import MetadataFloat        from "./Core/MetadataFloat.js";
@@ -61,32 +60,26 @@ import X3DNode              from "./Core/X3DNode.js";
 import X3DPrototypeInstance from "./Core/X3DPrototypeInstance.js";
 import X3DSensorNode        from "./Core/X3DSensorNode.js";
 
-const Types =
-{
-   MetadataBoolean: MetadataBoolean,
-   MetadataDouble:  MetadataDouble,
-   MetadataFloat:   MetadataFloat,
-   MetadataInteger: MetadataInteger,
-   MetadataSet:     MetadataSet,
-   MetadataString:  MetadataString,
-   WorldInfo:       WorldInfo,
+export default {
+   name: "Core",
+   concreteNodes:
+   [
+      MetadataBoolean,
+      MetadataDouble,
+      MetadataFloat,
+      MetadataInteger,
+      MetadataSet,
+      MetadataString,
+      WorldInfo,
+   ],
+   abstractNodes:
+   [
+      X3DBindableNode,
+      X3DChildNode,
+      X3DInfoNode,
+      X3DMetadataObject,
+      X3DNode,
+      X3DPrototypeInstance,
+      X3DSensorNode,
+   ],
 };
-
-const AbstractTypes =
-{
-   X3DBindableNode:      X3DBindableNode,
-   X3DChildNode:         X3DChildNode,
-   X3DInfoNode:          X3DInfoNode,
-   X3DMetadataObject:    X3DMetadataObject,
-   X3DNode:              X3DNode,
-   X3DPrototypeInstance: X3DPrototypeInstance,
-   X3DSensorNode:        X3DSensorNode,
-};
-
-for (const typeName in Types)
-   SupportedNodes .addNodeType (typeName, Types [typeName]);
-
-for (const typeName in AbstractTypes)
-   SupportedNodes .addAbstractNodeType (typeName, AbstractTypes [typeName]);
-
-export default undefined;

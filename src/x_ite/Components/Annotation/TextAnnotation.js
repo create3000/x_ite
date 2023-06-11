@@ -58,36 +58,47 @@ function TextAnnotation (executionContext)
    this .addType (X3DConstants .TextAnnotation);
 }
 
-TextAnnotation .prototype = Object .assign (Object .create (X3DAnnotationNode .prototype),
+Object .assign (Object .setPrototypeOf (TextAnnotation .prototype, X3DAnnotationNode .prototype),
 {
-   constructor: TextAnnotation,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",          new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",           new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "annotationGroupID", new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "displayPolicy",     new Fields .SFString ("NEVER")),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "contentType",       new Fields .SFString ("text/plain")),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "text",              new Fields .SFString ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "TextAnnotation";
-   },
-   getComponentName: function ()
-   {
-      return "Annotation";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["4.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DAnnotationNode .prototype .initialize .call (this);
+   },
+});
+
+Object .defineProperties (TextAnnotation,
+{
+   typeName:
+   {
+      value: "TextAnnotation",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Annotation",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["4.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",          new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",           new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "annotationGroupID", new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "displayPolicy",     new Fields .SFString ("NEVER")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "contentType",       new Fields .SFString ("text/plain")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "text",              new Fields .SFString ()),
+      ]),
+      enumerable: true,
    },
 });
 

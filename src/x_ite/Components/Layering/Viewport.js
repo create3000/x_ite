@@ -66,37 +66,9 @@ function Viewport (executionContext)
    this .rectangle = new Vector4 (0, 0, 0, 0);
 }
 
-Viewport .prototype = Object .assign (Object .create (X3DViewportNode .prototype),
+Object .assign (Object .setPrototypeOf (Viewport .prototype, X3DViewportNode .prototype),
 {
-   constructor: Viewport,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",       new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "clipBoundary",   new Fields .MFFloat (0, 1, 0, 1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",        new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",    new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",       new Fields .SFVec3f (-1, -1, -1)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",     new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",    new Fields .MFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,      "removeChildren", new Fields .MFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "children",       new Fields .MFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "Viewport";
-   },
-   getComponentName: function ()
-   {
-      return "Layering";
-   },
-   getContainerField: function ()
-   {
-      return "viewport";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
-   getRectangle: function ()
+   getRectangle ()
    {
       const
          viewport = this .getBrowser () .getViewport (),
@@ -112,23 +84,23 @@ Viewport .prototype = Object .assign (Object .create (X3DViewportNode .prototype
 
       return this .rectangle;
    },
-   getLeft: function ()
+   getLeft ()
    {
       return this ._clipBoundary .length > 0 ? this ._clipBoundary [0] : 0;
    },
-   getRight: function ()
+   getRight ()
    {
       return this ._clipBoundary .length > 1 ? this ._clipBoundary [1] : 1;
    },
-   getBottom: function ()
+   getBottom ()
    {
       return this ._clipBoundary .length > 2 ? this ._clipBoundary [2] : 0;
    },
-   getTop: function ()
+   getTop ()
    {
       return this ._clipBoundary .length > 3 ? this ._clipBoundary [3] : 1;
    },
-   traverse: function (type, renderObject)
+   traverse (type, renderObject)
    {
       this .push (renderObject);
 
@@ -148,7 +120,7 @@ Viewport .prototype = Object .assign (Object .create (X3DViewportNode .prototype
 
       this .pop (renderObject);
    },
-   push: function (renderObject)
+   push (renderObject)
    {
       const
          viewVolumes = renderObject .getViewVolumes (),
@@ -160,9 +132,48 @@ Viewport .prototype = Object .assign (Object .create (X3DViewportNode .prototype
 
       viewVolumes .push (viewVolume);
    },
-   pop: function (renderObject)
+   pop (renderObject)
    {
       ViewVolumes .push (renderObject .getViewVolumes () .pop ());
+   },
+});
+
+Object .defineProperties (Viewport,
+{
+   typeName:
+   {
+      value: "Viewport",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Layering",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "viewport",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",       new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "clipBoundary",   new Fields .MFFloat (0, 1, 0, 1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",        new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",    new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",       new Fields .SFVec3f (-1, -1, -1)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",     new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",    new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "removeChildren", new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "children",       new Fields .MFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 

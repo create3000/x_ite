@@ -120,39 +120,15 @@ function BooleanFilter (executionContext)
    this .addType ((X3DConstants_default()).BooleanFilter);
 }
 
-BooleanFilter .prototype = Object .assign (Object .create ((X3DChildNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (BooleanFilter .prototype, (X3DChildNode_default()).prototype),
 {
-   constructor: BooleanFilter,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",    new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,   "set_boolean", new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "inputTrue",   new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "inputFalse",  new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "inputNegate", new (Fields_default()).SFBool ()),
-   ]),
-   getTypeName: function ()
+   initialize ()
    {
-      return "BooleanFilter";
-   },
-   getComponentName: function ()
-   {
-      return "EventUtilities";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
-   {
-      X3DChildNode_default().prototype.initialize.call (this);
+      X3DChildNode_default().prototype .initialize .call (this);
 
       this ._set_boolean .addInterest ("set_boolean__", this);
    },
-   set_boolean__: function ()
+   set_boolean__ ()
    {
       const value = this ._set_boolean .getValue ();
 
@@ -163,6 +139,41 @@ BooleanFilter .prototype = Object .assign (Object .create ((X3DChildNode_default
          this ._inputFalse = false;
 
       this ._inputNegate = ! value;
+   },
+});
+
+Object .defineProperties (BooleanFilter,
+{
+   typeName:
+   {
+      value: "BooleanFilter",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "EventUtilities",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",    new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,   "set_boolean", new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "inputTrue",   new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "inputFalse",  new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "inputNegate", new (Fields_default()).SFBool ()),
+      ]),
+      enumerable: true,
    },
 });
 
@@ -235,19 +246,18 @@ function X3DSequencerNode (executionContext)
    this .index = -1;
 }
 
-X3DSequencerNode .prototype = Object .assign (Object .create ((X3DChildNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (X3DSequencerNode .prototype, (X3DChildNode_default()).prototype),
 {
-   constructor: X3DSequencerNode,
-   initialize: function ()
+   initialize ()
    {
-      X3DChildNode_default().prototype.initialize.call (this);
+      X3DChildNode_default().prototype .initialize .call (this);
 
       this ._set_fraction .addInterest ("set_fraction__", this);
       this ._previous     .addInterest ("set_previous__", this);
       this ._next         .addInterest ("set_next__", this);
       this ._key          .addInterest ("set_index__", this);
    },
-   set_fraction__: function ()
+   set_fraction__ ()
    {
       const
          fraction = this ._set_fraction .getValue (),
@@ -280,7 +290,7 @@ X3DSequencerNode .prototype = Object .assign (Object .create ((X3DChildNode_defa
          }
       }
    },
-   set_previous__: function ()
+   set_previous__ ()
    {
       if (this ._previous .getValue ())
       {
@@ -294,7 +304,7 @@ X3DSequencerNode .prototype = Object .assign (Object .create ((X3DChildNode_defa
             this .sequence (this .index);
       }
    },
-   set_next__: function ()
+   set_next__ ()
    {
       if (this ._next .getValue ())
       {
@@ -308,9 +318,23 @@ X3DSequencerNode .prototype = Object .assign (Object .create ((X3DChildNode_defa
             this .sequence (this .index);
       }
    },
-   set_index__: function ()
+   set_index__ ()
    {
       this .index = -1;
+   },
+});
+
+Object .defineProperties (X3DSequencerNode,
+{
+   typeName:
+   {
+      value: "X3DSequencerNode",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "EventUtilities",
+      enumerable: true,
    },
 });
 
@@ -375,52 +399,63 @@ Namespace_default().set ("x_ite/Components/EventUtilities/X3DSequencerNode", X3D
 
 function BooleanSequencer (executionContext)
 {
-   EventUtilities_X3DSequencerNode.call (this, executionContext);
+   EventUtilities_X3DSequencerNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).BooleanSequencer);
 }
 
-BooleanSequencer .prototype = Object .assign (Object .create (EventUtilities_X3DSequencerNode.prototype),
+Object .assign (Object .setPrototypeOf (BooleanSequencer .prototype, EventUtilities_X3DSequencerNode .prototype),
 {
-   constructor: BooleanSequencer,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",      new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,   "set_fraction",  new (Fields_default()).SFFloat ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,   "previous",      new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,   "next",          new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "key",           new (Fields_default()).MFFloat ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "keyValue",      new (Fields_default()).MFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "value_changed", new (Fields_default()).SFBool ()),
-   ]),
-   getTypeName: function ()
+   initialize ()
    {
-      return "BooleanSequencer";
-   },
-   getComponentName: function ()
-   {
-      return "EventUtilities";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
-   {
-      EventUtilities_X3DSequencerNode.prototype.initialize.call (this);
+      EventUtilities_X3DSequencerNode .prototype .initialize .call (this);
 
       this ._keyValue .addInterest ("set_index__", this);
    },
-   getSize: function ()
+   getSize ()
    {
       return this ._keyValue .length;
    },
-   sequence: function (index)
+   sequence (index)
    {
       this ._value_changed = this ._keyValue [index];
+   },
+});
+
+Object .defineProperties (BooleanSequencer,
+{
+   typeName:
+   {
+      value: "BooleanSequencer",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "EventUtilities",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",      new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,   "set_fraction",  new (Fields_default()).SFFloat ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,   "previous",      new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,   "next",          new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "key",           new (Fields_default()).MFFloat ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "keyValue",      new (Fields_default()).MFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "value_changed", new (Fields_default()).SFBool ()),
+      ]),
+      enumerable: true,
    },
 });
 
@@ -490,40 +525,51 @@ function BooleanToggle (executionContext)
    this .addType ((X3DConstants_default()).BooleanToggle);
 }
 
-BooleanToggle .prototype = Object .assign (Object .create ((X3DChildNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (BooleanToggle .prototype, (X3DChildNode_default()).prototype),
 {
-   constructor: BooleanToggle,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",    new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,   "set_boolean", new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "toggle",      new (Fields_default()).SFBool ()),
-   ]),
-   getTypeName: function ()
+   initialize ()
    {
-      return "BooleanToggle";
-   },
-   getComponentName: function ()
-   {
-      return "EventUtilities";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
-   {
-      X3DChildNode_default().prototype.initialize.call (this);
+      X3DChildNode_default().prototype .initialize .call (this);
 
       this ._set_boolean .addInterest ("set_boolean__", this);
    },
-   set_boolean__: function ()
+   set_boolean__ ()
    {
       if (this ._set_boolean .getValue ())
          this ._toggle = ! this ._toggle .getValue ();
+   },
+});
+
+Object .defineProperties (BooleanToggle,
+{
+   typeName:
+   {
+      value: "BooleanToggle",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "EventUtilities",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",    new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,   "set_boolean", new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "toggle",      new (Fields_default()).SFBool ()),
+      ]),
+      enumerable: true,
    },
 });
 
@@ -590,9 +636,20 @@ function X3DTriggerNode (executionContext)
    this .addType ((X3DConstants_default()).X3DTriggerNode);
 }
 
-X3DTriggerNode .prototype = Object .assign (Object .create ((X3DChildNode_default()).prototype),
+Object .setPrototypeOf (X3DTriggerNode .prototype, (X3DChildNode_default()).prototype);
+
+Object .defineProperties (X3DTriggerNode,
 {
-   constructor: X3DTriggerNode,
+   typeName:
+   {
+      value: "X3DTriggerNode",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "EventUtilities",
+      enumerable: true,
+   },
 });
 
 const X3DTriggerNode_default_ = X3DTriggerNode;
@@ -656,44 +713,55 @@ Namespace_default().set ("x_ite/Components/EventUtilities/X3DTriggerNode", X3DTr
 
 function BooleanTrigger (executionContext)
 {
-   EventUtilities_X3DTriggerNode.call (this, executionContext);
+   EventUtilities_X3DTriggerNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).BooleanTrigger);
 }
 
-BooleanTrigger .prototype = Object .assign (Object .create (EventUtilities_X3DTriggerNode.prototype),
+Object .assign (Object .setPrototypeOf (BooleanTrigger .prototype, EventUtilities_X3DTriggerNode .prototype),
 {
-   constructor: BooleanTrigger,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",        new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,   "set_triggerTime", new (Fields_default()).SFTime ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "triggerTrue",     new (Fields_default()).SFBool ()),
-   ]),
-   getTypeName: function ()
+   initialize ()
    {
-      return "BooleanTrigger";
-   },
-   getComponentName: function ()
-   {
-      return "EventUtilities";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
-   {
-      EventUtilities_X3DTriggerNode.prototype.initialize.call (this);
+      EventUtilities_X3DTriggerNode .prototype .initialize .call (this);
 
       this ._set_triggerTime .addInterest ("set_triggerTime__", this);
    },
-   set_triggerTime__: function ()
+   set_triggerTime__ ()
    {
       this ._triggerTrue = true;
+   },
+});
+
+Object .defineProperties (BooleanTrigger,
+{
+   typeName:
+   {
+      value: "BooleanTrigger",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "EventUtilities",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",        new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,   "set_triggerTime", new (Fields_default()).SFTime ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "triggerTrue",     new (Fields_default()).SFBool ()),
+      ]),
+      enumerable: true,
    },
 });
 
@@ -758,52 +826,63 @@ Namespace_default().set ("x_ite/Components/EventUtilities/BooleanTrigger", Boole
 
 function IntegerSequencer (executionContext)
 {
-   EventUtilities_X3DSequencerNode.call (this, executionContext);
+   EventUtilities_X3DSequencerNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).IntegerSequencer);
 }
 
-IntegerSequencer .prototype = Object .assign (Object .create (EventUtilities_X3DSequencerNode.prototype),
+Object .assign (Object .setPrototypeOf (IntegerSequencer .prototype, EventUtilities_X3DSequencerNode .prototype),
 {
-   constructor: IntegerSequencer,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",      new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,   "set_fraction",  new (Fields_default()).SFFloat ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,   "previous",      new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,   "next",          new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "key",           new (Fields_default()).MFFloat ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "keyValue",      new (Fields_default()).MFInt32 ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "value_changed", new (Fields_default()).SFInt32 ()),
-   ]),
-   getTypeName: function ()
+   initialize ()
    {
-      return "IntegerSequencer";
-   },
-   getComponentName: function ()
-   {
-      return "EventUtilities";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
-   {
-      EventUtilities_X3DSequencerNode.prototype.initialize.call (this);
+      EventUtilities_X3DSequencerNode .prototype .initialize .call (this);
 
       this ._keyValue .addInterest ("set_index__", this);
    },
-   getSize: function ()
+   getSize ()
    {
       return this ._keyValue .length;
    },
-   sequence: function (index)
+   sequence (index)
    {
       this ._value_changed = this ._keyValue [index];
+   },
+});
+
+Object .defineProperties (IntegerSequencer,
+{
+   typeName:
+   {
+      value: "IntegerSequencer",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "EventUtilities",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",      new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,   "set_fraction",  new (Fields_default()).SFFloat ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,   "previous",      new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,   "next",          new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "key",           new (Fields_default()).MFFloat ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "keyValue",      new (Fields_default()).MFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "value_changed", new (Fields_default()).SFInt32 ()),
+      ]),
+      enumerable: true,
    },
 });
 
@@ -868,45 +947,56 @@ Namespace_default().set ("x_ite/Components/EventUtilities/IntegerSequencer", Int
 
 function IntegerTrigger (executionContext)
 {
-   EventUtilities_X3DTriggerNode.call (this, executionContext);
+   EventUtilities_X3DTriggerNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).IntegerTrigger);
 }
 
-IntegerTrigger .prototype = Object .assign (Object .create (EventUtilities_X3DTriggerNode.prototype),
+Object .assign (Object .setPrototypeOf (IntegerTrigger .prototype, EventUtilities_X3DTriggerNode .prototype),
 {
-   constructor: IntegerTrigger,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",     new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,   "set_boolean",  new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "integerKey",   new (Fields_default()).SFInt32 (-1)),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "triggerValue", new (Fields_default()).SFInt32 ()),
-   ]),
-   getTypeName: function ()
+   initialize ()
    {
-      return "IntegerTrigger";
-   },
-   getComponentName: function ()
-   {
-      return "EventUtilities";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
-   {
-      EventUtilities_X3DTriggerNode.prototype.initialize.call (this);
+      EventUtilities_X3DTriggerNode .prototype .initialize .call (this);
 
       this ._set_boolean .addInterest ("set_boolean__", this);
    },
-   set_boolean__: function ()
+   set_boolean__ ()
    {
       this ._triggerValue = this ._integerKey;
+   },
+});
+
+Object .defineProperties (IntegerTrigger,
+{
+   typeName:
+   {
+      value: "IntegerTrigger",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "EventUtilities",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",     new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,   "set_boolean",  new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "integerKey",   new (Fields_default()).SFInt32 (-1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "triggerValue", new (Fields_default()).SFInt32 ()),
+      ]),
+      enumerable: true,
    },
 });
 
@@ -971,44 +1061,55 @@ Namespace_default().set ("x_ite/Components/EventUtilities/IntegerTrigger", Integ
 
 function TimeTrigger (executionContext)
 {
-   EventUtilities_X3DTriggerNode.call (this, executionContext);
+   EventUtilities_X3DTriggerNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).TimeTrigger);
 }
 
-TimeTrigger .prototype = Object .assign (Object .create (EventUtilities_X3DTriggerNode.prototype),
+Object .assign (Object .setPrototypeOf (TimeTrigger .prototype, EventUtilities_X3DTriggerNode .prototype),
 {
-   constructor: TimeTrigger,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new (FieldDefinitionArray_default()) ([
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",    new (Fields_default()).SFNode ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,   "set_boolean", new (Fields_default()).SFBool ()),
-      new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "triggerTime", new (Fields_default()).SFTime ()),
-   ]),
-   getTypeName: function ()
+   initialize ()
    {
-      return "TimeTrigger";
-   },
-   getComponentName: function ()
-   {
-      return "EventUtilities";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
-   {
-      EventUtilities_X3DTriggerNode.prototype.initialize.call (this);
+      EventUtilities_X3DTriggerNode .prototype .initialize .call (this);
 
       this ._set_boolean .addInterest ("set_boolean__", this);
    },
-   set_boolean__: function ()
+   set_boolean__ ()
    {
       this ._triggerTime = this .getBrowser () .getCurrentTime ();
+   },
+});
+
+Object .defineProperties (TimeTrigger,
+{
+   typeName:
+   {
+      value: "TimeTrigger",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "EventUtilities",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new (FieldDefinitionArray_default()) ([
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",    new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,   "set_boolean", new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "triggerTime", new (Fields_default()).SFTime ()),
+      ]),
+      enumerable: true,
    },
 });
 
@@ -1076,23 +1177,23 @@ Namespace_default().set ("x_ite/Components/EventUtilities/TimeTrigger", TimeTrig
 
 
 
-Components_default().addComponent ({
+Components_default().add ({
    name: "EventUtilities",
-   types:
-   {
-      BooleanFilter:    EventUtilities_BooleanFilter,
-      BooleanSequencer: EventUtilities_BooleanSequencer,
-      BooleanToggle:    EventUtilities_BooleanToggle,
-      BooleanTrigger:   EventUtilities_BooleanTrigger,
-      IntegerSequencer: EventUtilities_IntegerSequencer,
-      IntegerTrigger:   EventUtilities_IntegerTrigger,
-      TimeTrigger:      EventUtilities_TimeTrigger,
-   },
-   abstractTypes:
-   {
-      X3DSequencerNode: EventUtilities_X3DSequencerNode,
-      X3DTriggerNode:   EventUtilities_X3DTriggerNode,
-   },
+   concreteNodes:
+   [
+      EventUtilities_BooleanFilter,
+      EventUtilities_BooleanSequencer,
+      EventUtilities_BooleanToggle,
+      EventUtilities_BooleanTrigger,
+      EventUtilities_IntegerSequencer,
+      EventUtilities_IntegerTrigger,
+      EventUtilities_TimeTrigger,
+   ],
+   abstractNodes:
+   [
+      EventUtilities_X3DSequencerNode,
+      EventUtilities_X3DTriggerNode,
+   ],
 });
 
 const EventUtilities_default_ = undefined;

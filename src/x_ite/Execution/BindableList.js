@@ -59,18 +59,13 @@ function BindableList (executionContext, defaultNode)
    this .removedNodes   = [ ];
 }
 
-BindableList .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+Object .assign (Object .setPrototypeOf (BindableList .prototype, X3DBaseNode .prototype),
 {
-   constructor: BindableList,
-   getTypeName: function ()
-   {
-      return "BindableList";
-   },
-   get: function ()
+   get ()
    {
       return this .nodes;
    },
-   getBound: function (name)
+   getBound (name)
    {
       const length = this .nodes .length;
 
@@ -128,11 +123,11 @@ BindableList .prototype = Object .assign (Object .create (X3DBaseNode .prototype
 
       return this .nodes [0]; // Return default viewpoint.
    },
-   push: function (node)
+   push (node)
    {
       return this .collectedNodes .push (node);
    },
-   update: function (layerNode, stack)
+   update (layerNode, stack)
    {
       const
          collectedNodes = this .collectedNodes,
@@ -198,5 +193,14 @@ function equals (lhs, rhs)
 
    return true;
 }
+
+Object .defineProperties (BindableList,
+{
+   typeName:
+   {
+      value: "BindableList",
+      enumerable: true,
+   },
+});
 
 export default BindableList;

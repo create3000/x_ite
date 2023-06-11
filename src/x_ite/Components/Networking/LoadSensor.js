@@ -66,36 +66,9 @@ function LoadSensor (executionContext)
    this .timeOutId  = undefined;
 }
 
-LoadSensor .prototype = Object .assign (Object .create (X3DNetworkSensorNode .prototype),
+Object .assign (Object .setPrototypeOf (LoadSensor .prototype, X3DNetworkSensorNode .prototype),
 {
-   constructor: LoadSensor,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",  new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "timeOut",  new Fields .SFTime ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive", new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "isLoaded", new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "progress", new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "loadTime", new Fields .SFTime ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "children", new Fields .MFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "LoadSensor";
-   },
-   getComponentName: function ()
-   {
-      return "Networking";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DNetworkSensorNode .prototype .initialize .call (this);
 
@@ -105,7 +78,7 @@ LoadSensor .prototype = Object .assign (Object .create (X3DNetworkSensorNode .pr
 
       this .set_children__ ();
    },
-   set_enabled__: function ()
+   set_enabled__ ()
    {
       if (this ._enabled .getValue ())
          this .reset ();
@@ -116,7 +89,7 @@ LoadSensor .prototype = Object .assign (Object .create (X3DNetworkSensorNode .pr
          this .remove ();
       }
    },
-   set_timeOut__: function ()
+   set_timeOut__ ()
    {
       if (this ._isActive .getValue ())
       {
@@ -128,11 +101,11 @@ LoadSensor .prototype = Object .assign (Object .create (X3DNetworkSensorNode .pr
             this .timeOutId = setTimeout (this .abort .bind (this), this ._timeOut .getValue () * 1000);
       }
    },
-   set_children__: function ()
+   set_children__ ()
    {
       this .reset ();
    },
-   set_loadState__: function (urlObject)
+   set_loadState__ (urlObject)
    {
       switch (urlObject .checkLoadState ())
       {
@@ -147,7 +120,7 @@ LoadSensor .prototype = Object .assign (Object .create (X3DNetworkSensorNode .pr
          }
       }
    },
-   count: function ()
+   count ()
    {
       const urlObjects = this .urlObjects;
 
@@ -200,7 +173,7 @@ LoadSensor .prototype = Object .assign (Object .create (X3DNetworkSensorNode .pr
          this ._progress = 0;
       }
    },
-   abort: function ()
+   abort ()
    {
       this .clearTimeout ();
 
@@ -209,7 +182,7 @@ LoadSensor .prototype = Object .assign (Object .create (X3DNetworkSensorNode .pr
       if (this ._enabled .getValue ())
          this .count ();
    },
-   reset: function ()
+   reset ()
    {
       this .remove ();
 
@@ -232,7 +205,7 @@ LoadSensor .prototype = Object .assign (Object .create (X3DNetworkSensorNode .pr
 
       this .count ();
    },
-   remove: function ()
+   remove ()
    {
       this .clearTimeout ();
 
@@ -243,11 +216,49 @@ LoadSensor .prototype = Object .assign (Object .create (X3DNetworkSensorNode .pr
 
       urlObjects .length = 0;
    },
-   clearTimeout: function ()
+   clearTimeout ()
    {
       clearTimeout (this .timeOutId);
 
       this .timeOutId = undefined;
+   },
+});
+
+Object .defineProperties (LoadSensor,
+{
+   typeName:
+   {
+      value: "LoadSensor",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Networking",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",  new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "timeOut",  new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive", new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "isLoaded", new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "progress", new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "loadTime", new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "children", new Fields .MFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 

@@ -55,30 +55,29 @@ function CatmullRomSplineInterpolatorTemplate (Type)
       this .T1 = [ ];
    }
 
-   CatmullRomSplineInterpolatorInstance .prototype = Object .assign (Object .create (CatmullRomSplineInterpolator .prototype),
+   Object .assign (Object .setPrototypeOf (CatmullRomSplineInterpolatorInstance .prototype, CatmullRomSplineInterpolator .prototype),
    {
-      constructor: CatmullRomSplineInterpolatorInstance,
-      create: function ()
+      create ()
       {
          return Type .Zero .copy ();
       },
-      copy: function (value)
+      copy (value)
       {
          return value .copy ();
       },
-      subtract: function (lhs, rhs)
+      subtract (lhs, rhs)
       {
          return lhs .copy () .subtract (rhs);
       },
-      multiply: function (lhs, rhs)
+      multiply (lhs, rhs)
       {
          return lhs .copy () .multiply (rhs);
       },
-      divide: function (lhs, rhs)
+      divide (lhs, rhs)
       {
          return lhs .copy () .divide (rhs);
       },
-      magnitude: function (value)
+      magnitude (value)
       {
          return value .magnitude ();
       },

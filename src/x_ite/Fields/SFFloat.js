@@ -45,57 +45,47 @@
  *
  ******************************************************************************/
 
-import X3DField     from "../Base/X3DField.js";
-import X3DConstants from "../Base/X3DConstants.js";
+import X3DField from "../Base/X3DField.js";
 
 function SFFloat (value)
 {
-   return X3DField .call (this, arguments .length ? +value : 0);
+   X3DField .call (this, arguments .length ? +value : 0);
 }
 
-SFFloat .prototype = Object .assign (Object .create (X3DField .prototype),
+Object .assign (Object .setPrototypeOf (SFFloat .prototype, X3DField .prototype),
 {
-   constructor: SFFloat,
-   copy: function ()
+   copy ()
    {
       return new SFFloat (this .getValue ());
    },
-   getTypeName: function ()
-   {
-      return "SFFloat";
-   },
-   getType: function ()
-   {
-      return X3DConstants .SFFloat;
-   },
-   isDefaultValue: function ()
+   isDefaultValue ()
    {
       return this .getValue () === 0;
    },
-   set: function (value)
+   set (value)
    {
       X3DField .prototype .set .call (this, +value);
    },
    valueOf: X3DField .prototype .getValue,
-   toStream: function (generator)
+   toStream (generator)
    {
       const category = generator .Unit (this .getUnit ());
 
       generator .string += generator .FloatFormat (generator .ToUnit (category, this .getValue ()));
    },
-   toVRMLStream: function (generator)
+   toVRMLStream (generator)
    {
       this .toStream (generator);
    },
-   toXMLStream: function (generator)
+   toXMLStream (generator)
    {
       this .toStream (generator);
    },
-   toJSONStream: function (generator)
+   toJSONStream (generator)
    {
       this .toJSONStreamValue (generator);
    },
-   toJSONStreamValue: function (generator)
+   toJSONStreamValue (generator)
    {
       const category = generator .Unit (this .getUnit ());
 
@@ -105,5 +95,14 @@ SFFloat .prototype = Object .assign (Object .create (X3DField .prototype),
 
 for (const key of Reflect .ownKeys (SFFloat .prototype))
    Object .defineProperty (SFFloat .prototype, key, { enumerable: false });
+
+Object .defineProperties (SFFloat,
+{
+   typeName:
+   {
+      value: "SFFloat",
+      enumerable: true,
+   },
+});
 
 export default SFFloat;

@@ -67,18 +67,17 @@ function GeometryContext (options = { })
    this .updateGeometryKey ();
 }
 
-GeometryContext .prototype =
+Object .assign (GeometryContext .prototype,
 {
-   constructor: GeometryContext,
    updateGeometryKey: X3DGeometryNode .prototype .updateGeometryKey,
-   getTextureCoordinateMapping: function ()
+   getTextureCoordinateMapping ()
    {
       return this .textureCoordinateMapping;
    },
-   getTextureCoordinate: function ()
+   getTextureCoordinate ()
    {
       return this .textureCoordinateNode;
    },
-};
+});
 
 export default GeometryContext;

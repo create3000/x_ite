@@ -59,30 +59,9 @@ function Normal (executionContext)
    this .addType (X3DConstants .Normal);
 }
 
-Normal .prototype = Object .assign (Object .create (X3DNormalNode .prototype),
+Object .assign (Object .setPrototypeOf (Normal .prototype, X3DNormalNode .prototype),
 {
-   constructor: Normal,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "vector",   new Fields .MFVec3f ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "Normal";
-   },
-   getComponentName: function ()
-   {
-      return "Rendering";
-   },
-   getContainerField: function ()
-   {
-      return "normal";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DNormalNode .prototype .initialize .call (this);
 
@@ -90,16 +69,16 @@ Normal .prototype = Object .assign (Object .create (X3DNormalNode .prototype),
 
       this .set_vector__ ();
    },
-   set_vector__: function ()
+   set_vector__ ()
    {
       this .vector = this ._vector .getValue ();
       this .length = this ._vector .length;
    },
-   set1Vector: function (index, vector)
+   set1Vector (index, vector)
    {
       this ._vector [index] = vector;
    },
-   get1Vector: function (index, result)
+   get1Vector (index, result)
    {
       if (index >= 0 && index < this .length)
       {
@@ -123,7 +102,7 @@ Normal .prototype = Object .assign (Object .create (X3DNormalNode .prototype),
          return result .set (0, 0, 0);
       }
    },
-   addVector: function (index, array)
+   addVector (index, array)
    {
       if (index >= 0 && index < this .length)
       {
@@ -147,7 +126,7 @@ Normal .prototype = Object .assign (Object .create (X3DNormalNode .prototype),
          return array .push (0, 0, 0);
       }
    },
-   addNormals: function (array, min)
+   addNormals (array, min)
    {
       if (this .length)
       {
@@ -176,6 +155,38 @@ Normal .prototype = Object .assign (Object .create (X3DNormalNode .prototype),
       }
 
       return array;
+   },
+});
+
+Object .defineProperties (Normal,
+{
+   typeName:
+   {
+      value: "Normal",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Rendering",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "normal",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "vector",   new Fields .MFVec3f ()),
+      ]),
+      enumerable: true,
    },
 });
 

@@ -60,40 +60,9 @@ function TriangleStripSet (executionContext)
    this .triangleIndex = [ ];
 }
 
-TriangleStripSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .prototype),
+Object .assign (Object .setPrototypeOf (TriangleStripSet .prototype, X3DComposedGeometryNode .prototype),
 {
-   constructor: TriangleStripSet,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",        new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",           new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "ccw",             new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "colorPerVertex",  new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "normalPerVertex", new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "stripCount",      new Fields .MFInt32 ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "attrib",          new Fields .MFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "fogCoord",        new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "color",           new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "texCoord",        new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "normal",          new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "coord",           new Fields .SFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "TriangleStripSet";
-   },
-   getComponentName: function ()
-   {
-      return "Rendering";
-   },
-   getContainerField: function ()
-   {
-      return "geometry";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DComposedGeometryNode .prototype .initialize .call (this);
 
@@ -101,7 +70,7 @@ TriangleStripSet .prototype = Object .assign (Object .create (X3DComposedGeometr
 
       this .set_stripCount__ ();
    },
-   set_stripCount__: function ()
+   set_stripCount__ ()
    {
       // Build coordIndex
 
@@ -127,13 +96,55 @@ TriangleStripSet .prototype = Object .assign (Object .create (X3DComposedGeometr
          index += vertexCount;
       }
    },
-   getPolygonIndex: function (index)
+   getPolygonIndex (index)
    {
       return this .triangleIndex [index];
    },
-   build: function ()
+   build ()
    {
       X3DComposedGeometryNode .prototype .build .call (this, 3, this .triangleIndex .length, 3, this .triangleIndex .length);
+   },
+});
+
+Object .defineProperties (TriangleStripSet,
+{
+   typeName:
+   {
+      value: "TriangleStripSet",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Rendering",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "geometry",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",        new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",           new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "ccw",             new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "colorPerVertex",  new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "normalPerVertex", new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "stripCount",      new Fields .MFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "attrib",          new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "fogCoord",        new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "color",           new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "texCoord",        new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "normal",          new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "coord",           new Fields .SFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 

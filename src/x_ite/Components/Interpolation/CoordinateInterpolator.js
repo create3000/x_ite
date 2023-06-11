@@ -59,34 +59,10 @@ function CoordinateInterpolator (executionContext)
    this .addType (X3DConstants .CoordinateInterpolator);
 }
 
-CoordinateInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
+Object .assign (Object .setPrototypeOf (CoordinateInterpolator .prototype, X3DInterpolatorNode .prototype),
 {
-   constructor: CoordinateInterpolator,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "key",           new Fields .MFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "keyValue",      new Fields .MFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .MFVec3f ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "CoordinateInterpolator";
-   },
-   getComponentName: function ()
-   {
-      return "Interpolation";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
-   set_keyValue__: function () { },
-   interpolate: function (index0, index1, weight)
+   set_keyValue__ () { },
+   interpolate (index0, index1, weight)
    {
       const keyValue = this ._keyValue .getValue ();
 
@@ -115,6 +91,41 @@ CoordinateInterpolator .prototype = Object .assign (Object .create (X3DInterpola
       }
 
       this ._value_changed .addEvent ();
+   },
+});
+
+Object .defineProperties (CoordinateInterpolator,
+{
+   typeName:
+   {
+      value: "CoordinateInterpolator",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Interpolation",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "key",           new Fields .MFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "keyValue",      new Fields .MFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .MFVec3f ()),
+      ]),
+      enumerable: true,
    },
 });
 

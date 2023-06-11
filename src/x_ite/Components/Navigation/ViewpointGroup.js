@@ -68,35 +68,9 @@ function ViewpointGroup (executionContext)
    this .viewpointGroups  = [ ];
 }
 
-ViewpointGroup .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+Object .assign (Object .setPrototypeOf (ViewpointGroup .prototype, X3DChildNode .prototype),
 {
-   constructor: ViewpointGroup,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",          new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "description",       new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "displayed",         new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "retainUserOffsets", new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "size",              new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "center",            new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "children",          new Fields .MFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "ViewpointGroup";
-   },
-   getComponentName: function ()
-   {
-      return "Navigation";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DChildNode .prototype .initialize .call (this);
 
@@ -115,11 +89,11 @@ ViewpointGroup .prototype = Object .assign (Object .create (X3DChildNode .protot
       this .set_displayed__ ();
       this .set_children__ ();
    },
-   isActive: function ()
+   isActive ()
    {
       return this .proximitySensor ._isActive .getValue ();
    },
-   set_displayed__: function ()
+   set_displayed__ ()
    {
       var
          proxy     = ! this ._size .getValue () .equals (Vector3 .Zero),
@@ -151,7 +125,7 @@ ViewpointGroup .prototype = Object .assign (Object .create (X3DChildNode .protot
             delete this .traverse;
       }
    },
-   set_children__: function ()
+   set_children__ ()
    {
       this .cameraObjects   .length = 0;
       this .viewpointGroups .length = 0;
@@ -184,11 +158,11 @@ ViewpointGroup .prototype = Object .assign (Object .create (X3DChildNode .protot
                }
             }
          }
-         catch (error)
+         catch
          { }
       }
    },
-   traverse: function () { },
+   traverse () { },
 });
 
 function traverseWithProximitySensor (type, renderObject)
@@ -242,5 +216,42 @@ function traverse (type, renderObject)
       }
    }
 }
+
+Object .defineProperties (ViewpointGroup,
+{
+   typeName:
+   {
+      value: "ViewpointGroup",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Navigation",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",          new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "description",       new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "displayed",         new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "retainUserOffsets", new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "size",              new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "center",            new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "children",          new Fields .MFNode ()),
+      ]),
+      enumerable: true,
+   },
+});
 
 export default ViewpointGroup;

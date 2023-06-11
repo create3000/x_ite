@@ -54,21 +54,21 @@ import TextAnnotation    from "../../x_ite/Components/Annotation/TextAnnotation.
 import URLAnnotation     from "../../x_ite/Components/Annotation/URLAnnotation.js";
 import X3DAnnotationNode from "../../x_ite/Components/Annotation/X3DAnnotationNode.js";
 
-Components .addComponent ({
+Components .add ({
    name: "Annotation",
-   types:
-   {
-      AnnotationLayer:  AnnotationLayer,
-      AnnotationTarget: AnnotationTarget,
-      GroupAnnotation:  GroupAnnotation,
-      IconAnnotation:   IconAnnotation,
-      TextAnnotation:   TextAnnotation,
-      URLAnnotation:    URLAnnotation,
-   },
-   abstractTypes:
-   {
-      X3DAnnotationNode: X3DAnnotationNode,
-   },
+   concreteNodes:
+   [
+      AnnotationLayer,
+      AnnotationTarget,
+      GroupAnnotation,
+      IconAnnotation,
+      TextAnnotation,
+      URLAnnotation,
+   ],
+   abstractNodes:
+   [
+      X3DAnnotationNode,
+   ],
 });
 
 export default undefined;

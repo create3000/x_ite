@@ -54,22 +54,17 @@ function BindableStack (executionContext, defaultNode)
    this .nodes = [ defaultNode ];
 }
 
-BindableStack .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+Object .assign (Object .setPrototypeOf (BindableStack .prototype, X3DBaseNode .prototype),
 {
-   constructor: BindableStack,
-   getTypeName: function ()
-   {
-      return "BindableStack";
-   },
-   get: function ()
+   get ()
    {
       return this .nodes;
    },
-   top: function ()
+   top ()
    {
       return this .nodes .at (-1);
    },
-   pushOnTop: function (node)
+   pushOnTop (node)
    {
       if (node !== this .nodes [0])
       {
@@ -83,7 +78,7 @@ BindableStack .prototype = Object .assign (Object .create (X3DBaseNode .prototyp
 
       this .addNodeEvent ();
    },
-   update: function (layerNode, removedNodes, changedNodes)
+   update (layerNode, removedNodes, changedNodes)
    {
       if (removedNodes .length === 0 && changedNodes .length === 0)
          return;
@@ -157,5 +152,14 @@ BindableStack .prototype = Object .assign (Object .create (X3DBaseNode .prototyp
 
 for (const key of Reflect .ownKeys (BindableStack .prototype))
    Object .defineProperty (BindableStack .prototype, key, { enumerable: false });
+
+Object .defineProperties (BindableStack,
+{
+   typeName:
+   {
+      value: "BindableStack",
+      enumerable: true,
+   },
+});
 
 export default BindableStack;

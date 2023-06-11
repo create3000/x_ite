@@ -58,49 +58,60 @@ function HAnimMotion (executionContext)
    this .addType (X3DConstants .HAnimMotion);
 }
 
-HAnimMotion .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .prototype),
 {
-   constructor: HAnimMotion,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",        new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "description",     new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",         new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOnly,   "next",            new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,   "previous",        new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "frameDuration",   new Fields .SFTime (0.1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "frameIncrement",  new Fields .SFInt32 (1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "frameIndex",      new Fields .SFInt32 (0)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "loop",            new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "channels",        new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "channelsEnabled", new Fields .MFBool ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "joints",          new Fields .MFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "loa",             new Fields .SFInt32 (-1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "startFrame",      new Fields .SFInt32 ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "endFrame",        new Fields .SFInt32 ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "values",          new Fields .MFFloat ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "cycleTime",       new Fields .SFTime ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "elapsedTime",     new Fields .SFTime ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,  "frameCount",      new Fields .SFInt32 ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "HAnimMotion";
-   },
-   getComponentName: function ()
-   {
-      return "HAnim";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["4.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DChildNode .prototype .initialize .call (this);
+   },
+});
+
+Object .defineProperties (HAnimMotion,
+{
+   typeName:
+   {
+      value: "HAnimMotion",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "HAnim",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["4.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",        new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "description",     new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",         new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOnly,   "next",            new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,   "previous",        new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "frameDuration",   new Fields .SFTime (0.1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "frameIncrement",  new Fields .SFInt32 (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "frameIndex",      new Fields .SFInt32 (0)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "loop",            new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "channels",        new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "channelsEnabled", new Fields .MFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "joints",          new Fields .MFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "loa",             new Fields .SFInt32 (-1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "startFrame",      new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "endFrame",        new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "values",          new Fields .MFFloat ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "cycleTime",       new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "elapsedTime",     new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "frameCount",      new Fields .SFInt32 ()),
+      ]),
+      enumerable: true,
    },
 });
 

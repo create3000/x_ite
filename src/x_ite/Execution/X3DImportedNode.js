@@ -46,6 +46,7 @@
  ******************************************************************************/
 
 import X3DNode      from "../Components/Core/X3DNode.js";
+import X3DObject    from "../Base/X3DObject.js";
 import X3DConstants from "../Base/X3DConstants.js";
 import SFNodeCache  from "../Fields/SFNodeCache.js";
 
@@ -68,26 +69,25 @@ function X3DImportedNode (executionContext, inlineNode, exportedName, importedNa
 }
 
 // Must be of type X3DNode, to get routes work.
-X3DImportedNode .prototype = Object .assign (Object .create (X3DNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DNode .prototype),
 {
-   constructor: X3DImportedNode,
-   getInlineNode: function ()
+   getInlineNode ()
    {
       return this [_inlineNode];
    },
-   getExportedName: function ()
+   getExportedName ()
    {
       return this [_exportedName];
    },
-   getExportedNode: function ()
+   getExportedNode ()
    {
       return this [_inlineNode] .getInternalScene () .getExportedNode (this [_exportedName]) .getValue ();
    },
-   getImportedName: function ()
+   getImportedName ()
    {
       return this [_importedName];
    },
-   addRoute: function (sourceNode, sourceField, destinationNode, destinationField)
+   addRoute (sourceNode, sourceField, destinationNode, destinationField)
    {
       // Add route.
 
@@ -105,7 +105,7 @@ X3DImportedNode .prototype = Object .assign (Object .create (X3DNode .prototype)
       if (this [_inlineNode] .checkLoadState () === X3DConstants .COMPLETE_STATE)
          this .resolveRoute (route);
    },
-   resolveRoute: function (route)
+   resolveRoute (route)
    {
       try
       {
@@ -133,7 +133,7 @@ X3DImportedNode .prototype = Object .assign (Object .create (X3DNode .prototype)
          console .error (error .message);
       }
    },
-   deleteRoute: function (real)
+   deleteRoute (real)
    {
       for (const route of this [_routes])
       {
@@ -141,7 +141,7 @@ X3DImportedNode .prototype = Object .assign (Object .create (X3DNode .prototype)
             this [_routes] .delete (route);
       }
    },
-   deleteRoutes: function ()
+   deleteRoutes ()
    {
       for (const route of this [_routes])
       {
@@ -154,7 +154,7 @@ X3DImportedNode .prototype = Object .assign (Object .create (X3DNode .prototype)
          }
       }
    },
-   set_loadState__: function ()
+   set_loadState__ ()
    {
       switch (this [_inlineNode] .checkLoadState ())
       {
@@ -175,7 +175,11 @@ X3DImportedNode .prototype = Object .assign (Object .create (X3DNode .prototype)
          }
       }
    },
-   toVRMLStream: function (generator)
+   toStream (generator)
+   {
+      X3DObject .prototype .toStream .call (this, generator);
+   },
+   toVRMLStream (generator)
    {
       if (generator .ExistsNode (this .getInlineNode ()))
       {
@@ -199,7 +203,7 @@ X3DImportedNode .prototype = Object .assign (Object .create (X3DNode .prototype)
             generator .AddRouteNode (this);
             generator .AddImportedNode (this .getExportedNode (), this .getImportedName ());
          }
-         catch (error)
+         catch
          {
             // Output unresolved routes.
 
@@ -244,7 +248,7 @@ X3DImportedNode .prototype = Object .assign (Object .create (X3DNode .prototype)
          throw new Error ("X3DImportedNode.toXMLStream: Inline node does not exist.");
       }
    },
-   toXMLStream: function (generator)
+   toXMLStream (generator)
    {
       if (generator .ExistsNode (this .getInlineNode ()))
       {
@@ -274,7 +278,7 @@ X3DImportedNode .prototype = Object .assign (Object .create (X3DNode .prototype)
             generator .AddRouteNode (this);
             generator .AddImportedNode (this .getExportedNode (), this .getImportedName ());
          }
-         catch (error)
+         catch
          {
             // Output unresolved routes.
 
@@ -326,7 +330,7 @@ X3DImportedNode .prototype = Object .assign (Object .create (X3DNode .prototype)
          throw new Error ("X3DImportedNode.toXMLStream: Inline node does not exist.");
       }
    },
-   toJSONStream: function (generator)
+   toJSONStream (generator)
    {
       if (generator .ExistsNode (this .getInlineNode ()))
       {
@@ -399,7 +403,7 @@ X3DImportedNode .prototype = Object .assign (Object .create (X3DNode .prototype)
             generator .AddRouteNode (this);
             generator .AddImportedNode (this .getExportedNode (), this .getImportedName ());
          }
-         catch (error)
+         catch
          {
             // Output unresolved routes.
 
@@ -500,7 +504,7 @@ X3DImportedNode .prototype = Object .assign (Object .create (X3DNode .prototype)
          throw new Error ("X3DImportedNode.toJSONStream: Inline node does not exist.");
       }
    },
-   dispose: function ()
+   dispose ()
    {
       this [_inlineNode] ._loadState .removeInterest ("set_loadState__", this);
 
@@ -517,7 +521,7 @@ Object .defineProperties (X3DImportedNode .prototype,
 {
    inlineNode:
    {
-      get: function ()
+      get ()
       {
          return SFNodeCache .get (this [_inlineNode]);
       },
@@ -525,7 +529,7 @@ Object .defineProperties (X3DImportedNode .prototype,
    },
    exportedName:
    {
-      get: function ()
+      get ()
       {
          return this [_exportedName];
       },
@@ -533,7 +537,7 @@ Object .defineProperties (X3DImportedNode .prototype,
    },
    exportedNode:
    {
-      get: function ()
+      get ()
       {
          return this [_inlineNode] .getInternalScene () .getExportedNode (this [_exportedName]);
       },
@@ -541,10 +545,19 @@ Object .defineProperties (X3DImportedNode .prototype,
    },
    importedName:
    {
-      get: function ()
+      get ()
       {
          return this [_importedName];
       },
+      enumerable: true,
+   },
+});
+
+Object .defineProperties (X3DImportedNode,
+{
+   typeName:
+   {
+      value: "X3DImportedNode",
       enumerable: true,
    },
 });

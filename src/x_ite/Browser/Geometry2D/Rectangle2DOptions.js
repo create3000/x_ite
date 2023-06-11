@@ -56,26 +56,13 @@ function Rectangle2DOptions (executionContext)
    X3DBaseNode .call (this, executionContext);
 }
 
-Rectangle2DOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+Object .assign (Object .setPrototypeOf (Rectangle2DOptions .prototype, X3DBaseNode .prototype),
 {
-   constructor: Rectangle2DOptions,
-   getTypeName: function ()
-   {
-      return "Rectangle2DOptions";
-   },
-   getComponentName: function ()
-   {
-      return "X_ITE";
-   },
-   getContainerField: function ()
-   {
-      return "rectangle2DOptions";
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DBaseNode .prototype .initialize .call (this);
    },
-   getGeometry: function ()
+   getGeometry ()
    {
       if (this .geometry)
          return this .geometry;
@@ -110,6 +97,15 @@ Rectangle2DOptions .prototype = Object .assign (Object .create (X3DBaseNode .pro
       geometry .setup ();
 
       return this .geometry;
+   },
+});
+
+Object .defineProperties (Rectangle2DOptions,
+{
+   typeName:
+   {
+      value: "Rectangle2DOptions",
+      enumerable: true,
    },
 });
 

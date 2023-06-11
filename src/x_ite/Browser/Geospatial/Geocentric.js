@@ -49,18 +49,17 @@ import Algorithm from "../../../standard/Math/Algorithm.js";
 
 function Geocentric () { }
 
-Geocentric .prototype =
+Object .assign (Geocentric .prototype,
 {
-   constructor: Geocentric,
-   convert: function (geocentric, result)
+   convert (geocentric, result)
    {
       return result .assign (geocentric);
    },
-   apply: function (geocentric, result)
+   apply (geocentric, result)
    {
       return result .assign (geocentric);
    },
-   slerp: function (source, destination, t)
+   slerp (source, destination, t)
    {
       const
          sourceLength      = source      .magnitude (),
@@ -71,6 +70,6 @@ Geocentric .prototype =
 
       return Algorithm .simpleSlerp (source, destination, t) .multiply (Algorithm .lerp (sourceLength, destinationLength, t));
    },
-};
+});
 
 export default Geocentric;

@@ -71,24 +71,23 @@ function X3DLineGeometryNode (executionContext)
    this .setSolid (false);
 }
 
-X3DLineGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeometryNode .prototype),
 {
-   constructor: X3DLineGeometryNode,
-   intersectsLine: function ()
+   intersectsLine ()
    {
       return false;
    },
-   intersectsBox: function ()
+   intersectsBox ()
    {
       return false;
    },
-   updateVertexArrays: function ()
+   updateVertexArrays ()
    {
       X3DGeometryNode .prototype .updateVertexArrays .call (this);
 
       this .thickVertexArrayObject .update ();
    },
-   buildTexCoords: function ()
+   buildTexCoords ()
    {
       // Line stipple support.
 
@@ -151,7 +150,7 @@ X3DLineGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode
          gl .bufferData (gl .ARRAY_BUFFER, lineStipples, gl .DYNAMIC_DRAW);
       };
    })(),
-   displaySimple: function (gl, renderContext, shaderNode)
+   displaySimple (gl, renderContext, shaderNode)
    {
       const linePropertiesNode = renderContext .shapeNode .getAppearance () .getStyleProperties (1);
 
@@ -398,7 +397,7 @@ X3DLineGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode
          gl .lineWidth (1);
       };
    })(),
-   displayParticles: function (gl, renderContext, particleSystem)
+   displayParticles (gl, renderContext, particleSystem)
    {
       const
          browser        = this .getBrowser (),
@@ -451,6 +450,20 @@ X3DLineGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode
       blendModeNode ?.disable (gl);
 
       gl .lineWidth (1);
+   },
+});
+
+Object .defineProperties (X3DLineGeometryNode,
+{
+   typeName:
+   {
+      value: "X3DLineGeometryNode",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Rendering",
+      enumerable: true,
    },
 });
 

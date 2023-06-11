@@ -65,36 +65,11 @@ function ComposedShader (executionContext)
    this .transformFeedbackVaryings = [ ];
 }
 
-ComposedShader .prototype = Object .assign (Object .create (X3DShaderNode .prototype),
+Object .assign (Object .setPrototypeOf (ComposedShader .prototype, X3DShaderNode .prototype),
    X3DProgrammableShaderObject .prototype,
 {
-   constructor: ComposedShader,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",   new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOnly,      "activate",   new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,     "isSelected", new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,     "isValid",    new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "language",   new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "parts",      new Fields .MFNode ()),
-   ]),
    wireframe: false,
-   getTypeName: function ()
-   {
-      return "ComposedShader";
-   },
-   getComponentName: function ()
-   {
-      return "Shaders";
-   },
-   getContainerField: function ()
-   {
-      return "shaders";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DShaderNode               .prototype .initialize .call (this);
       X3DProgrammableShaderObject .prototype .initialize .call (this);
@@ -114,12 +89,12 @@ ComposedShader .prototype = Object .assign (Object .create (X3DShaderNode .proto
       else
          this .connectLoaded ();
    },
-   connectLoaded: function ()
+   connectLoaded ()
    {
       this .loadSensor ._isLoaded .removeInterest ("connectLoaded", this);
       this .loadSensor ._isLoaded .addInterest ("set_loaded__", this);
    },
-   addUserDefinedField: function (accessType, name, field)
+   addUserDefinedField (accessType, name, field)
    {
       const shaderFields = this .isInitialized () && this .isValid ();
 
@@ -131,7 +106,7 @@ ComposedShader .prototype = Object .assign (Object .create (X3DShaderNode .proto
       if (shaderFields)
          this .addShaderFields ();
    },
-   removeUserDefinedField: function (name)
+   removeUserDefinedField (name)
    {
       const shaderFields = this .isInitialized () && this .isValid ();
 
@@ -143,22 +118,22 @@ ComposedShader .prototype = Object .assign (Object .create (X3DShaderNode .proto
       if (shaderFields)
          this .addShaderFields ();
    },
-   setTransformFeedbackVaryings: function (value)
+   setTransformFeedbackVaryings (value)
    {
       this .transformFeedbackVaryings = value;
    },
-   getProgram: function ()
+   getProgram ()
    {
       return this .program;
    },
-   set_activate__: function ()
+   set_activate__ ()
    {
       if (!this ._activate .getValue ())
          return;
 
       this .set_loaded__ ();
    },
-   set_loaded__: function ()
+   set_loaded__ ()
    {
       if (this .loadSensor ._isLoaded .getValue () && this ._language .getValue () === "GLSL")
       {
@@ -207,10 +182,46 @@ ComposedShader .prototype = Object .assign (Object .create (X3DShaderNode .proto
          this .setValid (false);
       }
    },
-   dispose: function ()
+   dispose ()
    {
       X3DProgrammableShaderObject .prototype .dispose .call (this);
       X3DShaderNode               .prototype .dispose .call (this);
+   },
+});
+
+Object .defineProperties (ComposedShader,
+{
+   typeName:
+   {
+      value: "ComposedShader",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Shaders",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "shaders",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",   new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "activate",   new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "isSelected", new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "isValid",    new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "language",   new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "parts",      new Fields .MFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 

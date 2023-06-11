@@ -55,9 +55,20 @@ function X3DProductStructureChildNode (executionContext)
    this .addType (X3DConstants .X3DProductStructureChildNode);
 }
 
-X3DProductStructureChildNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+Object .setPrototypeOf (X3DProductStructureChildNode .prototype, X3DChildNode .prototype);
+
+Object .defineProperties (X3DProductStructureChildNode,
 {
-   constructor: X3DProductStructureChildNode,
+   typeName:
+   {
+      value: "X3DProductStructureChildNode",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "CADGeometry",
+      enumerable: true,
+   },
 });
 
 export default X3DProductStructureChildNode;

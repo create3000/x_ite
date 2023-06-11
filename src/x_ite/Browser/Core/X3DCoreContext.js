@@ -147,9 +147,9 @@ function X3DCoreContext (element)
                           "altGrKey",   new Fields .SFBool ());
 }
 
-X3DCoreContext .prototype =
+Object .assign (X3DCoreContext .prototype,
 {
-   initialize: function ()
+   initialize ()
    {
       // Setup browser nodes.
 
@@ -177,7 +177,8 @@ X3DCoreContext .prototype =
             },
             set: (value) =>
             {
-               this .loadURL (new Fields .MFString (value), new Fields .MFString ());
+               this .loadURL (new Fields .MFString (value))
+                  .catch (error => console .error (error));
             },
             enumerable: true,
          },
@@ -189,7 +190,8 @@ X3DCoreContext .prototype =
             },
             set: (value) =>
             {
-               this .loadURL (value, new Fields .MFString ());
+               this .loadURL (value)
+                  .catch (error => console .error (error));
             },
             enumerable: true,
          },
@@ -201,71 +203,71 @@ X3DCoreContext .prototype =
          .on ("keydown.X3DCoreContext", this [_keydown] .bind (this))
          .on ("keyup.X3DCoreContext",   this [_keyup]   .bind (this));
    },
-   getInstanceId: function ()
+   getInstanceId ()
    {
       return this [_instanceId];
    },
-   isStrict: function ()
+   isStrict ()
    {
       return false;
    },
-   getElement: function ()
+   getElement ()
    {
       return this [_element];
    },
-   getShadow: function ()
+   getShadow ()
    {
       return this [_shadow];
    },
-   getSurface: function ()
+   getSurface ()
    {
       return this [_surface];
    },
-   getSplashScreen: function ()
+   getSplashScreen ()
    {
       return this [_splashScreen];
    },
-   getCanvas: function ()
+   getCanvas ()
    {
       return this [_canvas];
    },
-   getContext: function ()
+   getContext ()
    {
       return this [_context];
    },
-   getMobile: function ()
+   getMobile ()
    {
       return this [_mobile];
    },
-   getLocalStorage: function ()
+   getLocalStorage ()
    {
       return this [_localStorage];
    },
-   getBrowserTimings: function ()
+   getBrowserTimings ()
    {
       return this [_browserTimings];
    },
-   getBrowserOptions: function ()
+   getBrowserOptions ()
    {
       return this [_browserOptions];
    },
-   getBrowserProperties: function ()
+   getBrowserProperties ()
    {
       return this [_browserProperties];
    },
-   getRenderingProperties: function ()
+   getRenderingProperties ()
    {
       return this [_renderingProperties];
    },
-   getNotification: function ()
+   getNotification ()
    {
       return this [_notification];
    },
-   getContextMenu: function ()
+   getContextMenu ()
    {
       return this [_contextMenu];
    },
-   getPrivateScene: function ()
+   getPrivateScene ()
    {
       if (this [_privateScene])
          return this [_privateScene];
@@ -280,13 +282,13 @@ X3DCoreContext .prototype =
 
       return this [_privateScene];
    },
-   getPixelPerPoint: function ()
+   getPixelPerPoint ()
    {
       return this [_pixelPerPoint] * this .getRenderingProperty ("ContentScale");
    },
-   connectedCallback: function ()
+   connectedCallback ()
    { },
-   attributeChangedCallback: function (name, oldValue, newValue)
+   attributeChangedCallback (name, oldValue, newValue)
    {
       switch (name)
       {
@@ -365,7 +367,10 @@ X3DCoreContext .prototype =
          case "src":
          {
             if (newValue)
-               this .loadURL (new Fields .MFString (newValue), new Fields .MFString ());
+            {
+               this .loadURL (new Fields .MFString (newValue))
+                  .catch (error => console .error (error));
+            }
 
             break;
          }
@@ -395,13 +400,16 @@ X3DCoreContext .prototype =
          case "url":
          {
             if (newValue)
-               this .loadURL (this .parseUrlAttribute (newValue), new Fields .MFString ());
+            {
+               this .loadURL (this .parseUrlAttribute (newValue))
+                  .catch (error => console .error (error));
+            }
 
             break;
          }
       }
    },
-   parseBooleanAttribute: function  (value, defaultValue)
+   parseBooleanAttribute  (value, defaultValue)
    {
       if (value === "true")
          return true;
@@ -411,7 +419,7 @@ X3DCoreContext .prototype =
 
       return defaultValue;
    },
-   parseUrlAttribute: function (urlCharacters)
+   parseUrlAttribute (urlCharacters)
    {
       const url = new Fields .MFString ();
 
@@ -447,23 +455,23 @@ X3DCoreContext .prototype =
          }
       };
    })(),
-   getShiftKey: function ()
+   getShiftKey ()
    {
       return this ._shiftKey .getValue ();
    },
-   getControlKey: function ()
+   getControlKey ()
    {
       return this ._controlKey .getValue ();
    },
-   getAltKey: function ()
+   getAltKey ()
    {
       return this ._altKey .getValue ();
    },
-   getAltGrKey: function ()
+   getAltGrKey ()
    {
       return this ._altGrKey .getValue ();
    },
-   [_keydown]: function (event)
+   [_keydown] (event)
    {
       //console .log (event .keyCode);
 
@@ -692,7 +700,7 @@ X3DCoreContext .prototype =
          }
       }
    },
-   [_keyup]: function (event)
+   [_keyup] (event)
    {
       //console .log (event .which);
 
@@ -720,7 +728,7 @@ X3DCoreContext .prototype =
          }
       }
    },
-   copyToClipboard: function (text)
+   copyToClipboard (text)
    {
       // The textarea must be visible to make copy work.
       const tmp = $("<textarea></textarea>");
@@ -729,10 +737,10 @@ X3DCoreContext .prototype =
       document .execCommand ("copy");
       tmp .remove ();
    },
-   dispose: function ()
+   dispose ()
    {
       this [_context] .getExtension ("WEBGL_lose_context") ?.loseContext ();
    },
-};
+});
 
 export default X3DCoreContext;

@@ -64,31 +64,31 @@ import X3DNBodyCollidableNode     from "../../x_ite/Components/RigidBodyPhysics/
 import X3DNBodyCollisionSpaceNode from "../../x_ite/Components/RigidBodyPhysics/X3DNBodyCollisionSpaceNode.js";
 import X3DRigidJointNode          from "../../x_ite/Components/RigidBodyPhysics/X3DRigidJointNode.js";
 
-Components .addComponent ({
+Components .add ({
    name: "RigidBodyPhysics",
-   types:
-   {
-      BallJoint:            BallJoint,
-      CollidableOffset:     CollidableOffset,
-      CollidableShape:      CollidableShape,
-      CollisionCollection:  CollisionCollection,
-      CollisionSensor:      CollisionSensor,
-      CollisionSpace:       CollisionSpace,
-      Contact:              Contact,
-      DoubleAxisHingeJoint: DoubleAxisHingeJoint,
-      MotorJoint:           MotorJoint,
-      RigidBody:            RigidBody,
-      RigidBodyCollection:  RigidBodyCollection,
-      SingleAxisHingeJoint: SingleAxisHingeJoint,
-      SliderJoint:          SliderJoint,
-      UniversalJoint:       UniversalJoint,
-   },
-   abstractTypes:
-   {
-      X3DNBodyCollidableNode:     X3DNBodyCollidableNode,
-      X3DNBodyCollisionSpaceNode: X3DNBodyCollisionSpaceNode,
-      X3DRigidJointNode:          X3DRigidJointNode,
-   },
+   concreteNodes:
+   [
+      BallJoint,
+      CollidableOffset,
+      CollidableShape,
+      CollisionCollection,
+      CollisionSensor,
+      CollisionSpace,
+      Contact,
+      DoubleAxisHingeJoint,
+      MotorJoint,
+      RigidBody,
+      RigidBodyCollection,
+      SingleAxisHingeJoint,
+      SliderJoint,
+      UniversalJoint,
+   ],
+   abstractNodes:
+   [
+      X3DNBodyCollidableNode,
+      X3DNBodyCollisionSpaceNode,
+      X3DRigidJointNode,
+   ],
 });
 
 export default undefined;

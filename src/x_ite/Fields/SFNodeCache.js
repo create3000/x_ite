@@ -50,9 +50,9 @@ import X3DField from "../Base/X3DField.js";
 
 const cache = new WeakMap ();
 
-class SFNodeCache
+const SFNodeCache =
 {
-   static get (baseNode)
+   get (baseNode)
    {
       const node = cache .get (baseNode);
 
@@ -70,20 +70,16 @@ class SFNodeCache
 
          return node;
       }
-   }
-}
-
-const _target = Symbol .for ("X_ITE.SFNode.target");
+   },
+};
 
 function dispose ()
 {
-   const
-      target = this [_target],
-      value  = target .getValue ();
-
-   X3DField .prototype .dispose .call (target);
+   const value = this .getValue ();
 
    value ?.dispose ();
+
+   SFNode .prototype .dispose .call (this);
 
    cache .delete (value);
 }

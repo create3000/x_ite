@@ -60,31 +60,9 @@ function Sphere (executionContext)
    this ._radius .setUnit ("length");
 }
 
-Sphere .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
+Object .assign (Object .setPrototypeOf (Sphere .prototype, X3DGeometryNode .prototype),
 {
-   constructor: Sphere,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata", new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "radius",   new Fields .SFFloat (1)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",    new Fields .SFBool (true)),
-   ]),
-   getTypeName: function ()
-   {
-      return "Sphere";
-   },
-   getComponentName: function ()
-   {
-      return "Geometry3D";
-   },
-   getContainerField: function ()
-   {
-      return "geometry";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
-   set_live__: function ()
+   set_live__ ()
    {
       X3DGeometryNode .prototype .set_live__ .call (this);
 
@@ -93,7 +71,7 @@ Sphere .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
       else
          this .getBrowser () .getSphereOptions () .removeInterest ("requestRebuild", this);
    },
-   build: function ()
+   build ()
    {
       const
          options  = this .getBrowser () .getSphereOptions (),
@@ -129,6 +107,39 @@ Sphere .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
       }
 
       this .setSolid (this ._solid .getValue ());
+   },
+});
+
+Object .defineProperties (Sphere,
+{
+   typeName:
+   {
+      value: "Sphere",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Geometry3D",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "geometry",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "radius",   new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",    new Fields .SFBool (true)),
+      ]),
+      enumerable: true,
    },
 });
 

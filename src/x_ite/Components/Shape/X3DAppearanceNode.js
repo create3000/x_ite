@@ -60,17 +60,30 @@ function X3DAppearanceNode (executionContext)
    this ._transparent .setAccessType (X3DConstants .outputOnly);
 }
 
-X3DAppearanceNode .prototype = Object .assign (Object .create (X3DNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DAppearanceNode .prototype, X3DNode .prototype),
 {
-   constructor: X3DAppearanceNode,
-   setTransparent: function (value)
+   setTransparent (value)
    {
       if (value !== this ._transparent .getValue ())
          this ._transparent = value;
    },
-   isTransparent: function ()
+   isTransparent ()
    {
       return this ._transparent .getValue ();
+   },
+});
+
+Object .defineProperties (X3DAppearanceNode,
+{
+   typeName:
+   {
+      value: "X3DAppearanceNode",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Shape",
+      enumerable: true,
    },
 });
 

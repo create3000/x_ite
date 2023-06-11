@@ -51,17 +51,17 @@ import FontStyle        from "../../x_ite/Components/Text/FontStyle.js";
 import Text             from "../../x_ite/Components/Text/Text.js";
 import X3DFontStyleNode from "../../x_ite/Components/Text/X3DFontStyleNode.js";
 
-Components .addComponent ({
+Components .add ({
    name: "Text",
-   types:
-   {
-      FontStyle: FontStyle,
-      Text: Text,
-   },
-   abstractTypes:
-   {
-      X3DFontStyleNode: X3DFontStyleNode,
-   },
+   concreteNodes:
+   [
+      FontStyle,
+      Text,
+   ],
+   abstractNodes:
+   [
+      X3DFontStyleNode,
+   ],
    browserContext: X3DTextContext,
 });
 

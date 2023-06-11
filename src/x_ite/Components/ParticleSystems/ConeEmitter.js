@@ -85,37 +85,9 @@ function ConeEmitter (executionContext)
    }`);
 }
 
-ConeEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),
+Object .assign (Object .setPrototypeOf (ConeEmitter .prototype, X3DParticleEmitterNode .prototype),
 {
-   constructor: ConeEmitter,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "on",          new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "position",    new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "direction",   new Fields .SFVec3f (0, 1, 0)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "angle",       new Fields .SFFloat (0.7854)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "speed",       new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "variation",   new Fields .SFFloat (0.25)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "mass",        new Fields .SFFloat ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "surfaceArea", new Fields .SFFloat ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "ConeEmitter";
-   },
-   getComponentName: function ()
-   {
-      return "ParticleSystems";
-   },
-   getContainerField: function ()
-   {
-      return "emitter";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DParticleEmitterNode .prototype .initialize .call (this);
 
@@ -130,21 +102,60 @@ ConeEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode 
       this .set_direction__ ();
       this .set_angle__ ();
    },
-   set_position__: function ()
+   set_position__ ()
    {
       const position = this ._position .getValue ();
 
       this .setUniform ("uniform3f", "position", position .x, position .y, position .z);
    },
-   set_direction__: function ()
+   set_direction__ ()
    {
       const direction = this ._direction .getValue ();
 
       this .setUniform ("uniform3f", "direction", direction .x, direction .y, direction .z);
    },
-   set_angle__: function ()
+   set_angle__ ()
    {
       this .setUniform ("uniform1f", "angle", this ._angle .getValue ());
+   },
+});
+
+Object .defineProperties (ConeEmitter,
+{
+   typeName:
+   {
+      value: "ConeEmitter",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "ParticleSystems",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "emitter",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "on",          new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "position",    new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "direction",   new Fields .SFVec3f (0, 1, 0)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "angle",       new Fields .SFFloat (0.7854)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "speed",       new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "variation",   new Fields .SFFloat (0.25)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "mass",        new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "surfaceArea", new Fields .SFFloat ()),
+      ]),
+      enumerable: true,
    },
 });
 

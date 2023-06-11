@@ -62,36 +62,9 @@ function CollisionSpace (executionContext)
    this .collisionSpaceNodes = [ ];
 }
 
-CollisionSpace .prototype = Object .assign (Object .create (X3DNBodyCollisionSpaceNode .prototype),
+Object .assign (Object .setPrototypeOf (CollisionSpace .prototype, X3DNBodyCollisionSpaceNode .prototype),
 {
-   constructor: CollisionSpace,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",     new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "useGeometry", new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",     new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay", new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",    new Fields .SFVec3f (-1, -1, -1)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",  new Fields .SFVec3f ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "collidables", new Fields .MFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "CollisionSpace";
-   },
-   getComponentName: function ()
-   {
-      return "RigidBodyPhysics";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.2", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DNBodyCollisionSpaceNode .prototype .initialize .call (this);
 
@@ -99,7 +72,7 @@ CollisionSpace .prototype = Object .assign (Object .create (X3DNBodyCollisionSpa
 
       this .set_collidables__ ();
    },
-   getBBox: function (bbox, shadows)
+   getBBox (bbox, shadows)
    {
       // TODO: add space node.
       if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
@@ -107,11 +80,11 @@ CollisionSpace .prototype = Object .assign (Object .create (X3DNBodyCollisionSpa
 
       return bbox;
    },
-   getCollidables: function ()
+   getCollidables ()
    {
       return this .collidableNodes;
    },
-   set_collidables__: function ()
+   set_collidables__ ()
    {
       var collisionSpaceNodes = this .collisionSpaceNodes;
 
@@ -134,7 +107,7 @@ CollisionSpace .prototype = Object .assign (Object .create (X3DNBodyCollisionSpa
 
       this .collect ();
    },
-   collect: function ()
+   collect ()
    {
       var
          collidableNodes     = this .collidableNodes,
@@ -163,6 +136,44 @@ CollisionSpace .prototype = Object .assign (Object .create (X3DNBodyCollisionSpa
       }
 
       this .addNodeEvent ();
+   },
+});
+
+Object .defineProperties (CollisionSpace,
+{
+   typeName:
+   {
+      value: "CollisionSpace",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "RigidBodyPhysics",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.2", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",     new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "useGeometry", new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",     new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay", new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",    new Fields .SFVec3f (-1, -1, -1)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",  new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "collidables", new Fields .MFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 

@@ -66,7 +66,7 @@ function X3DCast (type, node, innerNode = true)
          }
       }
    }
-   catch (error)
+   catch
    { }
 
    return null;

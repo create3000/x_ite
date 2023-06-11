@@ -30,7 +30,7 @@
  *
  ******************************************************************************/
 
-// Maps are set when component is registered.
+import X3DConstants from "../Base/X3DConstants.js";
 
 const
    nodeTypeNames = new Map (), // (TYPENAME -> TypeName)
@@ -38,21 +38,31 @@ const
 
 const HTMLSupport =
 {
-   addNodeTypeName: function (typeName)
+   addConcreteNode ({ typeName, fieldDefinitions })
+   {
+      this .addNodeTypeName (typeName);
+
+      for (const { name, accessType } of fieldDefinitions)
+      {
+         if (accessType & X3DConstants .initializeOnly)
+            this .addFieldName (name)
+      }
+   },
+   addNodeTypeName (typeName)
    {
       nodeTypeNames .set (typeName,                 typeName);
       nodeTypeNames .set (typeName .toUpperCase (), typeName);
    },
-   getNodeTypeName: function (typeName)
+   getNodeTypeName (typeName)
    {
       return nodeTypeNames .get (typeName);
    },
-   addFieldName: function (name)
+   addFieldName (name)
    {
       fieldNames .set (name,                 name);
       fieldNames .set (name .toLowerCase (), name);
    },
-   getFieldName: function (name)
+   getFieldName (name)
    {
       return fieldNames .get (name);
    },

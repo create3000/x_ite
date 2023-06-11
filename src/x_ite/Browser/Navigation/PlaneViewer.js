@@ -72,13 +72,9 @@ function PlaneViewer (executionContext, navigationInfo)
    this .toPoint   = new Vector3 (0, 0, 0);
 }
 
-PlaneViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
+Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, X3DViewer .prototype),
 {
-   constructor: PlaneViewer,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .outputOnly, "isActive", new Fields .SFBool ()),
-   ]),
-   initialize: function ()
+   initialize ()
    {
       X3DViewer .prototype .initialize .call (this);
 
@@ -91,7 +87,7 @@ PlaneViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
       element .on ("mousemove.PlaneViewer",  this .mousemove  .bind (this));
       element .on ("mousewheel.PlaneViewer", this .mousewheel .bind (this));
    },
-   mousedown: function (event)
+   mousedown (event)
    {
       if (this .button >= 0)
          return;
@@ -126,7 +122,7 @@ PlaneViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
          }
       }
    },
-   mouseup: function (event)
+   mouseup (event)
    {
       // Stop event propagation.
 
@@ -145,7 +141,7 @@ PlaneViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
 
       this ._isActive = false;
    },
-   mousemove: function (event)
+   mousemove (event)
    {
       const [x, y] = this .getPointer (event);
 
@@ -173,7 +169,7 @@ PlaneViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
          }
       }
    },
-   mousewheel: function (event)
+   mousewheel (event)
    {
       const [x, y] = this .getPointer (event);
 
@@ -211,7 +207,7 @@ PlaneViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
       viewpoint ._positionOffset         = positionOffset         .assign (viewpoint ._positionOffset         .getValue ()) .add (translation);
       viewpoint ._centerOfRotationOffset = centerOfRotationOffset .assign (viewpoint ._centerOfRotationOffset .getValue ()) .add (translation);
    },
-   constrainFieldOfViewScale: function ()
+   constrainFieldOfViewScale ()
    {
       const viewpoint = this .getActiveViewpoint ();
 
@@ -221,10 +217,26 @@ PlaneViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
             viewpoint ._fieldOfViewScale = (Math .PI - 0.001) / viewpoint ._fieldOfView .getValue ();
       }
    },
-   dispose: function ()
+   dispose ()
    {
       this .getBrowser () .getSurface () .off (".PlaneViewer");
       $(document) .off (".PlaneViewer" + this .getId ());
+   },
+});
+
+Object .defineProperties (PlaneViewer,
+{
+   typeName:
+   {
+      value: "PlaneViewer",
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .outputOnly, "isActive", new Fields .SFBool ()),
+      ]),
+      enumerable: true,
    },
 });
 

@@ -45,7 +45,6 @@
  *
  ******************************************************************************/
 
-import SupportedNodes              from "../Configuration/SupportedNodes.js";
 import ComposedShader              from "./Shaders/ComposedShader.js";
 import FloatVertexAttribute        from "./Shaders/FloatVertexAttribute.js";
 import Matrix3VertexAttribute      from "./Shaders/Matrix3VertexAttribute.js";
@@ -58,29 +57,23 @@ import X3DProgrammableShaderObject from "./Shaders/X3DProgrammableShaderObject.j
 import X3DShaderNode               from "./Shaders/X3DShaderNode.js";
 import X3DVertexAttributeNode      from "./Shaders/X3DVertexAttributeNode.js";
 
-const Types =
-{
-   ComposedShader:         ComposedShader,
-   FloatVertexAttribute:   FloatVertexAttribute,
-   Matrix3VertexAttribute: Matrix3VertexAttribute,
-   Matrix4VertexAttribute: Matrix4VertexAttribute,
-   PackagedShader:         PackagedShader,
-   ProgramShader:          ProgramShader,
-   ShaderPart:             ShaderPart,
-   ShaderProgram:          ShaderProgram,
+export default {
+   name: "Shaders",
+   concreteNodes:
+   [
+      ComposedShader,
+      FloatVertexAttribute,
+      Matrix3VertexAttribute,
+      Matrix4VertexAttribute,
+      PackagedShader,
+      ProgramShader,
+      ShaderPart,
+      ShaderProgram,
+   ],
+   abstractNodes:
+   [
+      X3DProgrammableShaderObject,
+      X3DShaderNode,
+      X3DVertexAttributeNode,
+   ],
 };
-
-const AbstractTypes =
-{
-   X3DProgrammableShaderObject: X3DProgrammableShaderObject,
-   X3DShaderNode:               X3DShaderNode,
-   X3DVertexAttributeNode:      X3DVertexAttributeNode,
-};
-
-for (const typeName in Types)
-   SupportedNodes .addNodeType (typeName, Types [typeName]);
-
-for (const typeName in AbstractTypes)
-   SupportedNodes .addAbstractNodeType (typeName, AbstractTypes [typeName]);
-
-export default undefined;

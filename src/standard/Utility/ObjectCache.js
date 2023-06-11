@@ -50,18 +50,18 @@ function ObjectCache (Type)
    return Object .assign ([ ],
    {
       top: 0,
-      pop: function ()
+      pop ()
       {
          if (this .top !== 0)
             return this [-- this .top];
 
          return new Type ();
       },
-      push: function (object)
+      push (object)
       {
          this [this .top ++] = object;
       },
-      clear: function ()
+      clear ()
       {
          this .length = 0;
          this .top    = 0;

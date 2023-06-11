@@ -58,10 +58,9 @@ function X3DSequencerNode (executionContext)
    this .index = -1;
 }
 
-X3DSequencerNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DSequencerNode .prototype, X3DChildNode .prototype),
 {
-   constructor: X3DSequencerNode,
-   initialize: function ()
+   initialize ()
    {
       X3DChildNode .prototype .initialize .call (this);
 
@@ -70,7 +69,7 @@ X3DSequencerNode .prototype = Object .assign (Object .create (X3DChildNode .prot
       this ._next         .addInterest ("set_next__", this);
       this ._key          .addInterest ("set_index__", this);
    },
-   set_fraction__: function ()
+   set_fraction__ ()
    {
       const
          fraction = this ._set_fraction .getValue (),
@@ -103,7 +102,7 @@ X3DSequencerNode .prototype = Object .assign (Object .create (X3DChildNode .prot
          }
       }
    },
-   set_previous__: function ()
+   set_previous__ ()
    {
       if (this ._previous .getValue ())
       {
@@ -117,7 +116,7 @@ X3DSequencerNode .prototype = Object .assign (Object .create (X3DChildNode .prot
             this .sequence (this .index);
       }
    },
-   set_next__: function ()
+   set_next__ ()
    {
       if (this ._next .getValue ())
       {
@@ -131,9 +130,23 @@ X3DSequencerNode .prototype = Object .assign (Object .create (X3DChildNode .prot
             this .sequence (this .index);
       }
    },
-   set_index__: function ()
+   set_index__ ()
    {
       this .index = -1;
+   },
+});
+
+Object .defineProperties (X3DSequencerNode,
+{
+   typeName:
+   {
+      value: "X3DSequencerNode",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "EventUtilities",
+      enumerable: true,
    },
 });
 

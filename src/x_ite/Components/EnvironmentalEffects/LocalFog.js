@@ -60,39 +60,15 @@ function LocalFog (executionContext)
    this .addType (X3DConstants .LocalFog);
 }
 
-LocalFog .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+Object .assign (Object .setPrototypeOf (LocalFog .prototype, X3DChildNode .prototype),
    X3DFogObject .prototype,
 {
-   constructor: LocalFog,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",        new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",         new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "fogType",         new Fields .SFString ("LINEAR")),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "color",           new Fields .SFColor (1, 1, 1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput, "visibilityRange", new Fields .SFFloat ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "LocalFog";
-   },
-   getComponentName: function ()
-   {
-      return "EnvironmentalEffects";
-   },
-   getContainerField: function ()
-   {
-      return "children";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["3.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DChildNode .prototype .initialize .call (this);
       X3DFogObject .prototype .initialize .call (this);
    },
-   push: function (renderObject)
+   push (renderObject)
    {
       if (this ._enabled .getValue () && this .getFogType ())
       {
@@ -103,15 +79,50 @@ LocalFog .prototype = Object .assign (Object .create (X3DChildNode .prototype),
          renderObject .getLocalFogs () .push (fogContainer);
       }
    },
-   pop: function (renderObject)
+   pop (renderObject)
    {
       if (this ._enabled .getValue () && this .getFogType ())
          this .getBrowser () .getLocalObjects () .push (renderObject .getLocalFogs () .pop ());
    },
-   dispose: function ()
+   dispose ()
    {
       X3DFogObject .prototype .dispose .call (this);
       X3DChildNode .prototype .dispose .call (this);
+   },
+});
+
+Object .defineProperties (LocalFog,
+{
+   typeName:
+   {
+      value: "LocalFog",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "EnvironmentalEffects",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "children",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["3.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",        new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",         new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "fogType",         new Fields .SFString ("LINEAR")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "color",           new Fields .SFColor (1, 1, 1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "visibilityRange", new Fields .SFFloat ()),
+      ]),
+      enumerable: true,
    },
 });
 

@@ -54,7 +54,7 @@ import X3DUrlObject         from "../Networking/X3DUrlObject.js";
 import GifMedia             from "../../Browser/Texturing/GIFMedia.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import Algorithm            from "../../../standard/Math/Algorithm.js";
-import DEBUG                from "../../DEBUG.js";
+import DEVELOPMENT          from "../../DEVELOPMENT.js";
 
 function MovieTexture (executionContext)
 {
@@ -68,52 +68,11 @@ function MovieTexture (executionContext)
    this .urlStack = new Fields .MFString ();
 }
 
-MovieTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prototype),
+Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNode .prototype),
    X3DSoundSourceNode .prototype,
    X3DUrlObject .prototype,
 {
-   constructor: MovieTexture,
-   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "description",          new Fields .SFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",              new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "gain",                 new Fields .SFFloat (1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "speed",                new Fields .SFFloat (1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "pitch",                new Fields .SFFloat (1)),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "loop",                 new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "startTime",            new Fields .SFTime ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "resumeTime",           new Fields .SFTime ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "pauseTime",            new Fields .SFTime ()),
-      new X3DFieldDefinition (X3DConstants .inputOutput,    "stopTime",             new Fields .SFTime ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,     "isPaused",             new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",             new Fields .SFBool ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,     "elapsedTime",          new Fields .SFTime ()),
-      new X3DFieldDefinition (X3DConstants .outputOnly,     "duration_changed",     new Fields .SFTime (-1)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatS",              new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatT",              new Fields .SFBool (true)),
-      new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties",    new Fields .SFNode ()),
-   ]),
-   getTypeName: function ()
-   {
-      return "MovieTexture";
-   },
-   getComponentName: function ()
-   {
-      return "Texturing";
-   },
-   getContainerField: function ()
-   {
-      return "texture";
-   },
-   getSpecificationRange: function ()
-   {
-      return ["2.0", "Infinity"];
-   },
-   initialize: function ()
+   initialize ()
    {
       X3DTexture2DNode   .prototype .initialize .call (this);
       X3DSoundSourceNode .prototype .initialize .call (this);
@@ -128,20 +87,20 @@ MovieTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
 
       this .requestImmediateLoad () .catch (Function .prototype);
    },
-   getElement: function ()
+   getElement ()
    {
       return this .video [0];
    },
-   set_live__: function ()
+   set_live__ ()
    {
       X3DSoundSourceNode .prototype .set_live__ .call (this);
       X3DUrlObject       .prototype .set_live__ .call (this);
    },
-   unloadData: function ()
+   unloadData ()
    {
       this .clearTexture ();
    },
-   loadData: function ()
+   loadData ()
    {
       delete this .gif;
       this .setMedia (null);
@@ -149,7 +108,7 @@ MovieTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
       this .video .on ("canplaythrough", this .setVideo .bind (this));
       this .loadNext ();
    },
-   loadNext: function ()
+   loadNext ()
    {
       if (this .urlStack .length === 0)
       {
@@ -186,7 +145,7 @@ MovieTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
          this .video .get (0) .load ();
       }
    },
-   setTimeout: function (event)
+   setTimeout (event)
    {
       setTimeout (() =>
       {
@@ -195,16 +154,16 @@ MovieTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
       },
       3000);
    },
-   setError: function (event)
+   setError (event)
    {
       if (this .URL .protocol !== "data:")
          console .warn (`Error loading movie '${decodeURI (this .URL .href)}'`, event .type);
 
       this .loadNext ();
    },
-   setVideo: function ()
+   setVideo ()
    {
-      if (DEBUG)
+      if (DEVELOPMENT)
       {
          if (this .URL .protocol !== "data:")
             console .info (`Done loading movie '${decodeURI (this .URL .href)}'`);
@@ -232,7 +191,7 @@ MovieTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
          this .setError ({ type: error .message });
       }
    },
-   setGif: function (gif)
+   setGif (gif)
    {
       try
       {
@@ -252,7 +211,7 @@ MovieTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
          this .setError ({ type: error .message });
       }
    },
-   set_time: function ()
+   set_time ()
    {
       X3DSoundSourceNode .prototype .set_time .call (this);
 
@@ -265,11 +224,63 @@ MovieTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prot
          this .updateTexture (this .video [0], true);
    },
    traverse: X3DTexture2DNode .prototype .traverse,
-   dispose: function ()
+   dispose ()
    {
       X3DUrlObject       .prototype .dispose .call (this);
       X3DSoundSourceNode .prototype .dispose .call (this);
       X3DTexture2DNode   .prototype .dispose .call (this);
+   },
+});
+
+Object .defineProperties (MovieTexture,
+{
+   typeName:
+   {
+      value: "MovieTexture",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Texturing",
+      enumerable: true,
+   },
+   containerField:
+   {
+      value: "texture",
+      enumerable: true,
+   },
+   specificationRange:
+   {
+      value: Object .freeze (["2.0", "Infinity"]),
+      enumerable: true,
+   },
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "description",          new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",              new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "gain",                 new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "speed",                new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "pitch",                new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "loop",                 new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "startTime",            new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "resumeTime",           new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "pauseTime",            new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "stopTime",             new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "isPaused",             new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",             new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "elapsedTime",          new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "duration_changed",     new Fields .SFTime (-1)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatS",              new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatT",              new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties",    new Fields .SFNode ()),
+      ]),
+      enumerable: true,
    },
 });
 

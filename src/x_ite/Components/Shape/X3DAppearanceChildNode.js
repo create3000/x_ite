@@ -55,9 +55,20 @@ function X3DAppearanceChildNode (executionContext)
    this .addType (X3DConstants .X3DAppearanceChildNode);
 }
 
-X3DAppearanceChildNode .prototype = Object .assign (Object .create (X3DNode .prototype),
+Object .setPrototypeOf (X3DAppearanceChildNode .prototype, X3DNode .prototype);
+
+Object .defineProperties (X3DAppearanceChildNode,
 {
-   constructor: X3DAppearanceChildNode,
+   typeName:
+   {
+      value: "X3DAppearanceChildNode",
+      enumerable: true,
+   },
+   componentName:
+   {
+      value: "Shape",
+      enumerable: true,
+   },
 });
 
 export default X3DAppearanceChildNode;
