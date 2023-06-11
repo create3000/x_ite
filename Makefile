@@ -46,7 +46,7 @@ zip:
 
 .PHONY: dist
 .SILENT:dist
-dist: compile copy-files html
+dist: compile copy-files html min-size
 	du -h dist/x_ite.min.js
 
 checkout-dist:
