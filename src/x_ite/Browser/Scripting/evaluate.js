@@ -49,11 +49,9 @@ function evaluate (globalObject, sourceText)
 {
    return Function (/* js */ `with (arguments [0])
    {
-      delete arguments [0];
-      arguments .length = 0;
-      ${sourceText}
+      return eval (arguments [1]);
    }`)
-   (globalObject);
+   (globalObject, sourceText);
 }
 
 export default evaluate;

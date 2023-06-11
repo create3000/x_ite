@@ -217,11 +217,9 @@ function evaluate (globalObject, sourceText)
 {
    return Function (/* js */ `with (arguments [0])
    {
-      delete arguments [0];
-      arguments .length = 0;
-      ${sourceText}
+      return eval (arguments [1]);
    }`)
-   (globalObject);
+   (globalObject, sourceText);
 }
 
 const __default__ = evaluate;
@@ -506,7 +504,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, Scripting_X3DScriptNo
             }
          }
 
-         sourceText += "\nreturn [" + callbacks .map (function (c)
+         sourceText += "\n[" + callbacks .map (function (c)
          {
             return `typeof ${c} !== "undefined" ? ${c} : undefined`;
          })

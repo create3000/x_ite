@@ -167,7 +167,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
             }
          }
 
-         sourceText += "\nreturn [" + callbacks .map (function (c)
+         sourceText += "\n[" + callbacks .map (function (c)
          {
             return `typeof ${c} !== "undefined" ? ${c} : undefined`;
          })
