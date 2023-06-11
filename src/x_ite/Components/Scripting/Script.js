@@ -176,7 +176,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
          this .globalObject = this .getGlobalObject ();
 
          const
-            result  = evaluate (this .globalObject, sourceText),
+            result  = this .evaluate (sourceText),
             context = new Map ();
 
          for (let i = 0; i < callbacks .length; ++ i)
@@ -193,7 +193,18 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
    },
    evaluate (sourceText)
    {
-      return evaluate (this .globalObject, `return (${sourceText})`);
+      const browser = this .getBrowser ();
+
+      browser .getScriptStack () .push (this);
+
+      try
+      {
+         return evaluate (this .globalObject, sourceText);
+      }
+      finally
+      {
+         browser .getScriptStack () .pop ();
+      }
    },
    getGlobalObject ()
    {
