@@ -81,8 +81,8 @@ function X3DBaseNode (executionContext)
    this [_childObjects]      = [ ];
    this [_live]              = true;
    this [_initialized]       = false;
-   this [_cloneCount]        = 0;
    this [_private]           = false;
+   this [_cloneCount]        = 0;
 
    if (this .canUserDefinedFields ())
       this [_fieldDefinitions] = new FieldDefinitionArray (this [_fieldDefinitions]);
