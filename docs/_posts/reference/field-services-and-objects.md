@@ -391,9 +391,11 @@ The SFNode object corresponds to an X3D SFNode field.
 
 ### Instance Creation Method(s)
 
-#### *sfNodeObjectName* = new **SFNode** (*x3dsyntax*)
+#### *sfNodeObjectName* = new **SFNode** (*vrmlSyntax*)
 
-*x3dsyntax* is a UTF-8 string containing the definition of an X3D node.
+*vrmlSyntax* is a UTF-8 string containing the definition of an X3D node.
+
+If the specification version is greater than 2.0, SFNode will throw an error when instantiated directly.
 
 ### Properties
 

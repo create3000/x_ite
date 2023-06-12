@@ -359,7 +359,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
             this .getScene () .setProfile (this .getBrowser () .getProfile ("Core"));
 
             for (const componentName of VRML)
-               this .getScene () .addComponent (this .getBrowser () .getComponent (componentName));
+               this .getScene () .updateComponent (this .getBrowser () .getComponent (componentName));
          }
 
          if (this .resolve)

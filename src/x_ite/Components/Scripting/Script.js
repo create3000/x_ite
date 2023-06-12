@@ -208,12 +208,17 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
    },
    getGlobalObject ()
    {
-      const browser = this .getBrowser ();
+      const
+         browser              = this .getBrowser (),
+         specificationVersion = this .getExecutionContext () .specificationVersion;
 
       class SFNode extends Fields .SFNode
       {
          constructor (vrmlSyntax)
          {
+            if (specificationVersion > 2.0)
+               throw new Error ("SFNode cannot be instantiated directly.");
+
             const nodes = browser .createVrmlFromString (vrmlSyntax);
 
             if (nodes .length && nodes [0])
