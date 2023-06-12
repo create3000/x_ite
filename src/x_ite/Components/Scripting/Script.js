@@ -220,19 +220,12 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
             if (specificationVersion > 2.0)
                throw new Error ("SFNode cannot be instantiated directly.");
 
-            try
-            {
-               browser .getScriptStack () .push (self);
+            browser .getScriptStack () .push (self);
 
-               const nodes = browser .createVrmlFromString (vrmlSyntax);
+            const nodes = browser .createVrmlFromString (vrmlSyntax);
 
-               if (nodes .length && nodes [0])
-                  return Object .setPrototypeOf (nodes [0], SFNode .prototype);
-            }
-            finally
-            {
-               browser .getScriptStack () .pop ();
-            }
+            if (nodes .length && nodes [0])
+               return Object .setPrototypeOf (nodes [0], SFNode .prototype);
 
             throw new Error ("SFNode.new: invalid argument.");
          }
