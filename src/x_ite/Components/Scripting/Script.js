@@ -222,7 +222,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
             const nodes = browser .createVrmlFromString (vrmlSyntax);
 
             if (nodes .length && nodes [0])
-               return nodes [0];
+               return Object .setPrototypeOf (nodes [0], SFNode .prototype);
 
             throw new Error ("SFNode.new: invalid argument.");
          }
