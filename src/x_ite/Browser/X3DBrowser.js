@@ -384,13 +384,11 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    },
    createVrmlFromString (vrmlSyntax)
    {
-      vrmlSyntax = String (vrmlSyntax);
-
       const
          currentScene = this .currentScene,
          external     = this .isExternal (),
          fileLoader   = new FileLoader (this .getWorld ()),
-         scene        = fileLoader .createX3DFromString (currentScene .getWorldURL (), vrmlSyntax);
+         scene        = fileLoader .createX3DFromString (currentScene .getWorldURL (), `#VRML V2.0 utf8\n\n${vrmlSyntax}`);
 
       if (!external)
       {
