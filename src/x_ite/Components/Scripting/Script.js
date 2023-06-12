@@ -208,29 +208,16 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
    },
    getGlobalObject ()
    {
-      const
-         browser          = this .getBrowser (),
-         executionContext = this .getExecutionContext (),
-         live             = this .getLive ();
+      const browser = this .getBrowser ();
 
       function SFNode (vrmlSyntax)
       {
-         const
-            scene     = browser .createX3DFromString (String (vrmlSyntax)),
-            rootNodes = scene .getRootNodes ();
+         const nodes = browser .createVrmlFromString (vrmlSyntax);
 
-         live .addFieldInterest (scene .getLive ());
+         if (nodes .length && nodes [0])
+            return nodes [0];
 
-         scene .setLive (live .getValue ());
-         scene .setPrivate (executionContext .isPrivate ());
-         scene .setExecutionContext (executionContext);
-
-         if (rootNodes .length && rootNodes [0])
-         {
-            return rootNodes [0];
-         }
-
-         throw new Error ("SFNode.new: invalid argument, must be 'string' is 'undefined'.");
+         throw new Error ("SFNode.new: invalid argument.");
       }
 
       Object .setPrototypeOf (SFNode .prototype, Fields .SFNode .prototype);
