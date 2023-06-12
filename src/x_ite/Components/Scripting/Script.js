@@ -209,7 +209,6 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
    getGlobalObject ()
    {
       const
-         self                 = this,
          browser              = this .getBrowser (),
          specificationVersion = this .getExecutionContext () .specificationVersion;
 
