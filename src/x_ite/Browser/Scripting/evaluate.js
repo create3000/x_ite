@@ -49,7 +49,18 @@ function evaluate (globalObject, sourceText)
 {
    return Function (/* js */ `with (arguments [0])
    {
-      return eval (arguments [1]);
+      return eval ((() =>
+      {
+         const sourceText = arguments [1];
+
+         delete arguments [0];
+         delete arguments [1];
+
+         arguments .length = 0;
+
+         return sourceText;
+      })
+      ());
    }`)
    (globalObject, sourceText);
 }
