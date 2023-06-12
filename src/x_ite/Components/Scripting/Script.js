@@ -210,17 +210,18 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
    {
       const browser = this .getBrowser ();
 
-      function SFNode (vrmlSyntax)
+      class SFNode extends Fields .SFNode
       {
-         const nodes = browser .createVrmlFromString (vrmlSyntax);
+         constructor (vrmlSyntax)
+         {
+            const nodes = browser .createVrmlFromString (vrmlSyntax);
 
-         if (nodes .length && nodes [0])
-            return nodes [0];
+            if (nodes .length && nodes [0])
+               return nodes [0];
 
-         throw new Error ("SFNode.new: invalid argument.");
+            throw new Error ("SFNode.new: invalid argument.");
+         }
       }
-
-      Object .setPrototypeOf (SFNode .prototype, Fields .SFNode .prototype);
 
       const globalObject =
       {
