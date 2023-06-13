@@ -96,7 +96,7 @@ Object .assign (SquatInterpolator .prototype,
          s .push (keyValue [0] .getValue () .copy ());
       }
    },
-   interpolate: (function ()
+   interpolate: (() =>
    {
       const result = new Rotation4 ();
 

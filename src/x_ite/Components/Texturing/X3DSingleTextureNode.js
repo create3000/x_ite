@@ -93,7 +93,7 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, X3DText
    {
       return this .texture;
    },
-   updateTextureParameters: (function ()
+   updateTextureParameters: (() =>
    {
       // Anisotropic Filtering in WebGL is handled by an extension, use one of getExtension depending on browser:
 
@@ -163,7 +163,7 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, X3DText
       textureBits .set (channel * 2 + 0, textureType & 0b01);
       textureBits .set (channel * 2 + 1, textureType & 0b10);
    },
-   getShaderOptions: (function ()
+   getShaderOptions: (() =>
    {
       const textureTypes = {
          2: "2D",

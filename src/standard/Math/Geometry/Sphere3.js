@@ -99,7 +99,7 @@ Object .assign (Sphere3 .prototype,
          return false;
       }
    },
-   intersectsTriangle: (function ()
+   intersectsTriangle: (() =>
    {
       const
          AB = new Vector3 (0, 0, 0),

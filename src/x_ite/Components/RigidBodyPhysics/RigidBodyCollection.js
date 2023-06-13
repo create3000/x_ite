@@ -130,7 +130,7 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
    set_contacts__ ()
    {
    },
-   set_gravity__: (function ()
+   set_gravity__: (() =>
    {
       var gravity = new Ammo .btVector3 (0, 0, 0);
 

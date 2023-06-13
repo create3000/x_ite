@@ -39,7 +39,7 @@ function createAccessor (name, data)
    {
       case inferType .ARRAY_OF_OBJECTS:
       {
-         return wrapAccessor (function (accessors)
+         return wrapAccessor (accessors =>
          {
             var e = accessors .pop ();
 
@@ -48,21 +48,21 @@ function createAccessor (name, data)
       }
       case inferType .ARRAY_OF_ARRAYS:
       {
-         return wrapAccessor (function (accessors)
+         return wrapAccessor (accessors =>
          {
             return name + "[" + accessors .join ("][") + "]";
          });
       }
       case inferType .GENERIC_NDARRAY:
       {
-         return wrapAccessor(function (accessors)
+         return wrapAccessor (accessors =>
          {
             return name + ".get(" + accessors.join(",") + ")";
          });
       }
       case inferType .NDARRAY:
       {
-         return wrapAccessor(function (accessors)
+         return wrapAccessor (accessors =>
          {
             var code = [name + "Offset"];
 

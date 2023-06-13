@@ -131,7 +131,7 @@ Object .assign (Box3 .prototype,
       min .add (this .center);
       max .add (this .center);
    },
-   getAbsoluteExtents: (function ()
+   getAbsoluteExtents: (() =>
    {
       const
          r1 = new Vector3 (0, 0, 0),
@@ -169,7 +169,7 @@ Object .assign (Box3 .prototype,
          max .max (p1, p2, p3, p4);
       };
    })(),
-   getPoints: (function ()
+   getPoints: (() =>
    {
       const
          x  = new Vector3 (0, 0, 0),
@@ -236,7 +236,7 @@ Object .assign (Box3 .prototype,
 
       return axes;
    },
-   getNormals: (function ()
+   getNormals: (() =>
    {
       const
          x = new Vector3 (0, 0, 0),
@@ -354,7 +354,7 @@ Object .assign (Box3 .prototype,
    {
       return this .matrix [15] === 0;
    },
-   add: (function ()
+   add: (() =>
    {
       const
          lhs_min = new Vector3 (0, 0, 0),
@@ -386,7 +386,7 @@ Object .assign (Box3 .prototype,
       this .matrix .multRight (matrix);
       return this;
    },
-   containsPoint: (function ()
+   containsPoint: (() =>
    {
       const
          min = new Vector3 (0, 0, 0),
@@ -404,7 +404,7 @@ Object .assign (Box3 .prototype,
                 max .z >= point .z;
       };
    })(),
-   intersectsBox: (function ()
+   intersectsBox: (() =>
    {
       const points1 = [
          new Vector3 (0, 0, 0),
@@ -506,7 +506,7 @@ Object .assign (Box3 .prototype,
          return true;
       };
    })(),
-   intersectsTriangle: (function ()
+   intersectsTriangle: (() =>
    {
       const points1 = [
          new Vector3 (0, 0, 0),
@@ -627,7 +627,7 @@ Object .defineProperties (Box3 .prototype,
 {
    size:
    {
-      get: (function ()
+      get: (() =>
       {
          const
             min = new Vector3 (0, 0, 0),

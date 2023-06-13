@@ -889,7 +889,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
 
       const EPSILON = 1e-9; // Min point distance.
 
-      contours = contours .map (function (points)
+      contours = contours .map (points =>
       {
          if (points .closed)
          {
@@ -2480,7 +2480,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
 
       return false;
    },
-   colorValue: (function ()
+   colorValue: (() =>
    {
       const color = new Color4 (0, 0, 0, 0);
 

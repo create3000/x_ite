@@ -427,7 +427,7 @@ Object .assign (X3DCoreContext .prototype,
 
       return url;
    },
-   callBrowserEventHandler: (function ()
+   callBrowserEventHandler: (() =>
    {
       const build_in = new Set (["error", "load"]);
 

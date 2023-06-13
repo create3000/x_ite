@@ -140,7 +140,7 @@ Object .assign (Object .setPrototypeOf (SurfaceEmitter .prototype, X3DParticleEm
       if (this .surfaceNode)
          this .setUniform ("uniform1i", "solid", this .surfaceNode ._solid .getValue ());
    },
-   set_geometry__: (function ()
+   set_geometry__: (() =>
    {
       const
          vertex1  = new Vector3 (0, 0, 0),

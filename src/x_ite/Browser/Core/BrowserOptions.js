@@ -103,7 +103,7 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
 
       this .configure ();
    },
-   configure: (function ()
+   configure: (() =>
    {
       const attributes = new Set ([
          "Antialiased",
@@ -214,7 +214,7 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
       if (typeof browser .setTextureQuality === "function")
          browser .setTextureQuality (this .textureQuality);
    },
-   set_shading__: (function ()
+   set_shading__: (() =>
    {
       const strings = {
          [Shading .POINT]:     "POINT",

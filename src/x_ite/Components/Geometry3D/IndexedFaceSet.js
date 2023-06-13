@@ -273,7 +273,7 @@ Object .assign (Object .setPrototypeOf (IndexedFaceSet .prototype, X3DComposedGe
 
       return polygons;
    },
-   triangulatePolygon: (function ()
+   triangulatePolygon: (() =>
    {
       const polygon = [ ];
 
@@ -319,7 +319,7 @@ Object .assign (Object .setPrototypeOf (IndexedFaceSet .prototype, X3DComposedGe
          }
       }
    },
-   createNormals: (function ()
+   createNormals: (() =>
    {
       const
          normals     = [ ],
@@ -393,7 +393,7 @@ Object .assign (Object .setPrototypeOf (IndexedFaceSet .prototype, X3DComposedGe
          return this .refineNormals (normalIndex, normals, this ._creaseAngle .getValue ());
       };
    })(),
-   getPolygonNormal: (function ()
+   getPolygonNormal: (() =>
    {
       let
          current = new Vector3 (0, 0, 0),

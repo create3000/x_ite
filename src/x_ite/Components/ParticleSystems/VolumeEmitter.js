@@ -162,7 +162,7 @@ Object .assign (Object .setPrototypeOf (VolumeEmitter .prototype, X3DParticleEmi
       this .set_direction__ ();
       this .set_geometry__ ();
    },
-   set_direction__: (function ()
+   set_direction__: (() =>
    {
       const direction = new Vector3 (0, 0, 0);
 
@@ -173,7 +173,7 @@ Object .assign (Object .setPrototypeOf (VolumeEmitter .prototype, X3DParticleEmi
          this .setUniform ("uniform3f", "direction", direction .x, direction .y, direction .z);
       };
    })(),
-   set_geometry__: (function ()
+   set_geometry__: (() =>
    {
       const
          vertex1 = new Vector3 (0, 0, 0),

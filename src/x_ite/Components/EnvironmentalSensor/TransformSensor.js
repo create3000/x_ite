@@ -180,7 +180,7 @@ Object .assign (Object .setPrototypeOf (TransformSensor .prototype, X3DEnvironme
    {
       this .targetMatrices .push (TargetMatrixCache .pop () .assign (targetMatrix));
    },
-   process: (function ()
+   process: (() =>
    {
       const
          position    = new Vector3 (0, 0, 0),
@@ -232,7 +232,7 @@ Object .assign (Object .setPrototypeOf (TransformSensor .prototype, X3DEnvironme
          targetMatrices .length = 0;
       };
    })(),
-   intersects: (function ()
+   intersects: (() =>
    {
       const infinity = new Vector3 (-1, -1, -1);
 

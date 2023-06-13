@@ -95,7 +95,7 @@ Object .assign (Object .setPrototypeOf (SFColorRGBA .prototype, X3DField .protot
       this .getValue () .setHSVA (h, s, v, a);
       this .addEvent ();
    },
-   lerp: (function ()
+   lerp: (() =>
    {
       const
          s = [ ],

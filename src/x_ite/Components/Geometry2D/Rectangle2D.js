@@ -66,7 +66,7 @@ function Rectangle2D (executionContext)
 
 Object .assign (Object .setPrototypeOf (Rectangle2D .prototype, X3DGeometryNode .prototype),
 {
-   build: (function ()
+   build: (() =>
    {
       const defaultSize = new Vector2 (2, 2);
 

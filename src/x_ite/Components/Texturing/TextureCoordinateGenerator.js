@@ -74,7 +74,7 @@ Object .assign (Object .setPrototypeOf (TextureCoordinateGenerator .prototype, X
       this .set_mode__ ();
       this .set_parameter__ ();
    },
-   set_mode__: (function ()
+   set_mode__: (() =>
    {
       const modes = new Map ([
          ["SPHERE",                      ModeType .SPHERE],

@@ -145,7 +145,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
       for (var i = 0, length = this .geometryNodes .length; i < length; ++ i)
          this .geometryNodes [i] ._rotation = this ._orientation;
    },
-   set_transform__: (function ()
+   set_transform__: (() =>
    {
       var
          o  = new Ammo .btVector3 (0, 0, 0),
@@ -196,7 +196,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
          this .rigidBody .setMotionState (this .motionState);
       };
    })(),
-   set_linearVelocity__: (function ()
+   set_linearVelocity__: (() =>
    {
       var lv = new Ammo .btVector3 (0, 0, 0);
 
@@ -211,7 +211,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
          this .rigidBody .activate ();
       };
    }) (),
-   set_angularVelocity__: (function ()
+   set_angularVelocity__: (() =>
    {
       var av = new Ammo .btVector3 (0, 0, 0);
 
@@ -226,7 +226,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
          this .rigidBody .activate ();
       };
    })(),
-   set_finiteRotationAxis__: (function ()
+   set_finiteRotationAxis__: (() =>
    {
       var angularFactor = new Ammo .btVector3 (1, 1, 1);
 
@@ -249,7 +249,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
 
       this .rigidBody .activate ();
    },
-   set_centerOfMass__: (function ()
+   set_centerOfMass__: (() =>
    {
       var
          rotation     = new Ammo .btQuaternion (0, 0, 0, 1),
@@ -264,7 +264,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
          this .rigidBody .setCenterOfMassTransform (centerOfMass);
       };
    })(),
-   set_massProps__: (function ()
+   set_massProps__: (() =>
    {
       var localInertia = new Ammo .btVector3 (0, 0, 0);
 
@@ -370,7 +370,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
    {
       this ._otherGeometry .addEvent ();
    },
-   set_compoundShape__: (function ()
+   set_compoundShape__: (() =>
    {
       var transform = new Ammo .btTransform ();
 
@@ -396,7 +396,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
          this .set_disable__ ();
       };
    })(),
-   applyForces: (function ()
+   applyForces: (() =>
    {
       var
          g = new Ammo .btVector3 (0, 0, 0),
@@ -422,7 +422,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
          this .rigidBody .applyTorque (t);
       };
    })(),
-   update: (function ()
+   update: (() =>
    {
       var
          transform       = new Ammo .btTransform (),

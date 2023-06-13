@@ -112,7 +112,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          this .input = undefined;
       }
    },
-   isValid: (function ()
+   isValid: (() =>
    {
       const keys = new Set ([
          "asset",
@@ -433,7 +433,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       for (const accessor of accessors)
          this .accessorObject (accessor);
    },
-   accessorObject: (function ()
+   accessorObject: (() =>
    {
       const TypedArrays = new Map ([
          [5120, Int8Array],
@@ -506,7 +506,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          });
       };
    })(),
-   sparseObject: (function ()
+   sparseObject: (() =>
    {
       const TypedArrays = new Map ([
          [5121, Uint8Array],
@@ -560,7 +560,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       for (const sampler of samplers)
          this .samplerObject (sampler);
    },
-   samplerObject: (function ()
+   samplerObject: (() =>
    {
       const MinificationFilters = new Map ([
          [9728, ["NEAREST_PIXEL",                false]],
@@ -2062,7 +2062,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       return geometryNode;
    },
-   createColor: (function ()
+   createColor: (() =>
    {
       const TypeNames = new Map ([
          ["VEC3", "Color"],

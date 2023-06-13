@@ -379,7 +379,7 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
       this .set_nearDistance__ ();
       this .set_farDistance__ ();
    },
-   getRelativeTransformation: (function ()
+   getRelativeTransformation: (() =>
    {
       const
          position         = new Vector3 (0, 0, 0),
@@ -404,7 +404,7 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
          };
       };
    })(),
-   getLookAtRotation: (function ()
+   getLookAtRotation: (() =>
    {
       const
          x = new Vector3 (0, 0, 0),
@@ -509,7 +509,7 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
 
       this .setInterpolators (this, relative);
    },
-   straightenHorizon: (function ()
+   straightenHorizon: (() =>
    {
       const
          localXAxis  = new Vector3 (0, 0, 0),

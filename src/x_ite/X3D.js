@@ -110,7 +110,7 @@ function X3D (callback, fallback)
 
       initialized = true;
 
-      $(function ()
+      $(() =>
       {
          try
          {
@@ -139,7 +139,7 @@ Object .assign (X3D,
 
       return Namespace .get (id);
    },
-   noConflict: (function ()
+   noConflict: (() =>
    {
       const
          _had = window .hasOwnProperty ("X3D"),

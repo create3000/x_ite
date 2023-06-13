@@ -69,7 +69,7 @@ Object .assign (Object .setPrototypeOf (NormalInterpolator .prototype, X3DInterp
       this ._keyValue .addInterest ("set_keyValue__", this);
    },
    set_keyValue__ () { },
-   interpolate: (function ()
+   interpolate: (() =>
    {
       const
          keyValue0 = new Vector3 (0, 0, 0),

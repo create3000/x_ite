@@ -72,7 +72,7 @@ Object .assign (Object .setPrototypeOf (WindPhysicsModel .prototype, X3DParticle
 
       return emitterNode .getRandomValue (Math .max (0, speed - variation), speed + variation);
    },
-   addForce: (function ()
+   addForce: (() =>
    {
       const force = new Vector3 (0, 0, 0);
 

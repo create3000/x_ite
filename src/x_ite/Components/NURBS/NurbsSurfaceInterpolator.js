@@ -92,7 +92,7 @@ Object .assign (Object .setPrototypeOf (NurbsSurfaceInterpolator .prototype, X3D
 
       this .geometry .setup ();
    },
-   set_fraction__: (function ()
+   set_fraction__: (() =>
    {
       const
          a     = new Vector3 (0, 0, 0),

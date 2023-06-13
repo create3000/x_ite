@@ -92,7 +92,7 @@ Object .assign (Object .setPrototypeOf (CollisionSensor .prototype, X3DSensorNod
 
       this .set_live__ ();
    },
-   update: (function ()
+   update: (() =>
    {
       var
          collidableNodesIndex = new Map (),
@@ -131,7 +131,7 @@ Object .assign (Object .setPrototypeOf (CollisionSensor .prototype, X3DSensorNod
          intersectionNodes .clear ();
          contactNodes .length = 0;
 
-         collisionWorlds .forEach (function (collisionWorld)
+         collisionWorlds .forEach (collisionWorld =>
          {
             //collisionWorld .performDiscreteCollisionDetection ();
 
@@ -197,8 +197,7 @@ Object .assign (Object .setPrototypeOf (CollisionSensor .prototype, X3DSensorNod
                   }
                }
             }
-         },
-         this);
+         });
 
          var active = !! contactNodes .length;
 
@@ -209,11 +208,7 @@ Object .assign (Object .setPrototypeOf (CollisionSensor .prototype, X3DSensorNod
          {
             var i = 0;
 
-            intersectionNodes .forEach (function (intersectionNode)
-            {
-               this ._intersections [i ++] = intersectionNode;
-            },
-            this);
+            intersectionNodes .forEach (intersectionNode => this ._intersections [i ++] = intersectionNode);
 
             this ._intersections .length = i;
          }
@@ -222,11 +217,7 @@ Object .assign (Object .setPrototypeOf (CollisionSensor .prototype, X3DSensorNod
          {
             var i = 0;
 
-            contactNodes .forEach (function (contactNode)
-            {
-               this ._contacts [i ++] = contactNode;
-            },
-            this);
+            contactNodes .forEach (contactNode => this ._contacts [i ++] = contactNode);
 
             this ._contacts .length = i;
          }

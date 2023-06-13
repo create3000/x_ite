@@ -382,7 +382,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
       this .getMultiTexCoords () .push (texCoords);
    },
-   getTexCoordParams: (function ()
+   getTexCoordParams: (() =>
    {
       const texCoordParams = { min: new Vector3 (0, 0, 0), Ssize: 0, Sindex: 0, Tindex: 0 };
 
@@ -477,12 +477,9 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    },
    isClipped (point, clipPlanes)
    {
-      return clipPlanes .some (function (clipPlane)
-      {
-         return clipPlane .isClipped (point);
-      });
+      return clipPlanes .some (clipPlane => clipPlane .isClipped (point));
    },
-   intersectsLine: (function ()
+   intersectsLine: (() =>
    {
       const
          modelViewMatrix = new Matrix4 (),
@@ -551,7 +548,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          return intersections .length;
       };
    })(),
-   getPlanesWithOffset: (function ()
+   getPlanesWithOffset: (() =>
    {
       const
          min    = new Vector3 (0, 0, 0),
@@ -572,7 +569,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          return planes;
       };
    })(),
-   intersectsBBox: (function ()
+   intersectsBBox: (() =>
    {
       const intersection = new Vector3 (0, 0, 0);
 
@@ -648,7 +645,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          return false;
       };
    })(),
-   intersectsBox: (function ()
+   intersectsBox: (() =>
    {
       const
          v0        = new Vector3 (0, 0, 0),
@@ -704,7 +701,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
       else
          this .getBrowser () .getBrowserOptions () ._Shading .removeInterest ("set_shading__", this);
    },
-   set_shading__: (function ()
+   set_shading__: (() =>
    {
       const
          v0     = new Vector3 (0, 0, 0),
@@ -773,7 +770,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    {
       this ._rebuild .addEvent ();
    },
-   rebuild: (function ()
+   rebuild: (() =>
    {
       const point = new Vector3 (0, 0, 0);
 

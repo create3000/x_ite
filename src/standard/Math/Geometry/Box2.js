@@ -117,7 +117,7 @@ Object .assign (Box2 .prototype,
    {
       return this .matrix [8] === 0;
    },
-   add: (function ()
+   add: (() =>
    {
       const
          lhs_min = new Vector2 (0, 0),
@@ -156,7 +156,7 @@ Object .assign (Box2 .prototype,
       min .add (this .center);
       max .add (this .center);
    },
-   getAbsoluteExtents: (function ()
+   getAbsoluteExtents: (() =>
    {
       const p1 = new Vector2 (0, 0);
 
@@ -181,7 +181,7 @@ Object .assign (Box2 .prototype,
          max .max (p1, p2);
       };
    })(),
-   containsPoint: (function ()
+   containsPoint: (() =>
    {
       const
          min = new Vector2 (0, 0),
@@ -219,7 +219,7 @@ Object .defineProperties (Box2 .prototype,
 {
    size:
    {
-      get: (function ()
+      get: (() =>
       {
          const
             min = new Vector2 (0, 0),

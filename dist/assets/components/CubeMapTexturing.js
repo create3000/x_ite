@@ -182,7 +182,7 @@ Object .assign (Object .setPrototypeOf (X3DEnvironmentTextureNode .prototype, (X
    {
       return this .targets;
    },
-   clearTexture: (function ()
+   clearTexture: (() =>
    {
       const defaultData = new Uint8Array ([ 255, 255, 255, 255 ]);
 
@@ -638,7 +638,7 @@ Object .assign (Object .setPrototypeOf (DependentRenderer .prototype, (X3DBaseNo
    },
 });
 
-for (const key of Reflect .ownKeys (DependentRenderer .prototype))
+for (const key of Object .keys (DependentRenderer .prototype))
    Object .defineProperty (DependentRenderer .prototype, key, { enumerable: false });
 
 const DependentRenderer_default_ = DependentRenderer;
@@ -810,7 +810,7 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, Cube
 
       this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ()) .multRight (renderObject .getCameraSpaceMatrix () .get ());
    },
-   renderTexture: (function ()
+   renderTexture: (() =>
    {
       // Rotations to negated normals of the texture cube.
 
@@ -916,7 +916,7 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, Cube
             this ._update = "NONE";
       };
    })(),
-   setShaderUniforms: (function ()
+   setShaderUniforms: (() =>
    {
       const zeros = new Float32Array (16); // Trick: zero model view matrix to hide object.
 

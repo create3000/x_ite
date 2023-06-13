@@ -1,7 +1,7 @@
 /* X_ITE v8.8.3 */(() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 250:
+/***/ 626:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 /**
@@ -15656,7 +15656,7 @@ Object .assign (Object .setPrototypeOf (PolygonText .prototype, Text_X3DTextGeom
    {
       return (Matrix4_default()).Identity;
    },
-   build: (function ()
+   build: (() =>
    {
       const
          min = new (Vector3_default()) (0, 0, 0),
@@ -15893,7 +15893,7 @@ Object .assign (Object .setPrototypeOf (PolygonText .prototype, Text_X3DTextGeom
             return 5;
       }
    },
-   triangulatePolygon: (function ()
+   triangulatePolygon: (() =>
    {
       // Function called for each vertex of tessellator output.
 
@@ -16069,7 +16069,7 @@ Namespace_default().set ("x_ite/Components/Text/FontStyle", FontStyle_default_);
 /* harmony default export */ const Text_FontStyle = (FontStyle_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Text/X3DTextContext.js
 /* provided dependency */ var $ = __webpack_require__(355);
-/* provided dependency */ var opentype = __webpack_require__(250);
+/* provided dependency */ var opentype = __webpack_require__(626);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.

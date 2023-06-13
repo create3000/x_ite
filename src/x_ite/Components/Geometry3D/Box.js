@@ -63,7 +63,7 @@ function Box (executionContext)
 
 Object .assign (Object .setPrototypeOf (Box .prototype, X3DGeometryNode .prototype),
 {
-   build: (function ()
+   build: (() =>
    {
       const defaultSize = new Vector3 (2, 2, 2);
 

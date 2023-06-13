@@ -86,7 +86,7 @@ const NURBS = {
 
       return true;
    },
-   getClosed: (function ()
+   getClosed: (() =>
    {
       const
          firstPoint = new Vector3 (0, 0, 0),
@@ -119,7 +119,7 @@ const NURBS = {
          return true;
       };
    })(),
-   getUClosed: (function ()
+   getUClosed: (() =>
    {
       const
          firstPoint = new Vector3 (0, 0, 0),
@@ -157,7 +157,7 @@ const NURBS = {
          return true;
       };
    })(),
-   getVClosed: (function ()
+   getVClosed: (() =>
    {
       const
          firstPoint = new Vector3 (0, 0, 0),

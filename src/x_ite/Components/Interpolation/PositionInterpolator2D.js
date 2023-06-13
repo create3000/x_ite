@@ -76,7 +76,7 @@ Object .assign (Object .setPrototypeOf (PositionInterpolator2D .prototype, X3DIn
       if (keyValue .length < key .length)
          keyValue .resize (key .length, keyValue .length ? keyValue [keyValue .length - 1] : new Fields .SFVec2f ());
    },
-   interpolate:  (function ()
+   interpolate:  (() =>
    {
       const keyValue = new Vector2 (0, 0);
 

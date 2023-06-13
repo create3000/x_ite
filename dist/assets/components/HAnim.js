@@ -411,7 +411,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (X3DChildNode_
 
       this .skinning (type, renderObject);
    },
-   skinning: (function ()
+   skinning: (() =>
    {
       const
          invModelMatrix = new (Matrix4_default()) (),

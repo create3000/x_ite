@@ -93,7 +93,7 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
 
       return true;
    },
-   createPoints: (function ()
+   createPoints: (() =>
    {
       const scale3 = new Vector3 (1, 1, 1);
 
@@ -135,7 +135,7 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
          return points;
       };
    })(),
-   createRotations: (function ()
+   createRotations: (() =>
    {
       const rotations = [ ];
 
@@ -327,7 +327,7 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
          return rotations;
       };
    })(),
-   build: (function ()
+   build: (() =>
    {
       const
          min     = new Vector2 (0, 0, 0),

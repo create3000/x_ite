@@ -201,7 +201,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    {
       return SupportedComponents;
    },
-   loadComponents: (function ()
+   loadComponents: (() =>
    {
       function loadComponents (components, seen)
       {
@@ -609,7 +609,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    {
       return this [_browserCallbacks];
    },
-   callBrowserCallbacks: (function ()
+   callBrowserCallbacks: (() =>
    {
       const browserCallbacks = [ ];
 

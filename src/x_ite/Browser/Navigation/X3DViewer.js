@@ -106,7 +106,7 @@ Object .assign (Object .setPrototypeOf (X3DViewer .prototype, X3DBaseNode .proto
 
       return [x, y];
    },
-   isPointerInRectangle: (function ()
+   isPointerInRectangle: (() =>
    {
       const pointer = new Vector2 (0, 0);
 
@@ -119,7 +119,7 @@ Object .assign (Object .setPrototypeOf (X3DViewer .prototype, X3DBaseNode .proto
          return browser .isPointerInRectangle (rectangle, pointer .set (x, y));
       };
    })(),
-   getPointOnCenterPlane: (function ()
+   getPointOnCenterPlane: (() =>
    {
       const
          axis     = new Vector3 (0, 0, -1),

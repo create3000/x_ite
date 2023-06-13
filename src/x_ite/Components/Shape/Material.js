@@ -178,7 +178,7 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
    {
       return this .diffuseTexture;
    },
-   getTextureIndices: (function ()
+   getTextureIndices: (() =>
    {
       let i = 0;
 

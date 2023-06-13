@@ -427,7 +427,7 @@ Object .defineProperties (Quaternion .prototype,
    },
    imag:
    {
-      get: (function ()
+      get: (() =>
       {
          const result = new Vector3 (0, 0, 0);
 
@@ -444,7 +444,7 @@ Object .defineProperties (Quaternion .prototype,
 Object .assign (Quaternion,
 {
    Identity: new Quaternion (0, 0, 0, 1),
-   spline: (function ()
+   spline: (() =>
    {
       const
          q0   = new Quaternion (0, 0, 0, 1),

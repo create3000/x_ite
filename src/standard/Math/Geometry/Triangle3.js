@@ -49,7 +49,7 @@ import Vector3 from "../Numbers/Vector3.js";
 
 const Triangle3 =
 {
-   area: (function ()
+   area: (() =>
    {
       const
          B = new Vector3 (0, 0, 0),
@@ -92,7 +92,7 @@ const Triangle3 =
 
       return normal .normalize ();
    },
-   triangulatePolygon: (function ()
+   triangulatePolygon: (() =>
    {
       // Function called for each vertex of tesselator output.
 

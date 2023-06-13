@@ -1,7 +1,7 @@
 /* X_ITE v8.8.3 */(() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 740:
+/***/ 132:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -38,7 +38,7 @@ var Ib=[cx,_q,cr,Yr,as,fs,hs,Hu,Su,cx,cx,cx,cx,cx,cx,cx];var Jb=[dx,si,gi,Wh,Kh,
 
 /***/ }),
 
-/***/ 951:
+/***/ 499:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -72,7 +72,7 @@ var _a=[yj,od,ef,yj];var $a=[zj,Li,di,bi,Kb,Lb,Mb,Nb,Rc,Sc,Uc,jd,xd,Ye,lf,yd,zd,
 
 /***/ }),
 
-/***/ 128:
+/***/ 697:
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 /*! dicom-parser - 1.8.12 - 2023-02-20 | (c) 2017 Chris Hafey | https://github.com/cornerstonejs/dicomParser */
@@ -4028,7 +4028,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_zlib__;
 
 /***/ }),
 
-/***/ 89:
+/***/ 481:
 /***/ ((module) => {
 
 /* -*- tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- /
@@ -5183,7 +5183,7 @@ function decode(jpegData, userOpts = {}) {
 
 /***/ }),
 
-/***/ 486:
+/***/ 631:
 /***/ ((module) => {
 
 (function(f){if(true){module.exports=f()}else { var g; }})(function(){var define,module,exports;return (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c=undefined;if(!f&&c)return require(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u=undefined,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
@@ -7599,7 +7599,7 @@ Object .assign (NRRDParser .prototype,
             ;
       }
    },
-   getType: (function ()
+   getType: (() =>
    {
       const types = new Map ([
          ["signed char",        ["signed char", 1]],
@@ -7643,7 +7643,7 @@ Object .assign (NRRDParser .prototype,
          this .bytes    = type [1];
       };
    })(),
-   getEncoding: (function ()
+   getEncoding: (() =>
    {
       const encodings = new Map ([
          ["ascii", "ascii"],
@@ -7936,11 +7936,11 @@ const NRRDParser_default_ = NRRDParser;
 Namespace_default().set ("x_ite/Browser/Texturing3D/NRRDParser", NRRDParser_default_);
 /* harmony default export */ const Texturing3D_NRRDParser = (NRRDParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Texturing3D/DICOMParser.js
-/* provided dependency */ var dicomParser = __webpack_require__(128);
-/* provided dependency */ var JpegImage = __webpack_require__(89);
-/* provided dependency */ var jpeg = __webpack_require__(486);
-/* provided dependency */ var CharLS = __webpack_require__(740);
-/* provided dependency */ var OpenJPEG = __webpack_require__(951);
+/* provided dependency */ var dicomParser = __webpack_require__(697);
+/* provided dependency */ var JpegImage = __webpack_require__(481);
+/* provided dependency */ var jpeg = __webpack_require__(631);
+/* provided dependency */ var CharLS = __webpack_require__(132);
+/* provided dependency */ var OpenJPEG = __webpack_require__(499);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -8084,7 +8084,7 @@ Object .assign (DicomParser .prototype,
          bytes        = new Uint8Array (byteLength),
          frames       = this .getFrames (pixelElement);
 
-      frames .forEach (function (frame, f)
+      frames .forEach ((frame, f) =>
       {
          // Handle transfer syntax.
 
@@ -8652,7 +8652,7 @@ Object .assign (DicomParser .prototype,
 
       return new Uint8Array (image .pixelData .buffer);
    },
-   jpegLSDecode: (function ()
+   jpegLSDecode: (() =>
    {
       const charLS = CharLS ();
 
@@ -8736,7 +8736,7 @@ Object .assign (DicomParser .prototype,
 
       return new Uint8Array (image .pixelData .buffer);
    },
-   decodeOpenJPEG: (function ()
+   decodeOpenJPEG: (() =>
    {
       const openJPEG = OpenJPEG ();
 
@@ -9564,7 +9564,7 @@ Object .assign (Object .setPrototypeOf (PixelTexture3D .prototype, Texturing3D_X
    {
       return this ._loadState .getValue ();
    },
-   set_image__: (function ()
+   set_image__: (() =>
    {
       const
          OFFSET     = 4,
@@ -10178,7 +10178,7 @@ Object .assign (Object .setPrototypeOf (TextureTransform3D .prototype, (X3DSingl
    {
       return this .matrix;
    },
-   eventsProcessed: (function ()
+   eventsProcessed: (() =>
    {
       const vector = new (Vector3_default()) (0, 0, 0);
 

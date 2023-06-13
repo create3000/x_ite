@@ -172,7 +172,7 @@ Object .assign (Object .setPrototypeOf (X3DTextureProjectorNode .prototype, (X3D
    {
       return this .textureNode;
    },
-   getBiasMatrix: (function ()
+   getBiasMatrix: (() =>
    {
       // Transforms normalized coords from range (-1, 1) to (0, 1).
       const biasMatrix = new (Matrix4_default()) (0.5, 0.0, 0.0, 0.0,
@@ -185,7 +185,7 @@ Object .assign (Object .setPrototypeOf (X3DTextureProjectorNode .prototype, (X3D
          return biasMatrix;
       };
    })(),
-   straightenHorizon: (function ()
+   straightenHorizon: (() =>
    {
       const
          localXAxis = new (Vector3_default()) (0, 0, 0),

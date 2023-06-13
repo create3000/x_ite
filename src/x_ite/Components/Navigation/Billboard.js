@@ -74,7 +74,7 @@ Object .assign (Object .setPrototypeOf (Billboard .prototype, X3DGroupingNode .p
    {
       return this .matrix;
    },
-   rotate: (function ()
+   rotate: (() =>
    {
       const
          inverseModelViewMatrix = new Matrix4 (),

@@ -97,7 +97,7 @@ Object .assign (Object .setPrototypeOf (ArcClose2D .prototype, X3DGeometryNode .
       // We must test for NAN, as NAN to int is undefined.
       return 0;
    },
-   build: (function ()
+   build: (() =>
    {
       const half = new Complex (0.5, 0.5);
 

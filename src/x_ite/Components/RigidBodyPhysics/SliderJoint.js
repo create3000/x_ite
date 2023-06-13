@@ -81,7 +81,7 @@ Object .assign (Object .setPrototypeOf (SliderJoint .prototype, X3DRigidJointNod
       this ._minSeparation .addInterest ("set_separation__",  this);
       this ._maxSeparation .addInterest ("set_separation__",  this);
    },
-   addJoint: (function ()
+   addJoint: (() =>
    {
       var
          axisRotation = new Rotation4 (),

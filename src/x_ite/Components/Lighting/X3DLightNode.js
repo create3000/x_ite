@@ -121,7 +121,7 @@ Object .assign (Object .setPrototypeOf (X3DLightNode .prototype, X3DChildNode .p
    {
       return Math .min (this ._shadowMapSize .getValue (), this .getBrowser () .getMaxTextureSize ());
    },
-   getBiasMatrix: (function ()
+   getBiasMatrix: (() =>
    {
       // Transforms normalized coords from range (-1, 1) to (0, 1).
       const biasMatrix = new Matrix4 (0.5, 0.0, 0.0, 0.0,

@@ -176,7 +176,7 @@ Object .assign (Rotation4 .prototype,
                                Math .cos (halfTheta));
       return this;
    },
-   get: (function ()
+   get: (() =>
    {
       const result = new Vector4 (0, 0, 0, 0);
 
@@ -214,7 +214,7 @@ Object .assign (Rotation4 .prototype,
    {
       return this .set (axis .x, axis .y, axis .z, angle);
    },
-   setFromToVec: (function ()
+   setFromToVec: (() =>
    {
       const
          from = new Vector3 (0, 0, 0),

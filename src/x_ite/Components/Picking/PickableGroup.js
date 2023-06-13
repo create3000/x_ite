@@ -82,7 +82,7 @@ Object .assign (Object .setPrototypeOf (PickableGroup .prototype, X3DGroupingNod
    {
       this .setPickableObject (!!(this ._pickable .getValue () || this .getTransformSensors () .size));
    },
-   traverse: (function ()
+   traverse: (() =>
    {
       const pickSensorNodes = new Set ();
 

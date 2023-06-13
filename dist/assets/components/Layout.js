@@ -171,7 +171,7 @@ Object .assign (X3DLayoutContext .prototype,
 
       return this [_screenTextureProperties];
    },
-   getScreenScaleMatrix: (function ()
+   getScreenScaleMatrix: (() =>
    {
       const
          screenScale  = new (Vector3_default()) (0, 0, 0),
@@ -1416,7 +1416,7 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, (X3DTextGeometry_
    {
       return this .matrix;
    },
-   update: (function ()
+   update: (() =>
    {
       const
          min = new (Vector3_default()) (0, 0, 0),
@@ -1479,7 +1479,7 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, (X3DTextGeometry_
          this .getBBox () .setExtents (min, max);
       };
    })(),
-   build: (function ()
+   build: (() =>
    {
       const
          min = new (Vector3_default()) (0, 0, 0),
@@ -1706,7 +1706,7 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, (X3DTextGeometry_
       min .set ((glyph .xMin || 0) / unitsPerEm, (glyph .yMin || 0) / unitsPerEm, 0);
       max .set ((glyph .xMax || 0) / unitsPerEm, (glyph .yMax || 0) / unitsPerEm, 0);
    },
-   traverse: (function ()
+   traverse: (() =>
    {
       const bbox = new (Box3_default()) ();
 
@@ -1727,7 +1727,7 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, (X3DTextGeometry_
 
       renderContext .textureNode = this .textureNode;
    },
-   transformLine: (function ()
+   transformLine: (() =>
    {
       const invMatrix = new (Matrix4_default()) ();
 

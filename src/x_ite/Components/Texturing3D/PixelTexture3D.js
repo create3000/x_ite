@@ -74,7 +74,7 @@ Object .assign (Object .setPrototypeOf (PixelTexture3D .prototype, X3DTexture3DN
    {
       return this ._loadState .getValue ();
    },
-   set_image__: (function ()
+   set_image__: (() =>
    {
       const
          OFFSET     = 4,

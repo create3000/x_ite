@@ -141,7 +141,7 @@ Object .assign (Object .setPrototypeOf (PolylineEmitter .prototype, X3DParticleE
       this .set_direction__ ();
       this .set_polyline ();
    },
-   set_direction__: (function ()
+   set_direction__: (() =>
    {
       const direction = new Vector3 (0, 0, 0);
 
@@ -152,7 +152,7 @@ Object .assign (Object .setPrototypeOf (PolylineEmitter .prototype, X3DParticleE
          this .setUniform ("uniform3f", "direction", direction .x, direction .y, direction .z);
       };
    })(),
-   set_polyline: (function ()
+   set_polyline: (() =>
    {
       const
          vertex1 = new Vector3 (0, 0, 0),

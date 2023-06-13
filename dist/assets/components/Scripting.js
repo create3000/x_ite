@@ -515,11 +515,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, Scripting_X3DScriptNo
             }
          }
 
-         sourceText += "\n[" + callbacks .map (function (c)
-         {
-            return `typeof ${c} !== "undefined" ? ${c} : undefined`;
-         })
-         .join (",") + "];";
+         sourceText += "\n[" + callbacks .map (c => `typeof ${c} !== "undefined" ? ${c} : undefined`) .join (",") + "];";
 
          this .globalObject = this .getGlobalObject ();
 
@@ -560,9 +556,6 @@ Object .assign (Object .setPrototypeOf (Script .prototype, Scripting_X3DScriptNo
 
       function SFNode (vrmlSyntax)
       {
-         if (browser .currentScene .specificationVersion > 2.0)
-            throw new Error ("SFNode cannot be instantiated directly.");
-
          const nodes = browser .createVrmlFromString (vrmlSyntax);
 
          if (nodes .length && nodes [0])

@@ -32,13 +32,13 @@
 import X3D from "./x_ite.js";
 window .X3D = X3D;
 
-X3D (function ()
+X3D (() =>
 {
    const
       Browser      = X3D .getBrowser (),
       localStorage = Browser .getLocalStorage ();
 
-   Browser .getContextMenu () .setUserMenu (function ()
+   Browser .getContextMenu () .setUserMenu (() =>
    {
       function antialiasing (antialiased, contentScale, imageRendering)
       {

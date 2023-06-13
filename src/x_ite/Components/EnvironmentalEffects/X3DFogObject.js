@@ -125,7 +125,7 @@ Object .assign (X3DFogObject .prototype,
    {
       return Fogs;
    },
-   set_fogType__: (function ()
+   set_fogType__: (() =>
    {
       const fogTypes = new Map ([
          ["LINEAR",      1],

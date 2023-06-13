@@ -74,7 +74,7 @@ Object .assign (Object .setPrototypeOf (WalkViewer .prototype, X3DFlyViewer .pro
    {
       return direction .assign (toVector) .subtract (fromVector);
    },
-   getTranslationOffset: (function ()
+   getTranslationOffset: (() =>
    {
       const
          localYAxis      = new Vector3 (0, 0, 0),

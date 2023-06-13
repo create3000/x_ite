@@ -70,7 +70,7 @@ Object .assign (Object .setPrototypeOf (GeoCoordinate .prototype, X3DCoordinateN
       X3DCoordinateNode   .prototype .initialize .call (this);
       X3DGeospatialObject .prototype .initialize .call (this);
    },
-   set1Point: (function ()
+   set1Point: (() =>
    {
       const result = new Vector3 (0, 0, 0);
 
@@ -79,7 +79,7 @@ Object .assign (Object .setPrototypeOf (GeoCoordinate .prototype, X3DCoordinateN
          this ._point [index] = this .getGeoCoord (point, result);
       };
    })(),
-   get1Point: (function ()
+   get1Point: (() =>
    {
       const p = new Vector3 (0, 0, 0);
 
@@ -99,7 +99,7 @@ Object .assign (Object .setPrototypeOf (GeoCoordinate .prototype, X3DCoordinateN
          }
       };
    })(),
-   addPoint: (function ()
+   addPoint: (() =>
    {
       const
          p = new Vector3 (0, 0, 0),
@@ -123,7 +123,7 @@ Object .assign (Object .setPrototypeOf (GeoCoordinate .prototype, X3DCoordinateN
          }
       };
    })(),
-   addPoints: (function ()
+   addPoints: (() =>
    {
       const
          p = new Vector3 (0, 0, 0),
@@ -144,7 +144,7 @@ Object .assign (Object .setPrototypeOf (GeoCoordinate .prototype, X3DCoordinateN
             array .push (0, 0, 0, 1);
       };
    })(),
-   getNormal: (function ()
+   getNormal: (() =>
    {
       const
          point1 = new Vector3 (0, 0, 0),
@@ -168,7 +168,7 @@ Object .assign (Object .setPrototypeOf (GeoCoordinate .prototype, X3DCoordinateN
          return new Vector3 (0, 0, 0);
       };
    })(),
-   getQuadNormal: (function ()
+   getQuadNormal: (() =>
    {
       const
          point1 = new Vector3 (0, 0, 0),

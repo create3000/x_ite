@@ -105,7 +105,7 @@ Object .assign (Object .setPrototypeOf (PrimitivePickSensor .prototype, X3DPickS
       catch
       { }
    },
-   process: (function ()
+   process: (() =>
    {
       var
          pickingBBox   = new Box3 (),

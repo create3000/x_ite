@@ -88,7 +88,7 @@ Object .assign (Object .setPrototypeOf (CollisionCollection .prototype, X3DChild
    {
       return this .collidableNodes;
    },
-   set_appliedParameters__: (function ()
+   set_appliedParameters__: (() =>
    {
       var appliedParametersIndex = new Map ([
          ["BOUNCE",                 AppliedParametersType .BOUNCE],

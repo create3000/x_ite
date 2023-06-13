@@ -236,7 +236,7 @@ Object .defineProperties (Matrix2 .prototype,
    length: { value: 4 },
    x:
    {
-      get: (function ()
+      get: (() =>
       {
          const vector = new Vector2 (0, 0);
 
@@ -245,7 +245,7 @@ Object .defineProperties (Matrix2 .prototype,
    },
    y:
    {
-      get: (function ()
+      get: (() =>
       {
          const vector = new Vector2 (0, 0);
 

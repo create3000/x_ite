@@ -124,7 +124,7 @@ Object .assign (NRRDParser .prototype,
             ;
       }
    },
-   getType: (function ()
+   getType: (() =>
    {
       const types = new Map ([
          ["signed char",        ["signed char", 1]],
@@ -168,7 +168,7 @@ Object .assign (NRRDParser .prototype,
          this .bytes    = type [1];
       };
    })(),
-   getEncoding: (function ()
+   getEncoding: (() =>
    {
       const encodings = new Map ([
          ["ascii", "ascii"],

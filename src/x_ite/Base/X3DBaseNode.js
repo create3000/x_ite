@@ -160,7 +160,7 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DEventObject .
 
       this [_set_live__] ();
    },
-   getLive: (function ()
+   getLive: (() =>
    {
       function getLive ()
       {
@@ -571,7 +571,7 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DEventObject .
    },
 });
 
-const getFieldFromArray = (function ()
+const getFieldFromArray = (() =>
 {
    const
       set_field     = /^set_(.*?)$/,

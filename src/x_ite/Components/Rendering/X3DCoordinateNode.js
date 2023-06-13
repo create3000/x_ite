@@ -124,7 +124,7 @@ Object .assign (Object .setPrototypeOf (X3DCoordinateNode .prototype, X3DGeometr
       for (var index = length, length = min * 3; index < length; index += 3)
          array .push (0, 0, 0, 1);
    },
-   getNormal: (function ()
+   getNormal: (() =>
    {
       const
          point1 = new Vector3 (0, 0, 0),
@@ -148,7 +148,7 @@ Object .assign (Object .setPrototypeOf (X3DCoordinateNode .prototype, X3DGeometr
          return new Vector3 (0, 0, 0);
       };
    })(),
-   getQuadNormal: (function ()
+   getQuadNormal: (() =>
    {
       const
          point1 = new Vector3 (0, 0, 0),

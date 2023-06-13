@@ -95,7 +95,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
    {
       return this .convex;
    },
-   createConvexGeometry: (function ()
+   createConvexGeometry: (() =>
    {
       var p = new Ammo .btVector3 ();
 
@@ -119,7 +119,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
          return convexHull;
       };
    })(),
-   createConcaveGeometry: (function ()
+   createConcaveGeometry: (() =>
    {
       var
          p1 = new Ammo .btVector3 (),
@@ -224,7 +224,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
 
       this .set_collidableGeometry__ ();
    },
-   set_collidableGeometry__: (function ()
+   set_collidableGeometry__: (() =>
    {
       var
          localScaling   = new Ammo .btVector3 (),

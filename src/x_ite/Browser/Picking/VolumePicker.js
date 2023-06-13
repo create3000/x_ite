@@ -90,7 +90,7 @@ Object .assign (VolumePicker .prototype,
    {
       this .setChildShapeComponents (this .compoundShape2, transform, localScaling, childShape);
    },
-   setChildShape: (function ()
+   setChildShape: (() =>
    {
       const
          translation = new Vector3 (0, 0, 0),
@@ -148,7 +148,7 @@ Object .assign (VolumePicker .prototype,
 
       return false;
    },
-   getTransform: (function ()
+   getTransform: (() =>
    {
       const
          T = new Ammo .btTransform (),

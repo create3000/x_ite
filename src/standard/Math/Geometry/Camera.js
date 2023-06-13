@@ -109,7 +109,7 @@ const Camera =
                           0, 0, C, 0,
                           D, E, F, 1);
    },
-   orthoBox: (function ()
+   orthoBox: (() =>
    {
       const
          min = new Vector3 (0, 0, 0),

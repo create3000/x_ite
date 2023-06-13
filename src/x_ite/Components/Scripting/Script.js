@@ -167,11 +167,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
             }
          }
 
-         sourceText += "\n[" + callbacks .map (function (c)
-         {
-            return `typeof ${c} !== "undefined" ? ${c} : undefined`;
-         })
-         .join (",") + "];";
+         sourceText += "\n[" + callbacks .map (c => `typeof ${c} !== "undefined" ? ${c} : undefined`) .join (",") + "];";
 
          this .globalObject = this .getGlobalObject ();
 

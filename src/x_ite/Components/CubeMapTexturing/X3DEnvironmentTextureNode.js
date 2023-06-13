@@ -86,7 +86,7 @@ Object .assign (Object .setPrototypeOf (X3DEnvironmentTextureNode .prototype, X3
    {
       return this .targets;
    },
-   clearTexture: (function ()
+   clearTexture: (() =>
    {
       const defaultData = new Uint8Array ([ 255, 255, 255, 255 ]);
 

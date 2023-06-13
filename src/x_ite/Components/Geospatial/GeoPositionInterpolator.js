@@ -90,7 +90,7 @@ Object .assign (Object .setPrototypeOf (GeoPositionInterpolator .prototype, X3DI
       if (keyValue .length < key .length)
          keyValue .resize (key .length, keyValue .length ? keyValue [keyValue .length - 1] : new Fields .SFVec3f ());
    },
-   interpolate: (function ()
+   interpolate: (() =>
    {
       const
          keyValue0 = new Vector3 (0, 0, 0),

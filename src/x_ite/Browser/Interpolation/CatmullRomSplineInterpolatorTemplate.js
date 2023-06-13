@@ -81,7 +81,7 @@ function CatmullRomSplineInterpolatorTemplate (Type)
       {
          return value .magnitude ();
       },
-      dot: (function ()
+      dot: (() =>
       {
          const
             c0 = new Type (0, 0, 0, 0),

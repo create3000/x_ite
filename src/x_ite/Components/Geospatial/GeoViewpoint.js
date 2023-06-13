@@ -111,7 +111,7 @@ Object .assign (Object .setPrototypeOf (GeoViewpoint .prototype, X3DViewpointNod
    {
       return this .logarithmicDepthBuffer;
    },
-   setPosition: (function ()
+   setPosition: (() =>
    {
       const geoPosition = new Vector3 (0, 0, 0);
 
@@ -120,7 +120,7 @@ Object .assign (Object .setPrototypeOf (GeoViewpoint .prototype, X3DViewpointNod
          this ._position .setValue (this .getGeoCoord (value, geoPosition));
       };
    })(),
-   getPosition: (function ()
+   getPosition: (() =>
    {
       const position = new Vector3 (0, 0, 0);
 
@@ -129,7 +129,7 @@ Object .assign (Object .setPrototypeOf (GeoViewpoint .prototype, X3DViewpointNod
          return this .getCoord (this ._position .getValue (), position);
       };
    })(),
-   set_position__: (function ()
+   set_position__: (() =>
    {
       const position = new Vector3 (0, 0, 0);
 
@@ -140,7 +140,7 @@ Object .assign (Object .setPrototypeOf (GeoViewpoint .prototype, X3DViewpointNod
          this .elevation = this .getGeoElevation (position .add (this ._positionOffset .getValue ()));
       };
    })(),
-   setOrientation: (function ()
+   setOrientation: (() =>
    {
       const
          locationMatrix = new Matrix4 (),
@@ -157,7 +157,7 @@ Object .assign (Object .setPrototypeOf (GeoViewpoint .prototype, X3DViewpointNod
          this ._orientation .setValue (geoOrientation .inverse () .multLeft (value));
       };
    })(),
-   getOrientation: (function ()
+   getOrientation: (() =>
    {
       const
          locationMatrix = new Matrix4 (),
@@ -174,7 +174,7 @@ Object .assign (Object .setPrototypeOf (GeoViewpoint .prototype, X3DViewpointNod
          return orientation .multLeft (this ._orientation .getValue ());
       };
    })(),
-   getCenterOfRotation: (function ()
+   getCenterOfRotation: (() =>
    {
       const centerOfRotation = new Vector3 (0, 0, 0);
 
@@ -187,7 +187,7 @@ Object .assign (Object .setPrototypeOf (GeoViewpoint .prototype, X3DViewpointNod
    {
       return 1e9;
    },
-   getUpVector: (function ()
+   getUpVector: (() =>
    {
       const
          position = new Vector3 (0, 0, 0),

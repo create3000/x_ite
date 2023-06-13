@@ -66,7 +66,7 @@ Object .assign (Object .setPrototypeOf (X3DTouchSensorNode .prototype, X3DPointi
       if (this ._enabled .getValue () && this ._isOver .getValue () && ! active)
          this ._touchTime = this .getBrowser () .getCurrentTime ();
    },
-   set_over__: (function ()
+   set_over__: (() =>
    {
       const
          invModelViewMatrix = new Matrix4 (),

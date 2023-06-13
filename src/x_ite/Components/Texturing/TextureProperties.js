@@ -73,7 +73,7 @@ Object .assign (Object .setPrototypeOf (TextureProperties .prototype, X3DNode .p
       // https://stackoverflow.com/questions/27760277/webgl-border-color-shader?lq=1
       return Algorithm .clamp (this ._borderWidth .getValue (), 0, 1);
    },
-   getBoundaryMode: (function ()
+   getBoundaryMode: (() =>
    {
       const boundaryModes = new Map ([
          ["CLAMP",             "CLAMP_TO_EDGE"], // "CLAMP"
@@ -105,7 +105,7 @@ Object .assign (Object .setPrototypeOf (TextureProperties .prototype, X3DNode .p
    {
       return this .getBoundaryMode (this ._boundaryModeR .getValue ());
    },
-   getMinificationFilter: (function ()
+   getMinificationFilter: (() =>
    {
       const minificationFilters = new Map ([
          ["AVG_PIXEL_AVG_MIPMAP",         "LINEAR_MIPMAP_LINEAR"],
@@ -133,7 +133,7 @@ Object .assign (Object .setPrototypeOf (TextureProperties .prototype, X3DNode .p
          return "LINEAR";
       };
    })(),
-   getMagnificationFilter: (function ()
+   getMagnificationFilter: (() =>
    {
       const magnificationFilters = new Map ([
          ["AVG_PIXEL",     "LINEAR"],
@@ -153,7 +153,7 @@ Object .assign (Object .setPrototypeOf (TextureProperties .prototype, X3DNode .p
          return this .getBrowser () .getDefaultTextureProperties () .getMagnificationFilter ();
       };
    })(),
-   getTextureCompression: (function ()
+   getTextureCompression: (() =>
    {
       const textureCompressions = new Map ([
          ["DEFAULT", "RGBA"],

@@ -341,7 +341,7 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
          this .getModelViewMatrix () .pop ();
       }
    },
-   collision: (function ()
+   collision: (() =>
    {
       const projectionMatrix = new Matrix4 ();
 

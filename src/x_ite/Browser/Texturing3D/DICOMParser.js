@@ -141,7 +141,7 @@ Object .assign (DicomParser .prototype,
          bytes        = new Uint8Array (byteLength),
          frames       = this .getFrames (pixelElement);
 
-      frames .forEach (function (frame, f)
+      frames .forEach ((frame, f) =>
       {
          // Handle transfer syntax.
 
@@ -709,7 +709,7 @@ Object .assign (DicomParser .prototype,
 
       return new Uint8Array (image .pixelData .buffer);
    },
-   jpegLSDecode: (function ()
+   jpegLSDecode: (() =>
    {
       const charLS = CharLS ();
 
@@ -793,7 +793,7 @@ Object .assign (DicomParser .prototype,
 
       return new Uint8Array (image .pixelData .buffer);
    },
-   decodeOpenJPEG: (function ()
+   decodeOpenJPEG: (() =>
    {
       const openJPEG = OpenJPEG ();
 

@@ -489,7 +489,7 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, (X3DSensor
    {
       return this .targets;
    },
-   getPickShape: (function ()
+   getPickShape: (() =>
    {
       const pickShapes = new WeakMap ();
 
@@ -520,7 +520,7 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, (X3DSensor
          return collidableShapeNode;
       };
    })(),
-   getPickedGeometries: (function ()
+   getPickedGeometries: (() =>
    {
       return function ()
       {
@@ -653,7 +653,7 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, (X3DSensor
 
       this .set_live__ ();
    },
-   set_matchCriterion__: (function ()
+   set_matchCriterion__: (() =>
    {
       var matchCriterions = new Map ([
          ["MATCH_ANY",      Picking_MatchCriterion .MATCH_ANY],
@@ -669,7 +669,7 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, (X3DSensor
             this .matchCriterion = MatchCriterionType .MATCH_ANY;
       };
    })(),
-   set_intersectionType__: (function ()
+   set_intersectionType__: (() =>
    {
       var intersectionTypes = new Map ([
          ["BOUNDS",   Picking_IntersectionType .BOUNDS],
@@ -684,7 +684,7 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, (X3DSensor
             this .intersectionType = Picking_IntersectionType .BOUNDS;
       };
    })(),
-   set_sortOrder__: (function ()
+   set_sortOrder__: (() =>
    {
       var sortOrders = new Map ([
          ["ANY",        Picking_SortOrder .ANY],
@@ -747,10 +747,7 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, (X3DSensor
    {
       var pickTargetNodes = this .pickTargetNodes;
 
-      var haveTarget = pickingHierarchy .some (function (node)
-      {
-         return pickTargetNodes .has (node);
-      });
+      var haveTarget = pickingHierarchy .some (node => pickTargetNodes .has (node));
 
       if (haveTarget)
       {
@@ -929,7 +926,7 @@ Object .assign (Object .setPrototypeOf (LinePickSensor .prototype, Picking_X3DPi
       catch
       { }
    },
-   process: (function ()
+   process: (() =>
    {
       var
          pickingBBox             = new (Box3_default()) (),
@@ -1355,7 +1352,7 @@ Object .assign (Object .setPrototypeOf (PickableGroup .prototype, (X3DGroupingNo
    {
       this .setPickableObject (!!(this ._pickable .getValue () || this .getTransformSensors () .size));
    },
-   traverse: (function ()
+   traverse: (() =>
    {
       const pickSensorNodes = new Set ();
 
@@ -1600,7 +1597,7 @@ Object .assign (VolumePicker .prototype,
    {
       this .setChildShapeComponents (this .compoundShape2, transform, localScaling, childShape);
    },
-   setChildShape: (function ()
+   setChildShape: (() =>
    {
       const
          translation = new (Vector3_default()) (0, 0, 0),
@@ -1658,7 +1655,7 @@ Object .assign (VolumePicker .prototype,
 
       return false;
    },
-   getTransform: (function ()
+   getTransform: (() =>
    {
       const
          T = new (AmmoClass_default()).btTransform (),
@@ -1783,7 +1780,7 @@ Object .assign (Object .setPrototypeOf (PointPickSensor .prototype, Picking_X3DP
 
       this .set_geometry__ ();
    },
-   set_geometry__: (function ()
+   set_geometry__: (() =>
    {
       var
          defaultScale = new (AmmoClass_default()).btVector3 (1, 1, 1),
@@ -1844,7 +1841,7 @@ Object .assign (Object .setPrototypeOf (PointPickSensor .prototype, Picking_X3DP
          }
       };
    })(),
-   process: (function ()
+   process: (() =>
    {
       var
          pickingBBox   = new (Box3_default()) (),
@@ -2152,7 +2149,7 @@ Object .assign (Object .setPrototypeOf (PrimitivePickSensor .prototype, Picking_
       catch
       { }
    },
-   process: (function ()
+   process: (() =>
    {
       var
          pickingBBox   = new (Box3_default()) (),
@@ -2402,7 +2399,7 @@ Object .assign (Object .setPrototypeOf (VolumePickSensor .prototype, Picking_X3D
    {
       this .pickingGeometryNode = X3DCast_default() ((X3DConstants_default()).X3DGeometryNode, this ._pickingGeometry);
    },
-   process: (function ()
+   process: (() =>
    {
       var
          pickingBBox   = new (Box3_default()) (),

@@ -86,7 +86,7 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DCh
 
       this .eventsProcessed ();
    },
-   getLocalTransform: (function ()
+   getLocalTransform: (() =>
    {
       var
          m = new Matrix4 (),

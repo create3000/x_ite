@@ -339,7 +339,7 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
 
       this .set_shader__ ();
    },
-   set_shader__: (function ()
+   set_shader__: (() =>
    {
       function getShader ()
       {

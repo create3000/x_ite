@@ -48,7 +48,7 @@
 import Features from "./Features.js";
 
 const URLs = {
-   getScriptUrl: (function ()
+   getScriptUrl: (() =>
    {
       if (Features .NODE_ENV)
          var src = global .require ("url") .pathToFileURL (__filename) .href;

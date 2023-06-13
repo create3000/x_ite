@@ -79,7 +79,7 @@ Object .assign (Object .setPrototypeOf (OrientationInterpolator .prototype, X3DI
       if (keyValue .length < key .length)
          keyValue .resize (key .length, keyValue .length ? keyValue [keyValue .length - 1] : new Fields .SFRotation ());
    },
-   interpolate: (function ()
+   interpolate: (() =>
    {
       const
          keyValue0 = new Rotation4 (),

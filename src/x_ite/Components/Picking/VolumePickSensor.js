@@ -80,7 +80,7 @@ Object .assign (Object .setPrototypeOf (VolumePickSensor .prototype, X3DPickSens
    {
       this .pickingGeometryNode = X3DCast (X3DConstants .X3DGeometryNode, this ._pickingGeometry);
    },
-   process: (function ()
+   process: (() =>
    {
       var
          pickingBBox   = new Box3 (),

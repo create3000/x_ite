@@ -103,7 +103,7 @@ Object .assign (Object .setPrototypeOf (LinePickSensor .prototype, X3DPickSensor
       catch
       { }
    },
-   process: (function ()
+   process: (() =>
    {
       var
          pickingBBox             = new Box3 (),

@@ -1122,7 +1122,7 @@ const HTMLParser =
       this .protoNames .set (name,                 name);
       this .protoNames .set (name .toUpperCase (), name);
    },
-   addProtoFieldNames: (function ()
+   addProtoFieldNames: (() =>
    {
       const reservedAttributes = new Set ();
 

@@ -84,7 +84,7 @@ Object .assign (Object .setPrototypeOf (SingleAxisHingeJoint .prototype, X3DRigi
       this ._anchorPoint .addInterest ("set_joint__", this);
       this ._axis        .addInterest ("set_joint__", this);
    },
-   addJoint: (function ()
+   addJoint: (() =>
    {
       var
          localAxis1 = new Vector3 (0, 0, 0),
@@ -167,7 +167,7 @@ Object .assign (Object .setPrototypeOf (SingleAxisHingeJoint .prototype, X3DRigi
 
       this .setOutput (! $.isEmptyObject (this .outputs));
    },
-   update1: (function ()
+   update1: (() =>
    {
       var localAnchorPoint1 = new Vector3 (0, 0, 0);
 
@@ -177,7 +177,7 @@ Object .assign (Object .setPrototypeOf (SingleAxisHingeJoint .prototype, X3DRigi
             this ._body1AnchorPoint = this .getBody1 () .getMatrix () .multVecMatrix (this .getInitialInverseMatrix1 () .multVecMatrix (localAnchorPoint1 .assign (this .localAnchorPoint1)));
       };
    })(),
-   update2: (function ()
+   update2: (() =>
    {
       var
          localAnchorPoint2 = new Vector3 (0, 0, 0),

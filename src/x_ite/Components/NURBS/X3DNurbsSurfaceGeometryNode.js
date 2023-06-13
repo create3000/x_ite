@@ -231,7 +231,7 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
       this .setSolid (this ._solid .getValue ());
       this .setCCW (true);
    },
-   buildNurbsTexCoords: (function ()
+   buildNurbsTexCoords: (() =>
    {
       const
          defaultTexUKnots        = [ ],
@@ -337,7 +337,7 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
 
       return this .refineNormals (normalIndex, normals, Algorithm .radians (85));
    },
-   createFaceNormals: (function ()
+   createFaceNormals: (() =>
    {
       const
          v1 = new Vector3 (0, 0, 0),

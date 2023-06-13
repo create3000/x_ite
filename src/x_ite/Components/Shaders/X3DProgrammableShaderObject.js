@@ -534,7 +534,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       for (const field of this .getUserDefinedFields ())
          field .removeInterest ("set_field__", this);
    },
-   set_field__: (function ()
+   set_field__: (() =>
    {
       const rotation = new Float32Array (9);
 
@@ -963,7 +963,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       for (const clipPlane of clipPlanes)
          clipPlane .setShaderUniforms (gl, this);
    },
-   setUniforms: (function ()
+   setUniforms: (() =>
    {
       const normalMatrix = new Float32Array (9);
 
@@ -1301,8 +1301,8 @@ Object .assign (X3DProgrammableShaderObject .prototype,
          result .attributeCount += attribute .size;
       }
 
-      result .uniforms   .sort (function (a, b) { return cmp (a .name, b .name); });
-      result .attributes .sort (function (a, b) { return cmp (a .name, b .name); });
+      result .uniforms   .sort ((a, b) => cmp (a .name, b .name));
+      result .attributes .sort ((a, b) => cmp (a .name, b .name));
 
       return result;
    },

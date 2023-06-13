@@ -242,7 +242,7 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, X3DViewpointN
          return screenScale .set (s, s, s);
       }
    },
-   getViewportSize: (function ()
+   getViewportSize: (() =>
    {
       const viewportSize = new Vector2 (0, 0);
 

@@ -77,7 +77,7 @@ Object .assign (Object .setPrototypeOf (TextureTransform3D .prototype, X3DSingle
    {
       return this .matrix;
    },
-   eventsProcessed: (function ()
+   eventsProcessed: (() =>
    {
       const vector = new Vector3 (0, 0, 0);
 

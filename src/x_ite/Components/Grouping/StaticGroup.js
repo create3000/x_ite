@@ -151,7 +151,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
          }
       }
    },
-   traverseObjects: (function ()
+   traverseObjects: (() =>
    {
       const viewVolume = new ViewVolume ();
 

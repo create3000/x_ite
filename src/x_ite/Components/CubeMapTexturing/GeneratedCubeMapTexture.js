@@ -137,7 +137,7 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DE
 
       this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ()) .multRight (renderObject .getCameraSpaceMatrix () .get ());
    },
-   renderTexture: (function ()
+   renderTexture: (() =>
    {
       // Rotations to negated normals of the texture cube.
 
@@ -243,7 +243,7 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DE
             this ._update = "NONE";
       };
    })(),
-   setShaderUniforms: (function ()
+   setShaderUniforms: (() =>
    {
       const zeros = new Float32Array (16); // Trick: zero model view matrix to hide object.
 

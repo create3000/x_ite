@@ -138,7 +138,7 @@ Object .assign (Object .setPrototypeOf (MultiTexture .prototype, X3DTextureNode 
    {
       this .color [3] = this ._alpha;
    },
-   set_mode__: (function ()
+   set_mode__: (() =>
    {
       const modeTypes = new Map ([
          ["REPLACE",                   ModeType .REPLACE],
@@ -201,7 +201,7 @@ Object .assign (Object .setPrototypeOf (MultiTexture .prototype, X3DTextureNode 
          }
       };
    })(),
-   set_source__: (function ()
+   set_source__: (() =>
    {
       const sourceTypes = new Map ([
          ["DIFFUSE",  SourceType .DIFFUSE],
@@ -224,7 +224,7 @@ Object .assign (Object .setPrototypeOf (MultiTexture .prototype, X3DTextureNode 
          }
       };
    })(),
-   set_function__: (function ()
+   set_function__: (() =>
    {
       const functionsTypes = new Map ([
          ["COMPLEMENT",     FunctionType .COMPLEMENT],

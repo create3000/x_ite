@@ -171,7 +171,7 @@ Object .assign (Object .setPrototypeOf (LOD .prototype, X3DGroupingNode .prototy
          this .boundedObject = null;
       }
    },
-   getLevel: (function ()
+   getLevel: (() =>
    {
       const
          FRAMES         = 180, // Number of frames after wich a level change takes in affect.
@@ -208,7 +208,7 @@ Object .assign (Object .setPrototypeOf (LOD .prototype, X3DGroupingNode .prototy
          return Algorithm .upperBound (this ._range, 0, this ._range .length, distance);
       };
    })(),
-   traverse: (function ()
+   traverse: (() =>
    {
       const modelViewMatrix = new Matrix4 ();
 

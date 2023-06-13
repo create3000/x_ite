@@ -81,7 +81,7 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
    {
       return this .matrix;
    },
-   update: (function ()
+   update: (() =>
    {
       const
          min = new Vector3 (0, 0, 0),
@@ -144,7 +144,7 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
          this .getBBox () .setExtents (min, max);
       };
    })(),
-   build: (function ()
+   build: (() =>
    {
       const
          min = new Vector3 (0, 0, 0),
@@ -371,7 +371,7 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
       min .set ((glyph .xMin || 0) / unitsPerEm, (glyph .yMin || 0) / unitsPerEm, 0);
       max .set ((glyph .xMax || 0) / unitsPerEm, (glyph .yMax || 0) / unitsPerEm, 0);
    },
-   traverse: (function ()
+   traverse: (() =>
    {
       const bbox = new Box3 ();
 
@@ -392,7 +392,7 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
 
       renderContext .textureNode = this .textureNode;
    },
-   transformLine: (function ()
+   transformLine: (() =>
    {
       const invMatrix = new Matrix4 ();
 

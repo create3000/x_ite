@@ -18,7 +18,7 @@ var createVariable = function createVariable (name, nurbs) {
 
 createVariable.sum = function (parts) {
    parts = Array.isArray(parts) ? parts : [parts];
-   parts = parts.filter(function (part) { return part !== undefined && part !== 0; });
+   parts = parts.filter(part => part !== undefined && part !== 0);
    if (parts.length === 0) parts.push(0);
    return parts.join(" + ");
 };

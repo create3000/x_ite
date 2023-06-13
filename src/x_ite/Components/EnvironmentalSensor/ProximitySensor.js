@@ -114,7 +114,7 @@ Object .assign (Object .setPrototypeOf (ProximitySensor .prototype, X3DEnvironme
       this .min .set (cx - sx, cy - sy, cz - sz);
       this .max .set (cx + sx, cy + sy, cz + sz);
    },
-   update: (function ()
+   update: (() =>
    {
       const
          invModelMatrix         = new Matrix4 (),
@@ -183,7 +183,7 @@ Object .assign (Object .setPrototypeOf (ProximitySensor .prototype, X3DEnvironme
          this .setTraversed (false);
       };
    })(),
-   traverse: (function ()
+   traverse: (() =>
    {
       const
          invModelViewMatrix = new Matrix4 (),

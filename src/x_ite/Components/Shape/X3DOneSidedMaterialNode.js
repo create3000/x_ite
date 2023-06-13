@@ -128,7 +128,7 @@ Object .assign (Object .setPrototypeOf (X3DOneSidedMaterialNode .prototype, X3DM
    {
       return this .transparency;
    },
-   getTextureIndices: (function ()
+   getTextureIndices: (() =>
    {
       let i = 0;
 

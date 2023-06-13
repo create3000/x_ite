@@ -121,7 +121,7 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, X3DSensorN
    {
       return this .targets;
    },
-   getPickShape: (function ()
+   getPickShape: (() =>
    {
       const pickShapes = new WeakMap ();
 
@@ -152,7 +152,7 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, X3DSensorN
          return collidableShapeNode;
       };
    })(),
-   getPickedGeometries: (function ()
+   getPickedGeometries: (() =>
    {
       return function ()
       {
@@ -285,7 +285,7 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, X3DSensorN
 
       this .set_live__ ();
    },
-   set_matchCriterion__: (function ()
+   set_matchCriterion__: (() =>
    {
       var matchCriterions = new Map ([
          ["MATCH_ANY",      MatchCriterion .MATCH_ANY],
@@ -301,7 +301,7 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, X3DSensorN
             this .matchCriterion = MatchCriterionType .MATCH_ANY;
       };
    })(),
-   set_intersectionType__: (function ()
+   set_intersectionType__: (() =>
    {
       var intersectionTypes = new Map ([
          ["BOUNDS",   IntersectionType .BOUNDS],
@@ -316,7 +316,7 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, X3DSensorN
             this .intersectionType = IntersectionType .BOUNDS;
       };
    })(),
-   set_sortOrder__: (function ()
+   set_sortOrder__: (() =>
    {
       var sortOrders = new Map ([
          ["ANY",        SortOrder .ANY],
@@ -379,10 +379,7 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, X3DSensorN
    {
       var pickTargetNodes = this .pickTargetNodes;
 
-      var haveTarget = pickingHierarchy .some (function (node)
-      {
-         return pickTargetNodes .has (node);
-      });
+      var haveTarget = pickingHierarchy .some (node => pickTargetNodes .has (node));
 
       if (haveTarget)
       {

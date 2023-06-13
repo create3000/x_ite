@@ -117,7 +117,7 @@ Object .assign (Matrix4 .prototype,
    {
       return this [r * this .order + c];
    },
-   set: (function ()
+   set: (() =>
    {
       const
          invScaleOrientation = new Rotation4 (),
@@ -248,7 +248,7 @@ Object .assign (Matrix4 .prototype,
          return this;
       };
    })(),
-   get: (function ()
+   get: (() =>
    {
       const
          dummyTranslation      = new Vector3 (0, 0, 0),
@@ -342,7 +342,7 @@ Object .assign (Matrix4 .prototype,
 
       return this;
    },
-   factor: (function ()
+   factor: (() =>
    {
       const
          si = new Matrix3 (),
@@ -673,7 +673,7 @@ Object .defineProperties (Matrix4 .prototype,
    length: { value: 16 },
    x:
    {
-      get: (function ()
+      get: (() =>
       {
          const vector = new Vector4 (0, 0, 0, 0);
 
@@ -682,7 +682,7 @@ Object .defineProperties (Matrix4 .prototype,
    },
    y:
    {
-      get: (function ()
+      get: (() =>
       {
          const vector = new Vector4 (0, 0, 0, 0);
 
@@ -691,7 +691,7 @@ Object .defineProperties (Matrix4 .prototype,
    },
    z:
    {
-      get: (function ()
+      get: (() =>
       {
          const vector = new Vector4 (0, 0, 0, 0);
 
@@ -700,7 +700,7 @@ Object .defineProperties (Matrix4 .prototype,
    },
    w:
    {
-      get: (function ()
+      get: (() =>
       {
          const vector = new Vector4 (0, 0, 0, 0);
 
@@ -709,7 +709,7 @@ Object .defineProperties (Matrix4 .prototype,
    },
    xAxis:
    {
-      get: (function ()
+      get: (() =>
       {
          const vector = new Vector3 (0, 0, 0);
 
@@ -718,7 +718,7 @@ Object .defineProperties (Matrix4 .prototype,
    },
    yAxis:
    {
-      get: (function ()
+      get: (() =>
       {
          const vector = new Vector3 (0, 0, 0);
 
@@ -727,7 +727,7 @@ Object .defineProperties (Matrix4 .prototype,
    },
    zAxis:
    {
-      get: (function ()
+      get: (() =>
       {
          const vector = new Vector3 (0, 0, 0);
 
@@ -736,7 +736,7 @@ Object .defineProperties (Matrix4 .prototype,
    },
    origin:
    {
-      get: (function ()
+      get: (() =>
       {
          const vector = new Vector3 (0, 0, 0);
 
@@ -745,7 +745,7 @@ Object .defineProperties (Matrix4 .prototype,
    },
    submatrix:
    {
-      get: (function ()
+      get: (() =>
       {
          const matrix = new Matrix3 ();
 

@@ -214,7 +214,7 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, X3DViewer .prot
          }
       }
    },
-   mousewheel: (function ()
+   mousewheel: (() =>
    {
       const
          step        = new Vector3 (0, 0, 0),
@@ -313,7 +313,7 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, X3DViewer .prot
 
       this .tapStart = this .getBrowser () .getCurrentTime ();
    },
-   touchmove: (function ()
+   touchmove: (() =>
    {
       const
          MOVE_ANGLE   = 0.7,
@@ -398,7 +398,7 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, X3DViewer .prot
 
       viewpoint ._orientationOffset = value;
    },
-   addMove: (function ()
+   addMove: (() =>
    {
       const
          positionOffset         = new Vector3 (0, 0, 0),
@@ -449,7 +449,7 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, X3DViewer .prot
          this .centerOfRotationChaser ._value_changed .addInterest ("set_centerOfRotationOffset__", this);
       };
    })(),
-   addRotation: (function ()
+   addRotation: (() =>
    {
       const
          userOrientation   = new Rotation4 (),

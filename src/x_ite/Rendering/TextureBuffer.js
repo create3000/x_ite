@@ -162,7 +162,7 @@ Object .assign (TextureBuffer .prototype,
 
       return array;
    },
-   readDepth: (function ()
+   readDepth: (() =>
    {
       const
          invProjectionMatrix = new Matrix4 (),

@@ -592,7 +592,7 @@ Object .assign (Object .setPrototypeOf (BallJoint .prototype, RigidBodyPhysics_X
          this .joint .setPivotB (new AmmoClass .btVector3 (localAnchorPoint2 .x, localAnchorPoint2 .y, localAnchorPoint2 .z));
       }
    },
-   update1: (function ()
+   update1: (() =>
    {
       var localAnchorPoint1 = new (Vector3_default()) (0, 0, 0);
 
@@ -602,7 +602,7 @@ Object .assign (Object .setPrototypeOf (BallJoint .prototype, RigidBodyPhysics_X
             this ._body1AnchorPoint = this .getBody1 () .getMatrix () .multVecMatrix (this .getInitialInverseMatrix1 () .multVecMatrix (localAnchorPoint1 .assign (this .localAnchorPoint1)));
       };
    })(),
-   update2: (function ()
+   update2: (() =>
    {
       var localAnchorPoint2 = new (Vector3_default()) (0, 0, 0);
 
@@ -751,7 +751,7 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, (X3DC
 
       this .eventsProcessed ();
    },
-   getLocalTransform: (function ()
+   getLocalTransform: (() =>
    {
       var
          m = new (Matrix4_default()) (),
@@ -1201,7 +1201,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, RigidBodyPhy
    {
       return this .convex;
    },
-   createConvexGeometry: (function ()
+   createConvexGeometry: (() =>
    {
       var p = new AmmoClass .btVector3 ();
 
@@ -1225,7 +1225,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, RigidBodyPhy
          return convexHull;
       };
    })(),
-   createConcaveGeometry: (function ()
+   createConcaveGeometry: (() =>
    {
       var
          p1 = new AmmoClass .btVector3 (),
@@ -1330,7 +1330,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, RigidBodyPhy
 
       this .set_collidableGeometry__ ();
    },
-   set_collidableGeometry__: (function ()
+   set_collidableGeometry__: (() =>
    {
       var
          localScaling   = new AmmoClass .btVector3 (),
@@ -1764,7 +1764,7 @@ Object .assign (Object .setPrototypeOf (CollisionCollection .prototype, (X3DChil
    {
       return this .collidableNodes;
    },
-   set_appliedParameters__: (function ()
+   set_appliedParameters__: (() =>
    {
       var appliedParametersIndex = new Map ([
          ["BOUNCE",                 RigidBodyPhysics_AppliedParametersType .BOUNCE],
@@ -1990,7 +1990,7 @@ Object .assign (Object .setPrototypeOf (CollisionSensor .prototype, (X3DSensorNo
 
       this .set_live__ ();
    },
-   update: (function ()
+   update: (() =>
    {
       var
          collidableNodesIndex = new Map (),
@@ -2029,7 +2029,7 @@ Object .assign (Object .setPrototypeOf (CollisionSensor .prototype, (X3DSensorNo
          intersectionNodes .clear ();
          contactNodes .length = 0;
 
-         collisionWorlds .forEach (function (collisionWorld)
+         collisionWorlds .forEach (collisionWorld =>
          {
             //collisionWorld .performDiscreteCollisionDetection ();
 
@@ -2095,8 +2095,7 @@ Object .assign (Object .setPrototypeOf (CollisionSensor .prototype, (X3DSensorNo
                   }
                }
             }
-         },
-         this);
+         });
 
          var active = !! contactNodes .length;
 
@@ -2107,11 +2106,7 @@ Object .assign (Object .setPrototypeOf (CollisionSensor .prototype, (X3DSensorNo
          {
             var i = 0;
 
-            intersectionNodes .forEach (function (intersectionNode)
-            {
-               this ._intersections [i ++] = intersectionNode;
-            },
-            this);
+            intersectionNodes .forEach (intersectionNode => this ._intersections [i ++] = intersectionNode);
 
             this ._intersections .length = i;
          }
@@ -2120,11 +2115,7 @@ Object .assign (Object .setPrototypeOf (CollisionSensor .prototype, (X3DSensorNo
          {
             var i = 0;
 
-            contactNodes .forEach (function (contactNode)
-            {
-               this ._contacts [i ++] = contactNode;
-            },
-            this);
+            contactNodes .forEach (contactNode => this ._contacts [i ++] = contactNode);
 
             this ._contacts .length = i;
          }
@@ -2682,7 +2673,7 @@ Object .assign (Object .setPrototypeOf (DoubleAxisHingeJoint .prototype, RigidBo
       this ._axis1       .addInterest ("set_joint__", this);
       this ._axis2       .addInterest ("set_joint__", this);
    },
-   addJoint: (function ()
+   addJoint: (() =>
    {
       var
          localAnchorPoint1 = new (Vector3_default()) (0, 0, 0),
@@ -2767,7 +2758,7 @@ Object .assign (Object .setPrototypeOf (DoubleAxisHingeJoint .prototype, RigidBo
 
       this .setOutput (! DoubleAxisHingeJoint_$.isEmptyObject (this .outputs));
    },
-   update1: (function ()
+   update1: (() =>
    {
       var
          localAnchorPoint1 = new (Vector3_default()) (0, 0, 0),
@@ -2797,7 +2788,7 @@ Object .assign (Object .setPrototypeOf (DoubleAxisHingeJoint .prototype, RigidBo
          }
       };
    })(),
-   update2: (function ()
+   update2: (() =>
    {
       var
          localAnchorPoint2 = new (Vector3_default()) (0, 0, 0),
@@ -3178,7 +3169,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, (X3DNode_default()
       for (var i = 0, length = this .geometryNodes .length; i < length; ++ i)
          this .geometryNodes [i] ._rotation = this ._orientation;
    },
-   set_transform__: (function ()
+   set_transform__: (() =>
    {
       var
          o  = new AmmoClass .btVector3 (0, 0, 0),
@@ -3229,7 +3220,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, (X3DNode_default()
          this .rigidBody .setMotionState (this .motionState);
       };
    })(),
-   set_linearVelocity__: (function ()
+   set_linearVelocity__: (() =>
    {
       var lv = new AmmoClass .btVector3 (0, 0, 0);
 
@@ -3244,7 +3235,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, (X3DNode_default()
          this .rigidBody .activate ();
       };
    }) (),
-   set_angularVelocity__: (function ()
+   set_angularVelocity__: (() =>
    {
       var av = new AmmoClass .btVector3 (0, 0, 0);
 
@@ -3259,7 +3250,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, (X3DNode_default()
          this .rigidBody .activate ();
       };
    })(),
-   set_finiteRotationAxis__: (function ()
+   set_finiteRotationAxis__: (() =>
    {
       var angularFactor = new AmmoClass .btVector3 (1, 1, 1);
 
@@ -3282,7 +3273,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, (X3DNode_default()
 
       this .rigidBody .activate ();
    },
-   set_centerOfMass__: (function ()
+   set_centerOfMass__: (() =>
    {
       var
          rotation     = new AmmoClass .btQuaternion (0, 0, 0, 1),
@@ -3297,7 +3288,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, (X3DNode_default()
          this .rigidBody .setCenterOfMassTransform (centerOfMass);
       };
    })(),
-   set_massProps__: (function ()
+   set_massProps__: (() =>
    {
       var localInertia = new AmmoClass .btVector3 (0, 0, 0);
 
@@ -3403,7 +3394,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, (X3DNode_default()
    {
       this ._otherGeometry .addEvent ();
    },
-   set_compoundShape__: (function ()
+   set_compoundShape__: (() =>
    {
       var transform = new AmmoClass .btTransform ();
 
@@ -3429,7 +3420,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, (X3DNode_default()
          this .set_disable__ ();
       };
    })(),
-   applyForces: (function ()
+   applyForces: (() =>
    {
       var
          g = new AmmoClass .btVector3 (0, 0, 0),
@@ -3455,7 +3446,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, (X3DNode_default()
          this .rigidBody .applyTorque (t);
       };
    })(),
-   update: (function ()
+   update: (() =>
    {
       var
          transform       = new AmmoClass .btTransform (),
@@ -3686,7 +3677,7 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, (X3DChil
    set_contacts__ ()
    {
    },
-   set_gravity__: (function ()
+   set_gravity__: (() =>
    {
       var gravity = new AmmoClass .btVector3 (0, 0, 0);
 
@@ -4035,7 +4026,7 @@ Object .assign (Object .setPrototypeOf (SingleAxisHingeJoint .prototype, RigidBo
       this ._anchorPoint .addInterest ("set_joint__", this);
       this ._axis        .addInterest ("set_joint__", this);
    },
-   addJoint: (function ()
+   addJoint: (() =>
    {
       var
          localAxis1 = new (Vector3_default()) (0, 0, 0),
@@ -4118,7 +4109,7 @@ Object .assign (Object .setPrototypeOf (SingleAxisHingeJoint .prototype, RigidBo
 
       this .setOutput (! SingleAxisHingeJoint_$.isEmptyObject (this .outputs));
    },
-   update1: (function ()
+   update1: (() =>
    {
       var localAnchorPoint1 = new (Vector3_default()) (0, 0, 0);
 
@@ -4128,7 +4119,7 @@ Object .assign (Object .setPrototypeOf (SingleAxisHingeJoint .prototype, RigidBo
             this ._body1AnchorPoint = this .getBody1 () .getMatrix () .multVecMatrix (this .getInitialInverseMatrix1 () .multVecMatrix (localAnchorPoint1 .assign (this .localAnchorPoint1)));
       };
    })(),
-   update2: (function ()
+   update2: (() =>
    {
       var
          localAnchorPoint2 = new (Vector3_default()) (0, 0, 0),
@@ -4291,7 +4282,7 @@ Object .assign (Object .setPrototypeOf (SliderJoint .prototype, RigidBodyPhysics
       this ._minSeparation .addInterest ("set_separation__",  this);
       this ._maxSeparation .addInterest ("set_separation__",  this);
    },
-   addJoint: (function ()
+   addJoint: (() =>
    {
       var
          axisRotation = new (Rotation4_default()) (),

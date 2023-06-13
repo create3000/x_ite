@@ -100,7 +100,7 @@ Object .assign (Line3 .prototype,
 
       return result .assign (this .direction) .multiply (d) .add (this .point);
    },
-   getClosestPointToLine: (function ()
+   getClosestPointToLine: (() =>
    {
       const u = new Vector3 (0, 0, 0);
 
@@ -123,7 +123,7 @@ Object .assign (Line3 .prototype,
          return true;
       };
    })(),
-   getPerpendicularVectorToPoint: (function ()
+   getPerpendicularVectorToPoint: (() =>
    {
       const t = new Vector3 (0, 0, 0);
 
@@ -134,7 +134,7 @@ Object .assign (Line3 .prototype,
          return result .subtract (t .assign (this .direction) .multiply (result .dot (this .direction)));
       };
    })(),
-   getPerpendicularVectorToLine: (function ()
+   getPerpendicularVectorToLine: (() =>
    {
       const
          d  = new Vector3 (0, 0, 0),
@@ -162,7 +162,7 @@ Object .assign (Line3 .prototype,
          return bd .subtract (ad) .add (d);
       };
    })(),
-   intersectsTriangle: (function ()
+   intersectsTriangle: (() =>
    {
       const
          pvec = new Vector3 (0, 0, 0),

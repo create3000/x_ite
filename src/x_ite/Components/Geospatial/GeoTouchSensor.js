@@ -71,7 +71,7 @@ Object .assign (Object .setPrototypeOf (GeoTouchSensor .prototype, X3DTouchSenso
       X3DTouchSensorNode  .prototype .initialize .call (this);
       X3DGeospatialObject .prototype .initialize .call (this);
    },
-   set_over__: (function ()
+   set_over__: (() =>
    {
       const geoCoords = new Vector3 (0, 0, 0);
 

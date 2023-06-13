@@ -403,7 +403,7 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
          }
       }
    },
-   fly: (function ()
+   fly: (() =>
    {
       const
          upVector           = new Vector3 (0, 0, 0),
@@ -477,7 +477,7 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
          this .startTime = now;
       };
    })(),
-   pan: (function ()
+   pan: (() =>
    {
       const
          direction = new Vector3 (0, 0, 0),
@@ -539,7 +539,7 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
 
       this .startTime = Date .now ();
    },
-   addRoll: (function ()
+   addRoll: (() =>
    {
       const
          orientationOffset = new Rotation4 (),
@@ -576,7 +576,7 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
          this .orientationChaser ._value_changed .addInterest ("set_orientationOffset__", this);
       };
    })(),
-   addRotation: (function ()
+   addRotation: (() =>
    {
       const
          userOrientation   = new Rotation4 (),
@@ -619,7 +619,7 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
          this .orientationChaser ._value_changed .addInterest ("set_orientationOffset__", this);
       };
    })(),
-   display: (function ()
+   display: (() =>
    {
       const
          fromPoint             = new Vector3 (0, 0, 0),

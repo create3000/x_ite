@@ -199,7 +199,7 @@ Object .assign (X3DRenderObject .prototype,
    {
       this .localShadows .pop ();
    },
-   setGlobalFog: (function ()
+   setGlobalFog: (() =>
    {
       const modelViewMatrix = new Matrix4 ();
 
@@ -343,7 +343,7 @@ Object .assign (X3DRenderObject .prototype,
 
       return translation .assign (Vector3 .Zero);
    },
-   getDistance: (function ()
+   getDistance: (() =>
    {
       const
          projectionMatrix            = new Matrix4 (),
@@ -402,7 +402,7 @@ Object .assign (X3DRenderObject .prototype,
          return -depth;
       };
    })(),
-   getDepth: (function ()
+   getDepth: (() =>
    {
       const
          depthBufferViewport   = new Vector4 (0, 0, DEPTH_BUFFER_SIZE, DEPTH_BUFFER_SIZE),
@@ -475,7 +475,7 @@ Object .assign (X3DRenderObject .prototype,
    {
       ViewVolume .unProjectRay (pointer .x, pointer .y, Matrix4 .Identity, projectionMatrix, viewport, this .hitRay);
    },
-   addPointingShape: (function ()
+   addPointingShape: (() =>
    {
       const
          bboxSize   = new Vector3 (0, 0, 0),
@@ -518,7 +518,7 @@ Object .assign (X3DRenderObject .prototype,
          return false;
       };
    })(),
-   addCollisionShape: (function ()
+   addCollisionShape: (() =>
    {
       const
          bboxSize   = new Vector3 (0, 0, 0),
@@ -564,7 +564,7 @@ Object .assign (X3DRenderObject .prototype,
          return false;
       };
    })(),
-   addShadowShape: (function ()
+   addShadowShape: (() =>
    {
       const
          bboxSize   = new Vector3 (0, 0, 0),
@@ -606,7 +606,7 @@ Object .assign (X3DRenderObject .prototype,
          return false;
       };
    })(),
-   addDisplayShape: (function ()
+   addDisplayShape: (() =>
    {
       const
          bboxSize   = new Vector3 (0, 0, 0),
@@ -675,7 +675,7 @@ Object .assign (X3DRenderObject .prototype,
          objectsCount: [0, 0, 0], // [clip planes, lights, texture projectors]
       };
    },
-   pointing: (function ()
+   pointing: (() =>
    {
       const projectionMatrixArray = new Float32Array (16);
 
@@ -741,7 +741,7 @@ Object .assign (X3DRenderObject .prototype,
          }
       };
    })(),
-   collide: (function ()
+   collide: (() =>
    {
       const
          invModelViewMatrix = new Matrix4 (),
@@ -798,7 +798,7 @@ Object .assign (X3DRenderObject .prototype,
             collision .set_active (true);
       };
    })(),
-   gravite: (function ()
+   gravite: (() =>
    {
       const
          projectionMatrix            = new Matrix4 (),
@@ -917,7 +917,7 @@ Object .assign (X3DRenderObject .prototype,
          }
       };
    })(),
-   depth: (function ()
+   depth: (() =>
    {
       const projectionMatrixArray = new Float32Array (16);
 

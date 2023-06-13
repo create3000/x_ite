@@ -116,7 +116,7 @@ Object .assign (Object .setPrototypeOf (ShaderPart .prototype, X3DNode .prototyp
    {
       return this .shader;
    },
-   getShaderType: (function ()
+   getShaderType: (() =>
    {
       const shaderTypes = new Map ([
          ["VERTEX",          "VERTEX_SHADER"],

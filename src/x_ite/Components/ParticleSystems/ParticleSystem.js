@@ -774,7 +774,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
 
       browser .addBrowserEvent ();
    },
-   updateSprite: (function ()
+   updateSprite: (() =>
    {
       const data = new Float32Array (QuadGeometry);
 
@@ -997,7 +997,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
          }
       }
    },
-   getScreenAlignedRotation: (function ()
+   getScreenAlignedRotation: (() =>
    {
       const
          invModelViewMatrix = new Matrix4 (),

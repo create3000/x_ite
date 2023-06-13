@@ -72,7 +72,7 @@ Object .assign (Object .setPrototypeOf (PolygonText .prototype, X3DTextGeometry 
    {
       return Matrix4 .Identity;
    },
-   build: (function ()
+   build: (() =>
    {
       const
          min = new Vector3 (0, 0, 0),
@@ -309,7 +309,7 @@ Object .assign (Object .setPrototypeOf (PolygonText .prototype, X3DTextGeometry 
             return 5;
       }
    },
-   triangulatePolygon: (function ()
+   triangulatePolygon: (() =>
    {
       // Function called for each vertex of tessellator output.
 

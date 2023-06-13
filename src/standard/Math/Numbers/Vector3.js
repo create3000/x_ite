@@ -204,7 +204,7 @@ Object .assign (Vector3 .prototype,
       this .z = z + t * (destination .z - z);
       return this;
    },
-   slerp: (function ()
+   slerp: (() =>
    {
       const tmp = new Vector3 (0, 0, 0);
 

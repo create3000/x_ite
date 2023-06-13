@@ -105,7 +105,7 @@ Object .assign (Object .setPrototypeOf (VisibilitySensor .prototype, X3DEnvironm
 
       this .setTraversed (false);
    },
-   traverse: (function ()
+   traverse: (() =>
    {
       const
          bbox     = new Box3 (),

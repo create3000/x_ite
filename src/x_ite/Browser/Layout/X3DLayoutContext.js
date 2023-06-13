@@ -78,7 +78,7 @@ Object .assign (X3DLayoutContext .prototype,
 
       return this [_screenTextureProperties];
    },
-   getScreenScaleMatrix: (function ()
+   getScreenScaleMatrix: (() =>
    {
       const
          screenScale  = new Vector3 (0, 0, 0),

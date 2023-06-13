@@ -99,7 +99,7 @@ Object .assign (Object .setPrototypeOf (PointEmitter .prototype, X3DParticleEmit
 
       this .setUniform ("uniform3f", "position", position .x, position .y, position .z);
    },
-   set_direction__: (function ()
+   set_direction__: (() =>
    {
       const direction = new Vector3 (0, 0, 0);
 

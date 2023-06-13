@@ -239,7 +239,7 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .pro
    {
       return this [_referencesCallbacks];
    },
-   processReferencesCallbacks: (function ()
+   processReferencesCallbacks: (() =>
    {
       const referencesCallbacksTemp = [ ];
 
@@ -337,7 +337,7 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .pro
    {
       return this [_routeCallbacks];
    },
-   processRouteCallbacks: (function ()
+   processRouteCallbacks: (() =>
    {
       const routeCallbacksTemp = [ ];
 
@@ -350,7 +350,7 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .pro
          }
       };
    })(),
-   processEvent: (function ()
+   processEvent: (() =>
    {
       const fieldCallbacksTemp = [ ];
 

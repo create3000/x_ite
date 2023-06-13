@@ -87,7 +87,7 @@ Object .assign (Object .setPrototypeOf (Disk2DOptions .prototype, X3DBaseNode .p
    {
       return this .diskVertices;
    },
-   build: (function ()
+   build: (() =>
    {
       const
          half      = new Complex (0.5, 0.5),

@@ -690,7 +690,7 @@ const NURBS = {
 
       return true;
    },
-   getClosed: (function ()
+   getClosed: (() =>
    {
       const
          firstPoint = new (Vector3_default()) (0, 0, 0),
@@ -723,7 +723,7 @@ const NURBS = {
          return true;
       };
    })(),
-   getUClosed: (function ()
+   getUClosed: (() =>
    {
       const
          firstPoint = new (Vector3_default()) (0, 0, 0),
@@ -761,7 +761,7 @@ const NURBS = {
          return true;
       };
    })(),
-   getVClosed: (function ()
+   getVClosed: (() =>
    {
       const
          firstPoint = new (Vector3_default()) (0, 0, 0),
@@ -1340,7 +1340,7 @@ var createVariable = function createVariable (name, nurbs) {
 
 createVariable.sum = function (parts) {
    parts = Array.isArray(parts) ? parts : [parts];
-   parts = parts.filter(function (part) { return part !== undefined && part !== 0; });
+   parts = parts.filter(part => part !== undefined && part !== 0);
    if (parts.length === 0) parts.push(0);
    return parts.join(" + ");
 };
@@ -1392,7 +1392,7 @@ function createAccessor (name, data)
    {
       case infer_type .ARRAY_OF_OBJECTS:
       {
-         return wrapAccessor (function (accessors)
+         return wrapAccessor (accessors =>
          {
             var e = accessors .pop ();
 
@@ -1401,21 +1401,21 @@ function createAccessor (name, data)
       }
       case infer_type .ARRAY_OF_ARRAYS:
       {
-         return wrapAccessor (function (accessors)
+         return wrapAccessor (accessors =>
          {
             return name + "[" + accessors .join ("][") + "]";
          });
       }
       case infer_type .GENERIC_NDARRAY:
       {
-         return wrapAccessor(function (accessors)
+         return wrapAccessor (accessors =>
          {
             return name + ".get(" + accessors.join(",") + ")";
          });
       }
       case infer_type .NDARRAY:
       {
-         return wrapAccessor(function (accessors)
+         return wrapAccessor (accessors =>
          {
             var code = [name + "Offset"];
 
@@ -3722,7 +3722,7 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
       this .setSolid (this ._solid .getValue ());
       this .setCCW (true);
    },
-   buildNurbsTexCoords: (function ()
+   buildNurbsTexCoords: (() =>
    {
       const
          defaultTexUKnots        = [ ],
@@ -3828,7 +3828,7 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
 
       return this .refineNormals (normalIndex, normals, Algorithm_default().radians (85));
    },
-   createFaceNormals: (function ()
+   createFaceNormals: (() =>
    {
       const
          v1 = new (Vector3_default()) (0, 0, 0),
@@ -4598,7 +4598,7 @@ Object .assign (Object .setPrototypeOf (NurbsSurfaceInterpolator .prototype, (X3
 
       this .geometry .setup ();
    },
-   set_fraction__: (function ()
+   set_fraction__: (() =>
    {
       const
          a     = new (Vector3_default()) (0, 0, 0),

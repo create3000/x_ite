@@ -56,7 +56,7 @@ function CatmullRomSplineInterpolator ()
 
 Object .assign (CatmullRomSplineInterpolator .prototype,
 {
-   generate: (function ()
+   generate: (() =>
    {
       const
          T  = [ ],
@@ -159,7 +159,7 @@ Object .assign (CatmullRomSplineInterpolator .prototype,
          }
       };
    })(),
-   interpolate: (function ()
+   interpolate: (() =>
    {
       const S = new Vector4 (0, 0, 0, 0);
 

@@ -106,7 +106,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
       gl .bindBuffer (gl .ARRAY_BUFFER, this .trianglesBuffer);
       gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (15 * 6 * numLines), gl .DYNAMIC_DRAW);
    },
-   updateLengthSoFar: (function ()
+   updateLengthSoFar: (() =>
    {
       const
          modelViewProjectionMatrix = new Matrix4 (),
@@ -199,7 +199,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
       gl .drawArrays (this .primitiveMode, 0, this .vertexCount);
       gl .lineWidth (1);
    },
-   display: (function ()
+   display: (() =>
    {
       const
          matrix                            = new Matrix4 (),

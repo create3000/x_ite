@@ -58,7 +58,7 @@ const { interval } = Algorithm;
 
 const Bezier =
 {
-   quadric: (function ()
+   quadric: (() =>
    {
       const
          c = new Matrix3 (1, 0, 0, -2, 2, 0, 1, -2, 1),
@@ -77,7 +77,7 @@ const Bezier =
          }
       };
    })(),
-   cubic: (function ()
+   cubic: (() =>
    {
       const
          v = new Vector4 (0, 0, 0, 0),

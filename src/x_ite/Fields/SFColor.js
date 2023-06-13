@@ -100,7 +100,7 @@ Object .assign (Object .setPrototypeOf (SFColor .prototype, X3DField .prototype)
       this .getValue () .setHSV (h, s, v);
       this .addEvent ();
    },
-   lerp: (function ()
+   lerp: (() =>
    {
       const
          s = [ ],

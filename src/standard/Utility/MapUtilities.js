@@ -47,7 +47,7 @@
 
 const MapUtilities =
 {
-   assign: (function ()
+   assign: (() =>
    {
       function callback (value, key)
       {
@@ -62,7 +62,7 @@ const MapUtilities =
          return m1;
       };
    })(),
-   values: (function ()
+   values: (() =>
    {
       function callback (value)
       {

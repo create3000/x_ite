@@ -142,7 +142,7 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
    {
       return this .baseTextureNode;
    },
-   getTextureIndices: (function ()
+   getTextureIndices: (() =>
    {
       let i = 0;
 

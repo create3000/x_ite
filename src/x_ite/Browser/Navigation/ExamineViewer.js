@@ -283,7 +283,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
       this .disconnect ();
       this .lookAtBBox (x, y, this .getStraightenHorizon ());
    },
-   mousemove: (function ()
+   mousemove: (() =>
    {
       const fromPoint = new Vector3 (0, 0, 0);
 
@@ -335,7 +335,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
          }
       };
    })(),
-   mousewheel: (function ()
+   mousewheel: (() =>
    {
       const
          step        = new Vector3 (0, 0, 0),
@@ -462,7 +462,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
          }
       }
    },
-   touchmove: (function ()
+   touchmove: (() =>
    {
       const
          MOVE_ANGLE   = 0.7,
@@ -564,7 +564,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
       viewpoint ._orientationOffset = this .getOrientationOffset (value .getValue (), this .initialOrientationOffset, false);
       viewpoint ._positionOffset    = this .getPositionOffset (this .initialPositionOffset, this .initialOrientationOffset, viewpoint ._orientationOffset .getValue ());
    },
-   addRotate: (function ()
+   addRotate: (() =>
    {
       const destination = new Rotation4 ();
 
@@ -655,7 +655,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
          this .rotation .assign (rotationChange);
       }
    },
-   spin: (function ()
+   spin: (() =>
    {
       const
          direction         = new Vector3 (0, 0, 0),
@@ -695,7 +695,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
          }
       };
    })(),
-   addMove: (function ()
+   addMove: (() =>
    {
       const
          positionOffset         = new Vector3 (0, 0, 0),
@@ -746,7 +746,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
          this .centerOfRotationChaser ._value_changed .addInterest ("set_centerOfRotationOffset__", this);
       };
    })(),
-   getPositionOffset: (function ()
+   getPositionOffset: (() =>
    {
       const
          distance = new Vector3 (0, 0, 0),
@@ -766,7 +766,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
             .add (positionOffsetBefore));
       };
    })(),
-   getOrientationOffset: (function ()
+   getOrientationOffset: (() =>
    {
       const
          userOrientation   = new Rotation4 (),
@@ -810,7 +810,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
          }
       };
    })(),
-   getHorizonRotation: (function ()
+   getHorizonRotation: (() =>
    {
       const zAxis = new Vector3 (0, 0, 0);
 

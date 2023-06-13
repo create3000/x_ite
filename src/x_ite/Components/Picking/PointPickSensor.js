@@ -91,7 +91,7 @@ Object .assign (Object .setPrototypeOf (PointPickSensor .prototype, X3DPickSenso
 
       this .set_geometry__ ();
    },
-   set_geometry__: (function ()
+   set_geometry__: (() =>
    {
       var
          defaultScale = new Ammo .btVector3 (1, 1, 1),
@@ -152,7 +152,7 @@ Object .assign (Object .setPrototypeOf (PointPickSensor .prototype, X3DPickSenso
          }
       };
    })(),
-   process: (function ()
+   process: (() =>
    {
       var
          pickingBBox   = new Box3 (),

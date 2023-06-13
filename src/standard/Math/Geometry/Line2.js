@@ -100,7 +100,7 @@ Object .assign (Line2 .prototype,
 
       return result .assign (this .direction) .multiply (d) .add (this .point);
    },
-   getPerpendicularVectorToPoint: (function ()
+   getPerpendicularVectorToPoint: (() =>
    {
       const t = new Vector2 (0, 0);
 
@@ -111,7 +111,7 @@ Object .assign (Line2 .prototype,
          return result .subtract (t .assign (this .direction) .multiply (result .dot (this .direction)));
       };
    })(),
-   intersectsLine: (function ()
+   intersectsLine: (() =>
    {
       const u = new Vector2 (0, 0);
 

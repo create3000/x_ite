@@ -1738,7 +1738,7 @@ Object .assign (Object .setPrototypeOf (PointEmitter .prototype, ParticleSystems
 
       this .setUniform ("uniform3f", "position", position .x, position .y, position .z);
    },
-   set_direction__: (function ()
+   set_direction__: (() =>
    {
       const direction = new (Vector3_default()) (0, 0, 0);
 
@@ -2469,7 +2469,7 @@ function ForcePhysicsModel (executionContext)
 
 Object .assign (Object .setPrototypeOf (ForcePhysicsModel .prototype, ParticleSystems_X3DParticlePhysicsModelNode .prototype),
 {
-   addForce: (function ()
+   addForce: (() =>
    {
       const force = new (Vector3_default()) (0, 0, 0);
 
@@ -3824,7 +3824,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (X3DShapeNode
 
       browser .addBrowserEvent ();
    },
-   updateSprite: (function ()
+   updateSprite: (() =>
    {
       const data = new Float32Array (QuadGeometry);
 
@@ -4047,7 +4047,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (X3DShapeNode
          }
       }
    },
-   getScreenAlignedRotation: (function ()
+   getScreenAlignedRotation: (() =>
    {
       const
          invModelViewMatrix = new (Matrix4_default()) (),
@@ -4285,7 +4285,7 @@ Object .assign (Object .setPrototypeOf (PolylineEmitter .prototype, ParticleSyst
       this .set_direction__ ();
       this .set_polyline ();
    },
-   set_direction__: (function ()
+   set_direction__: (() =>
    {
       const direction = new (Vector3_default()) (0, 0, 0);
 
@@ -4296,7 +4296,7 @@ Object .assign (Object .setPrototypeOf (PolylineEmitter .prototype, ParticleSyst
          this .setUniform ("uniform3f", "direction", direction .x, direction .y, direction .z);
       };
    })(),
-   set_polyline: (function ()
+   set_polyline: (() =>
    {
       const
          vertex1 = new (Vector3_default()) (0, 0, 0),
@@ -4536,7 +4536,7 @@ Object .assign (Object .setPrototypeOf (SurfaceEmitter .prototype, ParticleSyste
       if (this .surfaceNode)
          this .setUniform ("uniform1i", "solid", this .surfaceNode ._solid .getValue ());
    },
-   set_geometry__: (function ()
+   set_geometry__: (() =>
    {
       const
          vertex1  = new (Vector3_default()) (0, 0, 0),
@@ -4818,7 +4818,7 @@ Object .assign (Object .setPrototypeOf (VolumeEmitter .prototype, ParticleSystem
       this .set_direction__ ();
       this .set_geometry__ ();
    },
-   set_direction__: (function ()
+   set_direction__: (() =>
    {
       const direction = new (Vector3_default()) (0, 0, 0);
 
@@ -4829,7 +4829,7 @@ Object .assign (Object .setPrototypeOf (VolumeEmitter .prototype, ParticleSystem
          this .setUniform ("uniform3f", "direction", direction .x, direction .y, direction .z);
       };
    })(),
-   set_geometry__: (function ()
+   set_geometry__: (() =>
    {
       const
          vertex1 = new (Vector3_default()) (0, 0, 0),
@@ -5023,7 +5023,7 @@ Object .assign (Object .setPrototypeOf (WindPhysicsModel .prototype, ParticleSys
 
       return emitterNode .getRandomValue (Math .max (0, speed - variation), speed + variation);
    },
-   addForce: (function ()
+   addForce: (() =>
    {
       const force = new (Vector3_default()) (0, 0, 0);
 

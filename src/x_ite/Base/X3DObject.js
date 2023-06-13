@@ -200,7 +200,7 @@ Object .defineProperties (X3DObject .prototype,
 
 Object .assign (X3DObject,
 {
-   getId: DEVELOPMENT ? (function ()
+   getId: DEVELOPMENT ? (() =>
    {
       const
          map      = new WeakMap (),
@@ -227,7 +227,7 @@ Object .assign (X3DObject,
             return id;
          }
       };
-   })() : (function ()
+   })() : (() =>
    {
       const map = new WeakMap ();
 

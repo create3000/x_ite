@@ -308,7 +308,7 @@ Object .assign (Generator .prototype,
    {
       const index = this .exportedNodesIndex .get (this .ExecutionContext ());
 
-      exportedNodes .forEach (function (exportedNode)
+      for (const exportedNode of exportedNodes)
       {
          try
          {
@@ -316,13 +316,13 @@ Object .assign (Generator .prototype,
          }
          catch
          { }
-      });
+      }
    },
    ImportedNodes (importedNodes)
    {
       const index = this .importedNodesIndex .get (this .ExecutionContext ());
 
-      importedNodes .forEach (function (importedNode)
+      for (const importedNode of importedNodes)
       {
          try
          {
@@ -330,7 +330,7 @@ Object .assign (Generator .prototype,
          }
          catch
          { }
-      });
+      }
    },
    AddImportedNode (exportedNode, importedName)
    {
@@ -505,7 +505,7 @@ Object .assign (Generator .prototype,
 
       return value;
    },
-   XMLEncode: (function ()
+   XMLEncode: (() =>
    {
       const map = {
          "\\": "\\\\",
@@ -526,7 +526,7 @@ Object .assign (Generator .prototype,
          return string .replace (regex, char => map [char]);
       };
    })(),
-   XMLEncodeSourceText: (function ()
+   XMLEncodeSourceText: (() =>
    {
       const map = {
          "\\": "\\\\",
@@ -544,7 +544,7 @@ Object .assign (Generator .prototype,
          return string .replace (regex, char => map [char]);
       };
    })(),
-   JSONEncode: (function ()
+   JSONEncode: (() =>
    {
       const map = {
          "\\": "\\\\",

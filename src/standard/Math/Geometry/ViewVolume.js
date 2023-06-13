@@ -118,7 +118,7 @@ function ViewVolume (projectionMatrix, viewport, scissor)
 
 Object .assign (ViewVolume .prototype,
 {
-   set: (function ()
+   set: (() =>
    {
       const matrix = new Matrix4 ();
 
@@ -228,7 +228,7 @@ Object .assign (ViewVolume .prototype,
 
       return true;
    },
-   intersectsBox: (function ()
+   intersectsBox: (() =>
    {
       const points1 = [
          new Vector3 (0, 0, 0),
@@ -301,7 +301,7 @@ Object .assign (ViewVolume .prototype,
 
 Object .assign (ViewVolume,
 {
-   unProjectPoint: (function ()
+   unProjectPoint: (() =>
    {
       const invModelViewProjectionMatrix = new Matrix4 ();
 
@@ -310,7 +310,7 @@ Object .assign (ViewVolume,
          return this .unProjectPointMatrix (winx, winy, winz, invModelViewProjectionMatrix .assign (modelViewMatrix) .multRight (projectionMatrix) .inverse (), viewport, point);
       };
    })(),
-   unProjectPointMatrix: (function ()
+   unProjectPointMatrix: (() =>
    {
       const vin = new Vector4 (0, 0, 0, 0);
 
@@ -330,7 +330,7 @@ Object .assign (ViewVolume,
          return point .set (vin .x * d, vin .y * d, vin .z * d, 1);
       };
    })(),
-   unProjectRay: (function ()
+   unProjectRay: (() =>
    {
       const invModelViewProjectionMatrix = new Matrix4 ();
 
@@ -339,7 +339,7 @@ Object .assign (ViewVolume,
          return this .unProjectRayMatrix (winx, winy, invModelViewProjectionMatrix .assign (modelViewMatrix) .multRight (projectionMatrix) .inverse (), viewport, result);
       };
    })(),
-   unProjectRayMatrix: (function ()
+   unProjectRayMatrix: (() =>
    {
       const
          near = new Vector3 (0, 0, 0),
@@ -353,7 +353,7 @@ Object .assign (ViewVolume,
          return result .setPoints (near, far);
       };
    })(),
-   projectPoint: (function ()
+   projectPoint: (() =>
    {
       const vin = new Vector4 (0, 0, 0, 0);
 
@@ -373,7 +373,7 @@ Object .assign (ViewVolume,
                            (vin .z * d + 0.5));
       };
    })(),
-   projectPointMatrix: (function ()
+   projectPointMatrix: (() =>
    {
       const vin = new Vector4 (0, 0, 0, 0);
 
@@ -393,7 +393,7 @@ Object .assign (ViewVolume,
                            (vin .z * d + 0.5));
       };
    })(),
-   projectLine: (function ()
+   projectLine: (() =>
    {
       const modelViewProjectionMatrix = new Matrix4 ();
 
@@ -402,7 +402,7 @@ Object .assign (ViewVolume,
          return this .projectLineMatrix (line, modelViewProjectionMatrix .assign (modelViewMatrix) .multRight (projectionMatrix), viewport, result);
       };
    })(),
-   projectLineMatrix: (function ()
+   projectLineMatrix: (() =>
    {
       const
          near      = new Vector2 (0, 0),

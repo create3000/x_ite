@@ -68,7 +68,7 @@ function X3DBoundedObject (executionContext)
 Object .assign (X3DBoundedObject .prototype,
 {
    initialize () { },
-   getDefaultBBoxSize: (function ()
+   getDefaultBBoxSize: (() =>
    {
       const defaultBBoxSize = new Vector3 (-1, -1, -1);
 
@@ -94,7 +94,7 @@ Object .assign (X3DBoundedObject .prototype,
 
       return bbox;
    },
-   displayBBox: (function ()
+   displayBBox: (() =>
    {
       const
          bbox   = new Box3 (),

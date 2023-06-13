@@ -231,7 +231,7 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
 
       this .transferSphere ();
    },
-   buildSphere: (function ()
+   buildSphere: (() =>
    {
       const U_DIMENSION = 20;
 
@@ -325,7 +325,7 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
 
       this .sphereCount = this .sphere .length / 4;
    },
-   transferRectangle: (function ()
+   transferRectangle: (() =>
    {
       const s = SIZE;
 
@@ -452,7 +452,7 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
          }
       }
    },
-   display: (function ()
+   display: (() =>
    {
       const
          modelViewMatrix = new Matrix4 (),
@@ -534,7 +534,7 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
 
       gl .drawArrays (gl .TRIANGLES, 0, this .sphereCount);
    },
-   drawCube: (function ()
+   drawCube: (() =>
    {
       const textureMatrixArray = new Float32Array (Matrix4 .Identity);
 

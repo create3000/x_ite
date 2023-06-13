@@ -137,7 +137,7 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
 
       this .setTraversed (false);
    },
-   traverse: (function ()
+   traverse: (() =>
    {
       const
          min = { distance: 0, intersection: new Vector3 (0, 0, 0) },
@@ -192,7 +192,7 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
          }
       };
    })(),
-   getEllipsoidParameter: (function ()
+   getEllipsoidParameter: (() =>
    {
       const
          location        = new Vector3 (0, 0, 0),

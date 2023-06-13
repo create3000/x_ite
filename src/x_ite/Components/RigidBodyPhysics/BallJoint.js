@@ -149,7 +149,7 @@ Object .assign (Object .setPrototypeOf (BallJoint .prototype, X3DRigidJointNode 
          this .joint .setPivotB (new Ammo .btVector3 (localAnchorPoint2 .x, localAnchorPoint2 .y, localAnchorPoint2 .z));
       }
    },
-   update1: (function ()
+   update1: (() =>
    {
       var localAnchorPoint1 = new Vector3 (0, 0, 0);
 
@@ -159,7 +159,7 @@ Object .assign (Object .setPrototypeOf (BallJoint .prototype, X3DRigidJointNode 
             this ._body1AnchorPoint = this .getBody1 () .getMatrix () .multVecMatrix (this .getInitialInverseMatrix1 () .multVecMatrix (localAnchorPoint1 .assign (this .localAnchorPoint1)));
       };
    })(),
-   update2: (function ()
+   update2: (() =>
    {
       var localAnchorPoint2 = new Vector3 (0, 0, 0);
 

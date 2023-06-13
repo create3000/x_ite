@@ -122,7 +122,7 @@ Object .assign (Object .setPrototypeOf (Viewpoint .prototype, X3DViewpointNode .
 
       return screenScale .set (size, size, size);
    },
-   getViewportSize: (function ()
+   getViewportSize: (() =>
    {
       const viewportSize = new Vector2 (0, 0);
 

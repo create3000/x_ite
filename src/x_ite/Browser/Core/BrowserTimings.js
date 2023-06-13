@@ -283,7 +283,7 @@ Object .defineProperties (BrowserTimings,
    },
 });
 
-const f2 = (function ()
+const f2 = (() =>
 {
    const format = new Intl .NumberFormat (navigator .language || navigator .userLanguage, {
       notation: "standard",

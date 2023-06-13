@@ -112,7 +112,7 @@ Object .assign (Matrix3 .prototype,
    {
       return this [r * this .order + c];
    },
-   set: (function ()
+   set: (() =>
    {
       const invCenter = new Vector2 (0, 0);
 
@@ -241,7 +241,7 @@ Object .assign (Matrix3 .prototype,
          return this;
       };
    })(),
-   get: (function ()
+   get: (() =>
    {
       const
          dummyTranslation      = new Vector2 (0, 0),
@@ -310,7 +310,7 @@ Object .assign (Matrix3 .prototype,
          }
       };
    })(),
-   factor: (function ()
+   factor: (() =>
    {
       const
          si = new Matrix2 (),
@@ -579,7 +579,7 @@ Object .defineProperties (Matrix3 .prototype,
    length: { value: 9 },
    x:
    {
-      get: (function ()
+      get: (() =>
       {
          const vector = new Vector3 (0, 0, 0);
 
@@ -588,7 +588,7 @@ Object .defineProperties (Matrix3 .prototype,
    },
    y:
    {
-      get: (function ()
+      get: (() =>
       {
          const vector = new Vector3 (0, 0, 0);
 
@@ -597,7 +597,7 @@ Object .defineProperties (Matrix3 .prototype,
    },
    z:
    {
-      get: (function ()
+      get: (() =>
       {
          const vector = new Vector3 (0, 0, 0);
 
@@ -606,7 +606,7 @@ Object .defineProperties (Matrix3 .prototype,
    },
    xAxis:
    {
-      get: (function ()
+      get: (() =>
       {
          const vector = new Vector2 (0, 0);
 
@@ -615,7 +615,7 @@ Object .defineProperties (Matrix3 .prototype,
    },
    yAxis:
    {
-      get: (function ()
+      get: (() =>
       {
          const vector = new Vector2 (0, 0);
 
@@ -624,7 +624,7 @@ Object .defineProperties (Matrix3 .prototype,
    },
    origin:
    {
-      get: (function ()
+      get: (() =>
       {
          const vector = new Vector2 (0, 0);
 
@@ -633,7 +633,7 @@ Object .defineProperties (Matrix3 .prototype,
    },
    submatrix:
    {
-      get: (function ()
+      get: (() =>
       {
          const matrix = new Matrix2 ();
 

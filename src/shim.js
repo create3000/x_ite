@@ -45,7 +45,7 @@
  *
  ******************************************************************************/
 
-(function ()
+(() =>
 {
    // Added at February 2022
    // https://github.com/tc39/proposal-relative-indexing-method#polyfill
