@@ -150,7 +150,7 @@ Object .assign (Object .setPrototypeOf (BindableStack .prototype, X3DBaseNode .p
    },
 });
 
-for (const key of Reflect .ownKeys (BindableStack .prototype))
+for (const key of Object .keys (BindableStack .prototype))
    Object .defineProperty (BindableStack .prototype, key, { enumerable: false });
 
 Object .defineProperties (BindableStack,

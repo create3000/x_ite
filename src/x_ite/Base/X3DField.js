@@ -425,7 +425,7 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .pro
    }
 });
 
-for (const key of Reflect .ownKeys (X3DField .prototype))
+for (const key of Object .keys (X3DField .prototype))
    Object .defineProperty (X3DField .prototype, key, { enumerable: false });
 
 export default X3DField;

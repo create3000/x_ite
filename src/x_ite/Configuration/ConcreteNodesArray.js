@@ -72,7 +72,7 @@ Object .assign (Object .setPrototypeOf (ConcreteNodesArray .prototype, X3DInfoAr
    },
 });
 
-for (const key of Reflect .ownKeys (ConcreteNodesArray .prototype))
+for (const key of Object .keys (ConcreteNodesArray .prototype))
    Object .defineProperty (ConcreteNodesArray .prototype, key, { enumerable: false });
 
 Object .defineProperties (ConcreteNodesArray,

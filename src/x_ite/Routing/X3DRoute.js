@@ -257,7 +257,7 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
    }
 });
 
-for (const key of Reflect .ownKeys (X3DRoute .prototype))
+for (const key of Object .keys (X3DRoute .prototype))
    Object .defineProperty (X3DRoute .prototype, key, { enumerable: false });
 
 Object .defineProperties (X3DRoute .prototype,

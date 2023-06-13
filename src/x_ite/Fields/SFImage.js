@@ -154,7 +154,7 @@ function SFImage (width, height, comp, array)
       case 4:
          X3DField .call (this, new Image (width, height, comp, array));
          break;
-         
+
       default:
          throw new Error ("Invalid arguments.");
    }
@@ -297,7 +297,7 @@ Object .assign (Object .setPrototypeOf (SFImage .prototype, X3DField .prototype)
    },
 });
 
-for (const key of Reflect .ownKeys (SFImage .prototype))
+for (const key of Object .keys (SFImage .prototype))
    Object .defineProperty (SFImage .prototype, key, { enumerable: false });
 
 const width = {

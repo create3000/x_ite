@@ -99,7 +99,7 @@ Object .assign (Object .setPrototypeOf (SFString .prototype, X3DField .prototype
    },
 });
 
-for (const key of Reflect .ownKeys (SFString .prototype))
+for (const key of Object .keys (SFString .prototype))
    Object .defineProperty (SFString .prototype, key, { enumerable: false });
 
 Object .defineProperty (SFString .prototype, "length",

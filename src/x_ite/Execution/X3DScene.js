@@ -1037,7 +1037,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
    },
 });
 
-for (const key of Reflect .ownKeys (X3DScene .prototype))
+for (const key of Object .keys (X3DScene .prototype))
    Object .defineProperty (X3DScene .prototype, key, { enumerable: false });
 
 Object .defineProperties (X3DScene .prototype,

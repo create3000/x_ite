@@ -970,7 +970,7 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
    },
 });
 
-for (const key of Reflect .ownKeys (X3DTypedArrayField .prototype))
+for (const key of Object .keys (X3DTypedArrayField .prototype))
    Object .defineProperty (X3DTypedArrayField .prototype, key, { enumerable: false });
 
 Object .defineProperty (X3DTypedArrayField .prototype, "length",

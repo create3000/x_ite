@@ -74,7 +74,7 @@ function SFVec4Template (TypeName, double)
 
    SFVecPrototypeTemplate (SFVec4, TypeName, Vector4, double);
 
-   for (const key of Reflect .ownKeys (SFVec4 .prototype))
+   for (const key of Object .keys (SFVec4 .prototype))
       Object .defineProperty (SFVec4 .prototype, key, { enumerable: false });
 
    const x = {

@@ -200,7 +200,7 @@ Object .assign (Object .setPrototypeOf (SFRotation .prototype, X3DField .prototy
    },
 });
 
-for (const key of Reflect .ownKeys (SFRotation .prototype))
+for (const key of Object .keys (SFRotation .prototype))
    Object .defineProperty (SFRotation .prototype, key, { enumerable: false });
 
 const x = {

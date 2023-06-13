@@ -55,7 +55,7 @@ function RouteArray (values = [ ])
 
 Object .setPrototypeOf (RouteArray .prototype, X3DInfoArray .prototype);
 
-for (const key of Reflect .ownKeys (RouteArray .prototype))
+for (const key of Object .keys (RouteArray .prototype))
    Object .defineProperty (RouteArray .prototype, key, { enumerable: false });
 
 Object .defineProperties (RouteArray,

@@ -60,7 +60,7 @@ function X3DFieldDefinition (accessType, name, value)
 
 Object .setPrototypeOf (X3DFieldDefinition .prototype, X3DObject .prototype);
 
-for (const key of Reflect .ownKeys (X3DFieldDefinition .prototype))
+for (const key of Object .keys (X3DFieldDefinition .prototype))
    Object .defineProperty (X3DFieldDefinition .prototype, key, { enumerable: false });
 
 Object .defineProperties (X3DFieldDefinition,

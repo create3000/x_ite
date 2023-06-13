@@ -94,7 +94,7 @@ const Events = Object .assign ([ ],
    },
 });
 
-for (const key of Reflect .ownKeys (Events))
+for (const key of Object .keys (Events))
    Object .defineProperty (Events, key, { enumerable: false });
 
 export default Events;

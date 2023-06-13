@@ -367,7 +367,7 @@ Object .assign (Object .setPrototypeOf (X3DInfoArray .prototype, X3DChildObject 
    },
 });
 
-for (const key of Reflect .ownKeys (X3DInfoArray .prototype))
+for (const key of Object .keys (X3DInfoArray .prototype))
    Object .defineProperty (X3DInfoArray .prototype, key, { enumerable: false });
 
 Object .defineProperties (X3DInfoArray .prototype,

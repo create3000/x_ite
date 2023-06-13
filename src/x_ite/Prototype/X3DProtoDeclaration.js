@@ -529,7 +529,7 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProto
    },
 });
 
-for (const key of Reflect .ownKeys (X3DProtoDeclaration .prototype))
+for (const key of Object .keys (X3DProtoDeclaration .prototype))
    Object .defineProperty (X3DProtoDeclaration .prototype, key, { enumerable: false });
 
 Object .defineProperties (X3DProtoDeclaration .prototype,

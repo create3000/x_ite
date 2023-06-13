@@ -122,7 +122,7 @@ Object .assign (Object .setPrototypeOf (ComponentInfo .prototype, X3DObject .pro
    },
 });
 
-for (const key of Reflect .ownKeys (ComponentInfo .prototype))
+for (const key of Object .keys (ComponentInfo .prototype))
    Object .defineProperty (ComponentInfo .prototype, key, { enumerable: false });
 
 Object .defineProperties (ComponentInfo,

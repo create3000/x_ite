@@ -55,7 +55,7 @@ function NamedNodesArray (values = [ ])
 
 Object .setPrototypeOf (NamedNodesArray .prototype, X3DInfoArray .prototype);
 
-for (const key of Reflect .ownKeys (NamedNodesArray .prototype))
+for (const key of Object .keys (NamedNodesArray .prototype))
    Object .defineProperty (NamedNodesArray .prototype, key, { enumerable: false });
 
 Object .defineProperties (NamedNodesArray,

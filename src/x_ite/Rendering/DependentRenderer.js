@@ -126,7 +126,7 @@ Object .assign (Object .setPrototypeOf (DependentRenderer .prototype, X3DBaseNod
    },
 });
 
-for (const key of Reflect .ownKeys (DependentRenderer .prototype))
+for (const key of Object .keys (DependentRenderer .prototype))
    Object .defineProperty (DependentRenderer .prototype, key, { enumerable: false });
 
 export default DependentRenderer;

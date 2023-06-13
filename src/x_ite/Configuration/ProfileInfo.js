@@ -77,7 +77,7 @@ Object .assign (Object .setPrototypeOf (ProfileInfo .prototype, X3DObject .proto
    },
 });
 
-for (const key of Reflect .ownKeys (ProfileInfo .prototype))
+for (const key of Object .keys (ProfileInfo .prototype))
    Object .defineProperty (ProfileInfo .prototype, key, { enumerable: false });
 
 Object .defineProperties (ProfileInfo,

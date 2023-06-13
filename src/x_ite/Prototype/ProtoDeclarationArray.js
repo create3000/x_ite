@@ -55,7 +55,7 @@ function ProtoDeclarationArray (values = [ ])
 
 Object .setPrototypeOf (ProtoDeclarationArray .prototype, X3DInfoArray .prototype);
 
-for (const key of Reflect .ownKeys (ProtoDeclarationArray .prototype))
+for (const key of Object .keys (ProtoDeclarationArray .prototype))
    Object .defineProperty (ProtoDeclarationArray .prototype, key, { enumerable: false });
 
 Object .defineProperties (ProtoDeclarationArray,

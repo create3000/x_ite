@@ -608,7 +608,7 @@ const getFieldFromArray = (function ()
    };
 })();
 
-for (const key of Reflect .ownKeys (X3DBaseNode .prototype))
+for (const key of Object .keys (X3DBaseNode .prototype))
    Object .defineProperty (X3DBaseNode .prototype, key, { enumerable: false });
 
 Object .defineProperties (X3DBaseNode .prototype,

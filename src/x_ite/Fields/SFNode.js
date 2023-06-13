@@ -442,7 +442,7 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
    },
 });
 
-for (const key of Reflect .ownKeys (SFNode .prototype))
+for (const key of Object .keys (SFNode .prototype))
    Object .defineProperty (SFNode .prototype, key, { enumerable: false });
 
 Object .defineProperties (SFNode,

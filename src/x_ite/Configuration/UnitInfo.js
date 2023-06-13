@@ -138,7 +138,7 @@ Object .assign (Object .setPrototypeOf (UnitInfo .prototype, X3DObject .prototyp
    },
 });
 
-for (const key of Reflect .ownKeys (UnitInfo .prototype))
+for (const key of Object .keys (UnitInfo .prototype))
    Object .defineProperty (UnitInfo .prototype, key, { enumerable: false });
 
 Object .defineProperty (UnitInfo .prototype, "conversion_factor",

@@ -89,7 +89,7 @@ Object .assign (Object .setPrototypeOf (SFTime .prototype, X3DField .prototype),
    },
 });
 
-for (const key of Reflect .ownKeys (SFTime .prototype))
+for (const key of Object .keys (SFTime .prototype))
    Object .defineProperty (SFTime .prototype, key, { enumerable: false });
 
 Object .defineProperties (SFTime,

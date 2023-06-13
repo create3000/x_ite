@@ -225,7 +225,7 @@ else
    });
 }
 
-for (const key of Reflect .ownKeys (X3DChildObject .prototype))
+for (const key of Object .keys (X3DChildObject .prototype))
    Object .defineProperty (X3DChildObject .prototype, key, { enumerable: false });
 
 export default X3DChildObject;

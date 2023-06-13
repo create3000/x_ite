@@ -55,7 +55,7 @@ function ExportedNodesArray (values = [ ])
 
 Object .setPrototypeOf (ExportedNodesArray .prototype, X3DInfoArray .prototype);
 
-for (const key of Reflect .ownKeys (ExportedNodesArray .prototype))
+for (const key of Object .keys (ExportedNodesArray .prototype))
    Object .defineProperty (ExportedNodesArray .prototype, key, { enumerable: false });
 
 Object .defineProperties (ExportedNodesArray,

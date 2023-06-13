@@ -395,7 +395,7 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
    },
 });
 
-for (const key of Reflect .ownKeys (X3DExternProtoDeclaration .prototype))
+for (const key of Object .keys (X3DExternProtoDeclaration .prototype))
    Object .defineProperty (X3DExternProtoDeclaration .prototype, key, { enumerable: false });
 
 Object .defineProperties (X3DExternProtoDeclaration .prototype,

@@ -123,7 +123,7 @@ Object .assign (Object .setPrototypeOf (SFColorRGBA .prototype, X3DField .protot
    toJSONStreamValue: SFColor .prototype .toJSONStreamValue,
 });
 
-for (const key of Reflect .ownKeys (SFColorRGBA .prototype))
+for (const key of Object .keys (SFColorRGBA .prototype))
    Object .defineProperty (SFColorRGBA .prototype, key, { enumerable: false });
 
 const r = {

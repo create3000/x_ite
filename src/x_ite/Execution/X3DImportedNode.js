@@ -514,7 +514,7 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DNode .pro
    },
 });
 
-for (const key of Reflect .ownKeys (X3DImportedNode .prototype))
+for (const key of Object .keys (X3DImportedNode .prototype))
    Object .defineProperty (X3DImportedNode .prototype, key, { enumerable: false });
 
 Object .defineProperties (X3DImportedNode .prototype,

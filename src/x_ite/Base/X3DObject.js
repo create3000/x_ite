@@ -187,7 +187,7 @@ Object .assign (X3DObject .prototype,
    },
 });
 
-for (const key of Reflect .ownKeys (X3DObject .prototype))
+for (const key of Object .keys (X3DObject .prototype))
    Object .defineProperty (X3DObject .prototype, key, { enumerable: false });
 
 Object .defineProperties (X3DObject .prototype,

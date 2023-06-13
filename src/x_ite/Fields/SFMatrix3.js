@@ -106,7 +106,7 @@ function SFMatrix3Template (TypeName, SFVec2, double)
       },
    });
 
-   for (const key of Reflect .ownKeys (SFMatrix3 .prototype))
+   for (const key of Object .keys (SFMatrix3 .prototype))
       Object .defineProperty (SFMatrix3 .prototype, key, { enumerable: false });
 
    function defineProperty (i)

@@ -55,7 +55,7 @@ function ExternProtoDeclarationArray (values = [ ])
 
 Object .setPrototypeOf (ExternProtoDeclarationArray .prototype, X3DInfoArray .prototype);
 
-for (const key of Reflect .ownKeys (ExternProtoDeclarationArray .prototype))
+for (const key of Object .keys (ExternProtoDeclarationArray .prototype))
    Object .defineProperty (ExternProtoDeclarationArray .prototype, key, { enumerable: false });
 
 Object .defineProperties (ExternProtoDeclarationArray,

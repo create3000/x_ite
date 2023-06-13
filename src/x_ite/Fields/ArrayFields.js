@@ -370,7 +370,7 @@ Object .assign (Object .setPrototypeOf (MFNode .prototype, X3DObjectArrayField .
    },
 });
 
-for (const key of Reflect .ownKeys (MFNode .prototype))
+for (const key of Object .keys (MFNode .prototype))
    Object .defineProperty (MFNode .prototype, key, { enumerable: false });
 
 Object .defineProperties (MFNode,
@@ -419,7 +419,7 @@ Object .assign (Object .setPrototypeOf (MFString .prototype, X3DObjectArrayField
    },
 });
 
-for (const key of Reflect .ownKeys (MFString .prototype))
+for (const key of Object .keys (MFString .prototype))
    Object .defineProperty (MFString .prototype, key, { enumerable: false });
 
 Object .defineProperties (MFString,
@@ -448,7 +448,7 @@ Object .assign (Object .setPrototypeOf (MFImage .prototype, X3DObjectArrayField 
    },
 });
 
-for (const key of Reflect .ownKeys (MFImage .prototype))
+for (const key of Object .keys (MFImage .prototype))
    Object .defineProperty (MFImage .prototype, key, { enumerable: false });
 
 Object .defineProperties (MFImage,
@@ -487,7 +487,7 @@ function TypedArrayTemplate (TypeName, SingleType, ValueType, ArrayType, Compone
       },
    });
 
-   for (const key of Reflect .ownKeys (ArrayField .prototype))
+   for (const key of Object .keys (ArrayField .prototype))
       Object .defineProperty (ArrayField .prototype, key, { enumerable: false });
 
    Object .defineProperties (ArrayField,

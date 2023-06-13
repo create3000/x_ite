@@ -93,7 +93,7 @@ Object .assign (Object .setPrototypeOf (SFFloat .prototype, X3DField .prototype)
    },
 });
 
-for (const key of Reflect .ownKeys (SFFloat .prototype))
+for (const key of Object .keys (SFFloat .prototype))
    Object .defineProperty (SFFloat .prototype, key, { enumerable: false });
 
 Object .defineProperties (SFFloat,

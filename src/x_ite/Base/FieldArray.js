@@ -55,7 +55,7 @@ function FieldArray (values = [ ])
 
 Object .setPrototypeOf (FieldArray .prototype, X3DInfoArray .prototype);
 
-for (const key of Reflect .ownKeys (FieldArray .prototype))
+for (const key of Object .keys (FieldArray .prototype))
    Object .defineProperty (FieldArray .prototype, key, { enumerable: false });
 
 Object .defineProperties (FieldArray,

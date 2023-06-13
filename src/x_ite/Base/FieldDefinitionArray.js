@@ -55,7 +55,7 @@ function FieldDefinitionArray (values = [ ])
 
 Object .setPrototypeOf (FieldDefinitionArray .prototype, X3DInfoArray .prototype);
 
-for (const key of Reflect .ownKeys (FieldDefinitionArray .prototype))
+for (const key of Object .keys (FieldDefinitionArray .prototype))
    Object .defineProperty (FieldDefinitionArray .prototype, key, { enumerable: false });
 
 Object .defineProperties (FieldDefinitionArray,

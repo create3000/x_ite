@@ -330,7 +330,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
    },
 });
 
-for (const key of Reflect .ownKeys (FileLoader .prototype))
+for (const key of Object .keys (FileLoader .prototype))
    Object .defineProperty (FileLoader .prototype, key, { enumerable: false });
 
 export default FileLoader;

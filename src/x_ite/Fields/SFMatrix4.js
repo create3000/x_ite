@@ -98,7 +98,7 @@ function SFMatrix4Template (TypeName, SFVec3, double)
 
    SFMatrixPrototypeTemplate (SFMatrix4, TypeName, Matrix4, SFVec3, double);
 
-   for (const key of Reflect .ownKeys (SFMatrix4 .prototype))
+   for (const key of Object .keys (SFMatrix4 .prototype))
       Object .defineProperty (SFMatrix4 .prototype, key, { enumerable: false });
 
    function defineProperty (i)

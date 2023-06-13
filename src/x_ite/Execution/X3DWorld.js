@@ -144,7 +144,7 @@ Object .assign (Object .setPrototypeOf (X3DWorld .prototype, X3DBaseNode .protot
    },
 });
 
-for (const key of Reflect .ownKeys (X3DWorld .prototype))
+for (const key of Object .keys (X3DWorld .prototype))
    Object .defineProperty (X3DWorld .prototype, key, { enumerable: false });
 
 Object .defineProperties (X3DWorld,

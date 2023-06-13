@@ -1354,7 +1354,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
    },
 });
 
-for (const key of Reflect .ownKeys (X3DNode .prototype))
+for (const key of Object .keys (X3DNode .prototype))
    Object .defineProperty (X3DNode .prototype, key, { enumerable: false });
 
 Object .defineProperties (X3DNode,

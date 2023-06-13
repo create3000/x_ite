@@ -96,7 +96,7 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclarationNode .prototype, X3DB
    },
 });
 
-for (const key of Reflect .ownKeys (X3DProtoDeclarationNode .prototype))
+for (const key of Object .keys (X3DProtoDeclarationNode .prototype))
    Object .defineProperty (X3DProtoDeclarationNode .prototype, key, { enumerable: false });
 
 Object .defineProperties (X3DProtoDeclarationNode,

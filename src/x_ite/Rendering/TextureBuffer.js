@@ -233,7 +233,7 @@ Object .assign (TextureBuffer .prototype,
     },
 });
 
-for (const key of Reflect .ownKeys (TextureBuffer .prototype))
+for (const key of Object .keys (TextureBuffer .prototype))
    Object .defineProperty (TextureBuffer .prototype, key, { enumerable: false });
 
 export default TextureBuffer;

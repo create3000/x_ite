@@ -586,7 +586,7 @@ Object .assign (Generator .prototype,
    },
 });
 
-for (const key of Reflect .ownKeys (Generator .prototype))
+for (const key of Object .keys (Generator .prototype))
    Object .defineProperty (Generator .prototype, key, { enumerable: false });
 
 export default Generator;

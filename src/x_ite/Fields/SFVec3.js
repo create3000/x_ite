@@ -80,7 +80,7 @@ function SFVec3Template (TypeName, double)
       },
    });
 
-   for (const key of Reflect .ownKeys (SFVec3 .prototype))
+   for (const key of Object .keys (SFVec3 .prototype))
       Object .defineProperty (SFVec3 .prototype, key, { enumerable: false });
 
    const x = {

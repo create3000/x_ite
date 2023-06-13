@@ -93,7 +93,7 @@ Object .assign (Object .setPrototypeOf (SFDouble .prototype, X3DField .prototype
    },
 });
 
-for (const key of Reflect .ownKeys (SFDouble .prototype))
+for (const key of Object .keys (SFDouble .prototype))
    Object .defineProperty (SFDouble .prototype, key, { enumerable: false });
 
 Object .defineProperties (SFDouble,

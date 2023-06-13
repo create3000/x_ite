@@ -526,7 +526,7 @@ Object .assign (Object .setPrototypeOf (X3DObjectArrayField .prototype, X3DArray
    },
 });
 
-for (const key of Reflect .ownKeys (X3DObjectArrayField .prototype))
+for (const key of Object .keys (X3DObjectArrayField .prototype))
    Object .defineProperty (X3DObjectArrayField .prototype, key, { enumerable: false });
 
 Object .defineProperty (X3DObjectArrayField .prototype, "length",

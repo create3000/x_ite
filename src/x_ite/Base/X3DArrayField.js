@@ -117,7 +117,7 @@ Object .assign (Object .setPrototypeOf (X3DArrayField .prototype, X3DField .prot
    },
 });
 
-for (const key of Reflect .ownKeys (X3DArrayField .prototype))
+for (const key of Object .keys (X3DArrayField .prototype))
    Object .defineProperty (X3DArrayField .prototype, key, { enumerable: false });
 
 export default X3DArrayField;

@@ -170,7 +170,7 @@ Object .assign (Object .setPrototypeOf (SFColor .prototype, X3DField .prototype)
    },
 });
 
-for (const key of Reflect .ownKeys (SFColor .prototype))
+for (const key of Object .keys (SFColor .prototype))
    Object .defineProperty (SFColor .prototype, key, { enumerable: false });
 
 const r = {

@@ -109,7 +109,7 @@ Object .assign (Object .setPrototypeOf (X3DEventObject .prototype, X3DChildObjec
    },
 });
 
-for (const key of Reflect .ownKeys (X3DEventObject .prototype))
+for (const key of Object .keys (X3DEventObject .prototype))
    Object .defineProperty (X3DEventObject .prototype, key, { enumerable: false });
 
 export default X3DEventObject;

@@ -55,7 +55,7 @@ function UnitInfoArray (values = [ ])
 
 Object .setPrototypeOf (UnitInfoArray .prototype, X3DInfoArray .prototype);
 
-for (const key of Reflect .ownKeys (UnitInfoArray .prototype))
+for (const key of Object .keys (UnitInfoArray .prototype))
    Object .defineProperty (UnitInfoArray .prototype, key, { enumerable: false });
 
 Object .defineProperties (UnitInfoArray,

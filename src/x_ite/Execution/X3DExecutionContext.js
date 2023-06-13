@@ -945,7 +945,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
    },
 });
 
-for (const key of Reflect .ownKeys (X3DExecutionContext .prototype))
+for (const key of Object .keys (X3DExecutionContext .prototype))
    Object .defineProperty (X3DExecutionContext .prototype, key, { enumerable: false });
 
 Object .defineProperties (X3DExecutionContext .prototype,

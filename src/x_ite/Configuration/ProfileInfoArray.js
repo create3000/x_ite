@@ -62,7 +62,7 @@ Object .assign (Object .setPrototypeOf (ProfileInfoArray .prototype, X3DInfoArra
    },
 });
 
-for (const key of Reflect .ownKeys (ProfileInfoArray .prototype))
+for (const key of Object .keys (ProfileInfoArray .prototype))
    Object .defineProperty (ProfileInfoArray .prototype, key, { enumerable: false });
 
 Object .defineProperties (ProfileInfoArray,

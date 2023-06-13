@@ -867,7 +867,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    },
 });
 
-for (const key of Reflect .ownKeys (X3DBrowser .prototype))
+for (const key of Object .keys (X3DBrowser .prototype))
    Object .defineProperty (X3DBrowser .prototype, key, { enumerable: false });
 
 Object .defineProperties (X3DBrowser .prototype,

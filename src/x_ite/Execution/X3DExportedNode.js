@@ -166,7 +166,7 @@ Object .assign (Object .setPrototypeOf (X3DExportedNode .prototype, X3DObject .p
    },
 });
 
-for (const key of Reflect .ownKeys (X3DExportedNode .prototype))
+for (const key of Object .keys (X3DExportedNode .prototype))
    Object .defineProperty (X3DExportedNode .prototype, key, { enumerable: false });
 
 Object .defineProperties (X3DExportedNode .prototype,
