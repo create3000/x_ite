@@ -143,7 +143,7 @@ Object .assign (X3DObject .prototype,
 
       return generator .string;
    },
-   toVRMLString  (options = Object .prototype)
+   toVRMLString (options = Object .prototype)
    {
       const generator = new Generator (options);
 
@@ -154,7 +154,7 @@ Object .assign (X3DObject .prototype,
 
       return generator .string;
    },
-   toXMLString  (options = Object .prototype)
+   toXMLString (options = Object .prototype)
    {
       const generator = new Generator (options);
 
