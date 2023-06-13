@@ -49,44 +49,24 @@ const Events = Object .assign ([ ],
 {
    create (field)
    {
-      if (this .length)
-      {
-         const event = this .pop ();
-
-         event .field = field;
-         event .clear ();
-
-         return event;
-      }
-
-      const event = new Set ();
+      const event = this .pop () ?? new Set ();
 
       event .field = field;
+      event .clear ();
 
       return event;
    },
    copy (event)
    {
-      if (this .length)
-      {
-         const copy = this .pop ();
+      const copy = this .pop () ?? new Set ();
 
-         copy .field = event .field;
-         copy .clear ();
+      copy .field = event .field;
+      copy .clear ();
 
-         for (const source of event)
-            copy .add (source);
+      for (const source of event)
+         copy .add (source);
 
-         return copy;
-      }
-      else
-      {
-         const copy = new Set (event);
-
-         copy .field = event .field;
-
-         return copy;
-      }
+      return copy;
    },
    clear ()
    {
