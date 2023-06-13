@@ -65,22 +65,15 @@ import X3DObjectArrayField from "../Base/X3DObjectArrayField.js";
 import X3DTypedArrayField  from "../Base/X3DTypedArrayField.js";
 
 const
-   SFMatrix3d = SFMatrix3 .SFMatrix3d,
-   SFMatrix3f = SFMatrix3 .SFMatrix3f,
-   SFMatrix4d = SFMatrix4 .SFMatrix4d,
-   SFMatrix4f = SFMatrix4 .SFMatrix4f,
-   SFVec2d    = SFVec2 .SFVec2d,
-   SFVec2f    = SFVec2 .SFVec2f,
-   SFVec3d    = SFVec3 .SFVec3d,
-   SFVec3f    = SFVec3 .SFVec3f,
-   SFVec4d    = SFVec4 .SFVec4d,
-   SFVec4f    = SFVec4 .SFVec4f;
+   { SFMatrix3d, SFMatrix3f } = SFMatrix3,
+   { SFMatrix4d, SFMatrix4f } = SFMatrix4,
+   { SFVec2d, SFVec2f }       = SFVec2,
+   { SFVec3d, SFVec3f }       = SFVec3,
+   { SFVec4d, SFVec4f }       = SFVec4;
 
 /*
  *  MFNode
  */
-
-const _cloneCount = Symbol ();
 
 function MFNode (... args)
 {
@@ -89,7 +82,6 @@ function MFNode (... args)
 
 Object .assign (Object .setPrototypeOf (MFNode .prototype, X3DObjectArrayField .prototype),
 {
-   [_cloneCount]: 0,
    getSingleType ()
    {
       return SFNode;
@@ -111,40 +103,6 @@ Object .assign (Object .setPrototypeOf (MFNode .prototype, X3DObjectArrayField .
       {
          return X3DObjectArrayField .prototype .copy .call (this);
       }
-   },
-   addCloneCount (count)
-   {
-      const target = this .getTarget ();
-
-      target [_cloneCount] += count;
-
-      for (const element of target .getValue ())
-         element .addCloneCount (count);
-   },
-   removeCloneCount (count)
-   {
-      const target = this .getTarget ();
-
-      target [_cloneCount] -= count;
-
-      for (const element of target .getValue ())
-         element .removeCloneCount (count);
-   },
-   addChildObject (value)
-   {
-      const target = this .getTarget ();
-
-      X3DObjectArrayField .prototype .addChildObject .call (target, value);
-
-      value .addCloneCount (target [_cloneCount]);
-   },
-   removeChildObject (value)
-   {
-      const target = this .getTarget ();
-
-      X3DObjectArrayField .prototype .removeChildObject .call (target, value);
-
-      value .removeCloneCount (target [_cloneCount]);
    },
    toStream (generator)
    {

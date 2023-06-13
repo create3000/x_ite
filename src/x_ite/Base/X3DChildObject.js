@@ -114,16 +114,24 @@ if (DEVELOPMENT)
          if (this [_parents] === X3DChildObject .prototype [_parents])
          {
             this [_parents]  = new Map ();
-            this [_registry] = new FinalizationRegistry (id => this [_parents] .delete (id));
+            this [_registry] = new FinalizationRegistry (id =>
+            {
+               this [_parents] .delete (id);
+               this .parentsChanged ();
+            });
          }
 
          this [_parents] .set (parent .getId (), new WeakRef (parent));
          this [_registry] .register (parent, parent .getId (), parent);
+
+         this .parentsChanged ();
       },
       removeParent (parent)
       {
          this [_parents] .delete (parent .getId ());
          this [_registry] .unregister (parent);
+
+         this .parentsChanged ();
       },
       getParents ()
       {
@@ -134,10 +142,20 @@ if (DEVELOPMENT)
 
          return parents;
       },
+      parentsChanged () { },
       processEvent ()
       {
          this .setTainted (false);
          this .processInterests ();
+      },
+      collectCloneCount ()
+      {
+         let cloneCount = 0;
+
+         for (const weakRef of this [_parents] .values ())
+            cloneCount += weakRef .deref () .collectCloneCount ();
+
+         return cloneCount;
       },
       dispose ()
       {
@@ -202,19 +220,33 @@ else
             this [_parents] = new Set ();
 
          this [_parents] .add (parent);
+
+         this .parentsChanged ();
       },
       removeParent (parent)
       {
          this [_parents] .delete (parent);
+
+         this .parentsChanged ();
       },
       getParents ()
       {
          return this [_parents];
       },
+      parentsChanged () { },
       processEvent ()
       {
          this .setTainted (false);
          this .processInterests ();
+      },
+      collectCloneCount ()
+      {
+         let cloneCount = 0;
+
+         for (const parent of this [_parents])
+            cloneCount += parent .collectCloneCount ();
+
+         return cloneCount;
       },
       dispose ()
       {

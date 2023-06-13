@@ -81,7 +81,6 @@ function X3DExecutionContext (executionContext, outerNode = null)
                           "sceneGraph_changed", new Fields .SFTime ())
 
    this ._rootNodes .setAccessType (X3DConstants .initializeOnly);
-   this ._rootNodes .addCloneCount (1);
 
    this [_outerNode]     = outerNode;
    this [_namedNodes]    = new NamedNodesArray ();

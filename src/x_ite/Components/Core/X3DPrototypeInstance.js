@@ -206,9 +206,6 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
 
          this .getPredefinedFields () .update (newField .getName (), newField .getName (), oldField);
 
-         if (!this .isPrivate ())
-            oldField .addCloneCount (1);
-
          oldFields .delete (oldFieldName);
          newField .dispose ();
       }

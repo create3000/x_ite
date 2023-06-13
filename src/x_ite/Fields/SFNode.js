@@ -51,9 +51,8 @@ import Generator    from "../InputOutput/Generator.js";
 import SFNodeCache  from "./SFNodeCache.js";
 
 const
-   _target     = Symbol (),
-   _proxy      = Symbol (),
-   _cloneCount = Symbol ();
+   _target = Symbol (),
+   _proxy  = Symbol ();
 
 const handler =
 {
@@ -182,7 +181,6 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
 {
    [_target]: null,
    [_proxy]: null,
-   [_cloneCount]: 0,
    copy (instance)
    {
       const
@@ -216,17 +214,13 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
          current = target .getValue ();
 
       if (current)
-      {
-         current .removeCloneCount (target [_cloneCount]);
          current .removeParent (target [_proxy]);
-      }
 
       // No need to test for X3DBaseNode, because there is a special version of SFNode in Script.
 
       if (value)
       {
          value .addParent (target [_proxy]);
-         value .addCloneCount (target [_cloneCount]);
 
          X3DField .prototype .set .call (target, value);
       }
@@ -331,22 +325,6 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
             throw new Error ("SFNode.removeFieldCallback: node is null.");
          }
       }
-   },
-   addCloneCount (count)
-   {
-      const target = this [_target];
-
-      target [_cloneCount] += count;
-
-      target .getValue () ?.addCloneCount (count);
-   },
-   removeCloneCount (count)
-   {
-      const target = this [_target];
-
-      target [_cloneCount] -= count;
-
-      target .getValue () ?.removeCloneCount (count);
    },
    getNodeUserData (key)
    {

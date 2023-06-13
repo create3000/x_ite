@@ -401,8 +401,6 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .pro
          }
       };
    })(),
-   addCloneCount: Function .prototype,
-   removeCloneCount: Function .prototype,
    fromString (string, scene)
    {
       // Function will be overridden in VRMLParser.

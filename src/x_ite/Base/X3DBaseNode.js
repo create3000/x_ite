@@ -63,8 +63,7 @@ const
    _initialized       = Symbol (),
    _live              = Symbol (),
    _set_live__        = Symbol (),
-   _private           = Symbol (),
-   _cloneCount        = Symbol ();
+   _private           = Symbol ();
 
 function X3DBaseNode (executionContext)
 {
@@ -82,16 +81,15 @@ function X3DBaseNode (executionContext)
    this [_live]              = true;
    this [_initialized]       = false;
    this [_private]           = false;
-   this [_cloneCount]        = 0;
 
    if (this .canUserDefinedFields ())
       this [_fieldDefinitions] = new FieldDefinitionArray (this [_fieldDefinitions]);
 
    // Create fields.
 
-   this .addChildObjects ("name_changed",       new Fields .SFTime (),
-                          "typeName_changed",   new Fields .SFTime (),
-                          "cloneCount_changed", new Fields .SFTime ())
+   this .addChildObjects ("name_changed",     new Fields .SFTime (),
+                          "typeName_changed", new Fields .SFTime (),
+                          "parents_changed",  new Fields .SFTime ())
 
    for (const fieldDefinition of this [_fieldDefinitions])
       this .addPredefinedField (fieldDefinition);
@@ -333,9 +331,6 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DEventObject .
          set (value) { field .setValue (value); },
 			configurable: true,
       });
-
-      if (!this .isPrivate ())
-         field .addCloneCount (1);
    },
    addAlias (alias, field)
    {
@@ -356,9 +351,6 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DEventObject .
       this [_predefinedFields] .remove (name);
 
       delete this [`_${field .getName ()}`];
-
-      if (!this .isPrivate ())
-         field .removeCloneCount (1);
    },
    getPredefinedField (name)
    {
@@ -394,9 +386,6 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DEventObject .
 
       this [_fieldDefinitions]  .add (name, new X3DFieldDefinition (accessType, name, field));
       this [_userDefinedFields] .add (name, field);
-
-      if (!this .isPrivate ())
-         field .addCloneCount (1);
    },
    removeUserDefinedField (name)
    {
@@ -409,9 +398,6 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DEventObject .
 
       this [_fieldDefinitions]  .remove (name);
       this [_userDefinedFields] .remove (name);
-
-      if (!this .isPrivate ())
-         field .removeCloneCount (1);
    },
    getUserDefinedField (name)
    {
@@ -508,51 +494,21 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DEventObject .
    setPrivate (value)
    {
       this [_private] = value;
-
-      if (value)
-      {
-         for (const field of this [_predefinedFields])
-            field .removeCloneCount (1);
-
-         for (const field of this [_userDefinedFields])
-            field .removeCloneCount (1);
-      }
-      else
-      {
-         for (const field of this [_predefinedFields])
-            field .addCloneCount (1);
-
-         for (const field of this [_userDefinedFields])
-            field .addCloneCount (1);
-      }
    },
    getCloneCount ()
    {
-      return this [_cloneCount];
+      return X3DEventObject .prototype .collectCloneCount .call (this);
    },
-   addCloneCount (count)
+   collectCloneCount ()
    {
-      if (count === 0)
-         return;
-
+      return this [_private] ? 0 : 1;
+   },
+   parentsChanged ()
+   {
       const time = this .getBrowser () .getCurrentTime ();
 
-      this [_cloneCount] += count;
-
       this [_executionContext] ._sceneGraph_changed = time;
-      this ._cloneCount_changed                     = time;
-   },
-   removeCloneCount (count)
-   {
-      if (count === 0)
-         return;
-
-      const time = this .getBrowser () .getCurrentTime ();
-
-      this [_cloneCount] -= count;
-
-      this [_executionContext] ._sceneGraph_changed = time;
-      this ._cloneCount_changed                     = time;
+      this ._parents_changed                        = time;
    },
    dispose ()
    {
@@ -623,9 +579,9 @@ Object .defineProperties (X3DBaseNode .prototype,
       get () { return this ._typeName_changed; },
       enumerable: false,
    },
-   cloneCount_changed:
+   parents_changed:
    {
-      get () { return this ._cloneCount_changed; },
+      get () { return this ._parents_changed; },
       enumerable: false,
    },
 });
