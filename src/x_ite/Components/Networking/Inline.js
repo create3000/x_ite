@@ -102,9 +102,6 @@ Object .assign (Object .setPrototypeOf (Inline .prototype, X3DChildNode .prototy
    {
       X3DUrlObject .prototype .set_live__ .call (this);
 
-      if (this .isPrivate ())
-         return;
-
       this .scene .setLive (this .getLive () .getValue ());
    },
    unloadData ()
@@ -156,7 +153,6 @@ Object .assign (Object .setPrototypeOf (Inline .prototype, X3DChildNode .prototy
 
       this .scene = scene;
       this .scene .setExecutionContext (this .getExecutionContext ());
-      this .scene .setPrivate (this .getExecutionContext () .isPrivate ());
 
       this .scene .rootNodes .addFieldInterest (this .groupNode ._children);
       this .groupNode ._children = this .scene .rootNodes;

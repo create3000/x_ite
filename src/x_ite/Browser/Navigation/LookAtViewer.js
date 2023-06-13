@@ -106,15 +106,12 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, X3DViewer .prot
       // Setup chaser.
 
       this .positionChaser ._duration = MOVE_TIME;
-      this .positionChaser .setPrivate (true);
       this .positionChaser .setup ();
 
       this .centerOfRotationChaser ._duration = MOVE_TIME;
-      this .centerOfRotationChaser .setPrivate (true);
       this .centerOfRotationChaser .setup ();
 
       this .orientationChaser ._duration = ROTATE_TIME;
-      this .orientationChaser .setPrivate (true);
       this .orientationChaser .setup ();
    },
    mousedown (event)

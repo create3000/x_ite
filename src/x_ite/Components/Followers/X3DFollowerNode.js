@@ -115,7 +115,7 @@ Object .assign (Object .setPrototypeOf (X3DFollowerNode .prototype, X3DChildNode
    },
    set_live__ ()
    {
-      if ((this .getLive () .getValue () || this .isPrivate ()) && this ._isActive .getValue ())
+      if (this .getLive () .getValue () && this ._isActive .getValue ())
       {
          this .getBrowser () .prepareEvents () .addInterest ("prepareEvents", this);
          this .getBrowser () .addBrowserEvent ();

@@ -141,7 +141,6 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
          throw new Error ("PROTO not found");
 
       this [_scene] .setLive (this .getLive () .getValue ());
-      this [_scene] .setPrivate (this .getScene () .isPrivate ());
       this [_scene] .setExecutionContext (this .getExecutionContext ());
 
       this .setLoadState (X3DConstants .COMPLETE_STATE);

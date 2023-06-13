@@ -62,8 +62,7 @@ const
    _childObjects      = Symbol (),
    _initialized       = Symbol (),
    _live              = Symbol (),
-   _set_live__        = Symbol (),
-   _private           = Symbol ();
+   _set_live__        = Symbol ();
 
 function X3DBaseNode (executionContext)
 {
@@ -80,7 +79,6 @@ function X3DBaseNode (executionContext)
    this [_childObjects]      = [ ];
    this [_live]              = true;
    this [_initialized]       = false;
-   this [_private]           = false;
 
    if (this .canUserDefinedFields ())
       this [_fieldDefinitions] = new FieldDefinitionArray (this [_fieldDefinitions]);
@@ -486,14 +484,6 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DEventObject .
       }
 
       return false;
-   },
-   isPrivate ()
-   {
-      return this [_private];
-   },
-   setPrivate (value)
-   {
-      this [_private] = value;
    },
    parentsChanged ()
    {

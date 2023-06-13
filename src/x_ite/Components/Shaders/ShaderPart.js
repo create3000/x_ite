@@ -87,7 +87,7 @@ Object .assign (Object .setPrototypeOf (ShaderPart .prototype, X3DNode .prototyp
       X3DNode      .prototype .initialize .call (this);
       X3DUrlObject .prototype .initialize .call (this);
 
-      if (! this .isPrivate ())
+      if (!this .isPrivate ())
          this .options = customOptions .slice ();
 
       this ._type .addInterest ("set_type__", this);

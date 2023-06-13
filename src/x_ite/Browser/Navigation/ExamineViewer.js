@@ -131,20 +131,16 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
       // Setup scroll chaser.
 
       this .positionChaser ._duration = MOVE_TIME;
-      this .positionChaser .setPrivate (true);
       this .positionChaser .setup ();
 
       this .centerOfRotationChaser ._duration = MOVE_TIME;
-      this .centerOfRotationChaser .setPrivate (true);
       this .centerOfRotationChaser .setup ();
 
       this .rotationChaser ._duration = ROTATE_TIME;
-      this .rotationChaser .setPrivate (true);
       this .rotationChaser .setup ();
 
       this .timeSensor ._loop     = true;
       this .timeSensor ._stopTime = browser .getCurrentTime ();
-      this .timeSensor .setPrivate (true);
       this .timeSensor .setup ();
 
       this .timeSensor ._fraction_changed  .addInterest ("spin", this);

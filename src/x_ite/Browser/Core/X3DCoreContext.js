@@ -276,7 +276,6 @@ Object .assign (X3DCoreContext .prototype,
 
       this [_privateScene] = new X3DScene (this);
 
-      this [_privateScene] .setPrivate (true);
       this [_privateScene] .setLive (true);
       this [_privateScene] .setup ();
 
