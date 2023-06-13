@@ -68,10 +68,6 @@ const Events = Object .assign ([ ],
 
       return copy;
    },
-   clear ()
-   {
-      this .length = 0;
-   },
 });
 
 for (const key of Object .keys (Events))
