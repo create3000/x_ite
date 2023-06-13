@@ -75,18 +75,18 @@ const Events = Object .assign ([ ],
          copy .clear ();
 
          for (const source of event)
-         {
             copy .add (source);
-         }
 
          return copy;
       }
+      else
+      {
+         const copy = new Set (event);
 
-      const copy = new Set (event);
+         copy .field = event .field;
 
-      copy .field = event .field;
-
-      return copy;
+         return copy;
+      }
    },
    clear ()
    {
