@@ -32,7 +32,7 @@ Object .assign ($,
    },
 });
 
-// // @iffe fn (...args) { return function () { }; }
+// // decorator: @iffe fn (... args) { return function () { }; }
 // function iife (target, key, { value: fn, configurable, enumerable })
 // {
 //    return {
