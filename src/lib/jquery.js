@@ -32,6 +32,16 @@ Object .assign ($,
    },
 });
 
+// // @iffe fn (...args) { return function () { }; }
+// function iife (target, key, { value: fn, configurable, enumerable })
+// {
+//    return {
+//       configurable,
+//       enumerable,
+//       value: fn (),
+//    };
+// }
+
 Object .assign ($.fn,
 {
    isInViewport ()
