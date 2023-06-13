@@ -109,6 +109,20 @@ if (DEVELOPMENT)
          for (const parent of this [_parents] .values ())
             parent .deref () .addEventObject (this, event);
       },
+      processEvent ()
+      {
+         this .setTainted (false);
+         this .processInterests ();
+      },
+      collectCloneCount ()
+      {
+         let cloneCount = 0;
+
+         for (const weakRef of this [_parents] .values ())
+            cloneCount += weakRef .deref () .collectCloneCount ();
+
+         return cloneCount;
+      },
       addParent (parent)
       {
          if (this [_parents] === X3DChildObject .prototype [_parents])
@@ -143,20 +157,6 @@ if (DEVELOPMENT)
          return parents;
       },
       parentsChanged () { },
-      processEvent ()
-      {
-         this .setTainted (false);
-         this .processInterests ();
-      },
-      collectCloneCount ()
-      {
-         let cloneCount = 0;
-
-         for (const weakRef of this [_parents] .values ())
-            cloneCount += weakRef .deref () .collectCloneCount ();
-
-         return cloneCount;
-      },
       dispose ()
       {
          this [_parents] .clear ();
@@ -214,6 +214,20 @@ else
          for (const parent of this [_parents])
             parent .addEventObject (this, event);
       },
+      processEvent ()
+      {
+         this .setTainted (false);
+         this .processInterests ();
+      },
+      collectCloneCount ()
+      {
+         let cloneCount = 0;
+
+         for (const parent of this [_parents])
+            cloneCount += parent .collectCloneCount ();
+
+         return cloneCount;
+      },
       addParent (parent)
       {
          if (this [_parents] === X3DChildObject .prototype [_parents])
@@ -234,20 +248,6 @@ else
          return this [_parents];
       },
       parentsChanged () { },
-      processEvent ()
-      {
-         this .setTainted (false);
-         this .processInterests ();
-      },
-      collectCloneCount ()
-      {
-         let cloneCount = 0;
-
-         for (const parent of this [_parents])
-            cloneCount += parent .collectCloneCount ();
-
-         return cloneCount;
-      },
       dispose ()
       {
          this [_parents] .clear ();
