@@ -33,13 +33,11 @@ Object .assign ($,
 });
 
 // // decorator: @iffe fn (... args) { return function () { }; }
-// function iife (target, key, { value: fn, configurable, enumerable })
+// function iife (target, key, descriptor)
 // {
-//    return {
-//       configurable,
-//       enumerable,
-//       value: fn (),
-//    };
+//    descriptor .value = descriptor .value ();
+
+//    return descriptor;
 // }
 
 Object .assign ($.fn,
