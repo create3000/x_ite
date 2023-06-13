@@ -381,17 +381,6 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                   $("<div></div>") .addClass ("x_ite-private-world-info-info") .text (line) .appendTo (div);
                }
 
-               div .find ("a") .on ("click", function (event) { event .stopPropagation (); });
-
-               // Open external link in new tab.
-               div .find ("a[href^=http]") .each (function ()
-               {
-                  if (this .href .indexOf (location .hostname) !== -1)
-                     return;
-
-                  $(this) .attr ("target", "_blank");
-               });
-
                overlay .on ("click", function () { overlay .remove (); });
             },
          },
@@ -590,7 +579,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
       // Display submenus on the left or right side.
       // If the submenu is higher than vh, add scrollbars.
 
-      ul .find ("ul") .each (function (i, e)
+      ul .find ("ul") .each ((i, e) =>
       {
          e = $(e);
 
