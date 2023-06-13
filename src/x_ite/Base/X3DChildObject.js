@@ -66,7 +66,7 @@ if (DEVELOPMENT)
       [_modificationTime]: 0,
       [_tainted]: false,
       [_parents]: new Map (),
-      [_registry]: null,
+      [_registry]: new FinalizationRegistry (Function .prototype),
       isInitializable ()
       {
          return true;
@@ -123,7 +123,7 @@ if (DEVELOPMENT)
       removeParent (parent)
       {
          this [_parents] .delete (parent .getId ());
-         this [_registry] ?.unregister (parent);
+         this [_registry] .unregister (parent);
       },
       getParents ()
       {
