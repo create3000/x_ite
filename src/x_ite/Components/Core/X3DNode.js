@@ -219,6 +219,14 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
 
       return false;
    },
+   getCloneCount ()
+   {
+      return X3DBaseNode .prototype .collectCloneCount .call (this);
+   },
+   collectCloneCount ()
+   {
+      return this .isPrivate () ? 0 : 1;
+   },
    getSourceText ()
    {
       return null;

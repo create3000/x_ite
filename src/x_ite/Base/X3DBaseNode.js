@@ -495,14 +495,6 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DEventObject .
    {
       this [_private] = value;
    },
-   getCloneCount ()
-   {
-      return X3DEventObject .prototype .collectCloneCount .call (this);
-   },
-   collectCloneCount ()
-   {
-      return this [_private] ? 0 : 1;
-   },
    parentsChanged ()
    {
       const time = this .getBrowser () .getCurrentTime ();
