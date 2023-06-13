@@ -58,10 +58,7 @@ const Events = Object .assign ([ ],
    },
    copy (event)
    {
-      const copy = this .pop () ?? new Set ();
-
-      copy .field = event .field;
-      copy .clear ();
+      const copy = this .create (event .field);
 
       for (const source of event)
          copy .add (source);
