@@ -54,11 +54,11 @@ const SFNodeCache = DEVELOPMENT ?
 {
    get (baseNode)
    {
-      const node = cache .get (baseNode);
+      const node = cache .get (baseNode) ?.deref ();
 
       if (node)
       {
-         return node .deref ();
+         return node;
       }
       else
       {
