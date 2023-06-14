@@ -59,7 +59,6 @@ import X3DConstants        from "../Base/X3DConstants.js";
 import SFNodeCache         from "../Fields/SFNodeCache.js";
 
 const
-   _browser              = Symbol .for ("X_ITE.X3DEventObject.browser"),
    _specificationVersion = Symbol (),
    _encoding             = Symbol (),
    _profile              = Symbol (),
@@ -74,9 +73,7 @@ const X3D_LATEST_VERSION = "4.0";
 
 function X3DScene (browser)
 {
-   this [_browser] = browser;
-
-   X3DExecutionContext .call (this, this);
+   X3DExecutionContext .call (this, this, null, browser);
 
    this .addType (X3DConstants .X3DScene)
 

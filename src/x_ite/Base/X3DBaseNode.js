@@ -45,7 +45,8 @@
  *
  ******************************************************************************/
 
-import X3DEventObject       from "./X3DEventObject.js";
+import X3DChildObject       from "./X3DChildObject.js";
+import Events               from "./Events.js";
 import X3DFieldDefinition   from "./X3DFieldDefinition.js";
 import FieldDefinitionArray from "./FieldDefinitionArray.js";
 import FieldArray           from "./FieldArray.js";
@@ -54,6 +55,7 @@ import X3DConstants         from "./X3DConstants.js";
 import HTMLSupport          from "../Parser/HTMLSupport.js";
 
 const
+   _browser           = Symbol (),
    _executionContext  = Symbol (),
    _type              = Symbol (),
    _fieldDefinitions  = Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions"),
@@ -64,13 +66,14 @@ const
    _live              = Symbol (),
    _set_live__        = Symbol ();
 
-function X3DBaseNode (executionContext)
+function X3DBaseNode (executionContext, browser = executionContext .getBrowser ())
 {
    if (this [_executionContext])
       return;
 
-   X3DEventObject .call (this, executionContext .getBrowser ());
+   X3DChildObject .call (this);
 
+   this [_browser]           = browser;
    this [_executionContext]  = executionContext;
    this [_type]              = [ X3DConstants .X3DBaseNode ];
    this [_fieldDefinitions]  = this .constructor .fieldDefinitions ?? this [_fieldDefinitions];
@@ -93,20 +96,24 @@ function X3DBaseNode (executionContext)
       this .addPredefinedField (fieldDefinition);
 }
 
-Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DEventObject .prototype),
+Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .prototype),
 {
    [_fieldDefinitions]: new FieldDefinitionArray ([ ]),
    setName (value)
    {
-      X3DEventObject .prototype .setName .call (this, value)
+      X3DChildObject .prototype .setName .call (this, value)
 
-      this ._name_changed = this .getBrowser () .getCurrentTime ();
+      this ._name_changed = this [_browser] .getCurrentTime ();
+   },
+   getBrowser ()
+   {
+      return this [_browser];
    },
    getMainScene ()
    {
       let scene = this [_executionContext] .getScene ();
 
-      while (! scene .isMainScene ())
+      while (!scene .isMainScene ())
          scene = scene .getScene ();
 
       return scene;
@@ -115,7 +122,7 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DEventObject .
    {
       let executionContext = this [_executionContext];
 
-      while (! executionContext .isScene ())
+      while (!executionContext .isScene ())
          executionContext = executionContext .getExecutionContext ();
 
       return executionContext;
@@ -487,10 +494,54 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DEventObject .
    },
    parentsChanged ()
    {
-      const time = this .getBrowser () .getCurrentTime ();
+      const time = this [_browser] .getCurrentTime ();
 
       this [_executionContext] ._sceneGraph_changed = time;
       this ._parents_changed                        = time;
+   },
+   getExtendedEventHandling ()
+   {
+      // Whether initializeOnly field are treated like inputOnly and inputOutput fields.
+      return true;
+   },
+   addEvent (field)
+   {
+      if (field .isTainted ())
+         return;
+
+      field .setTainted (true);
+
+      this .addEventObject (field, Events .create (field));
+   },
+   addEventObject (field, event)
+   {
+      const browser = this [_browser];
+
+      // Register for processEvent
+
+      browser .addTaintedField (field, event);
+      browser .addBrowserEvent ();
+
+      // Register for eventsProcessed
+
+      if (this .isTainted ())
+         return;
+
+      if (field .isInput () || (this .getExtendedEventHandling () && field .isInitializable ()))
+      {
+         this .addNodeEvent ();
+      }
+   },
+   addNodeEvent ()
+   {
+      if (this .isTainted ())
+         return;
+
+      const browser = this [_browser];
+
+      this .setTainted (true);
+      browser .addTaintedNode (this);
+      browser .addBrowserEvent ();
    },
    dispose ()
    {
@@ -505,7 +556,7 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DEventObject .
       for (const field of this [_userDefinedFields])
          field .dispose ();
 
-      X3DEventObject .prototype .dispose .call (this);
+      X3DChildObject .prototype .dispose .call (this);
    },
 });
 

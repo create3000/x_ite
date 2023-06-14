@@ -70,9 +70,9 @@ const
    _routes         = Symbol (),
    _outerNode      = Symbol ();
 
-function X3DExecutionContext (executionContext, outerNode = null)
+function X3DExecutionContext (executionContext, outerNode = null, browser = executionContext .getBrowser ())
 {
-   X3DBaseNode .call (this, executionContext);
+   X3DBaseNode .call (this, executionContext, browser);
 
    this .addType (X3DConstants .X3DExecutionContext)
 
