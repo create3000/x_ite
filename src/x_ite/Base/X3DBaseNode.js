@@ -492,13 +492,6 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
 
       return false;
    },
-   parentsChanged ()
-   {
-      const time = this [_browser] .getCurrentTime ();
-
-      this [_executionContext] ._sceneGraph_changed = time;
-      this ._parents_changed                        = time;
-   },
    getExtendedEventHandling ()
    {
       // Whether initializeOnly field are treated like inputOnly and inputOutput fields.
@@ -542,6 +535,13 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
       this .setTainted (true);
       browser .addTaintedNode (this);
       browser .addBrowserEvent ();
+   },
+   parentsChanged ()
+   {
+      const time = this [_browser] .getCurrentTime ();
+
+      this [_executionContext] ._sceneGraph_changed = time;
+      this ._parents_changed                        = time;
    },
    dispose ()
    {
