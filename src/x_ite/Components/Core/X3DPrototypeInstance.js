@@ -94,8 +94,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
       {
          if (protoNode .checkLoadState () !== X3DConstants .COMPLETE_STATE)
          {
-            this [_body] = new X3DExecutionContext (this .getExecutionContext (), this);
-            this [_body] .setup ();
+            this [_body] = null;
 
             if (this .isInitialized ())
                X3DChildObject .prototype .addEvent .call (this);
@@ -256,14 +255,17 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
    },
    getInnerNode ()
    {
-      const rootNodes = this [_body] .getRootNodes ();
-
-      if (rootNodes .length)
+      if (this [_body])
       {
-         const rootNode = rootNodes [0];
+         const rootNodes = this [_body] .getRootNodes ();
 
-         if (rootNode)
-            return rootNode .getValue () .getInnerNode ();
+         if (rootNodes .length)
+         {
+            const rootNode = rootNodes [0];
+
+            if (rootNode)
+               return rootNode .getValue () .getInnerNode ();
+         }
       }
 
       throw new Error ("Root node not available.");
