@@ -236,9 +236,11 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
    {
       // Disconnect old proto node.
 
-      this [_protoNode] ._name_changed .removeFieldInterest (this ._typeName_changed);
-      this [_protoNode] ._updateInstances .removeInterest ("construct", this);
-      this [_protoNode] ._updateInstances .removeInterest ("update",    this);
+      const oldProtoNode = this [_protoNode];
+
+      oldProtoNode ._name_changed .removeFieldInterest (this ._typeName_changed);
+      oldProtoNode ._updateInstances .removeInterest ("construct", this);
+      oldProtoNode ._updateInstances .removeInterest ("update",    this);
 
       // Get fields from new proto node.
 
@@ -971,9 +973,11 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
    },
    dispose ()
    {
-      this [_protoNode] ._name_changed .removeFieldInterest (this ._typeName_changed);
-      this [_protoNode] ._updateInstances .removeInterest ("construct", this);
-      this [_protoNode] ._updateInstances .removeInterest ("update",    this);
+      const protoNode = this [_protoNode];
+
+      protoNode ._name_changed .removeFieldInterest (this ._typeName_changed);
+      protoNode ._updateInstances .removeInterest ("construct", this);
+      protoNode ._updateInstances .removeInterest ("update",    this);
 
       this [_body] ?.dispose ();
 
