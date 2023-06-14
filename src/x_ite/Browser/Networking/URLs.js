@@ -45,9 +45,10 @@
  *
  ******************************************************************************/
 
-import Features from "./Features.js";
+import Features from "../../Features.js";
 
-const URLs = {
+const URLs =
+{
    getScriptUrl: (() =>
    {
       if (Features .NODE_ENV)

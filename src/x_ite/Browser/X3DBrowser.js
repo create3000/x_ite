@@ -64,7 +64,7 @@ import XMLParser           from "../Parser/XMLParser.js";
 import JSONParser          from "../Parser/JSONParser.js";
 import X3DCast             from "../Base/X3DCast.js";
 import X3DConstants        from "../Base/X3DConstants.js";
-import Features            from "./Networking/Features.js";
+import Features            from "../Features.js";
 import Algorithm           from "../../standard/Math/Algorithm.js";
 import MapUtilities        from "../../standard/Utility/MapUtilities.js";
 import _                   from "../../locale/gettext.js";
