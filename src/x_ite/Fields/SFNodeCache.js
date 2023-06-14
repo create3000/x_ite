@@ -45,12 +45,33 @@
  *
  ******************************************************************************/
 
-import SFNode   from "./SFNode.js";
-import X3DField from "../Base/X3DField.js";
+import SFNode      from "./SFNode.js";
+import DEVELOPMENT from "../DEVELOPMENT.js";
 
 const cache = new WeakMap ();
 
-const SFNodeCache =
+const SFNodeCache = DEVELOPMENT ?
+{
+   get (baseNode)
+   {
+      const node = cache .get (baseNode);
+
+      if (node)
+      {
+         return node .deref ();
+      }
+      else
+      {
+         const node = new SFNode (baseNode);
+
+         node .dispose = dispose;
+
+         cache .set (baseNode, new WeakRef (node));
+
+         return node;
+      }
+   },
+} :
 {
    get (baseNode)
    {
