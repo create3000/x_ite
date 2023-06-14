@@ -88,22 +88,30 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
    {
       this [_body] ?.dispose ();
 
-      const proto = this [_protoNode] .getProtoDeclaration ();
+      const protoNode = this [_protoNode];
 
-      if (!proto)
+      if (protoNode .isExternProto)
       {
-         this [_body] = new X3DExecutionContext (this .getExecutionContext (), this);
-         this [_body] .setup ();
+         if (protoNode .checkLoadState () !== X3DConstants .COMPLETE_STATE)
+         {
+            this [_body] = new X3DExecutionContext (this .getExecutionContext (), this);
+            this [_body] .setup ();
 
-         if (this .isInitialized ())
-            X3DChildObject .prototype .addEvent .call (this);
+            if (this .isInitialized ())
+               X3DChildObject .prototype .addEvent .call (this);
 
-         return;
+            protoNode ._updateInstances .addInterest ("construct", this);
+            protoNode .requestImmediateLoad () .catch (Function .prototype);
+
+            return;
+         }
       }
 
-      // If there is a proto the externproto is completely loaded.
+      const proto = protoNode .getProtoDeclaration ();
 
-      if (this [_protoNode] .isExternProto)
+      // If there is a proto, the externproto is completely loaded.
+
+      if (protoNode .isExternProto)
       {
          for (const protoField of proto .getUserDefinedFields ())
          {
@@ -162,8 +170,8 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
       if (this .isInitialized ())
          X3DChildObject .prototype .addEvent .call (this);
 
-      this [_protoNode] ._updateInstances .removeInterest ("construct", this);
-      this [_protoNode] ._updateInstances .addInterest ("update", this);
+      protoNode ._updateInstances .removeInterest ("construct", this);
+      protoNode ._updateInstances .addInterest ("update", this);
    },
    update ()
    {
@@ -240,22 +248,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
 
       protoNode ._name_changed .addFieldInterest (this ._typeName_changed);
 
-      if (protoNode .isExternProto)
-      {
-         if (this [_protoNode] .checkLoadState () === X3DConstants .COMPLETE_STATE)
-         {
-            this .construct ();
-         }
-         else
-         {
-            protoNode ._updateInstances .addInterest ("construct", this);
-            protoNode .requestImmediateLoad () .catch (Function .prototype);
-         }
-      }
-      else
-      {
-         this .construct ();
-      }
+      this .construct ();
    },
    getBody ()
    {
