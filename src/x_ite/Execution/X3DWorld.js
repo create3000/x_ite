@@ -45,7 +45,6 @@
  *
  ******************************************************************************/
 
-import AbstractNodes  from "../Configuration/AbstractNodes.js";
 import SFNode         from "../Fields/SFNode.js";
 import X3DBaseNode    from "../Base/X3DBaseNode.js";
 import LayerSet       from "../Components/Layering/LayerSet.js";

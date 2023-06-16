@@ -45,7 +45,6 @@
  *
  ******************************************************************************/
 
-import AbstractNodes               from "../Configuration/AbstractNodes.js";
 import Fields                      from "../Fields.js";
 import X3DBaseNode                 from "../Base/X3DBaseNode.js";
 import { getUniqueName }           from "./NamedNodesHandling.js";

@@ -133,11 +133,7 @@ Object .assign (Object .setPrototypeOf (X3DInfoArray .prototype, X3DChildObject 
    },
    copy ()
    {
-      const copy = new (this .constructor) ();
-
-      copy .assign (this);
-
-      return copy;
+      return new (this .constructor) (this);
    },
    assign (array)
    {

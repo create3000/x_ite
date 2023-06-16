@@ -70,12 +70,16 @@ import MapUtilities        from "../../standard/Utility/MapUtilities.js";
 import _                   from "../../locale/gettext.js";
 
 const
-   _DOMIntegration   = Symbol (),
-   _reject           = Symbol (),
-   _fileLoader       = Symbol (),
-   _browserCallbacks = Symbol (),
-   _console          = Symbol (),
-   _processEvents    = Symbol .for ("X_ITE.X3DRoutingContext.processEvents");
+   _DOMIntegration      = Symbol (),
+   _supportedProfiles   = Symbol (),
+   _supportedComponents = Symbol (),
+   _concreteNodes       = Symbol (),
+   _abstractNodes       = Symbol (),
+   _reject              = Symbol (),
+   _fileLoader          = Symbol (),
+   _browserCallbacks    = Symbol (),
+   _console             = Symbol (),
+   _processEvents       = Symbol .for ("X_ITE.X3DRoutingContext.processEvents");
 
 function X3DBrowser (element)
 {
@@ -88,8 +92,12 @@ function X3DBrowser (element)
 
    this .addType (X3DConstants .X3DBrowser);
 
-   this [_browserCallbacks] = new Map ();
-   this [_console]          = document .getElementsByClassName ("x_ite-console");
+   this [_supportedProfiles]   = SupportedProfiles .copy ();
+   this [_supportedComponents] = SupportedComponents .copy ();
+   this [_concreteNodes]       = ConcreteNodes;
+   this [_abstractNodes]       = AbstractNodes;
+   this [_browserCallbacks]    = new Map ();
+   this [_console]             = document .getElementsByClassName ("x_ite-console");
 
    this .setup ();
 };
@@ -167,7 +175,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    {
       name = String (name);
 
-      const profile = SupportedProfiles .get (name);
+      const profile = this [_supportedProfiles] .get (name);
 
       if (profile)
          return profile;
@@ -176,30 +184,30 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    },
    addSupportedProfile: function (profile)
    {
-      SupportedProfiles .add (profile .name, profile);
+      this [_supportedProfiles] .add (profile .name, profile);
    },
    updateSupportedProfile: function (profile)
    {
-      SupportedProfiles .update (profile .name, profile .name, profile);
+      this [_supportedProfiles] .update (profile .name, profile .name, profile);
    },
    removeSupportedProfile (name)
    {
-      return SupportedProfiles .remove (String (name));
+      return this [_supportedProfiles] .remove (String (name));
    },
    getSupportedProfile (name)
    {
-      return SupportedProfiles .get (String (name));
+      return this [_supportedProfiles] .get (String (name));
    },
    getSupportedProfiles ()
    {
-      return SupportedProfiles;
+      return this [_supportedProfiles];
    },
    getComponent (name, level)
    {
       name   = String (name);
       level |= 0;
 
-      const component = SupportedComponents .get (name);
+      const component = this [_supportedComponents] .get (name);
 
       if (component)
       {
@@ -215,36 +223,36 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    },
    addSupportedComponent (component)
    {
-      SupportedComponents .add (component .name, component);
+      this [_supportedComponents] .add (component .name, component);
    },
    updateSupportedComponent (component)
    {
-      SupportedComponents .update (component .name, component .name, component);
+      this [_supportedComponents] .update (component .name, component .name, component);
    },
    removeSupportedComponent (name)
    {
-      SupportedComponents .remove (String (name));
+      this [_supportedComponents] .remove (String (name));
    },
    getSupportedComponent (name)
    {
-      return SupportedComponents .get (String (name));
+      return this [_supportedComponents] .get (String (name));
    },
    getSupportedComponents ()
    {
-      return SupportedComponents;
+      return this [_supportedComponents];
    },
    loadComponents: (() =>
    {
       function loadComponents (components, seen)
       {
-         return Promise .all (components .map (component => loadComponent (component, seen)))
+         return Promise .all (components .map (component => loadComponent .call (this, component, seen)))
       }
 
       async function loadComponent ({ name, providerUrl, external, dependencies }, seen)
       {
          if (seen .has (name)) return; seen .add (name);
 
-         await loadComponents (dependencies .map (name => SupportedComponents .get (name)), seen);
+         await loadComponents .call (this, dependencies .map (name => this [_supportedComponents] .get (name)), seen);
 
          if (!external)
             return;
@@ -271,52 +279,52 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
                component .push (arg);
 
             else if (typeof arg === "string")
-               component .push (SupportedComponents .get (arg))
+               component .push (this [_supportedComponents] .get (arg))
          }
 
          // Load array of component names.
-         return loadComponents (component, new Set ());
+         return loadComponents .call (this, component, new Set ());
       };
    })(),
    addConcreteNode (ConcreteNode)
    {
-      ConcreteNodes .add (ConcreteNode .typeName, ConcreteNode);
+      this [_concreteNodes] .add (ConcreteNode .typeName, ConcreteNode);
    },
    updateConcreteNode (ConcreteNode)
    {
-      ConcreteNodes .update (ConcreteNode .typeName, ConcreteNode .typeName, ConcreteNode);
+      this [_concreteNodes] .update (ConcreteNode .typeName, ConcreteNode .typeName, ConcreteNode);
    },
    removeConcreteNode (typeName)
    {
-      ConcreteNodes .remove (String (typeName));
+      this [_concreteNodes] .remove (String (typeName));
    },
    getConcreteNode (typeName)
    {
-      return ConcreteNodes .get (String (typeName));
+      return this [_concreteNodes] .get (String (typeName));
    },
    getConcreteNodes ()
    {
-      return ConcreteNodes;
+      return this [_concreteNodes];
    },
    addAbstractNode (AbstractNode)
    {
-      AbstractNodes .add (AbstractNode .typeName, AbstractNode);
+      this [_abstractNodes] .add (AbstractNode .typeName, AbstractNode);
    },
    updateAbstractNode (AbstractNode)
    {
-      AbstractNodes .update (AbstractNode .typeName, AbstractNode .typeName, AbstractNode);
+      this [_abstractNodes] .update (AbstractNode .typeName, AbstractNode .typeName, AbstractNode);
    },
    removeAbstractNode (typeName)
    {
-      AbstractNodes .remove (String (typeName));
+      this [_abstractNodes] .remove (String (typeName));
    },
    getAbstractNode (typeName)
    {
-      return AbstractNodes .get (String (typeName));
+      return this [_abstractNodes] .get (String (typeName));
    },
    getAbstractNodes ()
    {
-      return AbstractNodes;
+      return this [_abstractNodes];
    },
    createScene (profile, ... components)
    {
@@ -946,22 +954,34 @@ Object .defineProperties (X3DBrowser .prototype,
    },
    supportedProfiles:
    {
-      value: SupportedProfiles,
+      get ()
+      {
+         return this [_supportedProfiles];
+      },
       enumerable: true,
    },
    supportedComponents:
    {
-      value: SupportedComponents,
+      get ()
+      {
+         return this [_supportedComponents];
+      },
       enumerable: true,
    },
    concreteNodes:
    {
-      value: ConcreteNodes,
+      get ()
+      {
+         return this [_concreteNodes];
+      },
       enumerable: true,
    },
    abstractNodes:
    {
-      value: AbstractNodes,
+      get ()
+      {
+         return this [_abstractNodes];
+      },
       enumerable: true,
    },
 });
