@@ -11,11 +11,11 @@
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 464:
+/***/ 889:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* provided dependency */ var jQuery = __webpack_require__(967);
+/* provided dependency */ var jQuery = __webpack_require__(431);
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;
 
 /**
@@ -387,10 +387,10 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;
 
 /***/ }),
 
-/***/ 287:
+/***/ 635:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var jQuery = __webpack_require__(967);
+/* provided dependency */ var jQuery = __webpack_require__(431);
 /**
  * @preserve jquery.fullscreen 1.1.5
  * https://github.com/code-lts/jquery-fullscreen-plugin
@@ -586,7 +586,7 @@ installFullScreenHandlers();
 
 /***/ }),
 
-/***/ 598:
+/***/ 246:
 /***/ ((module, exports, __webpack_require__) => {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -600,7 +600,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 (function (factory) {
     if ( true ) {
         // AMD. Register as an anonymous module.
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(967)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(431)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 		(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -811,7 +811,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 967:
+/***/ 431:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -11523,7 +11523,7 @@ return jQuery;
 
 /***/ }),
 
-/***/ 706:
+/***/ 31:
 /***/ ((module) => {
 
 /**
@@ -16302,7 +16302,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 480:
+/***/ 921:
 /***/ (function(__unused_webpack_module, exports) {
 
 
@@ -19547,7 +19547,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 510:
+/***/ 620:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -20807,7 +20807,7 @@ Object .defineProperty (X3DConstants, "addNode",
 {
    value ({ typeName })
    {
-      if (this [typeName])
+      if (this .hasOwnProperty (typeName))
          return;
 
       this [typeName] = ++ NODE_TYPE;
@@ -22258,6 +22258,20 @@ if (DEVELOPMENT)
          for (const parent of this [_parents] .values ())
             parent .deref () .addEventObject (this, event);
       },
+      processEvent ()
+      {
+         this .setTainted (false);
+         this .processInterests ();
+      },
+      collectCloneCount ()
+      {
+         let cloneCount = 0;
+
+         for (const weakRef of this [_parents] .values ())
+            cloneCount += weakRef .deref () .collectCloneCount ();
+
+         return cloneCount;
+      },
       addParent (parent)
       {
          if (this [_parents] === X3DChildObject .prototype [_parents])
@@ -22292,20 +22306,6 @@ if (DEVELOPMENT)
          return parents;
       },
       parentsChanged () { },
-      processEvent ()
-      {
-         this .setTainted (false);
-         this .processInterests ();
-      },
-      collectCloneCount ()
-      {
-         let cloneCount = 0;
-
-         for (const weakRef of this [_parents] .values ())
-            cloneCount += weakRef .deref () .collectCloneCount ();
-
-         return cloneCount;
-      },
       dispose ()
       {
          this [_parents] .clear ();
@@ -22363,6 +22363,20 @@ else
          for (const parent of this [_parents])
             parent .addEventObject (this, event);
       },
+      processEvent ()
+      {
+         this .setTainted (false);
+         this .processInterests ();
+      },
+      collectCloneCount ()
+      {
+         let cloneCount = 0;
+
+         for (const parent of this [_parents])
+            cloneCount += parent .collectCloneCount ();
+
+         return cloneCount;
+      },
       addParent (parent)
       {
          if (this [_parents] === X3DChildObject .prototype [_parents])
@@ -22383,20 +22397,6 @@ else
          return this [_parents];
       },
       parentsChanged () { },
-      processEvent ()
-      {
-         this .setTainted (false);
-         this .processInterests ();
-      },
-      collectCloneCount ()
-      {
-         let cloneCount = 0;
-
-         for (const parent of this [_parents])
-            cloneCount += parent .collectCloneCount ();
-
-         return cloneCount;
-      },
       dispose ()
       {
          this [_parents] .clear ();
@@ -22492,126 +22492,6 @@ const Events_default_ = Events;
 
 x_ite_Namespace .set ("x_ite/Base/Events", Events_default_);
 /* harmony default export */ const Base_Events = (Events_default_);
-;// CONCATENATED MODULE: ./src/x_ite/Base/X3DEventObject.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-
-
-const _browser = Symbol .for ("X_ITE.X3DEventObject.browser");
-
-function X3DEventObject (browser)
-{
-   Base_X3DChildObject .call (this);
-
-   this [_browser] = browser;
-}
-
-Object .assign (Object .setPrototypeOf (X3DEventObject .prototype, Base_X3DChildObject .prototype),
-{
-   getBrowser ()
-   {
-      return this [_browser];
-   },
-   getExtendedEventHandling ()
-   {
-      // Whether initializeOnly field are treated like inputOnly and inputOutput fields.
-      return true;
-   },
-   addEvent (field)
-   {
-      if (field .isTainted ())
-         return;
-
-      field .setTainted (true);
-
-      this .addEventObject (field, Base_Events .create (field));
-   },
-   addEventObject (field, event)
-   {
-      const browser = this .getBrowser ();
-
-      // Register for processEvent
-
-      browser .addTaintedField (field, event);
-      browser .addBrowserEvent ();
-
-      // Register for eventsProcessed
-
-      if (this .isTainted ())
-         return;
-
-      if (field .isInput () || (this .getExtendedEventHandling () && field .isInitializable ()))
-      {
-         this .addNodeEvent ();
-      }
-   },
-   addNodeEvent ()
-   {
-      if (this .isTainted ())
-         return;
-
-      const browser = this .getBrowser ();
-
-      this .setTainted (true);
-      browser .addTaintedNode (this);
-      browser .addBrowserEvent ();
-   },
-});
-
-for (const key of Object .keys (X3DEventObject .prototype))
-   Object .defineProperty (X3DEventObject .prototype, key, { enumerable: false });
-
-const X3DEventObject_default_ = X3DEventObject;
-;
-
-x_ite_Namespace .set ("x_ite/Base/X3DEventObject", X3DEventObject_default_);
-/* harmony default export */ const Base_X3DEventObject = (X3DEventObject_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Base/X3DFieldDefinition.js
 /*******************************************************************************
  *
@@ -29764,7 +29644,28 @@ x_ite_Namespace .set ("x_ite/Fields/SFMatrix4", SFMatrix4_default_);
 
 const cache = new WeakMap ();
 
-const SFNodeCache =
+const SFNodeCache = DEVELOPMENT ?
+{
+   get (baseNode)
+   {
+      const node = cache .get (baseNode) ?.deref ();
+
+      if (node)
+      {
+         return node;
+      }
+      else
+      {
+         const node = new Fields_SFNode (baseNode);
+
+         node .dispose = dispose;
+
+         cache .set (baseNode, new WeakRef (node));
+
+         return node;
+      }
+   },
+} :
 {
    get (baseNode)
    {
@@ -33622,6 +33523,9 @@ const HTMLSupport =
 {
    addConcreteNode ({ typeName, fieldDefinitions })
    {
+      if (nodeTypeNames .has (typeName))
+         return;
+
       this .addNodeTypeName (typeName);
 
       for (const { name, accessType } of fieldDefinitions)
@@ -33711,7 +33615,9 @@ x_ite_Namespace .set ("x_ite/Parser/HTMLSupport", HTMLSupport_default_);
 
 
 
+
 const
+   _browser           = Symbol (),
    _executionContext  = Symbol (),
    _type              = Symbol (),
    _fieldDefinitions  = Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions"),
@@ -33720,16 +33626,16 @@ const
    _childObjects      = Symbol (),
    _initialized       = Symbol (),
    _live              = Symbol (),
-   _set_live__        = Symbol (),
-   _private           = Symbol ();
+   _set_live__        = Symbol ();
 
-function X3DBaseNode (executionContext)
+function X3DBaseNode (executionContext, browser = executionContext .getBrowser ())
 {
    if (this [_executionContext])
       return;
 
-   Base_X3DEventObject .call (this, executionContext .getBrowser ());
+   Base_X3DChildObject .call (this);
 
+   this [_browser]           = browser;
    this [_executionContext]  = executionContext;
    this [_type]              = [ Base_X3DConstants .X3DBaseNode ];
    this [_fieldDefinitions]  = this .constructor .fieldDefinitions ?? this [_fieldDefinitions];
@@ -33738,7 +33644,6 @@ function X3DBaseNode (executionContext)
    this [_childObjects]      = [ ];
    this [_live]              = true;
    this [_initialized]       = false;
-   this [_private]           = false;
 
    if (this .canUserDefinedFields ())
       this [_fieldDefinitions] = new Base_FieldDefinitionArray (this [_fieldDefinitions]);
@@ -33753,20 +33658,24 @@ function X3DBaseNode (executionContext)
       this .addPredefinedField (fieldDefinition);
 }
 
-Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, Base_X3DEventObject .prototype),
+Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, Base_X3DChildObject .prototype),
 {
    [_fieldDefinitions]: new Base_FieldDefinitionArray ([ ]),
    setName (value)
    {
-      Base_X3DEventObject .prototype .setName .call (this, value)
+      Base_X3DChildObject .prototype .setName .call (this, value)
 
-      this ._name_changed = this .getBrowser () .getCurrentTime ();
+      this ._name_changed = this [_browser] .getCurrentTime ();
+   },
+   getBrowser ()
+   {
+      return this [_browser];
    },
    getMainScene ()
    {
       let scene = this [_executionContext] .getScene ();
 
-      while (! scene .isMainScene ())
+      while (!scene .isMainScene ())
          scene = scene .getScene ();
 
       return scene;
@@ -33775,7 +33684,7 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, Base_X3DEventObj
    {
       let executionContext = this [_executionContext];
 
-      while (! executionContext .isScene ())
+      while (!executionContext .isScene ())
          executionContext = executionContext .getExecutionContext ();
 
       return executionContext;
@@ -34145,17 +34054,53 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, Base_X3DEventObj
 
       return false;
    },
-   isPrivate ()
+   getExtendedEventHandling ()
    {
-      return this [_private];
+      // Whether initializeOnly field are treated like inputOnly and inputOutput fields.
+      return true;
    },
-   setPrivate (value)
+   addEvent (field)
    {
-      this [_private] = value;
+      if (field .isTainted ())
+         return;
+
+      field .setTainted (true);
+
+      this .addEventObject (field, Base_Events .create (field));
+   },
+   addEventObject (field, event)
+   {
+      const browser = this [_browser];
+
+      // Register for processEvent
+
+      browser .addTaintedField (field, event);
+      browser .addBrowserEvent ();
+
+      // Register for eventsProcessed
+
+      if (this .isTainted ())
+         return;
+
+      if (field .isInput () || (this .getExtendedEventHandling () && field .isInitializable ()))
+      {
+         this .addNodeEvent ();
+      }
+   },
+   addNodeEvent ()
+   {
+      if (this .isTainted ())
+         return;
+
+      const browser = this [_browser];
+
+      this .setTainted (true);
+      browser .addTaintedNode (this);
+      browser .addBrowserEvent ();
    },
    parentsChanged ()
    {
-      const time = this .getBrowser () .getCurrentTime ();
+      const time = this [_browser] .getCurrentTime ();
 
       this [_executionContext] ._sceneGraph_changed = time;
       this ._parents_changed                        = time;
@@ -34173,7 +34118,7 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, Base_X3DEventObj
       for (const field of this [_userDefinedFields])
          field .dispose ();
 
-      Base_X3DEventObject .prototype .dispose .call (this);
+      Base_X3DChildObject .prototype .dispose .call (this);
    },
 });
 
@@ -34346,12 +34291,15 @@ x_ite_Namespace .set ("x_ite/Browser/VERSION", VERSION_default_);
 
 
 
+const _private = Symbol ()
 
 function X3DNode (executionContext)
 {
    Base_X3DBaseNode .call (this, executionContext);
 
    this .addType (Base_X3DConstants .X3DNode);
+
+   this [_private] = false;
 }
 
 Object .assign (Object .setPrototypeOf (X3DNode .prototype, Base_X3DBaseNode .prototype),
@@ -34515,6 +34463,14 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, Base_X3DBaseNode .pr
       }
 
       return false;
+   },
+   isPrivate ()
+   {
+      return this [_private];
+   },
+   setPrivate (value)
+   {
+      this [_private] = value;
    },
    getCloneCount ()
    {
@@ -36854,144 +36810,6 @@ const X3DBindableNode_default_ = X3DBindableNode;
 
 x_ite_Namespace .set ("x_ite/Components/Core/X3DBindableNode", X3DBindableNode_default_);
 /* harmony default export */ const Core_X3DBindableNode = (X3DBindableNode_default_);
-;// CONCATENATED MODULE: ./src/x_ite/Configuration/AbstractNodesArray.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-
-
-function AbstractNodesArray (values = [ ])
-{
-   return Base_X3DInfoArray .call (this, Array .from (values, value => [value .typeName, value]), Function);
-}
-
-Object .assign (Object .setPrototypeOf (AbstractNodesArray .prototype, Base_X3DInfoArray .prototype),
-{
-   add (typeName, AbstractNode)
-   {
-      Base_X3DConstants .addNode (AbstractNode);
-
-      Base_X3DInfoArray .prototype .add .call (this, typeName, AbstractNode);
-   },
-});
-
-for (const key of Object .keys (AbstractNodesArray .prototype))
-   Object .defineProperty (AbstractNodesArray .prototype, key, { enumerable: false });
-
-Object .defineProperties (AbstractNodesArray,
-{
-   typeName:
-   {
-      value: "AbstractNodesArray",
-      enumerable: true,
-   },
-});
-
-const AbstractNodesArray_default_ = AbstractNodesArray;
-;
-
-x_ite_Namespace .set ("x_ite/Configuration/AbstractNodesArray", AbstractNodesArray_default_);
-/* harmony default export */ const Configuration_AbstractNodesArray = (AbstractNodesArray_default_);
-;// CONCATENATED MODULE: ./src/x_ite/Configuration/AbstractNodes.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-
-const AbstractNodes_default_ = new Configuration_AbstractNodesArray ();
-;
-
-x_ite_Namespace .set ("x_ite/Configuration/AbstractNodes", AbstractNodes_default_);
-/* harmony default export */ const AbstractNodes = (AbstractNodes_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Execution/NamedNodesArray.js
 /*******************************************************************************
  *
@@ -37766,7 +37584,6 @@ x_ite_Namespace .set ("x_ite/Execution/ImportedNodesArray", ImportedNodesArray_d
 
 
 
-
 function X3DProtoDeclarationNode (executionContext)
 {
    Base_X3DBaseNode .call (this, executionContext);
@@ -37877,7 +37694,6 @@ x_ite_Namespace .set ("x_ite/Prototype/X3DProtoDeclarationNode", X3DProtoDeclara
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -38703,7 +38519,7 @@ const X3DUrlObject_default_ = X3DUrlObject;
 x_ite_Namespace .set ("x_ite/Components/Networking/X3DUrlObject", X3DUrlObject_default_);
 /* harmony default export */ const Networking_X3DUrlObject = (X3DUrlObject_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/X3DParser.js
-/* provided dependency */ var $ = __webpack_require__(967);
+/* provided dependency */ var $ = __webpack_require__(431);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -38951,7 +38767,7 @@ const Expressions_default_ = Expressions;
 x_ite_Namespace .set ("x_ite/Parser/Expressions", Expressions_default_);
 /* harmony default export */ const Parser_Expressions = (Expressions_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/VRMLParser.js
-/* provided dependency */ var VRMLParser_$ = __webpack_require__(967);
+/* provided dependency */ var VRMLParser_$ = __webpack_require__(431);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -41503,7 +41319,7 @@ const VRMLParser_default_ = VRMLParser;
 x_ite_Namespace .set ("x_ite/Parser/VRMLParser", VRMLParser_default_);
 /* harmony default export */ const Parser_VRMLParser = (VRMLParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/XMLParser.js
-/* provided dependency */ var XMLParser_$ = __webpack_require__(967);
+/* provided dependency */ var XMLParser_$ = __webpack_require__(431);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -43302,7 +43118,7 @@ const X3DOptimizer_default_ = X3DOptimizer;
 
 x_ite_Namespace .set ("x_ite/Parser/X3DOptimizer", X3DOptimizer_default_);
 /* harmony default export */ const Parser_X3DOptimizer = (X3DOptimizer_default_);
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Networking/Features.js
+;// CONCATENATED MODULE: ./src/x_ite/Features.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -43350,15 +43166,22 @@ x_ite_Namespace .set ("x_ite/Parser/X3DOptimizer", X3DOptimizer_default_);
  *
  ******************************************************************************/
 
-const Features = {
-   NODE_ENV: (typeof process === "object") && (process .release .name .search (/node|io.js/) !== -1),
+const Features =
+{
+   get ENVIRONMENT ()
+   {
+      if ((typeof process === "object") && (process .release .name .search (/node|io.js/) !== -1))
+         return "NODE";
+
+      return "BROWSER";
+   },
 };
 
 const Features_default_ = Features;
 ;
 
-x_ite_Namespace .set ("x_ite/Browser/Networking/Features", Features_default_);
-/* harmony default export */ const Networking_Features = (Features_default_);
+x_ite_Namespace .set ("x_ite/Features", Features_default_);
+/* harmony default export */ const x_ite_Features = (Features_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Networking/URLs.js
 /*******************************************************************************
  *
@@ -43409,15 +43232,23 @@ x_ite_Namespace .set ("x_ite/Browser/Networking/Features", Features_default_);
 
 
 
-const URLs = {
+const URLs =
+{
    getScriptUrl: (() =>
    {
-      if (Networking_Features .NODE_ENV)
-         var src = __webpack_require__.g .require ("url") .pathToFileURL (__filename) .href;
-      else if (document .currentScript)
-         var src = document .currentScript .src;
-      else
-         var src = document .location .href;
+      switch (x_ite_Features .ENVIRONMENT)
+      {
+         case "NODE":
+         {
+            var src = __webpack_require__.g .require ("url") .pathToFileURL (__filename) .href;
+            break;
+         }
+         case "BROWSER":
+         {
+            var src = document .currentScript ?.src ?? document .location .href;
+            break;
+         }
+      }
 
       return function ()
       {
@@ -43460,7 +43291,7 @@ const URLs_default_ = URLs;
 x_ite_Namespace .set ("x_ite/Browser/Networking/URLs", URLs_default_);
 /* harmony default export */ const Networking_URLs = (URLs_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GLTF2Parser.js
-/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(967);
+/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(431);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -45925,7 +45756,7 @@ const GLTF2Parser_default_ = GLTF2Parser;
 x_ite_Namespace .set ("x_ite/Parser/GLTF2Parser", GLTF2Parser_default_);
 /* harmony default export */ const Parser_GLTF2Parser = (GLTF2Parser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GLB2Parser.js
-/* provided dependency */ var GLB2Parser_$ = __webpack_require__(967);
+/* provided dependency */ var GLB2Parser_$ = __webpack_require__(431);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -46077,7 +45908,7 @@ const GLB2Parser_default_ = GLB2Parser;
 x_ite_Namespace .set ("x_ite/Parser/GLB2Parser", GLB2Parser_default_);
 /* harmony default export */ const Parser_GLB2Parser = (GLB2Parser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/OBJParser.js
-/* provided dependency */ var OBJParser_$ = __webpack_require__(967);
+/* provided dependency */ var OBJParser_$ = __webpack_require__(431);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -48576,8 +48407,8 @@ const MatrixStack_default_ = MatrixStack;
 x_ite_Namespace .set ("standard/Math/Utility/MatrixStack", MatrixStack_default_);
 /* harmony default export */ const Utility_MatrixStack = (MatrixStack_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_$ = __webpack_require__(967);
-/* provided dependency */ var libtess = __webpack_require__(706);
+/* provided dependency */ var SVGParser_$ = __webpack_require__(431);
+/* provided dependency */ var libtess = __webpack_require__(31);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -51345,7 +51176,7 @@ const SVGParser_default_ = SVGParser;
 x_ite_Namespace .set ("x_ite/Parser/SVGParser", SVGParser_default_);
 /* harmony default export */ const Parser_SVGParser = (SVGParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GoldenGate.js
-/* provided dependency */ var GoldenGate_$ = __webpack_require__(967);
+/* provided dependency */ var GoldenGate_$ = __webpack_require__(431);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -51671,7 +51502,7 @@ const Plane3_default_ = Plane3;
 x_ite_Namespace .set ("standard/Math/Geometry/Plane3", Plane3_default_);
 /* harmony default export */ const Geometry_Plane3 = (Plane3_default_);
 ;// CONCATENATED MODULE: ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var Triangle3_libtess = __webpack_require__(706);
+/* provided dependency */ var Triangle3_libtess = __webpack_require__(31);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -59066,7 +58897,7 @@ const X3DTexture2DNode_default_ = X3DTexture2DNode;
 x_ite_Namespace .set ("x_ite/Components/Texturing/X3DTexture2DNode", X3DTexture2DNode_default_);
 /* harmony default export */ const Texturing_X3DTexture2DNode = (X3DTexture2DNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/ImageTexture.js
-/* provided dependency */ var ImageTexture_$ = __webpack_require__(967);
+/* provided dependency */ var ImageTexture_$ = __webpack_require__(431);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -63495,7 +63326,6 @@ x_ite_Namespace .set ("x_ite/Components/Layering/LayerSet", LayerSet_default_);
 
 
 
-
 function X3DWorld (executionContext)
 {
    Base_X3DBaseNode .call (this, executionContext);
@@ -63607,7 +63437,7 @@ const X3DWorld_default_ = X3DWorld;
 x_ite_Namespace .set ("x_ite/Execution/X3DWorld", X3DWorld_default_);
 /* harmony default export */ const Execution_X3DWorld = (X3DWorld_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/InputOutput/FileLoader.js
-/* provided dependency */ var FileLoader_$ = __webpack_require__(967);
+/* provided dependency */ var FileLoader_$ = __webpack_require__(431);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -64004,7 +63834,6 @@ x_ite_Namespace .set ("x_ite/InputOutput/FileLoader", FileLoader_default_);
 
 
 
-
 const
    _proto = Symbol (),
    _scene = Symbol ();
@@ -64092,7 +63921,6 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, Pr
          throw new Error ("PROTO not found");
 
       this [_scene] .setLive (this .getLive () .getValue ());
-      this [_scene] .setPrivate (this .getScene () .isPrivate ());
       this [_scene] .setExecutionContext (this .getExecutionContext ());
 
       this .setLoadState (Base_X3DConstants .COMPLETE_STATE);
@@ -65011,7 +64839,6 @@ x_ite_Namespace .set ("x_ite/Routing/RouteArray", RouteArray_default_);
 
 
 
-
 const
    _namedNodes     = Symbol (),
    _importedNodes  = Symbol (),
@@ -65020,9 +64847,9 @@ const
    X3DExecutionContext_routes         = Symbol (),
    _outerNode      = Symbol ();
 
-function X3DExecutionContext (executionContext, outerNode = null)
+function X3DExecutionContext (executionContext, outerNode = null, browser = executionContext .getBrowser ())
 {
-   Base_X3DBaseNode .call (this, executionContext);
+   Base_X3DBaseNode .call (this, executionContext, browser);
 
    this .addType (Base_X3DConstants .X3DExecutionContext)
 
@@ -65158,11 +64985,10 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, Base_X3D
    {
       name = String (name);
 
-      let executionContext = this;
-
-      for (;;)
+      for (let executionContext = this;;)
       {
-         const protoNode = executionContext .protos .get (name) ?? executionContext .externprotos .get (name);
+         const protoNode = executionContext .protos .get (name)
+            ?? executionContext .externprotos .get (name);
 
          if (protoNode)
             return protoNode .createInstance (this, setup);
@@ -66070,22 +65896,29 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, Core_X3
    {
       this [X3DPrototypeInstance_body] ?.dispose ();
 
-      const proto = this [_protoNode] .getProtoDeclaration ();
+      const protoNode = this [_protoNode];
 
-      if (!proto)
+      if (protoNode .isExternProto)
       {
-         this [X3DPrototypeInstance_body] = new Execution_X3DExecutionContext (this .getExecutionContext (), this);
-         this [X3DPrototypeInstance_body] .setup ();
+         if (protoNode .checkLoadState () !== Base_X3DConstants .COMPLETE_STATE)
+         {
+            this [X3DPrototypeInstance_body] = null;
 
-         if (this .isInitialized ())
-            Base_X3DChildObject .prototype .addEvent .call (this);
+            if (this .isInitialized ())
+               Base_X3DChildObject .prototype .addEvent .call (this);
 
-         return;
+            protoNode ._updateInstances .addInterest ("construct", this);
+            protoNode .requestImmediateLoad () .catch (Function .prototype);
+
+            return;
+         }
       }
 
-      // If there is a proto the externproto is completely loaded.
+      const proto = protoNode .getProtoDeclaration ();
 
-      if (this [_protoNode] .isExternProto)
+      // If there is a proto, the externproto is completely loaded.
+
+      if (protoNode .isExternProto)
       {
          for (const protoField of proto .getUserDefinedFields ())
          {
@@ -66144,8 +65977,8 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, Core_X3
       if (this .isInitialized ())
          Base_X3DChildObject .prototype .addEvent .call (this);
 
-      this [_protoNode] ._updateInstances .removeInterest ("construct", this);
-      this [_protoNode] ._updateInstances .addInterest ("update", this);
+      protoNode ._updateInstances .removeInterest ("construct", this);
+      protoNode ._updateInstances .addInterest ("update", this);
    },
    update ()
    {
@@ -66211,9 +66044,11 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, Core_X3
    {
       // Disconnect old proto node.
 
-      this [_protoNode] ._name_changed .removeFieldInterest (this ._typeName_changed);
-      this [_protoNode] ._updateInstances .removeInterest ("construct", this);
-      this [_protoNode] ._updateInstances .removeInterest ("update",    this);
+      const oldProtoNode = this [_protoNode];
+
+      oldProtoNode ._name_changed .removeFieldInterest (this ._typeName_changed);
+      oldProtoNode ._updateInstances .removeInterest ("construct", this);
+      oldProtoNode ._updateInstances .removeInterest ("update",    this);
 
       // Get fields from new proto node.
 
@@ -66222,22 +66057,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, Core_X3
 
       protoNode ._name_changed .addFieldInterest (this ._typeName_changed);
 
-      if (protoNode .isExternProto)
-      {
-         if (this [_protoNode] .checkLoadState () === Base_X3DConstants .COMPLETE_STATE)
-         {
-            this .construct ();
-         }
-         else
-         {
-            protoNode ._updateInstances .addInterest ("construct", this);
-            protoNode .requestImmediateLoad () .catch (Function .prototype);
-         }
-      }
-      else
-      {
-         this .construct ();
-      }
+      this .construct ();
    },
    getBody ()
    {
@@ -66245,14 +66065,17 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, Core_X3
    },
    getInnerNode ()
    {
-      const rootNodes = this [X3DPrototypeInstance_body] .getRootNodes ();
-
-      if (rootNodes .length)
+      if (this [X3DPrototypeInstance_body])
       {
-         const rootNode = rootNodes [0];
+         const rootNodes = this [X3DPrototypeInstance_body] .getRootNodes ();
 
-         if (rootNode)
-            return rootNode .getValue () .getInnerNode ();
+         if (rootNodes .length)
+         {
+            const rootNode = rootNodes [0];
+
+            if (rootNode)
+               return rootNode .getValue () .getInnerNode ();
+         }
       }
 
       throw new Error ("Root node not available.");
@@ -66958,9 +66781,11 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, Core_X3
    },
    dispose ()
    {
-      this [_protoNode] ._name_changed .removeFieldInterest (this ._typeName_changed);
-      this [_protoNode] ._updateInstances .removeInterest ("construct", this);
-      this [_protoNode] ._updateInstances .removeInterest ("update",    this);
+      const protoNode = this [_protoNode];
+
+      protoNode ._name_changed .removeFieldInterest (this ._typeName_changed);
+      protoNode ._updateInstances .removeInterest ("construct", this);
+      protoNode ._updateInstances .removeInterest ("update",    this);
 
       this [X3DPrototypeInstance_body] ?.dispose ();
 
@@ -68799,7 +68624,7 @@ Object .assign (Object .setPrototypeOf (X3DFollowerNode .prototype, Core_X3DChil
    },
    set_live__ ()
    {
-      if ((this .getLive () .getValue () || this .isPrivate ()) && this ._isActive .getValue ())
+      if (this .getLive () .getValue () && this ._isActive .getValue ())
       {
          this .getBrowser () .prepareEvents () .addInterest ("prepareEvents", this);
          this .getBrowser () .addBrowserEvent ();
@@ -81331,9 +81156,6 @@ Object .assign (Object .setPrototypeOf (Inline .prototype, Core_X3DChildNode .pr
    {
       Networking_X3DUrlObject .prototype .set_live__ .call (this);
 
-      if (this .isPrivate ())
-         return;
-
       this .scene .setLive (this .getLive () .getValue ());
    },
    unloadData ()
@@ -81385,7 +81207,6 @@ Object .assign (Object .setPrototypeOf (Inline .prototype, Core_X3DChildNode .pr
 
       this .scene = scene;
       this .scene .setExecutionContext (this .getExecutionContext ());
-      this .scene .setPrivate (this .getExecutionContext () .isPrivate ());
 
       this .scene .rootNodes .addFieldInterest (this .groupNode ._children);
       this .groupNode ._children = this .scene .rootNodes;
@@ -87234,7 +87055,7 @@ const X3DShaderNode_default_ = X3DShaderNode;
 x_ite_Namespace .set ("x_ite/Components/Shaders/X3DShaderNode", X3DShaderNode_default_);
 /* harmony default export */ const Shaders_X3DShaderNode = (X3DShaderNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js
-/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(967);
+/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(431);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -87658,112 +87479,115 @@ Object .assign (X3DProgrammableShaderObject .prototype,
 
       for (const field of this .getUserDefinedFields ())
       {
+         if (field .getAccessType () === Base_X3DConstants .outputOnly)
+            continue;
+
          const location = gl .getUniformLocation (program, field .getName ());
 
-         if (location)
+         if (!location)
+            continue;
+
+         switch (field .getType ())
          {
-            switch (field .getType ())
+            case Base_X3DConstants .SFImage:
             {
-               case Base_X3DConstants .SFImage:
-               {
-                  location .array = new Int32Array (3 + field .array .length);
-                  break;
-               }
-               case Base_X3DConstants .SFMatrix3d:
-               case Base_X3DConstants .SFMatrix3f:
-               case Base_X3DConstants .SFRotation:
-               {
-                  location .array = new Float32Array (9);
-                  break;
-               }
-               case Base_X3DConstants .SFMatrix4d:
-               case Base_X3DConstants .SFMatrix4f:
-               {
-                  location .array = new Float32Array (16);
-                  break;
-               }
-               case Base_X3DConstants .SFNode:
-               {
-                  break;
-               }
-               case Base_X3DConstants .MFBool:
-               case Base_X3DConstants .MFInt32:
-               {
-                  location .array = new Int32Array (this .getLocationLength (gl, program, field));
-                  break;
-               }
-               case Base_X3DConstants .MFFloat:
-               case Base_X3DConstants .MFDouble:
-               case Base_X3DConstants .MFTime:
-               {
-                  location .array = new Float32Array (this .getLocationLength (gl, program, field));
-                  break;
-               }
-               case Base_X3DConstants .MFImage:
-               {
-                  location .array = new Int32Array (this .getImagesLength (field));
-                  break;
-               }
-               case Base_X3DConstants .MFMatrix3d:
-               case Base_X3DConstants .MFMatrix3f:
-               case Base_X3DConstants .MFRotation:
-               {
-                  location .array = new Float32Array (9 * this .getLocationLength (gl, program, field));
-                  break;
-               }
-               case Base_X3DConstants .MFMatrix4d:
-               case Base_X3DConstants .MFMatrix4f:
-               {
-                  location .array = new Float32Array (16 * this .getLocationLength (gl, program, field));
-                  break;
-               }
-               case Base_X3DConstants .MFNode:
-               {
-                  const locations = location .locations = [ ];
-
-                  for (let i = 0;; ++ i)
-                  {
-                     const l = gl .getUniformLocation (program, field .getName () + "[" + i + "]");
-
-                     if (! l)
-                        break;
-
-                     locations .push (l);
-                  }
-
-                  break;
-               }
-               case Base_X3DConstants .MFVec2d:
-               case Base_X3DConstants .MFVec2f:
-               {
-                  location .array = new Float32Array (2 * this .getLocationLength (gl, program, field));
-                  break;
-               }
-               case Base_X3DConstants .MFVec3d:
-               case Base_X3DConstants .MFVec3f:
-               case Base_X3DConstants .MFColor:
-               {
-                  location .array = new Float32Array (3 * this .getLocationLength (gl, program, field));
-                  break;
-               }
-               case Base_X3DConstants .MFVec4d:
-               case Base_X3DConstants .MFVec4f:
-               case Base_X3DConstants .MFColorRGBA:
-               {
-                  location .array = new Float32Array (4 * this .getLocationLength (gl, program, field));
-                  break;
-               }
+               location .array = new Int32Array (3 + field .array .length);
+               break;
             }
+            case Base_X3DConstants .SFMatrix3d:
+            case Base_X3DConstants .SFMatrix3f:
+            case Base_X3DConstants .SFRotation:
+            {
+               location .array = new Float32Array (9);
+               break;
+            }
+            case Base_X3DConstants .SFMatrix4d:
+            case Base_X3DConstants .SFMatrix4f:
+            {
+               location .array = new Float32Array (16);
+               break;
+            }
+            case Base_X3DConstants .SFNode:
+            {
+               break;
+            }
+            case Base_X3DConstants .MFBool:
+            case Base_X3DConstants .MFInt32:
+            {
+               location .array = new Int32Array (this .getLocationLength (gl, program, field));
+               break;
+            }
+            case Base_X3DConstants .MFFloat:
+            case Base_X3DConstants .MFDouble:
+            case Base_X3DConstants .MFTime:
+            {
+               location .array = new Float32Array (this .getLocationLength (gl, program, field));
+               break;
+            }
+            case Base_X3DConstants .MFImage:
+            {
+               location .array = new Int32Array (this .getImagesLength (field));
+               break;
+            }
+            case Base_X3DConstants .MFMatrix3d:
+            case Base_X3DConstants .MFMatrix3f:
+            case Base_X3DConstants .MFRotation:
+            {
+               location .array = new Float32Array (9 * this .getLocationLength (gl, program, field));
+               break;
+            }
+            case Base_X3DConstants .MFMatrix4d:
+            case Base_X3DConstants .MFMatrix4f:
+            {
+               location .array = new Float32Array (16 * this .getLocationLength (gl, program, field));
+               break;
+            }
+            case Base_X3DConstants .MFNode:
+            {
+               const locations = location .locations = [ ];
 
-            if (location .array)
-               field [X3DProgrammableShaderObject_uniformLocation] = location .array .length ? location : null;
-            else
-               field [X3DProgrammableShaderObject_uniformLocation] = location;
+               for (let i = 0;; ++ i)
+               {
+                  const l = gl .getUniformLocation (program, field .getName () + "[" + i + "]");
 
-            field .addInterest ("set_field__", this);
+                  if (! l)
+                     break;
 
-            this .set_field__ (field);
+                  locations .push (l);
+               }
+
+               break;
+            }
+            case Base_X3DConstants .MFVec2d:
+            case Base_X3DConstants .MFVec2f:
+            {
+               location .array = new Float32Array (2 * this .getLocationLength (gl, program, field));
+               break;
+            }
+            case Base_X3DConstants .MFVec3d:
+            case Base_X3DConstants .MFVec3f:
+            case Base_X3DConstants .MFColor:
+            {
+               location .array = new Float32Array (3 * this .getLocationLength (gl, program, field));
+               break;
+            }
+            case Base_X3DConstants .MFVec4d:
+            case Base_X3DConstants .MFVec4f:
+            case Base_X3DConstants .MFColorRGBA:
+            {
+               location .array = new Float32Array (4 * this .getLocationLength (gl, program, field));
+               break;
+            }
          }
+
+         if (location .array)
+            field [X3DProgrammableShaderObject_uniformLocation] = location .array .length ? location : null;
+         else
+            field [X3DProgrammableShaderObject_uniformLocation] = location;
+
+         field .addInterest ("set_field__", this);
+
+         this .set_field__ (field);
       }
    },
    removeShaderFields ()
@@ -87784,361 +87608,361 @@ Object .assign (X3DProgrammableShaderObject .prototype,
 
          gl .useProgram (program);
 
-         if (location)
+         if (!location)
+            return;
+
+         switch (field .getType ())
          {
-            switch (field .getType ())
+            case Base_X3DConstants .SFBool:
+            case Base_X3DConstants .SFInt32:
             {
-               case Base_X3DConstants .SFBool:
-               case Base_X3DConstants .SFInt32:
-               {
-                  gl .uniform1i (location, field .getValue ());
-                  return;
-               }
-               case Base_X3DConstants .SFColor:
-               {
-                  const value = field .getValue ();
-                  gl .uniform3f (location, value .r, value .g, value .b);
-                  return;
-               }
-               case Base_X3DConstants .SFColorRGBA:
-               {
-                  const value = field .getValue ();
-                  gl .uniform4f (location, value .r, value .g, value .b, value .a);
-                  return;
-               }
-               case Base_X3DConstants .SFDouble:
-               case Base_X3DConstants .SFFloat:
-               case Base_X3DConstants .SFTime:
-               {
-                  gl .uniform1f (location, field .getValue ());
-                  return;
-               }
-               case Base_X3DConstants .SFImage:
-               {
-                  let array = location .array;
+               gl .uniform1i (location, field .getValue ());
+               return;
+            }
+            case Base_X3DConstants .SFColor:
+            {
+               const value = field .getValue ();
+               gl .uniform3f (location, value .r, value .g, value .b);
+               return;
+            }
+            case Base_X3DConstants .SFColorRGBA:
+            {
+               const value = field .getValue ();
+               gl .uniform4f (location, value .r, value .g, value .b, value .a);
+               return;
+            }
+            case Base_X3DConstants .SFDouble:
+            case Base_X3DConstants .SFFloat:
+            case Base_X3DConstants .SFTime:
+            {
+               gl .uniform1f (location, field .getValue ());
+               return;
+            }
+            case Base_X3DConstants .SFImage:
+            {
+               let array = location .array;
 
+               const
+                  pixels = field .array,
+                  length = 3 + pixels .length;
+
+               if (length !== array .length)
+                  array = location .array = new Int32Array (length);
+
+               array [0] = field .width;
+               array [1] = field .height;
+               array [2] = field .comp;
+
+               for (let a = 3, p = 0, pl = pixels .length; p < pl; ++ p, ++ a)
+                  array [a] = pixels [p];
+
+               gl .uniform1iv (location, array);
+               return;
+            }
+            case Base_X3DConstants .SFMatrix3d:
+            case Base_X3DConstants .SFMatrix3f:
+            {
+               location .array .set (field .getValue ());
+
+               gl .uniformMatrix3fv (location, false, location .array);
+               return;
+            }
+            case Base_X3DConstants .SFMatrix4d:
+            case Base_X3DConstants .SFMatrix4f:
+            {
+               location .array .set (field .getValue ());
+
+               gl .uniformMatrix4fv (location, false, location .array);
+               return;
+            }
+            case Base_X3DConstants .SFNode:
+            {
+               const texture = Base_X3DCast (Base_X3DConstants .X3DTextureNode, field);
+
+               if (texture)
+               {
+                  location .name    = field .getName ();
+                  location .texture = texture;
+
+                  this .textures .add (location);
+               }
+               else
+               {
+                  this .textures .delete (location);
+               }
+
+               return;
+            }
+            case Base_X3DConstants .SFRotation:
+            {
+               field .getValue () .getMatrix (location .array);
+
+               gl .uniformMatrix3fv (location, false, location .array);
+               return;
+            }
+            case Base_X3DConstants .SFString:
+            {
+               return;
+            }
+            case Base_X3DConstants .SFVec2d:
+            case Base_X3DConstants .SFVec2f:
+            {
+               const value = field .getValue ();
+               gl .uniform2f (location, value .x, value .y);
+               return;
+            }
+            case Base_X3DConstants .SFVec3d:
+            case Base_X3DConstants .SFVec3f:
+            {
+               const value = field .getValue ();
+               gl .uniform3f (location, value .x, value .y, value .z);
+               return;
+            }
+            case Base_X3DConstants .SFVec4d:
+            case Base_X3DConstants .SFVec4f:
+            {
+               const value = field .getValue ();
+               gl .uniform4f (location, value .x, value .y, value .z, value .w);
+               return;
+            }
+            case Base_X3DConstants .MFBool:
+            case Base_X3DConstants .MFInt32:
+            {
+               const array = location .array;
+
+               for (var i = 0, length = field .length; i < length; ++ i)
+                  array [i] = field [i];
+
+               for (let length = array .length; i < length; ++ i)
+                  array [i] = 0;
+
+               gl .uniform1iv (location, array);
+               return;
+            }
+            case Base_X3DConstants .MFColor:
+            {
+               const array = location .array;
+
+               for (var i = 0, k = 0, length = field .length; i < length; ++ i)
+               {
+                  const color = field [i];
+
+                  array [k++] = color .r;
+                  array [k++] = color .g;
+                  array [k++] = color .b;
+               }
+
+               for (let length = array .length; k < length; ++ k)
+                  array [k] = 0;
+
+               gl .uniform3fv (location, array);
+               return;
+            }
+            case Base_X3DConstants .MFColorRGBA:
+            {
+               const array = location .array;
+
+               for (var i = 0, k = 0, length = field .length; i < length; ++ i)
+               {
+                  const color = field [i];
+
+                  array [k++] = color .r;
+                  array [k++] = color .g;
+                  array [k++] = color .b;
+                  array [k++] = color .a;
+               }
+
+               for (let length = array .length; k < length; ++ k)
+                  array [k] = 0;
+
+               gl .uniform4fv (location, array);
+               return;
+            }
+            case Base_X3DConstants .MFDouble:
+            case Base_X3DConstants .MFFloat:
+            case Base_X3DConstants .MFTime:
+            {
+               const array = location .array;
+
+               for (var i = 0, length = field .length; i < length; ++ i)
+                  array [i] = field [i];
+
+               for (let length = array .length; i < length; ++ i)
+                  array [i] = 0;
+
+               gl .uniform1fv (location, array);
+               return;
+            }
+            case Base_X3DConstants .MFImage:
+            {
+               const array = location .array;
+
+               for (let i = 0, a = 0, length = field .length; i < length; ++ i)
+               {
                   const
-                     pixels = field .array,
-                     length = 3 + pixels .length;
+                     value  = field [i],
+                     pixels = value .array;
 
-                  if (length !== array .length)
-                     array = location .array = new Int32Array (length);
+                  array [a ++] = value .width;
+                  array [a ++] = value .height;
+                  array [a ++] = value .comp;
 
-                  array [0] = field .width;
-                  array [1] = field .height;
-                  array [2] = field .comp;
-
-                  for (let a = 3, p = 0, pl = pixels .length; p < pl; ++ p, ++ a)
-                     array [a] = pixels [p];
-
-                  gl .uniform1iv (location, array);
-                  return;
+                  for (let p = 0, pl = pixels .length; p < pl; ++ p)
+                     array [a ++] = pixels [p];
                }
-               case Base_X3DConstants .SFMatrix3d:
-               case Base_X3DConstants .SFMatrix3f:
-               {
-                  location .array .set (field .getValue ());
 
-                  gl .uniformMatrix3fv (location, false, location .array);
-                  return;
-               }
-               case Base_X3DConstants .SFMatrix4d:
-               case Base_X3DConstants .SFMatrix4f:
-               {
-                  location .array .set (field .getValue ());
+               gl .uniform1iv (location, array);
+               return;
+            }
+            case Base_X3DConstants .MFMatrix3d:
+            case Base_X3DConstants .MFMatrix3f:
+            {
+               const array = location .array;
 
-                  gl .uniformMatrix4fv (location, false, location .array);
-                  return;
-               }
-               case Base_X3DConstants .SFNode:
+               for (var i = 0, k = 0, length = field .length; i < length; ++ i)
                {
-                  const texture = Base_X3DCast (Base_X3DConstants .X3DTextureNode, field);
+                  const matrix = field [i];
+
+                  for (let m = 0; m < 9; ++ m)
+                     array [k++] = matrix [m];
+               }
+
+               for (let length = array .length; k < length; ++ k)
+                  array [k] = 0;
+
+               gl .uniformMatrix3fv (location, false, array);
+               return;
+            }
+            case Base_X3DConstants .MFMatrix4d:
+            case Base_X3DConstants .MFMatrix4f:
+            {
+               const array = location .array;
+
+               for (var i = 0, k = 0, length = field .length; i < length; ++ i)
+               {
+                  const matrix = field [i];
+
+                  for (let m = 0; m < 16; ++ m)
+                     array [k++] = matrix [m];
+               }
+
+               for (let length = array .length; k < length; ++ k)
+                  array [k] = 0;
+
+               gl .uniformMatrix4fv (location, false, array);
+               return;
+            }
+            case Base_X3DConstants .MFNode:
+            {
+               const locations = location .locations;
+
+               for (let i = 0, length = field .length; i < length; ++ i)
+               {
+                  const texture = Base_X3DCast (Base_X3DConstants .X3DTextureNode, field [i]);
 
                   if (texture)
                   {
-                     location .name    = field .getName ();
-                     location .texture = texture;
+                     locations [i] .name    = field .getName ();
+                     locations [i] .texture = texture;
 
-                     this .textures .add (location);
+                     this .textures .add (locations [i]);
                   }
                   else
                   {
-                     this .textures .delete (location);
+                     this .textures .delete (locations [i]);
                   }
-
-                  return;
                }
-               case Base_X3DConstants .SFRotation:
+
+               return;
+            }
+            case Base_X3DConstants .MFRotation:
+            {
+               const array = location .array;
+
+               for (var i = 0, k = 0, length = field .length; i < length; ++ i)
                {
-                  field .getValue () .getMatrix (location .array);
+                  field [i] .getValue () .getMatrix (rotation);
 
-                  gl .uniformMatrix3fv (location, false, location .array);
-                  return;
+                  array [k++] = rotation [0];
+                  array [k++] = rotation [1];
+                  array [k++] = rotation [2];
+                  array [k++] = rotation [3];
+                  array [k++] = rotation [4];
+                  array [k++] = rotation [5];
+                  array [k++] = rotation [6];
+                  array [k++] = rotation [7];
+                  array [k++] = rotation [8];
                }
-               case Base_X3DConstants .SFString:
+
+               for (let length = array .length; k < length; ++ k)
+                  array [k] = 0;
+
+               gl .uniformMatrix3fv (location, false, array);
+               return;
+            }
+            case Base_X3DConstants .MFString:
+            {
+               return;
+            }
+            case Base_X3DConstants .MFVec2d:
+            case Base_X3DConstants .MFVec2f:
+            {
+               const array = location .array;
+
+               for (var i = 0, k = 0, length = field .length; i < length; ++ i)
                {
-                  return;
+                  const vector = field [i];
+
+                  array [k++] = vector .x;
+                  array [k++] = vector .y;
                }
-               case Base_X3DConstants .SFVec2d:
-               case Base_X3DConstants .SFVec2f:
+
+               for (let length = array .length; k < length; ++ k)
+                  array [k] = 0;
+
+               gl .uniform2fv (location, array);
+               return;
+            }
+            case Base_X3DConstants .MFVec3d:
+            case Base_X3DConstants .MFVec3f:
+            {
+               const array = location .array;
+
+               for (var i = 0, k = 0, length = field .length; i < length; ++ i)
                {
-                  const value = field .getValue ();
-                  gl .uniform2f (location, value .x, value .y);
-                  return;
+                  const vector = field [i];
+
+                  array [k++] = vector .x;
+                  array [k++] = vector .y;
+                  array [k++] = vector .z;
                }
-               case Base_X3DConstants .SFVec3d:
-               case Base_X3DConstants .SFVec3f:
+
+               for (let length = array .length; k < length; ++ k)
+                  array [k] = 0;
+
+               gl .uniform3fv (location, array);
+               return;
+            }
+            case Base_X3DConstants .MFVec4d:
+            case Base_X3DConstants .MFVec4f:
+            {
+               const array = location .array;
+
+               for (var i = 0, k = 0, length = field .length; i < length; ++ i)
                {
-                  const value = field .getValue ();
-                  gl .uniform3f (location, value .x, value .y, value .z);
-                  return;
+                  const vector = field [i];
+
+                  array [k++] = vector .x;
+                  array [k++] = vector .y;
+                  array [k++] = vector .z;
+                  array [k++] = vector .w;
                }
-               case Base_X3DConstants .SFVec4d:
-               case Base_X3DConstants .SFVec4f:
-               {
-                  const value = field .getValue ();
-                  gl .uniform4f (location, value .x, value .y, value .z, value .w);
-                  return;
-               }
-               case Base_X3DConstants .MFBool:
-               case Base_X3DConstants .MFInt32:
-               {
-                  const array = location .array;
 
-                  for (var i = 0, length = field .length; i < length; ++ i)
-                     array [i] = field [i];
+               for (let length = array .length; k < length; ++ k)
+                  array [k] = 0;
 
-                  for (let length = array .length; i < length; ++ i)
-                     array [i] = 0;
-
-                  gl .uniform1iv (location, array);
-                  return;
-               }
-               case Base_X3DConstants .MFColor:
-               {
-                  const array = location .array;
-
-                  for (var i = 0, k = 0, length = field .length; i < length; ++ i)
-                  {
-                     const color = field [i];
-
-                     array [k++] = color .r;
-                     array [k++] = color .g;
-                     array [k++] = color .b;
-                  }
-
-                  for (let length = array .length; k < length; ++ k)
-                     array [k] = 0;
-
-                  gl .uniform3fv (location, array);
-                  return;
-               }
-               case Base_X3DConstants .MFColorRGBA:
-               {
-                  const array = location .array;
-
-                  for (var i = 0, k = 0, length = field .length; i < length; ++ i)
-                  {
-                     const color = field [i];
-
-                     array [k++] = color .r;
-                     array [k++] = color .g;
-                     array [k++] = color .b;
-                     array [k++] = color .a;
-                  }
-
-                  for (let length = array .length; k < length; ++ k)
-                     array [k] = 0;
-
-                  gl .uniform4fv (location, array);
-                  return;
-               }
-               case Base_X3DConstants .MFDouble:
-               case Base_X3DConstants .MFFloat:
-               case Base_X3DConstants .MFTime:
-               {
-                  const array = location .array;
-
-                  for (var i = 0, length = field .length; i < length; ++ i)
-                     array [i] = field [i];
-
-                  for (let length = array .length; i < length; ++ i)
-                     array [i] = 0;
-
-                  gl .uniform1fv (location, array);
-                  return;
-               }
-               case Base_X3DConstants .MFImage:
-               {
-                  const array = location .array;
-
-                  for (let i = 0, a = 0, length = field .length; i < length; ++ i)
-                  {
-                     const
-                        value  = field [i],
-                        pixels = value .array;
-
-                     array [a ++] = value .width;
-                     array [a ++] = value .height;
-                     array [a ++] = value .comp;
-
-                     for (let p = 0, pl = pixels .length; p < pl; ++ p)
-                        array [a ++] = pixels [p];
-                  }
-
-                  gl .uniform1iv (location, array);
-                  return;
-               }
-               case Base_X3DConstants .MFMatrix3d:
-               case Base_X3DConstants .MFMatrix3f:
-               {
-                  const array = location .array;
-
-                  for (var i = 0, k = 0, length = field .length; i < length; ++ i)
-                  {
-                     const matrix = field [i];
-
-                     for (let m = 0; m < 9; ++ m)
-                        array [k++] = matrix [m];
-                  }
-
-                  for (let length = array .length; k < length; ++ k)
-                     array [k] = 0;
-
-                  gl .uniformMatrix3fv (location, false, array);
-                  return;
-               }
-               case Base_X3DConstants .MFMatrix4d:
-               case Base_X3DConstants .MFMatrix4f:
-               {
-                  const array = location .array;
-
-                  for (var i = 0, k = 0, length = field .length; i < length; ++ i)
-                  {
-                     const matrix = field [i];
-
-                     for (let m = 0; m < 16; ++ m)
-                        array [k++] = matrix [m];
-                  }
-
-                  for (let length = array .length; k < length; ++ k)
-                     array [k] = 0;
-
-                  gl .uniformMatrix4fv (location, false, array);
-                  return;
-               }
-               case Base_X3DConstants .MFNode:
-               {
-                  const locations = location .locations;
-
-                  for (let i = 0, length = field .length; i < length; ++ i)
-                  {
-                     const texture = Base_X3DCast (Base_X3DConstants .X3DTextureNode, field [i]);
-
-                     if (texture)
-                     {
-                        locations [i] .name    = field .getName ();
-                        locations [i] .texture = texture;
-
-                        this .textures .add (locations [i]);
-                     }
-                     else
-                     {
-                        this .textures .delete (locations [i]);
-                     }
-                  }
-
-                  return;
-               }
-               case Base_X3DConstants .MFRotation:
-               {
-                  const array = location .array;
-
-                  for (var i = 0, k = 0, length = field .length; i < length; ++ i)
-                  {
-                     field [i] .getValue () .getMatrix (rotation);
-
-                     array [k++] = rotation [0];
-                     array [k++] = rotation [1];
-                     array [k++] = rotation [2];
-                     array [k++] = rotation [3];
-                     array [k++] = rotation [4];
-                     array [k++] = rotation [5];
-                     array [k++] = rotation [6];
-                     array [k++] = rotation [7];
-                     array [k++] = rotation [8];
-                  }
-
-                  for (let length = array .length; k < length; ++ k)
-                     array [k] = 0;
-
-                  gl .uniformMatrix3fv (location, false, array);
-                  return;
-               }
-               case Base_X3DConstants .MFString:
-               {
-                  return;
-               }
-               case Base_X3DConstants .MFVec2d:
-               case Base_X3DConstants .MFVec2f:
-               {
-                  const array = location .array;
-
-                  for (var i = 0, k = 0, length = field .length; i < length; ++ i)
-                  {
-                     const vector = field [i];
-
-                     array [k++] = vector .x;
-                     array [k++] = vector .y;
-                  }
-
-                  for (let length = array .length; k < length; ++ k)
-                     array [k] = 0;
-
-                  gl .uniform2fv (location, array);
-                  return;
-               }
-               case Base_X3DConstants .MFVec3d:
-               case Base_X3DConstants .MFVec3f:
-               {
-                  const array = location .array;
-
-                  for (var i = 0, k = 0, length = field .length; i < length; ++ i)
-                  {
-                     const vector = field [i];
-
-                     array [k++] = vector .x;
-                     array [k++] = vector .y;
-                     array [k++] = vector .z;
-                  }
-
-                  for (let length = array .length; k < length; ++ k)
-                     array [k] = 0;
-
-                  gl .uniform3fv (location, array);
-                  return;
-               }
-               case Base_X3DConstants .MFVec4d:
-               case Base_X3DConstants .MFVec4f:
-               {
-                  const array = location .array;
-
-                  for (var i = 0, k = 0, length = field .length; i < length; ++ i)
-                  {
-                     const vector = field [i];
-
-                     array [k++] = vector .x;
-                     array [k++] = vector .y;
-                     array [k++] = vector .z;
-                     array [k++] = vector .w;
-                  }
-
-                  for (let length = array .length; k < length; ++ k)
-                     array [k] = 0;
-
-                  gl .uniform4fv (location, array);
-                  return;
-               }
+               gl .uniform4fv (location, array);
+               return;
             }
          }
       };
@@ -95954,7 +95778,7 @@ const ShaderCompiler_default_ = ShaderCompiler;
 x_ite_Namespace .set ("x_ite/Browser/Shaders/ShaderCompiler", ShaderCompiler_default_);
 /* harmony default export */ const Shaders_ShaderCompiler = (ShaderCompiler_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shaders/ShaderPart.js
-/* provided dependency */ var ShaderPart_$ = __webpack_require__(967);
+/* provided dependency */ var ShaderPart_$ = __webpack_require__(431);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -96044,7 +95868,7 @@ Object .assign (Object .setPrototypeOf (ShaderPart .prototype, Core_X3DNode .pro
       Core_X3DNode      .prototype .initialize .call (this);
       Networking_X3DUrlObject .prototype .initialize .call (this);
 
-      if (! this .isPrivate ())
+      if (!this .isPrivate ())
          this .options = customOptions .slice ();
 
       this ._type .addInterest ("set_type__", this);
@@ -96613,7 +96437,7 @@ const X3DAppearanceNode_default_ = X3DAppearanceNode;
 x_ite_Namespace .set ("x_ite/Components/Shape/X3DAppearanceNode", X3DAppearanceNode_default_);
 /* harmony default export */ const Shape_X3DAppearanceNode = (X3DAppearanceNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shape/Appearance.js
-/* provided dependency */ var Appearance_$ = __webpack_require__(967);
+/* provided dependency */ var Appearance_$ = __webpack_require__(431);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -100308,7 +100132,7 @@ const X3DSoundSourceNode_default_ = X3DSoundSourceNode;
 x_ite_Namespace .set ("x_ite/Components/Sound/X3DSoundSourceNode", X3DSoundSourceNode_default_);
 /* harmony default export */ const Sound_X3DSoundSourceNode = (X3DSoundSourceNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/AudioClip.js
-/* provided dependency */ var AudioClip_$ = __webpack_require__(967);
+/* provided dependency */ var AudioClip_$ = __webpack_require__(431);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -103419,8 +103243,8 @@ const GIFMedia_default_ = GifMedia;
 x_ite_Namespace .set ("x_ite/Browser/Texturing/GIFMedia", GIFMedia_default_);
 /* harmony default export */ const GIFMedia = (GIFMedia_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var MovieTexture_$ = __webpack_require__(967);
-/* provided dependency */ var SuperGif = __webpack_require__(510);
+/* provided dependency */ var MovieTexture_$ = __webpack_require__(431);
+/* provided dependency */ var SuperGif = __webpack_require__(620);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -104585,7 +104409,7 @@ const MultiTextureTransform_default_ = MultiTextureTransform;
 x_ite_Namespace .set ("x_ite/Components/Texturing/MultiTextureTransform", MultiTextureTransform_default_);
 /* harmony default export */ const Texturing_MultiTextureTransform = (MultiTextureTransform_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/PixelTexture.js
-/* provided dependency */ var PixelTexture_$ = __webpack_require__(967);
+/* provided dependency */ var PixelTexture_$ = __webpack_require__(431);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -105996,153 +105820,6 @@ const Time_default_ = {
 
 x_ite_Namespace .set ("x_ite/Components/Time", Time_default_);
 /* harmony default export */ const Time = (Time_default_);
-;// CONCATENATED MODULE: ./src/x_ite/Configuration/ConcreteNodesArray.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-
-
-
-function ConcreteNodesArray (values = [ ])
-{
-   return Base_X3DInfoArray .call (this, Array .from (values, value => [value .typeName, value]), Function);
-}
-
-Object .assign (Object .setPrototypeOf (ConcreteNodesArray .prototype, Base_X3DInfoArray .prototype),
-{
-   add (typeName, ConcreteNode)
-   {
-      Base_X3DConstants .addNode (ConcreteNode);
-      Parser_HTMLSupport .addConcreteNode (ConcreteNode);
-
-      Base_X3DInfoArray .prototype .add .call (this, typeName, ConcreteNode);
-   },
-   update (oldTypeName, typeName, ConcreteNode)
-   {
-      Base_X3DConstants .addNode (ConcreteNode);
-      Parser_HTMLSupport .addConcreteNode (ConcreteNode);
-
-      Base_X3DInfoArray .prototype .update .call (this, oldTypeName, typeName, ConcreteNode);
-   },
-});
-
-for (const key of Object .keys (ConcreteNodesArray .prototype))
-   Object .defineProperty (ConcreteNodesArray .prototype, key, { enumerable: false });
-
-Object .defineProperties (ConcreteNodesArray,
-{
-   typeName:
-   {
-      value: "ConcreteNodesArray",
-      enumerable: true,
-   },
-});
-
-const ConcreteNodesArray_default_ = ConcreteNodesArray;
-;
-
-x_ite_Namespace .set ("x_ite/Configuration/ConcreteNodesArray", ConcreteNodesArray_default_);
-/* harmony default export */ const Configuration_ConcreteNodesArray = (ConcreteNodesArray_default_);
-;// CONCATENATED MODULE: ./src/x_ite/Configuration/ConcreteNodes.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-
-const ConcreteNodes_default_ = new Configuration_ConcreteNodesArray ();
-;
-
-x_ite_Namespace .set ("x_ite/Configuration/ConcreteNodes", ConcreteNodes_default_);
-/* harmony default export */ const ConcreteNodes = (ConcreteNodes_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/Context.js
 /*******************************************************************************
  *
@@ -106913,7 +106590,7 @@ const gettext_default_ = gettext;
 x_ite_Namespace .set ("locale/gettext", gettext_default_);
 /* harmony default export */ const locale_gettext = (gettext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserTimings.js
-/* provided dependency */ var BrowserTimings_$ = __webpack_require__(967);
+/* provided dependency */ var BrowserTimings_$ = __webpack_require__(431);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -107343,7 +107020,7 @@ const TextureQuality_default_ = TextureQuality;
 x_ite_Namespace .set ("x_ite/Browser/Core/TextureQuality", TextureQuality_default_);
 /* harmony default export */ const Core_TextureQuality = (TextureQuality_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserOptions.js
-/* provided dependency */ var BrowserOptions_$ = __webpack_require__(967);
+/* provided dependency */ var BrowserOptions_$ = __webpack_require__(431);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -107920,7 +107597,7 @@ const RenderingProperties_default_ = RenderingProperties;
 x_ite_Namespace .set ("x_ite/Browser/Core/RenderingProperties", RenderingProperties_default_);
 /* harmony default export */ const Core_RenderingProperties = (RenderingProperties_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/Notification.js
-/* provided dependency */ var Notification_$ = __webpack_require__(967);
+/* provided dependency */ var Notification_$ = __webpack_require__(431);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -108042,8 +107719,8 @@ const Notification_default_ = Notification;
 x_ite_Namespace .set ("x_ite/Browser/Core/Notification", Notification_default_);
 /* harmony default export */ const Core_Notification = (Notification_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/ContextMenu.js
-/* provided dependency */ var jquery_fullscreen = __webpack_require__(287);
-/* provided dependency */ var ContextMenu_$ = __webpack_require__(967);
+/* provided dependency */ var jquery_fullscreen = __webpack_require__(635);
+/* provided dependency */ var ContextMenu_$ = __webpack_require__(431);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -109568,9 +109245,7 @@ x_ite_Namespace .set ("x_ite/Execution/ExportedNodesArray", ExportedNodesArray_d
 
 
 
-
 const
-   X3DScene_browser              = Symbol .for ("X_ITE.X3DEventObject.browser"),
    _specificationVersion = Symbol (),
    _encoding             = Symbol (),
    _profile              = Symbol (),
@@ -109585,9 +109260,7 @@ const X3D_LATEST_VERSION = "4.0";
 
 function X3DScene (browser)
 {
-   this [X3DScene_browser] = browser;
-
-   Execution_X3DExecutionContext .call (this, this);
+   Execution_X3DExecutionContext .call (this, this, null, browser);
 
    this .addType (Base_X3DConstants .X3DScene)
 
@@ -110765,7 +110438,7 @@ const DataStorage_default_ = DataStorage;
 x_ite_Namespace .set ("standard/Utility/DataStorage", DataStorage_default_);
 /* harmony default export */ const Utility_DataStorage = (DataStorage_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/X3DCoreContext.js
-/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(967);
+/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(431);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -111044,7 +110717,6 @@ Object .assign (X3DCoreContext .prototype,
 
       this [_privateScene] = new Execution_X3DScene (this);
 
-      this [_privateScene] .setPrivate (true);
       this [_privateScene] .setLive (true);
       this [_privateScene] .setup ();
 
@@ -112794,8 +112466,8 @@ const X3DViewer_default_ = X3DViewer;
 x_ite_Namespace .set ("x_ite/Browser/Navigation/X3DViewer", X3DViewer_default_);
 /* harmony default export */ const Navigation_X3DViewer = (X3DViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/ExamineViewer.js
-/* provided dependency */ var jquery_mousewheel = __webpack_require__(598);
-/* provided dependency */ var ExamineViewer_$ = __webpack_require__(967);
+/* provided dependency */ var jquery_mousewheel = __webpack_require__(246);
+/* provided dependency */ var ExamineViewer_$ = __webpack_require__(431);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -112929,20 +112601,16 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, Navigation_X3D
       // Setup scroll chaser.
 
       this .positionChaser ._duration = MOVE_TIME;
-      this .positionChaser .setPrivate (true);
       this .positionChaser .setup ();
 
       this .centerOfRotationChaser ._duration = MOVE_TIME;
-      this .centerOfRotationChaser .setPrivate (true);
       this .centerOfRotationChaser .setup ();
 
       this .rotationChaser ._duration = ROTATE_TIME;
-      this .rotationChaser .setPrivate (true);
       this .rotationChaser .setup ();
 
       this .timeSensor ._loop     = true;
       this .timeSensor ._stopTime = browser .getCurrentTime ();
-      this .timeSensor .setPrivate (true);
       this .timeSensor .setup ();
 
       this .timeSensor ._fraction_changed  .addInterest ("spin", this);
@@ -113671,8 +113339,8 @@ const ExamineViewer_default_ = ExamineViewer;
 x_ite_Namespace .set ("x_ite/Browser/Navigation/ExamineViewer", ExamineViewer_default_);
 /* harmony default export */ const Navigation_ExamineViewer = (ExamineViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/X3DFlyViewer.js
-/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(598);
-/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(967);
+/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(246);
+/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(431);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -113794,7 +113462,6 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, Navigation_X3DV
       // Setup look around chaser.
 
       this .orientationChaser ._duration = X3DFlyViewer_ROTATE_TIME;
-      this .orientationChaser .setPrivate (true);
       this .orientationChaser .setup ();
    },
    addCollision () { },
@@ -114643,8 +114310,8 @@ const FlyViewer_default_ = FlyViewer;
 x_ite_Namespace .set ("x_ite/Browser/Navigation/FlyViewer", FlyViewer_default_);
 /* harmony default export */ const Navigation_FlyViewer = (FlyViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/PlaneViewer.js
-/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(598);
-/* provided dependency */ var PlaneViewer_$ = __webpack_require__(967);
+/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(246);
+/* provided dependency */ var PlaneViewer_$ = __webpack_require__(431);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -114975,8 +114642,8 @@ const NoneViewer_default_ = NoneViewer;
 x_ite_Namespace .set ("x_ite/Browser/Navigation/NoneViewer", NoneViewer_default_);
 /* harmony default export */ const Navigation_NoneViewer = (NoneViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/LookAtViewer.js
-/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(598);
-/* provided dependency */ var LookAtViewer_$ = __webpack_require__(967);
+/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(246);
+/* provided dependency */ var LookAtViewer_$ = __webpack_require__(431);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -115085,15 +114752,12 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, Navigation_X3DV
       // Setup chaser.
 
       this .positionChaser ._duration = LookAtViewer_MOVE_TIME;
-      this .positionChaser .setPrivate (true);
       this .positionChaser .setup ();
 
       this .centerOfRotationChaser ._duration = LookAtViewer_MOVE_TIME;
-      this .centerOfRotationChaser .setPrivate (true);
       this .centerOfRotationChaser .setup ();
 
       this .orientationChaser ._duration = LookAtViewer_ROTATE_TIME;
-      this .orientationChaser .setPrivate (true);
       this .orientationChaser .setup ();
    },
    mousedown (event)
@@ -115857,8 +115521,6 @@ Object .assign (X3DNetworkingContext .prototype,
       // Inline node's empty scene.
 
       this [_defaultScene] = this .createScene ();
-
-      this [_defaultScene] .setPrivate (true);
       this [_defaultScene] .setLive (true);
 
       this .getDefaultScene = function () { return this [_defaultScene]; };
@@ -116118,8 +115780,8 @@ const X3DPickingContext_default_ = X3DPickingContext;
 x_ite_Namespace .set ("x_ite/Browser/Picking/X3DPickingContext", X3DPickingContext_default_);
 /* harmony default export */ const Picking_X3DPickingContext = (X3DPickingContext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/PointingDeviceSensor/PointingDevice.js
-/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(598);
-/* provided dependency */ var PointingDevice_$ = __webpack_require__(967);
+/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(246);
+/* provided dependency */ var PointingDevice_$ = __webpack_require__(431);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -117159,8 +116821,8 @@ const MultiSampleFrameBuffer_default_ = MultiSampleFrameBuffer;
 x_ite_Namespace .set ("x_ite/Rendering/MultiSampleFrameBuffer", MultiSampleFrameBuffer_default_);
 /* harmony default export */ const Rendering_MultiSampleFrameBuffer = (MultiSampleFrameBuffer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Rendering/X3DRenderingContext.js
-/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(967);
-/* provided dependency */ var ResizeSensor = __webpack_require__(464);
+/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(431);
+/* provided dependency */ var ResizeSensor = __webpack_require__(889);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -118550,6 +118212,291 @@ const X3DRoutingContext_default_ = X3DRoutingContext;
 
 x_ite_Namespace .set ("x_ite/Routing/X3DRoutingContext", X3DRoutingContext_default_);
 /* harmony default export */ const Routing_X3DRoutingContext = (X3DRoutingContext_default_);
+;// CONCATENATED MODULE: ./src/x_ite/Configuration/AbstractNodesArray.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+function AbstractNodesArray (values = [ ])
+{
+   return Base_X3DInfoArray .call (this, Array .from (values, value => [value .typeName, value]), Function);
+}
+
+Object .assign (Object .setPrototypeOf (AbstractNodesArray .prototype, Base_X3DInfoArray .prototype),
+{
+   add (typeName, AbstractNode)
+   {
+      Base_X3DConstants .addNode (AbstractNode);
+
+      Base_X3DInfoArray .prototype .add .call (this, typeName, AbstractNode);
+   },
+});
+
+for (const key of Object .keys (AbstractNodesArray .prototype))
+   Object .defineProperty (AbstractNodesArray .prototype, key, { enumerable: false });
+
+Object .defineProperties (AbstractNodesArray,
+{
+   typeName:
+   {
+      value: "AbstractNodesArray",
+      enumerable: true,
+   },
+});
+
+const AbstractNodesArray_default_ = AbstractNodesArray;
+;
+
+x_ite_Namespace .set ("x_ite/Configuration/AbstractNodesArray", AbstractNodesArray_default_);
+/* harmony default export */ const Configuration_AbstractNodesArray = (AbstractNodesArray_default_);
+;// CONCATENATED MODULE: ./src/x_ite/Configuration/AbstractNodes.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+const AbstractNodes_default_ = new Configuration_AbstractNodesArray ();
+;
+
+x_ite_Namespace .set ("x_ite/Configuration/AbstractNodes", AbstractNodes_default_);
+/* harmony default export */ const AbstractNodes = (AbstractNodes_default_);
+;// CONCATENATED MODULE: ./src/x_ite/Configuration/ConcreteNodesArray.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+
+
+function ConcreteNodesArray (values = [ ])
+{
+   return Base_X3DInfoArray .call (this, Array .from (values, value => [value .typeName, value]), Function);
+}
+
+Object .assign (Object .setPrototypeOf (ConcreteNodesArray .prototype, Base_X3DInfoArray .prototype),
+{
+   add (typeName, ConcreteNode)
+   {
+      Base_X3DConstants .addNode (ConcreteNode);
+      Parser_HTMLSupport .addConcreteNode (ConcreteNode);
+
+      Base_X3DInfoArray .prototype .add .call (this, typeName, ConcreteNode);
+   },
+   update (oldTypeName, typeName, ConcreteNode)
+   {
+      Base_X3DConstants .addNode (ConcreteNode);
+      Parser_HTMLSupport .addConcreteNode (ConcreteNode);
+
+      Base_X3DInfoArray .prototype .update .call (this, oldTypeName, typeName, ConcreteNode);
+   },
+});
+
+for (const key of Object .keys (ConcreteNodesArray .prototype))
+   Object .defineProperty (ConcreteNodesArray .prototype, key, { enumerable: false });
+
+Object .defineProperties (ConcreteNodesArray,
+{
+   typeName:
+   {
+      value: "ConcreteNodesArray",
+      enumerable: true,
+   },
+});
+
+const ConcreteNodesArray_default_ = ConcreteNodesArray;
+;
+
+x_ite_Namespace .set ("x_ite/Configuration/ConcreteNodesArray", ConcreteNodesArray_default_);
+/* harmony default export */ const Configuration_ConcreteNodesArray = (ConcreteNodesArray_default_);
+;// CONCATENATED MODULE: ./src/x_ite/Configuration/ConcreteNodes.js
+/*******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+
+const ConcreteNodes_default_ = new Configuration_ConcreteNodesArray ();
+;
+
+x_ite_Namespace .set ("x_ite/Configuration/ConcreteNodes", ConcreteNodes_default_);
+/* harmony default export */ const ConcreteNodes = (ConcreteNodes_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/X3DBrowserContext.js
 /*******************************************************************************
  *
@@ -118597,6 +118544,9 @@ x_ite_Namespace .set ("x_ite/Routing/X3DRoutingContext", X3DRoutingContext_defau
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
+
+
 
 
 
@@ -118925,32 +118875,65 @@ for (const key of Object .keys (X3DBrowserContext .prototype))
 
 Object .assign (X3DBrowserContext,
 {
-   addBrowserContext (browserContext)
+   addComponent ({ name, concreteNodes, abstractNodes, browserContext, external })
    {
-      browserContexts .push (browserContext);
-
-      const keys = Object .keys (browserContext .prototype)
-         .filter (k => !k .match (/^(initialize|dispose)$/))
-         .concat (Object .getOwnPropertySymbols (browserContext .prototype));
-
-      for (const key of keys)
+      if (concreteNodes)
       {
-         Object .defineProperty (X3DBrowserContext .prototype, key,
+         for (const ConcreteNode of concreteNodes)
+            ConcreteNodes .add (ConcreteNode .typeName, ConcreteNode);
+      }
+
+      if (abstractNodes)
+      {
+         for (const AbstractNode of abstractNodes)
+            AbstractNodes .add (AbstractNode .typeName, AbstractNode);
+      }
+
+      if (browserContext)
+      {
+         browserContexts .push (browserContext);
+
+         const keys = Object .keys (browserContext .prototype)
+            .filter (k => !k .match (/^(?:initialize|dispose)$/))
+            .concat (Object .getOwnPropertySymbols (browserContext .prototype));
+
+         for (const key of keys)
          {
-            value: browserContext .prototype [key],
-            writable: true,
-         });
+            Object .defineProperty (X3DBrowserContext .prototype, key,
+            {
+               value: browserContext .prototype [key],
+               writable: true,
+            });
+         }
       }
 
       for (const browser of browsers)
       {
-         browserContext .call (browser);
-         browserContext .prototype .initialize ?.call (browser);
+         if (concreteNodes)
+         {
+            for (const ConcreteNode of concreteNodes)
+               browser .addConcreteNode (ConcreteNode);
+         }
 
-         // Process events from context creation. This will setup nodes like
-         // geometry option nodes before any node is created.
-         browser [_processEvents] ();
+         if (abstractNodes)
+         {
+            for (const AbstractNode of abstractNodes)
+               browser .addAbstractNode (AbstractNode);
+         }
+
+         if (browserContext)
+         {
+            browserContext .call (browser);
+            browserContext .prototype .initialize ?.call (browser);
+
+            // Process events from context creation. This will setup nodes like
+            // geometry option nodes before any node is created.
+            browser [_processEvents] ();
+         }
       }
+
+      if (external && DEVELOPMENT)
+         console .info (`Done loading external component '${name}'.`);
    },
 });
 
@@ -119027,32 +119010,13 @@ x_ite_Namespace .set ("x_ite/Browser/X3DBrowserContext", X3DBrowserContext_defau
 
 
 
-
-
-
 let external = false;
 
 const Components =
 {
    add ({ name, concreteNodes, abstractNodes, browserContext })
    {
-      if (concreteNodes)
-      {
-         for (const ConcreteNode of concreteNodes)
-            ConcreteNodes .add (ConcreteNode .typeName, ConcreteNode);
-      }
-
-      if (abstractNodes)
-      {
-         for (const AbstractNode of abstractNodes)
-            AbstractNodes .add (AbstractNode .typeName, AbstractNode);
-      }
-
-      if (browserContext)
-         Browser_X3DBrowserContext .addBrowserContext (browserContext);
-
-      if (DEVELOPMENT && external)
-         console .info (`Done loading external component '${name}'.`);
+      Browser_X3DBrowserContext .addComponent ({ name, concreteNodes, abstractNodes, browserContext, external });
    },
 };
 
@@ -119083,7 +119047,7 @@ const Components_default_ = Components;
 x_ite_Namespace .set ("x_ite/Components", Components_default_);
 /* harmony default export */ const x_ite_Components = ((/* unused pure expression or super */ null && (Components_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/DOMIntegration.js
-/* provided dependency */ var DOMIntegration_$ = __webpack_require__(967);
+/* provided dependency */ var DOMIntegration_$ = __webpack_require__(431);
 /*******************************************************************************
  * MIT License
  *
@@ -119484,7 +119448,7 @@ const DOMIntegration_default_ = DOMIntegration;
 x_ite_Namespace .set ("x_ite/Browser/DOMIntegration", DOMIntegration_default_);
 /* harmony default export */ const Browser_DOMIntegration = (DOMIntegration_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Legacy.js
-/* provided dependency */ var Legacy_$ = __webpack_require__(967);
+/* provided dependency */ var Legacy_$ = __webpack_require__(431);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -120315,7 +120279,7 @@ const SupportedProfiles_default_ = SupportedProfiles;
 x_ite_Namespace .set ("x_ite/Configuration/SupportedProfiles", SupportedProfiles_default_);
 /* harmony default export */ const Configuration_SupportedProfiles = (SupportedProfiles_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/X3DBrowser.js
-/* provided dependency */ var X3DBrowser_$ = __webpack_require__(967);
+/* provided dependency */ var X3DBrowser_$ = __webpack_require__(431);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -120388,12 +120352,16 @@ x_ite_Namespace .set ("x_ite/Configuration/SupportedProfiles", SupportedProfiles
 
 
 const
-   _DOMIntegration   = Symbol (),
-   _reject           = Symbol (),
-   _fileLoader       = Symbol (),
-   _browserCallbacks = Symbol (),
-   _console          = Symbol (),
-   X3DBrowser_processEvents    = Symbol .for ("X_ITE.X3DRoutingContext.processEvents");
+   _DOMIntegration      = Symbol (),
+   _supportedProfiles   = Symbol (),
+   _supportedComponents = Symbol (),
+   _concreteNodes       = Symbol (),
+   _abstractNodes       = Symbol (),
+   _reject              = Symbol (),
+   _fileLoader          = Symbol (),
+   _browserCallbacks    = Symbol (),
+   _console             = Symbol (),
+   X3DBrowser_processEvents       = Symbol .for ("X_ITE.X3DRoutingContext.processEvents");
 
 function X3DBrowser (element)
 {
@@ -120406,8 +120374,12 @@ function X3DBrowser (element)
 
    this .addType (Base_X3DConstants .X3DBrowser);
 
-   this [_browserCallbacks] = new Map ();
-   this [_console]          = document .getElementsByClassName ("x_ite-console");
+   this [_supportedProfiles]   = Configuration_SupportedProfiles .copy ();
+   this [_supportedComponents] = Configuration_SupportedComponents .copy ();
+   this [_concreteNodes]       = ConcreteNodes .copy ();
+   this [_abstractNodes]       = AbstractNodes .copy ();
+   this [_browserCallbacks]    = new Map ();
+   this [_console]             = document .getElementsByClassName ("x_ite-console");
 
    this .setup ();
 };
@@ -120436,30 +120408,30 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, Browser_X3DBrowse
       if (!this .getBrowserOption ("Debug"))
          return;
 
-      this .printWelcomeMessage ();
+      this .print (this .getWelcomeMessage ());
    },
-   printWelcomeMessage ()
+   getWelcomeMessage ()
    {
-      this .print (`Welcome to ${this .name} X3D Browser v${this .version}:\n` +
-                   `   Current Graphics Renderer\n` +
-                   `      Name: ${this .getVendor ()} ${this .getRenderer ()}\n` +
-                   `      WebGL version: ${this .getWebGLVersion ()}\n` +
-                   `      Shading language: ${this .getShadingLanguageVersion ()}\n` +
-                   `   Rendering Properties\n` +
-                   `      Antialiased: ${this .getAntialiased ()}\n` +
-                   `      Max samples: ${this .getMaxSamples ()}\n` +
-                   `      Depth size: ${this .getDepthSize ()} bits\n` +
-                   `      Color depth: ${this .getColorDepth ()} bits\n` +
-                   `      Max clip planes per shape: ${this .getMaxClipPlanes ()}\n` +
-                   `      Max lights per shape: ${this .getMaxLights ()}\n` +
-                   `      Max multi textures per shape: ${this .getMaxTextures ()}\n` +
-                   `      Texture units: ${this .getMaxCombinedTextureUnits ()}\n` +
-                   `      Max texture size: ${this .getMaxTextureSize ()} × ${this .getMaxTextureSize ()} pixels\n` +
-                   `      Texture memory: ${this .getTextureMemory ()}\n` +
-                   `      Max vertex uniform vectors: ${this .getMaxVertexUniformVectors ()}\n` +
-                   `      Max fragment uniform vectors: ${this .getMaxFragmentUniformVectors ()}\n` +
-                   `      Max vertex attribs: ${this .getMaxVertexAttribs ()}\n` +
-                   `      Max varying vectors: ${this .getMaxVaryingVectors ()}\n`);
+      return `Welcome to ${this .name} X3D Browser v${this .version}:\n` +
+             `   Current Graphics Renderer\n` +
+             `      Name: ${this .getVendor ()} ${this .getRenderer ()}\n` +
+             `      WebGL version: ${this .getWebGLVersion ()}\n` +
+             `      Shading language: ${this .getShadingLanguageVersion ()}\n` +
+             `   Rendering Properties\n` +
+             `      Antialiased: ${this .getAntialiased ()}\n` +
+             `      Max samples: ${this .getMaxSamples ()}\n` +
+             `      Depth size: ${this .getDepthSize ()} bits\n` +
+             `      Color depth: ${this .getColorDepth ()} bits\n` +
+             `      Max clip planes per shape: ${this .getMaxClipPlanes ()}\n` +
+             `      Max lights per shape: ${this .getMaxLights ()}\n` +
+             `      Max multi textures per shape: ${this .getMaxTextures ()}\n` +
+             `      Texture units: ${this .getMaxCombinedTextureUnits ()}\n` +
+             `      Max texture size: ${this .getMaxTextureSize ()} × ${this .getMaxTextureSize ()} pixels\n` +
+             `      Texture memory: ${this .getTextureMemory ()}\n` +
+             `      Max vertex uniform vectors: ${this .getMaxVertexUniformVectors ()}\n` +
+             `      Max fragment uniform vectors: ${this .getMaxFragmentUniformVectors ()}\n` +
+             `      Max vertex attribs: ${this .getMaxVertexAttribs ()}\n` +
+             `      Max varying vectors: ${this .getMaxVaryingVectors ()}\n`;
    },
    getName ()
    {
@@ -120485,23 +120457,39 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, Browser_X3DBrowse
    {
       name = String (name);
 
-      const profile = Configuration_SupportedProfiles .get (name);
+      const profile = this [_supportedProfiles] .get (name);
 
       if (profile)
          return profile;
 
       throw Error (`Profile '${name}' is not supported.`);
    },
+   addSupportedProfile: function (profile)
+   {
+      this [_supportedProfiles] .add (profile .name, profile);
+   },
+   updateSupportedProfile: function (profile)
+   {
+      this [_supportedProfiles] .update (profile .name, profile .name, profile);
+   },
+   removeSupportedProfile (name)
+   {
+      return this [_supportedProfiles] .remove (String (name));
+   },
+   getSupportedProfile (name)
+   {
+      return this [_supportedProfiles] .get (String (name));
+   },
    getSupportedProfiles ()
    {
-      return Configuration_SupportedProfiles;
+      return this [_supportedProfiles];
    },
-   getComponent (name, level = 0)
+   getComponent (name, level)
    {
       name   = String (name);
       level |= 0;
 
-      const component = Configuration_SupportedComponents .get (name);
+      const component = this [_supportedComponents] .get (name);
 
       if (component)
       {
@@ -120515,30 +120503,55 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, Browser_X3DBrowse
 
       throw Error (`Component '${name}' at level '${level}' is not supported.`);
    },
+   addSupportedComponent (component)
+   {
+      this [_supportedComponents] .add (component .name, component);
+   },
+   updateSupportedComponent (component)
+   {
+      this [_supportedComponents] .update (component .name, component .name, component);
+   },
+   removeSupportedComponent (name)
+   {
+      this [_supportedComponents] .remove (String (name));
+   },
+   getSupportedComponent (name)
+   {
+      return this [_supportedComponents] .get (String (name));
+   },
    getSupportedComponents ()
    {
-      return Configuration_SupportedComponents;
+      return this [_supportedComponents];
    },
    loadComponents: (() =>
    {
       function loadComponents (components, seen)
       {
-         return Promise .all (components .map (component => loadComponent (component, seen)))
+         return Promise .all (components .map (component => loadComponent .call (this, component, seen)))
       }
 
       async function loadComponent ({ name, providerUrl, external, dependencies }, seen)
       {
          if (seen .has (name)) return; seen .add (name);
 
-         await loadComponents (dependencies .map (name => Configuration_SupportedComponents .get (name)), seen);
+         await loadComponents .call (this, dependencies .map (name => this [_supportedComponents] .get (name)), seen);
 
          if (!external)
             return;
 
-         if (Networking_Features .NODE_ENV)
-            __webpack_require__.g .require (__webpack_require__.g .require ("url") .fileURLToPath (providerUrl))
-         else
-            await import (/* webpackIgnore: true */ providerUrl);
+         switch (x_ite_Features .ENVIRONMENT)
+         {
+            case "NODE":
+            {
+               __webpack_require__.g .require (__webpack_require__.g .require ("url") .fileURLToPath (providerUrl))
+               break;
+            }
+            case "BROWSER":
+            {
+               await import (/* webpackIgnore: true */ providerUrl);
+               break;
+            }
+         }
       }
 
       return function (... args)
@@ -120557,52 +120570,52 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, Browser_X3DBrowse
                component .push (arg);
 
             else if (typeof arg === "string")
-               component .push (Configuration_SupportedComponents .get (arg))
+               component .push (this [_supportedComponents] .get (arg))
          }
 
          // Load array of component names.
-         return loadComponents (component, new Set ());
+         return loadComponents .call (this, component, new Set ());
       };
    })(),
-   addConcreteNode (typeName, ConcreteNode)
+   addConcreteNode (ConcreteNode)
    {
-      ConcreteNodes .add (String (typeName), ConcreteNode);
+      this [_concreteNodes] .add (ConcreteNode .typeName, ConcreteNode);
    },
-   updateConcreteNode (typeName, ConcreteNode)
+   updateConcreteNode (ConcreteNode)
    {
-      ConcreteNodes .update (String (typeName), String (typeName), ConcreteNode);
+      this [_concreteNodes] .update (ConcreteNode .typeName, ConcreteNode .typeName, ConcreteNode);
    },
    removeConcreteNode (typeName)
    {
-      ConcreteNodes .remove (String (typeName));
+      this [_concreteNodes] .remove (String (typeName));
    },
    getConcreteNode (typeName)
    {
-      return ConcreteNodes .get (String (typeName));
+      return this [_concreteNodes] .get (String (typeName));
    },
    getConcreteNodes ()
    {
-      return ConcreteNodes;
+      return this [_concreteNodes];
    },
-   addAbstractNode (typeName, AbstractNode)
+   addAbstractNode (AbstractNode)
    {
-      AbstractNodes .add (String (typeName), AbstractNode);
+      this [_abstractNodes] .add (AbstractNode .typeName, AbstractNode);
    },
-   updateAbstractNode (typeName, AbstractNode)
+   updateAbstractNode (AbstractNode)
    {
-      AbstractNodes .update (String (typeName), String (typeName), AbstractNode);
+      this [_abstractNodes] .update (AbstractNode .typeName, AbstractNode .typeName, AbstractNode);
    },
    removeAbstractNode (typeName)
    {
-      AbstractNodes .remove (String (typeName));
+      this [_abstractNodes] .remove (String (typeName));
    },
    getAbstractNode (typeName)
    {
-      return AbstractNodes .get (String (typeName));
+      return this [_abstractNodes] .get (String (typeName));
    },
    getAbstractNodes ()
    {
-      return AbstractNodes;
+      return this [_abstractNodes];
    },
    createScene (profile, ... components)
    {
@@ -121232,22 +121245,34 @@ Object .defineProperties (X3DBrowser .prototype,
    },
    supportedProfiles:
    {
-      value: Configuration_SupportedProfiles,
+      get ()
+      {
+         return this [_supportedProfiles];
+      },
       enumerable: true,
    },
    supportedComponents:
    {
-      value: Configuration_SupportedComponents,
+      get ()
+      {
+         return this [_supportedComponents];
+      },
       enumerable: true,
    },
    concreteNodes:
    {
-      value: ConcreteNodes,
+      get ()
+      {
+         return this [_concreteNodes];
+      },
       enumerable: true,
    },
    abstractNodes:
    {
-      value: AbstractNodes,
+      get ()
+      {
+         return this [_abstractNodes];
+      },
       enumerable: true,
    },
 });
@@ -121358,8 +121383,8 @@ const MicroTime_default_ = undefined;
 x_ite_Namespace .set ("standard/Time/MicroTime", MicroTime_default_);
 /* harmony default export */ const MicroTime = ((/* unused pure expression or super */ null && (MicroTime_default_)));
 ;// CONCATENATED MODULE: ./src/lib/jquery.js
-/* provided dependency */ var jquery_$ = __webpack_require__(967);
-/* provided dependency */ var pako = __webpack_require__(480);
+/* provided dependency */ var jquery_$ = __webpack_require__(431);
+/* provided dependency */ var pako = __webpack_require__(921);
 Object .assign (jquery_$,
 {
    decodeText (input)
@@ -121424,14 +121449,14 @@ const jquery_default_ = jquery_$;
 x_ite_Namespace .set ("lib/jquery", jquery_default_);
 /* harmony default export */ const jquery = ((/* unused pure expression or super */ null && (jquery_default_)));
 ;// CONCATENATED MODULE: ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(706);
+/* provided dependency */ var libtess_libtess = __webpack_require__(31);
 const libtess_default_ = libtess_libtess;
 ;
 
 x_ite_Namespace .set ("lib/libtess", libtess_default_);
 /* harmony default export */ const lib_libtess = ((/* unused pure expression or super */ null && (libtess_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/X3D.js
-/* provided dependency */ var X3D_$ = __webpack_require__(967);
+/* provided dependency */ var X3D_$ = __webpack_require__(431);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -121688,7 +121713,7 @@ const X3D_default_ = X3D;
 x_ite_Namespace .set ("x_ite/X3D", X3D_default_);
 /* harmony default export */ const x_ite_X3D = (X3D_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/X3DCanvasElement.js
-/* provided dependency */ var X3DCanvasElement_$ = __webpack_require__(967);
+/* provided dependency */ var X3DCanvasElement_$ = __webpack_require__(431);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
