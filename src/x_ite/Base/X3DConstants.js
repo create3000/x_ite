@@ -136,8 +136,8 @@ Object .defineProperty (X3DConstants, "addNode",
 {
    value ({ typeName })
    {
-      if (this [typeName])
-         throw new Error ("Cannot add node to X3DConstants, constant is already defined.");
+      if (this .hasOwnProperty (typeName))
+         throw new Error ("Cannot add node to X3DConstants, node type is already defined.");
 
       this [typeName] = ++ NODE_TYPE;
    },
