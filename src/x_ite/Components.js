@@ -63,10 +63,7 @@ import Shape                from "./Components/Shape.js";
 import Sound                from "./Components/Sound.js";
 import Texturing            from "./Components/Texturing.js";
 import Time                 from "./Components/Time.js";
-import AbstractNodes        from "./Configuration/AbstractNodes.js"
-import ConcreteNodes        from "./Configuration/ConcreteNodes.js"
 import X3DBrowserContext    from "./Browser/X3DBrowserContext.js";
-import DEVELOPMENT          from "./DEVELOPMENT.js";
 
 let external = false;
 
@@ -74,23 +71,7 @@ const Components =
 {
    add ({ name, concreteNodes, abstractNodes, browserContext })
    {
-      if (concreteNodes)
-      {
-         for (const ConcreteNode of concreteNodes)
-            ConcreteNodes .add (ConcreteNode .typeName, ConcreteNode);
-      }
-
-      if (abstractNodes)
-      {
-         for (const AbstractNode of abstractNodes)
-            AbstractNodes .add (AbstractNode .typeName, AbstractNode);
-      }
-
-      if (browserContext)
-         X3DBrowserContext .addBrowserContext (browserContext);
-
-      if (DEVELOPMENT && external)
-         console .info (`Done loading external component '${name}'.`);
+      X3DBrowserContext .addComponent ({ name, concreteNodes, abstractNodes, browserContext, external });
    },
 };
 

@@ -40,6 +40,9 @@ const HTMLSupport =
 {
    addConcreteNode ({ typeName, fieldDefinitions })
    {
+      if (nodeTypeNames .has (typeName))
+         return;
+
       this .addNodeTypeName (typeName);
 
       for (const { name, accessType } of fieldDefinitions)

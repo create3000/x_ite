@@ -65,9 +65,12 @@ import X3DSoundContext                from "./Sound/X3DSoundContext.js";
 import X3DTexturingContext            from "./Texturing/X3DTexturingContext.js";
 import X3DTimeContext                 from "./Time/X3DTimeContext.js";
 import X3DRoutingContext              from "../Routing/X3DRoutingContext.js";
+import AbstractNodes                  from "../Configuration/AbstractNodes.js"
+import ConcreteNodes                  from "../Configuration/ConcreteNodes.js"
 import X3DWorld                       from "../Execution/X3DWorld.js";
 import TraverseType                   from "../Rendering/TraverseType.js";
 import StopWatch                      from "../../standard/Time/StopWatch.js";
+import DEVELOPMENT                    from "../DEVELOPMENT.js";
 
 const
    _world           = Symbol (),
@@ -372,32 +375,65 @@ for (const key of Object .keys (X3DBrowserContext .prototype))
 
 Object .assign (X3DBrowserContext,
 {
-   addBrowserContext (browserContext)
+   addComponent ({ name, concreteNodes, abstractNodes, browserContext, external })
    {
-      browserContexts .push (browserContext);
-
-      const keys = Object .keys (browserContext .prototype)
-         .filter (k => !k .match (/^(?:initialize|dispose)$/))
-         .concat (Object .getOwnPropertySymbols (browserContext .prototype));
-
-      for (const key of keys)
+      if (concreteNodes)
       {
-         Object .defineProperty (X3DBrowserContext .prototype, key,
+         for (const ConcreteNode of concreteNodes)
+            ConcreteNodes .add (ConcreteNode .typeName, ConcreteNode);
+      }
+
+      if (abstractNodes)
+      {
+         for (const AbstractNode of abstractNodes)
+            AbstractNodes .add (AbstractNode .typeName, AbstractNode);
+      }
+
+      if (browserContext)
+      {
+         browserContexts .push (browserContext);
+
+         const keys = Object .keys (browserContext .prototype)
+            .filter (k => !k .match (/^(?:initialize|dispose)$/))
+            .concat (Object .getOwnPropertySymbols (browserContext .prototype));
+
+         for (const key of keys)
          {
-            value: browserContext .prototype [key],
-            writable: true,
-         });
+            Object .defineProperty (X3DBrowserContext .prototype, key,
+            {
+               value: browserContext .prototype [key],
+               writable: true,
+            });
+         }
       }
 
       for (const browser of browsers)
       {
-         browserContext .call (browser);
-         browserContext .prototype .initialize ?.call (browser);
+         if (concreteNodes)
+         {
+            for (const ConcreteNode of concreteNodes)
+               browser .addConcreteNode (ConcreteNode);
+         }
 
-         // Process events from context creation. This will setup nodes like
-         // geometry option nodes before any node is created.
-         browser [_processEvents] ();
+         if (abstractNodes)
+         {
+            for (const AbstractNode of abstractNodes)
+               browser .addAbstractNode (AbstractNode);
+         }
+
+         if (browserContext)
+         {
+            browserContext .call (browser);
+            browserContext .prototype .initialize ?.call (browser);
+
+            // Process events from context creation. This will setup nodes like
+            // geometry option nodes before any node is created.
+            browser [_processEvents] ();
+         }
       }
+
+      if (external && DEVELOPMENT)
+         console .info (`Done loading external component '${name}'.`);
    },
 });
 
