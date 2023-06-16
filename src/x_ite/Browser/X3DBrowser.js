@@ -174,11 +174,27 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
 
       throw Error (`Profile '${name}' is not supported.`);
    },
+   addSupportedProfile: function (profile)
+   {
+      SupportedProfiles .add (profile .name, profile);
+   },
+   updateSupportedProfile: function (profile)
+   {
+      SupportedProfiles .update (profile .name, profile .name, profile);
+   },
+   removeSupportedProfile (name)
+   {
+      return SupportedProfiles .remove (String (name));
+   },
+   getSupportedProfile (name)
+   {
+      return SupportedProfiles .get (String (name));
+   },
    getSupportedProfiles ()
    {
       return SupportedProfiles;
    },
-   getComponent (name, level = 0)
+   getComponent (name, level)
    {
       name   = String (name);
       level |= 0;
@@ -196,6 +212,22 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
       }
 
       throw Error (`Component '${name}' at level '${level}' is not supported.`);
+   },
+   addSupportedComponent (component)
+   {
+      SupportedComponents .add (component .name, component);
+   },
+   updateSupportedComponent (component)
+   {
+      SupportedComponents .update (component .name, component .name, component);
+   },
+   removeSupportedComponent (name)
+   {
+      SupportedComponents .remove (String (name));
+   },
+   getSupportedComponent (name)
+   {
+      return SupportedComponents .get (String (name));
    },
    getSupportedComponents ()
    {
@@ -246,13 +278,13 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
          return loadComponents (component, new Set ());
       };
    })(),
-   addConcreteNode (typeName, ConcreteNode)
+   addConcreteNode (ConcreteNode)
    {
-      ConcreteNodes .add (String (typeName), ConcreteNode);
+      ConcreteNodes .add (ConcreteNode .typeName, ConcreteNode);
    },
-   updateConcreteNode (typeName, ConcreteNode)
+   updateConcreteNode (ConcreteNode)
    {
-      ConcreteNodes .update (String (typeName), String (typeName), ConcreteNode);
+      ConcreteNodes .update (ConcreteNode .typeName, ConcreteNode .typeName, ConcreteNode);
    },
    removeConcreteNode (typeName)
    {
@@ -266,13 +298,13 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    {
       return ConcreteNodes;
    },
-   addAbstractNode (typeName, AbstractNode)
+   addAbstractNode (AbstractNode)
    {
-      AbstractNodes .add (String (typeName), AbstractNode);
+      AbstractNodes .add (AbstractNode .typeName, AbstractNode);
    },
-   updateAbstractNode (typeName, AbstractNode)
+   updateAbstractNode (AbstractNode)
    {
-      AbstractNodes .update (String (typeName), String (typeName), AbstractNode);
+      AbstractNodes .update (AbstractNode .typeName, AbstractNode .typeName, AbstractNode);
    },
    removeAbstractNode (typeName)
    {
