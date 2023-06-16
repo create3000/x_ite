@@ -51,12 +51,19 @@ const URLs =
 {
    getScriptUrl: (() =>
    {
-      if (Features .NODE_ENV)
-         var src = global .require ("url") .pathToFileURL (__filename) .href;
-      else if (document .currentScript)
-         var src = document .currentScript .src;
-      else
-         var src = document .location .href;
+      switch (Features .ENVIRONMENT)
+      {
+         case "NODE":
+         {
+            var src = global .require ("url") .pathToFileURL (__filename) .href;
+            break;
+         }
+         case "BROWSER":
+         {
+            var src = document .currentScript ?.src ?? document .location .href;
+            break;
+         }
+      }
 
       return function ()
       {

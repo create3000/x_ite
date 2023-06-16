@@ -257,10 +257,19 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
          if (!external)
             return;
 
-         if (Features .NODE_ENV)
-            global .require (global .require ("url") .fileURLToPath (providerUrl))
-         else
-            await import (/* webpackIgnore: true */ providerUrl);
+         switch (Features .ENVIRONMENT)
+         {
+            case "NODE":
+            {
+               global .require (global .require ("url") .fileURLToPath (providerUrl))
+               break;
+            }
+            case "BROWSER":
+            {
+               await import (/* webpackIgnore: true */ providerUrl);
+               break;
+            }
+         }
       }
 
       return function (... args)

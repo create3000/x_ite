@@ -47,7 +47,13 @@
 
 const Features =
 {
-   NODE_ENV: (typeof process === "object") && (process .release .name .search (/node|io.js/) !== -1),
+   get ENVIRONMENT ()
+   {
+      if ((typeof process === "object") && (process .release .name .search (/node|io.js/) !== -1))
+         return "NODE";
+
+      return "BROWSER";
+   },
 };
 
 export default Features;
