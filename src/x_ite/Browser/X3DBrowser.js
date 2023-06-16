@@ -118,30 +118,30 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
       if (!this .getBrowserOption ("Debug"))
          return;
 
-      this .printWelcomeMessage ();
+      this .print (this .getWelcomeMessage ());
    },
-   printWelcomeMessage ()
+   getWelcomeMessage ()
    {
-      this .print (`Welcome to ${this .name} X3D Browser v${this .version}:\n` +
-                   `   Current Graphics Renderer\n` +
-                   `      Name: ${this .getVendor ()} ${this .getRenderer ()}\n` +
-                   `      WebGL version: ${this .getWebGLVersion ()}\n` +
-                   `      Shading language: ${this .getShadingLanguageVersion ()}\n` +
-                   `   Rendering Properties\n` +
-                   `      Antialiased: ${this .getAntialiased ()}\n` +
-                   `      Max samples: ${this .getMaxSamples ()}\n` +
-                   `      Depth size: ${this .getDepthSize ()} bits\n` +
-                   `      Color depth: ${this .getColorDepth ()} bits\n` +
-                   `      Max clip planes per shape: ${this .getMaxClipPlanes ()}\n` +
-                   `      Max lights per shape: ${this .getMaxLights ()}\n` +
-                   `      Max multi textures per shape: ${this .getMaxTextures ()}\n` +
-                   `      Texture units: ${this .getMaxCombinedTextureUnits ()}\n` +
-                   `      Max texture size: ${this .getMaxTextureSize ()} × ${this .getMaxTextureSize ()} pixels\n` +
-                   `      Texture memory: ${this .getTextureMemory ()}\n` +
-                   `      Max vertex uniform vectors: ${this .getMaxVertexUniformVectors ()}\n` +
-                   `      Max fragment uniform vectors: ${this .getMaxFragmentUniformVectors ()}\n` +
-                   `      Max vertex attribs: ${this .getMaxVertexAttribs ()}\n` +
-                   `      Max varying vectors: ${this .getMaxVaryingVectors ()}\n`);
+      return `Welcome to ${this .name} X3D Browser v${this .version}:\n` +
+             `   Current Graphics Renderer\n` +
+             `      Name: ${this .getVendor ()} ${this .getRenderer ()}\n` +
+             `      WebGL version: ${this .getWebGLVersion ()}\n` +
+             `      Shading language: ${this .getShadingLanguageVersion ()}\n` +
+             `   Rendering Properties\n` +
+             `      Antialiased: ${this .getAntialiased ()}\n` +
+             `      Max samples: ${this .getMaxSamples ()}\n` +
+             `      Depth size: ${this .getDepthSize ()} bits\n` +
+             `      Color depth: ${this .getColorDepth ()} bits\n` +
+             `      Max clip planes per shape: ${this .getMaxClipPlanes ()}\n` +
+             `      Max lights per shape: ${this .getMaxLights ()}\n` +
+             `      Max multi textures per shape: ${this .getMaxTextures ()}\n` +
+             `      Texture units: ${this .getMaxCombinedTextureUnits ()}\n` +
+             `      Max texture size: ${this .getMaxTextureSize ()} × ${this .getMaxTextureSize ()} pixels\n` +
+             `      Texture memory: ${this .getTextureMemory ()}\n` +
+             `      Max vertex uniform vectors: ${this .getMaxVertexUniformVectors ()}\n` +
+             `      Max fragment uniform vectors: ${this .getMaxFragmentUniformVectors ()}\n` +
+             `      Max vertex attribs: ${this .getMaxVertexAttribs ()}\n` +
+             `      Max varying vectors: ${this .getMaxVaryingVectors ()}\n`;
    },
    getName ()
    {
