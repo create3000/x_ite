@@ -211,7 +211,8 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
 
       for (;;)
       {
-         const protoNode = executionContext .protos .get (name) ?? executionContext .externprotos .get (name);
+         const protoNode = executionContext .protos .get (name)
+            ?? executionContext .externprotos .get (name);
 
          if (protoNode)
             return protoNode .createInstance (this, setup);
