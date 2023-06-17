@@ -117,6 +117,10 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
          "SplashScreen",
       ]);
 
+      const mappings = new Map ([
+         ["AutoUpdate", "Update"],
+      ]);
+
       const restorable = new Set ([
          "PrimitiveQuality",
          "Rubberband",
@@ -136,7 +140,7 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
             if (attributes .has (name))
             {
                const
-                  attribute = $.toLowerCaseFirst (name),
+                  attribute = $.toLowerCaseFirst (mappings .get (name) ?? name),
                   value     = browser .getElement () .attr (attribute);
 
                if (value !== undefined)
