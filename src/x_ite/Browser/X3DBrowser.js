@@ -196,7 +196,12 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    },
    getSupportedProfile (name)
    {
-      return this [_supportedProfiles] .get (String (name));
+      const profile = this [_supportedProfiles] .get (String (name));
+
+      if (profile)
+         return profile;
+
+      throw new Error (`Supported profile '${name}' does not exists.`);
    },
    getSupportedProfiles ()
    {
@@ -235,7 +240,12 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    },
    getSupportedComponent (name)
    {
-      return this [_supportedComponents] .get (String (name));
+      const component = this [_supportedComponents] .get (String (name));
+
+      if (component)
+         return component;
+
+      throw new Error (`Supported component '${name}' does not exists.`);
    },
    getSupportedComponents ()
    {
@@ -309,7 +319,12 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    },
    getConcreteNode (typeName)
    {
-      return this [_concreteNodes] .get (String (typeName));
+      const concreteNode = this [_concreteNodes] .get (String (typeName));
+
+      if (concreteNode)
+         return concreteNode;
+
+      throw new Error (`Concrete node '${typeName}' does not exists.`);
    },
    getConcreteNodes ()
    {
@@ -329,7 +344,12 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    },
    getAbstractNode (typeName)
    {
-      return this [_abstractNodes] .get (String (typeName));
+      const abstractNode = this [_abstractNodes] .get (String (typeName));
+
+      if (abstractNode)
+         return abstractNode;
+
+      throw new Error (`Abstract node '${typeName}' does not exists.`);
    },
    getAbstractNodes ()
    {

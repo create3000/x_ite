@@ -160,7 +160,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
 
       if (setup === false)
       {
-         const ConcreteNode = this .getBrowser () .getConcreteNode (typeName);
+         const ConcreteNode = this .getBrowser () .getConcreteNodes () .get (typeName);
 
          if (!ConcreteNode)
             return null;
@@ -180,7 +180,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       }
       else
       {
-         const ConcreteNode = this .getBrowser () .getConcreteNode (typeName);
+         const ConcreteNode = this .getBrowser () .getConcreteNodes () .get (typeName);
 
          if (!ConcreteNode)
             throw new Error (`Unknown node type '${typeName}'.`);
