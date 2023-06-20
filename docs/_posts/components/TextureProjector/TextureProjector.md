@@ -51,7 +51,7 @@ Author-provided prose that describes intended purpose of the url asset.
 
 ### SFFloat [in, out] **farDistance** 0 <small></small>
 
-### SFFloat [out] **aspectRatio** <small></small>
+### SFFloat [out] **aspectRatio**
 
 ### SFNode [in, out] **texture** <small></small>
 

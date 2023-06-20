@@ -33,7 +33,7 @@ The ChannelSplitter node belongs to the **Sound** component and its default cont
 
 ### SFFloat [in, out] **gain** <small></small>
 
-### SFInt32 [out] **channelCount** <small></small>
+### SFInt32 [out] **channelCount**
 
 ### SFString [in, out] **channelCountMode** <small></small>
 

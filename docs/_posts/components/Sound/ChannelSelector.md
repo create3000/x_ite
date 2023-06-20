@@ -35,7 +35,7 @@ The ChannelSelector node belongs to the **Sound** component and its default cont
 
 ### SFInt32 [in, out] **channelSelection** <small></small>
 
-### SFInt32 [out] **channelCount** <small></small>
+### SFInt32 [out] **channelCount**
 
 ### SFString [in, out] **channelCountMode** <small></small>
 

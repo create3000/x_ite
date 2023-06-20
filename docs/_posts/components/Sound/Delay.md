@@ -39,7 +39,7 @@ The Delay node belongs to the **Sound** component and its default container fiel
 
 ### SFTime [in, out] **tailTime** <small></small>
 
-### SFInt32 [out] **channelCount** <small></small>
+### SFInt32 [out] **channelCount**
 
 ### SFString [in, out] **channelCountMode** <small></small>
 

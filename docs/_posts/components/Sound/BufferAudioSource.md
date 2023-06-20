@@ -99,9 +99,9 @@ Location and filename of image. Multiple locations are more reliable, and includ
 
 ### SFFloat [in, out] **sampleRate** <small></small>
 
-### SFInt32 [out] **bufferLength** <small></small>
+### SFInt32 [out] **bufferLength**
 
-### SFInt32 [out] **channelCount** <small></small>
+### SFInt32 [out] **channelCount**
 
 ### SFString [in, out] **channelCountMode** <small></small>
 

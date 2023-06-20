@@ -44,7 +44,7 @@ Enables/disables node operation.
 
 Output field intersections.
 
-### MFNode [out] **contacts**
+### MFNode [out] **contacts** <small>[Contact]</small>
 
 Output field contacts.
 

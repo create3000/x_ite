@@ -69,7 +69,7 @@ Author-provided prose that describes intended purpose of the url asset.
 
 ### SFTime [out] **elapsedTime**
 
-### SFInt32 [out] **frameCount** <small></small>
+### SFInt32 [out] **frameCount**
 
 ## External Links
 

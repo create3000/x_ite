@@ -35,13 +35,13 @@ The AudioDestination node belongs to the **Sound** component and its default con
 
 ### SFInt32 [in, out] **maxChannelCount** <small></small>
 
-### SFInt32 [out] **channelCount** <small></small>
+### SFInt32 [out] **channelCount**
 
 ### SFString [in, out] **channelCountMode** <small></small>
 
 ### SFString [in, out] **channelInterpretation** <small></small>
 
-### SFString [out] **mediaDeviceID** <small></small>
+### SFString [out] **mediaDeviceID**
 
 ### SFBool [out] **isActive**
 
