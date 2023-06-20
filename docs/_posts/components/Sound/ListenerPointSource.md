@@ -29,7 +29,7 @@ The ListenerPointSource node belongs to the **Sound** component and its default 
 
 ### SFString [in, out] **description** ""
 
-### SFBool [in, out] **enabled** <small></small>
+### SFBool [in, out] **enabled** TRUE
 
 ### SFVec3f [in, out] **position** <small></small>
 
@@ -51,11 +51,11 @@ The ListenerPointSource node belongs to the **Sound** component and its default 
 
 ### SFTime [in, out] **stopTime** <small>(-∞,∞)</small>
 
-### SFBool [out] **isPaused** <small></small>
+### SFBool [out] **isPaused**
 
-### SFBool [out] **isActive** <small></small>
+### SFBool [out] **isActive**
 
-### SFTime [out] **elapsedTime** <small></small>
+### SFTime [out] **elapsedTime**
 
 ## External Links
 

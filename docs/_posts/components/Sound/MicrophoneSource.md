@@ -29,7 +29,7 @@ The MicrophoneSource node belongs to the **Sound** component and its default con
 
 ### SFString [in, out] **description** ""
 
-### SFBool [in, out] **enabled** <small></small>
+### SFBool [in, out] **enabled** TRUE
 
 ### SFFloat [in, out] **gain** <small></small>
 
@@ -43,11 +43,11 @@ The MicrophoneSource node belongs to the **Sound** component and its default con
 
 ### SFTime [in, out] **stopTime** <small>(-∞,∞)</small>
 
-### SFBool [out] **isPaused** <small></small>
+### SFBool [out] **isPaused**
 
-### SFBool [out] **isActive** <small></small>
+### SFBool [out] **isActive**
 
-### SFTime [out] **elapsedTime** <small></small>
+### SFTime [out] **elapsedTime**
 
 ## External Links
 

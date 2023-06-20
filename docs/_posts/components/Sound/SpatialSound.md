@@ -29,7 +29,7 @@ The SpatialSound node belongs to the **Sound** component and its default contain
 
 ### SFString [in, out] **description** ""
 
-### SFBool [in, out] **enabled** <small></small>
+### SFBool [in, out] **enabled** TRUE
 
 ### SFBool [] **spatialize** <small></small>
 

@@ -29,7 +29,7 @@ The AudioDestination node belongs to the **Sound** component and its default con
 
 ### SFString [in, out] **description** ""
 
-### SFBool [in, out] **enabled** <small></small>
+### SFBool [in, out] **enabled** TRUE
 
 ### SFFloat [in, out] **gain** <small></small>
 
@@ -43,7 +43,7 @@ The AudioDestination node belongs to the **Sound** component and its default con
 
 ### SFString [out] **mediaDeviceID** <small></small>
 
-### SFBool [out] **isActive** <small></small>
+### SFBool [out] **isActive**
 
 ### MFNode [in, out] **children** <small></small>
 

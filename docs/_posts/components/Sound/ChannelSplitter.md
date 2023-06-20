@@ -29,7 +29,7 @@ The ChannelSplitter node belongs to the **Sound** component and its default cont
 
 ### SFString [in, out] **description** ""
 
-### SFBool [in, out] **enabled** <small></small>
+### SFBool [in, out] **enabled** TRUE
 
 ### SFFloat [in, out] **gain** <small></small>
 

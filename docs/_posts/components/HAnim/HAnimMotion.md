@@ -37,11 +37,11 @@ Author-provided prose that describes intended purpose of the url asset.
 
 - Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for & ampersand character, or &amp;#34; for " quotation-mark character).
 
-### SFBool [in, out] **enabled** <small></small>
+### SFBool [in, out] **enabled** TRUE
 
-### SFBool [undefined] **next** <small></small>
+### SFBool [in] **next**
 
-### SFBool [undefined] **previous** <small></small>
+### SFBool [in] **previous**
 
 ### SFTime [in, out] **frameDuration** <small></small>
 
@@ -65,9 +65,9 @@ Author-provided prose that describes intended purpose of the url asset.
 
 ### MFFloat [in, out] **values** <small></small>
 
-### SFTime [out] **cycleTime** <small></small>
+### SFTime [out] **cycleTime**
 
-### SFTime [out] **elapsedTime** <small></small>
+### SFTime [out] **elapsedTime**
 
 ### SFInt32 [out] **frameCount** <small></small>
 

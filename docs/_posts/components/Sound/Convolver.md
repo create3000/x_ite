@@ -29,7 +29,7 @@ The Convolver node belongs to the **Sound** component and its default container 
 
 ### SFString [in, out] **description** ""
 
-### SFBool [in, out] **enabled** <small></small>
+### SFBool [in, out] **enabled** TRUE
 
 ### SFFloat [in, out] **gain** <small></small>
 
@@ -53,11 +53,11 @@ The Convolver node belongs to the **Sound** component and its default container 
 
 ### SFTime [in, out] **stopTime** <small>(-∞,∞)</small>
 
-### SFBool [out] **isPaused** <small></small>
+### SFBool [out] **isPaused**
 
-### SFBool [out] **isActive** <small></small>
+### SFBool [out] **isActive**
 
-### SFTime [out] **elapsedTime** <small></small>
+### SFTime [out] **elapsedTime**
 
 ### MFNode [in, out] **children** <small></small>
 
