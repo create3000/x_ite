@@ -41,11 +41,11 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 *set_destination* resets destination value of this node.
 
-### SFFloat [ ] **initialValue** <small>(-∞,∞)</small>
+### SFFloat [ ] **initialValue** 0 <small>(-∞,∞)</small>
 
 Initial starting value for this node.
 
-### SFFloat [ ] **initialDestination** <small>(-∞,∞)</small>
+### SFFloat [ ] **initialDestination** 0 <small>(-∞,∞)</small>
 
 Initial destination value for this node.
 
