@@ -32,7 +32,7 @@ The BooleanTrigger node belongs to the **EventUtilities** component and its defa
 
 Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
 
-### SFTime [in] **set_triggerTime**
+### SFTime [in] **set_triggerTime** <small>(-∞,∞)</small>
 
 *set_triggerTime* provides input time event, typical event sent is TouchSensor touchTime.
 
