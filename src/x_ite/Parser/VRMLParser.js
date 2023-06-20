@@ -115,7 +115,7 @@ const Grammar = Expressions ({
    eventOut:     /eventOut/gy,
    exposedField: /exposedField/gy,
 
-   FieldType: /(MFBool|MFColorRGBA|MFColor|MFDouble|MFFloat|MFImage|MFInt32|MFMatrix3d|MFMatrix3f|MFMatrix4d|MFMatrix4f|MFNode|MFRotation|MFString|MFTime|MFVec2d|MFVec2f|MFVec3d|MFVec3f|MFVec4d|MFVec4f|SFBool|SFColorRGBA|SFColor|SFDouble|SFFloat|SFImage|SFInt32|SFMatrix3d|SFMatrix3f|SFMatrix4d|SFMatrix4f|SFNode|SFRotation|SFString|SFTime|SFVec2d|SFVec2f|SFVec3d|SFVec3f|SFVec4d|SFVec4f)/gy,
+   FieldType: /([SM]F(?:Bool|ColorRGBA|Color|Double|Float|Image|Int32|Matrix3d|Matrix3f|Matrix4d|Matrix4f|Node|Rotation|String|Time|Vec2d|Vec2f|Vec3d|Vec3f|Vec4d|Vec4f))/gy,
 
    // Values
    int32:  /((?:0[xX][\da-fA-F]+)|(?:[+-]?\d+))/gy,
