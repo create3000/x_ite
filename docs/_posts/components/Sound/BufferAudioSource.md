@@ -107,7 +107,7 @@ Location and filename of image. Multiple locations are more reliable, and includ
 
 ### SFString [in, out] **channelInterpretation** <small></small>
 
-### SFBool [in, out] **loop** <small></small>
+### SFBool [in, out] **loop** FALSE
 
 ### SFTime [in, out] **startTime** <small>(-∞,∞)</small>
 

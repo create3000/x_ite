@@ -105,7 +105,7 @@ farDistance defines maximum clipping plane distance allowed for object display.
 
 - nearDistance must be less than farDistance.
 
-### SFBool [in, out] **viewAll** FALSE</small>
+### SFBool [in, out] **viewAll** FALSE
 
 Viewpoint is automatically adjusted to view all visible geometry. Typically centerOfRotation is shifted to center of current bounding box and view is zoomed in or out until all visible objects are viewed.
 

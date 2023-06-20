@@ -35,7 +35,7 @@ The Convolver node belongs to the **Sound** component and its default container 
 
 ### MFFloat [in, out] **buffer** <small></small>
 
-### SFBool [in, out] **normalize** <small></small>
+### SFBool [in, out] **normalize** FALSE
 
 ### SFTime [in, out] **tailTime** <small></small>
 

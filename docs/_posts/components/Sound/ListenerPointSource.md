@@ -37,11 +37,11 @@ The ListenerPointSource node belongs to the **Sound** component and its default 
 
 ### SFFloat [in, out] **gain** <small></small>
 
-### SFBool [in, out] **dopplerEnabled** <small></small>
+### SFBool [in, out] **dopplerEnabled** FALSE
 
 ### SFFloat [in, out] **interauralDistance** <small></small>
 
-### SFBool [in, out] **trackCurrentView** <small></small>
+### SFBool [in, out] **trackCurrentView** FALSE
 
 ### SFTime [in, out] **startTime** <small>(-∞,∞)</small>
 

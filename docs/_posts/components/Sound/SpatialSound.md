@@ -31,7 +31,7 @@ The SpatialSound node belongs to the **Sound** component and its default contain
 
 ### SFBool [in, out] **enabled** TRUE
 
-### SFBool [] **spatialize** <small></small>
+### SFBool [ ] **spatialize** TRUE
 
 ### SFFloat [in, out] **coneInnerAngle** <small></small>
 
@@ -43,9 +43,9 @@ The SpatialSound node belongs to the **Sound** component and its default contain
 
 ### SFString [in, out] **distanceModel** <small></small>
 
-### SFBool [in, out] **dopplerEnabled** <small></small>
+### SFBool [in, out] **dopplerEnabled** FALSE
 
-### SFBool [in, out] **enableHRTF** <small></small>
+### SFBool [in, out] **enableHRTF** FALSE
 
 ### SFFloat [in, out] **gain** <small></small>
 

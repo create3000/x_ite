@@ -60,7 +60,7 @@ Definition parameters for linear-interpolation function time intervals, in incre
 
 - Number of keys must match number of keyValues!
 
-### MFBool [in, out] **keyValue** [ ] <small>[]</small>
+### MFBool [in, out] **keyValue** [ ]
 
 Output values for linear interpolation, each corresponding to time-fraction keys.
 
