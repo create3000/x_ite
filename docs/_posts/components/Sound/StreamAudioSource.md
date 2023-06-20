@@ -35,13 +35,13 @@ The StreamAudioSource node belongs to the **Sound** component and its default co
 
 ### MFString [in, out] **streamIdentifier** <small></small>
 
-### SFTime [in, out] **startTime** <small></small>
+### SFTime [in, out] **startTime** <small>(-∞,∞)</small>
 
-### SFTime [in, out] **resumeTime** <small></small>
+### SFTime [in, out] **resumeTime** <small>(-∞,∞)</small>
 
-### SFTime [in, out] **pauseTime** <small></small>
+### SFTime [in, out] **pauseTime** <small>(-∞,∞)</small>
 
-### SFTime [in, out] **stopTime** <small></small>
+### SFTime [in, out] **stopTime** <small>(-∞,∞)</small>
 
 ### SFBool [out] **isPaused** <small></small>
 

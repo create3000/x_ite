@@ -66,7 +66,7 @@ When time now \>= startTime, isActive becomes true and TimeSensor becomes active
 
 - Usually receives a ROUTEd time value.
 
-### SFTime [in, out] **resumeTime**
+### SFTime [in, out] **resumeTime** <small>(-∞,∞)</small>
 
 When *resumeTime* becomes\<= time now, isPaused becomes false and TimeSensor becomes inactive. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 

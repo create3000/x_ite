@@ -109,13 +109,13 @@ Location and filename of image. Multiple locations are more reliable, and includ
 
 ### SFBool [in, out] **loop** <small></small>
 
-### SFTime [in, out] **startTime** <small></small>
+### SFTime [in, out] **startTime** <small>(-∞,∞)</small>
 
-### SFTime [in, out] **resumeTime** <small></small>
+### SFTime [in, out] **resumeTime** <small>(-∞,∞)</small>
 
-### SFTime [in, out] **pauseTime** <small></small>
+### SFTime [in, out] **pauseTime** <small>(-∞,∞)</small>
 
-### SFTime [in, out] **stopTime** <small></small>
+### SFTime [in, out] **stopTime** <small>(-∞,∞)</small>
 
 ### SFBool [out] **isPaused** <small></small>
 
