@@ -33,19 +33,19 @@ The OrientationDamper node belongs to the **Followers** component and its defaul
 
 Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
 
-### SFRotation [in] **set_value**
+### SFRotation [in] **set_value** <small>[-1,1] or (-∞,∞)</small>
 
 *set_value* resets current value of this node.
 
-### SFRotation [in] **set_destination**
+### SFRotation [in] **set_destination** <small>[-1,1] or (-∞,∞)</small>
 
 *set_destination* resets destination value of this node.
 
-### SFRotation [ ] **initialValue** 0 0 1 0
+### SFRotation [ ] **initialValue** 0 0 1 0 <small>[-1,1] or (-∞,∞)</small>
 
 Initial starting value for this node.
 
-### SFRotation [ ] **initialDestination** 0 0 1 0
+### SFRotation [ ] **initialDestination** 0 0 1 0 <small>[-1,1] or (-∞,∞)</small>
 
 Initial destination value for this node.
 

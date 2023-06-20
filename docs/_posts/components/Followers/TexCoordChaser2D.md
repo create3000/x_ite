@@ -33,19 +33,19 @@ The TexCoordChaser2D node belongs to the **Followers** component and its default
 
 Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
 
-### MFVec2f [in] **set_value**
+### MFVec2f [in] **set_value** <small>(-∞,∞)</small>
 
 *set_value* resets current value of this node.
 
-### MFVec2f [in] **set_destination**
+### MFVec2f [in] **set_destination** <small>(-∞,∞)</small>
 
 *set_destination* resets destination value of this node.
 
-### MFVec2f [ ] **initialValue** [ ]
+### MFVec2f [ ] **initialValue** [ ] <small>(-∞,∞)</small>
 
 Initial starting value for this node.
 
-### MFVec2f [ ] **initialDestination** [ ]
+### MFVec2f [ ] **initialDestination** [ ] <small>(-∞,∞)</small>
 
 Initial destination value for this node.
 

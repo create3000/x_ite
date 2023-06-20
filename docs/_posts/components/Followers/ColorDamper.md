@@ -33,11 +33,11 @@ The ColorDamper node belongs to the **Followers** component and its default cont
 
 Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
 
-### SFColor [in] **set_value**
+### SFColor [in] **set_value** <small>[0,1]</small>
 
 *set_value* resets current value of this node.
 
-### SFColor [in] **set_destination**
+### SFColor [in] **set_destination** <small>[0,1]</small>
 
 *set_destination* resets destination value of this node.
 

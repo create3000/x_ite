@@ -35,7 +35,7 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 Enables/disables node operation.
 
-### MFNode [in] **set_contacts**<span class="red"><small> not supported</small></span>
+### MFNode [in] **set_contacts** <span class="red"><small>not supported</small></span>
 
 *set_contacts* input field for Contact nodes provides per-frame information about contacts between bodies.
 

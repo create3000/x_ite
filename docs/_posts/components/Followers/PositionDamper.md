@@ -33,19 +33,19 @@ The PositionDamper node belongs to the **Followers** component and its default c
 
 Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
 
-### SFVec3f [in] **set_value**
+### SFVec3f [in] **set_value** <small>(-∞,∞)</small>
 
 *set_value* resets current value of this node.
 
-### SFVec3f [in] **set_destination**
+### SFVec3f [in] **set_destination** <small>(-∞,∞)</small>
 
 *set_destination* resets destination value of this node.
 
-### SFVec3f [ ] **initialValue** 0 0 0
+### SFVec3f [ ] **initialValue** 0 0 0 <small>(-∞,∞)</small>
 
 Initial starting value for this node.
 
-### SFVec3f [ ] **initialDestination** 0 0 0
+### SFVec3f [ ] **initialDestination** 0 0 0 <small>(-∞,∞)</small>
 
 Initial destination value for this node.
 

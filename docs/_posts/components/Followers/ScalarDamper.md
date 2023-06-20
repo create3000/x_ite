@@ -33,19 +33,19 @@ The ScalarDamper node belongs to the **Followers** component and its default con
 
 Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
 
-### SFFloat [in] **set_value**
+### SFFloat [in] **set_value** <small>(-∞,∞)</small>
 
 *set_value* resets current value of this node.
 
-### SFFloat [in] **set_destination**
+### SFFloat [in] **set_destination** <small>(-∞,∞)</small>
 
 *set_destination* resets destination value of this node.
 
-### SFFloat [ ] **initialValue**
+### SFFloat [ ] **initialValue** <small>(-∞,∞)</small>
 
 Initial starting value for this node.
 
-### SFFloat [ ] **initialDestination**
+### SFFloat [ ] **initialDestination** <small>(-∞,∞)</small>
 
 Initial destination value for this node.
 
