@@ -38,7 +38,7 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 - Allows author to design when ImageTextureAtlas loading occurs via user interaction, event chains or scripting.
 - Use a separate LoadSensor node to detect when loading is complete.
 
-### MFString [in, out] **url** [ ]
+### MFString [in, out] **url** [ ] <small>[URI]</small>
 
 Name of the X3D model of interest, for example "MyFastBoat.x3d".
 
