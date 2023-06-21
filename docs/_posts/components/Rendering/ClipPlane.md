@@ -35,7 +35,7 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 Enables/disables node operation.
 
-### SFVec4f [in, out] **plane** 0 1 0 0 <small>[0,1]</small>
+### SFVec4f [in, out] **plane** 0 1 0 0 <small>[0,1] or (-∞,∞)</small>
 
 If (a,b,c,d) is the plane, with the first three components being a normalized vector describing the plane's normal direction (and thus the fourth component d being distance from the origin), a point (x,y,z) is visible to the user, with regards to the clipping plane, if a\*x+b\*y+c\*z+d is greater than 0.
 
