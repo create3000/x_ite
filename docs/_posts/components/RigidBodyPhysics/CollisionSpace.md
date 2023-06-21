@@ -66,7 +66,7 @@ Whether to display bounding box for associated geometry, aligned with world coor
 
 - The bounding box is displayed regardless of whether contained content is visible.
 
-### SFVec3f [ ] **bboxSize** -1 -1 -1
+### SFVec3f [ ] **bboxSize** -1 -1 -1 <small>[0,∞) or −1 −1 −1</small>
 
 Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost. Bounding box size can also be defined as an optional authoring hint that suggests an optimization or constraint.
 
@@ -74,7 +74,7 @@ Bounding box size is usually omitted, and can easily be calculated automatically
 
 - Can be useful for collision computations or inverse-kinematics (IK) engines.
 
-### SFVec3f [ ] **bboxCenter** 0 0 0
+### SFVec3f [ ] **bboxCenter** 0 0 0 <small>(-∞,∞)</small>
 
 Bounding box center: optional hint for position offset from origin of local coordinate system.
 
