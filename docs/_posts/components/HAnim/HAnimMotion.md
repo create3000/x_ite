@@ -51,7 +51,7 @@ Author-provided prose that describes intended purpose of the url asset.
 
 ### SFBool [in, out] **loop** <small></small>
 
-### SFString [in, out] **channels** <small></small>
+### SFString [in, out] **channels**
 
 ### MFBool [in, out] **channelsEnabled** <small></small>
 
