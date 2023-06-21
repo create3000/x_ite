@@ -47,7 +47,7 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 *minAngle* is minimum rotation angle for hinge.
 
-### SFFloat [in, out] **maxAngle** π <small>[-π,π)<span class="red">not supported</span></small>
+### SFFloat [in, out] **maxAngle** π <small>[-π,π)</small> <small class="red">not supported</small>
 
 *maxAngle* is maximum rotation angle for hinge.
 
