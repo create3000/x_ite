@@ -108,11 +108,11 @@ Multicast network port, for example: 62040.
 
 Identifies a particular radio within a given entity.
 
-### SFFloat [in, out] **readInterval** 0.1
+### SFFloat [in, out] **readInterval** 0.1 <small>(0,∞)</small>
 
 Seconds between read updates, 0 means no reading.
 
-### SFFloat [in, out] **receivedPower**
+### SFFloat [in, out] **receivedPower** <small>(0,∞)</small>
 
 *receivedPower* indicates radio frequency (RF) power received, in units of decibel-milliwatts (dBm), after applying any propagation loss and antenna gain
 
@@ -148,7 +148,7 @@ Simulation/exercise transmitterSiteID of the participating LAN or organization.
 
 Select geometry to render: -1 for no geometry, 0 for text trace, 1 for default geometry, (optional) higher values to render different states.
 
-### SFFloat [in, out] **writeInterval** 1
+### SFFloat [in, out] **writeInterval** 1 <small>(0,∞)</small>
 
 Seconds between write updates, 0 means no writing (sending).
 

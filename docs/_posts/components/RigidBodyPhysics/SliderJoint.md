@@ -59,7 +59,7 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 Input/Output field sliderForce.
 
-### SFFloat [in, out] **stopBounce** 0 <small>[0,1] <span class="red">not supported</span></small>
+### SFFloat [in, out] **stopBounce** 0 <small>[0,1]</small> <small class="red">not supported</small>
 
 *stopBounce* is velocity factor for bounce back once stop point is reached.
 
@@ -67,7 +67,7 @@ Input/Output field sliderForce.
 
 - 0 means no bounce, 1 means return velocity matches.
 
-### SFFloat [in, out] **stopErrorCorrection** 1 <small>[0,1] <span class="red">not supported</span></small>
+### SFFloat [in, out] **stopErrorCorrection** 1 <small>[0,1]</small> <small class="red">not supported</small>
 
 *stopErrorCorrection* is fraction of error correction performed during time step once stop point is reached.
 

@@ -152,7 +152,7 @@ Whether this entity is ignoring the network, sending DIS packets to the network,
 
 Multicast network port, for example: 62040.
 
-### SFFloat [in, out] **power**
+### SFFloat [in, out] **power** <small>(0,∞)</small>
 
 *power* that radio would be capable of outputting if on and transmitting, independent of actual transmit state of the radio.
 
@@ -184,7 +184,7 @@ Named equipment version number.
 
 Identifies a particular radio within a given entity.
 
-### SFFloat [in, out] **readInterval** 0.1
+### SFFloat [in, out] **readInterval** 0.1 <small>(0,∞)</small>
 
 Seconds between read updates, 0 means no reading.
 
@@ -200,7 +200,7 @@ Whether RTP headers are prepended to DIS PDUs.
 
 Simulation/exercise siteID of the participating LAN or organization.
 
-### SFFloat [in, out] **transmitFrequencyBandwidth**
+### SFFloat [in, out] **transmitFrequencyBandwidth** <small>(-∞,∞)</small>
 
 Bandwidth of the particular transmitter measured between the half-power (-3 dB) points (this value represents total bandwidth, not the deviation from the center frequency).
 
@@ -212,7 +212,7 @@ Specify radio transmission state where enumerations value 0 is for off, value 1 
 
 Select geometry to render: -1 for no geometry, 0 for text trace, 1 for default geometry, (optional) higher values to render different states.
 
-### SFFloat [in, out] **writeInterval** 1
+### SFFloat [in, out] **writeInterval** 1 <small>[0,∞)</small>
 
 Seconds between write updates, 0 means no writing (sending).
 

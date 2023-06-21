@@ -47,7 +47,7 @@ Default global parameters for collision outputs of rigid body physics system. Co
 
 *bounce* indicates bounciness (0 = no bounce at all, 1 = maximum bounce).
 
-### SFFloat [in, out] **minBounceSpeed** 0.1
+### SFFloat [in, out] **minBounceSpeed** 0.1 <small>[0,∞)</small>
 
 *minBounceSpeed* m/s needed to bounce.
 
@@ -63,11 +63,11 @@ Default global parameters for collision outputs of rigid body physics system. Co
 
 *slipFactors* used for computing surface drag.
 
-### SFFloat [in, out] **softnessConstantForceMix** 0.0001
+### SFFloat [in, out] **softnessConstantForceMix** 0.0001 <small>[0,1]</small>
 
 *softnessConstantForceMix* value applies a constant force value to make colliding surfaces appear to be somewhat soft.
 
-### SFFloat [in, out] **softnessErrorCorrection** 0.8
+### SFFloat [in, out] **softnessErrorCorrection** 0.8 <small>[0,1]</small>
 
 *softnessErrorCorrection* indicates fraction of collision error fixed in a set of evaluations (0 = no error correction, 1 = all errors corrected in single step).
 

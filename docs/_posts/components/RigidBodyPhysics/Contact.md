@@ -54,7 +54,7 @@ Default global parameters for collision outputs of rigid body physics system. Co
 
 *bounce* indicates bounciness (0 = no bounce at all, 1 = maximum bounce).
 
-### SFFloat [in, out] **minBounceSpeed**
+### SFFloat [in, out] **minBounceSpeed** <small>[0,∞)</small>
 
 *minBounceSpeed* m/s needed to bounce.
 

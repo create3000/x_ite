@@ -69,7 +69,7 @@ Default rate at which viewer travels through scene, meters/second.
 
 Enable/disable directional light that always points in the direction the user is looking.
 
-### SFFloat [in, out] **visibilityLimit**
+### SFFloat [in, out] **visibilityLimit** <small>[0,∞)</small>
 
 Geometry beyond the visibilityLimit may not be rendered (far culling plane of the view frustrum). visibilityLimit=0.0 indicates an infinite visibility limit.
 

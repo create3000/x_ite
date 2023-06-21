@@ -86,7 +86,7 @@ Enables/disables node operation.
 
 *autoDamp* enables/disables angularDampingFactor and linearDampingFactor.
 
-### SFFloat [in, out] **linearDampingFactor** 0.001
+### SFFloat [in, out] **linearDampingFactor** 0.001 <small>[0,1]</small>
 
 *linearDampingFactor* automatically damps a portion of body motion over time.
 
@@ -94,7 +94,7 @@ Enables/disables node operation.
 
 *angularDampingFactor* automatically damps a portion of body motion over time.
 
-### SFFloat [in, out] **mass** 1
+### SFFloat [in, out] **mass** 1 <small>(0,∞)</small>
 
 *mass* of the body in kilograms.
 
