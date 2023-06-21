@@ -39,7 +39,7 @@ The ChannelMerger node belongs to the **Sound** component and its default contai
 
 ### SFString [in, out] **channelInterpretation** "SPEAKERS" <small>["SPEAKERS", "DISCRETE"]</small>
 
-### MFNode [in, out] **children** <small></small>
+### MFNode [in, out] **children** <small>[X3DSoundChannelNode,X3DSoundProcessingNode,X3DSoundSourceNode]</small>
 
 ## External Links
 

@@ -59,7 +59,7 @@ The Delay node belongs to the **Sound** component and its default container fiel
 
 ### SFTime [out] **elapsedTime**
 
-### MFNode [in, out] **children** <small></small>
+### MFNode [in, out] **children** <small>[X3DSoundChannelNode,X3DSoundProcessingNode,X3DSoundSourceNode]</small>
 
 ## External Links
 

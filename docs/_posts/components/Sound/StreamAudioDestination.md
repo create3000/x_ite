@@ -45,7 +45,7 @@ The StreamAudioDestination node belongs to the **Sound** component and its defau
 
 ### SFBool [out] **isActive**
 
-### MFNode [in, out] **children** <small></small>
+### MFNode [in, out] **children** <small>[X3DSoundChannelNode,X3DSoundProcessingNode,X3DSoundSourceNode]</small>
 
 ## External Links
 

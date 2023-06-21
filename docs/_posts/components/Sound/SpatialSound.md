@@ -61,7 +61,7 @@ The SpatialSound node belongs to the **Sound** component and its default contain
 
 ### SFFloat [in, out] **rolloffFactor** <small>[0,∞)</small>
 
-### MFNode [in, out] **children** <small></small>
+### MFNode [in, out] **children** <small>[X3DSoundChannelNode,X3DSoundProcessingNode,X3DSoundSourceNode]</small>
 
 ## External Links
 
