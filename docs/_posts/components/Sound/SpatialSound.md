@@ -33,11 +33,11 @@ The SpatialSound node belongs to the **Sound** component and its default contain
 
 ### SFBool [ ] **spatialize** TRUE
 
-### SFFloat [in, out] **coneInnerAngle** <small></small>
+### SFFloat [in, out] **coneInnerAngle** <small>[0,2π]</small>
 
-### SFFloat [in, out] **coneOuterAngle** <small></small>
+### SFFloat [in, out] **coneOuterAngle** <small>[0,2π]</small>
 
-### SFFloat [in, out] **coneOuterGain** <small></small>
+### SFFloat [in, out] **coneOuterGain** <small>(-∞,∞)</small>
 
 ### SFVec3f [in, out] **direction** <small></small>
 
@@ -47,19 +47,19 @@ The SpatialSound node belongs to the **Sound** component and its default contain
 
 ### SFBool [in, out] **enableHRTF** FALSE
 
-### SFFloat [in, out] **gain** <small></small>
+### SFFloat [in, out] **gain** <small>(-∞,∞)</small>
 
-### SFFloat [in, out] **intensity** <small></small>
+### SFFloat [in, out] **intensity** <small>[0,1]</small>
 
 ### SFVec3f [in, out] **location** <small></small>
 
-### SFFloat [in, out] **maxDistance** <small></small>
+### SFFloat [in, out] **maxDistance** <small>[0,∞)</small>
 
-### SFFloat [in, out] **priority** <small></small>
+### SFFloat [in, out] **priority** <small>[0,1]</small>
 
-### SFFloat [in, out] **referenceDistance** <small></small>
+### SFFloat [in, out] **referenceDistance** <small>[0,∞)</small>
 
-### SFFloat [in, out] **rolloffFactor** <small></small>
+### SFFloat [in, out] **rolloffFactor** <small>[0,∞)</small>
 
 ### MFNode [in, out] **children** <small></small>
 

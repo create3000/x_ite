@@ -31,7 +31,7 @@ The MicrophoneSource node belongs to the **Sound** component and its default con
 
 ### SFBool [in, out] **enabled** TRUE
 
-### SFFloat [in, out] **gain** <small></small>
+### SFFloat [in, out] **gain** <small>(-∞,∞)</small>
 
 ### SFString [in, out] **mediaDeviceID** <small></small>
 

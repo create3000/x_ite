@@ -81,11 +81,11 @@ Location and filename of image. Multiple locations are more reliable, and includ
 
 - Automatically reloading content has security considerations and needs to be considered carefully.
 
-### SFFloat [in, out] **gain** <small></small>
+### SFFloat [in, out] **gain** <small>(-∞,∞)</small>
 
 ### MFFloat [in, out] **buffer** <small></small>
 
-### SFFloat [in, out] **detune** <small></small>
+### SFFloat [in, out] **detune** <small>[0,∞)</small>
 
 ### SFTime [in, out] **bufferDuration** <small>[0,∞)</small>
 
@@ -95,9 +95,9 @@ Location and filename of image. Multiple locations are more reliable, and includ
 
 ### SFInt32 [in, out] **numberOfChannels** <small></small>
 
-### SFFloat [in, out] **playbackRate** <small></small>
+### SFFloat [in, out] **playbackRate** <small>(-∞,∞)</small>
 
-### SFFloat [in, out] **sampleRate** <small></small>
+### SFFloat [in, out] **sampleRate** <small>[0,∞)</small>
 
 ### SFInt32 [out] **bufferLength**
 

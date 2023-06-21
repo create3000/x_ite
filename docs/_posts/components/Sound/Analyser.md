@@ -31,17 +31,17 @@ The Analyser node belongs to the **Sound** component and its default container f
 
 ### SFBool [in, out] **enabled** TRUE
 
-### SFFloat [in, out] **gain** <small></small>
+### SFFloat [in, out] **gain** <small>(-∞,∞)</small>
 
 ### SFInt32 [in, out] **fftSize** <small></small>
 
 ### SFInt32 [in, out] **frequencyBinCount** <small></small>
 
-### SFFloat [in, out] **minDecibels** <small></small>
+### SFFloat [in, out] **minDecibels** <small>(-∞,∞)</small>
 
-### SFFloat [in, out] **maxDecibels** <small></small>
+### SFFloat [in, out] **maxDecibels** <small>(-∞,∞)</small>
 
-### SFFloat [in, out] **smoothingTimeConstant** <small></small>
+### SFFloat [in, out] **smoothingTimeConstant** <small>[0,∞)</small>
 
 ### SFTime [in, out] **tailTime** <small>[0,∞)</small>
 

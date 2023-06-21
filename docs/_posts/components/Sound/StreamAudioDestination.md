@@ -31,7 +31,7 @@ The StreamAudioDestination node belongs to the **Sound** component and its defau
 
 ### SFBool [in, out] **enabled** TRUE
 
-### SFFloat [in, out] **gain** <small></small>
+### SFFloat [in, out] **gain** <small>(-∞,∞)</small>
 
 ### MFString [in, out] **streamIdentifier** <small></small>
 

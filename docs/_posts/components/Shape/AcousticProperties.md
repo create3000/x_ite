@@ -39,13 +39,13 @@ Author-provided prose that describes intended purpose of the url asset.
 
 ### SFBool [in, out] **enabled** TRUE
 
-### SFFloat [in, out] **absorption** 0 <small></small>
+### SFFloat [in, out] **absorption** 0 <small>[0,1]</small>
 
-### SFFloat [in, out] **refraction** 0 <small></small>
+### SFFloat [in, out] **refraction** 0 <small>[0,1]</small>
 
-### SFFloat [in, out] **diffuse** 0 <small></small>
+### SFFloat [in, out] **diffuse** 0 <small>[0,1]</small>
 
-### SFFloat [in, out] **specular** 0 <small></small>
+### SFFloat [in, out] **specular** 0 <small>[0,1]</small>
 
 ## External Links
 

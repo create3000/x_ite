@@ -31,19 +31,19 @@ The DynamicsCompressor node belongs to the **Sound** component and its default c
 
 ### SFBool [in, out] **enabled** TRUE
 
-### SFFloat [in, out] **gain** <small></small>
+### SFFloat [in, out] **gain** <small>(-∞,∞)</small>
 
-### SFFloat [in, out] **attack** <small></small>
+### SFFloat [in, out] **attack** <small>[0,∞)</small>
 
-### SFFloat [in, out] **knee** <small></small>
+### SFFloat [in, out] **knee** <small>[0,∞)</small>
 
-### SFFloat [in, out] **ratio** <small></small>
+### SFFloat [in, out] **ratio** <small>[0,∞)</small>
 
-### SFFloat [in, out] **reduction** <small></small>
+### SFFloat [in, out] **reduction** <small>[0,∞)</small>
 
 ### SFTime [in, out] **release** <small>[0,∞)</small>
 
-### SFFloat [in, out] **threshold** <small></small>
+### SFFloat [in, out] **threshold** <small>[0,∞)</small>
 
 ### SFTime [in, out] **tailTime** <small>[0,∞)</small>
 

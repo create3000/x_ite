@@ -31,7 +31,7 @@ The ChannelSelector node belongs to the **Sound** component and its default cont
 
 ### SFBool [in, out] **enabled** TRUE
 
-### SFFloat [in, out] **gain** <small></small>
+### SFFloat [in, out] **gain** <small>(-∞,∞)</small>
 
 ### SFInt32 [in, out] **channelSelection** <small></small>
 

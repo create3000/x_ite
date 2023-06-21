@@ -47,9 +47,9 @@ Author-provided prose that describes intended purpose of the url asset.
 
 ### SFVec3f [in, out] **upVector** <small></small>
 
-### SFFloat [in, out] **nearDistance** 0 <small></small>
+### SFFloat [in, out] **nearDistance** 0 <small>-1 or (0,∞)</small>
 
-### SFFloat [in, out] **farDistance** 0 <small></small>
+### SFFloat [in, out] **farDistance** 0 <small>-1 or (0,∞)</small>
 
 ### SFFloat [out] **aspectRatio**
 

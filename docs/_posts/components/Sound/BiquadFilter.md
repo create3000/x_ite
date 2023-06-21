@@ -31,13 +31,13 @@ The BiquadFilter node belongs to the **Sound** component and its default contain
 
 ### SFBool [in, out] **enabled** TRUE
 
-### SFFloat [in, out] **detune** <small></small>
+### SFFloat [in, out] **detune** <small>[0,∞)</small>
 
-### SFFloat [in, out] **frequency** <small></small>
+### SFFloat [in, out] **frequency** <small>[0,∞)</small>
 
-### SFFloat [in, out] **gain** <small></small>
+### SFFloat [in, out] **gain** <small>(-∞,∞)</small>
 
-### SFFloat [in, out] **qualityFactor** <small></small>
+### SFFloat [in, out] **qualityFactor** <small>[0,∞)</small>
 
 ### SFTime [in, out] **tailTime** <small>[0,∞)</small>
 

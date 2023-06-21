@@ -31,7 +31,7 @@ The WaveShaper node belongs to the **Sound** component and its default container
 
 ### SFBool [in, out] **enabled** TRUE
 
-### SFFloat [in, out] **gain** <small></small>
+### SFFloat [in, out] **gain** <small>(-∞,∞)</small>
 
 ### MFFloat [in, out] **curve** <small></small>
 

@@ -31,7 +31,7 @@ The Gain node belongs to the **Sound** component and its default container field
 
 ### SFBool [in, out] **enabled** TRUE
 
-### SFFloat [in, out] **gain** <small></small>
+### SFFloat [in, out] **gain** <small>(-∞,∞)</small>
 
 ### SFTime [in, out] **tailTime** <small>[0,∞)</small>
 

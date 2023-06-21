@@ -35,11 +35,11 @@ The ListenerPointSource node belongs to the **Sound** component and its default 
 
 ### SFRotation [in, out] **orientation** 0 0 1 0 <small>[-1,1] or (-∞,∞)</small>
 
-### SFFloat [in, out] **gain** <small></small>
+### SFFloat [in, out] **gain** <small>(-∞,∞)</small>
 
 ### SFBool [in, out] **dopplerEnabled** FALSE
 
-### SFFloat [in, out] **interauralDistance** <small></small>
+### SFFloat [in, out] **interauralDistance** <small>[0,∞)</small>
 
 ### SFBool [in, out] **trackCurrentView** FALSE
 

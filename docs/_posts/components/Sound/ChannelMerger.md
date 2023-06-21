@@ -31,7 +31,7 @@ The ChannelMerger node belongs to the **Sound** component and its default contai
 
 ### SFBool [in, out] **enabled** TRUE
 
-### SFFloat [in, out] **gain** <small></small>
+### SFFloat [in, out] **gain** <small>(-∞,∞)</small>
 
 ### SFInt32 [out] **channelCount**
 

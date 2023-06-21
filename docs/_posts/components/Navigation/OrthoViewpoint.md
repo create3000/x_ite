@@ -77,7 +77,7 @@ Minimum and maximum extents of view in units of local coordinate system. Small f
 
 - Minimum corner must remain less than maximum corner.
 
-### SFFloat [in, out] **nearDistance** -1 <small>(0,∞)</small>
+### SFFloat [in, out] **nearDistance** -1 <small>-1 or (0,∞)</small>
 
 nearDistance defines minimum clipping plane distance necessary for object display.
 
@@ -91,7 +91,7 @@ nearDistance defines minimum clipping plane distance necessary for object displa
 
 - nearDistance must be less than farDistance.
 
-### SFFloat [in, out] **farDistance** -1 <small>(0,∞)</small>
+### SFFloat [in, out] **farDistance** -1 <small>-1 or (0,∞)</small>
 
 farDistance defines maximum clipping plane distance allowed for object display.
 

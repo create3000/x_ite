@@ -31,11 +31,11 @@ The OscillatorSource node belongs to the **Sound** component and its default con
 
 ### SFBool [in, out] **enabled** TRUE
 
-### SFFloat [in, out] **gain** <small></small>
+### SFFloat [in, out] **gain** <small>(-∞,∞)</small>
 
-### SFFloat [in, out] **detune** <small></small>
+### SFFloat [in, out] **detune** <small>[0,∞)</small>
 
-### SFFloat [in, out] **frequency** <small></small>
+### SFFloat [in, out] **frequency** <small>[0,∞)</small>
 
 ### SFNode [in, out] **periodicWave** <small></small>
 
