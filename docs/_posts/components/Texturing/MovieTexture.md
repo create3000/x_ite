@@ -94,6 +94,18 @@ Location and filename of movie file or stream. Multiple locations are more relia
 
 - Automatically reloading content has security considerations and needs to be considered carefully.
 
+### SFFloat [in, out] **gain** 1 <small>(-∞,∞)</small>
+
+The gain field is a factor that represents the amount of linear amplification to apply to the output of the node.
+
+#### Hint
+
+- Negative gain factors negate the input signal.
+
+#### Warning
+
+- Decibel values shall not be used.
+
 ### SFFloat [in, out] **speed** 1 <small>(-∞,∞)</small>
 
 Factor for how fast the movie (or soundtrack) is played.

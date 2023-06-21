@@ -35,6 +35,18 @@ Enables/disables node operation.
 
 Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
 
+### SFString [in, out] **type** "MAX" <small>["MAX","MIN","AVERAGE"]</small>
+
+If type=MAX then Maximum Intensity Projection (MIP) or Least MIP (LMIP) algorithm is used to generate output color. If type=MIN then Minimum Intensity Projection algorithm is used. If type=AVERAGE then all voxels along ray are averaged.
+
+#### Hint
+
+- type=AVERAGE matches a simple approximation of an X-ray.
+
+#### Warning
+
+- Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
+
 ### SFFloat [in, out] **intensityThreshold** 0 <small>[0,1]</small>
 
 Threshold value used when type=MIN (LMIP) or type=MAX (MIP).
