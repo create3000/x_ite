@@ -37,7 +37,7 @@ The OscillatorSource node belongs to the **Sound** component and its default con
 
 ### SFFloat [in, out] **frequency** <small>[0,∞)</small>
 
-### SFNode [in, out] **periodicWave** <small></small>
+### SFNode [in, out] **periodicWave** <small>[PeriodicWave]</small>
 
 ### SFTime [in, out] **startTime** <small>(-∞,∞)</small>
 
