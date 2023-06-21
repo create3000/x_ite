@@ -51,15 +51,15 @@ Default global parameters for collision outputs of rigid body physics system. Co
 
 *minBounceSpeed* m/s needed to bounce.
 
-### SFVec2f [in, out] **frictionCoefficients** 0 0
+### SFVec2f [in, out] **frictionCoefficients** 0 0 <small>[0,∞)</small>
 
 *frictionCoefficients* used for computing surface drag.
 
-### SFVec2f [in, out] **surfaceSpeed** 0 0
+### SFVec2f [in, out] **surfaceSpeed** 0 0 <small>(-∞,∞)</small>
 
 *surfaceSpeed* defines speed vectors for computing surface drag, if contact surfaces move independently of bodies.
 
-### SFVec2f [in, out] **slipFactors** 0 0
+### SFVec2f [in, out] **slipFactors** 0 0 <small>(-∞,∞)</small>
 
 *slipFactors* used for computing surface drag.
 
