@@ -39,9 +39,9 @@ Multicast network address, or else "localhost" example: 224.2.181.145.
 
 Each simulation application that can respond to simulation management PDUs needs to have a unique applicationID.
 
-### MFNode [in, out] **mapping** [ ] <small>[DISEntityTypeMapping]</small>
+### MFNode [in, out] **children** [ ] <small>[DISEntityTypeMapping]</small>
 
-Input/Output field mapping.
+Input/Output field children.
 
 ### SFInt32 [in, out] **port** 0 <small>[0,65535]</small>
 

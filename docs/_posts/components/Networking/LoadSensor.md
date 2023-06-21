@@ -65,9 +65,9 @@ Sends 0.0 on start and 1.0 on completion. Intermediate values are browser depend
 
 Time of successful load complete, not sent on failure.
 
-### MFNode [in, out] **watchList** [ ] <small>[X3DUrlObject]</small>
+### MFNode [in, out] **children** [ ] <small>[X3DUrlObject]</small>
 
-Input/Output field watchList.
+Input/Output field children.
 
 ## Description
 
