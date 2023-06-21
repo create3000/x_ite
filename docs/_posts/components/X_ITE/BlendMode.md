@@ -57,11 +57,11 @@ Source and destination parameters must be one of the following symbolic constant
 - CONSTANT_ALPHA
 - ONE_MINUS_CONSTANT_ALPHA
 
-### SFString [in,out] **sourceAlphaFactor** "ONE_MINUS_SRC_ALPHA"
+### SFString [in,out] **sourceAlphaFactor** "ONE"
 
 Specifies how the alpha source blending factors are computed.
 
-### SFString [in,out] **destinationColorFactor** "ONE"
+### SFString [in,out] **destinationColorFactor** "ONE_MINUS_SRC_ALPHA"
 
 Specifies how the red, green, and blue destination blending factors are computed.
 

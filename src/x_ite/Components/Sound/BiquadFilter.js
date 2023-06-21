@@ -94,7 +94,7 @@ Object .defineProperties (BiquadFilter,
          new X3DFieldDefinition (X3DConstants .inputOutput, "gain",                  new Fields .SFFloat (1)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "qualityFactor",         new Fields .SFFloat (1)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "tailTime",              new Fields .SFTime ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "type",                  new Fields .SFString ("lowpass")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "type",                  new Fields .SFString ("LOWPASS")),
 
          new X3DFieldDefinition (X3DConstants .outputOnly,  "channelCount",          new Fields .SFInt32 ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "channelCountMode",      new Fields .SFString ("MAX")),

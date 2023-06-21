@@ -63,14 +63,6 @@ Nominal rendered point size is a browser-dependent minimum renderable point size
 
 - Nominal point size is multiplied by attenuation factor and then clipped to a minimum value of pointSizeMinValue × minimum renderable point size, then clipped to maximum size of pointSizeMaxValue × minimum renderable point size.
 
-### SFString [in, out] **colorMode** "TEXTURE_AND_POINT_COLOR" <small>["POINT_COLOR", "TEXTURE_COLOR", "TEXTURE_AND_POINT_COLOR"]</small>
-
-*colorMode* has blending effect on the rendering of point sprites, applying supplied color (Color node or Material emissiveColor) and texture color
-
-#### Hint
-
-- POINT_COLOR shall display the RGB channels of the color instance defined in X3DMaterialNode or X3DColorNode, and the A channel of the texture if any. If no color is associated to the point, the default RGB color (0, 0, 0) shall be used. TEXTURE_COLOR shall display the original texture with its RGBA channels and regardless to the X3DMaterialNode or X3DColorNode which might be associated to the point set. TEXTURE_AND_POINT_COLOR shall display the RGBA channels of a texture added to the RGB channels of the color defined in X3DMaterialNode or X3DColorNode node, and the A channel of the texture if any. If no color is associated to the point, the result shall be exactly the same as TEXTURE_COLOR.
-
 ## Description
 
 ### Hints

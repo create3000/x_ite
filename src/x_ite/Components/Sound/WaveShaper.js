@@ -91,7 +91,7 @@ Object .defineProperties (WaveShaper,
 
          new X3DFieldDefinition (X3DConstants .inputOutput, "gain",                  new Fields .SFFloat (1)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "curve",                 new Fields .MFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "oversample",            new Fields .SFString ("none")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "oversample",            new Fields .SFString ("NONE")),
          new X3DFieldDefinition (X3DConstants .inputOutput, "tailTime",              new Fields .SFTime ()),
 
          new X3DFieldDefinition (X3DConstants .outputOnly,  "channelCount",          new Fields .SFInt32 ()),
