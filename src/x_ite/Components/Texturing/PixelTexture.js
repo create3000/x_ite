@@ -272,7 +272,7 @@ Object .defineProperties (PixelTexture,
       value: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "description",       new Fields .SFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "image",             new Fields .SFImage (0, 0, 0, new Fields .MFInt32 ())),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "image",             new Fields .SFImage ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatS",           new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatT",           new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties", new Fields .SFNode ()),
