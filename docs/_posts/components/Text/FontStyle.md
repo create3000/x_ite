@@ -48,7 +48,7 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 ### MFString [in, out] **family** "SERIF" <small>String or [URI]</small>
 
-Array of quoted font family names, or the address of the font files to load, in order of preference; browsers will use the first supported family.
+Array of quoted font family names, or the addresses of the font files to load, in order of preference; browsers will use the first supported family.
 
 #### Hints
 
