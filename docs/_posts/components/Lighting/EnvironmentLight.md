@@ -32,7 +32,7 @@ The EnvironmentLight node belongs to the **Lighting** component and its default 
 
 Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
 
-### SFBool [in, out] **global** TRUE
+### SFBool [in, out] **global** FALSE
 
 *global* lights illuminate all objects within their volume of lighting influence. Scoped lights only illuminate objects within the same transformation hierarchy.
 

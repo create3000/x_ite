@@ -31,9 +31,9 @@ The Layer node belongs to the **Layering** component and its default container f
 
 Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
 
-### SFBool [in, out] **isPickable** TRUE
+### SFBool [in, out] **pickable** TRUE
 
-*isPickable* determines whether pick traversal is performed for this layer.
+*pickable* determines whether pick traversal is performed for this layer.
 
 ### SFNode [in, out] **viewport** NULL <small>[X3DViewportNode]</small>
 
