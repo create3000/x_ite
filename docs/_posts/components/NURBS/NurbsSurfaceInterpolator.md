@@ -55,7 +55,7 @@ Linearly interpolated output value determined by current key time and correspond
 
 Linearly interpolated output value determined by current key time and corresponding keyValue pair.
 
-### SFInt32 [ ] **uDimension** <small>[0,∞)</small>
+### SFInt32 [ ] **uDimension** 0 <small>[0,∞)</small>
 
 Number of control points in u dimension.
 
@@ -67,7 +67,7 @@ Knot vector, where size = number of control points + order of curve.
 
 Define order of surface by polynomials of degree = order-1.
 
-### SFInt32 [ ] **vDimension** <small>[0,∞)</small>
+### SFInt32 [ ] **vDimension** 0 <small>[0,∞)</small>
 
 Number of control points in v dimension.
 

@@ -32,7 +32,7 @@ The NurbsCurve node belongs to the **NURBS** component and its default container
 
 Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
 
-### SFInt32 [in, out] **tessellation** <small>(-∞,∞)</small>
+### SFInt32 [in, out] **tessellation** 0 <small>(-∞,∞)</small>
 
 Hint for surface tesselation.
 

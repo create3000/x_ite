@@ -31,17 +31,17 @@ The BiquadFilter node belongs to the **Sound** component and its default contain
 
 ### SFBool [in, out] **enabled** TRUE
 
-### SFFloat [in, out] **detune** <small>[0,∞)</small>
+### SFFloat [in, out] **detune** 0 <small>[0,∞)</small>
 
-### SFFloat [in, out] **frequency** <small>[0,∞)</small>
+### SFFloat [in, out] **frequency** 350 <small>[0,∞)</small>
 
-### SFFloat [in, out] **gain** <small>(-∞,∞)</small>
+### SFFloat [in, out] **gain** 1 <small>(-∞,∞)</small>
 
-### SFFloat [in, out] **qualityFactor** <small>[0,∞)</small>
+### SFFloat [in, out] **qualityFactor** 1 <small>[0,∞)</small>
 
-### SFTime [in, out] **tailTime** <small>[0,∞)</small>
+### SFTime [in, out] **tailTime** 0 <small>[0,∞)</small>
 
-### SFString [in, out] **type** <small></small>
+### SFString [in, out] **type** "LOWPASS" <small>["LOWPASS", "HIGHPASS", "BANDPASS", "LOWSHELF", "HIGHSHELF", "PEAKING", "NOTCH", "ALLPASS"]</small>
 
 ### SFInt32 [out] **channelCount**
 
@@ -49,13 +49,13 @@ The BiquadFilter node belongs to the **Sound** component and its default contain
 
 ### SFString [in, out] **channelInterpretation** "SPEAKERS" <small>["SPEAKERS", "DISCRETE"]</small>
 
-### SFTime [in, out] **startTime** <small>(-∞,∞)</small>
+### SFTime [in, out] **startTime** 0 <small>(-∞,∞)</small>
 
-### SFTime [in, out] **resumeTime** <small>(-∞,∞)</small>
+### SFTime [in, out] **resumeTime** 0 <small>(-∞,∞)</small>
 
-### SFTime [in, out] **pauseTime** <small>(-∞,∞)</small>
+### SFTime [in, out] **pauseTime** 0 <small>(-∞,∞)</small>
 
-### SFTime [in, out] **stopTime** <small>(-∞,∞)</small>
+### SFTime [in, out] **stopTime** 0 <small>(-∞,∞)</small>
 
 ### SFBool [out] **isPaused**
 
@@ -63,7 +63,7 @@ The BiquadFilter node belongs to the **Sound** component and its default contain
 
 ### SFTime [out] **elapsedTime**
 
-### MFNode [in, out] **children** <small>[X3DSoundChannelNode,X3DSoundProcessingNode,X3DSoundSourceNode]</small>
+### MFNode [in, out] **children** [ ] <small>[X3DSoundChannelNode,X3DSoundProcessingNode,X3DSoundSourceNode]</small>
 
 ## External Links
 

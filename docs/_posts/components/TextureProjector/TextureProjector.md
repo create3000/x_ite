@@ -41,11 +41,11 @@ Author-provided prose that describes intended purpose of the url asset.
 
 ### SFBool [in, out] **global** TRUE
 
-### SFVec3f [in, out] **location** <small>(-∞,∞)</small>
+### SFVec3f [in, out] **location** 0 0 0 <small>(-∞,∞)</small>
 
-### SFVec3f [in, out] **direction** <small>(-∞,∞)</small>
+### SFVec3f [in, out] **direction** 0 0 1 <small>(-∞,∞)</small>
 
-### SFVec3f [in, out] **upVector** <small>(-∞,∞)</small>
+### SFVec3f [in, out] **upVector** 0 0 1 <small>(-∞,∞)</small>
 
 ### SFFloat [in, out] **nearDistance** 0 <small>-1 or (0,∞)</small>
 
@@ -53,7 +53,7 @@ Author-provided prose that describes intended purpose of the url asset.
 
 ### SFFloat [out] **aspectRatio**
 
-### SFNode [in, out] **texture** <small></small>
+### SFNode [in, out] **texture** NULL <small>[X3DTexture2DNode]</small>
 
 ## External Links
 

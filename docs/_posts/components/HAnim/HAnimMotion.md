@@ -43,11 +43,11 @@ Author-provided prose that describes intended purpose of the url asset.
 
 ### SFBool [in] **previous**
 
-### SFTime [in, out] **frameDuration** <small>(0,∞)</small>
+### SFTime [in, out] **frameDuration** 0.1 <small>(0,∞)</small>
 
-### SFInt32 [in, out] **frameIncrement** <small>(-∞,∞)</small>
+### SFInt32 [in, out] **frameIncrement** 1 <small>(-∞,∞)</small>
 
-### SFInt32 [in, out] **frameIndex** <small>[0,∞)</small>
+### SFInt32 [in, out] **frameIndex** 0 <small>[0,∞)</small>
 
 ### SFBool [in, out] **loop**
 
@@ -57,13 +57,13 @@ Author-provided prose that describes intended purpose of the url asset.
 
 ### SFString [in, out] **joints** ""
 
-### SFInt32 [in, out] **loa** <small>[-1,4]</small>
+### SFInt32 [in, out] **loa** -1 <small>[-1,4]</small>
 
-### SFInt32 [in, out] **startFrame** <small>[0,∞)</small>
+### SFInt32 [in, out] **startFrame** 0 <small>[0,∞)</small>
 
-### SFInt32 [in, out] **endFrame** <small>[0,∞)</small>
+### SFInt32 [in, out] **endFrame** 0 <small>[0,∞)</small>
 
-### MFFloat [in, out] **values** <small>(-∞,∞)</small>
+### MFFloat [in, out] **values** [ ] <small>(-∞,∞)</small>
 
 ### SFTime [out] **cycleTime**
 

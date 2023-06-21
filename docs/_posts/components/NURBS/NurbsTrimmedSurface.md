@@ -33,11 +33,11 @@ The NurbsTrimmedSurface node belongs to the **NURBS** component and its default 
 
 Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
 
-### SFInt32 [in, out] **uTessellation** <small>(-∞,∞)</small>
+### SFInt32 [in, out] **uTessellation** 0 <small>(-∞,∞)</small>
 
 Hint for surface tesselation.
 
-### SFInt32 [in, out] **vTessellation** <small>(-∞,∞)</small>
+### SFInt32 [in, out] **vTessellation** 0 <small>(-∞,∞)</small>
 
 Hint for surface tesselation.
 
@@ -69,11 +69,11 @@ Define order of surface by polynomials of degree = order-1.
 
 Define order of surface by polynomials of degree = order-1.
 
-### SFInt32 [ ] **uDimension** <small>[0,∞)</small>
+### SFInt32 [ ] **uDimension** 0 <small>[0,∞)</small>
 
 Number of control points in u dimension.
 
-### SFInt32 [ ] **vDimension** <small>[0,∞)</small>
+### SFInt32 [ ] **vDimension** 0 <small>[0,∞)</small>
 
 Number of control points in v dimension.
 

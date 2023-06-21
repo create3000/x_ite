@@ -33,35 +33,35 @@ The SpatialSound node belongs to the **Sound** component and its default contain
 
 ### SFBool [ ] **spatialize** TRUE
 
-### SFFloat [in, out] **coneInnerAngle** <small>[0,2π]</small>
+### SFFloat [in, out] **coneInnerAngle** 6.2832 <small>[0,2π]</small>
 
-### SFFloat [in, out] **coneOuterAngle** <small>[0,2π]</small>
+### SFFloat [in, out] **coneOuterAngle** 6.2832 <small>[0,2π]</small>
 
-### SFFloat [in, out] **coneOuterGain** <small>(-∞,∞)</small>
+### SFFloat [in, out] **coneOuterGain** 0 <small>(-∞,∞)</small>
 
-### SFVec3f [in, out] **direction** <small>(-∞,∞)</small>
+### SFVec3f [in, out] **direction** 0 0 1 <small>(-∞,∞)</small>
 
-### SFString [in, out] **distanceModel** <small></small>
+### SFString [in, out] **distanceModel** "INVERSE" <small>["LINEAR" "INVERSE" "EXPONENTIAL"]</small>
 
 ### SFBool [in, out] **dopplerEnabled** FALSE
 
 ### SFBool [in, out] **enableHRTF** FALSE
 
-### SFFloat [in, out] **gain** <small>(-∞,∞)</small>
+### SFFloat [in, out] **gain** 1 <small>(-∞,∞)</small>
 
-### SFFloat [in, out] **intensity** <small>[0,1]</small>
+### SFFloat [in, out] **intensity** 1 <small>[0,1]</small>
 
-### SFVec3f [in, out] **location** <small>(-∞,∞)</small>
+### SFVec3f [in, out] **location** 0 0 0 <small>(-∞,∞)</small>
 
-### SFFloat [in, out] **maxDistance** <small>[0,∞)</small>
+### SFFloat [in, out] **maxDistance** 10000 <small>[0,∞)</small>
 
-### SFFloat [in, out] **priority** <small>[0,1]</small>
+### SFFloat [in, out] **priority** 0 <small>[0,1]</small>
 
-### SFFloat [in, out] **referenceDistance** <small>[0,∞)</small>
+### SFFloat [in, out] **referenceDistance** 1 <small>[0,∞)</small>
 
-### SFFloat [in, out] **rolloffFactor** <small>[0,∞)</small>
+### SFFloat [in, out] **rolloffFactor** 1 <small>[0,∞)</small>
 
-### MFNode [in, out] **children** <small>[X3DSoundChannelNode,X3DSoundProcessingNode,X3DSoundSourceNode]</small>
+### MFNode [in, out] **children** [ ] <small>[X3DSoundChannelNode,X3DSoundProcessingNode,X3DSoundSourceNode]</small>
 
 ## External Links
 

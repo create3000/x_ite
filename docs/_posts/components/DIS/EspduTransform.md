@@ -123,7 +123,7 @@ Multicast network address, or else "localhost"
 
 Simulation/exercise applicationID is unique for application at that site. Each simulation application that can respond to simulation management PDUs needs to have a unique applicationID.
 
-### SFInt32 [in, out] **articulationParameterCount** <small>[0,78]</small>
+### SFInt32 [in, out] **articulationParameterCount** 0 <small>[0,78]</small>
 
 Number of articulated parameters attached to this entity state PDU.
 
@@ -155,11 +155,11 @@ Information required for representation of the entity's visual appearance and po
 
 Translation offset from origin of local coordinate system.
 
-### SFInt32 [in, out] **collisionType** <small>[0,255]</small>
+### SFInt32 [in, out] **collisionType** 0 <small>[0,255]</small>
 
 Enumeration for type of collision: ELASTIC or INELASTIC.
 
-### SFInt32 [in, out] **deadReckoning** <small>[0,255]</small>
+### SFInt32 [in, out] **deadReckoning** 0 <small>[0,255]</small>
 
 Dead reckoning algorithm being used to project position/orientation with velocities/accelerations.
 
@@ -171,39 +171,39 @@ World coordinates for detonationLocation
 
 Relative coordinates for detonation location
 
-### SFInt32 [in, out] **detonationResult** <small>[0,255]</small>
+### SFInt32 [in, out] **detonationResult** 0 <small>[0,255]</small>
 
 Enumeration for type of detonation and result that occurred., if any.
 
-### SFInt32 [in, out] **entityCategory** <small>[0,255]</small>
+### SFInt32 [in, out] **entityCategory** 0 <small>[0,255]</small>
 
 Enumerations value for main category that describes the entity, semantics of each code varies according to domain. See DIS Enumerations values.
 
-### SFInt32 [in, out] **entityCountry** <small>[0,65535]</small>
+### SFInt32 [in, out] **entityCountry** 0 <small>[0,65535]</small>
 
 Enumerations value for country to which the design of the entity or its design specification is attributed.
 
-### SFInt32 [in, out] **entityDomain** <small>[0,255]</small>
+### SFInt32 [in, out] **entityDomain** 0 <small>[0,255]</small>
 
 Enumerations value for domain in which the entity operates: LAND, AIR, SURFACE, SUBSURFACE, SPACE or OTHER.
 
-### SFInt32 [in, out] **entityExtra** <small>[0,255]</small>
+### SFInt32 [in, out] **entityExtra** 0 <small>[0,255]</small>
 
 Any extra information required to describe a particular entity. The contents of this field shall depend on the type of entity represented.
 
-### SFInt32 [in, out] **entityID** <small>[0,65535]</small>
+### SFInt32 [in, out] **entityID** 0 <small>[0,65535]</small>
 
 Simulation/exercise entityID is a unique ID for a single entity within that application.
 
-### SFInt32 [in, out] **entityKind** <small>[0,255]</small>
+### SFInt32 [in, out] **entityKind** 0 <small>[0,255]</small>
 
 Enumerations value for whether entity is a PLATFORM, MUNITION, LIFE_FORM, ENVIRONMENTAL, CULTURAL_FEATURE, SUPPLY, RADIO, EXPENDABLE, SENSOR_EMITTER or OTHER.
 
-### SFInt32 [in, out] **entitySpecific** <small>[0,255]</small>
+### SFInt32 [in, out] **entitySpecific** 0 <small>[0,255]</small>
 
 Specific information about an entity based on the Subcategory field. See DIS Enumerations values.
 
-### SFInt32 [in, out] **entitySubCategory** <small>[0,255]</small>
+### SFInt32 [in, out] **entitySubCategory** 0 <small>[0,255]</small>
 
 Enumerations value for particular subcategory to which an entity belongs based on the Category field. See DIS Enumerations values.
 
@@ -211,11 +211,11 @@ Enumerations value for particular subcategory to which an entity belongs based o
 
 Simulation/exercise eventApplicationID is unique for events generated from application at that site. Each simulation application that can respond to simulation management PDUs needs to have a unique applicationID.
 
-### SFInt32 [in, out] **eventEntityID** <small>[0,65535]</small>
+### SFInt32 [in, out] **eventEntityID** 0 <small>[0,65535]</small>
 
 For a given event, simulation/exercise entityID is a unique ID for a single entity within that application.
 
-### SFInt32 [in, out] **eventNumber** <small>[0,65355]</small>
+### SFInt32 [in, out] **eventNumber** 1 <small>[0,65355]</small>
 
 Sequential number of each event issued by an application.
 
@@ -223,7 +223,7 @@ Sequential number of each event issued by an application.
 
 - Reuse of numbers may be necessary during long simulation exercises.
 
-### SFInt32 [in, out] **eventSiteID** <small>[0,65535]</small>
+### SFInt32 [in, out] **eventSiteID** 0 <small>[0,65535]</small>
 
 Simulation/exercise siteID of the participating LAN or organization.
 
@@ -235,7 +235,7 @@ Has the primary weapon (Fire PDU) been fired?
 
 Has the secondary weapon (Fire PDU) been fired?
 
-### SFInt32 [in, out] **fireMissionIndex** <small>[0,65535]</small>
+### SFInt32 [in, out] **fireMissionIndex** 0 <small>[0,65535]</small>
 
 Input/Output field fireMissionIndex.
 
@@ -243,15 +243,15 @@ Input/Output field fireMissionIndex.
 
 Range (three dimension, straight-line distance) that the firing entity's fire control system has assumed for computing the fire control solution if a weapon and if the value is known
 
-### SFInt32 [in, out] **firingRate** <small>[0,65535]</small>
+### SFInt32 [in, out] **firingRate** 0 <small>[0,65535]</small>
 
 Rate at which munitions are fired.
 
-### SFInt32 [in, out] **forceID** <small>[0,255]</small>
+### SFInt32 [in, out] **forceID** 0 <small>[0,255]</small>
 
 *forceID* determines the team membership of the issuing entity, and whether FRIENDLY OPPOSING or NEUTRAL or OTHER.
 
-### SFInt32 [in, out] **fuse** <small>[0,65535]</small>
+### SFInt32 [in, out] **fuse** 0 <small>[0,65535]</small>
 
 Enumerations value for type of fuse on the munition.
 
@@ -271,7 +271,7 @@ Maximum of 11 characters for simple entity label.
 
 Fallback server address if multicast not available locally.
 
-### SFInt32 [in, out] **multicastRelayPort** <small>[0,65535]</small>
+### SFInt32 [in, out] **multicastRelayPort** 0 <small>[0,65535]</small>
 
 Fallback server port if multicast not available locally.
 
@@ -283,15 +283,15 @@ Fallback server port if multicast not available locally.
 
 Final point of the munition path from firing weapon to detonation or impact, in exercise coordinates.
 
-### SFInt32 [in, out] **munitionEntityID** <small>[0,65535]</small>
+### SFInt32 [in, out] **munitionEntityID** 1 <small>[0,65535]</small>
 
 *munitionEntityID* is unique ID for entity firing munition within that application.
 
-### SFInt32 [in, out] **munitionQuantity** <small>[0,65535]</small>
+### SFInt32 [in, out] **munitionQuantity** 0 <small>[0,65535]</small>
 
 Quantity of munitions fired.
 
-### SFInt32 [in, out] **munitionSiteID** <small>[0,65535]</small>
+### SFInt32 [in, out] **munitionSiteID** 0 <small>[0,65535]</small>
 
 Munition siteID of the participating LAN or organization.
 
@@ -307,7 +307,7 @@ Whether this entity is ignoring the network, sending DIS packets to the network,
 
 - Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values. Network activity may have associated security issues.
 
-### SFInt32 [in, out] **port** <small>[0,65535]</small>
+### SFInt32 [in, out] **port** 0 <small>[0,65535]</small>
 
 Network connection port number (EXAMPLE 62040) for sending or receiving DIS messages.
 
@@ -327,7 +327,7 @@ Non-uniform x-y-z scale of child coordinate system, adjusted by center and scale
 
 Preliminary rotation of coordinate system before scaling (to allow scaling around arbitrary orientations).
 
-### SFInt32 [in, out] **siteID** <small>[0,65535]</small>
+### SFInt32 [in, out] **siteID** 0 <small>[0,65535]</small>
 
 Simulation/exercise siteID of the participating LAN or organization.
 
@@ -335,7 +335,7 @@ Simulation/exercise siteID of the participating LAN or organization.
 
 Position of children relative to local coordinate system, usually read from (or written to) remote, networked EspduTransform nodes.
 
-### SFInt32 [in, out] **warhead** <small>[0,65535]</small>
+### SFInt32 [in, out] **warhead** 0 <small>[0,65535]</small>
 
 Enumerations value for type of warhead on the munition.
 

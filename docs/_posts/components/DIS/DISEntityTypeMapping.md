@@ -79,31 +79,31 @@ Name of the X3D model of interest, for example "MyFastBoat.x3d".
 
 - Automatically reloading content has security considerations and needs to be considered carefully.
 
-### SFInt32 [ ] **category** <small>[0,255]</small>
+### SFInt32 [ ] **category** 0 <small>[0,255]</small>
 
 Enumerations value for main category that describes the entity, semantics of each code varies according to domain. See DIS Enumerations values.
 
-### SFInt32 [ ] **country** <small>[0,0,65535]</small>
+### SFInt32 [ ] **country** 0 <small>[0,0,65535]</small>
 
 Enumerations value for country to which the design of the entity or its design specification is attributed.
 
-### SFInt32 [ ] **domain** <small>[0,255]</small>
+### SFInt32 [ ] **domain** 0 <small>[0,255]</small>
 
 Enumerations value for domain in which the entity operates: LAND, AIR, SURFACE, SUBSURFACE, SPACE or OTHER.
 
-### SFInt32 [ ] **extra** <small>[0,255]</small>
+### SFInt32 [ ] **extra** 0 <small>[0,255]</small>
 
 Any extra information required to describe a particular entity. The contents of this field shall depend on the type of entity represented.
 
-### SFInt32 [ ] **kind** <small>[0,255]</small>
+### SFInt32 [ ] **kind** 0 <small>[0,255]</small>
 
 Enumerations value for whether entity is a PLATFORM, MUNITION, LIFE_FORM, ENVIRONMENTAL, CULTURAL_FEATURE, SUPPLY, RADIO, EXPENDABLE, SENSOR_EMITTER or OTHER.
 
-### SFInt32 [ ] **specific** <small>[0,255]</small>
+### SFInt32 [ ] **specific** 0 <small>[0,255]</small>
 
 *specific* information about an entity based on the Subcategory field. See DIS Enumerations values.
 
-### SFInt32 [ ] **subcategory** <small>[0,255]</small>
+### SFInt32 [ ] **subcategory** 0 <small>[0,255]</small>
 
 Field subcategory.
 

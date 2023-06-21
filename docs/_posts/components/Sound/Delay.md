@@ -31,13 +31,13 @@ The Delay node belongs to the **Sound** component and its default container fiel
 
 ### SFBool [in, out] **enabled** TRUE
 
-### SFFloat [in, out] **gain** <small>(-∞,∞)</small>
+### SFFloat [in, out] **gain** 1 <small>(-∞,∞)</small>
 
-### SFTime [in, out] **delayTime** <small>[0,∞)</small>
+### SFTime [in, out] **delayTime** 0 <small>[0,∞)</small>
 
-### SFTime [in, out] **maxDelayTime** <small>[0,∞)</small>
+### SFTime [in, out] **maxDelayTime** 1 <small>[0,∞)</small>
 
-### SFTime [in, out] **tailTime** <small>[0,∞)</small>
+### SFTime [in, out] **tailTime** 0 <small>[0,∞)</small>
 
 ### SFInt32 [out] **channelCount**
 
@@ -45,13 +45,13 @@ The Delay node belongs to the **Sound** component and its default container fiel
 
 ### SFString [in, out] **channelInterpretation** "SPEAKERS" <small>["SPEAKERS", "DISCRETE"]</small>
 
-### SFTime [in, out] **startTime** <small>(-∞,∞)</small>
+### SFTime [in, out] **startTime** 0 <small>(-∞,∞)</small>
 
-### SFTime [in, out] **resumeTime** <small>(-∞,∞)</small>
+### SFTime [in, out] **resumeTime** 0 <small>(-∞,∞)</small>
 
-### SFTime [in, out] **pauseTime** <small>(-∞,∞)</small>
+### SFTime [in, out] **pauseTime** 0 <small>(-∞,∞)</small>
 
-### SFTime [in, out] **stopTime** <small>(-∞,∞)</small>
+### SFTime [in, out] **stopTime** 0 <small>(-∞,∞)</small>
 
 ### SFBool [out] **isPaused**
 
@@ -59,7 +59,7 @@ The Delay node belongs to the **Sound** component and its default container fiel
 
 ### SFTime [out] **elapsedTime**
 
-### MFNode [in, out] **children** <small>[X3DSoundChannelNode,X3DSoundProcessingNode,X3DSoundSourceNode]</small>
+### MFNode [in, out] **children** [ ] <small>[X3DSoundChannelNode,X3DSoundProcessingNode,X3DSoundSourceNode]</small>
 
 ## External Links
 

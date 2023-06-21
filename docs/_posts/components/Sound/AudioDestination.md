@@ -31,9 +31,9 @@ The AudioDestination node belongs to the **Sound** component and its default con
 
 ### SFBool [in, out] **enabled** TRUE
 
-### SFFloat [in, out] **gain** <small>(-∞,∞)</small>
+### SFFloat [in, out] **gain** 1 <small>(-∞,∞)</small>
 
-### SFInt32 [in, out] **maxChannelCount** <small>[0,∞)</small>
+### SFInt32 [in, out] **maxChannelCount** 2 <small>[0,∞)</small>
 
 ### SFInt32 [out] **channelCount**
 
@@ -45,7 +45,7 @@ The AudioDestination node belongs to the **Sound** component and its default con
 
 ### SFBool [out] **isActive**
 
-### MFNode [in, out] **children** <small>[X3DSoundChannelNode,X3DSoundProcessingNode,X3DSoundSourceNode]</small>
+### MFNode [in, out] **children** [ ] <small>[X3DSoundChannelNode,X3DSoundProcessingNode,X3DSoundSourceNode]</small>
 
 ## External Links
 

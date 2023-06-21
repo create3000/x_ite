@@ -31,19 +31,19 @@ The Analyser node belongs to the **Sound** component and its default container f
 
 ### SFBool [in, out] **enabled** TRUE
 
-### SFFloat [in, out] **gain** <small>(-∞,∞)</small>
+### SFFloat [in, out] **gain** 1 <small>(-∞,∞)</small>
 
-### SFInt32 [in, out] **fftSize** <small>[0,∞)</small>
+### SFInt32 [in, out] **fftSize** 2048 <small>[0,∞)</small>
 
-### SFInt32 [in, out] **frequencyBinCount** <small>[0,∞)</small>
+### SFInt32 [in, out] **frequencyBinCount** 1024 <small>[0,∞)</small>
 
-### SFFloat [in, out] **minDecibels** <small>(-∞,∞)</small>
+### SFFloat [in, out] **minDecibels** -100 <small>(-∞,∞)</small>
 
-### SFFloat [in, out] **maxDecibels** <small>(-∞,∞)</small>
+### SFFloat [in, out] **maxDecibels** -30 <small>(-∞,∞)</small>
 
-### SFFloat [in, out] **smoothingTimeConstant** <small>[0,∞)</small>
+### SFFloat [in, out] **smoothingTimeConstant** 0.8<small>[0,∞)</small>
 
-### SFTime [in, out] **tailTime** <small>[0,∞)</small>
+### SFTime [in, out] **tailTime** 0 <small>[0,∞)</small>
 
 ### SFInt32 [out] **channelCount**
 
@@ -51,13 +51,13 @@ The Analyser node belongs to the **Sound** component and its default container f
 
 ### SFString [in, out] **channelInterpretation** "SPEAKERS" <small>["SPEAKERS", "DISCRETE"]</small>
 
-### SFTime [in, out] **startTime** <small>(-∞,∞)</small>
+### SFTime [in, out] **startTime** 0 <small>(-∞,∞)</small>
 
-### SFTime [in, out] **resumeTime** <small>(-∞,∞)</small>
+### SFTime [in, out] **resumeTime** 0 <small>(-∞,∞)</small>
 
-### SFTime [in, out] **pauseTime** <small>(-∞,∞)</small>
+### SFTime [in, out] **pauseTime** 0 <small>(-∞,∞)</small>
 
-### SFTime [in, out] **stopTime** <small>(-∞,∞)</small>
+### SFTime [in, out] **stopTime** 0 <small>(-∞,∞)</small>
 
 ### SFBool [out] **isPaused**
 
@@ -65,7 +65,7 @@ The Analyser node belongs to the **Sound** component and its default container f
 
 ### SFTime [out] **elapsedTime**
 
-### MFNode [in, out] **children** <small>[X3DSoundChannelNode,X3DSoundProcessingNode,X3DSoundSourceNode]</small>
+### MFNode [in, out] **children** [ ] <small>[X3DSoundChannelNode,X3DSoundProcessingNode,X3DSoundSourceNode]</small>
 
 ## External Links
 

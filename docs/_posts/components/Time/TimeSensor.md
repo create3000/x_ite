@@ -58,7 +58,7 @@ Enables/disables node operation.
 
 Repeat indefinitely when loop=true, repeat only once when loop=false.
 
-### SFTime [in, out] **startTime** <small>(-∞,∞)</small>
+### SFTime [in, out] **startTime** 0 <small>(-∞,∞)</small>
 
 When time now \>= startTime, isActive becomes true and TimeSensor becomes active. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
@@ -66,7 +66,7 @@ When time now \>= startTime, isActive becomes true and TimeSensor becomes active
 
 - Usually receives a ROUTEd time value.
 
-### SFTime [in, out] **resumeTime** <small>(-∞,∞)</small>
+### SFTime [in, out] **resumeTime** 0 <small>(-∞,∞)</small>
 
 When *resumeTime* becomes\<= time now, isPaused becomes false and TimeSensor becomes inactive. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
@@ -78,7 +78,7 @@ When *resumeTime* becomes\<= time now, isPaused becomes false and TimeSensor bec
 
 - Not supported in VRML97.
 
-### SFTime [in, out] **pauseTime** <small>(-∞,∞)</small>
+### SFTime [in, out] **pauseTime** 0 <small>(-∞,∞)</small>
 
 When time now \>= *pauseTime*, *isPaused* becomes true and TimeSensor becomes paused. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
@@ -90,7 +90,7 @@ When time now \>= *pauseTime*, *isPaused* becomes true and TimeSensor becomes pa
 
 - Not supported in VRML97.
 
-### SFTime [in, out] **stopTime** <small>(-∞,∞)</small>
+### SFTime [in, out] **stopTime** 0 <small>(-∞,∞)</small>
 
 When stopTime becomes \<= time now, isActive becomes false and TimeSensor becomes inactive. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 

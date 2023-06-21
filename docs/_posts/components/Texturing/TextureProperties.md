@@ -38,7 +38,7 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 - [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color){:target="_blank"}
 
-### SFInt32 [in, out] **borderWidth** <small>[0,1]</small>
+### SFInt32 [in, out] **borderWidth** 0 <small>[0,1]</small>
 
 *borderWidth* number of pixels for texture border.
 

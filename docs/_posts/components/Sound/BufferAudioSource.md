@@ -81,23 +81,23 @@ Location and filename of image. Multiple locations are more reliable, and includ
 
 - Automatically reloading content has security considerations and needs to be considered carefully.
 
-### SFFloat [in, out] **gain** <small>(-∞,∞)</small>
+### SFFloat [in, out] **gain** 1 <small>(-∞,∞)</small>
 
-### MFFloat [in, out] **buffer** <small>[−1,1]</small>
+### MFFloat [in, out] **buffer** [ ] <small>[−1,1]</small>
 
-### SFFloat [in, out] **detune** <small>[0,∞)</small>
+### SFFloat [in, out] **detune** 0 <small>[0,∞)</small>
 
-### SFTime [in, out] **bufferDuration** <small>[0,∞)</small>
+### SFTime [in, out] **bufferDuration** 0 <small>[0,∞)</small>
 
-### SFTime [in, out] **loopStart** <small>[0,∞)</small>
+### SFTime [in, out] **loopStart** 0 <small>[0,∞)</small>
 
-### SFTime [in, out] **loopEnd** <small>[0,∞)</small>
+### SFTime [in, out] **loopEnd** 0 <small>[0,∞)</small>
 
-### SFInt32 [in, out] **numberOfChannels** <small>[0,∞)</small>
+### SFInt32 [in, out] **numberOfChannels** 0 <small>[0,∞)</small>
 
-### SFFloat [in, out] **playbackRate** <small>(-∞,∞)</small>
+### SFFloat [in, out] **playbackRate** 1 <small>(-∞,∞)</small>
 
-### SFFloat [in, out] **sampleRate** <small>[0,∞)</small>
+### SFFloat [in, out] **sampleRate** 0 <small>[0,∞)</small>
 
 ### SFInt32 [out] **bufferLength**
 
@@ -109,13 +109,13 @@ Location and filename of image. Multiple locations are more reliable, and includ
 
 ### SFBool [in, out] **loop** FALSE
 
-### SFTime [in, out] **startTime** <small>(-∞,∞)</small>
+### SFTime [in, out] **startTime** 0 <small>(-∞,∞)</small>
 
-### SFTime [in, out] **resumeTime** <small>(-∞,∞)</small>
+### SFTime [in, out] **resumeTime** 0 <small>(-∞,∞)</small>
 
-### SFTime [in, out] **pauseTime** <small>(-∞,∞)</small>
+### SFTime [in, out] **pauseTime** 0 <small>(-∞,∞)</small>
 
-### SFTime [in, out] **stopTime** <small>(-∞,∞)</small>
+### SFTime [in, out] **stopTime** 0 <small>(-∞,∞)</small>
 
 ### SFBool [out] **isPaused**
 

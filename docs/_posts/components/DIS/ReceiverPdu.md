@@ -80,7 +80,7 @@ Multicast network address, or else "localhost"
 
 Each simulation application that can respond to simulation management PDUs needs to have a unique applicationID.
 
-### SFInt32 [in, out] **entityID** <small>[0,65535]</small>
+### SFInt32 [in, out] **entityID** 0 <small>[0,65535]</small>
 
 *entityID* unique ID for entity within that application.
 
@@ -88,7 +88,7 @@ Each simulation application that can respond to simulation management PDUs needs
 
 Fallback server address if multicast not available locally. For example: track.nps.edu.
 
-### SFInt32 [in, out] **multicastRelayPort** <small>[0,65535]</small>
+### SFInt32 [in, out] **multicastRelayPort** 0 <small>[0,65535]</small>
 
 Fallback server port if multicast not available locally. For example: 8010.
 
@@ -100,11 +100,11 @@ Whether this entity is ignoring the network, sending DIS packets to the network,
 
 - Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values. Network activity may have associated security issues.
 
-### SFInt32 [in, out] **port** <small>[0,65535]</small>
+### SFInt32 [in, out] **port** 0 <small>[0,65535]</small>
 
 Multicast network port, for example: 62040.
 
-### SFInt32 [in, out] **radioID** <small>[0,65535]</small>
+### SFInt32 [in, out] **radioID** 0 <small>[0,65535]</small>
 
 Identifies a particular radio within a given entity.
 
@@ -112,11 +112,11 @@ Identifies a particular radio within a given entity.
 
 Seconds between read updates, 0 means no reading.
 
-### SFFloat [in, out] **receivedPower** <small>(0,∞)</small>
+### SFFloat [in, out] **receivedPower** 0 <small>(0,∞)</small>
 
 *receivedPower* indicates radio frequency (RF) power received, in units of decibel-milliwatts (dBm), after applying any propagation loss and antenna gain
 
-### SFInt32 [in, out] **receiverState** <small>[0,65535]</small>
+### SFInt32 [in, out] **receiverState** 0 <small>[0,65535]</small>
 
 *receiverState* indicates if receiver is currently idle or busy via one of these enumerated values: 0 = off, 1 = on but not receiving, or 2 = on and receiving.
 
@@ -124,7 +124,7 @@ Seconds between read updates, 0 means no reading.
 
 Whether RTP headers are prepended to DIS PDUs.
 
-### SFInt32 [in, out] **siteID** <small>[0,65535]</small>
+### SFInt32 [in, out] **siteID** 0 <small>[0,65535]</small>
 
 Simulation/exercise siteID of the participating LAN or organization.
 
@@ -132,15 +132,15 @@ Simulation/exercise siteID of the participating LAN or organization.
 
 Simulation/exercise transmitterApplicationID is unique for transmitter application at that site. Each simulation application that can respond to simulation management PDUs needs to have a unique applicationID.
 
-### SFInt32 [in, out] **transmitterEntityID** <small>[0,65535]</small>
+### SFInt32 [in, out] **transmitterEntityID** 0 <small>[0,65535]</small>
 
 Simulation/exercise transmitterEntityID is a unique ID for a single entity within that application.
 
-### SFInt32 [in, out] **transmitterRadioID** <small>[0,65535]</small>
+### SFInt32 [in, out] **transmitterRadioID** 0 <small>[0,65535]</small>
 
 Identifies a particular radio within a given entity.
 
-### SFInt32 [in, out] **transmitterSiteID** <small>[0,65535]</small>
+### SFInt32 [in, out] **transmitterSiteID** 0 <small>[0,65535]</small>
 
 Simulation/exercise transmitterSiteID of the participating LAN or organization.
 

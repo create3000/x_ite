@@ -39,11 +39,11 @@ Grid array of height vertices with upward direction along +Y axis, with xDimensi
 
 - Height array values are given in row-major order from left to right along X axis, then back to front along Z axis.
 
-### SFInt32 [ ] **xDimension** <small>[0,∞)</small>
+### SFInt32 [ ] **xDimension** 0 <small>[0,∞)</small>
 
 Number of elements in the height array along X direction.
 
-### SFInt32 [ ] **zDimension** <small>[0,∞)</small>
+### SFInt32 [ ] **zDimension** 0 <small>[0,∞)</small>
 
 Number of elements in the height array along Z direction.
 

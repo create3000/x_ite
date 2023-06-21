@@ -31,21 +31,21 @@ The OscillatorSource node belongs to the **Sound** component and its default con
 
 ### SFBool [in, out] **enabled** TRUE
 
-### SFFloat [in, out] **gain** <small>(-∞,∞)</small>
+### SFFloat [in, out] **gain** 1 <small>(-∞,∞)</small>
 
-### SFFloat [in, out] **detune** <small>[0,∞)</small>
+### SFFloat [in, out] **detune** 0 <small>[0,∞)</small>
 
-### SFFloat [in, out] **frequency** <small>[0,∞)</small>
+### SFFloat [in, out] **frequency** 0 <small>[0,∞)</small>
 
-### SFNode [in, out] **periodicWave** <small>[PeriodicWave]</small>
+### SFNode [in, out] **periodicWave** NULL <small>[PeriodicWave]</small>
 
-### SFTime [in, out] **startTime** <small>(-∞,∞)</small>
+### SFTime [in, out] **startTime** 0 <small>(-∞,∞)</small>
 
-### SFTime [in, out] **resumeTime** <small>(-∞,∞)</small>
+### SFTime [in, out] **resumeTime** 0 <small>(-∞,∞)</small>
 
-### SFTime [in, out] **pauseTime** <small>(-∞,∞)</small>
+### SFTime [in, out] **pauseTime** 0 <small>(-∞,∞)</small>
 
-### SFTime [in, out] **stopTime** <small>(-∞,∞)</small>
+### SFTime [in, out] **stopTime** 0 <small>(-∞,∞)</small>
 
 ### SFBool [out] **isPaused**
 

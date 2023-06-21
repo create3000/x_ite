@@ -37,7 +37,7 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 Enables/disables node operation.
 
-### SFTime [in, out] **timeOut** <small>(0,∞)</small>
+### SFTime [in, out] **timeOut** 0 <small>(0,∞)</small>
 
 Time in seconds of maximum load duration prior to declaring failure. Default value zero means use browser defaults.
 

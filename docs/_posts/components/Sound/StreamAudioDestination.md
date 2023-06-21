@@ -31,9 +31,9 @@ The StreamAudioDestination node belongs to the **Sound** component and its defau
 
 ### SFBool [in, out] **enabled** TRUE
 
-### SFFloat [in, out] **gain** <small>(-∞,∞)</small>
+### SFFloat [in, out] **gain** 1 <small>(-∞,∞)</small>
 
-### MFString [in, out] **streamIdentifier** <small></small>
+### MFString [in, out] **streamIdentifier** [ ]
 
 ### SFInt32 [out] **channelCount**
 
@@ -45,7 +45,7 @@ The StreamAudioDestination node belongs to the **Sound** component and its defau
 
 ### SFBool [out] **isActive**
 
-### MFNode [in, out] **children** <small>[X3DSoundChannelNode,X3DSoundProcessingNode,X3DSoundSourceNode]</small>
+### MFNode [in, out] **children** [ ] <small>[X3DSoundChannelNode,X3DSoundProcessingNode,X3DSoundSourceNode]</small>
 
 ## External Links
 

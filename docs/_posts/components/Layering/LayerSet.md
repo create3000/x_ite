@@ -30,7 +30,7 @@ The LayerSet node belongs to the **Layering** component and its default containe
 
 Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
 
-### SFInt32 [in, out] **activeLayer** <small>(0,∞)</small>
+### SFInt32 [in, out] **activeLayer** 0 <small>(0,∞)</small>
 
 *activeLayer* field specifies the layer in which navigation takes place.
 
@@ -38,7 +38,7 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 - Nodes that are not part of a layer are considered to be in layer 0.
 
-### MFInt32 [in, out] **order** <small>(0,∞)</small>
+### MFInt32 [in, out] **order** [ 0 ] <small>(0,∞)</small>
 
 The order list defines the order in which layers are rendered. Each value corresponds to the ordinals of the layers.
 

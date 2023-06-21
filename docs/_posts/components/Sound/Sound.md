@@ -84,7 +84,7 @@ Player hint [0,1] if needed to choose which sounds to play.
 
 Input/Output field source.
 
-### MFNode [in, out] **children** <small>[X3DSoundChannelNode,X3DSoundProcessingNode,X3DSoundSourceNode]</small>
+### MFNode [in, out] **children** [ ] <small>[X3DSoundChannelNode,X3DSoundProcessingNode,X3DSoundSourceNode]</small>
 
 ## Description
 

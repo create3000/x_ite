@@ -84,15 +84,15 @@ Each simulation application that can respond to simulation management PDUs needs
 
 Holds audio or digital data conveyed by the radio transmission. Interpretation of the field depends on values of encodingScheme and tdlType fields.
 
-### SFInt32 [in, out] **dataLength** <small>[0,65535]</small>
+### SFInt32 [in, out] **dataLength** 0 <small>[0,65535]</small>
 
 Number of bits of digital voice audio or digital data being sent in the Signal PDU. If the Encoding Class is database index, then dataLength field is set to 96.
 
-### SFInt32 [in, out] **encodingScheme** <small>[0,65535]</small>
+### SFInt32 [in, out] **encodingScheme** 0 <small>[0,65535]</small>
 
 Designates both Encoding Class and Encoding Type. Encoding Class enumerated value (2 most significant bits): 0 = Encoded Voice; 1 = Raw Binary Data; 2 = Application-Specific Data; 3 = Database Index. Encoding Type enumerated value (14 least significant bits): 1 = 8-bit mu-law; 2 = CVSD per MIL-STD-188-113; 3 = ADPCM per CCITT G.721; 4 = 16-bit linear PCM; 5 = 8-bit linear PCM; 6 = Vector Quantization.
 
-### SFInt32 [in, out] **entityID** <small>[0,65535]</small>
+### SFInt32 [in, out] **entityID** 0 <small>[0,65535]</small>
 
 *entityID* unique ID for entity within that application.
 
@@ -112,11 +112,11 @@ Whether this entity is ignoring the network, sending DIS packets to the network,
 
 - Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values. Network activity may have associated security issues.
 
-### SFInt32 [in, out] **port** <small>[0,65535]</small>
+### SFInt32 [in, out] **port** 0 <small>[0,65535]</small>
 
 Multicast network port, for example: 62040.
 
-### SFInt32 [in, out] **radioID** <small>[0,65535]</small>
+### SFInt32 [in, out] **radioID** 0 <small>[0,65535]</small>
 
 Identifies a particular radio within a given entity.
 
@@ -128,19 +128,19 @@ Seconds between read updates, 0 means no reading.
 
 Whether RTP headers are prepended to DIS PDUs.
 
-### SFInt32 [in, out] **sampleRate** <small>[0,65535]</small>
+### SFInt32 [in, out] **sampleRate** 0 <small>[0,65535]</small>
 
 *sampleRate* gives either (1) sample rate in samples per second if Encoding Class is encoded audio, or (2) data rate in bits per second for data transmissions. If Encoding Class is database index, sampleRate is set to zero.
 
-### SFInt32 [in, out] **samples** <small>[0,65535]</small>
+### SFInt32 [in, out] **samples** 0 <small>[0,65535]</small>
 
 Number of samples in the PDU if the Encoding Class is encoded voice, otherwise the field is set to zero.
 
-### SFInt32 [in, out] **siteID** <small>[0,65535]</small>
+### SFInt32 [in, out] **siteID** 0 <small>[0,65535]</small>
 
 Simulation/exercise siteID of the participating LAN or organization.
 
-### SFInt32 [in, out] **tdlType** <small>[0,65535]</small>
+### SFInt32 [in, out] **tdlType** 0 <small>[0,65535]</small>
 
 Tactical Data Link (TDL) type as an enumerated value when the Encoding Class is voice, raw binary, application-specific, or database index representation of a TDL message.
 

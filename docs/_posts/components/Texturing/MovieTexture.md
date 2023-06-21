@@ -110,7 +110,7 @@ Input/Output field pitch.
 
 Repeat indefinitely when loop=true, repeat only once when loop=false.
 
-### SFTime [in, out] **startTime** <small>(-∞,∞)</small>
+### SFTime [in, out] **startTime** 0 <small>(-∞,∞)</small>
 
 Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
@@ -118,7 +118,7 @@ Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
 - Usually receives a ROUTEd time value.
 
-### SFTime [in, out] **resumeTime** <small>(-∞,∞)</small>
+### SFTime [in, out] **resumeTime** 0 <small>(-∞,∞)</small>
 
 When resumeTime becomes\<= time now, isPaused becomes false and MovieTexture becomes active. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
@@ -130,7 +130,7 @@ When resumeTime becomes\<= time now, isPaused becomes false and MovieTexture bec
 
 - Not supported in VRML97.
 
-### SFTime [in, out] **pauseTime** <small>(-∞,∞)</small>
+### SFTime [in, out] **pauseTime** 0 <small>(-∞,∞)</small>
 
 When time now \>= pauseTime, isPaused becomes true and MovieTexture becomes paused. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
@@ -142,7 +142,7 @@ When time now \>= pauseTime, isPaused becomes true and MovieTexture becomes paus
 
 - Not supported in VRML97.
 
-### SFTime [in, out] **stopTime** <small>(-∞,∞)</small>
+### SFTime [in, out] **stopTime** 0 <small>(-∞,∞)</small>
 
 Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 

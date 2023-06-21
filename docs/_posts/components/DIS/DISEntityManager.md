@@ -43,11 +43,11 @@ Each simulation application that can respond to simulation management PDUs needs
 
 Input/Output field mapping.
 
-### SFInt32 [in, out] **port** <small>[0,65535]</small>
+### SFInt32 [in, out] **port** 0 <small>[0,65535]</small>
 
 Multicast network port, for example: 62040.
 
-### SFInt32 [in, out] **siteID** <small>[0,65535]</small>
+### SFInt32 [in, out] **siteID** 0 <small>[0,65535]</small>
 
 Simulation/exercise siteID of the participating LAN or organization.
 

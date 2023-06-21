@@ -53,7 +53,7 @@ Identifies spatial reference frame: Geodetic (GD), Geocentric (GC), Universal Tr
 
 Geographic coordinate for southwest (lower-left) corner of height dataset.
 
-### SFInt32 [ ] **xDimension** <small>(0,∞)</small>
+### SFInt32 [ ] **xDimension** 0 <small>(0,∞)</small>
 
 Number of elements in the height array along east-west X direction.
 
@@ -61,7 +61,7 @@ Number of elements in the height array along east-west X direction.
 
 - Total horizontal x-axis distance equals (xDimension-1) \* xSpacing.
 
-### SFInt32 [ ] **zDimension** <small>(0,∞)</small>
+### SFInt32 [ ] **zDimension** 0 <small>(0,∞)</small>
 
 Number of elements in the height array along north-south Z direction.
 
@@ -109,7 +109,7 @@ Setting solid true means draw only one side of polygons (backface culling on), s
 
 - *ccw* false can reverse solid (backface culling) and normal-vector orientation.
 
-### SFDouble [ ] **creaseAngle** <small>[0,∞)</small>
+### SFDouble [ ] **creaseAngle** 0 <small>[0,∞)</small>
 
 *creaseAngle* defines angle (in radians) for determining whether adjacent polygons are drawn with sharp edges or smooth shading. If angle between normals of two adjacent polygons is less than creaseAngle, smooth shading is rendered across the shared line segment.
 

@@ -31,21 +31,21 @@ The DynamicsCompressor node belongs to the **Sound** component and its default c
 
 ### SFBool [in, out] **enabled** TRUE
 
-### SFFloat [in, out] **gain** <small>(-∞,∞)</small>
+### SFFloat [in, out] **gain** 1 <small>(-∞,∞)</small>
 
-### SFFloat [in, out] **attack** <small>[0,∞)</small>
+### SFFloat [in, out] **attack** 0.003 <small>[0,∞)</small>
 
-### SFFloat [in, out] **knee** <small>[0,∞)</small>
+### SFFloat [in, out] **knee** 30 <small>[0,∞)</small>
 
-### SFFloat [in, out] **ratio** <small>[0,∞)</small>
+### SFFloat [in, out] **ratio** 12 <small>[0,∞)</small>
 
-### SFFloat [in, out] **reduction** <small>[0,∞)</small>
+### SFFloat [in, out] **reduction** 0 <small>[0,∞)</small>
 
-### SFTime [in, out] **release** <small>[0,∞)</small>
+### SFTime [in, out] **release** 0.25 <small>[0,∞)</small>
 
-### SFFloat [in, out] **threshold** <small>[0,∞)</small>
+### SFFloat [in, out] **threshold** -24 <small>[0,∞)</small>
 
-### SFTime [in, out] **tailTime** <small>[0,∞)</small>
+### SFTime [in, out] **tailTime** 0 <small>[0,∞)</small>
 
 ### SFInt32 [out] **channelCount**
 
@@ -53,13 +53,13 @@ The DynamicsCompressor node belongs to the **Sound** component and its default c
 
 ### SFString [in, out] **channelInterpretation** "SPEAKERS" <small>["SPEAKERS", "DISCRETE"]</small>
 
-### SFTime [in, out] **startTime** <small>(-∞,∞)</small>
+### SFTime [in, out] **startTime** 0 <small>(-∞,∞)</small>
 
-### SFTime [in, out] **resumeTime** <small>(-∞,∞)</small>
+### SFTime [in, out] **resumeTime** 0 <small>(-∞,∞)</small>
 
-### SFTime [in, out] **pauseTime** <small>(-∞,∞)</small>
+### SFTime [in, out] **pauseTime** 0 <small>(-∞,∞)</small>
 
-### SFTime [in, out] **stopTime** <small>(-∞,∞)</small>
+### SFTime [in, out] **stopTime** 0 <small>(-∞,∞)</small>
 
 ### SFBool [out] **isPaused**
 
@@ -67,7 +67,7 @@ The DynamicsCompressor node belongs to the **Sound** component and its default c
 
 ### SFTime [out] **elapsedTime**
 
-### MFNode [in, out] **children** <small>[X3DSoundChannelNode,X3DSoundProcessingNode,X3DSoundSourceNode]</small>
+### MFNode [in, out] **children** [ ] <small>[X3DSoundChannelNode,X3DSoundProcessingNode,X3DSoundSourceNode]</small>
 
 ## External Links
 

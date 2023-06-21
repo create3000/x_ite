@@ -31,13 +31,13 @@ The Convolver node belongs to the **Sound** component and its default container 
 
 ### SFBool [in, out] **enabled** TRUE
 
-### SFFloat [in, out] **gain** <small>(-∞,∞)</small>
+### SFFloat [in, out] **gain** 1 <small>(-∞,∞)</small>
 
-### MFFloat [in, out] **buffer** <small>[−1,1]</small>
+### MFFloat [in, out] **buffer** [ ] <small>[−1,1]</small>
 
 ### SFBool [in, out] **normalize** FALSE
 
-### SFTime [in, out] **tailTime** <small>[0,∞)</small>
+### SFTime [in, out] **tailTime** 0 <small>[0,∞)</small>
 
 ### SFInt32 [out] **channelCount**
 
@@ -45,13 +45,13 @@ The Convolver node belongs to the **Sound** component and its default container 
 
 ### SFString [in, out] **channelInterpretation** "SPEAKERS" <small>["SPEAKERS", "DISCRETE"]</small>
 
-### SFTime [in, out] **startTime** <small>(-∞,∞)</small>
+### SFTime [in, out] **startTime** 0 <small>(-∞,∞)</small>
 
-### SFTime [in, out] **resumeTime** <small>(-∞,∞)</small>
+### SFTime [in, out] **resumeTime** 0 <small>(-∞,∞)</small>
 
-### SFTime [in, out] **pauseTime** <small>(-∞,∞)</small>
+### SFTime [in, out] **pauseTime** 0 <small>(-∞,∞)</small>
 
-### SFTime [in, out] **stopTime** <small>(-∞,∞)</small>
+### SFTime [in, out] **stopTime** 0 <small>(-∞,∞)</small>
 
 ### SFBool [out] **isPaused**
 
@@ -59,7 +59,7 @@ The Convolver node belongs to the **Sound** component and its default container 
 
 ### SFTime [out] **elapsedTime**
 
-### MFNode [in, out] **children** <small>[X3DSoundChannelNode,X3DSoundProcessingNode,X3DSoundSourceNode]</small>
+### MFNode [in, out] **children** [ ] <small>[X3DSoundChannelNode,X3DSoundProcessingNode,X3DSoundSourceNode]</small>
 
 ## External Links
 

@@ -31,25 +31,25 @@ The ListenerPointSource node belongs to the **Sound** component and its default 
 
 ### SFBool [in, out] **enabled** TRUE
 
-### SFVec3f [in, out] **position** <small>(-∞,∞)</small>
+### SFVec3f [in, out] **position** 0 0 0 <small>(-∞,∞)</small>
 
 ### SFRotation [in, out] **orientation** 0 0 1 0 <small>[-1,1] or (-∞,∞)</small>
 
-### SFFloat [in, out] **gain** <small>(-∞,∞)</small>
+### SFFloat [in, out] **gain** 1 <small>(-∞,∞)</small>
 
 ### SFBool [in, out] **dopplerEnabled** FALSE
 
-### SFFloat [in, out] **interauralDistance** <small>[0,∞)</small>
+### SFFloat [in, out] **interauralDistance** 0 <small>[0,∞)</small>
 
 ### SFBool [in, out] **trackCurrentView** FALSE
 
-### SFTime [in, out] **startTime** <small>(-∞,∞)</small>
+### SFTime [in, out] **startTime** 0 <small>(-∞,∞)</small>
 
-### SFTime [in, out] **resumeTime** <small>(-∞,∞)</small>
+### SFTime [in, out] **resumeTime** 0 <small>(-∞,∞)</small>
 
-### SFTime [in, out] **pauseTime** <small>(-∞,∞)</small>
+### SFTime [in, out] **pauseTime** 0 <small>(-∞,∞)</small>
 
-### SFTime [in, out] **stopTime** <small>(-∞,∞)</small>
+### SFTime [in, out] **stopTime** 0 <small>(-∞,∞)</small>
 
 ### SFBool [out] **isPaused**
 
