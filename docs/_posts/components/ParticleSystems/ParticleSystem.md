@@ -98,7 +98,7 @@ Array of time intervals in seconds, corresponding to particle lifetime, that are
 
 - [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color){:target="_blank"}
 
-### SFNode [ ] **colorRamp** NULL <small>[X3DColorNode]</small>
+### SFNode [ ] **color** NULL <small>[X3DColorNode]</small>
 
 The colorRamp Color/ColorRGBA node holds a series of colour values to be used at the given colorKey points in time.
 
@@ -122,7 +122,7 @@ Array of time intervals in seconds, corresponding to particle lifetime, that are
 
 - No interpolation is performed, texture coordinates are simply sequenced in order. Texture-coordinate values map textures to vertices in the geometry. Number of texCoordKey values must match length of the per-vertex texCoordRamp arrays!
 
-### SFNode [ ] **texCoordRamp** NULL <small>[TextureCoordinate]</small>
+### SFNode [ ] **texCoord** NULL <small>[TextureCoordinate]</small>
 
 Texture coordinates of the provided texture(s) in the Appearance node, over time. Particle systems frequently like to change the texture on a particle as it ages, yet there is no good way of accomplishing this through standard interpolators because interpolators have no concept of particle time. This pair of fields hold time-dependent values for the texture coordinates to be applied to the particle. When a particle reaches the next time stamp it moves to the next set of texture coordinates.
 
