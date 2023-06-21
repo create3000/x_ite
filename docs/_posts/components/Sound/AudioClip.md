@@ -43,6 +43,10 @@ Author-provided text tooltip that tells users the expected action of this node.
 
 - Many XML tools substitute XML character references automatically if needed (such as &amp;#38; for &amp; ampersand, or &amp;#34; for " quotation mark).
 
+### SFBool [in, out] **enabled** TRUE
+
+Enables/disables node operation.
+
 ### SFBool [in, out] **load** TRUE
 
 *load*=true means load immediately, load=false means defer loading or else unload a previously loaded asset.
@@ -92,6 +96,18 @@ Location and filename of sound file or stream. Support for .wav format is requir
 #### Warning
 
 - Automatically reloading content has security considerations and needs to be considered carefully.
+
+### SFFloat [in, out] **gain** 1 <small>(-∞,∞)</small>
+
+The gain field is a factor that represents the amount of linear amplification to apply to the output of the node.
+
+#### Hint
+
+- Negative gain factors negate the input signal.
+
+#### Warning
+
+- Decibel values shall not be used.
 
 ### SFFloat [in, out] **pitch** 1 <small>(0,∞)</small>
 

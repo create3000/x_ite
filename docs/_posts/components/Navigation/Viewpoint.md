@@ -75,7 +75,7 @@ Preferred minimum viewing angle from this viewpoint in radians. Small field of v
 
 #### Warning
 
-- FieldOfView may not be correct for different window sizes and aspect ratios. Interchange profile hint: this field may be ignored, applying the default value regardless.
+- *fieldOfView* may not be correct for different window sizes and aspect ratios. Interchange profile hint: this field may be ignored, applying the default value regardless.
 
 ### SFFloat [in, out] **nearDistance** -1 <small>-1 or (0,∞)</small>
 
