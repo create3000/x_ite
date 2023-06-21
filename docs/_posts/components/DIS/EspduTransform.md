@@ -75,7 +75,7 @@ Input field addChildren.
 
 Input field removeChildren.
 
-### MFNode [in, out] **children** [ ]
+### MFNode [in, out] **children** [ ] <small>[X3DChildNode]</small>
 
 Input/Output field children.
 
