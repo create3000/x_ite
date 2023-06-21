@@ -55,31 +55,27 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 - 0 0 0 means motor disabled.
 
-### SFFloat [in, out] **minAngle1** -π <small>π [-π,π] <span class="red">not supported</span>
-</small>
+### SFFloat [in, out] **minAngle1** -π <small>π [-π,π]</small> <small class="red">not supported</small>
 
 MinAngle1 is minimum rotation angle for hinge.
 
-### SFFloat [in, out] **maxAngle1** π <small>[-π,π] <span class="red">not supported</span>
-</small>
+### SFFloat [in, out] **maxAngle1** π <small>[-π,π]</small> <small class="red">not supported</small>
 
 MaxAngle1 is maximum rotation angle for hinge.
 
-### SFFloat [in, out] **desiredAngularVelocity1** 0 <small>(-∞,∞) <span class="red">not supported</span>
-</small>
+### SFFloat [in, out] **desiredAngularVelocity1** 0 <small>(-∞,∞)</small> <small class="red">not supported</small>
 
 DesiredAngularVelocity1 is goal rotation rate for hinge connection to body1.
 
-### SFFloat [in, out] **desiredAngularVelocity2** 0 <small>(-∞,∞) <span class="red">not supported</span>
-</small>
+### SFFloat [in, out] **desiredAngularVelocity2** 0 <small>(-∞,∞)</small> <small class="red">not supported</small>
 
 DesiredAngularVelocity2 is goal rotation rate for hinge connection to body2.
 
-### SFFloat [in, out] **maxTorque1** 0 <small>(-∞,∞) <span class="red">not supported</span></small>
+### SFFloat [in, out] **maxTorque1** 0 <small>(-∞,∞)</small> <small class="red">not supported</small>
 
 *maxTorque1* is maximum rotational torque applied by corresponding motor axis to achieve desiredAngularVelocity1.
 
-### SFFloat [in, out] **maxTorque2** 0 <small>(-∞,∞) <span class="red">not supported</span></small>
+### SFFloat [in, out] **maxTorque2** 0 <small>(-∞,∞)</small> <small class="red">not supported</small>
 
 *maxTorque2* is maximum rotational torque applied by corresponding motor axis to achieve desiredAngularVelocity2.
 

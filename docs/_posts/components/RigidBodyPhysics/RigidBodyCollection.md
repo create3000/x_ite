@@ -35,7 +35,7 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 Enables/disables node operation.
 
-### MFNode [in] **set_contacts** <span class="red"><small>not supported</small></span>
+### MFNode [in] **set_contacts** <small class="red">not supported</small>
 
 *set_contacts* input field for Contact nodes provides per-frame information about contacts between bodies.
 
@@ -47,7 +47,7 @@ Enables/disables node operation.
 
 *preferAccuracy* provides hint for performance preference: higher accuracy or faster computational speed.
 
-### SFFloat [in, out] **errorCorrection** 0.8 <small>[0,1] <span class="red">not supported</span></small>
+### SFFloat [in, out] **errorCorrection** 0.8 <small>[0,1]</small> <small class="red">not supported</small>
 
 *errorCorrection* describes how quickly intersection errors due to floating-point inaccuracies are resolved (0=no correction, 1=all corrected in single step).
 
@@ -55,7 +55,7 @@ Enables/disables node operation.
 
 *iterations* controls number of iterations performed over collectioned joints and bodies during each evaluation.
 
-### SFFloat [in, out] **constantForceMix** 0.0001 <small>[0,∞) <span class="red">not supported</span></small>
+### SFFloat [in, out] **constantForceMix** 0.0001 <small>[0,∞)</small> <small class="red">not supported</small>
 
 *constantForceMix* modifies damping calculations by violating normal constraints while applying small, constant forces in those calculations.
 
@@ -63,7 +63,7 @@ Enables/disables node operation.
 
 - This allows joints and bodies to be a fraction springy, and helps to eliminate numerical instability. Spring-driven or spongy connections can be emulated by combined use of errorCorrection and constantForceMix.
 
-### SFFloat [in, out] **maxCorrectionSpeed** -1 <small>[0,∞) or -1 <span class="red">not supported</span></small>
+### SFFloat [in, out] **maxCorrectionSpeed** -1 <small>[0,∞) or -1</small> <small class="red">not supported</small>
 
 Or -1, maxCorrectionSpeed .
 
@@ -75,7 +75,7 @@ Or -1, maxCorrectionSpeed .
 
 *autoDisable* toggles operation of disableAngularSpeed, disableLinearSpeed, disableTime.
 
-### SFFloat [in, out] **disableTime** 0 <small>[0,∞) <span class="red">not supported</span></small>
+### SFFloat [in, out] **disableTime** 0 <small>[0,∞)</small> <small class="red">not supported</small>
 
 *disableTime* defines interval when body becomes at rest and not part of rigid body calculations, reducing numeric instabilities.
 

@@ -114,7 +114,7 @@ Enables/disables node operation.
 
 *centerOfMass* defines local center of mass for physics calculations.
 
-### SFNode [in, out] **massDensityModel** NULL <small><span class="red">not supported</span></small>
+### SFNode [in, out] **massDensityModel** NULL <small class="red">not supported</small>
 
 Input/Output field massDensityModel.
 
@@ -138,7 +138,7 @@ Input/Output field massDensityModel.
 
 *autoDisable* toggles operation of disableAngularSpeed, disableLinearSpeed, disableTime.
 
-### SFFloat [in, out] **disableTime** 0 <small>[0,∞) <span class="red">not supported</span></small>
+### SFFloat [in, out] **disableTime** 0 <small>[0,∞)</small> <small class="red">not supported</small>
 
 *disableTime* defines interval when body becomes at rest and not part of rigid body calculations, reducing numeric instabilities.
 

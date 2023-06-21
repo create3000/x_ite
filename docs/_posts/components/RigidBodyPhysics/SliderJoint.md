@@ -55,7 +55,7 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 - If (minSeparation is less than maxSeparation) then no stop is effective.
 
-### SFFLoat [in, out] **sliderForce** 0 <span class="red"><small>not supported</small></span>
+### SFFLoat [in, out] **sliderForce** 0 <small class="red">not supported</small>
 
 Input/Output field sliderForce.
 
@@ -75,11 +75,11 @@ Input/Output field sliderForce.
 
 - 0 means no error correction, 1 means all error corrected in single step.
 
-### SFFloat [out] **separation** <span class="red"><small>not supported</small></span>
+### SFFloat [out] **separation** <small class="red">not supported</small>
 
 *separation* indicates final separation distance between the two bodies.
 
-### SFFloat [out] **separationRate** <span class="red"><small>not supported</small></span>
+### SFFloat [out] **separationRate** <small class="red">not supported</small>
 
 *separationRate* indicates change in separation distance over time between the two bodies.
 
