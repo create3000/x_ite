@@ -46,7 +46,7 @@ Author-provided text tooltip that tells users the expected action of this node.
 
 - Use spaces, make descriptions clear and readable. Many XML tools substitute XML character references automatically if needed (such as &amp;#38; for &amp; ampersand, or &amp;#34; for " quotation mark).
 
-### SFRotation [in, out] **axisRotation** 0 0 1 0
+### SFRotation [in, out] **axisRotation** 0 0 1 0 <small>[-1,1] or (-∞,∞)</small>
 
 *axisRotation* determines local sensor coordinate system by rotating the local coordinate system.
 

@@ -33,7 +33,7 @@ The ListenerPointSource node belongs to the **Sound** component and its default 
 
 ### SFVec3f [in, out] **position** <small></small>
 
-### SFRotation [in, out] **orientation** <small></small>
+### SFRotation [in, out] **orientation** 0 0 1 0 <small>[-1,1] or (-∞,∞)</small>
 
 ### SFFloat [in, out] **gain** <small></small>
 

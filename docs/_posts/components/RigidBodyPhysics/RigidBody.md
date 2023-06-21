@@ -46,7 +46,7 @@ Enables/disables node operation.
 
 *position* sets body location in world space, then reports physics updates.
 
-### SFRotation [in, out] **orientation** 0 0 1 0
+### SFRotation [in, out] **orientation** 0 0 1 0 <small>[-1,1] or (-∞,∞)</small>
 
 *orientation* sets body direction in world space, then reports physics updates.
 

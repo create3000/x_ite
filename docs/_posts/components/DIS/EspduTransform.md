@@ -315,7 +315,7 @@ Network connection port number (EXAMPLE 62040) for sending or receiving DIS mess
 
 Seconds between read updates, 0 means no reading.
 
-### SFRotation [in, out] **rotation** 0 0 1 0
+### SFRotation [in, out] **rotation** 0 0 1 0 <small>[-1,1] or (-∞,∞)</small>
 
 Orientation of children relative to local coordinate system, usually read from (or written to) remote, networked EspduTransform nodes.
 
@@ -323,7 +323,7 @@ Orientation of children relative to local coordinate system, usually read from (
 
 Non-uniform x-y-z scale of child coordinate system, adjusted by center and scaleOrientation.
 
-### SFRotation [in, out] **scaleOrientation** 0 0 1 0
+### SFRotation [in, out] **scaleOrientation** 0 0 1 0 <small>[-1,1] or (-∞,∞)</small>
 
 Preliminary rotation of coordinate system before scaling (to allow scaling around arbitrary orientations).
 
