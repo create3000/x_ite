@@ -105,7 +105,7 @@ Outer conical solid angle (in radians) where light source intensity becomes zero
 
 Color of shadow, applied to colors of objects.
 
-### SFFloat [in, out] **shadowIntensity** 0 <small>[0,1]</small>
+### SFFloat [in, out] **shadowIntensity** 1 <small>[0,1]</small>
 
 *shadowIntensity* field defines how much light is obscured by shapes that cast shadows, ranging from 0 (light not obscured, no visible shadows) to 1 (light completely obscured, full-intensity shadows).
 

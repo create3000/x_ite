@@ -31,7 +31,7 @@ The PointProperties node belongs to the **Shape** component and its default cont
 
 Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
 
-### SFFloat [in, out] **pointSizeScaleFactor** 1 (1,∞)
+### SFFloat [in, out] **pointSizeScaleFactor** 1 <small>(1,∞)</small>
 
 Nominal rendered point size is a browser-dependent minimum renderable point size, which is then multiplied by an additional (greater than or equal to 1.0) pointSizeScaleFactor.
 
