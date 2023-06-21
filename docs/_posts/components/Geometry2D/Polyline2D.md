@@ -31,7 +31,7 @@ The Polyline2D node belongs to the **Geometry2D** component and its default cont
 
 Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
 
-### MFVec2f [in, out] **lineSegments** [ ] <small>(-∞,∞)</small>
+### MFVec2f [ ] **lineSegments** [ ] <small>(-∞,∞)</small>
 
 Coordinates of vertices connected into contiguous Polyline2D.
 

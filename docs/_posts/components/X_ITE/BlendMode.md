@@ -36,7 +36,7 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 The *blendColor* may be used to calculate the source and destination blending factors.
 
-### SFString [in,out] **sourceColorFactor** "SRC_ALPHA"
+### SFString [in, out] **sourceColorFactor** "SRC_ALPHA"
 
 Specifies how the red, green, and blue source blending factors are computed.
 
@@ -57,19 +57,19 @@ Source and destination parameters must be one of the following symbolic constant
 - CONSTANT_ALPHA
 - ONE_MINUS_CONSTANT_ALPHA
 
-### SFString [in,out] **sourceAlphaFactor** "ONE"
+### SFString [in, out] **sourceAlphaFactor** "ONE"
 
 Specifies how the alpha source blending factors are computed.
 
-### SFString [in,out] **destinationColorFactor** "ONE_MINUS_SRC_ALPHA"
+### SFString [in, out] **destinationColorFactor** "ONE_MINUS_SRC_ALPHA"
 
 Specifies how the red, green, and blue destination blending factors are computed.
 
-### SFString [in,out] **destinationAlphaFactor** "ONE_MINUS_SRC_ALPHA"
+### SFString [in, out] **destinationAlphaFactor** "ONE_MINUS_SRC_ALPHA"
 
 Specifies how the alpha destination blending factors are computed.
 
-### SFString [in,out] **colorEquation** "FUNC_ADD"
+### SFString [in, out] **colorEquation** "FUNC_ADD"
 
 Specifies the RGB blend equation, how the red, green, and blue components of the source and destination colors are combined. It must be:
 
@@ -77,7 +77,7 @@ Specifies the RGB blend equation, how the red, green, and blue components of the
 - FUNC_SUBTRACT
 - FUNC_REVERSE_SUBTRACT
 
-### SFString [in,out] **alphaEquation** "FUNC_ADD"
+### SFString [in, out] **alphaEquation** "FUNC_ADD"
 
 Specifies the alpha blend equation, how the alpha component of the source and destination colors are combined. It must be:
 

@@ -34,7 +34,7 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 *controlPoint* defines a set of control points of dimension uDimension by vDimension, and defines a mesh where the points do not have uniform spacing.
 
-### MFFloat [in, out] **weight** [ ] <small>(0,∞)</small>
+### MFDouble [in, out] **weight** [ ] <small>(0,∞)</small>
 
 Output values for linear interpolation, each corresponding to knots.
 

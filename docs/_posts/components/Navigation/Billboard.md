@@ -40,7 +40,7 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 - Axis 0 0 0 always faces viewer.
 
-### SFBool [ ] **visible** TRUE
+### SFBool [in, out] **visible** TRUE
 
 Whether or not renderable content within this node is visually displayed.
 
@@ -49,7 +49,7 @@ Whether or not renderable content within this node is visually displayed.
 - The visible field has no effect on animation behaviors, event passing or other non-visual characteristics.
 - Content must be visible to be collidable and to be pickable.
 
-### SFBool [ ] **bboxDisplay** FALSE
+### SFBool [in, out] **bboxDisplay** FALSE
 
 Whether to display bounding box for associated geometry, aligned with world coordinates.
 

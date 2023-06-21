@@ -41,7 +41,7 @@ Author-provided prose that describes intended purpose of the url asset.
 
 - Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for & ampersand character, or &amp;#34; for " quotation-mark character).
 
-### SFBool [ ] **visible** TRUE
+### SFBool [in, out] **visible** TRUE
 
 Whether or not renderable content within this node is visually displayed.
 
@@ -50,7 +50,7 @@ Whether or not renderable content within this node is visually displayed.
 - The visible field has no effect on animation behaviors, event passing or other non-visual characteristics.
 - Content must be visible to be collidable and to be pickable.
 
-### SFBool [ ] **bboxDisplay** FALSE
+### SFBool [in, out] **bboxDisplay** FALSE
 
 Whether to display bounding box for associated geometry, aligned with world coordinates.
 

@@ -145,6 +145,7 @@ Object .assign (Object .setPrototypeOf (VolumeEmitter .prototype, X3DParticleEmi
 
       // Initialize fields.
 
+      this ._set_coordIndex .addFieldInterest (this ._coordIndex);
       this ._direction .addInterest ("set_direction__", this);
 
       this ._coordIndex .addFieldInterest (this .volumeNode ._coordIndex);
@@ -269,16 +270,17 @@ Object .defineProperties (VolumeEmitter,
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "on",          new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "internal",    new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "direction",   new Fields .SFVec3f (0, 1, 0)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "speed",       new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "variation",   new Fields .SFFloat (0.25)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "mass",        new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "surfaceArea", new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "coordIndex",  new Fields .MFInt32 (-1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "coord",       new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",       new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "set_coordIndex", new Fields .MFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "on",             new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "internal",       new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "direction",      new Fields .SFVec3f (0, 1, 0)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "speed",          new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "variation",      new Fields .SFFloat (0.25)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "mass",           new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "surfaceArea",    new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "coordIndex",     new Fields .MFInt32 (-1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "coord",          new Fields .SFNode ()),
       ]),
       enumerable: true,
    },

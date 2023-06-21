@@ -31,7 +31,7 @@ The Cylinder node belongs to the **Geometry3D** component and its default contai
 
 Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
 
-### SFBool [ ] **top** TRUE
+### SFBool [in, out] **top** TRUE
 
 Whether to draw top (inside faces are never drawn).
 
@@ -39,7 +39,7 @@ Whether to draw top (inside faces are never drawn).
 
 - Cannot be changed after initial creation.
 
-### SFBool [ ] **side** TRUE
+### SFBool [in, out] **side** TRUE
 
 Whether to draw sides (inside faces are never drawn).
 
@@ -47,7 +47,7 @@ Whether to draw sides (inside faces are never drawn).
 
 - Cannot be changed after initial creation.
 
-### SFBool [ ] **bottom** TRUE
+### SFBool [in, out] **bottom** TRUE
 
 Whether to draw bottom (inside faces are never drawn).
 

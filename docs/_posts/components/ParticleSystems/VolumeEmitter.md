@@ -31,6 +31,14 @@ The VolumeEmitter node belongs to the **ParticleSystems** component and its defa
 
 Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
 
+### MFInt32 [in] **set_coordIndex** <small>[0,∞) or -1</small>
+
+*coordIndex* indices provide the order in which coordinates are applied to construct each polygon face. Order starts at index 0, commas are optional between sets.
+
+#### Hint
+
+- Sentinel value -1 is used to separate indices for each successive polygon.
+
 ### SFBool [ ] **internal** TRUE
 
 TODO, X3D specification is undefined.
@@ -67,7 +75,7 @@ Particle surface area in area base units (default is meters squared). Surface ar
 
 - SurfaceArea value represents average frontal area presented to the wind. Assumes spherical model for each particle (i.e., surface area is the same regardless of direction).
 
-### MFInt32 [in, out] **coordIndex** -1 <small>[0,∞) or -1</small>
+### MFInt32 [ ] **coordIndex** -1 <small>[0,∞) or -1</small>
 
 *coordIndex* indices are applied to contained Coordinate values in order to define randomly generated initial geometry of the particles.
 

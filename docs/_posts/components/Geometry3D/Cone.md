@@ -31,7 +31,7 @@ The Cone node belongs to the **Geometry3D** component and its default container 
 
 Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
 
-### SFBool [ ] **side** TRUE
+### SFBool [in, out] **side** TRUE
 
 Whether to draw sides (other inside faces are not drawn).
 
@@ -39,7 +39,7 @@ Whether to draw sides (other inside faces are not drawn).
 
 - Cannot be changed after initial creation.
 
-### SFBool [ ] **bottom** TRUE
+### SFBool [in, out] **bottom** TRUE
 
 Whether to draw bottom (other inside faces are not drawn).
 

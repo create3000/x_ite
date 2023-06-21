@@ -43,17 +43,11 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 ### MFInt32 [in] **set_coordIndex** <small>[0,∞) or -1</small>
 
-**colorIndex** values define the order in which Color|ColorRGBA values are applied to polygons (or vertices).
+*coordIndex* indices provide the order in which coordinates are applied to construct each polygon face. Order starts at index 0, commas are optional between sets.
 
-#### Hints
+#### Hint
 
-- If *colorIndex* array is not provided, then Color|ColorRGBA values are indexed according to the coordIndex field.
-- If colorPerVertex='false' then one index is provided for each polygon defined by the coordIndex array. No sentinel -1 values are included.
-- If colorPerVertex='true' then a matching set of indices is provided, each separated by sentinel -1, that exactly corresponds to individual values in the coordIndex array polygon definitions.
-
-#### Warning
-
-- It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
+- Sentinel value -1 is used to separate indices for each successive polygon.
 
 ### SFBool [ ] **colorPerVertex** TRUE
 
