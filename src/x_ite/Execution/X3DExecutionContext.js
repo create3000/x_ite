@@ -694,9 +694,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
    },
    deleteSimpleRoute (route)
    {
-      const id = X3DRoute .getRouteId (route .getSourceField (), route .getDestinationField ());
-
-      this [_routes] .remove (id);
+      this [_routes] .remove (route .getRouteId ());
 
       route .disconnect ();
 
