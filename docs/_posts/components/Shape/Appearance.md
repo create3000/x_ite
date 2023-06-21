@@ -98,7 +98,7 @@ Zero or more contained programmable shader nodes (ComposedShader, PackagedShader
 
 - [X3D Architecture 31 Programmable shaders component](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/shaders.html){:target="_blank"}
 
-### SFNode [in, out] **blendMode** NULL <small>[BlendMode] <span class="yellow">non standard</span></small>
+### SFNode [in, out] **blendMode** NULL <small>[BlendMode]</small> <small><span class="yellow">non standard</span></small>
 
 Single contained BlendMode node that defines blend mode properties.
 
