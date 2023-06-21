@@ -35,7 +35,7 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 TODO, X3D specification is undefined.
 
-### SFVec3f [in, out] **direction** 0 1 0 <small>[-1,1]</small>
+### SFVec3f [in, out] **direction** 0 1 0 <small>(-∞,∞)</small>
 
 Initial direction from which particles emanate.
 

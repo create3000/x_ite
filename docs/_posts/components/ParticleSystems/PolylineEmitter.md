@@ -31,7 +31,7 @@ The PolylineEmitter node belongs to the **ParticleSystems** component and its de
 
 Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
 
-### SFVec3f [in, out] **direction** 0 1 0 <small>[-1,1]</small>
+### SFVec3f [in, out] **direction** 0 1 0 <small>(-∞,∞)</small>
 
 Initial direction from which particles emanate.
 

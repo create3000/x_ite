@@ -39,7 +39,7 @@ Enables/disables node operation.
 
 *set_contacts* input field for Contact nodes provides per-frame information about contacts between bodies.
 
-### SFVec3f [in, out] **gravity** 0 -9.8 0
+### SFVec3f [in, out] **gravity** 0 -9.8 0 <small>(-∞,∞)</small>
 
 *gravity* indicates direction and strength of local gravity vector for this collection of bodies (units m/sec^2).
 

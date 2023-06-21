@@ -35,7 +35,7 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 *forceOutput* controls which output fields are generated for the next frame. Values are ALL, NONE, or exact names of output fields updated at start of next frame.
 
-### SFVec3f [in, out] **axis** 0 1 0
+### SFVec3f [in, out] **axis** 0 1 0 <small>(-∞,∞)</small>
 
 *axis* is normalized vector specifying direction of motion.
 

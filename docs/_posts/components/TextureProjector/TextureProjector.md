@@ -41,11 +41,11 @@ Author-provided prose that describes intended purpose of the url asset.
 
 ### SFBool [in, out] **global** TRUE
 
-### SFVec3f [in, out] **location** <small></small>
+### SFVec3f [in, out] **location** <small>(-∞,∞)</small>
 
-### SFVec3f [in, out] **direction** <small></small>
+### SFVec3f [in, out] **direction** <small>(-∞,∞)</small>
 
-### SFVec3f [in, out] **upVector** <small></small>
+### SFVec3f [in, out] **upVector** <small>(-∞,∞)</small>
 
 ### SFFloat [in, out] **nearDistance** 0 <small>-1 or (0,∞)</small>
 

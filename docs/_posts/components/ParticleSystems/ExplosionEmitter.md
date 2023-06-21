@@ -31,7 +31,7 @@ The ExplosionEmitter node belongs to the **ParticleSystems** component and its d
 
 Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
 
-### SFVec3f [in, out] **position** 0 0 0
+### SFVec3f [in, out] **position** 0 0 0 <small>(-∞,∞)</small>
 
 Point from which particles emanate.
 

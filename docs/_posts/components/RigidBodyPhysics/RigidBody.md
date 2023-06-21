@@ -42,7 +42,7 @@ Enables/disables node operation.
 
 - Fixed is useful for indicating objects that do not move: walls, ground, etc.
 
-### SFVec3f [in, out] **position** 0 0 0
+### SFVec3f [in, out] **position** 0 0 0 <small>(-∞,∞)</small>
 
 *position* sets body location in world space, then reports physics updates.
 
@@ -50,7 +50,7 @@ Enables/disables node operation.
 
 *orientation* sets body direction in world space, then reports physics updates.
 
-### SFVec3f [in, out] **linearVelocity** 0 0 0
+### SFVec3f [in, out] **linearVelocity** 0 0 0 <small>(-∞,∞)</small>
 
 *linearVelocity* sets constant velocity value to object every frame, and reports updates by physics model.
 
@@ -78,7 +78,7 @@ Enables/disables node operation.
 
 *useFiniteRotation* enables/disables higher-resolution, higher-cost computational method for calculating rotations.
 
-### SFVec3f [in, out] **finiteRotationAxis** 0 0 0 <small>[-1,1]</small>
+### SFVec3f [in, out] **finiteRotationAxis** 0 0 0 <small>(-∞,∞)</small>
 
 *finiteRotationAxis* specifies vector around which the object rotates.
 

@@ -90,7 +90,7 @@ Unique name attribute must be defined so that HAnimHumanoid node can be identifi
 
 - Name is not included if this instance is a USE node.
 
-### SFRotation [in, out] **rotation** 0 0 1 0 <small>(-∞,∞)|[-1,1]</small>
+### SFRotation [in, out] **rotation** 0 0 1 0 <small>(-∞,∞) or [-1,1]</small>
 
 Orientation of children relative to local coordinate system.
 
@@ -98,7 +98,7 @@ Orientation of children relative to local coordinate system.
 
 Non-uniform x-y-z scale of child coordinate system, adjusted by center and scaleOrientation.
 
-### SFRotation [in, out] **scaleOrientation** 0 0 1 0 <small>(-∞,∞)|[-1,1]</small>
+### SFRotation [in, out] **scaleOrientation** 0 0 1 0 <small>(-∞,∞) or [-1,1]</small>
 
 Preliminary rotation of coordinate system before scaling (to allow scaling around arbitrary orientations).
 

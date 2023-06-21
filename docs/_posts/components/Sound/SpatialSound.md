@@ -39,7 +39,7 @@ The SpatialSound node belongs to the **Sound** component and its default contain
 
 ### SFFloat [in, out] **coneOuterGain** <small>(-∞,∞)</small>
 
-### SFVec3f [in, out] **direction** <small></small>
+### SFVec3f [in, out] **direction** <small>(-∞,∞)</small>
 
 ### SFString [in, out] **distanceModel** <small></small>
 
@@ -51,7 +51,7 @@ The SpatialSound node belongs to the **Sound** component and its default contain
 
 ### SFFloat [in, out] **intensity** <small>[0,1]</small>
 
-### SFVec3f [in, out] **location** <small></small>
+### SFVec3f [in, out] **location** <small>(-∞,∞)</small>
 
 ### SFFloat [in, out] **maxDistance** <small>[0,∞)</small>
 

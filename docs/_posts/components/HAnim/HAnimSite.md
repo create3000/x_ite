@@ -102,7 +102,7 @@ Unique name attribute must be defined so that HAnimSite node can be identified a
 - [HAnim Humanoid Site Names LOA-3](https://www.web3d.org/x3d/content/examples/Basic/HumanoidAnimation/tables/HAnimSiteLoa3Names19774V1.0.txt){:target="_blank"}
 - [HAnim Specification, LOA-3 default Site object translations](https://www.web3d.org/documents/specifications/19774-1/V2.0/HAnim/BodyDimensionsAndLOAs.html#LOA3DefaultSiteTranslations){:target="_blank"}
 
-### SFRotation [in, out] **rotation** 0 0 1 0 <small>(-∞,∞)|[-1,1]</small>
+### SFRotation [in, out] **rotation** 0 0 1 0 <small>(-∞,∞) or [-1,1]</small>
 
 Orientation of children relative to local coordinate system.
 
@@ -110,11 +110,11 @@ Orientation of children relative to local coordinate system.
 
 Non-uniform x-y-z scale of child coordinate system, adjusted by center and scaleOrientation.
 
-### SFRotation [in, out] **scaleOrientation** 0 0 1 0 <small>(-∞,∞)|[-1,1]</small>
+### SFRotation [in, out] **scaleOrientation** 0 0 1 0 <small>(-∞,∞) or [-1,1]</small>
 
 Preliminary rotation of coordinate system before scaling (to allow scaling around arbitrary orientations).
 
-### SFVec3f [in, out] **translation** 0 0 0 <small>(-∞,∞)|[-1,1]</small>
+### SFVec3f [in, out] **translation** 0 0 0 <small>(-∞,∞)</small>
 
 Position of children relative to local coordinate system.
 

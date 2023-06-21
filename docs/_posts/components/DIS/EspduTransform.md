@@ -319,7 +319,7 @@ Seconds between read updates, 0 means no reading.
 
 Orientation of children relative to local coordinate system, usually read from (or written to) remote, networked EspduTransform nodes.
 
-### SFVec3f [in, out] **scale** 1 1 1
+### SFVec3f [in, out] **scale** 1 1 1 <small>(-∞,∞)</small>
 
 Non-uniform x-y-z scale of child coordinate system, adjusted by center and scaleOrientation.
 
@@ -331,7 +331,7 @@ Preliminary rotation of coordinate system before scaling (to allow scaling aroun
 
 Simulation/exercise siteID of the participating LAN or organization.
 
-### SFVec3f [in, out] **translation** 0 0 0
+### SFVec3f [in, out] **translation** 0 0 0 <small>(-∞,∞)</small>
 
 Position of children relative to local coordinate system, usually read from (or written to) remote, networked EspduTransform nodes.
 

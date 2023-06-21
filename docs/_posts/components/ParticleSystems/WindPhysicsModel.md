@@ -35,7 +35,7 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 Enables/disables node operation.
 
-### SFVec3f [in, out] **direction** 0 0 0 <small>(∞,∞)</small>
+### SFVec3f [in, out] **direction** 0 0 0 <small>(-∞,∞)</small>
 
 *direction* in which wind is travelling in the form of a normalized, unit vector.
 

@@ -188,7 +188,7 @@ Identifies a particular radio within a given entity.
 
 Seconds between read updates, 0 means no reading.
 
-### SFVec3f [in, out] **relativeAntennaLocation** 0 0 0
+### SFVec3f [in, out] **relativeAntennaLocation** 0 0 0 <small>(-∞,∞)</small>
 
 Relative coordinates for antenna location.
 

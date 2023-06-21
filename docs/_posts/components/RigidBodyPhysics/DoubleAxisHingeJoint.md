@@ -35,11 +35,11 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 *forceOutput* controls which output fields are generated for the next frame. Values are ALL, NONE, or exact names of output fields updated at start of next frame.
 
-### SFVec3f [in, out] **anchorPoint** 0 0 0
+### SFVec3f [in, out] **anchorPoint** 0 0 0 <small>(-∞,∞)</small>
 
 *anchorPoint* is joint center, specified in world coordinates.
 
-### SFVec3f [in, out] **axis1** 0 0 0
+### SFVec3f [in, out] **axis1** 0 0 0 <small>(-∞,∞)</small>
 
 *axis1* defines axis vector of joint connection to body1.
 
@@ -47,7 +47,7 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 - 0 0 0 means motor disabled.
 
-### SFVec3f [in, out] **axis2** 0 0 0
+### SFVec3f [in, out] **axis2** 0 0 0 <small>(-∞,∞)</small>
 
 *axis2* defines axis vector of joint connection to body2.
 

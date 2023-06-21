@@ -93,7 +93,7 @@ Translation offset from origin of local coordinate system.
 
 Input/Output field displacers.
 
-### SFRotation [in, out] **limitOrientation** 0 0 1 0 <small>(-∞,∞)|[-1,1]</small>
+### SFRotation [in, out] **limitOrientation** 0 0 1 0 <small>(-∞,∞) or [-1,1]</small>
 
 Orientation of upper/lower rotation limits, relative to HAnimJoint center.
 
@@ -118,7 +118,7 @@ Unique name attribute must be defined so that HAnimJoint node can be identified 
 - [HAnim Humanoid Joint Names](https://www.web3d.org/x3d/content/examples/Basic/HumanoidAnimation/tables/HAnimJointNames19774V1.0.txt){:target="_blank"}
 - [HAnim Specification, Humanoid Joint-Segment Hierarchy](https://www.web3d.org/documents/specifications/19774-1/V2.0/HAnim/concepts.html#Hierarchy){:target="_blank"}
 
-### SFRotation [in, out] **rotation** 0 0 1 0 <small>(-∞,∞)|[-1,1]</small>
+### SFRotation [in, out] **rotation** 0 0 1 0 <small>(-∞,∞) or [-1,1]</small>
 
 Orientation of children relative to local coordinate system.
 
@@ -126,7 +126,7 @@ Orientation of children relative to local coordinate system.
 
 Non-uniform x-y-z scale of child coordinate system, adjusted by center and scaleOrientation.
 
-### SFRotation [in, out] **scaleOrientation** 0 0 1 0 <small>(-∞,∞)|[-1,1]</small>
+### SFRotation [in, out] **scaleOrientation** 0 0 1 0 <small>(-∞,∞) or [-1,1]</small>
 
 Preliminary rotation of coordinate system before scaling (to allow scaling around arbitrary orientations).
 
