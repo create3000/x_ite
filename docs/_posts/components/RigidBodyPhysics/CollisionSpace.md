@@ -29,7 +29,7 @@ The CollisionSpace node belongs to the **RigidBodyPhysics** component and its de
 
 ## Fields
 
-### SFNode [in, out] **metadata** NULL
+### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
 Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
 

@@ -52,26 +52,6 @@ The value attribute is a strictly typed data array providing relevant metadata i
 
 - Use lower-case values ("true false") for .x3d XML encoding, and upper-case values ("TRUE FALSE") for .x3dv ClassicVRML encoding.
 
-### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
-
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
-
-### SFString [in, out] **name** ""
-
-Depending on the metadata vocabulary, the attribute name is usually required for metadata nodes.
-
-#### Warning
-
-- Name is not included if this instance is a USE node.
-
-### SFString [in, out] **reference** ""
-
-*reference* to the metadata standard or definition defining this particular metadata value.
-
-### MFBool [in, out] **value** [ ]
-
-The value attribute is a strictly typed data array providing relevant metadata information.
-
 #### Warning
 
 - Use lower-case values ("true false") for .x3d XML encoding, and upper-case values ("TRUE FALSE") for .x3dv ClassicVRML encoding.
