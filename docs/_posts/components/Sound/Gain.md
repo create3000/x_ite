@@ -21,6 +21,10 @@ The Gain node belongs to the **Sound** component and its default container field
 
 ```
 + X3DNode
+  + X3DChildNode
+    + X3DTimeDependentNode
+      + X3DSoundProcessingNode
+        + Gain
 ```
 
 ## Fields

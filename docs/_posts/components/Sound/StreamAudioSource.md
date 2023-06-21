@@ -21,6 +21,10 @@ The StreamAudioSource node belongs to the **Sound** component and its default co
 
 ```
 + X3DNode
+  + X3DChildNode
+    + X3DTimeDependentNode
+      + X3DSoundSourceNode
+        + StreamAudioSource
 ```
 
 ## Fields

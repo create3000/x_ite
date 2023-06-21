@@ -21,6 +21,9 @@ The SpatialSound node belongs to the **Sound** component and its default contain
 
 ```
 + X3DNode
+  + X3DChildNode
+    + X3DSoundNode
+      + SpatialSound
 ```
 
 ## Fields

@@ -21,6 +21,10 @@ The AudioDestination node belongs to the **Sound** component and its default con
 
 ```
 + X3DNode
+  + X3DChildNode
+    + X3DSoundNode
+      + X3DSoundDestinationNode
+        + AudioDestination
 ```
 
 ## Fields

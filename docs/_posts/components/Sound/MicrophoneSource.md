@@ -21,6 +21,10 @@ The MicrophoneSource node belongs to the **Sound** component and its default con
 
 ```
 + X3DNode
+  + X3DChildNode
+    + X3DTimeDependentNode
+      + X3DSoundSourceNode
+        + MicrophoneSource
 ```
 
 ## Fields

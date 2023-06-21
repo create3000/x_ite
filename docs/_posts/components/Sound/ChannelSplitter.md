@@ -21,6 +21,10 @@ The ChannelSplitter node belongs to the **Sound** component and its default cont
 
 ```
 + X3DNode
+  + X3DChildNode
+    + X3DSoundNode
+      + X3DSoundChannelNode
+        + ChannelSplitter
 ```
 
 ## Fields

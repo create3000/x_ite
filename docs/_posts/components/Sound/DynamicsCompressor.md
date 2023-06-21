@@ -21,6 +21,10 @@ The DynamicsCompressor node belongs to the **Sound** component and its default c
 
 ```
 + X3DNode
+  + X3DChildNode
+   + X3DTimeDependentNode
+     + X3DSoundProcessingNode
+       + DynamicsCompressor
 ```
 
 ## Fields

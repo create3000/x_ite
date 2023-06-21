@@ -21,6 +21,10 @@ The ChannelMerger node belongs to the **Sound** component and its default contai
 
 ```
 + X3DNode
+  + X3DChildNode
+    + X3DSoundNode
+      + X3DSoundChannelNode
+        + ChannelMerger
 ```
 
 ## Fields

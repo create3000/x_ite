@@ -21,6 +21,10 @@ The StreamAudioDestination node belongs to the **Sound** component and its defau
 
 ```
 + X3DNode
+  + X3DChildNode
+    + X3DSoundNode
+      + X3DSoundDestinationNode
+        + StreamAudioDestination
 ```
 
 ## Fields
