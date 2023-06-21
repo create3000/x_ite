@@ -53,7 +53,7 @@ Author-provided prose that describes intended purpose of the url asset.
 
 ### SFString [in, out] **channels** ""
 
-### MFBool [in, out] **channelsEnabled**
+### MFBool [in, out] **channelsEnabled** [ ]
 
 ### SFString [in, out] **joints** ""
 
