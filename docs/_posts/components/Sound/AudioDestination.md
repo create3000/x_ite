@@ -33,7 +33,7 @@ The AudioDestination node belongs to the **Sound** component and its default con
 
 ### SFFloat [in, out] **gain** <small>(-∞,∞)</small>
 
-### SFInt32 [in, out] **maxChannelCount** <small></small>
+### SFInt32 [in, out] **maxChannelCount** <small>[0,∞)</small>
 
 ### SFInt32 [out] **channelCount**
 

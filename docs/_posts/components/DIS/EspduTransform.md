@@ -271,7 +271,7 @@ Maximum of 11 characters for simple entity label.
 
 Fallback server address if multicast not available locally.
 
-### SFInt32 [in, out] **multicastRelayPort**
+### SFInt32 [in, out] **multicastRelayPort** <small>[0,65535]</small>
 
 Fallback server port if multicast not available locally.
 
@@ -307,7 +307,7 @@ Whether this entity is ignoring the network, sending DIS packets to the network,
 
 - Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values. Network activity may have associated security issues.
 
-### SFInt32 [in, out] **port**
+### SFInt32 [in, out] **port** <small>[0,65535]</small>
 
 Network connection port number (EXAMPLE 62040) for sending or receiving DIS messages.
 
@@ -327,7 +327,7 @@ Non-uniform x-y-z scale of child coordinate system, adjusted by center and scale
 
 Preliminary rotation of coordinate system before scaling (to allow scaling around arbitrary orientations).
 
-### SFInt32 [in, out] **siteID**
+### SFInt32 [in, out] **siteID** <small>[0,65535]</small>
 
 Simulation/exercise siteID of the participating LAN or organization.
 
@@ -335,7 +335,7 @@ Simulation/exercise siteID of the participating LAN or organization.
 
 Position of children relative to local coordinate system, usually read from (or written to) remote, networked EspduTransform nodes.
 
-### SFInt32 [in, out] **warhead**
+### SFInt32 [in, out] **warhead** <small>[0,65535]</small>
 
 Enumerations value for type of warhead on the munition.
 

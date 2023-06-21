@@ -33,9 +33,9 @@ The Analyser node belongs to the **Sound** component and its default container f
 
 ### SFFloat [in, out] **gain** <small>(-∞,∞)</small>
 
-### SFInt32 [in, out] **fftSize** <small></small>
+### SFInt32 [in, out] **fftSize** <small>[0,∞)</small>
 
-### SFInt32 [in, out] **frequencyBinCount** <small></small>
+### SFInt32 [in, out] **frequencyBinCount** <small>[0,∞)</small>
 
 ### SFFloat [in, out] **minDecibels** <small>(-∞,∞)</small>
 

@@ -93,7 +93,7 @@ Location and filename of image. Multiple locations are more reliable, and includ
 
 ### SFTime [in, out] **loopEnd** <small>[0,∞)</small>
 
-### SFInt32 [in, out] **numberOfChannels** <small></small>
+### SFInt32 [in, out] **numberOfChannels** <small>[0,∞)</small>
 
 ### SFFloat [in, out] **playbackRate** <small>(-∞,∞)</small>
 

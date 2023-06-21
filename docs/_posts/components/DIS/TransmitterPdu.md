@@ -136,7 +136,7 @@ Specifies radio system associated with this Transmitter PDU and used to interpre
 
 Fallback server address if multicast not available locally. For example: track.nps.edu.
 
-### SFInt32 [in, out] **multicastRelayPort**
+### SFInt32 [in, out] **multicastRelayPort** <small>[0,65535]</small>
 
 Fallback server port if multicast not available locally. For example: 8010.
 
@@ -148,7 +148,7 @@ Whether this entity is ignoring the network, sending DIS packets to the network,
 
 - Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values. Network activity may have associated security issues.
 
-### SFInt32 [in, out] **port**
+### SFInt32 [in, out] **port** <small>[0,65535]</small>
 
 Multicast network port, for example: 62040.
 
@@ -156,31 +156,31 @@ Multicast network port, for example: 62040.
 
 *power* that radio would be capable of outputting if on and transmitting, independent of actual transmit state of the radio.
 
-### SFInt32 [in, out] **radioEntityTypeCategory**
+### SFInt32 [in, out] **radioEntityTypeCategory** <small>[0,255]</small>
 
 Enumeration containing EntityType of transmitter radio. Enumerations value: 0 for Other, 1 for Generic Radio or Simple Intercom, 2 for HAVE QUICK, 3 for HAVE QUICK II, 4 for HAVE QUICK IIA, 5 for SINCGARS, 6 for CCTT SINCGARS, 7 for EPLRS (Enhanced Position Location Reporting System), 8 for JTIDS/MIDS, 9 for Link 11, 10 for Link 11B, 11 for L-Band SATCOM, 12 for Enhanced SINCGARS 7.3, 13 for Navigation Aid.
 
-### SFInt32 [in, out] **radioEntityTypeCountry**
+### SFInt32 [in, out] **radioEntityTypeCountry** <small>[0,65535]</small>
 
 Enumerations value for country to which the design of the entity or its design specification is attributed.
 
-### SFInt32 [in, out] **radioEntityTypeDomain**
+### SFInt32 [in, out] **radioEntityTypeDomain** <small>[0,255]</small>
 
 Enumerations value for domain in which the entity operates: LAND, AIR, SURFACE, SUBSURFACE, SPACE or OTHER.
 
-### SFInt32 [in, out] **radioEntityTypeKind**
+### SFInt32 [in, out] **radioEntityTypeKind** <small>[0,255]</small>
 
 Enumerations value for whether entity is a PLATFORM, MUNITION, LIFE_FORM, ENVIRONMENTAL, CULTURAL_FEATURE, SUPPLY, RADIO, EXPENDABLE, SENSOR_EMITTER or OTHER.
 
-### SFInt32 [in, out] **radioEntityTypeNomenclature**
+### SFInt32 [in, out] **radioEntityTypeNomenclature** <small>[0,255]</small>
 
 Enumerations value indicating nomenclature (name) for a particular emitter. See DIS enumerations reference for value/name pairs.
 
-### SFInt32 [in, out] **radioEntityTypeNomenclatureVersion**
+### SFInt32 [in, out] **radioEntityTypeNomenclatureVersion** <small>[0,65535]</small>
 
 Named equipment version number.
 
-### SFInt32 [in, out] **radioID**
+### SFInt32 [in, out] **radioID** <small>[0,255]</small>
 
 Identifies a particular radio within a given entity.
 
@@ -196,7 +196,7 @@ Relative coordinates for antenna location.
 
 Whether RTP headers are prepended to DIS PDUs.
 
-### SFInt32 [in, out] **siteID**
+### SFInt32 [in, out] **siteID** <small>[0,65535]</small>
 
 Simulation/exercise siteID of the participating LAN or organization.
 
@@ -204,11 +204,11 @@ Simulation/exercise siteID of the participating LAN or organization.
 
 Bandwidth of the particular transmitter measured between the half-power (-3 dB) points (this value represents total bandwidth, not the deviation from the center frequency).
 
-### SFInt32 [in, out] **transmitState**
+### SFInt32 [in, out] **transmitState** <small>[0,255]</small>
 
 Specify radio transmission state where enumerations value 0 is for off, value 1 for powered but not transmitting, or value 1 is for powered and transmitting,
 
-### SFInt32 [in, out] **whichGeometry** 1
+### SFInt32 [in, out] **whichGeometry** 1 <small>[-1,∞)</small>
 
 Select geometry to render: -1 for no geometry, 0 for text trace, 1 for default geometry, (optional) higher values to render different states.
 
