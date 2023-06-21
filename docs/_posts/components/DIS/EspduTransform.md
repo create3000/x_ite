@@ -215,7 +215,7 @@ Simulation/exercise eventApplicationID is unique for events generated from appli
 
 For a given event, simulation/exercise entityID is a unique ID for a single entity within that application.
 
-### SFInt32 [in, out] **eventNumber** 1 <small>[0,65355]</small>
+### SFInt32 [in, out] **eventNumber** 0 <small>[0,65355]</small>
 
 Sequential number of each event issued by an application.
 
@@ -283,7 +283,7 @@ Fallback server port if multicast not available locally.
 
 Final point of the munition path from firing weapon to detonation or impact, in exercise coordinates.
 
-### SFInt32 [in, out] **munitionEntityID** 1 <small>[0,65535]</small>
+### SFInt32 [in, out] **munitionEntityID** 0 <small>[0,65535]</small>
 
 *munitionEntityID* is unique ID for entity firing munition within that application.
 
