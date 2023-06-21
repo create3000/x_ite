@@ -95,6 +95,10 @@ Parent ComposedCubeMapTexture element can contain up to six image nodes (ImageTe
 - Each child image node must have a different containerField value.
 - Field originally named 'bottom' in X3Dv3. https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges
 
+### SFNode [ ] **textureProperties** NULL <small>[TextureProperties]</small>
+
+Field textureProperties.
+
 ## Description
 
 ### Hint

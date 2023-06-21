@@ -35,6 +35,18 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 *pickable* determines whether pick traversal is performed for this layer.
 
+### MFString [in, out] **objectType** "ALL" <small>["ALL","NONE","TERRAIN",...]</small>
+
+The objectType field specifies a set of labels used in the picking process. Each string specified is treated as an independent label that needs to be matched against the same type in one of the pick sensor instances.
+
+#### Hints
+
+- Authors may define any value for objectType. MFString arrays can have multiple values, so "separate each individual string" "by using quote marks".
+
+### SFBool [in, out] **visible** TRUE
+
+Whether or not renderable content within this node is visually displayed.
+
 ### SFNode [in, out] **layout** NULL <small>[X3DLayoutNode]</small>
 
 The layout field contains an X3DLayoutNode node that provides the information required to locate and size the layout region of the LayoutGroup node relative to its parent’s layout region, and also to scale the contents of the LayoutGroup.
