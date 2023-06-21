@@ -33,7 +33,7 @@ The Gain node belongs to the **Sound** component and its default container field
 
 ### SFFloat [in, out] **gain** <small></small>
 
-### SFTime [in, out] **tailTime** <small></small>
+### SFTime [in, out] **tailTime** <small>[0,∞)</small>
 
 ### SFInt32 [out] **channelCount**
 

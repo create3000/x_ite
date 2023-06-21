@@ -39,7 +39,7 @@ The BiquadFilter node belongs to the **Sound** component and its default contain
 
 ### SFFloat [in, out] **qualityFactor** <small></small>
 
-### SFTime [in, out] **tailTime** <small></small>
+### SFTime [in, out] **tailTime** <small>[0,∞)</small>
 
 ### SFString [in, out] **type** <small></small>
 

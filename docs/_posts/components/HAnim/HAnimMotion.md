@@ -43,27 +43,27 @@ Author-provided prose that describes intended purpose of the url asset.
 
 ### SFBool [in] **previous**
 
-### SFTime [in, out] **frameDuration** <small></small>
+### SFTime [in, out] **frameDuration** <small>(0,∞)</small>
 
-### SFInt32 [in, out] **frameIncrement** <small></small>
+### SFInt32 [in, out] **frameIncrement** <small>(-∞,∞)</small>
 
-### SFInt32 [in, out] **frameIndex** <small></small>
+### SFInt32 [in, out] **frameIndex** <small>[0,∞)</small>
 
-### SFBool [in, out] **loop** <small></small>
+### SFBool [in, out] **loop**
 
-### SFString [in, out] **channels**
+### SFString [in, out] **channels** ""
 
-### MFBool [in, out] **channelsEnabled** <small></small>
+### MFBool [in, out] **channelsEnabled**
 
-### MFString [in, out] **joints** <small></small>
+### SFString [in, out] **joints** ""
 
-### SFInt32 [in, out] **loa** <small></small>
+### SFInt32 [in, out] **loa** <small>[-1,4]</small>
 
-### SFInt32 [in, out] **startFrame** <small></small>
+### SFInt32 [in, out] **startFrame** <small>[0,∞)</small>
 
-### SFInt32 [in, out] **endFrame** <small></small>
+### SFInt32 [in, out] **endFrame** <small>[0,∞)</small>
 
-### MFFloat [in, out] **values** <small></small>
+### MFFloat [in, out] **values** <small>(-∞,∞)</small>
 
 ### SFTime [out] **cycleTime**
 

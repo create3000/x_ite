@@ -87,11 +87,11 @@ Location and filename of image. Multiple locations are more reliable, and includ
 
 ### SFFloat [in, out] **detune** <small></small>
 
-### SFTime [in, out] **bufferDuration** <small></small>
+### SFTime [in, out] **bufferDuration** <small>[0,∞)</small>
 
-### SFTime [in, out] **loopStart** <small></small>
+### SFTime [in, out] **loopStart** <small>[0,∞)</small>
 
-### SFTime [in, out] **loopEnd** <small></small>
+### SFTime [in, out] **loopEnd** <small>[0,∞)</small>
 
 ### SFInt32 [in, out] **numberOfChannels** <small></small>
 

@@ -311,7 +311,7 @@ Whether this entity is ignoring the network, sending DIS packets to the network,
 
 Network connection port number (EXAMPLE 62040) for sending or receiving DIS messages.
 
-### SFTime [in, out] **readInterval** 0.1
+### SFTime [in, out] **readInterval** 0.1 <small>[0,∞)</small>
 
 Seconds between read updates, 0 means no reading.
 
@@ -339,7 +339,7 @@ Position of children relative to local coordinate system, usually read from (or 
 
 Enumerations value for type of warhead on the munition.
 
-### SFTime [in, out] **writeInterval** 1
+### SFTime [in, out] **writeInterval** 1 <small>[0,∞)</small>
 
 Seconds between write updates, 0 means no writing (sending).
 
