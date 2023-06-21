@@ -49,7 +49,7 @@ Author-provided prose that describes intended purpose of the url asset.
 
 ### SFInt32 [in, out] **frameIndex** 0 <small>[0,∞)</small>
 
-### SFBool [in, out] **loop**
+### SFBool [in, out] **loop** FALSE
 
 ### SFString [in, out] **channels** ""
 
