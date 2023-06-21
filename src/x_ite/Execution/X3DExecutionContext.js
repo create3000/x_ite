@@ -657,7 +657,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
          if (sourceField .getType () !== destinationField .getType ())
             throw new Error (`ROUTE types ${sourceField .getTypeName ()} and ${destinationField .getTypeName ()} do not match.`);
 
-         const id = X3DRoute .getId (sourceField, destinationField);
+         const id = X3DRoute .getRouteId (sourceField, destinationField);
 
          let route = this [_routes] .get (id);
 
@@ -694,7 +694,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
    },
    deleteSimpleRoute (route)
    {
-      const id = X3DRoute .getId (route .getSourceField (), route .getDestinationField ());
+      const id = X3DRoute .getRouteId (route .getSourceField (), route .getDestinationField ());
 
       this [_routes] .remove (id);
 
@@ -762,7 +762,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       sourceField      = sourceNode      .getField (sourceField);
       destinationField = destinationNode .getField (destinationField);
 
-      return this [_routes] .get (X3DRoute .getId (sourceField, destinationField));
+      return this [_routes] .get (X3DRoute .getRouteId (sourceField, destinationField));
    },
    getRoutes ()
    {

@@ -80,9 +80,9 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
    {
       return this [_executionContext];
    },
-   getId ()
+   getRouteId ()
    {
-      return X3DRoute .getId (this [_sourceField], this [_destinationField]);
+      return X3DRoute .getRouteId (this [_sourceField], this [_destinationField]);
    },
    getSourceNode ()
    {
@@ -307,7 +307,7 @@ Object .defineProperties (X3DRoute,
 
 Object .assign (X3DRoute,
 {
-   getId (sourceField, destinationField)
+   getRouteId (sourceField, destinationField)
    {
       return `${sourceField .getId ()}.${destinationField .getId ()}`;
    },
