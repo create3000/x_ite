@@ -37,7 +37,7 @@ The WaveShaper node belongs to the **Sound** component and its default container
 
 ### SFString [in, out] **oversample** <small></small>
 
-### SFTime [in, out] **tailTime** <small></small>
+### SFTime [in, out] **tailTime** <small>[0,∞)</small>
 
 ### SFInt32 [out] **channelCount**
 
