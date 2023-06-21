@@ -123,8 +123,8 @@ Object .defineProperties (BufferAudioSource,
          new X3DFieldDefinition (X3DConstants .outputOnly,  "bufferLength",         new Fields .SFInt32 ()),
 
          new X3DFieldDefinition (X3DConstants .outputOnly,  "channelCount",          new Fields .SFInt32 ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "channelCountMode",      new Fields .SFString ("max")),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "channelInterpretation", new Fields .SFString ("speakers")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "channelCountMode",      new Fields .SFString ("MAX")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "channelInterpretation", new Fields .SFString ("SPEAKERS")),
 
          new X3DFieldDefinition (X3DConstants .inputOutput, "loop",                 new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "startTime",            new Fields .SFTime ()),

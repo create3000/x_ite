@@ -37,9 +37,9 @@ The Gain node belongs to the **Sound** component and its default container field
 
 ### SFInt32 [out] **channelCount**
 
-### SFString [in, out] **channelCountMode** <small></small>
+### SFString [in, out] **channelCountMode** "MAX" <small>["MAX", "CLAMPED-MAX", "EXPLICIT"]</small>
 
-### SFString [in, out] **channelInterpretation** <small></small>
+### SFString [in, out] **channelInterpretation** "SPEAKERS" <small>["SPEAKERS", "DISCRETE"]</small>
 
 ### SFTime [in, out] **startTime** <small>(-∞,∞)</small>
 

@@ -35,9 +35,9 @@ The ChannelSplitter node belongs to the **Sound** component and its default cont
 
 ### SFInt32 [out] **channelCount**
 
-### SFString [in, out] **channelCountMode** <small></small>
+### SFString [in, out] **channelCountMode** "MAX" <small>["MAX", "CLAMPED-MAX", "EXPLICIT"]</small>
 
-### SFString [in, out] **channelInterpretation** <small></small>
+### SFString [in, out] **channelInterpretation** "SPEAKERS" <small>["SPEAKERS", "DISCRETE"]</small>
 
 ### MFNode [in, out] **children** <small></small>
 

@@ -33,7 +33,7 @@ The WaveShaper node belongs to the **Sound** component and its default container
 
 ### SFFloat [in, out] **gain** <small>(-∞,∞)</small>
 
-### MFFloat [in, out] **curve** <small></small>
+### MFFloat [in, out] **curve** <small>[-1,-1]</small>
 
 ### SFString [in, out] **oversample** <small></small>
 
@@ -41,9 +41,9 @@ The WaveShaper node belongs to the **Sound** component and its default container
 
 ### SFInt32 [out] **channelCount**
 
-### SFString [in, out] **channelCountMode** <small></small>
+### SFString [in, out] **channelCountMode** "MAX" <small>["MAX", "CLAMPED-MAX", "EXPLICIT"]</small>
 
-### SFString [in, out] **channelInterpretation** <small></small>
+### SFString [in, out] **channelInterpretation** "SPEAKERS" <small>["SPEAKERS", "DISCRETE"]</small>
 
 ### SFTime [in, out] **startTime** <small>(-∞,∞)</small>
 

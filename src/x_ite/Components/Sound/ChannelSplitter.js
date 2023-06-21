@@ -92,8 +92,8 @@ Object .defineProperties (ChannelSplitter,
          new X3DFieldDefinition (X3DConstants .inputOutput, "gain",                  new Fields .SFFloat (1)),
 
          new X3DFieldDefinition (X3DConstants .outputOnly,  "channelCount",          new Fields .SFInt32 ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "channelCountMode",      new Fields .SFString ("max")),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "channelInterpretation", new Fields .SFString ("speakers")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "channelCountMode",      new Fields .SFString ("MAX")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "channelInterpretation", new Fields .SFString ("SPEAKERS")),
 
          new X3DFieldDefinition (X3DConstants .inputOutput, "children",              new Fields .MFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "outputs",               new Fields .MFNode ()),

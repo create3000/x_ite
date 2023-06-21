@@ -93,8 +93,8 @@ Object .defineProperties (AudioDestination,
          new X3DFieldDefinition (X3DConstants .inputOutput, "maxChannelCount",       new Fields .SFInt32 (2)),
 
          new X3DFieldDefinition (X3DConstants .outputOnly,  "channelCount",          new Fields .SFInt32 ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "channelCountMode",      new Fields .SFString ("max")),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "channelInterpretation", new Fields .SFString ("speakers")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "channelCountMode",      new Fields .SFString ("MAX")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "channelInterpretation", new Fields .SFString ("SPEAKERS")),
 
          new X3DFieldDefinition (X3DConstants .outputOnly,  "mediaDeviceID",         new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",              new Fields .SFBool ()),

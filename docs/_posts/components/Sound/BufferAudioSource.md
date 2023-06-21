@@ -83,7 +83,7 @@ Location and filename of image. Multiple locations are more reliable, and includ
 
 ### SFFloat [in, out] **gain** <small>(-∞,∞)</small>
 
-### MFFloat [in, out] **buffer** <small></small>
+### MFFloat [in, out] **buffer** <small>[−1,1]</small>
 
 ### SFFloat [in, out] **detune** <small>[0,∞)</small>
 
@@ -103,9 +103,9 @@ Location and filename of image. Multiple locations are more reliable, and includ
 
 ### SFInt32 [out] **channelCount**
 
-### SFString [in, out] **channelCountMode** <small></small>
+### SFString [in, out] **channelCountMode** "MAX" <small>["MAX", "CLAMPED-MAX", "EXPLICIT"]</small>
 
-### SFString [in, out] **channelInterpretation** <small></small>
+### SFString [in, out] **channelInterpretation** "SPEAKERS" <small>["SPEAKERS", "DISCRETE"]</small>
 
 ### SFBool [in, out] **loop** FALSE
 

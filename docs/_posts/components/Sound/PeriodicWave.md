@@ -31,9 +31,9 @@ The PeriodicWave node belongs to the **Sound** component and its default contain
 
 ### SFBool [in, out] **enabled** TRUE
 
-### MFFloat [in, out] **optionsReal** <small></small>
+### MFFloat [in, out] **optionsReal** <small>(-∞,∞)</small>
 
-### MFFloat [in, out] **optionsImag** <small></small>
+### MFFloat [in, out] **optionsImag** <small>(-∞,∞)</small>
 
 ### SFString [in, out] **type** <small></small>
 
