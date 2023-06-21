@@ -130,7 +130,7 @@ Non-uniform x-y-z scale of child coordinate system, adjusted by center and scale
 
 Preliminary rotation of coordinate system before scaling (to allow scaling around arbitrary orientations).
 
-### MFInt32 [in, out] **skinCoordIndex** [ ]
+### MFInt32 [in, out] **skinCoordIndex** [ ] <small>[0,∞)</small>
 
 Coordinate index values referencing which vertices are influenced by the HAnimJoint.
 
