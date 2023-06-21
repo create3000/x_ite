@@ -78,7 +78,7 @@ Enables/disables node operation.
 
 *useFiniteRotation* enables/disables higher-resolution, higher-cost computational method for calculating rotations.
 
-### SFVec3f [in, out] **finiteRotationAxis** 0 0 0 <small>(-∞,∞)</small>
+### SFVec3f [in, out] **finiteRotationAxis** 0 1 0 <small>(-∞,∞)</small>
 
 *finiteRotationAxis* specifies vector around which the object rotates.
 
