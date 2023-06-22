@@ -28,21 +28,21 @@ The SilhouetteEnhancementVolumeStyle node belongs to the **VolumeRendering** com
 
 ## Fields
 
-### SFBool [in, out] **enabled** TRUE
-
-Enables/disables node operation.
-
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
 Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
 
-### SFFloat [in, out] **silhouetteBoundaryOpacity** 0 <small>[0,1]</small>
+### SFBool [in, out] **enabled** TRUE
 
-Amount of the silhouette enhancement to use.
+Enables/disables node operation.
 
 ### SFFloat [in, out] **silhouetteRetainedOpacity** 1 <small>[0,1]</small>
 
 Scaling of non-silhouette regions.
+
+### SFFloat [in, out] **silhouetteBoundaryOpacity** 0 <small>[0,1]</small>
+
+Amount of the silhouette enhancement to use.
 
 ### SFFloat [in, out] **silhouetteSharpness** 0.5 <small>[0,∞)</small>
 
