@@ -28,25 +28,25 @@ The BoundaryEnhancementVolumeStyle node belongs to the **VolumeRendering** compo
 
 ## Fields
 
-### SFFloat [in, out] **boundaryOpacity** 0.9 <small>[0,1]</small>
+### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-*boundaryOpacity* k_gs is the factored amount of the gradient enhancement to use.
+Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
 
 ### SFBool [in, out] **enabled** TRUE
 
 Enables/disables node operation.
 
-### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+### SFFloat [in, out] **retainedOpacity** 0.2 <small>[0,1]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+*retainedOpacity* k_gc is the amount of initial opacity to mix into the output
+
+### SFFloat [in, out] **boundaryOpacity** 0.9 <small>[0,1]</small>
+
+*boundaryOpacity* k_gs is the factored amount of the gradient enhancement to use.
 
 ### SFFloat [in, out] **opacityFactor** 2 <small>[0,∞)</small>
 
 *opacityFactor* k_ge is the power function to control the slope of the opacity curve to highlight the set of data.
-
-### SFFloat [in, out] **retainedOpacity** 0.2 <small>[0,1]</small>
-
-*retainedOpacity* k_gc is the amount of initial opacity to mix into the output
 
 ## External Links
 
