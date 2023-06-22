@@ -28,21 +28,13 @@ The BlendedVolumeStyle node belongs to the **VolumeRendering** component and its
 
 ## Fields
 
-### SFBool [in, out] **enabled** TRUE
-
-Enables/disables node operation.
-
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
 Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
 
-### SFNode [in, out] **renderStyle** NULL <small>[X3DComposableVolumeRenderStyleNode]</small>
+### SFBool [in, out] **enabled** TRUE
 
-Input/Output field renderStyle.
-
-### SFNode [in, out] **voxels** NULL <small>[X3DTexture3DNode]</small>
-
-Input/Output field voxels.
+Enables/disables node operation.
 
 ### SFFloat [in, out] **weightConstant1** 0.5 <small>[0,1]</small>
 
@@ -75,6 +67,14 @@ The weightTransferFunction1 and weightTransferFunction2 fields specify two-dimen
 ### SFNode [in, out] **weightTransferFunction2** NULL <small>[X3DTexture2DNode]</small>
 
 The weightTransferFunction1 and weightTransferFunction2 fields specify two-dimensional textures that are used to determine the weight values when the weight function is set to "TABLE". The output weight value depends on the number of components in the textures as specified in Table 41.4.
+
+### SFNode [in, out] **renderStyle** NULL <small>[X3DComposableVolumeRenderStyleNode]</small>
+
+Input/Output field renderStyle.
+
+### SFNode [in, out] **voxels** NULL <small>[X3DTexture3DNode]</small>
+
+Input/Output field voxels.
 
 #### See Also
 
