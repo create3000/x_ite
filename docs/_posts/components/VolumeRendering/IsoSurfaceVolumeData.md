@@ -30,6 +30,14 @@ The IsoSurfaceVolumeData node belongs to the **VolumeRendering** component and i
 
 ## Fields
 
+### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+
+Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+
+### SFVec3f [in, out] **dimensions** 1 1 1 <small>(0,∞)</small>
+
+Actual-size X-Y-Z dimensions of volume data in local coordinate system.
+
 ### SFFloat [in, out] **contourStepSize** 0 <small>(-∞,∞)</small>
 
 If contourStepSize is non-zero, also render all isosurfaces that are multiples of that step size from initial surface value.
@@ -38,21 +46,9 @@ If contourStepSize is non-zero, also render all isosurfaces that are multiples o
 
 - ContourStepSize can be negative so that steppping can proceed in a negative direction.
 
-### SFVec3f [in, out] **dimensions** 1 1 1 <small>(0,∞)</small>
+### MFFloat [in, out] **surfaceValues** [ ] <small>(-∞,∞)</small>
 
-Actual-size X-Y-Z dimensions of volume data in local coordinate system.
-
-### SFNode [in, out] **gradients** NULL <small>[X3DTexture3DNode]</small>
-
-Input/Output field gradients.
-
-### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
-
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
-
-### MFNode [in, out] **renderStyle** [ ] <small>[X3DVolumeRenderStyleNode]</small>
-
-Input/Output field renderStyle.
+If surfaceValues has one value defined, render corresponding isosurface plus any isosurfaces based on contourStepSize. If surfaceValues has more than one value defined, ignore contourStepSize and render surfaces corresponding to listed surfaceValues.
 
 ### SFFloat [in, out] **surfaceTolerance** 0 <small>[0,∞)</small>
 
@@ -61,18 +57,6 @@ Threshold for gradient magnitude for voxel inolusion in isosurface.
 #### Hint
 
 - Contained Texture3D node with containerField='gradients' can provide explicit per-voxel gradient direction information for determining surface boundaries.
-
-### MFFloat [in, out] **surfaceValues** [ ] <small>(-∞,∞)</small>
-
-If surfaceValues has one value defined, render corresponding isosurface plus any isosurfaces based on contourStepSize. If surfaceValues has more than one value defined, ignore contourStepSize and render surfaces corresponding to listed surfaceValues.
-
-### SFNode [in, out] **voxels** NULL <small>[X3DTexture3DNode]</small>
-
-Input/Output field voxels.
-
-### SFVec3f [ ] **bboxCenter** 0 0 0 <small>(-∞,∞)</small>
-
-Bounding box center: optional hint for position offset from origin of local coordinate system.
 
 ### SFBool [in, out] **visible** TRUE
 
@@ -98,6 +82,22 @@ Bounding box size is usually omitted, and can easily be calculated automatically
 #### Hint
 
 - Can be useful for collision computations or inverse-kinematics (IK) engines.
+
+### SFVec3f [ ] **bboxCenter** 0 0 0 <small>(-∞,∞)</small>
+
+Bounding box center: optional hint for position offset from origin of local coordinate system.
+
+### MFNode [in, out] **renderStyle** [ ] <small>[X3DVolumeRenderStyleNode]</small>
+
+Input/Output field renderStyle.
+
+### SFNode [in, out] **gradients** NULL <small>[X3DTexture3DNode]</small>
+
+Input/Output field gradients.
+
+### SFNode [in, out] **voxels** NULL <small>[X3DTexture3DNode]</small>
+
+Input/Output field voxels.
 
 ## Description
 
