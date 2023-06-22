@@ -42,6 +42,10 @@ Author-provided prose that describes intended purpose of the url asset.
 
 - Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for & ampersand character, or &amp;#34; for " quotation-mark character).
 
+### MFInt32 [in, out] **image** [ 0, 0, 0, 0 ]
+
+*image* describes raw data for this 3D texture: number of components to the image [0,.4], width, height and depth of the texture, followed by (width x height x depth) pixel values.
+
 ### SFBool [ ] **repeatS** FALSE
 
 Whether to horizontally repeat texture along S axis.
@@ -53,10 +57,6 @@ Whether to vertically repeat texture along T axis.
 ### SFBool [ ] **repeatR** FALSE
 
 Whether to vertically repeat texture along R axis.
-
-### MFInt32 [in, out] **image** [ 0, 0, 0, 0 ]
-
-*image* describes raw data for this 3D texture: number of components to the image [0,.4], width, height and depth of the texture, followed by (width x height x depth) pixel values.
 
 ### SFNode [ ] **textureProperties** NULL <small>[TextureProperties]</small>
 
