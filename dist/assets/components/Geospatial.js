@@ -3619,6 +3619,9 @@ Object .assign (Object .setPrototypeOf (GeoViewpoint .prototype, (X3DViewpointNo
 
       this .geoNavigationInfoNode .setup ();
 
+      if (executionContext .getSpecificationVersion () <= 3.2)
+         this ._navigationInfo = this .geoNavigationInfoNode;
+
       this .set_position__ ();
    },
    getRelativeTransformation: (Viewpoint_default()).prototype .getRelativeTransformation,
