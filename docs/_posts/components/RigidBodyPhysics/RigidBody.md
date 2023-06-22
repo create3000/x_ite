@@ -102,14 +102,6 @@ Enables/disables node operation.
 
 - Mass must be greater than 0.
 
-### SFMatrix3f [in, out] **inertia** 1 0 0 0 1 0 0 0 1 <small>1 0 0</small>
-
-*inertia* matrix defines a 3x2 inertia tensor matrix.
-
-#### Warning
-
-- Only the first 6 values are used.
-
 ### SFVec3f [in, out] **centerOfMass** 0 0 0 <small>(-∞,∞)</small>
 
 *centerOfMass* defines local center of mass for physics calculations.
@@ -133,6 +125,14 @@ Input/Output field massDensityModel.
 ### MFVec3f [in, out] **torques** [ ]
 
 *torques* defines rotational force values applied to the object every frame.
+
+### SFMatrix3f [in, out] **inertia** 1 0 0 0 1 0 0 0 1 <small>1 0 0</small>
+
+*inertia* matrix defines a 3x2 inertia tensor matrix.
+
+#### Warning
+
+- Only the first 6 values are used.
 
 ### SFBool [in, out] **autoDisable** FALSE
 
