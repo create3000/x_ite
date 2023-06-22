@@ -3579,7 +3579,17 @@ function GeoViewpoint (executionContext)
    this ._fieldOfView      .setUnit ("angle");
 
    if (executionContext .getSpecificationVersion () <= 3.2)
+   {
+      this .addPredefinedField ({ accessType: (X3DConstants_default()).inputOutput, name: "navType", value: new (Fields_default()).MFString ("EXAMINE", "ANY") });
+      this .addPredefinedField ({ accessType: (X3DConstants_default()).inputOutput, name: "headlight", value: new (Fields_default()).SFBool (true) });
+
       this .traverse = traverse;
+   }
+   else
+   {
+      this .addChildObjects ("navType",   new (Fields_default()).MFString ("EXAMINE", "ANY"),
+                             "headlight", new (Fields_default()).SFBool (true));
+   }
 
    this .geoNavigationInfoNode = new (NavigationInfo_default()) (executionContext);
    this .projectionMatrix      = new (Matrix4_default()) ();
@@ -3706,7 +3716,7 @@ Object .assign (Object .setPrototypeOf (GeoViewpoint .prototype, (X3DViewpointNo
 
       return function (dynamic = false)
       {
-         if (! dynamic || this .getUserPosition () .magnitude () < 6.5e6)
+         if (!dynamic || this .getUserPosition () .magnitude () < 6.5e6)
          {
             this .getCoord (this ._position .getValue (), position);
 
@@ -3775,8 +3785,6 @@ Object .defineProperties (GeoViewpoint,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "viewAll",           new (Fields_default()).SFBool ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "jump",              new (Fields_default()).SFBool (true)),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "retainUserOffsets", new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "navType",           new (Fields_default()).MFString ("EXAMINE", "ANY")),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "headlight",         new (Fields_default()).SFBool (true)),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "speedFactor",       new (Fields_default()).SFFloat (1)),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isBound",           new (Fields_default()).SFBool ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "bindTime",          new (Fields_default()).SFTime ()),
