@@ -41,6 +41,73 @@ Author-provided prose that describes intended purpose of the url asset.
 
 - Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for & ampersand character, or &amp;#34; for " quotation-mark character).
 
+### SFString [in, out] **name** ""
+
+Unique name attribute must be defined so that each HAnimHumanoid node in a scene can be identified at run time for animation purposes.
+
+#### Hints
+
+- This same name is a required name prefix for all other HAnim nodes within the HAnimHumanoid, if more than one humanoid appears within a scene file.
+- Well-defined names can simplify design and debugging through improved author understanding.
+- [X3D Scene Authoring Hints, Naming Conventions](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints)html#NamingConventions
+- [HAnim2 Names HAnim1 Alias Tables](https://www.web3d.org/x3d/content/examples/HumanoidAnimation/HAnim2NameHAnim1AliasTables.txt)
+
+#### Warning
+
+- *name* field is not included if this instance is a USE node, in order to avoid potential mismatches.
+
+### SFString [in, out] **name** ""
+
+Unique name attribute must be defined so that HAnimHumanoid node can be identified at run time for animation purposes.
+
+#### Warning
+
+- Name is not included if this instance is a USE node.
+
+### SFString [in, out] **version** ""
+
+HAnimHumanoid version, where standardized ISO 19774 value is 2.0.
+
+#### Warning
+
+- Prior versions of HAnim nodes might not validate correctly.
+
+### MFString [in, out] **info** [ ]
+
+Contains metadata keyword=value pairs, where approved keyword terms are humanoidVersion authorName authorEmail copyright creationDate usageRestrictions age gender height and weight.
+
+### SFVec3f [in, out] **translation** 0 0 0 <small>(-∞,∞)</small>
+
+Position of children relative to local coordinate system.
+
+### SFRotation [in, out] **rotation** 0 0 1 0 <small>(-∞,∞) or [-1,1]</small>
+
+Orientation of children relative to local coordinate system.
+
+### SFVec3f [in, out] **scale** 1 1 1 <small>(0,∞)</small>
+
+Non-uniform x-y-z scale of child coordinate system, adjusted by center and scaleOrientation.
+
+### SFRotation [in, out] **scaleOrientation** 0 0 1 0 <small>(-∞,∞) or [-1,1]</small>
+
+Preliminary rotation of coordinate system before scaling (to allow scaling around arbitrary orientations).
+
+### SFVec3f [in, out] **center** 0 0 0 <small>(-∞,∞)</small>
+
+Translation offset from origin of local coordinate system.
+
+### MFVec3f [in, out] **jointBindingPositions** [ ] <small>(-∞,∞)</small>
+
+### MFRotation [in, out] **jointBindingRotations** [ ] <small>(-∞,∞) or [-1,1]</small>
+
+### MFVec3f [in, out] **jointBindingScales** [ ] <small>(-∞,∞)</small>
+
+### MFBool [in, out] **motionsEnabled** [ ]
+
+### SFInt32 [in, out] **loa** -1 <small>[-1,∞)</small>
+
+### skeletalConfiguration [in, out] **skeletalConfiguration** "BASIC" <small>(-∞,∞)</small>
+
 ### SFBool [in, out] **visible** TRUE
 
 Whether or not renderable content within this node is visually displayed.
@@ -70,77 +137,49 @@ Bounding box size is usually omitted, and can easily be calculated automatically
 
 Bounding box center: optional hint for position offset from origin of local coordinate system.
 
-### SFVec3f [in, out] **center** 0 0 0 <small>(-∞,∞)</small>
+### MFNode [in, out] **skeleton** [ ] <small>[HAnimJoint, HAnimSite]</small>
 
-Translation offset from origin of local coordinate system.
+Input/Output field skeleton.
 
-### MFString [in, out] **info** [ ]
+### MFNode [in, out] **viewpoints** [ ] <small>[HAnimSite]</small>
 
-Contains metadata keyword=value pairs, where approved keyword terms are humanoidVersion authorName authorEmail copyright creationDate usageRestrictions age gender height and weight.
-
-### MFNode [in, out] **joints** [ ] <small>[HAnimJoint]</small>
-
-Input/Output field joints.
-
-### SFString [in, out] **name** ""
-
-Unique name attribute must be defined so that HAnimHumanoid node can be identified at run time for animation purposes.
-
-#### Warning
-
-- Name is not included if this instance is a USE node.
-
-### SFRotation [in, out] **rotation** 0 0 1 0 <small>(-∞,∞) or [-1,1]</small>
-
-Orientation of children relative to local coordinate system.
-
-### SFVec3f [in, out] **scale** 1 1 1 <small>(0,∞)</small>
-
-Non-uniform x-y-z scale of child coordinate system, adjusted by center and scaleOrientation.
-
-### SFRotation [in, out] **scaleOrientation** 0 0 1 0 <small>(-∞,∞) or [-1,1]</small>
-
-Preliminary rotation of coordinate system before scaling (to allow scaling around arbitrary orientations).
-
-### MFNode [in, out] **segments** [ ] <small>[HAnimSegment]</small>
-
-Input/Output field segments.
+Input/Output field viewpoints.
 
 ### MFNode [in, out] **sites** [ ] <small>[HAnimSite]</small>
 
 Input/Output field sites.
 
-### MFNode [in, out] **skeleton** [ ] <small>[HAnimJoint, HAnimSite]</small>
+### MFNode [in, out] **segments** [ ] <small>[HAnimSegment]</small>
 
-Input/Output field skeleton.
+Input/Output field segments.
 
-### MFNode [in, out] **skin** [ ] <small>[X3DChildNode]</small>
+### MFNode [in, out] **joints** [ ] <small>[HAnimJoint]</small>
 
-Input/Output field skin.
+Input/Output field joints.
 
-### SFNode [in, out] **skinCoord** NULL <small>[X3DCoordinateNode]</small>
+### MFNode [in, out] **motions** [ ] <small>[HAnimMotion]</small>
 
-Input/Output field skinCoord.
+Input/Output field motions.
+
+### SFNode [in, out] **skinBindingNormal** NULL <small>[X3DNormalNode]</small>
+
+Input/Output field skinBindingNormal.
+
+### SFNode [in, out] **skinBindingCoord** NULL <small>[X3DCoordinateNode]</small>
+
+Input/Output field skinBindingCoord.
 
 ### SFNode [in, out] **skinNormal** NULL <small>[X3DNormalNode]</small>
 
 Input/Output field skinNormal.
 
-### SFVec3f [in, out] **translation** 0 0 0 <small>(-∞,∞)</small>
+### SFNode [in, out] **skinCoord** NULL <small>[X3DCoordinateNode]</small>
 
-Position of children relative to local coordinate system.
+Input/Output field skinCoord.
 
-### SFString [in, out] **version** ""
+### MFNode [in, out] **skin** [ ] <small>[X3DChildNode]</small>
 
-HAnimHumanoid version, where standardized ISO 19774 value is 2.0.
-
-#### Warning
-
-- Prior versions of HAnim nodes might not validate correctly.
-
-### MFNode [in, out] **viewpoints** [ ] <small>[HAnimSite]</small>
-
-Input/Output field viewpoints.
+Input/Output field skin.
 
 ## Description
 
