@@ -49,6 +49,10 @@ The objectType field specifies a set of labels used in the picking process. Each
 
 - Authors may define any value for objectType. MFString arrays can have multiple values, so "separate each individual string" "by using quote marks".
 
+### SFString [in, out] **matchCriterion** "MATCH_ANY" <small>["MATCH_ANY","MATCH_EVERY","MATCH_ONLY_ONE"]</small>
+
+Defines whether the intersection test (i.e. pick) by this X3DPickSensorNode must match one or more objectType. Specifically MATCH_ANY means any match of objectType values is acceptable, MATCH_EVERY means that every objectType value in this node shall match an objectType value in the X3DPickableObject, and MATCH_ONLY_ONE means that one and only one objectType value can match.
+
 ### SFNode [in, out] **pickingGeometry** NULL <small>[PointSet]</small>
 
 *pickingGeometry* specifies the exact geometry coordinates that are used to perform the intersection testing of the picking operation.
