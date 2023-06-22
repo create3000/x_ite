@@ -28,21 +28,21 @@ The SegmentedVolumeData node belongs to the **VolumeRendering** component and it
 
 ## Fields
 
-### SFVec3f [in, out] **dimensions** 1 1 1 <small>(0,∞)</small>
-
-Actual-size X-Y-Z dimensions of volume data in local coordinate system.
-
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
 Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
 
-### MFNode [in, out] **renderStyle** [ ] <small>[X3DVolumeRenderStyleNode]</small>
+### SFVec3f [in, out] **dimensions** 1 1 1 <small>(0,∞)</small>
 
-Input/Output field renderStyle.
+Actual-size X-Y-Z dimensions of volume data in local coordinate system.
 
 ### MFBool [in, out] **segmentEnabled** [ ]
 
 Input/Output field segmentEnabled.
+
+### MFNode [in, out] **renderStyle** [ ] <small>[X3DVolumeRenderStyleNode]</small>
+
+Input/Output field renderStyle.
 
 ### SFNode [in, out] **segmentIdentifiers** NULL <small>[X3DTexture3DNode]</small>
 
