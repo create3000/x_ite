@@ -44,10 +44,6 @@ Author-provided prose that describes intended purpose of the url asset.
 
 Enables/disables node operation.
 
-### SFFloat [in, out] **intensity** 1 <small>[0,1]</small>
-
-Factor [0,1] adjusting loudness (decibels) of emitted sound.
-
 ### SFBool [ ] **spatialize** TRUE
 
 Whether to spatialize sound playback relative to viewer.
@@ -55,6 +51,10 @@ Whether to spatialize sound playback relative to viewer.
 #### Hint
 
 - Only effective between minimum and maximum ellipsoids.
+
+### SFFloat [in, out] **intensity** 1 <small>[0,1]</small>
+
+Factor [0,1] adjusting loudness (decibels) of emitted sound.
 
 ### SFVec3f [in, out] **location** 0 0 0 <small>(-∞,∞)</small>
 
