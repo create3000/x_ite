@@ -39,22 +39,6 @@ Author-provided prose that describes intended purpose of the url asset.
 
 - Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for & ampersand character, or &amp;#34; for " quotation-mark character).
 
-### MFInt32 [in, out] **coordIndex** [ ] <small>[0,∞) or -1</small>
-
-Defines index values into the parent HAnimSegment or HAnimBody/HAnimHumanoid coordinate array for the mesh of vertices affected by this HAnimDisplacer. Values start at index 0.
-
-#### Warning
-
-- -1 sentinel values are not allowed.
-
-### MFVec3f [in, out] **displacements** [ ]
-
-*displacements* are a set of SFVec3f values added to neutral/resting position of each of the corresponding HAnimSegment vertices (or HAnimJoint/HAnimHumanoid vertices) referenced by coordIndex field.
-
-#### Hint
-
-- Individual displacement values are scaled by the weight factor, if present.
-
 ### SFString [in, out] **name** ""
 
 Unique name attribute must be defined so that HAnimDisplacer node can be identified at run time for animation purposes.
@@ -68,6 +52,14 @@ Unique name attribute must be defined so that HAnimDisplacer node can be identif
 - [HAnim Feature Points](https://www.web3d.org/x3d/content/examples/Basic/HumanoidAnimation/tables/HAnimSurfaceFeaturePoints19774V1.0.txt){:target="_blank"}
 - [HAnim Specification, Feature points for the human body](https://www.web3d.org/documents/specifications/19774-1/V2.0/HAnim/FeaturePoints.html){:target="_blank"}
 
+### MFInt32 [in, out] **coordIndex** [ ] <small>[0,∞) or -1</small>
+
+Defines index values into the parent HAnimSegment or HAnimBody/HAnimHumanoid coordinate array for the mesh of vertices affected by this HAnimDisplacer. Values start at index 0.
+
+#### Warning
+
+- -1 sentinel values are not allowed.
+
 ### SFFloat [in, out] **weight** 0 <small>(-∞,∞)</small>
 
 The weigh factor has typical range [0,1] and defines the scale factor applied to displacement values before adding them to neutral vertex positions.
@@ -75,6 +67,14 @@ The weigh factor has typical range [0,1] and defines the scale factor applied to
 #### Hint
 
 - Apply a non-zero weight factor to see the effect of HAnimDisplacer displacements.
+
+### MFVec3f [in, out] **displacements** [ ]
+
+*displacements* are a set of SFVec3f values added to neutral/resting position of each of the corresponding HAnimSegment vertices (or HAnimJoint/HAnimHumanoid vertices) referenced by coordIndex field.
+
+#### Hint
+
+- Individual displacement values are scaled by the weight factor, if present.
 
 ## Description
 

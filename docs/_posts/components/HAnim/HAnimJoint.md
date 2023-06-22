@@ -40,6 +40,95 @@ Author-provided prose that describes intended purpose of the url asset.
 
 - Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for & ampersand character, or &amp;#34; for " quotation-mark character).
 
+### SFString [in, out] **name** ""
+
+Unique name attribute must be defined so that HAnimJoint node can be identified at run time for animation purposes.
+
+#### Warning
+
+- Name is not included if this instance is a USE node. Examples: HumanoidRoot sacroiliac l_hip l_knee l_ankle etc. as listed in HAnim Specification.
+
+#### See Also
+
+- [HAnim Humanoid Joint Names](https://www.web3d.org/x3d/content/examples/Basic/HumanoidAnimation/tables/HAnimJointNames19774V1.0.txt){:target="_blank"}
+- [HAnim Specification, Humanoid Joint-Segment Hierarchy](https://www.web3d.org/documents/specifications/19774-1/V2.0/HAnim/concepts.html#Hierarchy){:target="_blank"}
+
+### SFVec3f [in, out] **translation** 0 0 0 <small>(-∞,∞)</small>
+
+Position of children relative to local coordinate system.
+
+#### Warning
+
+- Usually HAnimJoint position is controlled by the center field, not the translation field.
+
+### SFRotation [in, out] **rotation** 0 0 1 0 <small>(-∞,∞) or [-1,1]</small>
+
+Orientation of children relative to local coordinate system.
+
+### SFVec3f [in, out] **scale** 1 1 1 <small>(0,∞)</small>
+
+Non-uniform x-y-z scale of child coordinate system, adjusted by center and scaleOrientation.
+
+### SFRotation [in, out] **scaleOrientation** 0 0 1 0 <small>(-∞,∞) or [-1,1]</small>
+
+Preliminary rotation of coordinate system before scaling (to allow scaling around arbitrary orientations).
+
+### SFVec3f [in, out] **center** 0 0 0 <small>(-∞,∞)</small>
+
+Translation offset from origin of local coordinate system.
+
+#### Hint
+
+- Usually HAnimJoint position is controlled by the center field, not the translation field.
+
+### MFFloat [in, out] **llimit** [ ] <small>(-∞,∞)</small>
+
+Lower limit for minimum joint rotation in radians.
+
+#### Hint
+
+- Always contains 3 values, one for each local axis.
+
+### MFFloat [in, out] **ulimit** [ ] <small>(-∞,∞)</small>
+
+Upper limit for maximum joint rotation in radians.
+
+#### Hint
+
+- Always contains 3 values, one for each local axis.
+
+### SFRotation [in, out] **limitOrientation** 0 0 1 0 <small>(-∞,∞) or [-1,1]</small>
+
+Orientation of upper/lower rotation limits, relative to HAnimJoint center.
+
+### MFFloat [in, out] **stiffness** [ 0, 0, 0 ] <small>[0,1]</small>
+
+Axial values (0,1) indicating willingness of joint to move (about local X, Y, Z axes), larger stiffness values means greater resistance.
+
+#### Hint
+
+- Used by inverse kinematics (IK) systems.
+
+### MFInt32 [in, out] **skinCoordIndex** [ ] <small>[0,∞)</small>
+
+Coordinate index values referencing which vertices are influenced by the HAnimJoint.
+
+#### Hint
+
+- Corresponding skinCoord Coordinate and skinNormal Normal nodes are directly contained within the ancestor HAnimHumanoid node for this HAnimJoint.
+
+#### Warning
+
+- -1 sentinel values are not allowed.
+
+### MFFloat [in, out] **skinCoordWeight** [ ]
+
+Weight deformation values for the corresponding values in the skinCoordIndex field.
+
+### MFNode [in, out] **displacers** [ ] <small>[HAnimDisplacer]</small>
+
+Input/Output field displacers.
+
 ### SFBool [in, out] **visible** TRUE
 
 Whether or not renderable content within this node is visually displayed.
@@ -80,95 +169,6 @@ Input field removeChildren.
 ### MFNode [in, out] **children** [ ] <small>[HAnimJoint,HAnimSegment,HAnimSite]</small>
 
 Input/Output field children.
-
-### SFVec3f [in, out] **center** 0 0 0 <small>(-∞,∞)</small>
-
-Translation offset from origin of local coordinate system.
-
-#### Hint
-
-- Usually HAnimJoint position is controlled by the center field, not the translation field.
-
-### MFNode [in, out] **displacers** [ ] <small>[HAnimDisplacer]</small>
-
-Input/Output field displacers.
-
-### SFRotation [in, out] **limitOrientation** 0 0 1 0 <small>(-∞,∞) or [-1,1]</small>
-
-Orientation of upper/lower rotation limits, relative to HAnimJoint center.
-
-### MFFloat [in, out] **llimit** [ ] <small>(-∞,∞)</small>
-
-Lower limit for minimum joint rotation in radians.
-
-#### Hint
-
-- Always contains 3 values, one for each local axis.
-
-### SFString [in, out] **name** ""
-
-Unique name attribute must be defined so that HAnimJoint node can be identified at run time for animation purposes.
-
-#### Warning
-
-- Name is not included if this instance is a USE node. Examples: HumanoidRoot sacroiliac l_hip l_knee l_ankle etc. as listed in HAnim Specification.
-
-#### See Also
-
-- [HAnim Humanoid Joint Names](https://www.web3d.org/x3d/content/examples/Basic/HumanoidAnimation/tables/HAnimJointNames19774V1.0.txt){:target="_blank"}
-- [HAnim Specification, Humanoid Joint-Segment Hierarchy](https://www.web3d.org/documents/specifications/19774-1/V2.0/HAnim/concepts.html#Hierarchy){:target="_blank"}
-
-### SFRotation [in, out] **rotation** 0 0 1 0 <small>(-∞,∞) or [-1,1]</small>
-
-Orientation of children relative to local coordinate system.
-
-### SFVec3f [in, out] **scale** 1 1 1 <small>(0,∞)</small>
-
-Non-uniform x-y-z scale of child coordinate system, adjusted by center and scaleOrientation.
-
-### SFRotation [in, out] **scaleOrientation** 0 0 1 0 <small>(-∞,∞) or [-1,1]</small>
-
-Preliminary rotation of coordinate system before scaling (to allow scaling around arbitrary orientations).
-
-### MFInt32 [in, out] **skinCoordIndex** [ ] <small>[0,∞)</small>
-
-Coordinate index values referencing which vertices are influenced by the HAnimJoint.
-
-#### Hint
-
-- Corresponding skinCoord Coordinate and skinNormal Normal nodes are directly contained within the ancestor HAnimHumanoid node for this HAnimJoint.
-
-#### Warning
-
-- -1 sentinel values are not allowed.
-
-### MFFloat [in, out] **skinCoordWeight** [ ]
-
-Weight deformation values for the corresponding values in the skinCoordIndex field.
-
-### MFFloat [in, out] **stiffness** [ 0, 0, 0 ] <small>[0,1]</small>
-
-Axial values (0,1) indicating willingness of joint to move (about local X, Y, Z axes), larger stiffness values means greater resistance.
-
-#### Hint
-
-- Used by inverse kinematics (IK) systems.
-
-### SFVec3f [in, out] **translation** 0 0 0 <small>(-∞,∞)</small>
-
-Position of children relative to local coordinate system.
-
-#### Warning
-
-- Usually HAnimJoint position is controlled by the center field, not the translation field.
-
-### MFFloat [in, out] **ulimit** [ ] <small>(-∞,∞)</small>
-
-Upper limit for maximum joint rotation in radians.
-
-#### Hint
-
-- Always contains 3 values, one for each local axis.
 
 ## Description
 
