@@ -42,6 +42,30 @@ Author-provided prose that describes intended purpose of the url asset.
 
 - Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for & ampersand character, or &amp;#34; for " quotation-mark character).
 
+### SFBool [in] **activate**
+
+*activate* forces the shader to activate the contained objects.
+
+### SFBool [out] **isSelected**
+
+*isSelected* indicates this shader instance is selected for use by browser
+
+### SFBool [out] **isValid**
+
+*isValid* indicates whether current shader objects can be run as a shader program.
+
+### SFString [ ] **language** "" <small>["Cg"|"GLSL"|"HLSL"|...]</small>
+
+The language field indicates to the X3D player which shading language is used. The language field may be used to optionally determine the language type if no MIME-type information is available.
+
+#### Hint
+
+- Recognized values include "CG" "GLSL" "HLSL" "FX"
+
+#### See Also
+
+- [Relates to Internationalization (i18n)](https://www.w3.org/standards/webdesign/i18n){:target="_blank"}
+
 ### SFBool [in, out] **load** TRUE
 
 *load*=true means load immediately, load=false means defer loading or else unload a previously loaded asset.
@@ -91,30 +115,6 @@ Location and filename of image. Multiple locations are more reliable, and includ
 #### Warning
 
 - Automatically reloading content has security considerations and needs to be considered carefully.
-
-### SFBool [in] **activate**
-
-*activate* forces the shader to activate the contained objects.
-
-### SFBool [out] **isSelected**
-
-*isSelected* indicates this shader instance is selected for use by browser
-
-### SFBool [out] **isValid**
-
-*isValid* indicates whether current shader objects can be run as a shader program.
-
-### SFString [ ] **language** "" <small>["Cg"|"GLSL"|"HLSL"|...]</small>
-
-The language field indicates to the X3D player which shading language is used. The language field may be used to optionally determine the language type if no MIME-type information is available.
-
-#### Hint
-
-- Recognized values include "CG" "GLSL" "HLSL" "FX"
-
-#### See Also
-
-- [Relates to Internationalization (i18n)](https://www.w3.org/standards/webdesign/i18n){:target="_blank"}
 
 ## Description
 
