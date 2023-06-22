@@ -31,6 +31,10 @@ The ConeEmitter node belongs to the **ParticleSystems** component and its defaul
 
 Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
 
+### SFBool [in, out] **on** TRUE
+
+Enables/disables production of particles from this emitter node. If operating when turned off, existing particles complete their rendering process.
+
 ### SFVec3f [in, out] **position** 0 0 0 <small>(-∞,∞)</small>
 
 Point from which particles emanate.

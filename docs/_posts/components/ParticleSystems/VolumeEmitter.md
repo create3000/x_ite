@@ -39,6 +39,10 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 - Sentinel value -1 is used to separate indices for each successive polygon.
 
+### SFBool [in, out] **on** TRUE
+
+Enables/disables production of particles from this emitter node. If operating when turned off, existing particles complete their rendering process.
+
 ### SFBool [ ] **internal** TRUE
 
 TODO, X3D specification is undefined.

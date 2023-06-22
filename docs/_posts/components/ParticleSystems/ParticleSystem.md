@@ -143,6 +143,15 @@ Whether or not renderable content within this node is visually displayed.
 - The visible field has no effect on animation behaviors, event passing or other non-visual characteristics.
 - Content must be visible to be collidable and to be pickable.
 
+### SFBool [in, out] **castShadow** TRUE
+
+*castShadow* defines whether this Shape casts shadows as produced by lighting nodes.
+
+#### Hint
+
+- If the visible field is FALSE, then the Shape does not cast any shadows.
+- If prior X3D3 content is loaded into an X3D4 model, then legacy Shape nodes have shadows set to true.
+
 ### SFBool [in, out] **bboxDisplay** FALSE
 
 Whether to display bounding box for associated geometry, aligned with world coordinates.

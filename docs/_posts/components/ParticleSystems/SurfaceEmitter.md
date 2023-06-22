@@ -31,6 +31,10 @@ The SurfaceEmitter node belongs to the **ParticleSystems** component and its def
 
 Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
 
+### SFBool [in, out] **on** TRUE
+
+Enables/disables production of particles from this emitter node. If operating when turned off, existing particles complete their rendering process.
+
 ### SFFloat [in, out] **speed** 0 <small>[0,∞)</small>
 
 Initial linear speed (default is m/s) imparted to all particles along their direction of movement.
