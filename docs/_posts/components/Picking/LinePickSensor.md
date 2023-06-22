@@ -77,6 +77,22 @@ The sortOrder field determines the order provided for picked output events.
 
 *isActive* indicates when the intersecting object is picked by the picking geometry. Output event isActive=true gets sent once a picked item is found. Output event isActive=false gets sent once no picked item is found.
 
+### MFVec3f [out] **pickedTextureCoordinate**
+
+Output event containing 3D texture coordinates of surfaces computed by the picking intersection computations. Picked texture coordinates are in three dimensions. If the target texture coordinate has two dimensions, the third coordinate (z component of an SFVec3f) shall be zero.
+
+#### Warning
+
+- If the target object has multiple textures defined, only texture coordinates for the first texture are returned and all other textures are ignored.
+
+### MFVec3f [out] **pickedNormal**
+
+Output event containing surface normal vectors computed by the picking intersection computations.
+
+### MFVec3f [out] **pickedPoint**
+
+Output event containing 3D points on surface of underlying pickingGeometry computed by the picking intersection computations, given in the local coordinate system.
+
 ### SFNode [in, out] **pickingGeometry** NULL <small>[IndexedLineSet|LineSet]</small>
 
 *pickingGeometry* specifies the exact geometry coordinates that are used to perform the intersection testing of the picking operation.
@@ -88,22 +104,6 @@ The sortOrder field determines the order provided for picked output events.
 ### MFNode [out] **pickedGeometry**
 
 Output event containing the node or nodes that have been found to intersect with the picking geometry from the last time this node performed a picking operation, given in the local coordinate system.
-
-### MFVec3f [out] **pickedNormal**
-
-Output event containing surface normal vectors computed by the picking intersection computations.
-
-### MFVec3f [out] **pickedPoint**
-
-Output event containing 3D points on surface of underlying pickingGeometry computed by the picking intersection computations, given in the local coordinate system.
-
-### MFVec3f [out] **pickedTextureCoordinate**
-
-Output event containing 3D texture coordinates of surfaces computed by the picking intersection computations. Picked texture coordinates are in three dimensions. If the target texture coordinate has two dimensions, the third coordinate (z component of an SFVec3f) shall be zero.
-
-#### Warning
-
-- If the target object has multiple textures defined, only texture coordinates for the first texture are returned and all other textures are ignored.
 
 ## Description
 
