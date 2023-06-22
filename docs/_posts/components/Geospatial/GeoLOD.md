@@ -87,10 +87,6 @@ Viewer range from geographic-coordinates center triggers quadtree loading/unload
 
 Output field level_changed.
 
-### MFNode [ ] **rootNode** [ ] <small>[X3DChildNode]</small>
-
-Field rootNode.
-
 ### SFBool [in, out] **visible** TRUE
 
 Whether or not renderable content within this node is visually displayed.
@@ -119,6 +115,10 @@ Bounding box size is usually omitted, and can easily be calculated automatically
 ### SFVec3f [ ] **bboxCenter** 0 0 0 <small>(-∞,∞)</small>
 
 Bounding box center: optional hint for position offset from origin of local coordinate system.
+
+### MFNode [ ] **rootNode** [ ] <small>[X3DChildNode]</small>
+
+Field rootNode.
 
 ### MFNode [out] **children**
 
