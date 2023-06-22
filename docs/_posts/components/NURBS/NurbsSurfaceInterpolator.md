@@ -35,9 +35,29 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 Setting fraction in range [0,1] selects input key for corresponding keyValue output, computing a 3D position on the curve.
 
-### SFNode [in, out] **controlPoint** NULL <small>[X3DCoordinateNode]</small>
+### SFInt32 [ ] **uOrder** 3 <small>[2,∞)</small>
 
-Input/Output field controlPoint.
+Define order of surface by polynomials of degree = order-1.
+
+### SFInt32 [ ] **vOrder** 3 <small>[2,∞)</small>
+
+Define order of surface by polynomials of degree = order-1.
+
+### SFInt32 [ ] **uDimension** 0 <small>[0,∞)</small>
+
+Number of control points in u dimension.
+
+### SFInt32 [ ] **vDimension** 0 <small>[0,∞)</small>
+
+Number of control points in v dimension.
+
+### MFDouble [ ] **uKnot** [ ] <small>(-∞,∞)</small>
+
+Knot vector, where size = number of control points + order of curve.
+
+### MFDouble [ ] **vKnot** [ ] <small>(-∞,∞)</small>
+
+Knot vector, where size = number of control points + order of curve.
 
 ### MFDouble [in, out] **weight** [ ] <small>(-∞,∞)</small>
 
@@ -47,37 +67,17 @@ Output values for linear interpolation, each corresponding to knots.
 
 - Number of weights must match number of knots!
 
-### SFVec3f [out] **position_changed**
+### SFNode [in, out] **controlPoint** NULL <small>[X3DCoordinateNode]</small>
 
-Linearly interpolated output value determined by current key time and corresponding keyValue pair.
+Input/Output field controlPoint.
 
 ### SFVec3f [out] **normal_changed**
 
 Linearly interpolated output value determined by current key time and corresponding keyValue pair.
 
-### SFInt32 [ ] **uDimension** 0 <small>[0,∞)</small>
+### SFVec3f [out] **position_changed**
 
-Number of control points in u dimension.
-
-### MFDouble [ ] **uKnot** [ ] <small>(-∞,∞)</small>
-
-Knot vector, where size = number of control points + order of curve.
-
-### SFInt32 [ ] **uOrder** 3 <small>[2,∞)</small>
-
-Define order of surface by polynomials of degree = order-1.
-
-### SFInt32 [ ] **vDimension** 0 <small>[0,∞)</small>
-
-Number of control points in v dimension.
-
-### MFDouble [ ] **vKnot** [ ] <small>(-∞,∞)</small>
-
-Knot vector, where size = number of control points + order of curve.
-
-### SFInt32 [ ] **vOrder** 3 <small>[2,∞)</small>
-
-Define order of surface by polynomials of degree = order-1.
+Linearly interpolated output value determined by current key time and corresponding keyValue pair.
 
 ## Description
 

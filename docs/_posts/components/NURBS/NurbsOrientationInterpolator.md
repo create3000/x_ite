@@ -35,17 +35,13 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 Setting fraction in range [0,1] selects input key for corresponding keyValue output, computing a 3D position on the curve.
 
-### SFNode [in, out] **controlPoint** NULL <small>[X3DCoordinateNode]</small>
+### SFInt32 [in, out] **order** 3 <small>(2,∞)</small>
 
-Input/Output field controlPoint.
+Define order of surface by polynomials of degree = order-1.
 
 ### MFDouble [in, out] **knot** [ ] <small>(-∞,∞)</small>
 
 *knot* vector, where size = number of control points + order of curve.
-
-### SFInt32 [in, out] **order** 3 <small>(2,∞)</small>
-
-Define order of surface by polynomials of degree = order-1.
 
 ### MFDouble [in, out] **weight** [ ] <small>(-∞,∞)</small>
 
@@ -54,6 +50,10 @@ Output values for linear interpolation, each corresponding to knots.
 #### Hint
 
 - Number of weights must match number of knots!
+
+### SFNode [in, out] **controlPoint** NULL <small>[X3DCoordinateNode]</small>
+
+Input/Output field controlPoint.
 
 ### SFRotation [out] **value_changed**
 

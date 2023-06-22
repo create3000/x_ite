@@ -41,14 +41,6 @@ Hint for surface tesselation.
 
 Hint for surface tesselation.
 
-### SFBool [ ] **uClosed** FALSE
-
-Whether opposite surface sides are closed (seamless) across u dimension.
-
-### SFBool [ ] **vClosed** FALSE
-
-Whether opposite surface sides are closed (seamless) across u dimension.
-
 ### SFBool [ ] **solid** TRUE
 
 Setting solid true means draw only one side of polygons (backface culling on), setting solid false means draw both sides of polygons (backface culling off).
@@ -60,6 +52,14 @@ Setting solid true means draw only one side of polygons (backface culling on), s
 #### Warning
 
 - Default value true can completely hide geometry if viewed from wrong side!
+
+### SFBool [ ] **uClosed** FALSE
+
+Whether opposite surface sides are closed (seamless) across u dimension.
+
+### SFBool [ ] **vClosed** FALSE
+
+Whether opposite surface sides are closed (seamless) across u dimension.
 
 ### SFInt32 [ ] **uOrder** 3 <small>[2,∞)</small>
 

@@ -33,6 +33,10 @@ The NurbsSet node belongs to the **NURBS** component and its default container f
 
 Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
 
+### SFFloat [in, out] **tessellationScale** 1 <small>(0,∞)</small>
+
+Scale for surface tesselation in children NurbsSurface nodes.
+
 ### SFBool [in, out] **visible** TRUE
 
 Whether or not renderable content within this node is visually displayed.
@@ -73,10 +77,6 @@ Input field removeGeometry.
 ### MFNode [in, out] **geometry** [ ] <small>[X3DNurbsSurfaceGeometryNode]</small>
 
 Input/Output field geometry.
-
-### SFFloat [in, out] **tessellationScale** 1 <small>(0,∞)</small>
-
-Scale for surface tesselation in children NurbsSurface nodes.
 
 ## External Links
 
