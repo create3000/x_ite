@@ -31,7 +31,7 @@ The MotorJoint node belongs to the **RigidBodyPhysics** component and its defaul
 
 Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
 
-### MFString [in, out] **forceOutput** "NONE" <small>["ALL","NONE",...]</small>
+### MFString [in, out] **forceOutput** "NONE" <small>["ALL", "NONE", ...]</small>
 
 *forceOutput* controls which output fields are generated for the next frame. Values are ALL, NONE, or exact names of output fields updated at start of next frame.
 

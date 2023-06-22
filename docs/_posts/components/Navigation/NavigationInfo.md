@@ -36,7 +36,7 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 Setting set_bind true makes this node active setting set_bind false makes this node inactive. Thus setting set_bind true/false will pop/push (enable/disable) this node.
 
-### MFString [in, out] **type** [ "EXAMINE", "ANY" ] <small>["EXAMINE","WALK","FLY","PLANE_create3000.github.io","LOOKAT","EXPLORE","ANY","NONE"]</small>
+### MFString [in, out] **type** [ "EXAMINE", "ANY" ] <small>["EXAMINE", "WALK", "FLY", "PLANE_create3000.github.io", "LOOKAT", "EXPLORE", "ANY", "NONE"]</small>
 
 Enter one or more quoted SFString values: "EXAMINE" "WALK" "FLY" "PLANE_create3000.github.io" "LOOKAT" "EXPLORE" "ANY" "NONE".
 
