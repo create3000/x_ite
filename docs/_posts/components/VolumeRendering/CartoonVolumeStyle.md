@@ -28,6 +28,14 @@ The CartoonVolumeStyle node belongs to the **VolumeRendering** component and its
 
 ## Fields
 
+### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+
+Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+
+### SFBool [in, out] **enabled** TRUE
+
+Enables/disables node operation.
+
 ### SFInt32 [in, out] **colorSteps** 4 <small>[1,64]</small>
 
 Number of distinct colors taken from interpolated colors and used to render the object.
@@ -35,14 +43,6 @@ Number of distinct colors taken from interpolated colors and used to render the 
 #### Hints
 
 - ColorSteps=1 means no color interpolation takes place, only use orthogonalColor. ParallelColor and orthogonalColor interpolation is in HSV color space for RGB components, linearly for alpha component.
-
-### SFBool [in, out] **enabled** TRUE
-
-Enables/disables node operation.
-
-### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
-
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
 
 ### SFColorRGBA [in, out] **orthogonalColor** 1 1 1 1 <small>[0,1]</small>
 
