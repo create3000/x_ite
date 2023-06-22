@@ -28,6 +28,14 @@ The ToneMappedVolumeStyle node belongs to the **VolumeRendering** component and 
 
 ## Fields
 
+### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+
+Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+
+### SFBool [in, out] **enabled** TRUE
+
+Enables/disables node operation.
+
 ### SFColorRGBA [in, out] **coolColor** 0 0 1 0 <small>[0,1]</small>
 
 *coolColor* is used for surfaces facing away from the light direction.
@@ -36,18 +44,6 @@ The ToneMappedVolumeStyle node belongs to the **VolumeRendering** component and 
 
 - [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color){:target="_blank"}
 
-### SFBool [in, out] **enabled** TRUE
-
-Enables/disables node operation.
-
-### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
-
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
-
-### SFNode [in, out] **surfaceNormals** NULL <small>[X3DTexture3DNode]</small>
-
-Input/Output field surfaceNormals.
-
 ### SFColorRGBA [in, out] **warmColor** 1 1 0 0 <small>[0,1]</small>
 
 *warmColor* is used for surfaces facing towards the light.
@@ -55,6 +51,10 @@ Input/Output field surfaceNormals.
 #### See Also
 
 - [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color){:target="_blank"}
+
+### SFNode [in, out] **surfaceNormals** NULL <small>[X3DTexture3DNode]</small>
+
+Input/Output field surfaceNormals.
 
 ## Description
 

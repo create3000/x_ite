@@ -28,25 +28,13 @@ The VolumeData node belongs to the **VolumeRendering** component and its default
 
 ## Fields
 
-### SFVec3f [in, out] **dimensions** 1 1 1 <small>(0,∞)</small>
-
-Actual-size X-Y-Z dimensions of volume data in local coordinate system.
-
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
 Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
 
-### SFNode [in, out] **renderStyle** NULL <small>[X3DVolumeRenderStyleNode]</small>
+### SFVec3f [in, out] **dimensions** 1 1 1 <small>(0,∞)</small>
 
-Input/Output field renderStyle.
-
-### SFNode [in, out] **voxels** NULL <small>[X3DTexture3DNode]</small>
-
-Input/Output field voxels.
-
-### SFVec3f [ ] **bboxCenter** 0 0 0 <small>(-∞,∞)</small>
-
-Bounding box center: optional hint for position offset from origin of local coordinate system.
+Actual-size X-Y-Z dimensions of volume data in local coordinate system.
 
 ### SFBool [in, out] **visible** TRUE
 
@@ -72,6 +60,18 @@ Bounding box size is usually omitted, and can easily be calculated automatically
 #### Hint
 
 - Can be useful for collision computations or inverse-kinematics (IK) engines.
+
+### SFVec3f [ ] **bboxCenter** 0 0 0 <small>(-∞,∞)</small>
+
+Bounding box center: optional hint for position offset from origin of local coordinate system.
+
+### SFNode [in, out] **renderStyle** NULL <small>[X3DVolumeRenderStyleNode]</small>
+
+Input/Output field renderStyle.
+
+### SFNode [in, out] **voxels** NULL <small>[X3DTexture3DNode]</small>
+
+Input/Output field voxels.
 
 ## Description
 
