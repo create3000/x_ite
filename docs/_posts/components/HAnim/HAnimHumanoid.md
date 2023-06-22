@@ -56,14 +56,6 @@ Unique name attribute must be defined so that each HAnimHumanoid node in a scene
 
 - *name* field is not included if this instance is a USE node, in order to avoid potential mismatches.
 
-### SFString [in, out] **name** ""
-
-Unique name attribute must be defined so that HAnimHumanoid node can be identified at run time for animation purposes.
-
-#### Warning
-
-- Name is not included if this instance is a USE node.
-
 ### SFString [in, out] **version** ""
 
 HAnimHumanoid version, where standardized ISO 19774 value is 2.0.
@@ -106,7 +98,7 @@ Translation offset from origin of local coordinate system.
 
 ### SFInt32 [in, out] **loa** -1 <small>[-1,∞)</small>
 
-### skeletalConfiguration [in, out] **skeletalConfiguration** "BASIC" <small>(-∞,∞)</small>
+### SFString [in, out] **skeletalConfiguration** "BASIC"
 
 ### SFBool [in, out] **visible** TRUE
 
