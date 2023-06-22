@@ -3575,21 +3575,19 @@ function GeoViewpoint (executionContext)
 
    this .addType ((X3DConstants_default()).GeoViewpoint);
 
-   this ._centerOfRotation .setUnit ("length");
-   this ._fieldOfView      .setUnit ("angle");
+   this .addChildObjects ("navType",   new (Fields_default()).MFString ("EXAMINE", "ANY"),
+                          "headlight", new (Fields_default()).SFBool (true));
 
    if (executionContext .getSpecificationVersion () <= 3.2)
    {
-      this .addPredefinedField ({ accessType: (X3DConstants_default()).inputOutput, name: "navType", value: new (Fields_default()).MFString ("EXAMINE", "ANY") });
-      this .addPredefinedField ({ accessType: (X3DConstants_default()).inputOutput, name: "headlight", value: new (Fields_default()).SFBool (true) });
+      this .addAlias ("navType",   this ._navType);
+      this .addAlias ("headlight", this ._headlight);
 
       this .traverse = traverse;
    }
-   else
-   {
-      this .addChildObjects ("navType",   new (Fields_default()).MFString ("EXAMINE", "ANY"),
-                             "headlight", new (Fields_default()).SFBool (true));
-   }
+
+   this ._centerOfRotation .setUnit ("length");
+   this ._fieldOfView      .setUnit ("angle");
 
    this .geoNavigationInfoNode = new (NavigationInfo_default()) (executionContext);
    this .projectionMatrix      = new (Matrix4_default()) ();
@@ -3617,9 +3615,12 @@ Object .assign (Object .setPrototypeOf (GeoViewpoint .prototype, (X3DViewpointNo
       this ._navType        .addFieldInterest (this .geoNavigationInfoNode ._type);
       this ._headlight      .addFieldInterest (this .geoNavigationInfoNode ._headlight);
 
+      this .geoNavigationInfoNode ._type      = this ._navType;
+      this .geoNavigationInfoNode ._headlight = this ._headlight;
+
       this .geoNavigationInfoNode .setup ();
 
-      if (executionContext .getSpecificationVersion () <= 3.2)
+      if (this .getExecutionContext () .getSpecificationVersion () <= 3.2)
          this ._navigationInfo = this .geoNavigationInfoNode;
 
       this .set_position__ ();

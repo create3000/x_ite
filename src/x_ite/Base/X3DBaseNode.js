@@ -339,7 +339,7 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
    },
    addAlias (alias, field)
    {
-      this [_predefinedFields] .alias (alias, field .getName ());
+      this [_predefinedFields] .alias (alias, field);
 
       if (field .isInitializable ())
          HTMLSupport .addFieldName (alias);

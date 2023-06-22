@@ -64,21 +64,19 @@ function GeoViewpoint (executionContext)
 
    this .addType (X3DConstants .GeoViewpoint);
 
-   this ._centerOfRotation .setUnit ("length");
-   this ._fieldOfView      .setUnit ("angle");
+   this .addChildObjects ("navType",   new Fields .MFString ("EXAMINE", "ANY"),
+                          "headlight", new Fields .SFBool (true));
 
    if (executionContext .getSpecificationVersion () <= 3.2)
    {
-      this .addPredefinedField ({ accessType: X3DConstants .inputOutput, name: "navType", value: new Fields .MFString ("EXAMINE", "ANY") });
-      this .addPredefinedField ({ accessType: X3DConstants .inputOutput, name: "headlight", value: new Fields .SFBool (true) });
+      this .addAlias ("navType",   this ._navType);
+      this .addAlias ("headlight", this ._headlight);
 
       this .traverse = traverse;
    }
-   else
-   {
-      this .addChildObjects ("navType",   new Fields .MFString ("EXAMINE", "ANY"),
-                             "headlight", new Fields .SFBool (true));
-   }
+
+   this ._centerOfRotation .setUnit ("length");
+   this ._fieldOfView      .setUnit ("angle");
 
    this .geoNavigationInfoNode = new NavigationInfo (executionContext);
    this .projectionMatrix      = new Matrix4 ();
@@ -106,9 +104,12 @@ Object .assign (Object .setPrototypeOf (GeoViewpoint .prototype, X3DViewpointNod
       this ._navType        .addFieldInterest (this .geoNavigationInfoNode ._type);
       this ._headlight      .addFieldInterest (this .geoNavigationInfoNode ._headlight);
 
+      this .geoNavigationInfoNode ._type      = this ._navType;
+      this .geoNavigationInfoNode ._headlight = this ._headlight;
+
       this .geoNavigationInfoNode .setup ();
 
-      if (executionContext .getSpecificationVersion () <= 3.2)
+      if (this .getExecutionContext () .getSpecificationVersion () <= 3.2)
          this ._navigationInfo = this .geoNavigationInfoNode;
 
       this .set_position__ ();

@@ -141,7 +141,7 @@ SupportedComponents .add ("HAnim",
    external: true,
 });
 
-SupportedComponents .alias ("H-Anim", "HAnim");
+SupportedComponents .alias ("H-Anim", SupportedComponents .get ("HAnim"));
 
 SupportedComponents .add ("Interpolation",
 {
@@ -229,7 +229,7 @@ SupportedComponents .add ("TextureProjector",
    external: true,
 });
 
-SupportedComponents .alias ("ProjectiveTextureMapping", "TextureProjector");
+SupportedComponents .alias ("ProjectiveTextureMapping", SupportedComponents .get ("TextureProjector"));
 
 SupportedComponents .add ("Rendering",
 {

@@ -191,9 +191,9 @@ Object .assign (Object .setPrototypeOf (X3DInfoArray .prototype, X3DChildObject 
 
       this .addEvent ();
    },
-   alias (alias, key)
+   alias (alias, value)
    {
-      this [_index] .set (alias, this [_index] .get (key));
+      this [_index] .set (alias, value);
 
       this .addEvent ();
    },
