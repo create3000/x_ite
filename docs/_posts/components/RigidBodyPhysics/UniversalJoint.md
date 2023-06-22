@@ -59,14 +59,6 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 Input/Output field stop1Bounce.
 
-### SFFloat [in, out] **stop1ErrorCorrection** 0.8 <small>[0,1]</small>
-
-*stop1ErrorCorrection* is fraction of error correction performed during time step once stop point is reached.
-
-#### Hint
-
-- 0 means no error correction, 1 means all error corrected in single step.
-
 ### SFFloat [in, out] **stop2Bounce** 0 <small>[0,1]</small>
 
 *stop2Bounce* is velocity factor for bounce back once stop point is reached.
@@ -74,6 +66,14 @@ Input/Output field stop1Bounce.
 #### Hint
 
 - 0 means no bounce, 1 means return velocity matches.
+
+### SFFloat [in, out] **stop1ErrorCorrection** 0.8 <small>[0,1]</small>
+
+*stop1ErrorCorrection* is fraction of error correction performed during time step once stop point is reached.
+
+#### Hint
+
+- 0 means no error correction, 1 means all error corrected in single step.
 
 ### SFFloat [in, out] **stop2ErrorCorrection** 0.8 <small>[0,1]</small>
 
@@ -87,13 +87,13 @@ Input/Output field stop1Bounce.
 
 Output field body1Axis.
 
-### SFVec3f [out] **body1AnchorPoint**
-
-Output field body1AnchorPoint.
-
 ### SFVec3f [out] **body2Axis**
 
 Output field body2Axis.
+
+### SFVec3f [out] **body1AnchorPoint**
+
+Output field body1AnchorPoint.
 
 ### SFVec3f [out] **body2AnchorPoint**
 
