@@ -46,7 +46,7 @@ The pickable field determines whether pick traversal is performed on this node o
 
 - If one or more of the children of this instance is accessible through another transformation hierarchy through DEF/USE that still has picking enabled, they are still pickable through that path only.
 
-### MFString [in, out] **objectType** "ALL" <small>["ALL","NONE","TERRAIN",...]</small>
+### MFString [in, out] **objectType** "ALL" <small>["ALL","NONE"|"TERRAIN"|...]</small>
 
 The objectType field specifies a set of labels used in the picking process. Each string specified is treated as an independent label that needs to be matched against the same type in one of the pick sensor instances.
 

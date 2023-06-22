@@ -37,11 +37,7 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 Enables/disables node operation.
 
-### SFBool [out] **isActive**
-
-*isActive* indicates when the intersecting object is picked by the picking geometry. Output event isActive=true gets sent once a picked item is found. Output event isActive=false gets sent once no picked item is found.
-
-### MFString [in, out] **objectType** "ALL" <small>["ALL","NONE","TERRAIN",...]</small>
+### MFString [in, out] **objectType** "ALL" <small>["ALL","NONE"|"TERRAIN"|...]</small>
 
 The objectType field specifies a set of labels used in the picking process. Each string specified is treated as an independent label that needs to be matched against the same type in one of the pick sensor instances.
 
@@ -49,21 +45,9 @@ The objectType field specifies a set of labels used in the picking process. Each
 
 - Authors may define any value for objectType. MFString arrays can have multiple values, so "separate each individual string" "by using quote marks".
 
-### SFString [in, out] **matchCriterion** "MATCH_ANY" <small>["MATCH_ANY","MATCH_EVERY","MATCH_ONLY_ONE"]</small>
+### SFString [in, out] **matchCriterion** "MATCH_ANY" <small>["MATCH_ANY"|"MATCH_EVERY"|"MATCH_ONLY_ONE"]</small>
 
 Defines whether the intersection test (i.e. pick) by this X3DPickSensorNode must match one or more objectType. Specifically MATCH_ANY means any match of objectType values is acceptable, MATCH_EVERY means that every objectType value in this node shall match an objectType value in the X3DPickableObject, and MATCH_ONLY_ONE means that one and only one objectType value can match.
-
-### SFNode [in, out] **pickingGeometry** NULL <small>[PointSet]</small>
-
-*pickingGeometry* specifies the exact geometry coordinates that are used to perform the intersection testing of the picking operation.
-
-### MFNode [in, out] **pickTarget** [ ] <small>[X3DGroupingNode|X3DShapeNode|Inline]</small>
-
-*pickTarget* specifies the list of nodes against which picking operations are performed. All nodes declared in this field and their descendents are evaluated for intersections.
-
-### MFNode [out] **pickedGeometry**
-
-Output event containing the node or nodes that have been found to intersect with the picking geometry from the last time this node performed a picking operation, given in the local coordinate system.
 
 ### SFString [ ] **intersectionType** "BOUNDS" <small>["GEOMETRY"|"BOUNDS"|...]</small>
 
@@ -89,9 +73,25 @@ The sortOrder field determines the order provided for picked output events.
 
 - Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
 
+### SFBool [out] **isActive**
+
+*isActive* indicates when the intersecting object is picked by the picking geometry. Output event isActive=true gets sent once a picked item is found. Output event isActive=false gets sent once no picked item is found.
+
 ### MFVec3f [out] **pickedPoint**
 
 Output event containing 3D points on surface of underlying pickingGeometry computed by the picking intersection computations, given in the local coordinate system.
+
+### SFNode [in, out] **pickingGeometry** NULL <small>[PointSet]</small>
+
+*pickingGeometry* specifies the exact geometry coordinates that are used to perform the intersection testing of the picking operation.
+
+### MFNode [in, out] **pickTarget** [ ] <small>[X3DGroupingNode|X3DShapeNode|Inline]</small>
+
+*pickTarget* specifies the list of nodes against which picking operations are performed. All nodes declared in this field and their descendents are evaluated for intersections.
+
+### MFNode [out] **pickedGeometry**
+
+Output event containing the node or nodes that have been found to intersect with the picking geometry from the last time this node performed a picking operation, given in the local coordinate system.
 
 ## Description
 
