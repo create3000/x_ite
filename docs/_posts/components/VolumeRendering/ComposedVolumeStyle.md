@@ -28,13 +28,13 @@ The ComposedVolumeStyle node belongs to the **VolumeRendering** component and it
 
 ## Fields
 
-### SFBool [in, out] **enabled** TRUE
-
-Enables/disables node operation.
-
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
 Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+
+### SFBool [in, out] **enabled** TRUE
+
+Enables/disables node operation.
 
 ### MFNode [in, out] **renderStyle** [ ] <small>[X3DComposableVolumeRenderStyleNode]</small>
 
