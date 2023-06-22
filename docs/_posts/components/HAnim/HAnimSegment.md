@@ -40,6 +40,43 @@ Author-provided prose that describes intended purpose of the url asset.
 
 - Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for & ampersand character, or &amp;#34; for " quotation-mark character).
 
+### SFString [in, out] **name** ""
+
+Unique name attribute must be defined so that HAnimSegment node can be identified at run time for animation purposes.
+
+#### Hint
+
+- For arbitrary humanoids, HAnimSegment name can describe geometry between parent HAnimJoint and sibling HAnimJoint nodes (for example LeftHip_to_LeftKnee).
+
+#### Warning
+
+- Name is not included if this instance is a USE node. Examples: sacrum pelvis l_thigh l_calf etc. as listed in HAnim Specification.
+
+#### See Also
+
+- [HAnim Humanoid Segment Names HAnim Specification, Humanoid Joint-Segment Hierarchy](https://www.web3d.org/x3d/content/examples/Basic/HumanoidAnimation/tables/HAnimSegmentNames19774V1.0.txt){:target="_blank"}
+- [HAnim Specification, Humanoid Joint-Segment Hierarchy](https://www.web3d.org/documents/specifications/19774-1/V2.0/HAnim/concepts.html#Hierarchy){:target="_blank"}
+
+### SFFloat [in, out] **mass** 0 <small>[0,∞)</small>
+
+Total mass of the segment, 0 if not available.
+
+### SFVec3f [in, out] **centerOfMass** 0 0 0 <small>(-∞,∞)</small>
+
+Location within segment of center of mass.
+
+### MFFloat [in, out] **momentsOfInertia** [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ] <small>[0,∞)</small>
+
+3x3 moments of inertia matrix. default: 0 0 0 0 0 0 0 0 0.
+
+### MFNode [in, out] **displacers** [ ] <small>[HAnimDisplacer]</small>
+
+Input/Output field displacers.
+
+### SFNode [in, out] **coord** NULL <small>[X3DCoordinateNode]</small>
+
+Single contained Coordinate or CoordinateDouble node that can specify a list of vertex values.
+
 ### SFBool [in, out] **visible** TRUE
 
 Whether or not renderable content within this node is visually displayed.
@@ -80,43 +117,6 @@ Input field removeChildren.
 ### MFNode [in, out] **children** [ ] <small>[X3DChildNode]</small>
 
 Input/Output field children.
-
-### SFVec3f [in, out] **centerOfMass** 0 0 0 <small>(-∞,∞)</small>
-
-Location within segment of center of mass.
-
-### SFNode [in, out] **coord** NULL <small>[X3DCoordinateNode]</small>
-
-Single contained Coordinate or CoordinateDouble node that can specify a list of vertex values.
-
-### MFNode [in, out] **displacers** [ ] <small>[HAnimDisplacer]</small>
-
-Input/Output field displacers.
-
-### SFFloat [in, out] **mass** 0 <small>[0,∞)</small>
-
-Total mass of the segment, 0 if not available.
-
-### MFFloat [in, out] **momentsOfInertia** [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ] <small>[0,∞)</small>
-
-3x3 moments of inertia matrix. default: 0 0 0 0 0 0 0 0 0.
-
-### SFString [in, out] **name** ""
-
-Unique name attribute must be defined so that HAnimSegment node can be identified at run time for animation purposes.
-
-#### Hint
-
-- For arbitrary humanoids, HAnimSegment name can describe geometry between parent HAnimJoint and sibling HAnimJoint nodes (for example LeftHip_to_LeftKnee).
-
-#### Warning
-
-- Name is not included if this instance is a USE node. Examples: sacrum pelvis l_thigh l_calf etc. as listed in HAnim Specification.
-
-#### See Also
-
-- [HAnim Humanoid Segment Names HAnim Specification, Humanoid Joint-Segment Hierarchy](https://www.web3d.org/x3d/content/examples/Basic/HumanoidAnimation/tables/HAnimSegmentNames19774V1.0.txt){:target="_blank"}
-- [HAnim Specification, Humanoid Joint-Segment Hierarchy](https://www.web3d.org/documents/specifications/19774-1/V2.0/HAnim/concepts.html#Hierarchy){:target="_blank"}
 
 ## Description
 
