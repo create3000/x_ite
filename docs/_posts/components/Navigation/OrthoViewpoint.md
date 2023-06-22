@@ -138,6 +138,14 @@ Event true sent when node becomes active, event false sent when unbound by anoth
 
 Event sent when node becomes active/inactive.
 
+### SFNode [in, out] **navigationInfo** NULL <small>[NavigationInfo]</small>
+
+The navigationInfo field defines a dedicated NavigationInfo node for this X3DViewpointNode. The specified NavigationInfo node receives a set_bind TRUE event at the time when the parent node is bound and receives a set_bind FALSE at the time when the parent node is unbound.
+
+#### Hint
+
+- Allows simple integration of custom navigation associated with each Viewpoint according to user needs at that location.
+
 ## Description
 
 ### Hint
