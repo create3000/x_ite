@@ -195,7 +195,7 @@ Object .assign (Object .setPrototypeOf (GeoViewpoint .prototype, X3DViewpointNod
 
       return function (dynamic = false)
       {
-         if (! dynamic || this .getUserPosition () .magnitude () < 6.5e6)
+         if (!dynamic || this .getUserPosition () .magnitude () < 6.5e6)
          {
             this .getCoord (this ._position .getValue (), position);
 
