@@ -34,10 +34,6 @@ The CylinderSensor node belongs to the **PointingDeviceSensor** component and it
 
 Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
 
-### SFBool [in, out] **enabled** TRUE
-
-Enables/disables node operation.
-
 ### SFString [in, out] **description** ""
 
 Author-provided text tooltip that tells users the expected action of this node.
@@ -45,6 +41,10 @@ Author-provided text tooltip that tells users the expected action of this node.
 #### Hints
 
 - Use spaces, make descriptions clear and readable. Many XML tools substitute XML character references automatically if needed (such as &amp;#38; for &amp; ampersand, or &amp;#34; for " quotation mark).
+
+### SFBool [in, out] **enabled** TRUE
+
+Enables/disables node operation.
 
 ### SFRotation [in, out] **axisRotation** 0 0 1 0 <small>[-1,1] or (-∞,∞)</small>
 

@@ -31,10 +31,6 @@ The ViewpointGroup node belongs to the **Navigation** component and its default 
 
 Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
 
-### SFBool [in, out] **displayed** TRUE
-
-*displayed* determines whether this ViewpointGroup is displayed in the current viewpoint list.
-
 ### SFString [in, out] **description** ""
 
 Text description or navigation hint to identify this ViewpointGroup.
@@ -46,6 +42,10 @@ Text description or navigation hint to identify this ViewpointGroup.
 #### Warning
 
 - Without description, this ViewpointGroup is unlikely to appear on browser Viewpoints menu.
+
+### SFBool [in, out] **displayed** TRUE
+
+*displayed* determines whether this ViewpointGroup is displayed in the current viewpoint list.
 
 ### SFBool [in, out] **retainUserOffsets** FALSE
 

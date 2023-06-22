@@ -38,14 +38,6 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 Enables/disables node operation.
 
-### SFString [ ] **geometryType** "QUAD" <small>["LINE"|"POINT"|"QUAD"|"SPRITE"|"TRIANGLE"|"GEOMETRY"|...]</small>
-
-Field geometryType.
-
-### SFInt32 [in, out] **maxParticles** 200 <small>[0,∞)</small>
-
-Maximum number of particles to be generated at one time (subject to player limitations).
-
 ### SFBool [in, out] **createParticles** TRUE
 
 Enables/disables creation of new particles, while any existing particles remain in existence and continue to animate until the end of their lifetimes.
@@ -53,6 +45,14 @@ Enables/disables creation of new particles, while any existing particles remain 
 #### Hint
 
 - If no particles are left in scene, system is considered both active and enabled.
+
+### SFString [ ] **geometryType** "QUAD" <small>["LINE"|"POINT"|"QUAD"|"SPRITE"|"TRIANGLE"|"GEOMETRY"|...]</small>
+
+Field geometryType.
+
+### SFInt32 [in, out] **maxParticles** 200 <small>[0,∞)</small>
+
+Maximum number of particles to be generated at one time (subject to player limitations).
 
 ### SFFloat [in, out] **particleLifetime** 5 <small>[0,∞)</small>
 
