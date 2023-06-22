@@ -40,22 +40,6 @@ Actual-size X-Y-Z dimensions of volume data in local coordinate system.
 
 Input/Output field segmentEnabled.
 
-### MFNode [in, out] **renderStyle** [ ] <small>[X3DVolumeRenderStyleNode]</small>
-
-Input/Output field renderStyle.
-
-### SFNode [in, out] **segmentIdentifiers** NULL <small>[X3DTexture3DNode]</small>
-
-Input/Output field segmentIdentifiers.
-
-### SFNode [in, out] **voxels** NULL <small>[X3DTexture3DNode]</small>
-
-Input/Output field voxels.
-
-### SFVec3f [ ] **bboxCenter** 0 0 0 <small>(-∞,∞)</small>
-
-Bounding box center: optional hint for position offset from origin of local coordinate system.
-
 ### SFBool [in, out] **visible** TRUE
 
 Whether or not renderable content within this node is visually displayed.
@@ -80,6 +64,22 @@ Bounding box size is usually omitted, and can easily be calculated automatically
 #### Hint
 
 - Can be useful for collision computations or inverse-kinematics (IK) engines.
+
+### SFVec3f [ ] **bboxCenter** 0 0 0 <small>(-∞,∞)</small>
+
+Bounding box center: optional hint for position offset from origin of local coordinate system.
+
+### SFNode [in, out] **segmentIdentifiers** NULL <small>[X3DTexture3DNode]</small>
+
+Input/Output field segmentIdentifiers.
+
+### MFNode [in, out] **renderStyle** [ ] <small>[X3DVolumeRenderStyleNode]</small>
+
+Input/Output field renderStyle.
+
+### SFNode [in, out] **voxels** NULL <small>[X3DTexture3DNode]</small>
+
+Input/Output field voxels.
 
 ## Description
 
