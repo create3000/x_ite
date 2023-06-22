@@ -313,8 +313,8 @@ function ComposedCubeMapTexture (executionContext)
       this .addAlias ("back",   this ._backTexture);
       this .addAlias ("left",   this ._leftTexture);
       this .addAlias ("right",  this ._rightTexture);
-      this .addAlias ("bottom", this ._bottomTexture);
       this .addAlias ("top",    this ._topTexture);
+      this .addAlias ("bottom", this ._bottomTexture);
    }
 
    this .addChildObjects ("update", new (Fields_default()).SFTime ());
@@ -487,8 +487,8 @@ Object .defineProperties (ComposedCubeMapTexture,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "backTexture",       new (Fields_default()).SFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "leftTexture",       new (Fields_default()).SFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "rightTexture",      new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bottomTexture",     new (Fields_default()).SFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "topTexture",        new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bottomTexture",     new (Fields_default()).SFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "textureProperties", new (Fields_default()).SFNode ()),
       ]),
       enumerable: true,

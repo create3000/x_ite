@@ -3974,9 +3974,9 @@ Object .defineProperties (NurbsPatchSurface,
    {
       value: new (FieldDefinitionArray_default()) ([
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",      new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "solid",         new (Fields_default()).SFBool (true)),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "uTessellation", new (Fields_default()).SFInt32 ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "vTessellation", new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "solid",         new (Fields_default()).SFBool (true)),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "uClosed",       new (Fields_default()).SFBool ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "vClosed",       new (Fields_default()).SFBool ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "uOrder",        new (Fields_default()).SFInt32 (3)),
@@ -5388,9 +5388,9 @@ Object .defineProperties (NurbsTrimmedSurface,
    {
       value: new (FieldDefinitionArray_default()) ([
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",              new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "solid",                 new (Fields_default()).SFBool (true)),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "uTessellation",         new (Fields_default()).SFInt32 ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "vTessellation",         new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "solid",                 new (Fields_default()).SFBool (true)),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "uClosed",               new (Fields_default()).SFBool ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "vClosed",               new (Fields_default()).SFBool ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "uOrder",                new (Fields_default()).SFInt32 (3)),

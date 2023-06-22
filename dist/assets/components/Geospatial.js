@@ -2591,9 +2591,9 @@ Object .defineProperties (GeoLocation,
    {
       value: new (FieldDefinitionArray_default()) ([
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",       new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geoOrigin",      new (Fields_default()).SFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geoSystem",      new (Fields_default()).MFString ("GD", "WE")),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "geoCoords",      new (Fields_default()).SFVec3d ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geoOrigin",      new (Fields_default()).SFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "visible",        new (Fields_default()).SFBool (true)),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bboxDisplay",    new (Fields_default()).SFBool ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxSize",       new (Fields_default()).SFVec3f (-1, -1, -1)),
