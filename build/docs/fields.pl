@@ -17,7 +17,7 @@ sub node {
    return if $componentName =~ /^Annotation$/o;
    return if $typeName =~ /^X3D/o;
 
-   return unless $typeName =~ /^Delay$/o;
+   #return unless $typeName =~ /^Delay$/o;
    say "$componentName $typeName";
 
    $md     = "$cwd/docs/_posts/components/$componentName/$typeName.md";
@@ -31,9 +31,9 @@ sub field {
    $name = shift;
    $file = shift;
 
-   return unless $file =~ m|###.*?\*\*$name\*\*|;
+   return unless $file =~ m|###.*?\*\*$name\*\*.*?[\s\n]+###|;
 
-   say $name;
+   say "  $name";
 }
 
 $cwd = getcwd ();
