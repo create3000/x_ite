@@ -39,21 +39,23 @@ sub node {
    $file   = `cat $md`;
    @fields = map { /\*\*(.*?)\*\*/o; $_ = $1 } $file =~ /###\s*[SM]F\w+.*/go;
 
-   $file = fill_empty_field ($_, $typeName, $file) foreach @fields;
-   exit;
-}
-
-sub fill_empty_field {
-   $name     = shift;
-   $typeName = shift;
-   $file     = shift;
-
-   return $file unless $file =~ /###.*?\*\*$name\*\*.*?[\s\n]+###/;
+   return unless grep /^$typeName$/, @td;
 
    @node = @td [(first_index { /^$typeName$/ } @td) .. $#td];
    @node = @node [0 .. (first_index { /^$/ } @node)];
 
-   @field = @node [(first_index { /$name/ } @node) + 1 .. $#node];
+   $file = fill_empty_field ($_, \@node, $file) foreach @fields;
+   exit;
+}
+
+sub fill_empty_field {
+   $name = shift;
+   $node = shift;
+   $file = shift;
+
+   return $file unless $file =~ /###.*?\*\*$name\*\*.*?[\s\n]+###/;
+
+   @field = @$node [(first_index { /$name/ } @$node) + 1 .. $#$node];
    $field = shift @field;
 
    say "  $name '$field'";
