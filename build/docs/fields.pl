@@ -9,22 +9,31 @@ sub node {
    $filename = shift;
    chomp $filename;
 
-   $filename =~ m|([^/]+)/([^/]+)\.js$|;
+   $filename =~ m|([^/]+)/([^/]+)\.js$|o;
 
    $componentName = $1;
    $typeName      = $2;
 
-   return if $componentName =~ /^Annotation$/;
-   return if $typeName =~ /^X3D/;
+   return if $componentName =~ /^Annotation$/o;
+   return if $typeName =~ /^X3D/o;
 
-   return unless $typeName =~ /^Delay$/;
+   return unless $typeName =~ /^Delay$/o;
    say "$componentName $typeName";
 
    $md     = "$cwd/docs/_posts/components/$componentName/$typeName.md";
    $file   = `cat $md`;
-   @fields = map { /\*\*(.*?)\*\*/; $_ = $1 } $file =~ m|###\s*[SM]F\w+.*|go;
+   @fields = map { /\*\*(.*?)\*\*/o; $_ = $1 } $file =~ /###\s*[SM]F\w+.*/go;
 
-   say $_ foreach @fields;
+   field ($_, $file) foreach @fields;
+}
+
+sub field {
+   $name = shift;
+   $file = shift;
+
+   return unless $file =~ m|###.*?\*\*$name\*\*|;
+
+   say $name;
 }
 
 $cwd = getcwd ();
