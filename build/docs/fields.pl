@@ -13,9 +13,9 @@ $tooltips = `cat /tmp/tooltips.html`;
 @td = $tooltips =~ m|<td.*?</td.*?>|sgo;
 
 s|</?.*?>||sgo   foreach @td;
+s/&nbsp;/ /sgo   foreach @td;
 s/\s+/ /sgo      foreach @td;
 s/^\s+|\s+$//sgo foreach @td;
-s/&nbsp;/ /sgo   foreach @td;
 
 #say @td;
 
