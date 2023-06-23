@@ -6,7 +6,18 @@ use open qw/:std :utf8/;
 use Cwd;
 use LWP::Simple;
 
-$tooltips = get ("https://www.web3d.org/x3d/content/X3dTooltips.html");
+system "wget -q --output-document - https://www.web3d.org/x3d/content/X3dTooltips.html > /tmp/tooltips.html"
+   unless -f "/tmp/tooltips.html";
+$tooltips = `cat /tmp/tooltips.html`;
+
+@td = $tooltips =~ m|<td.*?</td.*?>|sgo;
+
+s|</?.*?>||sgo   foreach @td;
+s/\s+/ /sgo      foreach @td;
+s/^\s+|\s+$//sgo foreach @td;
+s/&nbsp;/ /sgo   foreach @td;
+
+#say @td;
 
 sub node {
    $filename = shift;
@@ -27,16 +38,17 @@ sub node {
    $file   = `cat $md`;
    @fields = map { /\*\*(.*?)\*\*/o; $_ = $1 } $file =~ /###\s*[SM]F\w+.*/go;
 
-   $file = fill_empty_field ($_, $file) foreach @fields;
+   $file = fill_empty_field ($_, $typeName, $file) foreach @fields;
 }
 
 sub fill_empty_field {
-   $name = shift;
-   $file = shift;
+   $name     = shift;
+   $typeName = shift;
+   $file     = shift;
 
    return $file unless $file =~ /###.*?\*\*$name\*\*.*?[\s\n]+###/;
 
-   say "  $name";
+   say "  $name ", scalar grep /^$typeName$/, @td;
 
    return $file;
 }
