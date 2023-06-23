@@ -55,7 +55,7 @@ sub fill_empty_field {
 
    return $file unless $file =~ /###.*?\*\*$name\*\*.*?[\s\n]+###/;
 
-   @field = @$node [(first_index { /$name/ } @$node) + 1 .. $#$node];
+   @field = @$node [(first_index { /^$name$/ } @$node) + 1 .. $#$node];
    $field = shift @field;
 
    say "  $name '$field'";
