@@ -4,6 +4,9 @@ use utf8;
 use open qw/:std :utf8/;
 
 use Cwd;
+use LWP::Simple;
+
+$tooltips = get ("https://www.web3d.org/x3d/content/X3dTooltips.html");
 
 sub node {
    $filename = shift;
