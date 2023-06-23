@@ -45,7 +45,6 @@ sub node {
    @node = @node [0 .. (first_index { /^$/ } @node)];
 
    $file = fill_empty_field ($_, \@node, $file) foreach @fields;
-   exit;
 }
 
 sub fill_empty_field {
@@ -57,6 +56,9 @@ sub fill_empty_field {
 
    @field = @$node [(first_index { /^$name$/ } @$node) + 1 .. $#$node];
    $field = shift @field;
+
+   $field =~ s/^\[.*?\]\s*//so;
+   $field =~ s/^[\[\()].*?[\]\)]\s*//so;
 
    say "  $name '$field'";
 
