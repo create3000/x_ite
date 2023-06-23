@@ -17,9 +17,14 @@ sub node {
    return if $componentName =~ /^Annotation$/;
    return if $typeName =~ /^X3D/;
 
-   return unless $typeName =~ /^Transform$/;
+   return unless $typeName =~ /^Delay$/;
    say "$componentName $typeName";
 
+   $md     = "$cwd/docs/_posts/components/$componentName/$typeName.md";
+   $file   = `cat $md`;
+   @fields = map { /\*\*(.*?)\*\*/; $_ = $1 } $file =~ m|###\s*[SM]F\w+.*|go;
+
+   say $_ foreach @fields;
 }
 
 $cwd = getcwd ();
