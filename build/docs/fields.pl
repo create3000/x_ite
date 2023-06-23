@@ -24,10 +24,10 @@ sub node {
    $file   = `cat $md`;
    @fields = map { /\*\*(.*?)\*\*/o; $_ = $1 } $file =~ /###\s*[SM]F\w+.*/go;
 
-   field ($_, $file) foreach @fields;
+   fill_empty_field ($_, $file) foreach @fields;
 }
 
-sub field {
+sub fill_empty_field {
    $name = shift;
    $file = shift;
 
