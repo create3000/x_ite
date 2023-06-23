@@ -40,6 +40,7 @@ sub node {
    @fields = map { /\*\*(.*?)\*\*/o; $_ = $1 } $file =~ /###\s*[SM]F\w+.*/go;
 
    $file = fill_empty_field ($_, $typeName, $file) foreach @fields;
+   exit;
 }
 
 sub fill_empty_field {
@@ -57,7 +58,6 @@ sub fill_empty_field {
 
    say "  $name '$field'";
 
-exit;
    return $file;
 }
 
