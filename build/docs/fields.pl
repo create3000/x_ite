@@ -4,7 +4,8 @@ use utf8;
 use open qw/:std :utf8/;
 
 use Cwd;
-use LWP::Simple;
+use List::MoreUtils qw(first_index);
+
 
 system "wget -q --output-document - https://www.web3d.org/x3d/content/X3dTooltips.html > /tmp/tooltips.html"
    unless -f "/tmp/tooltips.html";
@@ -48,8 +49,15 @@ sub fill_empty_field {
 
    return $file unless $file =~ /###.*?\*\*$name\*\*.*?[\s\n]+###/;
 
-   say "  $name ", scalar grep /^$typeName$/, @td;
+   @node = @td [(first_index { /^$typeName$/ } @td) .. $#td];
+   @node = @node [0 .. (first_index { /^$/ } @node)];
 
+   @field = @node [(first_index { /$name/ } @node) + 1 .. $#node];
+   $field = shift @field;
+
+   say "  $name '$field'";
+
+exit;
    return $file;
 }
 
