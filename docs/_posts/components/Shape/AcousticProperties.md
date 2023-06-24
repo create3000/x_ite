@@ -15,7 +15,7 @@ tags: [AcousticProperties, Shape]
 
 AcousticProperties ...
 
-The AcousticProperties node belongs to the **Shape** component and its default container field is *AcousticProperties.* It is available since X3D version 4.0 or later.
+The AcousticProperties node belongs to the **Shape** component and its default container field is *acousticProperties.* It is available since X3D version 4.0 or later.
 
 ## Hierarchy
 

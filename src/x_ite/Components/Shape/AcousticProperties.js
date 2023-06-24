@@ -74,7 +74,7 @@ Object .defineProperties (AcousticProperties,
    },
    containerField:
    {
-      value: "AcousticProperties",
+      value: "acousticProperties",
       enumerable: true,
    },
    specificationRange:

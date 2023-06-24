@@ -33,7 +33,7 @@ sub node {
    return if $componentName =~ /^Annotation$/o;
    return if $typeName =~ /^X3D/o;
 
-   # return unless $typeName =~ /^HAnimMotion$/o;
+   # return unless $typeName =~ /^AcousticProperties$/o;
    say "$componentName $typeName";
 
    $md     = "$cwd/docs/_posts/components/$componentName/$typeName.md";
@@ -68,8 +68,8 @@ sub field {
    1 while $field =~ s/^\s*(?:\[.*?\]|\(.*?\))\s*//so;
    $field =~ s/^(\s*or)?\s*[\[\()].*?[\]\)]\s*//so;
 
-   decode_entities ($field);
-   $field =~ s/([<>*_])/\\$1/sgo;
+   decode_entities $field;
+   $field =~ s/([<>])/\\$1/sgo;
    $field =~ s/\b$name\b/*$name*/sg;
 
    # Special substitutions
