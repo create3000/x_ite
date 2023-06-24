@@ -5,6 +5,7 @@ use open qw/:std :utf8/;
 
 use Cwd;
 use List::MoreUtils qw(first_index);
+use HTML::Entities;
 
 
 system "wget -q --output-document - https://www.web3d.org/x3d/content/X3dTooltips.html > /tmp/tooltips.html"
@@ -32,7 +33,7 @@ sub node {
    return if $componentName =~ /^Annotation$/o;
    return if $typeName =~ /^X3D/o;
 
-   return unless $typeName =~ /^Delay$/o;
+   return unless $typeName =~ /^Anchor$/o;
    say "$componentName $typeName";
 
    $md     = "$cwd/docs/_posts/components/$componentName/$typeName.md";
@@ -45,6 +46,7 @@ sub node {
    @node = @node [0 .. (first_index { /^$/ } @node)];
 
    $file = fill_empty_field ($_, \@node, $file) foreach @fields;
+
 }
 
 sub fill_empty_field {
@@ -52,7 +54,8 @@ sub fill_empty_field {
    $node = shift;
    $file = shift;
 
-   return $file unless $file =~ /###.*?\*\*$name\*\*.*?[\s\n]+###/;
+   # #return $file unless $file =~ /###.*?\*\*$name\*\*.*?[\s\n]+###/;
+   return $file unless grep /^$name$/, @$node;
 
    @field = @$node [(first_index { /^$name$/ } @$node) + 1 .. $#$node];
    $field = shift @field;
@@ -60,7 +63,53 @@ sub fill_empty_field {
    $field =~ s/^\[.*?\]\s*//so;
    $field =~ s/^[\[\()].*?[\]\)]\s*//so;
 
-   say "  $name '$field'";
+   decode_entities ($field);
+   $field =~ s/\b$name\b/*$name*/sg;
+
+   @description = @hints = @warnings = ();
+
+   return unless $name eq "url";
+
+   say $field;
+
+   $field =~ s/(Hint\s*:)/$1 __HINT__/sg;
+   $field =~ s/(Warning\s*:)/$1 __WARNING__/sg;
+
+   @sentences = split (/\s*(Hint|Warning)\s*:/, $field);
+
+   foreach (@sentences)
+   {
+      s/^\s+|\s+$//sgo;
+
+      if ($_ =~ s/__HINT__//)
+      {
+         s/^\s+|\s+$//sgo;
+
+         push @hints, ucfirst $_;
+         next;
+      }
+
+      if ($_ =~ s/__WARNING__//)
+      {
+         s/^\s+|\s+$//sgo;
+         
+         push @warnings, ucfirst $_;
+         next;
+      }
+
+      push @description, ucfirst $_;
+   }
+
+   say "\n'$name'\n";
+   say join " ", @description;
+   say "";
+
+   if (@hints)
+   {
+      say @hints == 1 ? "Hint:" : "Hints";
+      say "";
+      say "- " . ucfirst $_ foreach @hints;
+   }
 
    return $file;
 }
