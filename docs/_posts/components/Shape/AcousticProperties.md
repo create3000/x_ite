@@ -21,6 +21,8 @@ The AcousticProperties node belongs to the **Shape** component and its default c
 
 ```
 + X3DNode
+  + X3DAppearanceChildNode
+    + AcousticProperties
 ```
 
 ## Fields

@@ -45,14 +45,14 @@ sub node {
    @node = @td [(first_index { /^$typeName$/ } @td) .. $#td];
    @node = @node [0 .. (first_index { /^$/ } @node)];
 
-   $file = fill_empty_field ($_, \@node, $file) foreach @fields;
+   $file = field ($_, \@node, $file) foreach @fields;
 
    open FILE, ">", $md;
    print FILE $file;
    close FILE;
 }
 
-sub fill_empty_field {
+sub field {
    $name = shift;
    $node = shift;
    $file = shift;
@@ -70,14 +70,18 @@ sub fill_empty_field {
 
    decode_entities ($field);
    $field =~ s/([<>*_])/\\$1/sgo;
+   $field =~ s/\b$name\b/*$name*/sg;
+
+   # Special substitutions
+   $field =~ s/\*next\* to/next to/sgo;
    $field =~ s/\[autoRefresh/autoRefresh/sgo;
 
    @description = @hints = @warnings = ();
 
-   $field =~ s/(Hint\s*:)/$1 __HINT__/sg;
-   $field =~ s/(Warning\s*:)/$1 __WARNING__/sg;
+   $field =~ s/(Hint\s*:)/$1 __HINT__/sgo;
+   $field =~ s/(Warning\s*:)/$1 __WARNING__/sgo;
 
-   @sentences = split (/(?:Hint|Warning)\s*:/, $field);
+   @sentences = split (/(?:Hint|Warning)\s*:/so, $field);
 
    foreach (@sentences)
    {
@@ -102,16 +106,12 @@ sub fill_empty_field {
       push @description, $_;
    }
 
-   s/\b$name\b/*$name*/sg foreach @description;
-   s/\b$name\b/*$name*/sg foreach @hints;
-   s/\b$name\b/*$name*/sg foreach @warnings;
-
    $_ = ucfirst foreach @description;
    $_ = ucfirst foreach @hints;
    $_ = ucfirst foreach @warnings;
 
-   s/^(.*?)[\s,]+(https?:.*?$)/[$1]($2){:target="_blank"}/ foreach @hints;
-   s/^(.*?)[\s,]+(https?:.*?$)/[$1]($2){:target="_blank"}/ foreach @warnings;
+   s/^(.*?)[\s,]+(https?:.*?$)/[$1]($2){:target="_blank"}/sgo foreach @hints;
+   s/^(.*?)[\s,]+(https?:.*?$)/[$1]($2){:target="_blank"}/sgo foreach @warnings;
 
    $string = "";
 
