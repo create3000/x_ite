@@ -33,7 +33,7 @@ sub node {
    return if $componentName =~ /^Annotation$/o;
    return if $typeName =~ /^X3D/o;
 
-   return unless $typeName =~ /^Anchor$/o;
+   return unless $typeName =~ /^Delay$/o;
    say "$componentName $typeName";
 
    $md     = "$cwd/docs/_posts/components/$componentName/$typeName.md";
@@ -47,6 +47,9 @@ sub node {
 
    $file = fill_empty_field ($_, \@node, $file) foreach @fields;
 
+   open FILE, ">", $filename;
+   print FILE $file;
+   close FILE;
 }
 
 sub fill_empty_field {
@@ -54,9 +57,9 @@ sub fill_empty_field {
    $node = shift;
    $file = shift;
 
-   # return unless $name eq "autoRefresh";
-   # return $file unless $file =~ /###.*?\*\*$name\*\*.*?[\s\n]+###/;
+   return $file unless $file =~ /###.*?\*\*$name\*\*.*?\s+###?/s;
    return $file unless grep /^$name$/, @$node;
+   # return unless $name eq "autoRefresh";
 
    @field = @$node [(first_index { /^$name$/ } @$node) + 1 .. $#$node];
    $field = shift @field;
@@ -132,8 +135,10 @@ sub fill_empty_field {
       $string .= "\n";
    }
 
-   print "\n'$name'\n";
-   print $string;
+   say $name;
+   # print $string;
+
+   $file =~ s/(###.*?\*\*$name\*\*.*?\n+).*?(###?\s+)/$1$string$2/s;
 
    return $file;
 }
