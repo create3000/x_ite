@@ -69,8 +69,6 @@ sub fill_empty_field {
 
    return unless $name eq "url";
 
-   say $field;
-
    $field =~ s/(Hint\s*:)/$1 __HINT__/sg;
    $field =~ s/(Warning\s*:)/$1 __WARNING__/sg;
 
@@ -102,6 +100,9 @@ sub fill_empty_field {
    $description = join " ", @description;
    $description =~ s/\b$name\b/*$name*/sg;
 
+   s/^(.*?)\s+(https?:.*?$)/[$1]($2)/ foreach @hints;
+   s/^(.*?)\s+(https?:.*?$)/[$1]($2)/ foreach @warnings;
+
    $string = "";
 
    $string .= $description;
@@ -110,7 +111,8 @@ sub fill_empty_field {
 
    if (@hints)
    {
-      $string .= @hints == 1 ? "Hint:" : "Hints";
+      $string .= "#### ";
+      $string .= @hints == 1 ? "Hint" : "Hints";
       $string .= "\n";
       $string .= "\n";
       $string .= "- $_\n" foreach @hints;
@@ -119,7 +121,8 @@ sub fill_empty_field {
 
    if (@warnings)
    {
-      $string .= @warnings == 1 ? "Warning:" : "Warnings";
+      $string .= "#### ";
+      $string .= @warnings == 1 ? "Warning" : "Warnings";
       $string .= "\n";
       $string .= "\n";
       $string .= "- $_\n" foreach @warnings;
