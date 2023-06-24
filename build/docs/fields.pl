@@ -33,7 +33,7 @@ sub node {
    return if $componentName =~ /^Annotation$/o;
    return if $typeName =~ /^X3D/o;
 
-   # return unless $typeName =~ /^AcousticProperties$/o;
+   # return unless $typeName =~ /^Analyser$/o;
    say "$componentName $typeName";
 
    $md     = "$cwd/docs/_posts/components/$componentName/$typeName.md";
@@ -57,10 +57,10 @@ sub field {
    $node = shift;
    $file = shift;
 
-   return $file unless $file =~ /###.*?\*\*$name\*\*.*?[\s\n]+###?/;
    return $file unless grep /^$name$/, @$node;
 
    # return unless $name eq "frameDuration";
+   say $name;
 
    @field = @$node [(first_index { /^$name$/ } @$node) + 1 .. $#$node];
    $field = shift @field;
@@ -142,7 +142,7 @@ sub field {
    # say $name;
    # print $string;
 
-   $file =~ s/(###.*?\*\*$name\*\*.*?\n+).*?(###?\s+)/$1$string$2/s;
+   $file =~ s/(###.*?\*\*$name\*\*.*?\n+).*?(#{2,3}}\s+)/$1$bah$2/s;
 
    return $file;
 }
