@@ -113,7 +113,7 @@ sub fill_empty_field {
       $string .= @hints == 1 ? "Hint:" : "Hints";
       $string .= "\n";
       $string .= "\n";
-      $string .= "- " . ucfirst ($_) . "\n" foreach @hints;
+      $string .= "- $_\n" foreach @hints;
       $string .= "\n";
    }
 
@@ -122,7 +122,7 @@ sub fill_empty_field {
       $string .= @warnings == 1 ? "Warning:" : "Warnings";
       $string .= "\n";
       $string .= "\n";
-      $string .= "- " . ucfirst ($_) . "\n" foreach @warnings;
+      $string .= "- $_\n" foreach @warnings;
       $string .= "\n";
    }
 
