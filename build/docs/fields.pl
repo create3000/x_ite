@@ -33,7 +33,7 @@ sub node {
    return if $componentName =~ /^Annotation$/o;
    return if $typeName =~ /^X3D/o;
 
-   # return unless $typeName =~ /^Analyser$/o;
+   # return unless $typeName =~ /^CADAssembly$/o;
    say "$componentName $typeName";
 
    $md     = "$cwd/docs/_posts/components/$componentName/$typeName.md";
@@ -59,8 +59,8 @@ sub field {
 
    return $file unless grep /^$name$/, @$node;
 
-   # return unless $name eq "frameDuration";
-   say $name;
+   # return $file unless $name eq "metadata";
+   # say $name;
 
    @field = @$node [(first_index { /^$name$/ } @$node) + 1 .. $#$node];
    $field = shift @field;
@@ -70,11 +70,12 @@ sub field {
 
    decode_entities $field;
    $field =~ s/([<>])/\\$1/sgo;
-   $field =~ s/\b$name\b/*$name*/sg;
 
    # Special substitutions
    $field =~ s/\*next\* to/next to/sgo;
-   $field =~ s/\[autoRefresh/autoRefresh/sgo;
+   $field =~ s/\[autoRefresh\b/autoRefresh/sgo;
+
+   $field =~ s/\b$name\b/*$name*/sg;
 
    @description = @hints = @warnings = ();
 
@@ -142,7 +143,7 @@ sub field {
    # say $name;
    # print $string;
 
-   $file =~ s/(###.*?\*\*$name\*\*.*?\n+).*?(#{2,3}}\s+)/$1$bah$2/s;
+   $file =~ s/(###.*?\*\*$name\*\*.*?\n+).*?\n((?:###|##)\s+)/$1$string$2/s;
 
    return $file;
 }
