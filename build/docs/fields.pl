@@ -33,7 +33,7 @@ sub node {
    return if $componentName =~ /^Annotation$/o;
    return if $typeName =~ /^X3D/o;
 
-   # return unless $typeName =~ /^Delay$/o;
+   # return unless $typeName =~ /^HAnimMotion$/o;
    say "$componentName $typeName";
 
    $md     = "$cwd/docs/_posts/components/$componentName/$typeName.md";
@@ -47,7 +47,7 @@ sub node {
 
    $file = fill_empty_field ($_, \@node, $file) foreach @fields;
 
-   open FILE, ">", $filename;
+   open FILE, ">", $md;
    print FILE $file;
    close FILE;
 }
@@ -57,14 +57,13 @@ sub fill_empty_field {
    $node = shift;
    $file = shift;
 
-   return $file unless $file =~ /###.*?\*\*$name\*\*.*?\s+###?/s;
+   return $file unless $file =~ /###.*?\*\*$name\*\*.*?[\s\n]+###?/;
    return $file unless grep /^$name$/, @$node;
-   # return unless $name eq "autoRefresh";
+
+   # return unless $name eq "frameDuration";
 
    @field = @$node [(first_index { /^$name$/ } @$node) + 1 .. $#$node];
    $field = shift @field;
-
-   # say $field;
 
    1 while $field =~ s/^\s*(?:\[.*?\]|\(.*?\))\s*//so;
    $field =~ s/^(\s*or)?\s*[\[\()].*?[\]\)]\s*//so;
@@ -78,7 +77,7 @@ sub fill_empty_field {
    $field =~ s/(Hint\s*:)/$1 __HINT__/sg;
    $field =~ s/(Warning\s*:)/$1 __WARNING__/sg;
 
-   @sentences = split (/\s*(Hint|Warning)\s*:/, $field);
+   @sentences = split (/(?:Hint|Warning)\s*:/, $field);
 
    foreach (@sentences)
    {
@@ -88,7 +87,7 @@ sub fill_empty_field {
       {
          s/^\s+|\s+$//sgo;
 
-         push @hints, ucfirst $_;
+         push @hints, $_;
          next;
       }
 
@@ -96,22 +95,27 @@ sub fill_empty_field {
       {
          s/^\s+|\s+$//sgo;
 
-         push @warnings, ucfirst $_;
+         push @warnings, $_;
          next;
       }
 
-      push @description, ucfirst $_;
+      push @description, $_;
    }
 
-   $description = join " ", @description;
-   $description =~ s/\b$name\b/*$name*/sg;
+   s/\b$name\b/*$name*/sg foreach @description;
+   s/\b$name\b/*$name*/sg foreach @hints;
+   s/\b$name\b/*$name*/sg foreach @warnings;
 
-   s/^(.*?)\s+(https?:.*?$)/[$1]($2){:target="_blank"}/ foreach @hints;
-   s/^(.*?)\s+(https?:.*?$)/[$1]($2){:target="_blank"}/ foreach @warnings;
+   $_ = ucfirst foreach @description;
+   $_ = ucfirst foreach @hints;
+   $_ = ucfirst foreach @warnings;
+
+   s/^(.*?)[\s,]+(https?:.*?$)/[$1]($2){:target="_blank"}/ foreach @hints;
+   s/^(.*?)[\s,]+(https?:.*?$)/[$1]($2){:target="_blank"}/ foreach @warnings;
 
    $string = "";
 
-   $string .= $description;
+   $string .= join " ", @description;
    $string .= "\n";
    $string .= "\n";
 
@@ -135,7 +139,7 @@ sub fill_empty_field {
       $string .= "\n";
    }
 
-   say $name;
+   # say $name;
    # print $string;
 
    $file =~ s/(###.*?\*\*$name\*\*.*?\n+).*?(###?\s+)/$1$string$2/s;
@@ -144,5 +148,7 @@ sub fill_empty_field {
 }
 
 $cwd = getcwd ();
+
+system "git checkout -- docs/_posts/components/";
 
 node $_ foreach sort `find $cwd/src/x_ite/Components -type f -mindepth 2`;

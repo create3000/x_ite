@@ -21,6 +21,8 @@ The HAnimMotion node belongs to the **HAnim** component and its default containe
 
 ```
 + X3DNode
+  + X3DChildNode
+    + HAnimMotion
 ```
 
 ## Fields
