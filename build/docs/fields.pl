@@ -54,20 +54,23 @@ sub fill_empty_field {
    $node = shift;
    $file = shift;
 
-   # #return $file unless $file =~ /###.*?\*\*$name\*\*.*?[\s\n]+###/;
+   # return unless $name eq "autoRefresh";
+   # return $file unless $file =~ /###.*?\*\*$name\*\*.*?[\s\n]+###/;
    return $file unless grep /^$name$/, @$node;
 
    @field = @$node [(first_index { /^$name$/ } @$node) + 1 .. $#$node];
    $field = shift @field;
 
-   $field =~ s/^\[.*?\]\s*//so;
-   $field =~ s/^[\[\()].*?[\]\)]\s*//so;
+   # say $field;
+
+   1 while $field =~ s/^\s*(?:\[.*?\]|\(.*?\))\s*//so;
+   $field =~ s/^(\s*or)?\s*[\[\()].*?[\]\)]\s*//so;
 
    decode_entities ($field);
+   $field =~ s/([<>*_])/\\$1/sgo;
+   $field =~ s/\[autoRefresh/autoRefresh/sgo;
 
    @description = @hints = @warnings = ();
-
-   return unless $name eq "url";
 
    $field =~ s/(Hint\s*:)/$1 __HINT__/sg;
    $field =~ s/(Warning\s*:)/$1 __WARNING__/sg;
@@ -100,8 +103,8 @@ sub fill_empty_field {
    $description = join " ", @description;
    $description =~ s/\b$name\b/*$name*/sg;
 
-   s/^(.*?)\s+(https?:.*?$)/[$1]($2)/ foreach @hints;
-   s/^(.*?)\s+(https?:.*?$)/[$1]($2)/ foreach @warnings;
+   s/^(.*?)\s+(https?:.*?$)/[$1]($2){:target="_blank"}/ foreach @hints;
+   s/^(.*?)\s+(https?:.*?$)/[$1]($2){:target="_blank"}/ foreach @warnings;
 
    $string = "";
 
