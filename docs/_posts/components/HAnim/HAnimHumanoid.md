@@ -90,15 +90,60 @@ Translation offset from origin of local coordinate system.
 
 ### MFVec3f [in, out] **jointBindingPositions** [ ] <small>(-∞,∞)</small>
 
+Specifies an array of position values for each HAnimJoint node in the joints field, in order, corresponding to each binding pose.
+
+#### Hint
+
+- If only one value is provided, it is provided to each Joint equivalently.
+
+#### Warning
+
+- Not used when skeletalConfiguration='BASIC'.
+
 ### MFRotation [in, out] **jointBindingRotations** [ ] <small>(-∞,∞) or [-1,1]</small>
+
+Specifies an array of rotation values for each HAnimJoint node in the joints field, in order, corresponding to each binding pose.
+
+#### Hint
+
+- If only one value is provided, it is provided to each Joint equivalently.
+
+#### Warning
+
+- Not used when skeletalConfiguration='BASIC'.
 
 ### MFVec3f [in, out] **jointBindingScales** [ ] <small>(-∞,∞)</small>
 
+Specifies an array of scale values for each HAnimJoint node in the joints field, in order, corresponding to each binding pose.
+
+#### Hint
+
+- If only one value is provided, it is provided to each Joint equivalently.
+
+#### Warning
+
+- Not used when skeletalConfiguration='BASIC'.
+
 ### MFBool [in, out] **motionsEnabled** [ ]
+
+Array of boolean values corresponding to HAnimMotion nodes indicating which can animate the HAnimHumanoid.
 
 ### SFInt32 [in, out] **loa** -1 <small>[-1,∞)</small>
 
+Level Of Articulation 0..4 indicates complexity and detail of joints for given humanoid skeletal hierarchy.
+
+#### Hints
+
+- *loa* value of -1 indicates that no LOA conformance is provided.
+- [Humanoid Animation (HAnim) Specification, Part 1 Architecture, 4.8.4 Levels of articulation](https://www.web3d.org/documents/specifications/19774/V2.0/Architecture/concepts.html#LevelsOfArticulation){:target="_blank"}
+
 ### SFString [in, out] **skeletalConfiguration** "BASIC"
+
+Models sharing a common skeletal configuration can share animations and binding poses.
+
+#### Hint
+
+- [A value of 'BASIC' conforms to restrictive skeletal model in X3D Humanoid Animation (HAnim) Specification, Part 1 Architecture, 4.8 Modelling of humanoids](https://www.web3d.org/documents/specifications/19774/V2.0/Architecture/concepts.html#ModellingOfHumanoids){:target="_blank"}
 
 ### SFBool [in, out] **visible** TRUE
 
