@@ -64,7 +64,6 @@ sub fill_empty_field {
    $field =~ s/^[\[\()].*?[\]\)]\s*//so;
 
    decode_entities ($field);
-   $field =~ s/\b$name\b/*$name*/sg;
 
    @description = @hints = @warnings = ();
 
@@ -92,7 +91,7 @@ sub fill_empty_field {
       if ($_ =~ s/__WARNING__//)
       {
          s/^\s+|\s+$//sgo;
-         
+
          push @warnings, ucfirst $_;
          next;
       }
@@ -100,16 +99,35 @@ sub fill_empty_field {
       push @description, ucfirst $_;
    }
 
-   say "\n'$name'\n";
-   say join " ", @description;
-   say "";
+   $description = join " ", @description;
+   $description =~ s/\b$name\b/*$name*/sg;
+
+   $string = "";
+
+   $string .= $description;
+   $string .= "\n";
+   $string .= "\n";
 
    if (@hints)
    {
-      say @hints == 1 ? "Hint:" : "Hints";
-      say "";
-      say "- " . ucfirst $_ foreach @hints;
+      $string .= @hints == 1 ? "Hint:" : "Hints";
+      $string .= "\n";
+      $string .= "\n";
+      $string .= "- " . ucfirst ($_) . "\n" foreach @hints;
+      $string .= "\n";
    }
+
+   if (@warnings)
+   {
+      $string .= @warnings == 1 ? "Warning:" : "Warnings";
+      $string .= "\n";
+      $string .= "\n";
+      $string .= "- " . ucfirst ($_) . "\n" foreach @warnings;
+      $string .= "\n";
+   }
+
+   print "\n'$name'\n";
+   print $string;
 
    return $file;
 }
