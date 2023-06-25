@@ -32,7 +32,11 @@ The Script node belongs to the **Scripting** component and its default container
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
 ### SFString [in, out] **description** ""
 
@@ -40,34 +44,38 @@ Author-provided prose that describes intended purpose of the url asset.
 
 #### Hint
 
-- Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for & ampersand character, or &amp;#34; for " quotation-mark character).
+- Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &#38; for & ampersand character, or &#34; for " quotation-mark character).
 
 ### SFBool [in, out] **load** TRUE
 
-*load*=true means load immediately, load=false means defer loading or else unload a previously loaded asset.
+*load*=true means *load* immediately, *load*=false means defer loading or else unload a previously loaded scene.
 
 #### Hints
 
-- Allows author to design when ImageTextureAtlas loading occurs via user interaction, event chains or scripting.
+- Allows author to design when Inline loading occurs via user interaction, event chains or scripting.
 - Use a separate LoadSensor node to detect when loading is complete.
 
 ### MFString [in, out] **url** [ ] <small>[URI]</small>
 
-Points to a script file url. Also (as deprecated alternative to CDATA block) can contain ecmascript: source as a quoted SFString within the url array.
+List of address links for runnable script files.
 
-#### Hint
+#### Hints
 
-- If Script contains both external url reference and internal CDATA source then external url takes precedence, but will fall back to contained CDATA source if no external script is found.
+- Embedded ecmascript: source can also be contained in the sourceCode pseudo-field without escape characters, equivalent to last entry in the *url* list, when using other API codebases and file encodings.
+- Browsers are not required to support any particular scripting language, but ECMAScript (JavaScript) is widely supported.
+- Equivalent script code written in multiple programming languages can be provided for portability, the first runnable version is chosen at run time.
+- [X3D Scene Authoring Hints, Scripts](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Scripts){:target="_blank"}
+- If both *url* field and CDATA section are provided simultaneously, the *url* field is processed first. This approach allows utilization of update modifications or live queries in external scripts, while still providing reliable script source as a fallback alternative within the model itself.
+- [X3D XML Encoding, 4.3.13 Encapsulating Script node code](https://www.web3d.org/documents/specifications/19776-1/V3.3/Part01/concepts.html#EncapsulatingScriptNodeCode){:target="_blank"}
+- MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc."
+- Alternative XML encoding for quotation mark " is &quot; (which is an example of a character entity).
+- Can replace embedded blank(s) in *url* queries with %20 for each blank character.
+- [X3D Scene Authoring Hints, urls](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#urls){:target="_blank"}
 
 #### Warnings
 
-- Do not use the ecmascript: protocol prefix within external script files. Replace javascript: or vrmlscript: protocol prefix with ecmascript: for source code embedded within an X3D scene.
-
-#### See Also
-
-- [ECMAScript is the ISO standard version of JavaScript.](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#JavaScript){:target="_blank"}
-- [VrmlScript was a subset of JavaScript originally proposed for use with VRML 97.](https://www.bitmanagement.com/developer/spec/vrmlscript/vrmlscript.html){:target="_blank"}
-- [X3D Scene Authoring Hints, urls](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#urls){:target="_blank"}
+- Source code can be placed in *url* attribute but may be unparsable due to escaping of special characters and elimination of line breaks (causing comments to nullify follow-on code). Use contained CDATA section instead for embedding source code.
+- Strictly match directory and filename capitalization for http links! This is important for portability. Some operating systems are forgiving of capitalization mismatches, but http/https *url* addresses and paths in Unix-based operating systems are all case sensitive and intolerant of uppercase/lowercase mismatches.
 
 ### SFTime [in, out] **autoRefresh** 0 <small>[0,∞)</small>
 
@@ -96,19 +104,21 @@ Points to a script file url. Also (as deprecated alternative to CDATA block) can
 
 ### SFBool [ ] **directOutput** FALSE
 
-Set directOutput true if Script has field reference(s) of type SFNode/MFNode, and also uses direct access to modify attributes of a referenced node in the Scene.
+Set *directOutput* true if Script has field reference(s) of type SFNode/MFNode, and also uses direct access to modify attributes of a referenced node in the Scene.
 
 #### Hints
 
-- Set directOutput true if Script dynamically establishes or breaks ROUTEs. DirectOutput is a browser hint to avoid overoptimizing referenced nodes, since the Script may change their attribute values without ROUTEd events. DirectOutput false means Script cannot modify referenced nodes or change ROUTEs.
+- Set *directOutput* true if Script dynamically establishes or breaks ROUTEs.
+- *directOutput* is a browser hint to avoid overoptimizing referenced nodes, since a Script might directly change attribute values in referenced SFNode/MFNode fields, without a ROUTE connecting output events.
+- *directOutput* false means Script cannot modify referenced nodes or change ROUTEs.
 
 ### SFBool [ ] **mustEvaluate** FALSE
 
-If mustEvaluate false, then browser may delay sending input events to Script until outputs are needed. If mustEvaluate true, then Script must receive input events immediately without browser delays.
+If *mustEvaluate* false, then the X3D player may delay sending input events to Script until output events are needed. If *mustEvaluate* true, then Script must receive input events immediately without any event-aggregation delays.
 
 #### Hint
 
-- Set mustEvaluate true when sending/receiving values via the network.
+- Set *mustEvaluate* true when sending/receiving values via the network.
 
 ## Description
 

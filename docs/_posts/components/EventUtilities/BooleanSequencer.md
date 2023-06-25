@@ -30,39 +30,64 @@ The BooleanSequencer node belongs to the **EventUtilities** component and its de
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
 ### SFFloat [in] **set_fraction** <small>(-∞,∞)</small>
 
 *set_fraction* selects input key for corresponding keyValue output.
 
-### SFBool [in] **previous**
-
-Send previous output value in keyValue array, and reset internal fraction field to match corresponding value in key array.
-
 #### Hint
 
-- "wrap around" boundary of keyValue array, i.e. continue from first to last if necessary.
-
-### SFBool [in] **next**
-
-Send next output value in keyValue array, and reset internal fraction field to match corresponding value in key array.
-
-#### Hint
-
-- "wrap around" boundary of keyValue array, i.e. continue from last to first if necessary.
-
-### MFFloat [in, out] **key** [ ] <small>(-∞,∞)</small>
-
-Definition parameters for linear-interpolation function time intervals, in increasing order and corresponding to keyValues.
+- *set_fraction* values are typically in same range interval as values in the key array. Response to an input *set_fraction* value less than minimum is equivalent to minimum key, and response to an input *set_fraction* value greater than maximum is equivalent to maximum key.
 
 #### Warning
 
+- It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
+
+### SFBool [in] **previous**
+
+Send *previous* output value in keyValue array, and reset internal fraction field to match corresponding value in key array.
+
+#### Hint
+
+- This input event will "wrap around" boundary of keyValue array, i.e. continue from first to last if necessary.
+
+#### Warning
+
+- It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
+
+### SFBool [in] **next**
+
+Send *next* output value in keyValue array, and reset internal fraction field to match corresponding value in key array.
+
+#### Hint
+
+- This input event will "wrap around" boundary of keyValue array, i.e. continue from last to first if necessary.
+
+#### Warning
+
+- It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
+
+### MFFloat [in, out] **key** [ ] <small>(-∞,∞)</small>
+
+Definition values for linear-interpolation function input intervals, listed in non-decreasing order and corresponding to a value in the keyValue array.
+
+#### Hint
+
+- Typical interval for values in *key* array is within range of 0 to 1, but larger intervals can be defined with arbitrary bounds.
+
+#### Warnings
+
 - Number of keys must match number of keyValues!
+- Values in *key* array shall be monotonically non-decreasing, meaning that each value is greater than or equal to the preceding value.
 
 ### MFBool [in, out] **keyValue** [ ]
 
-Output values for linear interpolation, each corresponding to time-fraction keys.
+Output values for linear sequencing, each corresponding to an input-fraction value in the key array.
 
 #### Warning
 
@@ -70,7 +95,11 @@ Output values for linear interpolation, each corresponding to time-fraction keys
 
 ### SFBool [out] **value_changed**
 
-Single intermittent output value determined by current key time and corresponding keyValue pair.
+Single intermittent output value determined by current key time and corresponding keyValue entry.
+
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ## Description
 

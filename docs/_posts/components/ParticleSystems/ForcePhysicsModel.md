@@ -29,7 +29,11 @@ The ForcePhysicsModel node belongs to the **ParticleSystems** component and its 
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
 ### SFBool [in, out] **enabled** TRUE
 
@@ -37,11 +41,14 @@ Enables/disables node operation.
 
 ### SFVec3f [in, out] **force** 0 -9.8 0 <small>(∞,∞)</small>
 
-Force field indicates strength and direction of the propelling force on the particles (e.g. default is Earth's gravity).
+*force* field indicates strength and direction of the propelling *force* on the particles (for example, default is Earth's gravity).
 
 #### Hints
 
-- Force is specified in force base units (usually newtons). If particles have zero mass, ForcePhysicsModel node has no effect.
+- If particles have zero mass, ForcePhysicsModel node has no effect.
+- *force* is specified in *force* base units (usually newtons, acceleration of one kilogram at rate of one meter per second squared).
+- [Https://en.wikipedia.org/wiki/Newton_(unit) and](https://en.wikipedia.org/wiki/Kilogram){:target="_blank"}
+- [X3D Architecture 4.3.6 Standard units and coordinate system](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/concepts.html#Standardunitscoordinates){:target="_blank"}
 
 ## Description
 

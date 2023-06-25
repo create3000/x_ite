@@ -29,7 +29,11 @@ The ProjectionVolumeStyle node belongs to the **VolumeRendering** component and 
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
 ### SFBool [in, out] **enabled** TRUE
 
@@ -37,11 +41,11 @@ Enables/disables node operation.
 
 ### SFString [in, out] **type** "MAX" <small>["MAX"|"MIN"|"AVERAGE"]</small>
 
-If type=MAX then Maximum Intensity Projection (MIP) or Least MIP (LMIP) algorithm is used to generate output color. If type=MIN then Minimum Intensity Projection algorithm is used. If type=AVERAGE then all voxels along ray are averaged.
+If *type*=MAX then Maximum Intensity Projection (MIP) or Least MIP (LMIP) algorithm is used to generate output color. If *type*=MIN then Minimum Intensity Projection algorithm is used. If *type*=AVERAGE then all voxels along ray are averaged.
 
 #### Hint
 
-- type=AVERAGE matches a simple approximation of an X-ray.
+- *type*=AVERAGE matches a simple approximation of an X-ray.#10;
 
 #### Warning
 

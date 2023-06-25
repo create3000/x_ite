@@ -29,27 +29,38 @@ The Rectangle2D node belongs to the **Geometry2D** component and its default con
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
 ### SFVec2f [ ] **size** 2 2 <small>(0,∞)</small>
 
 2D dimensions of Rectangle2D.
 
+#### Hint
+
+- For *size* animation, modify the scale of a parent/ancestor Transform node instead.
+
 #### Warning
 
-- Simple-geometry dimensions are initializeOnly and cannot be changed after initial creation, for animation use Transform scale instead.
+- Simple-geometry dimensions are initializeOnly and cannot be changed after initial creation, avoiding the need for potentially expensive tessellation at run time.
 
 ### SFBool [ ] **solid** FALSE
 
-Setting solid true means draw only one side of polygons (backface culling on), setting solid false means draw both sides of polygons (backface culling off).
+Setting *solid* true means draw only one side of polygons (backface culling on), setting *solid* false means draw both sides of polygons (backface culling off).
 
-#### Hint
+#### Hints
 
-- If in doubt, use solid='false' for maximum visibility.
+- Mnemonic "this geometry is *solid* like a brick" (you don't render the inside of a brick).
+- If in doubt, use *solid*='false' for maximum visibility.
+- (X3D version 4.0 draft) accessType relaxed to inputOutput in order to support animation and visualization.
 
 #### Warnings
 
-- Default value true can completely hide geometry if viewed from wrong side! Solid false not supported in VRML97.
+- Default value true can completely hide geometry if viewed from wrong side!
+- *solid* false not supported in VRML97.
 
 ## Description
 

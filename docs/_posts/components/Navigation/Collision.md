@@ -32,7 +32,11 @@ The Collision node belongs to the **Navigation** component and its default conta
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
 ### SFBool [in, out] **enabled** TRUE
 
@@ -44,20 +48,28 @@ Enables/disables collision detection for children and all descendants.
 
 ### SFBool [out] **isActive**
 
-*isActive* true/false events are sent when triggering the sensor. isActive=true when view-object collision occurs, isActive=false when view-object collision no longer occurs.
+*isActive* true/false events are sent when triggering the sensor. *isActive*=true when view-object collision occurs, *isActive*=false when view-object collision no longer occurs.
+
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFTime [out] **collideTime**
 
 Time of collision between camera (avatar) and geometry.
 
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
+
 ### SFBool [in, out] **visible** TRUE
 
 Whether or not renderable content within this node is visually displayed.
 
-#### Hint
+#### Hints
 
-- The visible field has no effect on animation behaviors, event passing or other non-visual characteristics.
-- Content must be visible to be collidable and to be pickable.
+- The *visible* field has no effect on animation behaviors, event passing or other non-visual characteristics.
+- Content must be *visible* to be collidable and to be pickable.
 
 ### SFBool [in, out] **bboxDisplay** FALSE
 
@@ -71,17 +83,35 @@ Whether to display bounding box for associated geometry, aligned with world coor
 
 Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost. Bounding box size can also be defined as an optional authoring hint that suggests an optimization or constraint.
 
-#### Hint
+#### Hints
 
 - Can be useful for collision computations or inverse-kinematics (IK) engines.
+- Precomputation and inclusion of bounding box information can speed up the initialization of large detailed models, with a corresponding cost of increased file size.
+- [X3D Architecture, 10.2.2 Bounding boxes](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/grouping.html#BoundingBoxes){:target="_blank"}
+- [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/grouping.html#X3DBoundedObject){:target="_blank"}
 
 ### SFVec3f [ ] **bboxCenter** 0 0 0 <small>(-∞,∞)</small>
 
-Bounding box center: optional hint for position offset from origin of local coordinate system.
+Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
+
+#### Hints
+
+- Precomputation and inclusion of bounding box information can speed up the initialization of large detailed models, with a corresponding cost of increased file size.
+- [X3D Architecture, 10.2.2 Bounding boxes](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/grouping.html#BoundingBoxes){:target="_blank"}
+- [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/grouping.html#X3DBoundedObject){:target="_blank"}
 
 ### SFNode [ ] **proxy** NULL <small>[X3DChildNode]</small>
 
-Field proxy.
+The *proxy* node is used as a substitute for Collision children during collision detection, simplifying collision-intersection computations.
+
+#### Hint
+
+- The *proxy* node is used strictly for collision detection and is not drawn.
+
+#### Warnings
+
+- The *proxy* node must have containerField='*proxy*' or it is simply treated like other children nodes.
+- Insert a Shape node before adding geometry or Appearance.
 
 ### MFNode [in] **addChildren**
 
@@ -93,11 +123,14 @@ Input field removeChildren.
 
 ### MFNode [in, out] **children** [ ] <small>[X3DChildNode]</small>
 
-Grouping nodes contain a list of children nodes.
+Grouping nodes contain an ordered list of *children* nodes.
 
-#### Hint
+#### Hints
 
-- Each grouping node defines a coordinate space for its children, relative to the coordinate space of its parent node. Thus transformations accumulate down the scene graph hierarchy.
+- Each grouping node defines a coordinate space for its *children*, relative to the coordinate space of its parent node. Thus transformations accumulate down the scene graph hierarchy.
+- InputOnly MFNode addChildren field can append new X3DChildNode nodes via a ROUTE connection, duplicate input nodes (i.e. matching DEF, USE values) are ignored.
+- InputOnly MFNode removeChildren field can remove nodes from the *children* list, unrecognized input nodes (i.e. nonmatching DEF, USE values) are ignored.
+- [X3D Architecture 10.2.1 Grouping and *children* node types](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/grouping.html#GroupingAndChildrenNodes){:target="_blank"}
 
 ## Description
 

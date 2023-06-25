@@ -29,28 +29,37 @@ The HAnimDisplacer node belongs to the **HAnim** component and its default conta
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
-
-### SFString [in, out] **description** ""
-
-Author-provided prose that describes intended purpose of the url asset.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
 
 #### Hint
 
-- Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for & ampersand character, or &amp;#34; for " quotation-mark character).
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
+
+### SFString [in, out] **description** ""
+
+Author-provided prose that describes intended purpose of this node.
+
+#### Hint
+
+- Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &#38; for & ampersand character, or &#34; for " quotation-mark character).
 
 ### SFString [in, out] **name** ""
 
-Unique name attribute must be defined so that HAnimDisplacer node can be identified at run time for animation purposes.
+Unique *name* attribute must be defined so that HAnimDisplacer node can be identified at run time for animation purposes.
 
-#### Warning
+#### Hints
 
-- Name is not included if this instance is a USE node. Examples: sellion r_infraorbitale etc. as listed in HAnim Specification.
+- HAnimDisplacer names are based on feature point names.
+- Https://www.web3d.org/documents/specifications/19774/V2.0/Architecture/FeaturePoints.html
+- Well-defined names can simplify design and debugging through improved author understanding.
+- [X3D Scene Authoring Hints, Naming Conventions](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#NamingConventions){:target="_blank"}
+- [HAnim2 Names HAnim1 Alias Tables](https://www.web3d.org/x3d/content/examples/HumanoidAnimation/HAnim2NameHAnim1AliasTables.txt){:target="_blank"}
 
-#### See Also
+#### Warnings
 
-- [HAnim Feature Points](https://www.web3d.org/x3d/content/examples/Basic/HumanoidAnimation/tables/HAnimSurfaceFeaturePoints19774V1.0.txt){:target="_blank"}
-- [HAnim Specification, Feature points for the human body](https://www.web3d.org/documents/specifications/19774-1/V2.0/HAnim/FeaturePoints.html){:target="_blank"}
+- Allowed *name* suffixes include _feature, _action and _config.
+- *name* prefix must match ancestor HAnimHumanoid *name* followed by underscore character, if more than one humanoid appears within a scene file. For example, 'Nancy_' prepended before location *name*.
+- *name* field is not included if this instance is a USE node, in order to avoid potential mismatches.
 
 ### MFInt32 [in, out] **coordIndex** [ ] <small>[0,∞) or -1</small>
 
@@ -66,15 +75,16 @@ The weigh factor has typical range [0,1] and defines the scale factor applied to
 
 #### Hint
 
-- Apply a non-zero weight factor to see the effect of HAnimDisplacer displacements.
+- Apply a non-zero *weight* factor to see the effect of HAnimDisplacer displacements.
 
 ### MFVec3f [in, out] **displacements** [ ]
 
 *displacements* are a set of SFVec3f values added to neutral/resting position of each of the corresponding HAnimSegment vertices (or HAnimJoint/HAnimHumanoid vertices) referenced by coordIndex field.
 
-#### Hint
+#### Hints
 
 - Individual displacement values are scaled by the weight factor, if present.
+- Since default pose faces along +Z axis, -x values are right side and +x values are left side within HAnimHumanoid.
 
 ## Description
 

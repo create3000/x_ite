@@ -27,32 +27,36 @@ The DISEntityTypeMapping node belongs to the **DIS** component and its default c
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
 ### SFBool [in, out] **load** TRUE
 
-*load*=true means load immediately, load=false means defer loading or else unload a previously loaded asset.
+*load*=true means *load* immediately, *load*=false means defer loading or else unload a previously loaded scene.
 
 #### Hints
 
-- Allows author to design when ImageTextureAtlas loading occurs via user interaction, event chains or scripting.
+- Allows author to design when Inline loading occurs via user interaction, event chains or scripting.
 - Use a separate LoadSensor node to detect when loading is complete.
 
 ### MFString [in, out] **url** [ ] <small>[URI]</small>
 
-Name of the X3D model of interest, for example "MyFastBoat.x3d".
+Local and/or online addresses of X3D model of interest, for example: "ExtrusionExampleShip.x3d" "https://www.web3d.org/x3d/content/examples/Basic/course/ExtrusionExampleShip.x3d"
 
 #### Hints
 
-- MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc." XML encoding for quotation mark " is &amp;quot; (which is called a character entity). Can replace embedded blank(s) in url queries with %20 for each blank character.
+- [See](https://www.web3d.org/x3d/content/examples/Basic/course/ExtrusionExampleShipIndex.html){:target="_blank"}
+- MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc."
+- Alternative XML encoding for quotation mark " is &quot; (which is an example of a character entity).
+- Can replace embedded blank(s) in *url* queries with %20 for each blank character.
+- [X3D Scene Authoring Hints, urls](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#urls){:target="_blank"}
 
 #### Warning
 
-- Strictly match directory and filename capitalization for http links! This is important for portability. Some operating systems are forgiving of capitalization mismatches, but http/https and other operating systems are not.
-
-#### See Also
-
-- [X3D Scene Authoring Hints, urls](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#urls){:target="_blank"}
+- Strictly match directory and filename capitalization for http links! This is important for portability. Some operating systems are forgiving of capitalization mismatches, but http/https *url* addresses and paths in Unix-based operating systems are all case sensitive and intolerant of uppercase/lowercase mismatches.
 
 ### SFTime [in, out] **autoRefresh** 0 <small>[0,∞)</small>
 
@@ -81,31 +85,31 @@ Name of the X3D model of interest, for example "MyFastBoat.x3d".
 
 ### SFInt32 [ ] **category** 0 <small>[0,255]</small>
 
-Enumerations value for main category that describes the entity, semantics of each code varies according to domain. See DIS Enumerations values.
+Integer enumerations value for main *category* that describes the entity, semantics of each code varies according to domain. See DIS Enumerations values.
 
 ### SFInt32 [ ] **country** 0 <small>[0,0,65535]</small>
 
-Enumerations value for country to which the design of the entity or its design specification is attributed.
+Integer enumerations value for *country* to which the design of the entity or its design specification is attributed.
 
 ### SFInt32 [ ] **domain** 0 <small>[0,255]</small>
 
-Enumerations value for domain in which the entity operates: LAND, AIR, SURFACE, SUBSURFACE, SPACE or OTHER.
+Integer enumerations value for *domain* in which the entity operates: LAND, AIR, SURFACE, SUBSURFACE, SPACE or OTHER.
 
 ### SFInt32 [ ] **extra** 0 <small>[0,255]</small>
 
-Any extra information required to describe a particular entity. The contents of this field shall depend on the type of entity represented.
+Any *extra* information required to describe a particular entity. The contents of this field shall depend on the type of entity represented.
 
 ### SFInt32 [ ] **kind** 0 <small>[0,255]</small>
 
-Enumerations value for whether entity is a PLATFORM, MUNITION, LIFE_FORM, ENVIRONMENTAL, CULTURAL_FEATURE, SUPPLY, RADIO, EXPENDABLE, SENSOR_EMITTER or OTHER.
+Integer enumerations value for whether entity is a PLATFORM, MUNITION, LIFE_FORM, ENVIRONMENTAL, CULTURAL_FEATURE, SUPPLY, RADIO, EXPENDABLE, SENSOR_EMITTER or OTHER.
 
 ### SFInt32 [ ] **specific** 0 <small>[0,255]</small>
 
-*specific* information about an entity based on the Subcategory field. See DIS Enumerations values.
+Specific information about an entity based on the subcategory field. See DIS Enumerations values.
 
 ### SFInt32 [ ] **subcategory** 0 <small>[0,255]</small>
 
-Field subcategory.
+Integer enumerations value for particular *subcategory* to which an entity belongs based on the category field. See DIS Enumerations values.
 
 ## Description
 

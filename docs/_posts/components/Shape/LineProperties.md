@@ -29,11 +29,15 @@ The LineProperties node belongs to the **Shape** component and its default conta
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
 ### SFBool [in, out] **applied** TRUE
 
-Whether or not LineProperties are applied to associated geometry.
+Whether or not LineProperties are *applied* to associated geometry.
 
 ### SFInt32 [in, out] **linetype** 1 <small>[1,∞)</small>
 
@@ -41,7 +45,7 @@ Whether or not LineProperties are applied to associated geometry.
 
 #### Hint
 
-- Detailed descriptions of lineType values are found at the [ISO/IEC International Register of Graphical Items](https://www.iso.org/jtc1/sc24/register){:target="_blank"} (may require login)
+- [Detailed descriptions of lineType values are found at the ISO/IEC 9973 International Register of Graphical Items](https://www.iso.org/jtc1/sc24/register at https://isotc.iso.org/livelink/livelink/fetch/-8916524/8916549/8916590/6208440/class_pages/*linetype*.html){:target="_blank"}
 
 ### SFFloat [in, out] **linewidthScaleFactor** 0 <small>(-∞,∞)</small>
 

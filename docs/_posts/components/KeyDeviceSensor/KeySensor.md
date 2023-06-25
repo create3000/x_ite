@@ -31,7 +31,11 @@ The KeySensor node belongs to the **KeyDeviceSensor** component and its default 
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
 ### SFBool [in, out] **enabled** TRUE
 
@@ -41,33 +45,65 @@ Enables/disables node operation.
 
 *controlKey* generates true event when pressed, false event when released.
 
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
+
 ### SFBool [out] **shiftKey**
 
 *shiftKey* generates true event when pressed, false event when released.
+
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFBool [out] **altKey**
 
 *altKey* generates true event when pressed, false event when released.
 
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
+
 ### SFInt32 [out] **actionKeyPress**
 
-Action key press gives following values: F1..F12 = 1...12 HOME=13 END=14 PGUP=15 PGDN=16 UP=17 DOWN=18 LEFT=19 RIGHT=20.
+Action key press gives following values: HOME=000 END=1001 PGUP=1002 PGDN=1003 UP=1004 DOWN=1005 LEFT=1006 RIGHT=1007 F1..F12 = 1008..1019.
+
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFInt32 [out] **actionKeyRelease**
 
-Action key release gives following values: F1..F12 = 1...12 HOME=13 END=14 PGUP=15 PGDN=16 UP=17 DOWN=18 LEFT=19 RIGHT=20.
+Action key release gives following values: HOME=000 END=1001 PGUP=1002 PGDN=1003 UP=1004 DOWN=1005 LEFT=1006 RIGHT=1007 F1..F12 = 1008..1019.
+
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFString [out] **keyPress**
 
 Events generated when user presses character-producing keys on keyboard produces integer UTF-8 character values.
 
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
+
 ### SFString [out] **keyRelease**
 
 Events generated when user releases character-producing keys on keyboard produces integer UTF-8 character values.
 
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
+
 ### SFBool [out] **isActive**
 
-When a key is pressed, the KeySensor sends an isActive event with value true. Once the key is released, the KeySensor sends an isActive event with value false.
+Select geometry by activating the pointing device (for example, clicking the mouse) to generate *isActive* events. Output event *isActive*=true is sent when geometry is selected (for example, when primary mouse button is pressed), output event *isActive*=false is sent when geometry is deselected (for example, when primary mouse button is released).
+
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ## Example
 

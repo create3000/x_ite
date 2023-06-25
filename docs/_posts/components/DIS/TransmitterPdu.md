@@ -33,16 +33,20 @@ The TransmitterPdu node belongs to the **DIS** component and its default contain
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
 ### SFBool [in, out] **visible** TRUE
 
 Whether or not renderable content within this node is visually displayed.
 
-#### Hint
+#### Hints
 
-- The visible field has no effect on animation behaviors, event passing or other non-visual characteristics.
-- Content must be visible to be collidable and to be pickable.
+- The *visible* field has no effect on animation behaviors, event passing or other non-visual characteristics.
+- Content must be *visible* to be collidable and to be pickable.
 
 ### SFBool [in, out] **bboxDisplay** FALSE
 
@@ -56,13 +60,22 @@ Whether to display bounding box for associated geometry, aligned with world coor
 
 Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost. Bounding box size can also be defined as an optional authoring hint that suggests an optimization or constraint.
 
-#### Hint
+#### Hints
 
 - Can be useful for collision computations or inverse-kinematics (IK) engines.
+- Precomputation and inclusion of bounding box information can speed up the initialization of large detailed models, with a corresponding cost of increased file size.
+- [X3D Architecture, 10.2.2 Bounding boxes](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/grouping.html#BoundingBoxes){:target="_blank"}
+- [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/grouping.html#X3DBoundedObject){:target="_blank"}
 
 ### SFVec3f [ ] **bboxCenter** 0 0 0 <small>(-∞,∞)</small>
 
-Bounding box center: optional hint for position offset from origin of local coordinate system.
+Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
+
+#### Hints
+
+- Precomputation and inclusion of bounding box information can speed up the initialization of large detailed models, with a corresponding cost of increased file size.
+- [X3D Architecture, 10.2.2 Bounding boxes](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/grouping.html#BoundingBoxes){:target="_blank"}
+- [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/grouping.html#X3DBoundedObject){:target="_blank"}
 
 ### SFBool [in, out] **enabled** TRUE
 
@@ -70,11 +83,15 @@ Enables/disables the sensor node.
 
 ### SFBool [out] **isActive**
 
-Have we had a network update recently?.
+Confirm whether there has been a recent network update.
+
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFString [in, out] **address** "localhost"
 
-Multicast network address, or else "localhost" example: 224.2.181.145.
+Multicast network *address*, or else 'localhost'. Example: 224.2.181.145.
 
 ### SFVec3f [in, out] **antennaLocation** 0 0 0 <small>(-∞,∞)</small>
 
@@ -82,7 +99,7 @@ World coordinates for antenna location.
 
 ### SFInt32 [in, out] **antennaPatternLength** 0 <small>[0,65535]</small>
 
-Input/Output field antennaPatternLength.
+
 
 ### SFInt32 [in, out] **antennaPatternType** 0 <small>[0,65535]</small>
 
@@ -90,7 +107,7 @@ Antenna shape pattern: 0 for omnidirectional, 1 for beam, 2 for spherical harmon
 
 ### SFInt32 [in, out] **applicationID** 1 <small>[0,65535]</small>
 
-Each simulation application that can respond to simulation management PDUs needs to have a unique applicationID.
+Each simulation application that can respond to simulation management PDUs needs to have a unique *applicationID*.
 
 ### SFInt32 [in, out] **cryptoKeyID** 0 <small>[0,65535]</small>
 
@@ -98,15 +115,15 @@ Nonzero value corresponding to the simulated cryptographic key. Enumerations val
 
 ### SFInt32 [in, out] **cryptoSystem** 0 <small>[0,65535]</small>
 
-Indicates type of crypto system being used, even if the encryption equipment is not keyed. Value 0 for No Encryption Device, higher enumerations values correspond to other specific equipment..
+Indicates type of crypto system being used, even if the encryption equipment is not keyed. Value 0 for No Encryption Device, higher enumerations values correspond to other specific equipment.
 
 ### SFInt32 [in, out] **entityID** 0 <small>[0,65535]</small>
 
-*entityID* unique ID for entity within that application.
+EntityID unique ID for entity within that application.
 
 ### SFInt32 [in, out] **frequency**
 
-Transmission frequency in Hz. If the radio is in frequency hopping mode, this field may be set to the center of the frequency hopping band currently in use, or to some other appropriate value.
+Transmission *frequency* in Hz. If the radio is in *frequency* hopping mode, this field may be set to the center of the *frequency* hopping band currently in use, or to some other appropriate value.
 
 ### SFInt32 [in, out] **inputSource** 0 <small>[0,255]</small>
 
@@ -114,15 +131,15 @@ Source of transmission input. Enumerations value 0 for Other, 1 for Pilot, 2 for
 
 ### SFInt32 [in, out] **lengthOfModulationParameters** 0 <small>[0,255]</small>
 
-Input/Output field lengthOfModulationParameters.
+
 
 ### SFInt32 [in, out] **modulationTypeDetail** 0 <small>[0,65535]</small>
 
-Enumeration containing detailed information depending on the major modulation type.
+Integer enumeration containing detailed information depending on the major modulation type.
 
 ### SFInt32 [in, out] **modulationTypeMajor** 0 <small>[0,65535]</small>
 
-Enumeration containing major classification of the modulation type. Enumerations value 0 for No Statement, 1 for Amplitude, 2 for Amplitude and Angle, 3 for Angle, 4 for Combination, 5 for Pulse, 6 for Unmodulated, 7 for Carrier Phase Shift Modulation (CPSM).
+Integer enumeration containing major classification of the modulation type. Enumerations value 0 for No Statement, 1 for Amplitude, 2 for Amplitude and Angle, 3 for Angle, 4 for Combination, 5 for Pulse, 6 for Unmodulated, 7 for Carrier Phase Shift Modulation (CPSM).
 
 ### SFInt32 [in, out] **modulationTypeSpreadSpectrum** 0 <small>[0,65535]</small>
 
@@ -146,35 +163,36 @@ Whether this entity is ignoring the network, sending DIS packets to the network,
 
 #### Warnings
 
-- Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values. Network activity may have associated security issues.
+- Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
+- Network activity may have associated security issues.
 
 ### SFInt32 [in, out] **port** 0 <small>[0,65535]</small>
 
-Multicast network port, for example: 62040.
+Multicast network *port*, for example: 3000.
 
 ### SFFloat [in, out] **power** 0 <small>(0,∞)</small>
 
-*power* that radio would be capable of outputting if on and transmitting, independent of actual transmit state of the radio.
+Power that radio would be capable of outputting if on and transmitting, independent of actual transmit state of the radio.
 
 ### SFInt32 [in, out] **radioEntityTypeCategory** 0 <small>[0,255]</small>
 
-Enumeration containing EntityType of transmitter radio. Enumerations value: 0 for Other, 1 for Generic Radio or Simple Intercom, 2 for HAVE QUICK, 3 for HAVE QUICK II, 4 for HAVE QUICK IIA, 5 for SINCGARS, 6 for CCTT SINCGARS, 7 for EPLRS (Enhanced Position Location Reporting System), 8 for JTIDS/MIDS, 9 for Link 11, 10 for Link 11B, 11 for L-Band SATCOM, 12 for Enhanced SINCGARS 7.3, 13 for Navigation Aid.
+Integer enumeration containing EntityType of transmitter radio. Enumerations value: 0 for Other, 1 for Generic Radio or Simple Intercom, 2 for HAVE QUICK, 3 for HAVE QUICK II, 4 for HAVE QUICK IIA, 5 for SINCGARS, 6 for CCTT SINCGARS, 7 for EPLRS (Enhanced Position Location Reporting System), 8 for JTIDS/MIDS, 9 for Link 11, 10 for Link 11B, 11 for L-Band SATCOM, 12 for Enhanced SINCGARS 7.3, 13 for Navigation Aid.
 
 ### SFInt32 [in, out] **radioEntityTypeCountry** 0 <small>[0,65535]</small>
 
-Enumerations value for country to which the design of the entity or its design specification is attributed.
+Integer enumerations value for country to which the design of the entity or its design specification is attributed.
 
 ### SFInt32 [in, out] **radioEntityTypeDomain** 0 <small>[0,255]</small>
 
-Enumerations value for domain in which the entity operates: LAND, AIR, SURFACE, SUBSURFACE, SPACE or OTHER.
+Integer enumerations value for domain in which the entity operates: LAND, AIR, SURFACE, SUBSURFACE, SPACE or OTHER.
 
 ### SFInt32 [in, out] **radioEntityTypeKind** 0 <small>[0,255]</small>
 
-Enumerations value for whether entity is a PLATFORM, MUNITION, LIFE_FORM, ENVIRONMENTAL, CULTURAL_FEATURE, SUPPLY, RADIO, EXPENDABLE, SENSOR_EMITTER or OTHER.
+Integer enumerations value for whether entity is a PLATFORM, MUNITION, LIFE_FORM, ENVIRONMENTAL, CULTURAL_FEATURE, SUPPLY, RADIO, EXPENDABLE, SENSOR_EMITTER or OTHER.
 
 ### SFInt32 [in, out] **radioEntityTypeNomenclature** 0 <small>[0,255]</small>
 
-Enumerations value indicating nomenclature (name) for a particular emitter. See DIS enumerations reference for value/name pairs.
+Integer enumerations value indicating nomenclature (name) for a particular emitter. See DIS enumerations reference for value/name pairs.
 
 ### SFInt32 [in, out] **radioEntityTypeNomenclatureVersion** 0 <small>[0,65535]</small>
 
@@ -188,6 +206,10 @@ Identifies a particular radio within a given entity.
 
 Seconds between read updates, 0 means no reading.
 
+#### Hint
+
+- *readInterval* is a nonnegative SFTime duration interval, not an absolute clock time.
+
 ### SFVec3f [in, out] **relativeAntennaLocation** 0 0 0 <small>(-∞,∞)</small>
 
 Relative coordinates for antenna location.
@@ -198,7 +220,7 @@ Whether RTP headers are prepended to DIS PDUs.
 
 ### SFInt32 [in, out] **siteID** 0 <small>[0,65535]</small>
 
-Simulation/exercise siteID of the participating LAN or organization.
+Simulation/exercise *siteID* of the participating LAN or organization.
 
 ### SFFloat [in, out] **transmitFrequencyBandwidth** 0 <small>(-∞,∞)</small>
 
@@ -216,25 +238,49 @@ Select geometry to render: -1 for no geometry, 0 for text trace, 1 for default g
 
 Seconds between write updates, 0 means no writing (sending).
 
+#### Hint
+
+- *writeInterval* is a nonnegative SFTime duration interval, not an absolute clock time.
+
 ### SFBool [out] **isNetworkReader**
 
-Whether networkMode="remote" (listen to network as copy of remote entity)
+Whether networkMode='remote' (listen to network as copy of remote entity).
+
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFBool [out] **isNetworkWriter**
 
-Whether networkMode="master" (output to network as master entity at writeInterval)
+Whether networkMode='master' (output to network as master entity at writeInterval).
+
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFBool [out] **isRtpHeaderHeard**
 
 Whether incoming DIS packets have an RTP header prepended.
 
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
+
 ### SFBool [out] **isStandAlone**
 
-Whether networkMode="local" (ignore network but still respond to local events)
+Whether networkMode='local' (ignore network but still respond to local events).
+
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFTime [out] **timestamp**
 
-DIS timestamp in X3D units (seconds since 1 January 1970).
+DIS *timestamp* in X3D units (value 0.0 matches 1 January 1970) in seconds.
+
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ## Description
 

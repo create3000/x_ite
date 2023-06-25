@@ -30,11 +30,15 @@ The ColorRGBA node belongs to the **Rendering** component and its default contai
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
 ### MFColorRGBA [in, out] **color** [ ] <small>[0,1]</small>
 
-The color field defines an array of 4-tuple RGBA colors.
+The *color* field defines an array of 4-tuple RGBA colors.
 
 #### Warning
 

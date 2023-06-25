@@ -29,7 +29,11 @@ The DoubleAxisHingeJoint node belongs to the **RigidBodyPhysics** component and 
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
 ### MFString [in, out] **forceOutput** "NONE" <small>["ALL", "NONE", ...]</small>
 
@@ -45,7 +49,7 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 #### Hint
 
-- 0 0 0 means motor disabled.
+- 0 0 0 means motor disabled about this axis.
 
 ### SFVec3f [in, out] **axis2** 0 0 0 <small>(-∞,∞)</small>
 
@@ -53,23 +57,23 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 #### Hint
 
-- 0 0 0 means motor disabled.
+- 0 0 0 means motor disabled about this axis.
 
 ### SFFloat [in, out] **minAngle1** -π <small>π [-π,π]</small> <small class="red">not supported</small>
 
-MinAngle1 is minimum rotation angle for hinge.
+*minAngle1* is minimum rotation angle for hinge.
 
 ### SFFloat [in, out] **maxAngle1** π <small>[-π,π]</small> <small class="red">not supported</small>
 
-MaxAngle1 is maximum rotation angle for hinge.
+*maxAngle1* is maximum rotation angle for hinge.
 
 ### SFFloat [in, out] **desiredAngularVelocity1** 0 <small>(-∞,∞)</small> <small class="red">not supported</small>
 
-DesiredAngularVelocity1 is goal rotation rate for hinge connection to body1.
+*desiredAngularVelocity1* is goal rotation rate for hinge connection to body1.
 
 ### SFFloat [in, out] **desiredAngularVelocity2** 0 <small>(-∞,∞)</small> <small class="red">not supported</small>
 
-DesiredAngularVelocity2 is goal rotation rate for hinge connection to body2.
+*desiredAngularVelocity2* is goal rotation rate for hinge connection to body2.
 
 ### SFFloat [in, out] **maxTorque1** 0 <small>(-∞,∞)</small> <small class="red">not supported</small>
 
@@ -97,7 +101,8 @@ Input/Output field stopErrorCorrection1.
 
 #### Hints
 
-- Use with stop1ConstantForceMix to improve softness and numerical stability. 0 means no stop adjustment, 1 means springier stop response.
+- Use with stop1ConstantForceMix to improve softness and numerical stability.
+- 0 means no stop adjustment, 1 means springier stop response.
 
 ### SFFloat [in, out] **suspensionErrorCorrection** 0.8 <small>[0,1]<span class="red"> not supported</span></small>
 
@@ -105,7 +110,8 @@ Input/Output field stopErrorCorrection1.
 
 #### Hints
 
-- Use with stop1ConstantForceMix to improve softness and numerical stability. 0 means no stop adjustment, 1 means springier stop response.
+- Use with stop1ConstantForceMix to improve softness and numerical stability.
+- 0 means no stop adjustment, 1 means springier stop response.
 
 ### SFVec3f [out] **body1AnchorPoint**
 
@@ -141,11 +147,11 @@ Output field hinge2AngleRate.
 
 ### SFNode [in, out] **body1** NULL <small>[RigidBody]</small>
 
-Input/Output field body1.
+The *body1* and body2 fields indicate the two RigidBody nodes connected by this joint.
 
 ### SFNode [in, out] **body2** NULL <small>[RigidBody]</small>
 
-Input/Output field body2.
+The body1 and *body2* fields indicate the two RigidBody nodes connected by this joint.
 
 ## Description
 

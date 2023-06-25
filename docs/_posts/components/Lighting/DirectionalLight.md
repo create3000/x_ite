@@ -30,11 +30,19 @@ The DirectionalLight node belongs to the **Lighting** component and its default 
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
 ### SFBool [in, out] **global** FALSE
 
-*global* lights illuminate all objects within their volume of lighting influence. Scoped lights only illuminate objects within the same transformation hierarchy.
+Global lights illuminate all objects within their volume of lighting influence. Scoped lights only illuminate objects within the same transformation hierarchy.
+
+#### Warning
+
+- DirectionalLight default *global*=false to limit scope and avoid inadvertently illuminating every object in a large scene. PointLight and SpotLight default *global*=true since their effects are each limited by maximum radius value.
 
 ### SFBool [in, out] **on** TRUE
 
@@ -44,7 +52,7 @@ Enables/disables this light source.
 
 *color* of light, applied to colors of objects.
 
-#### See Also
+#### Hint
 
 - [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color){:target="_blank"}
 
@@ -62,7 +70,7 @@ Orientation vector of light relative to local coordinate system.
 
 #### Hint
 
-- Animate direction to simulate time-of-day sunlight effects.
+- Animate *direction* to simulate time-of-day sunlight effects.
 
 ### SFBool [in, out] **shadows** FALSE
 

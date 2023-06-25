@@ -30,15 +30,24 @@ The FloatVertexAttribute node belongs to the **Shaders** component and its defau
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
 ### SFString [ ] **name** ""
 
-Required name for this particular VertexAttribute instance.
+Required *name* for this particular VertexAttribute instance.
+
+#### Hints
+
+- Well-defined names can simplify design and debugging through improved author understanding.
+- [X3D Scene Authoring Hints, Naming Conventions](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#NamingConventions){:target="_blank"}
 
 #### Warning
 
-- Name is not specified if this instance is a USE node.
+- *name* is not specified if this instance is a USE node.
 
 ### SFInt32 [ ] **numComponents** 4 <small>[1..4]</small>
 
@@ -46,7 +55,7 @@ Required name for this particular VertexAttribute instance.
 
 #### Hint
 
-- The length of the value field shall be a multiple of numComponents.
+- The length of the value field shall be a multiple of *numComponents*.
 
 ### MFFloat [in, out] **value** [ ] <small>(-∞,∞)</small>
 
@@ -54,7 +63,7 @@ Required name for this particular VertexAttribute instance.
 
 #### Hint
 
-- The length of the value field shall be a multiple of numComponents.
+- The length of the *value* field shall be a multiple of numComponents.
 
 ## Example
 

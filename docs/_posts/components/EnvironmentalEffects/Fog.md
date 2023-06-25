@@ -32,11 +32,23 @@ The Fog node belongs to the **EnvironmentalEffects** component and its default c
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
 ### SFBool [in] **set_bind**
 
-Setting set_bind true makes this node active setting set_bind false makes this node inactive. Thus setting set_bind true/false will pop/push (enable/disable) this node.
+Receiving event *set_bind*=true activates and binds this node at the top of the binding stack. Receiving event *set_bind*=false deactivates and unbinds this node from the top of the binding stack. Thus setting *set_bind* to true/false will enable/disable the effect of this node.
+
+#### Hint
+
+- Paired node operations can be established by connecting *set_bind* and isBound fields of corresponding bindable nodes.
+
+#### Warning
+
+- It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
 
 ### SFString [in, out] **fogType** "LINEAR" <small>["LINEAR"|"EXPONENTIAL"]</small>
 
@@ -52,14 +64,11 @@ Specifies algorithm for rate of increasing Fog, either LINEAR or EXPONENTIAL.
 
 ### SFColor [in, out] **color** 1 1 1 <small>[0,1]</small>
 
-Fog color.
+Fog *color*.
 
-#### Hint
+#### Hints
 
-- Match Background color to make objects fade away.
-
-#### See Also
-
+- Match Background *color* to make objects fade away.
 - [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color){:target="_blank"}
 
 ### SFFloat [in, out] **visibilityRange** 0 <small>[0,∞)</small>
@@ -68,15 +77,27 @@ Distance in meters where objects are totally obscured by the fog, using local co
 
 #### Hint
 
-- VisibilityRange 0 disables Fog.
+- *visibilityRange* 0 disables Fog.
 
 ### SFBool [out] **isBound**
 
-Event true sent when node becomes active, event false sent when unbound by another node.
+Output event true gets sent when node becomes bound and activated, otherwise output event false gets sent when node becomes unbound and deactivated.
+
+#### Hint
+
+- Paired node operations can be established by connecting set_bind and *isBound* fields of corresponding bindable nodes.
+
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFTime [out] **bindTime**
 
-Event sent when node becomes active/inactive.
+Event sent reporting timestamp when node becomes active/inactive.
+
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ## Description
 

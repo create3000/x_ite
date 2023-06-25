@@ -29,7 +29,11 @@ The SliderJoint node belongs to the **RigidBodyPhysics** component and its defau
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
 ### MFString [in, out] **forceOutput** "NONE" <small>["ALL", "NONE", ...]</small>
 
@@ -45,7 +49,7 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 #### Hint
 
-- If (minSeparation is less than maxSeparation) then no stop is effective.
+- If (*minSeparation* is less than maxSeparation) then no stop is effective.
 
 ### SFFloat [in, out] **maxSeparation** 1 <small>[0,∞)</small>
 
@@ -53,11 +57,11 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 #### Hint
 
-- If (minSeparation is less than maxSeparation) then no stop is effective.
+- If (minSeparation is less than *maxSeparation*) then no stop is effective.
 
 ### SFFloat [in, out] **sliderForce** 0 <small>[-∞,∞)</small> <small class="red">not supported</small>
 
-Input/Output field sliderForce.
+*sliderForce* value is used to apply a force (specified in force base units) along the axis of the slider in equal and opposite directions to the two bodies. A positive value applies a force such that the two bodies accelerate away from each other, while a negative value applies a force such that the two bodies accelerate toward each other.
 
 ### SFFloat [in, out] **stopBounce** 0 <small>[0,1]</small> <small class="red">not supported</small>
 
@@ -77,19 +81,27 @@ Input/Output field sliderForce.
 
 ### SFFloat [out] **separation** <small class="red">not supported</small>
 
-*separation* indicates final separation distance between the two bodies.
+*separation* indicates final *separation* distance between the two bodies.
+
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFFloat [out] **separationRate** <small class="red">not supported</small>
 
 *separationRate* indicates change in separation distance over time between the two bodies.
 
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
+
 ### SFNode [in, out] **body1** NULL <small>[RigidBody]</small>
 
-Input/Output field body1.
+The *body1* and body2 fields indicate the two RigidBody nodes connected by this joint.
 
 ### SFNode [in, out] **body2** NULL <small>[RigidBody]</small>
 
-Input/Output field body2.
+The body1 and *body2* fields indicate the two RigidBody nodes connected by this joint.
 
 ## Description
 

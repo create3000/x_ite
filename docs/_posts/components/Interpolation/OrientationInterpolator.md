@@ -30,23 +30,44 @@ The OrientationInterpolator node belongs to the **Interpolation** component and 
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
 ### SFFloat [in] **set_fraction** <small>(-∞,∞)</small>
 
 *set_fraction* selects input key for corresponding keyValue output.
 
-### MFFloat [in, out] **key** [ ] <small>(-∞,∞)</small>
+#### Hint
 
-Definition parameters for linear-interpolation function time intervals, in increasing order and corresponding to keyValues.
+- *set_fraction* values are typically in same range interval as values in the key array. Response to an input *set_fraction* value less than minimum is equivalent to minimum key, and response to an input *set_fraction* value greater than maximum is equivalent to maximum key.
 
 #### Warning
 
+- It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
+
+### MFFloat [in, out] **key** [ ] <small>(-∞,∞)</small>
+
+Definition values for linear-interpolation function input intervals, listed in non-decreasing order and corresponding to a value in the keyValue array.
+
+#### Hint
+
+- Typical interval for values in *key* array is within range of 0 to 1, but larger intervals can be defined with arbitrary bounds.
+
+#### Warnings
+
 - Number of keys must match number of keyValues!
+- Values in *key* array shall be monotonically non-decreasing, meaning that each value is greater than or equal to the preceding value.
 
 ### MFRotation [in, out] **keyValue** [ ] <small>[-1,1] or (-∞,∞)</small>
 
-Output values for linear interpolation, each corresponding to time-fraction keys.
+Output values for linear interpolation, each corresponding to an input-fraction value in the key array.
+
+#### Hint
+
+- [Identical adjacent entries in *keyValue* array have the effect of defining constant-value step functions.](https://en.wikipedia.org/wiki/Step_function){:target="_blank"}
 
 #### Warning
 
@@ -55,6 +76,14 @@ Output values for linear interpolation, each corresponding to time-fraction keys
 ### SFRotation [out] **value_changed**
 
 Linearly interpolated output value determined by current key time and corresponding keyValue pair.
+
+#### Hint
+
+- X3D players might not send unchanging intermediate values, thus avoiding excessive superfluous events that have no effect.
+
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ## Description
 

@@ -29,25 +29,37 @@ The GeoElevationGrid node belongs to the **Geospatial** component and its defaul
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
 ### SFNode [ ] **geoOrigin** NULL <small>[GeoOrigin] (deprecated)</small>
 
-Field geoOrigin.
+Single contained GeoOrigin node that can specify a local coordinate frame for extended precision.
+
+#### Hint
+
+- [X3D Architecture 25.2.5 Dealing with high-precision coordinates](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/geospatial.html#high-precisioncoords){:target="_blank"}
+
+#### Warning
+
+- XML validation requires placement as first child node following contained metadata nodes (if any).
 
 ### MFString [ ] **geoSystem** [ "GD", "WE" ]
 
 Identifies spatial reference frame: Geodetic (GD), Geocentric (GC), Universal Transverse Mercator (UTM). Supported values: "GD" "UTM" or "GC" followed by additional quoted string parameters as appropriate for the type.
 
+#### Hints
+
+- [X3D Architecture 25.2.2 Spatial reference frames](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/geospatial.html#Spatialreferenceframes){:target="_blank"}
+- [X3D Architecture 25.2.4 Specifying geospatial coordinates](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/geospatial.html#Specifyinggeospatialcoords){:target="_blank"}
+- [UTM is Universal Transverse Mercator coordinate system](https://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system){:target="_blank"}
+
 #### Warning
 
-- Deprecated values are GDC (use GD) and GCC (use GC).
-
-#### See Also
-
-- [See X3D Specification 25.2.2 Spatial reference frames](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geospatial.html#Spatialreferenceframes){:target="_blank"}
-- [See X3D Specification 25.2.4 Specifying geospatial coordinates](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geospatial.html#Specifyinggeospatialcoords){:target="_blank"}
-- [UTM is Universal Transverse Mercator coordinate system](https://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system){:target="_blank"}
+- Deprecated values are GDC (replaced by GD) and GCC (replaced by GC).
 
 ### SFVec3d [ ] **geoGridOrigin** 0 0 0 <small>(-∞,∞)</small>
 
@@ -59,7 +71,11 @@ Number of elements in the height array along east-west X direction.
 
 #### Hint
 
-- Total horizontal x-axis distance equals (xDimension-1) \* xSpacing.
+- Total horizontal x-axis distance equals (*xDimension*-1) * xSpacing.
+
+#### Warning
+
+- *xDimension* \< 2 means that GeoElevationGrid contains no quadrilaterals.
 
 ### SFInt32 [ ] **zDimension** 0 <small>(0,∞)</small>
 
@@ -67,7 +83,11 @@ Number of elements in the height array along north-south Z direction.
 
 #### Hint
 
-- Total lateral z-axis distance equals (zDimension-1) \* zSpacing.
+- Total lateral z-axis distance equals (*zDimension*-1) * zSpacing.
+
+#### Warning
+
+- *zDimension* \< 2 means that GeoElevationGrid contains no quadrilaterals.
 
 ### SFDouble [ ] **xSpacing** 1 <small>[0,∞)</small>
 
@@ -75,7 +95,8 @@ Distance between grid-array vertices along east-west X direction.
 
 #### Hints
 
-- When geoSystem is GDC, xSpacing is number of degrees of longitude. When geoSystem is UTM, xSpacing is number of eastings (meters).
+- When geoSystem is GDC, *xSpacing* is number of degrees of longitude.
+- When geoSystem is UTM, *xSpacing* is number of eastings (meters).
 
 ### SFDouble [ ] **zSpacing** 1 <small>[0,∞)</small>
 
@@ -83,7 +104,8 @@ Distance between grid-array vertices along north-south Z direction.
 
 #### Hints
 
-- When geoSystem is GDC, zSpacing is number of degrees of latitude. When geoSystem is UTM, zSpacing is number of northings (meters).
+- When geoSystem is GDC, *zSpacing* is number of degrees of latitude.
+- When geoSystem is UTM, *zSpacing* is number of northings (meters).
 
 ### SFFloat [in, out] **yScale** 1 <small>[0,∞)</small>
 
@@ -91,11 +113,13 @@ Vertical exaggeration of displayed data produced from the height array.
 
 ### SFBool [ ] **solid** TRUE
 
-Setting solid true means draw only one side of polygons (backface culling on), setting solid false means draw both sides of polygons (backface culling off).
+Setting *solid* true means draw only one side of polygons (backface culling on), setting *solid* false means draw both sides of polygons (backface culling off).
 
-#### Hint
+#### Hints
 
-- If in doubt, use solid='false' for maximum visibility.
+- Mnemonic "this geometry is *solid* like a brick" (you don't render the inside of a brick).
+- If in doubt, use *solid*='false' for maximum visibility.
+- (X3D version 4.0 draft) accessType relaxed to inputOutput in order to support animation and visualization.
 
 #### Warning
 
@@ -103,39 +127,49 @@ Setting solid true means draw only one side of polygons (backface culling on), s
 
 ### SFBool [ ] **ccw** TRUE
 
-*ccw* = counterclockwise: ordering of vertex coordinates orientation.
+*ccw* defines clockwise/counterclockwise ordering of vertex coordinates, which in turn defines front/back orientation of polygon normals according to Right-Hand Rule (RHR).
 
-#### Hint
+#### Hints
 
-- *ccw* false can reverse solid (backface culling) and normal-vector orientation.
-
-### SFDouble [ ] **creaseAngle** 0 <small>[0,∞)</small>
-
-*creaseAngle* defines angle (in radians) for determining whether adjacent polygons are drawn with sharp edges or smooth shading. If angle between normals of two adjacent polygons is less than creaseAngle, smooth shading is rendered across the shared line segment.
-
-#### Hint
-
-- CreaseAngle=0 means render all edges sharply, creaseAngle=3.14159 means render all edges smoothly.
+- A good debugging technique for problematic polygons is to try changing the value of *ccw*, which can reverse solid effects (single-sided backface culling) and normal-vector direction.
+- [Clockwise](https://en.wikipedia.org/wiki/Clockwise){:target="_blank"}
 
 #### Warning
 
-- Note type double, unlike ElevationGrid creaseAngle.
+- Consistent and correct ordering of left-handed or right-handed point sequences is important throughout the coord array of point values.
+
+### SFDouble [ ] **creaseAngle** 0 <small>[0,∞)</small>
+
+*creaseAngle* defines angle (in radians) for determining whether adjacent polygons are drawn with sharp edges or smooth shading. If angle between normals of two adjacent polygons is less than *creaseAngle*, smooth shading is rendered across the shared line segment.
+
+#### Hints
+
+- *creaseAngle*=0 means render all edges sharply, *creaseAngle*=3.14159 means render all edges smoothly.
+- [Radian units for angular measure](https://en.wikipedia.org/wiki/Radian){:target="_blank"}
+
+#### Warning
+
+- Note type double, unlike ElevationGrid *creaseAngle*.
 
 ### SFBool [ ] **colorPerVertex** TRUE
 
-Whether Color node color values are applied to each vertex (true) or per quadrilateral (false).
+Whether Color node color values are applied to each point vertex (true) or per quadrilateral (false).
 
-#### See Also
+#### Hint
 
 - [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color){:target="_blank"}
 
 ### SFBool [ ] **normalPerVertex** TRUE
 
-Whether Normal node vector values are applied to each vertex (true) or per quadrilateral (false).
+Whether Normal node vector values are applied to each point vertex (true) or per quadrilateral (false).
+
+#### Hint
+
+- If no child Normal node is provided, the X3D browser shall automatically generate normals, using creaseAngle to determine smoothed shading across shared vertices.
 
 ### SFNode [in, out] **color** NULL <small>[X3DColorNode]</small>
 
-Single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorIndex and colorPerVertex fields.
+Single contained Color or ColorRGBA node that can specify *color* values applied to corresponding vertices according to colorPerVertex field.
 
 ### SFNode [in, out] **texCoord** NULL <small>[X3DTextureCoordinateNode]</small>
 
@@ -149,13 +183,22 @@ Single contained Normal node that can specify perpendicular vectors for correspo
 
 - Useful for special effects. Normal vector computation by 3D graphics hardware is quite fast so adding normals to a scene is typically unnecessary.
 
+#### Warning
+
+- *normal* vectors increase file size, typically doubling geometry definitions.
+
 ### MFDouble [in, out] **height** [ 0, 0 ] <small>(-∞,∞)</small>
 
-Contains xDimension rows \* zDimension columns floating-point values for elevation above ellipsoid.
+Contains xDimension rows * zDimension columns floating-point values for elevation above ellipsoid.
 
 #### Hints
 
-- Height array values are in row-major order from west to east, south to north. GeoGridOrigin is in southwest (lower-left) corner of height dataset.
+- *height* array values are in row-major order from west to east, south to north.
+- GeoGridOrigin is in southwest (lower-left) corner of *height* dataset.
+
+#### Warning
+
+- *height* array values are not retained or available at run time since a browser is permitted to condense geometry.
 
 ## Description
 

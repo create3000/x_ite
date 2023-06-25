@@ -29,15 +29,19 @@ The LineSet node belongs to the **Rendering** component and its default containe
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
 ### MFInt32 [in, out] **vertexCount** [ ] <small>[2,∞)</small>
 
-*vertexCount* describes how many vertices are used in each individual polyline segment from the Coordinate point values. Coordinate point values are assigned as a block of points to each line by taking vertexCount[n] vertices at a time.
+Vertices at a time.
 
 ### MFNode [in, out] **attrib** [ ] <small>[X3DVertexAttributeNode]</small>
 
-Multiple contained FloatVertexAttribute nodes that can specify list of per-vertex attribute information for programmable shaders.
+Single contained FloatVertexAttribute node that can specify list of per-vertex attribute information for programmable shaders.
 
 #### Hint
 
@@ -49,7 +53,7 @@ Single contained FogCoordinate node that can specify depth parameters for fog in
 
 ### SFNode [in, out] **color** NULL <small>[X3DColorNode]</small>
 
-Single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorIndex and colorPerVertex fields.
+Single contained Color or ColorRGBA node that can specify *color* values applied to corresponding vertices according to colorIndex and colorPerVertex fields.
 
 ### SFNode [in, out] **normal** NULL <small>[X3DNormalNode]</small>
 
@@ -61,7 +65,7 @@ Single contained Normal node that can specify perpendicular vectors for correspo
 
 #### Warning
 
-- Normal vectors increase file size, typically doubling geometry definitions.
+- *normal* vectors increase file size, typically doubling geometry definitions.
 
 ### SFNode [in, out] **coord** NULL <small>[X3DCoordinateNode]</small>
 

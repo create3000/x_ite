@@ -30,7 +30,11 @@ The ShadedVolumeStyle node belongs to the **VolumeRendering** component and its 
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
 ### SFBool [in, out] **enabled** TRUE
 
@@ -42,7 +46,7 @@ Whether rendering calculates and applies shading effects to visual output.
 
 ### SFBool [in, out] **shadows** FALSE
 
-Whether rendering calculates and applies shadows to visual output (using global illumination model).
+Whether rendering calculates and applies *shadows* to visual output (using global illumination model).
 
 ### SFString [ ] **phaseFunction** "Henyey-Greenstein" <small>["Henyey-Greenstein"|"NONE"|...]</small>
 
@@ -54,11 +58,11 @@ Define scattering model for implementations using global illumination (NONE or H
 
 ### SFNode [in, out] **material** NULL <small>[X3DMaterialNode]</small>
 
-Input/Output field material.
+Colour and opacity is determined based on whether a value has been specified for the *material* field.
 
 ### SFNode [in, out] **surfaceNormals** NULL <small>[X3DTexture3DNode]</small>
 
-Input/Output field surfaceNormals.
+The *surfaceNormals* field contains a 3D texture with at least three component values. Each voxel in the texture represents the surface normal direction for the corresponding voxel in the base data source.
 
 ## Description
 

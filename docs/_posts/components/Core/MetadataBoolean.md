@@ -30,27 +30,32 @@ The MetadataBoolean node belongs to the **Core** component and its default conta
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
 ### SFString [in, out] **name** ""
 
-Depending on the metadata vocabulary, the attribute name is usually required for metadata nodes.
+Depending on the metadata vocabulary, the attribute *name* is usually required for metadata nodes.
+
+#### Hints
+
+- Well-defined names can simplify design and debugging through improved author understanding.
+- [X3D Scene Authoring Hints, Naming Conventions](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#NamingConventions){:target="_blank"}
 
 #### Warning
 
-- Name is not included if this instance is a USE node.
+- *name* field is not included if this instance is a USE node, in order to avoid potential mismatches.
 
 ### SFString [in, out] **reference** ""
 
-*reference* to the metadata standard or definition defining this particular metadata value.
+Reference to the metadata standard or definition defining this particular metadata value.
 
 ### MFBool [in, out] **value** [ ]
 
-The value attribute is a strictly typed data array providing relevant metadata information.
-
-#### Warning
-
-- Use lower-case values ("true false") for .x3d XML encoding, and upper-case values ("TRUE FALSE") for .x3dv ClassicVRML encoding.
+The *value* attribute is a strictly typed data array providing relevant metadata information.
 
 #### Warning
 

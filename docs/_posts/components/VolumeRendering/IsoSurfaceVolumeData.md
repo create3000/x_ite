@@ -32,23 +32,27 @@ The IsoSurfaceVolumeData node belongs to the **VolumeRendering** component and i
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
-
-### SFVec3f [in, out] **dimensions** 1 1 1 <small>(0,∞)</small>
-
-Actual-size X-Y-Z dimensions of volume data in local coordinate system.
-
-### SFFloat [in, out] **contourStepSize** 0 <small>(-∞,∞)</small>
-
-If contourStepSize is non-zero, also render all isosurfaces that are multiples of that step size from initial surface value.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
 
 #### Hint
 
-- ContourStepSize can be negative so that steppping can proceed in a negative direction.
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
+
+### SFVec3f [in, out] **dimensions** 1 1 1 <small>(0,∞)</small>
+
+Actual-size X-Y-Z *dimensions* of volume data in local coordinate system.
+
+### SFFloat [in, out] **contourStepSize** 0 <small>(-∞,∞)</small>
+
+If *contourStepSize* is non-zero, also render all isosurfaces that are multiples of that step size from initial surface value.
+
+#### Hint
+
+- *contourStepSize* can be negative so that steppping can proceed in a negative direction.
 
 ### MFFloat [in, out] **surfaceValues** [ ] <small>(-∞,∞)</small>
 
-If surfaceValues has one value defined, render corresponding isosurface plus any isosurfaces based on contourStepSize. If surfaceValues has more than one value defined, ignore contourStepSize and render surfaces corresponding to listed surfaceValues.
+If *surfaceValues* has one value defined, render corresponding isosurface plus any isosurfaces based on contourStepSize. If *surfaceValues* has more than one value defined, ignore contourStepSize and render surfaces corresponding to listed *surfaceValues*.
 
 ### SFFloat [in, out] **surfaceTolerance** 0 <small>[0,∞)</small>
 
@@ -62,10 +66,10 @@ Threshold for gradient magnitude for voxel inolusion in isosurface.
 
 Whether or not renderable content within this node is visually displayed.
 
-#### Hint
+#### Hints
 
-- The visible field has no effect on animation behaviors, event passing or other non-visual characteristics.
-- Content must be visible to be collidable and to be pickable.
+- The *visible* field has no effect on animation behaviors, event passing or other non-visual characteristics.
+- Content must be *visible* to be collidable and to be pickable.
 
 ### SFBool [in, out] **bboxDisplay** FALSE
 
@@ -79,25 +83,42 @@ Whether to display bounding box for associated geometry, aligned with world coor
 
 Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost. Bounding box size can also be defined as an optional authoring hint that suggests an optimization or constraint.
 
-#### Hint
+#### Hints
 
 - Can be useful for collision computations or inverse-kinematics (IK) engines.
+- Precomputation and inclusion of bounding box information can speed up the initialization of large detailed models, with a corresponding cost of increased file size.
+- [X3D Architecture, 10.2.2 Bounding boxes](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/grouping.html#BoundingBoxes){:target="_blank"}
+- [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/grouping.html#X3DBoundedObject){:target="_blank"}
 
 ### SFVec3f [ ] **bboxCenter** 0 0 0 <small>(-∞,∞)</small>
 
-Bounding box center: optional hint for position offset from origin of local coordinate system.
+Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
+
+#### Hints
+
+- Precomputation and inclusion of bounding box information can speed up the initialization of large detailed models, with a corresponding cost of increased file size.
+- [X3D Architecture, 10.2.2 Bounding boxes](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/grouping.html#BoundingBoxes){:target="_blank"}
+- [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/grouping.html#X3DBoundedObject){:target="_blank"}
 
 ### MFNode [in, out] **renderStyle** [ ] <small>[X3DVolumeRenderStyleNode]</small>
 
-Input/Output field renderStyle.
+Multiple contained X3DVolumeRenderStyleNode nodes corresponding to each isosurface that define specific rendering technique for this volumetric object.
+
+#### Hint
+
+- 
+
+#### Warning
+
+- If not defined, no default renderStryle is defined.
 
 ### SFNode [in, out] **gradients** NULL <small>[X3DTexture3DNode]</small>
 
-Input/Output field gradients.
+Single contained X3DTexture3DNode (ComposedTexture3D, ImageTexture3D, PixelTexture3D) that provides explicit per-voxel gradient direction information for determining surface boundaries, rather than having it implicitly calculated by the implementation.
 
 ### SFNode [in, out] **voxels** NULL <small>[X3DTexture3DNode]</small>
 
-Input/Output field voxels.
+Single contained X3DTexture3DNode (ComposedTexture3D, ImageTexture3D, PixelTexture3D) that provides raw voxel information utilized by corresponding rendering styles. Any number of color components (1-4) may be defined.
 
 ## Description
 

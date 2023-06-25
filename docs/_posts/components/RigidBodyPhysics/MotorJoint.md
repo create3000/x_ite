@@ -29,7 +29,11 @@ The MotorJoint node belongs to the **RigidBodyPhysics** component and its defaul
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
 ### SFBool [ ] **autoCalc** FALSE
 
@@ -43,13 +47,25 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 *axis1Angle* (radians) is rotation angle for corresponding motor axis when in user-calculated mode.
 
+#### Hint
+
+- [Radian units for angular measure](https://en.wikipedia.org/wiki/Radian){:target="_blank"}
+
 ### SFFloat [in, out] **axis2Angle** 0 <small>[-π,π]</small>
 
 *axis2Angle* (radians) is rotation angle for corresponding motor axis when in user-calculated mode.
 
+#### Hint
+
+- [Radian units for angular measure](https://en.wikipedia.org/wiki/Radian){:target="_blank"}
+
 ### SFFloat [in, out] **axis3Angle** 0 <small>[-π,π]</small>
 
 *axis3Angle* (radians) is rotation angle for corresponding motor axis when in user-calculated mode.
+
+#### Hint
+
+- [Radian units for angular measure](https://en.wikipedia.org/wiki/Radian){:target="_blank"}
 
 ### SFFloat [in, out] **axis1Torque** 0 <small>(-∞,∞)</small>
 
@@ -73,7 +89,7 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 #### Hint
 
-- 0 0 0 means motor disabled.
+- 0 0 0 means motor disabled about this axis.
 
 ### SFVec3f [in, out] **motor2Axis** 0 0 0 <small>(-∞,∞)</small>
 
@@ -81,7 +97,7 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 #### Hint
 
-- 0 0 0 means motor disabled.
+- 0 0 0 means motor disabled about this axis.
 
 ### SFVec3f [in, out] **motor3Axis** 0 0 0 <small>(-∞,∞)</small>
 
@@ -89,7 +105,7 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 #### Hint
 
-- 0 0 0 means motor disabled.
+- 0 0 0 means motor disabled about this axis.
 
 ### SFFloat [in, out] **stop1Bounce** 0 <small>[0,1]</small>
 
@@ -143,33 +159,69 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 *motor1Angle* provides calculated angle of rotation (radians) for this motor joint from last frame.
 
+#### Hint
+
+- [Radian units for angular measure](https://en.wikipedia.org/wiki/Radian){:target="_blank"}
+
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
+
 ### SFFloat [out] **motor2Angle**
 
 *motor2Angle* provides calculated angle of rotation (radians) for this motor joint from last frame.
+
+#### Hint
+
+- [Radian units for angular measure](https://en.wikipedia.org/wiki/Radian){:target="_blank"}
+
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFFloat [out] **motor3Angle**
 
 *motor3Angle* provides calculated angle of rotation (radians) for this motor joint from last frame.
 
+#### Hint
+
+- [Radian units for angular measure](https://en.wikipedia.org/wiki/Radian){:target="_blank"}
+
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
+
 ### SFFloat [out] **motor1AngleRate**
 
 *motor1AngleRate* provides calculated anglular rotation rate (radians/second) for this motor joint from last frame.
+
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFFloat [out] **motor2AngleRate**
 
 *motor2AngleRate* provides calculated anglular rotation rate (radians/second) for this motor joint from last frame.
 
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
+
 ### SFFloat [out] **motor3AngleRate**
 
 *motor3AngleRate* provides calculated anglular rotation rate (radians/second) for this motor joint from last frame.
 
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
+
 ### SFNode [in, out] **body1** NULL <small>[RigidBody]</small>
 
-Input/Output field body1.
+The *body1* and body2 fields indicate the two RigidBody nodes connected by this joint.
 
 ### SFNode [in, out] **body2** NULL <small>[RigidBody]</small>
 
-Input/Output field body2.
+The body1 and *body2* fields indicate the two RigidBody nodes connected by this joint.
 
 ## Description
 

@@ -31,7 +31,11 @@ The UnlitMaterial node belongs to the **Shape** component and its default contai
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
 ### SFColor [in, out] **emissiveColor** 1 1 1 <small>[0,1]</small>
 
@@ -39,17 +43,21 @@ How much glowing light is emitted from this object.
 
 #### Hints
 
-- emissiveColors glow even when all lights are off.
-- Reset diffuseColor from default (0.8 0.8 0.8) to (0 0 0) to avoid washout.
-- Only emissiveColor affects IndexedLineSet, LineSet and PointSet.
+- EmissiveColors glow even when all lights are off.
+- Reset diffuseColor from default (.8 .8 .8) to (0 0 0) to avoid washout.
+- Only *emissiveColor* affects IndexedLineSet, LineSet and PointSet.
 
 #### Warning
 
-- Bright emissiveColor values can wash out other colors and some textures.
+- Bright *emissiveColor* values can wash out other colors and some textures.
 
 ### SFString [in, out] **emissiveTextureMapping** ""
 
 The mapping label identifies which texture coordinates and transformations are used to compute texture effects from corresponding geometry on a given material.
+
+#### Hint
+
+- [TODO support planned to perform multiple-node mapping validation checks using X3D Schematron or X3D Validator](https://savage.nps.edu/X3dValidator){:target="_blank"}
 
 ### SFNode [in, out] **emissiveTexture** NULL <small>[X3DSingleTextureNode]</small>
 
@@ -58,7 +66,7 @@ When applying emissiveColor for this material node, the contained texture provid
 #### Hints
 
 - If texture node is NULL or unspecified, no effect is applied to material values.
-- Contained texture node must include containerField='emissiveTexture'
+- Contained texture node must include containerField='*emissiveTexture*'
 
 ### SFFloat [in, out] **normalScale** 1 <small>[0,∞)</small>
 
@@ -66,12 +74,16 @@ When applying emissiveColor for this material node, the contained texture provid
 
 #### Hints
 
-- normalScale only affects computation of normalTexture modulations that affect lighting of characteristics of the parent Material and has no relation to normal vectors defined by corresponding geometry.
-- normalTexture techniques apply Bump mapping https://en.wikipedia.org/wiki/Bump_mapping
+- *normalScale* only affects computation of normalTexture modulations that affect lighting of characteristics of the parent Material and has no relation to normal vectors defined by corresponding geometry.
+- [NormalTexture techniques apply Bump mapping](https://en.wikipedia.org/wiki/Bump_mapping){:target="_blank"}
 
 ### SFString [in, out] **normalTextureMapping** ""
 
 The mapping label identifies which texture coordinates and transformations are used to compute texture effects from corresponding geometry on a given material.
+
+#### Hint
+
+- [TODO support planned to perform multiple-node mapping validation checks using X3D Schematron or X3D Validator](https://savage.nps.edu/X3dValidator){:target="_blank"}
 
 ### SFNode [in, out] **normalTexture** NULL <small>[X3DSingleTextureNode]</small>
 
@@ -79,13 +91,13 @@ When applying normalScale for this material node, the contained texture modulate
 
 #### Hints
 
-- normalTexture techniques apply Bump mapping https://en.wikipedia.org/wiki/Bump_mapping
+- [*normalTexture* techniques apply Bump mapping](https://en.wikipedia.org/wiki/Bump_mapping){:target="_blank"}
 - If texture node is NULL or unspecified, no effect is applied to material values.
-- Contained texture node must include containerField='normalTexture'
+- Contained texture node must include containerField='*normalTexture*'
 
 ### SFFloat [in, out] **transparency** 0 <small>[0,1]</small>
 
-How "clear" an object is: 1.0 is completely transparent, 0.0 is completely opaque.
+How "clear" an object is: 1.0 is completely transparent, 0.0 is completely opaque. Interchange profile hint: *transparency* \< .5 opaque, *transparency* \> .5 transparent.
 
 ## Description
 

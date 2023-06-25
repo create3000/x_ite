@@ -32,15 +32,19 @@ The TimeSensor node belongs to the **Time** component and its default container 
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
-
-### SFString [in, out] **description** ""
-
-Author-provided prose that describes intended purpose of the url asset.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
 
 #### Hint
 
-- Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for & ampersand character, or &amp;#34; for " quotation-mark character).
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
+
+### SFString [in, out] **description** ""
+
+Author-provided prose that describes intended purpose of this node.
+
+#### Hint
+
+- Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &#38; for & ampersand character, or &#34; for " quotation-mark character).
 
 ### SFBool [in, out] **enabled** TRUE
 
@@ -48,7 +52,11 @@ Enables/disables node operation.
 
 ### SFTime [in, out] **cycleInterval** 1 <small>(0,∞)</small>
 
-*cycleInterval* is loop duration in seconds. Interchange profile hint: TimeSensor may be ignored if cycleInterval \< 0.01 second.
+*cycleInterval* is loop duration in seconds. Interchange profile hint: TimeSensor may be ignored if *cycleInterval* \< 0.01 second.
+
+#### Hint
+
+- *cycleInterval* is a nonnegative SFTime duration interval, not an absolute clock time.
 
 #### Warning
 
@@ -56,23 +64,23 @@ Enables/disables node operation.
 
 ### SFBool [in, out] **loop** FALSE
 
-Repeat indefinitely when loop=true, repeat only once when loop=false.
+Repeat indefinitely when *loop*=true, repeat only once when *loop*=false.
 
 ### SFTime [in, out] **startTime** 0 <small>(-∞,∞)</small>
 
-When time now \>= startTime, isActive becomes true and TimeSensor becomes active. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
+When time now \>= *startTime*, isActive becomes true and TimeSensor becomes active. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
 #### Hint
 
-- Usually receives a ROUTEd time value.
+- ROUTE a time value matching system clock to this field, such as output event from TouchSensor touchTime or TimeTrigger triggerTime.
 
 ### SFTime [in, out] **resumeTime** 0 <small>(-∞,∞)</small>
 
-When *resumeTime* becomes\<= time now, isPaused becomes false and TimeSensor becomes inactive. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
+When *resumeTime* becomes \<= time now, isPaused becomes false and TimeSensor becomes inactive. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
 #### Hint
 
-- Usually receives a ROUTEd time value.
+- ROUTE a time value matching system clock to this field, such as output event from TouchSensor touchTime or TimeTrigger triggerTime.
 
 #### Warning
 
@@ -80,11 +88,11 @@ When *resumeTime* becomes\<= time now, isPaused becomes false and TimeSensor bec
 
 ### SFTime [in, out] **pauseTime** 0 <small>(-∞,∞)</small>
 
-When time now \>= *pauseTime*, *isPaused* becomes true and TimeSensor becomes paused. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
+When time now \>= *pauseTime*, isPaused becomes true and TimeSensor becomes paused. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
 #### Hint
 
-- Usually receives a ROUTEd time value.
+- ROUTE a time value matching system clock to this field, such as output event from TouchSensor touchTime or TimeTrigger triggerTime.
 
 #### Warning
 
@@ -92,47 +100,75 @@ When time now \>= *pauseTime*, *isPaused* becomes true and TimeSensor becomes pa
 
 ### SFTime [in, out] **stopTime** 0 <small>(-∞,∞)</small>
 
-When stopTime becomes \<= time now, isActive becomes false and TimeSensor becomes inactive. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
+When *stopTime* becomes \<= time now, isActive becomes false and TimeSensor becomes inactive. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
 #### Hint
 
-- Usually receives a ROUTEd time value.
+- ROUTE a time value matching system clock to this field, such as output event from TouchSensor touchTime or TimeTrigger triggerTime.
 
 #### Warnings
 
-- An active TimeSensor node ignores set_cycleInterval and set_startTime events. An active TimeSensor node ignores set_stopTime event values less than or equal to startTime.
+- An active TimeSensor node ignores set_cycleInterval and set_startTime events.
+- An active TimeSensor node ignores set_stopTime event values less than or equal to startTime.
 
 ### SFBool [out] **isPaused**
 
 *isPaused* true/false events are sent when TimeSensor is paused/resumed.
 
-#### Warning
+#### Warnings
 
 - Not supported in VRML97.
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFBool [out] **isActive**
 
 *isActive* true/false events are sent when TimeSensor starts/stops running.
 
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
+
 ### SFTime [out] **cycleTime**
 
 *cycleTime* sends a time outputOnly at startTime, and also at the beginning of each new cycle (useful for synchronization with other time-based objects).
+
+#### Hints
+
+- The first *cycleTime* event for a TimeSensor node can be used as an alarm (single pulse at a specified time).
+- *cycleTime* is a nonnegative SFTime duration interval, not an absolute clock time.
+
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFTime [out] **elapsedTime**
 
 Current elapsed time since TimeSensor activated/running, cumulative in seconds, and not counting any paused time.
 
-#### Warning
+#### Hint
+
+- *elapsedTime* is a nonnegative SFTime duration interval, not an absolute clock time.
+
+#### Warnings
 
 - Not supported in VRML97.
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFFloat [out] **fraction_changed**
 
 *fraction_changed* continuously sends value in range [0,1] showing time progress in the current cycle.
 
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
+
 ### SFTime [out] **time**
 
-*time* continuously sends the absolute time (since January 1, 1970) for a given simulation tick.
+Time continuously sends the absolute *time* (value 0.0 matches 1 January 1970) in seconds for a given simulation tick.
+
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ## Example
 

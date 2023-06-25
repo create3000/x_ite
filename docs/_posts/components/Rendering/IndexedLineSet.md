@@ -29,55 +29,77 @@ The IndexedLineSet node belongs to the **Rendering** component and its default c
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
-
-### MFInt32 [in] **set_colorIndex** <small>[0,∞) or -1</small>
-
-*colorIndex* values define the order in which Color|ColorRGBA values are applied to polygons (or vertices).
-
-#### Hints
-
-- If *colorIndex* array is not provided, then Color|ColorRGBA values are indexed according to the coordIndex field.
-- If colorPerVertex='false' then one index is provided for each polygon defined by the coordIndex array. No sentinel -1 values are included.
-- If colorPerVertex='true' then a matching set of indices is provided, each separated by sentinel -1, that exactly corresponds to individual
-
-### MFInt32 [in] **set_coordIndex** <small>[0,∞) or -1</small>
-
-*coordIndex* indices provide the order in which coordinates are applied to construct each polygon face. Order starts at index 0, commas are optional between sets.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
 
 #### Hint
 
-- Sentinel value -1 is used to separate indices for each successive polygon.
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
+
+### MFInt32 [in] **set_colorIndex** <small>[0,∞) or -1</small>
+
+*colorIndex* values define the order in which Color\|ColorRGBA values are applied to polygons (or vertices).
+
+#### Hints
+
+- If *colorIndex* array is not provided, then Color\|ColorRGBA values are indexed according to the coordIndex field.
+- If colorPerVertex='false' then one index is provided for each polygon defined by the coordIndex array. No sentinel -1 values are included.
+- If colorPerVertex='true' then a matching set of indices is provided, each separated by sentinel -1, that exactly corresponds to individual values in the coordIndex array polygon definitions.
+
+#### Warning
+
+- It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
+
+### MFInt32 [in] **set_coordIndex** <small>[0,∞) or -1</small>
+
+*coordIndex* indices provide the order in which coordinates are applied to construct each polyline. Order starts at index 0, commas are optional between sets.
+
+#### Hint
+
+- Sentinel value -1 is used to separate indices for each successive polyline.
+
+#### Warning
+
+- It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
 
 ### SFBool [ ] **colorPerVertex** TRUE
 
-Whether Color node color values are applied to each vertex (true) or per polyline (false).
+Whether Color node color values are applied to each point vertex (true) or per polyline (false).
 
-#### See Also
+#### Hint
 
 - [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color){:target="_blank"}
 
 ### MFInt32 [ ] **colorIndex** [ ] <small>[0,∞) or -1</small>
 
-*colorIndex* values define the order in which Color|ColorRGBA values are applied to polygons (or vertices).
+*colorIndex* values define the order in which Color\|ColorRGBA values are applied to polygons (or vertices).
 
 #### Hints
 
-- If *colorIndex* array is not provided, then Color|ColorRGBA values are indexed according to the coordIndex field.
+- If *colorIndex* array is not provided, then Color\|ColorRGBA values are indexed according to the coordIndex field.
 - If colorPerVertex='false' then one index is provided for each polygon defined by the coordIndex array. No sentinel -1 values are included.
-- If colorPerVertex='true' then a matching set of indices is provided, each separated by sentinel -1, that exactly corresponds to individual
+- If colorPerVertex='true' then a matching set of indices is provided, each separated by sentinel -1, that exactly corresponds to individual values in the coordIndex array polygon definitions.
+- If rendering Coordinate points originally defined for an IndexedFaceSet, index values may need to repeat initial each initial vertex to close the polygons.
+
+#### Warning
+
+- If child Color\|ColorRGBA node is not provided, then geometry is rendered using corresponding Appearance and material/texture values.
 
 ### MFInt32 [ ] **coordIndex** [ ] <small>[0,∞) or -1</small>
 
 *coordIndex* indices provide the order in which coordinates are applied to construct each polygon face. Order starts at index 0, commas are optional between sets, use -1 to separate indices for each polyline.
 
-#### Hint
+#### Hints
 
 - If rendering Coordinate points originally defined for an IndexedFaceSet, index values may need to repeat initial each initial vertex to close the polygons.
+- Sentinel value -1 is used to separate indices for each successive polyline.
+
+#### Warning
+
+- *coordIndex* is required in order to connect contained coordinate point values.
 
 ### MFNode [in, out] **attrib** [ ] <small>[X3DVertexAttributeNode]</small>
 
-Multiple contained FloatVertexAttribute nodes that can specify list of per-vertex attribute information for programmable shaders.
+Single contained FloatVertexAttribute node that can specify list of per-vertex attribute information for programmable shaders.
 
 #### Hint
 
@@ -89,7 +111,7 @@ Single contained FogCoordinate node that can specify depth parameters for fog in
 
 ### SFNode [in, out] **color** NULL <small>[X3DColorNode]</small>
 
-Single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorIndex and colorPerVertex fields.
+Single contained Color or ColorRGBA node that can specify *color* values applied to corresponding vertices according to colorIndex and colorPerVertex fields.
 
 ### SFNode [in, out] **normal** NULL <small>[X3DNormalNode]</small>
 
@@ -98,6 +120,10 @@ Single contained Normal node that can specify perpendicular vectors for correspo
 #### Hint
 
 - Useful for special effects. Normal vector computation by 3D graphics hardware is quite fast so adding normals to a scene is typically unnecessary.
+
+#### Warning
+
+- *normal* vectors increase file size, typically doubling geometry definitions.
 
 ### SFNode [in, out] **coord** NULL <small>[X3DCoordinateNode]</small>
 

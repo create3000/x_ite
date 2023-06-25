@@ -32,15 +32,20 @@ The PlaneSensor node belongs to the **PointingDeviceSensor** component and its d
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
 ### SFString [in, out] **description** ""
 
-Author-provided text tooltip that tells users the expected action of this node.
+Author-provided prose that describes intended purpose of this node.
 
 #### Hints
 
-- Use spaces, make descriptions clear and readable. Many XML tools substitute XML character references automatically if needed (such as &amp;#38; for &amp; ampersand, or &amp;#34; for " quotation mark).
+- Include space characters since a *description* is not a DEF identifier. Write short phrases that make descriptions clear and readable.
+- Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &#38; for & ampersand character, or &#34; for " quotation-mark character).
 
 ### SFBool [in, out] **enabled** TRUE
 
@@ -64,35 +69,52 @@ Sends event and remembers last value sensed.
 
 ### SFVec2f [in, out] **minPosition** 0 0 <small>(-∞,∞)</small>
 
-*minPosition* and maxPosition clamp translations to a range of values measured from origin of Z=0 plane default maxPosition \< minPosition means no clamping.
+*minPosition* and maxPosition clamp translations to a range of values measured from origin of Z=0 plane default maxPosition \< *minPosition* means no clamping.
 
 #### Hint
 
-- Create a LineSensor by constraining one axis (minPosition.x=maxPosition.x) or (minPosition.y=maxPosition.y).
+- Create a LineSensor by constraining one axis (*minPosition*.x=maxPosition.x) or (*minPosition*.y=maxPosition.y).
 
 ### SFVec2f [in, out] **maxPosition** -1 -1 <small>(-∞,∞)</small>
 
-MinPosition and maxPosition clamp translations to a range of values measured from origin of Z=0 plane default maxPosition \< minPosition means no clamping.
+MinPosition and *maxPosition* clamp translations to a range of values measured from origin of Z=0 plane default *maxPosition* \< minPosition means no clamping.
 
 #### Hint
 
-- Create a LineSensor by constraining one axis (minPosition.x=maxPosition.x) or (minPosition.y=maxPosition.y).
+- Create a LineSensor by constraining one axis (minPosition.x=*maxPosition*.x) or (minPosition.y=*maxPosition*.y).
 
 ### SFVec3f [out] **trackPoint_changed**
 
 *trackPoint_changed* events give intersection point of bearing with sensor's virtual geometry.
 
+#### Warnings
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
+- *trackPoint_changed* events represent unclamped intersection points on plane surface. Browsers can interpret drags off of the surface in various ways. Note that translation_changed events are clamped by minPosition/maxPosition and thus may be preferable.
+
 ### SFVec3f [out] **translation_changed**
 
 *translation_changed* events equal sum of relative translation change plus offset value.
 
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
+
 ### SFBool [out] **isOver**
 
-Hover over geometry by aiming the mouse (or pointing device) to generate isOver events. Sensor sends output event isOver=true event when pointing device moves over sensor's geometry, and later sends output event isOver=false event when pointing device moves off.
+Hover over geometry by aiming the mouse (or pointing device) to generate *isOver* events. Sensor sends output event *isOver*=true event when pointing device moves over sensor's geometry, and later sends output event *isOver*=false event when pointing device moves off.
+
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFBool [out] **isActive**
 
-Select geometry by activating the pointing device (e.g. clicking the mouse) to generate isActive events. Output event isActive=true is sent when geometry is selected (e.g. when primary mouse button is pressed), output event isActive=false is sent when geometry is deselected (e.g. when primary mouse button is released).
+Select geometry by activating the pointing device (for example, clicking the mouse) to generate *isActive* events. Output event *isActive*=true is sent when geometry is selected (for example, when primary mouse button is pressed), output event *isActive*=false is sent when geometry is deselected (for example, when primary mouse button is released).
+
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ## Description
 

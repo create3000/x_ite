@@ -30,15 +30,20 @@ The Sound node belongs to the **Sound** component and its default container fiel
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
-
-### SFString [in, out] **description** ""
-
-Author-provided prose that describes intended purpose of the url asset.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
 
 #### Hint
 
-- Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for & ampersand character, or &amp;#34; for " quotation-mark character).
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
+
+### SFString [in, out] **description** ""
+
+Author-provided prose that describes intended purpose of this node.
+
+#### Hints
+
+- Include space characters since a *description* is not a DEF identifier. Write short phrases that make descriptions clear and readable.
+- Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &#38; for & ampersand character, or &#34; for " quotation-mark character).
 
 ### SFBool [in, out] **enabled** TRUE
 
@@ -46,11 +51,11 @@ Enables/disables node operation.
 
 ### SFBool [ ] **spatialize** TRUE
 
-Whether to spatialize sound playback relative to viewer.
+Whether to *spatialize* sound playback relative to viewer.
 
 #### Hint
 
-- Only effective between minimum and maximum ellipsoids.
+- Only effective within the auralization volume.
 
 ### SFFloat [in, out] **intensity** 1 <small>[0,1]</small>
 
@@ -58,7 +63,11 @@ Factor [0,1] adjusting loudness (decibels) of emitted sound.
 
 ### SFVec3f [in, out] **location** 0 0 0 <small>(-∞,∞)</small>
 
-Position of sound center, relative to local coordinate system.
+Position of sound ellipsoid center, relative to local coordinate system.
+
+#### Hint
+
+- Improve audibility by setting *location*='0 1.6 0' so that center height of sound ellipsoid matches typical NavigationInfo avatarSize height.
 
 ### SFVec3f [in, out] **direction** 0 0 1 <small>(-∞,∞)</small>
 
@@ -66,19 +75,35 @@ Position of sound center, relative to local coordinate system.
 
 ### SFFloat [in, out] **minBack** 1 <small>[0,∞)</small>
 
-Inner (full volume) ellipsoid distance along back direction. Ensure minBack \<= maxBack.
+Inner (full loudness) ellipsoid distance along back direction.
+
+#### Warning
+
+- Ensure *minBack* \<= maxBack.
 
 ### SFFloat [in, out] **minFront** 1 <small>[0,∞)</small>
 
-Inner (full volume) ellipsoid distance along front direction. Ensure minFront \<= maxFront.
+Inner (full loudness) ellipsoid distance along front direction.
+
+#### Warning
+
+- Ensure *minFront* \<= maxFront.
 
 ### SFFloat [in, out] **maxBack** 10 <small>[0,∞)</small>
 
-Outer (zero volume) ellipsoid distance along back direction. Ensure minBack \<= maxBack.
+Outer (zero loudness)ellipsoid distance along back direction.
+
+#### Warning
+
+- Ensure minBack \<= *maxBack*.
 
 ### SFFloat [in, out] **maxFront** 10 <small>[0,∞)</small>
 
-Outer (zero volume) ellipsoid distance along front direction. Ensure minFront \<= maxFront.
+Outer (zero loudness)ellipsoid distance along front direction.
+
+#### Warning
+
+- Ensure minFront \<= *maxFront*.
 
 ### SFFloat [in, out] **priority** 0 <small>[0,1]</small>
 
@@ -86,7 +111,11 @@ Player hint [0,1] if needed to choose which sounds to play.
 
 ### SFNode [in, out] **source** NULL <small>[X3DSoundSourceNode]</small>
 
-Input/Output field source.
+Sound *source* for the Sound node, either an AudioClip node or a MovieTexture node.
+
+#### Warning
+
+- If *source* field is not specified, the Sound node does not emit audio.
 
 ### MFNode [in, out] **children** [ ] <small>[X3DSoundChannelNode,X3DSoundProcessingNode,X3DSoundSourceNode]</small>
 

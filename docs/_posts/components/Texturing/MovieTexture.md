@@ -34,7 +34,11 @@ The MovieTexture node belongs to the **Texturing** component and its default con
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
 ### SFString [in, out] **description** ""
 
@@ -42,7 +46,7 @@ Author-provided prose that describes intended purpose of the url asset.
 
 #### Hint
 
-- Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for & ampersand character, or &amp;#34; for " quotation-mark character).
+- Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &#38; for & ampersand character, or &#34; for " quotation-mark character).
 
 ### SFBool [in, out] **enabled** TRUE
 
@@ -50,11 +54,11 @@ Enables/disables node operation.
 
 ### SFBool [in, out] **load** TRUE
 
-*load*=true means load immediately, load=false means defer loading or else unload a previously loaded asset.
+*load*=true means *load* immediately, *load*=false means defer loading or else unload a previously loaded scene.
 
 #### Hints
 
-- Allows author to design when MovieTexture loading occurs via user interaction, event chains or scripting.
+- Allows author to design when Inline loading occurs via user interaction, event chains or scripting.
 - Use a separate LoadSensor node to detect when loading is complete.
 
 ### MFString [in, out] **url** [ ] <small>[URI]</small>
@@ -63,15 +67,14 @@ Location and filename of movie file or stream. Multiple locations are more relia
 
 #### Hints
 
-- MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc." XML encoding for quotation mark " is &amp;quot; (which is called a character entity). Can replace embedded blank(s) in url queries with %20 for each blank character.
+- MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc."
+- Alternative XML encoding for quotation mark " is &quot; (which is an example of a character entity).
+- Can replace embedded blank(s) in *url* queries with %20 for each blank character.
+- [X3D Scene Authoring Hints, urls](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#urls){:target="_blank"}
 
 #### Warning
 
-- Strictly match directory and filename capitalization for http links! This is important for portability. Some operating systems are forgiving of capitalization mismatches, but http/https and other operating systems are not.
-
-#### See Also
-
-- [X3D Scene Authoring Hints, urls](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#urls){:target="_blank"}
+- Strictly match directory and filename capitalization for http links! This is important for portability. Some operating systems are forgiving of capitalization mismatches, but http/https *url* addresses and paths in Unix-based operating systems are all case sensitive and intolerant of uppercase/lowercase mismatches.
 
 ### SFTime [in, out] **autoRefresh** 0 <small>[0,∞)</small>
 
@@ -100,11 +103,11 @@ Location and filename of movie file or stream. Multiple locations are more relia
 
 ### SFFloat [in, out] **gain** 1 <small>(-∞,∞)</small>
 
-The gain field is a factor that represents the amount of linear amplification to apply to the output of the node.
+The *gain* field is a factor that represents the amount of linear amplification to apply to the output of the node.
 
 #### Hint
 
-- Negative gain factors negate the input signal.
+- Negative *gain* factors negate the input signal.
 
 #### Warning
 
@@ -116,15 +119,20 @@ Factor for how fast the movie (or soundtrack) is played.
 
 #### Hints
 
-- A MovieTexture node shall display frame 0 if speed = 0. A negative speed value sets the movie to play in reverse.
+- A MovieTexture node shall display frame 0 if *speed* = 0.
+- A negative *speed* value sets the movie to play in reverse.
 
 ### SFFloat [in, out] **pitch** 1 <small>(0,∞)</small>
 
-Input/Output field pitch.
+Multiplier for the rate at which sampled sound is played. Changing *pitch* also changes playback speed.
+
+#### Hint
+
+- Changing the *pitch* field does not trigger a duration_changed event. Playback interval may vary but duration of the original media data remains unmodified.
 
 ### SFBool [in, out] **loop** FALSE
 
-Repeat indefinitely when loop=true, repeat only once when loop=false.
+Repeat indefinitely when *loop*=true, repeat only once when *loop*=false.
 
 ### SFTime [in, out] **startTime** 0 <small>(-∞,∞)</small>
 
@@ -132,15 +140,15 @@ Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
 #### Hint
 
-- Usually receives a ROUTEd time value.
+- ROUTE a time value matching system clock to this field, such as output event from TouchSensor touchTime or TimeTrigger triggerTime.
 
 ### SFTime [in, out] **resumeTime** 0 <small>(-∞,∞)</small>
 
-When resumeTime becomes\<= time now, isPaused becomes false and MovieTexture becomes active. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
+When *resumeTime* becomes \<= time now, isPaused becomes false and MovieTexture becomes active. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
 #### Hint
 
-- Usually receives a ROUTEd time value.
+- ROUTE a time value matching system clock to this field, such as output event from TouchSensor touchTime or TimeTrigger triggerTime.
 
 #### Warning
 
@@ -148,11 +156,11 @@ When resumeTime becomes\<= time now, isPaused becomes false and MovieTexture bec
 
 ### SFTime [in, out] **pauseTime** 0 <small>(-∞,∞)</small>
 
-When time now \>= pauseTime, isPaused becomes true and MovieTexture becomes paused. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
+When time now \>= *pauseTime*, isPaused becomes true and MovieTexture becomes paused. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
 #### Hint
 
-- Usually receives a ROUTEd time value.
+- ROUTE a time value matching system clock to this field, such as output event from TouchSensor touchTime or TimeTrigger triggerTime.
 
 #### Warning
 
@@ -164,47 +172,68 @@ Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
 #### Hint
 
-- Usually receives a ROUTEd time value.
+- ROUTE a time value matching system clock to this field, such as output event from TouchSensor touchTime or TimeTrigger triggerTime.
 
 #### Warnings
 
-- An active TimeSensor node ignores set_cycleInterval and set_startTime events. An active TimeSensor node ignores set_stopTime event values less than or equal to startTime.
+- An active TimeSensor node ignores set_cycleInterval and set_startTime events.
+- An active TimeSensor node ignores set_stopTime event values less than or equal to startTime.
 
 ### SFBool [out] **isPaused**
 
 *isPaused* true/false events are sent when MovieTexture is paused/resumed.
 
-#### Warning
+#### Warnings
 
 - Not supported in VRML97.
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFBool [out] **isActive**
 
 *isActive* true/false events are sent when playback starts/stops.
 
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
+
 ### SFTime [out] **elapsedTime**
 
 Current elapsed time since MovieTexture activated/running, cumulative in seconds, and not counting any paused time.
 
-#### Warning
+#### Hint
+
+- *elapsedTime* is a nonnegative SFTime duration interval, not an absolute clock time.
+
+#### Warnings
 
 - Not supported in VRML97.
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFTime [out] **duration_changed**
 
-Length of time in seconds for one cycle of movie.
+Length of time in seconds for one cycle of media stream.
+
+#### Hints
+
+- *duration_changed* is an SFTime duration interval, normally nonnegative, and not an absolute clock time.
+- Changing the pitch field does not trigger a *duration_changed* event. Playback interval may vary but duration of the original media data remains unmodified.
+
+#### Warnings
+
+- Duration value of -1 implies that media data has not yet loaded or is unavailable for some reason.
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFBool [ ] **repeatS** TRUE
 
-Whether to horizontally repeat texture along S axis.
+Whether to repeat texture along S axis horizontally from left to right.
 
 ### SFBool [ ] **repeatT** TRUE
 
-Whether to vertically repeat texture along T axis.
+Whether to repeat texture along T axis vertically from top to bottom.
 
 ### SFNode [ ] **textureProperties** NULL <small>[TextureProperties]</small>
 
-Field textureProperties.
+Single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images.
 
 ## Description
 

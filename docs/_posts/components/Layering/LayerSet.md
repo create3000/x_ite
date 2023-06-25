@@ -28,7 +28,11 @@ The LayerSet node belongs to the **Layering** component and its default containe
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
 ### SFInt32 [in, out] **activeLayer** 0 <small>(0,∞)</small>
 
@@ -40,23 +44,25 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 ### MFInt32 [in, out] **order** [ 0 ] <small>(0,∞)</small>
 
-The order list defines the order in which layers are rendered. Each value corresponds to the ordinals of the layers.
+The *order* list defines the *order* in which layers are rendered. Each value corresponds to the ordinals of the layers.
 
 #### Hint
 
-- The order list may contain repetitions of ordinal values, in which case the layer is rendered again.
+- The *order* list may contain repetitions of ordinal values, in which case the layer is rendered again.
 
 #### Warnings
 
-- If order contains number values that are not ordinals assigned to layers, such numbers are ignored. Layers that are not included in the order list are not rendered.
+- If *order* contains number values that are not ordinals assigned to layers, such numbers are ignored.
+- Layers that are not included in the *order* list are not rendered.
 
 ### MFNode [in, out] **layers** [ ] <small>[X3DLayerNode]</small>
 
-The layers list defines a list of Layer nodes that contain the constituent parts of the scene. Each layer is assigned an ordinal number depending on its position in this contained list of nodes.
+The *layers* list defines a list of Layer nodes that contain the constituent parts of the scene. Each layer is assigned an ordinal number depending on its position in this contained list of nodes.
 
 #### Hints
 
-- Ordinal values start with the numeral 1 representing the first item in the list. Nodes that are not part of a layer are considered to be in layer 0.
+- Ordinal values start with the numeral 1 representing the first item in the list.
+- Nodes that are not part of a layer are considered to be in layer 0.
 
 ## Description
 

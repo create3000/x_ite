@@ -33,7 +33,7 @@ sub node {
    return if $componentName =~ /^Annotation$/o;
    return if $typeName =~ /^X3D/o;
 
-   # return unless $typeName =~ /^CADAssembly$/o;
+   # return unless $typeName =~ /^TexCoordDamper2D$/o;
    say "$componentName $typeName";
 
    $md     = "$cwd/docs/_posts/components/$componentName/$typeName.md";
@@ -59,23 +59,24 @@ sub field {
 
    return $file unless grep /^$name$/, @$node;
 
-   # return $file unless $name eq "metadata";
+   # return $file unless $name eq "tolerance";
    # say $name;
 
    @field = @$node [(first_index { /^$name$/ } @$node) + 1 .. $#$node];
    $field = shift @field;
 
    1 while $field =~ s/^\s*(?:\[.*?\]|\(.*?\))\s*//so;
-   $field =~ s/^(\s*or)?\s*[\[\()].*?[\]\)]\s*//so;
+   1 while $field =~ s/^(?:\s*or)?\s*(?:[\[\()].*?[\]\)]|-1\.)\s*//so;
 
    decode_entities $field;
-   $field =~ s/([<>])/\\$1/sgo;
+   $field =~ s/([<>|])/\\$1/sgo;
 
    # Special substitutions
    $field =~ s/\*next\* to/next to/sgo;
    $field =~ s/\[autoRefresh\b/autoRefresh/sgo;
 
    $field =~ s/\b$name\b/*$name*/sg;
+   $n = $1, $field =~ s/\b$n\b/*$n*/sg if $name =~ /^set_(.*)$/;
 
    @description = @hints = @warnings = ();
 

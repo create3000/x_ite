@@ -33,16 +33,20 @@ The SignalPdu node belongs to the **DIS** component and its default container fi
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
 ### SFBool [in, out] **visible** TRUE
 
 Whether or not renderable content within this node is visually displayed.
 
-#### Hint
+#### Hints
 
-- The visible field has no effect on animation behaviors, event passing or other non-visual characteristics.
-- Content must be visible to be collidable and to be pickable.
+- The *visible* field has no effect on animation behaviors, event passing or other non-visual characteristics.
+- Content must be *visible* to be collidable and to be pickable.
 
 ### SFBool [in, out] **bboxDisplay** FALSE
 
@@ -56,13 +60,22 @@ Whether to display bounding box for associated geometry, aligned with world coor
 
 Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost. Bounding box size can also be defined as an optional authoring hint that suggests an optimization or constraint.
 
-#### Hint
+#### Hints
 
 - Can be useful for collision computations or inverse-kinematics (IK) engines.
+- Precomputation and inclusion of bounding box information can speed up the initialization of large detailed models, with a corresponding cost of increased file size.
+- [X3D Architecture, 10.2.2 Bounding boxes](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/grouping.html#BoundingBoxes){:target="_blank"}
+- [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/grouping.html#X3DBoundedObject){:target="_blank"}
 
 ### SFVec3f [ ] **bboxCenter** 0 0 0 <small>(-∞,∞)</small>
 
-Bounding box center: optional hint for position offset from origin of local coordinate system.
+Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
+
+#### Hints
+
+- Precomputation and inclusion of bounding box information can speed up the initialization of large detailed models, with a corresponding cost of increased file size.
+- [X3D Architecture, 10.2.2 Bounding boxes](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/grouping.html#BoundingBoxes){:target="_blank"}
+- [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/grouping.html#X3DBoundedObject){:target="_blank"}
 
 ### SFBool [in, out] **enabled** TRUE
 
@@ -70,23 +83,27 @@ Enables/disables the sensor node.
 
 ### SFBool [out] **isActive**
 
-Have we had a network update recently?.
+Confirm whether there has been a recent network update.
+
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFString [in, out] **address** "localhost"
 
-Multicast network address, or else "localhost" example: 224.2.181.145.
+Multicast network *address*, or else 'localhost'. Example: 224.2.181.145.
 
 ### SFInt32 [in, out] **applicationID** 1 <small>[0,65535]</small>
 
-Each simulation application that can respond to simulation management PDUs needs to have a unique applicationID.
+Each simulation application that can respond to simulation management PDUs needs to have a unique *applicationID*.
 
 ### MFInt32 [in, out] **data** [ ] <small>[0,255]</small>
 
-Holds audio or digital data conveyed by the radio transmission. Interpretation of the field depends on values of encodingScheme and tdlType fields.
+Holds audio or digital *data* conveyed by the radio transmission. Interpretation of the field depends on values of encodingScheme and tdlType fields.
 
 ### SFInt32 [in, out] **dataLength** 0 <small>[0,65535]</small>
 
-Number of bits of digital voice audio or digital data being sent in the Signal PDU. If the Encoding Class is database index, then dataLength field is set to 96.
+Number of bits of digital voice audio or digital data being sent in the Signal PDU. If the Encoding Class is database index, then *dataLength* field is set to 96.
 
 ### SFInt32 [in, out] **encodingScheme** 0 <small>[0,65535]</small>
 
@@ -94,7 +111,7 @@ Designates both Encoding Class and Encoding Type. Encoding Class enumerated valu
 
 ### SFInt32 [in, out] **entityID** 0 <small>[0,65535]</small>
 
-*entityID* unique ID for entity within that application.
+EntityID unique ID for entity within that application.
 
 ### SFString [in, out] **multicastRelayHost** ""
 
@@ -110,11 +127,12 @@ Whether this entity is ignoring the network, sending DIS packets to the network,
 
 #### Warnings
 
-- Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values. Network activity may have associated security issues.
+- Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
+- Network activity may have associated security issues.
 
 ### SFInt32 [in, out] **port** 0 <small>[0,65535]</small>
 
-Multicast network port, for example: 62040.
+Multicast network *port*, for example: 3000.
 
 ### SFInt32 [in, out] **radioID** 0 <small>[0,65535]</small>
 
@@ -124,21 +142,29 @@ Identifies a particular radio within a given entity.
 
 Seconds between read updates, 0 means no reading.
 
+#### Hint
+
+- *readInterval* is a nonnegative SFTime duration interval, not an absolute clock time.
+
 ### SFBool [in, out] **rtpHeaderExpected** FALSE
 
 Whether RTP headers are prepended to DIS PDUs.
 
 ### SFInt32 [in, out] **sampleRate** 0 <small>[0,65535]</small>
 
-*sampleRate* gives either (1) sample rate in samples per second if Encoding Class is encoded audio, or (2) data rate in bits per second for data transmissions. If Encoding Class is database index, sampleRate is set to zero.
+*sampleRate* gives either (1) sample rate in samples per second if Encoding Class is encoded audio, or (2) data rate in bits per second for data transmissions. If Encoding Class is database index, *sampleRate* is set to zero.
+
+#### Hint
+
+- [Wikipedia Nyquist frequency](https://en.wikipedia.org/wiki/Nyquist_frequency){:target="_blank"}
 
 ### SFInt32 [in, out] **samples** 0 <small>[0,65535]</small>
 
-Number of samples in the PDU if the Encoding Class is encoded voice, otherwise the field is set to zero.
+Number of *samples* in the PDU if the Encoding Class is encoded voice, otherwise the field is set to zero.
 
 ### SFInt32 [in, out] **siteID** 0 <small>[0,65535]</small>
 
-Simulation/exercise siteID of the participating LAN or organization.
+Simulation/exercise *siteID* of the participating LAN or organization.
 
 ### SFInt32 [in, out] **tdlType** 0 <small>[0,65535]</small>
 
@@ -152,25 +178,49 @@ Select geometry to render: -1 for no geometry, 0 for text trace, 1 for default g
 
 Seconds between write updates, 0 means no writing (sending).
 
+#### Hint
+
+- *writeInterval* is a nonnegative SFTime duration interval, not an absolute clock time.
+
 ### SFBool [out] **isNetworkReader**
 
-Whether networkMode="remote" (listen to network as copy of remote entity)
+Whether networkMode='remote' (listen to network as copy of remote entity).
+
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFBool [out] **isNetworkWriter**
 
-Whether networkMode="master" (output to network as master entity at writeInterval)
+Whether networkMode='master' (output to network as master entity at writeInterval).
+
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFBool [out] **isRtpHeaderHeard**
 
 Whether incoming DIS packets have an RTP header prepended.
 
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
+
 ### SFBool [out] **isStandAlone**
 
-Whether networkMode="local" (ignore network but still respond to local events)
+Whether networkMode='local' (ignore network but still respond to local events).
+
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFTime [out] **timestamp**
 
-DIS timestamp in X3D units (seconds since 1 January 1970).
+DIS *timestamp* in X3D units (value 0.0 matches 1 January 1970) in seconds.
+
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ## Description
 

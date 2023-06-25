@@ -28,7 +28,11 @@ The RigidBody node belongs to the **RigidBodyPhysics** component and its default
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
 ### SFBool [in, out] **enabled** TRUE
 
@@ -40,7 +44,7 @@ Enables/disables node operation.
 
 #### Hint
 
-- Fixed is useful for indicating objects that do not move: walls, ground, etc.
+- *fixed* is useful for indicating objects that do not move: walls, ground, etc.
 
 ### SFVec3f [in, out] **position** 0 0 0 <small>(-∞,∞)</small>
 
@@ -98,9 +102,14 @@ Enables/disables node operation.
 
 *mass* of the body in kilograms.
 
+#### Hints
+
+- Https://en.wikipedia.org/wiki/Kilogram
+- [X3D Architecture 4.3.6 Standard units and coordinate system](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/concepts.html#Standardunitscoordinates){:target="_blank"}
+
 #### Warning
 
-- Mass must be greater than 0.
+- *mass* must be greater than 0.
 
 ### SFVec3f [in, out] **centerOfMass** 0 0 0 <small>(-∞,∞)</small>
 
@@ -108,7 +117,7 @@ Enables/disables node operation.
 
 ### SFNode [in, out] **massDensityModel** NULL <small class="red">not supported</small>
 
-Input/Output field massDensityModel.
+The *massDensityModel* field is used to describe the geometry type and dimensions used to calculate the mass density in the physics model. It is not rendered, nor modified by the physics model.
 
 ### SFBool [in, out] **useGlobalGravity** TRUE
 
@@ -128,7 +137,7 @@ Input/Output field massDensityModel.
 
 ### SFMatrix3f [in, out] **inertia** 1 0 0 0 1 0 0 0 1 <small>1 0 0</small>
 
-*inertia* matrix defines a 3x2 inertia tensor matrix.
+*inertia* matrix defines a 3x2 *inertia* tensor matrix.
 
 #### Warning
 
@@ -142,9 +151,10 @@ Input/Output field massDensityModel.
 
 *disableTime* defines interval when body becomes at rest and not part of rigid body calculations, reducing numeric instabilities.
 
-#### Hint
+#### Hints
 
 - Only activated if autoDisable='true'
+- *disableTime* is an SFTime duration interval, not an absolute clock time.
 
 ### SFFloat [in, out] **disableLinearSpeed** 0 <small>[0,∞)</small>
 
@@ -164,7 +174,7 @@ Input/Output field massDensityModel.
 
 ### MFNode [in, out] **geometry** [ ] <small>[X3DNBodyCollidableNode]</small>
 
-Input/Output field geometry.
+The *geometry* field is used to connect the body modelled by the physics engine implementation to the real *geometry* of the scene through the use of collidable nodes. This allows the *geometry* to be connected directly to the physics model as well as collision detection. Collidable nodes have their location set to the same location as the body instance in which they are located.
 
 ## Example
 

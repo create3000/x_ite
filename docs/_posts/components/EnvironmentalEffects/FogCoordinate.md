@@ -29,11 +29,15 @@ The FogCoordinate node belongs to the **EnvironmentalEffects** component and its
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
 ### MFFloat [in, out] **depth** [ ] <small>[0,1]</small>
 
-*depth* contains a set depth values.
+*depth* contains a set of 3D coordinate (triplet) point values.
 
 ## External Links
 

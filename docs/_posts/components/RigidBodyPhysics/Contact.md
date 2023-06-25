@@ -28,7 +28,11 @@ The Contact node belongs to the **RigidBodyPhysics** component and its default c
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
 ### SFVec3f [in, out] **position** 0 0 0 <small>(-∞,∞)</small>
 
@@ -44,15 +48,15 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 ### MFString [in, out] **appliedParameters** "BOUNCE"
 
-Default global parameters for collision outputs of rigid body physics system. Contact node can override parent CollisionCollection node. Selectable values for array: "BOUNCE" "USER_FRICTION" "FRICTION_COEFFICIENT-2" "ERROR_REDUCTION" "CONSTANT_FORCE" "SPEED-1" "SPEED-2" "SLIP-1" "SLIP-2".
+Default global parameters for collision outputs of rigid body physics system. Contact node can override parent CollisionCollection node. Selectable values for array: "BOUNCE" "USER_FRICTION" "FRICTION_COEFFICIENT_2" "ERROR_REDUCTION" "CONSTANT_FORCE" "SPEED_1" "SPEED_2" "SLIP_1" "SLIP_2".
 
 #### Hint
 
-- BOUNCE: bounce value is used; USER_FRICTION: apply user-supplied value; FRICTION_COEFFICIENT-2: apply frictionCoefficients values; ERROR_REDUCTION: apply softnessErrorCorrection value; CONSTANT_FORCE: apply softnessConstantForceMix value; SPEED-1: apply first component of surfaceSpeed array; SPEED-2: apply second component of surfaceSpeed array; SLIP-1: apply first component of slipFactors array; SLIP-2: apply second component of slipFactors array.
+- BOUNCE: bounce value is used; USER_FRICTION: apply user-supplied value; FRICTION_COEFFICIENT_2: apply frictionCoefficients values; ERROR_REDUCTION: apply softnessErrorCorrection value; CONSTANT_FORCE: apply softnessConstantForceMix value; SPEED_1: apply first component of surfaceSpeed array; SPEED_2: apply second component of surfaceSpeed array; SLIP_1: apply first component of slipFactors array; SLIP_2: apply second component of slipFactors array.
 
 ### SFFloat [in, out] **bounce** 0 <small>[0,1]</small>
 
-*bounce* indicates bounciness (0 = no bounce at all, 1 = maximum bounce).
+*bounce* indicates bounciness (0 = no *bounce* at all, 1 = maximum *bounce*).
 
 ### SFFloat [in, out] **minBounceSpeed** <small>[0,∞)</small>
 
@@ -88,19 +92,19 @@ Default global parameters for collision outputs of rigid body physics system. Co
 
 ### SFNode [in, out] **geometry1** NULL <small>[X3DNBodyCollidableNode]</small>
 
-Input/Output field geometry1.
+The *geometry1* and geometry2 fields specify collision-related information about body1 and body2.
 
 ### SFNode [in, out] **geometry2** NULL <small>[X3DNBodyCollidableNode]</small>
 
-Input/Output field geometry2.
+The geometry1 and *geometry2* fields specify collision-related information about body1 and body2.
 
 ### SFNode [in, out] **body1** NULL <small>[RigidBody]</small>
 
-Input/Output field body1.
+The *body1* and body2 fields specify two top-level nodes that should be evaluated in the physics model as a single set of interactions with respect to each other.
 
 ### SFNode [in, out] **body2** NULL <small>[RigidBody]</small>
 
-Input/Output field body2.
+The body1 and *body2* fields specify two top-level nodes that should be evaluated in the physics model as a single set of interactions with respect to each other.
 
 ## Description
 

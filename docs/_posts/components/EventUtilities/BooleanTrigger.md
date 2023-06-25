@@ -30,15 +30,27 @@ The BooleanTrigger node belongs to the **EventUtilities** component and its defa
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
 ### SFTime [in] **set_triggerTime** <small>(-∞,∞)</small>
 
 *set_triggerTime* provides input time event, typical event sent is TouchSensor touchTime.
 
+#### Warning
+
+- It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
+
 ### SFBool [out] **triggerTrue**
 
 *triggerTrue* outputs a true value whenever a triggerTime event is received.
+
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ## External Links
 

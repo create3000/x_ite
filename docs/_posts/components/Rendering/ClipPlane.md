@@ -29,7 +29,11 @@ The ClipPlane node belongs to the **Rendering** component and its default contai
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
 ### SFBool [in, out] **enabled** TRUE
 
@@ -37,20 +41,17 @@ Enables/disables node operation.
 
 ### SFVec4f [in, out] **plane** 0 1 0 0 <small>[0,1] or (-∞,∞)</small>
 
-If (a,b,c,d) is the plane, with the first three components being a normalized vector describing the plane's normal direction (and thus the fourth component d being distance from the origin), a point (x,y,z) is visible to the user, with regards to the clipping plane, if a\*x+b\*y+c\*z+d is greater than 0.
+If (a,b,c,d) is the *plane*, with the first three components being a normalized vector describing the *plane*'s normal direction (and thus the fourth component d being distance from the origin), a point (x,y,z) is visible to the user, with regards to the clipping *plane*, if a*x+b*y+c*z+d is greater than 0.
 
-#### Hint
+#### Hints
 
-- Negate all plane values to reverse which side of plane has visibility clipped.
+- Negate all *plane* values to reverse which side of *plane* has visibility clipped.
+- [*plane*-geometry equations](https://en.wikipedia.org/wiki/Plane_(geometry)#Point-normal_form_and_general_form_of_the_equation_of_a_plane){:target="_blank"}
+- [*plane*-geometry distance to point](https://en.wikipedia.org/wiki/Plane_(geometry)#Distance_from_a_point_to_a_plane){:target="_blank"}
 
 #### Warning
 
-- (a, b, c) value of (0, 0, 0) is forbidden since the zero vector has ambiguous direction and is thus degenerate, not defining a plane.
-
-#### See Also
-
-- [Plane-geometry equations](https://en.wikipedia.org/wiki/Plane_(geometry){:target="_blank"}
-#Point-normal_form_and_general_form_of_the_equation_of_a_plane) [Plane-geometry distance to point](https://en.wikipedia.org/wiki/Plane_(geometry){:target="_blank"}#Distance_from_a_point_to_a_plane)
+- (a, b, c) value of (0, 0, 0) is forbidden since the zero vector has ambiguous direction and is thus degenerate, not defining a *plane*.
 
 ## Description
 

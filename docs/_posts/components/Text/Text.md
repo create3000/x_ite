@@ -29,55 +29,77 @@ The Text node belongs to the **Text** component and its default container field 
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
-
-### MFString [in, out] **string** [ ]
-
-Single or multiple string values to present as Text. Each value in the string array (including empty strings) gets displayed on a separate line.
-
-#### Hints
-
-- MFString arrays can have multiple values, so separate each individual string by quote marks. Strings can contain quote marks by first escaping them with a backslash example: "say "hello" please" Many XML tools substitute XML character references automatically if needed (such as &amp;#38; for &amp; ampersand, or &amp;#34; for " quotation mark).
-
-#### See Also
-
-- [Relates to Internationalization (i18n)](https://www.w3.org/standards/webdesign/i18n){:target="_blank"}
-
-### MFFloat [in, out] **length** [ ] <small>[0,∞)</small>
-
-Array of length values for each text string in the local coordinate system. Each string is stretched or compressed to fit.
-
-### SFFloat [in, out] **maxExtent** 0 <small>[0,∞)</small>
-
-Limits/compresses all text strings if max string length is longer than maxExtent, as measured in local coordinate system.
-
-### SFBool [ ] **solid** FALSE
-
-Setting solid true means draw only one side of polygons (backface culling on), setting solid false means draw both sides of polygons (backface culling off).
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
 
 #### Hint
 
-- If in doubt, use solid='false' for maximum visibility.
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
+
+### MFString [in, out] **string** [ ]
+
+Single or multiple *string* values to present as Text. Each value in the *string* array (including empty strings) gets displayed on a separate line.
+
+#### Hints
+
+- MFString arrays can have multiple values, so separate each individual *string* by quote marks.
+- Strings can contain quote marks by first escaping them with a backslash example: "say \"hello\" please"
+- Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &#38; for & ampersand character, or &#34; for " quotation-mark character).
+- [Relates to Internationalization (i18n)](http://www.w3.org/standards/webdesign/i18n Example: https://x3dgraphics.com/examples/X3dForWebAuthors/Chapter02-GeometryPrimitives/TextIndex.html Example: https://x3dgraphics.com/examples/X3dForWebAuthors/Chapter02-GeometryPrimitives/TextSpecialCharactersIndex.html){:target="_blank"}
+
+### MFFloat [in, out] **length** [ ] <small>[0,∞)</small>
+
+Array of *length* values for each text string in the local coordinate system. Each string is stretched or compressed to fit.
+
+### SFFloat [in, out] **maxExtent** 0 <small>[0,∞)</small>
+
+Limits/compresses all text strings if max string length is longer than *maxExtent*, as measured in local coordinate system.
+
+### SFBool [ ] **solid** FALSE
+
+Setting *solid* true means draw only one side of polygons (backface culling on), setting *solid* false means draw both sides of polygons (backface culling off).
+
+#### Hints
+
+- Mnemonic "this geometry is *solid* like a brick" (you don't render the inside of a brick).
+- If in doubt, use *solid*='false' for maximum visibility.
+- (X3D version 4.0 draft) accessType relaxed to inputOutput in order to support animation and visualization.
 
 #### Warnings
 
-- Default value true can completely hide geometry if viewed from wrong side! Solid false not supported in VRML97.
+- Default value true can completely hide geometry if viewed from wrong side!
+- *solid* false not supported in VRML97.
 
 ### SFVec3f [out] **origin**
 
-*origin* of the text local coordinate system, in units of the coordinate system in which the Text node is embedded. The value of the origin field represents the upper left corner of the textBounds.
+*origin* of the text local coordinate system, in units of the coordinate system in which the Text node is embedded. The value of the *origin* field represents the upper left corner of the textBounds.
+
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFVec2f [out] **textBounds**
 
 2D bounding box value for all lines of text in the local coordinate system.
 
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
+
 ### MFVec2f [out] **lineBounds**
 
 Array of 2D bounding box values for each line of text in the local coordinate system.
 
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
+
 ### SFNode [in, out] **fontStyle** NULL <small>[X3DFontStyleNode]</small>
 
-Input/Output field fontStyle.
+The *fontStyle* field can contain a FontStyle or ScreenFontStyle node defining size, family, and style for presented text.
+
+#### Hint
+
+- [Wikipedia](https://en.wikipedia.org/wiki/Font){:target="_blank"}
 
 ## Description
 

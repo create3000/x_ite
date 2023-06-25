@@ -29,7 +29,11 @@ The ExplosionEmitter node belongs to the **ParticleSystems** component and its d
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
 ### SFBool [in, out] **on** TRUE
 
@@ -41,7 +45,7 @@ Point from which particles emanate.
 
 ### SFFloat [in, out] **speed** 0 <small>[0,∞)</small>
 
-Initial linear speed (default is m/s) imparted to all particles along their direction of movement.
+Initial linear *speed* (default is m/s) imparted to all particles along their direction of movement.
 
 ### SFFloat [in, out] **variation** 0.25 <small>[0,∞)</small>
 
@@ -49,15 +53,17 @@ Multiplier for the randomness used to control the range of possible output value
 
 #### Hint
 
-- Variation of zero does not allow any randomness.
+- *variation* of zero does not allow any randomness.
 
 ### SFFloat [ ] **mass** 0 <small>[0,∞)</small>
 
-Basic mass of each particle in mass base units (default is grams).
+Basic *mass* of each particle, defined in *mass* base units (default is kilograms).
 
-#### Hint
+#### Hints
 
-- Mass is needed if gravity or other force-related calculations are performed per-particle.
+- *mass* is needed if gravity or other force-related calculations are performed on a per-particle basis.
+- Https://en.wikipedia.org/wiki/Kilogram
+- [X3D Architecture 4.3.6 Standard units and coordinate system](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/concepts.html#Standardunitscoordinates){:target="_blank"}
 
 ### SFFloat [ ] **surfaceArea** 0 <small>[0,∞)</small>
 
@@ -65,7 +71,8 @@ Particle surface area in area base units (default is meters squared). Surface ar
 
 #### Hints
 
-- SurfaceArea value represents average frontal area presented to the wind. Assumes spherical model for each particle (i.e., surface area is the same regardless of direction).
+- *surfaceArea* value represents average frontal area presented to the wind.
+- Assumes spherical model for each particle (i.e., surface area is the same regardless of direction).
 
 ## Example
 

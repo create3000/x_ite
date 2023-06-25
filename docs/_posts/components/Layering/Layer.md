@@ -29,7 +29,11 @@ The Layer node belongs to the **Layering** component and its default container f
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
 ### SFBool [in, out] **pickable** TRUE
 
@@ -37,19 +41,25 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 ### MFString [in, out] **objectType** "ALL" <small>["ALL", "NONE", "TERRAIN", ...]</small>
 
-The objectType field specifies a set of labels used in the picking process. Each string specified is treated as an independent label that needs to be matched against the same type in one of the pick sensor instances.
+The *objectType* field specifies a set of labels used in the picking process. Each string specified is treated as an independent label that needs to be matched against the same type in one of the pick sensor instances. Example: labeling a PickableGroup with the *objectType* value "WATER" and then attempting to intersect a pick sensor with *objectType* value "GROUND" fails since the *objectType* values do not match. Example: the special value "ALL" means that each node is available for picking regardless of the type specified by the pick sensor. Example: the special value "NONE" effectively disables all picking for this node and is the equivalent of setting the pickable field to false.
 
 #### Hints
 
-- Authors may define any value for objectType. MFString arrays can have multiple values, so "separate each individual string" "by using quote marks".
+- Authors may define any value for *objectType*.
+- MFString arrays can have multiple values, so "separate each individual string" "by using quote marks".
 
 ### SFBool [in, out] **visible** TRUE
 
 Whether or not renderable content within this node is visually displayed.
 
+#### Hints
+
+- The *visible* field has no effect on animation behaviors, event passing or other non-visual characteristics.
+- Content must be *visible* to be collidable and to be pickable.
+
 ### SFNode [in, out] **viewport** NULL <small>[X3DViewportNode]</small>
 
-The viewport field is a single Viewport node that constrains layer output to a sub-region of the render surface.
+The *viewport* field is a single Viewport node that constrains layer output to a sub-region of the render surface.
 
 ### MFNode [in] **addChildren**
 
@@ -63,9 +73,12 @@ Input field removeChildren.
 
 Nodes making up this layer.
 
-#### Hint
+#### Hints
 
-- No transformations are possible above each Layerset/Layer combination in the scene graph hierarchy.
+- No transformations are possible above each LayerSet/Layer combination in the scene graph hierarchy.
+- InputOnly MFNode addChildren field can append new X3DChildNode nodes via a ROUTE connection, duplicate input nodes (i.e. matching DEF, USE values) are ignored.
+- InputOnly MFNode removeChildren field can remove nodes from the *children* list, unrecognized input nodes (i.e. nonmatching DEF, USE values) are ignored.
+- [X3D Architecture 10.2.1 Grouping and *children* node types](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/grouping.html#GroupingAndChildrenNodes){:target="_blank"}
 
 ## Description
 

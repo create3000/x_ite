@@ -29,7 +29,11 @@ The UniversalJoint node belongs to the **RigidBodyPhysics** component and its de
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
 ### MFString [in, out] **forceOutput** "NONE" <small>["ALL", "NONE", ...]</small>
 
@@ -45,7 +49,7 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 #### Hint
 
-- 0 0 0 means motor disabled.
+- 0 0 0 means motor disabled about this axis.
 
 ### SFVec3f [in, out] **axis2** 0 0 0 <small>(-∞,∞)</small>
 
@@ -53,11 +57,15 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 #### Hint
 
-- 0 0 0 means motor disabled.
+- 0 0 0 means motor disabled about this axis.
 
 ### SFFloat [in, out] **stop1Bounce** 0 <small>[0,1]</small>
 
-Input/Output field stop1Bounce.
+*stop1Bounce* is velocity factor for bounce back once stop point is reached.
+
+#### Hint
+
+- 0 means no bounce, 1 means return velocity matches.
 
 ### SFFloat [in, out] **stop2Bounce** 0 <small>[0,1]</small>
 
@@ -101,11 +109,11 @@ Output field body2AnchorPoint.
 
 ### SFNode [in, out] **body1** NULL <small>[RigidBody]</small>
 
-Input/Output field body1.
+The *body1* and body2 fields indicate the two RigidBody nodes connected by this joint.
 
 ### SFNode [in, out] **body2** NULL <small>[RigidBody]</small>
 
-Input/Output field body2.
+The body1 and *body2* fields indicate the two RigidBody nodes connected by this joint.
 
 ## Description
 

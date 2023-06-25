@@ -30,27 +30,36 @@ The MetadataFloat node belongs to the **Core** component and its default contain
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
-
-### SFString [in, out] **name** ""
-
-Depending on the metadata vocabulary, the attribute name is usually required for metadata nodes.
-
-#### Warning
-
-- Name is not included if this instance is a USE node.
-
-### SFString [in, out] **reference** ""
-
-*reference* to the metadata standard or definition defining this particular metadata value.
-
-### MFFloat [in, out] **value** [ ]
-
-The value attribute is a strictly typed data array providing relevant metadata information.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
 
 #### Hint
 
-- Many XML tools substitute XML character references automatically if needed (such as &amp;#38; for &amp; ampersand, or &amp;#34; for " quotation mark).
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
+
+### SFString [in, out] **name** ""
+
+Depending on the metadata vocabulary, the attribute *name* is usually required for metadata nodes.
+
+#### Hints
+
+- Well-defined names can simplify design and debugging through improved author understanding.
+- [X3D Scene Authoring Hints, Naming Conventions](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#NamingConventions){:target="_blank"}
+
+#### Warning
+
+- *name* field is not included if this instance is a USE node, in order to avoid potential mismatches.
+
+### SFString [in, out] **reference** ""
+
+Reference to the metadata standard or definition defining this particular metadata value.
+
+### MFFloat [in, out] **value** [ ]
+
+The *value* attribute is a strictly typed data array providing relevant metadata information.
+
+#### Hint
+
+- Many XML tools substitute XML character references for special characters automatically if needed within an attribute *value* (such as &#38; for & ampersand character, or &#34; for " quotation-mark character).
 
 ## Description
 

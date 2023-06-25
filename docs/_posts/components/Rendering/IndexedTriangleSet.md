@@ -30,7 +30,11 @@ The IndexedTriangleSet node belongs to the **Rendering** component and its defau
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
 ### MFInt32 [in] **set_index** <small>[0,∞)</small>
 
@@ -42,11 +46,13 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 ### SFBool [ ] **solid** TRUE
 
-Setting solid true means draw only one side of polygons (backface culling on), setting solid false means draw both sides of polygons (backface culling off).
+Setting *solid* true means draw only one side of polygons (backface culling on), setting *solid* false means draw both sides of polygons (backface culling off).
 
-#### Hint
+#### Hints
 
-- If in doubt, use solid='false' for maximum visibility.
+- Mnemonic "this geometry is *solid* like a brick" (you don't render the inside of a brick).
+- If in doubt, use *solid*='false' for maximum visibility.
+- (X3D version 4.0 draft) accessType relaxed to inputOutput in order to support animation and visualization.
 
 #### Warning
 
@@ -54,23 +60,37 @@ Setting solid true means draw only one side of polygons (backface culling on), s
 
 ### SFBool [ ] **ccw** TRUE
 
-*ccw* = counterclockwise: ordering of vertex coordinates orientation.
+*ccw* defines clockwise/counterclockwise ordering of vertex coordinates, which in turn defines front/back orientation of polygon normals according to Right-Hand Rule (RHR).
 
-#### Hint
+#### Hints
 
-- *ccw* false can reverse solid (backface culling) and normal-vector orientation.
+- A good debugging technique for problematic polygons is to try changing the value of *ccw*, which can reverse solid effects (single-sided backface culling) and normal-vector direction.
+- [Clockwise](https://en.wikipedia.org/wiki/Clockwise){:target="_blank"}
+
+#### Warning
+
+- Consistent and correct ordering of left-handed or right-handed point sequences is important throughout the coord array of point values.
 
 ### SFBool [ ] **colorPerVertex** TRUE
 
-Whether Color node color values are applied to each vertex (true) or to each polygon face (false).
+Whether Color\|ColorRGBA values are applied to each point vertex (true) or to each polygon face (false).
 
-#### See Also
+#### Hint
 
 - [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color){:target="_blank"}
 
+#### Warnings
+
+- The provided value of IndexedTriangleSet *colorPerVertex* field is ignored and always treated as true.
+- If child Color\|ColorRGBA node is not provided, then geometry is rendered using corresponding Appearance and material/texture values.
+
 ### SFBool [ ] **normalPerVertex** TRUE
 
-Whether Normal node vector values are applied to each vertex (true) or to each polygon face (false).
+Whether Normal node vector values are applied to each point vertex (true) or to each polygon face (false).
+
+#### Hint
+
+- If no child Normal node is provided, the X3D browser shall automatically generate normals, using creaseAngle to determine smoothed shading across shared vertices.
 
 ### MFInt32 [ ] **index** [ ] <small>[0,∞)</small>
 
@@ -82,7 +102,7 @@ Whether Normal node vector values are applied to each vertex (true) or to each p
 
 ### MFNode [in, out] **attrib** [ ] <small>[X3DVertexAttributeNode]</small>
 
-Multiple contained FloatVertexAttribute nodes that can specify list of per-vertex attribute information for programmable shaders.
+Single contained FloatVertexAttribute node that can specify list of per-vertex attribute information for programmable shaders.
 
 #### Hint
 
@@ -94,7 +114,7 @@ Single contained FogCoordinate node that can specify depth parameters for fog in
 
 ### SFNode [in, out] **color** NULL <small>[X3DColorNode]</small>
 
-Single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorIndex and colorPerVertex fields.
+Single contained Color or ColorRGBA node that can specify *color* values applied to corresponding vertices according to colorIndex and colorPerVertex fields.
 
 ### SFNode [in, out] **texCoord** NULL <small>[X3DTextureCoordinateNode]</small>
 
@@ -107,6 +127,10 @@ Single contained Normal node that can specify perpendicular vectors for correspo
 #### Hint
 
 - Useful for special effects. Normal vector computation by 3D graphics hardware is quite fast so adding normals to a scene is typically unnecessary.
+
+#### Warning
+
+- *normal* vectors increase file size, typically doubling geometry definitions.
 
 ### SFNode [in, out] **coord** NULL <small>[X3DCoordinateNode]</small>
 

@@ -30,11 +30,19 @@ The PointLight node belongs to the **Lighting** component and its default contai
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
 ### SFBool [in, out] **global** TRUE
 
-*global* lights illuminate all objects within their volume of lighting influence. Scoped lights only illuminate objects within the same transformation hierarchy.
+Global lights illuminate all objects within their volume of lighting influence. Scoped lights only illuminate objects within the same transformation hierarchy.
+
+#### Warning
+
+- DirectionalLight default *global*=false to limit scope and avoid inadvertently illuminating every object in a large scene. PointLight and SpotLight default *global*=true since their effects are each limited by maximum radius value.
 
 ### SFBool [in, out] **on** TRUE
 
@@ -44,7 +52,7 @@ Enables/disables this light source.
 
 *color* of light, applied to colors of objects.
 
-#### See Also
+#### Hint
 
 - [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color){:target="_blank"}
 
@@ -58,7 +66,11 @@ Brightness of ambient (nondirectional background) emission from the light.
 
 ### SFVec3f [in, out] **attenuation** 1 0 0 <small>[0,∞)</small>
 
-Constant, linear-distance and squared-distance dropoff factors.
+Constant, linear-distance and squared-distance dropoff factors as radial distance increases from the source.
+
+#### Hint
+
+- *attenuation* = 1/max(*attenuation*[0] + *attenuation*[1] ⨯ r + *attenuation*[2] ⨯ r2 , 1)
 
 ### SFVec3f [in, out] **location** 0 0 0 <small>(-∞,∞)</small>
 
