@@ -33,7 +33,7 @@ sub node {
    return if $componentName =~ /^Annotation$/o;
    return if $typeName =~ /^X3D/o;
 
-   # return unless $typeName =~ /^TexCoordDamper2D$/o;
+   # return unless $typeName =~ /^TransmitterPdu$/o;
    say "$componentName $typeName";
 
    $md     = "$cwd/docs/_posts/components/$componentName/$typeName.md";
@@ -141,10 +141,12 @@ sub field {
       $string .= "\n";
    }
 
-   # say $name;
-   # print $string;
+   $string =~ s/^\s+$//sgo;
 
-   $file =~ s/(###.*?\*\*$name\*\*.*?\n+).*?\n((?:###|##)\s+)/$1$string$2/s;
+   # say $name;
+   # print "'$string'";
+
+   $file =~ s/(###.*?\*\*$name\*\*.*?\n+).*?\n((?:###|##)\s+)/$1$string$2/s if $string;
 
    return $file;
 }
