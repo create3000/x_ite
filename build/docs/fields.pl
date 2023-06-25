@@ -117,9 +117,12 @@ sub field {
 
    $string = "";
 
-   $string .= join " ", @description;
-   $string .= "\n";
-   $string .= "\n";
+   if (@description)
+   {
+      $string .= join " ", @description;
+      $string .= "\n";
+      $string .= "\n";
+   }
 
    if (@hints)
    {
@@ -140,8 +143,6 @@ sub field {
       $string .= "- $_\n" foreach @warnings;
       $string .= "\n";
    }
-
-   $string =~ s/^\s+$//sgo;
 
    # say $name;
    # print "'$string'";
