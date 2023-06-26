@@ -45,6 +45,7 @@ sub node {
 
    $md     = "$cwd/docs/_posts/components/$componentName/$typeName.md";
    $file   = `cat $md`;
+   $file   = reorder_fields ($typeName, $componentName, $file);
    @fields = map { /\*\*(.*?)\*\*/o; $_ = $1 } $file =~ /###\s*[SM]F\w+.*/go;
 
    return unless grep /^$typeName$/, @td;
@@ -52,14 +53,40 @@ sub node {
    @node = @td [(first_index { /^$typeName$/ } @td) .. $#td];
    @node = @node [0 .. (first_index { /^$/ } @node)];
 
-   $file = field ($_, \@node, $file) foreach @fields;
+   $file = update_field ($_, \@node, $file) foreach @fields;
 
    open FILE, ">", $md;
    print FILE $file;
    close FILE;
 }
 
-sub field {
+sub reorder_fields {
+   $typeName      = shift;
+   $componentName = shift;
+   $file          = shift;
+
+   $source = `cat $cwd/src/x_ite/Components/$componentName/$typeName.js`;
+
+   @sourceFields = $source =~ /\bX3DFieldDefinition\s*\(.*/go;
+   @sourceFields = map { /"(.*?)"/o; $_ = $1 } @sourceFields;
+
+   $fields = { };
+
+   foreach $name (@sourceFields)
+   {
+      $file =~ s/(###.*?\*\*$name\*\*.*?\n[\s\S\n]*?\n)(?=(?:###|##)\s+)//;
+      $fields -> {$name} = $1;
+   }
+
+   $string = "";
+   $string .= $fields -> {$_} foreach @sourceFields;
+
+   $file =~ s/(## Fields\n+)/$1$string/so;
+
+   return $file;
+}
+
+sub update_field {
    $name = shift;
    $node = shift;
    $file = shift;
