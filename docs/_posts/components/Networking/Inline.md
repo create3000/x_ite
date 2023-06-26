@@ -13,7 +13,7 @@ tags: [Inline, Networking]
 
 ## Overview
 
-Inline is an X3DBoundedObject node that can load nodes from another X3D scene via url.
+Inline can load another X3D or VRML model into the current scene via url. Inline is an X3DBoundedObject node that has bounding-box dimensions.
 
 The Inline node belongs to the **Networking** component and its default container field is *children.* It is available since X3D version 2.0 or later.
 

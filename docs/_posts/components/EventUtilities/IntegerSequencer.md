@@ -13,7 +13,7 @@ tags: [IntegerSequencer, EventUtilities]
 
 ## Overview
 
-IntegerSequencer generates periodic discrete integer values that can be ROUTEd to other SFInt32 attributes (for example, when animating whichChoice in a Switch node).
+IntegerSequencer generates periodic discrete integer values. Authors can ROUTE value_changed output events to other SFInt32 attributes (for example, useful when animating whichChoice in a Switch node).
 
 The IntegerSequencer node belongs to the **EventUtilities** component and its default container field is *children.* It is available since X3D version 3.0 or later.
 

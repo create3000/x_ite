@@ -13,7 +13,7 @@ tags: [Normal, Rendering]
 
 ## Overview
 
-Normal defines a set of 3D surface-normal vectors that apply either to a sibling Coordinate/CoordinateDouble node, or else to a parent ElevationGrid node. Normal values are perpendicular directions that are used per-polygon or per-vertex when computing lighting and shading.
+Normal defines a set of 3D surface-normal vectors that apply either to a sibling Coordinate|CoordinateDouble node, or else to a parent ElevationGrid node. Normal values are perpendicular directions that are used per-polygon or per-vertex when computing lighting and shading.
 
 The Normal node belongs to the **Rendering** component and its default container field is *normal.* It is available since X3D version 2.0 or later.
 

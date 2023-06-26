@@ -13,7 +13,7 @@ tags: [Analyser, Sound]
 
 ## Overview
 
-Analyser ...
+Analyser provides real-time frequency and time-domain analysis information, without any change to the input.
 
 The Analyser node belongs to the **Sound** component and its default container field is *children.* It is available since X3D version 4.0 or later.
 

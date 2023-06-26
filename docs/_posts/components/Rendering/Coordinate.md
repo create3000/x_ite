@@ -13,7 +13,7 @@ tags: [Coordinate, Rendering]
 
 ## Overview
 
-Coordinate builds geometry by defining a set of 3D coordinate triplet values. Coordinate is used by IndexedFaceSet, IndexedLineSet, LineSet, PointSet, Triangle\* and IndexedTriangle\* nodes. Coordinate is also used by HAnimHumanoid, HAnimSegment, and various Nurbs nodes.
+Coordinate builds geometry by defining a set of 3D coordinate (triplet) point values. Coordinate is used by IndexedFaceSet, IndexedLineSet, LineSet, PointSet, Triangle* and IndexedTriangle* nodes. Coordinate is also used by HAnimHumanoid, HAnimSegment, and various Nurbs nodes.
 
 The Coordinate node belongs to the **Rendering** component and its default container field is *coord.* It is available since X3D version 2.0 or later.
 

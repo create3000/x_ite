@@ -13,7 +13,7 @@ tags: [Anchor, Networking]
 
 ## Overview
 
-Anchor is a Grouping node that can contain most nodes. When the user selects any of the geometry contained by the Anchor node, it jumps to another viewpoint or loads content (such as X3D, an image or HTML) specified by the url field. Loaded content completely replaces current content, if parameter is same window.
+Anchor is a Grouping node that can contain most nodes. When the user selects any of the geometry contained by the Anchor node, the browser either jumps to another viewpoint (similar to HTML bookmark) or else loads content (such as X3D, an image or HTML) specified by the url field. Newly loaded content completely replaces current content, if the value of parameter field indicates using the same window.
 
 The Anchor node belongs to the **Networking** component and its default container field is *children.* It is available since X3D version 2.0 or later.
 

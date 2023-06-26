@@ -13,7 +13,7 @@ tags: [Billboard, Navigation]
 
 ## Overview
 
-Billboard is a Grouping node that can contain most nodes. Content faces the user, rotating about the specified axis. Set axisOfRotation=0 0 0 to fully face the user's camera.
+Billboard is a Grouping node that can contain most nodes. Contained child geometry faces the user, rotating about the specified axis. Set axisOfRotation=0 0 0 to fully face the user's camera.
 
 The Billboard node belongs to the **Navigation** component and its default container field is *children.* It is available since X3D version 2.0 or later.
 

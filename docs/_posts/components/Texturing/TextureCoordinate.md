@@ -13,7 +13,7 @@ tags: [TextureCoordinate, Texturing]
 
 ## Overview
 
-TextureCoordinate specifies 2D (s,t) texture-coordinate points, used by vertex-based geometry nodes (such as IndexedFaceSet or ElevationGrid) to map textures to vertices (and patches to polygons).
+TextureCoordinate specifies 2D (s,t) texture-coordinate points, used by vertex-based geometry nodes (such as IndexedFaceSet or ElevationGrid) to map textures to vertices (and patches to NURBS surfaces).
 
 The TextureCoordinate node belongs to the **Texturing** component and its default container field is *texCoord.* It is available since X3D version 2.0 or later.
 

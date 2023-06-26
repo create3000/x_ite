@@ -13,7 +13,7 @@ tags: [TriangleStripSet, Rendering]
 
 ## Overview
 
-TriangleStripSet is a geometry node that can contain a Color/ColorRGBA, Coordinate/CoordinateDouble, Normal and TextureCoordinate nodes.
+TriangleStripSet is a geometry node containing a Coordinate|CoordinateDouble node, and can also contain Color|ColorRGBA, Normal and TextureCoordinate nodes.
 
 The TriangleStripSet node belongs to the **Rendering** component and its default container field is *geometry.* It is available since X3D version 3.0 or later.
 

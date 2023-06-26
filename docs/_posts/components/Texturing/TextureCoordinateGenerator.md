@@ -13,7 +13,7 @@ tags: [TextureCoordinateGenerator, Texturing]
 
 ## Overview
 
-TextureCoordinateGenerator computes 2D (s,t) texture-coordinate points, used by vertex-based geometry nodes (such as IndexedFaceSet or ElevationGrid) to map textures to vertices (and patches to polygons).
+TextureCoordinateGenerator computes 2D (s,t) texture-coordinate points, used by vertex-based geometry nodes (such as IndexedFaceSet or ElevationGrid) to map textures to vertices (and patches to NURBS surfaces).
 
 The TextureCoordinateGenerator node belongs to the **Texturing** component and its default container field is *texCoord.* It is available since X3D version 3.0 or later.
 

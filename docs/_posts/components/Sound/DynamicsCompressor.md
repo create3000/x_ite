@@ -13,7 +13,7 @@ tags: [DynamicsCompressor, Sound]
 
 ## Overview
 
-DynamicsCompressor ...
+DynamicsCompressor node implements a dynamics compression effect, lowering volume of loudest parts of signal and raising volume of softest parts.
 
 The DynamicsCompressor node belongs to the **Sound** component and its default container field is *children.* It is available since X3D version 4.0 or later.
 

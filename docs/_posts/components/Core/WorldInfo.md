@@ -13,7 +13,7 @@ tags: [WorldInfo, Core]
 
 ## Overview
 
-WorldInfo contains a title and persistent documentation or simple metadata information about an X3D scene.
+WorldInfo includes a browsesr-displayable title and persistent string information about an X3D scene. For X3D4 models, WorldInfo can also contain a single MetadataSet node with further metadata information about the scene.
 
 The WorldInfo node belongs to the **Core** component and its default container field is *children.* It is available since X3D version 2.0 or later.
 

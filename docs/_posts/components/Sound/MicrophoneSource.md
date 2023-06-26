@@ -13,7 +13,7 @@ tags: [MicrophoneSource, Sound]
 
 ## Overview
 
-MicrophoneSource ...
+MicrophoneSource captures input from a physical microphone in the real world.
 
 The MicrophoneSource node belongs to the **Sound** component and its default container field is *children.* It is available since X3D version 4.0 or later.
 

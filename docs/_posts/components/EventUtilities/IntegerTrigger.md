@@ -13,7 +13,7 @@ tags: [IntegerTrigger, EventUtilities]
 
 ## Overview
 
-IntegerTrigger converts boolean true or time input events to an integer value (for example, when animating whichChoice in a Switch node).
+IntegerTrigger converts set_boolean true input events to an integer value (for example, useful when animating whichChoice in a Switch node).
 
 The IntegerTrigger node belongs to the **EventUtilities** component and its default container field is *children.* It is available since X3D version 3.0 or later.
 

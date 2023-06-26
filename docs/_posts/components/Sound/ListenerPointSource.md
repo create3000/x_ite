@@ -13,7 +13,7 @@ tags: [ListenerPointSource, Sound]
 
 ## Overview
 
-ListenerPointSource ...
+ListenerPointSource node represents position and orientation of a person listening to virtual sound in the audio scene, and provides single or multiple sound channels as output. Multiple ListenerPointSource nodes can be active for sound processing.
 
 The ListenerPointSource node belongs to the **Sound** component and its default container field is *children.* It is available since X3D version 4.0 or later.
 

@@ -13,7 +13,7 @@ tags: [MultiTexture, Texturing]
 
 ## Overview
 
-MultiTexture applies several individual textures to a 3D object to achieve a more complex visual effect. MultiTexture contains multiple ImageTexture, MovieTexture and PixelTexture nodes. Texture maps have a 2D coordinate system (s, t) horizontal and vertical, with (s, t) values in range [0.0, 1.0] for opposite corners of the image.
+MultiTexture applies several individual textures to a single geometry node, enabling a variety of visual effects that include light mapping and environment mapping. MultiTexture can contain zero or more ImageTexture, MovieTexture, PixelTexture, ComposedCubeMapTexture, GeneratedCubeMapTexture, ImageCubeMapTexture, ComposedTexture3D, ImageTexture3D, and PixelTexture3D nodes. Texture maps have a 2D coordinate system (s, t) horizontal and vertical, with (s, t) texture-coordinate values in range [0.0, 1.0] for opposite corners of the image.
 
 The MultiTexture node belongs to the **Texturing** component and its default container field is *texture.* It is available since X3D version 3.0 or later.
 

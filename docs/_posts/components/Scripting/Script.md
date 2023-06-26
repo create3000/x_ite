@@ -13,7 +13,7 @@ tags: [Script, Scripting]
 
 ## Overview
 
-Script provides programmed behavior for a scene. Define the script interface with `<field>` elements. Scripting code is embedded in a child CDATA node or (deprecated) in the url field. Optionally supported programming languages: ECMAScript (JavaScript) and (via url to a myNode.class file) Java.
+Script contains author-programmed event behaviors for a scene. Define the script input-output event interface by including <field/> elements. Scripting code is embedded in a child CDATA node or (deprecated) in the url field. Optionally supported programming languages are ECMAScript (JavaScript) and Java (via url to a myNode.class file).
 
 The Script node belongs to the **Scripting** component and its default container field is *children.* It is available since X3D version 2.0 or later.
 

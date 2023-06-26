@@ -13,7 +13,7 @@ tags: [LineProperties, Shape]
 
 ## Overview
 
-LineProperties allows fine control over rendering of lines and edges for associated geometry nodes inside the same Shape.
+LineProperties allows precise fine-grained control over the rendering style of lines and edges for associated geometry nodes inside the same Shape.
 
 The LineProperties node belongs to the **Shape** component and its default container field is *lineProperties.* It is available since X3D version 3.0 or later.
 

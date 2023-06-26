@@ -13,7 +13,7 @@ tags: [Gain, Sound]
 
 ## Overview
 
-Gain ...
+The Gain node amplifies or deamplifies the input signal.
 
 The Gain node belongs to the **Sound** component and its default container field is *children.* It is available since X3D version 4.0 or later.
 

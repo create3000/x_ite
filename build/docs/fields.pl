@@ -53,11 +53,129 @@ sub node {
    @node = @td [(first_index { /^$typeName$/ } @td) .. $#td];
    @node = @node [0 .. (first_index { /^$/ } @node)];
 
+   $file = update_node ($typeName, $componentName, \@node, $file);
    $file = update_field ($_, \@node, $file) foreach @fields;
 
    open FILE, ">", $md;
    print FILE $file;
    close FILE;
+}
+
+sub update_node {
+   $typeName      = shift;
+   $componentName = shift;
+   $node          = shift;
+   $file          = shift;
+   $node          = $node -> [1];
+
+   $source = `cat $cwd/src/x_ite/Components/$componentName/$typeName.js`;
+   $source =~ /Object\s*\.freeze\s*\(\["(.*?)", "(.*?)"\]\)/;
+   $from   = $1;
+   $to     = $2;
+
+   $source =~ /containerField:.*?value:\s*"(.*?)"/s;
+   $containerField = $1;
+
+   1 while $node =~ s/^\s*(?:\[.*?\]|\(.*?\))\s*//so;
+   1 while $node =~ s/^(?:\s*or)?\s*(?:[\[\()].*?[\]\)]|-1\.)\s*//so;
+
+   decode_entities $node;
+   $node =~ s/incldes/includes/sgo;
+
+   @description = @hints = @warnings = ();
+
+   # Split node.
+
+   $node =~ s/(Hint\s*:)/$1 __HINT__/sgo;
+   $node =~ s/(Warning\s*:)/$1 __WARNING__/sgo;
+
+   @sentences = split (/(?:Hint|Warning)\s*:/so, $node);
+
+   foreach (@sentences)
+   {
+      s/^\s+|\s+$//sgo;
+
+      if ($_ =~ s/__HINT__//)
+      {
+         s/^\s+|\s+$//sgo;
+
+         push @hints, $_;
+         next;
+      }
+
+      if ($_ =~ s/__WARNING__//)
+      {
+         s/^\s+|\s+$//sgo;
+
+         push @warnings, $_;
+         next;
+      }
+
+      push @description, $_;
+   }
+
+   $_ = ucfirst foreach @description;
+   $_ = ucfirst foreach @hints;
+   $_ = ucfirst foreach @warnings;
+
+   s/^(.*?)[\s,]+(https?:.*?$)/[$1]($2){:target="_blank"}/sgo foreach @hints;
+   s/^(.*?)[\s,]+(https?:.*?$)/[$1]($2){:target="_blank"}/sgo foreach @warnings;
+
+   # Top
+
+   $string = "";
+
+   if (@description)
+   {
+      $string .= "\n";
+      $string .= join " ", @description;
+      $string .= "\n";
+      $string .= "\n";
+   }
+   else
+   {
+      $string .= "\n";
+      $string .= "$typeName ...";
+      $string .= "\n";
+      $string .= "\n";
+   }
+
+   $string .= "The $typeName node belongs to the **$componentName** component and its default container field is *$containerField.*";
+   $string .= " It is available since X3D version $from or later." if $to eq "Infinity";
+   $string .= " It is available since X3D version $from until $to." if $to ne "Infinity";
+   $string .= "\n";
+   $string .= "\n";
+   $string .= ">Deprecated: This node is deprecated since X3D version $to. Future versions of the standard may remove this node.\n{: .prompt-danger }\n\n" if $to ne "Infinity";
+
+   $file =~ s/(## Overview\n).*?\n(?=(?:###|##)\s+)/$1$string/s;
+
+   return $file;
+
+   # Description
+
+   $string = "";
+
+   if (@hints)
+   {
+      $string .= "### ";
+      $string .= @hints == 1 ? "Hint" : "Hints";
+      $string .= "\n";
+      $string .= "\n";
+      $string .= "- $_\n" foreach @hints;
+      $string .= "\n";
+   }
+
+   if (@warnings)
+   {
+      $string .= "### ";
+      $string .= @warnings == 1 ? "Warning" : "Warnings";
+      $string .= "\n";
+      $string .= "\n";
+      $string .= "- $_\n" foreach @warnings;
+      $string .= "\n";
+   }
+
+   return $file;
 }
 
 sub reorder_fields {
@@ -112,12 +230,14 @@ sub update_field {
       decode_entities $field;
       $field =~ s/([<>|])/\\$1/sgo;
 
-      # Special substitutions
+      # Special substitutions.
       $field =~ s/\*next\* to/next to/sgo;
       $field =~ s/\[autoRefresh\b/autoRefresh/sgo;
 
       $field =~ s/\b$name\b/*$name*/sg;
       $n = $1, $field =~ s/\b$n\b/*$n*/sg if $name =~ /^set_(.*)$/;
+
+      # Split field.
 
       $field =~ s/(Hint\s*:)/$1 __HINT__/sgo;
       $field =~ s/(Warning\s*:)/$1 __WARNING__/sgo;

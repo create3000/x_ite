@@ -13,7 +13,7 @@ tags: [NormalInterpolator, Interpolation]
 
 ## Overview
 
-NormalInterpolator generates a series of normal (perpendicular) vector sets along the surface of a unit sphere ROUTE values to vector attribute of a `<Normal>` node or another Vector3FloatArray attribute
+NormalInterpolator generates a series of normal (perpendicular) 3-tuple SFVec3f values. Each vector value has unit length, i.e. the set of allowed vectors describes the surface of a unit sphere. Authors can ROUTE value_changed output events to a Normal node's vector field, or to another 3-tuple SFVec3f field.
 
 The NormalInterpolator node belongs to the **Interpolation** component and its default container field is *children.* It is available since X3D version 2.0 or later.
 

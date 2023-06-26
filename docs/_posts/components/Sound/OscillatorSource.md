@@ -13,7 +13,7 @@ tags: [OscillatorSource, Sound]
 
 ## Overview
 
-OscillatorSource ...
+OscillatorSource node represents an audio source generating a periodic waveform, providing a constant tone.#10;
 
 The OscillatorSource node belongs to the **Sound** component and its default container field is *children.* It is available since X3D version 4.0 or later.
 

@@ -13,7 +13,7 @@ tags: [Box, Geometry3D]
 
 ## Overview
 
-Box is a geometry node.
+Box is a geometry node specifying a rectangular cuboid.
 
 The Box node belongs to the **Geometry3D** component and its default container field is *geometry.* It is available since X3D version 2.0 or later.
 

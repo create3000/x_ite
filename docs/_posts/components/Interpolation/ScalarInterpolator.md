@@ -13,7 +13,7 @@ tags: [ScalarInterpolator, Interpolation]
 
 ## Overview
 
-ScalarInterpolator generates piecewise-linear values that can be ROUTEd to other Float attributes.
+ScalarInterpolator generates piecewise-linear SFFloat values. Authors can ROUTE value_changed output events to other SFFloat fields.
 
 The ScalarInterpolator node belongs to the **Interpolation** component and its default container field is *children.* It is available since X3D version 2.0 or later.
 

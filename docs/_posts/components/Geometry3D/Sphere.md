@@ -13,7 +13,7 @@ tags: [Sphere, Geometry3D]
 
 ## Overview
 
-Sphere is a geometry node.
+Sphere is a geometry node, representing a perfectly round geometrical object that is the surface of a completely round ball.
 
 The Sphere node belongs to the **Geometry3D** component and its default container field is *geometry.* It is available since X3D version 2.0 or later.
 

@@ -13,7 +13,7 @@ tags: [OrientationChaser, Followers]
 
 ## Overview
 
-OrientationChaser generates a series of rotation values that progressively change from initial value to destination value.
+OrientationChaser generates a series of 4-tuple axis-angle SFRotation values that progressively change from initial value to destination value.
 
 The OrientationChaser node belongs to the **Followers** component and its default container field is *children.* It is available since X3D version 3.2 or later.
 

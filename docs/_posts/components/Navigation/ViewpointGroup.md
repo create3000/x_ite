@@ -13,7 +13,7 @@ tags: [ViewpointGroup, Navigation]
 
 ## Overview
 
-ViewpointGroup collects Viewpoint, OrthoViewpoint and other ViewpointGroup nodes for better user-navigation support with a shared description on the viewpoint list.
+ViewpointGroup can contain Viewpoint, OrthoViewpoint, GeoViewpoint and other ViewpointGroup nodes for better user-navigation support with a shared description on the viewpoint list.
 
 The ViewpointGroup node belongs to the **Navigation** component and its default container field is *children.* It is available since X3D version 3.2 or later.
 

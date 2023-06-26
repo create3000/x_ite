@@ -13,7 +13,7 @@ tags: [QuadSet, CADGeometry]
 
 ## Overview
 
-QuadSet is a geometry node that defines quadrilaterals. QuadSet can contain Color/ColorRGBA, Coordinate/CoordinateDouble, Normal and TextureCoordinate nodes.
+QuadSet is a geometry node that defines planar quadrilaterals. QuadSet contains a Coordinate|CoordinateDouble node, and can also contain Color|ColorRGBA, Normal and TextureCoordinate nodes.
 
 The QuadSet node belongs to the **CADGeometry** component and its default container field is *geometry.* It is available since X3D version 3.1 or later.
 

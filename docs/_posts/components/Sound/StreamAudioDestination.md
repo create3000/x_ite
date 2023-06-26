@@ -13,7 +13,7 @@ tags: [StreamAudioDestination, Sound]
 
 ## Overview
 
-StreamAudioDestination ...
+StreamAudioDestination node represents the final audio destination via a media stream.
 
 The StreamAudioDestination node belongs to the **Sound** component and its default container field is *children.* It is available since X3D version 4.0 or later.
 

@@ -13,7 +13,7 @@ tags: [CoordinateInterpolator2D, Interpolation]
 
 ## Overview
 
-CoordinateInterpolator2D generates a series of SFVec2f or MFVec2f 2-tuple float values that can be ROUTEd to a SFVec2f or MFVec2f attribute.
+CoordinateInterpolator2D generates a series of SFVec2f or MFVec2f 2-tuple float values. Authors can ROUTE value_changed output events to a SFVec2f or MFVec2f attribute.
 
 The CoordinateInterpolator2D node belongs to the **Interpolation** component and its default container field is *children.* It is available since X3D version 3.0 or later.
 

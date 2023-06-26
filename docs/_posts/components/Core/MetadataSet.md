@@ -13,7 +13,7 @@ tags: [MetadataSet, Core]
 
 ## Overview
 
-MetadataSet contains a list of Metadata nodes that each have containerField="value" and together provide information about the parent node of the MetadataSet. Further information about this specific MetadataSet node may be provided by a single child Metadata node with containerField="metadata".
+MetadataSet contains a list of Metadata* nodes that each have containerField="value" and together provide information about the parent node of the MetadataSet. Further information about this specific MetadataSet node may be provided by a single child Metadata* node with containerField="metadata".
 
 The MetadataSet node belongs to the **Core** component and its default container field is *metadata.* It is available since X3D version 3.0 or later.
 

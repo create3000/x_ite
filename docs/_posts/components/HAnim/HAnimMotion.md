@@ -13,7 +13,7 @@ tags: [HAnimMotion, HAnim]
 
 ## Overview
 
-HAnimMotion ...
+An HAnimMotion node supports discrete frame-by-frame playback for H-Anim motion data animation. Design characteristics include integration with HAnim figure data and HAnimJoint nodes, animation control, and playback of raw motion data.
 
 The HAnimMotion node belongs to the **HAnim** component and its default container field is *children.* It is available since X3D version 4.0 or later.
 

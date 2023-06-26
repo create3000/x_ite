@@ -13,7 +13,7 @@ tags: [StreamAudioSource, Sound]
 
 ## Overview
 
-StreamAudioSource ...
+StreamAudioSource operates as an audio source whose media is received from a MediaStream obtained using the WebRTC or Media Capture and Streams APIs. This media source might originate from a remote microphone or sound-processing channed provided by a remote peer on a WebRTC call.\.
 
 The StreamAudioSource node belongs to the **Sound** component and its default container field is *children.* It is available since X3D version 4.0 or later.
 

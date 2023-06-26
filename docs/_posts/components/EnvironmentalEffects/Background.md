@@ -13,7 +13,7 @@ tags: [Background, EnvironmentalEffects]
 
 ## Overview
 
-Background simulates ground and sky, using vertical arrays of wraparound color values, Background can also provide backdrop textures on all six sides.
+Background simulates ground and sky, using vertical arrays of wraparound color values. Background can also provide url addresses for backdrop textures on all six sides.
 
 The Background node belongs to the **EnvironmentalEffects** component and its default container field is *children.* It is available since X3D version 2.0 or later.
 
