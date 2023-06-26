@@ -65,8 +65,7 @@ sub reorder_fields {
    $componentName = shift;
    $file          = shift;
 
-   $source = `cat $cwd/src/x_ite/Components/$componentName/$typeName.js`;
-
+   $source       = `cat $cwd/src/x_ite/Components/$componentName/$typeName.js`;
    @sourceFields = $source =~ /\bX3DFieldDefinition\s*\(.*/go;
    @sourceFields = map { /"(.*?)"/o; $_ = $1 } @sourceFields;
 
