@@ -122,4 +122,3 @@ Output event containing the node or nodes that have been found to intersect with
 ## See Also
 
 - [X3D Specification of VolumePickSensor](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/picking.html#VolumePickSensor){:target="_blank"}
-- [Event timing details are explained in 4.4.8.3 Execution model](https://www.web3d.org/files/specifications/19775-1/V3.3/Part01/concepts.html#ExecutionModel){:target="_blank"}

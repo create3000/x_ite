@@ -46,10 +46,6 @@ Enables/disables this light source.
 
 *color* of light, applied to colors of objects.
 
-#### See Also
-
-- [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color){:target="_blank"}
-
 ### SFFloat [in, out] **intensity** 1 <small>[0,∞)</small>
 
 Brightness of direct emission from the light.

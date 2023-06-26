@@ -215,6 +215,8 @@ sub reorder_fields {
 
    $file =~ s/(## Fields\n+)/$1$string/so;
 
+   $file =~ s/(## See Also.*?-.*?\n).*/$1/s;
+
    return $file;
 }
 

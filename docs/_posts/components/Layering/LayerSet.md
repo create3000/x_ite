@@ -82,4 +82,3 @@ The *layers* list defines a list of Layer nodes that contain the constituent par
 ## See Also
 
 - [X3D Specification of LayerSet](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/layering.html#LayerSet){:target="_blank"}
-- [X3D Abstract Specification 35.2.1 Overview of layering](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/layering.html#OverviewOfLayering){:target="_blank"}

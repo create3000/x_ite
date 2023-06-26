@@ -170,5 +170,3 @@ Grouping nodes contain an ordered list of *children* nodes.
 ## See Also
 
 - [X3D Specification of HAnimSegment](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/hanim.html#HAnimSegment){:target="_blank"}
-- [HAnim Specification](https://www.web3d.org/documents/specifications/19774-1/V2.0/HAnim/HAnimArchitecture.html){:target="_blank"}
-- [HAnim Specification, Segment](https://www.web3d.org/documents/specifications/19774-1/V2.0/HAnim/ObjectInterfaces.html#Segment){:target="_blank"}

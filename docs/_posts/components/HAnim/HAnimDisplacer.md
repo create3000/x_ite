@@ -106,6 +106,3 @@ The weigh factor has typical range [0,1] and defines the scale factor applied to
 ## See Also
 
 - [X3D Specification of HAnimDisplacer](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/hanim.html#HAnimDisplacer){:target="_blank"}
-- [HAnim Specification](https://www.web3d.org/documents/specifications/19774-1/V2.0/HAnim/HAnimArchitecture.html){:target="_blank"}
-- [HAnim Specification, Displacer](https://www.web3d.org/documents/specifications/19774-1/V2.0/HAnim/ObjectInterfaces.html#Displacer){:target="_blank"}
-- In the case of a face, there might be a separate HAnimDisplacer node for each facial expression.

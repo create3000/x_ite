@@ -99,4 +99,3 @@ Computed output value that approaches within tolerance of destination value, as 
 ## See Also
 
 - [X3D Specification of ColorChaser](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/followers.html#ColorChaser){:target="_blank"}
-- [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color){:target="_blank"}

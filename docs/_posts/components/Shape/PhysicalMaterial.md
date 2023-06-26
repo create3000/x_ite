@@ -187,9 +187,3 @@ How "clear" an object is: 1.0 is completely transparent, 0.0 is completely opaqu
 ## See Also
 
 - [X3D Specification of PhysicalMaterial](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#PhysicalMaterial){:target="_blank"}
-- [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color){:target="_blank"}
-- [X3D Example Archives, Basic, Universal Media Materials](https://www.web3d.org/x3d/content/examples/Basic/UniversalMediaMaterials){:target="_blank"}
-- [3D Architecture 17.2.2 Lighting model](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/lighting.html#Lightingmodel){:target="_blank"}
-- [Rendering](https://en.wikipedia.org/wiki/Rendering_(computer_graphics)){:target="_blank"}
-- [3D rendering](https://en.wikipedia.org/wiki/3D_rendering){:target="_blank"}
-- [Physically based rendering (PBR)](https://en.wikipedia.org/wiki/Physically_based_rendering){:target="_blank"}

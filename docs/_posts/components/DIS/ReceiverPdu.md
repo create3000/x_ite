@@ -233,4 +233,3 @@ DIS *timestamp* in X3D units (value 0.0 matches 1 January 1970) in seconds.
 ## See Also
 
 - [X3D Specification of ReceiverPdu](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/dis.html#ReceiverPdu){:target="_blank"}
-- [Savage Developers Guide on DIS](https://savage.nps.edu/Savage/developers.html#DIS){:target="_blank"}

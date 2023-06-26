@@ -159,4 +159,3 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 ## See Also
 
 - [X3D Specification of Inline](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/networking.html#Inline){:target="_blank"}
-- [X3D Scene Authoring Hints, Inlines and Prototypes](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#InlinesPrototypes){:target="_blank"}

@@ -174,6 +174,3 @@ Grouping nodes contain an ordered list of *children* nodes.
 ## See Also
 
 - [X3D Specification of HAnimSite](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/hanim.html#HAnimSite){:target="_blank"}
-- [HAnim Specification](https://www.web3d.org/documents/specifications/19774-1/V2.0/HAnim/HAnimArchitecture.html){:target="_blank"}
-- [HAnim Specification, Site](https://www.web3d.org/documents/specifications/19774-1/V2.0/HAnim/ObjectInterfaces.html#Site){:target="_blank"}
-- [HAnim Specification, Annex B, Feature points for the human body](https://www.web3d.org/documents/specifications/19774-1/V2.0/HAnim/FeaturePoints.html){:target="_blank"}

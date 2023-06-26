@@ -349,5 +349,3 @@ List of one or more indexed mesh definitions (such as IndexedFaceSet) that utili
 ## See Also
 
 - [X3D Specification of HAnimHumanoid](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/hanim.html#HAnimHumanoid){:target="_blank"}
-- [HAnim Specification](https://www.web3d.org/documents/specifications/19774-1/V2.0/HAnim/HAnimArchitecture.html){:target="_blank"}
-- [HAnim Specification, Humanoid](https://www.web3d.org/documents/specifications/19774-1/V2.0/HAnim/ObjectInterfaces.html#Humanoid){:target="_blank"}

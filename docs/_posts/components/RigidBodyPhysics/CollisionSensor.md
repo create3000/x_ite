@@ -72,4 +72,3 @@ The *collider* field specifies a CollisionCollection node that holds a collidabl
 ## See Also
 
 - [X3D Specification of CollisionSensor](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rigidBodyPhysics.html#CollisionSensor){:target="_blank"}
-- [Event timing details are explained in 4.4.8.3 Execution model](https://www.web3d.org/files/specifications/19775-1/V3.3/Part01/concepts.html#ExecutionModel){:target="_blank"}
