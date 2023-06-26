@@ -45,7 +45,7 @@ Author-provided prose that describes intended purpose of this node.
 #### Hints
 
 - Include space characters since a *description* is not a DEF identifier. Write short phrases that make descriptions clear and readable.
-- Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &#38; for & ampersand character, or &#34; for " quotation-mark character).
+- Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
 
 ### SFNode [ ] **geoOrigin** NULL <small>[GeoOrigin] (deprecated)</small>
 

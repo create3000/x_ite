@@ -44,7 +44,7 @@ Author-provided prose that describes intended purpose of the url asset.
 
 #### Hint
 
-- Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &#38; for & ampersand character, or &#34; for " quotation-mark character).
+- Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
 
 ### SFBool [in, out] **load** TRUE
 
@@ -68,7 +68,7 @@ List of address links for runnable script files.
 - If both *url* field and CDATA section are provided simultaneously, the *url* field is processed first. This approach allows utilization of update modifications or live queries in external scripts, while still providing reliable script source as a fallback alternative within the model itself.
 - [X3D XML Encoding, 4.3.13 Encapsulating Script node code](https://www.web3d.org/documents/specifications/19776-1/V3.3/Part01/concepts.html#EncapsulatingScriptNodeCode){:target="_blank"}
 - MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc."
-- Alternative XML encoding for quotation mark " is &quot; (which is an example of a character entity).
+- Alternative XML encoding for quotation mark " is &amp;quot; (which is an example of a character entity).
 - Can replace embedded blank(s) in *url* queries with %20 for each blank character.
 - [X3D Scene Authoring Hints, urls](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#urls){:target="_blank"}
 

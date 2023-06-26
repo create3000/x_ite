@@ -80,6 +80,10 @@ sub update_node {
    1 while $node =~ s/^(?:\s*or)?\s*(?:[\[\()].*?[\]\)]|-1\.)\s*//so;
 
    decode_entities $node;
+   $field =~ s/([<>|])/\\$1/sgo;
+   $field =~ s/&/&amp;/sgo;
+
+   # Special substitutions
    $node =~ s/incldes/includes/sgo;
    $node =~ s/polgyonal/polygonal/sgo;
 
@@ -231,6 +235,7 @@ sub update_field {
 
       decode_entities $field;
       $field =~ s/([<>|])/\\$1/sgo;
+      $field =~ s/&/&amp;/sgo;
 
       # Special substitutions.
       $field =~ s/\*next\* to/next to/sgo;

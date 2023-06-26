@@ -50,7 +50,7 @@ Local and/or online addresses of X3D model of interest, for example: "ExtrusionE
 
 - [See](https://www.web3d.org/x3d/content/examples/Basic/course/ExtrusionExampleShipIndex.html){:target="_blank"}
 - MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc."
-- Alternative XML encoding for quotation mark " is &quot; (which is an example of a character entity).
+- Alternative XML encoding for quotation mark " is &amp;quot; (which is an example of a character entity).
 - Can replace embedded blank(s) in *url* queries with %20 for each blank character.
 - [X3D Scene Authoring Hints, urls](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#urls){:target="_blank"}
 

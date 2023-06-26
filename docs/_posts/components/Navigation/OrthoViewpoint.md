@@ -59,7 +59,7 @@ Text *description* or navigation hint to describe the significance of this model
 - The currently bound NavigationInfo node has a major effect on how a user might change viewing position and orientation after reaching this Viewpoint.
 - Consider paired Viewpoint/NavigationInfo node combinations by defining ROUTE connections between corresponding isBound/set_bind fields.
 - Include space characters since a *description* is not a DEF identifier. Write short phrases that make descriptions clear and readable.
-- Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &#38; for & ampersand character, or &#34; for " quotation-mark character).
+- Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
 
 #### Warning
 

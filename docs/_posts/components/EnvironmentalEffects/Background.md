@@ -56,7 +56,7 @@ Image background panorama between ground/sky backdrop and scene's geometry.
 #### Hints
 
 - MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc."
-- Alternative XML encoding for quotation mark " is &quot; (which is an example of a character entity).
+- Alternative XML encoding for quotation mark " is &amp;quot; (which is an example of a character entity).
 - Can replace embedded blank(s) in url queries with %20 for each blank character. Interchange profile hint: this field may be ignored, applying the default value regardless.
 
 #### Warning
@@ -70,7 +70,7 @@ Image background panorama between ground/sky backdrop and scene's geometry.
 #### Hints
 
 - MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc."
-- Alternative XML encoding for quotation mark " is &quot; (which is an example of a character entity).
+- Alternative XML encoding for quotation mark " is &amp;quot; (which is an example of a character entity).
 - Can replace embedded blank(s) in url queries with %20 for each blank character. Interchange profile hint: this field may be ignored, applying the default value regardless.
 
 #### Warning
@@ -84,7 +84,7 @@ Image background panorama between ground/sky backdrop and scene's geometry.
 #### Hints
 
 - MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc."
-- Alternative XML encoding for quotation mark " is &quot; (which is an example of a character entity).
+- Alternative XML encoding for quotation mark " is &amp;quot; (which is an example of a character entity).
 - Can replace embedded blank(s) in url queries with %20 for each blank character. Interchange profile hint: this field may be ignored, applying the default value regardless.
 
 #### Warning
@@ -98,7 +98,7 @@ Image background panorama between ground/sky backdrop and scene's geometry.
 #### Hints
 
 - MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc."
-- Alternative XML encoding for quotation mark " is &quot; (which is an example of a character entity).
+- Alternative XML encoding for quotation mark " is &amp;quot; (which is an example of a character entity).
 - Can replace embedded blank(s) in url queries with %20 for each blank character. Interchange profile hint: this field may be ignored, applying the default value regardless.
 
 #### Warning
@@ -112,7 +112,7 @@ Image background panorama between ground/sky backdrop and scene's geometry.
 #### Hints
 
 - MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc."
-- Alternative XML encoding for quotation mark " is &quot; (which is an example of a character entity).
+- Alternative XML encoding for quotation mark " is &amp;quot; (which is an example of a character entity).
 - Can replace embedded blank(s) in url queries with %20 for each blank character. Interchange profile hint: this field may be ignored, applying the default value regardless.
 
 #### Warning
@@ -126,7 +126,7 @@ Image background panorama between ground/sky backdrop and scene's geometry.
 #### Hints
 
 - MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc."
-- Alternative XML encoding for quotation mark " is &quot; (which is an example of a character entity).
+- Alternative XML encoding for quotation mark " is &amp;quot; (which is an example of a character entity).
 - Can replace embedded blank(s) in url queries with %20 for each blank character. Interchange profile hint: this field may be ignored, applying the default value regardless.
 
 #### Warning

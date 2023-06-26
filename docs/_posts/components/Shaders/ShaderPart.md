@@ -42,7 +42,7 @@ Author-provided prose that describes intended purpose of the url asset.
 
 #### Hint
 
-- Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &#38; for & ampersand character, or &#34; for " quotation-mark character).
+- Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
 
 ### SFString [ ] **type** "VERTEX" <small>["VERTEX"|"FRAGMENT"]</small>
 
@@ -68,7 +68,7 @@ Location and filename of shader. Multiple locations are more reliable, and inclu
 #### Hints
 
 - MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc."
-- Alternative XML encoding for quotation mark " is &quot; (which is an example of a character entity).
+- Alternative XML encoding for quotation mark " is &amp;quot; (which is an example of a character entity).
 - Can replace embedded blank(s) in *url* queries with %20 for each blank character.
 - [X3D Scene Authoring Hints, urls](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#urls){:target="_blank"}
 - Embedded ecmascript: source can also be contained in the sourceCode pseudo-field without escape characters, equivalent to last entry in the *url* list, when using other API codebases and file encodings.
