@@ -52,7 +52,7 @@ sub node {
    @node = @td [(first_index { /^$typeName$/ } @td) .. $#td];
    @node = @node [0 .. (first_index { /^$/ } @node)];
 
-   $file = field ($_, \@node, $file) foreach @fields;
+   $file = field ($_, $componentName, \@node, $file) foreach @fields;
 
    open FILE, ">", $md;
    print FILE $file;
@@ -60,9 +60,10 @@ sub node {
 }
 
 sub field {
-   $name = shift;
-   $node = shift;
-   $file = shift;
+   $name          = shift;
+   $componentName = shift;
+   $node          = shift;
+   $file          = shift;
 
    # return $file unless $name eq "tolerance";
    # say $name;
@@ -124,6 +125,10 @@ sub field {
 
       s/^(.*?)[\s,]+(https?:.*?$)/[$1]($2){:target="_blank"}/sgo foreach @hints;
       s/^(.*?)[\s,]+(https?:.*?$)/[$1]($2){:target="_blank"}/sgo foreach @warnings;
+   }
+   else
+   {
+      return $file if $componentName =~ /^(?:Lighting)$/;
    }
 
    $string = "";
