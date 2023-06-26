@@ -293,7 +293,7 @@ Has the secondary weapon (Fire PDU) been fired?
 
 ### SFInt32 [in, out] **fireMissionIndex** 0 <small>[0,65535]</small>
 
-
+Input and output field fireMissionIndex.
 
 ### SFFloat [in, out] **firingRange** 0 <small>(0,∞)</small>
 

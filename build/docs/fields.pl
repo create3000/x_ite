@@ -21,6 +21,13 @@ s/^\s+|\s+$//sgo foreach @td;
 
 #say @td;
 
+$fieldDescription = {
+   " " => "",
+   "in" => "input ",
+   "out" => "output ",
+   "in, out" => "input and output ",
+};
+
 sub node {
    $filename = shift;
    chomp $filename;
@@ -61,6 +68,9 @@ sub field {
 
    # return $file unless $name eq "tolerance";
    # say $name;
+
+   $file =~ /###.*?\[(.*?)\].*?\*\*$name\*\*/;
+   $accessType = $1;
 
    @field = @$node [(first_index { /^$name$/ } @$node) + 1 .. $#$node];
    $field = shift @field;
@@ -119,7 +129,15 @@ sub field {
 
    if (@description)
    {
+      $string .= "\n";
       $string .= join " ", @description;
+      $string .= "\n";
+      $string .= "\n";
+   }
+   else
+   {
+      $string .= "\n";
+      $string .= ucfirst ($fieldDescription -> {$accessType} . "field $name.");
       $string .= "\n";
       $string .= "\n";
    }
@@ -147,7 +165,7 @@ sub field {
    # say $name;
    # print "'$string'";
 
-   $file =~ s/(###.*?\*\*$name\*\*.*?\n+).*?\n((?:###|##)\s+)/$1$string$2/s if $string;
+   $file =~ s/(###.*?\*\*$name\*\*.*?\n).*?\n((?:###|##)\s+)/$1$string$2/s if $string;
 
    return $file;
 }

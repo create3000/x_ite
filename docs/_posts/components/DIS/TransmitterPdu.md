@@ -99,7 +99,7 @@ World coordinates for antenna location.
 
 ### SFInt32 [in, out] **antennaPatternLength** 0 <small>[0,65535]</small>
 
-
+Input and output field antennaPatternLength.
 
 ### SFInt32 [in, out] **antennaPatternType** 0 <small>[0,65535]</small>
 
@@ -131,7 +131,7 @@ Source of transmission input. Enumerations value 0 for Other, 1 for Pilot, 2 for
 
 ### SFInt32 [in, out] **lengthOfModulationParameters** 0 <small>[0,255]</small>
 
-
+Input and output field lengthOfModulationParameters.
 
 ### SFInt32 [in, out] **modulationTypeDetail** 0 <small>[0,65535]</small>
 
