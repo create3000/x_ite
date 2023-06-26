@@ -15,7 +15,7 @@ tags: [CADAssembly, CADGeometry]
 
 CADAssembly holds a set of Computer-Aided Design (CAD) assemblies or parts grouped together. CADAssembly is a Grouping node that can contain CADAssembly (subassembly), CADPart or CADFace nodes.
 
-The CADAssembly node belongs to the **CADGeometry** component and its default container field is *children.* It is available from X3D version 3.1 or later.
+The CADAssembly node belongs to the **CADGeometry** component and its default container field is *children.* It is available from X3D version 3.1 or higher.
 
 ## Hierarchy
 

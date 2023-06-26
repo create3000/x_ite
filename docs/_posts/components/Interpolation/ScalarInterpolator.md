@@ -15,7 +15,7 @@ tags: [ScalarInterpolator, Interpolation]
 
 ScalarInterpolator generates piecewise-linear SFFloat values. Authors can ROUTE value_changed output events to other SFFloat fields.
 
-The ScalarInterpolator node belongs to the **Interpolation** component and its default container field is *children.* It is available from X3D version 2.0 or later.
+The ScalarInterpolator node belongs to the **Interpolation** component and its default container field is *children.* It is available from X3D version 2.0 or higher.
 
 ## Hierarchy
 

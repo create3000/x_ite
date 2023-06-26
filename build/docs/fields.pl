@@ -149,8 +149,8 @@ sub update_node {
 
    $string .= "The $typeName node belongs to the **$componentName** component and its default container field is *$containerField.*";
    $string .= " ";
-   $string .= "It is available from X3D version $from or later."  if $to eq "Infinity";
-   $string .= "It is available from X3D version $from to $to." if $to ne "Infinity";
+   $string .= "It is available from X3D version $from or higher." if $to eq "Infinity";
+   $string .= "It is available from X3D version $from to $to."    if $to ne "Infinity";
    $string .= "\n";
    $string .= "\n";
    $string .= ">Deprecated: This node is deprecated since X3D version $to. Future versions of the standard may remove this node.\n{: .prompt-danger }\n\n" if $to ne "Infinity";

@@ -15,7 +15,7 @@ tags: [Collision, Navigation]
 
 Collision detects camera-to-object contact using current view and NavigationInfo avatarSize. Collision is a Grouping node that reports collision detection for its children.
 
-The Collision node belongs to the **Navigation** component and its default container field is *children.* It is available from X3D version 2.0 or later.
+The Collision node belongs to the **Navigation** component and its default container field is *children.* It is available from X3D version 2.0 or higher.
 
 ## Hierarchy
 

@@ -15,7 +15,7 @@ tags: [NurbsTextureCoordinate, NURBS]
 
 NurbsTextureCoordinate describes a 3D NURBS surface in the parametric domain of its surface host, specifying mapping of texture onto the surface.
 
-The NurbsTextureCoordinate node belongs to the **NURBS** component and its default container field is *texCoord.* It is available from X3D version 3.0 or later.
+The NurbsTextureCoordinate node belongs to the **NURBS** component and its default container field is *texCoord.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 

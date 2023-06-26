@@ -15,7 +15,7 @@ tags: [TimeTrigger, EventUtilities]
 
 TimeTrigger converts boolean true events to time events.
 
-The TimeTrigger node belongs to the **EventUtilities** component and its default container field is *children.* It is available from X3D version 3.0 or later.
+The TimeTrigger node belongs to the **EventUtilities** component and its default container field is *children.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 

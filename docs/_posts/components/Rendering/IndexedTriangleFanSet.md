@@ -15,7 +15,7 @@ tags: [IndexedTriangleFanSet, Rendering]
 
 IndexedTriangleFanSet is a geometry node containing a Coordinate|CoordinateDouble node, and can also contain Color|ColorRGBA, Normal and TextureCoordinate nodes.
 
-The IndexedTriangleFanSet node belongs to the **Rendering** component and its default container field is *geometry.* It is available from X3D version 3.0 or later.
+The IndexedTriangleFanSet node belongs to the **Rendering** component and its default container field is *geometry.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 

@@ -15,7 +15,7 @@ tags: [Fog, EnvironmentalEffects]
 
 Fog simulates atmospheric effects by blending distant objects with fog color.
 
-The Fog node belongs to the **EnvironmentalEffects** component and its default container field is *children.* It is available from X3D version 2.0 or later.
+The Fog node belongs to the **EnvironmentalEffects** component and its default container field is *children.* It is available from X3D version 2.0 or higher.
 
 ## Hierarchy
 

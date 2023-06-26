@@ -15,7 +15,7 @@ tags: [BallJoint, RigidBodyPhysics]
 
 BallJoint represents an unconstrained joint between two bodies that pivot about a common anchor point. Contains two RigidBody nodes (containerField values body1, body2).
 
-The BallJoint node belongs to the **RigidBodyPhysics** component and its default container field is *joints.* It is available from X3D version 3.2 or later.
+The BallJoint node belongs to the **RigidBodyPhysics** component and its default container field is *joints.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 
