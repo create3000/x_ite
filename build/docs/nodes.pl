@@ -46,7 +46,6 @@ sub node {
    $md     = "$cwd/docs/_posts/components/$componentName/$typeName.md";
    $file   = `cat $md`;
    $file   = reorder_fields ($typeName, $componentName, $file);
-   $file   = update_example ($typeName, $componentName, $file);
    @fields = map { /\*\*(.*?)\*\*/o; $_ = $1 } $file =~ /###\s*[SM]F\w+.*/go;
 
    if (grep /^$typeName$/, @tooltips)
@@ -57,6 +56,8 @@ sub node {
       $file = update_node ($typeName, $componentName, \@node, $file);
       $file = update_field ($_, \@node, $file) foreach @fields;
    }
+
+   $file = update_example ($typeName, $componentName, $file); # Must be executed after update_node.
 
    open FILE, ">", $md;
    print FILE $file;
@@ -88,6 +89,7 @@ sub update_node {
    # Special substitutions
    $node =~ s/incldes/includes/sgo;
    $node =~ s/polgyonal/polygonal/sgo;
+   $node =~ s/renderStryle/renderStyle/sgo;
 
    @description = @hints = @warnings = ();
 
@@ -106,7 +108,7 @@ sub update_node {
       {
          s/^\s+|\s+$//sgo;
 
-         push @hints, $_;
+         push @hints, $_ if $_;
          next;
       }
 
@@ -114,7 +116,7 @@ sub update_node {
       {
          s/^\s+|\s+$//sgo;
 
-         push @warnings, $_;
+         push @warnings, $_ if $_;
          next;
       }
 
@@ -222,10 +224,14 @@ sub update_example {
    $componentName = shift;
    $file          = shift;
 
-   $string = "<x3d-canvas src=\"https://create3000.github.io/media/examples/$componentName/$typeName/$typeName.x3d\" update=\"auto\"></x3d-canvas>";
+   return $file unless -d "../media/docs/examples/$componentName/$typeName";
 
-      # $file =~ s/\n\n(## See Also)/\n\n$string$1/so unless $file =~ /## Information/;
-      # $file =~ s/(## Information\n).*?\n(?=##\s+|\s+$)/$string/so;
+   $string = "## Example\n\n";
+   $string .= "<x3d-canvas src=\"https://create3000.github.io/media/examples/$componentName/$typeName/$typeName.x3d\" update=\"auto\"></x3d-canvas>";
+   $string .= "\n\n";
+
+   $file =~ s/\n\n(## See Also)/\n\n$string$1/so unless $file =~ /## Example/;
+   $file =~ s/(## Example\n).*?\n(?=##\s+|\s+$)/$string/so;
 
    return $file;
 }

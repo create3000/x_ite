@@ -112,6 +112,10 @@ Time event generated when sensor is touched by pointing device, and then deselec
 - [X3D Architecture 20.2.3 Activating and manipulating pointing device sensors](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/pointingDeviceSensor.html#Activatingandmanipulating){:target="_blank"}
 - [Example scenes and authoring assets at](https://x3dgraphics.com/examples/X3dForWebAuthors/Chapter08UserInteractivity){:target="_blank"}
 
+## Example
+
+<x3d-canvas src="https://create3000.github.io/media/examples/PointingDeviceSensor/TouchSensor/TouchSensor.x3d" update="auto"></x3d-canvas>
+
 ## See Also
 
 - [X3D Specification of TouchSensor](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/pointingDeviceSensor.html#TouchSensor){:target="_blank"}

@@ -102,6 +102,10 @@ Single contained *texture* node (ImageTexture, MovieTexture, PixelTexture, Multi
 
 - Add textureTransform field?
 
+## Example
+
+<x3d-canvas src="https://create3000.github.io/media/examples/TextureProjector/TextureProjector/TextureProjector.x3d" update="auto"></x3d-canvas>
+
 ## See Also
 
 - [X3D Specification of TextureProjector](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/textureprojector.html#TextureProjector){:target="_blank"}

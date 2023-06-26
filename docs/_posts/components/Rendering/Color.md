@@ -51,10 +51,6 @@ The *color* field defines an array of 3-tuple RGB colors.
 
 <x3d-canvas src="https://create3000.github.io/media/examples/Rendering/Color/Color.x3d" update="auto"></x3d-canvas>
 
-<table class="x3d-widgets"><tbody><tr><td><button class="button" id="reset-colors-button">Reset Colors</button></td><td><select class="select" id="randomize-colors-button"><option value="0">Preserve Positions</option><option value="1">Move Colors To Left Side</option><option value="2">Move Colors To Right Side</option><option selected="selected" value="3">Randomize Colors</option></select></td></tr></tbody></table>
-
-- [/c3-source-example]
-
 ## See Also
 
 - [X3D Specification of Color](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rendering.html#Color){:target="_blank"}
