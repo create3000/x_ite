@@ -105,7 +105,7 @@ Zero or more contained programmable shader nodes (ComposedShader, PackagedShader
 
 ### SFNode [in, out] **blendMode** NULL <small>[BlendMode]</small> <small class="yellow">non standard</small>
 
-Input/Output field *blendMode*.
+Single contained BlendMode node that defines blend mode properties.
 
 ### SFNode [in, out] **acousticProperties** NULL <small>[AcousticProperties]</small>
 
