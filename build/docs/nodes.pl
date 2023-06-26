@@ -132,7 +132,7 @@ sub update_node {
    s/(:|\s*at)\]/]/sgo foreach @hints;
    s/(:|\s*at)\]/]/sgo foreach @warnings;
 
-   # Top
+   # Overview
 
    $string = "";
 

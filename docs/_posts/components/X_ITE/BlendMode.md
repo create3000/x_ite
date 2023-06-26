@@ -17,6 +17,9 @@ BlendMode controls how pixels of an objects are drawn. Pixels can be drawn using
 
 The BlendMode node belongs to the **X_ITE** component and its default container field is *blendMode.* It is available in Titania and X_ITE.
 
+>Info: This node is still experimental.
+{: .prompt-info }
+
 ## Hierarchy
 
 ```
