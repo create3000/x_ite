@@ -93,7 +93,7 @@ Computed output value that approaches within tolerance of destination value, as 
 
 ### Hint
 
-- ROUTE value_changed output events to a <Transform> node's rotation field, for example.
+- ROUTE value_changed output events to a \<Transform\> node's rotation field, for example.
 
 ## See Also
 

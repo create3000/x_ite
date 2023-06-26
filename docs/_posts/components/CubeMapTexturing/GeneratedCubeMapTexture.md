@@ -71,7 +71,7 @@ Single contained TextureProperties node that can specify additional visual attri
 
 ### Warning
 
-- Requires X3D profile='Full' or else include <component name='CubeMapTexturing' level='3'/>
+- Requires X3D profile='Full' or else include \<component name='CubeMapTexturing' level='3'/\>
 
 ## Example
 

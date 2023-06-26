@@ -58,7 +58,7 @@ Triplets of 3D (s,t,r) texture coordinates, either in range [0,1] or higher if r
 
 ### Warning
 
-- Requires X3D profile='Full' or else include <component name='Texturing3D' level='1'/>
+- Requires X3D profile='Full' or else include \<component name='Texturing3D' level='1'/\>
 
 ## See Also
 

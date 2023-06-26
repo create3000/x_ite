@@ -124,7 +124,7 @@ Integer enumerations value for particular *subcategory* to which an entity belon
 
 ### Warning
 
-- Requires X3D profile='Full' or else include <component name='DIS' level='2'/>
+- Requires X3D profile='Full' or else include \<component name='DIS' level='2'/\>
 
 ## See Also
 

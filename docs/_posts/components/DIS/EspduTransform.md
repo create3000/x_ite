@@ -559,7 +559,7 @@ Whether RTP headers are prepended to DIS PDUs.
 
 ### Warning
 
-- Requires X3D profile='Full' or else include <component name='DIS' level='1'/>
+- Requires X3D profile='Full' or else include \<component name='DIS' level='1'/\>
 
 ## See Also
 

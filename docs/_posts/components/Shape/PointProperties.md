@@ -76,7 +76,7 @@ Are set to default values if undefined. Together these parameters define *attenu
 
 ### Warning
 
-- Requires X3D profile='Full' or else include <component name='Shape' level='5'/>
+- Requires X3D profile='Full' or else include \<component name='Shape' level='5'/\>
 
 ## See Also
 

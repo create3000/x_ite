@@ -126,7 +126,7 @@ Grouping nodes contain an ordered list of *children* nodes.
 
 ### Hints
 
-- Can add <WorldInfo info='null node'/> as a nonrendering, invisible final (or initial or intermediate) child node that also documents the LOD switch-over rationale.
+- Can add \<WorldInfo info='null node'/\> as a nonrendering, invisible final (or initial or intermediate) child node that also documents the LOD switch-over rationale.
 - Insert a Shape node before adding geometry or Appearance.
 - GeoViewpoint OrthoViewpoint and Viewpoint share the same binding stack, so no more than one of these nodes can be bound and active at a given time.
 - Security mechanisms such as encryption and authentication can be applied to high levels of detail, allowing authors to protect intellectual property at high resolution for authorized users while still rendering simple unrestricted models for other users.

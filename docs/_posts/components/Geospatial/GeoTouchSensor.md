@@ -146,7 +146,7 @@ Time event generated when touched.
 
 ### Warning
 
-- Requires X3D profile='Full' or else include <component name='Geospatial' level='1'/>
+- Requires X3D profile='Full' or else include \<component name='Geospatial' level='1'/\>
 
 ## See Also
 

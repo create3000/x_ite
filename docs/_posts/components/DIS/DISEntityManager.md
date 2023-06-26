@@ -91,7 +91,7 @@ Simulation/exercise *siteID* of the participating LAN or organization.
 ### Warnings
 
 - ['children' field originally named 'mapping' in X3Dv3.](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges){:target="_blank"}
-- Requires X3D profile='Full' or else include <component name='DIS' level='2'/>
+- Requires X3D profile='Full' or else include \<component name='DIS' level='2'/\>
 
 ## See Also
 

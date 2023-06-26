@@ -78,7 +78,7 @@ ComposedShader can contain multiple ShaderPart nodes in the *parts* field.
 
 ### Hints
 
-- ComposedShader contains field declarations and then corresponding IS/connect statements (if any), followed by <ShaderPart containerField='parts'/> nodes.
+- ComposedShader contains field declarations and then corresponding IS/connect statements (if any), followed by \<ShaderPart containerField='parts'/\> nodes.
 - Apply default containerField='shaders' when parent node is Appearance.
 
 ### Warning

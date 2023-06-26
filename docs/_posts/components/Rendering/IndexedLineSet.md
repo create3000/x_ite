@@ -13,7 +13,7 @@ tags: [IndexedLineSet, Rendering]
 
 ## Overview
 
-IndexedLineSet defines polyline segments using index lists corresponding to vertex coordinates. IndexedLineSet is a geometry node that can contain a Coordinate|CoordinateDouble node and optionally a Color|ColorRGBA node.
+IndexedLineSet defines polyline segments using index lists corresponding to vertex coordinates. IndexedLineSet is a geometry node that can contain a Coordinate\|CoordinateDouble node and optionally a Color\|ColorRGBA node.
 
 The IndexedLineSet node belongs to the **Rendering** component and its default container field is *geometry.* It is available from X3D version 2.0 or higher.
 

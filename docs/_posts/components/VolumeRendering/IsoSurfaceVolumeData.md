@@ -127,7 +127,7 @@ Single contained X3DTexture3DNode (ComposedTexture3D, ImageTexture3D, PixelTextu
 ### Warnings
 
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
-- Requires X3D profile='Full' or else include <component name='VolumeRendering' level='2'/>
+- Requires X3D profile='Full' or else include \<component name='VolumeRendering' level='2'/\>
 
 ## Example
 

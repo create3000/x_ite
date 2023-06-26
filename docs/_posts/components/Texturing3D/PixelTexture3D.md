@@ -80,7 +80,7 @@ Single contained TextureProperties node that can specify additional visual attri
 
 ### Warning
 
-- Requires X3D profile='Full' or else include <component name='Texturing3D' level='1'/>
+- Requires X3D profile='Full' or else include \<component name='Texturing3D' level='1'/\>
 
 ## See Also
 

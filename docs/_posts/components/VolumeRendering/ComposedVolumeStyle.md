@@ -52,7 +52,7 @@ List of contributing rendering style nodes or node references that can be applie
 
 ### Warning
 
-- Requires X3D profile='Full' or else include <component name='VolumeRendering' level='2'/>
+- Requires X3D profile='Full' or else include \<component name='VolumeRendering' level='2'/\>
 
 ## See Also
 

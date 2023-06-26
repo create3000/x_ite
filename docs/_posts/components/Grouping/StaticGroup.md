@@ -96,7 +96,7 @@ Grouping nodes contain an ordered list of *children* nodes.
 
 ### Warning
 
-- Requires X3D profile='Full' or else include <component name='Grouping' level='3'/>
+- Requires X3D profile='Full' or else include \<component name='Grouping' level='3'/\>
 
 ## See Also
 

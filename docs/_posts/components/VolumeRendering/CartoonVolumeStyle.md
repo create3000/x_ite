@@ -79,7 +79,7 @@ The *surfaceNormals* field contains a 3D texture with at least three component v
 
 ### Warning
 
-- Requires X3D profile='Full' or else include <component name='VolumeRendering' level='3'/>
+- Requires X3D profile='Full' or else include \<component name='VolumeRendering' level='3'/\>
 
 ## See Also
 

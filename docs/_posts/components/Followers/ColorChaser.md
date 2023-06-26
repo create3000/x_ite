@@ -89,7 +89,7 @@ Computed output value that approaches within tolerance of destination value, as 
 
 ### Hints
 
-- ROUTE value_changed output events to one of a <Material> node's color fields, for example.
+- ROUTE value_changed output events to one of a \<Material\> node's color fields, for example.
 - [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color){:target="_blank"}
 
 ## Example

@@ -63,7 +63,7 @@ Color of the hatch pattern.
 
 ### Warning
 
-- Requires X3D profile='Full' or else include <component name='Shape' level='3'/>
+- Requires X3D profile='Full' or else include \<component name='Shape' level='3'/\>
 
 ## Example
 

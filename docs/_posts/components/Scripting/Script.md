@@ -13,7 +13,7 @@ tags: [Script, Scripting]
 
 ## Overview
 
-Script contains author-programmed event behaviors for a scene. Define the script input-output event interface by including <field/> elements. Scripting code is embedded in a child CDATA node or (deprecated) in the url field. Optionally supported programming languages are ECMAScript (JavaScript) and Java (via url to a myNode.class file).
+Script contains author-programmed event behaviors for a scene. Define the script input-output event interface by including \<field/\> elements. Scripting code is embedded in a child CDATA node or (deprecated) in the url field. Optionally supported programming languages are ECMAScript (JavaScript) and Java (via url to a myNode.class file).
 
 The Script node belongs to the **Scripting** component and its default container field is *children.* It is available from X3D version 2.0 or higher.
 
@@ -125,7 +125,7 @@ If *mustEvaluate* false, then the X3D player may delay sending input events to S
 ### Hints
 
 - Insert an XML Character Data (CDATA) block within the Script node to contain source code embedded within an X3D scene, avoiding the need for escape characters.
-- A contained XML Character Data (CDATA) block for source code protects whitespace, line breaks, and literal characters (such as & for ampersand character, < for less-than-sign character, and > for greater-than-sign character) from unintended escape-character modifications by XML parsers.
+- A contained XML Character Data (CDATA) block for source code protects whitespace, line breaks, and literal characters (such as &amp; for ampersand character, \< for less-than-sign character, and \> for greater-than-sign character) from unintended escape-character modifications by XML parsers.
 - [X3D Scene Authoring Hints, Scripts](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Scripts){:target="_blank"}
 - [Apply containerField='watchList' when parent node is LoadSensor.ECMAScript-262 specification](http://www.ecma-international.org/publications/standards/Ecma-262.htm){:target="_blank"}
 - Embedded ecmascript: source can also be contained in the sourceCode pseudo-field without escape characters, equivalent to last entry in the url list, when using other API codebases and file encodings.

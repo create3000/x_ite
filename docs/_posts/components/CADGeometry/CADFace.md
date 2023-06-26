@@ -106,7 +106,7 @@ Contained Shape for this CADPart.
 ### Warnings
 
 - Only zero or one Shape child is allowed to be active at one time.
-- Requires X3D profile='Full' or else include <component name='CADGeometry' level='2'/>
+- Requires X3D profile='Full' or else include \<component name='CADGeometry' level='2'/\>
 
 ## See Also
 

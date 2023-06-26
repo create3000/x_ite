@@ -13,7 +13,7 @@ tags: [HAnimHumanoid, HAnim]
 
 ## Overview
 
-The HAnimHumanoid node is used to: (a) store references to the joints, segments, sites, skeleton, optional skin, and fixed viewpoints, (b) serve as a container for the entire humanoid, (c) provide a convenient way of moving the humanoid through its environment, and (d) store human-readable metadata such as name, version, author, copyright, age, gender and other information. HAnimHumanoid contains a skeleton consisting of HAnimJoint, HAnimSegment and HAnimSite nodes. HAnimHumanoid can also contain an optional skin consisting of an IndexedFaceSet mesh with corresponding skinCoord Coordinate|CoordinateDouble vertices and skinNormal Normal vectors.
+The HAnimHumanoid node is used to: (a) store references to the joints, segments, sites, skeleton, optional skin, and fixed viewpoints, (b) serve as a container for the entire humanoid, (c) provide a convenient way of moving the humanoid through its environment, and (d) store human-readable metadata such as name, version, author, copyright, age, gender and other information. HAnimHumanoid contains a skeleton consisting of HAnimJoint, HAnimSegment and HAnimSite nodes. HAnimHumanoid can also contain an optional skin consisting of an IndexedFaceSet mesh with corresponding skinCoord Coordinate\|CoordinateDouble vertices and skinNormal Normal vectors.
 
 The HAnimHumanoid node belongs to the **HAnim** component and its default container field is *children.* It is available from X3D version 3.0 or higher.
 
@@ -339,7 +339,7 @@ List of one or more indexed mesh definitions (such as IndexedFaceSet) that utili
 
 ### Warnings
 
-- Requires X3D profile='Full' or else include <component name='HAnim' level='1'/>
+- Requires X3D profile='Full' or else include \<component name='HAnim' level='1'/\>
 - For X3D3 HAnim1, spelling of component name is 'H-Anim' (including hyphen)
 
 ## Example

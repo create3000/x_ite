@@ -63,7 +63,7 @@ Threshold value used when type=MIN (LMIP) or type=MAX (MIP).
 
 ### Warning
 
-- Requires X3D profile='Full' or else include <component name='VolumeRendering' level='2'/>
+- Requires X3D profile='Full' or else include \<component name='VolumeRendering' level='2'/\>
 
 ## See Also
 

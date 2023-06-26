@@ -151,7 +151,7 @@ Sends changed centerOfRotation values, likely caused by user interaction.
 
 ### Warning
 
-- Requires X3D profile='Full' or else include <component name='Geospatial' level='2'/>
+- Requires X3D profile='Full' or else include \<component name='Geospatial' level='2'/\>
 
 ## See Also
 

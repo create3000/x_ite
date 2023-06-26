@@ -111,7 +111,7 @@ Nonlinearly interpolated output value computed by using current time fraction al
 
 ### Warning
 
-- Requires X3D profile='Full' or else include <component name='Interpolation' level='4'/>
+- Requires X3D profile='Full' or else include \<component name='Interpolation' level='4'/\>
 
 ## Example
 
