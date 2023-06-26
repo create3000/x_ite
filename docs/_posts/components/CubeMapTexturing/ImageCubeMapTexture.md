@@ -107,6 +107,6 @@ Single contained TextureProperties node that can specify additional visual attri
 - Can contain a single TextureProperties node.
 - [When parent node is LoadSensor, apply containerField='children' (X3Dv4) or containerField='watchList' (X3Dv3).](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges){:target="_blank"}
 
-## External Links
+## See Also
 
 - [X3D Specification of ImageCubeMapTexture](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/environmentalTexturing.html#ImageCubeMapTexture){:target="_blank"}

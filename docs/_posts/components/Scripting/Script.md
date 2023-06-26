@@ -134,7 +134,7 @@ If *mustEvaluate* false, then the X3D player may delay sending input events to S
 
 - Strict order is required for contained constructs: first field declarations (if any), then IS/connect statements (if any), and finally CDATA source-code block.
 
-## External Links
+## See Also
 
 - [X3D Specification of Script](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/scripting.html#Script){:target="_blank"}
 - [X3D Scene Authoring Hints, Scripts](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Scripts){:target="_blank"}

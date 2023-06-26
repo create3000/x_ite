@@ -140,6 +140,6 @@ Current elapsed time since AudioClip activated/running, cumulative in seconds, a
 
 - Multiple security and privacy condiderations need to be observed.
 
-## External Links
+## See Also
 
 - [X3D Specification of MicrophoneSource](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#MicrophoneSource){:target="_blank"}

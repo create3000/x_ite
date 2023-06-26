@@ -91,6 +91,6 @@ Computed output value that approaches within tolerance of destination value, as 
 
 - ROUTE value_changed output events to a <Transform> node's rotation field, for example.
 
-## External Links
+## See Also
 
 - [X3D Specification of OrientationChaser](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/followers.html#OrientationChaser){:target="_blank"}

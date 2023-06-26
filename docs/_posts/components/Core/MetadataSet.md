@@ -73,7 +73,7 @@ The *value* field provides a list of X3DMetadataObject nodes whose meaning is de
 
 - Metadata nodes can only contain other Metadata nodes.
 
-## External Links
+## See Also
 
 - [X3D Specification of MetadataSet](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/core.html#MetadataSet){:target="_blank"}
 - [X3D for Web Authors, Chapter 15, Metadata Information](https://x3dgraphics.com/examples/X3dForWebAuthors/Chapter15-Metadata/Chapter15-MetadataInformation.html){:target="_blank"}

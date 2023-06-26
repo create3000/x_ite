@@ -159,6 +159,6 @@ Grouping nodes contain an ordered list of *children* nodes.
 
 - Requires X3D profile='Full' or else include <component name='CADGeometry' level='2'/>
 
-## External Links
+## See Also
 
 - [X3D Specification of CADPart](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/CADGeometry.html#CADPart){:target="_blank"}

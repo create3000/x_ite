@@ -136,6 +136,6 @@ Interpolated coordinate in the geographic coordinate system specified by geoSyst
 
 - Requires X3D profile='Full' or else include <component name='Geospatial' level='1'/>
 
-## External Links
+## See Also
 
 - [X3D Specification of GeoPositionInterpolator](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geospatial.html#GeoPositionInterpolator){:target="_blank"}

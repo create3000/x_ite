@@ -60,7 +60,7 @@ The *color* field defines an array of 4-tuple RGBA colors.
 
 <x3d-canvas src="https://create3000.github.io/media/examples/Rendering/ColorRGBA/ColorRGBA.x3d" update="auto"></x3d-canvas>
 
-## External Links
+## See Also
 
 - [X3D Specification of ColorRGBA](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rendering.html#ColorRGBA){:target="_blank"}
 - [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color){:target="_blank"}

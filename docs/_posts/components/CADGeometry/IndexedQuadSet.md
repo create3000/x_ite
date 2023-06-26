@@ -149,6 +149,6 @@ Single contained Coordinate or CoordinateDouble node that can specify a list of 
 - Rendering characteristics are undefined if polygons are not planar.
 - Avoid self-intersecting polygon line segments, otherwise defined geometry is irregular and rendering results are undefined.
 
-## External Links
+## See Also
 
 - [X3D Specification of IndexedQuadSet](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/CADGeometry.html#IndexedQuadSet){:target="_blank"}

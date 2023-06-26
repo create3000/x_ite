@@ -136,7 +136,7 @@ Single contained TextureProperties node that can specify additional visual attri
 
 <x3d-canvas src="https://create3000.github.io/media/examples/Texturing3D/ImageTexture3D/ImageTexture3D.x3d" update="auto"></x3d-canvas>
 
-## External Links
+## See Also
 
 - [X3D Specification of ImageTexture3D](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/texture3D.html#ImageTexture3D){:target="_blank"}
 - [See X3D Specification 33.2.2 3D texturing concepts](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/texture3D.html#3DTextureconcepts){:target="_blank"}

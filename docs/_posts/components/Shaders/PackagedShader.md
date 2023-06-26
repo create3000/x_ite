@@ -132,6 +132,6 @@ The *language* field indicates to the X3D player which shading *language* is use
 
 - PackagedShader does not contain CDATA section of plain-text source code.
 
-## External Links
+## See Also
 
 - [X3D Specification of PackagedShader](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shaders.html#PackagedShader){:target="_blank"}

@@ -39,6 +39,6 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 
 *depth* contains a set of 3D coordinate (triplet) point values.
 
-## External Links
+## See Also
 
 - [X3D Specification of FogCoordinate](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/environmentalEffects.html#FogCoordinate){:target="_blank"}

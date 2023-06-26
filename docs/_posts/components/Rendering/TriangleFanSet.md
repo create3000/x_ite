@@ -132,6 +132,6 @@ Single contained Coordinate or CoordinateDouble node that can specify a list of 
 - Insert a Shape node before adding geometry or Appearance.
 - For advanced extensibility, authors can substitute a type-matched ProtoInstance node (with correct containerField value) for contained node content.
 
-## External Links
+## See Also
 
 - [X3D Specification of TriangleFanSet](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rendering.html#TriangleFanSet){:target="_blank"}

@@ -185,6 +185,6 @@ The *children* field specifies audio-graph sound sources providing input signals
 - Potential modifications include chorus effects, reverberation, and telephone-like speech.
 - [W3C Web Audio API](https://www.w3.org/TR/webaudio/#ConvolverNode){:target="_blank"}
 
-## External Links
+## See Also
 
 - [X3D Specification of Convolver](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#Convolver){:target="_blank"}

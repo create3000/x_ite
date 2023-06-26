@@ -81,6 +81,6 @@ Describes the center-line path using a NurbsCurve node, oriented so that it is d
 
 - Conceptually it is the NURBS equivalent of Extrusion but permits the use of non-closed cross sections.
 
-## External Links
+## See Also
 
 - [X3D Specification of NurbsSweptSurface](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/nurbs.html#NurbsSweptSurface){:target="_blank"}

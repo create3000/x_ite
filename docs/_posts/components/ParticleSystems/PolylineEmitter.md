@@ -101,6 +101,6 @@ Coordinates for the line along which particles are randomly generated.
 
 <x3d-canvas src="https://create3000.github.io/media/examples/ParticleSystems/PolylineEmitter/PolylineEmitter.x3d" update="auto"></x3d-canvas>
 
-## External Links
+## See Also
 
 - [X3D Specification of PolylineEmitter](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/particleSystems.html#PolylineEmitter){:target="_blank"}

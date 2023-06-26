@@ -107,6 +107,6 @@ Single contained Coordinate or CoordinateDouble node that can specify control po
 
 <x3d-canvas src="https://create3000.github.io/media/examples/NURBS/NurbsPatchSurface/NurbsPatchSurface.x3d" update="auto"></x3d-canvas>
 
-## External Links
+## See Also
 
 - [X3D Specification of NurbsPatchSurface](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/nurbs.html#NurbsPatchSurface){:target="_blank"}

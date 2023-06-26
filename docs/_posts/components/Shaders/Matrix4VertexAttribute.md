@@ -57,6 +57,6 @@ Required *name* for this particular VertexAttribute instance.
 
 - The length of the *value* field shall be a multiple of numComponents.
 
-## External Links
+## See Also
 
 - [X3D Specification of Matrix4VertexAttribute](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shaders.html#Matrix4VertexAttribute){:target="_blank"}

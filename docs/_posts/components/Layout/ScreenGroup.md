@@ -99,6 +99,6 @@ Grouping nodes contain an ordered list of *children* nodes.
 
 - Insert a Shape node before adding geometry or Appearance.
 
-## External Links
+## See Also
 
 - [X3D Specification of ScreenGroup](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/layout.html#ScreenGroup){:target="_blank"}

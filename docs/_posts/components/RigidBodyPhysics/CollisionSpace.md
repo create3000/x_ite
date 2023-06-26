@@ -101,6 +101,6 @@ Collection of collidable objects as well as nested CollisionSpace collections
 
 - Content must be visible to be collidable and to be pickable.
 
-## External Links
+## See Also
 
 - [X3D Specification of CollisionSpace](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rigidBodyPhysics.html#CollisionSpace){:target="_blank"}

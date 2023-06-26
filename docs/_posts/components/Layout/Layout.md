@@ -113,6 +113,6 @@ The *scaleMode* field specifies how the scale of the parent is modified. Two quo
 
 - The align, offset, and offsetUnits fields are used to determine the location of the layout region.
 
-## External Links
+## See Also
 
 - [X3D Specification of Layout](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/layout.html#Layout){:target="_blank"}

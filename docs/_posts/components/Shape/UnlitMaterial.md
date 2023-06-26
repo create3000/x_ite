@@ -114,7 +114,7 @@ How "clear" an object is: 1.0 is completely transparent, 0.0 is completely opaqu
 - [Non-photorealistic rendering (NPR)](https://en.wikipedia.org/wiki/Non-photorealistic_rendering){:target="_blank"}
 - [Cel shading (toon shading)](https://en.wikipedia.org/wiki/Cel_shading){:target="_blank"}
 
-## External Links
+## See Also
 
 - [X3D Specification of UnlitMaterial](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#UnlitMaterial){:target="_blank"}
 - [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color){:target="_blank"}

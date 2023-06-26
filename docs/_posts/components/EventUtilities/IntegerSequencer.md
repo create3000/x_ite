@@ -114,7 +114,7 @@ Single intermittent output value determined by current key time and correspondin
 
 <x3d-canvas src="https://create3000.github.io/media/examples/EventUtilities/IntegerSequencer/IntegerSequencer.x3d" update="auto"></x3d-canvas>
 
-## External Links
+## See Also
 
 - [X3D Specification of IntegerSequencer](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/eventUtilities.html#IntegerSequencer){:target="_blank"}
 - [Example scenes and authoring assets at](https://x3dgraphics.com/examples/X3dForWebAuthors/Chapter09-EventUtilitiesScripting){:target="_blank"}

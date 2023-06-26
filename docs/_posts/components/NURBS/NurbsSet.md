@@ -112,6 +112,6 @@ The children form a closed loop with first point of first child repeated as last
 - Geometry represented in children of this node shall not be directly rendered. It is an informational node only.
 - Surfaces not represented elsewhere in transformation hierarchy shall not be rendered.
 
-## External Links
+## See Also
 
 - [X3D Specification of NurbsSet](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/nurbs.html#NurbsSet){:target="_blank"}

@@ -108,6 +108,6 @@ Contained Shape for this CADPart.
 - Only zero or one Shape child is allowed to be active at one time.
 - Requires X3D profile='Full' or else include <component name='CADGeometry' level='2'/>
 
-## External Links
+## See Also
 
 - [X3D Specification of CADFace](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/CADGeometry.html#CADFace){:target="_blank"}

@@ -59,6 +59,6 @@ The *mapping* label identifies which texture coordinates and transformations are
 
 - Requires X3D profile='Full' or else include <component name='Texturing3D' level='1'/>
 
-## External Links
+## See Also
 
 - [X3D Specification of TextureCoordinate4D](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/texture3D.html#TextureCoordinate4D){:target="_blank"}

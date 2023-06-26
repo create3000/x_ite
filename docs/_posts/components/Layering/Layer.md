@@ -87,6 +87,6 @@ Nodes making up this layer.
 - No transformations are possible above each LayerSet/Layer combination in the scene graph hierarchy.
 - Each Layer node contains its own binding stacks and thus has its own viewpoints and navigation.
 
-## External Links
+## See Also
 
 - [X3D Specification of Layer](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/layering.html#Layer){:target="_blank"}

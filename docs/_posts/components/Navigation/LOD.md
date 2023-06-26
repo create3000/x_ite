@@ -141,6 +141,6 @@ Grouping nodes contain an ordered list of *children* nodes.
 - Nested LOD (and/or GeoLOD) nodes with overlapping range intervals can lead to unexpected or undefined behavior.
 - LOD is not allowed as a direct parent of Appearance, Material, Color, Coordinate, Normal or Texture nodes, instead ensure that a Shape is present.
 
-## External Links
+## See Also
 
 - [X3D Specification of LOD](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/navigation.html#LOD){:target="_blank"}

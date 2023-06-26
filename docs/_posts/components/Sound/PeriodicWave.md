@@ -78,6 +78,6 @@ Imaginary coefficients for defining a waveform.
 
 - [W3C Web Audio API](https://www.w3.org/TR/webaudio/#periodicwave){:target="_blank"}
 
-## External Links
+## See Also
 
 - [X3D Specification of PeriodicWave](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#PeriodicWave){:target="_blank"}

@@ -218,7 +218,7 @@ Current elapsed time since AudioClip activated/running, cumulative in seconds, a
 
 <x3d-canvas src="https://create3000.github.io/media/examples/Sound/AudioClip/AudioClip.x3d" update="auto"></x3d-canvas>
 
-## External Links
+## See Also
 
 - [X3D Specification of AudioClip](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#AudioClip){:target="_blank"}
 - [X3D Scene Authoring Hints:Audio](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Audio){:target="_blank"}

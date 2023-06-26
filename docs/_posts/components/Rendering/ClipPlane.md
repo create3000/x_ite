@@ -67,6 +67,6 @@ If (a,b,c,d) is the *plane*, with the first three components being a normalized 
 
 <x3d-canvas src="https://create3000.github.io/media/examples/Rendering/ClipPlane/ClipPlane.x3d" update="auto"></x3d-canvas>
 
-## External Links
+## See Also
 
 - [X3D Specification of ClipPlane](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rendering.html#ClipPlane){:target="_blank"}

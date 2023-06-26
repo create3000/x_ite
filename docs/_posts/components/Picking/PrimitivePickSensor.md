@@ -121,7 +121,7 @@ Output event containing the node or nodes that have been found to intersect with
 
 <x3d-canvas src="https://create3000.github.io/media/examples/Picking/PrimitivePickSensor/PrimitivePickSensor.x3d" update="auto"></x3d-canvas>
 
-## External Links
+## See Also
 
 - [X3D Specification of PrimitivePickSensor](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/picking.html#PrimitivePickSensor){:target="_blank"}
 - [Event timing details are explained in 4.4.8.3 Execution model](https://www.web3d.org/files/specifications/19775-1/V3.3/Part01/concepts.html#ExecutionModel){:target="_blank"}

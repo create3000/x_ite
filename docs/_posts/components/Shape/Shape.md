@@ -102,6 +102,6 @@ Single contained *geometry* node that is rendered according to corresponding app
 - [X3D Architecture 17.2.2 Lighting model](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/lighting.html#Lightingmodel){:target="_blank"}
 - Apply containerField='shape' if parent node is CADFace.
 
-## External Links
+## See Also
 
 - [X3D Specification of Shape](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#Shape){:target="_blank"}

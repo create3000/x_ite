@@ -45,6 +45,6 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 
 - ContourPolyline2D is not a renderable geometry node.
 
-## External Links
+## See Also
 
 - [X3D Specification of ContourPolyline2D](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/nurbs.html#ContourPolyline2D){:target="_blank"}

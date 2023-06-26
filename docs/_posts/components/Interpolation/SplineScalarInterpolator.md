@@ -126,6 +126,6 @@ Nonlinearly interpolated output value computed by using current time fraction al
 
 - [ScalarInterpolator](/x_ite/components/interpolation/scalarinterpolator)
 
-## External Links
+## See Also
 
 - [X3D Specification of SplineScalarInterpolator](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/interpolators.html#SplineScalarInterpolator){:target="_blank"}

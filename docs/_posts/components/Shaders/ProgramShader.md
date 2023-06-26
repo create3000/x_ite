@@ -86,6 +86,6 @@ ProgramShader contains zero or more ShaderProgram node instances. In general, on
 
 - ProgramShader contains no field declarations and no plain-text CDATA block source code.
 
-## External Links
+## See Also
 
 - [X3D Specification of ProgramShader](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shaders.html#ProgramShader){:target="_blank"}

@@ -59,6 +59,6 @@ Zero or more contained TextureCoordinate or TextureCoordinateGenerator nodes tha
 - The number of textures to be blended may have a significant impact on performance, depending on available graphics hardware capabilities.
 - MultiTextureCoordinate may not contain another MultiTextureCoordinate node.
 
-## External Links
+## See Also
 
 - [X3D Specification of MultiTextureCoordinate](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/texturing.html#MultiTextureCoordinate){:target="_blank"}

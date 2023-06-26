@@ -113,6 +113,6 @@ Nonlinearly interpolated output value computed by using current time fraction al
 
 - Requires X3D profile='Full' or else include <component name='Interpolation' level='4'/>
 
-## External Links
+## See Also
 
 - [X3D Specification of SplinePositionInterpolator](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/interpolators.html#SplinePositionInterpolator){:target="_blank"}

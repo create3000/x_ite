@@ -103,6 +103,6 @@ The *children* field specifies audio-graph sound sources providing input signals
 
 - [W3C Web Audio API](https://www.w3.org/TR/webaudio/#channelmergernode){:target="_blank"}
 
-## External Links
+## See Also
 
 - [X3D Specification of ChannelMerger](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#ChannelMerger){:target="_blank"}

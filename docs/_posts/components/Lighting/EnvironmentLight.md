@@ -86,6 +86,6 @@ The shadowBias value controls the visibility of *shadow acne*.
 
 Size of the shadow map in pixels, must be power of two.
 
-## External Links
+## See Also
 
 - [X3D Specification of EnvironmentLight](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/lighting.html#EnvironmentLight){:target="_blank"}

@@ -140,6 +140,6 @@ Single contained Coordinate or CoordinateDouble node that can specify a list of 
 
 <x3d-canvas src="https://create3000.github.io/media/examples/CADGeometry/QuadSet/QuadSet.x3d" update="auto"></x3d-canvas>
 
-## External Links
+## See Also
 
 - [X3D Specification of QuadSet](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/CADGeometry.html#QuadSet){:target="_blank"}

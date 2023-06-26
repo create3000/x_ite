@@ -107,6 +107,6 @@ The *children* field specifies audio-graph sound sources providing input signals
 
 - ChannelSelector is a utility node to complement ChannelSplitter.
 
-## External Links
+## See Also
 
 - [X3D Specification of ChannelSelector](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#ChannelSelector){:target="_blank"}

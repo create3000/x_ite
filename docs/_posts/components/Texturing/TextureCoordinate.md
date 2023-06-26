@@ -57,6 +57,6 @@ Pairs of 2D (s,t) texture coordinates, either in range [0,1] or higher if repeat
 - [Texture mapping](https://en.wikipedia.org/wiki/Texture_mapping){:target="_blank"}
 - [X3D Texturing component Figure 18.1, Texture map coordinate system](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/texturing.html#f-TextureMapCoordSystem){:target="_blank"}
 
-## External Links
+## See Also
 
 - [X3D Specification of TextureCoordinate](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/texturing.html#TextureCoordinate){:target="_blank"}

@@ -155,7 +155,7 @@ Grouping nodes contain an ordered list of *children* nodes.
 
 <x3d-canvas src="https://create3000.github.io/media/examples/Networking/Anchor/Anchor.x3d" update="auto"></x3d-canvas>
 
-## External Links
+## See Also
 
 - [X3D Specification of Anchor](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/networking.html#Anchor){:target="_blank"}
 - [See X3D Specification 20.2.1 Overview of pointing device sensors](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/pointingDeviceSensor.html#OverviewOfPointingDeviceSensors){:target="_blank"}

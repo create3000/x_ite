@@ -144,6 +144,6 @@ Single contained Coordinate or CoordinateDouble node that can specify a list of 
 
 <x3d-canvas src="https://create3000.github.io/media/examples/Rendering/IndexedTriangleSet/IndexedTriangleSet.x3d" update="auto"></x3d-canvas>[/c3-source-example]
 
-## External Links
+## See Also
 
 - [X3D Specification of IndexedTriangleSet](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rendering.html#IndexedTriangleSet){:target="_blank"}

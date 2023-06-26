@@ -60,6 +60,6 @@ The *children* form a closed loop with first point of first child repeated as la
 
 - Contour2D is not a renderable geometry node.
 
-## External Links
+## See Also
 
 - [X3D Specification of Contour2D](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/nurbs.html#Contour2D){:target="_blank"}

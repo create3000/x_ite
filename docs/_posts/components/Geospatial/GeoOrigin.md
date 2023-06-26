@@ -79,6 +79,6 @@ Whether to rotate coordinates of nodes using this GeoOrigin so that local-up dir
 - GeoOrigin is deprecated, discouraged and not legal in X3D v3.3. GeoOrigin can be ignored in X3D v3.2 and below.
 - XML validation requires placement as first child node following contained metadata nodes (if any).
 
-## External Links
+## See Also
 
 - [X3D Specification of GeoOrigin](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geospatial.html#GeoOrigin){:target="_blank"}

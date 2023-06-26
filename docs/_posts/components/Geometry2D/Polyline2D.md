@@ -64,6 +64,6 @@ Coordinates of vertices connected into contiguous Polyline2D.
 
 <x3d-canvas src="https://create3000.github.io/media/examples/Geometry2D/Polyline2D/Polyline2D.x3d" update="auto"></x3d-canvas>
 
-## External Links
+## See Also
 
 - [X3D Specification of Polyline2D](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry2D.html#Polyline2D){:target="_blank"}

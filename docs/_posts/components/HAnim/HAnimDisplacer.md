@@ -103,7 +103,7 @@ The weigh factor has typical range [0,1] and defines the scale factor applied to
 - Requires X3D profile='Full' or else include <component name='HAnim' level='1'/>
 - For X3D3 HAnim1, spelling of component name is 'H-Anim' (including hyphen)
 
-## External Links
+## See Also
 
 - [X3D Specification of HAnimDisplacer](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/hanim.html#HAnimDisplacer){:target="_blank"}
 - [HAnim Specification](https://www.web3d.org/documents/specifications/19774-1/V2.0/HAnim/HAnimArchitecture.html){:target="_blank"}

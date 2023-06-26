@@ -196,6 +196,6 @@ The *children* field specifies audio-graph sound sources providing input signals
 
 - W3C Web Audio API w3.org/TR/webaudio/#dynamicscompressornode
 
-## External Links
+## See Also
 
 - [X3D Specification of DynamicsCompressor](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#DynamicsCompressor){:target="_blank"}

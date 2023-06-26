@@ -105,6 +105,6 @@ Computationaly interpolated output value determined by current key time and corr
 
 - The SFNode controlPoint field can contain a single Coordinate or CoordinateDouble node.
 
-## External Links
+## See Also
 
 - [X3D Specification of NurbsSurfaceInterpolator](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/nurbs.html#NurbsSurfaceInterpolator){:target="_blank"}

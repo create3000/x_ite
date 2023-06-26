@@ -110,6 +110,6 @@ The *collidable* field holds a reference to a single nested item of a *collidabl
 
 - Content must be visible to be collidable and to be pickable.
 
-## External Links
+## See Also
 
 - [X3D Specification of CollidableOffset](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rigidBodyPhysics.html#CollidableOffset){:target="_blank"}

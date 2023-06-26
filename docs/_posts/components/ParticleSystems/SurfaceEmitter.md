@@ -96,6 +96,6 @@ The geometry node provides geometry used as the emitting *surface*.
 
 <x3d-canvas src="https://create3000.github.io/media/examples/ParticleSystems/SurfaceEmitter/SurfaceEmitter.x3d" update="auto"></x3d-canvas>
 
-## External Links
+## See Also
 
 - [X3D Specification of SurfaceEmitter](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/particleSystems.html#SurfaceEmitter){:target="_blank"}

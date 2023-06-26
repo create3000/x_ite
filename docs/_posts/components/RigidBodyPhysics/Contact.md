@@ -116,6 +116,6 @@ The body1 and *body2* fields specify two top-level nodes that should be evaluate
 
 - Contact nodes are transient and can only occur at run time. It is an error to define this transient node in an X3D file.
 
-## External Links
+## See Also
 
 - [X3D Specification of Contact](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rigidBodyPhysics.html#Contact){:target="_blank"}

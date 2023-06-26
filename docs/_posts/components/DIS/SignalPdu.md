@@ -234,7 +234,7 @@ DIS *timestamp* in X3D units (value 0.0 matches 1 January 1970) in seconds.
 
 - Requires X3D profile='Full' or else include <component name='DIS' level='1'/>
 
-## External Links
+## See Also
 
 - [X3D Specification of SignalPdu](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/dis.html#SignalPdu){:target="_blank"}
 - [Savage Developers Guide on DIS](https://savage.nps.edu/Savage/developers.html#DIS){:target="_blank"}

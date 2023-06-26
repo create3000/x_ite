@@ -127,6 +127,6 @@ The *children* field specifies audio-graph sound sources providing input signals
 
 - Stream-identification parameters are not fully defined and subject to change.
 
-## External Links
+## See Also
 
 - [X3D Specification of StreamAudioDestination](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#StreamAudioDestination){:target="_blank"}

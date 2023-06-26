@@ -71,6 +71,6 @@ Setting *solid* true means draw only one side of polygons (backface culling on),
 
 2D curve in the xz-plane that describes path over which to trace the cross-section.
 
-## External Links
+## See Also
 
 - [X3D Specification of NurbsSwungSurface](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/nurbs.html#NurbsSwungSurface){:target="_blank"}

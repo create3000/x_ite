@@ -98,6 +98,6 @@ Grouping nodes contain an ordered list of *children* nodes.
 
 - Requires X3D profile='Full' or else include <component name='Grouping' level='3'/>
 
-## External Links
+## See Also
 
 - [X3D Specification of StaticGroup](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/grouping.html#StaticGroup){:target="_blank"}

@@ -113,6 +113,6 @@ Grouping nodes contain an ordered list of *children* nodes.
 
 - A LayoutGroup can only be a child of a LayoutLayer node or another LayoutGroup node.
 
-## External Links
+## See Also
 
 - [X3D Specification of LayoutGroup](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/layout.html#LayoutGroup){:target="_blank"}

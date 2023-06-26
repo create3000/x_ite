@@ -76,7 +76,7 @@ The *value* attribute is a strictly typed data array providing relevant metadata
 
 - Metadata nodes can only contain other Metadata nodes.
 
-## External Links
+## See Also
 
 - [X3D Specification of MetadataBoolean](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/core.html#MetadataBoolean){:target="_blank"}
 - [X3D for Web Authors, Chapter 15, Metadata Information](https://x3dgraphics.com/examples/X3dForWebAuthors/Chapter15-Metadata/Chapter15-MetadataInformation.html){:target="_blank"}

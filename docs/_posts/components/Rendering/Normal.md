@@ -58,6 +58,6 @@ Set of unit-length normal vectors, corresponding to indexed polygons or vertices
 
 - Adding normal values to a model might significantly increase file size. Testing can help determine proper tradeoffs between file size, network transmission delays and initial rendering speed.
 
-## External Links
+## See Also
 
 - [X3D Specification of Normal](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rendering.html#Normal){:target="_blank"}

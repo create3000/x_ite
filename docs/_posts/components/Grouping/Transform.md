@@ -159,7 +159,7 @@ Grouping nodes contain an ordered list of *children* nodes.
 
 - Transform contained by CADFace can only hold a single LOD or Shape node.
 
-## External Links
+## See Also
 
 - [X3D Specification of Transform](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/grouping.html#Transform){:target="_blank"}
 - [X3D Scene Authoring Hints, Coordinate Systems](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#CoordinateSystems){:target="_blank"}

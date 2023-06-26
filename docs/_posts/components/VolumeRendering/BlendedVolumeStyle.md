@@ -108,6 +108,6 @@ Single contained X3DTexture3DNode (ComposedTexture3D, ImageTexture3D, PixelTextu
 
 - Requires X3D profile='Full' or else include <component name='VolumeRendering' level='3'/>
 
-## External Links
+## See Also
 
 - [X3D Specification of BlendedVolumeStyle](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/volume.html#BlendedVolumeStyle){:target="_blank"}

@@ -185,7 +185,7 @@ sub update_node {
 
    if (@hints || @warnings)
    {
-      $file =~ s/\n\n(## External Links)/\n\n$string$1/so unless $file =~ /## Information/;
+      $file =~ s/\n\n(## See Also)/\n\n$string$1/so unless $file =~ /## Information/;
       $file =~ s/(## Information\n).*?\n(?=##\s+|\s+$)/$string/so;
    }
 
@@ -223,6 +223,9 @@ sub update_example {
    $file          = shift;
 
    $string = "<x3d-canvas src=\"https://create3000.github.io/media/examples/$componentName/$typeName/$typeName.x3d\" update=\"auto\"></x3d-canvas>";
+
+      # $file =~ s/\n\n(## See Also)/\n\n$string$1/so unless $file =~ /## Information/;
+      # $file =~ s/(## Information\n).*?\n(?=##\s+|\s+$)/$string/so;
 
    return $file;
 }

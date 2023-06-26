@@ -115,6 +115,6 @@ Select geometry by activating the pointing device (for example, clicking the mou
 
 - [Example scenes and authoring assets at](https://x3dgraphics.com/examples/X3dForWebAuthors/Chapter08UserInteractivity){:target="_blank"}
 
-## External Links
+## See Also
 
 - [X3D Specification of KeySensor](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/keyboard.html#KeySensor){:target="_blank"}

@@ -217,6 +217,6 @@ The *spine* array defines a center-line sequence of 3D points that define a piec
 
 <x3d-canvas src="https://create3000.github.io/media/examples/Geometry3D/Extrusion/Extrusion.x3d" update="auto"></x3d-canvas>
 
-## External Links
+## See Also
 
 - [X3D Specification of Extrusion](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry3D.html#Extrusion){:target="_blank"}

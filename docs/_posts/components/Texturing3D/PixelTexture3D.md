@@ -82,7 +82,7 @@ Single contained TextureProperties node that can specify additional visual attri
 
 - Requires X3D profile='Full' or else include <component name='Texturing3D' level='1'/>
 
-## External Links
+## See Also
 
 - [X3D Specification of PixelTexture3D](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/texture3D.html#PixelTexture3D){:target="_blank"}
 - [See X3D Specification 33.2.2 3D texturing concepts](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/texture3D.html#3DTextureconcepts){:target="_blank"}

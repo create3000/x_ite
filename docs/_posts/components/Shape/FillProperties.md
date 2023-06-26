@@ -69,6 +69,6 @@ Color of the hatch pattern.
 
 <x3d-canvas src="https://create3000.github.io/media/examples/Shape/FillProperties/FillProperties.x3d" update="auto"></x3d-canvas>
 
-## External Links
+## See Also
 
 - [X3D Specification of FillProperties](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#FillProperties){:target="_blank"}

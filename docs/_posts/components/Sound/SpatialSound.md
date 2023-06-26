@@ -182,6 +182,6 @@ The *children* field specifies audio-graph sound sources providing input signals
 
 - While providing sounds on the ground plane, ensure that the audible auralization volume is sufficiently elevated to match avatar height.
 
-## External Links
+## See Also
 
 - [X3D Specification of SpatialSound](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#SpatialSound){:target="_blank"}

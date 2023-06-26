@@ -78,6 +78,6 @@ Are set to default values if undefined. Together these parameters define *attenu
 
 - Requires X3D profile='Full' or else include <component name='Shape' level='5'/>
 
-## External Links
+## See Also
 
 - [X3D Specification of PointProperties](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#LineProperties){:target="_blank"}

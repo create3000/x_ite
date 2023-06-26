@@ -140,6 +140,6 @@ Current elapsed time since AudioClip activated/running, cumulative in seconds, a
 
 - [W3C Web Audio API](https://www.w3.org/TR/webaudio/#mediastreamaudiosourcenode){:target="_blank"}
 
-## External Links
+## See Also
 
 - [X3D Specification of StreamAudioSource](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#StreamAudioSource){:target="_blank"}

@@ -119,6 +119,6 @@ A set of Contour2D nodes are used as trimming loops.
 
 - If no trimming contours are defined, NurbsTrimmedSurface has same semantics as NurbsPatchSurface node.
 
-## External Links
+## See Also
 
 - [X3D Specification of NurbsTrimmedSurface](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/nurbs.html#NurbsTrimmedSurface){:target="_blank"}

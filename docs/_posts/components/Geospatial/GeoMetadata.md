@@ -112,6 +112,6 @@ The *summary* string array contains a set of keyword/value pairs, with each keyw
 
 - Requires X3D profile='Full' or else include <component name='Geospatial' level='1'/>
 
-## External Links
+## See Also
 
 - [X3D Specification of GeoMetadata](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geospatial.html#GeoMetadata){:target="_blank"}

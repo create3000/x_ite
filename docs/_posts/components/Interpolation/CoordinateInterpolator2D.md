@@ -97,6 +97,6 @@ Linearly interpolated output value determined by current key time and correspond
 
 - Requires X3D profile='Full' or else include <component name='Interpolation' level='3'/>
 
-## External Links
+## See Also
 
 - [X3D Specification of CoordinateInterpolator2D](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/interpolators.html#CoordinateInterpolator2D){:target="_blank"}

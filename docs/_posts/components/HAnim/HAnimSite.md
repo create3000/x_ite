@@ -171,7 +171,7 @@ Grouping nodes contain an ordered list of *children* nodes.
 - For X3D3 HAnim1, spelling of component name is 'H-Anim' (including hyphen)
 - The number of contained <HAnimSite USE='*' containerField='sites, skeleton or viewpoints'/> nodes at top level of HAnimHumanoid needs to match the number of corresponding HAnimSite node instances found within the preceding skeleton hierarchy.
 
-## External Links
+## See Also
 
 - [X3D Specification of HAnimSite](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/hanim.html#HAnimSite){:target="_blank"}
 - [HAnim Specification](https://www.web3d.org/documents/specifications/19774-1/V2.0/HAnim/HAnimArchitecture.html){:target="_blank"}

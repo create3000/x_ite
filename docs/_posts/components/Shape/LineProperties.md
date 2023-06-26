@@ -66,6 +66,6 @@ Whether or not LineProperties are *applied* to associated geometry.
 
 <x3d-canvas src="https://create3000.github.io/media/examples/Shape/LineProperties/LineProperties.x3d" update="auto"></x3d-canvas>
 
-## External Links
+## See Also
 
 - [X3D Specification of LineProperties](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#LineProperties){:target="_blank"}

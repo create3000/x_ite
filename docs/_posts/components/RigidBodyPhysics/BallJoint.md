@@ -85,6 +85,6 @@ The body1 and *body2* fields indicate the two RigidBody nodes connected by this 
 
 <x3d-canvas src="https://create3000.github.io/media/examples/RigidBodyPhysics/BallJoint/BallJoint.x3d" update="auto"></x3d-canvas>
 
-## External Links
+## See Also
 
 - [X3D Specification of BallJoint](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rigidBodyPhysics.html#BallJoint){:target="_blank"}

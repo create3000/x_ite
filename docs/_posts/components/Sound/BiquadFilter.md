@@ -208,6 +208,6 @@ The *children* field specifies audio-graph sound sources providing input signals
 
 - Contained AudioClip or MovieTexture nodes must have containerField='children' to override otherwise-incorrect defaults.
 
-## External Links
+## See Also
 
 - [X3D Specification of BiquadFilter](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#BiquadFilter){:target="_blank"}

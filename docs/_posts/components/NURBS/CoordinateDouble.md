@@ -46,6 +46,6 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 
 - CoordinateDouble requires Rendering component level 1, otherwise Full profile.
 
-## External Links
+## See Also
 
 - [X3D Specification of CoordinateDouble](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/nurbs.html#CoordinateDouble){:target="_blank"}

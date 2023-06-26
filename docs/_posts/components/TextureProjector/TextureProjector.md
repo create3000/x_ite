@@ -102,6 +102,6 @@ Single contained *texture* node (ImageTexture, MovieTexture, PixelTexture, Multi
 
 - Add textureTransform field?
 
-## External Links
+## See Also
 
 - [X3D Specification of TextureProjector](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/textureprojector.html#TextureProjector){:target="_blank"}

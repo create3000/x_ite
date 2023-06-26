@@ -66,6 +66,6 @@ The *surfaceNormals* field contains a 3D texture with at least three component v
 
 - Requires X3D profile='Full' or else include <component name='VolumeRendering' level='2'/>
 
-## External Links
+## See Also
 
 - [X3D Specification of SilhouetteEnhancementVolumeStyle](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/volume.html#SilhouetteEnhancementVolumeStyle){:target="_blank"}

@@ -146,7 +146,7 @@ Output event containing the node or nodes that have been found to intersect with
 
 <x3d-canvas src="https://create3000.github.io/media/examples/Picking/LinePickSensor/LinePickSensor.x3d" update="auto"></x3d-canvas>
 
-## External Links
+## See Also
 
 - [X3D Specification of LinePickSensor](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/picking.html#LinePickSensor){:target="_blank"}
 - [When the picking line segment intersects a coplanar polygon, computed intersection point(s) are illustrated in Figure 38.1](https://www.web3d.org/files/specifications/19775-1/V3.3/Part01/components/picking.html#f-LineIntersection){:target="_blank"}

@@ -57,6 +57,6 @@ Single contained *geometry* node provides the *geometry* used for each particle 
 
 - When a particle touches the boundary surface, it is reflected by the geometry (either inside or outside).
 
-## External Links
+## See Also
 
 - [X3D Specification of BoundedPhysicsModel](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/particleSystems.html#BoundedPhysicsModel){:target="_blank"}

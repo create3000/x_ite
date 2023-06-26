@@ -44,6 +44,6 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 
 <x3d-canvas src="https://create3000.github.io/media/examples/Rendering/Coordinate/Coordinate.x3d" update="auto"></x3d-canvas>
 
-## External Links
+## See Also
 
 - [X3D Specification of Coordinate](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rendering.html#Coordinate){:target="_blank"}

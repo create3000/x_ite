@@ -279,6 +279,6 @@ Current elapsed time since AudioClip activated/running, cumulative in seconds, a
 
 - For longer sounds, such as music soundtracks, streaming such as StreamAudioSource should be used.
 
-## External Links
+## See Also
 
 - [X3D Specification of BufferAudioSource](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#BufferAudioSource){:target="_blank"}

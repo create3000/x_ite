@@ -76,6 +76,6 @@ Identifies spatial reference frame: Geodetic (GD), Geocentric (GC), Universal Tr
 
 - Requires X3D profile='Full' or else include <component name='Geospatial' level='1'/>
 
-## External Links
+## See Also
 
 - [X3D Specification of GeoCoordinate](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geospatial.html#GeoCoordinate){:target="_blank"}

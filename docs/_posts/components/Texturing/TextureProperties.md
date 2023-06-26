@@ -157,6 +157,6 @@ Determines whether MIPMAPs are generated for texture images.
 
 - Requires X3D profile='Full' or else include <component name='Shape' level='2'/>
 
-## External Links
+## See Also
 
 - [X3D Specification of TextureProperties](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/texturing.html#TextureProperties){:target="_blank"}

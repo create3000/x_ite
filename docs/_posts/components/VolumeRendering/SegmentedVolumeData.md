@@ -104,7 +104,7 @@ Multiple contained X3DVolumeRenderStyleNode nodes corresponding to each isosurfa
 
 #### Hint
 
-- 
+-
 
 #### Warning
 
@@ -129,6 +129,6 @@ Single contained X3DTexture3DNode (ComposedTexture3D, ImageTexture3D, PixelTextu
 
 <x3d-canvas src="https://create3000.github.io/media/examples/VolumeRendering/SegmentedVolumeData/SegmentedVolumeData.x3d" update="auto"></x3d-canvas>
 
-## External Links
+## See Also
 
 - [X3D Specification of SegmentedVolumeData](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/volume.html#SegmentedVolumeData){:target="_blank"}

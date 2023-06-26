@@ -126,7 +126,7 @@ Integer enumerations value for particular *subcategory* to which an entity belon
 
 - Requires X3D profile='Full' or else include <component name='DIS' level='2'/>
 
-## External Links
+## See Also
 
 - [X3D Specification of DISEntityTypeMapping](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/dis.html#DISEntityTypeMapping){:target="_blank"}
 - [Savage Developers Guide on DIS](https://savage.nps.edu/Savage/developers.html#DIS){:target="_blank"}

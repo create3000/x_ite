@@ -246,7 +246,7 @@ Single contained *geometry* node provides *geometry* used for each particle when
 - [Event timing details are explained in X3D Specification 4.4.8.3 Execution model](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/concepts.html#ExecutionModel){:target="_blank"}
 - [Wikipedia, particle system](https://en.wikipedia.org/wiki/Particle_system){:target="_blank"}
 
-## External Links
+## See Also
 
 - [X3D Specification of ParticleSystem](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/particleSystems.html#ParticleSystem){:target="_blank"}
 - [Event timing details are explained in 4.4.8.3 Execution model](https://www.web3d.org/files/specifications/19775-1/V3.3/Part01/concepts.html#ExecutionModel){:target="_blank"}

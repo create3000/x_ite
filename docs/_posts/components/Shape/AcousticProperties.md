@@ -75,6 +75,6 @@ Sound *refraction* coefficient of a medium, which determines change in propagati
 - Proxy geometry for acoustic response can be far simpler than geometry needed for visual rendering.
 - [X3D Architecture Figure 16.2 Sound Propagation Phenomena](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/sound.html#f-SoundPropagationPhenomena){:target="_blank"}
 
-## External Links
+## See Also
 
 - [X3D Specification of AcousticProperties](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#AcousticProperties){:target="_blank"}

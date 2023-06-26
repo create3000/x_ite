@@ -93,6 +93,6 @@ Linearly interpolated output value determined by current key time and correspond
 - Typical output connection is ROUTE thisInterpolatorDEF.value_changed TO someDestinationNodeDEF.set_someAttribute.
 - [Example scenes and authoring assets at](https://x3dgraphics.com/examples/X3dForWebAuthors/Chapter07EventAnimationInterpolation){:target="_blank"}
 
-## External Links
+## See Also
 
 - [X3D Specification of NormalInterpolator](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/interpolators.html#NormalInterpolator){:target="_blank"}

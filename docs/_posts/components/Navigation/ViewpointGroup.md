@@ -86,6 +86,6 @@ ViewpointGroup contains Viewpoint, OrthoViewpoint, GeoViewpoint and other Viewpo
 - ViewpointGroup and OrthoViewpoint require Navigation component level 3, which is higher than CADInterchange profile.
 - Viewpoint and ViewpointGroup descriptions together build simple menu/submenu lists for simple user navigation. ViewpointGroup is not an X3DGroupingNode, and can only contain a Metadata* node, Viewpoint, OrthoViewpoint, GeoViewpoint and other ViewpointGroup nodes.
 
-## External Links
+## See Also
 
 - [X3D Specification of ViewpointGroup](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/navigation.html#ViewpointGroup){:target="_blank"}

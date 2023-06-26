@@ -177,6 +177,6 @@ Grouping nodes contain an ordered list of *children* nodes.
 - Requires X3D profile='Full' or else include <component name='Geospatial' level='2'/>
 - Avoid having GeoLocation or GeoTransform as a parent or ancestor node of each other, since multiple geospatial transformations then occur with unpredictable results.
 
-## External Links
+## See Also
 
 - [X3D Specification of GeoTransform](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geospatial.html#GeoTransform){:target="_blank"}

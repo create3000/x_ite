@@ -116,6 +116,6 @@ Location and filename of shader. Multiple locations are more reliable, and inclu
 
 - Strict order is required for contained constructs: first field declarations (if any), then IS/connect statements (if any), and finally CDATA source-code block.
 
-## External Links
+## See Also
 
 - [X3D Specification of ShaderProgram](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shaders.html#ShaderProgram){:target="_blank"}
