@@ -17,7 +17,7 @@ TwoSidedMaterial specifies surface rendering properties for associated geometry 
 
 The TwoSidedMaterial node belongs to the **Shape** component and its default container field is *material.* It is available from X3D version 3.2 to 4.0.
 
->Deprecated: This node is deprecated since X3D version 4.0. Future versions of the standard may remove this node.
+>Deprecated: This node is deprecated as of X3D version 4.0. Future versions of the standard may remove this node.
 {: .prompt-danger }
 
 ## Hierarchy

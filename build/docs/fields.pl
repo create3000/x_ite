@@ -153,7 +153,7 @@ sub update_node {
    $string .= "It is available from X3D version $from to $to."    if $to ne "Infinity";
    $string .= "\n";
    $string .= "\n";
-   $string .= ">Deprecated: This node is deprecated since X3D version $to. Future versions of the standard may remove this node.\n{: .prompt-danger }\n\n" if $to ne "Infinity";
+   $string .= ">Deprecated: This node is deprecated as of X3D version $to. Future versions of the standard may remove this node.\n{: .prompt-danger }\n\n" if $to ne "Infinity";
 
    $file =~ s/(## Overview\n).*?\n(?=##\s+)/$1$string/s;
 
