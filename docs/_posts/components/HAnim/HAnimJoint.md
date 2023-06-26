@@ -246,7 +246,7 @@ Grouping nodes contain an ordered list of *children* nodes.
 
 - HAnimJoint can only contain certain nodes: HAnimJoint, HAnimSegment, HAnimSite (with containerField='children') and also HAnimDisplacer nodes (with containerField='displacers').
 - An HAnimJoint may not be a child of an HAnimSegment.
-- Requires X3D profile='Full' or else include \<component name='HAnim' level='1'/\>
+- Requires X3D `profile='Full'` or else include `<component name='HAnim' level='1'/>`
 - For X3D3 HAnim1, spelling of component name is 'H-Anim' (including hyphen)
 - For X3D3 HAnim1, spelling of component name is 'H-Anim' (including hyphen)
 - The number of contained \<HAnimJoint USE='*' containerField='joints'/\> nodes at top level of HAnimHumanoid needs to match the number of corresponding HAnimJoint node instances found within the preceding skeleton hierarchy.

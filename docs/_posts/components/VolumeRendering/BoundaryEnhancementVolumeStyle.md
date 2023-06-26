@@ -56,7 +56,7 @@ Enables/disables node operation.
 
 ### Warning
 
-- Requires X3D profile='Full' or else include \<component name='VolumeRendering' level='2'/\>
+- Requires X3D `profile='Full'` or else include `<component name='VolumeRendering' level='2'/>`
 
 ## See Also
 

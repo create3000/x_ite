@@ -105,7 +105,7 @@ Translation offset from origin of local coordinate system, applied prior to rota
 
 #### Warning
 
-- Requires X3D profile='Full' or else include \<component name='Geospatial' level='1'/\>
+- Requires X3D `profile='Full'` or else include `<component name='Geospatial' level='1'/>`
 
 ### SFBool [in, out] **visible** TRUE
 
@@ -174,7 +174,7 @@ Grouping nodes contain an ordered list of *children* nodes.
 
 ### Warnings
 
-- Requires X3D profile='Full' or else include \<component name='Geospatial' level='2'/\>
+- Requires X3D `profile='Full'` or else include `<component name='Geospatial' level='2'/>`
 - Avoid having GeoLocation or GeoTransform as a parent or ancestor node of each other, since multiple geospatial transformations then occur with unpredictable results.
 
 ## See Also

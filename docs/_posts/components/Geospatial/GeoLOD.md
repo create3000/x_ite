@@ -172,7 +172,7 @@ The outputOnly *children* field exposes a portion of the scene graph for the cur
 ### Warnings
 
 - Do not use rootUrl and rootNode simultaneously, since each specifies the root tile.
-- Requires X3D profile='Full' or else include \<component name='Geospatial' level='1'/\>
+- Requires X3D `profile='Full'` or else include `<component name='Geospatial' level='1'/>`
 - Nested LOD (and/or GeoLOD) nodes with overlapping range intervals can lead to unexpected or undefined behavior.
 
 ## Example

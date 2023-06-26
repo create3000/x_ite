@@ -84,7 +84,7 @@ Interpolated output value determined by current key time, corresponding easeInEa
 
 ### Warning
 
-- Requires X3D profile='Full' or else include \<component name='Interpolation' level='3'/\>
+- Requires X3D `profile='Full'` or else include `<component name='Interpolation' level='3'/>`
 
 ## See Also
 

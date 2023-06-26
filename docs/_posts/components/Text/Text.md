@@ -113,7 +113,7 @@ The *fontStyle* field can contain a FontStyle or ScreenFontStyle node defining s
 
 ### Warning
 
-- Text node requires X3D profile='Immersive' or \<component name='Text' level='1'/\>
+- Text node requires X3D `profile='Immersive'` or `<component name='Text' level='1'/>`
 
 ## Example
 

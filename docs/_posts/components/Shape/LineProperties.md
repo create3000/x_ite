@@ -60,7 +60,7 @@ Whether or not LineProperties are *applied* to associated geometry.
 
 ### Warning
 
-- Requires X3D profile='Full' or else include \<component name='Shape' level='2'/\>
+- Requires X3D `profile='Full'` or else include `<component name='Shape' level='2'/>`
 
 ## Example
 

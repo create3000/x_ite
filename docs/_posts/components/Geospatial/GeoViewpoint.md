@@ -190,7 +190,7 @@ The *navigationInfo* field defines a dedicated NavigationInfo node for this X3DV
 ### Hints
 
 - Alternatively can use GeoLocation or GeoTransform as parent of a Viewpoint node to orient geospatial views.
-- Include \<component name='Geospatial' level='1'/\>
+- Include `<component name='Geospatial' level='1'/>`
 - When a GeoViewpoint node is bound, it also overrides the currently bound NavigationInfo node in the scene and controls user navigation for smoother geospatial interaction.
 - Background, Fog, GeoViewpoint, NavigationInfo, OrthoViewpoint, TextureBackground and Viewpoint are bindable nodes, meaning that no more than one of each node type can be active at a given time.
 - GeoViewpoint OrthoViewpoint and Viewpoint share the same binding stack, so no more than one of these nodes can be bound and active at a given time.

@@ -155,7 +155,7 @@ Determines whether MIPMAPs are generated for texture images.
 
 ### Warning
 
-- Requires X3D profile='Full' or else include \<component name='Shape' level='2'/\>
+- Requires X3D `profile='Full'` or else include `<component name='Shape' level='2'/>`
 
 ## See Also
 

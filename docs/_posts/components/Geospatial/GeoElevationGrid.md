@@ -213,7 +213,7 @@ Contains xDimension rows * zDimension columns floating-point values for elevatio
 ### Warnings
 
 - Generated quadrilaterals can be nonplanar. Tessellation splits quadrilaterals into triangles along seam starting at initial vertex of the quadrilateral and proceeding to opposite vertex.
-- Requires X3D profile='Full' or else include \<component name='Geospatial' level='1'/\>
+- Requires X3D `profile='Full'` or else include `<component name='Geospatial' level='1'/>`
 - Avoid having GeoLocation or GeoTransform as a parent or ancestor node of GeoElevationGrid, since multiple geospatial transformations then occur with unpredictable results.
 
 ## Example

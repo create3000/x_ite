@@ -130,7 +130,7 @@ Single contained TextureProperties node that can specify additional visual attri
 ### Warnings
 
 - There are no required file formats, but at least one of the following formats is recommended for volume support in an X3D browser.
-- Requires X3D profile='Full' or else include \<component name='Texturing3D' level='2'/\>
+- Requires X3D `profile='Full'` or else include `<component name='Texturing3D' level='2'/>`
 
 ## Example
 

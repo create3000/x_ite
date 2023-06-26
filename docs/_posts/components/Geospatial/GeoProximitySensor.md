@@ -113,7 +113,7 @@ Sends geospatial coordinates of viewer's position corresponding to world positio
 
 #### Warnings
 
-- Requires X3D profile='Full' or else include \<component name='Geospatial' level='1'/\>
+- Requires X3D `profile='Full'` or else include `<component name='Geospatial' level='1'/>`
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFVec3f [out] **position_changed**
@@ -151,7 +151,7 @@ Sends changed centerOfRotation values, likely caused by user interaction.
 
 ### Warning
 
-- Requires X3D profile='Full' or else include \<component name='Geospatial' level='2'/\>
+- Requires X3D `profile='Full'` or else include `<component name='Geospatial' level='2'/>`
 
 ## See Also
 

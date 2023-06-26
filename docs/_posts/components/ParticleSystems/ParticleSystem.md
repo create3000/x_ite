@@ -67,7 +67,7 @@ Specifies type of geometry used to represent individual particles. Typically, a 
 #### Warnings
 
 - Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
-- Requires X3D profile='Full' or else include \<component name='Geospatial' level='1'/\>
+- Requires X3D `profile='Full'` or else include `<component name='Geospatial' level='1'/>`
 
 ### SFInt32 [in, out] **maxParticles** 200 <small>[0,∞)</small>
 
@@ -229,7 +229,7 @@ Single contained *geometry* node provides *geometry* used for each particle when
 
 #### Warning
 
-- Requires X3D profile='Full' or else include \<component name='Geospatial' level='1'/\>
+- Requires X3D `profile='Full'` or else include `<component name='Geospatial' level='1'/>`
 
 ## Hints
 

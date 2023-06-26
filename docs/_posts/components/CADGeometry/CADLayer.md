@@ -119,7 +119,7 @@ Grouping nodes contain an ordered list of *children* nodes.
 
 ### Warning
 
-- Requires X3D profile='Full' or else include \<component name='CADGeometry' level='2'/\>
+- Requires X3D `profile='Full'` or else include `<component name='CADGeometry' level='2'/>`
 
 ## See Also
 

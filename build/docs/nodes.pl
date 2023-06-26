@@ -86,6 +86,7 @@ sub update_node {
    $node =~ s/\s*\|\s*/ or /sgo;
    $node =~ s/([<>|])/\\$1/sgo;
    $node =~ s/&/&amp;/sgo;
+   $node =~ s/(profile=\S+|\\<component.*?>)/"`" . code($1) . "`"/sgoe;
 
    # Special substitutions
    $node =~ s/incldes/includes/sgo;
@@ -194,6 +195,14 @@ sub update_node {
    return $file;
 }
 
+sub code {
+   $string = shift;
+
+   $string =~ s/\\//sgo;
+
+   return $string;
+}
+
 sub reorder_fields {
    $typeName      = shift;
    $componentName = shift;
@@ -264,6 +273,7 @@ sub update_field {
       $field =~ s/\s*\|\s*/ or /sgo;
       $field =~ s/([<>|])/\\$1/sgo;
       $field =~ s/&/&amp;/sgo;
+      $field =~ s/(profile=\S+|\\<component.*?>)/"`" . code($1) . "`"/sgoe;
 
       # Special substitutions.
       $field =~ s/\*next\* to/next to/sgo;

@@ -95,7 +95,7 @@ Linearly interpolated output value determined by current key time and correspond
 
 ### Warning
 
-- Requires X3D profile='Full' or else include \<component name='Interpolation' level='3'/\>
+- Requires X3D `profile='Full'` or else include `<component name='Interpolation' level='3'/>`
 
 ## See Also
 

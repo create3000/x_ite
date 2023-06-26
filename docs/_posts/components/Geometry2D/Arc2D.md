@@ -85,7 +85,7 @@ Circle *radius*, of which the arc is a portion.
 
 - Lines are not lit, are not texture-mapped, and do not participate in collision detection.
 - Use a different Material emissiveColor than the Background color, otherwise geometry is invisible.
-- [Requires X3D profile='Full' or else include \<component name='Geometry2D' level='2'/\> Examples: X3D Example Archives, X3D for Web Authors, Chapter 10 Geometry 2D](https://x3dgraphics.com/examples/X3dForWebAuthors/Chapter10Geometry2D){:target="_blank"}
+- [Requires X3D `profile='Full'` or else include `<component name='Geometry2D' level='2'/>` Examples: X3D Example Archives, X3D for Web Authors, Chapter 10 Geometry 2D](https://x3dgraphics.com/examples/X3dForWebAuthors/Chapter10Geometry2D){:target="_blank"}
 
 ## Example
 

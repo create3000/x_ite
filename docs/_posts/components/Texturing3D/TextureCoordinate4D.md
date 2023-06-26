@@ -57,7 +57,7 @@ The *mapping* label identifies which texture coordinates and transformations are
 
 ### Warning
 
-- Requires X3D profile='Full' or else include \<component name='Texturing3D' level='1'/\>
+- Requires X3D `profile='Full'` or else include `<component name='Texturing3D' level='1'/>`
 
 ## See Also
 

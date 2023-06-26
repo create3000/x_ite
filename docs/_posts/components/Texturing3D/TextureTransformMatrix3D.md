@@ -60,7 +60,7 @@ The *mapping* label identifies which texture coordinates and transformations are
 ### Warnings
 
 - Resulting visible effects appear reversed because image changes occur before mapping to geometry.
-- Requires X3D profile='Full' or else include \<component name='Texturing3D' level='1'/\>
+- Requires X3D `profile='Full'` or else include `<component name='Texturing3D' level='1'/>`
 
 ## See Also
 

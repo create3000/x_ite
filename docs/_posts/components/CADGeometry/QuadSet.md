@@ -132,7 +132,7 @@ Single contained Coordinate or CoordinateDouble node that can specify a list of 
 
 ### Warnings
 
-- Requires X3D profile='Full' or else include \<component name='CADGeometry' level='1'/\>
+- Requires X3D `profile='Full'` or else include `<component name='CADGeometry' level='1'/>`
 - Rendering characteristics are undefined if polygons are not planar.
 - Avoid self-intersecting polygon line segments, otherwise defined geometry is irregular and rendering results are undefined.
 
