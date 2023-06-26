@@ -40,11 +40,12 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 
 The *color* field defines an array of 3-tuple RGB colors.
 
-## Description
+## Information
 
-### Hint
+### Hints
 
 - Colors are often controlled by Material instead.
+- [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color){:target="_blank"}
 
 ## Example
 

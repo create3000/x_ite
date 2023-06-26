@@ -67,13 +67,18 @@ Single contained Normal node that can specify perpendicular vectors for correspo
 
 Single contained Coordinate or CoordinateDouble node that can specify a list of vertex values.
 
-## Description
+## Information
 
 ### Hints
 
-- Use a different color (or emissiveColor) than the background color.
+- [Point (geometry)](https://en.wikipedia.org/wiki/Point_(geometry)){:target="_blank"}
+- Either values in a contained Color node, or else Material emissiveColor in corresponding Appearance node, are used for rendering lines and points.
 - Insert a Shape node before adding geometry or Appearance.
 - Each point is displayed independently, no other PointSet attributes for rendering are provided.
+
+### Warning
+
+- Use a different color (or Material emissiveColor) than the Background color, otherwise geometry is invisible.
 
 ## Example
 

@@ -133,7 +133,7 @@ Grouping nodes contain an ordered list of *children* nodes.
 - InputOnly MFNode removeChildren field can remove nodes from the *children* list, unrecognized input nodes (i.e. nonmatching DEF, USE values) are ignored.
 - [X3D Architecture 10.2.1 Grouping and *children* node types](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/grouping.html#GroupingAndChildrenNodes){:target="_blank"}
 
-## Description
+## Information
 
 ### Hints
 
@@ -143,6 +143,13 @@ Grouping nodes contain an ordered list of *children* nodes.
 - Insert a Shape node before adding geometry or Appearance.
 - Translation/rotation/scaling field attributes can be defined in any order in the scene. The applied order of translation/rotation/scaling transformation-matrix operations remains consistent.
 - Authors can modify order of translation/rotation/scaling operations by splitting them into separate nested parent/child Transform nodes.
+- [X3D Scene Authoring Hints, Coordinate Systems](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#CoordinateSystems){:target="_blank"}
+- [X3D Scene Authoring Hints, Scale Factors and Unit Conversions](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Scale){:target="_blank"}
+- Apply containerField='shape' if parent node is CADFace.
+
+### Warning
+
+- Transform contained by CADFace can only hold a single LOD or Shape node.
 
 ## Example
 

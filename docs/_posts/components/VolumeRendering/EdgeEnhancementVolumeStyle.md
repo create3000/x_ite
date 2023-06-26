@@ -56,11 +56,15 @@ Minimum angle (in radians) away from view-direction vector for surface normal be
 
 The *surfaceNormals* field contains a 3D texture with at least three component values. Each voxel in the texture represents the surface normal direction for the corresponding voxel in the base data source.
 
-## Description
+## Information
 
 ### Hint
 
 - SurfaceNormals can be provided in a single ComposedTexture3D, ImageTexture3D or PixelTexture3D node.
+
+### Warning
+
+- Requires X3D profile='Full' or else include <component name='VolumeRendering' level='2'/>
 
 ## Example
 

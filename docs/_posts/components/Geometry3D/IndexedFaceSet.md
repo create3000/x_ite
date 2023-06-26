@@ -238,12 +238,18 @@ Single contained Normal node that can specify perpendicular vectors for correspo
 
 Single contained Coordinate or CoordinateDouble node that can specify a list of vertex values.
 
-## Description
+## Information
 
 ### Hints
 
+- [Polygon](https://en.wikipedia.org/wiki/Polygon){:target="_blank"}
 - Insert a Shape node before adding geometry or Appearance.
-- You can also substitute a type-matched ProtoInstance node for contained content.
+- For advanced extensibility, authors can substitute a type-matched ProtoInstance node (with correct containerField value) for contained node content.
+
+### Warnings
+
+- Rendering characteristics are undefined if polygons are not planar.
+- Avoid self-intersecting polygon line segments, otherwise defined geometry is irregular and rendering results are undefined.
 
 ## Example
 

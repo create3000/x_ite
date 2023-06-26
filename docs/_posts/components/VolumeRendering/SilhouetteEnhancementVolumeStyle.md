@@ -56,11 +56,15 @@ Power function to control sharpness of the silhouette.
 
 The *surfaceNormals* field contains a 3D texture with at least three component values. Each voxel in the texture represents the surface normal direction for the corresponding voxel in the base data source.
 
-## Description
+## Information
 
 ### Hint
 
 - SilhouetteEnhancementVolumeStyle can contain a single Texture3D node with containerField='surfaceNormals'
+
+### Warning
+
+- Requires X3D profile='Full' or else include <component name='VolumeRendering' level='2'/>
 
 ## External Links
 

@@ -143,11 +143,14 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 - [X3D Architecture, 10.2.2 Bounding boxes](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/grouping.html#BoundingBoxes){:target="_blank"}
 - [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/grouping.html#X3DBoundedObject){:target="_blank"}
 
-## Description
+## Information
 
-### Hint
+### Hints
 
+- [(X3D version 4.0 draft) support includes .gltf and .glb](https://www.khronos.org/gltf https://en.wikipedia.org/wiki/glTF){:target="_blank"}
 - You cannot ROUTE values into an Inline scene, use IMPORT/EXPORT (or ExternProtoDeclare and ProtoInstance) instead.
+- [X3D Scene Authoring Hints, Inlines and Prototypes](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#InlinesPrototypes){:target="_blank"}
+- [When parent node is LoadSensor, apply containerField='children' (X3Dv4) or containerField='watchList' (X3Dv3).](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges){:target="_blank"}
 
 ## Example
 

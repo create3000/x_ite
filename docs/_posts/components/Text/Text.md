@@ -101,13 +101,19 @@ The *fontStyle* field can contain a FontStyle or ScreenFontStyle node defining s
 
 - [Wikipedia](https://en.wikipedia.org/wiki/Font){:target="_blank"}
 
-## Description
+## Information
 
 ### Hints
 
+- [String (computer science)](https://en.wikipedia.org/wiki/String_(computer_science)){:target="_blank"}
 - Full internationalization (i18n) and localization (l10n) features are available for any written language.
+- [Relates to Internationalization (i18n)](http://www.w3.org/standards/webdesign/i18n){:target="_blank"}
 - Insert a Shape node before adding geometry or Appearance.
-- You can also substitute a type-matched ProtoInstance node for contained content.
+- For advanced extensibility, authors can substitute a type-matched ProtoInstance node (with correct containerField value) for contained node content.
+
+### Warning
+
+- Text node requires X3D profile='Immersive' or <component name='Text' level='1'/>
 
 ## Example
 

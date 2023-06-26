@@ -127,14 +127,16 @@ Output event containing the node or nodes that have been found to intersect with
 
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
-## Description
+## Information
 
 ### Hints
 
 - Sort order for line picking is based on each pair of coordinates that defining a line segment, with first declared vertex of the segment defined to be the start of the line to which the intersection points are closest.
+- [When the picking line segment intersects a coplanar polygon, computed intersection point(s) are illustrated in Figure 38.1](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/picking.html#f-LineIntersection){:target="_blank"}
 - Picking is performed between rendered frames of the event model. An author sets up the picking request in one frame by placing a LinePickSensor in the desired location. At the start of the next frame, any picking intersections are reported by the pick sensor.
 - Picking notification is performed at the start of the frame for all enabled pick sensors once all other sensors are processed.
-- IndexedLineSet or LineSet can be used for pickingGeometry node.
+- [Event timing details are explained in X3D Specification 4.4.8.3 Execution model](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/concepts.html#ExecutionModel){:target="_blank"}
+- IndexedLineSet or Lineset can be used for pickingGeometry node.
 
 ### Warning
 

@@ -99,18 +99,20 @@ The *children* field monitors one or more USE nodes that contain a valid url fie
 
 - [Field originally named 'watchList' in X3Dv3.](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges){:target="_blank"}
 
-## Description
+## Information
 
 ### Hints
 
 - Use multiple LoadSensor nodes to track multiple loading nodes individually.
-- Background is not sensed due to multiple-image ambiguity.
+- Background node is not sensed by LoadSensor due to node typing and multiple-image ambiguity, alternatively utilize TextureBackground node with multiple ImageTexture nodes each referenced inside LoadSensor.
 - Use Inline 'load' field to prompt or defer loading.
+- [Example scenes and authoring assets at](https://x3dgraphics.com/examples/X3dForWebAuthors/Chapter12EnvironmentSensorSound){:target="_blank"}
 
 ### Warnings
 
-- WatchList child nodes are not rendered, so normally USE copies of other nodes to sense load status.
+- Children (watchList) child nodes are not rendered, so normally USE copies of other nodes to sense load status.
 - New X3D node, not supported in VRML97.
+- ['children' field originally named 'watchList' in X3Dv3.](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges){:target="_blank"}
 
 ## Example
 

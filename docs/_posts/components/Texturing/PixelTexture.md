@@ -72,17 +72,24 @@ Whether to repeat texture along T axis vertically from top to bottom.
 
 Single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images.
 
-## Description
+## Information
 
 ### Hints
 
 - This is a good way to bundle image(s) into a single scene file, avoiding multiple downloads.
+- [X3D-Edit includes PixelTexture image-conversion import capabilities.](https://savage.nps.edu/X3D-Edit/images/PixelTextureImportImage.png){:target="_blank"}
 - Can contain a single TextureProperties node.
 - Insert Shape and Appearance nodes before adding texture.
+- [X3D Scene Authoring Hints, Images and Videos](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Images){:target="_blank"}
+- If a texture is opaque, omitting values in the alpha channel can help avoid rendering artifacts related to transparency.
+- Texture coordinates are reapplied (or else recomputed if textureTransform field initially NULL) whenever the corresponding vertex-based geometry changes.
+- [Texture mapping](https://en.wikipedia.org/wiki/Texture_mapping){:target="_blank"}
+- [X3D Architecture 17.2.2 Lighting model](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/lighting.html#Lightingmodel){:target="_blank"}
 
-### Warning
+### Warnings
 
 - Aggregate file size can grow dramatically.
+- See ComposedCubeMapTexture and TextureBackground for special containerField values.
 
 ## Example
 

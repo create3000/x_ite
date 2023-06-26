@@ -86,18 +86,22 @@ The weigh factor has typical range [0,1] and defines the scale factor applied to
 - Individual displacement values are scaled by the weight factor, if present.
 - Since default pose faces along +Z axis, -x values are right side and +x values are left side within HAnimHumanoid.
 
-## Description
-
-### Example
-
-- In the case of a face, there might be a separate HAnimDisplacer node for each facial expression.
+## Information
 
 ### Hints
 
-- HAnimDisplacer can be used in three different ways: (a) identify vertices corresponding to a particular feature in a parent HAnimSegment node, (b) represent a particular muscular action for a parent HAnimJoint node by displacing corresponding HAnimHumanoid skin vertices in various directions (linearly or radially), or (c) represent a complete configuration of coordinate vertices in a parent HAnimSegment node or parent HAnimJoint/HAnimHumanoid nodes.
-- Name suffixes include \_feature, \_action and \_config.
-- Multiple HAnimDisplacer nodes must appear consecutively inside parent HAnimSegment.
-- Include `<component name='HAnim' level='1'/>`
+- HAnimDisplacer can be used in three different ways: (a) identify vertices corresponding to a particular feature in a parent HAnimSegment node, (b) represent a particular muscular action for a parent HAnimJoint node by displacing corresponding HAnimHumanoid skin vertices in various directions (linearly or radially), or (c) represent a complete configuration of coordinate vertices in parent HAnimSegment or HAnimJoint nodes. Example: in the case of a face, there might be a separate HAnimDisplacer node for each facial expression.
+- Multiple HAnimDisplacer nodes must appear consecutively inside parent HAnimSegment for proper content validation in XML encoding.
+- [HAnim Specification](https://www.web3d.org/documents/specifications/19774/V2.0){:target="_blank"}
+- [HAnim Specification part 1, Displacer](https://www.web3d.org/documents/specifications/19774/V2.0/Architecture/ObjectInterfaces.html#Displacer){:target="_blank"}
+- [X3D for Advanced Modeling (X3D4AM) slideset](https://x3dgraphics.com/slidesets/X3dForAdvancedModeling/HumanoidAnimation.pdf){:target="_blank"}
+
+### Warnings
+
+- Allowed name suffixes include _feature, _action and _config.
+- Index values for HanimHumanoid skin IndexedFaceSet, skinCoord and skinNormal nodes must all be consistently defined together with HAnimJoint HAnimSegment and HAnimDisplacer nodes for proper skin animation.
+- Requires X3D profile='Full' or else include <component name='HAnim' level='1'/>
+- For X3D3 HAnim1, spelling of component name is 'H-Anim' (including hyphen)
 
 ## External Links
 

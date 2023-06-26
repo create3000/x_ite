@@ -128,12 +128,13 @@ Single contained Normal node that can specify perpendicular vectors for correspo
 
 Single contained Coordinate or CoordinateDouble node that can specify a list of vertex values.
 
-## Description
+## Information
 
 ### Hints
 
+- Color, normal and texCoord values are applied in the same order as coord values.
 - Insert a Shape node before adding geometry or Appearance.
-- You can also substitute a type-matched ProtoInstance node for contained content.
+- For advanced extensibility, authors can substitute a type-matched ProtoInstance node (with correct containerField value) for contained node content.
 
 ## External Links
 

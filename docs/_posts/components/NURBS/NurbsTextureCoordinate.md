@@ -70,11 +70,11 @@ Output values for linear interpolation, each corresponding to knots.
 
 *controlPoint* defines a set of control points of dimension uDimension by vDimension, and defines a mesh where the points do not have uniform spacing.
 
-## Description
+## Information
 
 ### Hint
 
-- The SFNode controlPoints field can contain a single Coordinate or CoordinateDouble node.
+- The SFNode controlPoint field can contain a single Coordinate or CoordinateDouble node.
 
 ## External Links
 

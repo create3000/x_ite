@@ -89,11 +89,11 @@ Computed output value that approaches within tolerance of destination value, as 
 
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
-## Description
+## Information
 
 ### Hint
 
-- value_changed output events can be ROUTEd to a `<TextureTransform>` node's translation field, for example.
+- ROUTE value_changed output events to a <TextureTransform> node's translation field, for example.
 
 ## External Links
 

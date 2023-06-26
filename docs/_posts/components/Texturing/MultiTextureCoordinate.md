@@ -44,11 +44,20 @@ Zero or more contained TextureCoordinate or TextureCoordinateGenerator nodes tha
 
 - MultiTextureCoordinate may not contain another MultiTextureCoordinate node.
 
-## Description
+## Information
 
-### Hint
+### Hints
 
-- Add Shape and then polgyonal/planar geometry before adding MultiTextureCoordinate.
+- Add Shape and then polygonal/planar geometry before adding MultiTextureCoordinate.
+- [Texture mapping](https://en.wikipedia.org/wiki/Texture_mapping){:target="_blank"}
+- Multitexturing is accomplished using MultiTexture, MultiTextureCoordinate and MultiTextureTransform nodes.
+- [X3D Texturing component Figure 18.2 Lightmap example](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/texturing.html#f-Lightmapexample){:target="_blank"}
+- [X3D Texturing component Table 18.2: Comparison of single texture and multitexture attributes](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/texturing.html#t-SingleAndMultitextureAttrs){:target="_blank"}
+
+### Warnings
+
+- The number of textures to be blended may have a significant impact on performance, depending on available graphics hardware capabilities.
+- MultiTextureCoordinate may not contain another MultiTextureCoordinate node.
 
 ## External Links
 

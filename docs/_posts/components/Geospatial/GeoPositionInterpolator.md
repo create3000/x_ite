@@ -124,13 +124,17 @@ Interpolated coordinate in the geographic coordinate system specified by geoSyst
 - Requires X3D profile='Full' or else include \<component name='Geospatial' level='1'/\>
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
-## Description
+## Information
 
 ### Hints
 
 - Typical input connection is ROUTE someTimeSensorDEF.fraction_changed TO thisInterpolatorDEF.set_fraction
 - Typical output connection is ROUTE thisInterpolatorDEF.value_changed TO someDestinationNodeDEF.set_someAttribute.
-- Include `<component name='Geospatial' level='1'/>`
+- [X3D for Advanced Modeling (X3D4AM) slideset](https://x3dgraphics.com/slidesets/X3dForAdvancedModeling/GeospatialComponentX3dEarth.pdf){:target="_blank"}
+
+### Warning
+
+- Requires X3D profile='Full' or else include <component name='Geospatial' level='1'/>
 
 ## External Links
 

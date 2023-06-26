@@ -132,16 +132,20 @@ Grouping nodes contain an ordered list of *children* nodes.
 - InputOnly MFNode removeChildren field can remove nodes from the *children* list, unrecognized input nodes (i.e. nonmatching DEF, USE values) are ignored.
 - [X3D Architecture 10.2.1 Grouping and *children* node types](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/grouping.html#GroupingAndChildrenNodes){:target="_blank"}
 
-## Description
+## Information
 
 ### Hints
 
+- Collision can contain a single proxy child node for substitute collision-detection geometry. Improve run-time performance by using proxy with simpler contact-calculation geometry.
 - Proxy shapes are not rendered and remain invisible.
 - Apply containerField='proxy' to uniquely identify the proxy child Shape or grouping node.
-- PointSet, IndexedLineSet, LineSet and Text are not collidable geometry do not trigger collisions.
-- Improve performance using proxy for simpler contact-calculation geometry.
 - NavigationInfo types '"WALK" "FLY"' support camera-to-object collision detection.
+- Content must be visible to be collidable and to be pickable.
 - Insert a Shape node before adding geometry or Appearance.
+
+### Warning
+
+- PointSet, IndexedLineSet, LineSet and Text are not collidable geometry do not trigger collisions.
 
 ## Example
 

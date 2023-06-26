@@ -85,12 +85,13 @@ Linearly interpolated output value determined by current key time and correspond
 
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
-## Description
+## Information
 
 ### Hints
 
 - Typical input connection is ROUTE someTimeSensorDEF.fraction_changed TO thisInterpolatorDEF.set_fraction.
 - Typical output connection is ROUTE thisInterpolatorDEF.value_changed TO someDestinationNodeDEF.set_someAttribute.
+- [Example scenes and authoring assets at](https://x3dgraphics.com/examples/X3dForWebAuthors/Chapter07EventAnimationInterpolation){:target="_blank"}
 
 ## Example
 

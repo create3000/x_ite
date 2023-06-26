@@ -62,12 +62,16 @@ Author-provided prose that describes intended purpose of the url asset.
 
 Single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images.
 
-## Description
+## Information
 
 ### Hints
 
 - Can contain a single TextureProperties node.
 - Typically a Box is used for applying the GeneratedCubeMapTexture.
+
+### Warning
+
+- Requires X3D profile='Full' or else include <component name='CubeMapTexturing' level='3'/>
 
 ## Example
 

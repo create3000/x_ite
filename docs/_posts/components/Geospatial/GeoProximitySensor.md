@@ -140,14 +140,18 @@ Sends changed centerOfRotation values, likely caused by user interaction.
 
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
-## Description
+## Information
 
 ### Hints
 
 - Multiple USEd instances are cumulative, but avoid overlaps.
 - Can first use GeoTransform to relocate/reorient box.
 - Surround entire world to start behaviors once scene is loaded.
-- Include `<component name='Geospatial' level='2'/>`
+- [X3D for Advanced Modeling (X3D4AM) slideset](https://x3dgraphics.com/slidesets/X3dForAdvancedModeling/GeospatialComponentX3dEarth.pdf){:target="_blank"}
+
+### Warning
+
+- Requires X3D profile='Full' or else include <component name='Geospatial' level='2'/>
 
 ## External Links
 

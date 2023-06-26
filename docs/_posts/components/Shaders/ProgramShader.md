@@ -76,11 +76,15 @@ ProgramShader contains zero or more ShaderProgram node instances. In general, on
 
 - Each shader language defines required behavior for processing this field.
 
-## Description
+## Information
+
+### Hint
+
+- Apply default containerField='shaders' when parent node is Appearance.
 
 ### Warning
 
-- ProgramShader contains no field declarations and no plain-text source code.
+- ProgramShader contains no field declarations and no plain-text CDATA block source code.
 
 ## External Links
 

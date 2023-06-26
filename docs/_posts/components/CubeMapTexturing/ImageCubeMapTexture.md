@@ -100,11 +100,12 @@ Location and filename of image. Multiple locations are more reliable, and includ
 
 Single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images.
 
-## Description
+## Information
 
-### Hint
+### Hints
 
 - Can contain a single TextureProperties node.
+- [When parent node is LoadSensor, apply containerField='children' (X3Dv4) or containerField='watchList' (X3Dv3).](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges){:target="_blank"}
 
 ## External Links
 

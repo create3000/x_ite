@@ -101,17 +101,20 @@ Grouping nodes contain an ordered list of *children* nodes.
 - InputOnly MFNode removeChildren field can remove nodes from the *children* list, unrecognized input nodes (i.e. nonmatching DEF, USE values) are ignored.
 - [X3D Architecture 10.2.1 Grouping and *children* node types](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/grouping.html#GroupingAndChildrenNodes){:target="_blank"}
 
-## Description
+## Information
 
 ### Hints
 
 - Insert a Shape node before adding geometry or Appearance.
 - Authors can temporarily hide test geometry under an unselected child of a Switch. This is a good alternative to "commenting out" nodes.
+- GeoViewpoint OrthoViewpoint and Viewpoint share the same binding stack, so no more than one of these nodes can be bound and active at a given time.
+- Contained nodes must have type X3DChildNode, such as Group or Transform or Shape.
 
 ### Warnings
 
-- Do not include Viewpoint or OrthoViewpoint as a child of LOD or Switch, instead use ViewpointGroup as parent to constrain location proximity where the viewpoint is available to user.
-- Results are undefined if a bindable node (Viewpoint, OrthoViewpoint, NavigationInfo, Fog, Background, TextureBackground) is a contained child of LOD or Switch.
+- Do not include GeoViewpoint OrthoViewpoint or Viewpoint as a child of LOD or Switch, instead use ViewpointGroup as parent to constrain location proximity where the viewpoint is available to user.
+- Results are undefined if a bindable node (Background, Fog, NavigationInfo, OrthoViewpoint, TextureBackground, Viewpoint) is a contained descendant node of either LOD or Switch. Avoid this authoring pattern.
+- Switch is not allowed as parent of Appearance, Material, Color, Coordinate, Normal or Texture nodes.
 
 ## Example
 

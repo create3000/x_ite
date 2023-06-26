@@ -61,11 +61,13 @@ Parameter field defines the algorithm used to compute texture coordinates.
 
 *parameter* array contains scale and translation (x y z) values for Perlin NOISE mode, *parameter*[0] contains index of refraction for SPHERE-REFLECT mode, *parameter*[0] contains index of refraction and *parameter*[1 to 3] contains the eye point in local coordinates for SPHERE-REFLECT-LOCAL mode.
 
-## Description
+## Information
 
-### Hint
+### Hints
 
-- Add Shape and then polgyonal/planar geometry before adding TextureCoordinateGenerator.
+- Add Shape and then polygonal/planar geometry before adding TextureCoordinateGenerator.
+- [Texture mapping](https://en.wikipedia.org/wiki/Texture_mapping){:target="_blank"}
+- [X3D Texturing component Figure 18.1, Texture map coordinate system](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/texturing.html#f-TextureMapCoordSystem){:target="_blank"}
 
 ## External Links
 

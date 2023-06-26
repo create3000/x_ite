@@ -109,7 +109,7 @@ Whether to repeat texture along T axis vertically from top to bottom.
 
 Single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images.
 
-## Description
+## Information
 
 ### Hints
 
@@ -117,6 +117,12 @@ Single contained TextureProperties node that can specify additional visual attri
 - Insert Shape and Appearance nodes before adding texture.
 - Authors can provide multiple image formats for the same image, with each source address listed separately in the url field.
 - Player support is required for .png and .jpg formats, support is suggested for .gif format. Other image formats are optionally supported.
+- [X3D Scene Authoring Hints, Images](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Images){:target="_blank"}
+- If a texture is opaque, omitting values in the alpha channel can help avoid rendering artifacts related to transparency and reduce file size by 25%.
+- Texture coordinates are reapplied (or else recomputed if textureTransform field initially NULL) whenever the corresponding vertex-based geometry changes.
+- [Texture mapping](https://en.wikipedia.org/wiki/Texture_mapping){:target="_blank"}
+- [X3D Architecture 17.2.2 Lighting model](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/lighting.html#Lightingmodel){:target="_blank"}
+- [When parent node is LoadSensor, apply containerField='children' (X3Dv4) or containerField='watchList' (X3Dv3).](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges){:target="_blank"}
 
 ### Warnings
 

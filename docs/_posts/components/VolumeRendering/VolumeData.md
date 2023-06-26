@@ -86,11 +86,15 @@ Single contained X3DVolumeRenderStyleNode node that defines specific rendering t
 
 Single contained X3DTexture3DNode (ComposedTexture3D, ImageTexture3D, PixelTexture3D) that provides raw voxel information utilized by corresponding rendering styles. Any number of color components (1-4) may be defined.
 
-## Description
+## Information
 
 ### Hint
 
 - VolumeData can contain a single Texture3D node with containerField='voxels' and a single RenderStyle node.
+
+### Warning
+
+- Requires X3D profile='Full' or else include <component name='VolumeRendering' level='1'/>
 
 ## Example
 

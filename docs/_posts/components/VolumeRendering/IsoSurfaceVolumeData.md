@@ -120,13 +120,18 @@ Single contained X3DTexture3DNode (ComposedTexture3D, ImageTexture3D, PixelTextu
 
 Single contained X3DTexture3DNode (ComposedTexture3D, ImageTexture3D, PixelTexture3D) that provides raw voxel information utilized by corresponding rendering styles. Any number of color components (1-4) may be defined.
 
-## Description
+## Information
 
 ### Hints
 
 - IsoSurfaceVolumeData can contain a single Texture3D node with containerField='gradients' that is used to provide explicit per-voxel gradient direction information for determining surface boundaries, rather than having values implicitly calculated by the implementation.
 - IsoSurfaceVolumeData can contain another Texture3D node with containerField='voxels' containing voxel data.
 - IsoSurfaceVolumeData can contain multiple VolumeStyle nodes.
+
+### Warnings
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
+- Requires X3D profile='Full' or else include <component name='VolumeRendering' level='2'/>
 
 ## Example
 

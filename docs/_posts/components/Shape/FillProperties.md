@@ -55,12 +55,15 @@ Whether or not associated geometry is *hatched*.
 
 Color of the hatch pattern.
 
-## Description
+## Information
 
-### Hints
+### Hint
 
 - DEF/USE copies of a single node can provide a similar "look + feel" style for related shapes in a scene.
-- Include `<component name='Shape' level='3'/>`
+
+### Warning
+
+- Requires X3D profile='Full' or else include <component name='Shape' level='3'/>
 
 ## Example
 

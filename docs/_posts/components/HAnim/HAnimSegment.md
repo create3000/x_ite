@@ -152,12 +152,20 @@ Grouping nodes contain an ordered list of *children* nodes.
 - InputOnly MFNode removeChildren field can remove nodes from the *children* list, unrecognized input nodes (i.e. nonmatching DEF, USE values) are ignored.
 - [X3D Architecture 10.2.1 Grouping and *children* node types](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/grouping.html#GroupingAndChildrenNodes){:target="_blank"}
 
-## Description
+## Information
 
 ### Hints
 
 - HAnimSegment displays geometry between parent HAnimJoint and sibling HAnimJoint nodes.
-- Include `<component name='HAnim' level='1'/>`
+- [HAnim Specification](https://www.web3d.org/documents/specifications/19774/V2.0){:target="_blank"}
+- [HAnim Specification part 1, Segment](https://www.web3d.org/documents/specifications/19774/V2.0/Architecture/ObjectInterfaces.html#Segment){:target="_blank"}
+- [X3D for Advanced Modeling (X3D4AM) slideset](https://x3dgraphics.com/slidesets/X3dForAdvancedModeling/HumanoidAnimation.pdf){:target="_blank"}
+
+### Warnings
+
+- Requires X3D profile='Full' or else include <component name='HAnim' level='1'/>
+- For X3D3 HAnim1, spelling of component name is 'H-Anim' (including hyphen)
+- The number of contained <HAnimSegment USE='*' containerField='segments'/> nodes at top level of HAnimHumanoid needs to match the number of corresponding HAnimJoint node instances found within the preceding skeleton hierarchy.
 
 ## External Links
 

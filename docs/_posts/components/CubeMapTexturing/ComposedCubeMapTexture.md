@@ -103,15 +103,16 @@ Parent ComposedCubeMapTexture element can contain up to six image nodes (ImageTe
 
 Single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images.
 
-## Description
+## Information
 
 ### Hint
 
 - 0..6 child image nodes are allowed (ImageTexture MovieTexture PixelTexture) with corresponding containerField values: front back left right top bottom.
 
-### Warning
+### Warnings
 
-- Child ImageTexture nodes must have unique containerField values for back, bottom, front, left, right, or top.
+- Each of the child ImageTexture or PixelTexture nodes must have unique containerField values for backTexture, bottomTexture, frontTexture, leftTexture, rightTexture, or topTexture.
+- Fields originally named back, bottom, front, left, right, or top in X3Dv3.
 
 ## Example
 

@@ -171,12 +171,18 @@ When applying normalScale for this material node, the contained texture modulate
 
 How "clear" an object is: 1.0 is completely transparent, 0.0 is completely opaque. Interchange profile hint: *transparency* \< .5 opaque, *transparency* \> .5 transparent.
 
-## Description
+## Information
 
 ### Hints
 
 - Insert Shape and Appearance nodes before adding material.
 - DEF/USE copies of a single node can provide a similar "look + feel" style for related shapes in a scene.
+- [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color){:target="_blank"}
+- [X3D Example Archives, Basic, Universal Media Materials](https://www.web3d.org/x3d/content/examples/Basic/UniversalMediaMaterials){:target="_blank"}
+- [X3D Architecture 17.2.2 Lighting model](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/lighting.html#Lightingmodel){:target="_blank"}
+- [Rendering](https://en.wikipedia.org/wiki/Rendering_(computer_graphics)){:target="_blank"}
+- [3D rendering](https://en.wikipedia.org/wiki/3D_rendering){:target="_blank"}
+- [Physically based rendering (PBR)](https://en.wikipedia.org/wiki/Physically_based_rendering){:target="_blank"}
 
 ## External Links
 

@@ -114,12 +114,16 @@ Multiple contained X3DVolumeRenderStyleNode nodes corresponding to each isosurfa
 
 Single contained X3DTexture3DNode (ComposedTexture3D, ImageTexture3D, PixelTexture3D) that provides raw voxel information utilized by corresponding rendering styles. Any number of color components (1-4) may be defined.
 
-## Description
+## Information
 
 ### Hints
 
 - SegmentedVolumeData can contain a single ComposedTexture3D, ImageTexture3D or PixelTexture3D node with containerField='segmentIdentifiers' and another with containerField='voxels'.
 - SegmentedVolumeData can contain multiple RenderStyle nodes.
+
+### Warning
+
+- Requires X3D profile='Full' or else include <component name='VolumeRendering' level='2'/>
 
 ## Example
 

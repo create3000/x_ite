@@ -73,12 +73,19 @@ Circle *radius*, of which the arc is a portion.
 
 - Simple-geometry dimensions are initializeOnly and cannot be changed after initial creation, avoiding the need for potentially expensive tessellation at run time.
 
-## Description
+## Information
 
 ### Hints
 
+- Material emissiveColor in corresponding Appearance is used for rendering lines.
+- Adding LineProperties to the corresponding Appearance node can modify the rendering style of these lines.
 - Insert a Shape node before adding geometry or Appearance.
-- Include `<component name='Geometry2D' level='2'/>`
+
+### Warnings
+
+- Lines are not lit, are not texture-mapped, and do not participate in collision detection.
+- Use a different Material emissiveColor than the Background color, otherwise geometry is invisible.
+- [Requires X3D profile='Full' or else include <component name='Geometry2D' level='2'/> Examples: X3D Example Archives, X3D for Web Authors, Chapter 10 Geometry 2D](https://x3dgraphics.com/examples/X3dForWebAuthors/Chapter10Geometry2D){:target="_blank"}
 
 ## Example
 

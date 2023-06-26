@@ -61,12 +61,13 @@ Non-uniform planar scaling of texture about center (opposite effect appears on g
 
 *center* point in 2D (s,t) texture coordinates for rotation and scaling.
 
-## Description
+## Information
 
 ### Hints
 
 - Order of operations is translation, rotation about center, non-uniform scale about center.
-- Insert Shape and Appearance nodes before adding TextureTransform.
+- Insert Shape and Appearance nodes before adding TextureTransform3D.
+- [Texture mapping](https://en.wikipedia.org/wiki/Texture_mapping){:target="_blank"}
 
 ### Warning
 

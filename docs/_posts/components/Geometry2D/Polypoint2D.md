@@ -47,11 +47,11 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 
 - Simple-geometry dimensions are initializeOnly and cannot be changed after initial creation, avoiding the need for potentially expensive tessellation at run time.
 
-## Description
+## Information
 
 ### Hint
 
-- Insert a Shape node before adding geometry or Appearance.
+- [Insert a Shape node before adding geometry or Appearance. Examples: X3D Example Archives, X3D for Web Authors, Chapter 10 Geometry 2D](https://x3dgraphics.com/examples/X3dForWebAuthors/Chapter10Geometry2D){:target="_blank"}
 
 ## Example
 

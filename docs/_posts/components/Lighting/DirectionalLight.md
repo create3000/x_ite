@@ -92,12 +92,12 @@ The shadowBias value controls the visibility of *shadow acne*.
 
 Size of the shadow map in pixels, must be power of two.
 
-## Description
+## Information
 
 ### Hints
 
 - Animate direction to simulate time-of-day sunlight effects.
-- HeadLight enabled on/off is controlled by NavigationInfo.
+- The bound NavigationInfo controls whether headlight is enabled on/off. Interchange profile hint: light might not be scoped by parent Group or Transform.
 
 ## Example
 

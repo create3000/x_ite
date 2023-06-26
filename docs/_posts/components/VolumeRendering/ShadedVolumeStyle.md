@@ -64,11 +64,15 @@ Colour and opacity is determined based on whether a value has been specified for
 
 The *surfaceNormals* field contains a 3D texture with at least three component values. Each voxel in the texture represents the surface normal direction for the corresponding voxel in the base data source.
 
-## Description
+## Information
 
 ### Hint
 
 - ShadedVolumeStyle can contain a single Texture3D node with containerField='surfaceNormals' and a single Material node.
+
+### Warning
+
+- Requires X3D profile='Full' or else include <component name='VolumeRendering' level='3'/> or level='4' to include shadows.
 
 ## Example
 

@@ -161,17 +161,19 @@ The outputOnly *children* field exposes a portion of the scene graph for the cur
 
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
-## Description
+## Information
 
 ### Hints
 
 - Children nodes expose the scene graph for the currently loaded set of nodes.
 - RootNode specifies the geometry of the root tile.
-- Include `<component name='Geospatial' level='1'/>`
+- [X3D for Advanced Modeling (X3D4AM) slideset](https://x3dgraphics.com/slidesets/X3dForAdvancedModeling/GeospatialComponentX3dEarth.pdf){:target="_blank"}
 
-### Warning
+### Warnings
 
 - Do not use rootUrl and rootNode simultaneously, since each specifies the root tile.
+- Requires X3D profile='Full' or else include <component name='Geospatial' level='1'/>
+- Nested LOD (and/or GeoLOD) nodes with overlapping range intervals can lead to unexpected or undefined behavior.
 
 ## Example
 

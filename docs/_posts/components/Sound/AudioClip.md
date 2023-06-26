@@ -203,7 +203,7 @@ Current elapsed time since AudioClip activated/running, cumulative in seconds, a
 - Duration value of -1 implies that media data has not yet loaded or is unavailable for some reason.
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
-## Description
+## Information
 
 ### Hints
 
@@ -211,7 +211,8 @@ Current elapsed time since AudioClip activated/running, cumulative in seconds, a
 - Utilize DEF/USE references for multiple copies of a single AudioClip sound file in order to avoid multiple-download delays, reduce memory requirements, and maintain synchronization.
 - Authors can provide multiple audio formats for the same audio track, with each source address listed separately in the url field.
 - Player support for .wav format is required, .midi format is recommended, other formats are optional.
-- The underlying `<audio/>` element can be accessed via audioClip.getValue().getElement().
+- [X3D Scene Authoring Hints:Audio](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Audio){:target="_blank"}
+- [When parent node is LoadSensor, apply containerField='children' (X3Dv4) or containerField='watchList' (X3Dv3).](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges){:target="_blank"}
 
 ## Example
 

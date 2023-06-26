@@ -148,11 +148,16 @@ Grouping nodes contain an ordered list of *children* nodes.
 - InputOnly MFNode removeChildren field can remove nodes from the *children* list, unrecognized input nodes (i.e. nonmatching DEF, USE values) are ignored.
 - [X3D Architecture 10.2.1 Grouping and *children* node types](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/grouping.html#GroupingAndChildrenNodes){:target="_blank"}
 
-## Description
+## Information
 
-### Hint
+### Hints
 
-- Include `<component name='CADGeometry' level='2'/>`
+- CADPart is often a child of CADAssembly node.
+- [X3D for Advanced Modeling (X3D4AM) slideset](https://x3dgraphics.com/slidesets/X3dForAdvancedModeling/ComputerAidedDesignInterchangeProfile.pdf){:target="_blank"}
+
+### Warning
+
+- Requires X3D profile='Full' or else include <component name='CADGeometry' level='2'/>
 
 ## External Links
 

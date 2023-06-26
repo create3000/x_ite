@@ -99,11 +99,11 @@ Computationaly interpolated output value determined by current key time and corr
 
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
-## Description
+## Information
 
 ### Hint
 
-- The SFNode controlPoints field can contain a single Coordinate or CoordinateDouble node.
+- The SFNode controlPoint field can contain a single Coordinate or CoordinateDouble node.
 
 ## External Links
 

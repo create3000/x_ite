@@ -67,13 +67,16 @@ Are set to default values if undefined. Together these parameters define *attenu
 
 - Nominal point size is multiplied by *attenuation* factor and then clipped to a minimum value of pointSizeMinValue × minimum renderable point size, then clipped to maximum size of pointSizeMaxValue × minimum renderable point size.
 
-## Description
+## Information
 
 ### Hints
 
 - DEF/USE copies of a single node can provide a similar "look + feel" style for related shapes in a scene.
 - When an X3DTextureNode is defined in the same Appearance instance as PointProperties node, the points of a PointSet shall be displayed as point sprites using the given texture(s).
-- Requires X3D profile='Full' or else include \<component name='Shape' level='5'/>`
+
+### Warning
+
+- Requires X3D profile='Full' or else include <component name='Shape' level='5'/>
 
 ## External Links
 

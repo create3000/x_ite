@@ -102,13 +102,16 @@ Nonlinearly interpolated output value computed by using current time fraction al
 
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
-## Description
+## Information
 
 ### Hints
 
 - Typical input connection is ROUTE someTimeSensorDEF.fraction_changed TO thisInterpolatorDEF.set_fraction
 - Typical output connection is ROUTE thisInterpolatorDEF.value_changed TO someDestinationNodeDEF.set_someAttribute.
-- Include `<component name='Interpolation' level='4'/>`
+
+### Warning
+
+- Requires X3D profile='Full' or else include <component name='Interpolation' level='4'/>
 
 ## External Links
 

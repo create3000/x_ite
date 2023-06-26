@@ -81,6 +81,7 @@ sub update_node {
 
    decode_entities $node;
    $node =~ s/incldes/includes/sgo;
+   $node =~ s/polgyonal/polygonal/sgo;
 
    @description = @hints = @warnings = ();
 
@@ -141,15 +142,14 @@ sub update_node {
    }
 
    $string .= "The $typeName node belongs to the **$componentName** component and its default container field is *$containerField.*";
-   $string .= " It is available since X3D version $from or later." if $to eq "Infinity";
-   $string .= " It is available since X3D version $from until $to." if $to ne "Infinity";
+   $string .= " ";
+   $string .= "It is available since X3D version $from or later."  if $to eq "Infinity";
+   $string .= "It is available since X3D version $from until $to." if $to ne "Infinity";
    $string .= "\n";
    $string .= "\n";
    $string .= ">Deprecated: This node is deprecated since X3D version $to. Future versions of the standard may remove this node.\n{: .prompt-danger }\n\n" if $to ne "Infinity";
 
-   $file =~ s/(## Overview\n).*?\n(?=(?:###|##)\s+)/$1$string/s;
-
-   return $file;
+   $file =~ s/(## Overview\n).*?\n(?=##\s+)/$1$string/s;
 
    # Description
 
@@ -174,6 +174,8 @@ sub update_node {
       $string .= "- $_\n" foreach @warnings;
       $string .= "\n";
    }
+
+   $file =~ s/(## (?:Description|Information)\n).*?\n(?=##\s+|\s+$)/## Information\n\n$string/s;
 
    return $file;
 }

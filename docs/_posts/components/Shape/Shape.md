@@ -91,11 +91,16 @@ Single contained Appearance node that can specify visual attributes (such as mat
 
 Single contained *geometry* node that is rendered according to corresponding appearance.
 
-## Description
+## Information
 
-### Hint
+### Hints
 
-- You can also substitute a type-matched ProtoInstance node for contained content.
+- [Shape](https://en.wikipedia.org/wiki/Shape){:target="_blank"}
+- The Shape design pattern to collect appearance and geometry together is fundamentally the same for many types of 3D graphics software and hardware.
+- For advanced extensibility, authors can substitute a type-matched ProtoInstance node (with correct containerField value) for contained node content.
+- [X3D Architecture 12.2.1 Shape nodes](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/shape.html#Shapenodes){:target="_blank"}
+- [X3D Architecture 17.2.2 Lighting model](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/lighting.html#Lightingmodel){:target="_blank"}
+- Apply containerField='shape' if parent node is CADFace.
 
 ## External Links
 

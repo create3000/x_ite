@@ -185,15 +185,25 @@ The *navigationInfo* field defines a dedicated NavigationInfo node for this X3DV
 
 - Allows simple integration of custom navigation associated with each Viewpoint according to user needs at that location.
 
-## Description
+## Information
 
-### Hint
+### Hints
 
-- Include `<component name='Geospatial' level='1'/>`
+- Alternatively can use GeoLocation or GeoTransform as parent of a Viewpoint node to orient geospatial views.
+- Include <component name='Geospatial' level='1'/>
+- When a GeoViewpoint node is bound, it also overrides the currently bound NavigationInfo node in the scene and controls user navigation for smoother geospatial interaction.
+- Background, Fog, GeoViewpoint, NavigationInfo, OrthoViewpoint, TextureBackground and Viewpoint are bindable nodes, meaning that no more than one of each node type can be active at a given time.
+- GeoViewpoint OrthoViewpoint and Viewpoint share the same binding stack, so no more than one of these nodes can be bound and active at a given time.
+- Regardless of viewpoint jump value at bind time, the relative viewing transformation between user's view and defined position/orientation is stored for later use when un-jumping (returning to the viewpoint when subsequent viewpoint is unbound).
+- Customizable design pattern for dedicated Viewpoint/NavigationInfo pair: <Viewpoint DEF='SpecialView'/> <NavigationInfo DEF='SpecialNav'/> <ROUTE fromNode='SpecialView' fromField='isBound' toNode='SpecialNav' toField='set_bind'/>
+- [X3D Scene Authoring Hints, Viewpoints](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Viewpoints){:target="_blank"}
 
-### Warning
+### Warnings
 
-- The navType and headlight fields were removed as part of X3D version 3.3, instead use a NavigationInfo node for those fields.
+- Results are undefined if a bindable node (Background, Fog, NavigationInfo, OrthoViewpoint, TextureBackground, Viewpoint) is a contained descendant node of either LOD or Switch. Avoid this authoring pattern.
+- Do not include GeoViewpoint OrthoViewpoint or Viewpoint as a child of LOD or Switch, instead use ViewpointGroup as parent to constrain location proximity where the viewpoint is available to user.
+- GeoViewpoint navType and headlight fields were removed as part of X3D version 3.3, authors can instead use a NavigationInfo node for those fields in prior X3D versions 3.0, 3.1 or 3.2. Upgrading such legacy scenes to version 3.3 or greater is preferred and recommended.
+- Avoid having GeoLocation or GeoTransform as a parent or ancestor node of GeoViewpoint, since multiple geospatial transformations then occur with unpredictable results.
 
 ## Example
 

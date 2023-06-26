@@ -120,12 +120,19 @@ If *mustEvaluate* false, then the X3D player may delay sending input events to S
 
 - Set *mustEvaluate* true when sending/receiving values via the network.
 
-## Description
+## Information
 
 ### Hints
 
-- Insert a CDATA node to contain source code embedded within an X3D scene.
-- CDATA blocks can protect literal characters (such as &amp; '<' and '>') in source code from unintended escape-character modifications by XML parsers.
+- Insert an XML Character Data (CDATA) block within the Script node to contain source code embedded within an X3D scene, avoiding the need for escape characters.
+- A contained XML Character Data (CDATA) block for source code protects whitespace, line breaks, and literal characters (such as & for ampersand character, < for less-than-sign character, and > for greater-than-sign character) from unintended escape-character modifications by XML parsers.
+- [X3D Scene Authoring Hints, Scripts](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Scripts){:target="_blank"}
+- [Apply containerField='watchList' when parent node is LoadSensor.ECMAScript-262 specification](http://www.ecma-international.org/publications/standards/Ecma-262.htm){:target="_blank"}
+- Embedded ecmascript: source can also be contained in the sourceCode pseudo-field without escape characters, equivalent to last entry in the url list, when using other API codebases and file encodings.
+
+### Warning
+
+- Strict order is required for contained constructs: first field declarations (if any), then IS/connect statements (if any), and finally CDATA source-code block.
 
 ## External Links
 

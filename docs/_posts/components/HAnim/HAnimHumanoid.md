@@ -327,13 +327,20 @@ List of one or more indexed mesh definitions (such as IndexedFaceSet) that utili
 - (X3D version 4.0 draft) requires X3D profile='Full' or else include \<component name='HAnim' level='2'/\>
 - For X3D3 HAnim1, spelling of component name is 'H-Anim' (including hyphen)
 
-## Description
+## Information
 
 ### Hints
 
-- MFNode arrays for joints, segments, sites, skin and viewpoints usually follow the human body definition and contain USE node references.
-- The viewpoints field connects internal Site nodes that in turn hold relative Viewpoint nodes, such as `<HAnimSite USE='ObserveFace_viewSite' containerField='viewpoints'/>` which has a corresponding `<HAnimSite DEF='ObserveFace_viewSite' name='ObserveFace_view' containerField='children' description='look at me!'/>` node.
-- Include `<component name='HAnim' level='1'/>`
+- MFNode arrays for the joints, segments, sites, and viewpoints fields provide lists for all HAnim nodes found in the skeleton hierarchy and thus only contain USE node references.
+- [HAnim Specification](https://www.web3d.org/documents/specifications/19774/V2.0){:target="_blank"}
+- [HAnim Specification part 1, Humanoid](https://www.web3d.org/documents/specifications/19774/V2.0/Architecture/ObjectInterfaces.html#Humanoid){:target="_blank"}
+- [HAnim Specification part 2, clause 6.4 Extended definition of Humanoid object](https://www.web3d.org/documents/specifications/19774/V2.0/MotionDataAnimation/MotionNodes.html#HumanoidObjectExtension){:target="_blank"}
+- [X3D for Advanced Modeling (X3D4AM) slideset](https://x3dgraphics.com/slidesets/X3dForAdvancedModeling/HumanoidAnimation.pdf){:target="_blank"}
+
+### Warnings
+
+- Requires X3D profile='Full' or else include <component name='HAnim' level='1'/>
+- For X3D3 HAnim1, spelling of component name is 'H-Anim' (including hyphen)
 
 ## Example
 

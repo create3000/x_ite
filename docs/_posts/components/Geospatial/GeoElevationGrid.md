@@ -200,19 +200,21 @@ Contains xDimension rows * zDimension columns floating-point values for elevatio
 
 - *height* array values are not retained or available at run time since a browser is permitted to condense geometry.
 
-## Description
+## Information
 
 ### Hints
 
-- The height array defines (xDimension-1)\*(zDimension-1) quadrilaterals.
+- The height array defines (xDimension-1)*(zDimension-1) quadrilaterals.
 - Positive direction for normal of each triangle is on same side of the quadrilateral. Triangles are defined either counterclockwise or clockwise depending on value of ccw field.
-- GeoElevationGrid can contain GeoOrigin, Color/ColorRGBA, Normal and TextureCoordinate nodes.
+- GeoElevationGrid can contain GeoOrigin, Color|ColorRGBA, Normal and TextureCoordinate nodes.
 - Insert a Shape node before adding geometry or Appearance.
-- Include `<component name='Geospatial' level='1'/>`
+- [X3D for Advanced Modeling (X3D4AM) slideset](https://x3dgraphics.com/slidesets/X3dForAdvancedModeling/GeospatialComponentX3dEarth.pdf){:target="_blank"}
 
-### Warning
+### Warnings
 
 - Generated quadrilaterals can be nonplanar. Tessellation splits quadrilaterals into triangles along seam starting at initial vertex of the quadrilateral and proceeding to opposite vertex.
+- Requires X3D profile='Full' or else include <component name='Geospatial' level='1'/>
+- Avoid having GeoLocation or GeoTransform as a parent or ancestor node of GeoElevationGrid, since multiple geospatial transformations then occur with unpredictable results.
 
 ## Example
 

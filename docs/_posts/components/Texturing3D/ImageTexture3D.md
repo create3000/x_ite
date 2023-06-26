@@ -113,17 +113,24 @@ Whether to repeat texture along R axis from front to back.
 
 Single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images.
 
-## Description
+## Information
 
 ### Hints
 
+- [Microsoft DirectDraw Surface (DDS)](https://docs.microsoft.com/en-us/windows/win32/direct3ddds/dx-graphics-dds){:target="_blank"}
+- [Digital Imaging and Communications in Medicine (DICOM)](https://www.dicomstandard.org Nevertheless DDS, DICOM, NRRD and/or .vol formats are recommended.){:target="_blank"}
+- [Nearly Raw Raster Data (NRRD)](http://teem.sourceforge.net/nrrd){:target="_blank"}
+- [Volume data format (VOL)](http://paulbourke.net/dataformats/volumetric){:target="_blank"}
+- [X3D Scene Authoring Hints, Volume Tools and Volumes Visualization](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Volumes){:target="_blank"}
 - Can contain a single TextureProperties node.
 - Insert Shape and Appearance nodes before adding texture.
-- Supported file formats are [NRRD](https://teem.sourceforge.net/nrrd/format.html){:target="_blank"}, and also [DICOM](https://en.wikipedia.org/wiki/DICOM){:target="_blank"}.
+- [X3D Architecture 33.2.2 3D texturing concepts](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/texture3D.html#3DTextureconcepts){:target="_blank"}
+- [When parent node is LoadSensor, apply containerField='children' (X3Dv4) or containerField='watchList' (X3Dv3).](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges){:target="_blank"}
 
-### Warning
+### Warnings
 
-- There are no required file formats. Nevertheless: DDS, DICOM, and/or .vol formats are recommended.
+- There are no required file formats, but at least one of the following formats is recommended for volume support in an X3D browser.
+- Requires X3D profile='Full' or else include <component name='Texturing3D' level='2'/>
 
 ## Example
 

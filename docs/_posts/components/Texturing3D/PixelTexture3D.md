@@ -70,12 +70,17 @@ Whether to repeat texture along R axis from front to back.
 
 Single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images.
 
-## Description
+## Information
 
 ### Hints
 
 - Can contain a single TextureProperties node.
 - Insert Shape and Appearance nodes before adding texture.
+- [X3D Architecture 33.2.2 3D texturing concepts](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/texture3D.html#3DTextureconcepts){:target="_blank"}
+
+### Warning
+
+- Requires X3D profile='Full' or else include <component name='Texturing3D' level='1'/>
 
 ## External Links
 

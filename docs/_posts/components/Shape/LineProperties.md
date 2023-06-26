@@ -51,12 +51,16 @@ Whether or not LineProperties are *applied* to associated geometry.
 
 *linewidthScaleFactor* is a scale factor multiplied by browser-dependent nominal linewidth, mapped to nearest available line width. Values zero or less provide minimum available line width.
 
-## Description
+## Information
 
 ### Hints
 
 - DEF/USE copies of a single node can provide a similar "look + feel" style for related shapes in a scene.
-- Include `<component name='Shape' level='2'/>`
+- [LineProperties illustration model](https://X3dGraphics.com/examples/X3dForWebAuthors/Chapter05AppearanceMaterialTextures/LinePropertiesExampleIndex.html){:target="_blank"}
+
+### Warning
+
+- Requires X3D profile='Full' or else include <component name='Shape' level='2'/>
 
 ## Example
 

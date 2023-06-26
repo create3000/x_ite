@@ -66,13 +66,18 @@ Single contained TextureProperties node that can specify additional visual attri
 
 Collection of 2D *texture* sources.
 
-## Description
+## Information
 
 ### Hints
 
 - Insert 2^n ImageTexture, PixelTexture or MovieTexture child nodes. The first image is at depth 0 and each following image is at an increasing depth value in the R direction.
 - Can contain a single TextureProperties node.
 - Insert Shape and Appearance nodes before adding texture.
+- [X3D Architecture 33.2.2 3D texturing concepts](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/texture3D.html#3DTextureconcepts){:target="_blank"}
+
+### Warning
+
+- Requires X3D profile='Full' or else include <component name='Texturing3D' level='1'/>
 
 ## External Links
 

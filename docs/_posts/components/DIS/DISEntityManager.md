@@ -79,13 +79,19 @@ Simulation/exercise *siteID* of the participating LAN or organization.
 
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
-## Description
+## Information
 
 ### Hints
 
 - DISEntityManager contains DISEntityTypeMapping nodes.
 - DisEntityManager ESPDU packets use the IEEE Distributed Interactive Simulation (DIS) protocol.
-- Include `<component name='DIS' level='2'/>`
+- [Savage Developers Guide on DIS](https://savage.nps.edu/Savage/developers.html#DIS){:target="_blank"}
+- [X3D for Advanced Modeling (X3D4AM) slideset](https://x3dgraphics.com/slidesets/X3dForAdvancedModeling/DistributedInteractiveSimulation.pdf){:target="_blank"}
+
+### Warnings
+
+- ['children' field originally named 'mapping' in X3Dv3.](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges){:target="_blank"}
+- Requires X3D profile='Full' or else include <component name='DIS' level='2'/>
 
 ## External Links
 

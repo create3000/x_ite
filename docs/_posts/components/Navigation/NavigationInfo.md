@@ -146,17 +146,20 @@ Event sent reporting timestamp when node becomes active/inactive.
 
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
-## Description
+## Information
 
 ### Hints
 
 - For inspection of simple objects, usability often improves with type="EXAMINE" "ANY"
-- NavigationInfo, Background, TextureBackground, Fog, OrthoViewpoint and Viewpoint are bindable nodes, meaning that no more than one of each node type can be active at a given time.
+- Background, Fog, GeoViewpoint, NavigationInfo, OrthoViewpoint, TextureBackground and Viewpoint are bindable nodes, meaning that no more than one of each node type can be active at a given time.
 - NavigationInfo types '"WALK" "FLY"' support camera-to-object collision detection.
+- Regardless of viewpoint jump value at bind time, the relative viewing transformation between user's view and defined position/orientation is stored for later use when un-jumping (returning to the viewpoint when subsequent viewpoint is unbound).
+- Customizable design pattern for dedicated Viewpoint/NavigationInfo pair: <Viewpoint DEF='SpecialView'/> <NavigationInfo DEF='SpecialNav'/> <ROUTE fromNode='SpecialView' fromField='isBound' toNode='SpecialNav' toField='set_bind'/>
+- [X3D Scene Authoring Hints, Viewpoints](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Viewpoints){:target="_blank"}
 
 ### Warning
 
-- Results are undefined if a bindable node (Viewpoint, OrthoViewpoint, NavigationInfo, Fog, Background, TextureBackground) is a contained child of LOD or Switch.
+- Results are undefined if a bindable node (Background, Fog, NavigationInfo, OrthoViewpoint, TextureBackground, Viewpoint) is a contained descendant node of either LOD or Switch. Avoid this authoring pattern.
 
 ## Example
 

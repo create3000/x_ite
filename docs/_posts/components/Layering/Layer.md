@@ -80,11 +80,11 @@ Nodes making up this layer.
 - InputOnly MFNode removeChildren field can remove nodes from the *children* list, unrecognized input nodes (i.e. nonmatching DEF, USE values) are ignored.
 - [X3D Architecture 10.2.1 Grouping and *children* node types](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/grouping.html#GroupingAndChildrenNodes){:target="_blank"}
 
-## Description
+## Information
 
 ### Hints
 
-- No transformations are possible above each Layerset/Layer combination in the scene graph hierarchy.
+- No transformations are possible above each LayerSet/Layer combination in the scene graph hierarchy.
 - Each Layer node contains its own binding stacks and thus has its own viewpoints and navigation.
 
 ## External Links

@@ -164,17 +164,18 @@ Grouping nodes contain an ordered list of *children* nodes.
 - InputOnly MFNode removeChildren field can remove nodes from the *children* list, unrecognized input nodes (i.e. nonmatching DEF, USE values) are ignored.
 - [X3D Architecture 10.2.1 Grouping and *children* node types](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/grouping.html#GroupingAndChildrenNodes){:target="_blank"}
 
-## Description
+## Information
 
 ### Hints
 
 - +Y axis is up.
 - Insert a Shape node before adding geometry or Appearance.
-- Include `<component name='Geospatial' level='2'/>`
+- [X3D for Advanced Modeling (X3D4AM) slideset](https://x3dgraphics.com/slidesets/X3dForAdvancedModeling/GeospatialComponentX3dEarth.pdf){:target="_blank"}
 
-### Warning
+### Warnings
 
-- Avoid having GeoLocation or GeoTransform as a parent of ancestor node, since multiple geospatial transformations then occur with unpredictable results.
+- Requires X3D profile='Full' or else include <component name='Geospatial' level='2'/>
+- Avoid having GeoLocation or GeoTransform as a parent or ancestor node of each other, since multiple geospatial transformations then occur with unpredictable results.
 
 ## External Links
 

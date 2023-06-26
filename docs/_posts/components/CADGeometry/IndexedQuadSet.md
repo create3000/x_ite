@@ -132,13 +132,22 @@ Single contained Normal node that can specify perpendicular vectors for correspo
 
 Single contained Coordinate or CoordinateDouble node that can specify a list of vertex values.
 
-## Description
+## Information
 
 ### Hints
 
+- [Quadrilateral](https://en.wikipedia.org/wiki/Quadrilateral){:target="_blank"}
+- [Quadrilateral](https://en.wikipedia.org/wiki/Quadrilateral){:target="_blank"}
+- Color, normal and texCoord values are applied in the same order as coord values.
 - Insert a Shape node before adding geometry or Appearance.
-- You can also substitute a type-matched ProtoInstance node for contained content.
-- Include `<component name='CADGeometry' level='1'/>`
+- For advanced extensibility, authors can substitute a type-matched ProtoInstance node (with correct containerField value) for contained node content.
+- [X3D for Advanced Modeling (X3D4AM) slideset](https://x3dgraphics.com/slidesets/X3dForAdvancedModeling/ComputerAidedDesignInterchangeProfile.pdf){:target="_blank"}
+
+### Warnings
+
+- Requires X3D profile='Full' or else include <component name='CADGeometry' level='1'/>
+- Rendering characteristics are undefined if polygons are not planar.
+- Avoid self-intersecting polygon line segments, otherwise defined geometry is irregular and rendering results are undefined.
 
 ## External Links
 

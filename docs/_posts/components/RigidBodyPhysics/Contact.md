@@ -106,15 +106,15 @@ The *body1* and body2 fields specify two top-level nodes that should be evaluate
 
 The body1 and *body2* fields specify two top-level nodes that should be evaluated in the physics model as a single set of interactions with respect to each other.
 
-## Description
+## Information
 
 ### Hint
 
-- Each Contact node contains two RigidBody (containerField='body1,body2') and two CollidableShape or CollidableOffset nodes (containerField='geometry1,geometry2').
+- Each Contact node contains two RigidBody nodes (containerField='body1' and containerField='body2') as well as two CollidableShape or CollidableOffset nodes (containerField='geometry1' and containerField='geometry2').
 
 ### Warning
 
-- Contact nodes are transient and can only occur at run time, not in saved X3D files.
+- Contact nodes are transient and can only occur at run time. It is an error to define this transient node in an X3D file.
 
 ## External Links
 

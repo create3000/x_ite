@@ -53,11 +53,15 @@ If (a,b,c,d) is the *plane*, with the first three components being a normalized 
 
 - (a, b, c) value of (0, 0, 0) is forbidden since the zero vector has ambiguous direction and is thus degenerate, not defining a *plane*.
 
-## Description
+## Information
 
 ### Hint
 
-- Include `<component name='Rendering' level='5'/>`
+- ClipPlane nodes only affect peer and descendant nodes, thus a parent grouping node can limit its effect.
+
+### Warning
+
+- [Requires X3D profile='Full' or else include <component name='Rendering' level='5'/> Examples: X3D Example Archives, Basic, CAD, Clip Plane Example](https://www.web3d.org/x3d/content/examples/Basic/CAD/ClipPlaneExampleIndex.html){:target="_blank"}
 
 ## Example
 

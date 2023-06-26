@@ -78,13 +78,13 @@ ViewpointGroup contains Viewpoint, OrthoViewpoint, GeoViewpoint and other Viewpo
 - InputOnly MFNode removeChildren field can remove nodes from the *children* list, unrecognized input nodes (i.e. nonmatching DEF, USE values) are ignored.
 - [X3D Architecture 10.2.1 Grouping and *children* node types](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/grouping.html#GroupingAndChildrenNodes){:target="_blank"}
 
-## Description
+## Information
 
 ### Hints
 
-- Use ViewpointGroup as parent for Viewpoint and OrthoViewpoint to constrain location proximity where contained viewpoints are available to user.
+- Use ViewpointGroup as parent for Viewpoint, OrthoViewpoint, GeoViewpoint and other ViewpointGroup nodes to constrain location proximity where contained viewpoints are available to user.
 - ViewpointGroup and OrthoViewpoint require Navigation component level 3, which is higher than CADInterchange profile.
-- Viewpoint and ViewpointGroup descriptions together build simple menu/submenu lists for simple user navigation.
+- Viewpoint and ViewpointGroup descriptions together build simple menu/submenu lists for simple user navigation. ViewpointGroup is not an X3DGroupingNode, and can only contain a Metadata* node, Viewpoint, OrthoViewpoint, GeoViewpoint and other ViewpointGroup nodes.
 
 ## External Links
 

@@ -70,10 +70,16 @@ Distance in meters where objects are totally obscured by the fog, using local co
 
 - *visibilityRange* 0 disables Fog.
 
-## Description
+## Information
 
-### Warning
+### Hints
 
+- LocalFog effects are based on its position in the world, as given by current transformation hierarchy.
+- LocalFog effects remain independent of current view location.
+
+### Warnings
+
+- LocalFog only affects geometry within the same scene subgraph.
 - LocalFog is not a bindable node.
 
 ## Example

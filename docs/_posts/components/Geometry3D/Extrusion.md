@@ -202,11 +202,16 @@ The *spine* array defines a center-line sequence of 3D points that define a piec
 - Special care is needed if creating loops or spirals since self-intersecting, impossible or inverted geometry can result!
 - Ensure that *spine* segments have non-zero length and are not coincident with each other.
 
-## Description
+## Information
 
-### Hint
+### Hints
 
+- [Extrusion](https://en.wikipedia.org/wiki/Extrusion){:target="_blank"}
 - Insert a Shape node before adding geometry or Appearance.
+
+### Warning
+
+- Take care to avoid defining parameter combinations that create self-intersecting, impossible or inverted geometry.
 
 ## Example
 

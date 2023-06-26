@@ -49,11 +49,16 @@ The *mapping* label identifies which texture coordinates and transformations are
 
 Triplets of 3D (s,t,r) texture coordinates, either in range [0,1] or higher if repeating.
 
-## Description
+## Information
 
-### Hint
+### Hints
 
-- Add Shape and then polgyonal/planar geometry before adding texture coordinates.
+- Add Shape and then polygonal/planar geometry before adding texture coordinates.
+- [X3D Architecture 33.2.2 3D texturing concepts](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/texture3D.html#3DTextureconcepts){:target="_blank"}
+
+### Warning
+
+- Requires X3D profile='Full' or else include <component name='Texturing3D' level='1'/>
 
 ## External Links
 

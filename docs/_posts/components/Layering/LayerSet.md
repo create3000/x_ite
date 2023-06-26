@@ -64,11 +64,12 @@ The *layers* list defines a list of Layer nodes that contain the constituent par
 - Ordinal values start with the numeral 1 representing the first item in the list.
 - Nodes that are not part of a layer are considered to be in layer 0.
 
-## Description
+## Information
 
-### Hint
+### Hints
 
 - The layer first specified in the order field is the first layer rendered and appears below any other layers. The layer last specified in the order field is the last layer rendered and correspondingly appears on top of all other layers.
+- [X3D Architecture 35.2.1 Overview of layering](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/layering.html#OverviewOfLayering){:target="_blank"}
 
 ### Warning
 

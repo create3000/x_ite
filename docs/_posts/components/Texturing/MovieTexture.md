@@ -235,18 +235,21 @@ Whether to repeat texture along T axis vertically from top to bottom.
 
 Single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images.
 
-## Description
+## Information
 
 ### Hints
 
-- Texture width and height must be power of two.
 - Can contain a single TextureProperties node.
 - Insert Shape and Appearance nodes before adding texture.
 - Provide a Viewpoint that allows a clear view of the MovieTexture so that users can easily see all details.
 - Utilize DEF/USE references for multiple copies of a single MovieTexture video file in order to avoid multiple-download delays, reduce memory requirements, and maintain synchronization.
 - Authors can provide multiple video formats for the same video track, with each source address listed separately in the url field.
 - Player support for MPEG-1 video format is required, other formats are optional.
-- The underlying `<video/>` element can be accessed via movieTexture.getValue().getElement().
+- Texture coordinates are reapplied (or else recomputed if textureTransform field initially NULL) whenever the corresponding vertex-based geometry changes.
+- [X3D Scene Authoring Hints, Images](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Images){:target="_blank"}
+- [Texture mapping](https://en.wikipedia.org/wiki/Texture_mapping){:target="_blank"}
+- [X3D Architecture 17.2.2 Lighting model](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/lighting.html#Lightingmodel){:target="_blank"}
+- [When parent node is LoadSensor, apply containerField='children' (X3Dv4) or containerField='watchList' (X3Dv3).](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges){:target="_blank"}
 
 ### Warning
 

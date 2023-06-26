@@ -129,15 +129,23 @@ Single contained Normal node that can specify perpendicular vectors for correspo
 
 Single contained Coordinate or CoordinateDouble node that can specify a list of vertex values.
 
-## Description
+## Information
 
 ### Hints
 
-- Use a different color (or emissiveColor) than the background color.
-- If rendering Coordinate points originally defined for an IndexedFaceSet, index values may need to repeat each initial vertex to close each polygon outline. Step-wise colors or linear interpolation of colors can be used as a good scientific visualization technique to map arbitrary function values to a color map.
+- [Polygonal chain](https://en.wikipedia.org/wiki/Polygonal_chain){:target="_blank"}
+- Either values in a contained Color node, or else Material emissiveColor in corresponding Appearance node, are used for rendering lines and points.
+- Adding LineProperties to the corresponding Appearance node can modify the rendering style of these lines.
+- If rendering Coordinate points originally defined for an IndexedFaceSet, index values may need to repeat each initial vertex to close each polygon outline.
+- Step-wise variation or linear interpolation of color values can be used as a good scientific visualization technique to map arbitrary function values to a color map.
 - Insert a Shape node before adding geometry or Appearance.
-- You can also substitute a type-matched ProtoInstance node for contained content.
-- Consider including Fog to provide further depth cueing for IndexedLineSet (ILS).
+- For advanced extensibility, authors can substitute a type-matched ProtoInstance node (with correct containerField value) for contained node content.
+- Consider including Fog (with Fog color matching Background color) to provide further depth cueing for IndexedLineSet (ILS).
+
+### Warnings
+
+- Lines are not lit, are not texture-mapped, and do not participate in collision detection.
+- Use a different color (or Material emissiveColor) than the Background color, otherwise geometry is invisible.
 
 ## Example
 

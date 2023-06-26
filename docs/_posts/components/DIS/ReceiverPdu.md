@@ -218,12 +218,17 @@ DIS *timestamp* in X3D units (value 0.0 matches 1 January 1970) in seconds.
 
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
-## Description
+## Information
 
 ### Hints
 
 - ReceiverPdu packets use the IEEE Distributed Interactive Simulation (DIS) protocol.
-- Include `<component name='DIS' level='1'/>`
+- [Savage Developers Guide on DIS](https://savage.nps.edu/Savage/developers.html#DIS){:target="_blank"}
+- [X3D for Advanced Modeling (X3D4AM) slideset](https://x3dgraphics.com/slidesets/X3dForAdvancedModeling/DistributedInteractiveSimulation.pdf){:target="_blank"}
+
+### Warning
+
+- Requires X3D profile='Full' or else include <component name='DIS' level='1'/>
 
 ## External Links
 

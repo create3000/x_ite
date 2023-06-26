@@ -153,12 +153,23 @@ Grouping nodes contain an ordered list of *children* nodes.
 - InputOnly MFNode removeChildren field can remove nodes from the *children* list, unrecognized input nodes (i.e. nonmatching DEF, USE values) are ignored.
 - [X3D Architecture 10.2.1 Grouping and *children* node types](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/grouping.html#GroupingAndChildrenNodes){:target="_blank"}
 
-## Description
+## Information
 
 ### Hints
 
 - HAnimSite nodes are stored as children of an HAnimSegment node.
-- Include `<component name='HAnim' level='1'/>`
+- [HAnim Specification](https://www.web3d.org/documents/specifications/19774/V2.0){:target="_blank"}
+- [HAnim Specification part 1, Site](https://www.web3d.org/documents/specifications/19774/V2.0/Architecture/ObjectInterfaces.html#Site){:target="_blank"}
+- [HAnim Specification part 1, Annex B, Feature points for the human body](https://www.web3d.org/documents/specifications/19774/V2.0/Architecture/FeaturePoints.html){:target="_blank"}
+- [X3D for Advanced Modeling (X3D4AM) slideset](https://x3dgraphics.com/slidesets/X3dForAdvancedModeling/HumanoidAnimation.pdf){:target="_blank"}
+- [HAnim2 default values for Joint and Site (feature point) nodes](https://www.web3d.org/x3d/content/examples/HumanoidAnimation/HAnim2DefaultValuesJointsFeaturePoints.txt){:target="_blank"}
+
+### Warnings
+
+- Ensure that visible HAnimSite locations are not inadvertently obscured by skin animation.
+- Requires X3D profile='Full' or else include <component name='HAnim' level='1'/>
+- For X3D3 HAnim1, spelling of component name is 'H-Anim' (including hyphen)
+- The number of contained <HAnimSite USE='*' containerField='sites, skeleton or viewpoints'/> nodes at top level of HAnimHumanoid needs to match the number of corresponding HAnimSite node instances found within the preceding skeleton hierarchy.
 
 ## External Links
 

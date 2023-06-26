@@ -85,11 +85,12 @@ Computed output value that approaches within tolerance of destination value, as 
 
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
-## Description
+## Information
 
-### Hint
+### Hints
 
-- value_changed output events can be ROUTEd to one of a `<Material>` node's color fields, for example.
+- ROUTE value_changed output events to one of a <Material> node's color fields, for example.
+- [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color){:target="_blank"}
 
 ## Example
 

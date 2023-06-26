@@ -147,11 +147,15 @@ Determines whether MIPMAPs are generated for texture images.
 
 *texturePriority* defines relative priority for this texture when allocating texture memory, an important rendering resource in graphics-card hardware. Default value 0 is lowest, 1 is highest.
 
-## Description
+## Information
 
 ### Hint
 
-- Include `<component name='Shape' level='2'/>`
+- [Texture mapping](https://en.wikipedia.org/wiki/Texture_mapping){:target="_blank"}
+
+### Warning
+
+- Requires X3D profile='Full' or else include <component name='Shape' level='2'/>
 
 ## External Links
 

@@ -97,12 +97,16 @@ Contained Shape for this CADPart.
 
 - If LOD or Transform are used, only zero or one Shape child is allowed to be active at one time.
 
-## Description
+## Information
 
-### Hints
+### Hint
 
-- Only zero or one Shape child can be active at one time.
-- Include `<component name='CADGeometry' level='2'/>`
+- [X3D for Advanced Modeling (X3D4AM) slideset](https://x3dgraphics.com/slidesets/X3dForAdvancedModeling/ComputerAidedDesignInterchangeProfile.pdf){:target="_blank"}
+
+### Warnings
+
+- Only zero or one Shape child is allowed to be active at one time.
+- Requires X3D profile='Full' or else include <component name='CADGeometry' level='2'/>
 
 ## External Links
 

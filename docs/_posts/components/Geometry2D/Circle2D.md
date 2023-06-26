@@ -47,12 +47,15 @@ Circle *radius*.
 
 - Simple-geometry dimensions are initializeOnly and cannot be changed after initial creation, avoiding the need for potentially expensive tessellation at run time.
 
-## Description
+## Information
 
-### Hints
+### Hint
 
 - Insert a Shape node before adding geometry or Appearance.
-- Include `<component name='Geometry2D' level='2'/>`
+
+### Warning
+
+- [Requires X3D profile='Full' or else include <component name='Geometry2D' level='2'/> Examples: X3D Example Archives, X3D for Web Authors, Chapter 10 Geometry 2D](https://x3dgraphics.com/examples/X3dForWebAuthors/Chapter10Geometry2D){:target="_blank"}
 
 ## Example
 

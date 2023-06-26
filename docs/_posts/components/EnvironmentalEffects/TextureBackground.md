@@ -173,17 +173,17 @@ Parent TextureBackground element can contain up to six image nodes (ImageTexture
 
 - Each child image node must have a different containerField value.
 
-## Description
+## Information
 
 ### Hints
 
-- NavigationInfo, Background, TextureBackground, Fog, OrthoViewpoint and Viewpoint are bindable nodes, meaning that no more than one of each node type can be active at a given time.
-- Authors can have LoadSensor nodes receive notification when background texture node(s) are loaded.
+- Background, Fog, GeoViewpoint, NavigationInfo, OrthoViewpoint, TextureBackground and Viewpoint are bindable nodes, meaning that no more than one of each node type can be active at a given time.
+- Authors can have LoadSensor nodes receive notifications and send reporting events when background texture node(s) are loaded.
 
 ### Warnings
 
-- Results are undefined if a bindable node (Viewpoint, OrthoViewpoint, NavigationInfo, Fog, Background, TextureBackground) is a contained child of LOD or Switch.
-- Child ImageTexture nodes must have unique containerField values for backTexture, bottomTexture, frontTexture, leftTexture, rightTexture, or topTexture.
+- Results are undefined if a bindable node (Background, Fog, NavigationInfo, OrthoViewpoint, TextureBackground, Viewpoint) is a contained descendant node of either LOD or Switch. Avoid this authoring pattern.
+- Each of the child ImageTexture or PixelTexture nodes must have unique containerField values for backTexture, bottomTexture, frontTexture, leftTexture, rightTexture, or topTexture.
 
 ## Example
 

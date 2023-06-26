@@ -61,13 +61,20 @@ The *value* attribute is a strictly typed data array providing relevant metadata
 
 - Many XML tools substitute XML character references for special characters automatically if needed within an attribute *value* (such as &#38; for & ampersand character, or &#34; for " quotation-mark character).
 
-## Description
+## Information
 
 ### Hints
 
 - Use containerField="value" if the parent node is MetadataSet.
-- If a metadata node is needed as a top-level root node for the scene, first insert a parent WorldInfo (or WorldInfo/MetadataSet) to contain it.
-- An IS statement precedes any sibling Metadata node, which in turn precedes any other sibling nodes.
+- [Each of the Metadata nodes are allowed as top-level root nodes in a scene, be sure to explicitly define containerField='metadata'.](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-DIS/Part01/concepts.html#Rootnodes){:target="_blank"}
+- If present, an IS statement is the first child within any other node.
+- An IS statement precedes any sibling Metadata* node, which in turn precedes any other sibling nodes.
+- Comments are not readable when a model file is loaded for viewing, but WorldInfo and Metadata* nodes are persistent and inspectable at run time.
+- [X3D for Web Authors, Chapter 15, Metadata Information](https://x3dgraphics.com/examples/X3dForWebAuthors/Chapter15-Metadata/Chapter15-MetadataInformation.html){:target="_blank"}
+
+### Warning
+
+- Metadata nodes can only contain other Metadata nodes.
 
 ## External Links
 

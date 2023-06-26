@@ -49,11 +49,13 @@ The *mapping* label identifies which texture coordinates and transformations are
 
 Pairs of 2D (s,t) texture coordinates, either in range [0,1] or higher if repeating.
 
-## Description
+## Information
 
-### Hint
+### Hints
 
-- Add Shape and then polgyonal/planar geometry before adding TextureCoordinate.
+- Add Shape and then polygonal/planar geometry before adding TextureCoordinate.
+- [Texture mapping](https://en.wikipedia.org/wiki/Texture_mapping){:target="_blank"}
+- [X3D Texturing component Figure 18.1, Texture map coordinate system](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/texturing.html#f-TextureMapCoordSystem){:target="_blank"}
 
 ## External Links
 

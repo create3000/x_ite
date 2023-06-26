@@ -96,12 +96,15 @@ Select geometry by activating the pointing device (for example, clicking the mou
 
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
-## Description
+## Information
 
 ### Hints
 
 - This sensor detects user interactions affecting peer nodes and their child geometry.
 - Add semi-transparent surrounding geometry to see the effect of the sensor.
+- [X3D Architecture 20.2.1 Overview of pointing device sensors](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/pointingDeviceSensor.html#OverviewOfPointingDeviceSensors){:target="_blank"}
+- [X3D Architecture 20.2.2 Drag sensors](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/pointingDeviceSensor.html#DragSensors){:target="_blank"}
+- [X3D Architecture 20.2.3 Activating and manipulating pointing device sensors](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/pointingDeviceSensor.html#Activatingandmanipulating){:target="_blank"}
 
 ## External Links
 

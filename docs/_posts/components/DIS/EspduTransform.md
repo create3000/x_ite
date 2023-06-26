@@ -548,13 +548,18 @@ DIS *timestamp* received from latest PDU update, converted to X3D SFTime units.
 
 Whether RTP headers are prepended to DIS PDUs.
 
-## Description
+## Information
 
 ### Hints
 
 - These PDU packets use the IEEE Distributed Interactive Simulation (DIS) protocol.
+- [Savage Developers Guide on DIS](https://savage.nps.edu/Savage/developers.html#DIS){:target="_blank"}
 - Insert a Shape node before adding geometry or Appearance.
-- Include `<component name='DIS' level='1'/>`
+- [X3D for Advanced Modeling (X3D4AM) slideset](https://x3dgraphics.com/slidesets/X3dForAdvancedModeling/DistributedInteractiveSimulation.pdf){:target="_blank"}
+
+### Warning
+
+- Requires X3D profile='Full' or else include <component name='DIS' level='1'/>
 
 ## External Links
 

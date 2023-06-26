@@ -108,13 +108,18 @@ Grouping nodes contain an ordered list of *children* nodes.
 - InputOnly MFNode removeChildren field can remove nodes from the *children* list, unrecognized input nodes (i.e. nonmatching DEF, USE values) are ignored.
 - [X3D Architecture 10.2.1 Grouping and *children* node types](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/grouping.html#GroupingAndChildrenNodes){:target="_blank"}
 
-## Description
+## Information
 
 ### Hints
 
 - Can also contain Shapes or other grouped content.
-- Include `<component name='CADGeometry' level='2'/>`
+- [Datum reference](https://en.wikipedia.org/wiki/Datum_reference){:target="_blank"}
+- [X3D for Advanced Modeling (X3D4AM) slideset](https://x3dgraphics.com/slidesets/X3dForAdvancedModeling/ComputerAidedDesignInterchangeProfile.pdf){:target="_blank"}
 - ViewpointGroup and OrthoViewpoint require Navigation component level 3, which is higher than CADInterchange profile.
+
+### Warning
+
+- Requires X3D profile='Full' or else include <component name='CADGeometry' level='2'/>
 
 ## External Links
 

@@ -100,11 +100,11 @@ The shadowBias value controls the visibility of *shadow acne*.
 
 Size of the shadow map in pixels, must be power of two.
 
-## Description
+## Information
 
 ### Hint
 
-- HeadLight enabled on/off is controlled by NavigationInfo.
+- The bound NavigationInfo controls whether headlight is enabled on/off.
 
 ## Example
 

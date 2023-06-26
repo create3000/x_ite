@@ -62,10 +62,12 @@ Setting *solid* true means draw only one side of polygons (backface culling on),
 - Default value true can completely hide geometry if viewed from wrong side!
 - *solid* false not supported in VRML97.
 
-## Description
+## Information
 
-### Hint
+### Hints
 
+- [Cuboid](https://en.wikipedia.org/wiki/Cuboid){:target="_blank"}
+- [Parallelepiped](https://en.wikipedia.org/wiki/Parallelepiped){:target="_blank"}
 - Insert a Shape node before adding geometry or Appearance.
 
 ## Example

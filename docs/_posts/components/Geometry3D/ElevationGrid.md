@@ -183,15 +183,15 @@ Grid array of *height* vertices with upward direction along +Y axis, with xDimen
 
 - *height* array values are not retained or available at run time since a browser is permitted to condense geometry.
 
-## Description
+## Information
 
 ### Hints
 
-- The height array defines (xDimension-1)\*(zDimension-1) quadrilaterals.
+- The height array defines (xDimension-1)*(zDimension-1) quadrilaterals.
 - Positive direction for normal of each triangle is on same side of the quadrilateral. Triangles are defined either counterclockwise or clockwise depending on value of ccw field.
-- ElevationGrid can contain Color/ColorRGBA, Normal and TextureCoordinate nodes.
+- ElevationGrid can contain Color|ColorRGBA, Normal and TextureCoordinate nodes.
 - Insert a Shape node before adding geometry or Appearance.
-- You can also substitute a type-matched ProtoInstance node for contained content.
+- For advanced extensibility, authors can substitute a type-matched ProtoInstance node (with correct containerField value) for contained node content.
 
 ### Warning
 

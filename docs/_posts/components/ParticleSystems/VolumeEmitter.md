@@ -94,7 +94,7 @@ Particle surface area in area base units (default is meters squared). Surface ar
 
 Coordinates for the geometry used as the emitting volume.
 
-## Description
+## Information
 
 ### Hint
 

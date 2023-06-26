@@ -40,11 +40,11 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 
 *point* contains a set of 3D coordinate (triplet) *point* values.
 
-## Description
+## Information
 
 ### Warning
 
-- CoordinateDouble requires NURBS component level 1, otherwise Full profile.
+- CoordinateDouble requires Rendering component level 1, otherwise Full profile.
 
 ## External Links
 

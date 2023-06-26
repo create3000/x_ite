@@ -231,18 +231,25 @@ Grouping nodes contain an ordered list of *children* nodes.
 
 - HAnimJoint can only contain HAnimJoint\|HAnimSegment nodes (each having default containerField='*children*').
 
-## Description
+## Information
 
 ### Hints
 
-- HAnimJoint may only be a child of another HAnimJoint node, or skeleton field for the HAnimHumanoid.
-- HAnimJoint can only contain nodes HAnimJoint, HAnimSegment, HAnimSite with containerField='children' and also HAnimDisplacer nodes with containerField='displacers'.
+- HAnimJoint may only get inserted as one (or more) root nodes of HAnimHumanoid skeleton field, as a child of another HAnimJoint node, or as a USE node in the HAnimHumanoid joints field.
 - Visualization shapes for HAnimJoint nodes can be placed in child HAnimSegment or HAnimSite nodes.
-- Include `<component name='HAnim' level='1'/>`
+- [HAnim Specification](https://www.web3d.org/documents/specifications/19774/V2.0){:target="_blank"}
+- [HAnim Specification part 1, Joint](https://www.web3d.org/documents/specifications/19774/V2.0/Architecture/ObjectInterfaces.html#Joint){:target="_blank"}
+- [X3D for Advanced Modeling (X3D4AM) slideset](https://x3dgraphics.com/slidesets/X3dForAdvancedModeling/HumanoidAnimation.pdf){:target="_blank"}
+- [HAnim2 default values for Joint and Site (feature point) nodes](https://www.web3d.org/x3d/content/examples/HumanoidAnimation/HAnim2DefaultValuesJointsFeaturePoints.txt){:target="_blank"}
 
-### Warning
+### Warnings
 
+- HAnimJoint can only contain certain nodes: HAnimJoint, HAnimSegment, HAnimSite (with containerField='children') and also HAnimDisplacer nodes (with containerField='displacers').
 - An HAnimJoint may not be a child of an HAnimSegment.
+- Requires X3D profile='Full' or else include <component name='HAnim' level='1'/>
+- For X3D3 HAnim1, spelling of component name is 'H-Anim' (including hyphen)
+- For X3D3 HAnim1, spelling of component name is 'H-Anim' (including hyphen)
+- The number of contained <HAnimJoint USE='*' containerField='joints'/> nodes at top level of HAnimHumanoid needs to match the number of corresponding HAnimJoint node instances found within the preceding skeleton hierarchy.
 
 ## External Links
 

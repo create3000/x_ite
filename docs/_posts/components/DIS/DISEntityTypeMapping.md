@@ -111,14 +111,20 @@ Specific information about an entity based on the subcategory field. See DIS Enu
 
 Integer enumerations value for particular *subcategory* to which an entity belongs based on the category field. See DIS Enumerations values.
 
-## Description
+## Information
 
 ### Hints
 
 - Values set to zero are wildcards, matching any received value.
-- DISEntityTypeMapping is contained by a DISEntityManager node.
+- DISEntityTypeMapping is contained by a parent DISEntityManager node.
 - DisEntityManager ESPDU packets use the IEEE Distributed Interactive Simulation (DIS) protocol.
-- Include `<component name='DIS' level='2'/>`
+- [Savage Developers Guide on DIS](https://savage.nps.edu/Savage/developers.html#DIS){:target="_blank"}
+- [X3D for Advanced Modeling (X3D4AM) slideset](https://x3dgraphics.com/slidesets/X3dForAdvancedModeling/DistributedInteractiveSimulation.pdf){:target="_blank"}
+- [When parent node is LoadSensor, apply containerField='children' (X3Dv4) or containerField='watchList' (X3Dv3).](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges){:target="_blank"}
+
+### Warning
+
+- Requires X3D profile='Full' or else include <component name='DIS' level='2'/>
 
 ## External Links
 

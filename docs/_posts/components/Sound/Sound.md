@@ -121,15 +121,18 @@ Sound *source* for the Sound node, either an AudioClip node or a MovieTexture no
 
 Input/Output field *children*.
 
-## Description
+## Information
 
-### Hint
+### Hints
 
 - If the audio source is stereo or multi-channel, channel separation is retained during playback.
+- [X3D Sound component Figure 16.2 Sound Node Geometry](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/sound.html#f-Soundnodegeometry){:target="_blank"}
+- [X3D Scene Authoring Hints:Audio](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Audio){:target="_blank"}
+- [Wikipedia 3D sound localization](https://en.wikipedia.org/wiki/3D_sound_localization){:target="_blank"}
 
 ### Warning
 
-- While providing sounds on the ground plane, ensure that the audible auralization ellipse is sufficiently elevated to match avatar height.
+- While providing sounds on the ground plane, ensure that the audible auralization volume is sufficiently elevated to match avatar height.
 
 ## External Links
 

@@ -137,12 +137,16 @@ Time event generated when touched.
 
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
-## Description
+## Information
 
 ### Hints
 
 - This sensor detects user interactions affecting peer nodes and their child geometry.
-- Include `<component name='Geospatial' level='1'/>`
+- [X3D for Advanced Modeling (X3D4AM) slideset](https://x3dgraphics.com/slidesets/X3dForAdvancedModeling/GeospatialComponentX3dEarth.pdf){:target="_blank"}
+
+### Warning
+
+- Requires X3D profile='Full' or else include <component name='Geospatial' level='1'/>
 
 ## External Links
 

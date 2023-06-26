@@ -49,16 +49,18 @@ The *mapping* label identifies which texture coordinates and transformations are
 
 *matrix* is a generalized, unfiltered 4x4 transformation *matrix* to modify texture (opposite effect appears on geometry).
 
-## Description
+## Information
 
 ### Hints
 
 - Order of operations is translation, rotation about center, non-uniform scale about center.
-- Insert Shape and Appearance nodes before adding TextureTransform.
+- Insert Shape and Appearance nodes before adding TextureTransformMatrix3D.
+- [Texture mapping](https://en.wikipedia.org/wiki/Texture_mapping){:target="_blank"}
 
-### Warning
+### Warnings
 
 - Resulting visible effects appear reversed because image changes occur before mapping to geometry.
+- Requires X3D profile='Full' or else include <component name='Texturing3D' level='1'/>
 
 ## External Links
 

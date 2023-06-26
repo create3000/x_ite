@@ -123,13 +123,21 @@ Lower shininess values provide soft specular glows, while higher values result i
 
 How "clear" an object is: 1.0 is completely transparent, 0.0 is completely opaque. Interchange profile hint: transparency \< .5 opaque, transparency \> .5 transparent.
 
-## Description
+## Information
 
 ### Hints
 
-- Include `<component name='Shape' level='4'/>`
 - Insert Shape and Appearance nodes before adding material.
 - DEF/USE copies of a single node can provide a similar "look + feel" style for related shapes in a scene.
+- [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color){:target="_blank"}
+- [X3D Architecture 12.2.3 Two-sided materials](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/shape.html#TwoSidedMaterials){:target="_blank"}
+- [X3D Architecture 17.2.2 Lighting model](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/lighting.html#Lightingmodel){:target="_blank"}
+
+### Warnings
+
+- Requires X3D profile='Full' or else include <component name='Shape' level='4'/>
+- Corresponding geometry within the parent Shape must have solid='false' for two-sided rendering, otherwise no reverse-side back geometry is displayed.
+- X3D4 Architecture has deprecated TwoSidedMaterial, preferring use of child backMaterial node in parent Appearance.
 
 ## Example
 

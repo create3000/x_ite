@@ -49,11 +49,15 @@ The *mapping* label identifies which texture coordinates and transformations are
 
 4-tuple values of 4D texture coordinates, either in range [0,1] or higher if repeating.
 
-## Description
+## Information
 
 ### Hint
 
-- Add Shape and then polgyonal/planar geometry before adding texture coordinates.
+- Add Shape and then polygonal/planar geometry before adding texture coordinates.
+
+### Warning
+
+- Requires X3D profile='Full' or else include <component name='Texturing3D' level='1'/>
 
 ## External Links
 

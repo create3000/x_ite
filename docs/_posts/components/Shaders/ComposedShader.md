@@ -74,15 +74,16 @@ The *language* field indicates to the X3D player which shading *language* is use
 
 ComposedShader can contain multiple ShaderPart nodes in the *parts* field.
 
-## Description
+## Information
 
-### Hint
+### Hints
 
-- ComposedShader contains field definitions, IS/connect, and `<ShaderPart containerField='parts'/>` nodes.
+- ComposedShader contains field declarations and then corresponding IS/connect statements (if any), followed by <ShaderPart containerField='parts'/> nodes.
+- Apply default containerField='shaders' when parent node is Appearance.
 
 ### Warning
 
-- ComposedShader can contain field declarations, but no CDATA section of plain-text source code. All source programs are contained in child ShaderPart nodes.
+- ComposedShader does not contain CDATA section of plain-text source code. All source programs are contained in child ShaderPart nodes.
 
 ## Example
 

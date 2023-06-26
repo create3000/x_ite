@@ -98,11 +98,16 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 
 The *shape* field provides a geometry proxy for specifying which geometry best represents the collidable object.
 
-## Description
+## Information
 
-### Warning
+### Hint
+
+- Content must be visible to be collidable and to be pickable.
+
+### Warnings
 
 - Avoid changing Shape geometry at run time to prevent performance problems.
+- Apply containerField='shape' to single Shape child node, not containerField='children' default.
 
 ## Example
 

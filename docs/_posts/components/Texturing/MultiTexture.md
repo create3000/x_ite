@@ -102,12 +102,22 @@ Contained *texture* nodes (ImageTexture, MovieTexture, PixelTexture) that map im
 
 - MultiTexture may not contain another MultiTexture node.
 
-## Description
+## Information
 
-### Hint
+### Hints
 
 - Insert Shape and Appearance nodes before adding texture.
-- Add a default BlendMode node to Appearance if the resulting image is transparent.
+- [Texture mapping](https://en.wikipedia.org/wiki/Texture_mapping){:target="_blank"}
+- Multitexturing is accomplished using MultiTexture, MultiTextureCoordinate and MultiTextureTransform nodes.
+- Texture coordinates are reapplied (or else recomputed if textureTransform field initially NULL) whenever the corresponding vertex-based geometry changes.
+- [X3D Texturing component Figure 18.2 Lightmap example](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/texturing.html#f-Lightmapexample){:target="_blank"}
+- [X3D Texturing component Table 18.2: Comparison of single texture and multitexture attributes](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/texturing.html#t-SingleAndMultitextureAttrs){:target="_blank"}
+- MultiTexture does not need to be included in LoadSensor watchList since any child ImageTexture and MovieTexture nodes of interest can be handled separately.
+
+### Warnings
+
+- The number of textures to be blended may have a significant impact on performance, depending on available graphics hardware capabilities.
+- MultiTexture may not contain another MultiTexture node.
 
 ## Example
 

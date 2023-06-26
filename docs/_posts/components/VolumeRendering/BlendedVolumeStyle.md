@@ -98,11 +98,15 @@ Single contained X3DComposableVolumeRenderStyleNode node that defines specific r
 
 Single contained X3DTexture3DNode (ComposedTexture3D, ImageTexture3D, PixelTexture3D) that provides second set of raw voxel information utilized by corresponding rendering styles. Any number of color components (1-4) may be defined.
 
-## Description
+## Information
 
 ### Hint
 
 - BlendedVolumeStyle can contain just one each of following: VolumeStyle node with containerField='renderStyle', Texture3D node with containerField='voxels', Texture2D node with containerField='weightTransferFunction1' and Texture2D node with containerField='weightTransferFunction2'.
+
+### Warning
+
+- Requires X3D profile='Full' or else include <component name='VolumeRendering' level='3'/>
 
 ## External Links
 

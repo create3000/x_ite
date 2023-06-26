@@ -44,12 +44,13 @@ The *color* field defines an array of 4-tuple RGBA colors.
 
 - ColorRGBA requires Rendering component level 3 (alpha fully supported), Rendering component level 1 (alpha optional), otherwise Full profile.
 
-## Description
+## Information
 
 ### Hints
 
 - Colors are often controlled by Material instead.
 - Alpha channel may be ignored under Interchange profile.
+- [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color){:target="_blank"}
 
 ### Warning
 

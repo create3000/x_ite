@@ -51,7 +51,7 @@ Single contained *geometry* node provides the *geometry* used for each particle 
 
 - Requires X3D profile='Full' or else include \<component name='Geospatial' level='1'/\>
 
-## Description
+## Information
 
 ### Hint
 

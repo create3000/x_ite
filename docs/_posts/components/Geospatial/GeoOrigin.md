@@ -64,17 +64,20 @@ Defines absolute geographic location (and implicit local coordinate frame).
 
 Whether to rotate coordinates of nodes using this GeoOrigin so that local-up direction aligns with VRML Y axis *rotateYUp* false means local up-direction is relative to planet surface *rotateYUp* true allows proper operation of NavigationInfo modes FLY, WALK.
 
-## Description
+## Information
 
 ### Hints
 
-- Only one coordinate system allowed per scene thus USE-ing only one GeoOrigin node per scene is recommended.
-- Include `<component name='Geospatial' level='1'/>`
+- Only one geospatial coordinate system is allowed per scene, thus DEF-ing and later USE-ing only one GeoOrigin node per scene is recommended.
+- [X3D for Advanced Modeling (X3D4AM) slideset](https://x3dgraphics.com/slidesets/X3dForAdvancedModeling/GeospatialComponentX3dEarth.pdf){:target="_blank"}
 - GeoOrigin is likely to be restored in X3D v4.0 for special use on devices with limited floating-point resolution.
+- [X3D Architecture 25.2.5 Dealing with high-precision coordinates](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/geospatial.html#high-precisioncoords){:target="_blank"}
 
-### Warning
+### Warnings
 
-- GeoOrigin is deprecated and discouraged (but nevertheless allowed) in X3D v3.3.
+- Requires X3D profile='Full' or else include <component name='Geospatial' level='1'/>
+- GeoOrigin is deprecated, discouraged and not legal in X3D v3.3. GeoOrigin can be ignored in X3D v3.2 and below.
+- XML validation requires placement as first child node following contained metadata nodes (if any).
 
 ## External Links
 

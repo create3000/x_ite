@@ -152,13 +152,15 @@ The *justify* field determines horizontal and vertical alignment of text layout,
 - Exactly two string values are provided for major and minor axis alignment.
 - Do not use illegal values such as LEFT RIGHT TOP BOTTOM or CENTER.
 
-## Description
+## Information
 
 ### Hints
 
 - Full internationalization (i18n) and localization (l10n) features are available for any written language.
 - DEF/USE copies of a single node can provide a similar "look + feel" style for related shapes.
+- [Relates to Internationalization (i18n)](http://www.w3.org/standards/webdesign/i18n){:target="_blank"}
 - First add a Text node as a parent node for FontStyle.
+- [Wikipedia](https://en.wikipedia.org/wiki/Font){:target="_blank"}
 
 ## Example
 

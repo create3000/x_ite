@@ -122,19 +122,24 @@ Grouping nodes contain an ordered list of *children* nodes.
 - InputOnly MFNode removeChildren field can remove nodes from the *children* list, unrecognized input nodes (i.e. nonmatching DEF, USE values) are ignored.
 - [X3D Architecture 10.2.1 Grouping and *children* node types](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/grouping.html#GroupingAndChildrenNodes){:target="_blank"}
 
-## Description
+## Information
 
 ### Hints
 
-- Can add `<WorldInfo info='null node'/>` as a nonrendering, invisible final (or initial or intermediate) child node that also documents the LOD switch-over rationale.
+- Can add <WorldInfo info='null node'/> as a nonrendering, invisible final (or initial or intermediate) child node that also documents the LOD switch-over rationale.
 - Insert a Shape node before adding geometry or Appearance.
+- GeoViewpoint OrthoViewpoint and Viewpoint share the same binding stack, so no more than one of these nodes can be bound and active at a given time.
 - Security mechanisms such as encryption and authentication can be applied to high levels of detail, allowing authors to protect intellectual property at high resolution for authorized users while still rendering simple unrestricted models for other users.
+- Contained nodes must have type X3DChildNode, such as Group or Transform or Shape.
+- Apply containerField='shape' if parent node is CADFace.
+- [ConformanceNist X3D Examples Archive](https://www.web3d.org/x3d/content/examples/ConformanceNist/SpecialGroups/LOD){:target="_blank"}
 
 ### Warnings
 
-- Do not include Viewpoint or OrthoViewpoint as a child of LOD or Switch, instead use ViewpointGroup as parent to constrain location proximity where the viewpoint is available to user.
-- Results are undefined if a bindable node (Viewpoint, OrthoViewpoint, NavigationInfo, Fog, Background, TextureBackground) is a contained child of LOD or Switch.
-- Nested LOD nodes with overlapping range intervals can lead to unexpected or undefined behavior.
+- Do not include GeoViewpoint OrthoViewpoint or Viewpoint as a child of LOD or Switch, instead use ViewpointGroup as parent to constrain location proximity where the viewpoint is available to user.
+- Results are undefined if a bindable node (Background, Fog, NavigationInfo, OrthoViewpoint, TextureBackground, Viewpoint) is a contained descendant node of either LOD or Switch. Avoid this authoring pattern.
+- Nested LOD (and/or GeoLOD) nodes with overlapping range intervals can lead to unexpected or undefined behavior.
+- LOD is not allowed as a direct parent of Appearance, Material, Color, Coordinate, Normal or Texture nodes, instead ensure that a Shape is present.
 
 ## External Links
 
