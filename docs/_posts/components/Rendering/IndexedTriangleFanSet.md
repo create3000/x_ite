@@ -69,7 +69,7 @@ Setting *solid* true means draw only one side of polygons (backface culling on),
 
 ### SFBool [ ] **colorPerVertex** TRUE
 
-Whether Color\|ColorRGBA values are applied to each point vertex (true) or to each polygon face (false).
+Whether Color or ColorRGBA values are applied to each point vertex (true) or to each polygon face (false).
 
 #### Hint
 
@@ -78,7 +78,7 @@ Whether Color\|ColorRGBA values are applied to each point vertex (true) or to ea
 #### Warnings
 
 - The provided value of IndexedTriangleFanSet *colorPerVertex* field is ignored and always treated as true.
-- If child Color\|ColorRGBA node is not provided, then geometry is rendered using corresponding Appearance and material/texture values.
+- If child Color or ColorRGBA node is not provided, then geometry is rendered using corresponding Appearance and material/texture values.
 
 ### SFBool [ ] **normalPerVertex** TRUE
 

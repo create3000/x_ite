@@ -229,7 +229,7 @@ Grouping nodes contain an ordered list of *children* nodes.
 
 #### Warning
 
-- HAnimJoint can only contain HAnimJoint\|HAnimSegment nodes (each having default containerField='*children*').
+- HAnimJoint can only contain HAnimJoint or HAnimSegment nodes (each having default containerField='*children*').
 
 ## Information
 

@@ -261,6 +261,7 @@ sub update_field {
       1 while $field =~ s/^(?:\s*or)?\s*(?:[\[\()].*?[\]\)]|-1\.)\s*//so;
 
       decode_entities $field;
+      $field =~ s/\s*\|\s*/ or /sgo;
       $field =~ s/([<>|])/\\$1/sgo;
       $field =~ s/&/&amp;/sgo;
 

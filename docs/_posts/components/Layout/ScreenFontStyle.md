@@ -72,7 +72,7 @@ Array of quoted font *family* names in preference order, browsers use the first 
 
 ### SFString [in, out] **style** "PLAIN" <small>["PLAIN"|"BOLD"|"ITALIC"|"BOLDITALIC"|""]</small>
 
-Pick one of four values for text *style* (PLAIN\|BOLD\|ITALIC\|BOLDITALIC).
+Pick one of four values for text *style* (PLAIN or BOLD or ITALIC or BOLDITALIC).
 
 #### Hints
 

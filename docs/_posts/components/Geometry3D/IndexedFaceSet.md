@@ -38,11 +38,11 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 
 ### MFInt32 [in] **set_colorIndex** <small>[0,∞) or -1</small>
 
-*colorIndex* values define the order in which Color\|ColorRGBA values are applied to polygons (or vertices).
+*colorIndex* values define the order in which Color or ColorRGBA values are applied to polygons (or vertices).
 
 #### Hints
 
-- If *colorIndex* array is not provided, then Color\|ColorRGBA values are indexed according to the coordIndex field.
+- If *colorIndex* array is not provided, then Color or ColorRGBA values are indexed according to the coordIndex field.
 - If colorPerVertex='false' then one index is provided for each polygon defined by the coordIndex array. No sentinel -1 values are included.
 - If colorPerVertex='true' then a matching set of indices is provided, each separated by sentinel -1, that exactly corresponds to individual values in the coordIndex array polygon definitions.
 
@@ -135,7 +135,7 @@ The *convex* field is a hint to renderers whether all polygons in a shape are *c
 
 ### SFBool [ ] **colorPerVertex** TRUE
 
-Whether Color\|ColorRGBA values are applied to each point vertex (true) or to each polygon face (false).
+Whether Color or ColorRGBA values are applied to each point vertex (true) or to each polygon face (false).
 
 #### Hint
 
@@ -143,7 +143,7 @@ Whether Color\|ColorRGBA values are applied to each point vertex (true) or to ea
 
 #### Warning
 
-- If child Color\|ColorRGBA node is not provided, then geometry is rendered using corresponding Appearance and material/texture values.
+- If child Color or ColorRGBA node is not provided, then geometry is rendered using corresponding Appearance and material/texture values.
 
 ### SFBool [ ] **normalPerVertex** TRUE
 
@@ -155,17 +155,17 @@ Whether Normal node vector values are applied to each point vertex (true) or to 
 
 ### MFInt32 [ ] **colorIndex** [ ] <small>[0,∞) or -1</small>
 
-*colorIndex* values define the order in which Color\|ColorRGBA values are applied to polygons (or vertices).
+*colorIndex* values define the order in which Color or ColorRGBA values are applied to polygons (or vertices).
 
 #### Hints
 
-- If *colorIndex* array is not provided, then Color\|ColorRGBA values are indexed according to the coordIndex field.
+- If *colorIndex* array is not provided, then Color or ColorRGBA values are indexed according to the coordIndex field.
 - If colorPerVertex='false' then one index is provided for each polygon defined by the coordIndex array. No sentinel -1 values are included.
 - If colorPerVertex='true' then a matching set of indices is provided, each separated by sentinel -1, that exactly corresponds to individual values in the coordIndex array polygon definitions.
 
 #### Warning
 
-- If child Color\|ColorRGBA node is not provided, then geometry is rendered using corresponding Appearance and material/texture values.
+- If child Color or ColorRGBA node is not provided, then geometry is rendered using corresponding Appearance and material/texture values.
 
 ### MFInt32 [ ] **texCoordIndex** [ ] <small>[-1,∞)</small>
 

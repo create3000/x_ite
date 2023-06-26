@@ -119,7 +119,7 @@ Array of time intervals in seconds, corresponding to particle lifetime, that are
 
 ### SFNode [ ] **color** NULL <small>[X3DColorNode]</small>
 
-The *color* field contains Color\|ColorRGBA nodes as a series of *color* values to be used at the given colorKey points in time.
+The *color* field contains Color or ColorRGBA nodes as a series of *color* values to be used at the given colorKey points in time.
 
 #### Hints
 
