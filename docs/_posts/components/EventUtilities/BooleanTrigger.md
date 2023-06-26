@@ -52,6 +52,13 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
+## Information
+
+### Hints
+
+- [Example scenes and authoring assets at](https://x3dgraphics.com/examples/X3dForWebAuthors/Chapter09-EventUtilitiesScripting){:target="_blank"}
+- [X3D Event-Utility Node Diagrams](https://x3dgraphics.com/examples/X3dForWebAuthors/Chapter09-EventUtilitiesScripting/X3dEventUtilityNodeEventDiagrams.pdf){:target="_blank"}
+
 ## External Links
 
 - [X3D Specification of BooleanTrigger](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/eventUtilities.html#BooleanTrigger){:target="_blank"}

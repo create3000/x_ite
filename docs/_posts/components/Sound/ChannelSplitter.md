@@ -105,6 +105,12 @@ The *outputs* field is a set of output nodes receiving the split channels, and m
 
 - Can be original (DEF) or referenced (USE) nodes.
 
+## Information
+
+### Hint
+
+- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#channelsplitternode){:target="_blank"}
+
 ## External Links
 
 - [X3D Specification of ChannelSplitter](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#ChannelSplitter){:target="_blank"}

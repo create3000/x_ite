@@ -63,6 +63,13 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 
 *inputNegate* is an output event that provides an opposite value by negating set_boolean input.
 
+## Information
+
+### Hints
+
+- [Example scenes and authoring assets at](https://x3dgraphics.com/examples/X3dForWebAuthors/Chapter09-EventUtilitiesScripting){:target="_blank"}
+- [X3D Event-Utility Node Diagrams](https://x3dgraphics.com/examples/X3dForWebAuthors/Chapter09-EventUtilitiesScripting/X3dEventUtilityNodeEventDiagrams.pdf){:target="_blank"}
+
 ## External Links
 
 - [X3D Specification of BooleanFilter](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/eventUtilities.html#BooleanFilter){:target="_blank"}

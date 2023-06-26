@@ -52,6 +52,12 @@ Enables/disables node operation.
 
 *opacityFactor* k_ge is the power function to control the slope of the opacity curve to highlight the set of data.
 
+## Information
+
+### Warning
+
+- Requires X3D profile='Full' or else include <component name='VolumeRendering' level='2'/>
+
 ## External Links
 
 - [X3D Specification of BoundaryEnhancementVolumeStyle](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/volume.html#BoundaryEnhancementVolumeStyle){:target="_blank"}

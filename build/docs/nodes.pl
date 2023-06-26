@@ -12,14 +12,14 @@ system "wget -q --output-document - https://www.web3d.org/x3d/content/X3dTooltip
    unless -f "/tmp/tooltips.html";
 $tooltips = `cat /tmp/tooltips.html`;
 
-@td = $tooltips =~ m|<td.*?</td.*?>|sgo;
+@tooltips = $tooltips =~ m|<td.*?</td.*?>|sgo;
 
-s|</?.*?>||sgo   foreach @td;
-s/&nbsp;/ /sgo   foreach @td;
-s/\s+/ /sgo      foreach @td;
-s/^\s+|\s+$//sgo foreach @td;
+s|</?.*?>||sgo   foreach @tooltips;
+s/&nbsp;/ /sgo   foreach @tooltips;
+s/\s+/ /sgo      foreach @tooltips;
+s/^\s+|\s+$//sgo foreach @tooltips;
 
-#say @td;
+#say @tooltips;
 
 $fieldDescription = {
    " " => "",
@@ -40,21 +40,23 @@ sub node {
    return if $componentName =~ /^Annotation$/o;
    return if $typeName =~ /^X3D/o;
 
-   # return unless $typeName =~ /^TransmitterPdu$/o;
+   # return unless $typeName =~ /^WorldInfo$/o;
    say "$componentName $typeName";
 
    $md     = "$cwd/docs/_posts/components/$componentName/$typeName.md";
    $file   = `cat $md`;
    $file   = reorder_fields ($typeName, $componentName, $file);
+   $file   = update_example ($typeName, $componentName, $file);
    @fields = map { /\*\*(.*?)\*\*/o; $_ = $1 } $file =~ /###\s*[SM]F\w+.*/go;
 
-   return unless grep /^$typeName$/, @td;
+   if (grep /^$typeName$/, @tooltips)
+   {
+      @node = @tooltips [(first_index { /^$typeName$/ } @tooltips) .. $#tooltips];
+      @node = @node [0 .. (first_index { /^$/ } @node)];
 
-   @node = @td [(first_index { /^$typeName$/ } @td) .. $#td];
-   @node = @node [0 .. (first_index { /^$/ } @node)];
-
-   $file = update_node ($typeName, $componentName, \@node, $file);
-   $file = update_field ($_, \@node, $file) foreach @fields;
+      $file = update_node ($typeName, $componentName, \@node, $file);
+      $file = update_field ($_, \@node, $file) foreach @fields;
+   }
 
    open FILE, ">", $md;
    print FILE $file;
@@ -159,7 +161,7 @@ sub update_node {
 
    # Description
 
-   $string = "";
+   $string = "## Information\n\n";
 
    if (@hints)
    {
@@ -181,7 +183,11 @@ sub update_node {
       $string .= "\n";
    }
 
-   $file =~ s/(## (?:Description|Information)\n).*?\n(?=##\s+|\s+$)/## Information\n\n$string/s;
+   if (@hints || @warnings)
+   {
+      $file =~ s/\n\n(## External Links)/\n\n$string$1/so unless $file =~ /## Information/;
+      $file =~ s/(## Information\n).*?\n(?=##\s+|\s+$)/$string/so;
+   }
 
    return $file;
 }
@@ -207,6 +213,16 @@ sub reorder_fields {
    $string .= $fields -> {$_} foreach @sourceFields;
 
    $file =~ s/(## Fields\n+)/$1$string/so;
+
+   return $file;
+}
+
+sub update_example {
+   $typeName      = shift;
+   $componentName = shift;
+   $file          = shift;
+
+   $string = "<x3d-canvas src=\"https://create3000.github.io/media/examples/$componentName/$typeName/$typeName.x3d\" update=\"auto\"></x3d-canvas>";
 
    return $file;
 }

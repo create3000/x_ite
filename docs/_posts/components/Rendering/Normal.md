@@ -44,6 +44,20 @@ Set of unit-length normal vectors, corresponding to indexed polygons or vertices
 
 - Unit length means a magnitude of 1.0, so normal values of (0,0,0) are invalid.
 
+## Information
+
+### Hints
+
+- Normal values are typically only calculated or applied once, during initial loading of model geometry.
+- Custom Normal values can produce special effects.
+- If no child Normal node is provided, the X3D browser shall automatically generate normals, using creaseAngle to determine smoothed shading across shared vertices.
+- Computation of normal values is performed quite quickly on modern 3D graphics hardware, often with no perceptible delay.
+- [Normal vectors perpendicular to 3D surface](https://en.wikipedia.org/wiki/Normal_(geometry)){:target="_blank"}
+
+### Warning
+
+- Adding normal values to a model might significantly increase file size. Testing can help determine proper tradeoffs between file size, network transmission delays and initial rendering speed.
+
 ## External Links
 
 - [X3D Specification of Normal](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rendering.html#Normal){:target="_blank"}

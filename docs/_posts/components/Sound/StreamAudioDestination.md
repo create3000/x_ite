@@ -117,6 +117,16 @@ The *children* field specifies audio-graph sound sources providing input signals
 
 - Contained AudioClip or MovieTexture nodes must have containerField='*children*' to override otherwise-incorrect defaults.
 
+## Information
+
+### Hint
+
+- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#mediastreamaudiodestinationnode){:target="_blank"}
+
+### Warning
+
+- Stream-identification parameters are not fully defined and subject to change.
+
 ## External Links
 
 - [X3D Specification of StreamAudioDestination](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#StreamAudioDestination){:target="_blank"}

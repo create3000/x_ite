@@ -101,6 +101,12 @@ The *children* field specifies audio-graph sound sources providing input signals
 
 - Contained AudioClip or MovieTexture nodes must have containerField='*children*' to override otherwise-incorrect defaults.
 
+## Information
+
+### Hint
+
+- ChannelSelector is a utility node to complement ChannelSplitter.
+
 ## External Links
 
 - [X3D Specification of ChannelSelector](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#ChannelSelector){:target="_blank"}

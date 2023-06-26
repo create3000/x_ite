@@ -239,6 +239,13 @@ Single contained *geometry* node provides *geometry* used for each particle when
 
 <x3d-canvas src="https://create3000.github.io/media/examples/ParticleSystems/ParticleSystem/ParticleSystem.x3d" update="auto"></x3d-canvas>
 
+## Information
+
+### Hints
+
+- [Event timing details are explained in X3D Specification 4.4.8.3 Execution model](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/concepts.html#ExecutionModel){:target="_blank"}
+- [Wikipedia, particle system](https://en.wikipedia.org/wiki/Particle_system){:target="_blank"}
+
 ## External Links
 
 - [X3D Specification of ParticleSystem](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/particleSystems.html#ParticleSystem){:target="_blank"}

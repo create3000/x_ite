@@ -173,6 +173,14 @@ Level Of Articulation 0..4 indicates complexity and detail of joints for given h
 
 Output field *frameCount*.
 
+## Information
+
+### Hints
+
+- [HAnim Specification](https://www.web3d.org/documents/specifications/19774/V2.0){:target="_blank"}
+- HAnim Specification, clause 6.2 Introduction to Motion objectshttps://www.web3d.org/documents/specifications/19774/V2.0/MotionDataAnimation/MotionNodes.html#IntroductionToMotionNodes
+- [HAnim Specification part 2, clause 6.6 Example Usage of Motion object](https://www.web3d.org/documents/specifications/19774/V2.0/MotionDataAnimation/MotionNodes.html#MotionObjectExample){:target="_blank"}
+
 ## External Links
 
 - [X3D Specification of HAnimMotion](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/hanim.html#HAnimMotion){:target="_blank"}

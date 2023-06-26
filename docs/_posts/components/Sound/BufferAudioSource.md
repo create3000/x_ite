@@ -269,6 +269,16 @@ Current elapsed time since AudioClip activated/running, cumulative in seconds, a
 
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
+## Information
+
+### Hint
+
+- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#AudioBufferSourceNode){:target="_blank"}
+
+### Warning
+
+- For longer sounds, such as music soundtracks, streaming such as StreamAudioSource should be used.
+
 ## External Links
 
 - [X3D Specification of BufferAudioSource](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#BufferAudioSource){:target="_blank"}

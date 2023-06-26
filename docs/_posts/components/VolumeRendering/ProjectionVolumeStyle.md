@@ -59,6 +59,12 @@ Threshold value used when type=MIN (LMIP) or type=MAX (MIP).
 
 - Ignored if type=AVERAGE (no thresholding).
 
+## Information
+
+### Warning
+
+- Requires X3D profile='Full' or else include <component name='VolumeRendering' level='2'/>
+
 ## External Links
 
 - [X3D Specification of ProjectionVolumeStyle](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/volume.html#ProjectionVolumeStyle){:target="_blank"}
