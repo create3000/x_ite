@@ -104,7 +104,7 @@ sub update_node {
    {
       s/^\s+|\s+$//sgo;
 
-      if ($_ =~ s/__HINT__//)
+      if ($_ =~ s/__HINT__//o)
       {
          s/^\s+|\s+$//sgo;
 
@@ -112,7 +112,7 @@ sub update_node {
          next;
       }
 
-      if ($_ =~ s/__WARNING__//)
+      if ($_ =~ s/__WARNING__//o)
       {
          s/^\s+|\s+$//sgo;
 
@@ -282,7 +282,7 @@ sub update_field {
       {
          s/^\s+|\s+$//sgo;
 
-         if ($_ =~ s/__HINT__//)
+         if ($_ =~ s/__HINT__//o)
          {
             s/^\s+|\s+$//sgo;
 
@@ -290,7 +290,7 @@ sub update_field {
             next;
          }
 
-         if ($_ =~ s/__WARNING__//)
+         if ($_ =~ s/__WARNING__//o)
          {
             s/^\s+|\s+$//sgo;
 
