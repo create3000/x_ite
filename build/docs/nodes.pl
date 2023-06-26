@@ -129,8 +129,8 @@ sub update_node {
 
    s/(.*?)[\s,]+(https?:.*?)(\s+(?:or|and)\s+|\s+|$)/[$1]($2){:target="_blank"}$3/sgo foreach @hints;
    s/(.*?)[\s,]+(https?:.*?)(\s+(?:or|and)\s+|\s+|$)/[$1]($2){:target="_blank"}$3/sgo foreach @warnings;
-   s/:\]/]/sgo foreach @hints;
-   s/:\]/]/sgo foreach @warnings;
+   s/(:|\s*at)\]/]/sgo foreach @hints;
+   s/(:|\s*at)\]/]/sgo foreach @warnings;
 
    # Top
 
@@ -185,11 +185,10 @@ sub update_node {
       $string .= "\n";
    }
 
-   if (@hints || @warnings)
-   {
-      $file =~ s/\n\n(## See Also)/\n\n$string$1/so unless $file =~ /## Information/;
-      $file =~ s/(## Information\n).*?\n(?=##\s+|\s+$)/$string/so;
-   }
+   $string = "" unless @hints || @warnings;
+
+   $file =~ s/\n\n(## See Also)/\n\n$string$1/so unless $file =~ /## Information/;
+   $file =~ s/(## Information\n).*?\n(?=##\s+|\s+$)/$string/so;
 
    return $file;
 }
@@ -307,8 +306,8 @@ sub update_field {
 
       s/(.*?)[\s,]+(https?:.*?)(\s+(?:or|and)\s+|\s+|$)/[$1]($2){:target="_blank"}$3/sgo foreach @hints;
       s/(.*?)[\s,]+(https?:.*?)(\s+(?:or|and)\s+|\s+|$)/[$1]($2){:target="_blank"}$3/sgo foreach @warnings;
-      s/:\]/]/sgo foreach @hints;
-      s/:\]/]/sgo foreach @warnings;
+      s/(:|\s*at)\]/]/sgo foreach @hints;
+      s/(:|\s*at)\]/]/sgo foreach @warnings;
    }
    else
    {

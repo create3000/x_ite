@@ -92,7 +92,7 @@ Linearly interpolated output value determined by current key time and correspond
 - Typical input connection is ROUTE someTimeSensorDEF.fraction_changed TO thisInterpolatorDEF.set_fraction.
 - Typical output connection is ROUTE thisInterpolatorDEF.value_changed TO someDestinationNodeDEF.set_someAttribute.
 - [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color){:target="_blank"}
-- [Example scenes and authoring assets at](https://x3dgraphics.com/examples/X3dForWebAuthors/Chapter07EventAnimationInterpolation){:target="_blank"}
+- [Example scenes and authoring assets](https://x3dgraphics.com/examples/X3dForWebAuthors/Chapter07EventAnimationInterpolation){:target="_blank"}
 
 ## Example
 

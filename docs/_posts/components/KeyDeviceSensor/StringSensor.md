@@ -85,7 +85,7 @@ Select geometry by activating the pointing device (for example, clicking the mou
 
 ### Hint
 
-- [Example scenes and authoring assets at](https://x3dgraphics.com/examples/X3dForWebAuthors/Chapter08UserInteractivity){:target="_blank"}
+- [Example scenes and authoring assets](https://x3dgraphics.com/examples/X3dForWebAuthors/Chapter08UserInteractivity){:target="_blank"}
 
 ## See Also
 

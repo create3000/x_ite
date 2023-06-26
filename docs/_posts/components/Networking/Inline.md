@@ -69,8 +69,8 @@ Address of X3D world to load Inline with current scene, retrieved either from lo
 #### Hints
 
 - [(X3D version 4.0 draft) support includes .gltf and .glb](https://www.khronos.org/gltf){:target="_blank"} https://en.wikipedia.org/wiki/glTF
-- [Future work planned for PLY format](https://en.wikipedia.org/wiki/PLY_(file_format)){:target="_blank"}
-- [Future work planned for STL format](https://en.wikipedia.org/wiki/STL_(file_format)){:target="_blank"}
+- [Future work planned for PLY form](https://en.wikipedia.org/wiki/PLY_(file_format)){:target="_blank"}
+- [Future work planned for STL form](https://en.wikipedia.org/wiki/STL_(file_format)){:target="_blank"}
 - MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc."
 - Alternative XML encoding for quotation mark " is &amp;quot; (which is an example of a character entity).
 - Can replace embedded blank(s) in *url* queries with %20 for each blank character.

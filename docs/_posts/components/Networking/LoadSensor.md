@@ -106,7 +106,7 @@ The *children* field monitors one or more USE nodes that contain a valid url fie
 - Use multiple LoadSensor nodes to track multiple loading nodes individually.
 - Background node is not sensed by LoadSensor due to node typing and multiple-image ambiguity, alternatively utilize TextureBackground node with multiple ImageTexture nodes each referenced inside LoadSensor.
 - Use Inline 'load' field to prompt or defer loading.
-- [Example scenes and authoring assets at](https://x3dgraphics.com/examples/X3dForWebAuthors/Chapter12EnvironmentSensorSound){:target="_blank"}
+- [Example scenes and authoring assets](https://x3dgraphics.com/examples/X3dForWebAuthors/Chapter12EnvironmentSensorSound){:target="_blank"}
 
 ### Warnings
 
