@@ -50,11 +50,11 @@ Enables/disables node operation.
 
 ### MFNode [out] **intersections** <small>[X3DNBodyCollidableNode]</small>
 
-Output field intersections.
+Output field *intersections*.
 
 ### MFNode [out] **contacts** <small>[Contact]</small>
 
-Output field contacts.
+Output field *contacts*.
 
 ### SFNode [in, out] **collider** NULL <small>[CollisionCollection]</small>
 

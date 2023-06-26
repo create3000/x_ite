@@ -50,7 +50,7 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 
 ### SFBool [in, out] **closed** FALSE
 
-Input/Output field closed.
+Input/Output field *closed*.
 
 ### MFFloat [in, out] **key** [ ] <small>(-∞,∞)</small>
 

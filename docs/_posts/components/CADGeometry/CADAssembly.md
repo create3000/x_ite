@@ -91,11 +91,11 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 
 ### MFNode [in] **addChildren**
 
-Input field addChildren.
+Input field *addChildren*.
 
 ### MFNode [in] **removeChildren**
 
-Input field removeChildren.
+Input field *removeChildren*.
 
 ### MFNode [in, out] **children** [ ] <small>[X3DProductStructureChildNode, X3DGroupingNode]</small>
 

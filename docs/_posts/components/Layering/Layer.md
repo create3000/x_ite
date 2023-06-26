@@ -63,11 +63,11 @@ The *viewport* field is a single Viewport node that constrains layer output to a
 
 ### MFNode [in] **addChildren**
 
-Input field addChildren.
+Input field *addChildren*.
 
 ### MFNode [in] **removeChildren**
 
-Input field removeChildren.
+Input field *removeChildren*.
 
 ### MFNode [in, out] **children** [ ] <small>[X3DChildNode]</small>
 

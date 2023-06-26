@@ -105,11 +105,11 @@ Single contained Coordinate or CoordinateDouble node that can specify control po
 
 ### MFNode [in] **addTrimmingContour**
 
-Input field addTrimmingContour.
+Input field *addTrimmingContour*.
 
 ### MFNode [in] **removeTrimmingContour**
 
-Input field removeTrimmingContour.
+Input field *removeTrimmingContour*.
 
 ### MFNode [in, out] **trimmingContour** [ ] <small>[Contour2D]</small>
 

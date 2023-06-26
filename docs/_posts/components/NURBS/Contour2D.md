@@ -36,11 +36,11 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 
 ### MFNode [in] **addChildren**
 
-Input field addChildren.
+Input field *addChildren*.
 
 ### MFNode [in] **removeChildren**
 
-Input field removeChildren.
+Input field *removeChildren*.
 
 ### MFNode [in, out] **children** [ ] <small>[NurbsCurve2D|ContourPolyline2D]</small>
 

@@ -85,15 +85,15 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 
 ### SFFloat [in, out] **stopBounce1** 0 <small>[0,1]<span class="red"> not supported</span></small>
 
-Input/Output field stopBounce1.
+Input/Output field *stopBounce1*.
 
 ### SFFloat [in, out] **stopConstantForceMix1** 0.001 <small>[0,∞)<span class="red"> not supported</span></small>
 
-Input/Output field stopConstantForceMix1.
+Input/Output field *stopConstantForceMix1*.
 
 ### SFFloat [in, out] **stopErrorCorrection1** 0.8 <small>[0,1]<span class="red"> not supported</span></small>
 
-Input/Output field stopErrorCorrection1.
+Input/Output field *stopErrorCorrection1*.
 
 ### SFFloat [in, out] **suspensionForce** 0 <small>[0,∞)<span class="red"> not supported</span></small>
 
@@ -115,35 +115,35 @@ Input/Output field stopErrorCorrection1.
 
 ### SFVec3f [out] **body1AnchorPoint**
 
-Output field body1AnchorPoint.
+Output field *body1AnchorPoint*.
 
 ### SFVec3f [out] **body2AnchorPoint**
 
-Output field body2AnchorPoint.
+Output field *body2AnchorPoint*.
 
 ### SFVec3f [out] **body1Axis**
 
-Output field body1Axis.
+Output field *body1Axis*.
 
 ### SFVec3f [out] **body2Axis**
 
-Output field body2Axis.
+Output field *body2Axis*.
 
 ### SFFloat [out] **hinge1Angle**
 
-Output field hinge1Angle.
+Output field *hinge1Angle*.
 
 ### SFFloat [out] **hinge2Angle**
 
-Output field hinge2Angle.
+Output field *hinge2Angle*.
 
 ### SFFloat [out] **hinge1AngleRate**
 
-Output field hinge1AngleRate.
+Output field *hinge1AngleRate*.
 
 ### SFFloat [out] **hinge2AngleRate**
 
-Output field hinge2AngleRate.
+Output field *hinge2AngleRate*.
 
 ### SFNode [in, out] **body1** NULL <small>[RigidBody]</small>
 

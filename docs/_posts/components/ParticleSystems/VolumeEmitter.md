@@ -37,11 +37,7 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 
 ### MFInt32 [in] **set_coordIndex** <small>[0,∞) or -1</small>
 
-*coordIndex* indices provide the order in which coordinates are applied to construct each polygon face. Order starts at index 0, commas are optional between sets.
-
-#### Hint
-
-- Sentinel value -1 is used to separate indices for each successive polygon.
+Input field *set_coordIndex*.
 
 ### SFBool [in, out] **on** TRUE
 

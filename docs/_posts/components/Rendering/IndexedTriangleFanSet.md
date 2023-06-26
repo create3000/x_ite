@@ -38,11 +38,7 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 
 ### MFInt32 [in] **set_index** <small>[0,∞) or -1</small>
 
-*index* list specifies triangles by connecting Coordinate vertices, each individual fan separated by -1 sentinel value.
-
-#### Hint
-
-- First indexed coordinate in each sequence is fan center.
+Input field *set_index*.
 
 ### SFBool [ ] **solid** TRUE
 

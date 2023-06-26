@@ -38,11 +38,7 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 
 ### MFInt32 [in] **set_index** <small>[0,∞)</small>
 
-*index* values provide order in which coordinates are applied. Order starts at index 0, commas are optional between sets. Four unique indices are defined for each quadrilateral.
-
-#### Warning:
-
-- -1 sentinel values are not allowed.
+Input field *set_index*.
 
 ### SFBool [ ] **solid** TRUE
 

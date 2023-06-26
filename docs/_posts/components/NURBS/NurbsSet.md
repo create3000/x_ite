@@ -81,11 +81,11 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 
 ### MFNode [in] **addGeometry**
 
-Input field addGeometry.
+Input field *addGeometry*.
 
 ### MFNode [in] **removeGeometry**
 
-Input field removeGeometry.
+Input field *removeGeometry*.
 
 ### MFNode [in, out] **geometry** [ ] <small>[X3DNurbsSurfaceGeometryNode]</small>
 

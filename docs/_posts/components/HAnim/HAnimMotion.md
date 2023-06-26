@@ -171,6 +171,8 @@ Level Of Articulation 0..4 indicates complexity and detail of joints for given h
 
 ### SFInt32 [out] **frameCount**
 
+Output field *frameCount*.
+
 ## External Links
 
 - [X3D Specification of HAnimMotion](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/hanim.html#HAnimMotion){:target="_blank"}

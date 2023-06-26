@@ -23,9 +23,9 @@ s/^\s+|\s+$//sgo foreach @td;
 
 $fieldDescription = {
    " " => "",
-   "in" => "input ",
-   "out" => "output ",
-   "in, out" => "input and output ",
+   "in" => "Input ",
+   "out" => "Output ",
+   "in, out" => "Input/Output ",
 };
 
 sub node {
@@ -64,66 +64,67 @@ sub field {
    $node = shift;
    $file = shift;
 
-   return $file unless grep /^$name$/, @$node;
-
    # return $file unless $name eq "tolerance";
    # say $name;
 
    $file =~ /###.*?\[(.*?)\].*?\*\*$name\*\*/;
    $accessType = $1;
 
-   @field = @$node [(first_index { /^$name$/ } @$node) + 1 .. $#$node];
-   $field = shift @field;
-
-   1 while $field =~ s/^\s*(?:\[.*?\]|\(.*?\))\s*//so;
-   1 while $field =~ s/^(?:\s*or)?\s*(?:[\[\()].*?[\]\)]|-1\.)\s*//so;
-
-   decode_entities $field;
-   $field =~ s/([<>|])/\\$1/sgo;
-
-   # Special substitutions
-   $field =~ s/\*next\* to/next to/sgo;
-   $field =~ s/\[autoRefresh\b/autoRefresh/sgo;
-
-   $field =~ s/\b$name\b/*$name*/sg;
-   $n = $1, $field =~ s/\b$n\b/*$n*/sg if $name =~ /^set_(.*)$/;
-
    @description = @hints = @warnings = ();
 
-   $field =~ s/(Hint\s*:)/$1 __HINT__/sgo;
-   $field =~ s/(Warning\s*:)/$1 __WARNING__/sgo;
-
-   @sentences = split (/(?:Hint|Warning)\s*:/so, $field);
-
-   foreach (@sentences)
+   if (grep /^$name$/, @$node)
    {
-      s/^\s+|\s+$//sgo;
+      @field = @$node [(first_index { /^$name$/ } @$node) + 1 .. $#$node];
+      $field = shift @field;
 
-      if ($_ =~ s/__HINT__//)
+      1 while $field =~ s/^\s*(?:\[.*?\]|\(.*?\))\s*//so;
+      1 while $field =~ s/^(?:\s*or)?\s*(?:[\[\()].*?[\]\)]|-1\.)\s*//so;
+
+      decode_entities $field;
+      $field =~ s/([<>|])/\\$1/sgo;
+
+      # Special substitutions
+      $field =~ s/\*next\* to/next to/sgo;
+      $field =~ s/\[autoRefresh\b/autoRefresh/sgo;
+
+      $field =~ s/\b$name\b/*$name*/sg;
+      $n = $1, $field =~ s/\b$n\b/*$n*/sg if $name =~ /^set_(.*)$/;
+
+      $field =~ s/(Hint\s*:)/$1 __HINT__/sgo;
+      $field =~ s/(Warning\s*:)/$1 __WARNING__/sgo;
+
+      @sentences = split (/(?:Hint|Warning)\s*:/so, $field);
+
+      foreach (@sentences)
       {
          s/^\s+|\s+$//sgo;
 
-         push @hints, $_;
-         next;
+         if ($_ =~ s/__HINT__//)
+         {
+            s/^\s+|\s+$//sgo;
+
+            push @hints, $_;
+            next;
+         }
+
+         if ($_ =~ s/__WARNING__//)
+         {
+            s/^\s+|\s+$//sgo;
+
+            push @warnings, $_;
+            next;
+         }
+
+         push @description, $_;
       }
 
-      if ($_ =~ s/__WARNING__//)
-      {
-         s/^\s+|\s+$//sgo;
+      $_ = ucfirst foreach @description;
+      $_ = ucfirst foreach @hints;
+      $_ = ucfirst foreach @warnings;
 
-         push @warnings, $_;
-         next;
-      }
-
-      push @description, $_;
+      s/^(.*?)[\s,]+(https?:.*?$)/[$1]($2){:target="_blank"}/sgo foreach @hints;
+      s/^(.*?)[\s,]+(https?:.*?$)/[$1]($2){:target="_blank"}/sgo foreach @warnings;
    }
-
-   $_ = ucfirst foreach @description;
-   $_ = ucfirst foreach @hints;
-   $_ = ucfirst foreach @warnings;
-
-   s/^(.*?)[\s,]+(https?:.*?$)/[$1]($2){:target="_blank"}/sgo foreach @hints;
-   s/^(.*?)[\s,]+(https?:.*?$)/[$1]($2){:target="_blank"}/sgo foreach @warnings;
 
    $string = "";
 
@@ -137,7 +138,7 @@ sub field {
    else
    {
       $string .= "\n";
-      $string .= ucfirst ($fieldDescription -> {$accessType} . "field $name.");
+      $string .= ucfirst ($fieldDescription -> {$accessType} . "field *$name*.");
       $string .= "\n";
       $string .= "\n";
    }

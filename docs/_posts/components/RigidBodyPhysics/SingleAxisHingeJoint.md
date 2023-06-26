@@ -81,19 +81,19 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 
 ### SFVec3f [out] **body1AnchorPoint**
 
-Output field body1AnchorPoint.
+Output field *body1AnchorPoint*.
 
 ### SFVec3f [out] **body2AnchorPoint**
 
-Output field body2AnchorPoint.
+Output field *body2AnchorPoint*.
 
 ### SFFloat [out] **angle**
 
-Output field angle.
+Output field *angle*.
 
 ### SFFloat [out] **angleRate**
 
-Output field angleRate.
+Output field *angleRate*.
 
 ### SFNode [in, out] **body1** NULL <small>[RigidBody]</small>
 

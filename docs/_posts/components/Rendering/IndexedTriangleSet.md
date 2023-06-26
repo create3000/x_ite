@@ -38,11 +38,7 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 
 ### MFInt32 [in] **set_index** <small>[0,∞)</small>
 
-*index* list specifies triangles by connecting Coordinate vertices.
-
-#### Warning
-
-- -1 sentinel values are not allowed.
+Input field *set_index*.
 
 ### SFBool [ ] **solid** TRUE
 

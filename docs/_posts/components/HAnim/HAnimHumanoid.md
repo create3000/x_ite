@@ -280,11 +280,11 @@ Contains any HAnimMotion nodes that can animate the HAnimHumanoid.
 
 ### SFNode [in, out] **skinBindingNormal** NULL <small>[X3DNormalNode]</small>
 
-Input/Output field skinBindingNormal.
+Input/Output field *skinBindingNormal*.
 
 ### SFNode [in, out] **skinBindingCoord** NULL <small>[X3DCoordinateNode]</small>
 
-Input/Output field skinBindingCoord.
+Input/Output field *skinBindingCoord*.
 
 ### SFNode [in, out] **skinNormal** NULL <small>[X3DNormalNode]</small>
 

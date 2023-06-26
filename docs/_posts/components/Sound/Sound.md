@@ -119,6 +119,8 @@ Sound *source* for the Sound node, either an AudioClip node or a MovieTexture no
 
 ### MFNode [in, out] **children** [ ] <small>[X3DSoundChannelNode,X3DSoundProcessingNode,X3DSoundSourceNode]</small>
 
+Input/Output field *children*.
+
 ## Description
 
 ### Hint

@@ -82,11 +82,11 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 
 ### MFNode [in] **addChildren**
 
-Input field addChildren.
+Input field *addChildren*.
 
 ### MFNode [in] **removeChildren**
 
-Input field removeChildren.
+Input field *removeChildren*.
 
 ### MFNode [in, out] **children** [ ] <small>[X3DChildNode]</small>
 
@@ -261,7 +261,7 @@ Specific information about an entity based on the Subcategory field. See DIS Enu
 
 ### SFInt32 [in, out] **entitySubCategory** 0 <small>[0,255]</small>
 
-Enumerations value for particular subcategory to which an entity belongs based on the Category field. See DIS Enumerations values.
+Input/Output field *entitySubCategory*.
 
 ### SFInt32 [in, out] **eventApplicationID** 1 <small>[0,65535]</small>
 
@@ -293,7 +293,7 @@ Has the secondary weapon (Fire PDU) been fired?
 
 ### SFInt32 [in, out] **fireMissionIndex** 0 <small>[0,65535]</small>
 
-Input and output field fireMissionIndex.
+Input/Output field *fireMissionIndex*.
 
 ### SFFloat [in, out] **firingRange** 0 <small>(0,∞)</small>
 

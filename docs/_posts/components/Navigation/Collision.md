@@ -115,11 +115,11 @@ The *proxy* node is used as a substitute for Collision children during collision
 
 ### MFNode [in] **addChildren**
 
-Input field addChildren.
+Input field *addChildren*.
 
 ### MFNode [in] **removeChildren**
 
-Input field removeChildren.
+Input field *removeChildren*.
 
 ### MFNode [in, out] **children** [ ] <small>[X3DChildNode]</small>
 

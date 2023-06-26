@@ -73,7 +73,7 @@ Single contained Material node that can specify visual attributes for lighting r
 
 ### SFNode [in, out] **backMaterial** NULL <small>[X3DOneSidedMaterialNode]</small>
 
-Single contained Material node that can specify visual attributes for lighting response (color types, transparency, etc.) applied to corresponding geometry.
+Input/Output field *backMaterial*.
 
 ### SFNode [in, out] **texture** NULL <small>[X3DTextureNode]</small>
 
@@ -105,7 +105,7 @@ Zero or more contained programmable shader nodes (ComposedShader, PackagedShader
 
 ### SFNode [in, out] **blendMode** NULL <small>[BlendMode]</small> <small class="yellow">non standard</small>
 
-Single contained BlendMode node that defines blend mode properties.
+Input/Output field *blendMode*.
 
 ### SFNode [in, out] **acousticProperties** NULL <small>[AcousticProperties]</small>
 
