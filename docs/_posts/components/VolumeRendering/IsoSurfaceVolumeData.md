@@ -104,10 +104,6 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 
 Multiple contained X3DVolumeRenderStyleNode nodes corresponding to each isosurface that define specific rendering technique for this volumetric object.
 
-#### Hint
-
--
-
 #### Warning
 
 - If not defined, no default renderStryle is defined.

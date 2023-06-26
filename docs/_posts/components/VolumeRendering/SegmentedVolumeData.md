@@ -102,10 +102,6 @@ Single contained X3DTexture3DNode (ComposedTexture3D, ImageTexture3D, PixelTextu
 
 Multiple contained X3DVolumeRenderStyleNode nodes corresponding to each isosurface that define specific rendering technique for this volumetric object.
 
-#### Hint
-
-- 
-
 #### Warning
 
 - If not defined, no default renderStryle is defined.

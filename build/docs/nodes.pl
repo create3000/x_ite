@@ -40,7 +40,7 @@ sub node {
    return if $componentName =~ /^Annotation$/o;
    return if $typeName =~ /^X3D/o;
 
-   # return unless $typeName =~ /^WorldInfo$/o;
+   # return unless $typeName =~ /^IsoSurfaceVolumeData$/o;
    say "$componentName $typeName";
 
    $md     = "$cwd/docs/_posts/components/$componentName/$typeName.md";
@@ -120,7 +120,7 @@ sub update_node {
          next;
       }
 
-      push @description, $_;
+      push @description, $_ if $_;
    }
 
    $_ = ucfirst foreach @description;
@@ -286,7 +286,7 @@ sub update_field {
          {
             s/^\s+|\s+$//sgo;
 
-            push @hints, $_;
+            push @hints, $_ if $_;
             next;
          }
 
@@ -294,11 +294,11 @@ sub update_field {
          {
             s/^\s+|\s+$//sgo;
 
-            push @warnings, $_;
+            push @warnings, $_ if $_;
             next;
          }
 
-         push @description, $_;
+         push @description, $_ if $_;
       }
 
       $_ = ucfirst foreach @description;
