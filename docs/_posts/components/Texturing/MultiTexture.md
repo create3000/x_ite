@@ -63,7 +63,7 @@ The *alpha* field defines the *alpha* (1-transparency) base value for mode opera
 #### Hints
 
 - Include the same number of *mode* values as textures, otherwise the default value MODULATE is added for each remaining stage.
-- [X3D Architecture Table 18.3 Multitexture modes](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/texturing.html#t-MultitextureModes for further details.){:target="_blank"}
+- [X3D Architecture Table 18.3 Multitexture modes](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/texturing.html#t-MultitextureModes){:target="_blank"} for further details.
 
 #### Warning
 
@@ -76,7 +76,7 @@ The *alpha* field defines the *alpha* (1-transparency) base value for mode opera
 #### Hints
 
 - Include the same number of *source* values as textures, otherwise the default of no *source* interpretation is applied for each remaining stage.
-- [X3D Architecture Table 18.4 Values for the *source* field](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/texturing.html#t-ValuesForSourceField for further details.){:target="_blank"}
+- [X3D Architecture Table 18.4 Values for the *source* field](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/texturing.html#t-ValuesForSourceField){:target="_blank"} for further details.
 
 ### MFString [in, out] **function** [ ]
 
@@ -85,7 +85,7 @@ The *alpha* field defines the *alpha* (1-transparency) base value for mode opera
 #### Hints
 
 - Include the same number of *function* values as textures, otherwise the default of no *function* operation is applied for each remaining stage.
-- [X3D Architecture Table 18.5 Values for the *function* field](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/texturing.html#t-ValuesForFunctionField for further details.){:target="_blank"}
+- [X3D Architecture Table 18.5 Values for the *function* field](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/texturing.html#t-ValuesForFunctionField){:target="_blank"} for further details.
 
 ### MFNode [in, out] **texture** [ ] <small>[X3DTextureNode]</small>
 

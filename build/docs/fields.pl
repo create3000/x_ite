@@ -123,8 +123,10 @@ sub update_node {
    $_ = ucfirst foreach @hints;
    $_ = ucfirst foreach @warnings;
 
-   s/^(.*?)[\s,]+(https?:.*?$)/[$1]($2){:target="_blank"}/sgo foreach @hints;
-   s/^(.*?)[\s,]+(https?:.*?$)/[$1]($2){:target="_blank"}/sgo foreach @warnings;
+   s/(.*?)[\s,]+(https?:.*?)(\s+(?:or|and)\s+|\s+|$)/[$1]($2){:target="_blank"}$3/sgo foreach @hints;
+   s/(.*?)[\s,]+(https?:.*?)(\s+(?:or|and)\s+|\s+|$)/[$1]($2){:target="_blank"}$3/sgo foreach @warnings;
+   s/:\]/]/sgo foreach @hints;
+   s/:\]/]/sgo foreach @warnings;
 
    # Top
 
@@ -278,8 +280,10 @@ sub update_field {
       $_ = ucfirst foreach @hints;
       $_ = ucfirst foreach @warnings;
 
-      s/^(.*?)[\s,]+(https?:.*?$)/[$1]($2){:target="_blank"}/sgo foreach @hints;
-      s/^(.*?)[\s,]+(https?:.*?$)/[$1]($2){:target="_blank"}/sgo foreach @warnings;
+      s/(.*?)[\s,]+(https?:.*?)(\s+(?:or|and)\s+|\s+|$)/[$1]($2){:target="_blank"}$3/sgo foreach @hints;
+      s/(.*?)[\s,]+(https?:.*?)(\s+(?:or|and)\s+|\s+|$)/[$1]($2){:target="_blank"}$3/sgo foreach @warnings;
+      s/:\]/]/sgo foreach @hints;
+      s/:\]/]/sgo foreach @warnings;
    }
    else
    {

@@ -45,7 +45,7 @@ Whether or not LineProperties are *applied* to associated geometry.
 
 #### Hint
 
-- [Detailed descriptions of lineType values are found at the ISO/IEC 9973 International Register of Graphical Items](https://www.iso.org/jtc1/sc24/register at https://isotc.iso.org/livelink/livelink/fetch/-8916524/8916549/8916590/6208440/class_pages/*linetype*.html){:target="_blank"}
+- [Detailed descriptions of lineType values are found at the ISO/IEC 9973 International Register of Graphical Items](https://www.iso.org/jtc1/sc24/register){:target="_blank"} [at](https://isotc.iso.org/livelink/livelink/fetch/-8916524/8916549/8916590/6208440/class_pages/*linetype*.html){:target="_blank"}
 
 ### SFFloat [in, out] **linewidthScaleFactor** 0 <small>(-∞,∞)</small>
 

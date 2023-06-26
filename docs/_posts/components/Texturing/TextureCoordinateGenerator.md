@@ -51,7 +51,7 @@ Parameter field defines the algorithm used to compute texture coordinates.
 
 #### Hint
 
-- [X3D Architecture Table 18.6 Texture coordinate generation modes](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/texturing.html#t-Texturecoordgeneration for further details.){:target="_blank"}
+- [X3D Architecture Table 18.6 Texture coordinate generation modes](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/texturing.html#t-Texturecoordgeneration){:target="_blank"} for further details.
 
 #### Warning
 

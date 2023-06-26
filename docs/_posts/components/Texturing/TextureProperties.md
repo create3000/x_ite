@@ -63,7 +63,7 @@ Determines whether MIPMAPs are generated for texture images.
 
 - Mipmap preprocessing is a low-level rendering technique that can increase rendering speed and reduce aliasing artifacts.
 - Mipmap pyramids are pre-calculated, optimized sequences of images, each of which is a progressively lower resolution representation of the same image. The height and width of each image level in the mipmap is a power of two smaller than the previous level.
-- [Aliasing](https://en.wikipedia.org/wiki/Aliasing and Clipping https://en.wikipedia.org/wiki/Clipping_(computer_graphics)){:target="_blank"}
+- [Aliasing](https://en.wikipedia.org/wiki/Aliasing){:target="_blank"} and [Clipping](https://en.wikipedia.org/wiki/Clipping_(computer_graphics)){:target="_blank"}
 - [Mipmap](https://en.wikipedia.org/wiki/Mipmap){:target="_blank"}
 
 #### Warning
@@ -76,7 +76,7 @@ Determines whether MIPMAPs are generated for texture images.
 
 #### Hint
 
-- [X3D Architecture Table 18.9 Texture minification modes](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/texturing.html#t-TextureMinificationModes for details.){:target="_blank"}
+- [X3D Architecture Table 18.9 Texture minification modes](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/texturing.html#t-TextureMinificationModes){:target="_blank"} for details.
 
 #### Warning
 
@@ -88,7 +88,7 @@ Determines whether MIPMAPs are generated for texture images.
 
 #### Hint
 
-- [X3D Architecture Table 18.8 Texture magnification modes](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/texturing.html#t-TextureMagnificationModes for details.){:target="_blank"}
+- [X3D Architecture Table 18.8 Texture magnification modes](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/texturing.html#t-TextureMagnificationModes){:target="_blank"} for details.
 
 #### Warning
 
@@ -100,7 +100,7 @@ Determines whether MIPMAPs are generated for texture images.
 
 #### Hint
 
-- [X3D Architecture Table 18.7 Texture boundary modes](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/texturing.html#t-TextureBoundaryModes for details.){:target="_blank"}
+- [X3D Architecture Table 18.7 Texture boundary modes](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/texturing.html#t-TextureBoundaryModes){:target="_blank"} for details.
 
 #### Warning
 
@@ -112,7 +112,7 @@ Determines whether MIPMAPs are generated for texture images.
 
 #### Hint
 
-- [X3D Architecture Table 18.7 Texture boundary modes](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/texturing.html#t-TextureBoundaryModes for details.){:target="_blank"}
+- [X3D Architecture Table 18.7 Texture boundary modes](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/texturing.html#t-TextureBoundaryModes){:target="_blank"} for details.
 
 #### Warning
 
@@ -124,7 +124,7 @@ Determines whether MIPMAPs are generated for texture images.
 
 #### Hint
 
-- [X3D Architecture Table 18.7 Texture boundary modes](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/texturing.html#t-TextureBoundaryModes for details.){:target="_blank"}
+- [X3D Architecture Table 18.7 Texture boundary modes](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/texturing.html#t-TextureBoundaryModes){:target="_blank"} for details.
 
 #### Warning
 
@@ -136,7 +136,7 @@ Determines whether MIPMAPs are generated for texture images.
 
 #### Hints
 
-- [X3D Architecture Table 18.10 Texture compression modes](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/texturing.html#t-TextureCompressionModes for details.){:target="_blank"}
+- [X3D Architecture Table 18.10 Texture compression modes](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/texturing.html#t-TextureCompressionModes){:target="_blank"} for details.
 - [Texture compression](https://en.wikipedia.org/wiki/Texture_compression){:target="_blank"}
 
 #### Warning

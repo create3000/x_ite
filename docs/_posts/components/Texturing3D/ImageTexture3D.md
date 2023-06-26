@@ -118,7 +118,7 @@ Single contained TextureProperties node that can specify additional visual attri
 ### Hints
 
 - [Microsoft DirectDraw Surface (DDS)](https://docs.microsoft.com/en-us/windows/win32/direct3ddds/dx-graphics-dds){:target="_blank"}
-- [Digital Imaging and Communications in Medicine (DICOM)](https://www.dicomstandard.org Nevertheless DDS, DICOM, NRRD and/or .vol formats are recommended.){:target="_blank"}
+- [Digital Imaging and Communications in Medicine (DICOM)](https://www.dicomstandard.org){:target="_blank"} Nevertheless DDS, DICOM, NRRD and/or .vol formats are recommended.
 - [Nearly Raw Raster Data (NRRD)](http://teem.sourceforge.net/nrrd){:target="_blank"}
 - [Volume data format (VOL)](http://paulbourke.net/dataformats/volumetric){:target="_blank"}
 - [X3D Scene Authoring Hints, Volume Tools and Volumes Visualization](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Volumes){:target="_blank"}

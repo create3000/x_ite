@@ -66,7 +66,7 @@ Enter one or more quoted SFString values: "EXAMINE" "WALK" "FLY" "LOOKAT" "EXPLO
 #### Hints
 
 - X3D specification recommends that browsers set near clipping plane to one-half of *avatarSize*.CollisionDistance value.
-- [Aliasing](https://en.wikipedia.org/wiki/Aliasing and Clipping https://en.wikipedia.org/wiki/Clipping_(computer_graphics) Interchange profile hint: this field may be ignored, applying the default value regardless.){:target="_blank"}
+- [Aliasing](https://en.wikipedia.org/wiki/Aliasing){:target="_blank"} and [Clipping](https://en.wikipedia.org/wiki/Clipping_(computer_graphics)){:target="_blank"} Interchange profile hint: this field may be ignored, applying the default value regardless.
 - Transformation hierarchy of currently bound Viewpoint node scales *avatarSize*, but translations and rotations have no effect.
 - Content must be visible to be collidable and to be pickable.
 
@@ -96,7 +96,7 @@ Geometry beyond the *visibilityLimit* may not be rendered (far clipping plane of
 - *visibilityLimit*=0.0 indicates an infinite visibility limit (no far clipping plane).
 - Set *visibilityLimit* to appropriate positive value in meters to define far culling plane of view frustum.
 - X3D specification recommends that browsers set near clipping plane to one-half of avatarSize.CollisionDistance value.
-- [Aliasing](https://en.wikipedia.org/wiki/Aliasing and Clipping https://en.wikipedia.org/wiki/Clipping_(computer_graphics) Interchange profile hint: this field may be ignored, applying the default value regardless.){:target="_blank"}
+- [Aliasing](https://en.wikipedia.org/wiki/Aliasing){:target="_blank"} and [Clipping](https://en.wikipedia.org/wiki/Clipping_(computer_graphics)){:target="_blank"} Interchange profile hint: this field may be ignored, applying the default value regardless.
 
 #### Warning
 

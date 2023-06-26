@@ -107,7 +107,7 @@ Minimum and maximum extents of view in units of local coordinate system. Small f
 
 - Overrides bound NavigationInfo avatarSize value, if any.
 - Default value -1 means no effect on currently defined view frustum boundaries.
-- [Aliasing](https://en.wikipedia.org/wiki/Aliasing and Clipping https://en.wikipedia.org/wiki/Clipping_(computer_graphics)){:target="_blank"}
+- [Aliasing](https://en.wikipedia.org/wiki/Aliasing){:target="_blank"} and [Clipping](https://en.wikipedia.org/wiki/Clipping_(computer_graphics)){:target="_blank"}
 
 #### Warning
 
@@ -121,7 +121,7 @@ Minimum and maximum extents of view in units of local coordinate system. Small f
 
 - Overrides bound NavigationInfo visibilityLimit value, if any.
 - Default value -1 means no effect on currently defined view frustum boundaries.
-- [Aliasing](https://en.wikipedia.org/wiki/Aliasing and Clipping https://en.wikipedia.org/wiki/Clipping_(computer_graphics)){:target="_blank"}
+- [Aliasing](https://en.wikipedia.org/wiki/Aliasing){:target="_blank"} and [Clipping](https://en.wikipedia.org/wiki/Clipping_(computer_graphics)){:target="_blank"}
 
 #### Warning
 

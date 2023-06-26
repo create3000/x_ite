@@ -68,7 +68,7 @@ Address of X3D world to load Inline with current scene, retrieved either from lo
 
 #### Hints
 
-- [(X3D version 4.0 draft) support includes .gltf and .glb](https://www.khronos.org/gltf https://en.wikipedia.org/wiki/glTF){:target="_blank"}
+- [(X3D version 4.0 draft) support includes .gltf and .glb](https://www.khronos.org/gltf){:target="_blank"} https://en.wikipedia.org/wiki/glTF
 - [Future work planned for PLY format](https://en.wikipedia.org/wiki/PLY_(file_format)){:target="_blank"}
 - [Future work planned for STL format](https://en.wikipedia.org/wiki/STL_(file_format)){:target="_blank"}
 - MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc."
@@ -147,7 +147,7 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 
 ### Hints
 
-- [(X3D version 4.0 draft) support includes .gltf and .glb](https://www.khronos.org/gltf https://en.wikipedia.org/wiki/glTF){:target="_blank"}
+- [(X3D version 4.0 draft) support includes .gltf and .glb](https://www.khronos.org/gltf){:target="_blank"} https://en.wikipedia.org/wiki/glTF
 - You cannot ROUTE values into an Inline scene, use IMPORT/EXPORT (or ExternProtoDeclare and ProtoInstance) instead.
 - [X3D Scene Authoring Hints, Inlines and Prototypes](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#InlinesPrototypes){:target="_blank"}
 - [When parent node is LoadSensor, apply containerField='children' (X3Dv4) or containerField='watchList' (X3Dv3).](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges){:target="_blank"}
