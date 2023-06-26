@@ -15,7 +15,7 @@ tags: [TexCoordDamper2D, Followers]
 
 TexCoordDamper2D generates a series of 2D floating-point arrays that progressively change from initial value to destination value.
 
-The TexCoordDamper2D node belongs to the **Followers** component and its default container field is *children.* It is available since X3D version 3.2 or later.
+The TexCoordDamper2D node belongs to the **Followers** component and its default container field is *children.* It is available from X3D version 3.2 or later.
 
 ## Hierarchy
 

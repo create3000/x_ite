@@ -15,7 +15,7 @@ tags: [PlaneSensor, PointingDeviceSensor]
 
 PlaneSensor converts pointing device motion into 2D translation parallel to the local Z=0 plane.
 
-The PlaneSensor node belongs to the **PointingDeviceSensor** component and its default container field is *children.* It is available since X3D version 2.0 or later.
+The PlaneSensor node belongs to the **PointingDeviceSensor** component and its default container field is *children.* It is available from X3D version 2.0 or later.
 
 ## Hierarchy
 

@@ -15,7 +15,7 @@ tags: [Contact, RigidBodyPhysics]
 
 Contact nodes are produced as output events when two collidable objects or spaces make contact.
 
-The Contact node belongs to the **RigidBodyPhysics** component and its default container field is *children.* It is available since X3D version 3.2 or later.
+The Contact node belongs to the **RigidBodyPhysics** component and its default container field is *children.* It is available from X3D version 3.2 or later.
 
 ## Hierarchy
 

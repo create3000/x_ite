@@ -15,7 +15,7 @@ tags: [Sound, Sound]
 
 The Sound node controls the 3D spatialization of sound playback by a child AudioClip or MovieTexture node. Sound intensity includes stereo support, varying according to user location and view direction in the scene.
 
-The Sound node belongs to the **Sound** component and its default container field is *children.* It is available since X3D version 2.0 or later.
+The Sound node belongs to the **Sound** component and its default container field is *children.* It is available from X3D version 2.0 or later.
 
 ## Hierarchy
 

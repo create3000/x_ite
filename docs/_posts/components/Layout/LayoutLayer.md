@@ -15,7 +15,7 @@ tags: [LayoutLayer, Layout]
 
 LayoutLayer is a Grouping node that can contain most nodes. LayoutLayer content is clipped by the specified viewport node.
 
-The LayoutLayer node belongs to the **Layout** component and its default container field is *layers.* It is available since X3D version 3.2 or later.
+The LayoutLayer node belongs to the **Layout** component and its default container field is *layers.* It is available from X3D version 3.2 or later.
 
 ## Hierarchy
 

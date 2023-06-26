@@ -15,7 +15,7 @@ tags: [ImageTexture3D, Texturing3D]
 
 ImageTexture3D defines a 3D image-based texture map by specifying a single image file that contains complete 3D data.
 
-The ImageTexture3D node belongs to the **Texturing3D** component and its default container field is *texture.* It is available since X3D version 3.1 or later.
+The ImageTexture3D node belongs to the **Texturing3D** component and its default container field is *texture.* It is available from X3D version 3.1 or later.
 
 ## Hierarchy
 

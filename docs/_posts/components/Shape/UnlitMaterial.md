@@ -15,7 +15,7 @@ tags: [UnlitMaterial, Shape]
 
 UnlitMaterial specifies surface rendering properties for associated geometry nodes. Material attributes are used by the X3D lighting equations during rendering.
 
-The UnlitMaterial node belongs to the **Shape** component and its default container field is *material.* It is available since X3D version 4.0 or later.
+The UnlitMaterial node belongs to the **Shape** component and its default container field is *material.* It is available from X3D version 4.0 or later.
 
 ## Hierarchy
 

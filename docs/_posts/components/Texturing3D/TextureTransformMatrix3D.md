@@ -15,7 +15,7 @@ tags: [TextureTransformMatrix3D, Texturing3D]
 
 TextureTransformMatrix3D applies a 3D transformation to texture coordinates.
 
-The TextureTransformMatrix3D node belongs to the **Texturing3D** component and its default container field is *textureTransform.* It is available since X3D version 3.1 or later.
+The TextureTransformMatrix3D node belongs to the **Texturing3D** component and its default container field is *textureTransform.* It is available from X3D version 3.1 or later.
 
 ## Hierarchy
 

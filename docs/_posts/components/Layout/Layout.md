@@ -15,7 +15,7 @@ tags: [Layout, Layout]
 
 Layout node is used as layout field of LayoutLayer and LayoutGroup nodes. Layout provides all parameters required to define the size, location and scale of a 2D rectangular region.
 
-The Layout node belongs to the **Layout** component and its default container field is *layout.* It is available since X3D version 3.2 or later.
+The Layout node belongs to the **Layout** component and its default container field is *layout.* It is available from X3D version 3.2 or later.
 
 ## Hierarchy
 

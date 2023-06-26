@@ -15,7 +15,7 @@ tags: [ColorRGBA, Rendering]
 
 ColorRGBA node defines a set of RGBA color values that apply either to a sibling Coordinate|CoordinateDouble node, or else to a parent ElevationGrid node. ColorRGBA is only used by ElevationGrid, IndexedFaceSet, IndexedLineSet, LineSet, PointSet, Triangle* and IndexedTriangle* nodes.
 
-The ColorRGBA node belongs to the **Rendering** component and its default container field is *color.* It is available since X3D version 3.0 or later.
+The ColorRGBA node belongs to the **Rendering** component and its default container field is *color.* It is available from X3D version 3.0 or later.
 
 ## Hierarchy
 

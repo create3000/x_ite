@@ -15,7 +15,7 @@ tags: [GeoCoordinate, Geospatial]
 
 GeoCoordinate builds geometry as a set of geographic 3D coordinates. These are transformed into a geocentric, curved-earth representation. GeoCoordinate is only used by IndexedFaceSet, IndexedLineSet, LineSet and PointSet. GeoCoordinate can contain a GeoOrigin node.
 
-The GeoCoordinate node belongs to the **Geospatial** component and its default container field is *coord.* It is available since X3D version 3.0 or later.
+The GeoCoordinate node belongs to the **Geospatial** component and its default container field is *coord.* It is available from X3D version 3.0 or later.
 
 ## Hierarchy
 

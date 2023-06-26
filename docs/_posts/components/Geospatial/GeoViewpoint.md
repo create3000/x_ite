@@ -15,7 +15,7 @@ tags: [GeoViewpoint, Geospatial]
 
 GeoViewpoint specifies viewpoints using geographic coordinates. GeoViewpoint can contain a GeoOrigin node. Since GeoViewpoint must navigate smoothly inside a curved geographic coordinate system, it includes both Viewpoint and NavigationInfo attributes.
 
-The GeoViewpoint node belongs to the **Geospatial** component and its default container field is *children.* It is available since X3D version 3.0 or later.
+The GeoViewpoint node belongs to the **Geospatial** component and its default container field is *children.* It is available from X3D version 3.0 or later.
 
 ## Hierarchy
 

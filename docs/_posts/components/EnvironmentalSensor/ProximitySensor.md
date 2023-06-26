@@ -15,7 +15,7 @@ tags: [ProximitySensor, EnvironmentalSensor]
 
 ProximitySensor generates events when the viewer enters, exits and moves within a region of space (defined by a box).
 
-The ProximitySensor node belongs to the **EnvironmentalSensor** component and its default container field is *children.* It is available since X3D version 2.0 or later.
+The ProximitySensor node belongs to the **EnvironmentalSensor** component and its default container field is *children.* It is available from X3D version 2.0 or later.
 
 ## Hierarchy
 

@@ -15,7 +15,7 @@ tags: [Delay, Sound]
 
 Delay causes a time delay between the arrival of input data and subsequent propagation to the output.
 
-The Delay node belongs to the **Sound** component and its default container field is *children.* It is available since X3D version 4.0 or later.
+The Delay node belongs to the **Sound** component and its default container field is *children.* It is available from X3D version 4.0 or later.
 
 ## Hierarchy
 

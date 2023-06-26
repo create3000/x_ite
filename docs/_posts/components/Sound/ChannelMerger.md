@@ -15,7 +15,7 @@ tags: [ChannelMerger, Sound]
 
 ChannelMerger unites different input channels into a single output channel.
 
-The ChannelMerger node belongs to the **Sound** component and its default container field is *children.* It is available since X3D version 4.0 or later.
+The ChannelMerger node belongs to the **Sound** component and its default container field is *children.* It is available from X3D version 4.0 or later.
 
 ## Hierarchy
 

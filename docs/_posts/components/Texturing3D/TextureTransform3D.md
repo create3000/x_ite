@@ -15,7 +15,7 @@ tags: [TextureTransform3D, Texturing3D]
 
 TextureTransform3D applies a 3D transformation to texture coordinates.
 
-The TextureTransform3D node belongs to the **Texturing3D** component and its default container field is *textureTransform.* It is available since X3D version 3.1 or later.
+The TextureTransform3D node belongs to the **Texturing3D** component and its default container field is *textureTransform.* It is available from X3D version 3.1 or later.
 
 ## Hierarchy
 

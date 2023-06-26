@@ -15,7 +15,7 @@ tags: [TextureProperties, Texturing]
 
 TextureProperties allows precise fine-grained control over application of image textures to geometry.
 
-The TextureProperties node belongs to the **Texturing** component and its default container field is *textureProperties.* It is available since X3D version 3.0 or later.
+The TextureProperties node belongs to the **Texturing** component and its default container field is *textureProperties.* It is available from X3D version 3.0 or later.
 
 ## Hierarchy
 

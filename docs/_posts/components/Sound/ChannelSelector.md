@@ -15,7 +15,7 @@ tags: [ChannelSelector, Sound]
 
 ChannelSelector selects a single channel output from all input channels.
 
-The ChannelSelector node belongs to the **Sound** component and its default container field is *children.* It is available since X3D version 4.0 or later.
+The ChannelSelector node belongs to the **Sound** component and its default container field is *children.* It is available from X3D version 4.0 or later.
 
 ## Hierarchy
 

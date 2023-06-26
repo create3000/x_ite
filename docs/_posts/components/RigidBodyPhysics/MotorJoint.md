@@ -15,7 +15,7 @@ tags: [MotorJoint, RigidBodyPhysics]
 
 MotorJoint drives relative angular velocities between body1 and body2 within a common reference frame. Contains two RigidBody nodes (containerField values body1, body2).
 
-The MotorJoint node belongs to the **RigidBodyPhysics** component and its default container field is *joints.* It is available since X3D version 3.2 or later.
+The MotorJoint node belongs to the **RigidBodyPhysics** component and its default container field is *joints.* It is available from X3D version 3.2 or later.
 
 ## Hierarchy
 

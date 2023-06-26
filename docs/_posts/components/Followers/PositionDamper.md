@@ -15,7 +15,7 @@ tags: [PositionDamper, Followers]
 
 PositionDamper generates a series of position values that progressively change from initial value to destination value.
 
-The PositionDamper node belongs to the **Followers** component and its default container field is *children.* It is available since X3D version 3.2 or later.
+The PositionDamper node belongs to the **Followers** component and its default container field is *children.* It is available from X3D version 3.2 or later.
 
 ## Hierarchy
 

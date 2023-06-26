@@ -15,7 +15,7 @@ tags: [ParticleSystem, ParticleSystems]
 
 ParticleSystem specifies a complete particle system. It can contain Appearance for particle appearance, a geometry node if gemoetryType='GEOMETRY', a color field with Color|ColorRGBA node for changing base color over each particle's lifetime, a texcoord TextureCoordinate node to control texture coordinates of provided texture(s) in the Appearance node over time, a single emitter X3DParticleEmitterNode, and an array of physics X3DParticlePhysicsModelNode nodes.
 
-The ParticleSystem node belongs to the **ParticleSystems** component and its default container field is *children.* It is available since X3D version 3.2 or later.
+The ParticleSystem node belongs to the **ParticleSystems** component and its default container field is *children.* It is available from X3D version 3.2 or later.
 
 ## Hierarchy
 

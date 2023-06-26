@@ -15,7 +15,7 @@ tags: [Viewport, Layering]
 
 Viewport is a Grouping node that can contain most nodes. Viewport specifies a set of rectangular clip boundaries against which the children nodes are clipped as they are rendered.
 
-The Viewport node belongs to the **Layering** component and its default container field is *viewport.* It is available since X3D version 3.2 or later.
+The Viewport node belongs to the **Layering** component and its default container field is *viewport.* It is available from X3D version 3.2 or later.
 
 ## Hierarchy
 

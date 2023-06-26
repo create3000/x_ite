@@ -15,7 +15,7 @@ tags: [ComposedVolumeStyle, VolumeRendering]
 
 ComposedVolumeStyle allows compositing multiple rendering styles into single rendering pass.
 
-The ComposedVolumeStyle node belongs to the **VolumeRendering** component and its default container field is *renderStyle.* It is available since X3D version 3.3 or later.
+The ComposedVolumeStyle node belongs to the **VolumeRendering** component and its default container field is *renderStyle.* It is available from X3D version 3.3 or later.
 
 ## Hierarchy
 

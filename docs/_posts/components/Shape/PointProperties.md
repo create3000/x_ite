@@ -15,7 +15,7 @@ tags: [PointProperties, Shape]
 
 PointProperties allows precise fine-grained control over the rendering style of PointSet node points inside the same Shape.
 
-The PointProperties node belongs to the **Shape** component and its default container field is *pointProperties.* It is available since X3D version 4.0 or later.
+The PointProperties node belongs to the **Shape** component and its default container field is *pointProperties.* It is available from X3D version 4.0 or later.
 
 ## Hierarchy
 

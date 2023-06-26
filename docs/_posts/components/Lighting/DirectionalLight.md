@@ -15,7 +15,7 @@ tags: [DirectionalLight, Lighting]
 
 DirectionalLight defines parallel light rays that illuminate geometric shapes. Lighting illuminates all geometry except lines and points. By default, light scope only illuminates peer geometry and children nodes within the scene graph hierarchy. No source location is needed since rays are parallel from an infinitely distant source. DirectionalLight nodes do not attenuate with distance. Lights have no visible shape themselves and lighting effects continue through any intermediate geometry.
 
-The DirectionalLight node belongs to the **Lighting** component and its default container field is *children.* It is available since X3D version 2.0 or later.
+The DirectionalLight node belongs to the **Lighting** component and its default container field is *children.* It is available from X3D version 2.0 or later.
 
 ## Hierarchy
 

@@ -15,7 +15,7 @@ tags: [GeoTransform, Geospatial]
 
 GeoTransform is a Grouping node that can contain most nodes. GeoTransform translates, orients and scales GeoCoordinate geometry within the local world coordinate system. GeoTransform coordinate system X-Z plane is tangent to ellipsoid of local spatial reference frame.
 
-The GeoTransform node belongs to the **Geospatial** component and its default container field is *children.* It is available since X3D version 3.0 or later.
+The GeoTransform node belongs to the **Geospatial** component and its default container field is *children.* It is available from X3D version 3.0 or later.
 
 ## Hierarchy
 

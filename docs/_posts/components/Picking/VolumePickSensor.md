@@ -15,7 +15,7 @@ tags: [VolumePickSensor, Picking]
 
 VolumePickSensor tests picking intersections using the pickingGeometry against the pickTarget geometry volume.
 
-The VolumePickSensor node belongs to the **Picking** component and its default container field is *children.* It is available since X3D version 3.2 or later.
+The VolumePickSensor node belongs to the **Picking** component and its default container field is *children.* It is available from X3D version 3.2 or later.
 
 ## Hierarchy
 

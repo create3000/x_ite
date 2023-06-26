@@ -15,7 +15,7 @@ tags: [CylinderSensor, PointingDeviceSensor]
 
 CylinderSensor converts pointer motion (for example, a mouse or wand) into rotation values using an invisible cylinder aligned with local Y-axis.
 
-The CylinderSensor node belongs to the **PointingDeviceSensor** component and its default container field is *children.* It is available since X3D version 2.0 or later.
+The CylinderSensor node belongs to the **PointingDeviceSensor** component and its default container field is *children.* It is available from X3D version 2.0 or later.
 
 ## Hierarchy
 

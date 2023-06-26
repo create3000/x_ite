@@ -15,7 +15,7 @@ tags: [EdgeEnhancementVolumeStyle, VolumeRendering]
 
 EdgeEnhancementVolumeStyle specifies edge enhancement for the volume rendering style.
 
-The EdgeEnhancementVolumeStyle node belongs to the **VolumeRendering** component and its default container field is *renderStyle.* It is available since X3D version 3.3 or later.
+The EdgeEnhancementVolumeStyle node belongs to the **VolumeRendering** component and its default container field is *renderStyle.* It is available from X3D version 3.3 or later.
 
 ## Hierarchy
 

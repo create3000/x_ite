@@ -15,7 +15,7 @@ tags: [VisibilitySensor, EnvironmentalSensor]
 
 VisibilitySensor detects when user can see a specific object or region as they navigate the world. The region sensed for visibility to the user is bounded by a rectangular box.
 
-The VisibilitySensor node belongs to the **EnvironmentalSensor** component and its default container field is *children.* It is available since X3D version 2.0 or later.
+The VisibilitySensor node belongs to the **EnvironmentalSensor** component and its default container field is *children.* It is available from X3D version 2.0 or later.
 
 ## Hierarchy
 

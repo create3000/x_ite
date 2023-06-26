@@ -15,7 +15,7 @@ tags: [PackagedShader, Shaders]
 
 PackagedShader contains a url for a single file that may contain a number of shaders and combined effects.
 
-The PackagedShader node belongs to the **Shaders** component and its default container field is *shaders.* It is available since X3D version 3.0 or later.
+The PackagedShader node belongs to the **Shaders** component and its default container field is *shaders.* It is available from X3D version 3.0 or later.
 
 ## Hierarchy
 

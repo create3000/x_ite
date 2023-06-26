@@ -15,7 +15,7 @@ tags: [ScalarDamper, Followers]
 
 ScalarDamper generates a series of floating-point values that progressively change from initial value to destination value.
 
-The ScalarDamper node belongs to the **Followers** component and its default container field is *children.* It is available since X3D version 3.3 or later.
+The ScalarDamper node belongs to the **Followers** component and its default container field is *children.* It is available from X3D version 3.3 or later.
 
 ## Hierarchy
 
