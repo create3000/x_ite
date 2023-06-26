@@ -35,6 +35,10 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
+### SFNode [in, out] **acousticProperties** NULL <small>[AcousticProperties]</small>
+
+Single contained *acousticProperties* node that can specify additional acoustic attributes applied to associated surface geometry.
+
 ### SFString [in, out] **alphaMode** "AUTO" <small>["AUTO"|"OPAQUE"|"MASK"|"BLEND"]</small>
 
 Provides options for control of alpha transparency handling for textures. AUTO means Material transparency is applied to texture transparency for full backwards compatility with X3D3, OPAQUE means ignore alpha transparency to render texture as opaque, MASK means alpha-testing of pixels as fully transparent when alpha value is less than alphaCutoff and fully opaque when alpha value is greater than or equal to alphaCutoff, BLEND combines partial transparency of textures and materials.
@@ -106,10 +110,6 @@ Zero or more contained programmable shader nodes (ComposedShader, PackagedShader
 ### SFNode [in, out] **blendMode** NULL <small>[BlendMode]</small> <small class="yellow">non standard</small>
 
 Single contained BlendMode node that defines blend mode properties.
-
-### SFNode [in, out] **acousticProperties** NULL <small>[AcousticProperties]</small>
-
-Single contained *acousticProperties* node that can specify additional acoustic attributes applied to associated surface geometry.
 
 ## Description
 
