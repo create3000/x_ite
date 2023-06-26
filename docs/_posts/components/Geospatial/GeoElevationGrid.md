@@ -206,7 +206,7 @@ Contains xDimension rows * zDimension columns floating-point values for elevatio
 
 - The height array defines (xDimension-1)*(zDimension-1) quadrilaterals.
 - Positive direction for normal of each triangle is on same side of the quadrilateral. Triangles are defined either counterclockwise or clockwise depending on value of ccw field.
-- GeoElevationGrid can contain GeoOrigin, Color\|ColorRGBA, Normal and TextureCoordinate nodes.
+- GeoElevationGrid can contain GeoOrigin, Color or ColorRGBA, Normal and TextureCoordinate nodes.
 - Insert a Shape node before adding geometry or Appearance.
 - [X3D for Advanced Modeling (X3D4AM) slideset](https://x3dgraphics.com/slidesets/X3dForAdvancedModeling/GeospatialComponentX3dEarth.pdf){:target="_blank"}
 

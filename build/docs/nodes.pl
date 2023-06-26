@@ -83,6 +83,7 @@ sub update_node {
    1 while $node =~ s/^(?:\s*or)?\s*(?:[\[\()].*?[\]\)]|-1\.)\s*//so;
 
    decode_entities $node;
+   $node =~ s/\s*\|\s*/ or /sgo;
    $node =~ s/([<>|])/\\$1/sgo;
    $node =~ s/&/&amp;/sgo;
 
