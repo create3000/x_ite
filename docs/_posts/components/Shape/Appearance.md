@@ -127,4 +127,4 @@ Single contained BlendMode node that defines blend mode properties.
 
 ## See Also
 
-- [X3D Specification of Appearance](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#Appearance){:target="_blank"}
+- [X3D Specification of Appearance node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#Appearance){:target="_blank"}

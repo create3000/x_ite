@@ -153,4 +153,4 @@ Single contained Coordinate or CoordinateDouble node that can specify a list of 
 
 ## See Also
 
-- [X3D Specification of IndexedLineSet](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rendering.html#IndexedLineSet){:target="_blank"}
+- [X3D Specification of IndexedLineSet node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rendering.html#IndexedLineSet){:target="_blank"}

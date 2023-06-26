@@ -151,4 +151,4 @@ Single contained Coordinate or CoordinateDouble node that can specify a list of 
 
 ## See Also
 
-- [X3D Specification of IndexedQuadSet](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/CADGeometry.html#IndexedQuadSet){:target="_blank"}
+- [X3D Specification of IndexedQuadSet node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/CADGeometry.html#IndexedQuadSet){:target="_blank"}

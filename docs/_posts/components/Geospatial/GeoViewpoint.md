@@ -211,4 +211,4 @@ The *navigationInfo* field defines a dedicated NavigationInfo node for this X3DV
 
 ## See Also
 
-- [X3D Specification of GeoViewpoint](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geospatial.html#GeoViewpoint){:target="_blank"}
+- [X3D Specification of GeoViewpoint node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geospatial.html#GeoViewpoint){:target="_blank"}

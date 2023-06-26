@@ -77,4 +77,4 @@ Sound *refraction* coefficient of a medium, which determines change in propagati
 
 ## See Also
 
-- [X3D Specification of AcousticProperties](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#AcousticProperties){:target="_blank"}
+- [X3D Specification of AcousticProperties node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#AcousticProperties){:target="_blank"}

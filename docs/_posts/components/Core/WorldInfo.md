@@ -62,4 +62,4 @@ Additional information about this model.
 
 ## See Also
 
-- [X3D Specification of WorldInfo](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/core.html#WorldInfo){:target="_blank"}
+- [X3D Specification of WorldInfo node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/core.html#WorldInfo){:target="_blank"}

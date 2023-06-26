@@ -41,4 +41,4 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 
 ## See Also
 
-- [X3D Specification of FogCoordinate](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/environmentalEffects.html#FogCoordinate){:target="_blank"}
+- [X3D Specification of FogCoordinate node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/environmentalEffects.html#FogCoordinate){:target="_blank"}

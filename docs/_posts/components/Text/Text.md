@@ -121,4 +121,4 @@ The *fontStyle* field can contain a FontStyle or ScreenFontStyle node defining s
 
 ## See Also
 
-- [X3D Specification of Text](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/text.html#Text){:target="_blank"}
+- [X3D Specification of Text node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/text.html#Text){:target="_blank"}

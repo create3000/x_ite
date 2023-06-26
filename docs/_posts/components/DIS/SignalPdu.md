@@ -236,4 +236,4 @@ DIS *timestamp* in X3D units (value 0.0 matches 1 January 1970) in seconds.
 
 ## See Also
 
-- [X3D Specification of SignalPdu](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/dis.html#SignalPdu){:target="_blank"}
+- [X3D Specification of SignalPdu node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/dis.html#SignalPdu){:target="_blank"}

@@ -110,4 +110,4 @@ Contained Shape for this CADPart.
 
 ## See Also
 
-- [X3D Specification of CADFace](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/CADGeometry.html#CADFace){:target="_blank"}
+- [X3D Specification of CADFace node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/CADGeometry.html#CADFace){:target="_blank"}

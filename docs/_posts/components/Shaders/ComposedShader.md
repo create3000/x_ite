@@ -91,4 +91,4 @@ ComposedShader can contain multiple ShaderPart nodes in the *parts* field.
 
 ## See Also
 
-- [X3D Specification of ComposedShader](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shaders.html#ComposedShader){:target="_blank"}
+- [X3D Specification of ComposedShader node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shaders.html#ComposedShader){:target="_blank"}
