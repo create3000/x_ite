@@ -60,7 +60,7 @@ The *surfaceNormals* field contains a 3D texture with at least three component v
 
 ### Hint
 
-- SilhouetteEnhancementVolumeStyle can contain a single Texture3D node with containerField='surfaceNormals'
+- SilhouetteEnhancementVolumeStyle can contain a single Texture3D node with `containerField='surfaceNormals'`
 
 ### Warning
 

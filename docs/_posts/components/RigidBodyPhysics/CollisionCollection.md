@@ -83,7 +83,7 @@ CollisionCollection node holds a collection of objects in the *collidables* fiel
 
 ### Hints
 
-- Contains an array of CollisionSpace, CollidableShape or CollidableOffset nodes (containerField='collidables').
+- Contains an array of CollisionSpace, CollidableShape or CollidableOffset nodes (`containerField='collidables').`
 - Content must be visible to be collidable and to be pickable.
 
 ## Example

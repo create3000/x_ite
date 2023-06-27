@@ -56,7 +56,7 @@ When applying ambientIntensity for this material node, the contained texture pro
 #### Hints
 
 - If texture node is NULL or unspecified, no effect is applied to material values.
-- Contained texture node must include containerField='*ambientTexture*'
+- Contained texture node must include `containerField='ambientTexture'`
 
 ### SFColor [in, out] **diffuseColor** 0.8 0.8 0.8 <small>[0,1]</small>
 
@@ -81,7 +81,7 @@ When applying diffuseColor for this material node, the contained texture provide
 #### Hints
 
 - If texture node is NULL or unspecified, no effect is applied to material values.
-- Contained texture node must include containerField='*diffuseTexture*'
+- Contained texture node must include `containerField='diffuseTexture'`
 
 ### SFColor [in, out] **specularColor** 0 0 0 <small>[0,1]</small>
 
@@ -102,7 +102,7 @@ When applying specularColor for this material node, the contained texture provid
 #### Hints
 
 - If texture node is NULL or unspecified, no effect is applied to material values.
-- Contained texture node must include containerField='*specularTexture*'
+- Contained texture node must include `containerField='specularTexture'`
 
 ### SFColor [in, out] **emissiveColor** 0 0 0 <small>[0,1]</small>
 
@@ -133,7 +133,7 @@ When applying emissiveColor for this material node, the contained texture provid
 #### Hints
 
 - If texture node is NULL or unspecified, no effect is applied to material values.
-- Contained texture node must include containerField='*emissiveTexture*'
+- Contained texture node must include `containerField='emissiveTexture'`
 
 ### SFFloat [in, out] **shininess** 0.2 <small>[0,1]</small>
 
@@ -154,7 +154,7 @@ When applying shininess for this material node, the contained texture provides P
 #### Hints
 
 - If texture node is NULL or unspecified, no effect is applied to material values.
-- Contained texture node must include containerField='*shininessTexture*'
+- Contained texture node must include `containerField='shininessTexture'`
 
 ### SFFloat [in, out] **occlusionStrength** 1 <small>[0,1]</small>
 
@@ -180,7 +180,7 @@ When applying occlusionStrength for this material node, the contained texture pr
 #### Hints
 
 - If texture node is NULL or unspecified, no effect is applied to material values.
-- Contained texture node must include containerField='*occlusionTexture*'
+- Contained texture node must include `containerField='occlusionTexture'`
 
 ### SFFloat [in, out] **normalScale** 1 <small>[0,∞)</small>
 
@@ -207,7 +207,7 @@ When applying normalScale for this material node, the contained texture modulate
 
 - [*normalTexture* techniques apply Bump mapping](https://en.wikipedia.org/wiki/Bump_mapping){:target="_blank"}
 - If texture node is NULL or unspecified, no effect is applied to material values.
-- Contained texture node must include containerField='*normalTexture*'
+- Contained texture node must include `containerField='normalTexture'`
 
 ### SFFloat [in, out] **transparency** 0 <small>[0,1]</small>
 

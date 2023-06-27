@@ -249,11 +249,11 @@ Single contained TextureProperties node that can specify additional visual attri
 - [X3D Scene Authoring Hints, Images](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Images){:target="_blank"}
 - [Texture mapping](https://en.wikipedia.org/wiki/Texture_mapping){:target="_blank"}
 - [X3D Architecture 17.2.2 Lighting model](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/lighting.html#Lightingmodel){:target="_blank"}
-- [When parent node is LoadSensor, apply containerField='children' (X3Dv4) or containerField='watchList' (X3Dv3).](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges){:target="_blank"}
+- [When parent node is LoadSensor, apply `containerField='children'` (X3Dv4) or `containerField='watchList'` (X3Dv3).](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges){:target="_blank"}
 
 ### Warning
 
-- MovieTexture has containerField='texture' when parent is an Appearance node, otherwise containerField='source' when parent is a Sound node.
+- MovieTexture has `containerField='texture'` when parent is an Appearance node, otherwise `containerField='source'` when parent is a Sound node.
 
 ## Example
 

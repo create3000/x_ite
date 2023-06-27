@@ -13,7 +13,7 @@ tags: [MetadataDouble, Core]
 
 ## Overview
 
-MetadataDouble contains a typed list of values providing metadata information about its parent node. Further information about this specific Metadata* node may be provided by a single child Metadata* node with containerField="metadata".
+MetadataDouble contains a typed list of values providing metadata information about its parent node. Further information about this specific Metadata* node may be provided by a single child Metadata* node with `containerField='metadata'.`
 
 The MetadataDouble node belongs to the **Core** component and its default container field is *metadata.* It is available from X3D version 3.0 or higher.
 
@@ -65,8 +65,8 @@ The *value* attribute is a strictly typed data array providing relevant metadata
 
 ### Hints
 
-- Use containerField="value" if the parent node is MetadataSet.
-- [Each of the Metadata nodes are allowed as top-level root nodes in a scene, be sure to explicitly define containerField='metadata'.](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-DIS/Part01/concepts.html#Rootnodes){:target="_blank"}
+- Use `containerField='value'` if the parent node is MetadataSet.
+- [Each of the Metadata nodes are allowed as top-level root nodes in a scene, be sure to explicitly define `containerField='metadata'.`](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-DIS/Part01/concepts.html#Rootnodes){:target="_blank"}
 - If present, an IS statement is the first child within any other node.
 - An IS statement precedes any sibling Metadata* node, which in turn precedes any other sibling nodes.
 - The choice of MetadataDouble versus MetadataFloat usually depends on the relevant tool utilizing the value, or else the relevant metadata reference defining the value.

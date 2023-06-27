@@ -53,7 +53,7 @@ Send *next* output value in keyValue array, and reset internal fraction field to
 
 #### Hint
 
-- This input event will "wrap around" boundary of frame array, i.e. continue from endFrame *next* to startFrame if necessary.
+- This input event will "wrap around" boundary of frame array, i.e. continue from endFrame next to startFrame if necessary.
 
 #### Warning
 

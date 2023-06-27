@@ -110,7 +110,7 @@ The *proxy* node is used as a substitute for Collision children during collision
 
 #### Warnings
 
-- The *proxy* node must have containerField='*proxy*' or it is simply treated like other children nodes.
+- The *proxy* node must have `containerField='proxy'` or it is simply treated like other children nodes.
 - Insert a Shape node before adding geometry or Appearance.
 
 ### MFNode [in] **addChildren**
@@ -138,7 +138,7 @@ Grouping nodes contain an ordered list of *children* nodes.
 
 - Collision can contain a single proxy child node for substitute collision-detection geometry. Improve run-time performance by using proxy with simpler contact-calculation geometry.
 - Proxy shapes are not rendered and remain invisible.
-- Apply containerField='proxy' to uniquely identify the proxy child Shape or grouping node.
+- Apply `containerField='proxy'` to uniquely identify the proxy child Shape or grouping node.
 - NavigationInfo types '"WALK" "FLY"' support camera-to-object collision detection.
 - Content must be visible to be collidable and to be pickable.
 - Insert a Shape node before adding geometry or Appearance.

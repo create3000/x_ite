@@ -86,12 +86,11 @@ sub update_node {
    $node =~ s/\s*\|\s*/ or /sgo;
    $node =~ s/([<>|])/\\$1/sgo;
    $node =~ s/&/&amp;/sgo;
-   $node =~ s/(profile=\S+|\\<component.*?>)/"`" . code($1) . "`"/sgoe;
+
+   $node =~ s/(profile=\S+|\\<component.*?>|containerField=\S+)/"`" . code($1) . "`"/sgoe;
 
    # Special substitutions
-   $node =~ s/incldes/includes/sgo;
-   $node =~ s/polgyonal/polygonal/sgo;
-   $node =~ s/renderStryle/renderStyle/sgo;
+   $node = spelling ($node);
 
    @description = @hints = @warnings = ();
 
@@ -199,6 +198,30 @@ sub code {
    $string = shift;
 
    $string =~ s/\\//sgo;
+   $string =~ s/`//sgo;
+   $string =~ s/="(.*?)"/"='" . attrib($1) . "'"/sgoe;
+   $string =~ s/\*(\w+)\*/$1/sgo;
+
+   return $string;
+}
+
+sub attrib {
+   $string = shift;
+
+   $string =~ s/'/"/sgo;
+
+   return $string;
+}
+
+sub spelling {
+   $string = shift;
+
+   $string =~ s/\*next\* to/next to/sgo;
+   $string =~ s/\[autoRefresh\b/autoRefresh/sgo;
+   $string =~ s/incldes/includes/sgo;
+   $string =~ s/polgyonal/polygonal/sgo;
+   $string =~ s/renderStryle/renderStyle/sgo;
+   $string =~ s/utilitized/utilized/sgo;
 
    return $string;
 }
@@ -273,14 +296,13 @@ sub update_field {
       $field =~ s/\s*\|\s*/ or /sgo;
       $field =~ s/([<>|])/\\$1/sgo;
       $field =~ s/&/&amp;/sgo;
-      $field =~ s/(profile=\S+|\\<component.*?>)/"`" . code($1) . "`"/sgoe;
-
-      # Special substitutions.
-      $field =~ s/\*next\* to/next to/sgo;
-      $field =~ s/\[autoRefresh\b/autoRefresh/sgo;
 
       $field =~ s/\b$name\b/*$name*/sg;
       $n = $1, $field =~ s/\b$n\b/*$n*/sg if $name =~ /^set_(.*)$/;
+      $field =~ s/(profile=\S+|\\<\w+.*?>|containerField=\S+)/"`" . code($1) . "`"/sgoe;
+
+      # Special substitutions.
+      $field = spelling ($field);
 
       # Split field.
 

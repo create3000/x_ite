@@ -13,7 +13,7 @@ tags: [HAnimSegment, HAnim]
 
 ## Overview
 
-HAnimSegment node contains Shape geometry for each body segment, providing a visual representation of the skeleton segment. Parent/child translation and rotation relationships are defined in ancestor/descendant HAnimSegment nodes. HAnimSegment contains Coordinate or CoordinateDouble with containerField='coord', HAnimDisplacer with containerField='displacers' and Shape or grouping nodes with containerField='children'.
+HAnimSegment node contains Shape geometry for each body segment, providing a visual representation of the skeleton segment. Parent/child translation and rotation relationships are defined in ancestor/descendant HAnimSegment nodes. HAnimSegment contains Coordinate or CoordinateDouble with `containerField='coord',` HAnimDisplacer with `containerField='displacers'` and Shape or grouping nodes with `containerField='children'.`
 
 The HAnimSegment node belongs to the **HAnim** component and its default container field is *children.* It is available from X3D version 3.0 or higher.
 
@@ -165,7 +165,7 @@ Grouping nodes contain an ordered list of *children* nodes.
 
 - Requires X3D `profile='Full'` or else include `<component name='HAnim' level='1'/>`
 - For X3D3 HAnim1, spelling of component name is 'H-Anim' (including hyphen)
-- The number of contained \<HAnimSegment USE='*' containerField='segments'/\> nodes at top level of HAnimHumanoid needs to match the number of corresponding HAnimJoint node instances found within the preceding skeleton hierarchy.
+- The number of contained \<HAnimSegment USE='*' `containerField='segments'/>` nodes at top level of HAnimHumanoid needs to match the number of corresponding HAnimJoint node instances found within the preceding skeleton hierarchy.
 
 ## See Also
 

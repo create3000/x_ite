@@ -66,7 +66,7 @@ When applying emissiveColor for this material node, the contained texture provid
 #### Hints
 
 - If texture node is NULL or unspecified, no effect is applied to material values.
-- Contained texture node must include containerField='*emissiveTexture*'
+- Contained texture node must include `containerField='emissiveTexture'`
 
 ### SFFloat [in, out] **normalScale** 1 <small>[0,∞)</small>
 
@@ -93,7 +93,7 @@ When applying normalScale for this material node, the contained texture modulate
 
 - [*normalTexture* techniques apply Bump mapping](https://en.wikipedia.org/wiki/Bump_mapping){:target="_blank"}
 - If texture node is NULL or unspecified, no effect is applied to material values.
-- Contained texture node must include containerField='*normalTexture*'
+- Contained texture node must include `containerField='normalTexture'`
 
 ### SFFloat [in, out] **transparency** 0 <small>[0,1]</small>
 

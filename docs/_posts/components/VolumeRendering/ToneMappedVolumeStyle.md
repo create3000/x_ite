@@ -64,7 +64,7 @@ The *surfaceNormals* field contains a 3D texture with at least three component v
 
 ### Hints
 
-- ToneMappedVolumeStyle can contain a single Texture3D node with containerField='surfaceNormals'
+- ToneMappedVolumeStyle can contain a single Texture3D node with `containerField='surfaceNormals'`
 - [Gooch shading](https://en.wikipedia.org/wiki/Gooch_shading){:target="_blank"}
 
 ### Warning

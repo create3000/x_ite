@@ -81,7 +81,7 @@ If provided, *parameter* tells the X3D player where to to redirect the loaded ur
 
 ### SFTime [in, out] **autoRefresh** 0 <small>[0,∞)</small>
 
-The *autoRefresh* field has no effect, Anchor operation is only triggered by user selection.
+The [*autoRefresh* field has no effect, Anchor operation is only triggered by user selection.
 
 ### SFTime [in, out] **autoRefreshTimeLimit** 3600 <small>[0,∞)</small>
 
@@ -149,7 +149,7 @@ Grouping nodes contain an ordered list of *children* nodes.
 ### Hints
 
 - Insert a Shape node before adding geometry or Appearance.
-- [When parent node is LoadSensor, apply containerField='children' (X3Dv4) or containerField='watchList' (X3Dv3).](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges){:target="_blank"}
+- [When parent node is LoadSensor, apply `containerField='children'` (X3Dv4) or `containerField='watchList'` (X3Dv3).](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges){:target="_blank"}
 
 ## Example
 

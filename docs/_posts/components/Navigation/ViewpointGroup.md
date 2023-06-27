@@ -70,7 +70,7 @@ Size of proximity box around center location within which ViewpointGroup is usab
 
 ### MFNode [in, out] **children** [ ] <small>[X3DViewpointNode | ViewpointGroup]</small>
 
-ViewpointGroup contains Viewpoint, OrthoViewpoint, GeoViewpoint and other ViewpointGroup nodes that each have containerField='*children*' default value.
+ViewpointGroup contains Viewpoint, OrthoViewpoint, GeoViewpoint and other ViewpointGroup nodes that each have `containerField='children'` default value.
 
 #### Hints
 

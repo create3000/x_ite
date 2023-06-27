@@ -99,7 +99,7 @@ The *children* field specifies audio-graph sound sources providing input signals
 
 #### Warning
 
-- Contained AudioClip or MovieTexture nodes must have containerField='*children*' to override otherwise-incorrect defaults.
+- Contained AudioClip or MovieTexture nodes must have `containerField='children'` to override otherwise-incorrect defaults.
 
 ## Information
 

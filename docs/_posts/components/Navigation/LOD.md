@@ -50,7 +50,7 @@ Specifies ideal distances at which to switch between levels. The *range* field i
 
 #### Hints
 
-- Can add \<WorldInfo info='null node'/\> as a nonrendering, invisible final (or initial or intermediate) child node that also documents the LOD switch-over rationale.
+- Can add `<WorldInfo info='null node'/>` as a nonrendering, invisible final (or initial or intermediate) child node that also documents the LOD switch-over rationale.
 - Not setting *range* values indicates that level switching can be optimized automatically based on performance.
 
 ### SFInt32 [out] **level_changed**
@@ -131,7 +131,7 @@ Grouping nodes contain an ordered list of *children* nodes.
 - GeoViewpoint OrthoViewpoint and Viewpoint share the same binding stack, so no more than one of these nodes can be bound and active at a given time.
 - Security mechanisms such as encryption and authentication can be applied to high levels of detail, allowing authors to protect intellectual property at high resolution for authorized users while still rendering simple unrestricted models for other users.
 - Contained nodes must have type X3DChildNode, such as Group or Transform or Shape.
-- Apply containerField='shape' if parent node is CADFace.
+- Apply `containerField='shape'` if parent node is CADFace.
 - [ConformanceNist X3D Examples Archive](https://www.web3d.org/x3d/content/examples/ConformanceNist/SpecialGroups/LOD){:target="_blank"}
 
 ### Warnings

@@ -145,7 +145,7 @@ Grouping nodes contain an ordered list of *children* nodes.
 - Authors can modify order of translation/rotation/scaling operations by splitting them into separate nested parent/child Transform nodes.
 - [X3D Scene Authoring Hints, Coordinate Systems](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#CoordinateSystems){:target="_blank"}
 - [X3D Scene Authoring Hints, Scale Factors and Unit Conversions](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Scale){:target="_blank"}
-- Apply containerField='shape' if parent node is CADFace.
+- Apply `containerField='shape'` if parent node is CADFace.
 
 ### Warning
 

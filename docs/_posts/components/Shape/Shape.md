@@ -100,7 +100,7 @@ Single contained *geometry* node that is rendered according to corresponding app
 - For advanced extensibility, authors can substitute a type-matched ProtoInstance node (with correct containerField value) for contained node content.
 - [X3D Architecture 12.2.1 Shape nodes](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/shape.html#Shapenodes){:target="_blank"}
 - [X3D Architecture 17.2.2 Lighting model](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/lighting.html#Lightingmodel){:target="_blank"}
-- Apply containerField='shape' if parent node is CADFace.
+- Apply `containerField='shape'` if parent node is CADFace.
 
 ## See Also
 

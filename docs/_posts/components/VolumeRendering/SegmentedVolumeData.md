@@ -104,7 +104,7 @@ Multiple contained X3DVolumeRenderStyleNode nodes corresponding to each isosurfa
 
 #### Warning
 
-- If not defined, no default renderStryle is defined.
+- If not defined, no default renderStyle is defined.
 
 ### SFNode [in, out] **voxels** NULL <small>[X3DTexture3DNode]</small>
 
@@ -114,7 +114,7 @@ Single contained X3DTexture3DNode (ComposedTexture3D, ImageTexture3D, PixelTextu
 
 ### Hints
 
-- SegmentedVolumeData can contain a single ComposedTexture3D, ImageTexture3D or PixelTexture3D node with containerField='segmentIdentifiers' and another with containerField='voxels'.
+- SegmentedVolumeData can contain a single ComposedTexture3D, ImageTexture3D or PixelTexture3D node with `containerField='segmentIdentifiers'` and another with `containerField='voxels'.`
 - SegmentedVolumeData can contain multiple RenderStyle nodes.
 
 ### Warning

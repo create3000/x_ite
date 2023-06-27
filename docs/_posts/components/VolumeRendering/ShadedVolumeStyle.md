@@ -68,7 +68,7 @@ The *surfaceNormals* field contains a 3D texture with at least three component v
 
 ### Hint
 
-- ShadedVolumeStyle can contain a single Texture3D node with containerField='surfaceNormals' and a single Material node.
+- ShadedVolumeStyle can contain a single Texture3D node with `containerField='surfaceNormals'` and a single Material node.
 
 ### Warning
 

@@ -75,7 +75,7 @@ The *surfaceNormals* field contains a 3D texture with at least three component v
 
 ### Hint
 
-- Contains single Texture3D node with containerField='surfaceNormals'
+- Contains single Texture3D node with `containerField='surfaceNormals'`
 
 ### Warning
 

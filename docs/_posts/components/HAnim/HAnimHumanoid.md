@@ -216,7 +216,7 @@ List of top-level HAnimJoint and HAnimSite nodes that create the *skeleton* mode
 
 #### Warning
 
-- Top-level HAnimJoint and HAnimSite nodes must include containerField='*skeleton*' for proper validation and operation.
+- Top-level HAnimJoint and HAnimSite nodes must include `containerField='skeleton'` for proper validation and operation.
 
 ### MFNode [in, out] **viewpoints** [ ] <small>[HAnimSite]</small>
 
@@ -225,12 +225,12 @@ List of HAnimSite nodes containing Viewpoint nodes that appear in the skeleton m
 #### Hints
 
 - The viewpoint field has different functionality than the joints, segments and sites fields.
-- The *viewpoints* field connects internal Site nodes that in turn hold relative Viewpoint nodes, such as \<HAnimSite USE='ObserveFaceSite_view' containerField='*viewpoints*'/\> which has corresponding counterpart nodes \<HAnimSite DEF='ObserveFaceSite_view' name='ObserveFaceSite_view' containerField='children'\> \<Viewpoint description='look at me!'/\> \</HAnimSite\>.
+- The *viewpoints* field connects internal Site nodes that in turn hold relative Viewpoint nodes, such as `<HAnimSite USE='ObserveFaceSite_view' containerField='viewpoints'/>` which has corresponding counterpart nodes `<HAnimSite DEF='ObserveFaceSite_view' name='ObserveFaceSite_view' containerField='children'>` `<Viewpoint description='look at me!'/>` \</HAnimSite\>.
 
 #### Warnings
 
 - These are actual node declarations, not USE nodes.
-- Top-level HAnimSite nodes (in turn containing Viewpoint nodes) must include containerField='*viewpoints*' for proper validation and operation.
+- Top-level HAnimSite nodes (in turn containing Viewpoint nodes) must include `containerField='viewpoints'` for proper validation and operation.
 
 ### MFNode [in, out] **sites** [ ] <small>[HAnimSite]</small>
 
@@ -239,12 +239,12 @@ List of HAnimSite nodes containing Viewpoint nodes that appear in the skeleton m
 #### Hints
 
 - Order is irrelevant since names are contained in the original DEF objects.
-- These USE nodes can be utilitized by inverse kinematics (IK) and animation engines.
+- These USE nodes can be utilized by inverse kinematics (IK) and animation engines.
 
 #### Warnings
 
-- The number of contained \<HAnimSite USE='*' containerField='*sites*, skeleton or viewpoints'/\> nodes at top level of HAnimHumanoid needs to match the number of corresponding HAnimSite node instances found within the preceding skeleton hierarchy.
-- Top-level HAnimSite USE nodes must include containerField='*sites*' for proper validation and operation.
+- The number of contained `<HAnimSite USE='*' containerField='sites, skeleton or viewpoints'/>` nodes at top level of HAnimHumanoid needs to match the number of corresponding HAnimSite node instances found within the preceding skeleton hierarchy.
+- Top-level HAnimSite USE nodes must include `containerField='sites'` for proper validation and operation.
 
 ### MFNode [in, out] **segments** [ ] <small>[HAnimSegment]</small>
 
@@ -253,12 +253,12 @@ The *segments* field contains a list of USE references for all HAnimSegment node
 #### Hints
 
 - Order is irrelevant since names are contained in the original DEF objects.
-- These USE nodes can be utilitized by inverse kinematics (IK) and animation engines.
+- These USE nodes can be utilized by inverse kinematics (IK) and animation engines.
 
 #### Warnings
 
-- The number of contained \<HAnimSegment USE='*' containerField='*segments*'/\> nodes at top level of HAnimHumanoid needs to match the number of corresponding HAnimSegment node instances found within the preceding skeleton hierarchy.
-- Top-level HAnimSegment USE nodes must include containerField='*segments*' for proper validation and operation.
+- The number of contained `<HAnimSegment USE='*' containerField='segments'/>` nodes at top level of HAnimHumanoid needs to match the number of corresponding HAnimSegment node instances found within the preceding skeleton hierarchy.
+- Top-level HAnimSegment USE nodes must include `containerField='segments'` for proper validation and operation.
 
 ### MFNode [in, out] **joints** [ ] <small>[HAnimJoint]</small>
 
@@ -267,12 +267,12 @@ The *joints* field contains a list of USE references for all HAnimJoint node ins
 #### Hints
 
 - Order is irrelevant since names are contained in the original DEF objects.
-- These USE nodes can be utilitized by inverse kinematics (IK) and animation engines.
+- These USE nodes can be utilized by inverse kinematics (IK) and animation engines.
 
 #### Warnings
 
-- The number of contained \<HAnimJoint USE='*' containerField='*joints*'/\> nodes at top level of HAnimHumanoid needs to match the number of corresponding HAnimJoint node instances found within the preceding skeleton hierarchy.
-- Top-level HAnimJoint USE nodes must include containerField='*joints*' for proper validation and operation.
+- The number of contained `<HAnimJoint USE='*' containerField='joints'/>` nodes at top level of HAnimHumanoid needs to match the number of corresponding HAnimJoint node instances found within the preceding skeleton hierarchy.
+- Top-level HAnimJoint USE nodes must include `containerField='joints'` for proper validation and operation.
 
 ### MFNode [in, out] **motions** [ ] <small>[HAnimMotion]</small>
 
@@ -293,7 +293,7 @@ Single Normal node utilized by indexed mesh definitions for skin. The *skinNorma
 #### Warnings
 
 - Index values for HanimHumanoid skin IndexedFaceSet, skinCoord and *skinNormal* nodes must all be consistently defined together with HAnimJoint HAnimSegment and HAnimDisplacer nodes for proper skin animation.
-- Top-level Normal node must include containerField='*skinNormal*' for proper validation and operation.
+- Top-level Normal node must include `containerField='skinNormal'` for proper validation and operation.
 - (X3D version 4.0 draft) requires X3D `profile='Full'` or else include `<component name='HAnim' level='2'/>`
 - For X3D3 HAnim1, spelling of component name is 'H-Anim' (including hyphen)
 
@@ -308,7 +308,7 @@ Coordinate node utilized by indexed mesh definitions for skin. The *skinCoord* f
 #### Warnings
 
 - Index values for HanimHumanoid skin IndexedFaceSet, *skinCoord* and skinNormal nodes must all be consistently defined together with HAnimJoint HAnimSegment and HAnimDisplacer nodes for proper skin animation.
-- Top-level Coordinate or CoordinateDouble node must include containerField='*skinCoord*' for proper validation and operation.
+- Top-level Coordinate or CoordinateDouble node must include `containerField='skinCoord'` for proper validation and operation.
 - (X3D version 4.0 draft) requires X3D `profile='Full'` or else include `<component name='HAnim' level='2'/>`
 - For X3D3 HAnim1, spelling of component name is 'H-Anim' (including hyphen)
 
@@ -323,7 +323,7 @@ List of one or more indexed mesh definitions (such as IndexedFaceSet) that utili
 #### Warnings
 
 - Index values for HanimHumanoid *skin* IndexedFaceSet, skinCoord and skinNormal nodes must all be consistently defined together with HAnimJoint HAnimSegment and HAnimDisplacer nodes for proper *skin* animation.
-- Top-level node must include containerField='*skin*' for proper validation and operation.
+- Top-level node must include `containerField='skin'` for proper validation and operation.
 - (X3D version 4.0 draft) requires X3D `profile='Full'` or else include `<component name='HAnim' level='2'/>`
 - For X3D3 HAnim1, spelling of component name is 'H-Anim' (including hyphen)
 

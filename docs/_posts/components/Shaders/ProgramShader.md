@@ -80,7 +80,7 @@ ProgramShader contains zero or more ShaderProgram node instances. In general, on
 
 ### Hint
 
-- Apply default containerField='shaders' when parent node is Appearance.
+- Apply default `containerField='shaders'` when parent node is Appearance.
 
 ### Warning
 

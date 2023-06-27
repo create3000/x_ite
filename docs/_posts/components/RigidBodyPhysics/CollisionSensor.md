@@ -64,8 +64,8 @@ The *collider* field specifies a CollisionCollection node that holds a collidabl
 
 ### Hints
 
-- Contains CollisionCollection node (containerField='collider').
-- CollisionSensor also has output events: CollidableOffset and CollidableShape nodes (containerField='intersections'), Contact nodes (containerField='contacts').
+- Contains CollisionCollection node (`containerField='collider').`
+- CollisionSensor also has output events: CollidableOffset and CollidableShape nodes (`containerField='intersections'),` Contact nodes (`containerField='contacts').`
 - [Event timing details are explained in X3D Specification 4.4.8.3 Execution model](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/concepts.html#ExecutionModel){:target="_blank"}
 - Content must be visible to be collidable and to be pickable.
 

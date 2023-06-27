@@ -13,7 +13,7 @@ tags: [MetadataSet, Core]
 
 ## Overview
 
-MetadataSet contains a list of Metadata* nodes that each have containerField="value" and together provide information about the parent node of the MetadataSet. Further information about this specific MetadataSet node may be provided by a single child Metadata* node with containerField="metadata".
+MetadataSet contains a list of Metadata* nodes that each have `containerField='value'` and together provide information about the parent node of the MetadataSet. Further information about this specific MetadataSet node may be provided by a single child Metadata* node with `containerField='metadata'.`
 
 The MetadataSet node belongs to the **Core** component and its default container field is *metadata.* It is available from X3D version 3.0 or higher.
 
@@ -61,8 +61,8 @@ The *value* field provides a list of X3DMetadataObject nodes whose meaning is de
 
 ### Hints
 
-- Use containerField="value" if the parent node is MetadataSet.
-- [Each of the Metadata nodes are allowed as top-level root nodes in a scene, be sure to explicitly define containerField='metadata'.](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-DIS/Part01/concepts.html#Rootnodes){:target="_blank"}
+- Use `containerField='value'` if the parent node is MetadataSet.
+- [Each of the Metadata nodes are allowed as top-level root nodes in a scene, be sure to explicitly define `containerField='metadata'.`](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-DIS/Part01/concepts.html#Rootnodes){:target="_blank"}
 - If present, an IS statement is the first child within any other node.
 - An IS statement precedes any sibling Metadata* node, which in turn precedes any other sibling nodes.
 - MetadataSet can contain other MetadataSet nodes.

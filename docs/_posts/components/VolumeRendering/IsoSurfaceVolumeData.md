@@ -60,7 +60,7 @@ Threshold for gradient magnitude for voxel inolusion in isosurface.
 
 #### Hint
 
-- Contained Texture3D node with containerField='gradients' can provide explicit per-voxel gradient direction information for determining surface boundaries.
+- Contained Texture3D node with `containerField='gradients'` can provide explicit per-voxel gradient direction information for determining surface boundaries.
 
 ### SFBool [in, out] **visible** TRUE
 
@@ -106,7 +106,7 @@ Multiple contained X3DVolumeRenderStyleNode nodes corresponding to each isosurfa
 
 #### Warning
 
-- If not defined, no default renderStryle is defined.
+- If not defined, no default renderStyle is defined.
 
 ### SFNode [in, out] **gradients** NULL <small>[X3DTexture3DNode]</small>
 
@@ -120,8 +120,8 @@ Single contained X3DTexture3DNode (ComposedTexture3D, ImageTexture3D, PixelTextu
 
 ### Hints
 
-- IsoSurfaceVolumeData can contain a single Texture3D node with containerField='gradients' that is used to provide explicit per-voxel gradient direction information for determining surface boundaries, rather than having values implicitly calculated by the implementation.
-- IsoSurfaceVolumeData can contain another Texture3D node with containerField='voxels' containing voxel data.
+- IsoSurfaceVolumeData can contain a single Texture3D node with `containerField='gradients'` that is used to provide explicit per-voxel gradient direction information for determining surface boundaries, rather than having values implicitly calculated by the implementation.
+- IsoSurfaceVolumeData can contain another Texture3D node with `containerField='voxels'` containing voxel data.
 - IsoSurfaceVolumeData can contain multiple VolumeStyle nodes.
 
 ### Warnings

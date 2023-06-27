@@ -56,7 +56,7 @@ When applying baseColor for this material node, the contained texture provides P
 #### Hints
 
 - If texture node is NULL or unspecified, no effect is applied to material values.
-- Contained texture node must include containerField='*baseTexture*'
+- Contained texture node must include `containerField='baseTexture'`
 
 ### SFColor [in, out] **emissiveColor** 0 0 0 <small>[0,1]</small>
 
@@ -87,7 +87,7 @@ When applying emissiveColor for this material node, the contained texture provid
 #### Hints
 
 - If texture node is NULL or unspecified, no effect is applied to material values.
-- Contained texture node must include containerField='*emissiveTexture*'
+- Contained texture node must include `containerField='emissiveTexture'`
 
 ### SFFloat [in, out] **metallic** 1 <small>[0,1]</small>
 
@@ -112,7 +112,7 @@ When applying metallic for this material node, the contained texture provides Ph
 #### Hints
 
 - If texture node is NULL or unspecified, no effect is applied to material values.
-- Contained texture node must include containerField='*metallicRoughnessTexture*'
+- Contained texture node must include `containerField='metallicRoughnessTexture'`
 
 ### SFFloat [in, out] **occlusionStrength** 1 <small>[0,1]</small>
 
@@ -138,7 +138,7 @@ When applying occlusionStrength for this material node, the contained texture pr
 #### Hints
 
 - If texture node is NULL or unspecified, no effect is applied to material values.
-- Contained texture node must include containerField='*occlusionTexture*'
+- Contained texture node must include `containerField='occlusionTexture'`
 
 ### SFFloat [in, out] **normalScale** 1 <small>[0,∞)</small>
 
@@ -165,7 +165,7 @@ When applying normalScale for this material node, the contained texture modulate
 
 - [*normalTexture* techniques apply Bump mapping](https://en.wikipedia.org/wiki/Bump_mapping){:target="_blank"}
 - If texture node is NULL or unspecified, no effect is applied to material values.
-- Contained texture node must include containerField='*normalTexture*'
+- Contained texture node must include `containerField='normalTexture'`
 
 ### SFFloat [in, out] **transparency** 0 <small>[0,1]</small>
 

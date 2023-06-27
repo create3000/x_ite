@@ -93,7 +93,7 @@ The *summary* string array contains a set of keyword/value pairs, with each keyw
 
 #### Hints
 
-- Example \<GeoMetadata *summary*=' "title" "San Francisco, California USA" '/\>.
+- Example `<GeoMetadata summary=' "title" "San Francisco, California USA" '/>`.
 - [Table 25.5, GeoMetadata keywords and values](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/geospatial.html#t-keywordsandvalues){:target="_blank"}
 - There should always be an even (or zero) number of strings to match key-value paired strings.
 
@@ -106,7 +106,7 @@ The *summary* string array contains a set of keyword/value pairs, with each keyw
 ### Hints
 
 - [X3D for Advanced Modeling (X3D4AM) slideset](https://x3dgraphics.com/slidesets/X3dForAdvancedModeling/GeospatialComponentX3dEarth.pdf){:target="_blank"}
-- [When parent node is LoadSensor, apply containerField='children' (X3Dv4) or containerField='watchList' (X3Dv3).](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges){:target="_blank"}
+- [When parent node is LoadSensor, apply `containerField='children'` (X3Dv4) or `containerField='watchList'` (X3Dv3).](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges){:target="_blank"}
 
 ### Warning
 

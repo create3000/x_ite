@@ -110,7 +110,7 @@ The body1 and *body2* fields specify two top-level nodes that should be evaluate
 
 ### Hint
 
-- Each Contact node contains two RigidBody nodes (containerField='body1' and containerField='body2') as well as two CollidableShape or CollidableOffset nodes (containerField='geometry1' and containerField='geometry2').
+- Each Contact node contains two RigidBody nodes (`containerField='body1'` and `containerField='body2')` as well as two CollidableShape or CollidableOffset nodes (`containerField='geometry1'` and `containerField='geometry2').`
 
 ### Warning
 
