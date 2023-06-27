@@ -11,9 +11,13 @@ tags: [ParticleSystem, ParticleSystems]
 }
 </style>
 
+## Hints
+
+- Always adjust bboxSize and boxCenter properly; bboxSize and bboxCenter cannot be automatically determined so it's up to the author to provide proper values.
+
 ## Overview
 
-ParticleSystem specifies a complete particle system. It can contain Appearance for particle appearance, a geometry node if gemoetryType='GEOMETRY', a color field with Color or ColorRGBA node for changing base color over each particle's lifetime, a texcoord TextureCoordinate node to control texture coordinates of provided texture(s) in the Appearance node over time, a single emitter X3DParticleEmitterNode, and an array of physics X3DParticlePhysicsModelNode nodes.
+ParticleSystem specifies a complete particle system. It can contain Appearance for particle appearance, a geometry node if geometryType='GEOMETRY', a color field with Color or ColorRGBA node for changing base color over each particle's lifetime, a texcoord TextureCoordinate node to control texture coordinates of provided texture(s) in the Appearance node over time, a single emitter X3DParticleEmitterNode, and an array of physics X3DParticlePhysicsModelNode nodes.
 
 The ParticleSystem node belongs to the **ParticleSystems** component and its default container field is *children.* It is available from X3D version 3.2 or higher.
 
@@ -230,10 +234,6 @@ Single contained *geometry* node provides *geometry* used for each particle when
 #### Warning
 
 - Requires X3D `profile='Full'` or else include `<component name='Geospatial' level='1'/>`
-
-## Hints
-
-- Always adjust bboxSize and boxCenter properly; bboxSize and bboxCenter cannot be automatically determined so it's up to the author to provide proper values.
 
 ## Information
 

@@ -40,7 +40,7 @@ sub node {
    return if $componentName =~ /^Annotation$/o;
    return if $typeName =~ /^X3D/o;
 
-   # return unless $typeName =~ /^IsoSurfaceVolumeData$/o;
+   # return unless $typeName =~ /^CADAssembly$/o;
    say "$componentName $typeName";
 
    $md     = "$cwd/docs/_posts/components/$componentName/$typeName.md";
@@ -57,6 +57,8 @@ sub node {
       $file = update_node ($typeName, $componentName, \@node, $file);
       $file = update_field ($_, \@node, $file) foreach @fields;
    }
+
+   $file = reorder_sections ($file);
 
    open FILE, ">", $md;
    print FILE $file;
@@ -185,10 +187,14 @@ sub update_node {
       $string .= "\n";
    }
 
-   $string = "" unless @hints || @warnings;
+   $file =~ s/## Information\n.*?\n(?=##\s+|$)//so;
 
-   $file =~ s/\n\n(## (?:Example|See Also))/\n\n$string$1/so unless $file =~ /## Information/;
-   $file =~ s/(## Information\n).*?\n(?=##\s+|\s+$)/$string/so;
+   if (@hints || @warnings)
+   {
+      $file =~ s/\s+$//so;
+      $file .= "\n\n";
+      $file .= $string;
+   }
 
    return $file;
 }
@@ -221,6 +227,7 @@ sub spelling {
    $string =~ s/polgyonal/polygonal/sgo;
    $string =~ s/renderStryle/renderStyle/sgo;
    $string =~ s/utilitized/utilized/sgo;
+   $string =~ s/gemoetry/geometry/sgo;
 
    return $string;
 }
@@ -261,8 +268,10 @@ sub update_example {
    $string .= "<x3d-canvas src=\"https://create3000.github.io/media/examples/$componentName/$typeName/$typeName.x3d\" update=\"auto\"></x3d-canvas>";
    $string .= "\n\n";
 
-   $file =~ s/\n\n(## See Also)/\n\n$string$1/so unless $file =~ /## Example/;
-   $file =~ s/(## Example\n).*?\n(?=##\s+|\s+$)/$string/so;
+   $file =~ s/## Example\n.*?\n(?=##\s+|$)//so;
+   $file =~ s/\s+$//so;
+   $file .= "\n\n";
+   $file .= $string;
 
    return $file;
 }
@@ -388,6 +397,26 @@ sub update_field {
    # print "'$string'";
 
    $file =~ s/(###.*?\*\*$name\*\*.*?\n).*?\n((?:###|##)\s+)/$1$string$2/s if $string;
+
+   return $file;
+}
+
+sub reorder_sections {
+   $file     = shift;
+   @sections = ("Overview", "Hierarchy", "Fields", "Information", "Example", "See Also");
+   $sections = { };
+
+   foreach $s (@sections)
+   {
+      $file =~ s/(##\s+$s.*?\n)(?=##\s+|$)//s;
+      $sections -> {$s} = $1;
+      $sections -> {$s} =~ s/\s+$//so;
+   }
+
+   $file =~ s/\s+$/\n\n/so;
+
+   $file .= $sections -> {$_} . "\n\n" foreach grep { $sections -> {$_} } @sections;
+   $file =~ s/\s+$/\n/so;
 
    return $file;
 }
