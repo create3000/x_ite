@@ -229,6 +229,7 @@ sub spelling {
    $string =~ s/utilitized/utilized/sgo;
    $string =~ s/gemoetry/geometry/sgo;
    $string =~ s/spedification/specification/sgo;
+
    $string =~ s|(https://en.wikipedia.org/wiki/Kilogram)|Kilogram $1|sgo;
 
    return $string;
