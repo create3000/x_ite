@@ -65,6 +65,12 @@ docs:
 docs-update:
 	cd docs && bundle update
 
+docs-components:
+	node build/docs/components.js
+
+docs-nodes:
+	perl build/docs/nodes.pl
+
 .PHONY: tests
 tests:
 	perl build/bin/tests.pl
