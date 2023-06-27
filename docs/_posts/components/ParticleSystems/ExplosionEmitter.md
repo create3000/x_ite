@@ -62,7 +62,7 @@ Basic *mass* of each particle, defined in *mass* base units (default is kilogram
 #### Hints
 
 - *mass* is needed if gravity or other force-related calculations are performed on a per-particle basis.
-- Https://en.wikipedia.org/wiki/Kilogram
+- [Kilogram](https://en.wikipedia.org/wiki/Kilogram){:target="_blank"}
 - [X3D Architecture 4.3.6 Standard units and coordinate system](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/concepts.html#Standardunitscoordinates){:target="_blank"}
 
 ### SFFloat [ ] **surfaceArea** 0 <small>[0,∞)</small>

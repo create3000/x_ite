@@ -67,7 +67,7 @@ Total *mass* of the segment, 0 if not available, defined in *mass* base units (d
 
 #### Hints
 
-- Https://en.wikipedia.org/wiki/Kilogram
+- [Kilogram](https://en.wikipedia.org/wiki/Kilogram){:target="_blank"}
 - [X3D Architecture 4.3.6 Standard units and coordinate system](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/concepts.html#Standardunitscoordinates){:target="_blank"}
 
 ### SFVec3f [in, out] **centerOfMass** 0 0 0 <small>(-∞,∞)</small>

@@ -47,7 +47,7 @@ Enables/disables node operation.
 
 - If particles have zero mass, ForcePhysicsModel node has no effect.
 - *force* is specified in *force* base units (usually newtons, acceleration of one kilogram at rate of one meter per second squared).
-- [Https://en.wikipedia.org/wiki/Newton_(unit) and](https://en.wikipedia.org/wiki/Kilogram){:target="_blank"}
+- [Https://en.wikipedia.org/wiki/Newton_(unit) and Kilogram](https://en.wikipedia.org/wiki/Kilogram){:target="_blank"}
 - [X3D Architecture 4.3.6 Standard units and coordinate system](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/concepts.html#Standardunitscoordinates){:target="_blank"}
 
 ## Advisories

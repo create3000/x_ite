@@ -312,6 +312,7 @@ sub update_field {
 
       # Special substitutions.
       $field = spelling ($field);
+      $field =~ s|(https://en.wikipedia.org/wiki/Kilogram)|Kilogram $1|sgo;
 
       # Split field.
 
