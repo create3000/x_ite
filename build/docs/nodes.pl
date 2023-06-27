@@ -46,6 +46,7 @@ sub node {
    $md     = "$cwd/docs/_posts/components/$componentName/$typeName.md";
    $file   = `cat $md`;
    $file   = reorder_fields ($typeName, $componentName, $file);
+   $file   = update_example ($typeName, $componentName, $file);
    @fields = map { /\*\*(.*?)\*\*/o; $_ = $1 } $file =~ /###\s*[SM]F\w+.*/go;
 
    if (grep /^$typeName$/, @tooltips)
@@ -56,8 +57,6 @@ sub node {
       $file = update_node ($typeName, $componentName, \@node, $file);
       $file = update_field ($_, \@node, $file) foreach @fields;
    }
-
-   $file = update_example ($typeName, $componentName, $file); # Must be executed after update_node.
 
    open FILE, ">", $md;
    print FILE $file;
@@ -188,7 +187,7 @@ sub update_node {
 
    $string = "" unless @hints || @warnings;
 
-   $file =~ s/\n\n(## See Also)/\n\n$string$1/so unless $file =~ /## Information/;
+   $file =~ s/\n\n(## (?:Example|See Also))/\n\n$string$1/so unless $file =~ /## Information/;
    $file =~ s/(## Information\n).*?\n(?=##\s+|\s+$)/$string/so;
 
    return $file;
