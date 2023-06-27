@@ -102,7 +102,7 @@ Location and filename of shader. Multiple locations are more reliable, and inclu
 
 - Automatically reloading content has security considerations and needs to be considered carefully.
 
-## Information
+## Advisories
 
 ### Hints
 

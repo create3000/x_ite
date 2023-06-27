@@ -44,7 +44,7 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 
 The *transferFunction* field holds a single texture representation in either two or three dimensions that maps the voxel data values to a specific colour output. If no value is supplied for this field, the default implementation shall generate a 256x1 alpha-only image that blends from completely transparent at pixel 0 to fully opaque at pixel 255.The texture may be any number of dimensions and any number of components. The voxel values are used as a lookup coordinates into the transfer function texture, where the texel value represents the output colour.
 
-## Information
+## Advisories
 
 ### Hint
 

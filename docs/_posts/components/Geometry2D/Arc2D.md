@@ -73,7 +73,7 @@ Circle *radius*, of which the arc is a portion.
 
 - Simple-geometry dimensions are initializeOnly and cannot be changed after initial creation, avoiding the need for potentially expensive tessellation at run time.
 
-## Information
+## Advisories
 
 ### Hints
 

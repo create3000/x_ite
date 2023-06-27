@@ -70,7 +70,7 @@ Whether to repeat texture along R axis from front to back.
 
 Single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images.
 
-## Information
+## Advisories
 
 ### Hints
 

@@ -70,7 +70,7 @@ Distance in meters where objects are totally obscured by the fog, using local co
 
 - *visibilityRange* 0 disables Fog.
 
-## Information
+## Advisories
 
 ### Hints
 

@@ -65,7 +65,7 @@ Non-uniform planar scaling of texture about center (opposite effect appears on g
 
 *center* point in 2D (s,t) texture coordinates for rotation and scaling.
 
-## Information
+## Advisories
 
 ### Hints
 

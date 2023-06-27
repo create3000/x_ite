@@ -105,7 +105,7 @@ The *outputs* field is a set of output nodes receiving the split channels, and m
 
 - Can be original (DEF) or referenced (USE) nodes.
 
-## Information
+## Advisories
 
 ### Hint
 

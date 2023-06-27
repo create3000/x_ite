@@ -95,7 +95,7 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 
 Collection of collidable objects as well as nested CollisionSpace collections
 
-## Information
+## Advisories
 
 ### Hint
 

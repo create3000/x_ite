@@ -64,7 +64,7 @@ The *layers* list defines a list of Layer nodes that contain the constituent par
 - Ordinal values start with the numeral 1 representing the first item in the list.
 - Nodes that are not part of a layer are considered to be in layer 0.
 
-## Information
+## Advisories
 
 ### Hints
 

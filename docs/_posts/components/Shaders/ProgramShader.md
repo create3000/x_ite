@@ -76,7 +76,7 @@ ProgramShader contains zero or more ShaderProgram node instances. In general, on
 
 - Each shader language defines required behavior for processing this field.
 
-## Information
+## Advisories
 
 ### Hint
 

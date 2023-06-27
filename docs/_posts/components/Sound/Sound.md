@@ -121,7 +121,7 @@ Sound *source* for the Sound node, either an AudioClip node or a MovieTexture no
 
 Input/Output field *children*.
 
-## Information
+## Advisories
 
 ### Hints
 

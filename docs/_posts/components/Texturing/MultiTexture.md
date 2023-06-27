@@ -102,7 +102,7 @@ Contained *texture* nodes (ImageTexture, MovieTexture, PixelTexture) that map im
 
 - MultiTexture may not contain another MultiTexture node.
 
-## Information
+## Advisories
 
 ### Hints
 

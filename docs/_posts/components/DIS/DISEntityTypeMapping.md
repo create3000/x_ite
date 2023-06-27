@@ -111,7 +111,7 @@ Specific information about an entity based on the subcategory field. See DIS Enu
 
 Integer enumerations value for particular *subcategory* to which an entity belongs based on the category field. See DIS Enumerations values.
 
-## Information
+## Advisories
 
 ### Hints
 

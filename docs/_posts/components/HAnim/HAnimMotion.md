@@ -173,7 +173,7 @@ Level Of Articulation 0..4 indicates complexity and detail of joints for given h
 
 Output field *frameCount*.
 
-## Information
+## Advisories
 
 ### Hints
 

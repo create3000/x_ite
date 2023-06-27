@@ -124,7 +124,7 @@ Interpolated coordinate in the geographic coordinate system specified by geoSyst
 - Requires X3D `profile='Full'` or else include `<component name='Geospatial' level='1'/>`
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
-## Information
+## Advisories
 
 ### Hints
 

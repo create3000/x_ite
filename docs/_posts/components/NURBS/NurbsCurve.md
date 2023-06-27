@@ -60,7 +60,7 @@ Vector assigning relative *weight* value to each control point.
 
 Single contained Coordinate or CoordinateDouble node that can specify control points for NURBS geometry definitions.
 
-## Information
+## Advisories
 
 ### Hint
 

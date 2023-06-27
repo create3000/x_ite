@@ -64,7 +64,7 @@ Colour and opacity is determined based on whether a value has been specified for
 
 The *surfaceNormals* field contains a 3D texture with at least three component values. Each voxel in the texture represents the surface normal direction for the corresponding voxel in the base data source.
 
-## Information
+## Advisories
 
 ### Hint
 

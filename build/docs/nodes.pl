@@ -165,7 +165,7 @@ sub update_node {
 
    # Description
 
-   $string = "## Information\n\n";
+   $string = "## Advisories\n\n";
 
    if (@hints)
    {
@@ -187,7 +187,7 @@ sub update_node {
       $string .= "\n";
    }
 
-   $file =~ s/## Information\n.*?\n(?=##\s+|$)//so;
+   $file =~ s/## Advisories\n.*?\n(?=##\s+|$)//so;
 
    if (@hints || @warnings)
    {
@@ -404,7 +404,7 @@ sub update_field {
 
 sub reorder_sections {
    $file     = shift;
-   @sections = ("Overview", "Hierarchy", "Fields", "Information", "Example", "See Also");
+   @sections = ("Overview", "Hierarchy", "Fields", "Advisories", "Example", "See Also");
    $sections = { };
 
    foreach $s (@sections)

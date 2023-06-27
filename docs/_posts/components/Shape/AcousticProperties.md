@@ -67,7 +67,7 @@ Sound *refraction* coefficient of a medium, which determines change in propagati
 
 *specular* coefficient of sound reflection striking a plane surface, directly reflected back into space, where angle of reflection equals angle of incidence.
 
-## Information
+## Advisories
 
 ### Hints
 

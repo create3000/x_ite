@@ -63,7 +63,7 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 
 *inputNegate* is an output event that provides an opposite value by negating set_boolean input.
 
-## Information
+## Advisories
 
 ### Hints
 

@@ -86,7 +86,7 @@ The weigh factor has typical range [0,1] and defines the scale factor applied to
 - Individual displacement values are scaled by the weight factor, if present.
 - Since default pose faces along +Z axis, -x values are right side and +x values are left side within HAnimHumanoid.
 
-## Information
+## Advisories
 
 ### Hints
 

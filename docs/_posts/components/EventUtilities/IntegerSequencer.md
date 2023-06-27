@@ -101,7 +101,7 @@ Single intermittent output value determined by current key time and correspondin
 
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
-## Information
+## Advisories
 
 ### Hints
 

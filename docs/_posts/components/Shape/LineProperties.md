@@ -51,7 +51,7 @@ Whether or not LineProperties are *applied* to associated geometry.
 
 *linewidthScaleFactor* is a scale factor multiplied by browser-dependent nominal linewidth, mapped to nearest available line width. Values zero or less provide minimum available line width.
 
-## Information
+## Advisories
 
 ### Hints
 

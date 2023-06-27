@@ -50,7 +50,7 @@ The *children* form a closed loop with first point of first child repeated as la
 
 - *children* nodes are listed in consecutive order according to topology of the contour.
 
-## Information
+## Advisories
 
 ### Hint
 

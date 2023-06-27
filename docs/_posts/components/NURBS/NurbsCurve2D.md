@@ -59,7 +59,7 @@ Vector assigning relative *weight* value to each control point.
 
 *controlPoint* defines a set of control points of dimension uDimension by vDimension, and defines a mesh where the points do not have uniform spacing.
 
-## Information
+## Advisories
 
 ### Warning
 

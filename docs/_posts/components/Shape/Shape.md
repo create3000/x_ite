@@ -91,7 +91,7 @@ Single contained Appearance node that can specify visual attributes (such as mat
 
 Single contained *geometry* node that is rendered according to corresponding appearance.
 
-## Information
+## Advisories
 
 ### Hints
 

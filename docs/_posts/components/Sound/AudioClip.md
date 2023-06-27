@@ -203,7 +203,7 @@ Current elapsed time since AudioClip activated/running, cumulative in seconds, a
 - Duration value of -1 implies that media data has not yet loaded or is unavailable for some reason.
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
-## Information
+## Advisories
 
 ### Hints
 

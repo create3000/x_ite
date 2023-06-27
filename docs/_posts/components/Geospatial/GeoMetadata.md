@@ -101,7 +101,7 @@ The *summary* string array contains a set of keyword/value pairs, with each keyw
 
 #IMPLIED] DEF list of all nodes that implement this *data*. If no specific geospatial nodes are identified, then this GeoMetadata node pertains to entire scene.
 
-## Information
+## Advisories
 
 ### Hints
 

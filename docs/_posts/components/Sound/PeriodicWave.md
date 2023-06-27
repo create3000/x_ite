@@ -72,7 +72,7 @@ Imaginary coefficients for defining a waveform.
 
 - Array lengths for optionsReal and *optionsImag* must match.
 
-## Information
+## Advisories
 
 ### Hint
 

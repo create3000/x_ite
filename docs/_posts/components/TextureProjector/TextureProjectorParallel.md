@@ -97,7 +97,7 @@ Single contained *texture* node (ImageTexture, MovieTexture, PixelTexture, Multi
 - [X3D Architecture 18 Texturing component](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/texturing.html){:target="_blank"}
 - [X3D Architecture 33 Texturing3D component](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/texture3D.html){:target="_blank"}
 
-## Information
+## Advisories
 
 ### Hint
 

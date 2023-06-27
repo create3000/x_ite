@@ -97,7 +97,7 @@ Contained Shape for this CADPart.
 
 - If LOD or Transform are used, only zero or one Shape child is allowed to be active at one time.
 
-## Information
+## Advisories
 
 ### Hint
 

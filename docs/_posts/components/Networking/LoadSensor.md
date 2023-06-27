@@ -99,7 +99,7 @@ The *children* field monitors one or more USE nodes that contain a valid url fie
 
 - [Field originally named 'watchList' in X3Dv3.](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges){:target="_blank"}
 
-## Information
+## Advisories
 
 ### Hints
 
