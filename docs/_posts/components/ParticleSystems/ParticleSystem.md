@@ -233,6 +233,8 @@ Single contained *geometry* node provides *geometry* used for each particle when
 
 ## Advisories
 
+- Always set bboxSize and boxCenter correctly; bboxSize and bboxCenter cannot be determined automatically, so it's up to the author to provide the correct values.
+
 ### Hints
 
 - [Event timing details are explained in X3D Specification 4.4.8.3 Execution model](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/concepts.html#ExecutionModel){:target="_blank"}
