@@ -165,10 +165,10 @@ sub update_node {
 
    # Advisories
 
-   # $customs = $1 if $file =~ s/## Advisories\s*(.*?)\s*###\s+//so;
-   # say $customs;
+   $customs = $1 if $file =~ /## Advisories\s*(.*?)\s*###\s+/so;
 
    $string = "## Advisories\n\n";
+   $string .= $customs . "\n\n" if $customs;
 
    if (@hints)
    {
