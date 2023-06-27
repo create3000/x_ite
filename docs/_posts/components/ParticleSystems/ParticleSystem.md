@@ -75,11 +75,11 @@ Maximum number of particles to be generated at one time (subject to player limit
 
 ### SFFloat [in, out] **particleLifetime** 5 <small>[0,∞)</small>
 
-TODO not properly defined in X3D spedification. Particle animation lifetime in base time units (default is seconds).
+TODO not properly defined in X3D specification. Particle animation lifetime in base time units (default is seconds).
 
 ### SFFloat [in, out] **lifetimeVariation** 0.25 <small>[0,1]</small>
 
-TODO not properly defined in X3D spedification. Multiplier for the randomness used to control the range of possible output values. The bigger the value, the more random the output and the bigger the range of initial values possible.
+TODO not properly defined in X3D specification. Multiplier for the randomness used to control the range of possible output values. The bigger the value, the more random the output and the bigger the range of initial values possible.
 
 #### Hint
 

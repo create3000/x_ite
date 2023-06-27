@@ -228,6 +228,7 @@ sub spelling {
    $string =~ s/renderStryle/renderStyle/sgo;
    $string =~ s/utilitized/utilized/sgo;
    $string =~ s/gemoetry/geometry/sgo;
+   $string =~ s/spedification/specification/sgo;
 
    return $string;
 }
