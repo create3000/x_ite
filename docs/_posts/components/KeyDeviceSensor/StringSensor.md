@@ -77,6 +77,12 @@ Select geometry by activating the pointing device (for example, clicking the mou
 
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
+## Information
+
+### Hint
+
+- [Example scenes and authoring assets](https://x3dgraphics.com/examples/X3dForWebAuthors/Chapter08UserInteractivity){:target="_blank"}
+
 ## Example
 
 <x3d-canvas src="https://create3000.github.io/media/examples/KeyDeviceSensor/StringSensor/StringSensor.x3d" update="auto"></x3d-canvas>

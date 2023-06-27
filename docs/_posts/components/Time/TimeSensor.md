@@ -170,6 +170,14 @@ Time continuously sends the absolute *time* (value 0.0 matches 1 January 1970) i
 
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
+## Information
+
+### Hints
+
+- [Event timing details are explained in X3D Specification 4.4.8.3 Execution model](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/concepts.html#ExecutionModel){:target="_blank"}
+- [X3D Architecture 8 Time component](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/time.html){:target="_blank"}
+- [Example scenes and authoring assets](https://x3dgraphics.com/examples/X3dForWebAuthors/Chapter07EventAnimationInterpolation){:target="_blank"}
+
 ## Example
 
 <x3d-canvas src="https://create3000.github.io/media/examples/Time/TimeSensor/TimeSensor.x3d" update="auto"></x3d-canvas>

@@ -71,6 +71,12 @@ Defines cross-section of the surface traced about the trajectoryCurve axis.
 
 Describes the center-line path using a NurbsCurve node, oriented so that it is defined counterclockwise when looking down the −Y axis, thus defining a concept of inside and outside.
 
+## Information
+
+### Hint
+
+- Conceptually it is the NURBS equivalent of Extrusion but permits the use of non-closed cross sections.
+
 ## Example
 
 <x3d-canvas src="https://create3000.github.io/media/examples/NURBS/NurbsSweptSurface/NurbsSweptSurface.x3d" update="auto"></x3d-canvas>
