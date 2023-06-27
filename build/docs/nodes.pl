@@ -163,7 +163,10 @@ sub update_node {
 
    $file =~ s/(## Overview\n).*?\n(?=##\s+)/$1$string/s;
 
-   # Description
+   # Advisories
+
+   # $customs = $1 if $file =~ s/## Advisories\s*(.*?)\s*###\s+//so;
+   # say $customs;
 
    $string = "## Advisories\n\n";
 
