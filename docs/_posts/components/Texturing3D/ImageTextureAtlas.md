@@ -17,7 +17,7 @@ ImageTextureAtlas defines a 3D image-based texture map by specifying a single im
 
 The ImageTextureAtlas node belongs to the **Texturing3D** component and its default container field is *texture.* It is available since X3D version 4.0 or later.
 
->Info: This node is still experimental.
+>Please note that the functionality of this node is still experimental.
 {: .prompt-info }
 
 ## Hierarchy
