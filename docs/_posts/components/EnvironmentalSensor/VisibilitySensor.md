@@ -1,6 +1,6 @@
 ---
 title: VisibilitySensor
-date: 2022-01-07
+date: 2023-01-07
 nav: components-EnvironmentalSensor
 categories: [components, EnvironmentalSensor]
 tags: [VisibilitySensor, EnvironmentalSensor]

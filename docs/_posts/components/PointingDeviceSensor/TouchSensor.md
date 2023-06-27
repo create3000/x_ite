@@ -1,6 +1,6 @@
 ---
 title: TouchSensor
-date: 2022-01-07
+date: 2023-01-07
 nav: components-PointingDeviceSensor
 categories: [components, PointingDeviceSensor]
 tags: [TouchSensor, PointingDeviceSensor]

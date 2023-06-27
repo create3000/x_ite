@@ -1,6 +1,6 @@
 ---
 title: ImageTexture3D
-date: 2022-01-07
+date: 2023-01-07
 nav: components-Texturing3D
 categories: [components, Texturing3D]
 tags: [ImageTexture3D, Texturing3D]

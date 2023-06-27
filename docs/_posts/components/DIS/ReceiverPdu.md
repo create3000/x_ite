@@ -1,6 +1,6 @@
 ---
 title: ReceiverPdu
-date: 2022-01-07
+date: 2023-01-07
 nav: components-DIS
 categories: [components, DIS]
 tags: [ReceiverPdu, DIS]

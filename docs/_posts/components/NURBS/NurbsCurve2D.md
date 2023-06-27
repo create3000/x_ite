@@ -1,6 +1,6 @@
 ---
 title: NurbsCurve2D
-date: 2022-01-07
+date: 2023-01-07
 nav: components-NURBS
 categories: [components, NURBS]
 tags: [NurbsCurve2D, NURBS]

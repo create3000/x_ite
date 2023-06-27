@@ -1,6 +1,6 @@
 ---
 title: MetadataDouble
-date: 2022-01-07
+date: 2023-01-07
 nav: components-Core
 categories: [components, Core]
 tags: [MetadataDouble, Core]

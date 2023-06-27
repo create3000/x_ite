@@ -1,6 +1,6 @@
 ---
 title: IndexedQuadSet
-date: 2022-01-07
+date: 2023-01-07
 nav: components-CADGeometry
 categories: [components, CADGeometry]
 tags: [IndexedQuadSet, CADGeometry]

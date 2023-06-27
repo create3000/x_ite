@@ -1,6 +1,6 @@
 ---
 title: NormalInterpolator
-date: 2022-01-07
+date: 2023-01-07
 nav: components-Interpolation
 categories: [components, Interpolation]
 tags: [NormalInterpolator, Interpolation]

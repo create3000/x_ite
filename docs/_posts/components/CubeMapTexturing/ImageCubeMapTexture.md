@@ -1,6 +1,6 @@
 ---
 title: ImageCubeMapTexture
-date: 2022-01-07
+date: 2023-01-07
 nav: components-CubeMapTexturing
 categories: [components, CubeMapTexturing]
 tags: [ImageCubeMapTexture, CubeMapTexturing]

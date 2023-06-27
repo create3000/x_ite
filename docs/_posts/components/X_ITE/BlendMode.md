@@ -1,6 +1,6 @@
 ---
 title: BlendMode
-date: 2022-01-07
+date: 2023-01-07
 nav: components-X_ITE
 categories: [components, X_ITE]
 tags: [BlendMode, X_ITE]

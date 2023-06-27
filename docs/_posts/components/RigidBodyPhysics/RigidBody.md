@@ -1,6 +1,6 @@
 ---
 title: RigidBody
-date: 2022-01-07
+date: 2023-01-07
 nav: components-RigidBodyPhysics
 categories: [components, RigidBodyPhysics]
 tags: [RigidBody, RigidBodyPhysics]

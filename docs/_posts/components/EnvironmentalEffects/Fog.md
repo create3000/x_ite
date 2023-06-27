@@ -1,6 +1,6 @@
 ---
 title: Fog
-date: 2022-01-07
+date: 2023-01-07
 nav: components-EnvironmentalEffects
 categories: [components, EnvironmentalEffects]
 tags: [Fog, EnvironmentalEffects]

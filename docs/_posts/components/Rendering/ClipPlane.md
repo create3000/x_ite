@@ -1,6 +1,6 @@
 ---
 title: ClipPlane
-date: 2022-01-07
+date: 2023-01-07
 nav: components-Rendering
 categories: [components, Rendering]
 tags: [ClipPlane, Rendering]

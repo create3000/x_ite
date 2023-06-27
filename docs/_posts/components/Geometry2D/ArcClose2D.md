@@ -1,6 +1,6 @@
 ---
 title: ArcClose2D
-date: 2022-01-07
+date: 2023-01-07
 nav: components-Geometry2D
 categories: [components, Geometry2D]
 tags: [ArcClose2D, Geometry2D]
