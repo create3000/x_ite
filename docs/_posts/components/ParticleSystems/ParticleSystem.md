@@ -11,10 +11,6 @@ tags: [ParticleSystem, ParticleSystems]
 }
 </style>
 
-## Hints
-
-- Always adjust bboxSize and boxCenter properly; bboxSize and bboxCenter cannot be automatically determined so it's up to the author to provide proper values.
-
 ## Overview
 
 ParticleSystem specifies a complete particle system. It can contain Appearance for particle appearance, a geometry node if geometryType='GEOMETRY', a color field with Color or ColorRGBA node for changing base color over each particle's lifetime, a texcoord TextureCoordinate node to control texture coordinates of provided texture(s) in the Appearance node over time, a single emitter X3DParticleEmitterNode, and an array of physics X3DParticlePhysicsModelNode nodes.
