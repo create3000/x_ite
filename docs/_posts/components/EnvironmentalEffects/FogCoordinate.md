@@ -1,6 +1,6 @@
 ---
 title: FogCoordinate
-date: 2022-01-07
+date: 2023-01-07
 nav: components-EnvironmentalEffects
 categories: [components, EnvironmentalEffects]
 tags: [FogCoordinate, EnvironmentalEffects]
@@ -15,7 +15,7 @@ tags: [FogCoordinate, EnvironmentalEffects]
 
 FogCoordinate defines a set of explicit fog depths on a per-vertex basis, overriding Fog visibilityRange.
 
-The FogCoordinate node belongs to the **EnvironmentalEffects** component and its default container field is *fogCoord.* It is available since X3D version 3.0 or later.
+The FogCoordinate node belongs to the **EnvironmentalEffects** component and its default container field is *fogCoord.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -29,12 +29,16 @@ The FogCoordinate node belongs to the **EnvironmentalEffects** component and its
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
 ### MFFloat [in, out] **depth** [ ] <small>[0,1]</small>
 
-*depth* contains a set depth values.
+*depth* contains a set of 3D coordinate (triplet) point values.
 
-## External Links
+## See Also
 
-- [X3D Specification of FogCoordinate](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/environmentalEffects.html#FogCoordinate){:target="_blank"}
+- [X3D Specification of FogCoordinate node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/environmentalEffects.html#FogCoordinate){:target="_blank"}

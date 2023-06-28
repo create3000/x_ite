@@ -1,6 +1,6 @@
 ---
 title: SingleAxisHingeJoint
-date: 2022-01-07
+date: 2023-01-07
 nav: components-RigidBodyPhysics
 categories: [components, RigidBodyPhysics]
 tags: [SingleAxisHingeJoint, RigidBodyPhysics]
@@ -15,7 +15,7 @@ tags: [SingleAxisHingeJoint, RigidBodyPhysics]
 
 SingleAxisHingeJoint has single axis about which to rotate, similar to a traditional door hinge. Contains two RigidBody nodes (containerField values body1, body2).
 
-The SingleAxisHingeJoint node belongs to the **RigidBodyPhysics** component and its default container field is *joints.* It is available since X3D version 3.2 or later.
+The SingleAxisHingeJoint node belongs to the **RigidBodyPhysics** component and its default container field is *joints.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 
@@ -29,7 +29,11 @@ The SingleAxisHingeJoint node belongs to the **RigidBodyPhysics** component and 
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
 ### MFString [in, out] **forceOutput** "NONE" <small>["ALL", "NONE", ...]</small>
 
@@ -47,13 +51,21 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 *minAngle* is minimum rotation angle for hinge.
 
+#### Hint
+
+- [Radian units for angular measure](https://en.wikipedia.org/wiki/Radian){:target="_blank"}
+
 ### SFFloat [in, out] **maxAngle** π <small>[-π,π)</small> <small class="red">not supported</small>
 
 *maxAngle* is maximum rotation angle for hinge.
 
+#### Hint
+
+- [Radian units for angular measure](https://en.wikipedia.org/wiki/Radian){:target="_blank"}
+
 ### SFFloat [in, out] **stopBounce** 0 <small>[0,1]</small> <small class="red">not supported</small>
 
-StopBounce is velocity factor for bounce back once stop point is reached.
+*stopBounce* is velocity factor for bounce back once stop point is reached.
 
 #### Hint
 
@@ -61,7 +73,7 @@ StopBounce is velocity factor for bounce back once stop point is reached.
 
 ### SFFloat [in, out] **stopErrorCorrection** 0.8 <small>[0,1]</small> <small class="red">not supported</small>
 
-StopErrorCorrection is fraction of error correction performed during time step once stop point is reached.
+*stopErrorCorrection* is fraction of error correction performed during time step once stop point is reached.
 
 #### Hint
 
@@ -69,29 +81,29 @@ StopErrorCorrection is fraction of error correction performed during time step o
 
 ### SFVec3f [out] **body1AnchorPoint**
 
-Output field body1AnchorPoint.
+Output field *body1AnchorPoint*.
 
 ### SFVec3f [out] **body2AnchorPoint**
 
-Output field body2AnchorPoint.
+Output field *body2AnchorPoint*.
 
 ### SFFloat [out] **angle**
 
-Output field angle.
+Output field *angle*.
 
 ### SFFloat [out] **angleRate**
 
-Output field angleRate.
+Output field *angleRate*.
 
 ### SFNode [in, out] **body1** NULL <small>[RigidBody]</small>
 
-Input/Output field body1.
+The *body1* and body2 fields indicate the two RigidBody nodes connected by this joint.
 
 ### SFNode [in, out] **body2** NULL <small>[RigidBody]</small>
 
-Input/Output field body2.
+The body1 and *body2* fields indicate the two RigidBody nodes connected by this joint.
 
-## Description
+## Advisories
 
 ### Hint
 
@@ -101,6 +113,6 @@ Input/Output field body2.
 
 <x3d-canvas src="https://create3000.github.io/media/examples/RigidBodyPhysics/SingleAxisHingeJoint/SingleAxisHingeJoint.x3d" update="auto"></x3d-canvas>
 
-## External Links
+## See Also
 
-- [X3D Specification of SingleAxisHingeJoint](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rigidBodyPhysics.html#SingleAxisHingeJoint){:target="_blank"}
+- [X3D Specification of SingleAxisHingeJoint node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rigidBodyPhysics.html#SingleAxisHingeJoint){:target="_blank"}

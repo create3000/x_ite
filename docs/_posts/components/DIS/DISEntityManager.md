@@ -1,6 +1,6 @@
 ---
 title: DISEntityManager
-date: 2022-01-07
+date: 2023-01-07
 nav: components-DIS
 categories: [components, DIS]
 tags: [DISEntityManager, DIS]
@@ -15,7 +15,7 @@ tags: [DISEntityManager, DIS]
 
 DISEntityManager notifies a scene when new DIS ESPDU entities arrive or current entities leave. DISEntityManager may contain any number of DISEntityTypeMapping nodes that provide a best-match X3D model to incoming entity type values. For each new DIS entity, DISEntityManager thus produces a new EspduTransform node that contains a corresponding X3D model.
 
-The DISEntityManager node belongs to the **DIS** component and its default container field is *children.* It is available since X3D version 3.0 or later.
+The DISEntityManager node belongs to the **DIS** component and its default container field is *children.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -29,45 +29,70 @@ The DISEntityManager node belongs to the **DIS** component and its default conta
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
 ### SFString [in, out] **address** "localhost"
 
-Multicast network address, or else "localhost" example: 224.2.181.145.
+Multicast network *address*, or else 'localhost'. Example: 224.2.181.145.
 
 ### SFInt32 [in, out] **applicationID** 1 <small>[0,65535]</small>
 
-Each simulation application that can respond to simulation management PDUs needs to have a unique applicationID.
+Each simulation application that can respond to simulation management PDUs needs to have a unique *applicationID*.
 
 ### MFNode [in, out] **children** [ ] <small>[DISEntityTypeMapping]</small>
 
-Input/Output field children.
+Mapping field provides a mechanism for automatically creating an X3D model when a new entity arrives over the network. If a new entity matches one of the nodes, an instance of the provided URL is created and added as a child to the EspduTransform specified in the addedEntities field.
+
+#### Hint
+
+- Multiple DISEntityTypeMapping nodes can be provided in mapping field, best match takes precedence.
+
+#### Warning
+
+- [Field originally named 'mapping' in X3Dv3.](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges){:target="_blank"}
 
 ### SFInt32 [in, out] **port** 0 <small>[0,65535]</small>
 
-Multicast network port, for example: 62040.
+Multicast network *port*, for example: 3000.
 
 ### SFInt32 [in, out] **siteID** 0 <small>[0,65535]</small>
 
-Simulation/exercise siteID of the participating LAN or organization.
+Simulation/exercise *siteID* of the participating LAN or organization.
 
 ### MFNode [out] **addedEntities**
 
-Output field addedEntities.
+*addedEntities* array contains any new entities added during the last frame.
+
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### MFNode [out] **removedEntities**
 
-Output field removedEntities.
+*removedEntities* output array provides EspduTransform references to any entities removed during last frame, either due to a timeout or from an explicit RemoveEntityPDU action.
 
-## Description
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
+
+## Advisories
 
 ### Hints
 
 - DISEntityManager contains DISEntityTypeMapping nodes.
 - DisEntityManager ESPDU packets use the IEEE Distributed Interactive Simulation (DIS) protocol.
-- Include `<component name='DIS' level='2'/>`
-
-## External Links
-
-- [X3D Specification of DISEntityManager](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/dis.html#DISEntityManager){:target="_blank"}
 - [Savage Developers Guide on DIS](https://savage.nps.edu/Savage/developers.html#DIS){:target="_blank"}
+- [X3D for Advanced Modeling (X3D4AM) slideset](https://x3dgraphics.com/slidesets/X3dForAdvancedModeling/DistributedInteractiveSimulation.pdf){:target="_blank"}
+
+### Warnings
+
+- ['children' field originally named 'mapping' in X3Dv3.](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges){:target="_blank"}
+- Requires X3D `profile='Full'` or else include `<component name='DIS' level='2'/>`
+
+## See Also
+
+- [X3D Specification of DISEntityManager node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/dis.html#DISEntityManager){:target="_blank"}

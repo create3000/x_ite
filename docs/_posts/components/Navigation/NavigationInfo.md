@@ -1,6 +1,6 @@
 ---
 title: NavigationInfo
-date: 2022-01-07
+date: 2023-01-07
 nav: components-Navigation
 categories: [components, Navigation]
 tags: [NavigationInfo, Navigation]
@@ -15,7 +15,7 @@ tags: [NavigationInfo, Navigation]
 
 NavigationInfo describes the user's viewing model, user navigation-interaction modalities, and also dimensional characteristics of the user's (typically invisible) avatar.
 
-The NavigationInfo node belongs to the **Navigation** component and its default container field is *children.* It is available since X3D version 2.0 or later.
+The NavigationInfo node belongs to the **Navigation** component and its default container field is *children.* It is available from X3D version 2.0 or higher.
 
 ## Hierarchy
 
@@ -30,32 +30,50 @@ The NavigationInfo node belongs to the **Navigation** component and its default 
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
-
-### SFBool [in] **set_bind**
-
-Setting set_bind true makes this node active setting set_bind false makes this node inactive. Thus setting set_bind true/false will pop/push (enable/disable) this node.
-
-### MFString [in, out] **type** [ "EXAMINE", "ANY" ] <small>["EXAMINE", "WALK", "FLY", "PLANE_create3000.github.io", "LOOKAT", "EXPLORE", "ANY", "NONE"]</small>
-
-Enter one or more quoted SFString values: "EXAMINE" "WALK" "FLY" "PLANE_create3000.github.io" "LOOKAT" "EXPLORE" "ANY" "NONE".
-
-The PLANE viewer is primarily designed to use with OrthoViewpoint and 2D scenes. You can zoom, which will change the viewport size (center of zoom is mouse pointer), and you can move the scene along the viewport plane.
-
-#### Hints
-
-- For inspection of simple objects, usability often improves with type="EXAMINE" "ANY".
-- Types WALK and FLY force strict camera-to-object collision detection.
-- See Collision node for further details on camera-to-object collision detection.
-- MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc." ]
-
-### MFFloat [in, out] **avatarSize** [ 0.25, 1.6, 0.75 ] <small>[0,∞)</small>
-
-*avatarSize* triplet values are: (a) collision distance between user and geometry (near culling plane of the view frustrum) (b) viewer height above terrain (c) tallest height viewer can WALK over.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
 
 #### Hint
 
-- Keep (visibilityLimit / avatarSize.CollisionDistance) < 10,000 to avoid aliasing artifacts (i.e. polygon "tearing"). Interchange profile hint: this field may be ignored, applying the default value regardless.
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
+
+### SFBool [in] **set_bind**
+
+Receiving event *set_bind*=true activates and binds this node at the top of the binding stack. Receiving event *set_bind*=false deactivates and unbinds this node from the top of the binding stack. Thus setting *set_bind* to true/false will enable/disable the effect of this node.
+
+#### Hint
+
+- Paired node operations can be established by connecting *set_bind* and isBound fields of corresponding bindable nodes.
+
+#### Warning
+
+- It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
+
+### MFString [in, out] **type** [ "EXAMINE", "ANY" ] <small>["EXAMINE", "WALK", "FLY", "PLANE_create3000.github.io", "LOOKAT", "EXPLORE", "ANY", "NONE"]</small>
+
+Enter one or more quoted SFString values: "EXAMINE" "WALK" "FLY" "LOOKAT" "EXPLORE" "ANY" "NONE".
+
+#### Hints
+
+- For inspection of simple objects, usability often improves with *type*="EXAMINE" "ANY".
+- Types WALK and FLY force strict camera-to-object collision detection.
+- See Collision node for further details on camera-to-object collision detection.
+- MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc." ] Interchange profile hint: this field may be ignored, applying the default value regardless.
+
+### MFFloat [in, out] **avatarSize** [ 0.25, 1.6, 0.75 ] <small>[0,∞)</small>
+
+*avatarSize* triplet values define three separate parameters: (a) collisionDistance between user and geometry, i.e. near clipping plane of view frustrum, default 0.25m, (b) viewer height above terrain, default 1.6m, and (c) tallest height viewer can WALK over, default 0.75m.
+
+#### Hints
+
+- X3D specification recommends that browsers set near clipping plane to one-half of *avatarSize*.CollisionDistance value.
+- [Aliasing](https://en.wikipedia.org/wiki/Aliasing){:target="_blank"} and [Clipping](https://en.wikipedia.org/wiki/Clipping_(computer_graphics)){:target="_blank"} Interchange profile hint: this field may be ignored, applying the default value regardless.
+- Transformation hierarchy of currently bound Viewpoint node scales *avatarSize*, but translations and rotations have no effect.
+- Content must be visible to be collidable and to be pickable.
+
+#### Warnings
+
+- Important design thumbrule is to keep (visibilityLimit / *avatarSize*.CollisionDistance) \< 10,000 to avoid aliasing artifacts (i.e. polygon "tearing").
+- Data type is MFFloat rather than SFVec3f, be sure that three values are provided in the array since validation tools are typically unable to detect erroneous data prior to run time.
 
 ### SFFloat [in, out] **speed** 1 <small>[0,∞)</small>
 
@@ -71,11 +89,18 @@ Enable/disable directional light that always points in the direction the user is
 
 ### SFFloat [in, out] **visibilityLimit** 0 <small>[0,∞)</small>
 
-Geometry beyond the visibilityLimit may not be rendered (far culling plane of the view frustrum). visibilityLimit=0.0 indicates an infinite visibility limit.
+Geometry beyond the *visibilityLimit* may not be rendered (far clipping plane of the view frustrum).
 
 #### Hints
 
-- Keep visibilityLimit \>= zero. Keep (visibilityLimit / avatarSize.CollisionDistance) \< 10,000 to avoid aliasing artifacts (i.e. polygon "tearing"). Interchange profile hint: this field may be ignored, applying the default value regardless.
+- *visibilityLimit*=0.0 indicates an infinite visibility limit (no far clipping plane).
+- Set *visibilityLimit* to appropriate positive value in meters to define far culling plane of view frustum.
+- X3D specification recommends that browsers set near clipping plane to one-half of avatarSize.CollisionDistance value.
+- [Aliasing](https://en.wikipedia.org/wiki/Aliasing){:target="_blank"} and [Clipping](https://en.wikipedia.org/wiki/Clipping_(computer_graphics)){:target="_blank"} Interchange profile hint: this field may be ignored, applying the default value regardless.
+
+#### Warning
+
+- Important design thumbrule is to keep (*visibilityLimit* / avatarSize.CollisionDistance) \< 10,000 to avoid aliasing artifacts (i.e. polygon "tearing").
 
 ### MFString [in, out] **transitionType** "LINEAR" <small>["TELEPORT"|"LINEAR"|"ANIMATE"]</small>
 
@@ -87,41 +112,59 @@ Camera transition between viewpoints. Enter one or more quoted SFString values: 
 
 ### SFTime [in, out] **transitionTime** 1 <small>[0,∞)</small>
 
-Duration of viewpoint transition in seconds.
+*transitionTime* defines the expected duration of viewpoint transition in seconds.
 
 #### Hint
 
-- If transitionType is "ANIMATE", transitionTime provides browser-dependent animation parameters. Interchange profile hint: this field may be ignored, applying the default value regardless.
+- If transitionType is "ANIMATE", *transitionTime* provides browser-dependent animation parameters. Interchange profile hint: this field may be ignored, applying the default value regardless.
 
 ### SFBool [out] **transitionComplete**
 
-Event signaling viewpoint transition complete. Interchange profile hint: this field may be ignored, applying the default value regardless.
+Event signaling viewpoint transition complete. Interchange profile hint: this field may be ignored.
+
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFBool [out] **isBound**
 
-Event true sent when node becomes active, event false sent when unbound by another node.
+Output event true gets sent when node becomes bound and activated, otherwise output event false gets sent when node becomes unbound and deactivated.
+
+#### Hint
+
+- Paired node operations can be established by connecting set_bind and *isBound* fields of corresponding bindable nodes.
+
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFTime [out] **bindTime**
 
-Event sent when node becomes active/inactive.
+Event sent reporting timestamp when node becomes active/inactive.
 
-## Description
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
+
+## Advisories
 
 ### Hints
 
 - For inspection of simple objects, usability often improves with type="EXAMINE" "ANY"
-- NavigationInfo, Background, TextureBackground, Fog, OrthoViewpoint and Viewpoint are bindable nodes, meaning that no more than one of each node type can be active at a given time.
+- Background, Fog, GeoViewpoint, NavigationInfo, OrthoViewpoint, TextureBackground and Viewpoint are bindable nodes, meaning that no more than one of each node type can be active at a given time.
 - NavigationInfo types '"WALK" "FLY"' support camera-to-object collision detection.
+- Regardless of viewpoint jump value at bind time, the relative viewing transformation between user's view and defined position/orientation is stored for later use when un-jumping (returning to the viewpoint when subsequent viewpoint is unbound).
+- Customizable design pattern for dedicated Viewpoint/NavigationInfo pair: \<Viewpoint DEF='SpecialView'/\> \<NavigationInfo DEF='SpecialNav'/\> \<ROUTE fromNode='SpecialView' fromField='isBound' toNode='SpecialNav' toField='set_bind'/\>
+- [X3D Scene Authoring Hints, Viewpoints](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Viewpoints){:target="_blank"}
 
 ### Warning
 
-- Results are undefined if a bindable node (Viewpoint, OrthoViewpoint, NavigationInfo, Fog, Background, TextureBackground) is a contained child of LOD or Switch.
+- Results are undefined if a bindable node (Background, Fog, NavigationInfo, OrthoViewpoint, TextureBackground, Viewpoint) is a contained descendant node of either LOD or Switch. Avoid this authoring pattern.
 
 ## Example
 
 <x3d-canvas src="https://create3000.github.io/media/examples/Navigation/NavigationInfo/NavigationInfo.x3d" update="auto"></x3d-canvas>
 
-## External Links
+## See Also
 
-- [X3D Specification of NavigationInfo](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/navigation.html#NavigationInfo){:target="_blank"}
-- [X3D Scene Authoring Hints, Viewpoints](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Viewpoints){:target="_blank"}
+- [X3D Specification of NavigationInfo node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/navigation.html#NavigationInfo){:target="_blank"}

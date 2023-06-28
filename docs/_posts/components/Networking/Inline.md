@@ -1,6 +1,6 @@
 ---
 title: Inline
-date: 2022-01-07
+date: 2023-01-07
 nav: components-Networking
 categories: [components, Networking]
 tags: [Inline, Networking]
@@ -13,9 +13,9 @@ tags: [Inline, Networking]
 
 ## Overview
 
-Inline is an X3DBoundedObject node that can load nodes from another X3D scene via url.
+Inline can load another X3D or VRML model into the current scene via url. Inline is an X3DBoundedObject node that has bounding-box dimensions.
 
-The Inline node belongs to the **Networking** component and its default container field is *children.* It is available since X3D version 2.0 or later.
+The Inline node belongs to the **Networking** component and its default container field is *children.* It is available from X3D version 2.0 or higher.
 
 ## Hierarchy
 
@@ -31,7 +31,11 @@ The Inline node belongs to the **Networking** component and its default containe
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
 ### SFString [in, out] **description** ""
 
@@ -39,44 +43,42 @@ Author-provided prose that describes intended purpose of the url asset.
 
 #### Hint
 
-- Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for & ampersand character, or &amp;#34; for " quotation-mark character).
+- Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
 
 ### SFBool [in, out] **global** FALSE
 
-The global field controls potential external scoping effects of lights found within an Inline scene. Global lights illuminate all objects within their volume of lighting influence. Scoped lights only illuminate objects within the same transformation hierarchy.
+The *global* field controls potential external scoping effects of lights found within an Inline scene. Global lights illuminate all objects within their volume of lighting influence. Scoped lights only illuminate objects within the same transformation hierarchy.
 
 #### Hint
 
-- [X3D Architecture, 17.2.1.2 Scoping of lights](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/lighting.html#ScopingOfLights)
+- [X3D Architecture, 17.2.1.2 Scoping of lights](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/lighting.html#ScopingOfLights){:target="_blank"}
 
 ### SFBool [in, out] **load** TRUE
 
-*load*=true means load immediately, load=false means defer loading or else unload a previously loaded scene.
+*load*=true means *load* immediately, *load*=false means defer loading or else unload a previously loaded scene.
 
 #### Hints
 
 - Allows author to design when Inline loading occurs via user interaction, event chains or scripting.
 - Use a separate LoadSensor node to detect when loading is complete.
 
-#### Hint
-
-- Use LoadSensor to detect when loading is complete.
-
 ### MFString [in, out] **url** [ ] <small>[URI]</small>
 
-Address of X3D world to load into current scene.
+Address of X3D world to load Inline with current scene, retrieved either from local system or an online address. Browser support for X3D model support can include allowed file formats for XML .x3d, ClassicVRML .x3dv, X3D Binary .x3db, X3D JSON .json, and Virtual Reality Modeling Language (VRML97) .wrl.
 
 #### Hints
 
-- MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc." XML encoding for quotation mark " is &amp;quot; (which is called a character entity). Can replace embedded blank(s) in url queries with %20 for each blank character.
+- [(X3D version 4.0 draft) support includes .gltf and .glb](https://www.khronos.org/gltf){:target="_blank"} https://en.wikipedia.org/wiki/glTF
+- [Future work planned for PLY form](https://en.wikipedia.org/wiki/PLY_(file_format)){:target="_blank"}
+- [Future work planned for STL form](https://en.wikipedia.org/wiki/STL_(file_format)){:target="_blank"}
+- MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc."
+- Alternative XML encoding for quotation mark " is &amp;quot; (which is an example of a character entity).
+- Can replace embedded blank(s) in *url* queries with %20 for each blank character.
+- [X3D Scene Authoring Hints, urls](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#urls){:target="_blank"}
 
 #### Warning
 
-- Strictly match directory and filename capitalization for http links! This is important for portability. Some operating systems are forgiving of capitalization mismatches, but http/https and other operating systems are not.
-
-#### See Also
-
-- [X3D Scene Authoring Hints, urls](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#urls){:target="_blank"}
+- Strictly match directory and filename capitalization for http links! This is important for portability. Some operating systems are forgiving of capitalization mismatches, but http/https *url* addresses and paths in Unix-based operating systems are all case sensitive and intolerant of uppercase/lowercase mismatches.
 
 ### SFTime [in, out] **autoRefresh** 0 <small>[0,∞)</small>
 
@@ -107,10 +109,10 @@ Address of X3D world to load into current scene.
 
 Whether or not renderable content within this node is visually displayed.
 
-#### Hint
+#### Hints
 
-- The visible field has no effect on animation behaviors, event passing or other non-visual characteristics.
-- Content must be visible to be collidable and to be pickable.
+- The *visible* field has no effect on animation behaviors, event passing or other non-visual characteristics.
+- Content must be *visible* to be collidable and to be pickable.
 
 ### SFBool [in, out] **bboxDisplay** FALSE
 
@@ -124,25 +126,36 @@ Whether to display bounding box for associated geometry, aligned with world coor
 
 Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost. Bounding box size can also be defined as an optional authoring hint that suggests an optimization or constraint.
 
-#### Hint
+#### Hints
 
 - Can be useful for collision computations or inverse-kinematics (IK) engines.
+- Precomputation and inclusion of bounding box information can speed up the initialization of large detailed models, with a corresponding cost of increased file size.
+- [X3D Architecture, 10.2.2 Bounding boxes](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/grouping.html#BoundingBoxes){:target="_blank"}
+- [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/grouping.html#X3DBoundedObject){:target="_blank"}
 
 ### SFVec3f [ ] **bboxCenter** 0 0 0 <small>(-∞,∞)</small>
 
-Bounding box center: optional hint for position offset from origin of local coordinate system.
+Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
 
-## Description
+#### Hints
 
-### Hint
+- Precomputation and inclusion of bounding box information can speed up the initialization of large detailed models, with a corresponding cost of increased file size.
+- [X3D Architecture, 10.2.2 Bounding boxes](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/grouping.html#BoundingBoxes){:target="_blank"}
+- [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/grouping.html#X3DBoundedObject){:target="_blank"}
 
+## Advisories
+
+### Hints
+
+- [(X3D version 4.0 draft) support includes .gltf and .glb](https://www.khronos.org/gltf){:target="_blank"} https://en.wikipedia.org/wiki/glTF
 - You cannot ROUTE values into an Inline scene, use IMPORT/EXPORT (or ExternProtoDeclare and ProtoInstance) instead.
+- [X3D Scene Authoring Hints, Inlines and Prototypes](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#InlinesPrototypes){:target="_blank"}
+- [When parent node is LoadSensor, apply `containerField='children'` (X3Dv4) or `containerField='watchList'` (X3Dv3).](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges){:target="_blank"}
 
 ## Example
 
 <x3d-canvas src="https://create3000.github.io/media/examples/Networking/Inline/Inline.x3d" update="auto"></x3d-canvas>
 
-## External Links
+## See Also
 
-- [X3D Specification of Inline](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/networking.html#Inline){:target="_blank"}
-- [X3D Scene Authoring Hints, Inlines and Prototypes](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#InlinesPrototypes){:target="_blank"}
+- [X3D Specification of Inline node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/networking.html#Inline){:target="_blank"}

@@ -1,6 +1,6 @@
 ---
 title: ForcePhysicsModel
-date: 2022-01-07
+date: 2023-01-07
 nav: components-ParticleSystems
 categories: [components, ParticleSystems]
 tags: [ForcePhysicsModel, ParticleSystems]
@@ -15,7 +15,7 @@ tags: [ForcePhysicsModel, ParticleSystems]
 
 ForcePhysicsModel applies a constant force value to the particles.
 
-The ForcePhysicsModel node belongs to the **ParticleSystems** component and its default container field is *physics.* It is available since X3D version 3.2 or later.
+The ForcePhysicsModel node belongs to the **ParticleSystems** component and its default container field is *physics.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 
@@ -29,7 +29,11 @@ The ForcePhysicsModel node belongs to the **ParticleSystems** component and its 
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
 ### SFBool [in, out] **enabled** TRUE
 
@@ -37,13 +41,16 @@ Enables/disables node operation.
 
 ### SFVec3f [in, out] **force** 0 -9.8 0 <small>(∞,∞)</small>
 
-Force field indicates strength and direction of the propelling force on the particles (e.g. default is Earth's gravity).
+*force* field indicates strength and direction of the propelling *force* on the particles (for example, default is Earth's gravity).
 
 #### Hints
 
-- Force is specified in force base units (usually newtons). If particles have zero mass, ForcePhysicsModel node has no effect.
+- If particles have zero mass, ForcePhysicsModel node has no effect.
+- *force* is specified in *force* base units (usually newtons, acceleration of one kilogram at rate of one meter per second squared).
+- [Https://en.wikipedia.org/wiki/Newton_(unit) and Kilogram](https://en.wikipedia.org/wiki/Kilogram){:target="_blank"}
+- [X3D Architecture 4.3.6 Standard units and coordinate system](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/concepts.html#Standardunitscoordinates){:target="_blank"}
 
-## Description
+## Advisories
 
 ### Hint
 
@@ -53,6 +60,6 @@ Force field indicates strength and direction of the propelling force on the part
 
 <x3d-canvas src="https://create3000.github.io/media/examples/ParticleSystems/ForcePhysicsModel/ForcePhysicsModel.x3d" update="auto"></x3d-canvas>
 
-## External Links
+## See Also
 
-- [X3D Specification of ForcePhysicsModel](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/particleSystems.html#ForcePhysicsModel){:target="_blank"}
+- [X3D Specification of ForcePhysicsModel node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/particleSystems.html#ForcePhysicsModel){:target="_blank"}

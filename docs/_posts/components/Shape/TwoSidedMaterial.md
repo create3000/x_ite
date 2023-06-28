@@ -1,6 +1,6 @@
 ---
 title: TwoSidedMaterial
-date: 2022-01-07
+date: 2023-01-07
 nav: components-Shape
 categories: [components, Shape]
 tags: [TwoSidedMaterial, Shape]
@@ -15,9 +15,9 @@ tags: [TwoSidedMaterial, Shape]
 
 TwoSidedMaterial specifies surface rendering properties for associated geometry nodes, for outer (front) and inner (back) sides of polygons. Material attributes are used by the X3D lighting equations during rendering.
 
-The TwoSidedMaterial node belongs to the **Shape** component and its default container field is *material.* It is available since X3D version 3.2 until 4.0.
+The TwoSidedMaterial node belongs to the **Shape** component and its default container field is *material.* It is available from X3D version 3.2 to 4.0.
 
->Deprecated: This node is deprecated since X3D version 4.0. Future versions of the standard may remove this node.
+>Deprecated: This node is deprecated as of X3D version 4.0. Future versions of the standard may remove this node.
 {: .prompt-danger }
 
 ## Hierarchy
@@ -33,7 +33,11 @@ The TwoSidedMaterial node belongs to the **Shape** component and its default con
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
 ### SFBool [in, out] **separateBackColor** FALSE
 
@@ -41,7 +45,7 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 #### Warning
 
-- Backface Material values are ignored unless you set separateBackColor='true'
+- Backface Material values are ignored unless you set *separateBackColor*='true'
 
 ### SFFloat [in, out] **ambientIntensity** 0.2 <small>[0,1]</small>
 
@@ -51,9 +55,9 @@ How much ambient omnidirectional light is reflected from all light sources. Inte
 
 How much direct, angle-dependent light is reflected from all light sources.
 
-#### Hints
+#### Hint
 
-- Only emissiveColor affects IndexedLineSet, LineSet and PointSet. If a texture is present the diffuseColor is always multiplied with the texture color, in contrast to the specification. Set diffuseColor to (1 1 1) to get maximum texture color intensity.
+- Only emissiveColor affects IndexedLineSet, LineSet and PointSet.
 
 ### SFColor [in, out] **specularColor** 0 0 0 <small>[0,1]</small>
 
@@ -65,27 +69,21 @@ How much glowing light is emitted from this object.
 
 #### Hints
 
-- EmissiveColors glow even when all lights are off. Reset diffuseColor from default (.8 .8 .8) to (0 0 0) to avoid washout. Only emissiveColor affects IndexedLineSet, LineSet and PointSet.
+- EmissiveColors glow even when all lights are off.
+- Reset diffuseColor from default (.8 .8 .8) to (0 0 0) to avoid washout.
+- Only *emissiveColor* affects IndexedLineSet, LineSet and PointSet.
 
 #### Warning
 
-- Bright emissiveColor values can wash out other colors and some textures.
+- Bright *emissiveColor* values can wash out other colors and some textures.
 
 ### SFFloat [in, out] **shininess** 0.2 <small>[0,1]</small>
 
-Lower shininess values provide soft specular glows, while higher values result in sharper, smaller highlights. Interchange profile hint: this field may be ignored, applying the default value regardless.
+Lower *shininess* values provide soft specular glows, while higher values result in sharper, smaller highlights. Interchange profile hint: this field may be ignored, applying the default value regardless.
 
 ### SFFloat [in, out] **transparency** 0 <small>[0,1]</small>
 
-How "clear" an object is: 1.0 is completely transparent, 0.0 is completely opaque.
-
-#### Interchange profile hint:
-
-Transparency < .5 opaque, transparency > .5 transparent.
-
-#### Hint
-
-- If a texture is present the transparency is always multiplied with the texture's transparency, in contrast to the specification. Set transparency to (0) to get a full opaque texture color.
+How "clear" an object is: 1.0 is completely transparent, 0.0 is completely opaque. Interchange profile hint: *transparency* \< .5 opaque, *transparency* \> .5 transparent.
 
 ### SFFloat [in, out] **backAmbientIntensity** 0.2 <small>[0,1]</small>
 
@@ -95,9 +93,9 @@ How much ambient omnidirectional light is reflected from all light sources. Inte
 
 How much direct, angle-dependent light is reflected from all light sources.
 
-#### Hints
+#### Hint
 
-- Only emissiveColor affects IndexedLineSet, LineSet and PointSet. If a texture is present the diffuseColor is always multiplied with the texture color, in contrast to the specification. Set diffuseColor to (1 1 1) to get maximum texture color intensity.
+- Only emissiveColor affects IndexedLineSet, LineSet and PointSet.
 
 ### SFColor [in, out] **backSpecularColor** 0 0 0 <small>[0,1]</small>
 
@@ -109,7 +107,9 @@ How much glowing light is emitted from this object.
 
 #### Hints
 
-- EmissiveColors glow even when all lights are off. Reset diffuseColor from default (.8 .8 .8) to (0 0 0) to avoid washout. Only emissiveColor affects IndexedLineSet, LineSet and PointSet.
+- EmissiveColors glow even when all lights are off.
+- Reset diffuseColor from default (.8 .8 .8) to (0 0 0) to avoid washout.
+- Only emissiveColor affects IndexedLineSet, LineSet and PointSet.
 
 #### Warning
 
@@ -121,29 +121,28 @@ Lower shininess values provide soft specular glows, while higher values result i
 
 ### SFFloat [in, out] **backTransparency** 0 <small>[0,1]</small>
 
-How "clear" an object is: 1.0 is completely transparent, 0.0 is completely opaque.
+How "clear" an object is: 1.0 is completely transparent, 0.0 is completely opaque. Interchange profile hint: transparency \< .5 opaque, transparency \> .5 transparent.
 
-#### Interchange profile hint
-
-Transparency < .5 opaque, transparency > .5 transparent.
-
-#### Hint
-
-- If a texture is present the transparency is always multiplied with the texture's transparency, in contrast to the specification. Set transparency to (0) to get a full opaque texture color.
-
-## Description
+## Advisories
 
 ### Hints
 
-- Include `<component name='Shape' level='4'/>`
 - Insert Shape and Appearance nodes before adding material.
 - DEF/USE copies of a single node can provide a similar "look + feel" style for related shapes in a scene.
+- [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color){:target="_blank"}
+- [X3D Architecture 12.2.3 Two-sided materials](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/shape.html#TwoSidedMaterials){:target="_blank"}
+- [X3D Architecture 17.2.2 Lighting model](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/lighting.html#Lightingmodel){:target="_blank"}
+
+### Warnings
+
+- Requires X3D `profile='Full'` or else include `<component name='Shape' level='4'/>`
+- Corresponding geometry within the parent Shape must have solid='false' for two-sided rendering, otherwise no reverse-side back geometry is displayed.
+- X3D4 Architecture has deprecated TwoSidedMaterial, preferring use of child backMaterial node in parent Appearance.
 
 ## Example
 
 <x3d-canvas src="https://create3000.github.io/media/examples/Shape/TwoSidedMaterial/TwoSidedMaterial.x3d" update="auto"></x3d-canvas>
 
-## External Links
+## See Also
 
-- [X3D Specification of TwoSidedMaterial](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#TwoSidedMaterial){:target="_blank"}
-- [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color){:target="_blank"}
+- [X3D Specification of TwoSidedMaterial node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#TwoSidedMaterial){:target="_blank"}

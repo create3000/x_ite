@@ -46,10 +46,6 @@ Enables/disables this light source.
 
 *color* of light, applied to colors of objects.
 
-#### See Also
-
-- [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color){:target="_blank"}
-
 ### SFFloat [in, out] **intensity** 1 <small>[0,∞)</small>
 
 Brightness of direct emission from the light.
@@ -86,6 +82,6 @@ The shadowBias value controls the visibility of *shadow acne*.
 
 Size of the shadow map in pixels, must be power of two.
 
-## External Links
+## See Also
 
-- [X3D Specification of EnvironmentLight](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/lighting.html#EnvironmentLight){:target="_blank"}
+- [X3D Specification of EnvironmentLight node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/lighting.html#EnvironmentLight){:target="_blank"}

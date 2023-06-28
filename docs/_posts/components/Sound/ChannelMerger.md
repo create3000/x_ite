@@ -13,9 +13,9 @@ tags: [ChannelMerger, Sound]
 
 ## Overview
 
-ChannelMerger ...
+ChannelMerger unites different input channels into a single output channel.
 
-The ChannelMerger node belongs to the **Sound** component and its default container field is *children.* It is available since X3D version 4.0 or later.
+The ChannelMerger node belongs to the **Sound** component and its default container field is *children.* It is available from X3D version 4.0 or higher.
 
 ## Hierarchy
 
@@ -43,7 +43,7 @@ Author-provided prose that describes intended purpose of the url asset.
 
 #### Hint
 
-- Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &#38; for & ampersand character, or &#34; for " quotation-mark character).
+- Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
 
 ### SFBool [in, out] **enabled** TRUE
 
@@ -95,8 +95,14 @@ The *children* field specifies audio-graph sound sources providing input signals
 
 #### Warning
 
-- Contained AudioClip or MovieTexture nodes must have containerField='*children*' to override otherwise-incorrect defaults.
+- Contained AudioClip or MovieTexture nodes must have `containerField='children'` to override otherwise-incorrect defaults.
 
-## External Links
+## Advisories
 
-- [X3D Specification of ChannelMerger](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#ChannelMerger){:target="_blank"}
+### Hint
+
+- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#channelmergernode){:target="_blank"}
+
+## See Also
+
+- [X3D Specification of ChannelMerger node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#ChannelMerger){:target="_blank"}

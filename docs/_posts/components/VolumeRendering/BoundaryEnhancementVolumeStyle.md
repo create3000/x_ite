@@ -1,6 +1,6 @@
 ---
 title: BoundaryEnhancementVolumeStyle
-date: 2022-01-07
+date: 2023-01-07
 nav: components-VolumeRendering
 categories: [components, VolumeRendering]
 tags: [BoundaryEnhancementVolumeStyle, VolumeRendering]
@@ -15,7 +15,7 @@ tags: [BoundaryEnhancementVolumeStyle, VolumeRendering]
 
 BoundaryEnhancementVolumeStyle provides boundary enhancement for the volume rendering style.
 
-The BoundaryEnhancementVolumeStyle node belongs to the **VolumeRendering** component and its default container field is *renderStyle.* It is available since X3D version 3.3 or later.
+The BoundaryEnhancementVolumeStyle node belongs to the **VolumeRendering** component and its default container field is *renderStyle.* It is available from X3D version 3.3 or higher.
 
 ## Hierarchy
 
@@ -30,7 +30,11 @@ The BoundaryEnhancementVolumeStyle node belongs to the **VolumeRendering** compo
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
 ### SFBool [in, out] **enabled** TRUE
 
@@ -48,6 +52,12 @@ Enables/disables node operation.
 
 *opacityFactor* k_ge is the power function to control the slope of the opacity curve to highlight the set of data.
 
-## External Links
+## Advisories
 
-- [X3D Specification of BoundaryEnhancementVolumeStyle](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/volume.html#BoundaryEnhancementVolumeStyle){:target="_blank"}
+### Warning
+
+- Requires X3D `profile='Full'` or else include `<component name='VolumeRendering' level='2'/>`
+
+## See Also
+
+- [X3D Specification of BoundaryEnhancementVolumeStyle node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/volume.html#BoundaryEnhancementVolumeStyle){:target="_blank"}

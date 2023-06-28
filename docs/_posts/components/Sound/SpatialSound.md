@@ -13,9 +13,9 @@ tags: [SpatialSound, Sound]
 
 ## Overview
 
-SpatialSound ...
+The SpatialSound node controls the 3D spatialization of sound playback by a child AudioClip or MovieTexture node. Sound intensity includes stereo support, varying according to user location and view direction in the scene.
 
-The SpatialSound node belongs to the **Sound** component and its default container field is *children.* It is available since X3D version 4.0 or later.
+The SpatialSound node belongs to the **Sound** component and its default container field is *children.* It is available from X3D version 4.0 or higher.
 
 ## Hierarchy
 
@@ -42,7 +42,7 @@ Author-provided prose that describes intended purpose of the url asset.
 
 #### Hint
 
-- Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &#38; for & ampersand character, or &#34; for " quotation-mark character).
+- Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
 
 ### SFBool [in, out] **enabled** TRUE
 
@@ -166,8 +166,22 @@ The *children* field specifies audio-graph sound sources providing input signals
 
 #### Warning
 
-- Contained AudioClip or MovieTexture nodes must have containerField='*children*' to override otherwise-incorrect defaults.
+- Contained AudioClip or MovieTexture nodes must have `containerField='children'` to override otherwise-incorrect defaults.
 
-## External Links
+## Advisories
 
-- [X3D Specification of SpatialSound](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#SpatialSound){:target="_blank"}
+### Hints
+
+- If the audio source is stereo or multi-channel, channel separation is retained during playback.
+- [X3D Sound component Figure 16.2 Sound Node Geometry](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/sound.html#f-Soundnodegeometry){:target="_blank"}
+- [W3C Web Audio API, PannerNode Interface](https://www.w3.org/TR/webaudio/#pannernode){:target="_blank"}
+- [X3D Scene Authoring Hints:Audio](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Audio){:target="_blank"}
+- [Wikipedia 3D sound localization](https://en.wikipedia.org/wiki/3D_sound_localization){:target="_blank"}
+
+### Warning
+
+- While providing sounds on the ground plane, ensure that the audible auralization volume is sufficiently elevated to match avatar height.
+
+## See Also
+
+- [X3D Specification of SpatialSound node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#SpatialSound){:target="_blank"}

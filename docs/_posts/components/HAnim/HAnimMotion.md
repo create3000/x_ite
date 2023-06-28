@@ -13,9 +13,9 @@ tags: [HAnimMotion, HAnim]
 
 ## Overview
 
-HAnimMotion ...
+An HAnimMotion node supports discrete frame-by-frame playback for H-Anim motion data animation. Design characteristics include integration with HAnim figure data and HAnimJoint nodes, animation control, and playback of raw motion data.
 
-The HAnimMotion node belongs to the **HAnim** component and its default container field is *children.* It is available since X3D version 4.0 or later.
+The HAnimMotion node belongs to the **HAnim** component and its default container field is *children.* It is available from X3D version 4.0 or higher.
 
 ## Hierarchy
 
@@ -29,15 +29,19 @@ The HAnimMotion node belongs to the **HAnim** component and its default containe
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
-
-### SFString [in, out] **description** ""
-
-Author-provided prose that describes intended purpose of the url asset.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
 
 #### Hint
 
-- Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for & ampersand character, or &amp;#34; for " quotation-mark character).
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
+
+### SFString [in, out] **description** ""
+
+Author-provided prose that describes intended purpose of this node.
+
+#### Hint
+
+- Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
 
 ### SFBool [in, out] **enabled** TRUE
 
@@ -167,6 +171,16 @@ Level Of Articulation 0..4 indicates complexity and detail of joints for given h
 
 ### SFInt32 [out] **frameCount**
 
-## External Links
+Output field *frameCount*.
 
-- [X3D Specification of HAnimMotion](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/hanim.html#HAnimMotion){:target="_blank"}
+## Advisories
+
+### Hints
+
+- [HAnim Specification](https://www.web3d.org/documents/specifications/19774/V2.0){:target="_blank"}
+- HAnim Specification, clause 6.2 Introduction to Motion objectshttps://www.web3d.org/documents/specifications/19774/V2.0/MotionDataAnimation/MotionNodes.html#IntroductionToMotionNodes
+- [HAnim Specification part 2, clause 6.6 Example Usage of Motion object](https://www.web3d.org/documents/specifications/19774/V2.0/MotionDataAnimation/MotionNodes.html#MotionObjectExample){:target="_blank"}
+
+## See Also
+
+- [X3D Specification of HAnimMotion node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/hanim.html#HAnimMotion){:target="_blank"}

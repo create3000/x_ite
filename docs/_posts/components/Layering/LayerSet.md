@@ -1,6 +1,6 @@
 ---
 title: LayerSet
-date: 2022-01-07
+date: 2023-01-07
 nav: components-Layering
 categories: [components, Layering]
 tags: [LayerSet, Layering]
@@ -15,7 +15,7 @@ tags: [LayerSet, Layering]
 
 LayerSet defines a list of layers and a rendering order. The rendering order is specified by the order field.
 
-The LayerSet node belongs to the **Layering** component and its default container field is *children.* It is available since X3D version 3.2 or later.
+The LayerSet node belongs to the **Layering** component and its default container field is *children.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 
@@ -28,7 +28,11 @@ The LayerSet node belongs to the **Layering** component and its default containe
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
 ### SFInt32 [in, out] **activeLayer** 0 <small>(0,∞)</small>
 
@@ -40,29 +44,32 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 ### MFInt32 [in, out] **order** [ 0 ] <small>(0,∞)</small>
 
-The order list defines the order in which layers are rendered. Each value corresponds to the ordinals of the layers.
+The *order* list defines the *order* in which layers are rendered. Each value corresponds to the ordinals of the layers.
 
 #### Hint
 
-- The order list may contain repetitions of ordinal values, in which case the layer is rendered again.
+- The *order* list may contain repetitions of ordinal values, in which case the layer is rendered again.
 
 #### Warnings
 
-- If order contains number values that are not ordinals assigned to layers, such numbers are ignored. Layers that are not included in the order list are not rendered.
+- If *order* contains number values that are not ordinals assigned to layers, such numbers are ignored.
+- Layers that are not included in the *order* list are not rendered.
 
 ### MFNode [in, out] **layers** [ ] <small>[X3DLayerNode]</small>
 
-The layers list defines a list of Layer nodes that contain the constituent parts of the scene. Each layer is assigned an ordinal number depending on its position in this contained list of nodes.
+The *layers* list defines a list of Layer nodes that contain the constituent parts of the scene. Each layer is assigned an ordinal number depending on its position in this contained list of nodes.
 
 #### Hints
 
-- Ordinal values start with the numeral 1 representing the first item in the list. Nodes that are not part of a layer are considered to be in layer 0.
+- Ordinal values start with the numeral 1 representing the first item in the list.
+- Nodes that are not part of a layer are considered to be in layer 0.
 
-## Description
+## Advisories
 
-### Hint
+### Hints
 
 - The layer first specified in the order field is the first layer rendered and appears below any other layers. The layer last specified in the order field is the last layer rendered and correspondingly appears on top of all other layers.
+- [X3D Architecture 35.2.1 Overview of layering](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/layering.html#OverviewOfLayering){:target="_blank"}
 
 ### Warning
 
@@ -72,7 +79,6 @@ The layers list defines a list of Layer nodes that contain the constituent parts
 
 <x3d-canvas src="https://create3000.github.io/media/examples/Layering/LayerSet/LayerSet.x3d" update="auto"></x3d-canvas>
 
-## External Links
+## See Also
 
-- [X3D Specification of LayerSet](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/layering.html#LayerSet){:target="_blank"}
-- [X3D Abstract Specification 35.2.1 Overview of layering](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/layering.html#OverviewOfLayering){:target="_blank"}
+- [X3D Specification of LayerSet node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/layering.html#LayerSet){:target="_blank"}

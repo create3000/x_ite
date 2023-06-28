@@ -1,6 +1,6 @@
 ---
 title: SpotLight
-date: 2022-01-07
+date: 2023-01-07
 nav: components-Lighting
 categories: [components, Lighting]
 tags: [SpotLight, Lighting]
@@ -13,9 +13,9 @@ tags: [SpotLight, Lighting]
 
 ## Overview
 
-SpotLight is a light source that illuminates geometry within a conical beam. Light illuminates all geometry and is normally scoped to illuminate peers and children nodes within the scene graph hierarchy Lights have no visible shape themselves and shine through occluding geometry.
+SpotLight is a light source that illuminates geometry within a conical beam. Lighting illuminates all geometry except lines and points. By default, light scope only illuminates peer geometry and children nodes within the scene graph hierarchy. Lights have no visible shape themselves and lighting effects continue through any intermediate geometry.
 
-The SpotLight node belongs to the **Lighting** component and its default container field is *children.* It is available since X3D version 2.0 or later.
+The SpotLight node belongs to the **Lighting** component and its default container field is *children.* It is available from X3D version 2.0 or higher.
 
 ## Hierarchy
 
@@ -30,11 +30,19 @@ The SpotLight node belongs to the **Lighting** component and its default contain
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
 ### SFBool [in, out] **global** TRUE
 
-*global* lights illuminate all objects within their volume of lighting influence. Scoped lights only illuminate objects within the same transformation hierarchy.
+Global lights illuminate all objects within their volume of lighting influence. Scoped lights only illuminate objects within the same transformation hierarchy.
+
+#### Warning
+
+- DirectionalLight default *global*=false to limit scope and avoid inadvertently illuminating every object in a large scene. PointLight and SpotLight default *global*=true since their effects are each limited by maximum radius value.
 
 ### SFBool [in, out] **on** TRUE
 
@@ -44,7 +52,7 @@ Enables/disables this light source.
 
 *color* of light, applied to colors of objects.
 
-#### See Also
+#### Hint
 
 - [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color){:target="_blank"}
 
@@ -58,7 +66,11 @@ Brightness of ambient (nondirectional background) emission from the light.
 
 ### SFVec3f [in, out] **attenuation** 1 0 0 <small>[0,∞)</small>
 
-Constant, linear-distance and squared-distance dropoff factors.
+Constant, linear-distance and squared-distance dropoff factors as radial distance increases from the source.
+
+#### Hint
+
+- *attenuation* = 1/max(*attenuation*[0] + *attenuation*[1] ⨯ r + *attenuation*[2] ⨯ r2 , 1)
 
 ### SFVec3f [in, out] **location** 0 0 0 <small>(-∞,∞)</small>
 
@@ -76,26 +88,27 @@ Maximum effective distance of light relative to local light position, affected b
 
 Inner conical solid angle (in radians) where light source has uniform full intensity.
 
-#### Hint
+#### Hints
 
-- BeamWidth is inner angle of full intensity, cutOffAngle is outer angle of zero intensity. Therefore set beamWidth\<= cutOffAngle.
+- *beamWidth* is inner angle of full intensity, cutOffAngle is outer angle of zero intensity. Therefore set *beamWidth* \<= cutOffAngle.
+- [Radian units for angular measure](https://en.wikipedia.org/wiki/Radian){:target="_blank"}
 
 #### Warning
 
-- If beamWidth > cutOffAngle, then beamWidth reset to equal cutOffAngle.
+- If *beamWidth* \> cutOffAngle, then *beamWidth* is reset to equal cutOffAngle.
 
 ### SFFloat [in, out] **cutOffAngle** π/2 <small>(0,π/2]</small>
 
 Outer conical solid angle (in radians) where light source intensity becomes zero.
 
-#### Hint
+#### Hints
 
-- beamWidth is inner angle of full intensity, cutOffAngle is outer angle of zero intensity. Therefore set beamWidth\<= cutOffAngle.
+- BeamWidth is inner angle of full intensity, *cutOffAngle* is outer angle of zero intensity. Therefore set beamWidth \<= *cutOffAngle*.
+- [Radian units for angular measure](https://en.wikipedia.org/wiki/Radian){:target="_blank"}
 
-#### Warnings
+#### Warning
 
-- If beamWidth > cutOffAngle, then beamWidth reset to equal cutOffAngle.
-- If shadows is `TRUE`, cutOffAngle must be significantly smaller than π/2.
+- If beamWidth \> *cutOffAngle*, then beamWidth is reset to equal *cutOffAngle*.
 
 ### SFBool [in, out] **shadows** FALSE
 
@@ -117,16 +130,16 @@ The shadowBias value controls the visibility of *shadow acne*.
 
 Size of the shadow map in pixels, must be power of two.
 
-## Description
+## Advisories
 
 ### Hint
 
-- HeadLight enabled on/off is controlled by NavigationInfo.
+- The bound NavigationInfo controls whether headlight is enabled on/off.
 
 ## Example
 
 <x3d-canvas src="https://create3000.github.io/media/examples/Lighting/SpotLight/SpotLight.x3d" update="auto"></x3d-canvas>
 
-## External Links
+## See Also
 
-- [X3D Specification of SpotLight](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/lighting.html#SpotLight){:target="_blank"}
+- [X3D Specification of SpotLight node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/lighting.html#SpotLight){:target="_blank"}

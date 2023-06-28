@@ -1,6 +1,6 @@
 ---
 title: TextureTransformMatrix3D
-date: 2022-01-07
+date: 2023-01-07
 nav: components-Texturing3D
 categories: [components, Texturing3D]
 tags: [TextureTransformMatrix3D, Texturing3D]
@@ -15,7 +15,7 @@ tags: [TextureTransformMatrix3D, Texturing3D]
 
 TextureTransformMatrix3D applies a 3D transformation to texture coordinates.
 
-The TextureTransformMatrix3D node belongs to the **Texturing3D** component and its default container field is *textureTransform.* It is available since X3D version 3.1 or later.
+The TextureTransformMatrix3D node belongs to the **Texturing3D** component and its default container field is *textureTransform.* It is available from X3D version 3.1 or higher.
 
 ## Hierarchy
 
@@ -31,27 +31,37 @@ The TextureTransformMatrix3D node belongs to the **Texturing3D** component and i
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
 ### SFString [in, out] **mapping** ""
 
-The mapping label identifies which texture coordinates and transformations are used to compute texture effects from corresponding geometry on a given material.
+The *mapping* label identifies which texture coordinates and transformations are used to compute texture effects from corresponding geometry on a given material.
+
+#### Hint
+
+- [TODO support planned to perform multiple-node *mapping* validation checks using X3D Schematron or X3D Validator](https://savage.nps.edu/X3dValidator){:target="_blank"}
 
 ### SFMatrix4f [in, out] **matrix** 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 <small>(-∞,∞)</small>
 
-*matrix* is a generalized, unfiltered 4x4 transformation matrix to modify texture (opposite effect appears on geometry).
+*matrix* is a generalized, unfiltered 4x4 transformation *matrix* to modify texture (opposite effect appears on geometry).
 
-## Description
+## Advisories
 
 ### Hints
 
 - Order of operations is translation, rotation about center, non-uniform scale about center.
-- Insert Shape and Appearance nodes before adding TextureTransform.
+- Insert Shape and Appearance nodes before adding TextureTransformMatrix3D.
+- [Texture mapping](https://en.wikipedia.org/wiki/Texture_mapping){:target="_blank"}
 
-### Warning
+### Warnings
 
 - Resulting visible effects appear reversed because image changes occur before mapping to geometry.
+- Requires X3D `profile='Full'` or else include `<component name='Texturing3D' level='1'/>`
 
-## External Links
+## See Also
 
-- [X3D Specification of TextureTransformMatrix3D](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/texture3D.html#TextureTransformMatrix3D){:target="_blank"}
+- [X3D Specification of TextureTransformMatrix3D node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/texture3D.html#TextureTransformMatrix3D){:target="_blank"}

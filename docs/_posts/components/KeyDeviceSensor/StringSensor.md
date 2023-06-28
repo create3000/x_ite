@@ -1,6 +1,6 @@
 ---
 title: StringSensor
-date: 2022-01-07
+date: 2023-01-07
 nav: components-KeyDeviceSensor
 categories: [components, KeyDeviceSensor]
 tags: [StringSensor, KeyDeviceSensor]
@@ -13,9 +13,9 @@ tags: [StringSensor, KeyDeviceSensor]
 
 ## Overview
 
-StringSensor generates events as the user presses keys on the keyboard.
+StringSensor generates events as the user presses keys on the keyboard. Browser support includes the notion of "keyboard focus".
 
-The StringSensor node belongs to the **KeyDeviceSensor** component and its default container field is *children.* It is available since X3D version 3.0 or later.
+The StringSensor node belongs to the **KeyDeviceSensor** component and its default container field is *children.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -31,7 +31,11 @@ The StringSensor node belongs to the **KeyDeviceSensor** component and its defau
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
 ### SFBool [in, out] **enabled** TRUE
 
@@ -39,7 +43,7 @@ Enables/disables node operation.
 
 ### SFBool [in, out] **deletionAllowed** TRUE
 
-If deletionAllowed is true, then previously entered character in enteredText can be removed. If deletionAllowed is false, then characters may only be added to the string.
+If *deletionAllowed* is true, then previously entered character in enteredText can be removed. If *deletionAllowed* is false, then characters may only be added to the string.
 
 #### Hint
 
@@ -49,22 +53,40 @@ If deletionAllowed is true, then previously entered character in enteredText can
 
 Events generated as character-producing keys are pressed on keyboard.
 
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
+
 ### SFString [out] **finalText**
 
-Events generated when sequence of keystrokes matches keys in terminationText string when this condition occurs, enteredText is moved to finalText and enteredText is set to empty string.
+Events generated when sequence of keystrokes matches keys in terminationText string when this condition occurs, enteredText is moved to *finalText* and enteredText is set to empty string.
 
 #### Hint
 
 - Termination key is typically defined by local system.
 
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
+
 ### SFBool [out] **isActive**
 
-When the user begins typing, the StringSensor sends an isActive event with value true. When the string is terminated, the StringSensor sends an isActive event with value false.
+Select geometry by activating the pointing device (for example, clicking the mouse) to generate *isActive* events. Output event *isActive*=true is sent when geometry is selected (for example, when primary mouse button is pressed), output event *isActive*=false is sent when geometry is deselected (for example, when primary mouse button is released).
+
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
+
+## Advisories
+
+### Hint
+
+- [Example scenes and authoring assets](https://x3dgraphics.com/examples/X3dForWebAuthors/Chapter08UserInteractivity){:target="_blank"}
 
 ## Example
 
 <x3d-canvas src="https://create3000.github.io/media/examples/KeyDeviceSensor/StringSensor/StringSensor.x3d" update="auto"></x3d-canvas>
 
-## External Links
+## See Also
 
-- [X3D Specification of StringSensor](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/keyboard.html#StringSensor){:target="_blank"}
+- [X3D Specification of StringSensor node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/keyboard.html#StringSensor){:target="_blank"}

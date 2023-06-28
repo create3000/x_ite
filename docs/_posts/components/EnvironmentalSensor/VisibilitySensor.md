@@ -1,6 +1,6 @@
 ---
 title: VisibilitySensor
-date: 2022-01-07
+date: 2023-01-07
 nav: components-EnvironmentalSensor
 categories: [components, EnvironmentalSensor]
 tags: [VisibilitySensor, EnvironmentalSensor]
@@ -15,7 +15,7 @@ tags: [VisibilitySensor, EnvironmentalSensor]
 
 VisibilitySensor detects when user can see a specific object or region as they navigate the world. The region sensed for visibility to the user is bounded by a rectangular box.
 
-The VisibilitySensor node belongs to the **EnvironmentalSensor** component and its default container field is *children.* It is available since X3D version 2.0 or later.
+The VisibilitySensor node belongs to the **EnvironmentalSensor** component and its default container field is *children.* It is available from X3D version 2.0 or higher.
 
 ## Hierarchy
 
@@ -31,7 +31,11 @@ The VisibilitySensor node belongs to the **EnvironmentalSensor** component and i
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
 ### SFBool [in, out] **enabled** TRUE
 
@@ -49,15 +53,27 @@ Translation offset from origin of local coordinate system.
 
 Time event generated when user's camera enters visibility region for sensor.
 
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
+
 ### SFTime [out] **exitTime**
 
 Time event generated when user's camera exits visibility region for sensor.
 
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
+
 ### SFBool [out] **isActive**
 
-*isActive* true/false events are sent when triggering the sensor. isActive=true when entering visibility region, isActive=false when exiting visibility region.
+*isActive* true/false events are sent when triggering the sensor. *isActive*=true when entering visibility region, *isActive*=false when exiting visibility region.
 
-## Description
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
+
+## Advisories
 
 ### Hints
 
@@ -68,6 +84,6 @@ Time event generated when user's camera exits visibility region for sensor.
 
 <x3d-canvas src="https://create3000.github.io/media/examples/EnvironmentalSensor/VisibilitySensor/VisibilitySensor.x3d" update="auto"></x3d-canvas>
 
-## External Links
+## See Also
 
-- [X3D Specification of VisibilitySensor](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/environmentalSensor.html#VisibilitySensor){:target="_blank"}
+- [X3D Specification of VisibilitySensor node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/environmentalSensor.html#VisibilitySensor){:target="_blank"}

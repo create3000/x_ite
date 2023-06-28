@@ -1,6 +1,6 @@
 ---
 title: NurbsTrimmedSurface
-date: 2022-01-07
+date: 2023-01-07
 nav: components-NURBS
 categories: [components, NURBS]
 tags: [NurbsTrimmedSurface, NURBS]
@@ -15,7 +15,7 @@ tags: [NurbsTrimmedSurface, NURBS]
 
 NurbsTrimmedSurface generates texture coordinates from a Non-Uniform Rational B-Spline (NURBS) surface.
 
-The NurbsTrimmedSurface node belongs to the **NURBS** component and its default container field is *geometry.* It is available since X3D version 3.0 or later.
+The NurbsTrimmedSurface node belongs to the **NURBS** component and its default container field is *geometry.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -31,23 +31,29 @@ The NurbsTrimmedSurface node belongs to the **NURBS** component and its default 
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
-
-### SFInt32 [in, out] **uTessellation** 0 <small>(-∞,∞)</small>
-
-Hint for surface tesselation.
-
-### SFInt32 [in, out] **vTessellation** 0 <small>(-∞,∞)</small>
-
-Hint for surface tesselation.
-
-### SFBool [ ] **solid** TRUE
-
-Setting solid true means draw only one side of polygons (backface culling on), setting solid false means draw both sides of polygons (backface culling off).
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
 
 #### Hint
 
-- If in doubt, use solid='false' for maximum visibility.
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
+
+### SFInt32 [in, out] **uTessellation** 0 <small>(-∞,∞)</small>
+
+Hint for surface tessellation.
+
+### SFInt32 [in, out] **vTessellation** 0 <small>(-∞,∞)</small>
+
+Hint for surface tessellation.
+
+### SFBool [ ] **solid** TRUE
+
+Setting *solid* true means draw only one side of polygons (backface culling on), setting *solid* false means draw both sides of polygons (backface culling off).
+
+#### Hints
+
+- Mnemonic "this geometry is *solid* like a brick" (you don't render the inside of a brick).
+- If in doubt, use *solid*='false' for maximum visibility.
+- (X3D version 4.0 draft) accessType relaxed to inputOutput in order to support animation and visualization.
 
 #### Warning
 
@@ -87,28 +93,32 @@ Knot vector, where size = number of control points + order of curve.
 
 ### MFDouble [in, out] **weight** [ ] <small>(0,∞)</small>
 
-Vector assigning relative weight value to each control point.
+Vector assigning relative *weight* value to each control point.
 
 ### SFNode [in, out] **texCoord** NULL <small>[X3DTextureCoordinateNode|NurbsTextureCoordinate]</small>
 
-Input/Output field texCoord.
+Single contained NurbsTextureCoordinate, TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
 
 ### SFNode [in, out] **controlPoint** NULL <small>[X3DCoordinateNode]</small>
 
-Input/Output field controlPoint.
+Single contained Coordinate or CoordinateDouble node that can specify control points for NURBS geometry definitions.
 
 ### MFNode [in] **addTrimmingContour**
 
-Input field addTrimmingContour.
+Input field *addTrimmingContour*.
 
 ### MFNode [in] **removeTrimmingContour**
 
-Input field removeTrimmingContour.
+Input field *removeTrimmingContour*.
 
 ### MFNode [in, out] **trimmingContour** [ ] <small>[Contour2D]</small>
 
-Input/Output field trimmingContour.
+A set of Contour2D nodes are used as trimming loops.
 
-## External Links
+#### Hint
 
-- [X3D Specification of NurbsTrimmedSurface](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/nurbs.html#NurbsTrimmedSurface){:target="_blank"}
+- If no trimming contours are defined, NurbsTrimmedSurface has same semantics as NurbsPatchSurface node.
+
+## See Also
+
+- [X3D Specification of NurbsTrimmedSurface node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/nurbs.html#NurbsTrimmedSurface){:target="_blank"}

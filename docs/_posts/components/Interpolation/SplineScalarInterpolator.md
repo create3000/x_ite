@@ -1,6 +1,6 @@
 ---
 title: SplineScalarInterpolator
-date: 2022-01-07
+date: 2023-01-07
 nav: components-Interpolation
 categories: [components, Interpolation]
 tags: [SplineScalarInterpolator, Interpolation]
@@ -15,7 +15,7 @@ tags: [SplineScalarInterpolator, Interpolation]
 
 SplineScalarInterpolator performs non-linear interpolation among paired lists of float values and velocities to produce an SFFloat value_changed output event.
 
-The SplineScalarInterpolator node belongs to the **Interpolation** component and its default container field is *children.* It is available since X3D version 3.2 or later.
+The SplineScalarInterpolator node belongs to the **Interpolation** component and its default container field is *children.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 
@@ -30,31 +30,49 @@ The SplineScalarInterpolator node belongs to the **Interpolation** component and
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
 ### SFFloat [in] **set_fraction** <small>(-∞,∞)</small>
 
 *set_fraction* selects input key for corresponding use of keyValue, keyVelocity values for output computation.
 
-### SFBool [in, out] **closed** FALSE
+#### Hint
 
-Whether or not the curve is closed (i.e. matching end values), with continuous velocity vectors as the interpolator transitions from the last key to the first key.
-
-#### Warnings
-
-- If velocity vectors at first and last keys are specified, the closed field is ignored. If keyValues at first and last key are not identical, the closed field is ignored.
-
-### MFFloat [in, out] **key** [ ] <small>(-∞,∞)</small>
-
-Definition parameters for nonlinear-interpolation function time intervals, in increasing order and corresponding to keyValue, keyVelocity array values.
+- *set_fraction* values are typically in same range interval as values in the key array. Response to an input *set_fraction* value less than minimum is equivalent to minimum key, and response to an input *set_fraction* value greater than maximum is equivalent to maximum key.
 
 #### Warning
 
+- It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
+
+### SFBool [in, out] **closed** FALSE
+
+Whether or not the curve is *closed* (i.e. matching end values), with continuous velocity vectors as the interpolator transitions from the last key to the first key.
+
+#### Warnings
+
+- If velocity vectors at first and last keys are specified, the *closed* field is ignored.
+- If keyValues at first and last key are not identical, the *closed* field is ignored.
+
+### MFFloat [in, out] **key** [ ] <small>(-∞,∞)</small>
+
+Definition parameters for nonlinear-interpolation function time intervals, listed in non-decreasing order and corresponding to keyValue, keyVelocity array values.
+
+#### Hint
+
+- Typical interval for values in *key* array is within range of 0 to 1, but larger intervals can be defined with arbitrary bounds.
+
+#### Warnings
+
 - Number of keys must match number of keyValues!
+- Values in *key* array shall be monotonically non-decreasing, meaning that each value is greater than or equal to the preceding value.
 
 ### MFFloat [in, out] **keyValue** [ ] <small>(-∞,∞)</small>
 
-Output values for nonlinear interpolation, each corresponding to time-fraction keys.
+Output values for nonlinear interpolation, each corresponding to an input-fraction value in the key array.
 
 #### Warning
 
@@ -62,45 +80,43 @@ Output values for nonlinear interpolation, each corresponding to time-fraction k
 
 ### MFFloat [in, out] **keyVelocity** [ ] <small>(-∞,∞)</small>
 
-Output values for nonlinear interpolation, each corresponding to time-fraction keys.
+Output values for nonlinear interpolation, each corresponding to an input-fraction value in the key array.
 
 #### Warning
 
-- Number of keys must match number of keyVelocity values!
+- Number of keys must match number of *keyVelocity* values!
 
 ### SFBool [in, out] **normalizeVelocity** FALSE
 
 *normalizeVelocity* field specifies whether the velocity vectors are normalized to produce smooth speed transitions, or transformed into tangency vectors.
 
-#### See Also
+#### Hint
 
-- [X3D 19.2.3 Non-linear interpolation](https://www.web3d.org/files/specifications/19775-1/V3.3/Part01/components/interpolators.html#NonlinearInterpolation){:target="_blank"}
+- [X3D 19.2.3 Non-linear interpolation](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/interpolators.html#NonlinearInterpolation){:target="_blank"}
 
 ### SFFloat [out] **value_changed**
 
 Nonlinearly interpolated output value computed by using current time fraction along with corresponding key, keyValue and keyVelocity values.
 
-## Description
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
+
+## Advisories
 
 ### Hints
 
 - Typical input connection is ROUTE someTimeSensorDEF.fraction_changed TO thisInterpolatorDEF.set_fraction
 - Typical output connection is ROUTE thisInterpolatorDEF.value_changed TO someDestinationNodeDEF.set_someAttribute.
-- Include `<component name='Interpolation' level='4'/>`
+
+### Warning
+
+- Requires X3D `profile='Full'` or else include `<component name='Interpolation' level='4'/>`
 
 ## Example
 
 <x3d-canvas src="https://create3000.github.io/media/examples/Interpolation/SplineScalarInterpolator/SplineScalarInterpolator.x3d" update="auto"></x3d-canvas>
 
-<table class="x3d-widgets"><tbody><tr><td><input id="key-velocity" type="checkbox" value="true"></input><label for="key-velocity">Key Velocity</label></td><td><input id="normalize-velocity" type="checkbox" value="true"></input><label for="normalize-velocity">Normalize Key Velocity
-</label></td></tr></tbody></table>
-
-- [/c3-source-example]
-
 ## See Also
 
-- [ScalarInterpolator](/x_ite/components/interpolation/scalarinterpolator)
-
-## External Links
-
-- [X3D Specification of SplineScalarInterpolator](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/interpolators.html#SplineScalarInterpolator){:target="_blank"}
+- [X3D Specification of SplineScalarInterpolator node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/interpolators.html#SplineScalarInterpolator){:target="_blank"}

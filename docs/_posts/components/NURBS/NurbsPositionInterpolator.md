@@ -1,6 +1,6 @@
 ---
 title: NurbsPositionInterpolator
-date: 2022-01-07
+date: 2023-01-07
 nav: components-NURBS
 categories: [components, NURBS]
 tags: [NurbsPositionInterpolator, NURBS]
@@ -15,7 +15,7 @@ tags: [NurbsPositionInterpolator, NURBS]
 
 NurbsPositionInterpolator describes a 3D NURBS curve and outputs interpolated position values.
 
-The NurbsPositionInterpolator node belongs to the **NURBS** component and its default container field is *children.* It is available since X3D version 3.0 or later.
+The NurbsPositionInterpolator node belongs to the **NURBS** component and its default container field is *children.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -29,15 +29,27 @@ The NurbsPositionInterpolator node belongs to the **NURBS** component and its de
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
 ### SFFloat [in] **set_fraction** <small>(-∞,∞)</small>
 
-Setting fraction in range [0,1] selects input key for corresponding keyValue output, computing a 3D position on the curve.
+Setting *fraction* in range [0,1] selects input key for corresponding keyValue output, computing a 3D position on the curve.
+
+#### Hint
+
+- *set_fraction* values are typically in same range interval as values in the key array. Response to an input *set_fraction* value less than minimum is equivalent to minimum key, and response to an input *set_fraction* value greater than maximum is equivalent to maximum key.
+
+#### Warning
+
+- It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
 
 ### SFInt32 [in, out] **order** 3 <small>(2,∞)</small>
 
-Define order of surface by polynomials of degree = order-1.
+Define *order* of surface by polynomials of degree = *order*-1.
 
 ### MFDouble [in, out] **knot** [ ] <small>(-∞,∞)</small>
 
@@ -53,18 +65,22 @@ Output values for linear interpolation, each corresponding to knots.
 
 ### SFNode [in, out] **controlPoint** NULL <small>[X3DCoordinateNode]</small>
 
-Input/Output field controlPoint.
+Single contained Coordinate or CoordinateDouble node that can specify control points for NURBS geometry definitions.
 
 ### SFVec3f [out] **value_changed**
 
-Linearly interpolated output value determined by current key time and corresponding keyValue pair.
+Computationaly interpolated output value determined by current key time and corresponding keyValue pair.
 
-## Description
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
+
+## Advisories
 
 ### Hint
 
-- The SFNode controlPoints field can contain a single Coordinate or CoordinateDouble node.
+- The SFNode controlPoint field can contain a single Coordinate or CoordinateDouble node.
 
-## External Links
+## See Also
 
-- [X3D Specification of NurbsPositionInterpolator](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/nurbs.html#NurbsPositionInterpolator){:target="_blank"}
+- [X3D Specification of NurbsPositionInterpolator node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/nurbs.html#NurbsPositionInterpolator){:target="_blank"}

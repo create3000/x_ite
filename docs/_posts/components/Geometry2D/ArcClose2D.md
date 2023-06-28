@@ -1,6 +1,6 @@
 ---
 title: ArcClose2D
-date: 2022-01-07
+date: 2023-01-07
 nav: components-Geometry2D
 categories: [components, Geometry2D]
 tags: [ArcClose2D, Geometry2D]
@@ -13,9 +13,9 @@ tags: [ArcClose2D, Geometry2D]
 
 ## Overview
 
-ArcClose2D is a geometry node that defines a linear circular arc, closed by PIE or CHORD line segments, with center (0,0) in X-Y plane, with angles measured starting at positive x-axis and sweeping towards positive y-axis.
+ArcClose2D is a polygonal geometry node that defines a linear circular arc, closed by PIE or CHORD line segments, with center (0,0) in X-Y plane, with angles measured starting at positive x-axis and sweeping towards positive y-axis.
 
-The ArcClose2D node belongs to the **Geometry2D** component and its default container field is *geometry.* It is available since X3D version 3.0 or later.
+The ArcClose2D node belongs to the **Geometry2D** component and its default container field is *geometry.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -29,7 +29,11 @@ The ArcClose2D node belongs to the **Geometry2D** component and its default cont
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
 ### SFString [ ] **closureType** "PIE" <small>["PIE"|"CHORD"]</small>
 
@@ -41,51 +45,71 @@ Defines whether pair of line segments connect to center (PIE), or single line-se
 
 ### SFFloat [ ] **startAngle** 0 <small>[-2π,2π]</small>
 
-Arc extends from startAngle counterclockwise to endAngle, in radians.
+Arc extends from *startAngle* counterclockwise to endAngle, in radians.
+
+#### Hints
+
+- For size animation, modify the scale of a parent/ancestor Transform node instead.
+- [Radian units for angular measure](https://en.wikipedia.org/wiki/Radian){:target="_blank"}
 
 #### Warning
 
-- Simple-geometry dimensions are initializeOnly and cannot be changed after initial creation, for animation use Transform scale instead.
+- Simple-geometry dimensions are initializeOnly and cannot be changed after initial creation, avoiding the need for potentially expensive tessellation at run time.
 
 ### SFFloat [ ] **endAngle** π/2 <small>[-2π,2π]</small>
 
-Arc extends from startAngle counterclockwise to endAngle, in radians.
+Arc extends from startAngle counterclockwise to *endAngle*, in radians.
+
+#### Hints
+
+- For size animation, modify the scale of a parent/ancestor Transform node instead.
+- [Radian units for angular measure](https://en.wikipedia.org/wiki/Radian){:target="_blank"}
 
 #### Warning
 
-- Simple-geometry dimensions are initializeOnly and cannot be changed after initial creation, for animation use Transform scale instead.
+- Simple-geometry dimensions are initializeOnly and cannot be changed after initial creation, avoiding the need for potentially expensive tessellation at run time.
 
 ### SFFloat [ ] **radius** 1 <small>(0,∞)</small>
 
-Circle radius, of which the arc is a portion.
-
-#### Warning
-
-- Simple-geometry dimensions are initializeOnly and cannot be changed after initial creation, for animation use Transform scale instead.
-
-### SFBool [ ] **solid** FALSE
-
-Setting solid true means draw only one side of polygons (backface culling on), setting solid false means draw both sides of polygons (backface culling off).
+Circle *radius*, of which the arc is a portion.
 
 #### Hint
 
-- If in doubt, use solid='false' for maximum visibility.
+- For size animation, modify the scale of a parent/ancestor Transform node instead.
+
+#### Warning
+
+- Simple-geometry dimensions are initializeOnly and cannot be changed after initial creation, avoiding the need for potentially expensive tessellation at run time.
+
+### SFBool [ ] **solid** FALSE
+
+Setting *solid* true means draw only one side of polygons (backface culling on), setting *solid* false means draw both sides of polygons (backface culling off).
+
+#### Hints
+
+- Mnemonic "this geometry is *solid* like a brick" (you don't render the inside of a brick).
+- If in doubt, use *solid*='false' for maximum visibility.
+- (X3D version 4.0 draft) accessType relaxed to inputOutput in order to support animation and visualization.
 
 #### Warnings
 
-- Default value true can completely hide geometry if viewed from wrong side! Solid false not supported in VRML97.
+- Default value true can completely hide geometry if viewed from wrong side!
+- *solid* false not supported in VRML97.
 
-## Description
+## Advisories
 
-### Hints
+### Hint
 
 - Insert a Shape node before adding geometry or Appearance.
-- Include `<component name='Geometry2D' level='2'/>`
+
+### Warning
+
+- [Requires X3D `profile='Full'` or else include `<component name='Geometry2D' level='2'/>` Examples: X3D Example Archives, X3D for Web Authors, Chapter 10 Geometry 2D](https://x3dgraphics.com/examples/X3dForWebAuthors/Chapter10Geometry2D){:target="_blank"}
 
 ## Example
 
 <x3d-canvas src="https://create3000.github.io/media/examples/Geometry2D/ArcClose2D/ArcClose2D.x3d" update="auto"></x3d-canvas>
 
-## External Links
+## See Also
 
-- [X3D Specification of ArcClose2D](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry2D.html#ArcClose2D){:target="_blank"}
+- [X3D Specification of ArcClose2D node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry2D.html#ArcClose2D){:target="_blank"}

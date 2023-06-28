@@ -1,6 +1,6 @@
 ---
 title: LOD
-date: 2022-01-07
+date: 2023-01-07
 nav: components-Navigation
 categories: [components, Navigation]
 tags: [LOD, Navigation]
@@ -15,7 +15,7 @@ tags: [LOD, Navigation]
 
 LOD (Level Of Detail) uses camera-to-object distance to switch among contained child levels. (Contained nodes are now called 'children' rather than 'level', for consistent naming among all GroupingNodeType nodes.) LOD range values go from near to far (as child geometry gets simpler for better performance). For n range values, you must have n+1 children levels! Only currently selected children level is rendered, but all levels continue to send/receive events.
 
-The LOD node belongs to the **Navigation** component and its default container field is *children.* It is available since X3D version 2.0 or later.
+The LOD node belongs to the **Navigation** component and its default container field is *children.* It is available from X3D version 2.0 or higher.
 
 ## Hierarchy
 
@@ -30,7 +30,11 @@ The LOD node belongs to the **Navigation** component and its default container f
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
 ### SFBool [ ] **forceTransitions** FALSE
 
@@ -42,24 +46,33 @@ Viewpoint distance-measurement offset from origin of local coordinate system, us
 
 ### MFFloat [ ] **range** [ ] <small>[0,∞) or -1</small>
 
-Specifies ideal distances at which to switch between levels. The range field is a floating-point array of camera-to-object distance transitions for each child level, where range values go from near to far. For n range values, you must have n+1 child levels!
+Specifies ideal distances at which to switch between levels. The *range* field is a floating-point array of camera-to-object distance transitions for each child level, where *range* values go from near to far. For n *range* values, you must have n+1 child levels!
 
 #### Hints
 
-- Can add `<WorldInfo info='null node'/>` as a nonrendering, invisible final (or initial or intermediate) child node that also documents the LOD switch-over rationale. Not setting range values indicates that level switching can be optimized automatically based on performance.
+- Can add `<WorldInfo info='null node'/>` as a nonrendering, invisible final (or initial or intermediate) child node that also documents the LOD switch-over rationale.
+- Not setting *range* values indicates that level switching can be optimized automatically based on performance.
 
 ### SFInt32 [out] **level_changed**
 
-Indicates current level of LOD children when activated.
+Output event that reports current level of LOD children whenever switching occurs.
+
+#### Hint
+
+- LOD level index counting starts at zero. Thus *level_changed* value of -1 means no choice, 0 means initial child, 1 means second child, etc.
+
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFBool [in, out] **visible** TRUE
 
 Whether or not renderable content within this node is visually displayed.
 
-#### Hint
+#### Hints
 
-- The visible field has no effect on animation behaviors, event passing or other non-visual characteristics.
-- Content must be visible to be collidable and to be pickable.
+- The *visible* field has no effect on animation behaviors, event passing or other non-visual characteristics.
+- Content must be *visible* to be collidable and to be pickable.
 
 ### SFBool [in, out] **bboxDisplay** FALSE
 
@@ -73,44 +86,61 @@ Whether to display bounding box for associated geometry, aligned with world coor
 
 Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost. Bounding box size can also be defined as an optional authoring hint that suggests an optimization or constraint.
 
-#### Hint
+#### Hints
 
 - Can be useful for collision computations or inverse-kinematics (IK) engines.
+- Precomputation and inclusion of bounding box information can speed up the initialization of large detailed models, with a corresponding cost of increased file size.
+- [X3D Architecture, 10.2.2 Bounding boxes](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/grouping.html#BoundingBoxes){:target="_blank"}
+- [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/grouping.html#X3DBoundedObject){:target="_blank"}
 
 ### SFVec3f [ ] **bboxCenter** 0 0 0 <small>(-∞,∞)</small>
 
-Bounding box center: optional hint for position offset from origin of local coordinate system.
+Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
+
+#### Hints
+
+- Precomputation and inclusion of bounding box information can speed up the initialization of large detailed models, with a corresponding cost of increased file size.
+- [X3D Architecture, 10.2.2 Bounding boxes](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/grouping.html#BoundingBoxes){:target="_blank"}
+- [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/grouping.html#X3DBoundedObject){:target="_blank"}
 
 ### MFNode [in] **addChildren**
 
-Input field addChildren.
+Input field *addChildren*.
 
 ### MFNode [in] **removeChildren**
 
-Input field removeChildren.
+Input field *removeChildren*.
 
 ### MFNode [in, out] **children** [ ] <small>[X3DChildNode]</small>
 
-Grouping nodes contain a list of children nodes.
+Grouping nodes contain an ordered list of *children* nodes.
 
-#### Hint
+#### Hints
 
-- Each grouping node defines a coordinate space for its children, relative to the coordinate space of its parent node. Thus transformations accumulate down the scene graph hierarchy.
+- Each grouping node defines a coordinate space for its *children*, relative to the coordinate space of its parent node. Thus transformations accumulate down the scene graph hierarchy.
+- InputOnly MFNode addChildren field can append new X3DChildNode nodes via a ROUTE connection, duplicate input nodes (i.e. matching DEF, USE values) are ignored.
+- InputOnly MFNode removeChildren field can remove nodes from the *children* list, unrecognized input nodes (i.e. nonmatching DEF, USE values) are ignored.
+- [X3D Architecture 10.2.1 Grouping and *children* node types](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/grouping.html#GroupingAndChildrenNodes){:target="_blank"}
 
-## Description
+## Advisories
 
 ### Hints
 
-- Can add `<WorldInfo info='null node'/>` as a nonrendering, invisible final (or initial or intermediate) child node that also documents the LOD switch-over rationale.
+- Can add \<WorldInfo info='null node'/\> as a nonrendering, invisible final (or initial or intermediate) child node that also documents the LOD switch-over rationale.
 - Insert a Shape node before adding geometry or Appearance.
+- GeoViewpoint OrthoViewpoint and Viewpoint share the same binding stack, so no more than one of these nodes can be bound and active at a given time.
 - Security mechanisms such as encryption and authentication can be applied to high levels of detail, allowing authors to protect intellectual property at high resolution for authorized users while still rendering simple unrestricted models for other users.
+- Contained nodes must have type X3DChildNode, such as Group or Transform or Shape.
+- Apply `containerField='shape'` if parent node is CADFace.
+- [ConformanceNist X3D Examples Archive](https://www.web3d.org/x3d/content/examples/ConformanceNist/SpecialGroups/LOD){:target="_blank"}
 
 ### Warnings
 
-- Do not include Viewpoint or OrthoViewpoint as a child of LOD or Switch, instead use ViewpointGroup as parent to constrain location proximity where the viewpoint is available to user.
-- Results are undefined if a bindable node (Viewpoint, OrthoViewpoint, NavigationInfo, Fog, Background, TextureBackground) is a contained child of LOD or Switch.
-- Nested LOD nodes with overlapping range intervals can lead to unexpected or undefined behavior.
+- Do not include GeoViewpoint OrthoViewpoint or Viewpoint as a child of LOD or Switch, instead use ViewpointGroup as parent to constrain location proximity where the viewpoint is available to user.
+- Results are undefined if a bindable node (Background, Fog, NavigationInfo, OrthoViewpoint, TextureBackground, Viewpoint) is a contained descendant node of either LOD or Switch. Avoid this authoring pattern.
+- Nested LOD (and/or GeoLOD) nodes with overlapping range intervals can lead to unexpected or undefined behavior.
+- LOD is not allowed as a direct parent of Appearance, Material, Color, Coordinate, Normal or Texture nodes, instead ensure that a Shape is present.
 
-## External Links
+## See Also
 
-- [X3D Specification of LOD](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/navigation.html#LOD){:target="_blank"}
+- [X3D Specification of LOD node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/navigation.html#LOD){:target="_blank"}

@@ -1,6 +1,6 @@
 ---
 title: ScalarChaser
-date: 2022-01-07
+date: 2023-01-07
 nav: components-Followers
 categories: [components, Followers]
 tags: [ScalarChaser, Followers]
@@ -15,7 +15,7 @@ tags: [ScalarChaser, Followers]
 
 ScalarChaser generates a series of single floating-point values that progressively change from initial value to destination value.
 
-The ScalarChaser node belongs to the **Followers** component and its default container field is *children.* It is available since X3D version 3.2 or later.
+The ScalarChaser node belongs to the **Followers** component and its default container field is *children.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 
@@ -31,15 +31,27 @@ The ScalarChaser node belongs to the **Followers** component and its default con
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
 ### SFFloat [in] **set_value** <small>(-∞,∞)</small>
 
-*set_value* resets current value of this node.
+*set_value* resets current *value* of this node.
+
+#### Warning
+
+- It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
 
 ### SFFloat [in] **set_destination** <small>(-∞,∞)</small>
 
-*set_destination* resets destination value of this node.
+*set_destination* resets *destination* value of this node.
+
+#### Warning
+
+- It is an error to define this transient inputOnly field in an X3D file, instead only use it a *destination* for ROUTE events.
 
 ### SFFloat [ ] **initialValue** 0 <small>(-∞,∞)</small>
 
@@ -53,24 +65,36 @@ Initial destination value for this node.
 
 *duration* is the time interval for filter response in seconds.
 
+#### Hint
+
+- *duration* is a nonnegative SFTime *duration* interval, not an absolute clock time.
+
 ### SFBool [out] **isActive**
 
 *isActive* true/false events are sent when follower-node computation starts/stops.
+
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFFloat [out] **value_changed**
 
 Computed output value that approaches within tolerance of destination value, as determined by elapsed time, order and tau.
 
-## Description
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
+
+## Advisories
 
 ### Hint
 
-- value_changed output events can be ROUTEd to an interpolator node's set_fraction field, for example.
+- ROUTE value_changed output events to an interpolator node's set_fraction field, for example.
 
 ## Example
 
 <x3d-canvas src="https://create3000.github.io/media/examples/Followers/ScalarChaser/ScalarChaser.x3d" update="auto"></x3d-canvas>
 
-## External Links
+## See Also
 
-- [X3D Specification of ScalarChaser](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/followers.html#ScalarChaser){:target="_blank"}
+- [X3D Specification of ScalarChaser node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/followers.html#ScalarChaser){:target="_blank"}

@@ -1,6 +1,6 @@
 ---
 title: UniversalJoint
-date: 2022-01-07
+date: 2023-01-07
 nav: components-RigidBodyPhysics
 categories: [components, RigidBodyPhysics]
 tags: [UniversalJoint, RigidBodyPhysics]
@@ -15,7 +15,7 @@ tags: [UniversalJoint, RigidBodyPhysics]
 
 UniversalJoint is like a BallJoint that constrains an extra degree of rotational freedom. Contains two RigidBody nodes (containerField values body1, body2).
 
-The UniversalJoint node belongs to the **RigidBodyPhysics** component and its default container field is *joints.* It is available since X3D version 3.2 or later.
+The UniversalJoint node belongs to the **RigidBodyPhysics** component and its default container field is *joints.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 
@@ -29,7 +29,11 @@ The UniversalJoint node belongs to the **RigidBodyPhysics** component and its de
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
 ### MFString [in, out] **forceOutput** "NONE" <small>["ALL", "NONE", ...]</small>
 
@@ -45,7 +49,7 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 #### Hint
 
-- 0 0 0 means motor disabled.
+- 0 0 0 means motor disabled about this axis.
 
 ### SFVec3f [in, out] **axis2** 0 0 0 <small>(-∞,∞)</small>
 
@@ -53,11 +57,15 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 #### Hint
 
-- 0 0 0 means motor disabled.
+- 0 0 0 means motor disabled about this axis.
 
 ### SFFloat [in, out] **stop1Bounce** 0 <small>[0,1]</small>
 
-Input/Output field stop1Bounce.
+*stop1Bounce* is velocity factor for bounce back once stop point is reached.
+
+#### Hint
+
+- 0 means no bounce, 1 means return velocity matches.
 
 ### SFFloat [in, out] **stop2Bounce** 0 <small>[0,1]</small>
 
@@ -85,35 +93,35 @@ Input/Output field stop1Bounce.
 
 ### SFVec3f [out] **body1Axis**
 
-Output field body1Axis.
+Output field *body1Axis*.
 
 ### SFVec3f [out] **body2Axis**
 
-Output field body2Axis.
+Output field *body2Axis*.
 
 ### SFVec3f [out] **body1AnchorPoint**
 
-Output field body1AnchorPoint.
+Output field *body1AnchorPoint*.
 
 ### SFVec3f [out] **body2AnchorPoint**
 
-Output field body2AnchorPoint.
+Output field *body2AnchorPoint*.
 
 ### SFNode [in, out] **body1** NULL <small>[RigidBody]</small>
 
-Input/Output field body1.
+The *body1* and body2 fields indicate the two RigidBody nodes connected by this joint.
 
 ### SFNode [in, out] **body2** NULL <small>[RigidBody]</small>
 
-Input/Output field body2.
+The body1 and *body2* fields indicate the two RigidBody nodes connected by this joint.
 
-## Description
+## Advisories
 
 ### Hints
 
 - Useful in combination with BallJoint.
 - RigidBodyPhysics component, level 2.
 
-## External Links
+## See Also
 
-- [X3D Specification of UniversalJoint](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rigidBodyPhysics.html#UniversalJoint){:target="_blank"}
+- [X3D Specification of UniversalJoint node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rigidBodyPhysics.html#UniversalJoint){:target="_blank"}

@@ -1,6 +1,6 @@
 ---
 title: PackagedShader
-date: 2022-01-07
+date: 2023-01-07
 nav: components-Shaders
 categories: [components, Shaders]
 tags: [PackagedShader, Shaders]
@@ -13,9 +13,9 @@ tags: [PackagedShader, Shaders]
 
 ## Overview
 
-PackagedShader describes a single file that may contain a number of shaders and combined effects.
+PackagedShader contains a url for a single file that may contain a number of shaders and combined effects.
 
-The PackagedShader node belongs to the **Shaders** component and its default container field is *shaders.* It is available since X3D version 3.0 or later.
+The PackagedShader node belongs to the **Shaders** component and its default container field is *shaders.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -32,7 +32,11 @@ The PackagedShader node belongs to the **Shaders** component and its default con
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
 ### SFString [in, out] **description** ""
 
@@ -40,54 +44,54 @@ Author-provided prose that describes intended purpose of the url asset.
 
 #### Hint
 
-- Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for & ampersand character, or &amp;#34; for " quotation-mark character).
+- Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
 
 ### SFBool [in] **activate**
 
-*activate* forces the shader to activate the contained objects.
+*activate* forces the shader to *activate* the contained objects.
+
+#### Warning
+
+- It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
 
 ### SFBool [out] **isSelected**
 
 *isSelected* indicates this shader instance is selected for use by browser
 
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
+
 ### SFBool [out] **isValid**
 
 *isValid* indicates whether current shader objects can be run as a shader program.
 
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
+
 ### SFString [ ] **language** "" <small>["Cg"|"GLSL"|"HLSL"|...]</small>
 
-The language field indicates to the X3D player which shading language is used. The language field may be used to optionally determine the language type if no MIME-type information is available.
+The *language* field indicates to the X3D player which shading *language* is used. The *language* field may be used to optionally determine the *language* type if no MIME-type information is available.
 
 #### Hint
 
-- Recognized values include "CG" "GLSL" "HLSL" "FX"
-
-#### See Also
-
-- [Relates to Internationalization (i18n)](https://www.w3.org/standards/webdesign/i18n){:target="_blank"}
+- Recognized values include "Cg" "GLSL" "HLSL".
 
 ### SFBool [in, out] **load** TRUE
 
-*load*=true means load immediately, load=false means defer loading or else unload a previously loaded asset.
+*load*=true means *load* immediately, *load*=false means defer loading or else unload a previously loaded scene.
 
 #### Hints
 
-- Allows author to design when ImageTextureAtlas loading occurs via user interaction, event chains or scripting.
+- Allows author to design when Inline loading occurs via user interaction, event chains or scripting.
 - Use a separate LoadSensor node to detect when loading is complete.
 
 ### MFString [in, out] **url** [ ] <small>[URI]</small>
 
-Location and filename of image. Multiple locations are more reliable, and including a Web address lets e-mail attachments work.
+*url* points to a shader source-code file that may contain a number of shaders and combined effects.
 
-#### Hints
-
-- MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc." XML encoding for quotation mark " is &amp;quot; (which is called a character entity). Can replace embedded blank(s) in url queries with %20 for each blank character.
-
-#### Warning
-
-- Strictly match directory and filename capitalization for http links! This is important for portability. Some operating systems are forgiving of capitalization mismatches, but http/https and other operating systems are not.
-
-#### See Also
+#### Hint
 
 - [X3D Scene Authoring Hints, urls](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#urls){:target="_blank"}
 
@@ -116,16 +120,18 @@ Location and filename of image. Multiple locations are more reliable, and includ
 
 - Automatically reloading content has security considerations and needs to be considered carefully.
 
-## Description
+## Advisories
 
-### Hint
+### Hints
 
-- PackagedShader contains IS/connect and field definitions.
+- PackagedShader contains field declarations and then corresponding IS/connect statements (if any).
+- Apply default `containerField='shaders'` when parent node is Appearance.
+- [When parent node is LoadSensor, apply `containerField='children'` (X3Dv4) or `containerField='watchList'` (X3Dv3).](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges){:target="_blank"}
 
 ### Warning
 
-- PackagedShader can contain field declarations, but no CDATA section of plain-text source code.
+- PackagedShader does not contain CDATA section of plain-text source code.
 
-## External Links
+## See Also
 
-- [X3D Specification of PackagedShader](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shaders.html#PackagedShader){:target="_blank"}
+- [X3D Specification of PackagedShader node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shaders.html#PackagedShader){:target="_blank"}

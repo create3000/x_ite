@@ -1,6 +1,6 @@
 ---
 title: Coordinate
-date: 2022-01-07
+date: 2023-01-07
 nav: components-Rendering
 categories: [components, Rendering]
 tags: [Coordinate, Rendering]
@@ -13,9 +13,9 @@ tags: [Coordinate, Rendering]
 
 ## Overview
 
-Coordinate builds geometry by defining a set of 3D coordinate triplet values. Coordinate is used by IndexedFaceSet, IndexedLineSet, LineSet, PointSet, Triangle\* and IndexedTriangle\* nodes. Coordinate is also used by HAnimHumanoid, HAnimSegment, and various Nurbs nodes.
+Coordinate builds geometry by defining a set of 3D coordinate (triplet) point values. Coordinate is used by IndexedFaceSet, IndexedLineSet, LineSet, PointSet, Triangle* and IndexedTriangle* nodes. Coordinate is also used by HAnimHumanoid, HAnimSegment, and various Nurbs nodes.
 
-The Coordinate node belongs to the **Rendering** component and its default container field is *coord.* It is available since X3D version 2.0 or later.
+The Coordinate node belongs to the **Rendering** component and its default container field is *coord.* It is available from X3D version 2.0 or higher.
 
 ## Hierarchy
 
@@ -30,16 +30,20 @@ The Coordinate node belongs to the **Rendering** component and its default conta
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
 ### MFVec3f [in, out] **point** [ ] <small>(-∞,∞)</small>
 
-*point* contains a set of 3D coordinate triplet values.
+*point* contains a set of 3D coordinate (triplet) *point* values.
 
 ## Example
 
 <x3d-canvas src="https://create3000.github.io/media/examples/Rendering/Coordinate/Coordinate.x3d" update="auto"></x3d-canvas>
 
-## External Links
+## See Also
 
-- [X3D Specification of Coordinate](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rendering.html#Coordinate){:target="_blank"}
+- [X3D Specification of Coordinate node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rendering.html#Coordinate){:target="_blank"}

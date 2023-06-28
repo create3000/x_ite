@@ -1,6 +1,6 @@
 ---
 title: FontStyle
-date: 2022-01-07
+date: 2023-01-07
 nav: components-Text
 categories: [components, Text]
 tags: [FontStyle, Text]
@@ -15,7 +15,7 @@ tags: [FontStyle, Text]
 
 FontStyle is an X3DFontStyleNode that defines the size, family, justification, and other styles used by Text nodes.
 
-The FontStyle node belongs to the **Text** component and its default container field is *fontStyle.* It is available since X3D version 2.0 or later.
+The FontStyle node belongs to the **Text** component and its default container field is *fontStyle.* It is available from X3D version 2.0 or higher.
 
 ## Hierarchy
 
@@ -29,106 +29,138 @@ The FontStyle node belongs to the **Text** component and its default container f
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
 ### SFString [in, out] **language** ""
 
-*language* codes consist of a primary code and a (possibly empty) series of subcodes. [ language-code = primary-code ( "-" subcode )\* ] Two-letter primary codes are reserved for language abbreviations. Two-letter primary codes include en (English), fr (French), de (German), it (Italian), nl (Dutch), el (Greek), es (Spanish), pt (Portuguese), ar (Arabic), he (Hebrew), ru (Russian), zh (Chinese), ja (Japanese), hi (Hindi), ur (Urdu), and sa (Sanskrit). Any two-letter subcode is understood to be a country code.
+Language codes consist of a primary code and a (possibly empty) series of subcodes. [ *language*-code = primary-code ( "-" subcode )* ] Two-letter primary codes are reserved for *language* abbreviations. Two-letter primary codes include en (English), fr (French), de (German), it (Italian), nl (Dutch), el (Greek), es (Spanish), pt (Portuguese), ar (Arabic), he (Hebrew), ru (Russian), zh (Chinese), ja (Japanese), hi (Hindi), ur (Urdu), and sa (Sanskrit). Any two-letter subcode is understood to be a country code.
+
+#### Hints
+
+- [See ISO639.2 Codes for the Representation of Names of Languages](http://www.loc.gov/standards/iso639-2/php/code_list.php){:target="_blank"}
+- [See RFC3066 Tags for the Identification of Languages](https://tools.ietf.org/html/rfc3066){:target="_blank"}
+- [See ISO3166 or](http://xml.coverpages.org/languageIdentifiers.html){:target="_blank"}
+- [Relates to Internationalization (i18n)](http://www.w3.org/standards/webdesign/i18n){:target="_blank"}
+- (X3D version 4.0 draft) accessType relaxed to inputOutput in order to support animation and user accessibility.
 
 #### Warning
 
 - Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
 
-#### See Also
-
-- [See ISO639.2 Codes for the Representation of Names of Languages](https://www.loc.gov/standards/iso639-2/php/code_list.php){:target="_blank"}
-- [See RFC3066 Tags for the Identification of Languages](https://tools.ietf.org/html/rfc3066){:target="_blank"}
-- [See ISO3166 or](http://xml.coverpages.org/languageIdentifiers.html){:target="_blank"}
-- [Relates to Internationalization (i18n)](https://www.w3.org/standards/webdesign/i18n){:target="_blank"}
-
 ### MFString [in, out] **family** "SERIF" <small>String or [URI]</small>
 
-Array of quoted font family names, or the addresses of the font files to load, in order of preference; browsers will use the first supported family.
+Array of quoted font *family* names in preference order, browsers use the first supported *family*.
 
 #### Hints
 
-- Example family array might be "Times" "SERIF" Values with guaranteed support include "SERIF" "SANS" "TYPEWRITER". SERIF and SANS are variable-width fonts (for example, Times Roman and Arial). TYPEWRITER is a fixed-width font (for example, Courier). MFString arrays can have multiple values, so "separate each individual string" "by using quote marks". See [15.2.2.2 Font family and style](https://www.web3d.org/files/specifications/19775-1/V3.3/Part01/components/text.html#Fontfamilyandstyle){:target="_blank"} for details.
+- Example *family* array might be "Times" "SERIF"
+- Values with guaranteed support include "SERIF" "SANS" "TYPEWRITER".
+- SERIF and SANS are variable-width fonts (for example, Times Roman and Arial).
+- TYPEWRITER is a fixed-width font (for example, Courier).
+- MFString arrays can have multiple values, so "separate each individual string" "by using quote marks".
+- [See 15.2.2.2 Font *family* and style](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/text.html#Fontfamilyandstyle){:target="_blank"} for details.
+- [Relates to Internationalization (i18n)](http://www.w3.org/standards/webdesign/i18n){:target="_blank"}
+- (X3D version 4.0 draft) accessType relaxed to inputOutput in order to support animation and user accessibility.
 
 #### Warning
 
-- Font family support often varies.
-
-#### See Also
-
-- [Relates to Internationalization (i18n)](https://www.w3.org/standards/webdesign/i18n){:target="_blank"}
+- Font *family* support often varies.
 
 ### SFString [in, out] **style** "PLAIN" <small>["PLAIN"|"BOLD"|"ITALIC"|"BOLDITALIC"|""]</small>
 
-Pick one of four values for text style.
+Pick one of four values for text *style* (PLAIN or BOLD or ITALIC or BOLDITALIC).
 
-#### Hint
+#### Hints
 
-- See [15.2.2.2 Font family and style](https://www.web3d.org/files/specifications/19775-1/V3.3/Part01/components/text.html#Fontfamilyandstyle){:target="_blank"} for details.
+- [See 15.2.2.2 Font family and *style*](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/text.html#Fontfamilyandstyle){:target="_blank"} for details.
+- Overlapping functionality with CSS *style* attribute provides a "best of both worlds" approach. The *style* attribute provides an inline block of CSS source for element styling, reserved for use by Cascading Style Sheets (CSS) and XML stylesheets.
+- [X3D Architecture Annex L, HTML authoring guidelines, CSS considerations](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/htmlGuidelines.html#CSS){:target="_blank"}
+- [W3C Cascading Style Sheets](https://www.w3.org/Style/CSS){:target="_blank"}
+- [CSS Snapshot](https://www.w3.org/TR/css-2018){:target="_blank"}
+- Https://www.w3.org/TR/css-*style*-attr
+- [Wikibooks, XML - Managing Data Exchange/XSLT and Style Sheets](https://en.wikibooks.org/wiki/XML_-_Managing_Data_Exchange/XSLT_and_Style_Sheets){:target="_blank"}
+- (X3D version 4.0 draft) accessType relaxed to inputOutput in order to support animation and user accessibility.
 
-#### Warning
+#### Warnings
 
+- Overloaded name for CSS *style* attribute.
 - Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
 
 ### SFFloat [in, out] **size** 1 <small>(0,∞)</small>
 
-Nominal height (in local coordinate system) of text glyphs Also sets default spacing between adjacent lines of text.
-
-### SFFloat [in, out] **spacing** 1 <small>[0,∞)</small>
-
-Adjustment factor for line spacing between adjacent lines of text.
-
-### SFBool [in, out] **horizontal** TRUE
-
-Whether text direction is horizontal (true) or vertical (false).
+Nominal height (in local coordinate system) of text glyphs, also sets default spacing between adjacent lines of text.
 
 #### Hint
 
-- See [15.2.2.3 Direction and justification](https://www.web3d.org/files/specifications/19775-1/V3.3/Part01/components/text.html#Directionandjustification){:target="_blank"} for details.
+- (X3D version 4.0 draft) accessType relaxed to inputOutput in order to support animation and user accessibility.
 
-#### See Also
+### SFFloat [in, out] **spacing** 1 <small>[0,∞)</small>
 
-- [Relates to Internationalization (i18n)](https://www.w3.org/standards/webdesign/i18n){:target="_blank"}
+Adjustment factor for line *spacing* between adjacent lines of text.
+
+#### Hint
+
+- (X3D version 4.0 draft) accessType relaxed to inputOutput in order to support animation and user accessibility.
+
+### SFBool [in, out] **horizontal** TRUE
+
+Whether text direction is *horizontal* (true) or vertical (false).
+
+#### Hints
+
+- [See 15.2.2.3 Direction and justification](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/text.html#Directionandjustification){:target="_blank"} for details.
+- [Relates to Internationalization (i18n)](http://www.w3.org/standards/webdesign/i18n){:target="_blank"}
+- (X3D version 4.0 draft) accessType relaxed to inputOutput in order to support animation and user accessibility.
 
 ### SFBool [in, out] **leftToRight** TRUE
 
-Field leftToRight.
+Whether text direction is left-to-right (true) or right-to-left (false).
+
+#### Hints
+
+- [See 15.2.2.3 Direction and justification](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/text.html#Directionandjustification){:target="_blank"} for details.
+- [Relates to Internationalization (i18n)](http://www.w3.org/standards/webdesign/i18n){:target="_blank"}
+- (X3D version 4.0 draft) accessType relaxed to inputOutput in order to support animation and user accessibility.
 
 ### SFBool [in, out] **topToBottom** TRUE
 
 Whether text direction is top-to-bottom (true) or bottom-to-top (false).
 
-#### Hint
+#### Hints
 
-- See [15.2.2.3 Direction and justification](https://www.web3d.org/files/specifications/19775-1/V3.3/Part01/components/text.html#Directionandjustification){:target="_blank"} for details.
-
-#### See Also
-
-- [Relates to Internationalization (i18n)](https://www.w3.org/standards/webdesign/i18n){:target="_blank"}
+- [See 15.2.2.3 Direction and justification](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/text.html#Directionandjustification){:target="_blank"} for details.
+- [Relates to Internationalization (i18n)](http://www.w3.org/standards/webdesign/i18n){:target="_blank"}
+- (X3D version 4.0 draft) accessType relaxed to inputOutput in order to support animation and user accessibility.
 
 ### MFString [in, out] **justify** "BEGIN" <small>["BEGIN", "END", "FIRST", "MIDDLE", ""]</small>
 
-The justify field determines alignment of the above text layout relative to the origin of the object coordinate system.
+The *justify* field determines horizontal and vertical alignment of text layout, relative to the origin of the object coordinate system.
 
 #### Hints
 
-- Preferred value is usually justify=' "MIDDLE" "MIDDLE" ' for centered justification horizontally and vertically. MFString arrays can have multiple values, so "separate each individual string" "by using quote marks". See [15.2.2.3 Direction and justification](https://www.web3d.org/files/specifications/19775-1/V3.3/Part01/components/text.html#Directionandjustification){:target="_blank"} for details.
+- Preferred value is usually *justify*=' "MIDDLE" "MIDDLE" ' for centered justification horizontally and vertically.
+- MFString arrays can have multiple values, so "separate each individual string" "by using quote marks".
+- [See 15.2.2.3 Direction and justification](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/text.html#Directionandjustification){:target="_blank"} for details.
+- (X3D version 4.0 draft) accessType relaxed to inputOutput in order to support animation and user accessibility.
 
 #### Warnings
 
-- Exactly two string values are provided for major and minor axis alignment. Do not use illegal values such as LEFT RIGHT TOP BOTTOM or CENTER.
+- Exactly two string values are provided for major and minor axis alignment.
+- Do not use illegal values such as LEFT RIGHT TOP BOTTOM or CENTER.
 
-## Description
+## Advisories
 
 ### Hints
 
 - Full internationalization (i18n) and localization (l10n) features are available for any written language.
 - DEF/USE copies of a single node can provide a similar "look + feel" style for related shapes.
+- [Relates to Internationalization (i18n)](http://www.w3.org/standards/webdesign/i18n){:target="_blank"}
 - First add a Text node as a parent node for FontStyle.
+- [Wikipedia](https://en.wikipedia.org/wiki/Font){:target="_blank"}
 
 ## Example
 
@@ -136,10 +168,4 @@ The justify field determines alignment of the above text layout relative to the 
 
 ## See Also
 
-- [ScreenFontStyle](/x_ite/components/layout/screenfontstyle)
-- [Text](/x_ite/components/text/text)
-
-## External Links
-
-- [X3D Specification of FontStyle](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/text.html#FontStyle){:target="_blank"}
-- [Relates to Internationalization (i18n)](https://www.w3.org/standards/webdesign/i18n){:target="_blank"}
+- [X3D Specification of FontStyle node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/text.html#FontStyle){:target="_blank"}

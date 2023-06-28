@@ -1,6 +1,6 @@
 ---
 title: DirectionalLight
-date: 2022-01-07
+date: 2023-01-07
 nav: components-Lighting
 categories: [components, Lighting]
 tags: [DirectionalLight, Lighting]
@@ -13,9 +13,9 @@ tags: [DirectionalLight, Lighting]
 
 ## Overview
 
-DirectionalLight creates parallel light rays to illuminate geometric shapes. Light is scoped and only illuminates geometry within its enclosing parent group! No source location is needed since rays are parallel from an infinitely distant source. DirectionalLight nodes do not attenuate with distance. Lights have no visible shape themselves and shine through occluding geometry.
+DirectionalLight defines parallel light rays that illuminate geometric shapes. Lighting illuminates all geometry except lines and points. By default, light scope only illuminates peer geometry and children nodes within the scene graph hierarchy. No source location is needed since rays are parallel from an infinitely distant source. DirectionalLight nodes do not attenuate with distance. Lights have no visible shape themselves and lighting effects continue through any intermediate geometry.
 
-The DirectionalLight node belongs to the **Lighting** component and its default container field is *children.* It is available since X3D version 2.0 or later.
+The DirectionalLight node belongs to the **Lighting** component and its default container field is *children.* It is available from X3D version 2.0 or higher.
 
 ## Hierarchy
 
@@ -30,11 +30,19 @@ The DirectionalLight node belongs to the **Lighting** component and its default 
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
 ### SFBool [in, out] **global** FALSE
 
-*global* lights illuminate all objects within their volume of lighting influence. Scoped lights only illuminate objects within the same transformation hierarchy.
+Global lights illuminate all objects within their volume of lighting influence. Scoped lights only illuminate objects within the same transformation hierarchy.
+
+#### Warning
+
+- DirectionalLight default *global*=false to limit scope and avoid inadvertently illuminating every object in a large scene. PointLight and SpotLight default *global*=true since their effects are each limited by maximum radius value.
 
 ### SFBool [in, out] **on** TRUE
 
@@ -44,7 +52,7 @@ Enables/disables this light source.
 
 *color* of light, applied to colors of objects.
 
-#### See Also
+#### Hint
 
 - [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color){:target="_blank"}
 
@@ -62,7 +70,7 @@ Orientation vector of light relative to local coordinate system.
 
 #### Hint
 
-- Animate direction to simulate time-of-day sunlight effects.
+- Animate *direction* to simulate time-of-day sunlight effects.
 
 ### SFBool [in, out] **shadows** FALSE
 
@@ -84,17 +92,17 @@ The shadowBias value controls the visibility of *shadow acne*.
 
 Size of the shadow map in pixels, must be power of two.
 
-## Description
+## Advisories
 
 ### Hints
 
 - Animate direction to simulate time-of-day sunlight effects.
-- HeadLight enabled on/off is controlled by NavigationInfo.
+- The bound NavigationInfo controls whether headlight is enabled on/off. Interchange profile hint: light might not be scoped by parent Group or Transform.
 
 ## Example
 
 <x3d-canvas src="https://create3000.github.io/media/examples/Lighting/DirectionalLight/DirectionalLight.x3d" update="auto"></x3d-canvas>
 
-## External Links
+## See Also
 
-- [X3D Specification of DirectionalLight](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/lighting.html#DirectionalLight){:target="_blank"}
+- [X3D Specification of DirectionalLight node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/lighting.html#DirectionalLight){:target="_blank"}

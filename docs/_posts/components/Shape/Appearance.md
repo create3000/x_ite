@@ -1,6 +1,6 @@
 ---
 title: Appearance
-date: 2022-01-07
+date: 2023-01-07
 nav: components-Shape
 categories: [components, Shape]
 tags: [Appearance, Shape]
@@ -13,9 +13,9 @@ tags: [Appearance, Shape]
 
 ## Overview
 
-Appearance specifies the visual properties of geometry by containing the Material, ImageTexture/MovieTexture/PixelTexture, FillProperties, LineProperties, and TextureTransform nodes.
+Appearance specifies the visual properties of geometry by containing the Material, ImageTexture/MovieTexture/PixelTexture, FillProperties, LineProperties, programmable shader nodes (ComposedShader, PackagedShader, ProgramShader) and TextureTransform nodes.
 
-The Appearance node belongs to the **Shape** component and its default container field is *appearance.* It is available since X3D version 2.0 or later.
+The Appearance node belongs to the **Shape** component and its default container field is *appearance.* It is available from X3D version 2.0 or higher.
 
 ## Hierarchy
 
@@ -29,15 +29,23 @@ The Appearance node belongs to the **Shape** component and its default container
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
-
-### SFString [in, out] **alphaMode** "AUTO" <small>["AUTO"|"OPAQUE"|"MASK"|"BLEND"]</small>
-
-Provides options for control of alpha transparency handling for textures. AUTO means Material transparency is applied to texture transparency for full backwards compatibility with X3D3, OPAQUE means ignore alpha transparency to render texture as opaque, MASK means alpha-testing of pixels as fully transparent when alpha value is less than alphaCutoff and fully opaque when alpha value is greater than or equal to alphaCutoff, BLEND combines partial transparency of textures and materials.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
 
 #### Hint
 
-- [glTF version 2 Alpha Coverage](https://www.khronos.org/registry/glTF/specs/2.0/glTF-2.0.html#alpha-coverage){:target="_blank"}
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
+
+### SFNode [in, out] **acousticProperties** NULL <small>[AcousticProperties]</small>
+
+Single contained *acousticProperties* node that can specify additional acoustic attributes applied to associated surface geometry.
+
+### SFString [in, out] **alphaMode** "AUTO" <small>["AUTO"|"OPAQUE"|"MASK"|"BLEND"]</small>
+
+Provides options for control of alpha transparency handling for textures. AUTO means Material transparency is applied to texture transparency for full backwards compatility with X3D3, OPAQUE means ignore alpha transparency to render texture as opaque, MASK means alpha-testing of pixels as fully transparent when alpha value is less than alphaCutoff and fully opaque when alpha value is greater than or equal to alphaCutoff, BLEND combines partial transparency of textures and materials.
+
+#### Hint
+
+- [GlTF version 2 Alpha Coverage](https://www.khronos.org/registry/glTF/specs/2.0/glTF-2.0.html#alpha-coverage){:target="_blank"}
 
 ### SFFloat [in, out] **alphaCutoff** 0.5 <small>[0,1]</small>
 
@@ -45,7 +53,7 @@ Threshold value used for pixel rendering either transparent or opaque, used when
 
 #### Hint
 
-- [glTF version 2 Alpha Coverage](https://www.khronos.org/registry/glTF/specs/2.0/glTF-2.0.html#alpha-coverage){:target="_blank"}
+- [GlTF version 2 Alpha Coverage](https://www.khronos.org/registry/glTF/specs/2.0/glTF-2.0.html#alpha-coverage){:target="_blank"}
 
 ### SFNode [in, out] **pointProperties** NULL <small>[PointProperties]</small>
 
@@ -65,30 +73,31 @@ Single contained Material node that can specify visual attributes for lighting r
 
 #### Warning
 
-- If material is NULL or unspecified, lighting is off (all lights ignored) for this Shape and unlit object color is (1, 1, 1).
+- If *material* is NULL or unspecified, lighting is off (all lights ignored) for this Shape and unlit object color is (1, 1, 1).
 
 ### SFNode [in, out] **backMaterial** NULL <small>[X3DOneSidedMaterialNode]</small>
 
-Single contained Material node that can specify visual attributes for lighting response (color types, transparency, etc.) applied to corresponding geometry.
+Input/Output field *backMaterial*.
 
 ### SFNode [in, out] **texture** NULL <small>[X3DTextureNode]</small>
 
-Single contained texture node (ImageTexture, MovieTexture, PixelTexture, MultiTexture) that maps image(s) to surface geometry.
+Single contained *texture* node (ImageTexture, MovieTexture, PixelTexture, MultiTexture) that maps image(s) to surface geometry.
 
 #### Hints
 
-- If texture node is NULL or unspecified, corresponding Shape geometry for this Appearance is not textured.
+- If *texture* node is NULL or unspecified, corresponding Shape geometry for this Appearance is not textured.
 - [X3D Scene Authoring Hints, Images](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Images){:target="_blank"}
-- [3D Architecture 18 Texturing component](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/texturing.html){:target="_blank"}
+- [X3D Architecture 18 Texturing component](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/texturing.html){:target="_blank"}
 - [X3D Architecture 33 Texturing3D component](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/texture3D.html){:target="_blank"}
 
 ### SFNode [in, out] **textureTransform** NULL <small>[X3DTextureTransformNode]</small>
 
 Single contained TextureTransform node that defines 2D transformation applied to texture coordinates.
 
-#### Hint
+#### Hints
 
-- If textureTransform array is empty, then this field has no effect.
+- Texture coordinates are reapplied (or else recomputed if *textureTransform* field initially NULL) whenever the corresponding vertex-based geometry changes.
+- If *textureTransform* array is empty, then this field has no effect.
 
 ### MFNode [in, out] **shaders** [ ] <small>[X3DShaderNode]</small>
 
@@ -96,28 +105,26 @@ Zero or more contained programmable shader nodes (ComposedShader, PackagedShader
 
 #### Hint
 
-- [X3D Architecture 31 Programmable shaders component](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/shaders.html){:target="_blank"}
+- [X3D Architecture 31 Programmable *shaders* component](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/*shaders*.html){:target="_blank"}
 
 ### SFNode [in, out] **blendMode** NULL <small>[BlendMode]</small> <small class="yellow">non standard</small>
 
 Single contained BlendMode node that defines blend mode properties.
 
-### SFNode [in, out] **acousticProperties** NULL <small>[AcousticProperties]</small>
-
-Single contained acousticProperties node that can specify additional acoustic attributes applied to associated surface geometry.
-
-## Description
+## Advisories
 
 ### Hints
 
 - Insert a Shape node before adding geometry or Appearance. Interchange profile hint: only Material and ImageTexture children are allowed.
 - DEF/USE copies of a single node can provide a similar "look + feel" style for related shapes in a scene.
 - Advanced uses can contain MultiTexture, MultiTextureTransform/TextureTransformMatrix3D/TextureTransform3D, ComposedShader/PackagedShader/ProgramShader, ComposedTexture3D/ImageTexture3D/PixelTexture3D, or ComposedCubeMapTexture/GeneratedCubeMapTexture/ImageCubeMapTexture.
+- [X3D Architecture 12.2.2 Appearance node](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/shape.html#Appearancenode){:target="_blank"}
+- [X3D Architecture 17.2.2 Lighting model](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/lighting.html#Lightingmodel){:target="_blank"}
 
 ## Example
 
 <x3d-canvas src="https://create3000.github.io/media/examples/Shape/Appearance/Appearance.x3d" update="auto"></x3d-canvas>
 
-## External Links
+## See Also
 
-- [X3D Specification of Appearance](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#Appearance){:target="_blank"}
+- [X3D Specification of Appearance node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#Appearance){:target="_blank"}

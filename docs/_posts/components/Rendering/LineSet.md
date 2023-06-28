@@ -1,6 +1,6 @@
 ---
 title: LineSet
-date: 2022-01-07
+date: 2023-01-07
 nav: components-Rendering
 categories: [components, Rendering]
 tags: [LineSet, Rendering]
@@ -13,9 +13,9 @@ tags: [LineSet, Rendering]
 
 ## Overview
 
-LineSet is a geometry node that can contain a Coordinate/CoordinateDouble node and an (optional) Color/ColorRGBA node. Color values or a sibling Material emissiveColor is used to draw lines and points. Lines are not lit, are not texture-mapped, and do not participate in collision detection.
+LineSet is a geometry node that can contain a Coordinate or CoordinateDouble node and optionally a Color or ColorRGBA node.
 
-The LineSet node belongs to the **Rendering** component and its default container field is *geometry.* It is available since X3D version 3.0 or later.
+The LineSet node belongs to the **Rendering** component and its default container field is *geometry.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -29,15 +29,19 @@ The LineSet node belongs to the **Rendering** component and its default containe
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
 ### MFInt32 [in, out] **vertexCount** [ ] <small>[2,∞)</small>
 
-*vertexCount* describes how many vertices are used in each individual polyline segment from the Coordinate point values. Coordinate point values are assigned as a block of points to each line by taking vertexCount[n] vertices at a time.
+Vertices at a time.
 
 ### MFNode [in, out] **attrib** [ ] <small>[X3DVertexAttributeNode]</small>
 
-Multiple contained FloatVertexAttribute nodes that can specify list of per-vertex attribute information for programmable shaders.
+Single contained FloatVertexAttribute node that can specify list of per-vertex attribute information for programmable shaders.
 
 #### Hint
 
@@ -49,7 +53,7 @@ Single contained FogCoordinate node that can specify depth parameters for fog in
 
 ### SFNode [in, out] **color** NULL <small>[X3DColorNode]</small>
 
-Single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorIndex and colorPerVertex fields.
+Single contained Color or ColorRGBA node that can specify *color* values applied to corresponding vertices according to colorIndex and colorPerVertex fields.
 
 ### SFNode [in, out] **normal** NULL <small>[X3DNormalNode]</small>
 
@@ -61,25 +65,33 @@ Single contained Normal node that can specify perpendicular vectors for correspo
 
 #### Warning
 
-- Normal vectors increase file size, typically doubling geometry definitions.
+- *normal* vectors increase file size, typically doubling geometry definitions.
 
 ### SFNode [in, out] **coord** NULL <small>[X3DCoordinateNode]</small>
 
 Single contained Coordinate or CoordinateDouble node that can specify a list of vertex values.
 
-## Description
+## Advisories
 
 ### Hints
 
-- Use a different color (or emissiveColor) than the background color. Linear interpolation of colors can be used as a good scientific visualization technique to map arbitrary function values to a color map.
+- [Polygonal chain](https://en.wikipedia.org/wiki/Polygonal_chain){:target="_blank"}
+- Either values in a contained Color node, or else Material emissiveColor in corresponding Appearance node, are used for rendering lines and points.
+- Adding LineProperties to the corresponding Appearance node can modify the rendering style of these lines.
+- Step-wise variation or linear interpolation of color values can be used as a good scientific visualization technique to map arbitrary function values to a color map.
 - Insert a Shape node before adding geometry or Appearance.
-- You can also substitute a type-matched ProtoInstance node for contained content.
-- Consider including Fog to provide further depth cueing for LineSet (LS).
+- For advanced extensibility, authors can substitute a type-matched ProtoInstance node (with correct containerField value) for contained node content.
+- Consider including Fog (with Fog color matching Background color) to provide further depth cueing for LineSet (LS).
+
+### Warnings
+
+- Lines are not lit, are not texture-mapped, and do not participate in collision detection.
+- Use a different color (or Material emissiveColor) than the Background color, otherwise geometry is invisible.
 
 ## Example
 
 <x3d-canvas src="https://create3000.github.io/media/examples/Rendering/LineSet/LineSet.x3d" update="auto"></x3d-canvas>
 
-## External Links
+## See Also
 
-- [X3D Specification of LineSet](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rendering.html#LineSet){:target="_blank"}
+- [X3D Specification of LineSet node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rendering.html#LineSet){:target="_blank"}

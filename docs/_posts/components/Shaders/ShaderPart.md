@@ -1,6 +1,6 @@
 ---
 title: ShaderPart
-date: 2022-01-07
+date: 2023-01-07
 nav: components-Shaders
 categories: [components, Shaders]
 tags: [ShaderPart, Shaders]
@@ -15,7 +15,7 @@ tags: [ShaderPart, Shaders]
 
 ShaderPart defines the source for a portion of source code used by a ComposedShader node. The source is not required to be a complete shader for all of the vertex/fragment processing.
 
-The ShaderPart node belongs to the **Shaders** component and its default container field is *parts.* It is available since X3D version 3.0 or later.
+The ShaderPart node belongs to the **Shaders** component and its default container field is *parts.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -30,7 +30,11 @@ The ShaderPart node belongs to the **Shaders** component and its default contain
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
 ### SFString [in, out] **description** ""
 
@@ -38,7 +42,7 @@ Author-provided prose that describes intended purpose of the url asset.
 
 #### Hint
 
-- Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for & ampersand character, or &amp;#34; for " quotation-mark character).
+- Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
 
 ### SFString [ ] **type** "VERTEX" <small>["VERTEX"|"FRAGMENT"]</small>
 
@@ -50,11 +54,11 @@ Author-provided prose that describes intended purpose of the url asset.
 
 ### SFBool [in, out] **load** TRUE
 
-*load*=true means load immediately, load=false means defer loading or else unload a previously loaded asset.
+*load*=true means *load* immediately, *load*=false means defer loading or else unload a previously loaded scene.
 
 #### Hints
 
-- Allows author to design when ImageTextureAtlas loading occurs via user interaction, event chains or scripting.
+- Allows author to design when Inline loading occurs via user interaction, event chains or scripting.
 - Use a separate LoadSensor node to detect when loading is complete.
 
 ### MFString [in, out] **url** [ ] <small>[URI]</small>
@@ -63,15 +67,15 @@ Location and filename of shader. Multiple locations are more reliable, and inclu
 
 #### Hints
 
-- MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc." XML encoding for quotation mark " is &amp;quot; (which is called a character entity). Can replace embedded blank(s) in url queries with %20 for each blank character.
+- MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc."
+- Alternative XML encoding for quotation mark " is &amp;quot; (which is an example of a character entity).
+- Can replace embedded blank(s) in *url* queries with %20 for each blank character.
+- [X3D Scene Authoring Hints, urls](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#urls){:target="_blank"}
+- Embedded ecmascript: source can also be contained in the sourceCode pseudo-field without escape characters, equivalent to last entry in the *url* list, when using other API codebases and file encodings.
 
 #### Warning
 
-- Strictly match directory and filename capitalization for http links! This is important for portability. Some operating systems are forgiving of capitalization mismatches, but http/https and other operating systems are not.
-
-#### See Also
-
-- [X3D Scene Authoring Hints](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#urls){:target="_blank"}
+- Strictly match directory and filename capitalization for http links! This is important for portability. Some operating systems are forgiving of capitalization mismatches, but http/https *url* addresses and paths in Unix-based operating systems are all case sensitive and intolerant of uppercase/lowercase mismatches.
 
 ### SFTime [in, out] **autoRefresh** 0 <small>[0,∞)</small>
 
@@ -98,21 +102,26 @@ Location and filename of shader. Multiple locations are more reliable, and inclu
 
 - Automatically reloading content has security considerations and needs to be considered carefully.
 
-## Description
+## Advisories
 
 ### Hints
 
-- ShaderPart can contain a CDATA section of plain-text source code.
+- ShaderPart can contain a CDATA block of plain-text source code.
+- Embedded ecmascript: source can also be contained in the sourceCode pseudo-field without escape characters, equivalent to last entry in the url list, when using other API codebases and file encodings.
+- Insert an XML Character Data (CDATA) block within the Script node to contain source code embedded within an X3D scene, avoiding the need for escape characters.
+- A contained XML Character Data (CDATA) block for source code protects whitespace, line breaks, and literal characters (such as &amp; for ampersand character, \< for less-than-sign character, and \> for greater-than-sign character) from unintended escape-character modifications by XML parsers.
 - ShaderPart subprograms are written in the same language, which is specified in the parent ComposedShader node.
+- [When parent node is LoadSensor, apply `containerField='children'` (X3Dv4) or `containerField='watchList'` (X3Dv3).](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges){:target="_blank"}
 
-### Warning
+### Warnings
 
-- ShaderPart contains no field definitions.
+- ShaderPart contains no field declarations.
+- Strict order is required for contained constructs: first field declarations (if any), then IS/connect statements (if any), and finally CDATA source-code block.
 
 ## Example
 
 <x3d-canvas src="https://create3000.github.io/media/examples/Shaders/ShaderPart/ShaderPart.x3d" update="auto"></x3d-canvas>
 
-## External Links
+## See Also
 
-- [X3D Specification of ShaderPart](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shaders.html#ShaderPart){:target="_blank"}
+- [X3D Specification of ShaderPart node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shaders.html#ShaderPart){:target="_blank"}

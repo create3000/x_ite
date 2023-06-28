@@ -1,6 +1,6 @@
 ---
 title: Normal
-date: 2022-01-07
+date: 2023-01-07
 nav: components-Rendering
 categories: [components, Rendering]
 tags: [Normal, Rendering]
@@ -13,9 +13,9 @@ tags: [Normal, Rendering]
 
 ## Overview
 
-Normal defines a set of 3D surface-normal vectors that apply either to a sibling Coordinate/CoordinateDouble node, or else to a parent ElevationGrid node. Normal values are perpendicular directions that are used per-polygon or per-vertex when computing lighting and shading.
+Normal defines a set of 3D surface-normal vectors that apply either to a sibling Coordinate or CoordinateDouble node, or else to a parent ElevationGrid node. Normal values are perpendicular directions that are used per-polygon or per-vertex when computing lighting and shading.
 
-The Normal node belongs to the **Rendering** component and its default container field is *normal.* It is available since X3D version 2.0 or later.
+The Normal node belongs to the **Rendering** component and its default container field is *normal.* It is available from X3D version 2.0 or higher.
 
 ## Hierarchy
 
@@ -30,12 +30,34 @@ The Normal node belongs to the **Rendering** component and its default container
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
 ### MFVec3f [in, out] **vector** [ ] <small>[-1,1]</small>
 
 Set of unit-length normal vectors, corresponding to indexed polygons or vertices.
 
-## External Links
+#### Warning
 
-- [X3D Specification of Normal](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rendering.html#Normal){:target="_blank"}
+- Unit length means a magnitude of 1.0, so normal values of (0,0,0) are invalid.
+
+## Advisories
+
+### Hints
+
+- Normal values are typically only calculated or applied once, during initial loading of model geometry.
+- Custom Normal values can produce special effects.
+- If no child Normal node is provided, the X3D browser shall automatically generate normals, using creaseAngle to determine smoothed shading across shared vertices.
+- Computation of normal values is performed quite quickly on modern 3D graphics hardware, often with no perceptible delay.
+- [Normal vectors perpendicular to 3D surface](https://en.wikipedia.org/wiki/Normal_(geometry)){:target="_blank"}
+
+### Warning
+
+- Adding normal values to a model might significantly increase file size. Testing can help determine proper tradeoffs between file size, network transmission delays and initial rendering speed.
+
+## See Also
+
+- [X3D Specification of Normal node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rendering.html#Normal){:target="_blank"}

@@ -1,6 +1,6 @@
 ---
 title: ToneMappedVolumeStyle
-date: 2022-01-07
+date: 2023-01-07
 nav: components-VolumeRendering
 categories: [components, VolumeRendering]
 tags: [ToneMappedVolumeStyle, VolumeRendering]
@@ -15,7 +15,7 @@ tags: [ToneMappedVolumeStyle, VolumeRendering]
 
 ToneMappedVolumeStyle specifies that volumetric data is rendered with Gooch shading model of two-toned warm/cool coloring.
 
-The ToneMappedVolumeStyle node belongs to the **VolumeRendering** component and its default container field is *renderStyle.* It is available since X3D version 3.3 or later.
+The ToneMappedVolumeStyle node belongs to the **VolumeRendering** component and its default container field is *renderStyle.* It is available from X3D version 3.3 or higher.
 
 ## Hierarchy
 
@@ -30,7 +30,11 @@ The ToneMappedVolumeStyle node belongs to the **VolumeRendering** component and 
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
 ### SFBool [in, out] **enabled** TRUE
 
@@ -40,7 +44,7 @@ Enables/disables node operation.
 
 *coolColor* is used for surfaces facing away from the light direction.
 
-#### See Also
+#### Hint
 
 - [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color){:target="_blank"}
 
@@ -48,24 +52,29 @@ Enables/disables node operation.
 
 *warmColor* is used for surfaces facing towards the light.
 
-#### See Also
+#### Hint
 
 - [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color){:target="_blank"}
 
 ### SFNode [in, out] **surfaceNormals** NULL <small>[X3DTexture3DNode]</small>
 
-Input/Output field surfaceNormals.
+The *surfaceNormals* field contains a 3D texture with at least three component values. Each voxel in the texture represents the surface normal direction for the corresponding voxel in the base data source.
 
-## Description
+## Advisories
 
-### Hint
+### Hints
 
-- ToneMappedVolumeStyle can contain a single Texture3D node with containerField='surfaceNormals'
+- ToneMappedVolumeStyle can contain a single Texture3D node with `containerField='surfaceNormals'`
+- [Gooch shading](https://en.wikipedia.org/wiki/Gooch_shading){:target="_blank"}
+
+### Warning
+
+- Requires X3D `profile='Full'` or else include `<component name='VolumeRendering' level='2'/>`
 
 ## Example
 
 <x3d-canvas src="https://create3000.github.io/media/examples/VolumeRendering/ToneMappedVolumeStyle/ToneMappedVolumeStyle.x3d" update="auto"></x3d-canvas>
 
-## External Links
+## See Also
 
-- [X3D Specification of ToneMappedVolumeStyle](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/volume.html#ToneMappedVolumeStyle){:target="_blank"}
+- [X3D Specification of ToneMappedVolumeStyle node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/volume.html#ToneMappedVolumeStyle){:target="_blank"}

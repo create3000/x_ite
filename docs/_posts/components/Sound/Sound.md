@@ -1,6 +1,6 @@
 ---
 title: Sound
-date: 2022-01-07
+date: 2023-01-07
 nav: components-Sound
 categories: [components, Sound]
 tags: [Sound, Sound]
@@ -15,7 +15,7 @@ tags: [Sound, Sound]
 
 The Sound node controls the 3D spatialization of sound playback by a child AudioClip or MovieTexture node. Sound intensity includes stereo support, varying according to user location and view direction in the scene.
 
-The Sound node belongs to the **Sound** component and its default container field is *children.* It is available since X3D version 2.0 or later.
+The Sound node belongs to the **Sound** component and its default container field is *children.* It is available from X3D version 2.0 or higher.
 
 ## Hierarchy
 
@@ -30,15 +30,20 @@ The Sound node belongs to the **Sound** component and its default container fiel
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
-
-### SFString [in, out] **description** ""
-
-Author-provided prose that describes intended purpose of the url asset.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
 
 #### Hint
 
-- Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for & ampersand character, or &amp;#34; for " quotation-mark character).
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
+
+### SFString [in, out] **description** ""
+
+Author-provided prose that describes intended purpose of this node.
+
+#### Hints
+
+- Include space characters since a *description* is not a DEF identifier. Write short phrases that make descriptions clear and readable.
+- Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
 
 ### SFBool [in, out] **enabled** TRUE
 
@@ -46,11 +51,11 @@ Enables/disables node operation.
 
 ### SFBool [ ] **spatialize** TRUE
 
-Whether to spatialize sound playback relative to viewer.
+Whether to *spatialize* sound playback relative to viewer.
 
 #### Hint
 
-- Only effective between minimum and maximum ellipsoids.
+- Only effective within the auralization volume.
 
 ### SFFloat [in, out] **intensity** 1 <small>[0,1]</small>
 
@@ -58,7 +63,11 @@ Factor [0,1] adjusting loudness (decibels) of emitted sound.
 
 ### SFVec3f [in, out] **location** 0 0 0 <small>(-∞,∞)</small>
 
-Position of sound center, relative to local coordinate system.
+Position of sound ellipsoid center, relative to local coordinate system.
+
+#### Hint
+
+- Improve audibility by setting *location*='0 1.6 0' so that center height of sound ellipsoid matches typical NavigationInfo avatarSize height.
 
 ### SFVec3f [in, out] **direction** 0 0 1 <small>(-∞,∞)</small>
 
@@ -66,19 +75,35 @@ Position of sound center, relative to local coordinate system.
 
 ### SFFloat [in, out] **minBack** 1 <small>[0,∞)</small>
 
-Inner (full volume) ellipsoid distance along back direction. Ensure minBack \<= maxBack.
+Inner (full loudness) ellipsoid distance along back direction.
+
+#### Warning
+
+- Ensure *minBack* \<= maxBack.
 
 ### SFFloat [in, out] **minFront** 1 <small>[0,∞)</small>
 
-Inner (full volume) ellipsoid distance along front direction. Ensure minFront \<= maxFront.
+Inner (full loudness) ellipsoid distance along front direction.
+
+#### Warning
+
+- Ensure *minFront* \<= maxFront.
 
 ### SFFloat [in, out] **maxBack** 10 <small>[0,∞)</small>
 
-Outer (zero volume) ellipsoid distance along back direction. Ensure minBack \<= maxBack.
+Outer (zero loudness)ellipsoid distance along back direction.
+
+#### Warning
+
+- Ensure minBack \<= *maxBack*.
 
 ### SFFloat [in, out] **maxFront** 10 <small>[0,∞)</small>
 
-Outer (zero volume) ellipsoid distance along front direction. Ensure minFront \<= maxFront.
+Outer (zero loudness)ellipsoid distance along front direction.
+
+#### Warning
+
+- Ensure minFront \<= *maxFront*.
 
 ### SFFloat [in, out] **priority** 0 <small>[0,1]</small>
 
@@ -86,21 +111,29 @@ Player hint [0,1] if needed to choose which sounds to play.
 
 ### SFNode [in, out] **source** NULL <small>[X3DSoundSourceNode]</small>
 
-Input/Output field source.
+Sound *source* for the Sound node, either an AudioClip node or a MovieTexture node.
+
+#### Warning
+
+- If *source* field is not specified, the Sound node does not emit audio.
 
 ### MFNode [in, out] **children** [ ] <small>[X3DSoundChannelNode,X3DSoundProcessingNode,X3DSoundSourceNode]</small>
 
-## Description
+Input/Output field *children*.
 
-### Hint
+## Advisories
+
+### Hints
 
 - If the audio source is stereo or multi-channel, channel separation is retained during playback.
+- [X3D Sound component Figure 16.2 Sound Node Geometry](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/sound.html#f-Soundnodegeometry){:target="_blank"}
+- [X3D Scene Authoring Hints:Audio](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Audio){:target="_blank"}
+- [Wikipedia 3D sound localization](https://en.wikipedia.org/wiki/3D_sound_localization){:target="_blank"}
 
 ### Warning
 
-- While providing sounds on the ground plane, ensure that the audible auralization ellipse is sufficiently elevated to match avatar height.
+- While providing sounds on the ground plane, ensure that the audible auralization volume is sufficiently elevated to match avatar height.
 
-## External Links
+## See Also
 
-- [X3D Specification of Sound](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#Sound){:target="_blank"}
-- [X3D Scene Authoring Hints:Audio](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Audio){:target="_blank"}
+- [X3D Specification of Sound node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#Sound){:target="_blank"}

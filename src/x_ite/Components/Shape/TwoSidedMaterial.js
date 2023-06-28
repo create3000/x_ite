@@ -264,7 +264,7 @@ Object .defineProperties (TwoSidedMaterial,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.2", "Infinity"]),
+      value: Object .freeze (["3.2", "4.0"]),
       enumerable: true,
    },
    fieldDefinitions:

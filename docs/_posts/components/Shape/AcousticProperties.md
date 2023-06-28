@@ -13,9 +13,9 @@ tags: [AcousticProperties, Shape]
 
 ## Overview
 
-AcousticProperties ...
+AcousticProperties specifies the interaction of sound waves with characteristics of geometric objects in the scene. Acoustic coefficient values are expected to fully account for physical and structural characteristics of associated geometry such as width, height, thickness, shape, softness and/or hardness, and density variations.
 
-The AcousticProperties node belongs to the **Shape** component and its default container field is *acousticProperties.* It is available since X3D version 4.0 or later.
+The AcousticProperties node belongs to the **Shape** component and its default container field is *acousticProperties.* It is available from X3D version 4.0 or higher.
 
 ## Hierarchy
 
@@ -29,7 +29,11 @@ The AcousticProperties node belongs to the **Shape** component and its default c
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
 ### SFString [in, out] **description** ""
 
@@ -37,7 +41,7 @@ Author-provided prose that describes intended purpose of the url asset.
 
 #### Hint
 
-- Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for & ampersand character, or &amp;#34; for " quotation-mark character).
+- Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
 
 ### SFBool [in, out] **enabled** TRUE
 
@@ -63,6 +67,14 @@ Sound *refraction* coefficient of a medium, which determines change in propagati
 
 *specular* coefficient of sound reflection striking a plane surface, directly reflected back into space, where angle of reflection equals angle of incidence.
 
-## External Links
+## Advisories
 
-- [X3D Specification of AcousticProperties](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#AcousticProperties){:target="_blank"}
+### Hints
+
+- AcousticProperties must have a parent Appearance node, and only affects geometry within the same Shape.
+- Proxy geometry for acoustic response can be far simpler than geometry needed for visual rendering.
+- [X3D Architecture Figure 16.2 Sound Propagation Phenomena](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/sound.html#f-SoundPropagationPhenomena){:target="_blank"}
+
+## See Also
+
+- [X3D Specification of AcousticProperties node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#AcousticProperties){:target="_blank"}

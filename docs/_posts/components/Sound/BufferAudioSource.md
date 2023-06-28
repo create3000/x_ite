@@ -13,9 +13,9 @@ tags: [BufferAudioSource, Sound]
 
 ## Overview
 
-BufferAudioSource ...
+BufferAudioSource node represents a memory-resident audio asset that can contain one or more channels. Typically the length of the Pulse Coded Modulation (PCM) data is expected to be fairly short (usually somewhat less than a minute).
 
-The BufferAudioSource node belongs to the **Sound** component and its default container field is *children.* It is available since X3D version 4.0 or later.
+The BufferAudioSource node belongs to the **Sound** component and its default container field is *children.* It is available from X3D version 4.0 or higher.
 
 ## Hierarchy
 
@@ -43,7 +43,7 @@ Author-provided prose that describes intended purpose of the url asset.
 
 #### Hint
 
-- Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &#38; for & ampersand character, or &#34; for " quotation-mark character).
+- Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
 
 ### SFBool [in, out] **enabled** TRUE
 
@@ -51,28 +51,27 @@ Enables/disables node operation.
 
 ### SFBool [in, out] **load** TRUE
 
-*load*=true means load immediately, load=false means defer loading or else unload a previously loaded asset.
+*load*=true means *load* immediately, *load*=false means defer loading or else unload a previously loaded scene.
 
 #### Hints
 
-- Allows author to design when ImageTextureAtlas loading occurs via user interaction, event chains or scripting.
+- Allows author to design when Inline loading occurs via user interaction, event chains or scripting.
 - Use a separate LoadSensor node to detect when loading is complete.
 
 ### MFString [in, out] **url** [ ] <small>[URI]</small>
 
-Location and filename of image. Multiple locations are more reliable, and including a Web address lets e-mail attachments work.
+Location and filename of sound file. Support for .wav format is required, .midi format is recommended, other formats are optional.
 
 #### Hints
 
-- MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc." XML encoding for quotation mark " is &amp;quot; (which is called a character entity). Can replace embedded blank(s) in url queries with %20 for each blank character.
+- MFString arrays can have multiple values, so separate each individual string by quote marks. "https://www.web3d.org" "https://www.web3d.org/about" "etc."
+- Alternative XML encoding for quotation mark " is &amp;quot; (which is an example of a character entity).
+- Can replace embedded blank(s) in *url* queries with %20 for each blank character.
+- [X3D Scene Authoring Hints, urls](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#urls){:target="_blank"}
 
 #### Warning
 
-- Strictly match directory and filename capitalization for http links! This is important for portability. Some operating systems are forgiving of capitalization mismatches, but http/https and other operating systems are not.
-
-#### See Also
-
-- [X3D Scene Authoring Hints, urls](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#urls){:target="_blank"}
+- Strictly match directory and filename capitalization for http links! This is important for portability. Some operating systems are forgiving of capitalization mismatches, but http/https *url* addresses and paths in Unix-based operating systems are all case sensitive and intolerant of uppercase/lowercase mismatches.
 
 ### SFTime [in, out] **autoRefresh** 0 <small>[0,∞)</small>
 
@@ -270,6 +269,16 @@ Current elapsed time since AudioClip activated/running, cumulative in seconds, a
 
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
-## External Links
+## Advisories
 
-- [X3D Specification of BufferAudioSource](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#BufferAudioSource){:target="_blank"}
+### Hint
+
+- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#AudioBufferSourceNode){:target="_blank"}
+
+### Warning
+
+- For longer sounds, such as music soundtracks, streaming such as StreamAudioSource should be used.
+
+## See Also
+
+- [X3D Specification of BufferAudioSource node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#BufferAudioSource){:target="_blank"}

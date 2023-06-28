@@ -1,6 +1,6 @@
 ---
 title: Extrusion
-date: 2022-01-07
+date: 2023-01-07
 nav: components-Geometry3D
 categories: [components, Geometry3D]
 tags: [Extrusion, Geometry3D]
@@ -13,9 +13,9 @@ tags: [Extrusion, Geometry3D]
 
 ## Overview
 
-Extrusion is a geometry node stretching a 2D cross section along a 3D-spine path in the local coordinate system. Scaling/rotating cross-sections can produce a variety of shapes.
+Extrusion is a geometry node that sequentially stretches a 2D cross section along a 3D-spine path in the local coordinate system, creating an outer hull. Scaling and rotating the crossSection 2D outline at each control point can modify the outer hull of the Extrusion to produce a wide variety of interesting shapes.
 
-The Extrusion node belongs to the **Geometry3D** component and its default container field is *geometry.* It is available since X3D version 2.0 or later.
+The Extrusion node belongs to the **Geometry3D** component and its default container field is *geometry.* It is available from X3D version 2.0 or higher.
 
 ## Hierarchy
 
@@ -29,43 +29,60 @@ The Extrusion node belongs to the **Geometry3D** component and its default conta
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
 ### MFVec2f [in] **set_crossSection** <small>(-∞,∞)</small>
 
-An ordered set of 2D points drawing a piecewise-linear curve and forming a planar series of connected vertices. This provides a silhouette of the outer surface.
+The *crossSection* array defines a silhouette outline of the outer Extrusion surface. *crossSection* is an ordered set of 2D points that draw a piecewise-linear curve which is extruded to form a series of connected vertices.
 
-#### Warning
+#### Warnings
 
-- Match clockwise/counterclockwise or impossible/inverted geometry can result!
+- If the order of *crossSection* point definition does not match clockwise/counterclockwise setting of ccw field, then self-intersecting, impossible or inverted geometry can result!
+- It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
 
 ### MFRotation [in] **set_orientation** <small>[-1,1] or (-∞,∞)</small>
 
-Orientation is a list of axis-angle orientation 4-tuples applied at each spine-aligned cross-section plane.
+The *orientation* array is a list of axis-angle 4-tuple values applied at each spine-aligned cross-section plane.
 
-#### Hint
+#### Hints
 
-- Number of spine points, scale values and orientation values must be the same.
-
-### MFVec2f [in] **set_scale** <small>(0,∞)</small>
-
-Scale is a list of 2D-scale parameters applied at each spine-aligned cross-section plane.
-
-#### Hint
-
-- Number of spine points, scale values and orientation values must be the same.
+- If the *orientation* array contains a single 4-tuple value, it is applied at all spine-aligned crossSection planes.
+- Number of values must all match for 3-tuple spine points, 2-tuple scale values, and 4-tuple *orientation* values.
 
 #### Warning
 
-- Zero or negative scale values not allowed.
+- It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
 
-### MFVec3f [in] **set_spine** <small>(-∞,∞)</small>
+### MFVec2f [in] **set_scale** <small>(0,∞)</small>
 
-Spine is a list of 3D points for a piecewise-linear curve forming a series of connected vertices, open or closed. This is the path along which the crossSection is extruded.
+*scale* is a list of 2D-*scale* parameters applied at each spine-aligned cross-section plane.
 
 #### Hint
 
-- Number of spine points, scale values and orientation values must be the same.
+- Number of values must all match for 3-tuple spine points, 2-tuple *scale* values, and 4-tuple orientation values.
+
+#### Warnings
+
+- Zero or negative *scale* values not allowed.
+- It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
+
+### MFVec3f [in] **set_spine** <small>(-∞,∞)</small>
+
+The *spine* array defines a center-line sequence of 3D points that define a piecewise-linear curve forming a series of connected vertices. The *spine* is set of points along which a 2D crossSection is extruded, scaled and oriented.
+
+#### Hints
+
+- The *spine* array can be open or closed (closed means that endpoints are coincident).
+- Number of values must all match for 3-tuple *spine* points, 2-tuple scale values, and 4-tuple orientation values.
+
+#### Warnings
+
+- Special care is needed if creating loops or spirals since self-intersecting, impossible or inverted geometry can result!
+- It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
 
 ### SFBool [ ] **beginCap** TRUE
 
@@ -73,23 +90,25 @@ Whether beginning cap is drawn (similar to Cylinder top cap).
 
 #### Warning
 
-- Cannot be changed after initial creation.
+- Since this field has accessType initializeOnly, the value cannot be changed after initial creation.
 
 ### SFBool [ ] **endCap** TRUE
 
-Whether end cap is drawn (similar to Cylinder end cap).
+Whether end cap is drawn (similar to Cylinder bottom cap).
 
 #### Warning
 
-- Cannot be changed after initial creation.
+- Since this field has accessType initializeOnly, the value cannot be changed after initial creation.
 
 ### SFBool [ ] **solid** TRUE
 
-Setting solid true means draw only one side of polygons (backface culling on), setting solid false means draw both sides of polygons (backface culling off).
+Setting *solid* true means draw only one side of polygons (backface culling on), setting *solid* false means draw both sides of polygons (backface culling off).
 
-#### Hint
+#### Hints
 
-- If in doubt, use solid='false' for maximum visibility.
+- Mnemonic "this geometry is *solid* like a brick" (you don't render the inside of a brick).
+- If in doubt, use *solid*='false' for maximum visibility.
+- (X3D version 4.0 draft) accessType relaxed to inputOutput in order to support animation and visualization.
 
 #### Warning
 
@@ -97,74 +116,107 @@ Setting solid true means draw only one side of polygons (backface culling on), s
 
 ### SFBool [ ] **ccw** TRUE
 
-*ccw* = counterclockwise: ordering of vertex-coordinates orientation.
+The *ccw* field indicates counterclockwise ordering of vertex-coordinates orientation.
 
-#### Hint
+#### Hints
 
-- *ccw* false can reverse solid (backface culling) and normal-vector orientation.
+- A good debugging technique for problematic polygons is to try changing the value of *ccw*, which can reverse solid effects (single-sided backface culling) and normal-vector direction.
+- [Clockwise](https://en.wikipedia.org/wiki/Clockwise){:target="_blank"}
+
+#### Warning
+
+- Consistent and correct ordering of left-handed or right-handed point sequences is important throughout the coord array of point values.
 
 ### SFBool [ ] **convex** TRUE
 
-Whether all polygons in a shape are convex (true), or possibly concave (false). A convex polygon is planar, does not intersect itself, and has all interior angles \< 180 degrees.
+The *convex* field is a hint to renderers whether all polygons in a shape are *convex* (true), or possibly concave (false). A *convex* polygon is planar, does not intersect itself, and has all interior angles \< 180 degrees.
+
+#### Hints
+
+- Concave is the opposite of *convex*.
+- Select *convex*=false (i.e. concave) and solid=false (i.e. two-sided display) for greatest visibility of geometry.
+- [*convex* polygon](https://en.wikipedia.org/wiki/Convex_polygon){:target="_blank"}
+- [Tessellation](https://en.wikipedia.org/wiki/Tessellation){:target="_blank"}
 
 #### Warning
 
-- Concave geometry may be invisible default convex=true.
+- Concave or inverted geometry may be invisible when using default value *convex*=true, since some renderers use more-efficient algorithms to perform tessellation that may inadvertently fail on concave geometry.
 
 ### SFFloat [ ] **creaseAngle** 0 <small>[0,∞)</small>
 
-*creaseAngle* defines angle (in radians) where adjacent polygons are drawn with sharp edges or smooth shading. If angle between normals of two adjacent polygons is less than creaseAngle, smooth shading is rendered across the shared line segment.
+*creaseAngle* defines angle (in radians) where adjacent polygons are drawn with sharp edges or smooth shading. If angle between normals of two adjacent polygons is less than *creaseAngle*, smooth shading is rendered across the shared line segment.
 
-#### Hint
+#### Hints
 
-- CreaseAngle=0 means render all edges sharply, creaseAngle=3.14159 means render all edges smoothly.
+- *creaseAngle*=0 means render all edges sharply, *creaseAngle*=3.14159 means render all edges smoothly.
+- [Radian units for angular measure](https://en.wikipedia.org/wiki/Radian){:target="_blank"}
 
 ### MFVec2f [ ] **crossSection** [ 1 1, 1 -1, -1 -1, -1 1, 1 1 ] <small>(-∞,∞)</small>
 
-An ordered set of 2D points drawing a piecewise-linear curve and forming a planar series of connected vertices. This provides a silhouette of the outer surface.
+The *crossSection* array defines a silhouette outline of the outer Extrusion surface. *crossSection* is an ordered set of 2D points that draw a piecewise-linear curve which is extruded to form a series of connected vertices.
 
-#### Warning
+#### Hints
 
-- Match clockwise/counterclockwise or impossible/inverted geometry can result!
+- The *crossSection* array can be open or closed (closed means that endpoints are coincident).
+- Number of values must all match for 3-tuple spine points, 2-tuple scale values, and 4-tuple orientation values.
+
+#### Warnings
+
+- If the order of *crossSection* point definition does not match clockwise/counterclockwise setting of ccw field, then self-intersecting, impossible or inverted geometry can result!
+- Avoid self-intersecting polygon line segments, otherwise defined geometry is irregular and rendering results are undefined (especially for end caps).
 
 ### MFRotation [ ] **orientation** 0 0 1 0 <small>[-1,1] or (-∞,∞)</small>
 
-*orientation* is a list of axis-angle orientation 4-tuples applied at each spine-aligned cross-section plane.
+The *orientation* array is a list of axis-angle 4-tuple values applied at each spine-aligned cross-section plane.
 
-#### Hint
+#### Hints
 
-- Number of spine points, scale values and orientation values must be the same.
+- If the *orientation* array contains a single 4-tuple value, it is applied at all spine-aligned crossSection planes.
+- Number of values must all match for 3-tuple spine points, 2-tuple scale values, and 4-tuple *orientation* values.
 
 ### MFVec2f [ ] **scale** 1 1 <small>(0,∞)</small>
 
-*scale* is a list of 2D-scale parameters applied at each spine-aligned cross-section plane.
+*scale* is a list of 2D-*scale* parameters applied at each spine-aligned cross-section plane.
 
-#### Hint
+#### Hints
 
-- Number of spine points, scale values and orientation values must be the same.
+- Number of values must all match for 3-tuple spine points, 2-tuple *scale* values, and 4-tuple orientation values.
+- If the *scale* array contains one value, it is applied at all spine-aligned crossSection planes.
 
 #### Warning
 
-- Zero or negative scale values not allowed.
+- Zero or negative *scale* values not allowed.
 
 ### MFVec3f [ ] **spine** [ 0 0 0, 0 1 0 ] <small>(-∞,∞)</small>
 
-*spine* is a list of 3D points for a piecewise-linear curve forming a series of connected vertices, open or closed. This is the path along which the crossSection is extruded.
+The *spine* array defines a center-line sequence of 3D points that define a piecewise-linear curve forming a series of connected vertices. The *spine* is set of points along which a 2D crossSection is extruded, scaled and oriented.
 
-#### Hint
+#### Hints
 
-- Number of spine points, scale values and orientation values must be the same.
+- The *spine* array can be open or closed (closed means that endpoints are coincident).
+- Number of values must all match for 3-tuple *spine* points, 2-tuple scale values, and 4-tuple orientation values.
+- If a *spine* is closed (or nearly closed) then the inner diameter usually needs to be greater than the corresponding crossSection width.
 
-## Description
+#### Warnings
 
-### Hint
+- Special care is needed if creating loops or spirals since self-intersecting, impossible or inverted geometry can result!
+- Ensure that *spine* segments have non-zero length and are not coincident with each other.
 
+## Advisories
+
+### Hints
+
+- [Extrusion](https://en.wikipedia.org/wiki/Extrusion){:target="_blank"}
 - Insert a Shape node before adding geometry or Appearance.
+
+### Warning
+
+- Take care to avoid defining parameter combinations that create self-intersecting, impossible or inverted geometry.
 
 ## Example
 
 <x3d-canvas src="https://create3000.github.io/media/examples/Geometry3D/Extrusion/Extrusion.x3d" update="auto"></x3d-canvas>
 
-## External Links
+## See Also
 
-- [X3D Specification of Extrusion](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry3D.html#Extrusion){:target="_blank"}
+- [X3D Specification of Extrusion node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry3D.html#Extrusion){:target="_blank"}

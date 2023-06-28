@@ -1,6 +1,6 @@
 ---
 title: BooleanToggle
-date: 2022-01-07
+date: 2023-01-07
 nav: components-EventUtilities
 categories: [components, EventUtilities]
 tags: [BooleanToggle, EventUtilities]
@@ -15,7 +15,7 @@ tags: [BooleanToggle, EventUtilities]
 
 BooleanToggle maintains state and negates output when a true input is provided.
 
-The BooleanToggle node belongs to the **EventUtilities** component and its default container field is *children.* It is available since X3D version 3.0 or later.
+The BooleanToggle node belongs to the **EventUtilities** component and its default container field is *children.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -29,18 +29,39 @@ The BooleanToggle node belongs to the **EventUtilities** component and its defau
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
 ### SFBool [in] **set_boolean**
 
-If set_boolean input is true, toggle state.
+If input event *set_boolean* is true, flip state by negating current value of the toggle field
+
+#### Hint
+
+- For logical consistency, input event *set_boolean* false has no effect (under review as part of Mantis issue 519).
+
+#### Warning
+
+- It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
 
 ### SFBool [in, out] **toggle** FALSE
 
 Persistent state value that gets toggled or reset.
 
-## External Links
+#### Hint
 
-- [X3D Specification of BooleanToggle](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/eventUtilities.html#BooleanToggle){:target="_blank"}
-- [Example scenes and authoring assets at](https://x3dgraphics.com/examples/X3dForWebAuthors/Chapter09-EventUtilitiesScripting){:target="_blank"}
-- [X3D Event-Utility Nodes, Field Event Diagrams](https://x3dgraphics.com/examples/X3dForWebAuthors/Chapter09-EventUtilitiesScripting/X3dEventUtilityNodeEventDiagrams.pdf){:target="_blank"}
+- Directly setting a new value for the *toggle* field generates a corresponding toggle_changed output event.
+
+## Advisories
+
+### Hints
+
+- [Example scenes and authoring assets](https://x3dgraphics.com/examples/X3dForWebAuthors/Chapter09-EventUtilitiesScripting){:target="_blank"}
+- [X3D Event-Utility Node Diagrams](https://x3dgraphics.com/examples/X3dForWebAuthors/Chapter09-EventUtilitiesScripting/X3dEventUtilityNodeEventDiagrams.pdf){:target="_blank"}
+
+## See Also
+
+- [X3D Specification of BooleanToggle node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/eventUtilities.html#BooleanToggle){:target="_blank"}

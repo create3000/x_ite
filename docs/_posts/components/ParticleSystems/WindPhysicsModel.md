@@ -1,6 +1,6 @@
 ---
 title: WindPhysicsModel
-date: 2022-01-07
+date: 2023-01-07
 nav: components-ParticleSystems
 categories: [components, ParticleSystems]
 tags: [WindPhysicsModel, ParticleSystems]
@@ -15,7 +15,7 @@ tags: [WindPhysicsModel, ParticleSystems]
 
 WindPhysicsModel applies a wind effect to the particles. The wind includes a random variation factor to model gustiness.
 
-The WindPhysicsModel node belongs to the **ParticleSystems** component and its default container field is *physics.* It is available since X3D version 3.2 or later.
+The WindPhysicsModel node belongs to the **ParticleSystems** component and its default container field is *physics.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 
@@ -29,7 +29,11 @@ The WindPhysicsModel node belongs to the **ParticleSystems** component and its d
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
 ### SFBool [in, out] **enabled** TRUE
 
@@ -41,7 +45,7 @@ Enables/disables node operation.
 
 ### SFFloat [in, out] **speed** 0.1 <small>[0,∞)</small>
 
-Initial linear speed (default is m/s) imparted to all particles along their direction of movement.
+Initial linear *speed* (default is m/s) imparted to all particles along their direction of movement.
 
 ### SFFloat [in, out] **gustiness** 0.1 <small>[0,∞)</small>
 
@@ -57,12 +61,12 @@ Initial linear speed (default is m/s) imparted to all particles along their dire
 
 #### Hint
 
-- This is determined per-particle to model how each is effected by turbulence.
+- This is determined per-particle to model how each is effected by *turbulence*.
 
 ## Example
 
 <x3d-canvas src="https://create3000.github.io/media/examples/ParticleSystems/WindPhysicsModel/WindPhysicsModel.x3d" update="auto"></x3d-canvas>
 
-## External Links
+## See Also
 
-- [X3D Specification of WindPhysicsModel](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/particleSystems.html#WindPhysicsModel){:target="_blank"}
+- [X3D Specification of WindPhysicsModel node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/particleSystems.html#WindPhysicsModel){:target="_blank"}

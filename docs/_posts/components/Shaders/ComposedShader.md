@@ -1,6 +1,6 @@
 ---
 title: ComposedShader
-date: 2022-01-07
+date: 2023-01-07
 nav: components-Shaders
 categories: [components, Shaders]
 tags: [ComposedShader, Shaders]
@@ -15,7 +15,7 @@ tags: [ComposedShader, Shaders]
 
 ComposedShader defines a shader where the individual source files are assembled from contained ShaderPart program sections. All access to shading capabilities is defined through a single interface that applies to all parts.
 
-The ComposedShader node belongs to the **Shaders** component and its default container field is *shaders.* It is available since X3D version 3.0 or later.
+The ComposedShader node belongs to the **Shaders** component and its default container field is *shaders.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -32,50 +32,63 @@ The ComposedShader node belongs to the **Shaders** component and its default con
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
 ### SFBool [in] **activate**
 
-*activate* forces the shader to activate the contained objects.
+*activate* forces the shader to *activate* the contained objects.
+
+#### Warning
+
+- It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
 
 ### SFBool [out] **isSelected**
 
 *isSelected* indicates this shader instance is selected for use by browser
 
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
+
 ### SFBool [out] **isValid**
 
 *isValid* indicates whether current shader objects can be run as a shader program.
 
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
+
 ### SFString [ ] **language** "" <small>["Cg"|"GLSL"|"HLSL"|...]</small>
 
-The language field indicates to the X3D player which shading language is used. The language field may be used to optionally determine the language type if no MIME-type information is available.
+The *language* field indicates to the X3D player which shading *language* is used. The *language* field may be used to optionally determine the *language* type if no MIME-type information is available.
 
 #### Hint
 
-- Recognized values include "CG" "GLSL" "HLSL" "FX"
-
-#### See Also
-
-- [Relates to Internationalization (i18n)](https://www.w3.org/standards/webdesign/i18n){:target="_blank"}
+- Recognized values include "Cg" "GLSL" "HLSL".
 
 ### MFNode [in, out] **parts** [ ] <small>[ShaderPart]</small>
 
-Input/Output field parts.
+ComposedShader can contain multiple ShaderPart nodes in the *parts* field.
 
-## Description
+## Advisories
 
-### Hint
+### Hints
 
-- ComposedShader contains field definitions, IS/connect, and `<ShaderPart containerField='parts'/>` nodes.
+- ComposedShader contains field declarations and then corresponding IS/connect statements (if any), followed by \<ShaderPart `containerField='parts'/>` nodes.
+- Apply default `containerField='shaders'` when parent node is Appearance.
 
 ### Warning
 
-- ComposedShader can contain field declarations, but no CDATA section of plain-text source code. All source programs are contained in child ShaderPart nodes.
+- ComposedShader does not contain CDATA section of plain-text source code. All source programs are contained in child ShaderPart nodes.
 
 ## Example
 
 <x3d-canvas src="https://create3000.github.io/media/examples/Shaders/ComposedShader/ComposedShader.x3d" update="auto"></x3d-canvas>
 
-## External Links
+## See Also
 
-- [X3D Specification of ComposedShader](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shaders.html#ComposedShader){:target="_blank"}
+- [X3D Specification of ComposedShader node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shaders.html#ComposedShader){:target="_blank"}

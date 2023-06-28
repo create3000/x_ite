@@ -1,6 +1,6 @@
 ---
 title: PositionInterpolator2D
-date: 2022-01-07
+date: 2023-01-07
 nav: components-Interpolation
 categories: [components, Interpolation]
 tags: [PositionInterpolator2D, Interpolation]
@@ -13,9 +13,9 @@ tags: [PositionInterpolator2D, Interpolation]
 
 ## Overview
 
-PositionInterpolator2D generates a series of SFVec2f values that can be ROUTEd to a SFVec2f attribute.
+PositionInterpolator2D generates a series of SFVec2f values. Authors can ROUTE value_changed output events to a SFVec2f attribute.
 
-The PositionInterpolator2D node belongs to the **Interpolation** component and its default container field is *children.* It is available since X3D version 3.0 or later.
+The PositionInterpolator2D node belongs to the **Interpolation** component and its default container field is *children.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -30,48 +30,77 @@ The PositionInterpolator2D node belongs to the **Interpolation** component and i
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
 ### SFFloat [in] **set_fraction** <small>(-∞,∞)</small>
 
 *set_fraction* selects input key for corresponding keyValue output.
 
+#### Hint
+
+- *set_fraction* values are typically in same range interval as values in the key array. Response to an input *set_fraction* value less than minimum is equivalent to minimum key, and response to an input *set_fraction* value greater than maximum is equivalent to maximum key.
+
+#### Warning
+
+- It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
+
 ### MFFloat [in, out] **key** [ ] <small>(-∞,∞)</small>
 
-Definition parameters for linear-interpolation function time intervals, in increasing order and corresponding to keyValues.
+Definition values for linear-interpolation function input intervals, listed in non-decreasing order and corresponding to a value in the keyValue array.
 
 #### Hints
 
-- Number of keyValues must be an integer multiple of the number of keys! KeyValue/key integer multiple defines how many coordinates are sent in value_changed outputOnlys.
+- Number of keyValues must be an integer multiple of the number of keys!
+- KeyValue/*key* integer multiple defines how many coordinates are sent in value_changed outputOnlys.
+- Typical interval for values in *key* array is within range of 0 to 1, but larger intervals can be defined with arbitrary bounds.
+
+#### Warning
+
+- Values in *key* array shall be monotonically non-decreasing, meaning that each value is greater than or equal to the preceding value.
 
 ### MFVec2f [in, out] **keyValue** [ ] <small>(-∞,∞)</small>
 
-Output values for linear interpolation, each corresponding to time-fraction keys.
+Output values for linear interpolation, each corresponding to an input-fraction value in the key array.
 
 #### Hints
 
-- Number of keyValues must be an integer multiple of the number of keys! KeyValue/key integer multiple defines how many coordinates are sent in value_changed outputOnlys.
+- [Identical adjacent entries in *keyValue* array have the effect of defining constant-value step functions.](https://en.wikipedia.org/wiki/Step_function){:target="_blank"}
+- Number of keyValues must be an integer multiple of the number of keys!
+- *keyValue*/key integer multiple defines how many coordinates are sent in value_changed outputOnlys.
 
 ### SFVec2f [out] **value_changed**
 
 Linearly interpolated output value determined by current key time and corresponding keyValue pair.
 
-#### Hint
+#### Hints
 
-- KeyValue/key integer multiple defines how many coordinates are sent in value_changed outputOnlys.
+- X3D players might not send unchanging intermediate values, thus avoiding excessive superfluous events that have no effect.
+- KeyValue/key integer multiple defines how many coordinates are sent in *value_changed* outputOnlys.
 
-## Description
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
+
+## Advisories
 
 ### Hints
 
 - Typical input connection is ROUTE someTimeSensorDEF.fraction_changed TO thisInterpolatorDEF.set_fraction.
 - Typical output connection is ROUTE thisInterpolatorDEF.value_changed TO someDestinationNodeDEF.set_someAttribute.
-- Include `<component name='Interpolation' level='3'/>`
+- [Example scenes and authoring assets](https://x3dgraphics.com/examples/X3dForWebAuthors/Chapter07EventAnimationInterpolation){:target="_blank"}
+
+### Warning
+
+- Requires X3D `profile='Full'` or else include `<component name='Interpolation' level='3'/>`
 
 ## Example
 
 <x3d-canvas src="https://create3000.github.io/media/examples/Interpolation/PositionInterpolator2D/PositionInterpolator2D.x3d" update="auto"></x3d-canvas>
 
-## External Links
+## See Also
 
-- [X3D Specification of PositionInterpolator2D](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/interpolators.html#PositionInterpolator2D){:target="_blank"}
+- [X3D Specification of PositionInterpolator2D node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/interpolators.html#PositionInterpolator2D){:target="_blank"}

@@ -1,6 +1,6 @@
 ---
 title: AudioClip
-date: 2022-01-07
+date: 2023-01-07
 nav: components-Sound
 categories: [components, Sound]
 tags: [AudioClip, Sound]
@@ -15,7 +15,7 @@ tags: [AudioClip, Sound]
 
 AudioClip provides audio data used by parent Sound nodes.
 
-The AudioClip node belongs to the **Sound** component and its default container field is *source.* It is available since X3D version 2.0 or later.
+The AudioClip node belongs to the **Sound** component and its default container field is *source.* It is available from X3D version 2.0 or higher.
 
 ## Hierarchy
 
@@ -33,15 +33,19 @@ The AudioClip node belongs to the **Sound** component and its default container 
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
-
-### SFString [in, out] **description** ""
-
-Author-provided text tooltip that tells users the expected action of this node.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
 
 #### Hint
 
-- Many XML tools substitute XML character references automatically if needed (such as &amp;#38; for &amp; ampersand, or &amp;#34; for " quotation mark).
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
+
+### SFString [in, out] **description** ""
+
+Author-provided prose that describes intended purpose of the url asset.
+
+#### Hint
+
+- Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
 
 ### SFBool [in, out] **enabled** TRUE
 
@@ -49,11 +53,11 @@ Enables/disables node operation.
 
 ### SFBool [in, out] **load** TRUE
 
-*load*=true means load immediately, load=false means defer loading or else unload a previously loaded asset.
+*load*=true means *load* immediately, *load*=false means defer loading or else unload a previously loaded scene.
 
 #### Hints
 
-- Allows author to design when ImageTextureAtlas loading occurs via user interaction, event chains or scripting.
+- Allows author to design when Inline loading occurs via user interaction, event chains or scripting.
 - Use a separate LoadSensor node to detect when loading is complete.
 
 ### MFString [in, out] **url** [ ] <small>[URI]</small>
@@ -62,15 +66,14 @@ Location and filename of sound file or stream. Support for .wav format is requir
 
 #### Hints
 
-- MFString arrays can have multiple values, so separate each individual string by quote marks. "https://www.web3d.org" "https://www.web3d.org/about" "etc." XML encoding for quotation mark " is &amp;quot; (which is called a character entity). Can replace embedded blank(s) in url queries with %20 for each blank character.
+- MFString arrays can have multiple values, so separate each individual string by quote marks. "https://www.web3d.org" "https://www.web3d.org/about" "etc."
+- Alternative XML encoding for quotation mark " is &amp;quot; (which is an example of a character entity).
+- Can replace embedded blank(s) in *url* queries with %20 for each blank character.
+- [X3D Scene Authoring Hints, urls](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#urls){:target="_blank"}
 
 #### Warning
 
-- Strictly match directory and filename capitalization for http links! This is important for portability. Some operating systems are forgiving of capitalization mismatches, but http/https and other operating systems are not.
-
-#### See Also
-
-- [X3D Scene Authoring Hints, urls](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#urls){:target="_blank"}
+- Strictly match directory and filename capitalization for http links! This is important for portability. Some operating systems are forgiving of capitalization mismatches, but http/https *url* addresses and paths in Unix-based operating systems are all case sensitive and intolerant of uppercase/lowercase mismatches.
 
 ### SFTime [in, out] **autoRefresh** 0 <small>[0,∞)</small>
 
@@ -99,11 +102,11 @@ Location and filename of sound file or stream. Support for .wav format is requir
 
 ### SFFloat [in, out] **gain** 1 <small>(-∞,∞)</small>
 
-The gain field is a factor that represents the amount of linear amplification to apply to the output of the node.
+The *gain* field is a factor that represents the amount of linear amplification to apply to the output of the node.
 
 #### Hint
 
-- Negative gain factors negate the input signal.
+- Negative *gain* factors negate the input signal.
 
 #### Warning
 
@@ -111,11 +114,15 @@ The gain field is a factor that represents the amount of linear amplification to
 
 ### SFFloat [in, out] **pitch** 1 <small>(0,∞)</small>
 
-Multiplier for the rate at which sampled sound is played. Changing pitch also changes playback speed.
+Multiplier for the rate at which sampled sound is played. Changing *pitch* also changes playback speed.
+
+#### Hint
+
+- Changing the *pitch* field does not trigger a duration_changed event. Playback interval may vary but duration of the original media data remains unmodified.
 
 ### SFBool [in, out] **loop** FALSE
 
-Repeat indefinitely when loop=true, repeat only once when loop=false.
+Repeat indefinitely when *loop*=true, repeat only once when *loop*=false.
 
 ### SFTime [in, out] **startTime** 0 <small>(-∞,∞)</small>
 
@@ -123,23 +130,23 @@ Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
 #### Hint
 
-- Usually receives a ROUTEd time value.
+- ROUTE a time value matching system clock to this field, such as output event from TouchSensor touchTime or TimeTrigger triggerTime.
 
 ### SFTime [in, out] **resumeTime** 0 <small>(-∞,∞)</small>
 
-When resumeTime becomes\<= time now, isPaused becomes false and AudioClip becomes active. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
+When *resumeTime* becomes \<= time now, isPaused becomes false and AudioClip becomes active. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
 #### Hint
 
-- Usually receives a ROUTEd time value.
+- ROUTE a time value matching system clock to this field, such as output event from TouchSensor touchTime or TimeTrigger triggerTime.
 
 ### SFTime [in, out] **pauseTime** 0 <small>(-∞,∞)</small>
 
-When time now \>= pauseTime, isPaused becomes true and AudioClip becomes paused. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
+When time now \>= *pauseTime*, isPaused becomes true and AudioClip becomes paused. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
 #### Hint
 
-- Usually receives a ROUTEd time value.
+- ROUTE a time value matching system clock to this field, such as output event from TouchSensor touchTime or TimeTrigger triggerTime.
 
 ### SFTime [in, out] **stopTime** 0 <small>(-∞,∞)</small>
 
@@ -147,29 +154,56 @@ Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
 #### Hint
 
-- Usually receives a ROUTEd time value.
+- ROUTE a time value matching system clock to this field, such as output event from TouchSensor touchTime or TimeTrigger triggerTime.
 
 #### Warnings
 
-- An active TimeSensor node ignores set_cycleInterval and set_startTime events. An active TimeSensor node ignores set_stopTime event values less than or equal to startTime.
+- An active TimeSensor node ignores set_cycleInterval and set_startTime events.
+- An active TimeSensor node ignores set_stopTime event values less than or equal to startTime.
 
 ### SFBool [out] **isPaused**
 
 *isPaused* true/false events are sent when AudioClip is paused/resumed.
 
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
+
 ### SFBool [out] **isActive**
 
 *isActive* true/false events are sent when playback starts/stops.
+
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFTime [out] **elapsedTime**
 
 Current elapsed time since AudioClip activated/running, cumulative in seconds, and not counting any paused time.
 
+#### Hint
+
+- *elapsedTime* is a nonnegative SFTime duration interval, not an absolute clock time.
+
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
+
 ### SFTime [out] **duration_changed**
 
-*duration_changed* is length of time in seconds for one cycle of audio.
+*duration_changed* is length of time in seconds for one cycle of media stream.
 
-## Description
+#### Hints
+
+- *duration_changed* is an SFTime duration interval, normally nonnegative, and not an absolute clock time.
+- Changing the pitch field does not trigger a *duration_changed* event. Playback interval may vary but duration of the original media data remains unmodified.
+
+#### Warnings
+
+- Duration value of -1 implies that media data has not yet loaded or is unavailable for some reason.
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
+
+## Advisories
 
 ### Hints
 
@@ -177,13 +211,13 @@ Current elapsed time since AudioClip activated/running, cumulative in seconds, a
 - Utilize DEF/USE references for multiple copies of a single AudioClip sound file in order to avoid multiple-download delays, reduce memory requirements, and maintain synchronization.
 - Authors can provide multiple audio formats for the same audio track, with each source address listed separately in the url field.
 - Player support for .wav format is required, .midi format is recommended, other formats are optional.
-- The underlying `<audio/>` element can be accessed via audioClip.getValue().getElement().
+- [X3D Scene Authoring Hints:Audio](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Audio){:target="_blank"}
+- [When parent node is LoadSensor, apply `containerField='children'` (X3Dv4) or `containerField='watchList'` (X3Dv3).](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges){:target="_blank"}
 
 ## Example
 
 <x3d-canvas src="https://create3000.github.io/media/examples/Sound/AudioClip/AudioClip.x3d" update="auto"></x3d-canvas>
 
-## External Links
+## See Also
 
-- [X3D Specification of AudioClip](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#AudioClip){:target="_blank"}
-- [X3D Scene Authoring Hints:Audio](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Audio){:target="_blank"}
+- [X3D Specification of AudioClip node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#AudioClip){:target="_blank"}

@@ -13,9 +13,9 @@ tags: [TextureProjector, TextureProjector]
 
 ## Overview
 
-TextureProjector ...
+TextureProjector is similar to a light that projects a texture into the scene, illuminating geometry that intersects the perspective projection volume.
 
-The TextureProjector node belongs to the **TextureProjector** component and its default container field is *children.* It is available since X3D version 4.0 or later.
+The TextureProjector node belongs to the **TextureProjector** component and its default container field is *children.* It is available from X3D version 4.0 or higher.
 
 ## Hierarchy
 
@@ -27,7 +27,11 @@ The TextureProjector node belongs to the **TextureProjector** component and its 
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
 ### SFString [in, out] **description** ""
 
@@ -35,7 +39,7 @@ Author-provided prose that describes intended purpose of the url asset.
 
 #### Hint
 
-- Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for & ampersand character, or &amp;#34; for " quotation-mark character).
+- Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
 
 ### SFBool [in, out] **on** TRUE
 
@@ -88,6 +92,20 @@ Single contained *texture* node (ImageTexture, MovieTexture, PixelTexture, Multi
 - [X3D Architecture 18 Texturing component](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/texturing.html){:target="_blank"}
 - [X3D Architecture 33 Texturing3D component](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/texture3D.html){:target="_blank"}
 
-## External Links
+## Advisories
 
-- [X3D Specification of TextureProjector](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/textureprojector.html#TextureProjector){:target="_blank"}
+### Hint
+
+- Https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Images/ptmperspective.png
+
+### Warning
+
+- Add textureTransform field?
+
+## Example
+
+<x3d-canvas src="https://create3000.github.io/media/examples/TextureProjector/TextureProjector/TextureProjector.x3d" update="auto"></x3d-canvas>
+
+## See Also
+
+- [X3D Specification of TextureProjector node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/textureprojector.html#TextureProjector){:target="_blank"}

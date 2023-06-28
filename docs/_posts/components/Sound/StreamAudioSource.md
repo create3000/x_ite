@@ -13,9 +13,9 @@ tags: [StreamAudioSource, Sound]
 
 ## Overview
 
-StreamAudioSource ...
+StreamAudioSource operates as an audio source whose media is received from a MediaStream obtained using the WebRTC or Media Capture and Streams APIs. This media source might originate from a remote microphone or sound-processing channed provided by a remote peer on a WebRTC call.\.
 
-The StreamAudioSource node belongs to the **Sound** component and its default container field is *children.* It is available since X3D version 4.0 or later.
+The StreamAudioSource node belongs to the **Sound** component and its default container field is *children.* It is available from X3D version 4.0 or higher.
 
 ## Hierarchy
 
@@ -43,7 +43,7 @@ Author-provided prose that describes intended purpose of the url asset.
 
 #### Hint
 
-- Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &#38; for & ampersand character, or &#34; for " quotation-mark character).
+- Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
 
 ### SFBool [in, out] **enabled** TRUE
 
@@ -134,6 +134,12 @@ Current elapsed time since AudioClip activated/running, cumulative in seconds, a
 
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
-## External Links
+## Advisories
 
-- [X3D Specification of StreamAudioSource](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#StreamAudioSource){:target="_blank"}
+### Hint
+
+- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#mediastreamaudiosourcenode){:target="_blank"}
+
+## See Also
+
+- [X3D Specification of StreamAudioSource node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#StreamAudioSource){:target="_blank"}

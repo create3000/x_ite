@@ -1,6 +1,6 @@
 ---
 title: NurbsTextureCoordinate
-date: 2022-01-07
+date: 2023-01-07
 nav: components-NURBS
 categories: [components, NURBS]
 tags: [NurbsTextureCoordinate, NURBS]
@@ -15,7 +15,7 @@ tags: [NurbsTextureCoordinate, NURBS]
 
 NurbsTextureCoordinate describes a 3D NURBS surface in the parametric domain of its surface host, specifying mapping of texture onto the surface.
 
-The NurbsTextureCoordinate node belongs to the **NURBS** component and its default container field is *texCoord.* It is available since X3D version 3.0 or later.
+The NurbsTextureCoordinate node belongs to the **NURBS** component and its default container field is *texCoord.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -28,7 +28,11 @@ The NurbsTextureCoordinate node belongs to the **NURBS** component and its defau
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
 ### SFInt32 [ ] **uOrder** 3 <small>[2,∞)</small>
 
@@ -66,12 +70,12 @@ Output values for linear interpolation, each corresponding to knots.
 
 *controlPoint* defines a set of control points of dimension uDimension by vDimension, and defines a mesh where the points do not have uniform spacing.
 
-## Description
+## Advisories
 
 ### Hint
 
-- The SFNode controlPoints field can contain a single Coordinate or CoordinateDouble node.
+- The SFNode controlPoint field can contain a single Coordinate or CoordinateDouble node.
 
-## External Links
+## See Also
 
-- [X3D Specification of NurbsTextureCoordinate](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/nurbs.html#NurbsTextureCoordinate){:target="_blank"}
+- [X3D Specification of NurbsTextureCoordinate node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/nurbs.html#NurbsTextureCoordinate){:target="_blank"}
