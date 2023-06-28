@@ -119,7 +119,7 @@ function DISEntityManager (executionContext)
 
    this .addType ((X3DConstants_default()).DISEntityManager);
 
-   if (executionContext .getSpecificationVersion () < 4)
+   if (executionContext .getSpecificationVersion () <= 3.3)
       this .addAlias ("mapping", this ._children);
 }
 

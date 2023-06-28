@@ -307,7 +307,7 @@ function ComposedCubeMapTexture (executionContext)
 
    this .addType ((X3DConstants_default()).ComposedCubeMapTexture);
 
-   if (executionContext .getSpecificationVersion () < 4)
+   if (executionContext .getSpecificationVersion () < 4.0)
    {
       this .addAlias ("front",  this ._frontTexture);
       this .addAlias ("back",   this ._backTexture);

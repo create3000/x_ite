@@ -3156,7 +3156,7 @@ function ParticleSystem (executionContext)
 
    this ._particleSize .setUnit ("length");
 
-   if (executionContext .getSpecificationVersion () < 4)
+   if (executionContext .getSpecificationVersion () <= 3.3)
    {
       this .addAlias ("colorRamp",    this ._color);
       this .addAlias ("texCoordRamp", this ._texCoord);
