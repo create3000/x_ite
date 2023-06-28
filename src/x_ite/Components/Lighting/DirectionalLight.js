@@ -235,7 +235,7 @@ function DirectionalLight (executionContext)
 
    this .addType (X3DConstants .DirectionalLight);
 
-   if (executionContext .getSpecificationVersion () === "2.0")
+   if (executionContext .getSpecificationVersion () == 2.0)
       this ._global = true;
 }
 

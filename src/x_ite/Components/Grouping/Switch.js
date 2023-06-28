@@ -59,7 +59,7 @@ function Switch (executionContext)
 
    this .addType (X3DConstants .Switch);
 
-   if (executionContext .getSpecificationVersion () === "2.0")
+   if (executionContext .getSpecificationVersion () == 2.0)
       this .addAlias ("choice", this ._children);
 
    this .childNode     = null;

@@ -61,7 +61,7 @@ function LOD (executionContext)
 
    this .addType (X3DConstants .LOD);
 
-   if (executionContext .getSpecificationVersion () === "2.0")
+   if (executionContext .getSpecificationVersion () == 2.0)
       this .addAlias ("level", this ._children); // VRML2
 
    this ._center .setUnit ("length");

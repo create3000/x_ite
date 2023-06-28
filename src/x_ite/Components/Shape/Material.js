@@ -60,7 +60,7 @@ function Material (executionContext)
 
    this .addType (X3DConstants .Material);
 
-   if (executionContext .getSpecificationVersion () < 4.0)
+   if (executionContext .getSpecificationVersion () <= 3.3)
       this .getMaterialKey = getMaterialKey;
 
    this .diffuseColor  = new Float32Array (3);

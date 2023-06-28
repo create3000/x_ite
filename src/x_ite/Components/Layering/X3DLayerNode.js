@@ -66,7 +66,7 @@ function X3DLayerNode (executionContext, defaultViewpoint, groupNode)
 
    this .addType (X3DConstants .X3DLayerNode);
 
-   if (executionContext .getSpecificationVersion () < 4.0)
+   if (executionContext .getSpecificationVersion () <= 3.3)
       this .addAlias ("isPickable", this ._pickable);
 
    this .groupNode    = groupNode;

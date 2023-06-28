@@ -288,7 +288,7 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
 
          // VRML behavior
 
-         if (this .getExecutionContext () .getSpecificationVersion () === "2.0")
+         if (this .getExecutionContext () .getSpecificationVersion () == 2.0)
          {
             if (this .getVRMLTransition ())
                transitionType = "LINEAR";
