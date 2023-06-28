@@ -54,6 +54,7 @@ import GLB2Parser  from "./GLB2Parser.js";
 import OBJParser   from "./OBJParser.js";
 import STLAParser  from "./STLAParser.js";
 import STLBParser  from "./STLBParser.js";
+import PLYAParser  from "./PLYAParser.js";
 import SVGParser   from "./SVGParser.js";
 
 function GoldenGate (scene)
@@ -138,8 +139,8 @@ Object .assign (Object .setPrototypeOf (GoldenGate .prototype, X3DParser .protot
 });
 
 GoldenGate .Parser = [
-   SVGParser,
    XMLParser,
+   SVGParser,
    GLTF2Parser,
    GLB2Parser,
    JSONParser,
@@ -147,6 +148,7 @@ GoldenGate .Parser = [
    OBJParser,
    STLAParser,
    STLBParser,
+   PLYAParser,
 ];
 
 export default GoldenGate;

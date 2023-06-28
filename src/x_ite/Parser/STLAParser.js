@@ -48,7 +48,6 @@
 import X3DParser   from "./X3DParser.js";
 import Expressions from "./Expressions.js";
 import Color3      from "../../standard/Math/Numbers/Color3.js";
-import Vector3     from "../../standard/Math/Numbers/Vector3.js";
 
 // http://paulbourke.net/dataformats/stl/
 // https://people.sc.fsu.edu/~jburkardt/data/obj/obj.html
