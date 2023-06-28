@@ -58,7 +58,7 @@ function LoadSensor (executionContext)
 
    this .addType (X3DConstants .LoadSensor);
 
-   if (executionContext .getSpecificationVersion () < 4)
+   if (executionContext .getSpecificationVersion () < 4.0)
       this .addAlias ("watchList", this ._children);
 
    this .urlObjects = [ ];
