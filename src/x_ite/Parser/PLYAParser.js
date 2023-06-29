@@ -87,6 +87,8 @@ function PLYAParser (scene)
 {
    X3DParser .call (this, scene);
 
+   this .comments = [ ];
+
    this .typeMapping = new Map ([
       ["char",   this .int32],
       ["uchar",  this .int32],
@@ -156,7 +158,13 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
    },
    comment ()
    {
-      return Grammar .comment .parse (this) && Grammar .untilEndOfLine .parse (this);
+      if (Grammar .comment .parse (this) && Grammar .untilEndOfLine .parse (this))
+      {
+         this .comments .push (this .result [1] .trim ());
+         return true;
+      }
+
+      return false;
    },
    double ()
    {
@@ -194,6 +202,15 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
 
       Grammar .whitespaces .parse (this);
       Grammar .endHeader .parse (this);
+
+      const
+         scene     = this .getExecutionContext (),
+         worldInfo = scene .createNode ("WorldInfo");
+
+      worldInfo .title = new URL (scene .getWorldURL ()) .pathname .split ('/') .at (-1);
+      worldInfo .info  = this .comments;
+
+      scene .rootNodes .push (worldInfo);
    },
    elements (elements)
    {
