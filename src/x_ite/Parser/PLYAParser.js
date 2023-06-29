@@ -281,8 +281,8 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
       while (this .property (properties))
          ;
 
-      properties .normals = properties .some (p => p .name .match (/^(?:nx|ny|nz)$/));
       properties .colors  = properties .some (p => p .name .match (/^(?:red|green|blue)$/));
+      properties .normals = properties .some (p => p .name .match (/^(?:nx|ny|nz)$/));
    },
    property (properties)
    {
@@ -353,15 +353,13 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
          scene      = this .getExecutionContext (),
          shape      = scene .createNode ("Shape"),
          appearance = scene .createNode ("Appearance"),
-         material   = scene .createNode ("Material");
+         material   = scene .createNode ("Material"),
+         geometry   = this .geometry ?? scene .createNode ("PointSet");
 
-      if (!this .geometry)
-         this .geometry = scene .createNode ("PointSet");
-
-      this .geometry .solid  = false;
-      this .geometry .coord  = this .coord;
-      this .geometry .normal = this .normal;
-      this .geometry .color  = this .color;
+      geometry .solid  = false;
+      geometry .color  = this .color;
+      geometry .normal = this .normal;
+      geometry .coord  = this .coord;
 
       appearance .material = material;
       shape .appearance    = appearance;
@@ -385,20 +383,20 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
    {
       const
          scene   = this .getExecutionContext (),
-         coord   = scene .createNode ("Coordinate"),
-         points  = [ ],
+         color   = scene .createNode ("Color"),
+         colors  = [ ],
          normal  = scene .createNode ("Normal"),
          normals = [ ],
-         color   = scene .createNode ("Color"),
-         colors  = [ ];
+         coord   = scene .createNode ("Coordinate"),
+         points  = [ ];
 
       const { count, properties } = element;
 
       for (let i = 0; i < count; ++ i)
       {
-         let x = 0, y = 0, z = 0;
-         let nx = 0, ny = 0, nz = 0;
          let r = 1, g = 1, b = 1;
+         let nx = 0, ny = 0, nz = 0;
+         let x = 0, y = 0, z = 0;
 
          this .whitespaces ();
 
@@ -409,34 +407,34 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
 
             switch (name)
             {
-               case "x": x = this .value; break;
-               case "y": y = this .value; break;
-               case "z": z = this .value; break;
-               case "nx": nx = this .value; break;
-               case "ny": ny = this .value; break;
-               case "nz": nz = this .value; break;
                case "red":   r = this .convertColor (this .value, type); break;
                case "green": g = this .convertColor (this .value, type); break;
                case "blue":  b = this .convertColor (this .value, type); break;
+               case "nx": nx = this .value; break;
+               case "ny": ny = this .value; break;
+               case "nz": nz = this .value; break;
+               case "x": x = this .value; break;
+               case "y": y = this .value; break;
+               case "z": z = this .value; break;
             }
          }
 
-         points .push (x, y, z);
+         if (properties .colors)
+            colors .push (r, g, b);
 
          if (properties .normals)
             normals .push (nx, ny, nz);
 
-         if (properties .colors)
-            colors .push (r, g, b);
+         points .push (x, y, z);
       }
 
-      coord .point   = points;
-      normal .vector = normals;
       color .color   = colors;
+      normal .vector = normals;
+      coord .point   = points;
 
-      this .coord  = coord;
-      this .normal = normals .length ? normal : null;
       this .color  = colors .length  ? color : null;
+      this .normal = normals .length ? normal : null;
+      this .coord  = coord;
    },
    parseFaces (element)
    {
