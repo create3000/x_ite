@@ -444,10 +444,10 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
          ? scene .createNode ("ColorRGBA")
          : scene .createNode ("Color");
 
-      color .color    = alpha ? colors : colors .filter ((v, i) => i % 4 !== 3);
-      texCoord .point = texCoords;
-      normal .vector  = normals;
-      coord .point    = points;
+      color    .color  = alpha ? colors : colors .filter ((v, i) => i % 4 !== 3);
+      texCoord .point  = texCoords;
+      normal   .vector = normals;
+      coord    .point  = points;
 
       this .color    = colors .length ? color : null;
       this .texCoord = texCoords .length ? texCoord : null;
