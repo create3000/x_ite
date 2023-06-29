@@ -281,7 +281,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
       while (this .property (properties))
          ;
 
-      properties .colors    = properties .some (p => p .name .match (/^(?:red|green|blue)$/));
+      properties .colors    = properties .some (p => p .name .match (/^(?:red|green|blue|r|g|b)$/));
       properties .texCoords = properties .some (p => p .name .match (/^(?:s|t|u|v)$/));
       properties .normals   = properties .some (p => p .name .match (/^(?:nx|ny|nz)$/));
    },
@@ -412,9 +412,9 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
 
             switch (name)
             {
-               case "red":   r = this .convertColor (this .value, type); break;
-               case "green": g = this .convertColor (this .value, type); break;
-               case "blue":  b = this .convertColor (this .value, type); break;
+               case "red": case "r":   r = this .convertColor (this .value, type); break;
+               case "green": case "g": g = this .convertColor (this .value, type); break;
+               case "blue": case "b":  b = this .convertColor (this .value, type); break;
                case "s": case "u": s = this .value; break;
                case "t": case "v": t = this .value; break;
                case "nx": nx = this .value; break;
@@ -443,7 +443,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
       normal .vector  = normals;
       coord .point    = points;
 
-      this .color    = colors .length  ? color : null;
+      this .color    = colors .length ? color : null;
       this .texCoord = texCoords .length ? texCoord : null;
       this .normal   = normals .length ? normal : null;
       this .coord    = coord;
