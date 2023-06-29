@@ -511,17 +511,17 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
       {
          this .whitespaces ();
 
-         for (const { count, value } of properties)
+         for (const { count, value, name } of properties)
          {
             if (!count .call (this))
-               throw new Error (`Couldn't parse property count for ${property .name}.`);
+               throw new Error (`Couldn't parse property count for ${name}.`);
 
             const length = this .value;
 
             for (let i = 0; i < length; ++ i)
             {
                if (!value .call (this))
-                  throw new Error (`Couldn't parse a property value for ${property .name}.`);
+                  throw new Error (`Couldn't parse a property value for ${name}.`);
 
                coordIndex .push (this .value);
             }
