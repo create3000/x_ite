@@ -374,10 +374,10 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
          geometry .texCoord = this .texCoord;
       }
 
-      geometry .attrib   = this .attrib;
-      geometry .color    = this .color;
-      geometry .normal   = this .normal;
-      geometry .coord    = this .coord;
+      geometry .attrib = this .attrib;
+      geometry .color  = this .color;
+      geometry .normal = this .normal;
+      geometry .coord  = this .coord;
 
       appearance .material = material;
       shape .appearance    = appearance;
