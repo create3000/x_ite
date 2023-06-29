@@ -50,28 +50,6 @@ import PLYParser from "./PLYParser.js";
 function PLYAParser (scene)
 {
    PLYParser .call (this, scene);
-
-   this .comments = [ ];
-   this .attrib   = [ ];
-
-   this .typeMapping = new Map ([
-      ["char",    this .int32],
-      ["uchar",   this .int32],
-      ["short",   this .int32],
-      ["ushort",  this .int32],
-      ["int",     this .int32],
-      ["uint",    this .int32],
-      ["float",   this .double],
-      ["double",  this .double],
-      ["int8",    this .int32],
-      ["uint8",   this .int32],
-      ["int16",   this .int32],
-      ["uint16",  this .int32],
-      ["int32",   this .int32],
-      ["uint32",  this .int32],
-      ["float32", this .double],
-      ["float64", this .double],
-   ]);
 }
 
 Object .assign (Object .setPrototypeOf (PLYAParser .prototype, PLYParser .prototype),
