@@ -286,8 +286,6 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
    {
       while (this .property (properties))
          ;
-
-      properties .alpha = properties .some (p => p .name .match (/^(?:alpha|a)$/));
    },
    property (properties)
    {
@@ -469,10 +467,11 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
       // Geometric properties
 
       const
-         alpha = properties .alpha && colors .some ((v, i) => i % 4 === 3 && v < 1),
-         color = scene .createNode (alpha ? "ColorRGBA" : "Color");
+         pAlpha = properties .some (p => p .name .match (/^(?:alpha|a)$/)),
+         alpha  = pAlpha && colors .some ((v, i) => i % 4 === 3 && v < 1),
+         color  = scene .createNode (alpha ? "ColorRGBA" : "Color");
 
-      color    .color  = alpha || !properties .alpha ? colors : colors .filter ((v, i) => i % 4 !== 3);
+      color    .color  = alpha || !pAlpha ? colors : colors .filter ((v, i) => i % 4 !== 3);
       texCoord .point  = texCoords;
       normal   .vector = normals;
       coord    .point  = points;
