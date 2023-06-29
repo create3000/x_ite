@@ -207,7 +207,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
          scene     = this .getExecutionContext (),
          worldInfo = scene .createNode ("WorldInfo");
 
-      worldInfo .title = new URL (scene .getWorldURL ()) .pathname .split ('/') .at (-1);
+      worldInfo .title = new URL (scene .worldURL) .pathname .split ('/') .at (-1);
       worldInfo .info  = this .comments;
 
       scene .rootNodes .push (worldInfo);
