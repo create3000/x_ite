@@ -225,10 +225,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
       Grammar .whitespaces .parse (this);
       Grammar .format .parse (this);
 
-      this .elements (elements);
-
-      Grammar .whitespaces .parse (this);
-      Grammar .endHeader .parse (this);
+      this .headings (elements);
 
       const
          scene     = this .getScene (),
@@ -239,10 +236,23 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
 
       scene .rootNodes .push (worldInfo);
    },
-   elements (elements)
+   headings (elements)
    {
-      while (this .element (elements))
+      while (this .head (elements))
          ;
+   },
+   head (elements)
+   {
+      if (this .element (elements))
+         return true;
+
+      if (Grammar .endHeader .parse (this))
+         return false;
+
+      if (Grammar .untilEndOfLine .parse (this))
+         return true;
+
+      return false;
    },
    element (elements)
    {
@@ -355,19 +365,23 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
          scene      = this .getScene (),
          shape      = scene .createNode ("Shape"),
          appearance = scene .createNode ("Appearance"),
-         material   = scene .createNode ("Material"),
+         material   = scene .createNode (this .geometry ? "Material" : "UnlitMaterial"),
          geometry   = this .geometry ?? scene .createNode ("PointSet");
 
-      geometry .solid    = false;
+      if (geometry .getNodeTypeName () !== "PointSet")
+      {
+         geometry .solid    = false;
+         geometry .texCoord = this .texCoord;
+      }
+
       geometry .attrib   = this .attrib;
       geometry .color    = this .color;
-      geometry .texCoord = this .texCoord;
       geometry .normal   = this .normal;
       geometry .coord    = this .coord;
 
       appearance .material = material;
       shape .appearance    = appearance;
-      shape .geometry      = this .geometry;
+      shape .geometry      = geometry;
 
       scene .rootNodes .push (shape);
    },
