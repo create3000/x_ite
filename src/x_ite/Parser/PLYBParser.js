@@ -45,14 +45,14 @@
  *
  ******************************************************************************/
 
-import PLYParser from "./PLYParser.js";
+import PLYAParser from "./PLYAParser.js";
 
 function PLYBParser (scene)
 {
-   PLYParser .call (this, scene);
+   PLYAParser .call (this, scene);
 }
 
-Object .assign (Object .setPrototypeOf (PLYBParser .prototype, PLYParser .prototype),
+Object .assign (Object .setPrototypeOf (PLYBParser .prototype, PLYAParser .prototype),
 {
    getEncoding ()
    {
@@ -76,149 +76,149 @@ Object .assign (Object .setPrototypeOf (PLYBParser .prototype, PLYParser .protot
    },
    async parseVertices (element)
    {
-      const
-         scene      = this .getScene (),
-         colors     = [ ],
-         texCoord   = scene .createNode ("TextureCoordinate"),
-         texCoords  = [ ],
-         normal     = scene .createNode ("Normal"),
-         normals    = [ ],
-         coord      = scene .createNode ("Coordinate"),
-         points     = [ ],
-         attributes = new Map ();
+      // const
+      //    scene      = this .getScene (),
+      //    colors     = [ ],
+      //    texCoord   = scene .createNode ("TextureCoordinate"),
+      //    texCoords  = [ ],
+      //    normal     = scene .createNode ("Normal"),
+      //    normals    = [ ],
+      //    coord      = scene .createNode ("Coordinate"),
+      //    points     = [ ],
+      //    attributes = new Map ();
 
-      const { count, properties } = element;
+      // const { count, properties } = element;
 
-      for (const { name } of properties)
-      {
-         if (name .match (/^(?:red|green|blue|alpha|r|g|b|a|s|t|u|v|nx|ny|nz|x|y|z)$/))
-            continue;
+      // for (const { name } of properties)
+      // {
+      //    if (name .match (/^(?:red|green|blue|alpha|r|g|b|a|s|t|u|v|nx|ny|nz|x|y|z)$/))
+      //       continue;
 
-         attributes .set (name, [ ]);
-      }
+      //    attributes .set (name, [ ]);
+      // }
 
-      for (let i = 0; i < count; ++ i)
-      {
-         let r = 1, g = 1, b = 1, a = 1;
-         let s = 0, t = 0;
-         let nx = 0, ny = 0, nz = 0;
-         let x = 0, y = 0, z = 0;
+      // for (let i = 0; i < count; ++ i)
+      // {
+      //    let r = 1, g = 1, b = 1, a = 1;
+      //    let s = 0, t = 0;
+      //    let nx = 0, ny = 0, nz = 0;
+      //    let x = 0, y = 0, z = 0;
 
-         this .whitespaces ();
+      //    this .whitespaces ();
 
-         for (const { value, name, type } of properties)
-         {
-            if (!value .call (this))
-               throw new Error (`Couldn't parse value for property ${name}.`);
+      //    for (const { value, name, type } of properties)
+      //    {
+      //       if (!value .call (this))
+      //          throw new Error (`Couldn't parse value for property ${name}.`);
 
-            switch (name)
-            {
-               default: attributes .get (name) .push (this .value); break;
-               case "red":   case "r": r = this .convertColor (this .value, type); break;
-               case "green": case "g": g = this .convertColor (this .value, type); break;
-               case "blue":  case "b": b = this .convertColor (this .value, type); break;
-               case "alpha": case "a": a = this .convertColor (this .value, type); break;
-               case "s": case "u": s = this .value; break;
-               case "t": case "v": t = this .value; break;
-               case "nx": nx = this .value; break;
-               case "ny": ny = this .value; break;
-               case "nz": nz = this .value; break;
-               case "x": x = this .value; break;
-               case "y": y = this .value; break;
-               case "z": z = this .value; break;
-            }
-         }
+      //       switch (name)
+      //       {
+      //          default: attributes .get (name) .push (this .value); break;
+      //          case "red":   case "r": r = this .convertColor (this .value, type); break;
+      //          case "green": case "g": g = this .convertColor (this .value, type); break;
+      //          case "blue":  case "b": b = this .convertColor (this .value, type); break;
+      //          case "alpha": case "a": a = this .convertColor (this .value, type); break;
+      //          case "s": case "u": s = this .value; break;
+      //          case "t": case "v": t = this .value; break;
+      //          case "nx": nx = this .value; break;
+      //          case "ny": ny = this .value; break;
+      //          case "nz": nz = this .value; break;
+      //          case "x": x = this .value; break;
+      //          case "y": y = this .value; break;
+      //          case "z": z = this .value; break;
+      //       }
+      //    }
 
-         if (properties .colors)
-            colors .push (r, g, b, a);
+      //    if (properties .colors)
+      //       colors .push (r, g, b, a);
 
-         if (properties .texCoords)
-            texCoords .push (s, t);
+      //    if (properties .texCoords)
+      //       texCoords .push (s, t);
 
-         if (properties .normals)
-            normals .push (nx, ny, nz);
+      //    if (properties .normals)
+      //       normals .push (nx, ny, nz);
 
-         points .push (x, y, z);
-      }
+      //    points .push (x, y, z);
+      // }
 
-      // Attributes
+      // // Attributes
 
-      if (attributes .size)
-      {
-         scene .addComponent (this .getBrowser () .getComponent ("Shaders", 1));
+      // if (attributes .size)
+      // {
+      //    scene .addComponent (this .getBrowser () .getComponent ("Shaders", 1));
 
-         await this .loadComponents ();
+      //    await this .loadComponents ();
 
-         for (const [name, value] of attributes)
-         {
-            const floatVertexAttribute = scene .createNode ("FloatVertexAttribute");
+      //    for (const [name, value] of attributes)
+      //    {
+      //       const floatVertexAttribute = scene .createNode ("FloatVertexAttribute");
 
-            floatVertexAttribute .name          = name;
-            floatVertexAttribute .numComponents = 1;
-            floatVertexAttribute .value         = value;
+      //       floatVertexAttribute .name          = name;
+      //       floatVertexAttribute .numComponents = 1;
+      //       floatVertexAttribute .value         = value;
 
-            this .attrib .push (floatVertexAttribute);
-         }
-      }
+      //       this .attrib .push (floatVertexAttribute);
+      //    }
+      // }
 
-      // Geometric properties
+      // // Geometric properties
 
-      const
-         alpha = colors .some ((v, i) => i % 4 === 3 && v < 1),
-         color = scene .createNode (alpha ? "ColorRGBA" : "Color");
+      // const
+      //    alpha = colors .some ((v, i) => i % 4 === 3 && v < 1),
+      //    color = scene .createNode (alpha ? "ColorRGBA" : "Color");
 
-      color    .color  = alpha ? colors : colors .filter ((v, i) => i % 4 !== 3);
-      texCoord .point  = texCoords;
-      normal   .vector = normals;
-      coord    .point  = points;
+      // color    .color  = alpha ? colors : colors .filter ((v, i) => i % 4 !== 3);
+      // texCoord .point  = texCoords;
+      // normal   .vector = normals;
+      // coord    .point  = points;
 
-      this .color    = colors    .length ? color    : null;
-      this .texCoord = texCoords .length ? texCoord : null;
-      this .normal   = normals   .length ? normal   : null;
-      this .coord    = coord;
+      // this .color    = colors    .length ? color    : null;
+      // this .texCoord = texCoords .length ? texCoord : null;
+      // this .normal   = normals   .length ? normal   : null;
+      // this .coord    = coord;
    },
    parseFaces (element)
    {
-      const
-         scene      = this .getScene (),
-         geometry   = scene .createNode ("IndexedFaceSet"),
-         coordIndex = geometry .coordIndex;
+      // const
+      //    scene      = this .getScene (),
+      //    geometry   = scene .createNode ("IndexedFaceSet"),
+      //    coordIndex = geometry .coordIndex;
 
-      const { count, properties } = element;
+      // const { count, properties } = element;
 
-      for (let i = 0; i < count; ++ i)
-      {
-         this .whitespaces ();
+      // for (let i = 0; i < count; ++ i)
+      // {
+      //    this .whitespaces ();
 
-         for (const { count, value, name } of properties)
-         {
-            if (!count .call (this))
-               throw new Error (`Couldn't parse property count for ${name}.`);
+      //    for (const { count, value, name } of properties)
+      //    {
+      //       if (!count .call (this))
+      //          throw new Error (`Couldn't parse property count for ${name}.`);
 
-            const length = this .value;
+      //       const length = this .value;
 
-            for (let i = 0; i < length; ++ i)
-            {
-               if (!value .call (this))
-                  throw new Error (`Couldn't parse a property value for ${name}.`);
+      //       for (let i = 0; i < length; ++ i)
+      //       {
+      //          if (!value .call (this))
+      //             throw new Error (`Couldn't parse a property value for ${name}.`);
 
-               coordIndex .push (this .value);
-            }
+      //          coordIndex .push (this .value);
+      //       }
 
-            coordIndex .push (-1);
-         }
-      }
+      //       coordIndex .push (-1);
+      //    }
+      // }
 
-      this .geometry = geometry;
+      // this .geometry = geometry;
    },
    parseUnknown (element)
    {
-      this .whitespaces ();
+      // this .whitespaces ();
 
-      const { count } = element;
+      // const { count } = element;
 
-      for (let i = 0; i < count; ++ i)
-         Grammar .line .parse (this);
+      // for (let i = 0; i < count; ++ i)
+      //    Grammar .line .parse (this);
    },
 });
 
