@@ -58,6 +58,7 @@ const Grammar = Expressions ({
    whitespaces: /[\x20\n\t\r]+/gy,
    whitespacesNoLineTerminator: /[\x20\t]+/gy,
    untilEndOfLine: /([^\r\n]+)/gy,
+   line: /.*?\r?\n/gy,
 
    // Keywords
    ply: /ply/gy,
@@ -70,8 +71,6 @@ const Grammar = Expressions ({
    propertyType: /\b(char|uchar|short|ushort|int|uint|float|double|int8|uint8|int16|uint16|int32|uint32|float32|float64)\b/gy,
    propertyName: /\b(\S+)\b/gy,
    endHeader: /\bend_header\b/gy,
-
-   //property list uchar int vertex_indices
 
    double: /([+-]?(?:(?:(?:\d*\.\d+)|(?:\d+(?:\.)?))(?:[eE][+-]?\d+)?))/gy,
    int32:  /((?:0[xX][\da-fA-F]+)|(?:[+-]?\d+))/gy,
@@ -395,6 +394,9 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
          case "face":
             this .parseFaces (element);
             break;
+         default:
+            this .parseUnknown (element);
+            break;
       }
    },
    async parseVertices (element)
@@ -533,6 +535,13 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
       }
 
       this .geometry = geometry;
+   },
+   parseUnknown (element)
+   {
+      const { count } = element;
+
+      for (let i = 0; i < count; ++ i)
+         Grammar .line .parse (this);
    },
 });
 
