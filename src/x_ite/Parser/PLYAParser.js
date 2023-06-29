@@ -412,7 +412,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
 
       for (const { name } of properties)
       {
-         if (name .match (/^(?:red|r|green|g|blue|b|alpha|a|s|u|t|v|nx|ny|nz|x|y|z)$/))
+         if (name .match (/^(?:red|green|blue|alpha|r|g|b|a|s|t|u|v|nx|ny|nz|x|y|z)$/))
             continue;
 
          attributes .set (name, [ ]);
