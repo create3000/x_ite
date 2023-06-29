@@ -65,7 +65,7 @@ const Grammar = Expressions ({
    format: /format ascii 1.0/gy,
    comment: /\bcomment\b/gy,
    element: /\belement\b/gy,
-   elementType: /\b(vertex|face|edge)\b/gy,
+   elementName: /\b(\S+)\b/gy,
    property: /\bproperty\b/gy,
    propertyList: /\blist\b/gy,
    propertyType: /\b(char|uchar|short|ushort|int|uint|float|double|int8|uint8|int16|uint16|int32|uint32|float32|float64)\b/gy,
@@ -259,15 +259,15 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
       {
          this .whitespacesNoLineTerminator ();
 
-         if (Grammar .elementType .parse (this))
+         if (Grammar .elementName .parse (this))
          {
-            const type = this .result [1];
+            const name = this .result [1];
 
             if (this .int32 ())
             {
                const element =
                {
-                  type: type,
+                  name: name,
                   count: this .value,
                   properties: [ ],
                };
@@ -278,8 +278,6 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
                return true;
             }
          }
-
-         return true;
       }
 
       return false;
@@ -384,7 +382,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
    },
    async processElement (element)
    {
-      switch (element .type)
+      switch (element .name)
       {
          case "vertex":
             await this .parseVertices (element);
@@ -537,6 +535,8 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
    parseUnknown (element)
    {
       const { count } = element;
+
+      this .whitespaces ();
 
       for (let i = 0; i < count; ++ i)
          Grammar .line .parse (this);
