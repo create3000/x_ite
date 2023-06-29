@@ -139,11 +139,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
       scene .setProfile (browser .getProfile ("Interchange"));
 
       await this .loadComponents ();
-
-      const elements = [ ];
-
-      this .header (elements);
-      await this .processElements (elements)
+      await this .processElements (this .header ([ ]))
 
       // Create nodes.
 
@@ -234,6 +230,8 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
       worldInfo .info  = this .comments;
 
       scene .rootNodes .push (worldInfo);
+
+      return elements;
    },
    headings (elements)
    {
