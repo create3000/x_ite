@@ -424,7 +424,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
          points .push (x, y, z);
 
          if (properties .normals)
-            normals .push (r, g, b);
+            normals .push (nx, ny, nz);
 
          if (properties .colors)
             colors .push (r, g, b);
