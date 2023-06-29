@@ -57,8 +57,7 @@ const Grammar = Expressions ({
    // General
    whitespaces: /[\x20\n\t\r]+/gy,
    whitespacesNoLineTerminator: /[\x20\t]+/gy,
-   untilEndOfLine: /([^\r\n]+)/gy,
-   line: /.*?\r?\n/gy,
+   untilEndOfLine: /(.*?)[^\r\n]+/gy,
 
    // Keywords
    ply: /ply/gy,
@@ -539,7 +538,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
       const { count } = element;
 
       for (let i = 0; i < count; ++ i)
-         Grammar .line .parse (this);
+         Grammar .untilEndOfLine .parse (this);
    },
 });
 
