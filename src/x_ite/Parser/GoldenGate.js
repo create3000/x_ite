@@ -139,8 +139,8 @@ Object .assign (Object .setPrototypeOf (GoldenGate .prototype, X3DParser .protot
 });
 
 GoldenGate .Parser = [
-   XMLParser,
    SVGParser,
+   XMLParser,
    GLTF2Parser,
    GLB2Parser,
    JSONParser,
