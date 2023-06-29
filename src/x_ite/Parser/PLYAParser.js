@@ -281,7 +281,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
       while (this .property (properties))
          ;
 
-      properties .colors    = properties .some (p => p .name .match (/^(?:red|green|blue|r|g|b)$/));
+      properties .colors    = properties .some (p => p .name .match (/^(?:red|green|blue|alpha|r|g|b|a)$/));
       properties .texCoords = properties .some (p => p .name .match (/^(?:s|t|u|v)$/));
       properties .normals   = properties .some (p => p .name .match (/^(?:nx|ny|nz)$/));
    },
@@ -385,7 +385,6 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
    {
       const
          scene     = this .getExecutionContext (),
-         color     = scene .createNode ("Color"),
          colors    = [ ],
          texCoord  = scene .createNode ("TextureCoordinate"),
          texCoords = [ ],
@@ -398,7 +397,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
 
       for (let i = 0; i < count; ++ i)
       {
-         let r = 1, g = 1, b = 1;
+         let r = 1, g = 1, b = 1, a = 1;
          let s = 0, t = 0;
          let nx = 0, ny = 0, nz = 0;
          let x = 0, y = 0, z = 0;
@@ -415,6 +414,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
                case "red": case "r":   r = this .convertColor (this .value, type); break;
                case "green": case "g": g = this .convertColor (this .value, type); break;
                case "blue": case "b":  b = this .convertColor (this .value, type); break;
+               case "alpha": case "a": a = this .convertColor (this .value, type); break;
                case "s": case "u": s = this .value; break;
                case "t": case "v": t = this .value; break;
                case "nx": nx = this .value; break;
@@ -427,7 +427,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
          }
 
          if (properties .colors)
-            colors .push (r, g, b);
+            colors .push (r, g, b, a);
 
          if (properties .texCoords)
             texCoords .push (s, t);
@@ -438,7 +438,13 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
          points .push (x, y, z);
       }
 
-      color .color    = colors;
+      const alpha = colors .some ((v, i) => i % 4 === 3 && v < 1);
+
+      const color = alpha
+         ? scene .createNode ("ColorRGBA")
+         : scene .createNode ("Color");
+
+      color .color    = alpha ? colors : colors .filter ((v, i) => i % 4 !== 3);
       texCoord .point = texCoords;
       normal .vector  = normals;
       coord .point    = points;
