@@ -47,8 +47,6 @@
 
 import X3DParser   from "./X3DParser.js";
 import Expressions from "./Expressions.js";
-import Vector3     from "../../standard/Math/Numbers/Vector3.js";
-import Color3      from "../../standard/Math/Numbers/Color3.js";
 
 /*
  *  Grammar
@@ -192,6 +190,21 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
 
       return false;
    },
+   color (value, type)
+   {
+      switch (type)
+      {
+         case "uchar":
+            return value / 0xff;
+         case "ushort":
+            return value / 0xfffff;
+         case "uint":
+            return value / 0xffffffff;
+         case "float":
+         case "double":
+            return value;
+      }
+   },
    header (elements)
    {
       Grammar .ply .parse (this);
@@ -267,7 +280,9 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
 
          if (Grammar .propertyType .parse (this))
          {
-            const type = this .typeMapping .get (this .result [1]);
+            const
+               type  = this .result [1],
+               value = this .typeMapping .get (type);
 
             this .whitespacesNoLineTerminator ();
 
@@ -275,7 +290,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
             {
                const name = this .result [1];
 
-               properties .push ({ type, name });
+               properties .push ({ type, value, name });
                return true;
             }
          }
@@ -292,7 +307,9 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
 
                if (Grammar .propertyType .parse (this))
                {
-                  const type = this .typeMapping .get (this .result [1]);
+                  const
+                     type  = this .result [1],
+                     value = this .typeMapping .get (type);
 
                   this .whitespacesNoLineTerminator ();
 
@@ -300,7 +317,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
                   {
                      const name = this .result [1];
 
-                     properties .push ({ count, type, name });
+                     properties .push ({ count, type, value, name });
                      return true;
                   }
                }
@@ -353,9 +370,9 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
       const
          scene  = this .getExecutionContext (),
          coord  = scene .createNode ("Coordinate"),
-         point  = coord .point,
+         points = [ ],
          color  = scene .createNode ("Color"),
-         colors = color .color;
+         colors = [ ];
 
       const { count, properties } = element;
 
@@ -365,27 +382,30 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
 
          this .whitespaces ();
 
-         for (const property of properties)
+         for (const { value, name, type } of properties)
          {
-            if (!property .type .call (this))
-               throw new Error (`Couldn't parse value for property ${property .name}.`);
+            if (!value .call (this))
+               throw new Error (`Couldn't parse value for property ${name}.`);
 
-            switch (property .name)
+            switch (name)
             {
                case "x": x = this .value; break;
                case "y": y = this .value; break;
                case "z": z = this .value; break;
-               case "red":   r = this .value / 255; break;
-               case "green": g = this .value / 255; break;
-               case "blue":  b = this .value / 255; break;
+               case "red":   r = this .color (this .value, type); break;
+               case "green": g = this .color (this .value, type); break;
+               case "blue":  b = this .color (this .value, type); break;
             }
          }
 
-         point .push (new Vector3 (x, y, z));
+         points .push (x, y, z);
 
          if (properties .color)
-            colors .push (new Color3 (r, g, b));
+            colors .push (r, g, b);
       }
+
+      coord .point = points;
+      color .color = colors;
 
       this .coord = coord;
       this .color = colors .length ? color : null;
@@ -397,22 +417,22 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
          geometry   = scene .createNode ("IndexedFaceSet"),
          coordIndex = geometry .coordIndex;
 
-      const count = element .count;
+      const { count, properties } = element;
 
       for (let i = 0; i < count; ++ i)
       {
          this .whitespaces ();
 
-         for (const property of element .properties)
+         for (const { count, value } of properties)
          {
-            if (!property .count .call (this))
+            if (!count .call (this))
                throw new Error (`Couldn't parse property count for ${property .name}.`);
 
-            const count = this .value;
+            const length = this .value;
 
-            for (let i = 0; i < count; ++ i)
+            for (let i = 0; i < length; ++ i)
             {
-               if (!property .type .call (this))
+               if (!value .call (this))
                   throw new Error (`Couldn't parse a property value for ${property .name}.`);
 
                coordIndex .push (this .value);
