@@ -411,9 +411,9 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
 
             switch (name)
             {
-               case "red": case "r":   r = this .convertColor (this .value, type); break;
+               case "red":   case "r": r = this .convertColor (this .value, type); break;
                case "green": case "g": g = this .convertColor (this .value, type); break;
-               case "blue": case "b":  b = this .convertColor (this .value, type); break;
+               case "blue":  case "b": b = this .convertColor (this .value, type); break;
                case "alpha": case "a": a = this .convertColor (this .value, type); break;
                case "s": case "u": s = this .value; break;
                case "t": case "v": t = this .value; break;
