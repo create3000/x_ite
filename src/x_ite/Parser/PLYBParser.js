@@ -65,7 +65,7 @@ Object .assign (Object .setPrototypeOf (PLYBParser .prototype, PLYAParser .proto
       this .input        = inputs [1];
       this .magic        = this .input .match (/^ply\r?\nformat (binary_little_endian|binary_big_endian) 1.0/);
       this .byteOffset   = 0;
-      this .littleEndian = this .magic [1] === "binary_little_endian";
+      this .littleEndian = this .magic ?.[1] === "binary_little_endian";
    },
    isValid ()
    {
