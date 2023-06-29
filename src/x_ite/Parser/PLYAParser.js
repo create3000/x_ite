@@ -534,9 +534,9 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
    },
    parseUnknown (element)
    {
-      const { count } = element;
-
       this .whitespaces ();
+
+      const { count } = element;
 
       for (let i = 0; i < count; ++ i)
          Grammar .line .parse (this);
