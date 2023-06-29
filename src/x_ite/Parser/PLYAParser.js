@@ -67,7 +67,7 @@ const Grammar = Expressions ({
    elementType: /\b(vertex|face|edge)\b/gy,
    property: /\bproperty\b/gy,
    propertyList: /\blist\b/gy,
-   propertyType: /\b(char|uchar|short|ushort|int|uint|float|double)\b/gy,
+   propertyType: /\b(char|uchar|short|ushort|int|uint|float|double|int8|uint8|int16|uint16|int32|uint32|float32|float64)\b/gy,
    propertyName: /\b(\S+)\b/gy,
    endHeader: /\bend_header\b/gy,
 
@@ -88,14 +88,22 @@ function PLYAParser (scene)
    this .comments = [ ];
 
    this .typeMapping = new Map ([
-      ["char",   this .int32],
-      ["uchar",  this .int32],
-      ["short",  this .int32],
-      ["ushort", this .int32],
-      ["int",    this .int32],
-      ["uint",   this .int32],
-      ["float",  this .double],
-      ["double", this .double],
+      ["char",    this .int32],
+      ["uchar",   this .int32],
+      ["short",   this .int32],
+      ["ushort",  this .int32],
+      ["int",     this .int32],
+      ["uint",    this .int32],
+      ["float",   this .double],
+      ["double",  this .double],
+      ["int8",    this .int32],
+      ["uint8",   this .int32],
+      ["int16",   this .int32],
+      ["uint16",  this .int32],
+      ["int32",   this .int32],
+      ["uint32",  this .int32],
+      ["float32", this .double],
+      ["float64", this .double],
    ]);
 }
 
@@ -190,18 +198,23 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
 
       return false;
    },
-   colorValue (value, type)
+   convertColor (value, type)
    {
       switch (type)
       {
          case "uchar":
+         case "uint8":
             return value / 0xff;
          case "ushort":
+         case "uint16":
             return value / 0xfffff;
          case "uint":
+         case "uint32":
             return value / 0xffffffff;
          case "float":
+         case "float32":
          case "double":
+         case "float64":
             return value;
       }
    },
@@ -345,6 +358,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
       if (!this .geometry)
          this .geometry = scene .createNode ("PointSet");
 
+      this .geometry .solid  = false;
       this .geometry .coord  = this .coord;
       this .geometry .normal = this .normal;
       this .geometry .color  = this .color;
@@ -401,9 +415,9 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
                case "nx": nx = this .value; break;
                case "ny": ny = this .value; break;
                case "nz": nz = this .value; break;
-               case "red":   r = this .colorValue (this .value, type); break;
-               case "green": g = this .colorValue (this .value, type); break;
-               case "blue":  b = this .colorValue (this .value, type); break;
+               case "red":   r = this .convertColor (this .value, type); break;
+               case "green": g = this .convertColor (this .value, type); break;
+               case "blue":  b = this .convertColor (this .value, type); break;
             }
          }
 
