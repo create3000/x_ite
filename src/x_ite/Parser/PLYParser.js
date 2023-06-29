@@ -338,6 +338,8 @@ Object .assign (Object .setPrototypeOf (PLYParser .prototype, X3DParser .prototy
    },
    async processElements (elements)
    {
+      console .log (elements)
+      
       for (const element of elements)
          await this .processElement (element);
 

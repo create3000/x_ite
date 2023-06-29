@@ -55,6 +55,7 @@ import OBJParser   from "./OBJParser.js";
 import STLAParser  from "./STLAParser.js";
 import STLBParser  from "./STLBParser.js";
 import PLYAParser  from "./PLYAParser.js";
+import PLYBParser  from "./PLYBParser.js";
 import SVGParser   from "./SVGParser.js";
 
 function GoldenGate (scene)
@@ -106,14 +107,21 @@ Object .assign (Object .setPrototypeOf (GoldenGate .prototype, X3DParser .protot
    },
    getInput (encoding, x3dSyntax)
    {
-      if (this .inputs .has (encoding))
-         return this .inputs .get (encoding);
+      if (Array .isArray (encoding))
+      {
+         return encoding .map (encoding => this .getInput (encoding));
+      }
+      else
+      {
+         if (this .inputs .has (encoding))
+            return this .inputs .get (encoding);
 
-      const input = this .createInput (encoding, x3dSyntax);
+         const input = this .createInput (encoding, x3dSyntax);
 
-      this .inputs .set (encoding, input);
+         this .inputs .set (encoding, input);
 
-      return input;
+         return input;
+      }
    },
    createInput (encoding, x3dSyntax)
    {
@@ -149,6 +157,7 @@ GoldenGate .Parser = [
    STLAParser,
    STLBParser,
    PLYAParser,
+   PLYBParser,
 ];
 
 export default GoldenGate;

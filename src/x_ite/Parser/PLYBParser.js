@@ -56,13 +56,13 @@ Object .assign (Object .setPrototypeOf (PLYBParser .prototype, PLYParser .protot
 {
    getEncoding ()
    {
-      return "ARRAY_BUFFER";
+      return ["ARRAY_BUFFER", "STRING"];
    },
-   setInput (input)
+   setInput (inputs)
    {
-      this .arrayBuffer  = input;
-      this .dataView     = new DataView (input);
-      this .input        = $.decodeText (input);
+      this .arrayBuffer  = inputs [0];
+      this .dataView     = new DataView (this .arrayBuffer);
+      this .input        = inputs [1];
       this .magic        = this .input .match (/^ply\r?\nformat (binary_little_endian|binary_big_endian) 1.0/);
       this .littleEndian = this .magic [1] === "binary_little_endian";
    },
