@@ -494,7 +494,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
       const
          scene      = this .getScene (),
          geometry   = scene .createNode ("IndexedFaceSet"),
-         coordIndex = geometry .coordIndex;
+         coordIndex = [ ];
 
       const { count, properties } = element;
 
@@ -521,7 +521,8 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
          }
       }
 
-      this .geometry = geometry;
+      geometry .coordIndex = coordIndex;
+      this .geometry       = geometry;
    },
    parseUnknown (element)
    {
