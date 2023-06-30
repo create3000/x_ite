@@ -644,6 +644,7 @@ X_ITE can load several file formats, either directly as the source of the \<x3d-
 | glTF             | .gltf, .glb    | model/gltf+json |
 | Wavefront OBJ    | .obj           | model/obj       |
 | STL              | .stl           | model/stl       |
+| PLY              | .ply           | model/ply       |
 | SVG Document     | .svg, .svgz    | image/svg+xml   |
 
 >**Tip:** All files can be compressed using GZip compression. This saves bandwidth and speeds up download time.
