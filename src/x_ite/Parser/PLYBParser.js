@@ -168,6 +168,12 @@ Object .assign (Object .setPrototypeOf (PLYBParser .prototype, PLYAParser .proto
 
       return true;
    },
+   async processElements (elements)
+   {
+      this .whitespaces = Function .prototype;
+
+      return PLYAParser .prototype .processElements .call (this, elements);
+   },
    parseUnknown ({ count, properties })
    {
       for (let i = 0; i < count; ++ i)
