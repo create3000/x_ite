@@ -50,6 +50,44 @@ import PLYAParser from "./PLYAParser.js";
 function PLYBParser (scene)
 {
    PLYAParser .call (this, scene);
+
+   this .typeMapping = new Map ([
+      ["char",    this .binaryInt8],
+      ["uchar",   this .binaryUint8],
+      ["short",   this .binaryInt16],
+      ["ushort",  this .binaryUint16],
+      ["int",     this .binaryInt32],
+      ["uint",    this .binaryUint32],
+      ["float",   this .binaryFloat32],
+      ["double",  this .binaryFloat64],
+      ["int8",    this .binaryInt8],
+      ["uint8",   this .binaryUint8],
+      ["int16",   this .binaryInt16],
+      ["uint16",  this .binaryUint16],
+      ["int32",   this .binaryInt32],
+      ["uint32",  this .binaryUint32],
+      ["float32", this .binaryFloat32],
+      ["float64", this .binaryFloat64],
+   ]);
+
+   this .bytesMapping = new Map ([
+      ["char",    1],
+      ["uchar",   1],
+      ["short",   2],
+      ["ushort",  2],
+      ["int",     4],
+      ["uint",    4],
+      ["float",   4],
+      ["double",  8],
+      ["int8",    1],
+      ["uint8",   1],
+      ["int16",   2],
+      ["uint16",  2],
+      ["int32",   4],
+      ["uint32",  4],
+      ["float32", 4],
+      ["float64", 8],
+   ]);
 }
 
 Object .assign (Object .setPrototypeOf (PLYBParser .prototype, PLYAParser .prototype),
@@ -63,9 +101,11 @@ Object .assign (Object .setPrototypeOf (PLYBParser .prototype, PLYAParser .proto
       this .arrayBuffer  = inputs [0];
       this .dataView     = new DataView (this .arrayBuffer);
       this .input        = inputs [1];
-      this .magic        = this .input .match (/^ply\r?\nformat (binary_little_endian|binary_big_endian) 1.0/);
-      this .byteOffset   = 0;
+      this .magic        = this .input .match (/^ply\r?\nformat (binary_(?:little|big)_endian) 1.0.*?end_header\r?\n/s);
+      this .byteOffset   = this .magic ?.[0] .length;
       this .littleEndian = this .magic ?.[1] === "binary_little_endian";
+
+      console .log (this .byteOffset, this .littleEndian)
    },
    isValid ()
    {
@@ -74,151 +114,82 @@ Object .assign (Object .setPrototypeOf (PLYBParser .prototype, PLYAParser .proto
 
       return !! this .magic;
    },
-   async parseVertices (element)
+   binaryFloat32 ()
    {
-      // const
-      //    scene      = this .getScene (),
-      //    colors     = [ ],
-      //    texCoord   = scene .createNode ("TextureCoordinate"),
-      //    texCoords  = [ ],
-      //    normal     = scene .createNode ("Normal"),
-      //    normals    = [ ],
-      //    coord      = scene .createNode ("Coordinate"),
-      //    points     = [ ],
-      //    attributes = new Map ();
+      this .value       = this .dataView .getFloat32 (this .byteOffset, this .littleEndian);
+      this .byteOffset += 4;
 
-      // const { count, properties } = element;
-
-      // for (const { name } of properties)
-      // {
-      //    if (name .match (/^(?:red|green|blue|alpha|r|g|b|a|s|t|u|v|nx|ny|nz|x|y|z)$/))
-      //       continue;
-
-      //    attributes .set (name, [ ]);
-      // }
-
-      // for (let i = 0; i < count; ++ i)
-      // {
-      //    let r = 1, g = 1, b = 1, a = 1;
-      //    let s = 0, t = 0;
-      //    let nx = 0, ny = 0, nz = 0;
-      //    let x = 0, y = 0, z = 0;
-
-      //    this .whitespaces ();
-
-      //    for (const { value, name, type } of properties)
-      //    {
-      //       if (!value .call (this))
-      //          throw new Error (`Couldn't parse value for property ${name}.`);
-
-      //       switch (name)
-      //       {
-      //          default: attributes .get (name) .push (this .value); break;
-      //          case "red":   case "r": r = this .convertColor (this .value, type); break;
-      //          case "green": case "g": g = this .convertColor (this .value, type); break;
-      //          case "blue":  case "b": b = this .convertColor (this .value, type); break;
-      //          case "alpha": case "a": a = this .convertColor (this .value, type); break;
-      //          case "s": case "u": s = this .value; break;
-      //          case "t": case "v": t = this .value; break;
-      //          case "nx": nx = this .value; break;
-      //          case "ny": ny = this .value; break;
-      //          case "nz": nz = this .value; break;
-      //          case "x": x = this .value; break;
-      //          case "y": y = this .value; break;
-      //          case "z": z = this .value; break;
-      //       }
-      //    }
-
-      //    if (properties .colors)
-      //       colors .push (r, g, b, a);
-
-      //    if (properties .texCoords)
-      //       texCoords .push (s, t);
-
-      //    if (properties .normals)
-      //       normals .push (nx, ny, nz);
-
-      //    points .push (x, y, z);
-      // }
-
-      // // Attributes
-
-      // if (attributes .size)
-      // {
-      //    scene .addComponent (this .getBrowser () .getComponent ("Shaders", 1));
-
-      //    await this .loadComponents ();
-
-      //    for (const [name, value] of attributes)
-      //    {
-      //       const floatVertexAttribute = scene .createNode ("FloatVertexAttribute");
-
-      //       floatVertexAttribute .name          = name;
-      //       floatVertexAttribute .numComponents = 1;
-      //       floatVertexAttribute .value         = value;
-
-      //       this .attrib .push (floatVertexAttribute);
-      //    }
-      // }
-
-      // // Geometric properties
-
-      // const
-      //    alpha = colors .some ((v, i) => i % 4 === 3 && v < 1),
-      //    color = scene .createNode (alpha ? "ColorRGBA" : "Color");
-
-      // color    .color  = alpha ? colors : colors .filter ((v, i) => i % 4 !== 3);
-      // texCoord .point  = texCoords;
-      // normal   .vector = normals;
-      // coord    .point  = points;
-
-      // this .color    = colors    .length ? color    : null;
-      // this .texCoord = texCoords .length ? texCoord : null;
-      // this .normal   = normals   .length ? normal   : null;
-      // this .coord    = coord;
+      return true;
    },
-   parseFaces (element)
+   binaryFloat64 ()
    {
-      // const
-      //    scene      = this .getScene (),
-      //    geometry   = scene .createNode ("IndexedFaceSet"),
-      //    coordIndex = geometry .coordIndex;
+      this .value       = this .dataView .getFloat64 (this .byteOffset, this .littleEndian);
+      this .byteOffset += 8;
 
-      // const { count, properties } = element;
+      return true;
+   },
+   binaryInt8 ()
+   {
+      this .value       = this .dataView .getInt8 (this .byteOffset, this .littleEndian);
+      this .byteOffset += 1;
 
-      // for (let i = 0; i < count; ++ i)
-      // {
-      //    this .whitespaces ();
+      return true;
+   },
+   binaryUint8 ()
+   {
+      this .value       = this .dataView .getUint8 (this .byteOffset, this .littleEndian);
+      this .byteOffset += 1;
 
-      //    for (const { count, value, name } of properties)
-      //    {
-      //       if (!count .call (this))
-      //          throw new Error (`Couldn't parse property count for ${name}.`);
+      return true;
+   },
+   binaryInt16 ()
+   {
+      this .value       = this .dataView .getInt16 (this .byteOffset, this .littleEndian);
+      this .byteOffset += 2;
 
-      //       const length = this .value;
+      return true;
+   },
+   binaryUint16 ()
+   {
+      this .value       = this .dataView .getUint16 (this .byteOffset, this .littleEndian);
+      this .byteOffset += 2;
 
-      //       for (let i = 0; i < length; ++ i)
-      //       {
-      //          if (!value .call (this))
-      //             throw new Error (`Couldn't parse a property value for ${name}.`);
+      return true;
+   },
+   binaryInt32 ()
+   {
+      this .value       = this .dataView .getInt32 (this .byteOffset, this .littleEndian);
+      this .byteOffset += 4;
 
-      //          coordIndex .push (this .value);
-      //       }
+      return true;
+   },
+   binaryUint32 ()
+   {
+      this .value       = this .dataView .getUint32 (this .byteOffset, this .littleEndian);
+      this .byteOffset += 4;
 
-      //       coordIndex .push (-1);
-      //    }
-      // }
-
-      // this .geometry = geometry;
+      return true;
    },
    parseUnknown (element)
    {
-      // this .whitespaces ();
+      const { count, properties } = element;
 
-      // const { count } = element;
+      for (let i = 0; i < count; ++ i)
+      {
+         for (const { type, count } of properties)
+         {
+            if (count === undefined)
+            {
+               this .byteOffset += this .bytesMapping .get (type);
+            }
+            else
+            {
+               count .call (this);
 
-      // for (let i = 0; i < count; ++ i)
-      //    Grammar .line .parse (this);
+               this .byteOffset += this .value * this .bytesMapping .get (type);
+            }
+         }
+      }
    },
 });
 
