@@ -346,6 +346,8 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
    },
    async processElements (elements)
    {
+      // console .log (elements)
+
       for (const element of elements)
          await this .processElement (element);
 
@@ -359,6 +361,18 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
          material   = scene .createNode (this .geometry ? "Material" : "UnlitMaterial"),
          geometry   = this .geometry ?? scene .createNode ("PointSet");
 
+      appearance .material = material;
+
+      if (this .texCoord)
+      {
+         const textureTransform = scene .createNode ("TextureTransform");
+
+         textureTransform .translation .y = -1;
+         textureTransform .scale .y       = -1;
+
+         appearance .textureTransform = textureTransform;
+      }
+
       if (geometry .getNodeTypeName () !== "PointSet")
       {
          geometry .solid    = false;
@@ -370,9 +384,8 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
       geometry .normal = this .normal;
       geometry .coord  = this .coord;
 
-      appearance .material = material;
-      shape .appearance    = appearance;
-      shape .geometry      = geometry;
+      shape .appearance = appearance;
+      shape .geometry   = geometry;
 
       scene .rootNodes .push (shape);
    },
@@ -386,12 +399,18 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
          case "face":
             this .parseFaces (element);
             break;
+         case "multi_texture_vertex":
+            this .parseMultiTextureVertices (element);
+            break;
+         case "multi_texture_face":
+            this .parseMultiTextureFaces (element);
+            break;
          default:
             this .parseUnknown (element);
             break;
       }
    },
-   async parseVertices (element)
+   async parseVertices ({ count, properties })
    {
       const
          scene      = this .getScene (),
@@ -403,8 +422,6 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
          coord      = scene .createNode ("Coordinate"),
          points     = [ ],
          attributes = new Map ();
-
-      const { count, properties } = element;
 
       for (const { name } of properties)
       {
@@ -487,14 +504,12 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
       this .normal   = normals   .length ? normal   : null;
       this .coord    = coord;
    },
-   parseFaces (element)
+   parseFaces ({ count, properties })
    {
       const
          scene      = this .getScene (),
          geometry   = scene .createNode ("IndexedFaceSet"),
          coordIndex = [ ];
-
-      const { count, properties } = element;
 
       for (let i = 0; i < count; ++ i)
       {
@@ -522,11 +537,75 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
       geometry .coordIndex = coordIndex;
       this .geometry       = geometry;
    },
-   parseUnknown (element)
+   parseMultiTextureVertices ({ count, properties })
+   {
+      const
+         scene     = this .getScene (),
+         texCoord  = scene .createNode ("TextureCoordinate"),
+         texCoords = [ ];
+
+      for (let i = 0; i < count; ++ i)
+      {
+         this .whitespaces ();
+
+         for (const { value, name } of properties)
+         {
+            if (!value .call (this))
+               throw new Error (`Couldn't parse value for property ${name}.`);
+
+            switch (name)
+            {
+               case "s": case "t":
+               case "u": case "v":
+                  texCoords .push (this .value);
+                  break;
+            }
+         }
+      }
+
+      texCoord .point = texCoords;
+
+      this .texCoord = texCoords .length ? texCoord : null;
+   },
+   parseMultiTextureFaces ({ count, properties })
+   {
+      const texCoordIndex = [ ];
+
+      for (let i = 0; i < count; ++ i)
+      {
+         for (const { count, value, name } of properties)
+         {
+            if (count)
+            {
+               if (!count .call (this))
+                  throw new Error (`Couldn't parse property count for ${name}.`);
+
+               const length = this .value;
+
+               for (let i = 0; i < length; ++ i)
+               {
+                  if (!value .call (this))
+                     throw new Error (`Couldn't parse value for property ${name}.`);
+
+                  texCoordIndex .push (this .value);
+               }
+
+               texCoordIndex .push (-1);
+            }
+            else
+            {
+               if (!value .call (this))
+                  throw new Error (`Couldn't parse value for property ${name}.`);
+            }
+         }
+      }
+
+      if (this .geometry)
+         this .geometry .texCoordIndex = texCoordIndex;
+   },
+   parseUnknown ({ count })
    {
       this .whitespaces ();
-
-      const { count } = element;
 
       for (let i = 0; i < count; ++ i)
          Grammar .line .parse (this);

@@ -168,27 +168,59 @@ Object .assign (Object .setPrototypeOf (PLYBParser .prototype, PLYAParser .proto
 
       return true;
    },
-   parseUnknown (element)
+   parseUnknown ({ count, properties })
    {
-      const { count, properties } = element;
-
       for (let i = 0; i < count; ++ i)
       {
          for (const { count, type } of properties)
          {
-            if (count === undefined)
-            {
-               this .byteOffset += this .bytesMapping .get (type);
-            }
-            else
+            if (count)
             {
                count .call (this);
 
                this .byteOffset += this .value * this .bytesMapping .get (type);
             }
+            else
+            {
+               this .byteOffset += this .bytesMapping .get (type);
+            }
          }
       }
    },
+   // parseUnknown ({ count, properties })
+   // {
+   //    let string = "";
+
+   //    for (let i = 0; i < count; ++ i)
+   //    {
+   //       for (const { count, type, value } of properties)
+   //       {
+   //          if (count === undefined)
+   //          {
+   //             value .call (this);
+
+   //             string += this .value + " "
+   //          }
+   //          else
+   //          {
+   //             count .call (this);
+
+   //             string += this .value + " "
+
+   //             for (let i = 0, l = this .value; i < l; ++ i)
+   //             {
+   //                value .call (this);
+
+   //                string += this .value + " "
+   //             }
+   //          }
+   //       }
+
+   //       string += "\n"
+   //    }
+
+   //    console .log (string .substring (0, 1000))
+   // },
 });
 
 export default PLYBParser;
