@@ -432,30 +432,18 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
                default:
                   attributes .get (name) .push (this .value);
                   break;
-               case "red":
-               case "green":
-               case "blue":
-               case "alpha":
-               case "r":
-               case "g":
-               case "b":
-               case "a":
+               case "red": case "green": case "blue": case "alpha":
+               case "r": case "g": case "b": case "a":
                   colors .push (this .convertColor (this .value, type));
                   break;
-               case "s":
-               case "t":
-               case "u":
-               case "v":
+               case "s": case "t":
+               case "u": case "v":
                   texCoords .push (this .value);
                   break;
-               case "nx":
-               case "ny":
-               case "nz":
+               case "nx": case "ny": case "nz":
                   normals .push (this .value);
                   break;
-               case "x":
-               case "y":
-               case "z":
+               case "x": case "y": case "z":
                   points .push (this .value);
                   break;
             }
