@@ -104,8 +104,6 @@ Object .assign (Object .setPrototypeOf (PLYBParser .prototype, PLYAParser .proto
       this .magic        = this .input .match (/^ply\r?\nformat (binary_(?:little|big)_endian) 1.0.*?end_header\r?\n/s);
       this .byteOffset   = this .magic ?.[0] .length;
       this .littleEndian = this .magic ?.[1] === "binary_little_endian";
-
-      console .log (this .byteOffset, this .littleEndian)
    },
    isValid ()
    {

@@ -346,8 +346,6 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
    },
    async processElements (elements)
    {
-      console .log (elements)
-
       for (const element of elements)
          await this .processElement (element);
 
