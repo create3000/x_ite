@@ -168,7 +168,7 @@ Object .assign (Object .setPrototypeOf (PLYBParser .prototype, PLYAParser .proto
 
       return true;
    },
-   async processElements (elements)
+   processElements (elements)
    {
       this .whitespaces = Function .prototype;
 
