@@ -147,7 +147,7 @@ function SFMatrixPrototypeTemplate (Constructor, TypeName, Matrix, SFVec, double
          for (let i = 0; i < last; ++ i)
          {
             generator .string += generator [_formatter] (value [i]);
-            generator .string += generator .TidySpace ();
+            generator .string += generator .Space ();
          }
 
          generator .string += generator [_formatter] (value [last]);

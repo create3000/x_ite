@@ -158,11 +158,11 @@ Object .assign (Object .setPrototypeOf (SFRotation .prototype, X3DField .prototy
       const { x, y, z, angle } = this .getValue ();
 
       generator .string += generator .DoubleFormat (x);
-      generator .string += generator .TidySpace ();
+      generator .string += generator .Space ();
       generator .string += generator .DoubleFormat (y);
-      generator .string += generator .TidySpace ();
+      generator .string += generator .Space ();
       generator .string += generator .DoubleFormat (z);
-      generator .string += generator .TidySpace ();
+      generator .string += generator .Space ();
       generator .string += generator .DoubleFormat (generator .ToUnit ("angle", angle));
    },
    toVRMLStream (generator)

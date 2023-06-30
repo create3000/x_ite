@@ -156,7 +156,7 @@ function SFVecPrototypeTemplate (Constructor, TypeName, Vector, double)
          for (let i = 0; i < last; ++ i)
          {
             generator .string += generator [_formatter] (generator .ToUnit (category, value [i]));
-            generator .string += generator .TidySpace ();
+            generator .string += generator .Space ();
          }
 
          generator .string += generator [_formatter] (generator .ToUnit (category, value [last]));
