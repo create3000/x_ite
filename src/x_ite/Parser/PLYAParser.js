@@ -416,7 +416,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
          attributes .set (name, [ ]);
       }
 
-      console .time ("vertices")
+      // console .time ("vertices")
 
       for (let i = 0; i < count; ++ i)
       {
@@ -450,7 +450,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
          }
       }
 
-      console .timeEnd ("vertices")
+      // console .timeEnd ("vertices")
 
       // Attributes
 
