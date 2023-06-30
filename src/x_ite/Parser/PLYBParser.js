@@ -176,7 +176,7 @@ Object .assign (Object .setPrototypeOf (PLYBParser .prototype, PLYAParser .proto
 
       for (let i = 0; i < count; ++ i)
       {
-         for (const { type, count } of properties)
+         for (const { count, type } of properties)
          {
             if (count === undefined)
             {
