@@ -416,6 +416,8 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
          attributes .set (name, [ ]);
       }
 
+      console .time ("vertices")
+
       for (let i = 0; i < count; ++ i)
       {
          this .whitespaces ();
@@ -427,22 +429,40 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
 
             switch (name)
             {
-               default: attributes .get (name) .push (this .value); break;
-               case "red":   case "r": colors .push (this .convertColor (this .value, type)); break;
-               case "green": case "g": colors .push (this .convertColor (this .value, type)); break;
-               case "blue":  case "b": colors .push (this .convertColor (this .value, type)); break;
-               case "alpha": case "a": colors .push (this .convertColor (this .value, type)); break;
-               case "s": case "u": texCoords .push (this .value); break;
-               case "t": case "v": texCoords .push (this .value); break;
-               case "nx": normals .push (this .value); break;
-               case "ny": normals .push (this .value); break;
-               case "nz": normals .push (this .value); break;
-               case "x": points .push (this .value); break;
-               case "y": points .push (this .value); break;
-               case "z": points .push (this .value); break;
+               default:
+                  attributes .get (name) .push (this .value);
+                  break;
+               case "red":
+               case "green":
+               case "blue":
+               case "alpha":
+               case "r":
+               case "g":
+               case "b":
+               case "a":
+                  colors .push (this .convertColor (this .value, type));
+                  break;
+               case "s":
+               case "t":
+               case "u":
+               case "v":
+                  texCoords .push (this .value);
+                  break;
+               case "nx":
+               case "ny":
+               case "nz":
+                  normals .push (this .value);
+                  break;
+               case "x":
+               case "y":
+               case "z":
+                  points .push (this .value);
+                  break;
             }
          }
       }
+
+      console .timeEnd ("vertices")
 
       // Attributes
 
