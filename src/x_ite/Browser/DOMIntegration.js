@@ -135,15 +135,17 @@ class DOMIntegration
 
 	processAttribute (mutation, element)
 	{
-		const parser = this .parser;
+		const
+			parser = this .parser,
+			node   = $.data (element, "node");
 
-		if ($.data (element, "node"))
+		if (node)
 		{
 			const
 				attributeName = mutation .attributeName,
 				attribute     = element .attributes .getNamedItem (attributeName);
 
-			parser .nodeAttribute (attribute, $.data (element, "node"));
+			parser .nodeAttribute (attribute, node);
 		}
 		else
 		{
@@ -153,11 +155,14 @@ class DOMIntegration
 				parentNode = element .parentNode,
 			 	node       = $.data (parentNode, "node");
 
-			parser .pushExecutionContext (node .getExecutionContext ());
-			parser .pushParent (node);
-			parser .childElement (element);
-			parser .popParent ();
-			parser .popExecutionContext ();
+			if (node)
+			{
+				parser .pushExecutionContext (node .getExecutionContext ());
+				parser .pushParent (node);
+				parser .childElement (element);
+				parser .popParent ();
+				parser .popExecutionContext ();
+			}
 		}
 	}
 
