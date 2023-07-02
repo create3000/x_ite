@@ -420,11 +420,18 @@ Object .assign (X3DCoreContext .prototype,
    },
    parseUrlAttribute (urlCharacters)
    {
-      const url = new Fields .MFString ();
+      try
+      {
+         const url = new Fields .MFString ();
 
-      url .fromString ("[" + urlCharacters + "]", this .getExecutionContext ());
+         url .fromString ("[" + urlCharacters + "]", this .getExecutionContext ());
 
-      return url;
+         return url;
+      }
+      catch
+      {
+         throw new Error ("Couldn't parse url attribute.");
+      }
    },
    callBrowserEventHandler: (() =>
    {
