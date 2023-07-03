@@ -108,9 +108,10 @@ Object .assign (Object .setPrototypeOf (MFNode .prototype, X3DObjectArrayField .
    {
       const
          target = this .getTarget (),
-         array  = target .getValue ();
+         array  = target .getValue (),
+         length = array .length;
 
-      switch (array .length)
+      switch (length)
       {
          case 0:
          {
@@ -136,11 +137,11 @@ Object .assign (Object .setPrototypeOf (MFNode .prototype, X3DObjectArrayField .
             generator .string += generator .TidyBreak ();
             generator .IncIndent ();
 
-            for (let i = 0, length = array .length; i < length; ++ i)
+            for (let i = 0; i < length; ++ i)
             {
                generator .string += generator .Indent ();
                array [i] .toStream (generator);
-               generator .string += generator .Break ();
+               generator .string += generator .string .at (-1) === "}" ? generator .TidyBreak () : generator .Break ();
             }
 
             generator .DecIndent ();
@@ -156,9 +157,10 @@ Object .assign (Object .setPrototypeOf (MFNode .prototype, X3DObjectArrayField .
    {
       const
          target = this .getTarget (),
-         array  = target .getValue ();
+         array  = target .getValue (),
+         length = array .length;
 
-      switch (array .length)
+      switch (length)
       {
          case 0:
          {
@@ -188,7 +190,7 @@ Object .assign (Object .setPrototypeOf (MFNode .prototype, X3DObjectArrayField .
             {
                generator .string += generator .Indent ();
                element .toVRMLStream (generator);
-               generator .string += generator .Break ();
+               generator .string += generator .string .at (-1) === "}" ? generator .TidyBreak () : generator .Break ();
             }
 
             generator .DecIndent ();
