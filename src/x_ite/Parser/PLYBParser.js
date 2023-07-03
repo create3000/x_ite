@@ -70,24 +70,14 @@ function PLYBParser (scene)
       ["float64", this .binaryFloat64],
    ]);
 
-   this .bytesMapping = new Map ([
-      ["char",    1],
-      ["uchar",   1],
-      ["short",   2],
-      ["ushort",  2],
-      ["int",     4],
-      ["uint",    4],
-      ["float",   4],
-      ["double",  8],
-      ["int8",    1],
-      ["uint8",   1],
-      ["int16",   2],
-      ["uint16",  2],
-      ["int32",   4],
-      ["uint32",  4],
-      ["float32", 4],
-      ["float64", 8],
-   ]);
+   this .binaryInt8    .bytes = 1;
+   this .binaryUint8   .bytes = 1;
+   this .binaryInt16   .bytes = 2;
+   this .binaryUint16  .bytes = 2;
+   this .binaryInt32   .bytes = 4;
+   this .binaryUint32  .bytes = 4;
+   this .binaryFloat32 .bytes = 4;
+   this .binaryFloat64 .bytes = 8;
 }
 
 Object .assign (Object .setPrototypeOf (PLYBParser .prototype, PLYAParser .prototype),
@@ -111,20 +101,6 @@ Object .assign (Object .setPrototypeOf (PLYBParser .prototype, PLYAParser .proto
          return false;
 
       return !! this .magic;
-   },
-   binaryFloat32 ()
-   {
-      this .value       = this .dataView .getFloat32 (this .byteOffset, this .littleEndian);
-      this .byteOffset += 4;
-
-      return true;
-   },
-   binaryFloat64 ()
-   {
-      this .value       = this .dataView .getFloat64 (this .byteOffset, this .littleEndian);
-      this .byteOffset += 8;
-
-      return true;
    },
    binaryInt8 ()
    {
@@ -168,6 +144,20 @@ Object .assign (Object .setPrototypeOf (PLYBParser .prototype, PLYAParser .proto
 
       return true;
    },
+   binaryFloat32 ()
+   {
+      this .value       = this .dataView .getFloat32 (this .byteOffset, this .littleEndian);
+      this .byteOffset += 4;
+
+      return true;
+   },
+   binaryFloat64 ()
+   {
+      this .value       = this .dataView .getFloat64 (this .byteOffset, this .littleEndian);
+      this .byteOffset += 8;
+
+      return true;
+   },
    processElements (elements)
    {
       this .whitespaces = Function .prototype;
@@ -184,11 +174,11 @@ Object .assign (Object .setPrototypeOf (PLYBParser .prototype, PLYAParser .proto
             {
                count .call (this);
 
-               this .byteOffset += this .value * this .bytesMapping .get (type);
+               this .byteOffset += this .value * this .typeMapping .get (type) .bytes;
             }
             else
             {
-               this .byteOffset += this .bytesMapping .get (type);
+               this .byteOffset += this .typeMapping .get (type) .bytes;
             }
          }
       }
