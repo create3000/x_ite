@@ -355,31 +355,31 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
    })(),
    toVRMLStream (generator)
    {
-      if (this .skinCoordNode)
-         this .skinCoordNode ._point = this .skinBindingCoord ._point;
-
       if (this .skinNormalNode)
          this .skinNormalNode ._vector = this .skinBindingNormal ._vector;
+
+      if (this .skinCoordNode)
+         this .skinCoordNode ._point = this .skinBindingCoord ._point;
 
       X3DChildNode .prototype .toVRMLStream .call (this, generator);
    },
    toXMLStream (generator)
    {
-      if (this .skinCoordNode)
-         this .skinCoordNode ._point = this .skinBindingCoord ._point;
-
       if (this .skinNormalNode)
          this .skinNormalNode ._vector = this .skinBindingNormal ._vector;
+
+      if (this .skinCoordNode)
+         this .skinCoordNode ._point = this .skinBindingCoord ._point;
 
       X3DChildNode .prototype .toXMLStream .call (this, generator);
    },
    toJSONStream (generator)
    {
-      if (this .skinCoordNode)
-         this .skinCoordNode ._point = this .skinBindingCoord ._point;
-
       if (this .skinNormalNode)
          this .skinNormalNode ._vector = this .skinBindingNormal ._vector;
+
+      if (this .skinCoordNode)
+         this .skinCoordNode ._point = this .skinBindingCoord ._point;
 
       X3DChildNode .prototype .toJSONStream .call (this, generator);
    },
