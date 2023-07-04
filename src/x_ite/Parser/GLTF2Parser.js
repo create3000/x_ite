@@ -1456,9 +1456,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
          if (skin && shapeNodes .length)
          {
-            const name = this .sanitizeName (skin .name);
-
             humanoidNode = scene .createNode ("HAnimHumanoid", false);
+
+            const name = this .sanitizeName (skin .name);
 
             if (name)
                scene .addNamedNode (scene .getUniqueName (name), humanoidNode);
