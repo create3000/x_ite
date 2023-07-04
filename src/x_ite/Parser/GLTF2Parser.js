@@ -1775,7 +1775,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       const cycleInterval = samplers
          .map (sampler => this .accessors [sampler .input])
-         .filter (input => input && input .array .length)
+         .filter (input => input ?.array .length)
          .reduce ((value, input) => Math .max (value, input .array .at (-1)), 0);
 
       timeSensorNode ._loop          = DEVELOPMENT;
