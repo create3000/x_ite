@@ -1479,8 +1479,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             if (name)
                scene .addNamedNode (scene .getUniqueName (name), humanoidNode);
 
-            humanoidNode ._name    = skin .name;
-            humanoidNode ._version = "2.0";
+            humanoidNode ._name                  = skin .name;
+            humanoidNode ._version               = "2.0";
+            humanoidNode ._skeletalConfiguration = "";
 
             const skeletonNode = this .nodeObject (this .nodes [skin .skeleton], skin .skeleton);
 

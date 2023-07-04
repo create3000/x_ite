@@ -37,6 +37,19 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
 
+### SFString [in, out] **version** ""
+
+HAnimHumanoid *version*, where allowed value is 2.0 for final ISO 19774 *version* 2019.
+
+#### Hint
+
+- Default HAnimHumanoid *version* is 1.0 for X3D *version* 3, and HAnimHumanoid required *version* is 2.0 for X3D *version* 4.
+
+#### Warnings
+
+- No other values are allowed for strict validation.
+- Prior developmental versions of HAnim nodes, such as *version* 1 of standardized ISO 19774 *version* 2006, might not validate correctly due to small changes in the contained-node content model, so conversion of such models is recommended.
+
 ### SFString [in, out] **description** ""
 
 Author-provided prose that describes intended purpose of this node.
@@ -60,19 +73,6 @@ Unique *name* attribute must be defined so that each HAnimHumanoid node in a sce
 
 - *name* field is not included if this instance is a USE node, in order to avoid potential mismatches.
 
-### SFString [in, out] **version** ""
-
-HAnimHumanoid *version*, where allowed value is 2.0 for final ISO 19774 *version* 2019.
-
-#### Hint
-
-- Default HAnimHumanoid *version* is 1.0 for X3D *version* 3, and HAnimHumanoid required *version* is 2.0 for X3D *version* 4.
-
-#### Warnings
-
-- No other values are allowed for strict validation.
-- Prior developmental versions of HAnim nodes, such as *version* 1 of standardized ISO 19774 *version* 2006, might not validate correctly due to small changes in the contained-node content model, so conversion of such models is recommended.
-
 ### MFString [in, out] **info** [ ]
 
 Contains metadata keyword=value pairs, where approved keyword terms are humanoidVersion authorName authorEmail copyright creationDate usageRestrictions age gender height and weight.
@@ -81,27 +81,6 @@ Contains metadata keyword=value pairs, where approved keyword terms are humanoid
 
 - Height and weight are in base units (typically meters), hanimVersion is for author use and separate from HAnimHumanoid version field.
 - Alternate metadata keywords are also allowed.
-
-### SFInt32 [in, out] **loa** -1 <small>[-1,∞)</small>
-
-Level Of Articulation 0..4 indicates complexity and detail of joints for given humanoid skeletal hierarchy.
-
-#### Hints
-
-- *loa* value of -1 indicates that no LOA conformance is provided.
-- [Humanoid Animation (HAnim) Specification, Part 1 Architecture, 4.8.4 Levels of articulation](https://www.web3d.org/documents/specifications/19774/V2.0/Architecture/concepts.html#LevelsOfArticulation){:target="_blank"}
-
-### SFString [in, out] **skeletalConfiguration** "BASIC"
-
-Models sharing a common skeletal configuration can share animations and binding poses.
-
-#### Hint
-
-- [A value of 'BASIC' conforms to restrictive skeletal model in X3D Humanoid Animation (HAnim) Specification, Part 1 Architecture, 4.8 Modelling of humanoids](https://www.web3d.org/documents/specifications/19774/V2.0/Architecture/concepts.html#ModellingOfHumanoids){:target="_blank"}
-
-### MFBool [in, out] **motionsEnabled** [ ]
-
-Array of boolean values corresponding to HAnimMotion nodes indicating which can animate the HAnimHumanoid.
 
 ### SFVec3f [in, out] **translation** 0 0 0 <small>(-∞,∞)</small>
 
@@ -169,6 +148,23 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 - [X3D Architecture, 10.2.2 Bounding boxes](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/grouping.html#BoundingBoxes){:target="_blank"}
 - [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/grouping.html#X3DBoundedObject){:target="_blank"}
 
+### SFInt32 [in, out] **loa** -1 <small>[-1,∞)</small>
+
+Level Of Articulation 0..4 indicates complexity and detail of joints for given humanoid skeletal hierarchy.
+
+#### Hints
+
+- *loa* value of -1 indicates that no LOA conformance is provided.
+- [Humanoid Animation (HAnim) Specification, Part 1 Architecture, 4.8.4 Levels of articulation](https://www.web3d.org/documents/specifications/19774/V2.0/Architecture/concepts.html#LevelsOfArticulation){:target="_blank"}
+
+### SFString [in, out] **skeletalConfiguration** "BASIC"
+
+Models sharing a common skeletal configuration can share animations and binding poses.
+
+#### Hint
+
+- [A value of 'BASIC' conforms to restrictive skeletal model in X3D Humanoid Animation (HAnim) Specification, Part 1 Architecture, 4.8 Modelling of humanoids](https://www.web3d.org/documents/specifications/19774/V2.0/Architecture/concepts.html#ModellingOfHumanoids){:target="_blank"}
+
 ### MFNode [in, out] **skeleton** [ ] <small>[HAnimJoint, HAnimSite]</small>
 
 List of top-level HAnimJoint and HAnimSite nodes that create the *skeleton* model. The *skeleton* field contains the humanoid_root Joint object, and thus the entire hierarchy of HAnimJoint/HAnimSegment nodes making up the articulated *skeleton* model.
@@ -224,19 +220,9 @@ The *segments* field contains a list of USE references for all HAnimSegment node
 - The number of contained `<HAnimSegment USE='*' containerField='segments'/>` nodes at top level of HAnimHumanoid needs to match the number of corresponding HAnimSegment node instances found within the preceding skeleton hierarchy.
 - Top-level HAnimSegment USE nodes must include `containerField='segments'` for proper validation and operation.
 
-### MFNode [in, out] **joints** [ ] <small>[HAnimJoint]</small>
+### MFBool [in, out] **motionsEnabled** [ ]
 
-The *joints* field contains a list of USE references for all HAnimJoint node instances found within the preceding skeleton hierarchy.
-
-#### Hints
-
-- Order is irrelevant since names are contained in the original DEF objects.
-- These USE nodes can be utilized by inverse kinematics (IK) and animation engines.
-
-#### Warnings
-
-- The number of contained `<HAnimJoint USE='*' containerField='joints'/>` nodes at top level of HAnimHumanoid needs to match the number of corresponding HAnimJoint node instances found within the preceding skeleton hierarchy.
-- Top-level HAnimJoint USE nodes must include `containerField='joints'` for proper validation and operation.
+Array of boolean values corresponding to HAnimMotion nodes indicating which can animate the HAnimHumanoid.
 
 ### MFNode [in, out] **motions** [ ] <small>[HAnimMotion]</small>
 
@@ -277,6 +263,20 @@ Specifies an array of scale values for each HAnimJoint node in the joints field,
 #### Warning
 
 - Not used when skeletalConfiguration='BASIC'.
+
+### MFNode [in, out] **joints** [ ] <small>[HAnimJoint]</small>
+
+The *joints* field contains a list of USE references for all HAnimJoint node instances found within the preceding skeleton hierarchy.
+
+#### Hints
+
+- Order is irrelevant since names are contained in the original DEF objects.
+- These USE nodes can be utilized by inverse kinematics (IK) and animation engines.
+
+#### Warnings
+
+- The number of contained `<HAnimJoint USE='*' containerField='joints'/>` nodes at top level of HAnimHumanoid needs to match the number of corresponding HAnimJoint node instances found within the preceding skeleton hierarchy.
+- Top-level HAnimJoint USE nodes must include `containerField='joints'` for proper validation and operation.
 
 ### SFNode [in, out] **skinBindingNormal** NULL <small>[X3DNormalNode]</small>
 
