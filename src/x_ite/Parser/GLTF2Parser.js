@@ -2444,7 +2444,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          geometryNode ._coordIndex = geometryNode ._coordIndex .map (index => index < 0 ? -1 : index + start);
 
       if (geometryNode ._index)
-         geometryNode ._index = geometryNode ._index .map (index => index + start);
+         geometryNode ._index = geometryNode ._index .map (index => index < 0 ? -1 : index + start);
 
       if (textureCoordinateNode)
       {
