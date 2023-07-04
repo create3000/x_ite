@@ -71,16 +71,17 @@ function HAnimHumanoid (executionContext)
    this ._bboxSize    .setUnit ("length");
    this ._bboxCenter  .setUnit ("length");
 
-   this .skeletonNode      = new Group (executionContext);
-   this .viewpointsNode    = new Group (executionContext);
-   this .skinNode          = new Group (executionContext);
-   this .transformNode     = new Transform (executionContext);
-   this .jointNodes        = [ ];
-   this .skinBindingNormal = null;
-   this .skinBindingCoord  = null;
-   this .skinNormalNode    = null;
-   this .skinCoordNode     = null;
-   this .changed           = false;
+   this .skeletonNode         = new Group (executionContext);
+   this .viewpointsNode       = new Group (executionContext);
+   this .skinNode             = new Group (executionContext);
+   this .transformNode        = new Transform (executionContext);
+   this .jointNodes           = [ ];
+   this .jointBindingMatrices = [ ];
+   this .skinBindingNormal    = null;
+   this .skinBindingCoord     = null;
+   this .skinNormalNode       = null;
+   this .skinCoordNode        = null;
+   this .changed              = false;
 }
 
 Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .prototype),
@@ -146,11 +147,14 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
 
       // Skinning
 
-      this ._joints            .addInterest ("set_joints__",           this);
-      this ._skinBindingNormal .addInterest ("set_skinBindingNormal__", this);
-      this ._skinBindingCoord  .addInterest ("set_skinBindingCoord__",  this);
-      this ._skinNormal        .addInterest ("set_skinNormal__",        this);
-      this ._skinCoord         .addInterest ("set_skinCoord__",         this);
+      this ._joints                .addInterest ("set_joints__",            this);
+      this ._jointBindingPositions .addInterest ("set_joints__",            this);
+      this ._jointBindingRotations .addInterest ("set_joints__",            this);
+      this ._jointBindingScales    .addInterest ("set_joints__",            this);
+      this ._skinBindingNormal     .addInterest ("set_skinBindingNormal__", this);
+      this ._skinBindingCoord      .addInterest ("set_skinBindingCoord__",  this);
+      this ._skinNormal            .addInterest ("set_skinNormal__",        this);
+      this ._skinCoord             .addInterest ("set_skinCoord__",         this);
 
       this .set_joints__ ();
       this .set_skinBindingNormal__ ();
@@ -162,19 +166,39 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
    },
    set_joints__ ()
    {
-      const jointNodes = this .jointNodes;
+      const
+         jointNodes            = this .jointNodes,
+         jointBindingMatrices  = this .jointBindingMatrices,
+         jointBindingPositions = this ._jointBindingPositions,
+         jointBindingRotations = this ._jointBindingRotations,
+         jointBindingScales    = this ._jointBindingScales;
 
       for (const jointNode of jointNodes)
          jointNode .removeInterest ("set_joint__", this);
 
-      jointNodes .length = 0;
+      jointNodes .length           = 0;
+      jointBindingMatrices .length = 0;
 
-      for (const node of this ._joints)
+      const jointBindingMatrix = new Matrix4 ();
+
+      for (const [i, node] of this ._joints .entries ())
       {
          const jointNode = X3DCast (X3DConstants .HAnimJoint, node);
 
          if (jointNode)
+         {
+            if (jointBindingPositions .length)
+               jointBindingMatrix .translate (jointBindingPositions [Math .min (i, jointBindingPositions .length - 1)] .getValue ());
+
+            if (jointBindingRotations .length)
+               jointBindingMatrix .rotate (jointBindingRotations [Math .min (i, jointBindingRotations .length - 1)] .getValue ());
+
+            if (jointBindingScales .length)
+               jointBindingMatrix .scale (jointBindingScales [Math .min (i, jointBindingScales .length - 1)] .getValue ());
+
             jointNodes .push (jointNode);
+            jointBindingMatrices .push (jointBindingMatrix .copy ());
+         }
       }
 
       for (const jointNode of jointNodes)
@@ -247,11 +271,12 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
          this .changed = false;
 
          const
-            jointNodes        = this .jointNodes,
-            skinBindingNormal = this .skinBindingNormal,
-            skinBindingCoord  = this .skinBindingCoord,
-            skinNormalNode    = this .skinNormalNode,
-            skinCoordNode     = this .skinCoordNode;
+            jointNodes           = this .jointNodes,
+            jointBindingMatrices = this .jointBindingMatrices,
+            skinBindingNormal    = this .skinBindingNormal,
+            skinBindingCoord     = this .skinBindingCoord,
+            skinNormalNode       = this .skinNormalNode,
+            skinCoordNode        = this .skinCoordNode;
 
          // Reset skin normals and coords.
 
@@ -266,26 +291,13 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
 
          // Apply joint transformations.
 
-         const
-            jointBindingPositions = this ._jointBindingPositions,
-            jointBindingRotations = this ._jointBindingRotations,
-            jointBindingScales    = this ._jointBindingScales;
-
          for (const [i, jointNode] of jointNodes .entries ())
          {
             const
                skinCoordIndexLength = jointNode ._skinCoordIndex .length,
-               jointMatrix          = jointNode .getModelMatrix () .multRight (invModelMatrix),
+               jointBindingMatrix   = jointBindingMatrices [i],
+               jointMatrix          = jointNode .getModelMatrix () .multRight (invModelMatrix) .multLeft (jointBindingMatrix),
                displacerNodes       = jointNode .getDisplacers ();
-
-            if (jointBindingPositions .length)
-               jointMatrix .translate (jointBindingPositions [Math .min (i, jointBindingPositions .length - 1)] .getValue ());
-
-            if (jointBindingRotations .length)
-               jointMatrix .rotate (jointBindingRotations [Math .min (i, jointBindingRotations .length - 1)] .getValue ());
-
-            if (jointBindingScales .length)
-               jointMatrix .scale (jointBindingScales [Math .min (i, jointBindingScales .length - 1)] .getValue ());
 
             for (const displacerNode of displacerNodes)
             {
