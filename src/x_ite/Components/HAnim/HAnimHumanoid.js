@@ -272,6 +272,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
 
          const
             jointNodes           = this .jointNodes,
+            jointNodesLength     = jointNodes .length,
             jointBindingMatrices = this .jointBindingMatrices,
             skinBindingNormal    = this .skinBindingNormal,
             skinBindingCoord     = this .skinBindingCoord,
@@ -291,13 +292,14 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
 
          // Apply joint transformations.
 
-         for (const [i, jointNode] of jointNodes .entries ())
+         for (let i = 0; i < jointNodesLength; ++ i)
          {
             const
-               skinCoordIndexLength = jointNode ._skinCoordIndex .length,
+               jointNode            = jointNodes [i],
                jointBindingMatrix   = jointBindingMatrices [i],
                jointMatrix          = jointNode .getModelMatrix () .multRight (invModelMatrix) .multLeft (jointBindingMatrix),
-               displacerNodes       = jointNode .getDisplacers ();
+               displacerNodes       = jointNode .getDisplacers (),
+               skinCoordIndexLength = jointNode ._skinCoordIndex .length;
 
             for (const displacerNode of displacerNodes)
             {
