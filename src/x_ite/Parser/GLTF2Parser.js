@@ -1042,6 +1042,15 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       if (mesh .shapeNodes)
          return mesh .shapeNodes;
 
+      if (skin instanceof Object)
+      {
+         const scene = this .getScene ();
+
+         skin .textureCoordinateNode = scene .createNode ("TextureCoordinate", false);
+         skin .normalNode            = scene .createNode ("Normal", false);
+         skin .coordinateNode        = scene .createNode ("Coordinate", false);
+      }
+
       const shapeNodes = this .primitivesArray (mesh .primitives, skin);
 
       // Name Shape nodes.
@@ -1057,6 +1066,13 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             scene .addNamedNode (scene .getUniqueName (name), shapeNode);
             scene .addExportedNode (scene .getUniqueExportName (name), shapeNode);
          }
+      }
+
+      if (skin instanceof Object)
+      {
+         skin .textureCoordinateNode .setup ();
+         skin .normalNode            .setup ();
+         skin .coordinateNode        .setup ();
       }
 
       return mesh .shapeNodes = shapeNodes;
@@ -1966,6 +1982,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       geometryNode ._coord  = this .createCoordinate (attributes .POSITION);
 
       this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
+      this .skinGeometry (skin, geometryNode);
 
       geometryNode .setup ();
 
@@ -2039,6 +2056,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       }
 
       this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
+      this .skinGeometry (skin, geometryNode);
 
       geometryNode .setup ();
 
@@ -2055,6 +2073,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       geometryNode ._coord  = this .createCoordinate (attributes .POSITION);
 
       this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
+      this .skinGeometry (skin, geometryNode);
 
       geometryNode .setup ();
 
@@ -2075,6 +2094,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       geometryNode ._normalPerVertex = !! geometryNode ._normal;
 
       this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
+      this .skinGeometry (skin, geometryNode);
 
       geometryNode .setup ();
 
@@ -2094,6 +2114,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       geometryNode ._normalPerVertex = !! geometryNode ._normal;
 
       this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
+      this .skinGeometry (skin, geometryNode);
 
       geometryNode .setup ();
 
@@ -2114,6 +2135,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       geometryNode ._normalPerVertex = !! geometryNode ._normal;
 
       this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
+      this .skinGeometry (skin, geometryNode);
 
       geometryNode .setup ();
 
@@ -2141,6 +2163,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       }
 
       this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
+      this .skinGeometry (skin, geometryNode);
 
       geometryNode .setup ();
 
@@ -2161,6 +2184,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       geometryNode ._normalPerVertex = !! geometryNode ._normal;
 
       this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
+      this .skinGeometry (skin, geometryNode);
 
       geometryNode .setup ();
 
@@ -2188,6 +2212,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       }
 
       this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
+      this .skinGeometry (skin, geometryNode);
 
       geometryNode .setup ();
 
@@ -2364,6 +2389,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          return;
 
       const
+         start        = skin .coordinateNode ._point .length,
          jointsArray  = joints .array,
          weightsArray = weights .array,
          numVertices  = jointsArray .length / 4;
@@ -2381,9 +2407,50 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
                index     = skin .joints [jointsArray [v * 4 + i]],
                jointNode = this .nodeObject (this .nodes [index], index);
 
-            jointNode ._skinCoordIndex  .push (v);
+            jointNode ._skinCoordIndex  .push (v + start);
             jointNode ._skinCoordWeight .push (w);
          }
+      }
+   },
+   skinGeometry: function (skin, geometryNode)
+   {
+      if (!(skin instanceof Object))
+         return;
+
+      const
+         skinTextureCoordinateNode = skin .textureCoordinateNode,
+         skinNormalNode            = skin .normalNode,
+         skinCoordinateNode        = skin .coordinateNode,
+         start                     = skinCoordinateNode ._point .length,
+         textureCoordinateNode     = geometryNode ._texCoord ?.getValue (),
+         normalNode                = geometryNode ._normal ?.getValue (),
+         coordinateNode            = geometryNode ._coord ?.getValue ();
+
+      if (geometryNode ._coordIndex)
+         geometryNode ._coordIndex = geometryNode ._coordIndex .map (index => index < 0 ? -1 : index + start);
+
+      if (geometryNode ._index)
+         geometryNode ._index = geometryNode ._index .map (index => index + start);
+
+      if (textureCoordinateNode)
+      {
+         const point = skinTextureCoordinateNode ._point;
+         textureCoordinateNode ._point .forEach ((p, i) => point [i + start] = p);
+         geometryNode ._texCoord = skinTextureCoordinateNode;
+      }
+
+      if (normalNode)
+      {
+         const vector = skinNormalNode ._vector;
+         normalNode ._vector .forEach ((v, i) => vector [i + start] = v);
+         geometryNode ._normal = skinNormalNode;
+      }
+
+      if (coordinateNode)
+      {
+         const point = skinCoordinateNode ._point;
+         coordinateNode ._point .forEach ((p, i) => point [i + start] = p);
+         geometryNode ._coord = skinCoordinateNode;
       }
    },
    createInterpolator (path, interpolation, times, keyValues, cycleInterval)
