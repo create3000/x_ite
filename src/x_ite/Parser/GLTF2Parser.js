@@ -1458,8 +1458,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       // Add mesh.
 
-      let humanoidNode;
-
       const mesh = this .meshes [node .mesh];
 
       if (mesh)
@@ -1472,7 +1470,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
          if (skin && shapeNodes .length)
          {
-            humanoidNode = scene .createNode ("HAnimHumanoid", false);
+            var humanoidNode = scene .createNode ("HAnimHumanoid", false);
 
             const name = this .sanitizeName (skin .name);
 
