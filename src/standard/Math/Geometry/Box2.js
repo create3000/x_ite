@@ -209,9 +209,19 @@ Object .assign (Box2,
    {
       return new Box2 () .setExtents (min, max);
    },
-   Points (... points)
+   Points (points)
    {
-      return new Box2 () .setExtents (points [0] .copy () .min (... points), points [0] .copy () .max (... points));
+      const
+         min = new Vector2 (Infinity, Infinity),
+         max = new Vector2 (-Infinity, -Infinity);
+
+      for (const point of points)
+      {
+         min .min (point);
+         max .max (point);
+      }
+
+      return new Box2 () .setExtents (min, max);
    },
 });
 
