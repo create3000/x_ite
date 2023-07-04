@@ -42,6 +42,7 @@ tags: [glTF, Sample, Viewer]
 }
 
 .viewer-column1 {
+   position: relative;
    flex: 80%;
    width: 80%;
    height: 100%;
@@ -66,6 +67,21 @@ tags: [glTF, Sample, Viewer]
    height: 100%;
    aspect-ratio: unset;
 }
+
+#animations {
+   display: none;
+   position: absolute;
+   right: 0;
+   bottom: 5px;
+   min-width: 200px;
+   padding: 10px 20px;
+   background-color: var(--body-bg);
+   border-bottom: 5px solid var(--text-color);
+}
+
+#animations label {
+   margin: 0;
+}
 </style>
 
 <div class="viewer-row">
@@ -84,6 +100,7 @@ tags: [glTF, Sample, Viewer]
             </Scene>
          </X3D>
       </x3d-canvas>
+      <div id="animations"></div>
    </div>
    <div class="viewer-column2"></div>
 </div>
@@ -357,6 +374,8 @@ async function loadURL (filename, server, event)
 {
    event .preventDefault ();
 
+   $("#animations") .hide ();
+
    const Browser = X3D .getBrowser ();
 
    await Browser .loadURL (new X3D .MFString (server + filename));
@@ -365,13 +384,42 @@ async function loadURL (filename, server, event)
    {
       const animations = Browser .currentScene .getExportedNode ("Animations");
 
-      for (const group of animations .children)
+      $("#animations") .empty ();
+      $("<b></b>") .text ("Animations") .appendTo ($("#animations"));
+      $("<br>") .appendTo ($("#animations"));
+
+      for (const [i, group] of animations .children .entries ())
       {
-         group .children [0] .loop      = true;
-         group .children [0] .startTime = Date .now () / 1000;
+         const timeSensor = group .children [0];
+
+         timeSensor .loop     = true;
+         timeSensor .stopTime = Date .now () / 1000;
+
+         $("<input></input>")
+            .attr ("id", "animation" + i)
+            .attr ("type", "checkbox")
+            .on ("change", event =>
+            {
+               if ($(event .target) .is (":checked"))
+                  timeSensor .startTime = Date .now () / 1000;
+               else
+                  timeSensor .stopTime = Date .now () / 1000;
+            })
+            .appendTo ($("#animations"));
+
+         $(document .createTextNode (" ")) .appendTo ($("#animations"));
+
+         $("<label></label>")
+            .attr ("for", "animation" + i)
+            .text (group .children [0] .description)
+            .appendTo ($("#animations"));
+
+         $("<br>") .appendTo ($("#animations"));
       }
+
+      $("#animations") .show ();
    }
-   catch (error)
+   catch
    { }
 
    if (!Browser .getActiveViewpoint () ._description .getValue ())
