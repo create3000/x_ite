@@ -738,8 +738,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       const texCoordIndices = this .texCoordIndices ("", material);
 
-      this .texCoordIndex = [... texCoordIndices] .reduce (Math .max, -1);
-
+      this .texCoordIndex         = [... texCoordIndices] .reduce (Math .max, -1);
       this .textureTransformNodes = [ ];
       this .texCoordMappings      = new Map ();
       material .texCoordMappings  = this .texCoordMappings;
@@ -2019,7 +2018,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
             if (indices)
             {
-               coordIndex .push (... indices .array);
+               for (const i of indices .array)
+                  coordIndex .push (i);
 
                if (coordIndex .length)
                   coordIndex .push (coordIndex [0], -1);
@@ -2028,8 +2028,13 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             {
                const coord = geometryNode ._coord;
 
-               if (coord && coord .point .length)
-                  coordIndex .push (... coord .point .keys (), 0, -1);
+               if (coord ?.point .length)
+               {
+                  for (const i of coord .point .keys ())
+                     coordIndex .push (i);
+
+                  coordIndex .push (0, -1);
+               }
             }
             break
          }
@@ -2039,7 +2044,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
             if (indices)
             {
-               coordIndex .push (... indices .array);
+               for (const i of indices .array)
+                  coordIndex .push (i);
 
                if (coordIndex .length)
                   coordIndex .push (-1);
@@ -2048,8 +2054,13 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             {
                const coord = geometryNode ._coord;
 
-               if (coord && coord .point .length)
-                  coordIndex .push (... coord .point .keys (), -1);
+               if (coord ?.point .length)
+               {
+                  for (const i of coord .point .keys ())
+                     coordIndex .push (i);
+
+                  coordIndex .push (-1);
+               }
             }
 
             break
