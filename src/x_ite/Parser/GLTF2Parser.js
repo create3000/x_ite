@@ -88,10 +88,11 @@ function GLTF2Parser (scene)
    this .cameras               = [ ];
    this .viewpoints            = 0;
    this .nodes                 = [ ];
-   this .animations            = 0;
+   this .skins                 = [ ];
    this .joints                = new Set ();
    this .skeletons             = new Set ();
    this .inverseBindMatrices   = new Map ();
+   this .animations            = 0;
 }
 
 Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .prototype),
