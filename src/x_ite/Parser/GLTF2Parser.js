@@ -1395,7 +1395,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          scene .addExportedNode (scene .getUniqueExportName (name), transformNode);
 
          if (typeName === "HAnimJoint")
-            transformNode ._name = name;
+            transformNode ._name = node .name;
       }
 
       // Set transformation matrix.
@@ -1463,7 +1463,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             if (name)
                scene .addNamedNode (scene .getUniqueName (name), humanoidNode);
 
-            humanoidNode ._name    = name;
+            humanoidNode ._name    = skin .name;
             humanoidNode ._version = "2.0";
 
             const skeletonNode = this .nodeObject (this .nodes [skin .skeleton], skin .skeleton);
