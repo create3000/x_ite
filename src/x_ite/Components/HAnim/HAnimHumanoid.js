@@ -179,14 +179,14 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
       jointNodes .length           = 0;
       jointBindingMatrices .length = 0;
 
-      const jointBindingMatrix = new Matrix4 ();
-
       for (const [i, node] of this ._joints .entries ())
       {
          const jointNode = X3DCast (X3DConstants .HAnimJoint, node);
 
          if (jointNode)
          {
+            const jointBindingMatrix = new Matrix4 ();
+
             if (jointBindingPositions .length)
                jointBindingMatrix .translate (jointBindingPositions [Math .min (i, jointBindingPositions .length - 1)] .getValue ());
 
@@ -197,7 +197,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
                jointBindingMatrix .scale (jointBindingScales [Math .min (i, jointBindingScales .length - 1)] .getValue ());
 
             jointNodes .push (jointNode);
-            jointBindingMatrices .push (jointBindingMatrix .copy ());
+            jointBindingMatrices .push (jointBindingMatrix);
          }
       }
 
