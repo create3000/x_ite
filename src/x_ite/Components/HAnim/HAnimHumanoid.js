@@ -176,7 +176,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
       for (const jointNode of jointNodes)
          jointNode .removeInterest ("set_joint__", this);
 
-      jointNodes .length           = 0;
+      jointNodes           .length = 0;
       jointBindingMatrices .length = 0;
 
       for (const [i, node] of this ._joints .entries ())
@@ -196,7 +196,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
             if (jointBindingScales .length)
                jointBindingMatrix .scale (jointBindingScales [Math .min (i, jointBindingScales .length - 1)] .getValue ());
 
-            jointNodes .push (jointNode);
+            jointNodes           .push (jointNode);
             jointBindingMatrices .push (jointBindingMatrix);
          }
       }
