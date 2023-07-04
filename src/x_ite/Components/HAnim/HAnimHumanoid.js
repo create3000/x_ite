@@ -255,9 +255,9 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
    {
       const
          invModelMatrix = new Matrix4 (),
-         vector         = new Vector3 (0, 0, 0),
          rest           = new Vector3 (0, 0, 0),
          skin           = new Vector3 (0, 0, 0),
+         vector         = new Vector3 (0, 0, 0),
          point          = new Vector3 (0, 0, 0);
 
       return function (type, renderObject)
