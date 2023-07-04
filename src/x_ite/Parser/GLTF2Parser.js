@@ -89,6 +89,9 @@ function GLTF2Parser (scene)
    this .viewpoints            = 0;
    this .nodes                 = [ ];
    this .animations            = 0;
+   this .joints                = new Set ();
+   this .skeletons             = new Set ();
+   this .inverseBindMatrices   = new Map ();
 }
 
 Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .prototype),
@@ -130,10 +133,10 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          "meshes",
          "cameras",
          "nodes",
+         "skins",
          "scenes",
          "scene",
          "animations",
-         "skins",
       ]);
 
       return function ()
@@ -176,6 +179,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       scene .setEncoding ("GLTF");
       scene .setProfile (browser .getProfile ("Interchange"));
 
+      if (glTF .skins)
+         scene .addComponent (browser .getComponent ("HAnim"));
+
       // Parse root objects.
 
       this .assetObject      (glTF .asset);
@@ -200,9 +206,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       this .meshesArray     (glTF .meshes);
       this .camerasArray    (glTF .cameras);
       this .nodesArray      (glTF .nodes);
+      this .skinsArray      (glTF .skins);
       this .scenesArray     (glTF .scenes, glTF .scene);
       this .animationsArray (glTF .animations);
-      this .skinsArray      (glTF .skins);
 
       //this .optimizeSceneGraph (this .getExecutionContext () .getRootNodes ());
 
@@ -1028,7 +1034,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       this .meshes = meshes;
    },
-   meshObject (mesh)
+   meshObject (mesh, skin)
    {
       if (!(mesh instanceof Object))
          return;
@@ -1036,7 +1042,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       if (mesh .shapeNodes)
          return mesh .shapeNodes;
 
-      const shapeNodes = this .primitivesArray (mesh .primitives);
+      const shapeNodes = this .primitivesArray (mesh .primitives, skin);
 
       // Name Shape nodes.
 
@@ -1055,7 +1061,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       return mesh .shapeNodes = shapeNodes;
    },
-   primitivesArray (primitives)
+   primitivesArray (primitives, skin)
    {
       if (!(primitives instanceof Array))
          return [ ];
@@ -1063,11 +1069,11 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       const shapeNodes = [ ];
 
       for (const primitive of primitives)
-         this .primitiveObject (primitive, shapeNodes);
+         this .primitiveObject (primitive, skin, shapeNodes);
 
       return shapeNodes;
    },
-   primitiveObject (primitive, shapeNodes)
+   primitiveObject (primitive, skin, shapeNodes)
    {
       if (!(primitive instanceof Object))
          return;
@@ -1080,7 +1086,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       this .primitiveExtensionsObject (primitive .extensions, primitive)
 
-      shapeNodes .push (this .createShape (primitive));
+      shapeNodes .push (this .createShape (primitive, skin));
    },
    attributesObject (attributes)
    {
@@ -1365,7 +1371,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       this .nodes = nodes;
    },
-   nodeObject (node)
+   nodeObject (node, index)
    {
       if (!(node instanceof Object))
          return;
@@ -1377,7 +1383,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       const
          scene         = this .getExecutionContext (),
-         transformNode = scene .createNode ("Transform", false),
+         typeName      = this .joints .has (index) ? "HAnimJoint" : "Transform",
+         transformNode = scene .createNode (typeName, false),
          name          = this .sanitizeName (node .name);
 
       // Name
@@ -1432,10 +1439,53 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       // Add mesh.
 
+      let humanoidNode;
+
       const mesh = this .meshes [node .mesh];
 
       if (mesh)
-         transformNode ._children .push (... this .meshObject (mesh));
+      {
+         const
+            skin       = this .skins [node .skin],
+            shapeNodes = this .meshObject (mesh, skin);
+
+         transformNode ._children .push (... shapeNodes);
+
+         if (skin && shapeNodes .length)
+         {
+            const name = this .sanitizeName (skin .name);
+
+            humanoidNode = scene .createNode ("HAnimHumanoid", false);
+
+            if (name)
+               scene .addNamedNode (scene .getUniqueName (name), humanoidNode);
+
+            const skeletonNode = this .nodeObject (this .nodes [skin .skeleton], skin .skeleton);
+
+            if (skeletonNode)
+               humanoidNode ._skeleton .push (skeletonNode);
+
+            for (const joint of skin .joints)
+            {
+               const inverseBindMatrix = this .inverseBindMatrices .get (joint);
+
+               inverseBindMatrix .get (translation, rotation, scale);
+
+               humanoidNode ._joints .push (this .nodeObject (this .nodes [joint], joint));
+               humanoidNode ._jointBindingPositions .push (translation);
+               humanoidNode ._jointBindingRotations .push (rotation);
+               humanoidNode ._jointBindingScales .push (scale);
+            }
+
+            humanoidNode ._skinBindingNormal = shapeNodes [0] ._geometry .normal ?.getValue () ?.copy ();
+            humanoidNode ._skinBindingCoord  = shapeNodes [0] ._geometry .coord ?.getValue () ?.copy ();
+            humanoidNode ._skinNormal        = shapeNodes [0] ._geometry .normal;
+            humanoidNode ._skinCoord         = shapeNodes [0] ._geometry .coord;
+            humanoidNode ._skin .push (transformNode);
+
+            humanoidNode .setup ();
+         }
+      }
 
       // Get children.
 
@@ -1445,10 +1495,13 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       transformNode .setup ();
 
-      if (transformNode ._children .length === 0)
-         return node .childNode = null;
+      if (typeName === "Transform")
+      {
+         if (!transformNode ._children .length)
+            return node .childNode = null;
+      }
 
-      return node .childNode = transformNode;
+      return node .childNode = humanoidNode ?? transformNode;
    },
    nodeExtensions (extensions, transformNode)
    {
@@ -1477,8 +1530,67 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          return [ ];
 
       return children
+         .filter (index => !this .skeletons .has (index))
          .map (index => this .nodeObject (this .nodes [index], index))
          .filter (node => node);
+   },
+   skinsArray (skins)
+   {
+      if (!(skins instanceof Array))
+         return;
+
+      this .skins = skins;
+
+      for (const skin of skins)
+         this .skinObject (skin);
+   },
+   skinObject: function (skin)
+   {
+      if (!(skin instanceof Object))
+         return;
+
+      skin .joints = this .jointsArray (skin .joints);
+
+      if (skin .skeleton === undefined)
+         skin .skeleton = this .skeleton (skin .joints);
+
+      this .skeletons .add (skin .skeleton);
+
+      this .inverseBindMatricesAccessors (this .accessors [skin .inverseBindMatrices], skin .joints);
+   },
+   jointsArray: function (joints)
+   {
+      if (!(joints instanceof Array))
+         return [ ];
+
+      joints .forEach (index => this .joints .add (index));
+
+      return joints;
+   },
+   skeleton: function (joints)
+   {
+      const children = new Set (joints
+         .map (index => this .nodes [index])
+         .filter (node => node instanceof Object)
+         .filter (node => node .children instanceof Array)
+         .flatMap (node => node .children));
+
+      return joints .filter (index => !children .has (index)) [0];
+   },
+   inverseBindMatricesAccessors: function (inverseBindMatrices, joints)
+   {
+      if (!inverseBindMatrices)
+         return;
+
+      const
+         array    = inverseBindMatrices .array,
+         length   = array .length,
+         matrices = [ ];
+
+      for (let i = 0; i < length; i += 16)
+         matrices .push (new Matrix4 (... array .subarray (i, i + 16)));
+
+      matrices .forEach ((matrix, i) => this .inverseBindMatrices .set (joints [i], matrix));
    },
    scenesArray (scenes, sceneNumber)
    {
@@ -1661,7 +1773,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       if (!(target instanceof Object))
          return null;
 
-      const node = this .nodeObject (this .nodes [target .node]);
+      const node = this .nodeObject (this .nodes [target .node], target .node);
 
       if (!node)
          return null;
@@ -1699,11 +1811,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       return interpolatorNode;
    },
-   skinsArray (skins)
-   {
-      if (!(skins instanceof Array))
-         return;
-   },
    createNavigationInfo ()
    {
       const
@@ -1716,13 +1823,13 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       return navigationInfoNode;
    },
-   createShape (primitive)
+   createShape (primitive, skin)
    {
       const
          scene          = this .getExecutionContext (),
          shapeNode      = scene .createNode ("Shape", false),
          appearanceNode = this .materialObject (primitive .material),
-         geometryNode   = this .createGeometry (primitive);
+         geometryNode   = this .createGeometry (primitive, skin);
 
       shapeNode ._appearance = appearanceNode;
       shapeNode ._geometry   = geometryNode;
@@ -1795,54 +1902,54 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          }
       }
    },
-   createGeometry (primitive)
+   createGeometry (primitive, skin)
    {
       switch (primitive .mode)
       {
          case 0: // POINTS
          {
-            return this .createPointSet (primitive);
+            return this .createPointSet (primitive, skin);
          }
          case 1: // LINES
          {
             if (primitive .indices)
-               return this .createIndexedLineSet (primitive, 1);
+               return this .createIndexedLineSet (primitive, skin, 1);
 
-            return this .createLineSet (primitive);
+            return this .createLineSet (primitive, skin);
          }
          case 2: // LINE_LOOP
          {
-            return this .createIndexedLineSet (primitive, 2);
+            return this .createIndexedLineSet (primitive, skin, 2);
          }
          case 3: // LINE_STRIP
          {
-            return this .createIndexedLineSet (primitive, 3);
+            return this .createIndexedLineSet (primitive, skin, 3);
          }
          default:
          case 4: // TRIANGLES
          {
             if (primitive .indices)
-               return this .createIndexedTriangleSet (primitive);
+               return this .createIndexedTriangleSet (primitive, skin);
 
-            return this .createTriangleSet (primitive);
+            return this .createTriangleSet (primitive, skin);
          }
          case 5: // TRIANGLE_STRIP
          {
             if (primitive .indices)
-               return this .createIndexedTriangleStripSet (primitive);
+               return this .createIndexedTriangleStripSet (primitive, skin);
 
-            return this .createTriangleStripSet (primitive);
+            return this .createTriangleStripSet (primitive, skin);
          }
          case 6: // TRIANGLE_FAN
          {
             if (primitive .indices)
-               return this .createIndexedTriangleFanSet (primitive);
+               return this .createIndexedTriangleFanSet (primitive, skin);
 
-            return this .createTriangleFanSet (primitive);
+            return this .createTriangleFanSet (primitive, skin);
          }
       }
    },
-   createPointSet ({ attributes, material })
+   createPointSet ({ attributes, material }, skin)
    {
       const
          scene        = this .getExecutionContext (),
@@ -1852,11 +1959,13 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       geometryNode ._normal = this .createNormal (attributes .NORMAL);
       geometryNode ._coord  = this .createCoordinate (attributes .POSITION);
 
+      this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
+
       geometryNode .setup ();
 
       return geometryNode;
    },
-   createIndexedLineSet ({ attributes, indices, material }, mode)
+   createIndexedLineSet ({ attributes, indices, material }, skin, mode)
    {
       const
          scene        = this .getExecutionContext (),
@@ -1923,11 +2032,13 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          }
       }
 
+      this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
+
       geometryNode .setup ();
 
       return geometryNode;
    },
-   createLineSet ({ attributes, material })
+   createLineSet ({ attributes, material }, skin)
    {
       const
          scene        = this .getExecutionContext (),
@@ -1937,11 +2048,13 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       geometryNode ._normal = this .createNormal (attributes .NORMAL);
       geometryNode ._coord  = this .createCoordinate (attributes .POSITION);
 
+      this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
+
       geometryNode .setup ();
 
       return geometryNode;
    },
-   createIndexedTriangleSet ({ attributes, indices, material })
+   createIndexedTriangleSet ({ attributes, indices, material }, skin)
    {
       const
          scene        = this .getExecutionContext (),
@@ -1955,11 +2068,13 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       geometryNode ._coord           = this .createCoordinate (attributes .POSITION);
       geometryNode ._normalPerVertex = !! geometryNode ._normal;
 
+      this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
+
       geometryNode .setup ();
 
       return geometryNode;
    },
-   createTriangleSet ({ attributes, material })
+   createTriangleSet ({ attributes, material }, skin)
    {
       const
          scene        = this .getExecutionContext (),
@@ -1972,11 +2087,13 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       geometryNode ._coord           = this .createCoordinate (attributes .POSITION);
       geometryNode ._normalPerVertex = !! geometryNode ._normal;
 
+      this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
+
       geometryNode .setup ();
 
       return geometryNode;
    },
-   createIndexedTriangleStripSet ({ attributes, indices, material })
+   createIndexedTriangleStripSet ({ attributes, indices, material }, skin)
    {
       const
          scene        = this .getExecutionContext (),
@@ -1990,11 +2107,13 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       geometryNode ._coord           = this .createCoordinate (attributes .POSITION);
       geometryNode ._normalPerVertex = !! geometryNode ._normal;
 
+      this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
+
       geometryNode .setup ();
 
       return geometryNode;
    },
-   createTriangleStripSet ({ attributes, material })
+   createTriangleStripSet ({ attributes, material }, skin)
    {
       const
          scene        = this .getExecutionContext (),
@@ -2015,11 +2134,13 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             geometryNode ._stripCount = [coord .point .length];
       }
 
+      this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
+
       geometryNode .setup ();
 
       return geometryNode;
    },
-   createIndexedTriangleFanSet ({ attributes, indices, material })
+   createIndexedTriangleFanSet ({ attributes, indices, material }, skin)
    {
       const
          scene        = this .getExecutionContext (),
@@ -2033,11 +2154,13 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       geometryNode ._coord           = this .createCoordinate (attributes .POSITION);
       geometryNode ._normalPerVertex = !! geometryNode ._normal;
 
+      this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
+
       geometryNode .setup ();
 
       return geometryNode;
    },
-   createTriangleFanSet ({ attributes, material })
+   createTriangleFanSet ({ attributes, material }, skin)
    {
       const
          scene        = this .getExecutionContext (),
@@ -2057,6 +2180,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          if (coord .point .length)
             geometryNode ._fanCount = [coord .point .length];
       }
+
+      this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
 
       geometryNode .setup ();
 
@@ -2203,6 +2328,57 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       coordinateNode .setup ();
 
       return position .coordinateNode = coordinateNode;
+   },
+   attributesJointsArray: function (skin, joints, weights)
+   {
+      if (!(skin instanceof Object))
+         return;
+
+      if (!(joints instanceof Array))
+         return;
+
+      if (!(weights instanceof Array))
+         return;
+
+      for (let i = 0, length = joints .length; i < length; ++ i)
+         this .attributesJointsObject (skin, joints [i], weights [i]);
+   },
+   attributesJointsObject: function (skin, joints, weights)
+   {
+      if (!(joints instanceof Object))
+         return;
+
+      if (!(weights instanceof Object))
+         return;
+
+      if (joints .type !== "VEC4")
+         return;
+
+      if (weights .type !== "VEC4")
+         return;
+
+      const
+         jointsArray  = joints .array,
+         weightsArray = weights .array,
+         numVertices  = jointsArray .length / 4;
+
+      for (let v = 0; v < numVertices; ++ v)
+      {
+         for (let i = 0; i < 4; ++ i)
+         {
+            const w = weightsArray [v * 4 + i];
+
+            if (w === 0)
+               continue;
+
+            const
+               index     = skin .joints [jointsArray [v * 4 + i]],
+               jointNode = this .nodeObject (this .nodes [index], index);
+
+            jointNode ._skinCoordIndex  .push (v);
+            jointNode ._skinCoordWeight .push (w);
+         }
+      }
    },
    createInterpolator (path, interpolation, times, keyValues, cycleInterval)
    {

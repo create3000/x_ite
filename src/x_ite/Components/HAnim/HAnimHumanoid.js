@@ -55,8 +55,9 @@ import X3DBoundedObject     from "../Grouping/X3DBoundedObject.js";
 import TraverseType         from "../../Rendering/TraverseType.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import X3DCast              from "../../Base/X3DCast.js";
-import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
 import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
+import Rotation4            from "../../../standard/Math/Numbers/Rotation4.js";
+import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
 
 function HAnimHumanoid (executionContext)
 {
@@ -70,16 +71,16 @@ function HAnimHumanoid (executionContext)
    this ._bboxSize    .setUnit ("length");
    this ._bboxCenter  .setUnit ("length");
 
-   this .skeletonNode   = new Group (executionContext);
-   this .viewpointsNode = new Group (executionContext);
-   this .skinNode       = new Group (executionContext);
-   this .transformNode  = new Transform (executionContext);
-   this .jointNodes     = [ ];
-   this .skinNormalNode = null;
-   this .skinCoordNode  = null;
-   this .restNormalNode = null;
-   this .restCoordNode  = null;
-   this .changed        = false;
+   this .skeletonNode      = new Group (executionContext);
+   this .viewpointsNode    = new Group (executionContext);
+   this .skinNode          = new Group (executionContext);
+   this .transformNode     = new Transform (executionContext);
+   this .jointNodes        = [ ];
+   this .skinBindingNormal = null;
+   this .skinBindingCoord  = null;
+   this .skinNormalNode    = null;
+   this .skinCoordNode     = null;
+   this .changed           = false;
 }
 
 Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .prototype),
@@ -145,13 +146,15 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
 
       // Skinning
 
-      this ._joints     .addInterest ("set_joints__",     this);
-      this ._skinNormal .addInterest ("set_skinNormal__", this);
-      this ._skinCoord  .addInterest ("set_skinCoord__",  this);
+      this ._joints            .addInterest ("set_joints__",           this);
+      this ._skinBindingNormal .addInterest ("set_skinBindingNormal__", this);
+      this ._skinBindingCoord  .addInterest ("set_skinBindingCoord__",  this);
+      this ._skinNormal        .addInterest ("set_skinNormal__",        this);
+      this ._skinCoord         .addInterest ("set_skinCoord__",         this);
 
       this .set_joints__ ();
-      this .set_skinNormal__ ();
-      this .set_skinCoord__ ();
+      this .set_skinBindingNormal__ ();
+      this .set_skinBindingCoord__ ();
    },
    getBBox (bbox, shadows)
    {
@@ -183,33 +186,38 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
    {
       this .changed = true;
    },
+   set_skinBindingNormal__ ()
+   {
+      this .skinBindingNormal = X3DCast (X3DConstants .X3DNormalNode, this ._skinBindingNormal);
+
+      this .set_skinNormal__ ();
+   },
+   set_skinBindingCoord__ ()
+   {
+      this .skinBindingCoord = X3DCast (X3DConstants .X3DCoordinateNode, this ._skinBindingCoord);
+
+      this .set_skinCoord__ ();
+   },
    set_skinNormal__ ()
    {
-      this .restNormalNode = null;
-
       this .skinNormalNode = X3DCast (X3DConstants .X3DNormalNode, this ._skinNormal);
 
-      if (this .skinNormalNode)
-         this .restNormalNode = this .skinNormalNode .copy ();
+      if (!this .skinBindingNormal && this .skinNormalNode)
+         this .skinBindingNormal = this .skinNormalNode .copy ();
 
       this .changed = true;
    },
    set_skinCoord__ ()
    {
-      this .restCoordNode = null;
-
       this .skinCoordNode = X3DCast (X3DConstants .X3DCoordinateNode, this ._skinCoord);
 
-      if (this .skinCoordNode)
-      {
-         this .restCoordNode = this .skinCoordNode .copy ();
+      if (!this .skinBindingCoord && this .skinCoordNode)
+         this .skinBindingCoord = this .skinCoordNode .copy ();
 
+      if (this .skinCoordNode)
          delete this .skinning;
-      }
       else
-      {
          this .skinning = Function .prototype
-      }
 
       this .changed = true;
    },
@@ -239,18 +247,18 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
          this .changed = false;
 
          const
-            jointNodes     = this .jointNodes,
-            skinNormalNode = this .skinNormalNode,
-            skinCoordNode  = this .skinCoordNode,
-            restNormalNode = this .restNormalNode,
-            restCoordNode  = this .restCoordNode;
+            jointNodes        = this .jointNodes,
+            skinBindingNormal = this .skinBindingNormal,
+            skinBindingCoord  = this .skinBindingCoord,
+            skinNormalNode    = this .skinNormalNode,
+            skinCoordNode     = this .skinCoordNode;
 
          // Reset skin normals and coords.
 
          if (skinNormalNode)
-            skinNormalNode ._vector .assign (restNormalNode ._vector);
+            skinNormalNode ._vector .assign (skinBindingNormal ._vector);
 
-         skinCoordNode ._point .assign (restCoordNode ._point);
+         skinCoordNode ._point .assign (skinBindingCoord ._point);
 
          // Determine inverse model matrix of humanoid.
 
@@ -258,12 +266,26 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
 
          // Apply joint transformations.
 
-         for (const jointNode of jointNodes)
+         const
+            jointBindingPositions = this ._jointBindingPositions,
+            jointBindingRotations = this ._jointBindingRotations,
+            jointBindingScales    = this ._jointBindingScales;
+
+         for (const [i, jointNode] of jointNodes .entries ())
          {
             const
                skinCoordIndexLength = jointNode ._skinCoordIndex .length,
                jointMatrix          = jointNode .getModelMatrix () .multRight (invModelMatrix),
                displacerNodes       = jointNode .getDisplacers ();
+
+            if (jointBindingPositions .length)
+               jointMatrix .translate (jointBindingPositions [Math .min (i, jointBindingPositions .length - 1)] .getValue ());
+
+            if (jointBindingRotations .length)
+               jointMatrix .rotate (jointBindingRotations [Math .min (i, jointBindingRotations .length - 1)] .getValue ());
+
+            if (jointBindingScales .length)
+               jointMatrix .scale (jointBindingScales [Math .min (i, jointBindingScales .length - 1)] .getValue ());
 
             for (const displacerNode of displacerNodes)
             {
@@ -301,7 +323,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
 
                if (skinNormalNode)
                {
-                  rest .assign (restNormalNode .get1Vector (index, vector));
+                  rest .assign (skinBindingNormal .get1Vector (index, vector));
                   skinNormalNode .get1Vector (index, skin);
                   normalMatrix .multVecMatrix (vector) .subtract (rest) .multiply (weight) .add (skin);
                   skinNormalNode .set1Vector (index, vector);
@@ -309,7 +331,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
                }
 
                //skin += (rest * J - rest) * weight
-               rest .assign (restCoordNode .get1Point (index, point));
+               rest .assign (skinBindingCoord .get1Point (index, point));
                skinCoordNode .get1Point (index, skin);
                jointMatrix .multVecMatrix (point) .subtract (rest) .multiply (weight) .add (skin);
                skinCoordNode .set1Point (index, point);
@@ -320,30 +342,30 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
    toVRMLStream (generator)
    {
       if (this .skinCoordNode)
-         this .skinCoordNode ._point = this .restCoordNode ._point;
+         this .skinCoordNode ._point = this .skinBindingCoord ._point;
 
       if (this .skinNormalNode)
-         this .skinNormalNode ._vector = this .restNormalNode ._vector;
+         this .skinNormalNode ._vector = this .skinBindingNormal ._vector;
 
       X3DChildNode .prototype .toVRMLStream .call (this, generator);
    },
    toXMLStream (generator)
    {
       if (this .skinCoordNode)
-         this .skinCoordNode ._point = this .restCoordNode ._point;
+         this .skinCoordNode ._point = this .skinBindingCoord ._point;
 
       if (this .skinNormalNode)
-         this .skinNormalNode ._vector = this .restNormalNode ._vector;
+         this .skinNormalNode ._vector = this .skinBindingNormal ._vector;
 
       X3DChildNode .prototype .toXMLStream .call (this, generator);
    },
    toJSONStream (generator)
    {
       if (this .skinCoordNode)
-         this .skinCoordNode ._point = this .restCoordNode ._point;
+         this .skinCoordNode ._point = this .skinBindingCoord ._point;
 
       if (this .skinNormalNode)
-         this .skinNormalNode ._vector = this .restNormalNode ._vector;
+         this .skinNormalNode ._vector = this .skinBindingNormal ._vector;
 
       X3DChildNode .prototype .toJSONStream .call (this, generator);
    },
