@@ -168,7 +168,7 @@ Grouping nodes contain an ordered list of *children* nodes.
 
 - Ensure that visible HAnimSite locations are not inadvertently obscured by skin animation.
 - Requires X3D `profile='Full'` or else include `<component name='HAnim' level='1'/>`
-- For X3D3 HAnim1, spelling of component name is 'H-Anim' (including hyphen)
+- For X3D3 HAnim1, spelling of component name is 'H-Anim' (including hyphen).
 - The number of contained \<HAnimSite USE='*' `containerField='sites,` skeleton or viewpoints'/\> nodes at top level of HAnimHumanoid needs to match the number of corresponding HAnimSite node instances found within the preceding skeleton hierarchy.
 
 ## See Also

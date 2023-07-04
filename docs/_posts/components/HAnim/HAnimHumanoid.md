@@ -82,6 +82,27 @@ Contains metadata keyword=value pairs, where approved keyword terms are humanoid
 - Height and weight are in base units (typically meters), hanimVersion is for author use and separate from HAnimHumanoid version field.
 - Alternate metadata keywords are also allowed.
 
+### SFInt32 [in, out] **loa** -1 <small>[-1,∞)</small>
+
+Level Of Articulation 0..4 indicates complexity and detail of joints for given humanoid skeletal hierarchy.
+
+#### Hints
+
+- *loa* value of -1 indicates that no LOA conformance is provided.
+- [Humanoid Animation (HAnim) Specification, Part 1 Architecture, 4.8.4 Levels of articulation](https://www.web3d.org/documents/specifications/19774/V2.0/Architecture/concepts.html#LevelsOfArticulation){:target="_blank"}
+
+### SFString [in, out] **skeletalConfiguration** "BASIC"
+
+Models sharing a common skeletal configuration can share animations and binding poses.
+
+#### Hint
+
+- [A value of 'BASIC' conforms to restrictive skeletal model in X3D Humanoid Animation (HAnim) Specification, Part 1 Architecture, 4.8 Modelling of humanoids](https://www.web3d.org/documents/specifications/19774/V2.0/Architecture/concepts.html#ModellingOfHumanoids){:target="_blank"}
+
+### MFBool [in, out] **motionsEnabled** [ ]
+
+Array of boolean values corresponding to HAnimMotion nodes indicating which can animate the HAnimHumanoid.
+
 ### SFVec3f [in, out] **translation** 0 0 0 <small>(-∞,∞)</small>
 
 Position of children relative to local coordinate system.
@@ -109,63 +130,6 @@ Preliminary rotation of coordinate system before scaling (to allow scaling aroun
 ### SFVec3f [in, out] **center** 0 0 0 <small>(-∞,∞)</small>
 
 Translation offset from origin of local coordinate system.
-
-### MFVec3f [in, out] **jointBindingPositions** [ ] <small>(-∞,∞)</small>
-
-Specifies an array of position values for each HAnimJoint node in the joints field, in order, corresponding to each binding pose.
-
-#### Hint
-
-- If only one value is provided, it is provided to each Joint equivalently.
-
-#### Warning
-
-- Not used when skeletalConfiguration='BASIC'.
-
-### MFRotation [in, out] **jointBindingRotations** [ ] <small>(-∞,∞) or [-1,1]</small>
-
-Specifies an array of rotation values for each HAnimJoint node in the joints field, in order, corresponding to each binding pose.
-
-#### Hint
-
-- If only one value is provided, it is provided to each Joint equivalently.
-
-#### Warning
-
-- Not used when skeletalConfiguration='BASIC'.
-
-### MFVec3f [in, out] **jointBindingScales** [ ] <small>(-∞,∞)</small>
-
-Specifies an array of scale values for each HAnimJoint node in the joints field, in order, corresponding to each binding pose.
-
-#### Hint
-
-- If only one value is provided, it is provided to each Joint equivalently.
-
-#### Warning
-
-- Not used when skeletalConfiguration='BASIC'.
-
-### MFBool [in, out] **motionsEnabled** [ ]
-
-Array of boolean values corresponding to HAnimMotion nodes indicating which can animate the HAnimHumanoid.
-
-### SFInt32 [in, out] **loa** -1 <small>[-1,∞)</small>
-
-Level Of Articulation 0..4 indicates complexity and detail of joints for given humanoid skeletal hierarchy.
-
-#### Hints
-
-- *loa* value of -1 indicates that no LOA conformance is provided.
-- [Humanoid Animation (HAnim) Specification, Part 1 Architecture, 4.8.4 Levels of articulation](https://www.web3d.org/documents/specifications/19774/V2.0/Architecture/concepts.html#LevelsOfArticulation){:target="_blank"}
-
-### SFString [in, out] **skeletalConfiguration** "BASIC"
-
-Models sharing a common skeletal configuration can share animations and binding poses.
-
-#### Hint
-
-- [A value of 'BASIC' conforms to restrictive skeletal model in X3D Humanoid Animation (HAnim) Specification, Part 1 Architecture, 4.8 Modelling of humanoids](https://www.web3d.org/documents/specifications/19774/V2.0/Architecture/concepts.html#ModellingOfHumanoids){:target="_blank"}
 
 ### SFBool [in, out] **visible** TRUE
 
@@ -278,6 +242,42 @@ The *joints* field contains a list of USE references for all HAnimJoint node ins
 
 Contains any HAnimMotion nodes that can animate the HAnimHumanoid.
 
+### MFVec3f [in, out] **jointBindingPositions** [ ] <small>(-∞,∞)</small>
+
+Specifies an array of position values for each HAnimJoint node in the joints field, in order, corresponding to each binding pose.
+
+#### Hint
+
+- If only one value is provided, it is provided to each Joint equivalently.
+
+#### Warning
+
+- Not used when skeletalConfiguration='BASIC'.
+
+### MFRotation [in, out] **jointBindingRotations** [ ] <small>(-∞,∞) or [-1,1]</small>
+
+Specifies an array of rotation values for each HAnimJoint node in the joints field, in order, corresponding to each binding pose.
+
+#### Hint
+
+- If only one value is provided, it is provided to each Joint equivalently.
+
+#### Warning
+
+- Not used when skeletalConfiguration='BASIC'.
+
+### MFVec3f [in, out] **jointBindingScales** [ ] <small>(-∞,∞)</small>
+
+Specifies an array of scale values for each HAnimJoint node in the joints field, in order, corresponding to each binding pose.
+
+#### Hint
+
+- If only one value is provided, it is provided to each Joint equivalently.
+
+#### Warning
+
+- Not used when skeletalConfiguration='BASIC'.
+
 ### SFNode [in, out] **skinBindingNormal** NULL <small>[X3DNormalNode]</small>
 
 Input/Output field *skinBindingNormal*.
@@ -295,7 +295,7 @@ Single Normal node utilized by indexed mesh definitions for skin. The *skinNorma
 - Index values for HanimHumanoid skin IndexedFaceSet, skinCoord and *skinNormal* nodes must all be consistently defined together with HAnimJoint HAnimSegment and HAnimDisplacer nodes for proper skin animation.
 - Top-level Normal node must include `containerField='skinNormal'` for proper validation and operation.
 - (X3D version 4.0 draft) requires X3D `profile='Full'` or else include `<component name='HAnim' level='2'/>`
-- For X3D3 HAnim1, spelling of component name is 'H-Anim' (including hyphen)
+- For X3D3 HAnim1, spelling of component name is 'H-Anim' (including hyphen).
 
 ### SFNode [in, out] **skinCoord** NULL <small>[X3DCoordinateNode]</small>
 

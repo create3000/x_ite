@@ -13,7 +13,7 @@ tags: [HAnimMotion, HAnim]
 
 ## Overview
 
-An HAnimMotion node supports discrete frame-by-frame playback for H-Anim motion data animation. Design characteristics include integration with HAnim figure data and HAnimJoint nodes, animation control, and playback of raw motion data.
+An HAnimMotion node supports discrete frame-by-frame playback for HAnim motion data animation. Design characteristics include integration with HAnim figure data and HAnimJoint nodes, animation control, and playback of raw motion data.
 
 The HAnimMotion node belongs to the **HAnim** component and its default container field is *children.* It is available from X3D version 4.0 or higher.
 
@@ -171,7 +171,7 @@ Level Of Articulation 0..4 indicates complexity and detail of joints for given h
 
 ### SFInt32 [out] **frameCount**
 
-Output field *frameCount*.
+*frameCount* is computed at run time and indicates the total number of frames present in the animation, equaling the number of sets of channel data rows present in the values array.
 
 ## Advisories
 

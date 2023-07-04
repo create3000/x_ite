@@ -164,7 +164,7 @@ Grouping nodes contain an ordered list of *children* nodes.
 ### Warnings
 
 - Requires X3D `profile='Full'` or else include `<component name='HAnim' level='1'/>`
-- For X3D3 HAnim1, spelling of component name is 'H-Anim' (including hyphen)
+- For X3D3 HAnim1, spelling of component name is 'H-Anim' (including hyphen).
 - The number of contained \<HAnimSegment USE='*' `containerField='segments'/>` nodes at top level of HAnimHumanoid needs to match the number of corresponding HAnimJoint node instances found within the preceding skeleton hierarchy.
 
 ## See Also
