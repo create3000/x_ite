@@ -2010,7 +2010,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             for (let i = 0; i < length; i += 2)
                coordIndex .push (array [i], array [i + 1], -1);
 
-            break
+            break;
          }
          case 2: // LINE_LOOP
          {
@@ -2036,7 +2036,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
                   coordIndex .push (0, -1);
                }
             }
-            break
+
+            break;
          }
          case 3: // LINE_STRIP
          {
@@ -2063,7 +2064,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
                }
             }
 
-            break
+            break;
          }
       }
 
