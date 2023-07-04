@@ -124,7 +124,7 @@ const handler =
    },
 };
 
-function X3DObjectArrayField (value)
+function X3DObjectArrayField (values)
 {
    const proxy = new Proxy (this, handler);
 
@@ -133,7 +133,8 @@ function X3DObjectArrayField (value)
    this [_target] = this;
    this [_proxy]  = proxy;
 
-   this .push (... value);
+   for (const value of values)
+   	this .push (value);
 
    return proxy;
 }

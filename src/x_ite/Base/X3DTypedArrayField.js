@@ -164,7 +164,7 @@ const handler =
    },
 };
 
-function X3DTypedArrayField (args)
+function X3DTypedArrayField (values)
 {
    const proxy = new Proxy (this, handler);
 
@@ -179,7 +179,8 @@ function X3DTypedArrayField (args)
       this [_tmp]   = [ ]; // Array with components size.
    }
 
-   this .push (... args);
+   for (const value of values)
+   	this .push (value);
 
    return proxy;
 }
