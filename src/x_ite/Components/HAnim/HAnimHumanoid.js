@@ -341,7 +341,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
                   skinNormalNode .get1Vector (index, skin);
                   normalMatrix .multVecMatrix (vector) .subtract (rest) .multiply (weight) .add (skin);
                   skinNormalNode .set1Vector (index, vector);
-                  // Let it the shader normalize the normals.
+                  // Let the shader normalize the normals.
                }
 
                //skin += (rest * J - rest) * weight
