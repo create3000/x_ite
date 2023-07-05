@@ -190,7 +190,7 @@ Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, X3DG
 
       // Set size to a multiple of verticesPerPolygon.
 
-      polygonsSize  -= polygonsSize % verticesPerPolygon;
+      polygonsSize  -= polygonsSize  % verticesPerPolygon;
       trianglesSize -= trianglesSize % verticesPerFace;
 
       const
