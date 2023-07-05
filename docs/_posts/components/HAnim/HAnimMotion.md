@@ -71,6 +71,22 @@ Send *previous* output value in keyValue array, and reset internal fraction fiel
 
 - It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
 
+### SFInt32 [in, out] **startFrame** 0 <small>[0,∞)</small>
+
+*startFrame* indicates initial index of animated frame. Note that *startFrame* can precede, equal or follow endFrame.
+
+#### Hint
+
+- *startFrame* starts at 0 and is no greater than (frameCount - 1).
+
+### SFInt32 [in, out] **endFrame** 0 <small>[0,∞)</small>
+
+*endFrame* indicates final index of animated frame. Note that *endFrame* can precede, equal or follow *endFrame*. The default *endFrame* value is reset to (frameCount - 1) whenever frameCount is changed.
+
+#### Hint
+
+- *endFrame* starts at 0 and is no greater than (frameCount - 1).
+
 ### SFTime [in, out] **frameDuration** 0.1 <small>(0,∞)</small>
 
 *frameDuration* specifies the duration of each frame in seconds.
@@ -95,6 +111,10 @@ Send *previous* output value in keyValue array, and reset internal fraction fiel
 
 Repeat indefinitely when *loop*=true, repeat only once when *loop*=false.
 
+### MFBool [in, out] **channelsEnabled** [ ]
+
+Boolean values for each channel indicating whether enabled.
+
 ### SFString [in, out] **channels** ""
 
 List of number of *channels* for transformation, followed by transformation type of each channel of data. Each value is space or comma separated.
@@ -102,10 +122,6 @@ List of number of *channels* for transformation, followed by transformation type
 #### Hint
 
 - *channels* are enabled by default, unless otherwise indicated by channelsEnabled field.
-
-### MFBool [in, out] **channelsEnabled** [ ]
-
-Boolean values for each channel indicating whether enabled.
 
 ### SFString [in, out] **joints** ""
 
@@ -124,22 +140,6 @@ Level Of Articulation 0..4 indicates complexity and detail of joints for given h
 
 - *loa* value of -1 indicates that no LOA conformance is provided.
 - [Humanoid Animation (HAnim) Specification, Part 1 Architecture, 4.8.4 Levels of articulation](https://www.web3d.org/documents/specifications/19774/V2.0/Architecture/concepts.html#LevelsOfArticulation){:target="_blank"}
-
-### SFInt32 [in, out] **startFrame** 0 <small>[0,∞)</small>
-
-*startFrame* indicates initial index of animated frame. Note that *startFrame* can precede, equal or follow endFrame.
-
-#### Hint
-
-- *startFrame* starts at 0 and is no greater than (frameCount - 1).
-
-### SFInt32 [in, out] **endFrame** 0 <small>[0,∞)</small>
-
-*endFrame* indicates final index of animated frame. Note that *endFrame* can precede, equal or follow *endFrame*. The default *endFrame* value is reset to (frameCount - 1) whenever frameCount is changed.
-
-#### Hint
-
-- *endFrame* starts at 0 and is no greater than (frameCount - 1).
 
 ### MFFloat [in, out] **values** [ ] <small>(-∞,∞)</small>
 
