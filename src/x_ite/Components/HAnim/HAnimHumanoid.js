@@ -288,7 +288,8 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
 
          // Determine inverse model matrix of humanoid.
 
-         invModelMatrix .assign (this .transformNode .getMatrix ()) .multRight (renderObject .getModelViewMatrix () .get ()) .inverse ();
+         invModelMatrix .assign (this .transformNode .getMatrix ())
+            .multRight (renderObject .getModelViewMatrix () .get ()) .inverse ();
 
          // Apply joint transformations.
 
