@@ -589,14 +589,10 @@ If you are in production and everything is working well, then use a fixed versio
 $ npm install x_ite
 ```
 
-It can be used in [Electron](https://www.electronjs.org){:target="_blank"} apps in a preload script of the **renderer process** in a way like this:
+It can be used in [Electron](https://www.electronjs.org){:target="_blank"} apps in the **renderer process** in a way like this:
 
 ```js
-window .addEventListener ("DOMContentLoaded", () =>
-{
-  const X3D = require ("x_ite")
-  ...
-})
+const X3D = require ("x_ite")
 ```
 
 Make sure that contextIsolation is set to **false** when creating a BrowserWindow instance.
