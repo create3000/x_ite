@@ -595,7 +595,7 @@ It can be used in [Electron](https://www.electronjs.org){:target="_blank"} apps 
 const X3D = require ("x_ite")
 ```
 
-Make sure that `contextIsolation`` is set to **false** when creating a BrowserWindow instance.
+Make sure that `contextIsolation` is set to **false** when creating a BrowserWindow instance.
 
 ## Embedding X_ITE within a Web Page
 
