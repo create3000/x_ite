@@ -91,7 +91,6 @@ function GLTF2Parser (scene)
    this .skins                 = [ ];
    this .joints                = new Set ();
    this .skeletons             = new Set ();
-   this .inverseBindMatrices   = new Map ();
    this .animations            = 0;
 }
 
@@ -1486,9 +1485,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             if (skeletonNode)
                humanoidNode ._skeleton .push (skeletonNode);
 
-            for (const joint of skin .joints)
+            for (const [i, joint] of skin .joints .entries ())
             {
-               const inverseBindMatrix = this .inverseBindMatrices .get (joint);
+               const inverseBindMatrix = skin .inverseBindMatrices [i] ?? Matrix4 .Identity;
 
                inverseBindMatrix .get (translation, rotation, scale);
 
@@ -1577,7 +1576,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       this .skeletons .add (skin .skeleton);
 
-      this .inverseBindMatricesAccessors (this .accessors [skin .inverseBindMatrices], skin .joints);
+      skin .inverseBindMatrices = this .inverseBindMatricesAccessors (this .accessors [skin .inverseBindMatrices]);
    },
    jointsArray: function (joints)
    {
@@ -1598,10 +1597,10 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       return joints .filter (index => !children .has (index)) [0];
    },
-   inverseBindMatricesAccessors: function (inverseBindMatrices, joints)
+   inverseBindMatricesAccessors: function (inverseBindMatrices)
    {
       if (!inverseBindMatrices)
-         return;
+         return [ ];
 
       const
          array    = inverseBindMatrices .array,
@@ -1611,7 +1610,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       for (let i = 0; i < length; i += 16)
          matrices .push (new Matrix4 (... array .subarray (i, i + 16)));
 
-      matrices .forEach ((matrix, i) => this .inverseBindMatrices .set (joints [i], matrix));
+      return matrices;
    },
    scenesArray (scenes, sceneNumber)
    {
