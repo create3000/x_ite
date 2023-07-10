@@ -190,7 +190,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
 
       if (this .vertexArrayObject .enable (shaderNode))
       {
-         shaderNode .enableCoordIndexAttribute  (gl, this .coordIndicesBuffer, 0, 0);
+         shaderNode .enableCoordIndexAttribute  (gl, this .coordIndexBuffer, 0, 0);
          shaderNode .enableLineStippleAttribute (gl, this .lineStippleBuffer, 0, 0);
 
          if (this .hasNormals)
@@ -273,8 +273,8 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
                   // for (let i = 0, length = attribNodes .length; i < length; ++ i)
                   //    attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
 
-                  transformShaderNode .enableFloatAttrib (gl, "x3d_CoordIndex0", this .coordIndicesBuffer, 1, coordIndexStride, coordIndexOffset0);
-                  transformShaderNode .enableFloatAttrib (gl, "x3d_CoordIndex1", this .coordIndicesBuffer, 1, coordIndexStride, coordIndexOffset1);
+                  transformShaderNode .enableFloatAttrib (gl, "x3d_CoordIndex0", this .coordIndexBuffer, 1, coordIndexStride, coordIndexOffset0);
+                  transformShaderNode .enableFloatAttrib (gl, "x3d_CoordIndex1", this .coordIndexBuffer, 1, coordIndexStride, coordIndexOffset1);
 
                   transformShaderNode .enableFloatAttrib (gl, "x3d_LineStipple0", this .lineStippleBuffer, 3, lineStippleStride, lineStippleOffset0);
                   transformShaderNode .enableFloatAttrib (gl, "x3d_LineStipple1", this .lineStippleBuffer, 3, lineStippleStride, lineStippleOffset1);
@@ -384,7 +384,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
 
          if (this .vertexArrayObject .enable (shaderNode))
          {
-            shaderNode .enableCoordIndexAttribute (gl, this .coordIndicesBuffer, 0, 0);
+            shaderNode .enableCoordIndexAttribute (gl, this .coordIndexBuffer, 0, 0);
 
             for (let i = 0, length = attribNodes .length; i < length; ++ i)
                attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
@@ -438,8 +438,6 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
 
          shaderNode .enableParticleAttribute (gl, outputParticles, particleStride, particleSystem .particleOffset, 1);
          shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, particleSystem .matrixOffset, 1);
-
-         shaderNode .enableCoordIndexAttribute (gl, this .coordIndicesBuffer, 0, 0);
 
          for (let i = 0, length = attribNodes .length; i < length; ++ i)
             attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);

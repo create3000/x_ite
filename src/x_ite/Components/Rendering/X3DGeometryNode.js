@@ -179,7 +179,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
       this .frontFace             = gl .CCW;
       this .backFace              = new Map ([[gl .CCW, gl .CW], [gl .CW, gl .CCW]]);
-      this .coordIndicesBuffer    = gl .createBuffer ();
+      this .coordIndexBuffer    = gl .createBuffer ();
       this .attribBuffers         = [ ];
       this .textureCoordinateNode = browser .getDefaultTextureCoordinate ();
       this .texCoordBuffers       = Array .from ({length: browser .getMaxTexCoords ()}, () => gl .createBuffer ());
@@ -258,10 +258,6 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
       const gl = this .getBrowser () .getContext ();
 
       this .frontFace = value ? gl .CCW : gl .CW;
-   },
-   setCoordIndices (value)
-   {
-      this .coordIndices .assign (value);
    },
    getCoordIndices ()
    {
@@ -901,7 +897,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
       // Transfer coord indices.
 
-      gl .bindBuffer (gl .ARRAY_BUFFER, this .coordIndicesBuffer);
+      gl .bindBuffer (gl .ARRAY_BUFFER, this .coordIndexBuffer);
       gl .bufferData (gl .ARRAY_BUFFER, this .coordIndices .getValue (), gl .DYNAMIC_DRAW);
 
       // Transfer attribArrays.
@@ -1000,6 +996,8 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    {
       if (this .vertexArrayObject .enable (shaderNode))
       {
+         shaderNode .enableCoordIndexAttribute (gl, this .coordIndexBuffer, 0, 0);
+
          if (this .multiTexCoords .length)
             shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, 0);
 
@@ -1047,7 +1045,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
       if (this .vertexArrayObject .enable (shaderNode))
       {
-         shaderNode .enableCoordIndexAttribute (gl, this .coordIndicesBuffer, 0, 0);
+         shaderNode .enableCoordIndexAttribute (gl, this .coordIndexBuffer, 0, 0);
 
          for (let i = 0, length = attribNodes .length; i < length; ++ i)
             attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
@@ -1176,8 +1174,6 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
          shaderNode .enableParticleAttribute       (gl, outputParticles, particleStride, particleOffset, 1);
          shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, matrixOffset,   1);
-
-         shaderNode .enableCoordIndexAttribute (gl, this .coordIndicesBuffer, 0, 0);
 
          for (let i = 0, length = attribNodes .length; i < length; ++ i)
             attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
