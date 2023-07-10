@@ -202,20 +202,21 @@ Object .assign (Object .setPrototypeOf (IndexedLineSet .prototype, X3DLineGeomet
          return;
 
       const
-         coordIndex     = this ._coordIndex,
-         polylines      = this .getPolylineIndices (),
-         colorPerVertex = this ._colorPerVertex .getValue (),
-         attribNodes    = this .getAttrib (),
-         numAttribNodes = attribNodes .length,
-         attribArrays   = this .getAttribs (),
-         fogCoordNode   = this .fogCoordNode,
-         colorNode      = this .colorNode,
-         coordNode      = this .coordNode,
-         normalNode     = this .normalNode,
-         fogDepthArray  = this .getFogDepths (),
-         colorArray     = this .getColors (),
-         normalArray    = this .getNormals (),
-         vertexArray    = this .getVertices ();
+         coordIndex        = this ._coordIndex,
+         polylines         = this .getPolylineIndices (),
+         colorPerVertex    = this ._colorPerVertex .getValue (),
+         coordIndicesArray = this .getCoordIndices (),
+         attribNodes       = this .getAttrib (),
+         numAttribNodes    = attribNodes .length,
+         attribArrays      = this .getAttribs (),
+         fogCoordNode      = this .fogCoordNode,
+         colorNode         = this .colorNode,
+         coordNode         = this .coordNode,
+         normalNode        = this .normalNode,
+         fogDepthArray     = this .getFogDepths (),
+         colorArray        = this .getColors (),
+         normalArray       = this .getNormals (),
+         vertexArray       = this .getVertices ();
 
       // Fill GeometryNode
 
@@ -234,6 +235,8 @@ Object .assign (Object .setPrototypeOf (IndexedLineSet .prototype, X3DLineGeomet
                   const
                      i     = polyline [l],
                      index = coordIndex [i];
+
+                  coordIndicesArray .push (index);
 
                   for (let a = 0; a < numAttribNodes; ++ a)
                      attribNodes [a] .addValue (index, attribArrays [a]);

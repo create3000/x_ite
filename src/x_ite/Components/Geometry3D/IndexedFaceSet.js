@@ -126,6 +126,7 @@ Object .assign (Object .setPrototypeOf (IndexedFaceSet .prototype, X3DComposedGe
          colorPerVertex     = this ._colorPerVertex .getValue (),
          normalPerVertex    = this ._normalPerVertex .getValue (),
          coordIndex         = this ._coordIndex .getValue (),
+         coordIndicesArray  = this .getCoordIndices (),
          attribNodes        = this .getAttrib (),
          numAttribNodes     = attribNodes .length,
          attribArrays       = this .getAttribs (),
@@ -151,6 +152,8 @@ Object .assign (Object .setPrototypeOf (IndexedFaceSet .prototype, X3DComposedGe
          for (const i of triangles)
          {
             const index = coordIndex [i];
+
+            coordIndicesArray .push (index);
 
             for (let a = 0; a < numAttribNodes; ++ a)
                attribNodes [a] .addValue (index, attribArrays [a]);

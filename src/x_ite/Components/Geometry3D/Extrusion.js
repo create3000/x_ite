@@ -337,11 +337,12 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
       return function ()
       {
          const
-            cw            = ! this ._ccw .getValue (),
-            crossSection  = this ._crossSection,
-            spine         = this ._spine,
-            numSpines     = spine .length,
-            texCoordArray = this .getTexCoords ();
+            cw                = ! this ._ccw .getValue (),
+            crossSection      = this ._crossSection,
+            spine             = this ._spine,
+            numSpines         = spine .length,
+            coordIndicesArray = this .getCoordIndices (),
+            texCoordArray     = this .getTexCoords ();
 
          if (numSpines < 2 || crossSection .length < 2)
             return;
@@ -477,6 +478,8 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
 
                if (l1)
                {
+                  coordIndicesArray .push (i1, i2, i3);
+
                   // p1
                   if (l2)
                   {
@@ -511,6 +514,8 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
 
                if (l2)
                {
+                  coordIndicesArray .push (i1, i3, i4);
+
                   // p1
                   texCoordArray .push (k / numCrossSection_1, n / numSpine_1, 0, 1);
                   normalIndex [i1] .push (normals .length);
@@ -644,18 +649,24 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
    addCap (texCoordArray, texCoord, normal, vertices, triangles)
    {
       const
-         normalArray = this .getNormals (),
-         vertexArray = this .getVertices ();
+         coordIndicesArray = this .getCoordIndices (),
+         normalArray       = this .getNormals (),
+         vertexArray       = this .getVertices ();
 
       for (let i = 0, length = triangles .length; i < length; i += 3)
       {
          const
-            p0 = vertices [triangles [i]],
-            p1 = vertices [triangles [i + 1]],
-            p2 = vertices [triangles [i + 2]],
-            t0 = texCoord [triangles [i]],
-            t1 = texCoord [triangles [i + 1]],
-            t2 = texCoord [triangles [i + 2]];
+            i1 = triangles [i],
+            i2 = triangles [i + 1],
+            i3 = triangles [i + 2],
+            p0 = vertices [i1],
+            p1 = vertices [i2],
+            p2 = vertices [i3],
+            t0 = texCoord [i1],
+            t1 = texCoord [i2],
+            t2 = texCoord [i3];
+
+         coordIndicesArray .push (i1, i2, i3);
 
          texCoordArray .push (t0 .x, t0 .y, 0, 1);
          texCoordArray .push (t1 .x, t1 .y, 0, 1);

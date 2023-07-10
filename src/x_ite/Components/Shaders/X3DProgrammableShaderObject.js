@@ -287,6 +287,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
        */
 
       const attributes = [
+         "CoordIndex",
          "LineStipple",
          "FogDepth",
          "Color",
@@ -1146,6 +1147,16 @@ Object .assign (X3DProgrammableShaderObject .prototype,
          gl .enableVertexAttribArray (location);
          gl .vertexAttribPointer (location, 4, gl .FLOAT, false, stride, offset + 16 * i);
       }
+   },
+   enableCoordIndexAttribute (gl, buffer, stride, offset)
+   {
+      const location = this .x3d_CoordIndex;
+
+      gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
+      gl .enableVertexAttribArray (location);
+      gl .vertexAttribPointer (location, 1, gl .FLOAT, false, stride, offset); // gl .UNSIGNED_INT
+
+      console .log ("coordIndex", stride, buffer)
    },
    enableLineStippleAttribute (gl, buffer, stride, offset)
    {

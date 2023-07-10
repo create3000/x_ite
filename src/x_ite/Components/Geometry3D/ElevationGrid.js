@@ -290,6 +290,7 @@ Object .assign (Object .setPrototypeOf (ElevationGrid .prototype, X3DGeometryNod
          colorPerVertex     = this ._colorPerVertex .getValue (),
          normalPerVertex    = this ._normalPerVertex .getValue (),
          coordIndex         = this .createCoordIndex (),
+         coordIndicesArray  = this .getCoordIndices (),
          attribNodes        = this .getAttrib (),
          numAttribNodes     = attribNodes .length,
          attribArrays       = this .getAttribs (),
@@ -328,6 +329,8 @@ Object .assign (Object .setPrototypeOf (ElevationGrid .prototype, X3DGeometryNod
             const
                index = coordIndex [c],
                point = points [index];
+
+            coordIndicesArray .push (index);
 
             for (let a = 0; a < numAttribNodes; ++ a)
                attribNodes [a] .addValue (index, attribArrays [a]);

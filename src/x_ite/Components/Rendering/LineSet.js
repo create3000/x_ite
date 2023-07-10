@@ -152,19 +152,20 @@ Object .assign (Object .setPrototypeOf (LineSet .prototype, X3DLineGeometryNode 
       // Fill GeometryNode
 
       const
-         vertexCount    = this ._vertexCount,
-         attribNodes    = this .getAttrib (),
-         numAttribNodes = attribNodes .length,
-         attribArrays   = this .getAttribs (),
-         fogCoordNode   = this .fogCoordNode,
-         colorNode      = this .colorNode,
-         normalNode     = this .normalNode,
-         coordNode      = this .coordNode,
-         fogDepthArray  = this .getFogDepths (),
-         colorArray     = this .getColors (),
-         normalArray    = this .getNormals (),
-         vertexArray    = this .getVertices (),
-         size           = coordNode .getSize ();
+         vertexCount       = this ._vertexCount,
+         coordIndicesArray = this .getCoordIndices (),
+         attribNodes       = this .getAttrib (),
+         numAttribNodes    = attribNodes .length,
+         attribArrays      = this .getAttribs (),
+         fogCoordNode      = this .fogCoordNode,
+         colorNode         = this .colorNode,
+         normalNode        = this .normalNode,
+         coordNode         = this .coordNode,
+         fogDepthArray     = this .getFogDepths (),
+         colorArray        = this .getColors (),
+         normalArray       = this .getNormals (),
+         vertexArray       = this .getVertices (),
+         size              = coordNode .getSize ();
 
       let index = 0;
 
@@ -179,6 +180,8 @@ Object .assign (Object .setPrototypeOf (LineSet .prototype, X3DLineGeometryNode 
 
             for (let i = 0; i < count; ++ i, index += i & 1)
             {
+               coordIndicesArray .push (index);
+
                for (let a = 0; a < numAttribNodes; ++ a)
                   attribNodes [a] .addValue (index, attribArrays [a]);
 

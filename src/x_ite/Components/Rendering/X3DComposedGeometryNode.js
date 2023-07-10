@@ -196,6 +196,7 @@ Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, X3DG
       const
          colorPerVertex     = this ._colorPerVertex .getValue (),
          normalPerVertex    = this ._normalPerVertex .getValue (),
+         coordIndicesArray  = this .getCoordIndices (),
          attribNodes        = this .getAttrib (),
          numAttribNodes     = attribNodes .length,
          attribArrays       = this .getAttribs (),
@@ -219,6 +220,8 @@ Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, X3DG
          const
             face  = Math .floor (i / verticesPerFace),
             index = this .getPolygonIndex (this .getTriangleIndex (i));
+
+         coordIndicesArray .push (index);
 
          for (let a = 0; a < numAttribNodes; ++ a)
             attribNodes [a] .addValue (index, attribArrays [a]);

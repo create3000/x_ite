@@ -179,9 +179,9 @@ Object .assign (X3DShapeContext .prototype,
       ];
 
       const transformFeedbackVaryings = [
-         "lineStipple0", "fogDepth0", "color0", "normal0", "vertex0",
-         "lineStipple1", "fogDepth1", "color1", "normal1", "vertex1",
-         "lineStipple2", "fogDepth2", "color2", "normal2", "vertex2",
+         "coordIndex0", "lineStipple0", "fogDepth0", "color0", "normal0", "vertex0",
+         "coordIndex1", "lineStipple1", "fogDepth1", "color1", "normal1", "vertex1",
+         "coordIndex2", "lineStipple2", "fogDepth2", "color2", "normal2", "vertex2",
       ];
 
       this [_lineTransformShaderNode] = this .createShader ("LineTransformShader", "LineTransform", "LineTransform", [ ], uniformNames, transformFeedbackVaryings);

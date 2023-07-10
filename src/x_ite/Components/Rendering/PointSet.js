@@ -152,18 +152,22 @@ Object .assign (Object .setPrototypeOf (PointSet .prototype, X3DPointGeometryNod
          return;
 
       const
-         attribNodes    = this .getAttrib (),
-         numAttribNodes = attribNodes .length,
-         attribArrays   = this .getAttribs (),
-         fogCoordNode   = this .fogCoordNode,
-         fogDepthArray  = this .getFogDepths (),
-         colorNode      = this .colorNode,
-         colorArray     = this .getColors (),
-         coordNode      = this .coordNode,
-         normalArray    = this .getNormals (),
-         normalNode     = this .normalNode,
-         vertexArray    = this .getVertices (),
-         numPoints      = coordNode ._point .length;
+         coordIndicesArray = this .getCoordIndices (),
+         attribNodes       = this .getAttrib (),
+         numAttribNodes    = attribNodes .length,
+         attribArrays      = this .getAttribs (),
+         fogCoordNode      = this .fogCoordNode,
+         fogDepthArray     = this .getFogDepths (),
+         colorNode         = this .colorNode,
+         colorArray        = this .getColors (),
+         coordNode         = this .coordNode,
+         normalArray       = this .getNormals (),
+         normalNode        = this .normalNode,
+         vertexArray       = this .getVertices (),
+         numPoints         = coordNode ._point .length;
+
+      for (let i = 0; i < numPoints; ++ i)
+         coordIndicesArray .push (i);
 
       for (let a = 0; a < numAttribNodes; ++ a)
       {

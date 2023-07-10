@@ -104,7 +104,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
       gl .bufferData (gl .ARRAY_BUFFER, this .lineStipples, gl .DYNAMIC_DRAW);
 
       gl .bindBuffer (gl .ARRAY_BUFFER, this .trianglesBuffer);
-      gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (15 * 6 * numLines), gl .DYNAMIC_DRAW);
+      gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (16 * 6 * numLines), gl .DYNAMIC_DRAW);
    },
    updateLengthSoFar: (() =>
    {
@@ -163,11 +163,13 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
             if (this .thickVertexArrayObject .enable (shaderNode))
             {
                const
-                  stride            = 15 * Float32Array .BYTES_PER_ELEMENT,
-                  lineStippleOffset = 0,
-                  normalOffset      = 8 * Float32Array .BYTES_PER_ELEMENT,
-                  vertexOffset      = 11 * Float32Array .BYTES_PER_ELEMENT;
+                  stride            = 16 * Float32Array .BYTES_PER_ELEMENT,
+                  coordIndexOffset  = 0,
+                  lineStippleOffset = 1 * Float32Array .BYTES_PER_ELEMENT,
+                  normalOffset      = 9 * Float32Array .BYTES_PER_ELEMENT,
+                  vertexOffset      = 12 * Float32Array .BYTES_PER_ELEMENT;
 
+               shaderNode .enableCoordIndexAttribute  (gl, this .trianglesBuffer, stride, coordIndexOffset);
                shaderNode .enableLineStippleAttribute (gl, this .trianglesBuffer, stride, lineStippleOffset);
 
                if (this .hasNormals)
@@ -188,6 +190,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
 
       if (this .vertexArrayObject .enable (shaderNode))
       {
+         shaderNode .enableCoordIndexAttribute  (gl, this .coordIndicesBuffer, 0, 0);
          shaderNode .enableLineStippleAttribute (gl, this .lineStippleBuffer, 0, 0);
 
          if (this .hasNormals)
@@ -248,6 +251,9 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
                if (this .thickVertexArrayObject .enable (transformShaderNode))
                {
                   const
+                     coordIndexStride   = 2 * Float32Array .BYTES_PER_ELEMENT,
+                     coordIndexOffset0  = 0,
+                     coordIndexOffset1  = 1 * Float32Array .BYTES_PER_ELEMENT,
                      lineStippleStride  = 6 * Float32Array .BYTES_PER_ELEMENT,
                      lineStippleOffset0 = 0,
                      lineStippleOffset1 = 3 * Float32Array .BYTES_PER_ELEMENT,
@@ -266,6 +272,9 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
 
                   // for (let i = 0, length = attribNodes .length; i < length; ++ i)
                   //    attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
+
+                  transformShaderNode .enableFloatAttrib (gl, "x3d_CoordIndex0", this .coordIndicesBuffer, 1, coordIndexStride, coordIndexOffset0);
+                  transformShaderNode .enableFloatAttrib (gl, "x3d_CoordIndex1", this .coordIndicesBuffer, 1, coordIndexStride, coordIndexOffset1);
 
                   transformShaderNode .enableFloatAttrib (gl, "x3d_LineStipple0", this .lineStippleBuffer, 3, lineStippleStride, lineStippleOffset0);
                   transformShaderNode .enableFloatAttrib (gl, "x3d_LineStipple1", this .lineStippleBuffer, 3, lineStippleStride, lineStippleOffset1);
@@ -305,7 +314,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
 
                // DEBUG
 
-               // const data = new Float32Array (13 * 6 * this .vertexCount / 2);
+               // const data = new Float32Array (16 * 6 * this .vertexCount / 2);
                // gl .bindBuffer (gl .ARRAY_BUFFER, this .trianglesBuffer);
                // gl .getBufferSubData (gl .ARRAY_BUFFER, 0, data);
                // console .log (data);
@@ -324,16 +333,18 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
                if (this .thickVertexArrayObject .enable (shaderNode))
                {
                   const
-                     stride            = 15 * Float32Array .BYTES_PER_ELEMENT,
-                     lineStippleOffset = 0,
-                     fogCoordOffset    = 3 * Float32Array .BYTES_PER_ELEMENT,
-                     colorOffset       = 4 * Float32Array .BYTES_PER_ELEMENT,
-                     normalOffset      = 8 * Float32Array .BYTES_PER_ELEMENT,
-                     vertexOffset      = 11 * Float32Array .BYTES_PER_ELEMENT;
+                     stride            = 16 * Float32Array .BYTES_PER_ELEMENT,
+                     coordIndexOffset  = 0,
+                     lineStippleOffset = 1 * Float32Array .BYTES_PER_ELEMENT,
+                     fogCoordOffset    = 4 * Float32Array .BYTES_PER_ELEMENT,
+                     colorOffset       = 5 * Float32Array .BYTES_PER_ELEMENT,
+                     normalOffset      = 9 * Float32Array .BYTES_PER_ELEMENT,
+                     vertexOffset      = 12 * Float32Array .BYTES_PER_ELEMENT;
 
                   // for (let i = 0, length = attribNodes .length; i < length; ++ i)
                   //    attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
 
+                  shaderNode .enableCoordIndexAttribute (gl, this .trianglesBuffer, stride, coordIndexOffset);
                   shaderNode .enableLineStippleAttribute (gl, this .trianglesBuffer, stride, lineStippleOffset);
 
                   if (this .hasFogCoords)
@@ -373,6 +384,8 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
 
          if (this .vertexArrayObject .enable (shaderNode))
          {
+            shaderNode .enableCoordIndexAttribute (gl, this .coordIndicesBuffer, 0, 0);
+
             for (let i = 0, length = attribNodes .length; i < length; ++ i)
                attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
 
@@ -425,6 +438,8 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
 
          shaderNode .enableParticleAttribute (gl, outputParticles, particleStride, particleSystem .particleOffset, 1);
          shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, particleSystem .matrixOffset, 1);
+
+         shaderNode .enableCoordIndexAttribute (gl, this .coordIndicesBuffer, 0, 0);
 
          for (let i = 0, length = attribNodes .length; i < length; ++ i)
             attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
