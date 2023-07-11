@@ -390,6 +390,9 @@ Object .assign (Object .setPrototypeOf (IndexedFaceSet .prototype, X3DComposedGe
                normals [vertices [i]] = normal;
          }
 
+         if (!this ._normalPerVertex .getValue ())
+            return normals;
+
          return this .refineNormals (normalIndex, normals, this ._creaseAngle .getValue ());
       };
    })(),
