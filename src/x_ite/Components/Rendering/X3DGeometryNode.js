@@ -441,7 +441,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
       const
          cosCreaseAngle = Math .cos (Algorithm .clamp (creaseAngle, 0, Math .PI)),
-         normals_       = [ ];
+         refinedNormals = [ ];
 
       for (const i in normalIndex) // Don't use forEach
       {
@@ -461,11 +461,11 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
                   N .add (Q);
             }
 
-            normals_ [p] = N .normalize ();
+            refinedNormals [p] = N .normalize ();
          }
       }
 
-      return normals_;
+      return refinedNormals;
    },
    transformLine (hitRay)
    {
