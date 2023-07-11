@@ -385,8 +385,8 @@ Object .assign (Object .setPrototypeOf (IndexedFaceSet .prototype, X3DComposedGe
                normal .negate ();
          }
 
-         if (!this ._normalPerVertex .getValue ())
-            return normals;
+         // if (!this ._normalPerVertex .getValue ())
+         //    return normals;
 
          return this .refineNormals (normalIndex, normals, this ._creaseAngle .getValue ());
       };
