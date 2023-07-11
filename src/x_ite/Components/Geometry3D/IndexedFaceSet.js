@@ -367,11 +367,9 @@ Object .assign (Object .setPrototypeOf (IndexedFaceSet .prototype, X3DComposedGe
 
             // Add a normal index for each point.
 
-            for (let i = 0; i < length; ++ i)
+            for (const index of vertices)
             {
-               const
-                  index = vertices [i],
-                  point = coordIndex [index];
+               const point = coordIndex [index];
 
                let pointNormals = normalIndex [point];
 
