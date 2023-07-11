@@ -165,7 +165,7 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
       if (this ._vDimension .getValue () < this ._vOrder .getValue ())
          return;
 
-      if (! this .controlPointNode)
+      if (!this .controlPointNode)
          return;
 
       if (this .controlPointNode .getSize () !== this ._uDimension .getValue () * this ._vDimension .getValue ())
@@ -329,7 +329,7 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
 
          let pointIndex = normalIndex [index];
 
-         if (! pointIndex)
+         if (!pointIndex)
             pointIndex = normalIndex [index] = [ ];
 
          pointIndex .push (i);
