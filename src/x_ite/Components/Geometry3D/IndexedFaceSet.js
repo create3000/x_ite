@@ -379,15 +379,12 @@ Object .assign (Object .setPrototypeOf (IndexedFaceSet .prototype, X3DComposedGe
                   pointNormals = normalIndex [point] = [ ];
 
                pointNormals .push (index);
+
+               normals [index] = normal;
             }
 
             if (cw)
                normal .negate ();
-
-            // Add this normal for each vertex.
-
-            for (let i = 0; i < length; ++ i)
-               normals [vertices [i]] = normal;
          }
 
          if (!this ._normalPerVertex .getValue ())
