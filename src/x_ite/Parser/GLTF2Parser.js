@@ -85,6 +85,7 @@ function GLTF2Parser (scene)
    this .samplers              = [ ];
    this .materials             = [ ];
    this .textureTransformNodes = [ ];
+   this .meshes                = [ ];
    this .cameras               = [ ];
    this .viewpoints            = 0;
    this .nodes                 = [ ];
