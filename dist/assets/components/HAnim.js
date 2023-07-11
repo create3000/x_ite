@@ -1,4 +1,4 @@
-/* X_ITE v8.9.0 */(() => { // webpackBootstrap
+/* X_ITE v8.9.2 */(() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
 /******/ 	var __webpack_require__ = {};
@@ -39,25 +39,25 @@ var __webpack_exports__ = {};
 // UNUSED EXPORTS: default
 
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components\")"
-const Components_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.0")] .require ("x_ite/Components");
+const Components_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.2")] .require ("x_ite/Components");
 var Components_default = /*#__PURE__*/__webpack_require__.n(Components_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Fields\")"
-const Fields_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.0")] .require ("x_ite/Fields");
+const Fields_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.2")] .require ("x_ite/Fields");
 var Fields_default = /*#__PURE__*/__webpack_require__.n(Fields_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DFieldDefinition\")"
-const X3DFieldDefinition_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.0")] .require ("x_ite/Base/X3DFieldDefinition");
+const X3DFieldDefinition_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.2")] .require ("x_ite/Base/X3DFieldDefinition");
 var X3DFieldDefinition_default = /*#__PURE__*/__webpack_require__.n(X3DFieldDefinition_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/FieldDefinitionArray\")"
-const FieldDefinitionArray_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.0")] .require ("x_ite/Base/FieldDefinitionArray");
+const FieldDefinitionArray_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.2")] .require ("x_ite/Base/FieldDefinitionArray");
 var FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(FieldDefinitionArray_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Rendering/X3DGeometricPropertyNode\")"
-const X3DGeometricPropertyNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.0")] .require ("x_ite/Components/Rendering/X3DGeometricPropertyNode");
+const X3DGeometricPropertyNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.2")] .require ("x_ite/Components/Rendering/X3DGeometricPropertyNode");
 var X3DGeometricPropertyNode_default = /*#__PURE__*/__webpack_require__.n(X3DGeometricPropertyNode_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DConstants\")"
-const X3DConstants_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.0")] .require ("x_ite/Base/X3DConstants");
+const X3DConstants_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.2")] .require ("x_ite/Base/X3DConstants");
 var X3DConstants_default = /*#__PURE__*/__webpack_require__.n(X3DConstants_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Namespace\")"
-const Namespace_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.0")] .require ("x_ite/Namespace");
+const Namespace_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.2")] .require ("x_ite/Namespace");
 var Namespace_default = /*#__PURE__*/__webpack_require__.n(Namespace_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/HAnim/HAnimDisplacer.js
 /*******************************************************************************
@@ -166,29 +166,31 @@ const __default__ = HAnimDisplacer;
 Namespace_default().set ("x_ite/Components/HAnim/HAnimDisplacer", __default__);
 /* harmony default export */ const HAnim_HAnimDisplacer = (__default__);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Core/X3DChildNode\")"
-const X3DChildNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.0")] .require ("x_ite/Components/Core/X3DChildNode");
+const X3DChildNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.2")] .require ("x_ite/Components/Core/X3DChildNode");
 var X3DChildNode_default = /*#__PURE__*/__webpack_require__.n(X3DChildNode_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Grouping/Group\")"
-const Group_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.0")] .require ("x_ite/Components/Grouping/Group");
+const Group_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.2")] .require ("x_ite/Components/Grouping/Group");
 var Group_default = /*#__PURE__*/__webpack_require__.n(Group_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Grouping/Transform\")"
-const Transform_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.0")] .require ("x_ite/Components/Grouping/Transform");
+const Transform_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.2")] .require ("x_ite/Components/Grouping/Transform");
 var Transform_default = /*#__PURE__*/__webpack_require__.n(Transform_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Grouping/X3DBoundedObject\")"
-const X3DBoundedObject_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.0")] .require ("x_ite/Components/Grouping/X3DBoundedObject");
+const X3DBoundedObject_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.2")] .require ("x_ite/Components/Grouping/X3DBoundedObject");
 var X3DBoundedObject_default = /*#__PURE__*/__webpack_require__.n(X3DBoundedObject_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Rendering/TraverseType\")"
-const TraverseType_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.0")] .require ("x_ite/Rendering/TraverseType");
+const TraverseType_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.2")] .require ("x_ite/Rendering/TraverseType");
 var TraverseType_default = /*#__PURE__*/__webpack_require__.n(TraverseType_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DCast\")"
-const X3DCast_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.0")] .require ("x_ite/Base/X3DCast");
+const X3DCast_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.2")] .require ("x_ite/Base/X3DCast");
 var X3DCast_default = /*#__PURE__*/__webpack_require__.n(X3DCast_namespaceObject);
-;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Matrix4\")"
-const Matrix4_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.0")] .require ("standard/Math/Numbers/Matrix4");
-var Matrix4_default = /*#__PURE__*/__webpack_require__.n(Matrix4_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Vector3\")"
-const Vector3_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.0")] .require ("standard/Math/Numbers/Vector3");
+const Vector3_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.2")] .require ("standard/Math/Numbers/Vector3");
 var Vector3_default = /*#__PURE__*/__webpack_require__.n(Vector3_namespaceObject);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Rotation4\")"
+const Rotation4_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.2")] .require ("standard/Math/Numbers/Rotation4");
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Matrix4\")"
+const Matrix4_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.2")] .require ("standard/Math/Numbers/Matrix4");
+var Matrix4_default = /*#__PURE__*/__webpack_require__.n(Matrix4_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/HAnim/HAnimHumanoid.js
 /*******************************************************************************
  *
@@ -250,6 +252,7 @@ var Vector3_default = /*#__PURE__*/__webpack_require__.n(Vector3_namespaceObject
 
 
 
+
 function HAnimHumanoid (executionContext)
 {
    X3DChildNode_default().call (this, executionContext);
@@ -262,16 +265,17 @@ function HAnimHumanoid (executionContext)
    this ._bboxSize    .setUnit ("length");
    this ._bboxCenter  .setUnit ("length");
 
-   this .skeletonNode   = new (Group_default()) (executionContext);
-   this .viewpointsNode = new (Group_default()) (executionContext);
-   this .skinNode       = new (Group_default()) (executionContext);
-   this .transformNode  = new (Transform_default()) (executionContext);
-   this .jointNodes     = [ ];
-   this .skinNormalNode = null;
-   this .skinCoordNode  = null;
-   this .restNormalNode = null;
-   this .restCoordNode  = null;
-   this .changed        = false;
+   this .skeletonNode         = new (Group_default()) (executionContext);
+   this .viewpointsNode       = new (Group_default()) (executionContext);
+   this .skinNode             = new (Group_default()) (executionContext);
+   this .transformNode        = new (Transform_default()) (executionContext);
+   this .jointNodes           = [ ];
+   this .jointBindingMatrices = [ ];
+   this .skinBindingNormal    = null;
+   this .skinBindingCoord     = null;
+   this .skinNormalNode       = null;
+   this .skinCoordNode        = null;
+   this .changed              = false;
 }
 
 Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (X3DChildNode_default()).prototype),
@@ -337,13 +341,18 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (X3DChildNode_
 
       // Skinning
 
-      this ._joints     .addInterest ("set_joints__",     this);
-      this ._skinNormal .addInterest ("set_skinNormal__", this);
-      this ._skinCoord  .addInterest ("set_skinCoord__",  this);
+      this ._joints                .addInterest ("set_joints__",            this);
+      this ._jointBindingPositions .addInterest ("set_joints__",            this);
+      this ._jointBindingRotations .addInterest ("set_joints__",            this);
+      this ._jointBindingScales    .addInterest ("set_joints__",            this);
+      this ._skinBindingNormal     .addInterest ("set_skinBindingNormal__", this);
+      this ._skinBindingCoord      .addInterest ("set_skinBindingCoord__",  this);
+      this ._skinNormal            .addInterest ("set_skinNormal__",        this);
+      this ._skinCoord             .addInterest ("set_skinCoord__",         this);
 
       this .set_joints__ ();
-      this .set_skinNormal__ ();
-      this .set_skinCoord__ ();
+      this .set_skinBindingNormal__ ();
+      this .set_skinBindingCoord__ ();
    },
    getBBox (bbox, shadows)
    {
@@ -351,19 +360,39 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (X3DChildNode_
    },
    set_joints__ ()
    {
-      const jointNodes = this .jointNodes;
+      const
+         jointNodes            = this .jointNodes,
+         jointBindingMatrices  = this .jointBindingMatrices,
+         jointBindingPositions = this ._jointBindingPositions,
+         jointBindingRotations = this ._jointBindingRotations,
+         jointBindingScales    = this ._jointBindingScales;
 
       for (const jointNode of jointNodes)
          jointNode .removeInterest ("set_joint__", this);
 
-      jointNodes .length = 0;
+      jointNodes           .length = 0;
+      jointBindingMatrices .length = 0;
 
-      for (const node of this ._joints)
+      for (const [i, node] of this ._joints .entries ())
       {
          const jointNode = X3DCast_default() ((X3DConstants_default()).HAnimJoint, node);
 
          if (jointNode)
-            jointNodes .push (jointNode);
+         {
+            const jointBindingMatrix = new (Matrix4_default()) ();
+
+            if (jointBindingPositions .length)
+               jointBindingMatrix .translate (jointBindingPositions [Math .min (i, jointBindingPositions .length - 1)] .getValue ());
+
+            if (jointBindingRotations .length)
+               jointBindingMatrix .rotate (jointBindingRotations [Math .min (i, jointBindingRotations .length - 1)] .getValue ());
+
+            if (jointBindingScales .length)
+               jointBindingMatrix .scale (jointBindingScales [Math .min (i, jointBindingScales .length - 1)] .getValue ());
+
+            jointNodes           .push (jointNode);
+            jointBindingMatrices .push (jointBindingMatrix);
+         }
       }
 
       for (const jointNode of jointNodes)
@@ -375,33 +404,38 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (X3DChildNode_
    {
       this .changed = true;
    },
+   set_skinBindingNormal__ ()
+   {
+      this .skinBindingNormal = X3DCast_default() ((X3DConstants_default()).X3DNormalNode, this ._skinBindingNormal);
+
+      this .set_skinNormal__ ();
+   },
+   set_skinBindingCoord__ ()
+   {
+      this .skinBindingCoord = X3DCast_default() ((X3DConstants_default()).X3DCoordinateNode, this ._skinBindingCoord);
+
+      this .set_skinCoord__ ();
+   },
    set_skinNormal__ ()
    {
-      this .restNormalNode = null;
-
       this .skinNormalNode = X3DCast_default() ((X3DConstants_default()).X3DNormalNode, this ._skinNormal);
 
-      if (this .skinNormalNode)
-         this .restNormalNode = this .skinNormalNode .copy ();
+      if (!this .skinBindingNormal && this .skinNormalNode)
+         this .skinBindingNormal = this .skinNormalNode .copy ();
 
       this .changed = true;
    },
    set_skinCoord__ ()
    {
-      this .restCoordNode = null;
-
       this .skinCoordNode = X3DCast_default() ((X3DConstants_default()).X3DCoordinateNode, this ._skinCoord);
 
-      if (this .skinCoordNode)
-      {
-         this .restCoordNode = this .skinCoordNode .copy ();
+      if (!this .skinBindingCoord && this .skinCoordNode)
+         this .skinBindingCoord = this .skinCoordNode .copy ();
 
+      if (this .skinCoordNode)
          delete this .skinning;
-      }
       else
-      {
          this .skinning = Function .prototype
-      }
 
       this .changed = true;
    },
@@ -415,9 +449,9 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (X3DChildNode_
    {
       const
          invModelMatrix = new (Matrix4_default()) (),
-         vector         = new (Vector3_default()) (0, 0, 0),
          rest           = new (Vector3_default()) (0, 0, 0),
          skin           = new (Vector3_default()) (0, 0, 0),
+         vector         = new (Vector3_default()) (0, 0, 0),
          point          = new (Vector3_default()) (0, 0, 0);
 
       return function (type, renderObject)
@@ -431,31 +465,36 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (X3DChildNode_
          this .changed = false;
 
          const
-            jointNodes     = this .jointNodes,
-            skinNormalNode = this .skinNormalNode,
-            skinCoordNode  = this .skinCoordNode,
-            restNormalNode = this .restNormalNode,
-            restCoordNode  = this .restCoordNode;
+            jointNodes           = this .jointNodes,
+            jointNodesLength     = jointNodes .length,
+            jointBindingMatrices = this .jointBindingMatrices,
+            skinBindingNormal    = this .skinBindingNormal,
+            skinBindingCoord     = this .skinBindingCoord,
+            skinNormalNode       = this .skinNormalNode,
+            skinCoordNode        = this .skinCoordNode;
 
          // Reset skin normals and coords.
 
          if (skinNormalNode)
-            skinNormalNode ._vector .assign (restNormalNode ._vector);
+            skinNormalNode ._vector .assign (skinBindingNormal ._vector);
 
-         skinCoordNode ._point .assign (restCoordNode ._point);
+         skinCoordNode ._point .assign (skinBindingCoord ._point);
 
          // Determine inverse model matrix of humanoid.
 
-         invModelMatrix .assign (this .transformNode .getMatrix ()) .multRight (renderObject .getModelViewMatrix () .get ()) .inverse ();
+         invModelMatrix .assign (this .transformNode .getMatrix ())
+            .multRight (renderObject .getModelViewMatrix () .get ()) .inverse ();
 
          // Apply joint transformations.
 
-         for (const jointNode of jointNodes)
+         for (let i = 0; i < jointNodesLength; ++ i)
          {
             const
-               skinCoordIndexLength = jointNode ._skinCoordIndex .length,
-               jointMatrix          = jointNode .getModelMatrix () .multRight (invModelMatrix),
-               displacerNodes       = jointNode .getDisplacers ();
+               jointNode            = jointNodes [i],
+               jointBindingMatrix   = jointBindingMatrices [i],
+               jointMatrix          = jointNode .getModelMatrix () .multRight (invModelMatrix) .multLeft (jointBindingMatrix),
+               displacerNodes       = jointNode .getDisplacers (),
+               skinCoordIndexLength = jointNode ._skinCoordIndex .length;
 
             for (const displacerNode of displacerNodes)
             {
@@ -493,15 +532,15 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (X3DChildNode_
 
                if (skinNormalNode)
                {
-                  rest .assign (restNormalNode .get1Vector (index, vector));
+                  rest .assign (skinBindingNormal .get1Vector (index, vector));
                   skinNormalNode .get1Vector (index, skin);
                   normalMatrix .multVecMatrix (vector) .subtract (rest) .multiply (weight) .add (skin);
                   skinNormalNode .set1Vector (index, vector);
-                  // Should the normals be normalized at end, or let it the shader do?
+                  // Let the shader normalize the normals.
                }
 
                //skin += (rest * J - rest) * weight
-               rest .assign (restCoordNode .get1Point (index, point));
+               rest .assign (skinBindingCoord .get1Point (index, point));
                skinCoordNode .get1Point (index, skin);
                jointMatrix .multVecMatrix (point) .subtract (rest) .multiply (weight) .add (skin);
                skinCoordNode .set1Point (index, point);
@@ -511,31 +550,31 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (X3DChildNode_
    })(),
    toVRMLStream (generator)
    {
-      if (this .skinCoordNode)
-         this .skinCoordNode ._point = this .restCoordNode ._point;
-
       if (this .skinNormalNode)
-         this .skinNormalNode ._vector = this .restNormalNode ._vector;
+         this .skinNormalNode ._vector = this .skinBindingNormal ._vector;
+
+      if (this .skinCoordNode)
+         this .skinCoordNode ._point = this .skinBindingCoord ._point;
 
       X3DChildNode_default().prototype .toVRMLStream .call (this, generator);
    },
    toXMLStream (generator)
    {
-      if (this .skinCoordNode)
-         this .skinCoordNode ._point = this .restCoordNode ._point;
-
       if (this .skinNormalNode)
-         this .skinNormalNode ._vector = this .restNormalNode ._vector;
+         this .skinNormalNode ._vector = this .skinBindingNormal ._vector;
+
+      if (this .skinCoordNode)
+         this .skinCoordNode ._point = this .skinBindingCoord ._point;
 
       X3DChildNode_default().prototype .toXMLStream .call (this, generator);
    },
    toJSONStream (generator)
    {
-      if (this .skinCoordNode)
-         this .skinCoordNode ._point = this .restCoordNode ._point;
-
       if (this .skinNormalNode)
-         this .skinNormalNode ._vector = this .restNormalNode ._vector;
+         this .skinNormalNode ._vector = this .skinBindingNormal ._vector;
+
+      if (this .skinCoordNode)
+         this .skinCoordNode ._point = this .skinBindingCoord ._point;
 
       X3DChildNode_default().prototype .toJSONStream .call (this, generator);
    },
@@ -572,31 +611,31 @@ Object .defineProperties (HAnimHumanoid,
    {
       value: new (FieldDefinitionArray_default()) ([
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",              new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "version",               new (Fields_default()).SFString ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "description",           new (Fields_default()).SFString ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "name",                  new (Fields_default()).SFString ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "version",               new (Fields_default()).SFString ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "info",                  new (Fields_default()).MFString ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "translation",           new (Fields_default()).SFVec3f ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "rotation",              new (Fields_default()).SFRotation ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "scale",                 new (Fields_default()).SFVec3f (1, 1, 1)),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "scaleOrientation",      new (Fields_default()).SFRotation ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "center",                new (Fields_default()).SFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "jointBindingPositions", new (Fields_default()).MFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "jointBindingRotations", new (Fields_default()).MFRotation ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "jointBindingScales",    new (Fields_default()).MFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "motionsEnabled",        new (Fields_default()).MFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "loa",                   new (Fields_default()).SFInt32 (-1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "skeletalConfiguration", new (Fields_default()).SFString ("BASIC")),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "visible",               new (Fields_default()).SFBool (true)),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bboxDisplay",           new (Fields_default()).SFBool ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxSize",              new (Fields_default()).SFVec3f (-1, -1, -1)),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxCenter",            new (Fields_default()).SFVec3f ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "loa",                   new (Fields_default()).SFInt32 (-1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "skeletalConfiguration", new (Fields_default()).SFString ("BASIC")),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "skeleton",              new (Fields_default()).MFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "viewpoints",            new (Fields_default()).MFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "sites",                 new (Fields_default()).MFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "segments",              new (Fields_default()).MFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "joints",                new (Fields_default()).MFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "motionsEnabled",        new (Fields_default()).MFBool ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "motions",               new (Fields_default()).MFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "jointBindingPositions", new (Fields_default()).MFVec3f ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "jointBindingRotations", new (Fields_default()).MFRotation ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "jointBindingScales",    new (Fields_default()).MFVec3f ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "joints",                new (Fields_default()).MFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "skinBindingNormal",     new (Fields_default()).SFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "skinBindingCoord",      new (Fields_default()).SFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "skinNormal",            new (Fields_default()).SFNode ()),
@@ -613,7 +652,7 @@ const HAnimHumanoid_default_ = HAnimHumanoid;
 Namespace_default().set ("x_ite/Components/HAnim/HAnimHumanoid", HAnimHumanoid_default_);
 /* harmony default export */ const HAnim_HAnimHumanoid = (HAnimHumanoid_default_);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Grouping/X3DTransformNode\")"
-const X3DTransformNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.0")] .require ("x_ite/Components/Grouping/X3DTransformNode");
+const X3DTransformNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.2")] .require ("x_ite/Components/Grouping/X3DTransformNode");
 var X3DTransformNode_default = /*#__PURE__*/__webpack_require__.n(X3DTransformNode_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/HAnim/HAnimJoint.js
 /*******************************************************************************
@@ -905,16 +944,16 @@ Object .defineProperties (HAnimMotion,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "enabled",         new (Fields_default()).SFBool (true)),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,   "next",            new (Fields_default()).SFBool ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,   "previous",        new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "startFrame",      new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "endFrame",        new (Fields_default()).SFInt32 ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "frameDuration",   new (Fields_default()).SFTime (0.1)),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "frameIncrement",  new (Fields_default()).SFInt32 (1)),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "frameIndex",      new (Fields_default()).SFInt32 (0)),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "loop",            new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "channels",        new (Fields_default()).SFString ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "channelsEnabled", new (Fields_default()).MFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "channels",        new (Fields_default()).SFString ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "joints",          new (Fields_default()).SFString ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "loa",             new (Fields_default()).SFInt32 (-1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "startFrame",      new (Fields_default()).SFInt32 ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "endFrame",        new (Fields_default()).SFInt32 ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "values",          new (Fields_default()).MFFloat ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "cycleTime",       new (Fields_default()).SFTime ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "elapsedTime",     new (Fields_default()).SFTime ()),
@@ -930,7 +969,7 @@ const HAnimMotion_default_ = HAnimMotion;
 Namespace_default().set ("x_ite/Components/HAnim/HAnimMotion", HAnimMotion_default_);
 /* harmony default export */ const HAnim_HAnimMotion = (HAnimMotion_default_);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Grouping/X3DGroupingNode\")"
-const X3DGroupingNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.0")] .require ("x_ite/Components/Grouping/X3DGroupingNode");
+const X3DGroupingNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.2")] .require ("x_ite/Components/Grouping/X3DGroupingNode");
 var X3DGroupingNode_default = /*#__PURE__*/__webpack_require__.n(X3DGroupingNode_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/HAnim/HAnimSegment.js
 /*******************************************************************************
