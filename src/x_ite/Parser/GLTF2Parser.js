@@ -85,6 +85,7 @@ function GLTF2Parser (scene)
    this .samplers              = [ ];
    this .materials             = [ ];
    this .textureTransformNodes = [ ];
+   this .meshes                = [ ];
    this .cameras               = [ ];
    this .viewpoints            = 0;
    this .nodes                 = [ ];
@@ -1619,7 +1620,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       const
          scene    = this .getExecutionContext (),
-         children = scenes .map (scene => this .sceneObject (scene));
+         children = scenes .map (scene => this .sceneObject (scene)) .filter (node => node);
 
       switch (children .length)
       {
@@ -1664,12 +1665,12 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          }
       }
    },
-   sceneObject (sceneObject)
+   sceneObject (scene)
    {
-      if (!(sceneObject instanceof Object))
+      if (!(scene instanceof Object))
          return null;
 
-      const nodes = this .sceneNodesArray (sceneObject .nodes);
+      const nodes = this .sceneNodesArray (scene .nodes);
 
       switch (nodes .length)
       {
@@ -1686,7 +1687,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             const
                scene     = this .getExecutionContext (),
                groupNode = scene .createNode ("Group", false),
-               name      = this .sanitizeName (sceneObject .name);
+               name      = this .sanitizeName (scene .name);
 
             if (name)
             {
