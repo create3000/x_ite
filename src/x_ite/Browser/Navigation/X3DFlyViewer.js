@@ -138,7 +138,7 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
 
       this .event = event;
 
-      const [x, y] = this .getBrowser () .transformCoords (event);
+      const [x, y] = this .getBrowser () .transformPointer (event);
 
       if (!this .isPointerInRectangle (x, y))
          return;
@@ -246,7 +246,7 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
 
       this .event = event;
 
-      const [x, y] = this .getBrowser () .transformCoords (event);
+      const [x, y] = this .getBrowser () .transformPointer (event);
 
       switch (this .getButton (this .button))
       {
@@ -293,7 +293,7 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
    },
    mousewheel (event)
    {
-      const [x, y] = this .getBrowser () .transformCoords (event);
+      const [x, y] = this .getBrowser () .transformPointer (event);
 
       if (!this .isPointerInRectangle (x, y))
          return;

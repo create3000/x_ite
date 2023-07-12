@@ -160,11 +160,7 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
              pointer .y >= rectangle .y &&
              pointer .y <= rectangle .y + rectangle .w;
    },
-   getPointingLayer ()
-   {
-      return this [_pointingLayer];
-   },
-   transformCoords ({ pageX, pageY })
+   transformPointer ({ pageX, pageY })
    {
       const
          offset   = this .getSurface () .offset (),
@@ -174,6 +170,10 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
          y        = (1 - (pageY - offset .top)  / rect .height) * viewport [3];
 
       return [x, y];
+   },
+   getPointingLayer ()
+   {
+      return this [_pointingLayer];
    },
    getHit ()
    {

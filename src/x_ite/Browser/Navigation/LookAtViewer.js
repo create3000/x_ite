@@ -119,7 +119,7 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, X3DViewer .prot
       if (this .button >= 0)
          return;
 
-      const [x, y] = this .getBrowser () .transformCoords (event);
+      const [x, y] = this .getBrowser () .transformPointer (event);
 
       if (!this .isPointerInRectangle (x, y))
          return;
@@ -180,7 +180,7 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, X3DViewer .prot
       event .preventDefault ();
       event .stopImmediatePropagation ();
 
-      const [x, y] = this .getBrowser () .transformCoords (event);
+      const [x, y] = this .getBrowser () .transformPointer (event);
 
       this .disconnect ();
       this .lookAtPoint (x, y, this .getStraightenHorizon ());
@@ -191,7 +191,7 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, X3DViewer .prot
 
       this .event = event;
 
-      const [x, y] = this .getBrowser () .transformCoords (event);
+      const [x, y] = this .getBrowser () .transformPointer (event);
 
       switch (this .button)
       {
@@ -219,7 +219,7 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, X3DViewer .prot
 
       return function (event)
       {
-         const [x, y] = this .getBrowser () .transformCoords (event);
+         const [x, y] = this .getBrowser () .transformPointer (event);
 
          if (!this .isPointerInRectangle (x, y))
             return;
