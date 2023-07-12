@@ -70,7 +70,7 @@ function DoubleAxisHingeJoint (executionContext)
    this ._suspensionForce         .setUnit ("force");
 
    this .joint             = null;
-   this .outputs           = { };
+   this .outputs           = new Set ();
    this .localAnchorPoint1 = new Vector3 (0, 0, 0);
    this .localAnchorPoint2 = new Vector3 (0, 0, 0);
    this .localAxis1        = new Vector3 (0, 0, 0);
@@ -146,8 +146,7 @@ Object .assign (Object .setPrototypeOf (DoubleAxisHingeJoint .prototype, X3DRigi
    },
    set_forceOutput__ ()
    {
-      for (var key in this .outputs)
-         delete this .outputs [key];
+      this .outputs .clear ();
 
       for (var i = 0, length = this ._forceOutput .length; i < length; ++ i)
       {
@@ -155,22 +154,22 @@ Object .assign (Object .setPrototypeOf (DoubleAxisHingeJoint .prototype, X3DRigi
 
          if (value == "ALL")
          {
-            this .outputs .body1AnchorPoint = true;
-            this .outputs .body2AnchorPoint = true;
-            this .outputs .body1Axis        = true;
-            this .outputs .body2Axis        = true;
-            this .outputs .hinge1Angle      = true;
-            this .outputs .hinge2Angle      = true;
-            this .outputs .hinge1AngleRate  = true;
-            this .outputs .hinge2AngleRate  = true;
+            this .outputs .add ("body1AnchorPoint");
+            this .outputs .add ("body2AnchorPoint");
+            this .outputs .add ("body1Axis");
+            this .outputs .add ("body2Axis");
+            this .outputs .add ("hinge1Angle");
+            this .outputs .add ("hinge2Angle");
+            this .outputs .add ("hinge1AngleRate");
+            this .outputs .add ("hinge2AngleRate");
          }
          else
          {
-            this .outputs [value] = true;
+            this .outputs .add (value);
          }
       }
 
-      this .setOutput (! $.isEmptyObject (this .outputs));
+      this .setOutput (!! this .outputs .size);
    },
    update1: (() =>
    {
@@ -182,13 +181,13 @@ Object .assign (Object .setPrototypeOf (DoubleAxisHingeJoint .prototype, X3DRigi
 
       return function ()
       {
-         if (this .outputs .body1AnchorPoint)
+         if (this .outputs .has ("body1AnchorPoint"))
             this ._body1AnchorPoint = this .getBody1 () .getMatrix () .multVecMatrix (this .getInitialInverseMatrix1 () .multVecMatrix (localAnchorPoint1 .assign (this .localAnchorPoint1)));
 
-         if (this .outputs .body1Axis)
+         if (this .outputs .has ("body1Axis"))
             this ._body1Axis = this .getInitialInverseMatrix1 () .multDirMatrix (this .getBody1 () .getMatrix () .multDirMatrix (localAxis1 .assign (this .localAxis1))) .normalize ();
 
-         if (this .outputs .hinge1Angle)
+         if (this .outputs .has ("hinge1Angle"))
          {
             var lastAngle  = this ._hinge1Angle .getValue ();
 
@@ -197,7 +196,7 @@ Object .assign (Object .setPrototypeOf (DoubleAxisHingeJoint .prototype, X3DRigi
 
             this ._hinge1Angle = rotation .angle;
 
-            if (this .outputs .angleRate)
+            if (this .outputs .has ("angleRate"))
                this ._hinge1AngleRate = (this ._hinge1Angle .getValue () - lastAngle) * this .getBrowser () .getCurrentFrameRate ();
          }
       };
@@ -212,13 +211,13 @@ Object .assign (Object .setPrototypeOf (DoubleAxisHingeJoint .prototype, X3DRigi
 
       return function ()
       {
-         if (this .outputs .body2AnchorPoint)
+         if (this .outputs .has ("body2AnchorPoint"))
             this ._body2AnchorPoint = this .getBody2 () .getMatrix () .multVecMatrix (this .getInitialInverseMatrix2 () .multVecMatrix (localAnchorPoint2 .assign (this .localAnchorPoint2)));
 
-         if (this .outputs .body2Axis)
+         if (this .outputs .has ("body2Axis"))
             this ._body2Axis = this .getInitialInverseMatrix2 () .multDirMatrix (this .getBody2 () .getMatrix () .multDirMatrix (localAxis2 .assign (this .localAxis2))) .normalize ();
 
-         if (this .outputs .hinge2Angle)
+         if (this .outputs .has ("hinge2Angle"))
          {
             var lastAngle  = this ._hinge2Angle .getValue ();
 
@@ -227,7 +226,7 @@ Object .assign (Object .setPrototypeOf (DoubleAxisHingeJoint .prototype, X3DRigi
 
             this ._hinge2Angle = rotation .angle;
 
-            if (this .outputs .angleRate)
+            if (this .outputs .has ("angleRate"))
                this ._hinge2AngleRate = (this ._hinge2Angle .getValue () - lastAngle) * this .getBrowser () .getCurrentFrameRate ();
          }
       };
