@@ -45,9 +45,8 @@
  *
  ******************************************************************************/
 
-import Fields              from "../../Fields.js";
-import X3DConstants        from "../../Base/X3DConstants.js";
-import X3DProtoDeclaration from "../../Prototype/X3DProtoDeclaration.js";
+import Fields       from "../../Fields.js";
+import X3DConstants from "../../Base/X3DConstants.js";
 
 const
    _cache                   = Symbol (),
