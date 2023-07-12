@@ -95,18 +95,6 @@ Object .assign (Object .setPrototypeOf (X3DViewer .prototype, X3DBaseNode .proto
 
       return button;
    },
-   getPointer (event)
-   {
-      const
-         browser  = this .getBrowser (),
-         offset   = browser .getSurface () .offset (),
-         rect     = browser .getSurface () [0] .getBoundingClientRect (),
-         viewport = browser .getViewport (),
-         x        = (event .pageX - offset .left) / rect .width * viewport [2],
-         y        = (1 - (event .pageY - offset .top) / rect .height) * viewport [3];
-
-      return [x, y];
-   },
    isPointerInRectangle: (() =>
    {
       const pointer = new Vector2 (0, 0);

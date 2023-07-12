@@ -76,18 +76,6 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
       element .on ("touchstart.PointingDevice" + this .getId (), this .touchstart .bind (this));
       element .on ("touchend.PointingDevice"   + this .getId (), this .touchend   .bind (this));
    },
-   getPointer (event)
-   {
-      const
-         browser  = this .getBrowser (),
-         offset   = browser .getSurface () .offset (),
-         rect     = browser .getSurface () [0] .getBoundingClientRect (),
-         viewport = browser .getViewport (),
-         x        = (event .pageX - offset .left) / rect .width * viewport [2],
-         y        = (1 - (event .pageY - offset .top) / rect .height) * viewport [3];
-
-      return [x, y];
-   },
    mousewheel (event)
    {
       // event .preventDefault () must be done in the all viewers.
@@ -105,7 +93,7 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
 
       if (event .button === 0)
       {
-         const [x, y] = this .getPointer (event);
+         const [x, y] = browser .transformCoords (event);
 
          element .off ("mousemove.PointingDevice" + this .getId ());
 
@@ -135,7 +123,7 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
             browser = this .getBrowser (),
             element = browser .getSurface ();
 
-         const [x, y] = this .getPointer (event);
+         const [x, y] = browser .transformCoords (event);
 
          $(document) .off (".PointingDevice" + this .getId ());
          element .on ("mousemove.PointingDevice" + this .getId (), this .mousemove .bind (this));
@@ -164,7 +152,7 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
 
       this .motionTime = browser .getCurrentTime ();
 
-      const [x, y] = this .getPointer (event);
+      const [x, y] = browser .transformCoords (event);
 
       this .onmotion (x, y);
    },

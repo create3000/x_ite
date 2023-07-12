@@ -164,6 +164,17 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
    {
       return this [_pointingLayer];
    },
+   transformCoords ({ pageX, pageY })
+   {
+      const
+         offset   = this .getSurface () .offset (),
+         rect     = this .getSurface () [0] .getBoundingClientRect (),
+         viewport = this .getViewport (),
+         x        =      (pageX - offset .left) / rect .width   * viewport [2],
+         y        = (1 - (pageY - offset .top)  / rect .height) * viewport [3];
+
+      return [x, y];
+   },
    getHit ()
    {
       return this [_hit];
