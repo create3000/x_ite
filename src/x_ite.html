@@ -402,16 +402,18 @@ main.color-management #browser {
       <main>
          <div>
             <form action="javascript:alert('form submitted')">
-               <x3d-canvas id="browser" splashScreen="true" contextMenu="true" cache="false" debug="true" preserveDrawingBuffer="false" oninitialized="$('#file') .addClass ('loaded')" x-baseURL="tests/" x-src="lines.x3d" update="auto">
-                  <p class="fallback">
-                     Sorry,<br/>
-                     it wasn't me!<br/>
-                     <br/>
-                     Your browser may not support all features required by X_ITE! You can use Firefox, Chrome,
-                     or Microsoft Edge, because this is currently the choice of the choice. We will continuously
-                     keep you informed on technical developments and as soon as X_ITE is running in other browser too.
-                  </p>
-               </x3d-canvas>
+               <div style="transform: matrix(1, 0, 0, 1, 0, 0); transform-origin: 50% 50%;">
+                  <x3d-canvas id="browser" splashScreen="true" contextMenu="true" cache="false" debug="true" preserveDrawingBuffer="false" oninitialized="$('#file') .addClass ('loaded')" x-baseURL="tests/" x-src="lines.x3d" update="auto">
+                     <p class="fallback">
+                        Sorry,<br/>
+                        it wasn't me!<br/>
+                        <br/>
+                        Your browser may not support all features required by X_ITE! You can use Firefox, Chrome,
+                        or Microsoft Edge, because this is currently the choice of the choice. We will continuously
+                        keep you informed on technical developments and as soon as X_ITE is running in other browser too.
+                     </p>
+                  </x3d-canvas>
+                </div>
             </form>
             <div id="location-bar">
                <input id="location-entry" value="https://www.web3d.org/x3d/content/examples/Basic/ChemicalMarkupLanguage/ButanedioicAcid.x3d"/>

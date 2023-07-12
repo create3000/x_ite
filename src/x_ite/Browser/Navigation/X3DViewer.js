@@ -98,11 +98,11 @@ Object .assign (Object .setPrototypeOf (X3DViewer .prototype, X3DBaseNode .proto
    getPointer (event)
    {
       const
-         browser      = this .getBrowser (),
-         contentScale = browser .getRenderingProperty ("ContentScale"),
-         offset       = browser .getSurface () .offset (),
-         x            = (event .pageX - offset .left) * contentScale,
-         y            = browser .getViewport () [3] - (event .pageY - offset .top) * contentScale;
+         browser  = this .getBrowser (),
+         rect     = browser .getSurface () [0] .getBoundingClientRect (),
+         viewport = browser .getViewport (),
+         x        = (event .pageX - rect .left) / rect .width * viewport [2],
+         y        = (rect .height - (event .pageY - rect .top)) / rect .height * viewport [3];
 
       return [x, y];
    },
