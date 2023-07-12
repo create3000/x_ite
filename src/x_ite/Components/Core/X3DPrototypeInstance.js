@@ -236,6 +236,11 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
       if (protoNode .isExternProto && protoNode .checkLoadState () !== X3DConstants .COMPLETE_STATE)
       {
          protoNode ._updateInstances .addInterest ("construct", this);
+
+         this [_body] = null;
+
+         if (this .isInitialized ())
+            X3DChildObject .prototype .addEvent .call (this);
       }
       else
       {
