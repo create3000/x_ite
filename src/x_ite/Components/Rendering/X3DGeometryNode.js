@@ -783,6 +783,8 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          this .clear ();
          this .build ();
 
+         const vertices = this .vertices .getValue ();
+
          // Generate coord indices if needed.
 
          if (!this .coordIndices .length)
@@ -813,9 +815,8 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          // Determine bbox.
 
          const
-            min      = this .min,
-            max      = this .max,
-            vertices = this .vertices .getValue ();
+            min = this .min,
+            max = this .max;
 
          if (vertices .length)
          {
