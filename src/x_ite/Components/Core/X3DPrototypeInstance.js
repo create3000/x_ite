@@ -253,18 +253,10 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
    },
    getInnerNode ()
    {
-      if (this [_body])
-      {
-         const rootNodes = this [_body] .getRootNodes ();
+      const innerNode = this [_body] ?.getRootNodes () ?.[0] ?.getValue () ?.getInnerNode ();
 
-         if (rootNodes .length)
-         {
-            const rootNode = rootNodes [0];
-
-            if (rootNode)
-               return rootNode .getValue () .getInnerNode ();
-         }
-      }
+      if (innerNode)
+         return innerNode;
 
       throw new Error ("Root node not available.");
    },
