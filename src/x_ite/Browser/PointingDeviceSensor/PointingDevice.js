@@ -93,7 +93,7 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
 
       if (event .button === 0)
       {
-         const [x, y] = browser .getPointerFromEvent (event);
+         const { x, y } = browser .getPointerFromEvent (event);
 
          element .off ("mousemove.PointingDevice" + this .getId ());
 
@@ -123,7 +123,7 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
             browser = this .getBrowser (),
             element = browser .getSurface ();
 
-         const [x, y] = browser .getPointerFromEvent (event);
+         const { x, y } = browser .getPointerFromEvent (event);
 
          $(document) .off (".PointingDevice" + this .getId ());
          element .on ("mousemove.PointingDevice" + this .getId (), this .mousemove .bind (this));
@@ -152,7 +152,7 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
 
       this .motionTime = browser .getCurrentTime ();
 
-      const [x, y] = browser .getPointerFromEvent (event);
+      const { x, y } = browser .getPointerFromEvent (event);
 
       this .onmotion (x, y);
    },
