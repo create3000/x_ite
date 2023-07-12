@@ -55,6 +55,7 @@ function PointingDevice (executionContext)
 {
    X3DBaseNode .call (this, executionContext);
 
+   this .document   = $(document);
    this .cursor     = "DEFAULT";
    this .isOver     = false;
    this .motionTime = 0;
@@ -82,8 +83,8 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
          browser  = this .getBrowser (),
          rect     = browser .getSurface () [0] .getBoundingClientRect (),
          viewport = browser .getViewport (),
-         x        = (event .pageX - (rect .left + $(document) .scrollLeft ())) / rect .width * viewport [2],
-         y        = (rect .height - (event .pageY - (rect .top + $(document) .scrollTop ()))) / rect .height * viewport [3];
+         x        = (event .pageX - (rect .left + this .document .scrollLeft ())) / rect .width * viewport [2],
+         y        = (rect .height - (event .pageY - (rect .top + this .document .scrollTop ()))) / rect .height * viewport [3];
 
       return [x, y];
    },
@@ -108,10 +109,10 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
 
          element .off ("mousemove.PointingDevice" + this .getId ());
 
-         $(document) .on ("mouseup.PointingDevice"   + this .getId (), this .mouseup   .bind (this));
-         $(document) .on ("mousemove.PointingDevice" + this .getId (), this .mousemove .bind (this));
-         $(document) .on ("touchend.PointingDevice"  + this .getId (), this .touchend  .bind (this));
-         $(document) .on ("touchmove.PointingDevice" + this .getId (), this .touchmove .bind (this));
+         this .document .on ("mouseup.PointingDevice"   + this .getId (), this .mouseup   .bind (this));
+         this .document .on ("mousemove.PointingDevice" + this .getId (), this .mousemove .bind (this));
+         this .document .on ("touchend.PointingDevice"  + this .getId (), this .touchend  .bind (this));
+         this .document .on ("touchmove.PointingDevice" + this .getId (), this .touchmove .bind (this));
 
          if (browser .buttonPressEvent (x, y))
          {
@@ -135,7 +136,7 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
 
          const [x, y] = this .getPointer (event);
 
-         $(document) .off (".PointingDevice" + this .getId ());
+         this .document .off (".PointingDevice" + this .getId ());
          element .on ("mousemove.PointingDevice" + this .getId (), this .mousemove .bind (this));
 
          browser .buttonReleaseEvent ();
