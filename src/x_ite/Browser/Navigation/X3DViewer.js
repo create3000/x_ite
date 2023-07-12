@@ -173,7 +173,7 @@ Object .assign (Object .setPrototypeOf (X3DViewer .prototype, X3DBaseNode .proto
          viewpoint = this .getActiveViewpoint (),
          hit       = this .getBrowser () .getHit ();
 
-      viewpoint .lookAtPoint (this .getActiveLayer (), hit .point, 2 - 1.618034, straightenHorizon);
+      viewpoint .lookAtPoint (this .getActiveLayer (), hit .point, 1, 2 - 1.618034, straightenHorizon);
    },
    lookAtBBox (x, y, straightenHorizon)
    {
@@ -188,7 +188,7 @@ Object .assign (Object .setPrototypeOf (X3DViewer .prototype, X3DBaseNode .proto
          .multRight (hit .modelViewMatrix)
          .multRight (viewpoint .getCameraSpaceMatrix ());
 
-      viewpoint .lookAtBBox (this .getActiveLayer (), bbox, 2 - 1.618034, straightenHorizon);
+      viewpoint .lookAtBBox (this .getActiveLayer (), bbox, 1, 2 - 1.618034, straightenHorizon);
    },
    touch (x, y)
    {

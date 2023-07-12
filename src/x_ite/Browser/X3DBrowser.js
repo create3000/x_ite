@@ -749,14 +749,17 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    {
       return this .getRenderingProperties () .getField (name) .getValue ();
    },
-   viewAll (layerNode)
+   viewAll (layerNode, transitionTime = 1)
    {
+      if (arguments .length === 1 && typeof layerNode === "number")
+         transitionTime = layerNode;
+
       layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode) ?? this .getActiveLayer ();
 
       if (!layerNode)
          return;
 
-      layerNode .viewAll (1, this .getBrowserOption ("StraightenHorizon"));
+      layerNode .viewAll (transitionTime, 1, this .getBrowserOption ("StraightenHorizon"));
    },
    firstViewpoint (layerNode)
    {
