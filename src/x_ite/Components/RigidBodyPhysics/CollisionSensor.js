@@ -228,13 +228,17 @@ Object .assign (Object .setPrototypeOf (CollisionSensor .prototype, X3DSensorNod
       const contactNode = this .contactCache [index];
 
       if (contactNode)
+      {
          return contactNode;
+      }
+      else
+      {
+         const contactNode = this .contactCache [index] = this .getExecutionContext () .createNode ("Contact", false);
 
-      contactNode = this .contactCache [index] = this .getExecutionContext () .createNode ("Contact", false);
+         contactNode .setup ();
 
-      contactNode .setup ();
-
-      return contactNode;
+         return contactNode;
+      }
    },
 });
 
