@@ -101,8 +101,8 @@ Object .assign (Object .setPrototypeOf (X3DViewer .prototype, X3DBaseNode .proto
          browser  = this .getBrowser (),
          rect     = browser .getSurface () [0] .getBoundingClientRect (),
          viewport = browser .getViewport (),
-         x        = (event .pageX - rect .left) / rect .width * viewport [2],
-         y        = (rect .height - (event .pageY - rect .top)) / rect .height * viewport [3];
+         x        = (event .pageX - (rect .left + $(document) .scrollLeft ())) / rect .width * viewport [2],
+         y        = (rect .height - (event .pageY - (rect .top + $(document) .scrollTop ()))) / rect .height * viewport [3];
 
       return [x, y];
    },
