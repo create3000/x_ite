@@ -540,7 +540,7 @@ If you ever get into trouble, please [report a bug](report-a-bug). If you have a
 
 ## Become a Patreon of X_ITE
 
-Yeah tell me!
+Yeah, tell me!
 
 Have a look at: [https://patreon.com/X_ITE](https://patreon.com/X_ITE)
 
