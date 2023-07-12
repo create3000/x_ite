@@ -62,7 +62,7 @@ function BallJoint (executionContext)
    this ._anchorPoint .setUnit ("length");
 
    this .joint             = null;
-   this .outputs           = { };
+   this .outputs           = new Set ();
    this .localAnchorPoint1 = new Vector3 (0, 0, 0);
    this .localAnchorPoint2 = new Vector3 (0, 0, 0);
 }
@@ -114,8 +114,7 @@ Object .assign (Object .setPrototypeOf (BallJoint .prototype, X3DRigidJointNode 
    },
    set_forceOutput__ ()
    {
-      for (var key in this .outputs)
-         delete this .outputs [key];
+      this .outputs .clear ();
 
       for (var i = 0, length = this ._forceOutput .length; i < length; ++ i)
       {
@@ -123,16 +122,16 @@ Object .assign (Object .setPrototypeOf (BallJoint .prototype, X3DRigidJointNode 
 
          if (value == "ALL")
          {
-            this .outputs .body1AnchorPoint = true;
-            this .outputs .body2AnchorPoint = true;
+            this .outputs .add ("body1AnchorPoint");
+            this .outputs .add ("body2AnchorPoint");
          }
          else
          {
-            this .outputs [value] = true;
+            this .outputs .add (value);
          }
       }
 
-      this .setOutput (!$.isEmptyObject (this .outputs));
+      this .setOutput (!! this .outputs .size);
    },
    set_anchorPoint__ ()
    {
@@ -155,7 +154,7 @@ Object .assign (Object .setPrototypeOf (BallJoint .prototype, X3DRigidJointNode 
 
       return function ()
       {
-         if (this .outputs .body1AnchorPoint)
+         if (this .outputs .has ("body1AnchorPoint"))
             this ._body1AnchorPoint = this .getBody1 () .getMatrix () .multVecMatrix (this .getInitialInverseMatrix1 () .multVecMatrix (localAnchorPoint1 .assign (this .localAnchorPoint1)));
       };
    })(),
@@ -165,7 +164,7 @@ Object .assign (Object .setPrototypeOf (BallJoint .prototype, X3DRigidJointNode 
 
       return function ()
       {
-         if (this .outputs .body2AnchorPoint)
+         if (this .outputs .has ("body2AnchorPoint"))
             this ._body2AnchorPoint = this .getBody2 () .getMatrix () .multVecMatrix (this .getInitialInverseMatrix2 () .multVecMatrix (localAnchorPoint2 .assign (this .localAnchorPoint2)));
       };
    })(),

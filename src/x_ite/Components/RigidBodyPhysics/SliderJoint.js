@@ -68,7 +68,7 @@ function SliderJoint (executionContext)
    this ._separationRate .setUnit ("speed");
 
    this .joint   = null;
-   this .outputs = { };
+   this .outputs = new Set ();
 }
 
 Object .assign (Object .setPrototypeOf (SliderJoint .prototype, X3DRigidJointNode .prototype),
@@ -156,8 +156,7 @@ Object .assign (Object .setPrototypeOf (SliderJoint .prototype, X3DRigidJointNod
    },
    set_forceOutput__ ()
    {
-      for (var key in this .outputs)
-         delete this .outputs [key];
+      this .outputs .clear ();
 
       for (var i = 0, length = this ._forceOutput .length; i < length; ++ i)
       {
@@ -165,16 +164,16 @@ Object .assign (Object .setPrototypeOf (SliderJoint .prototype, X3DRigidJointNod
 
          if (value == "ALL")
          {
-            this .outputs .separation     = true;
-            this .outputs .separationRate = true;
+            this .outputs .add ("separation");
+            this .outputs .add ("separationRate");
          }
          else
          {
-            this .outputs [value] = true;
+            this .outputs .add (value);
          }
       }
 
-      this .setOutput (! $.isEmptyObject (this .outputs));
+      this .setOutput (!! this .outputs .size);
    },
    set_separation__ ()
    {

@@ -382,12 +382,12 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
          // Create
 
          const
-            normalIndex = [ ],
+            normalIndex = new Map (),
             normals     = [ ],
             points      = this .createPoints ();
 
          for (let p = 0, length = points .length; p < length; ++ p)
-            normalIndex [p] = [ ];
+            normalIndex .set (p, [ ]);
 
          // Build body.
 
@@ -493,19 +493,19 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
                      texCoordArray .push (k / numCrossSection_1, y, 0, 1);
                   }
 
-                  normalIndex [i1] .push (normals .length);
+                  normalIndex .get (i1) .push (normals .length);
                   normals .push (normal1);
                   vertexArray .push (p1 .x, p1 .y, p1 .z, 1);
 
                   // p2
                   texCoordArray .push ((k + 1) / numCrossSection_1, n / numSpine_1, 0, 1);
-                  normalIndex [i2] .push (normals .length);
+                  normalIndex .get (i2) .push (normals .length);
                   normals .push (normal1);
                   vertexArray .push (p2 .x, p2 .y, p2 .z, 1);
 
                   // p3
                   texCoordArray .push ((k + 1) / numCrossSection_1, (n + 1) / numSpine_1, 0, 1);
-                  normalIndex [i3] .push (normals .length);
+                  normalIndex .get (i3) .push (normals .length);
                   normals .push (normal1);
                   vertexArray .push (p3 .x, p3 .y, p3 .z, 1);
                }
@@ -518,7 +518,7 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
 
                   // p1
                   texCoordArray .push (k / numCrossSection_1, n / numSpine_1, 0, 1);
-                  normalIndex [i1] .push (normals .length);
+                  normalIndex .get (i1) .push (normals .length);
                   normals .push (normal2);
                   vertexArray .push (p1 .x, p1 .y, p1 .z, 1);
 
@@ -535,13 +535,13 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
                      texCoordArray .push ((k + 1) / numCrossSection_1, y, 0, 1);
                   }
 
-                  normalIndex [i3] .push (normals .length);
+                  normalIndex .get (i3) .push (normals .length);
                   normals .push (normal2);
                   vertexArray .push (p3 .x, p3 .y, p3 .z, 1);
 
                   // p4
                   texCoordArray .push (k / numCrossSection_1, (n + 1) / numSpine_1, 0, 1);
-                  normalIndex [i4] .push (normals .length);
+                  normalIndex .get (i4) .push (normals .length);
                   normals .push (normal2);
                   vertexArray .push (p4 .x, p4 .y, p4 .z, 1);
                }
@@ -550,12 +550,10 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
 
          // Refine body normals and add them.
 
-         const refineNormals = this .refineNormals (normalIndex, normals, this ._creaseAngle .getValue ());
+         const refinedNormals = this .refineNormals (normalIndex, normals, this ._creaseAngle .getValue ());
 
-         for (const normal of refineNormals)
-         {
+         for (const normal of refinedNormals)
             normalArray .push (normal .x, normal .y, normal .z);
-         }
 
          // Build caps
 

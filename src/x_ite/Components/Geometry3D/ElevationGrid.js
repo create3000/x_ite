@@ -196,11 +196,11 @@ Object .assign (Object .setPrototypeOf (ElevationGrid .prototype, X3DGeometryNod
    {
       const
          cw          = ! this ._ccw .getValue (),
-         normalIndex = [ ],
+         normalIndex = new Map (),
          normals     = [ ];
 
       for (let p = 0, length = points .length; p < length; ++ p)
-         normalIndex [p] = [ ];
+         normalIndex .set (p, [ ]);
 
       for (let c = 0, length = coordIndex .length; c < length; c += 3)
       {
@@ -209,9 +209,9 @@ Object .assign (Object .setPrototypeOf (ElevationGrid .prototype, X3DGeometryNod
             c1 = coordIndex [c + 1],
             c2 = coordIndex [c + 2];
 
-         normalIndex [c0] .push (normals .length);
-         normalIndex [c1] .push (normals .length + 1);
-         normalIndex [c2] .push (normals .length + 2);
+         normalIndex .get (c0) .push (normals .length);
+         normalIndex .get (c1) .push (normals .length + 1);
+         normalIndex .get (c2) .push (normals .length + 2);
 
          const normal = Triangle3 .normal (points [c0], points [c1], points [c2], new Vector3 (0, 0, 0));
 
@@ -222,6 +222,9 @@ Object .assign (Object .setPrototypeOf (ElevationGrid .prototype, X3DGeometryNod
          normals .push (normal);
          normals .push (normal);
       }
+
+      // if (!this ._normalPerVertex .getValue ())
+      //    return normals;
 
       return this .refineNormals (normalIndex, normals, this ._creaseAngle .getValue ());
    },

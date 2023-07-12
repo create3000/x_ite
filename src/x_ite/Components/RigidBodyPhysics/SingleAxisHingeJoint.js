@@ -70,7 +70,7 @@ function SingleAxisHingeJoint (executionContext)
    this ._angleRate        .setUnit ("angularRate");
 
    this .joint             = null;
-   this .outputs           = { };
+   this .outputs           = new Set ();
    this .localAnchorPoint1 = new Vector3 (0, 0, 0);
    this .localAnchorPoint2 = new Vector3 (0, 0, 0);
 }
@@ -145,8 +145,7 @@ Object .assign (Object .setPrototypeOf (SingleAxisHingeJoint .prototype, X3DRigi
    },
    set_forceOutput__ ()
    {
-      for (var key in this .outputs)
-         delete this .outputs [key];
+      this .outputs .clear ();
 
       for (var i = 0, length = this ._forceOutput .length; i < length; ++ i)
       {
@@ -154,18 +153,18 @@ Object .assign (Object .setPrototypeOf (SingleAxisHingeJoint .prototype, X3DRigi
 
          if (value == "ALL")
          {
-            this .outputs .body1AnchorPoint = true;
-            this .outputs .body2AnchorPoint = true;
-            this .outputs .angle            = true;
-            this .outputs .angularRate      = true;
+            this .outputs .add ("body1AnchorPoint");
+            this .outputs .add ("body2AnchorPoint");
+            this .outputs .add ("angle");
+            this .outputs .add ("angularRate");
          }
          else
          {
-            this .outputs [value] = true;
+            this .outputs .add (value);
          }
       }
 
-      this .setOutput (! $.isEmptyObject (this .outputs));
+      this .setOutput (!! this .outputs .size);
    },
    update1: (() =>
    {
@@ -173,7 +172,7 @@ Object .assign (Object .setPrototypeOf (SingleAxisHingeJoint .prototype, X3DRigi
 
       return function ()
       {
-         if (this .outputs .body1AnchorPoint)
+         if (this .outputs .has ("body1AnchorPoint"))
             this ._body1AnchorPoint = this .getBody1 () .getMatrix () .multVecMatrix (this .getInitialInverseMatrix1 () .multVecMatrix (localAnchorPoint1 .assign (this .localAnchorPoint1)));
       };
    })(),
@@ -186,10 +185,10 @@ Object .assign (Object .setPrototypeOf (SingleAxisHingeJoint .prototype, X3DRigi
 
       return function ()
       {
-         if (this .outputs .body2AnchorPoint)
+         if (this .outputs .has ("body2AnchorPoint"))
             this ._body2AnchorPoint = this .getBody2 () .getMatrix () .multVecMatrix (this .getInitialInverseMatrix2 () .multVecMatrix (localAnchorPoint2 .assign (this .localAnchorPoint2)));
 
-         if (this .outputs .angle)
+         if (this .outputs .has ("angle"))
          {
             var lastAngle  = this ._angle .getValue ();
 
@@ -198,7 +197,7 @@ Object .assign (Object .setPrototypeOf (SingleAxisHingeJoint .prototype, X3DRigi
 
             this ._angle = rotation .angle;
 
-            if (this .outputs .angleRate)
+            if (this .outputs .has ("angleRate"))
                this ._angleRate = (this ._angle .getValue () - lastAngle) * this .getBrowser () .getCurrentFrameRate ();
          }
       };
