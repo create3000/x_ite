@@ -1,13 +1,5 @@
-/* X_ITE v8.9.3 */(() => { // webpackBootstrap
+/* X_ITE v8.9.4 */(() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
-
-/***/ 355:
-/***/ ((module) => {
-
-"use strict";
-module.exports = window [Symbol .for ("X_ITE.X3D-8.9.3")] .require ("lib/jquery");
-
-/***/ }),
 
 /***/ 573:
 /***/ (() => {
@@ -88,31 +80,31 @@ var __webpack_exports__ = {};
 // UNUSED EXPORTS: default
 
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components\")"
-const Components_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.3")] .require ("x_ite/Components");
+const Components_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.4")] .require ("x_ite/Components");
 var Components_default = /*#__PURE__*/__webpack_require__.n(Components_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Fields\")"
-const Fields_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.3")] .require ("x_ite/Fields");
+const Fields_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.4")] .require ("x_ite/Fields");
 var Fields_default = /*#__PURE__*/__webpack_require__.n(Fields_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DFieldDefinition\")"
-const X3DFieldDefinition_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.3")] .require ("x_ite/Base/X3DFieldDefinition");
+const X3DFieldDefinition_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.4")] .require ("x_ite/Base/X3DFieldDefinition");
 var X3DFieldDefinition_default = /*#__PURE__*/__webpack_require__.n(X3DFieldDefinition_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/FieldDefinitionArray\")"
-const FieldDefinitionArray_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.3")] .require ("x_ite/Base/FieldDefinitionArray");
+const FieldDefinitionArray_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.4")] .require ("x_ite/Base/FieldDefinitionArray");
 var FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(FieldDefinitionArray_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Core/X3DNode\")"
-const X3DNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.3")] .require ("x_ite/Components/Core/X3DNode");
+const X3DNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.4")] .require ("x_ite/Components/Core/X3DNode");
 var X3DNode_default = /*#__PURE__*/__webpack_require__.n(X3DNode_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DConstants\")"
-const X3DConstants_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.3")] .require ("x_ite/Base/X3DConstants");
+const X3DConstants_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.4")] .require ("x_ite/Base/X3DConstants");
 var X3DConstants_default = /*#__PURE__*/__webpack_require__.n(X3DConstants_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DCast\")"
-const X3DCast_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.3")] .require ("x_ite/Base/X3DCast");
+const X3DCast_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.4")] .require ("x_ite/Base/X3DCast");
 var X3DCast_default = /*#__PURE__*/__webpack_require__.n(X3DCast_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Matrix4\")"
-const Matrix4_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.3")] .require ("standard/Math/Numbers/Matrix4");
+const Matrix4_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.4")] .require ("standard/Math/Numbers/Matrix4");
 var Matrix4_default = /*#__PURE__*/__webpack_require__.n(Matrix4_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Namespace\")"
-const Namespace_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.3")] .require ("x_ite/Namespace");
+const Namespace_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.4")] .require ("x_ite/Namespace");
 var Namespace_default = /*#__PURE__*/__webpack_require__.n(Namespace_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/X3DRigidJointNode.js
 /*******************************************************************************
@@ -341,7 +333,7 @@ const __default__ = X3DRigidJointNode;
 Namespace_default().set ("x_ite/Components/RigidBodyPhysics/X3DRigidJointNode", __default__);
 /* harmony default export */ const RigidBodyPhysics_X3DRigidJointNode = (__default__);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Vector3\")"
-const Vector3_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.3")] .require ("standard/Math/Numbers/Vector3");
+const Vector3_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.4")] .require ("standard/Math/Numbers/Vector3");
 var Vector3_default = /*#__PURE__*/__webpack_require__.n(Vector3_namespaceObject);
 ;// CONCATENATED MODULE: ./src/lib/ammojs/ammo.js
 var ammo_dirname = "/";
@@ -440,7 +432,6 @@ const AmmoClass_default_ = new ammo ();
 Namespace_default().set ("lib/ammojs/AmmoClass", AmmoClass_default_);
 /* harmony default export */ const AmmoClass = (AmmoClass_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/BallJoint.js
-/* provided dependency */ var $ = __webpack_require__(355);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -505,7 +496,7 @@ function BallJoint (executionContext)
    this ._anchorPoint .setUnit ("length");
 
    this .joint             = null;
-   this .outputs           = { };
+   this .outputs           = new Set ();
    this .localAnchorPoint1 = new (Vector3_default()) (0, 0, 0);
    this .localAnchorPoint2 = new (Vector3_default()) (0, 0, 0);
 }
@@ -557,8 +548,7 @@ Object .assign (Object .setPrototypeOf (BallJoint .prototype, RigidBodyPhysics_X
    },
    set_forceOutput__ ()
    {
-      for (var key in this .outputs)
-         delete this .outputs [key];
+      this .outputs .clear ();
 
       for (var i = 0, length = this ._forceOutput .length; i < length; ++ i)
       {
@@ -566,16 +556,16 @@ Object .assign (Object .setPrototypeOf (BallJoint .prototype, RigidBodyPhysics_X
 
          if (value == "ALL")
          {
-            this .outputs .body1AnchorPoint = true;
-            this .outputs .body2AnchorPoint = true;
+            this .outputs .add ("body1AnchorPoint");
+            this .outputs .add ("body2AnchorPoint");
          }
          else
          {
-            this .outputs [value] = true;
+            this .outputs .add (value);
          }
       }
 
-      this .setOutput (!$.isEmptyObject (this .outputs));
+      this .setOutput (!! this .outputs .size);
    },
    set_anchorPoint__ ()
    {
@@ -598,7 +588,7 @@ Object .assign (Object .setPrototypeOf (BallJoint .prototype, RigidBodyPhysics_X
 
       return function ()
       {
-         if (this .outputs .body1AnchorPoint)
+         if (this .outputs .has ("body1AnchorPoint"))
             this ._body1AnchorPoint = this .getBody1 () .getMatrix () .multVecMatrix (this .getInitialInverseMatrix1 () .multVecMatrix (localAnchorPoint1 .assign (this .localAnchorPoint1)));
       };
    })(),
@@ -608,7 +598,7 @@ Object .assign (Object .setPrototypeOf (BallJoint .prototype, RigidBodyPhysics_X
 
       return function ()
       {
-         if (this .outputs .body2AnchorPoint)
+         if (this .outputs .has ("body2AnchorPoint"))
             this ._body2AnchorPoint = this .getBody2 () .getMatrix () .multVecMatrix (this .getInitialInverseMatrix2 () .multVecMatrix (localAnchorPoint2 .assign (this .localAnchorPoint2)));
       };
    })(),
@@ -657,10 +647,10 @@ const BallJoint_default_ = BallJoint;
 Namespace_default().set ("x_ite/Components/RigidBodyPhysics/BallJoint", BallJoint_default_);
 /* harmony default export */ const RigidBodyPhysics_BallJoint = (BallJoint_default_);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Core/X3DChildNode\")"
-const X3DChildNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.3")] .require ("x_ite/Components/Core/X3DChildNode");
+const X3DChildNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.4")] .require ("x_ite/Components/Core/X3DChildNode");
 var X3DChildNode_default = /*#__PURE__*/__webpack_require__.n(X3DChildNode_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Grouping/X3DBoundedObject\")"
-const X3DBoundedObject_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.3")] .require ("x_ite/Components/Grouping/X3DBoundedObject");
+const X3DBoundedObject_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.4")] .require ("x_ite/Components/Grouping/X3DBoundedObject");
 var X3DBoundedObject_default = /*#__PURE__*/__webpack_require__.n(X3DBoundedObject_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/X3DNBodyCollidableNode.js
 /*******************************************************************************
@@ -835,7 +825,7 @@ const X3DNBodyCollidableNode_default_ = X3DNBodyCollidableNode;
 Namespace_default().set ("x_ite/Components/RigidBodyPhysics/X3DNBodyCollidableNode", X3DNBodyCollidableNode_default_);
 /* harmony default export */ const RigidBodyPhysics_X3DNBodyCollidableNode = (X3DNBodyCollidableNode_default_);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Rendering/TraverseType\")"
-const TraverseType_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.3")] .require ("x_ite/Rendering/TraverseType");
+const TraverseType_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.4")] .require ("x_ite/Rendering/TraverseType");
 var TraverseType_default = /*#__PURE__*/__webpack_require__.n(TraverseType_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/CollidableOffset.js
 /*******************************************************************************
@@ -1893,7 +1883,7 @@ const CollisionCollection_default_ = CollisionCollection;
 Namespace_default().set ("x_ite/Components/RigidBodyPhysics/CollisionCollection", CollisionCollection_default_);
 /* harmony default export */ const RigidBodyPhysics_CollisionCollection = (CollisionCollection_default_);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Core/X3DSensorNode\")"
-const X3DSensorNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.3")] .require ("x_ite/Components/Core/X3DSensorNode");
+const X3DSensorNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.4")] .require ("x_ite/Components/Core/X3DSensorNode");
 var X3DSensorNode_default = /*#__PURE__*/__webpack_require__.n(X3DSensorNode_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/CollisionSensor.js
 /*******************************************************************************
@@ -2126,13 +2116,17 @@ Object .assign (Object .setPrototypeOf (CollisionSensor .prototype, (X3DSensorNo
       const contactNode = this .contactCache [index];
 
       if (contactNode)
+      {
          return contactNode;
+      }
+      else
+      {
+         const contactNode = this .contactCache [index] = this .getExecutionContext () .createNode ("Contact", false);
 
-      contactNode = this .contactCache [index] = this .getExecutionContext () .createNode ("Contact", false);
+         contactNode .setup ();
 
-      contactNode .setup ();
-
-      return contactNode;
+         return contactNode;
+      }
    },
 });
 
@@ -2580,10 +2574,9 @@ const Contact_default_ = Contact;
 Namespace_default().set ("x_ite/Components/RigidBodyPhysics/Contact", Contact_default_);
 /* harmony default export */ const RigidBodyPhysics_Contact = (Contact_default_);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Rotation4\")"
-const Rotation4_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.3")] .require ("standard/Math/Numbers/Rotation4");
+const Rotation4_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.4")] .require ("standard/Math/Numbers/Rotation4");
 var Rotation4_default = /*#__PURE__*/__webpack_require__.n(Rotation4_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/DoubleAxisHingeJoint.js
-/* provided dependency */ var DoubleAxisHingeJoint_$ = __webpack_require__(355);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -2656,7 +2649,7 @@ function DoubleAxisHingeJoint (executionContext)
    this ._suspensionForce         .setUnit ("force");
 
    this .joint             = null;
-   this .outputs           = { };
+   this .outputs           = new Set ();
    this .localAnchorPoint1 = new (Vector3_default()) (0, 0, 0);
    this .localAnchorPoint2 = new (Vector3_default()) (0, 0, 0);
    this .localAxis1        = new (Vector3_default()) (0, 0, 0);
@@ -2732,8 +2725,7 @@ Object .assign (Object .setPrototypeOf (DoubleAxisHingeJoint .prototype, RigidBo
    },
    set_forceOutput__ ()
    {
-      for (var key in this .outputs)
-         delete this .outputs [key];
+      this .outputs .clear ();
 
       for (var i = 0, length = this ._forceOutput .length; i < length; ++ i)
       {
@@ -2741,22 +2733,22 @@ Object .assign (Object .setPrototypeOf (DoubleAxisHingeJoint .prototype, RigidBo
 
          if (value == "ALL")
          {
-            this .outputs .body1AnchorPoint = true;
-            this .outputs .body2AnchorPoint = true;
-            this .outputs .body1Axis        = true;
-            this .outputs .body2Axis        = true;
-            this .outputs .hinge1Angle      = true;
-            this .outputs .hinge2Angle      = true;
-            this .outputs .hinge1AngleRate  = true;
-            this .outputs .hinge2AngleRate  = true;
+            this .outputs .add ("body1AnchorPoint");
+            this .outputs .add ("body2AnchorPoint");
+            this .outputs .add ("body1Axis");
+            this .outputs .add ("body2Axis");
+            this .outputs .add ("hinge1Angle");
+            this .outputs .add ("hinge2Angle");
+            this .outputs .add ("hinge1AngleRate");
+            this .outputs .add ("hinge2AngleRate");
          }
          else
          {
-            this .outputs [value] = true;
+            this .outputs .add (value);
          }
       }
 
-      this .setOutput (! DoubleAxisHingeJoint_$.isEmptyObject (this .outputs));
+      this .setOutput (!! this .outputs .size);
    },
    update1: (() =>
    {
@@ -2768,13 +2760,13 @@ Object .assign (Object .setPrototypeOf (DoubleAxisHingeJoint .prototype, RigidBo
 
       return function ()
       {
-         if (this .outputs .body1AnchorPoint)
+         if (this .outputs .has ("body1AnchorPoint"))
             this ._body1AnchorPoint = this .getBody1 () .getMatrix () .multVecMatrix (this .getInitialInverseMatrix1 () .multVecMatrix (localAnchorPoint1 .assign (this .localAnchorPoint1)));
 
-         if (this .outputs .body1Axis)
+         if (this .outputs .has ("body1Axis"))
             this ._body1Axis = this .getInitialInverseMatrix1 () .multDirMatrix (this .getBody1 () .getMatrix () .multDirMatrix (localAxis1 .assign (this .localAxis1))) .normalize ();
 
-         if (this .outputs .hinge1Angle)
+         if (this .outputs .has ("hinge1Angle"))
          {
             var lastAngle  = this ._hinge1Angle .getValue ();
 
@@ -2783,7 +2775,7 @@ Object .assign (Object .setPrototypeOf (DoubleAxisHingeJoint .prototype, RigidBo
 
             this ._hinge1Angle = rotation .angle;
 
-            if (this .outputs .angleRate)
+            if (this .outputs .has ("angleRate"))
                this ._hinge1AngleRate = (this ._hinge1Angle .getValue () - lastAngle) * this .getBrowser () .getCurrentFrameRate ();
          }
       };
@@ -2798,13 +2790,13 @@ Object .assign (Object .setPrototypeOf (DoubleAxisHingeJoint .prototype, RigidBo
 
       return function ()
       {
-         if (this .outputs .body2AnchorPoint)
+         if (this .outputs .has ("body2AnchorPoint"))
             this ._body2AnchorPoint = this .getBody2 () .getMatrix () .multVecMatrix (this .getInitialInverseMatrix2 () .multVecMatrix (localAnchorPoint2 .assign (this .localAnchorPoint2)));
 
-         if (this .outputs .body2Axis)
+         if (this .outputs .has ("body2Axis"))
             this ._body2Axis = this .getInitialInverseMatrix2 () .multDirMatrix (this .getBody2 () .getMatrix () .multDirMatrix (localAxis2 .assign (this .localAxis2))) .normalize ();
 
-         if (this .outputs .hinge2Angle)
+         if (this .outputs .has ("hinge2Angle"))
          {
             var lastAngle  = this ._hinge2Angle .getValue ();
 
@@ -2813,7 +2805,7 @@ Object .assign (Object .setPrototypeOf (DoubleAxisHingeJoint .prototype, RigidBo
 
             this ._hinge2Angle = rotation .angle;
 
-            if (this .outputs .angleRate)
+            if (this .outputs .has ("angleRate"))
                this ._hinge2AngleRate = (this ._hinge2Angle .getValue () - lastAngle) * this .getBrowser () .getCurrentFrameRate ();
          }
       };
@@ -3019,7 +3011,7 @@ const MotorJoint_default_ = MotorJoint;
 Namespace_default().set ("x_ite/Components/RigidBodyPhysics/MotorJoint", MotorJoint_default_);
 /* harmony default export */ const RigidBodyPhysics_MotorJoint = (MotorJoint_default_);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Quaternion\")"
-const Quaternion_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.3")] .require ("standard/Math/Numbers/Quaternion");
+const Quaternion_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.4")] .require ("standard/Math/Numbers/Quaternion");
 var Quaternion_default = /*#__PURE__*/__webpack_require__.n(Quaternion_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/RigidBody.js
 /*******************************************************************************
@@ -3939,7 +3931,6 @@ const RigidBodyCollection_default_ = RigidBodyCollection;
 Namespace_default().set ("x_ite/Components/RigidBodyPhysics/RigidBodyCollection", RigidBodyCollection_default_);
 /* harmony default export */ const RigidBodyPhysics_RigidBodyCollection = (RigidBodyCollection_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/SingleAxisHingeJoint.js
-/* provided dependency */ var SingleAxisHingeJoint_$ = __webpack_require__(355);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -4012,7 +4003,7 @@ function SingleAxisHingeJoint (executionContext)
    this ._angleRate        .setUnit ("angularRate");
 
    this .joint             = null;
-   this .outputs           = { };
+   this .outputs           = new Set ();
    this .localAnchorPoint1 = new (Vector3_default()) (0, 0, 0);
    this .localAnchorPoint2 = new (Vector3_default()) (0, 0, 0);
 }
@@ -4087,8 +4078,7 @@ Object .assign (Object .setPrototypeOf (SingleAxisHingeJoint .prototype, RigidBo
    },
    set_forceOutput__ ()
    {
-      for (var key in this .outputs)
-         delete this .outputs [key];
+      this .outputs .clear ();
 
       for (var i = 0, length = this ._forceOutput .length; i < length; ++ i)
       {
@@ -4096,18 +4086,18 @@ Object .assign (Object .setPrototypeOf (SingleAxisHingeJoint .prototype, RigidBo
 
          if (value == "ALL")
          {
-            this .outputs .body1AnchorPoint = true;
-            this .outputs .body2AnchorPoint = true;
-            this .outputs .angle            = true;
-            this .outputs .angularRate      = true;
+            this .outputs .add ("body1AnchorPoint");
+            this .outputs .add ("body2AnchorPoint");
+            this .outputs .add ("angle");
+            this .outputs .add ("angularRate");
          }
          else
          {
-            this .outputs [value] = true;
+            this .outputs .add (value);
          }
       }
 
-      this .setOutput (! SingleAxisHingeJoint_$.isEmptyObject (this .outputs));
+      this .setOutput (!! this .outputs .size);
    },
    update1: (() =>
    {
@@ -4115,7 +4105,7 @@ Object .assign (Object .setPrototypeOf (SingleAxisHingeJoint .prototype, RigidBo
 
       return function ()
       {
-         if (this .outputs .body1AnchorPoint)
+         if (this .outputs .has ("body1AnchorPoint"))
             this ._body1AnchorPoint = this .getBody1 () .getMatrix () .multVecMatrix (this .getInitialInverseMatrix1 () .multVecMatrix (localAnchorPoint1 .assign (this .localAnchorPoint1)));
       };
    })(),
@@ -4128,10 +4118,10 @@ Object .assign (Object .setPrototypeOf (SingleAxisHingeJoint .prototype, RigidBo
 
       return function ()
       {
-         if (this .outputs .body2AnchorPoint)
+         if (this .outputs .has ("body2AnchorPoint"))
             this ._body2AnchorPoint = this .getBody2 () .getMatrix () .multVecMatrix (this .getInitialInverseMatrix2 () .multVecMatrix (localAnchorPoint2 .assign (this .localAnchorPoint2)));
 
-         if (this .outputs .angle)
+         if (this .outputs .has ("angle"))
          {
             var lastAngle  = this ._angle .getValue ();
 
@@ -4140,7 +4130,7 @@ Object .assign (Object .setPrototypeOf (SingleAxisHingeJoint .prototype, RigidBo
 
             this ._angle = rotation .angle;
 
-            if (this .outputs .angleRate)
+            if (this .outputs .has ("angleRate"))
                this ._angleRate = (this ._angle .getValue () - lastAngle) * this .getBrowser () .getCurrentFrameRate ();
          }
       };
@@ -4197,7 +4187,6 @@ const SingleAxisHingeJoint_default_ = SingleAxisHingeJoint;
 Namespace_default().set ("x_ite/Components/RigidBodyPhysics/SingleAxisHingeJoint", SingleAxisHingeJoint_default_);
 /* harmony default export */ const RigidBodyPhysics_SingleAxisHingeJoint = (SingleAxisHingeJoint_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/SliderJoint.js
-/* provided dependency */ var SliderJoint_$ = __webpack_require__(355);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -4268,7 +4257,7 @@ function SliderJoint (executionContext)
    this ._separationRate .setUnit ("speed");
 
    this .joint   = null;
-   this .outputs = { };
+   this .outputs = new Set ();
 }
 
 Object .assign (Object .setPrototypeOf (SliderJoint .prototype, RigidBodyPhysics_X3DRigidJointNode .prototype),
@@ -4356,8 +4345,7 @@ Object .assign (Object .setPrototypeOf (SliderJoint .prototype, RigidBodyPhysics
    },
    set_forceOutput__ ()
    {
-      for (var key in this .outputs)
-         delete this .outputs [key];
+      this .outputs .clear ();
 
       for (var i = 0, length = this ._forceOutput .length; i < length; ++ i)
       {
@@ -4365,16 +4353,16 @@ Object .assign (Object .setPrototypeOf (SliderJoint .prototype, RigidBodyPhysics
 
          if (value == "ALL")
          {
-            this .outputs .separation     = true;
-            this .outputs .separationRate = true;
+            this .outputs .add ("separation");
+            this .outputs .add ("separationRate");
          }
          else
          {
-            this .outputs [value] = true;
+            this .outputs .add (value);
          }
       }
 
-      this .setOutput (! SliderJoint_$.isEmptyObject (this .outputs));
+      this .setOutput (!! this .outputs .size);
    },
    set_separation__ ()
    {
