@@ -31,6 +31,12 @@ X_ITE supports custom shaders, clip planes, reflection mapping, script nodes, pr
 
 If you ever get into trouble, please [report a bug](report-a-bug). If you have any questions or need help [open a new issue](report-a-bug).
 
+### Become a Patreon of X_ITE
+
+Yeah, tell me!
+
+Have a look at: [https://patreon.com/X_ITE](https://patreon.com/X_ITE).
+
 ## X3D Examples
 
 <script type="module" src="assets/js/example.js"></script>
@@ -537,12 +543,6 @@ If you ever get into trouble, please [report a bug](report-a-bug). If you have a
 
 >**Note:** The VolumeRendering examples are only working if your browser supports WebGL 2, otherwise the examples left black.
 {: .prompt-info }
-
-## Become a Patreon of X_ITE
-
-Yeah, tell me!
-
-Have a look at: [https://patreon.com/X_ITE](https://patreon.com/X_ITE).
 
 ## Download X_ITE v{{ site.version }}
 
