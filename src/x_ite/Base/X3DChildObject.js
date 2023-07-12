@@ -100,14 +100,14 @@ if (DEVELOPMENT)
          this .setModificationTime (Date .now ());
 
          for (const parent of this [_parents] .values ())
-            parent .deref () .addEvent (this);
+            parent .deref () ?.addEvent (this);
       },
       addEventObject (field, event)
       {
          this .setModificationTime (Date .now ());
 
          for (const parent of this [_parents] .values ())
-            parent .deref () .addEventObject (this, event);
+            parent .deref () ?.addEventObject (this, event);
       },
       processEvent ()
       {
@@ -119,7 +119,7 @@ if (DEVELOPMENT)
          let cloneCount = 0;
 
          for (const weakRef of this [_parents] .values ())
-            cloneCount += weakRef .deref () .collectCloneCount ();
+            cloneCount += weakRef .deref () ?.collectCloneCount ();
 
          return cloneCount;
       },
@@ -153,6 +153,8 @@ if (DEVELOPMENT)
 
          for (const weakRef of this [_parents] .values ())
             parents .add (weakRef .deref ())
+
+         parents .delete (undefined);
 
          return parents;
       },

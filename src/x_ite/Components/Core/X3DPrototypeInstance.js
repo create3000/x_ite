@@ -242,8 +242,6 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
 
          protoNode ._updateInstances .addInterest ("construct", this);
          protoNode .requestImmediateLoad () .catch (Function .prototype);
-
-         return; // See Shape/Appearance test.
       }
       else
       {
