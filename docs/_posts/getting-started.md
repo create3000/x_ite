@@ -538,6 +538,12 @@ If you ever get into trouble, please [report a bug](report-a-bug). If you have a
 >**Note:** The VolumeRendering examples are only working if your browser supports WebGL 2, otherwise the examples left black.
 {: .prompt-info }
 
+## Become a Patreon of X_ITE
+
+Yeah tell me!
+
+Have a look at: [https://patreon.com/X_ITE](https://patreon.com/X_ITE)
+
 ## Download X_ITE v{{ site.version }}
 
 There is a ZIP archive available to locally install X_ITE on your server. Compressed and uncompressed copies of X_ITE files are available. The uncompressed file (x_ite.js) is best used during development or debugging; the compressed file (x_ite.min.js) saves bandwidth and improves performance in production.
