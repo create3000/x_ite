@@ -274,16 +274,16 @@ Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, X3DG
       if (!this ._normalPerVertex .getValue ())
          return normals;
 
-      const normalIndex = [ ];
+      const normalIndex = new Map ();
 
       for (let i = 0; i < polygonsSize; ++ i)
       {
          const index = this .getPolygonIndex (i);
 
-         let pointIndex = normalIndex [index];
+         let pointIndex = normalIndex .get (index);
 
          if (!pointIndex)
-            pointIndex = normalIndex [index] = [ ];
+            normalIndex .set (index, pointIndex = [ ]);
 
          pointIndex .push (i);
       }

@@ -319,78 +319,70 @@ Object .assign (Object .setPrototypeOf (IndexedFaceSet .prototype, X3DComposedGe
          }
       }
    },
-   createNormals: (() =>
+   createNormals (polygons)
    {
       const
-         normals     = [ ],
-         normalIndex = [ ];
+         cw          = !this ._ccw .getValue (),
+         coordIndex  = this ._coordIndex .getValue (),
+         coord       = this .getCoord (),
+         normalIndex = new Map (),
+         normals     = [ ];
 
-      return function (polygons)
+      for (const polygon of polygons)
       {
          const
-            cw         = !this ._ccw .getValue (),
-            coordIndex = this ._coordIndex .getValue (),
-            coord      = this .getCoord ();
+            vertices = polygon .vertices,
+            length   = vertices .length;
 
-         normals     .length = 0;
-         normalIndex .length = 0;
-
-         for (const polygon of polygons)
+         switch (length)
          {
-            const
-               vertices = polygon .vertices,
-               length   = vertices .length;
-
-            switch (length)
+            case 3:
             {
-               case 3:
-               {
-                  var normal = coord .getNormal (coordIndex [vertices [0]],
-                                                 coordIndex [vertices [1]],
-                                                 coordIndex [vertices [2]]);
-                  break;
-               }
-               case 4:
-               {
-                  var normal = coord .getQuadNormal (coordIndex [vertices [0]],
-                                                     coordIndex [vertices [1]],
-                                                     coordIndex [vertices [2]],
-                                                     coordIndex [vertices [3]]);
-                  break;
-               }
-               default:
-               {
-                  var normal = this .getPolygonNormal (vertices, coordIndex, coord);
-                  break;
-               }
+               var normal = coord .getNormal (coordIndex [vertices [0]],
+                                                coordIndex [vertices [1]],
+                                                coordIndex [vertices [2]]);
+               break;
             }
-
-            // Add a normal index for each point.
-
-            for (const index of vertices)
+            case 4:
             {
-               const point = coordIndex [index];
-
-               let pointNormals = normalIndex [point];
-
-               if (!pointNormals)
-                  pointNormals = normalIndex [point] = [ ];
-
-               pointNormals .push (index);
-
-               normals [index] = normal;
+               var normal = coord .getQuadNormal (coordIndex [vertices [0]],
+                                                   coordIndex [vertices [1]],
+                                                   coordIndex [vertices [2]],
+                                                   coordIndex [vertices [3]]);
+               break;
             }
-
-            if (cw)
-               normal .negate ();
+            default:
+            {
+               var normal = this .getPolygonNormal (vertices, coordIndex, coord);
+               break;
+            }
          }
 
-         // if (!this ._normalPerVertex .getValue ())
-         //    return normals;
+         // Add a normal index for each point.
 
-         return this .refineNormals (normalIndex, normals, this ._creaseAngle .getValue ());
-      };
-   })(),
+         for (const index of vertices)
+         {
+            const point = coordIndex [index];
+
+            let pointNormals = normalIndex .get (point);
+
+            if (!pointNormals)
+               normalIndex .set (point, pointNormals = [ ]);
+
+            pointNormals .push (index);
+
+            normals [index] = normal;
+         }
+
+         if (cw)
+            normal .negate ();
+      }
+
+      // if (!this ._normalPerVertex .getValue ())
+      //    return normals;
+
+      return this .refineNormals (normalIndex, normals, this ._creaseAngle .getValue ());
+   },
    getPolygonNormal: (() =>
    {
       let

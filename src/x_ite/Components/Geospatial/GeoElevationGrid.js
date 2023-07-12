@@ -155,11 +155,11 @@ Object .assign (Object .setPrototypeOf (GeoElevationGrid .prototype, X3DGeometry
    {
       const
          cw          = !this ._ccw .getValue (),
-         normalIndex = [ ],
+         normalIndex = new Map (),
          normals     = [ ];
 
       for (let p = 0; p < points .length; ++ p)
-         normalIndex [p] = [ ];
+         normalIndex .set (p, [ ]);
 
       for (let c = 0; c < coordIndex .length; c += 3)
       {
@@ -168,9 +168,9 @@ Object .assign (Object .setPrototypeOf (GeoElevationGrid .prototype, X3DGeometry
             c1 = coordIndex [c + 1],
             c2 = coordIndex [c + 2];
 
-         normalIndex [c0] .push (normals .length);
-         normalIndex [c1] .push (normals .length + 1);
-         normalIndex [c2] .push (normals .length + 2);
+         normalIndex .get (c0) .push (normals .length);
+         normalIndex .get (c1) .push (normals .length + 1);
+         normalIndex .get (c2) .push (normals .length + 2);
 
          const normal = Triangle3 .normal (points [c0], points [c1], points [c2], new Vector3 (0, 0, 0));
 

@@ -320,17 +320,18 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
    createNormals (faces, points)
    {
       const
+         normalIndex = new Map (),
          normals     = this .createFaceNormals (faces, points),
-         normalIndex = [ ];
+         length      = faces .length;
 
-      for (let i = 0, length = faces .length; i < length; ++ i)
+      for (let i = 0; i < length; ++ i)
       {
          const index = faces [i];
 
-         let pointIndex = normalIndex [index];
+         let pointIndex = normalIndex .get (index);
 
          if (!pointIndex)
-            pointIndex = normalIndex [index] = [ ];
+            normalIndex .set (index, pointIndex = [ ]);
 
          pointIndex .push (i);
       }
