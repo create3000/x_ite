@@ -153,14 +153,7 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
    {
       return this [_pointer];
    },
-   isPointerInRectangle (rectangle, pointer = this [_pointer])
-   {
-      return pointer .x >= rectangle .x &&
-             pointer .x <= rectangle .x + rectangle .z &&
-             pointer .y >= rectangle .y &&
-             pointer .y <= rectangle .y + rectangle .w;
-   },
-   transformPointer ({ pageX, pageY })
+   getPointerFromEvent ({ pageX, pageY })
    {
       const
          offset   = this .getSurface () .offset (),
@@ -169,7 +162,14 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
          x        =      (pageX - offset .left) / rect .width   * viewport [2],
          y        = (1 - (pageY - offset .top)  / rect .height) * viewport [3];
 
-      return [x, y];
+      return new Vector2 (x, y);
+   },
+   isPointerInRectangle (rectangle, pointer = this [_pointer])
+   {
+      return pointer .x >= rectangle .x &&
+             pointer .x <= rectangle .x + rectangle .z &&
+             pointer .y >= rectangle .y &&
+             pointer .y <= rectangle .y + rectangle .w;
    },
    getPointingLayer ()
    {
