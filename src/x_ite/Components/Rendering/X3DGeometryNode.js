@@ -443,7 +443,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          cosCreaseAngle = Math .cos (Algorithm .clamp (creaseAngle, 0, Math .PI)),
          refinedNormals = [ ];
 
-      for (const i in normalIndex) // Don't use forEach
+      for (const i in normalIndex) // Don't use forEach, because it is a sparse array.
       {
          const vertex = normalIndex [i];
 
