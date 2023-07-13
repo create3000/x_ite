@@ -395,6 +395,30 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
          gl .texImage2D (gl .TEXTURE_2D, 0, gl .getVersion () > 1 ? gl .RGBA32F : gl .RGBA, jointNodesLength * 4, 1, 0, gl .RGBA, gl .FLOAT, jointNormalMatricesArray);
       };
    })(),
+   setShaderUniforms (gl, shaderObject)
+   {
+      const
+         jointsTextureTextureUnit       = this .getBrowser () .getTexture2DUnit (),
+         weightsTextureTextureUnit      = this .getBrowser () .getTexture2DUnit (),
+         jointMatricesTextureUnit       = this .getBrowser () .getTexture2DUnit (),
+         jointNormalMatricesTextureUnit = this .getBrowser () .getTexture2DUnit ();
+
+      gl .activeTexture (gl .TEXTURE0 + jointsTextureTextureUnit);
+      gl .bindTexture (gl .TEXTURE_2D, this .jointsTexture);
+      gl .uniform1i (shaderObject .x3d_JointsTexture, jointsTextureTextureUnit);
+
+      gl .activeTexture (gl .TEXTURE0 + weightsTextureTextureUnit);
+      gl .bindTexture (gl .TEXTURE_2D, this .weightsTexture);
+      gl .uniform1i (shaderObject .x3d_WeightsTexture, weightsTextureTextureUnit);
+
+      gl .activeTexture (gl .TEXTURE0 + jointMatricesTextureUnit);
+      gl .bindTexture (gl .TEXTURE_2D, this .jointMatricesTexture);
+      gl .uniform1i (shaderObject .x3d_JointMatricesTexture, jointMatricesTextureUnit);
+
+      gl .activeTexture (gl .TEXTURE0 + jointNormalMatricesTextureUnit);
+      gl .bindTexture (gl .TEXTURE_2D, this .jointNormalMatricesTexture);
+      gl .uniform1i (shaderObject .x3d_JointNormalMatricesTexture, jointNormalMatricesTextureUnit);
+   },
    skinning_O: (() =>
    {
       const

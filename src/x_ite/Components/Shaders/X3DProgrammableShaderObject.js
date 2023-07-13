@@ -973,14 +973,12 @@ Object .assign (X3DProgrammableShaderObject .prototype,
 
       return function (gl, geometryContext, renderContext, front = true)
       {
+         const { renderObject, fogNode, appearanceNode, humanoidNode, modelViewMatrix } = renderContext;
+
          const
-            renderObject        = renderContext .renderObject,
-            fogNode             = renderContext .fogNode,
-            appearanceNode      = renderContext .appearanceNode,
             stylePropertiesNode = appearanceNode .getStyleProperties (geometryContext .geometryType),
             materialNode        = front ? appearanceNode .getMaterial () : appearanceNode .getBackMaterial (),
-            textureNode         = renderContext .textureNode || appearanceNode .getTexture (),
-            modelViewMatrix     = renderContext .modelViewMatrix;
+            textureNode         = renderContext .textureNode || appearanceNode .getTexture ();
 
          // Set global uniforms.
 
@@ -1076,6 +1074,10 @@ Object .assign (X3DProgrammableShaderObject .prototype,
 
          appearanceNode  .getTextureTransform ()  .setShaderUniforms (gl, this);
          geometryContext .getTextureCoordinate () .setShaderUniforms (gl, this);
+
+         // Skinning
+
+         humanoidNode ?.setShaderUniforms (gl, this);
       };
    })(),
    enable (gl)

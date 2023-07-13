@@ -657,6 +657,7 @@ Object .assign (X3DRenderObject .prototype,
             renderContext .fogNode         = this .localFogs .at (-1);
             renderContext .shapeNode       = shapeNode;
             renderContext .appearanceNode  = shapeNode .getAppearance ();
+            renderContext .humanoidNode    = this .humanoids .at (-1);
 
             // Clip planes and local lights
 

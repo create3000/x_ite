@@ -113,7 +113,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
 
       if (renderContext)
       {
-         const { renderObject, transparent, shadows, fogNode, shapeNode, appearanceNode, textureNode, objectsCount } = renderContext;
+         const { renderObject, transparent, shadows, fogNode, shapeNode, appearanceNode, textureNode, humanoidNode, objectsCount } = renderContext;
 
          key += this .logarithmicDepthBuffer || renderObject .getViewpoint () .getLogarithmicDepthBuffer () ? 1 : 0;
          key += appearanceNode .getNormalizedAlphaMode (transparent);
@@ -124,6 +124,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
          key += appearanceNode .getStyleProperties (geometryContext .geometryType) ? 1 : 0;
          key += appearanceNode .getTextureTransformMapping () .size || 1;
          key += geometryContext .textureCoordinateMapping .size || 1;
+         key += humanoidNode ? 1 : 0;
          key += ".";
          key += objectsCount [0]; // Clip planes
          key += ".";
@@ -140,7 +141,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
          key += this .logarithmicDepthBuffer ? 1 : 0;
          key += geometryContext .alphaMode;
          key += this .getMaterialKey (false);
-         key += "000011";
+         key += "0000110";
          key += ".";
          key += objectsCount [0]; // Clip planes
          key += ".";
@@ -172,7 +173,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
 
       if (renderContext)
       {
-         const { renderObject, fogNode, shapeNode, appearanceNode, objectsCount } = renderContext;
+         const { renderObject, fogNode, shapeNode, appearanceNode, humanoidNode, objectsCount } = renderContext;
 
          if (this .logarithmicDepthBuffer || renderObject .getViewpoint () .getLogarithmicDepthBuffer ())
             options .push ("X3D_LOGARITHMIC_DEPTH_BUFFER");
@@ -202,6 +203,9 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
                options .push ("X3D_FOG", "X3D_FOG_EXPONENTIAL");
                break;
          }
+
+         if (humanoidNode)
+            options .push ("X3D_SKINNING");
 
          if (objectsCount [0])
          {
