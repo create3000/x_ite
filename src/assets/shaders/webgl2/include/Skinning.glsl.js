@@ -16,7 +16,7 @@ getJointMatrix (const in int joint)
    vec4 c = texelFetch (x3d_JointMatricesTexture, joint * 4 + 2, 0);
    vec4 d = texelFetch (x3d_JointMatricesTexture, joint * 4 + 3, 0);
 
-   return transpose (mat4 (a, b, c, d));
+   return mat4 (a, b, c, d);
 }
 
 vec4
