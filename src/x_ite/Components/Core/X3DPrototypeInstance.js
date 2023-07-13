@@ -238,6 +238,8 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
 
       if (protoNode .isExternProto && protoNode .checkLoadState () !== X3DConstants .COMPLETE_STATE)
       {
+         this [_body] ?.dispose ();
+
          this [_body] = null;
 
          if (this .isInitialized ())
