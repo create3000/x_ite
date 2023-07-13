@@ -423,7 +423,7 @@ async function loadURL (filename, server, event)
    { }
 
    if (!Browser .getActiveViewpoint () ._description .getValue ())
-      Browser .viewAll ();
+      Browser .viewAll (0);
 }
 
 createList ("glTF Random Models",          models);

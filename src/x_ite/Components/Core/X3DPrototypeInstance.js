@@ -88,7 +88,11 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
    {
       this [_body] ?.dispose ();
 
-      const protoNode = this [_protoNode];
+      const
+         protoNode = this [_protoNode],
+         proto     = protoNode .getProtoDeclaration ();
+
+      // If there is a proto, the externproto is completely loaded.
 
       if (protoNode .isExternProto)
       {
@@ -104,14 +108,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
 
             return;
          }
-      }
 
-      const proto = protoNode .getProtoDeclaration ();
-
-      // If there is a proto, the externproto is completely loaded.
-
-      if (protoNode .isExternProto)
-      {
          for (const protoField of proto .getUserDefinedFields ())
          {
             try

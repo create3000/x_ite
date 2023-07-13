@@ -95,17 +95,6 @@ Object .assign (Object .setPrototypeOf (X3DViewer .prototype, X3DBaseNode .proto
 
       return button;
    },
-   getPointer (event)
-   {
-      const
-         browser      = this .getBrowser (),
-         contentScale = browser .getRenderingProperty ("ContentScale"),
-         offset       = browser .getSurface () .offset (),
-         x            = (event .pageX - offset .left) * contentScale,
-         y            = browser .getViewport () [3] - (event .pageY - offset .top) * contentScale;
-
-      return [x, y];
-   },
    isPointerInRectangle: (() =>
    {
       const pointer = new Vector2 (0, 0);
@@ -172,7 +161,7 @@ Object .assign (Object .setPrototypeOf (X3DViewer .prototype, X3DBaseNode .proto
          viewpoint = this .getActiveViewpoint (),
          hit       = this .getBrowser () .getHit ();
 
-      viewpoint .lookAtPoint (this .getActiveLayer (), hit .point, 2 - 1.618034, straightenHorizon);
+      viewpoint .lookAtPoint (this .getActiveLayer (), hit .point, 1, 2 - 1.618034, straightenHorizon);
    },
    lookAtBBox (x, y, straightenHorizon)
    {
@@ -187,7 +176,7 @@ Object .assign (Object .setPrototypeOf (X3DViewer .prototype, X3DBaseNode .proto
          .multRight (hit .modelViewMatrix)
          .multRight (viewpoint .getCameraSpaceMatrix ());
 
-      viewpoint .lookAtBBox (this .getActiveLayer (), bbox, 2 - 1.618034, straightenHorizon);
+      viewpoint .lookAtBBox (this .getActiveLayer (), bbox, 1, 2 - 1.618034, straightenHorizon);
    },
    touch (x, y)
    {

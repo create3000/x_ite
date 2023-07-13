@@ -427,31 +427,31 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
          return r;
       };
    })(),
-   lookAtPoint (layerNode, point, factor, straighten)
+   lookAtPoint (layerNode, point, transitionTime = 1, factor = 1, straighten = false)
    {
       this .getCameraSpaceMatrix () .multVecMatrix (point);
       this .getModelMatrix () .copy () .inverse () .multVecMatrix (point);
 
       const minDistance = layerNode .getNavigationInfo () .getNearValue () * 2;
 
-      this .lookAt (layerNode, point, minDistance, factor, straighten);
+      this .lookAt (layerNode, point, minDistance, transitionTime = 1, factor = 1, straighten = false);
    },
-   lookAtBBox (layerNode, bbox, factor, straighten)
+   lookAtBBox (layerNode, bbox, transitionTime = 1, factor, straighten)
    {
       bbox = bbox .copy () .multRight (this .getModelMatrix () .copy () .inverse ());
 
       const minDistance = Math .max (layerNode .getNavigationInfo () .getNearValue () * 2, this .getLookAtDistance (bbox));
 
-      this .lookAt (layerNode, bbox .center, minDistance, factor, straighten);
+      this .lookAt (layerNode, bbox .center, minDistance, transitionTime, factor, straighten);
    },
-   lookAt (layerNode, point, distance, factor, straighten)
+   lookAt (layerNode, point, distance, transitionTime = 1, factor = 1, straighten = false)
    {
       const
          offset = point .copy () .add (this .getUserOrientation () .multVecRot (new Vector3 (0, 0, distance))) .subtract (this .getPosition ());
 
       layerNode .getNavigationInfo () ._transitionStart = true;
 
-      this .timeSensor ._cycleInterval = 1;
+      this .timeSensor ._cycleInterval = transitionTime;
       this .timeSensor ._stopTime      = this .getBrowser () .getCurrentTime ();
       this .timeSensor ._startTime     = this .getBrowser () .getCurrentTime ();
 

@@ -20,7 +20,7 @@ timezone:
 # ↓ --------------------------
 
 title: X_ITE X3D Browser               # the main title
-version: 8.9.3                         # x_ite latest version
+version: 8.9.6                         # x_ite latest version
 size: 286                              # size in kb
 x3d_latest_version: 4.0                # x3d latest version
 
@@ -33,16 +33,16 @@ description: >-                        # used by seo meta and the atom feed
 url: "https://create3000.github.io"
 
 github:
-  username: create3000/x_ite            # change to your github username
+  username: create3000/x_ite           # change to your github username
 
 twitter:
-  username: web3dconsortium             # change to your twitter username
+  username: web3dconsortium            # change to your twitter username
 
 social:
   # Change to your full name.
   # It will be displayed as the default author of the posts and the copyright owner in the Footer
   name: CREATE3000
-  email: holger.seelig@google.com         # change to your email address
+  email: holger.seelig@gmail.com          # change to your email address
   links:
     # The first element serves as the copyright owner"s link
     - https://twitter.com/web3dconsortium # change to your twitter homepage

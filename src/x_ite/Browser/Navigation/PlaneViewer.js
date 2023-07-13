@@ -92,7 +92,7 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, X3DViewer .proto
       if (this .button >= 0)
          return;
 
-      const [x, y] = this .getPointer (event);
+      const { x, y } = this .getBrowser () .getPointerFromEvent (event);
 
       if (!this .isPointerInRectangle (x, y))
          return;
@@ -143,7 +143,7 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, X3DViewer .proto
    },
    mousemove (event)
    {
-      const [x, y] = this .getPointer (event);
+      const { x, y } = this .getBrowser () .getPointerFromEvent (event);
 
       switch (this .getButton (this .button))
       {
@@ -171,7 +171,7 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, X3DViewer .proto
    },
    mousewheel (event)
    {
-      const [x, y] = this .getPointer (event);
+      const { x, y } = this .getBrowser () .getPointerFromEvent (event);
 
       if (!this .isPointerInRectangle (x, y))
          return;

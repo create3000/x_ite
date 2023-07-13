@@ -208,13 +208,13 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
    {
       return this .collisionTime;
    },
-   viewAll (factor = 1, straighten = false)
+   viewAll (transitionTime = 1, factor = 1, straighten = false)
    {
       const
          viewpointNode = this .getViewpoint (),
          bbox          = this .getBBox (new Box3 ()) .multRight (viewpointNode .getModelMatrix () .copy () .inverse ());
 
-      viewpointNode .lookAt (this, bbox .center, viewpointNode .getLookAtDistance (bbox), factor, straighten);
+      viewpointNode .lookAt (this, bbox .center, viewpointNode .getLookAtDistance (bbox), transitionTime, factor, straighten);
    },
    straightenView ()
    {
