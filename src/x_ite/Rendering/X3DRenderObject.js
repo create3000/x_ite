@@ -81,6 +81,7 @@ function X3DRenderObject (executionContext)
    this .localShadows             = [ false ];
    this .localFogs                = [ null ];
    this .layouts                  = [ ];
+   this .humanoids                = [ ];
    this .textureProjectors        = [ ];
    this .generatedCubeMapTextures = [ ];
    this .collisions               = [ ];
@@ -231,6 +232,10 @@ Object .assign (X3DRenderObject .prototype,
    getParentLayout ()
    {
       return this .layouts .at (-1);
+   },
+   getHumanoids ()
+   {
+      return this .humanoids;
    },
    getTextureProjectors ()
    {
