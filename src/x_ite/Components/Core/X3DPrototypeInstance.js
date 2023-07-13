@@ -96,6 +96,19 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
 
       if (protoNode .isExternProto)
       {
+         if (protoNode .checkLoadState () !== X3DConstants .COMPLETE_STATE)
+         {
+            this [_body] = null;
+
+            if (this .isInitialized ())
+               X3DChildObject .prototype .addEvent .call (this);
+
+            protoNode ._updateInstances .addInterest ("construct", this);
+            protoNode .requestImmediateLoad () .catch (Function .prototype);
+
+            return;
+         }
+
          for (const protoField of proto .getUserDefinedFields ())
          {
             try
@@ -233,20 +246,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
 
       protoNode ._name_changed .addFieldInterest (this ._typeName_changed);
 
-      if (protoNode .isExternProto && protoNode .checkLoadState () !== X3DConstants .COMPLETE_STATE)
-      {
-         this [_body] = null;
-
-         if (this .isInitialized ())
-            X3DChildObject .prototype .addEvent .call (this);
-
-         protoNode ._updateInstances .addInterest ("construct", this);
-         protoNode .requestImmediateLoad () .catch (Function .prototype);
-      }
-      else
-      {
-         this .construct ();
-      }
+      this .construct ();
    },
    getBody ()
    {

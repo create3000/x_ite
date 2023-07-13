@@ -149,16 +149,23 @@ Object .assign (X3DUrlObject .prototype,
 
          const loadState = this .checkLoadState ();
 
-         if (loadState === X3DConstants .COMPLETE_STATE)
+         switch (loadState)
          {
-            resolve ();
-            return;
-         }
-
-         if (loadState === X3DConstants .IN_PROGRESS_STATE)
-         {
-            loading ();
-            return;
+            case X3DConstants .IN_PROGRESS_STATE:
+            {
+               loading ();
+               return;
+            }
+            case X3DConstants .COMPLETE_STATE:
+            {
+               resolve ();
+               return;
+            }
+            case X3DConstants .FAILED_STATE:
+            {
+               reject ();
+               return;
+            }
          }
 
          if (!this ._load .getValue ())
