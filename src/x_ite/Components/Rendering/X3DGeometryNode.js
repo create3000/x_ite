@@ -731,7 +731,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
             if (flatShading)
             {
-               if (! this .flatNormals .length)
+               if (!this .flatNormals .length)
                {
                   const
                      cw          = this .frontFace === gl .CW,
@@ -741,16 +741,16 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
                   for (let i = 0, length = vertices .length; i < length; i += 12)
                   {
                      Triangle3 .normal (v0 .set (vertices [i],     vertices [i + 1], vertices [i + 2]),
-                                       v1 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]),
-                                       v2 .set (vertices [i + 8], vertices [i + 9], vertices [i + 10]),
-                                       normal);
+                                        v1 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]),
+                                        v2 .set (vertices [i + 8], vertices [i + 9], vertices [i + 10]),
+                                        normal);
 
                      if (cw)
                         normal .negate ();
 
                      flatNormals .push (normal .x, normal .y, normal .z,
-                                       normal .x, normal .y, normal .z,
-                                       normal .x, normal .y, normal .z);
+                                        normal .x, normal .y, normal .z,
+                                        normal .x, normal .y, normal .z);
                   }
 
                   flatNormals .shrinkToFit ();
@@ -985,7 +985,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          appearanceNode = renderContext .appearanceNode,
          shaderNode     = appearanceNode .getShader (this, renderContext);
 
-      if (this .solid || ! appearanceNode .getBackMaterial () || this .getBrowser () .getWireframe ())
+      if (this .solid || !appearanceNode .getBackMaterial () || this .getBrowser () .getWireframe ())
       {
          this .displayGeometry (gl, renderContext, appearanceNode, shaderNode, true, true);
       }
@@ -1050,7 +1050,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
             // Render back.
 
-            if (back && ! this .solid)
+            if (back && !this .solid)
             {
                gl .cullFace (gl .FRONT);
                gl .drawArrays (primitiveMode, 0, this .vertexCount);
@@ -1104,7 +1104,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          appearanceNode = renderContext .appearanceNode,
          shaderNode     = appearanceNode .getShader (this, renderContext);
 
-      if (this .solid || ! appearanceNode .getBackMaterial () || this .getBrowser () .getWireframe ())
+      if (this .solid || !appearanceNode .getBackMaterial () || this .getBrowser () .getWireframe ())
       {
          this .displayParticlesGeometry (gl, renderContext, appearanceNode, shaderNode, true, true, particleSystem);
       }
@@ -1171,7 +1171,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
          gl .enable (gl .CULL_FACE);
 
-         if (back && ! this .solid)
+         if (back && !this .solid)
          {
             gl .cullFace (gl .FRONT);
             gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
