@@ -274,7 +274,11 @@ Object .assign (X3DProgrammableShaderObject .prototype,
             this .x3d_TexCoord .push ([i, x3d_TexCoord]);
       }
 
-      this .x3d_TexCoordRamp = gl .getUniformLocation (program, "x3d_TexCoordRamp");
+      this .x3d_TexCoordRamp               = gl .getUniformLocation (program, "x3d_TexCoordRamp");
+      this .x3d_JointsTexture              = gl .getUniformLocation (program, "x3d_JointsTexture");
+      this .x3d_WeightsTexture             = gl .getUniformLocation (program, "x3d_WeightsTexture");
+      this .x3d_JointMatricesTexture       = gl .getUniformLocation (program, "x3d_JointMatricesTexture");
+      this .x3d_JointNormalMatricesTexture = gl .getUniformLocation (program, "x3d_JointNormalMatricesTexture");
 
       this .x3d_Viewport          = gl .getUniformLocation (program, "x3d_Viewport");
       this .x3d_ProjectionMatrix  = gl .getUniformLocation (program, "x3d_ProjectionMatrix");
@@ -358,7 +362,11 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       for (const uniform of this .x3d_ProjectiveTexture)
          gl .uniform1i (uniform, browser .getDefaultTexture2DUnit ());
 
-      gl .uniform1i (this .x3d_TexCoordRamp, browser .getDefaultTexture2DUnit ());
+      gl .uniform1i (this .x3d_TexCoordRamp,               browser .getDefaultTexture2DUnit ());
+      gl .uniform1i (this .x3d_JoinsTexture,               browser .getDefaultTexture2DUnit ());
+      gl .uniform1i (this .x3d_WeightsTexture,             browser .getDefaultTexture2DUnit ());
+      gl .uniform1i (this .x3d_JointMatricesTexture,       browser .getDefaultTexture2DUnit ());
+      gl .uniform1i (this .x3d_JointNormalMatricesTexture, browser .getDefaultTexture2DUnit ());
    },
    getUniformLocation (gl, program, name, depreciated)
    {
