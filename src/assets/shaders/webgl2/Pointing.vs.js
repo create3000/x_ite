@@ -51,7 +51,7 @@ main ()
       midPoint    = x3d_LineStipple .xy;
    #endif
 
-   vec4 position = x3d_ModelViewMatrix * getVertex (x3d_Vertex);
+   vec4 position = x3d_ModelViewMatrix * getParticleVertex (x3d_Vertex);
 
    vertex = position .xyz;
    normal = x3d_Normal;

@@ -98,13 +98,30 @@ out vec3 vertex;
 
 // Main
 
+vec4
+texelFetch (const in sampler2D sampler, const in int index, const in int lod)
+{
+   int   x = textureSize (sampler, lod) .x;
+   ivec2 p = ivec2 (index % x, index / x);
+   vec4  t = texelFetch (sampler, p, lod);
+
+   return t;
+}
+
+#pragma X3D include "Skinning.glsl"
 #pragma X3D include "Particle.glsl"
 #pragma X3D include "PointSize.glsl"
 
 void
 vertex_main ()
 {
-   vec4 position = x3d_ModelViewMatrix * getVertex (x3d_Vertex);
+   vec4 x3d_TransformedVertex = getParticleVertex (getSkinningVertex (x3d_Vertex));
+
+   #if defined (X3D_NORMALS)
+      vec3 x3d_TransformedNormal = getSkinningNormal (x3d_Normal);
+   #endif
+
+   vec4 position = x3d_ModelViewMatrix * x3d_TransformedVertex;
 
    vertex = position .xyz;
 
@@ -133,33 +150,33 @@ vertex_main ()
    #if ! defined (X3D_GEOMETRY_0D) && ! defined (X3D_GEOMETRY_1D)
       #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
          #if X3D_NUM_TEXTURE_COORDINATES > 0
-            texCoord0 = getTexCoord (x3d_TexCoord0);
+            texCoord0 = getParticleTexCoord (x3d_TexCoord0);
          #endif
 
          #if X3D_NUM_TEXTURE_COORDINATES > 1
-            texCoord1 = getTexCoord (x3d_TexCoord1);
+            texCoord1 = getParticleTexCoord (x3d_TexCoord1);
          #endif
 
          #if X3D_NUM_TEXTURE_COORDINATES > 2
-            texCoord2 = getTexCoord (x3d_TexCoord2);
+            texCoord2 = getParticleTexCoord (x3d_TexCoord2);
          #endif
 
          #if X3D_NUM_TEXTURE_COORDINATES > 3
-            texCoord3 = getTexCoord (x3d_TexCoord3);
+            texCoord3 = getParticleTexCoord (x3d_TexCoord3);
          #endif
       #endif
    #endif
 
    #if defined (X3D_NORMALS)
-      normal = x3d_NormalMatrix * x3d_Normal;
+      normal = x3d_NormalMatrix * x3d_TransformedNormal;
 
       #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
-         localNormal = x3d_Normal;
+         localNormal = x3d_TransformedNormal;
       #endif
    #endif
 
    #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
-      localVertex = x3d_Vertex .xyz;
+      localVertex = x3d_TransformedVertex .xyz;
    #endif
 
    gl_Position = x3d_ProjectionMatrix * position;

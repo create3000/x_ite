@@ -58,8 +58,6 @@ import Plane3       from "../../../standard/Math/Geometry/Plane3.js";
 import Triangle3    from "../../../standard/Math/Geometry/Triangle3.js";
 import Algorithm    from "../../../standard/Math/Algorithm.js";
 
-const ARRAY_TYPE = "Array"; // For color, texCoord, normal, and vertex array, can be MFFloat or Array;
-
 // Box normals for bbox / line intersection.
 const boxNormals = [
    new Vector3 (0,  0,  1), // front
@@ -120,10 +118,10 @@ function X3DGeometryNode (executionContext)
 Object .defineProperty (X3DGeometryNode, "createArray",
 {
    // Function to select ether Array or MFFloat for color/normal/vertex arrays.
-   value ()
+   value (type = "MFFloat")
    {
-      if (ARRAY_TYPE == "MFFloat")
-         return new Fields .MFFloat ();
+      if (false)
+         return new Fields [type] ();
 
       const array = [ ];
 

@@ -75,6 +75,7 @@ import Perlin2                from "../../../assets/shaders/webgl2/include/Perli
 import Point2                 from "../../../assets/shaders/webgl2/include/Point.glsl.js";
 import PointSize2             from "../../../assets/shaders/webgl2/include/PointSize.glsl.js";
 import Shadow2                from "../../../assets/shaders/webgl2/include/Shadow.glsl.js";
+import Skinning2              from "../../../assets/shaders/webgl2/include/Skinning.glsl.js";
 import Stipple2               from "../../../assets/shaders/webgl2/include/Stipple.glsl.js";
 import SpotFactor2            from "../../../assets/shaders/webgl2/include/SpotFactor.glsl.js";
 import Texture2               from "../../../assets/shaders/webgl2/include/Texture.glsl.js";
@@ -138,6 +139,7 @@ const Shaders = {
          Point: Point2,
          PointSize: PointSize2,
          Shadow: Shadow2,
+         Skinning: Skinning2,
          Stipple: Stipple2,
          SpotFactor: SpotFactor2,
          Texture: Texture2,

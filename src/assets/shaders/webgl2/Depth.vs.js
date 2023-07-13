@@ -25,7 +25,7 @@ main ()
       #endif
    #endif
 
-   vec4 position = x3d_ModelViewMatrix * getVertex (x3d_Vertex);
+   vec4 position = x3d_ModelViewMatrix * getParticleVertex (x3d_Vertex);
 
    vertex = position .xyz;
 

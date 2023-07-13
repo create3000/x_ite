@@ -1165,8 +1165,6 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
       gl .enableVertexAttribArray (location);
       gl .vertexAttribPointer (location, 1, gl .FLOAT, false, stride, offset); // gl .UNSIGNED_INT
-
-      console .log ("coordIndex", stride, buffer)
    },
    enableLineStippleAttribute (gl, buffer, stride, offset)
    {
