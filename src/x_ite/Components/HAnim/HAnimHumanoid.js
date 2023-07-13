@@ -229,8 +229,9 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
    set_jointSkinCoord_impl__ ()
    {
       const
-         joints  = [ ],
-         weights = [ ];
+         joints          = [ ],
+         weights         = [ ],
+         skinCoordWeight = jointNode ._skinCoordWeight;
 
       for (const [j, jointNode] of this .jointNodes .entries ())
       {
@@ -238,12 +239,12 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
          {
             if (!joints [coordIndex])
             {
-               joints [coordIndex]  = [ ];
+               joints  [coordIndex] = [ ];
                weights [coordIndex] = [ ];
             }
 
-            joints [coordIndex] .push (j);
-            weights [coordIndex] .push (jointNode ._skinCoordWeight [i])
+            joints  [coordIndex] .push (j);
+            weights [coordIndex] .push (skinCoordWeight [i])
          }
       }
 
