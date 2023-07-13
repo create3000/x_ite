@@ -344,7 +344,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
 
       this .transformNode .traverse (type, renderObject);
 
-      renderObject .getHumanoids () .pop (this);
+      renderObject .getHumanoids () .pop ();
    },
    skinning: (() =>
    {
