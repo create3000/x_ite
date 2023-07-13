@@ -229,12 +229,13 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
    set_jointSkinCoord_impl__ ()
    {
       const
-         joints          = [ ],
-         weights         = [ ],
-         skinCoordWeight = jointNode ._skinCoordWeight;
+         joints  = [ ],
+         weights = [ ];
 
       for (const [j, jointNode] of this .jointNodes .entries ())
       {
+         const skinCoordWeight = jointNode ._skinCoordWeight;
+
          for (const [i, coordIndex] of jointNode ._skinCoordIndex .entries ())
          {
             if (!joints [coordIndex])
@@ -308,6 +309,45 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
       this .skinning (type, renderObject);
    },
    skinning: (() =>
+   {
+      const invModelMatrix = new Matrix4 ();
+
+      return function (type, renderObject)
+      {
+         if (type !== TraverseType .CAMERA)
+            return;
+
+         if (!this .changed)
+            return;
+
+         this .changed = false;
+
+         // Determine inverse model matrix of humanoid.
+
+         invModelMatrix .assign (this .transformNode .getMatrix ())
+            .multRight (renderObject .getModelViewMatrix () .get ()) .inverse ();
+
+         const
+            jointNodes               = this .jointNodes,
+            jointNodesLength         = jointNodes .length,
+            jointBindingMatrices     = this .jointBindingMatrices,
+            jointMatricesArray       = new Float32Array (jointNodesLength * 16),
+            jointNormalMatricesArray = new Float32Array (jointNodesLength * 16);
+
+         for (let i = 0; i < jointNodesLength; ++ i)
+         {
+            const
+               jointNode          = jointNodes [i],
+               jointBindingMatrix = jointBindingMatrices [i],
+               jointMatrix        = jointNode .getModelMatrix () .multRight (invModelMatrix) .multLeft (jointBindingMatrix),
+               jointNormalMatrix  = jointMatrix .submatrix .transpose () .inverse ();
+
+            jointMatricesArray       .set (jointMatrix,       i * 16);
+            jointNormalMatricesArray .set (jointNormalMatrix, i * 16);
+         }
+      };
+   })(),
+   skinning_O: (() =>
    {
       const
          invModelMatrix = new Matrix4 (),
