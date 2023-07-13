@@ -317,8 +317,11 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
    {
       this .skinNormalNode = X3DCast (X3DConstants .X3DNormalNode, this ._skinNormal);
 
-      if (!this .skinBindingNormal && this .skinNormalNode)
-         this .skinBindingNormal = this .skinNormalNode .copy ();
+      if (!this .skinBindingNormal)
+         this .skinBindingNormal = this .skinNormalNode ?.copy ();
+
+      if (this .skinNormalNode)
+         this .skinNormalNode ._vector .assign (this .skinBindingNormal ._vector);
 
       this .changed = true;
    },
@@ -326,13 +329,16 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
    {
       this .skinCoordNode = X3DCast (X3DConstants .X3DCoordinateNode, this ._skinCoord);
 
-      if (!this .skinBindingCoord && this .skinCoordNode)
-         this .skinBindingCoord = this .skinCoordNode .copy ();
+      if (!this .skinBindingCoord)
+         this .skinBindingCoord = this .skinCoordNode ?.copy ();
+
+      if (this .skinCoordNode)
+         this .skinCoordNode ._point .assign (this .skinBindingCoord ._point);
 
       if (this .skinCoordNode)
          delete this .skinning;
       else
-         this .skinning = Function .prototype
+         this .skinning = Function .prototype;
 
       this .changed = true;
    },
