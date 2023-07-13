@@ -94,6 +94,26 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
       X3DChildNode     .prototype .initialize .call (this);
       X3DBoundedObject .prototype .initialize .call (this);
 
+      // Textures
+
+      const
+         browser = this .getBrowser (),
+         gl      = browser .getContext ();
+
+      this .jointsTexture              = gl .createTexture ();
+      this .weightsTexture             = gl .createTexture ();
+      this .jointMatricesTexture       = gl .createTexture ();
+      this .jointNormalMatricesTexture = gl .createTexture ();
+
+      for (const texture of [this .jointsTexture, this .weightsTexture, this .jointMatricesTexture, this .jointNormalMatricesTexture])
+      {
+         gl .bindTexture (gl .TEXTURE_2D, texture);
+         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_S,     gl .CLAMP_TO_EDGE);
+         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_T,     gl .CLAMP_TO_EDGE);
+         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .LINEAR);
+         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .LINEAR);
+      }
+
       // Groups
 
       this .skeletonNode   .setAllowedTypes (X3DConstants .HAnimJoint, X3DConstants .HAnimSite);
@@ -215,6 +235,9 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
          jointNode ._skinCoordWeight .addInterest ("set_jointSkinCoord__", this);
       }
 
+      this .jointMatricesArray       = new Float32Array (jointNodes .length * 16),
+      this .jointNormalMatricesArray = new Float32Array (jointNodes .length * 16);
+
       this .set_joint__ ();
       this .set_jointSkinCoord__ ();
    },
@@ -251,8 +274,9 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
 
       const
          length       = joints .length,
-         jointsArray  = new Float32Array (joints  .length * 4),
-         weightsArray = new Float32Array (weights .length * 4);
+         size         = Math .ceil (Math .sqrt (length)),
+         jointsArray  = new Float32Array (size * size * 4),
+         weightsArray = new Float32Array (size * size * 4);
 
       for (let i = 0; i < length; ++ i)
       {
@@ -266,6 +290,16 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
             weightsArray [i * 4 + n] = w [n] ?? 0;
          }
       }
+
+      const
+         browser = this .getBrowser (),
+         gl      = browser .getContext ();
+
+      gl .bindTexture (gl .TEXTURE_2D, this .jointsTexture);
+      gl .texImage2D (gl .TEXTURE_2D, 0, gl .getVersion () > 1 ? gl .RGBA32F : gl .RGBA, size, size, 0, gl .RGBA, gl .FLOAT, jointsArray);
+
+      gl .bindTexture (gl .TEXTURE_2D, this .weightsTexture);
+      gl .texImage2D (gl .TEXTURE_2D, 0, gl .getVersion () > 1 ? gl .RGBA32F : gl .RGBA, size, size, 0, gl .RGBA, gl .FLOAT, weightsArray);
    },
    set_skinBindingNormal__ ()
    {
@@ -331,8 +365,8 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
             jointNodes               = this .jointNodes,
             jointNodesLength         = jointNodes .length,
             jointBindingMatrices     = this .jointBindingMatrices,
-            jointMatricesArray       = new Float32Array (jointNodesLength * 16),
-            jointNormalMatricesArray = new Float32Array (jointNodesLength * 16);
+            jointMatricesArray       = this .jointMatricesArray,
+            jointNormalMatricesArray = this .jointNormalMatricesArray;
 
          for (let i = 0; i < jointNodesLength; ++ i)
          {
@@ -345,6 +379,16 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
             jointMatricesArray       .set (jointMatrix,       i * 16);
             jointNormalMatricesArray .set (jointNormalMatrix, i * 16);
          }
+
+         const
+            browser = this .getBrowser (),
+            gl      = browser .getContext ();
+
+         gl .bindTexture (gl .TEXTURE_2D, this .jointMatricesTexture);
+         gl .texImage2D (gl .TEXTURE_2D, 0, gl .getVersion () > 1 ? gl .RGBA32F : gl .RGBA, jointNodesLength * 4, 1, 0, gl .RGBA, gl .FLOAT, jointMatricesArray);
+
+         gl .bindTexture (gl .TEXTURE_2D, this .jointNormalMatricesTexture);
+         gl .texImage2D (gl .TEXTURE_2D, 0, gl .getVersion () > 1 ? gl .RGBA32F : gl .RGBA, jointNodesLength * 4, 1, 0, gl .RGBA, gl .FLOAT, jointNormalMatricesArray);
       };
    })(),
    skinning_O: (() =>
