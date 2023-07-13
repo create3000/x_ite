@@ -777,7 +777,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          this .clear ();
          this .build ();
 
-         // Shrink arrays before transfer to graphics card.
+         // Shrink arrays before transferring to graphics card.
 
          for (const attribArray of this .attribArrays)
             attribArray .shrinkToFit ();
