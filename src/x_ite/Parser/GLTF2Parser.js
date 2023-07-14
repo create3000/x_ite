@@ -1494,10 +1494,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
                humanoidNode ._jointBindingScales .push (scale);
             }
 
-            humanoidNode ._skinBindingNormal = shapeNodes [0] ._geometry .normal ?.getValue () ?.copy ();
-            humanoidNode ._skinBindingCoord  = shapeNodes [0] ._geometry .coord ?.getValue () ?.copy ();
-            humanoidNode ._skinNormal        = shapeNodes [0] ._geometry .normal;
-            humanoidNode ._skinCoord         = shapeNodes [0] ._geometry .coord;
+            humanoidNode ._skinNormal = shapeNodes [0] ._geometry .normal;
+            humanoidNode ._skinCoord  = shapeNodes [0] ._geometry .coord;
             humanoidNode ._skin .push (transformNode);
 
             humanoidNode .setup ();

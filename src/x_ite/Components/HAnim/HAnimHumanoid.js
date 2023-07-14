@@ -78,8 +78,6 @@ function HAnimHumanoid (executionContext)
    this .transformNode        = new Transform (executionContext);
    this .jointNodes           = [ ];
    this .jointBindingMatrices = [ ];
-   this .skinBindingNormal    = null;
-   this .skinBindingCoord     = null;
    this .skinNormalNode       = null;
    this .skinCoordNode        = null;
    this .changed              = false;
@@ -178,19 +176,17 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
 
       // Skinning
 
-      this ._joints                .addInterest ("set_joints__",            this);
-      this ._jointBindingPositions .addInterest ("set_joints__",            this);
-      this ._jointBindingRotations .addInterest ("set_joints__",            this);
-      this ._jointBindingScales    .addInterest ("set_joints__",            this);
-      this ._jointTextures         .addInterest ("set_jointTextures__",     this);
-      this ._skinBindingNormal     .addInterest ("set_skinBindingNormal__", this);
-      this ._skinBindingCoord      .addInterest ("set_skinBindingCoord__",  this);
-      this ._skinNormal            .addInterest ("set_skinNormal__",        this);
-      this ._skinCoord             .addInterest ("set_skinCoord__",         this);
+      this ._joints                .addInterest ("set_joints__",        this);
+      this ._jointBindingPositions .addInterest ("set_joints__",        this);
+      this ._jointBindingRotations .addInterest ("set_joints__",        this);
+      this ._jointBindingScales    .addInterest ("set_joints__",        this);
+      this ._jointTextures         .addInterest ("set_jointTextures__", this);
+      this ._skinNormal            .addInterest ("set_skinNormal__",    this);
+      this ._skinCoord             .addInterest ("set_skinCoord__",     this);
 
       this .set_joints__ ();
-      this .set_skinBindingNormal__ ();
-      this .set_skinBindingCoord__ ();
+      this .set_skinNormal__ ();
+      this .set_skinCoord__ ();
    },
    getBBox (bbox, shadows)
    {
@@ -273,8 +269,8 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
 
          for (const [i, coordIndex] of jointNode ._skinCoordIndex .entries ())
          {
-            joints  [coordIndex] .push (j);
-            weights [coordIndex] .push (skinCoordWeight [i])
+            joints  [coordIndex] ?.push (j);
+            weights [coordIndex] ?.push (skinCoordWeight [i])
          }
       }
 
@@ -308,33 +304,15 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
       gl .bindTexture (gl .TEXTURE_2D, this .weightsTexture);
       gl .texImage2D (gl .TEXTURE_2D, 0, gl .getVersion () > 1 ? gl .RGBA32F : gl .RGBA, size, size, 0, gl .RGBA, gl .FLOAT, weightsArray);
    },
-   set_skinBindingNormal__ ()
-   {
-      this .skinBindingNormal = X3DCast (X3DConstants .X3DNormalNode, this ._skinBindingNormal);
-
-      this .set_skinNormal__ ();
-   },
-   set_skinBindingCoord__ ()
-   {
-      this .skinBindingCoord = X3DCast (X3DConstants .X3DCoordinateNode, this ._skinBindingCoord);
-
-      this .set_skinCoord__ ();
-   },
    set_skinNormal__ ()
    {
       this .skinNormalNode = X3DCast (X3DConstants .X3DNormalNode, this ._skinNormal);
-
-      if (!this .skinBindingNormal)
-         this .skinBindingNormal = this .skinNormalNode ?.copy ();
 
       this .changed = true;
    },
    set_skinCoord__ ()
    {
       this .skinCoordNode = X3DCast (X3DConstants .X3DCoordinateNode, this ._skinCoord);
-
-      if (!this .skinBindingCoord)
-         this .skinBindingCoord = this .skinCoordNode ?.copy ();
 
       if (this .skinCoordNode)
          delete this .skinning;
@@ -389,8 +367,6 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
             jointNormalMatricesArray .set (jointNormalMatrix, i * 16);
          }
 
-         // console .log (new Float32Array (jointMatricesArray))
-
          // Upload textures.
 
          const
@@ -428,109 +404,109 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
       gl .bindTexture (gl .TEXTURE_2D, this .jointNormalMatricesTexture);
       gl .uniform1i (shaderObject .x3d_JointNormalMatricesTexture, jointNormalMatricesTextureUnit);
    },
-   skinning_O: (() =>
-   {
-      const
-         invModelMatrix = new Matrix4 (),
-         rest           = new Vector3 (0, 0, 0),
-         skin           = new Vector3 (0, 0, 0),
-         vector         = new Vector3 (0, 0, 0),
-         point          = new Vector3 (0, 0, 0);
+   // skinning: (() =>
+   // {
+   //    const
+   //       invModelMatrix = new Matrix4 (),
+   //       rest           = new Vector3 (0, 0, 0),
+   //       skin           = new Vector3 (0, 0, 0),
+   //       vector         = new Vector3 (0, 0, 0),
+   //       point          = new Vector3 (0, 0, 0);
 
-      return function (type, renderObject)
-      {
-         if (type !== TraverseType .CAMERA)
-            return;
+   //    return function (type, renderObject)
+   //    {
+   //       if (type !== TraverseType .CAMERA)
+   //          return;
 
-         if (!this .changed)
-            return;
+   //       if (!this .changed)
+   //          return;
 
-         this .changed = false;
+   //       this .changed = false;
 
-         const
-            jointNodes           = this .jointNodes,
-            jointNodesLength     = jointNodes .length,
-            jointBindingMatrices = this .jointBindingMatrices,
-            skinBindingNormal    = this .skinBindingNormal,
-            skinBindingCoord     = this .skinBindingCoord,
-            skinNormalNode       = this .skinNormalNode,
-            skinCoordNode        = this .skinCoordNode;
+   //       const
+   //          jointNodes           = this .jointNodes,
+   //          jointNodesLength     = jointNodes .length,
+   //          jointBindingMatrices = this .jointBindingMatrices,
+   //          skinBindingNormal    = this .skinBindingNormal,
+   //          skinBindingCoord     = this .skinBindingCoord,
+   //          skinNormalNode       = this .skinNormalNode,
+   //          skinCoordNode        = this .skinCoordNode;
 
-         // Reset skin normals and coords.
+   //       // Reset skin normals and coords.
 
-         if (skinNormalNode)
-            skinNormalNode ._vector .assign (skinBindingNormal ._vector);
+   //       if (skinNormalNode)
+   //          skinNormalNode ._vector .assign (skinBindingNormal ._vector);
 
-         skinCoordNode ._point .assign (skinBindingCoord ._point);
+   //       skinCoordNode ._point .assign (skinBindingCoord ._point);
 
-         // Determine inverse model matrix of humanoid.
+   //       // Determine inverse model matrix of humanoid.
 
-         invModelMatrix .assign (this .transformNode .getMatrix ())
-            .multRight (renderObject .getModelViewMatrix () .get ()) .inverse ();
+   //       invModelMatrix .assign (this .transformNode .getMatrix ())
+   //          .multRight (renderObject .getModelViewMatrix () .get ()) .inverse ();
 
-         // Apply joint transformations.
+   //       // Apply joint transformations.
 
-         for (let i = 0; i < jointNodesLength; ++ i)
-         {
-            const
-               jointNode            = jointNodes [i],
-               jointBindingMatrix   = jointBindingMatrices [i],
-               jointMatrix          = jointNode .getModelMatrix () .multRight (invModelMatrix) .multLeft (jointBindingMatrix),
-               displacerNodes       = jointNode .getDisplacers (),
-               skinCoordIndexLength = jointNode ._skinCoordIndex .length;
+   //       for (let i = 0; i < jointNodesLength; ++ i)
+   //       {
+   //          const
+   //             jointNode            = jointNodes [i],
+   //             jointBindingMatrix   = jointBindingMatrices [i],
+   //             jointMatrix          = jointNode .getModelMatrix () .multRight (invModelMatrix) .multLeft (jointBindingMatrix),
+   //             displacerNodes       = jointNode .getDisplacers (),
+   //             skinCoordIndexLength = jointNode ._skinCoordIndex .length;
 
-            for (const displacerNode of displacerNodes)
-            {
-               const
-                  coordIndex          = displacerNode ._coordIndex .getValue (),
-                  coordIndexLength    = displacerNode ._coordIndex .length,
-                  weight              = displacerNode ._weight .getValue (),
-                  displacements       = displacerNode ._displacements .getValue (),
-                  displacementsLength = displacerNode ._displacements .length;
+   //          for (const displacerNode of displacerNodes)
+   //          {
+   //             const
+   //                coordIndex          = displacerNode ._coordIndex .getValue (),
+   //                coordIndexLength    = displacerNode ._coordIndex .length,
+   //                weight              = displacerNode ._weight .getValue (),
+   //                displacements       = displacerNode ._displacements .getValue (),
+   //                displacementsLength = displacerNode ._displacements .length;
 
-               for (let i = 0; i < coordIndexLength; ++ i)
-               {
-                  const
-                     i3           = i * 3,
-                     index        = coordIndex [i],
-                     displacement = i < displacementsLength ? point .set (displacements [i3], displacements [i3 + 1], displacements [i3 + 2]) : point .assign (Vector3 .Zero);
+   //             for (let i = 0; i < coordIndexLength; ++ i)
+   //             {
+   //                const
+   //                   i3           = i * 3,
+   //                   index        = coordIndex [i],
+   //                   displacement = i < displacementsLength ? point .set (displacements [i3], displacements [i3 + 1], displacements [i3 + 2]) : point .assign (Vector3 .Zero);
 
-                  skinCoordNode .get1Point (index, skin);
-                  jointMatrix .multDirMatrix (displacement) .multiply (weight) .add (skin);
-                  skinCoordNode .set1Point (index, displacement);
-               }
-            }
+   //                skinCoordNode .get1Point (index, skin);
+   //                jointMatrix .multDirMatrix (displacement) .multiply (weight) .add (skin);
+   //                skinCoordNode .set1Point (index, displacement);
+   //             }
+   //          }
 
-            const
-               normalMatrix          = skinNormalNode ? jointMatrix .submatrix .transpose () .inverse () : null,
-               skinCoordIndex        = jointNode ._skinCoordIndex .getValue (),
-               skinCoordWeight       = jointNode ._skinCoordWeight .getValue (),
-               skinCoordWeightLength = jointNode ._skinCoordWeight .length;
+   //          const
+   //             normalMatrix          = skinNormalNode ? jointMatrix .submatrix .transpose () .inverse () : null,
+   //             skinCoordIndex        = jointNode ._skinCoordIndex .getValue (),
+   //             skinCoordWeight       = jointNode ._skinCoordWeight .getValue (),
+   //             skinCoordWeightLength = jointNode ._skinCoordWeight .length;
 
-            for (let i = 0; i < skinCoordIndexLength; ++ i)
-            {
-               const
-                  index  = skinCoordIndex [i],
-                  weight = i < skinCoordWeightLength ? skinCoordWeight [i] : 1;
+   //          for (let i = 0; i < skinCoordIndexLength; ++ i)
+   //          {
+   //             const
+   //                index  = skinCoordIndex [i],
+   //                weight = i < skinCoordWeightLength ? skinCoordWeight [i] : 1;
 
-               if (skinNormalNode)
-               {
-                  rest .assign (skinBindingNormal .get1Vector (index, vector));
-                  skinNormalNode .get1Vector (index, skin);
-                  normalMatrix .multVecMatrix (vector) .subtract (rest) .multiply (weight) .add (skin);
-                  skinNormalNode .set1Vector (index, vector);
-                  // Let the shader normalize the normals.
-               }
+   //             if (skinNormalNode)
+   //             {
+   //                rest .assign (skinBindingNormal .get1Vector (index, vector));
+   //                skinNormalNode .get1Vector (index, skin);
+   //                normalMatrix .multVecMatrix (vector) .subtract (rest) .multiply (weight) .add (skin);
+   //                skinNormalNode .set1Vector (index, vector);
+   //                // Let the shader normalize the normals.
+   //             }
 
-               //skin += (rest * J - rest) * weight
-               rest .assign (skinBindingCoord .get1Point (index, point));
-               skinCoordNode .get1Point (index, skin);
-               jointMatrix .multVecMatrix (point) .subtract (rest) .multiply (weight) .add (skin);
-               skinCoordNode .set1Point (index, point);
-            }
-         }
-      };
-   })(),
+   //             //skin += (rest * J - rest) * weight
+   //             rest .assign (skinBindingCoord .get1Point (index, point));
+   //             skinCoordNode .get1Point (index, skin);
+   //             jointMatrix .multVecMatrix (point) .subtract (rest) .multiply (weight) .add (skin);
+   //             skinCoordNode .set1Point (index, point);
+   //          }
+   //       }
+   //    };
+   // })(),
    toVRMLStream (generator)
    {
       if (this .skinNormalNode)
