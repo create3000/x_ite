@@ -91,7 +91,8 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
 
       if (this .vertexArrayObject .enable (shaderNode))
       {
-         shaderNode .enableCoordIndexAttribute (gl, this .coordIndexBuffer, 0, 0);
+         if (this .coordIndices .length)
+            shaderNode .enableCoordIndexAttribute (gl, this .coordIndexBuffer, 0, 0);
 
          for (let i = 0, length = attribNodes .length; i < length; ++ i)
             attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);

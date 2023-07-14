@@ -117,9 +117,39 @@ function X3DGeometryNode (executionContext)
 
 Object .defineProperty (X3DGeometryNode, "createArray",
 {
+   // Function to select ether Array or MFFloat for color/normal/vertex arrays.
    value (type = "MFFloat")
    {
       return new Fields [type] ();
+
+      // const array = [ ];
+
+      // array .typedArray = new Float32Array ();
+
+      // array .assign = function (value)
+      // {
+      //    const length = value .length;
+
+      //    for (let i = 0; i < length; ++ i)
+      //       this [i] = value [i];
+
+      //    this .length = length;
+      // };
+
+      // array .getValue = function ()
+      // {
+      //    return this .typedArray;
+      // };
+
+      // array .shrinkToFit = function ()
+      // {
+      //    if (this .length === this .typedArray .length)
+      //       this .typedArray .set (this);
+      //    else
+      //       this .typedArray = new Float32Array (this);
+      // };
+
+      // return array;
    },
 })
 
@@ -146,7 +176,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
       this .frontFace             = gl .CCW;
       this .backFace              = new Map ([[gl .CCW, gl .CW], [gl .CW, gl .CCW]]);
-      this .coordIndexBuffer    = gl .createBuffer ();
+      this .coordIndexBuffer      = gl .createBuffer ();
       this .attribBuffers         = [ ];
       this .textureCoordinateNode = browser .getDefaultTextureCoordinate ();
       this .texCoordBuffers       = Array .from ({length: browser .getMaxTexCoords ()}, () => gl .createBuffer ());
@@ -285,10 +315,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    {
       this .textureCoordinateNode .removeInterest ("updateTextureCoordinateMapping", this);
 
-      if (value)
-         this .textureCoordinateNode = value;
-      else
-         this .textureCoordinateNode = this .getBrowser () .getDefaultTextureCoordinate ();
+      this .textureCoordinateNode = value ?? this .getBrowser () .getDefaultTextureCoordinate ();
 
       this .textureCoordinateNode .addInterest ("updateTextureCoordinateMapping", this);
 
@@ -750,22 +777,6 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          this .clear ();
          this .build ();
 
-         const vertices = this .vertices .getValue ();
-
-         // Generate coord indices if needed.
-
-         if (!this .coordIndices .length)
-         {
-            const
-               numVertices  = vertices .length / 4,
-               coordIndices = this .coordIndices;
-
-            for (let i = 0; i < numVertices; ++ i)
-               coordIndices .push (i);
-         }
-
-         this .coordIndices .shrinkToFit ();
-
          // Shrink arrays before transferring them to graphics card.
 
          for (const attribArray of this .attribArrays)
@@ -774,10 +785,14 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          for (const multiTexCoord of this .multiTexCoords)
             multiTexCoord .shrinkToFit ();
 
-         this .fogDepths .shrinkToFit ();
-         this .colors    .shrinkToFit ();
-         this .normals   .shrinkToFit ();
-         this .vertices  .shrinkToFit ();
+
+         this .coordIndices .shrinkToFit ();
+         this .fogDepths    .shrinkToFit ();
+         this .colors       .shrinkToFit ();
+         this .normals      .shrinkToFit ();
+         this .vertices     .shrinkToFit ();
+
+         const vertices = this .vertices .getValue ();
 
          // Determine bbox.
 
@@ -962,7 +977,8 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    {
       if (this .vertexArrayObject .enable (shaderNode))
       {
-         shaderNode .enableCoordIndexAttribute (gl, this .coordIndexBuffer, 0, 0);
+         if (this .coordIndices .length)
+            shaderNode .enableCoordIndexAttribute (gl, this .coordIndexBuffer, 0, 0);
 
          if (this .multiTexCoords .length)
             shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, 0);
@@ -987,7 +1003,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
       }
       else
       {
-         const backShaderNode = appearanceNode .getBackShader (this, renderContext)
+         const backShaderNode = appearanceNode .getBackShader (this, renderContext);
 
          this .displayGeometry (gl, renderContext, appearanceNode, backShaderNode, true,  false);
          this .displayGeometry (gl, renderContext, appearanceNode, shaderNode,     false, true);
@@ -1011,7 +1027,8 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
       if (this .vertexArrayObject .enable (shaderNode))
       {
-         shaderNode .enableCoordIndexAttribute (gl, this .coordIndexBuffer, 0, 0);
+         if (this .coordIndices .length)
+            shaderNode .enableCoordIndexAttribute (gl, this .coordIndexBuffer, 0, 0);
 
          for (let i = 0, length = attribNodes .length; i < length; ++ i)
             attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
