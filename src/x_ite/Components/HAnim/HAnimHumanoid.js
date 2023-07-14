@@ -65,7 +65,7 @@ function HAnimHumanoid (executionContext)
 
    this .addType (X3DConstants .HAnimHumanoid);
 
-   this .addChildObjects ("jointSkinCoord", new Fields .SFTime ());
+   this .addChildObjects ("jointTextures", new Fields .SFTime ());
 
    this ._translation .setUnit ("length");
    this ._center      .setUnit ("length");
@@ -182,7 +182,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
       this ._jointBindingPositions .addInterest ("set_joints__",              this);
       this ._jointBindingRotations .addInterest ("set_joints__",              this);
       this ._jointBindingScales    .addInterest ("set_joints__",              this);
-      this ._jointSkinCoord        .addInterest ("set_jointSkinCoord_impl__", this);
+      this ._jointTextures         .addInterest ("set_jointTextures__",       this);
       this ._skinBindingNormal     .addInterest ("set_skinBindingNormal__",   this);
       this ._skinBindingCoord      .addInterest ("set_skinBindingCoord__",    this);
       this ._skinNormal            .addInterest ("set_skinNormal__",          this);
@@ -256,9 +256,9 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
    },
    set_jointSkinCoord__ ()
    {
-      this ._jointSkinCoord = this .getBrowser () .getCurrentTime ();
+      this ._jointTextures .addEvent ();
    },
-   set_jointSkinCoord_impl__ ()
+   set_jointTextures__ ()
    {
       // Create arrays.
 
