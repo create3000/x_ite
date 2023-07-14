@@ -82,6 +82,23 @@ Contains metadata keyword=value pairs, where approved keyword terms are humanoid
 - Height and weight are in base units (typically meters), hanimVersion is for author use and separate from HAnimHumanoid version field.
 - Alternate metadata keywords are also allowed.
 
+### SFString [in, out] **skeletalConfiguration** "BASIC"
+
+Models sharing a common skeletal configuration can share animations and binding poses.
+
+#### Hint
+
+- [A value of 'BASIC' conforms to restrictive skeletal model in X3D Humanoid Animation (HAnim) Specification, Part 1 Architecture, 4.8 Modelling of humanoids](https://www.web3d.org/documents/specifications/19774/V2.0/Architecture/concepts.html#ModellingOfHumanoids){:target="_blank"}
+
+### SFInt32 [in, out] **loa** -1 <small>[-1,∞)</small>
+
+Level Of Articulation 0..4 indicates complexity and detail of joints for given humanoid skeletal hierarchy.
+
+#### Hints
+
+- *loa* value of -1 indicates that no LOA conformance is provided.
+- [Humanoid Animation (HAnim) Specification, Part 1 Architecture, 4.8.4 Levels of articulation](https://www.web3d.org/documents/specifications/19774/V2.0/Architecture/concepts.html#LevelsOfArticulation){:target="_blank"}
+
 ### SFVec3f [in, out] **translation** 0 0 0 <small>(-∞,∞)</small>
 
 Position of children relative to local coordinate system.
@@ -147,23 +164,6 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 - Precomputation and inclusion of bounding box information can speed up the initialization of large detailed models, with a corresponding cost of increased file size.
 - [X3D Architecture, 10.2.2 Bounding boxes](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/grouping.html#BoundingBoxes){:target="_blank"}
 - [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/grouping.html#X3DBoundedObject){:target="_blank"}
-
-### SFInt32 [in, out] **loa** -1 <small>[-1,∞)</small>
-
-Level Of Articulation 0..4 indicates complexity and detail of joints for given humanoid skeletal hierarchy.
-
-#### Hints
-
-- *loa* value of -1 indicates that no LOA conformance is provided.
-- [Humanoid Animation (HAnim) Specification, Part 1 Architecture, 4.8.4 Levels of articulation](https://www.web3d.org/documents/specifications/19774/V2.0/Architecture/concepts.html#LevelsOfArticulation){:target="_blank"}
-
-### SFString [in, out] **skeletalConfiguration** "BASIC"
-
-Models sharing a common skeletal configuration can share animations and binding poses.
-
-#### Hint
-
-- [A value of 'BASIC' conforms to restrictive skeletal model in X3D Humanoid Animation (HAnim) Specification, Part 1 Architecture, 4.8 Modelling of humanoids](https://www.web3d.org/documents/specifications/19774/V2.0/Architecture/concepts.html#ModellingOfHumanoids){:target="_blank"}
 
 ### MFNode [in, out] **skeleton** [ ] <small>[HAnimJoint, HAnimSite]</small>
 

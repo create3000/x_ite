@@ -53,7 +53,7 @@ Coordinates of vertices connected into contiguous Polyline2D.
 
 - Material emissiveColor in corresponding Appearance is used for rendering lines.
 - Adding LineProperties to the corresponding Appearance node can modify the rendering style of these lines.
-- [Insert a Shape node before adding geometry or Appearance. Examples: X3D Example Archives, X3D for Web Authors, Chapter 10 Geometry 2D](https://x3dgraphics.com/examples/X3dForWebAuthors/Chapter10Geometry2D){:target="_blank"}
+- [Insert a Shape node before adding geometry or Appearance. Examples: X3D Example Archives, X3D for Web Authors, Chapter 10 Geometry 2D](https://www.web3d.org/x3d/content/examples/X3dForWebAuthors/Chapter10Geometry2D){:target="_blank"}
 
 ### Warnings
 

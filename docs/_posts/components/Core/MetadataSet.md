@@ -67,7 +67,7 @@ The *value* field provides a list of X3DMetadataObject nodes whose meaning is de
 - An IS statement precedes any sibling Metadata* node, which in turn precedes any other sibling nodes.
 - MetadataSet can contain other MetadataSet nodes.
 - Comments are not readable when a model file is loaded for viewing, but WorldInfo and Metadata* nodes are persistent and inspectable at run time.
-- [X3D for Web Authors, Chapter 15, Metadata Information](https://x3dgraphics.com/examples/X3dForWebAuthors/Chapter15-Metadata/Chapter15-MetadataInformation.html){:target="_blank"}
+- [X3D for Web Authors, Chapter 15, Metadata Information](https://www.web3d.org/x3d/content/examples/X3dForWebAuthors/Chapter15-Metadata/Chapter15-MetadataInformation.html){:target="_blank"}
 
 ### Warning
 

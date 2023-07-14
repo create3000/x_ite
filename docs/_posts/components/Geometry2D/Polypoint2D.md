@@ -51,7 +51,7 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 
 ### Hint
 
-- [Insert a Shape node before adding geometry or Appearance. Examples: X3D Example Archives, X3D for Web Authors, Chapter 10 Geometry 2D](https://x3dgraphics.com/examples/X3dForWebAuthors/Chapter10Geometry2D){:target="_blank"}
+- [Insert a Shape node before adding geometry or Appearance. Examples: X3D Example Archives, X3D for Web Authors, Chapter 10 Geometry 2D](https://www.web3d.org/x3d/content/examples/X3dForWebAuthors/Chapter10Geometry2D){:target="_blank"}
 
 ## Example
 

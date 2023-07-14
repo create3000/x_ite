@@ -136,7 +136,7 @@ Select geometry by activating the pointing device (for example, clicking the mou
 - [X3D Architecture 20.2.1 Overview of pointing device sensors](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/pointingDeviceSensor.html#OverviewOfPointingDeviceSensors){:target="_blank"}
 - [X3D Architecture 20.2.2 Drag sensors](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/pointingDeviceSensor.html#DragSensors){:target="_blank"}
 - [X3D Architecture 20.2.3 Activating and manipulating pointing device sensors](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/pointingDeviceSensor.html#Activatingandmanipulating){:target="_blank"}
-- [Example scenes and authoring assets](https://x3dgraphics.com/examples/X3dForWebAuthors/Chapter08UserInteractivity){:target="_blank"}
+- [Example scenes and authoring assets](https://www.web3d.org/x3d/content/examples/X3dForWebAuthors/Chapter08UserInteractivity){:target="_blank"}
 
 ## Example
 

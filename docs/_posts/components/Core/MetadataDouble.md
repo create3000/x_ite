@@ -71,7 +71,7 @@ The *value* attribute is a strictly typed data array providing relevant metadata
 - An IS statement precedes any sibling Metadata* node, which in turn precedes any other sibling nodes.
 - The choice of MetadataDouble versus MetadataFloat usually depends on the relevant tool utilizing the value, or else the relevant metadata reference defining the value.
 - Comments are not readable when a model file is loaded for viewing, but WorldInfo and Metadata* nodes are persistent and inspectable at run time.
-- [X3D for Web Authors, Chapter 15, Metadata Information](https://x3dgraphics.com/examples/X3dForWebAuthors/Chapter15-Metadata/Chapter15-MetadataInformation.html){:target="_blank"}
+- [X3D for Web Authors, Chapter 15, Metadata Information](https://www.web3d.org/x3d/content/examples/X3dForWebAuthors/Chapter15-Metadata/Chapter15-MetadataInformation.html){:target="_blank"}
 
 ### Warning
 
