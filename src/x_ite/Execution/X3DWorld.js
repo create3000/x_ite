@@ -58,7 +58,7 @@ function X3DWorld (executionContext)
 
    this .addType (X3DConstants .X3DWorld)
 
-   this .addChildObjects ("activeLayer", new SFNode (this .layer0));
+   this .addChildObjects (X3DConstants .outputOnly, "activeLayer", new SFNode (this .layer0));
 
    this .defaultLayerSet = new LayerSet (executionContext);
    this .layerSet        = this .defaultLayerSet;

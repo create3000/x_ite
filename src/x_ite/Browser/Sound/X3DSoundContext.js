@@ -45,12 +45,13 @@
  *
  ******************************************************************************/
 
-import Fields from "../../Fields.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import Fields       from "../../Fields.js";
 
 function X3DSoundContext ()
 {
-   this .addChildObjects ("volume", new Fields .SFFloat (1),
-                          "mute",   new Fields .SFBool ());
+   this .addChildObjects (X3DConstants .outputOnly, "volume", new Fields .SFFloat (1),
+                          X3DConstants .outputOnly, "mute",   new Fields .SFBool ());
 }
 
 export default X3DSoundContext;

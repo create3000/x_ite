@@ -88,13 +88,9 @@ function X3DBaseNode (executionContext, browser = executionContext .getBrowser (
 
    // Create fields.
 
-   this .addChildObjects ("name_changed",     new Fields .SFTime (),
-                          "typeName_changed", new Fields .SFTime (),
-                          "parents_changed",  new Fields .SFTime ())
-
-   this ._name_changed     .setAccessType (X3DConstants .outputOnly);
-   this ._typeName_changed .setAccessType (X3DConstants .outputOnly);
-   this ._parents_changed  .setAccessType (X3DConstants .outputOnly);
+   this .addChildObjects (X3DConstants .outputOnly, "name_changed",     new Fields .SFTime (),
+                          X3DConstants .outputOnly, "typeName_changed", new Fields .SFTime (),
+                          X3DConstants .outputOnly, "parents_changed",  new Fields .SFTime ())
 
    for (const fieldDefinition of this [_fieldDefinitions])
       this .addPredefinedField (fieldDefinition);
@@ -184,7 +180,7 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
 
          // Add isLive event.
 
-         this .addChildObjects ("live", new Fields .SFBool (this .getLiveState ()));
+         this .addChildObjects (X3DConstants .outputOnly, "live", new Fields .SFBool (this .getLiveState ()));
 
          // Event processing is done manually and immediately, so:
          this ._live .removeParent (this);
@@ -286,18 +282,19 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
 
       return copy;
    },
-   addChildObjects (/* name, field, ... */)
+   addChildObjects (/* accessType, name, field, ... */)
    {
-      for (let i = 0, length = arguments .length; i < length; i += 2)
-         this .addChildObject (arguments [i], arguments [i + 1]);
+      for (let i = 0, length = arguments .length; i < length; i += 3)
+         this .addChildObject (arguments [i], arguments [i + 1], arguments [i + 2]);
    },
-   addChildObject (name, field)
+   addChildObject (accessType, name, field)
    {
       this [_childObjects] .push (field);
 
       field .setTainted (true);
       field .addParent (this);
       field .setName (name);
+      field .setAccessType (accessType);
 
       Object .defineProperty (this, `_${name}`,
       {

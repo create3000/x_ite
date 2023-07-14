@@ -45,6 +45,7 @@
  *
  ******************************************************************************/
 
+import X3DConstants     from "../../Base/X3DConstants.js";
 import Fields           from "../../Fields.js";
 import ExamineViewer    from "./ExamineViewer.js";
 import WalkViewer       from "./WalkViewer.js";
@@ -76,11 +77,11 @@ function getHeadlight (browser)
 
 function X3DNavigationContext ()
 {
-   this .addChildObjects ("activeLayer",          new Fields .SFNode (),
-                          "activeNavigationInfo", new Fields .SFNode (),
-                          "activeViewpoint",      new Fields .SFNode (),
-                          "availableViewers",     new Fields .MFString (),
-                          "viewer",               new Fields .SFString ("EXAMINE"));
+   this .addChildObjects (X3DConstants .outputOnly, "activeLayer",          new Fields .SFNode (),
+                          X3DConstants .outputOnly, "activeNavigationInfo", new Fields .SFNode (),
+                          X3DConstants .outputOnly, "activeViewpoint",      new Fields .SFNode (),
+                          X3DConstants .outputOnly, "availableViewers",     new Fields .MFString (),
+                          X3DConstants .outputOnly, "viewer",               new Fields .SFString ("EXAMINE"));
 
    this [_activeCollisions] = new Set ();
    this [_viewerNode]       = new NoneViewer (this .getPrivateScene ());

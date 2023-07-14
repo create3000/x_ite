@@ -46,6 +46,7 @@
  ******************************************************************************/
 
 import Fields            from "../../Fields.js";
+import X3DConstants      from "../../Base/X3DConstants.js";
 import X3DBaseNode       from "../../Base/X3DBaseNode.js";
 import IndexedFaceSet    from "../../Components/Geometry3D/IndexedFaceSet.js";
 import Coordinate        from "../../Components/Rendering/Coordinate.js";
@@ -56,8 +57,8 @@ function IcoSphereOptions (executionContext)
 {
    X3DBaseNode .call (this, executionContext);
 
-   this .addChildObjects ("type",  new Fields .SFString ("ICOSAHEDRON"),
-                          "order", new Fields .SFInt32 (2))
+   this .addChildObjects (X3DConstants .inputOutput, "type",  new Fields .SFString ("ICOSAHEDRON"),
+                          X3DConstants .inputOutput, "order", new Fields .SFInt32 (2))
 }
 
 Object .assign (Object .setPrototypeOf (IcoSphereOptions .prototype, X3DBaseNode .prototype),

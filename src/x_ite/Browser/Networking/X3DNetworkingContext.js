@@ -45,9 +45,10 @@
  *
  ******************************************************************************/
 
-import Fields from "../../Fields.js";
-import URLs   from "./URLs.js";
-import _      from "../../../locale/gettext.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import Fields       from "../../Fields.js";
+import URLs         from "./URLs.js";
+import _            from "../../../locale/gettext.js";
 
 const
    _loadingDisplay = Symbol (),
@@ -71,7 +72,7 @@ function getBaseURI (element)
 
 function X3DNetworkingContext ()
 {
-   this .addChildObjects ("loadCount", new Fields .SFInt32 ());
+   this .addChildObjects (X3DConstants .outputOnly, "loadCount", new Fields .SFInt32 ());
 
    this [_loadingDisplay] = 0;
    this [_loadingTotal]   = 0;

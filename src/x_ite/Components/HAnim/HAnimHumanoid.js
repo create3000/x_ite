@@ -65,7 +65,7 @@ function HAnimHumanoid (executionContext)
 
    this .addType (X3DConstants .HAnimHumanoid);
 
-   this .addChildObjects ("jointTextures", new Fields .SFTime ());
+   this .addChildObjects (X3DConstants .inputOutput, "jointTextures", new Fields .SFTime ());
 
    this ._translation .setUnit ("length");
    this ._center      .setUnit ("length");

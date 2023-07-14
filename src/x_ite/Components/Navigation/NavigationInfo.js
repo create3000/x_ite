@@ -65,10 +65,10 @@ function NavigationInfo (executionContext)
 
    this .addType (X3DConstants .NavigationInfo);
 
-   this .addChildObjects ("transitionStart",  new Fields .SFBool (),
-                          "transitionActive", new Fields .SFBool (),
-                          "availableViewers", new Fields .MFString (),
-                          "viewer",           new Fields .SFString ("EXAMINE"));
+   this .addChildObjects (X3DConstants .outputOnly, "transitionStart",  new Fields .SFBool (),
+                          X3DConstants .outputOnly, "transitionActive", new Fields .SFBool (),
+                          X3DConstants .outputOnly, "availableViewers", new Fields .MFString (),
+                          X3DConstants .outputOnly, "viewer",           new Fields .SFString ("EXAMINE"));
 
    this ._avatarSize      .setUnit ("length");
    this ._speed           .setUnit ("speed");

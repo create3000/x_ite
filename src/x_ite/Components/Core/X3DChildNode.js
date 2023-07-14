@@ -58,11 +58,8 @@ function X3DChildNode (executionContext)
 
    this .addType (X3DConstants .X3DChildNode);
 
-   this .addChildObjects ("isCameraObject",   new Fields .SFBool (),
-                          "isPickableObject", new Fields .SFBool ());
-
-   this ._isCameraObject   .setAccessType (X3DConstants .outputOnly);
-   this ._isPickableObject .setAccessType (X3DConstants .outputOnly);
+   this .addChildObjects (X3DConstants .outputOnly, "isCameraObject",   new Fields .SFBool (),
+                          X3DConstants .outputOnly, "isPickableObject", new Fields .SFBool ());
 }
 
 Object .assign (Object .setPrototypeOf (X3DChildNode .prototype, X3DNode .prototype),

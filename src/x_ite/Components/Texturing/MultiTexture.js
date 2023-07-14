@@ -61,7 +61,7 @@ function MultiTexture (executionContext)
 
    this .addType (X3DConstants .MultiTexture);
 
-   this .addChildObjects ("loadState", new Fields .SFInt32 (X3DConstants .NOT_STARTED_STATE));
+   this .addChildObjects (X3DConstants .outputOnly, "loadState", new Fields .SFInt32 (X3DConstants .NOT_STARTED_STATE));
 
    const browser = this .getBrowser ();
 

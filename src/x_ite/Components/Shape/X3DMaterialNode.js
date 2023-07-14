@@ -57,9 +57,7 @@ function X3DMaterialNode (executionContext)
 
    this .addType (X3DConstants .X3DMaterialNode);
 
-   this .addChildObjects ("transparent", new Fields .SFBool ());
-
-   this ._transparent .setAccessType (X3DConstants .outputOnly);
+   this .addChildObjects (X3DConstants .outputOnly, "transparent", new Fields .SFBool ());
 
    this .textureBits = new BitSet ();
    this .shaderNodes = this .getBrowser () .getShaders ();

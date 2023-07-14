@@ -67,12 +67,12 @@ function X3DViewpointNode (executionContext)
 
    this .addType (X3DConstants .X3DViewpointNode);
 
-   this .addChildObjects ("positionOffset",         new Fields .SFVec3f (),
-                          "orientationOffset",      new Fields .SFRotation (),
-                          "scaleOffset",            new Fields .SFVec3f (1, 1, 1),
-                          "scaleOrientationOffset", new Fields .SFRotation (),
-                          "centerOfRotationOffset", new Fields .SFVec3f (),
-                          "fieldOfViewScale",       new Fields .SFFloat (1));
+   this .addChildObjects (X3DConstants .inputOutput, "positionOffset",         new Fields .SFVec3f (),
+                          X3DConstants .inputOutput, "orientationOffset",      new Fields .SFRotation (),
+                          X3DConstants .inputOutput, "scaleOffset",            new Fields .SFVec3f (1, 1, 1),
+                          X3DConstants .inputOutput, "scaleOrientationOffset", new Fields .SFRotation (),
+                          X3DConstants .inputOutput, "centerOfRotationOffset", new Fields .SFVec3f (),
+                          X3DConstants .inputOutput, "fieldOfViewScale",       new Fields .SFFloat (1));
 
    this .userPosition         = new Vector3 (0, 1, 0);
    this .userOrientation      = new Rotation4 ();

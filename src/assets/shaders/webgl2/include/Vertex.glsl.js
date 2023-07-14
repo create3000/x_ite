@@ -98,6 +98,7 @@ out vec3 vertex;
 
 // Main
 
+#if defined (X3D_SKINNING) || defined (X3D_PARTICLE_SYSTEM)
 vec4
 texelFetch (const in sampler2D sampler, const in int index, const in int lod)
 {
@@ -107,6 +108,7 @@ texelFetch (const in sampler2D sampler, const in int index, const in int lod)
 
    return t;
 }
+#endif
 
 #pragma X3D include "Skinning.glsl"
 #pragma X3D include "Particle.glsl"

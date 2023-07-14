@@ -46,6 +46,7 @@
  ******************************************************************************/
 
 import Fields            from "../../Fields.js";
+import X3DConstants      from "../../Base/X3DConstants.js";
 import X3DBaseNode       from "../../Base/X3DBaseNode.js";
 import IndexedFaceSet    from "../../Components/Geometry3D/IndexedFaceSet.js";
 import Coordinate        from "../../Components/Rendering/Coordinate.js";
@@ -58,8 +59,8 @@ function QuadSphereOptions (executionContext)
 {
    X3DBaseNode .call (this, executionContext);
 
-   this .addChildObjects ("xDimension", new Fields .SFInt32 (32),
-                          "yDimension", new Fields .SFInt32 (15))
+   this .addChildObjects (X3DConstants .inputOutput, "xDimension", new Fields .SFInt32 (32),
+                          X3DConstants .inputOutput, "yDimension", new Fields .SFInt32 (15))
 }
 
 Object .assign (Object .setPrototypeOf (QuadSphereOptions .prototype, X3DBaseNode .prototype),

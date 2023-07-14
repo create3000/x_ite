@@ -58,8 +58,8 @@ function ComposedTexture3D (executionContext)
 
    this .addType (X3DConstants .ComposedTexture3D);
 
-   this .addChildObjects ("loadState", new Fields .SFInt32 (X3DConstants .NOT_STARTED_STATE),
-                          "update",    new Fields .SFTime ());
+   this .addChildObjects (X3DConstants .outputOnly,  "loadState", new Fields .SFInt32 (X3DConstants .NOT_STARTED_STATE),
+                          X3DConstants .inputOutput, "update",    new Fields .SFTime ());
 
    this .textureNodes = [ ];
 }

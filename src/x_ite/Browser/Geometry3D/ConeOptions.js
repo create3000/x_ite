@@ -45,15 +45,16 @@
  *
  ******************************************************************************/
 
-import Fields      from "../../Fields.js";
-import X3DBaseNode from "../../Base/X3DBaseNode.js";
+import Fields       from "../../Fields.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import X3DBaseNode  from "../../Base/X3DBaseNode.js";
 
 function ConeOptions (executionContext)
 {
    X3DBaseNode .call (this, executionContext);
 
-   this .addChildObjects ("xDimension", new Fields .SFInt32 (20),
-                          "yDimension", new Fields .SFInt32 (1))
+   this .addChildObjects (X3DConstants .inputOutput, "xDimension", new Fields .SFInt32 (20),
+                          X3DConstants .inputOutput, "yDimension", new Fields .SFInt32 (1))
 }
 
 Object .setPrototypeOf (ConeOptions .prototype, X3DBaseNode .prototype);

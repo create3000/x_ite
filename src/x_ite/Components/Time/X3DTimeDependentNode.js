@@ -53,8 +53,8 @@ function X3DTimeDependentNode (executionContext)
 {
    this .addType (X3DConstants .X3DTimeDependentNode);
 
-   this .addChildObjects ("initialized", new Fields .SFTime (),
-                          "isEvenLive",  new Fields .SFBool ());
+   this .addChildObjects (X3DConstants .outputOnly,  "initialized", new Fields .SFTime (),
+                          X3DConstants .inputOutput, "isEvenLive",  new Fields .SFBool ());
 
    this .startTimeValue  = 0;
    this .pauseTimeValue  = 0;

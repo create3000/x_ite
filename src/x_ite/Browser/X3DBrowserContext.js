@@ -46,6 +46,7 @@
  ******************************************************************************/
 
 import SFTime                         from "../Fields/SFTime.js";
+import X3DConstants                   from "../Base/X3DConstants.js";
 import X3DBaseNode                    from "../Base/X3DBaseNode.js";
 import X3DCoreContext                 from "./Core/X3DCoreContext.js";
 import X3DEnvironmentalEffectsContext from "./EnvironmentalEffects/X3DEnvironmentalEffectsContext.js";
@@ -117,13 +118,13 @@ function X3DBrowserContext (element)
    for (const browserContext of browserContexts)
       browserContext .call (this);
 
-   this .addChildObjects ("initialized",    new SFTime (),
-                          "shutdown",       new SFTime (),
-                          "prepareEvents",  new SFTime (),
-                          "timeEvents",     new SFTime (),
-                          "sensorEvents",   new SFTime (),
-                          "displayEvents",  new SFTime (),
-                          "finishedEvents", new SFTime ());
+   this .addChildObjects (X3DConstants .outputOnly, "initialized",    new SFTime (),
+                          X3DConstants .outputOnly, "shutdown",       new SFTime (),
+                          X3DConstants .outputOnly, "prepareEvents",  new SFTime (),
+                          X3DConstants .outputOnly, "timeEvents",     new SFTime (),
+                          X3DConstants .outputOnly, "sensorEvents",   new SFTime (),
+                          X3DConstants .outputOnly, "displayEvents",  new SFTime (),
+                          X3DConstants .outputOnly, "finishedEvents", new SFTime ());
 
    this [_changedTime]    = 0;
    this [_previousTime]   = 0;

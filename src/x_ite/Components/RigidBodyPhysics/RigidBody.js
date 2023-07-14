@@ -63,9 +63,9 @@ function RigidBody (executionContext)
 
    this .addType (X3DConstants .RigidBody);
 
-   this .addChildObjects ("collection",    new Fields .SFNode (),
-                          "transform",     new Fields .SFTime (),
-                          "otherGeometry", new Fields .MFNode ());
+   this .addChildObjects (X3DConstants .inputOutput, "collection",    new Fields .SFNode (),
+                          X3DConstants .inputOutput, "transform",     new Fields .SFTime (),
+                          X3DConstants .inputOutput, "otherGeometry", new Fields .MFNode ());
 
    this ._position            .setUnit ("length");
    this ._linearVelocity      .setUnit ("speed");

@@ -60,8 +60,8 @@ function X3DNBodyCollidableNode (executionContext)
 
    this .addType (X3DConstants .X3DNBodyCollidableNode);
 
-   this .addChildObjects ("body",                  new Fields .SFNode (),
-                          "compoundShape_changed", new Fields .SFTime ());
+   this .addChildObjects (X3DConstants .inputOutput, "body",                  new Fields .SFNode (),
+                          X3DConstants .outputOnly,  "compoundShape_changed", new Fields .SFTime ());
 
    // Units
 

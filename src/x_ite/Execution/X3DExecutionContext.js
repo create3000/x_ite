@@ -75,11 +75,10 @@ function X3DExecutionContext (executionContext, outerNode = null, browser = exec
 
    this .addType (X3DConstants .X3DExecutionContext)
 
-   this .addChildObjects ("rootNodes",          new Fields .MFNode (),
-                          "worldInfos",         new Fields .MFNode (),
-                          "sceneGraph_changed", new Fields .SFTime ())
+   this .addChildObjects (X3DConstants .initializeOnly, "rootNodes",          new Fields .MFNode (),
+                          X3DConstants .outputOnly,     "worldInfos",         new Fields .MFNode (),
+                          X3DConstants .outputOnly,     "sceneGraph_changed", new Fields .SFTime ())
 
-   this ._rootNodes .setAccessType (X3DConstants .initializeOnly);
    this ._rootNodes .collectCloneCount = () => 1;
 
    this [_outerNode]     = outerNode;

@@ -76,10 +76,10 @@ function X3DScene (browser)
 
    this .addType (X3DConstants .X3DScene)
 
-   this .addChildObjects ("profile_changed",  new Fields .SFTime (),
-                          "metadata_changed", new Fields .SFTime (),
-                          "initLoadCount",    new Fields .SFInt32 (),
-                          "loadCount",        new Fields .SFInt32 ())
+   this .addChildObjects (X3DConstants .outputOnly, "profile_changed",  new Fields .SFTime (),
+                          X3DConstants .outputOnly, "metadata_changed", new Fields .SFTime (),
+                          X3DConstants .outputOnly, "initLoadCount",    new Fields .SFInt32 (),
+                          X3DConstants .outputOnly, "loadCount",        new Fields .SFInt32 ())
 
    this [_specificationVersion] = X3D_LATEST_VERSION;
    this [_encoding]             = "SCRIPTED";

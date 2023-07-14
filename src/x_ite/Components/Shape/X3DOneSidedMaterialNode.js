@@ -57,8 +57,6 @@ function X3DOneSidedMaterialNode (executionContext)
 
    this .addType (X3DConstants .X3DOneSidedMaterialNode);
 
-   this .addChildObjects ("textures", new Fields .SFTime ());
-
    this .emissiveColor = new Float32Array (3);
 }
 

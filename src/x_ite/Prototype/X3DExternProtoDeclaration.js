@@ -64,10 +64,10 @@ function X3DExternProtoDeclaration (executionContext, url)
 
    this .addType (X3DConstants .X3DExternProtoDeclaration)
 
-   this .addChildObjects ("load",                 new Fields .SFBool (true),
-                          "url",                  url .copy (), // Must be of type MFString.
-                          "autoRefresh",          new Fields .SFTime (),
-                          "autoRefreshTimeLimit", new Fields .SFTime (3600));
+   this .addChildObjects (X3DConstants .inputOutput, "load",                 new Fields .SFBool (true),
+                          X3DConstants .inputOutput, "url",                  url .copy (), // Must be of type MFString.
+                          X3DConstants .inputOutput, "autoRefresh",          new Fields .SFTime (),
+                          X3DConstants .inputOutput, "autoRefreshTimeLimit", new Fields .SFTime (3600));
 }
 
 Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3DProtoDeclarationNode .prototype),

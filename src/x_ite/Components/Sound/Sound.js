@@ -65,7 +65,7 @@ function Sound (executionContext)
 
    this .addType (X3DConstants .Sound);
 
-   this .addChildObjects ("traversed", new Fields .SFBool (true));
+   this .addChildObjects (X3DConstants .outputOnly, "traversed", new Fields .SFBool (true));
 
    this ._location .setUnit ("length");
    this ._minBack  .setUnit ("length");

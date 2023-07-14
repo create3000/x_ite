@@ -46,6 +46,7 @@
  ******************************************************************************/
 
 import X3DBaseNode     from "../../Base/X3DBaseNode.js";
+import X3DConstants    from "../../Base/X3DConstants.js";
 import Fields          from "../../Fields.js";
 import X3DGeometryNode from "../../Components/Rendering/X3DGeometryNode.js";
 import Complex         from "../../../standard/Math/Numbers/Complex.js";
@@ -54,7 +55,7 @@ function Circle2DOptions (executionContext)
 {
    X3DBaseNode .call (this, executionContext);
 
-   this .addChildObjects ("dimension", new Fields .SFInt32 (40))
+   this .addChildObjects (X3DConstants .inputOutput, "dimension", new Fields .SFInt32 (40))
 
    this .vertices = X3DGeometryNode .createArray ();
 }

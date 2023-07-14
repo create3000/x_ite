@@ -57,7 +57,7 @@ function X3DRigidJointNode (executionContext)
 
    this .addType (X3DConstants .X3DRigidJointNode);
 
-   this .addChildObjects ("collection", new Fields .SFNode ());
+   this .addChildObjects (X3DConstants .inputOutput, "collection", new Fields .SFNode ());
 
    this .bodyNode1             = null;
    this .bodyNode2             = null;

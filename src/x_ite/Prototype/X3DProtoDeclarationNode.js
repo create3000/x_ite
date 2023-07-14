@@ -57,7 +57,7 @@ function X3DProtoDeclarationNode (executionContext)
 
    this .addType (X3DConstants .X3DProtoDeclarationNode);
 
-   this .addChildObjects ("updateInstances", new Fields .SFTime ());
+   this .addChildObjects (X3DConstants .outputOnly, "updateInstances", new Fields .SFTime ());
 }
 
 Object .assign (Object .setPrototypeOf (X3DProtoDeclarationNode .prototype, X3DBaseNode .prototype),

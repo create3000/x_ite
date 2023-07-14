@@ -60,7 +60,7 @@ function AudioClip (executionContext)
 
    this .addType (X3DConstants .AudioClip);
 
-   this .addChildObjects ("speed", new Fields .SFFloat (1));
+   this .addChildObjects (X3DConstants .inputOutput, "speed", new Fields .SFFloat (1));
 
    this .audio    = $("<audio></audio>");
    this .urlStack = new Fields .MFString ();

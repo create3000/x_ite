@@ -45,8 +45,9 @@
  *
  ******************************************************************************/
 
-import SFString    from "../../Fields/SFString.js";
-import X3DBaseNode from "../../Base/X3DBaseNode.js";
+import SFString     from "../../Fields/SFString.js";
+import X3DBaseNode  from "../../Base/X3DBaseNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
 
 $.fn.textWidth = function (string)
 {
@@ -65,7 +66,7 @@ function Notification (executionContext)
 {
    X3DBaseNode .call (this, executionContext);
 
-   this .addChildObjects ("string", new SFString ());
+   this .addChildObjects (X3DConstants .inputOutput, "string", new SFString ());
 }
 
 Object .assign (Object .setPrototypeOf (Notification .prototype, X3DBaseNode .prototype),

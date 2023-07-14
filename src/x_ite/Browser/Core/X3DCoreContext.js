@@ -45,6 +45,7 @@
  *
  ******************************************************************************/
 
+import X3DConstants        from "../../Base/X3DConstants.js";
 import Fields              from "../../Fields.js";
 import Context             from "./Context.js";
 import BrowserTimings      from "./BrowserTimings.js";
@@ -141,10 +142,10 @@ function X3DCoreContext (element)
    this [_pixelPerPoint] = inches .height () / 720 || 1;
    inches .remove ();
 
-   this .addChildObjects ("controlKey", new Fields .SFBool (),
-                          "shiftKey",   new Fields .SFBool (),
-                          "altKey",     new Fields .SFBool (),
-                          "altGrKey",   new Fields .SFBool ());
+   this .addChildObjects (X3DConstants .outputOnly, "controlKey", new Fields .SFBool (),
+                          X3DConstants .outputOnly, "shiftKey",   new Fields .SFBool (),
+                          X3DConstants .outputOnly, "altKey",     new Fields .SFBool (),
+                          X3DConstants .outputOnly, "altGrKey",   new Fields .SFBool ());
 }
 
 Object .assign (X3DCoreContext .prototype,

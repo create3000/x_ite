@@ -63,7 +63,7 @@ function NurbsOrientationInterpolator (executionContext)
 
    this .addType (X3DConstants .NurbsOrientationInterpolator);
 
-   this .addChildObjects ("rebuild", new Fields .SFTime ());
+   this .addChildObjects (X3DConstants .inputOutput, "rebuild", new Fields .SFTime ());
 
    this .interpolator  = new OrientationInterpolator (executionContext);
    this .knots         = [ ];

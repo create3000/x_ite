@@ -64,8 +64,8 @@ function GeoViewpoint (executionContext)
 
    this .addType (X3DConstants .GeoViewpoint);
 
-   this .addChildObjects ("navType",   new Fields .MFString ("EXAMINE", "ANY"),
-                          "headlight", new Fields .SFBool (true));
+   this .addChildObjects (X3DConstants .inputOutput, "navType",   new Fields .MFString ("EXAMINE", "ANY"),
+                          X3DConstants .inputOutput, "headlight", new Fields .SFBool (true));
 
    if (executionContext .getSpecificationVersion () <= 3.2)
    {

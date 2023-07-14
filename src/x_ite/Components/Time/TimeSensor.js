@@ -60,7 +60,7 @@ function TimeSensor (executionContext)
 
    this .addType (X3DConstants .TimeSensor);
 
-   this .addChildObjects ("range", new Fields .MFFloat (0, 0, 1)); // current, first, last (in fractions) - play range starting at current
+   this .addChildObjects (X3DConstants .inputOutput, "range", new Fields .MFFloat (0, 0, 1)); // current, first, last (in fractions) - play range starting at current
 
    this .cycle    = 0;
    this .interval = 0;

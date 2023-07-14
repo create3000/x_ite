@@ -57,7 +57,7 @@ function PixelTexture3D (executionContext)
 
    this .addType (X3DConstants .PixelTexture3D);
 
-   this .addChildObjects ("loadState", new Fields .SFInt32 (X3DConstants .NOT_STARTED_STATE));
+   this .addChildObjects (X3DConstants .outputOnly, "loadState", new Fields .SFInt32 (X3DConstants .NOT_STARTED_STATE));
 }
 
 Object .assign (Object .setPrototypeOf (PixelTexture3D .prototype, X3DTexture3DNode .prototype),

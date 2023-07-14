@@ -61,7 +61,7 @@ function OrthoViewpoint (executionContext)
 
    this .addType (X3DConstants .OrthoViewpoint);
 
-   this .addChildObjects ("fieldOfViewOffset", new Fields .MFFloat (0, 0, 0, 0));
+   this .addChildObjects (X3DConstants .inputOutput, "fieldOfViewOffset", new Fields .MFFloat (0, 0, 0, 0));
 
    this ._position         .setUnit ("length");
    this ._centerOfRotation .setUnit ("length");
