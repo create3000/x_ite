@@ -254,10 +254,10 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
       {
          const skinCoordWeight = jointNode ._skinCoordWeight;
 
-         for (const [i, coordIndex] of jointNode ._skinCoordIndex .entries ())
+         for (const [i, index] of jointNode ._skinCoordIndex .entries ())
          {
-            joints  [coordIndex] ?.push (j);
-            weights [coordIndex] ?.push (skinCoordWeight [i])
+            joints  [index] ?.push (j);
+            weights [index] ?.push (skinCoordWeight [i])
          }
       }
 
@@ -268,15 +268,13 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
 
       for (let i = 0; i < length; ++ i)
       {
-         const
-            j = joints  [i],
-            w = weights [i];
+         const j = joints [i], w = weights [i];
 
-         for (let n = 0; n < 4; ++ n)
-         {
-            jointsArray  [i * 4 + n] = j ?.[n] ?? 0;
-            weightsArray [i * 4 + n] = w ?.[n] ?? 0;
-         }
+         j .length = Math .min (j .length, 4);
+         w .length = Math .min (w .length, 4);
+
+         jointsArray  .set (j, i * 4);
+         weightsArray .set (w, i * 4);
       }
 
       // Upload textures.
