@@ -60,6 +60,8 @@ function HAnimJoint (executionContext)
 
    this .addType (X3DConstants .HAnimJoint);
 
+   this .addChildObjects (X3DConstants .outputOnly, "displacersTime", new Fields .SFTime ());
+
    this .setAllowedTypes (X3DConstants .HAnimJoint,
                           X3DConstants .HAnimSegment,
                           X3DConstants .HAnimSite);
@@ -90,6 +92,9 @@ Object .assign (Object .setPrototypeOf (HAnimJoint .prototype, X3DTransformNode 
    {
       const displacerNodes = this .displacerNodes;
 
+      for (const displacerNode of displacerNodes)
+         displacerNode .removeInterest ("addEvent", this ._displacersTime);
+
       displacerNodes .length = 0;
 
       for (const node of this ._displacers)
@@ -99,6 +104,9 @@ Object .assign (Object .setPrototypeOf (HAnimJoint .prototype, X3DTransformNode 
          if (displacerNode)
             displacerNodes .push (displacerNode);
       }
+
+      for (const displacerNode of displacerNodes)
+         displacerNode .addInterest ("addEvent", this ._displacersTime);
    },
    traverse (type, renderObject)
    {

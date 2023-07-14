@@ -5,6 +5,7 @@ in float x3d_CoordIndex;
 
 uniform sampler2D x3d_JointsTexture;
 uniform sampler2D x3d_WeightsTexture;
+uniform sampler2D x3d_DisplacementsTexture;
 uniform sampler2D x3d_JointMatricesTexture;
 uniform sampler2D x3d_JointNormalMatricesTexture;
 
@@ -19,13 +20,27 @@ getJointMatrix (const in int joint)
    return mat4 (a, b, c, d);
 }
 
+mat3
+getDisplacementJointMatrix (const in int joint)
+{
+   mat4 m = getJointMatrix (joint);
+
+   return mat3 (m [0] .xyz, m [1] .xyz, m [2] .xyz);
+}
+
 vec4
 getSkinningVertex (const in vec4 vertex)
 {
    int   coordIndex = int (x3d_CoordIndex);
    ivec4 joints     = ivec4 (texelFetch (x3d_JointsTexture, coordIndex, 0));
    vec4  weights    = texelFetch (x3d_WeightsTexture, coordIndex, 0);
+   vec4  d0         = texelFetch (x3d_DisplacementsTexture, coordIndex * 3 + 0, 0);
+   vec4  d1         = texelFetch (x3d_DisplacementsTexture, coordIndex * 3 + 1, 0);
+   vec4  d2         = texelFetch (x3d_DisplacementsTexture, coordIndex * 3 + 2, 0);
    vec4  skin       = vertex;
+
+   skin .xyz += (getDisplacementJointMatrix (int (d0 .x)) * d0 .yzw)              * d1 .x;
+   skin .xyz += (getDisplacementJointMatrix (int (d1 .y)) * vec3 (d1 .zw, d2 .x)) * d2 .y;
 
    for (int i = 0; i < 4; ++ i)
       skin += (getJointMatrix (joints [i]) * vertex - vertex) * weights [i];
