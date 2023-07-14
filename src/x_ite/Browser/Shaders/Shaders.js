@@ -79,6 +79,7 @@ import Skinning2              from "../../../assets/shaders/webgl2/include/Skinn
 import Stipple2               from "../../../assets/shaders/webgl2/include/Stipple.glsl.js";
 import SpotFactor2            from "../../../assets/shaders/webgl2/include/SpotFactor.glsl.js";
 import Texture2               from "../../../assets/shaders/webgl2/include/Texture.glsl.js";
+import Utils2                 from "../../../assets/shaders/webgl2/include/Utils.glsl.js";
 import Vertex2                from "../../../assets/shaders/webgl2/include/Vertex.glsl.js";
 
 /* WebGL 1 */
@@ -143,6 +144,7 @@ const Shaders = {
          Stipple: Stipple2,
          SpotFactor: SpotFactor2,
          Texture: Texture2,
+         Utils: Utils2,
          Vertex: Vertex2,
       },
    },

@@ -166,7 +166,7 @@ Object .assign (X3DRenderingContext .prototype,
    {
       return this [_frameBuffer];
    },
-   getDepthShader (numClipPlanes, shapeNode)
+   getDepthShader (numClipPlanes, shapeNode, humanoidNode)
    {
       const geometryContext = shapeNode .getGeometryContext ();
 
@@ -176,6 +176,7 @@ Object .assign (X3DRenderingContext .prototype,
       key += ".";
       key += shapeNode .getShapeKey ();
       key += geometryContext .geometryType;
+      key += humanoidNode ? 1 : 0;
 
       if (geometryContext .geometryType >= 2)
       {
@@ -192,9 +193,9 @@ Object .assign (X3DRenderingContext .prototype,
          key += appearanceNode .getMaterial () .getTextureBits () .toString (4); // Textures for point and line.
       }
 
-      return this [_depthShaders] .get (key) || this .createDepthShader (key, numClipPlanes, shapeNode);
+      return this [_depthShaders] .get (key) || this .createDepthShader (key, numClipPlanes, shapeNode, humanoidNode);
    },
-   createDepthShader (key, numClipPlanes, shapeNode)
+   createDepthShader (key, numClipPlanes, shapeNode, humanoidNode)
    {
       const
          appearanceNode  = shapeNode .getAppearance (),
@@ -217,6 +218,9 @@ Object .assign (X3DRenderingContext .prototype,
 
       if (+appearanceNode .getTextureBits () || +appearanceNode .getMaterial () .getTextureBits ())
          options .push ("X3D_TEXTURE", "X3D_NUM_TEXTURE_COORDINATES 1")
+
+      if (humanoidNode)
+         options .push ("X3D_SKINNING");
 
       const shaderNode = this .createShader ("DepthShader", "Depth", "Depth", options);
 
