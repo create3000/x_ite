@@ -78,9 +78,8 @@ function HAnimHumanoid (executionContext)
    this .transformNode        = new Transform (executionContext);
    this .jointNodes           = [ ];
    this .jointBindingMatrices = [ ];
-   this .skinNormalNode       = null;
    this .skinCoordNode        = null;
-   this .changed              = false;
+   this .changed              = new Lock ();
 }
 
 Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .prototype),
@@ -181,11 +180,9 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
       this ._jointBindingRotations .addInterest ("set_joints__",        this);
       this ._jointBindingScales    .addInterest ("set_joints__",        this);
       this ._jointTextures         .addInterest ("set_jointTextures__", this);
-      this ._skinNormal            .addInterest ("set_skinNormal__",    this);
       this ._skinCoord             .addInterest ("set_skinCoord__",     this);
 
       this .set_joints__ ();
-      this .set_skinNormal__ ();
       this .set_skinCoord__ ();
    },
    getBBox (bbox, shadows)
@@ -203,9 +200,9 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
 
       for (const jointNode of jointNodes)
       {
-         jointNode .removeInterest ("set_joint__", this);
-         jointNode ._skinCoordIndex  .removeInterest ("set_jointSkinCoord__", this);
-         jointNode ._skinCoordWeight .removeInterest ("set_jointSkinCoord__", this);
+         jointNode .removeInterest ("enable", this .changed);
+         jointNode ._skinCoordIndex  .removeInterest ("addEvent", this ._jointTextures);
+         jointNode ._skinCoordWeight .removeInterest ("addEvent", this ._jointTextures);
       }
 
       jointNodes           .length = 0;
@@ -235,23 +232,14 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
 
       for (const jointNode of jointNodes)
       {
-         jointNode .addInterest ("set_joint__", this);
-         jointNode ._skinCoordIndex  .addInterest ("set_jointSkinCoord__", this);
-         jointNode ._skinCoordWeight .addInterest ("set_jointSkinCoord__", this);
+         jointNode .addInterest ("enable", this .changed);
+         jointNode ._skinCoordIndex  .addInterest ("addEvent", this ._jointTextures);
+         jointNode ._skinCoordWeight .addInterest ("addEvent", this ._jointTextures);
       }
 
       this .jointMatricesArray       = new Float32Array (jointNodes .length * 16),
       this .jointNormalMatricesArray = new Float32Array (jointNodes .length * 16);
 
-      this .set_joint__ ();
-      this .set_jointSkinCoord__ ();
-   },
-   set_joint__ ()
-   {
-      this .changed = true;
-   },
-   set_jointSkinCoord__ ()
-   {
       this ._jointTextures .addEvent ();
    },
    set_jointTextures__ ()
@@ -303,12 +291,8 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
 
       gl .bindTexture (gl .TEXTURE_2D, this .weightsTexture);
       gl .texImage2D (gl .TEXTURE_2D, 0, gl .getVersion () > 1 ? gl .RGBA32F : gl .RGBA, size, size, 0, gl .RGBA, gl .FLOAT, weightsArray);
-   },
-   set_skinNormal__ ()
-   {
-      this .skinNormalNode = X3DCast (X3DConstants .X3DNormalNode, this ._skinNormal);
 
-      this .changed = true;
+      this .changed .enable ();
    },
    set_skinCoord__ ()
    {
@@ -319,7 +303,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
       else
          this .skinning = Function .prototype;
 
-      this .changed = true;
+      this ._jointTextures .addEvent ();
    },
    traverse (type, renderObject)
    {
@@ -336,10 +320,8 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
          if (type !== TraverseType .DISPLAY)
             return;
 
-         if (!this .changed)
+         if (this .changed .lock ())
             return;
-
-         this .changed = false;
 
          // Determine inverse model matrix of humanoid.
 
@@ -507,36 +489,6 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
    //       }
    //    };
    // })(),
-   toVRMLStream (generator)
-   {
-      if (this .skinNormalNode)
-         this .skinNormalNode ._vector = this .skinBindingNormal ._vector;
-
-      if (this .skinCoordNode)
-         this .skinCoordNode ._point = this .skinBindingCoord ._point;
-
-      X3DChildNode .prototype .toVRMLStream .call (this, generator);
-   },
-   toXMLStream (generator)
-   {
-      if (this .skinNormalNode)
-         this .skinNormalNode ._vector = this .skinBindingNormal ._vector;
-
-      if (this .skinCoordNode)
-         this .skinCoordNode ._point = this .skinBindingCoord ._point;
-
-      X3DChildNode .prototype .toXMLStream .call (this, generator);
-   },
-   toJSONStream (generator)
-   {
-      if (this .skinNormalNode)
-         this .skinNormalNode ._vector = this .skinBindingNormal ._vector;
-
-      if (this .skinCoordNode)
-         this .skinCoordNode ._point = this .skinBindingCoord ._point;
-
-      X3DChildNode .prototype .toJSONStream .call (this, generator);
-   },
    dispose ()
    {
       X3DBoundedObject .prototype .dispose .call (this);
@@ -604,5 +556,24 @@ Object .defineProperties (HAnimHumanoid,
       enumerable: true,
    },
 });
+
+class Lock
+{
+   #locked = true;
+
+   enable ()
+   {
+      this .#locked = false;
+   }
+
+   lock ()
+   {
+      const locked = this .#locked;
+
+      this .#locked = true;
+
+      return locked;
+   }
+}
 
 export default HAnimHumanoid;
