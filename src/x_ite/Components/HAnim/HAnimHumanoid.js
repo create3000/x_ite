@@ -346,9 +346,9 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
    {
       renderObject .getHumanoids () .push (this);
 
-      this .skinning (type, renderObject);
-
       this .transformNode .traverse (type, renderObject);
+
+      this .skinning (type, renderObject);
 
       renderObject .getHumanoids () .pop ();
    },
@@ -371,6 +371,8 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
          invModelMatrix .assign (this .transformNode .getMatrix ())
             .multRight (renderObject .getModelViewMatrix () .get ()) .inverse ();
 
+         // Create joint matrices.
+
          const
             jointNodes               = this .jointNodes,
             jointNodesLength         = jointNodes .length,
@@ -389,6 +391,8 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
             jointMatricesArray       .set (jointMatrix,       i * 16);
             jointNormalMatricesArray .set (jointNormalMatrix, i * 16);
          }
+
+         // Upload textures.
 
          const
             browser = this .getBrowser (),

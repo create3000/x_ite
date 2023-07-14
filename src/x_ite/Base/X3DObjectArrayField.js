@@ -160,10 +160,9 @@ Object .assign (Object .setPrototypeOf (X3DObjectArrayField .prototype, X3DArray
    {
       const
          target = this [_target],
-         copy   = target .create (),
-         array  = target .getValue ();
+         copy   = target .create ();
 
-      copy .push (... array);
+      copy .assign (target);
       copy .setModificationTime (0);
 
       return copy;
@@ -330,10 +329,13 @@ Object .assign (Object .setPrototypeOf (X3DObjectArrayField .prototype, X3DArray
       const
          target = this [_target],
          values = target .getValue () .splice (index, deleteCount),
-         result = new (target .constructor) (... values);
+         result = new (target .constructor) ();
 
       for (const value of values)
+      {
+         result .push (value);
          target .removeChildObject (value);
+      }
 
       target .addEvent ();
 

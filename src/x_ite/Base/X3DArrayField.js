@@ -63,7 +63,12 @@ Object .assign (Object .setPrototypeOf (X3DArrayField .prototype, X3DField .prot
    fill: Array .prototype .fill,
    filter (/* callbackFn, thisArg */)
    {
-      return new (this .constructor) (... Array .prototype .filter .call (this, ... arguments));
+      const array = new (this .constructor) ();
+
+      for (const v of Array .prototype .filter .call (this, ... arguments))
+         array .push (v);
+
+      return array;
    },
    find: Array .prototype .find,
    findIndex: Array .prototype .findIndex,
@@ -79,14 +84,24 @@ Object .assign (Object .setPrototypeOf (X3DArrayField .prototype, X3DField .prot
    lastIndexOf: Array .prototype .lastIndexOf,
    map (/* callbackFn, thisArg */)
    {
-      return new (this .constructor) (... Array .prototype .map .call (this, ... arguments));
+      const array = new (this .constructor) ();
+
+      for (const v of Array .prototype .map .call (this, ... arguments))
+         array .push (v);
+
+      return array;
    },
    reduce: Array .prototype .reduce,
    reduceRight: Array .prototype .reduceRight,
    reverse: Array .prototype .reverse,
    slice (/* start, end */)
    {
-      return new (this .constructor) (... Array .prototype .slice .call (this, ... arguments));
+      const array = new (this .constructor) ();
+
+      for (const v of Array .prototype .slice .call (this, ... arguments))
+         array .push (v);
+
+      return array;
    },
    some: Array .prototype .some,
    sort: Array .prototype .sort,
