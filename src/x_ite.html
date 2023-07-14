@@ -93,7 +93,7 @@ X3D (() =>
 
    let index = localStorage ["Bookmarks.history"] .length - 1;
 
-   function loadURL (url)
+   async function loadURL (url)
    {
       const history = localStorage ["Bookmarks.history"];
 
@@ -112,7 +112,41 @@ X3D (() =>
 
       $("#file") .removeClass ("loaded");
 
-      bookmarks .loadURL (url);
+      await bookmarks .loadURL (url);
+
+      try
+      {
+         $("#animations") .empty ();
+
+         const animations = Browser .currentScene .getExportedNode ("Animations");
+
+         const stop = function ()
+         {
+            for (const animation of animations .children)
+                  animation .children [0] .stopTime = Date .now () / 1000;
+         };
+
+         for (const animation of animations .children)
+         {
+            $("<span></span>")
+               .text ("▶")
+               .on ("click", () =>
+               {
+                  stop ();
+
+                  animation .children [0] .loop      = true;
+                  animation .children [0] .startTime = Date .now () / 1000;
+               })
+               .appendTo ($("#animations"));
+         }
+
+         $("<span></span>")
+            .text ("◼")
+            .on ("click", stop)
+            .appendTo ($("#animations"));
+      }
+      catch
+      { }
    }
 
    function toVRMLString ()
@@ -242,6 +276,11 @@ main.color-management #browser {
 
 #file.loaded a {
    border-color: #ffe32d;
+}
+
+#animations span {
+   cursor: pointer;
+   padding: 0 3px;
 }
 
 #browser {
@@ -418,6 +457,7 @@ main.color-management #browser {
       </header>
       <main>
          <div>
+            <div id="animations"></div>
             <form action="javascript:alert('form submitted')">
                <div id="transforms" style="transform-origin: 50% 50%;">
                   <x3d-canvas id="browser" splashScreen="true" contextMenu="true" cache="false" debug="true" preserveDrawingBuffer="false" oninitialized="$('#file') .addClass ('loaded')" x-baseURL="tests/" x-src="lines.x3d" update="auto">
