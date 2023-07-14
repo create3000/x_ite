@@ -90,17 +90,17 @@ function X3DGeometryNode (executionContext)
    this .geometryType             = 3;
    this .flatShading              = undefined;
    this .colorMaterial            = false;
-   this .coordIndices             = X3DGeometryNode .createArray ();
    this .attribNodes              = [ ];
    this .attribArrays             = [ ];
    this .textureCoordinateMapping = new Map ();
    this .multiTexCoords           = [ ];
-   this .texCoords                = X3DGeometryNode .createArray ();
-   this .fogDepths                = X3DGeometryNode .createArray ();
-   this .colors                   = X3DGeometryNode .createArray ();
-   this .normals                  = X3DGeometryNode .createArray ();
-   this .flatNormals              = X3DGeometryNode .createArray ();
-   this .vertices                 = X3DGeometryNode .createArray ();
+   this .coordIndices             = new Fields .MFFloat ();
+   this .texCoords                = new Fields .MFFloat ();
+   this .fogDepths                = new Fields .MFFloat ();
+   this .colors                   = new Fields .MFFloat ();
+   this .normals                  = new Fields .MFFloat ();
+   this .flatNormals              = new Fields .MFFloat ();
+   this .vertices                 = new Fields .MFFloat ();
    this .hasFogCoords             = false;
    this .hasNormals               = false;
    this .geometryKey              = "";
@@ -110,44 +110,6 @@ function X3DGeometryNode (executionContext)
    for (let i = 0; i < 5; ++ i)
       this .planes [i] = new Plane3 (Vector3 .Zero, Vector3 .zAxis);
 }
-
-Object .defineProperty (X3DGeometryNode, "createArray",
-{
-   // Function to select ether Array or MFFloat for color/normal/vertex arrays.
-   value (type = "MFFloat")
-   {
-      return new Fields [type] ();
-
-      // const array = [ ];
-
-      // array .typedArray = new Float32Array ();
-
-      // array .assign = function (value)
-      // {
-      //    const length = value .length;
-
-      //    for (let i = 0; i < length; ++ i)
-      //       this [i] = value [i];
-
-      //    this .length = length;
-      // };
-
-      // array .getValue = function ()
-      // {
-      //    return this .typedArray;
-      // };
-
-      // array .shrinkToFit = function ()
-      // {
-      //    if (this .length === this .typedArray .length)
-      //       this .typedArray .set (this);
-      //    else
-      //       this .typedArray = new Float32Array (this);
-      // };
-
-      // return array;
-   },
-})
 
 Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .prototype),
 {
@@ -848,7 +810,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          const length = this .attribNodes .length;
 
          for (let a = attribArrays .length; a < length; ++ a)
-            attribArrays [a] = X3DGeometryNode .createArray ();
+            attribArrays [a] = new Fields .MFFloat ();
 
          attribArrays .length = length;
       }

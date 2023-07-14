@@ -45,10 +45,10 @@
  *
  ******************************************************************************/
 
+import Fields          from "../../Fields.js";
 import X3DTextGeometry from "../Text/X3DTextGeometry.js";
 import TextAlignment   from "../Text/TextAlignment.js";
 import PixelTexture    from "../../Components/Texturing/PixelTexture.js";
-import X3DGeometryNode from "../../Components/Rendering/X3DGeometryNode.js";
 import Vector3         from "../../../standard/Math/Numbers/Vector3.js";
 import Matrix4         from "../../../standard/Math/Numbers/Matrix4.js";
 import Box3            from "../../../standard/Math/Geometry/Box3.js";
@@ -60,7 +60,7 @@ function ScreenText (text, fontStyle)
 
    text .setTransparent (true);
 
-   this .texCoordArray = X3DGeometryNode .createArray ();
+   this .texCoordArray = new Fields .MFFloat ();
    this .textureNode   = new PixelTexture (text .getExecutionContext ());
    this .canvas        = $("<canvas></canvas>");
    this .context       = this .canvas [0] .getContext ("2d", { willReadFrequently: true });

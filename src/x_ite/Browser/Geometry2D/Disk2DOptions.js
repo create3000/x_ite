@@ -45,11 +45,10 @@
  *
  ******************************************************************************/
 
-import X3DBaseNode     from "../../Base/X3DBaseNode.js";
-import X3DConstants    from "../../Base/X3DConstants.js";
-import Fields          from "../../Fields.js";
-import X3DGeometryNode from "../../Components/Rendering/X3DGeometryNode.js";
-import Complex         from "../../../standard/Math/Numbers/Complex.js";
+import Fields       from "../../Fields.js";
+import X3DBaseNode  from "../../Base/X3DBaseNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import Complex      from "../../../standard/Math/Numbers/Complex.js";
 
 function Disk2DOptions (executionContext)
 {
@@ -57,10 +56,10 @@ function Disk2DOptions (executionContext)
 
    this .addChildObjects (X3DConstants .inputOutput, "dimension", new Fields .SFInt32 (40))
 
-   this .circleVertices = X3DGeometryNode .createArray ();
-   this .diskTexCoords  = X3DGeometryNode .createArray ();
-   this .diskNormals    = X3DGeometryNode .createArray ();
-   this .diskVertices   = X3DGeometryNode .createArray ();
+   this .circleVertices = new Fields .MFFloat ();
+   this .diskTexCoords  = new Fields .MFFloat ();
+   this .diskNormals    = new Fields .MFFloat ();
+   this .diskVertices   = new Fields .MFFloat ();
 }
 
 Object .assign (Object .setPrototypeOf (Disk2DOptions .prototype, X3DBaseNode .prototype),

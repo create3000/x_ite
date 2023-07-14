@@ -45,11 +45,10 @@
  *
  ******************************************************************************/
 
-import X3DBaseNode     from "../../Base/X3DBaseNode.js";
-import X3DConstants    from "../../Base/X3DConstants.js";
-import Fields          from "../../Fields.js";
-import X3DGeometryNode from "../../Components/Rendering/X3DGeometryNode.js";
-import Complex         from "../../../standard/Math/Numbers/Complex.js";
+import Fields       from "../../Fields.js";
+import X3DBaseNode  from "../../Base/X3DBaseNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import Complex      from "../../../standard/Math/Numbers/Complex.js";
 
 function Circle2DOptions (executionContext)
 {
@@ -57,7 +56,7 @@ function Circle2DOptions (executionContext)
 
    this .addChildObjects (X3DConstants .inputOutput, "dimension", new Fields .SFInt32 (40))
 
-   this .vertices = X3DGeometryNode .createArray ();
+   this .vertices = new Fields .MFFloat ();
 }
 
 Object .assign (Object .setPrototypeOf (Circle2DOptions .prototype, X3DBaseNode .prototype),
