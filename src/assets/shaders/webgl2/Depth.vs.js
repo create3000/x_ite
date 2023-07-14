@@ -20,8 +20,7 @@ void
 main ()
 {
    vec4 x3d_TransformedVertex = getParticleVertex (getSkinningVertex (x3d_Vertex));
-
-   vec4 position = x3d_ModelViewMatrix * x3d_TransformedVertex;
+   vec4 position              = x3d_ModelViewMatrix * x3d_TransformedVertex;
 
    vertex = position .xyz;
 

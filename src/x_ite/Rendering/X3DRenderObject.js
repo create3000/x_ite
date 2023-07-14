@@ -509,8 +509,9 @@ Object .assign (X3DRenderObject .prototype,
             const pointingContext = this .pointingShapes [num];
 
             pointingContext .modelViewMatrix .set (modelViewMatrix);
-            pointingContext .shapeNode = shapeNode;
-            pointingContext .scissor   = viewVolume .getScissor ();
+            pointingContext .shapeNode    = shapeNode;
+            pointingContext .scissor      = viewVolume .getScissor ();
+            pointingContext .humanoidNode = this .humanoids .at (-1);
 
             // Clip planes & sensors
 
@@ -719,11 +720,11 @@ Object .assign (X3DRenderObject .prototype,
          {
             const
                renderContext       = shapes [s],
-               { scissor, clipPlanes, modelViewMatrix, shapeNode } = renderContext,
+               { scissor, clipPlanes, modelViewMatrix, shapeNode, humanoidNode } = renderContext,
                appearanceNode      = shapeNode .getAppearance (),
                geometryContext     = shapeNode .getGeometryContext (),
                stylePropertiesNode = appearanceNode .getStyleProperties (geometryContext .geometryType),
-               shaderNode          = browser .getPointingShader (clipPlanes .length, shapeNode),
+               shaderNode          = browser .getPointingShader (clipPlanes .length, shapeNode, humanoidNode),
                id                  = browser .addPointingShape (renderContext);
 
             gl .scissor (scissor .x - x,
@@ -740,8 +741,8 @@ Object .assign (X3DRenderObject .prototype,
             gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrix);
             gl .uniform1f (shaderNode .x3d_Id, id);
 
-            if (stylePropertiesNode)
-               stylePropertiesNode .setShaderUniforms (gl, shaderNode);
+            stylePropertiesNode ?.setShaderUniforms (gl, shaderNode);
+            humanoidNode        ?.setShaderUniforms (gl, shaderNode);
 
             shapeNode .displaySimple (gl, renderContext, shaderNode);
             browser .resetTextureUnits ();
@@ -975,7 +976,7 @@ Object .assign (X3DRenderObject .prototype,
             gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrix);
 
             stylePropertiesNode ?.setShaderUniforms (gl, shaderNode);
-            humanoidNode ?.setShaderUniforms (gl, shaderNode);
+            humanoidNode        ?.setShaderUniforms (gl, shaderNode);
 
             shapeNode .displaySimple (gl, renderContext, shaderNode);
             browser .resetTextureUnits ();

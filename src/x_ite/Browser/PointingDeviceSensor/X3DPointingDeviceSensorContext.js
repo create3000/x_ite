@@ -331,7 +331,7 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
       for (const sensor of this [_activeSensors])
          sensor .set_motion__ (hit);
    },
-   getPointingShader (numClipPlanes, shapeNode)
+   getPointingShader (numClipPlanes, shapeNode, humanoidNode)
    {
       const geometryContext = shapeNode .getGeometryContext ();
 
@@ -341,6 +341,7 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
       key += ".";
       key += shapeNode .getShapeKey ();
       key += geometryContext .geometryType;
+      key += humanoidNode ? 1 : 0;
 
       if (geometryContext .geometryType >= 2)
       {
@@ -357,9 +358,9 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
          key += appearanceNode .getMaterial () .getTextureBits () .toString (4); // Textures for point and line.
       }
 
-      return this [_pointingShaders] .get (key) || this .createPointingShader (key, numClipPlanes, shapeNode);
+      return this [_pointingShaders] .get (key) || this .createPointingShader (key, numClipPlanes, shapeNode, humanoidNode);
    },
-   createPointingShader (key, numClipPlanes, shapeNode)
+   createPointingShader (key, numClipPlanes, shapeNode, humanoidNode)
    {
       const
          appearanceNode  = shapeNode .getAppearance (),
@@ -382,6 +383,9 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
 
       if (+appearanceNode .getTextureBits () || +appearanceNode .getMaterial () .getTextureBits ())
          options .push ("X3D_TEXTURE", "X3D_NUM_TEXTURE_COORDINATES 1")
+
+      if (humanoidNode)
+         options .push ("X3D_SKINNING");
 
       const shaderNode = this .createShader ("PointingShader", "Pointing", "Pointing", options);
 
