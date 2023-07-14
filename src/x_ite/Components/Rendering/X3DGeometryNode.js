@@ -74,9 +74,9 @@ function X3DGeometryNode (executionContext)
 
    this .addType (X3DConstants .X3DGeometryNode);
 
-   this .addChildObjects (X3DConstants .outputOnly,  "transparent",  new Fields .SFBool (),
-                          X3DConstants .outputOnly,  "bbox_changed", new Fields .SFTime (),
-                          X3DConstants .inputOutput, "rebuild",      new Fields .SFTime ());
+   this .addChildObjects (X3DConstants .outputOnly, "transparent",  new Fields .SFBool (),
+                          X3DConstants .outputOnly, "bbox_changed", new Fields .SFTime (),
+                          X3DConstants .outputOnly, "rebuild",      new Fields .SFTime ());
 
    // Members
 
