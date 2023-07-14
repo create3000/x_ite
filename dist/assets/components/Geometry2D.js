@@ -44,6 +44,9 @@ var Components_default = /*#__PURE__*/__webpack_require__.n(Components_namespace
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DBaseNode\")"
 const X3DBaseNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.6")] .require ("x_ite/Base/X3DBaseNode");
 var X3DBaseNode_default = /*#__PURE__*/__webpack_require__.n(X3DBaseNode_namespaceObject);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DConstants\")"
+const X3DConstants_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.6")] .require ("x_ite/Base/X3DConstants");
+var X3DConstants_default = /*#__PURE__*/__webpack_require__.n(X3DConstants_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Fields\")"
 const Fields_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.6")] .require ("x_ite/Fields");
 var Fields_default = /*#__PURE__*/__webpack_require__.n(Fields_namespaceObject);
@@ -101,11 +104,12 @@ var Namespace_default = /*#__PURE__*/__webpack_require__.n(Namespace_namespaceOb
 
 
 
+
 function Arc2DOptions (executionContext)
 {
    X3DBaseNode_default().call (this, executionContext);
 
-   this .addChildObjects ("dimension", new (Fields_default()).SFInt32 (40))
+   this .addChildObjects ((X3DConstants_default()).inputOutput, "dimension", new (Fields_default()).SFInt32 (40))
 }
 
 Object .setPrototypeOf (Arc2DOptions .prototype, (X3DBaseNode_default()).prototype);
@@ -175,11 +179,12 @@ Namespace_default().set ("x_ite/Browser/Geometry2D/Arc2DOptions", __default__);
 
 
 
+
 function ArcClose2DOptions (executionContext)
 {
    X3DBaseNode_default().call (this, executionContext);
 
-   this .addChildObjects ("dimension", new (Fields_default()).SFInt32 (40))
+   this .addChildObjects ((X3DConstants_default()).inputOutput, "dimension", new (Fields_default()).SFInt32 (40))
 }
 
 Object .setPrototypeOf (ArcClose2DOptions .prototype, (X3DBaseNode_default()).prototype);
@@ -257,11 +262,12 @@ var Complex_default = /*#__PURE__*/__webpack_require__.n(Complex_namespaceObject
 
 
 
+
 function Circle2DOptions (executionContext)
 {
    X3DBaseNode_default().call (this, executionContext);
 
-   this .addChildObjects ("dimension", new (Fields_default()).SFInt32 (40))
+   this .addChildObjects ((X3DConstants_default()).inputOutput, "dimension", new (Fields_default()).SFInt32 (40))
 
    this .vertices = X3DGeometryNode_default().createArray ();
 }
@@ -315,8 +321,6 @@ const Circle2DOptions_default_ = Circle2DOptions;
 
 Namespace_default().set ("x_ite/Browser/Geometry2D/Circle2DOptions", Circle2DOptions_default_);
 /* harmony default export */ const Geometry2D_Circle2DOptions = (Circle2DOptions_default_);
-;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Vector3\")"
-const Vector3_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.6")] .require ("standard/Math/Numbers/Vector3");
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Geometry2D/Disk2DOptions.js
 /*******************************************************************************
  *
@@ -375,7 +379,7 @@ function Disk2DOptions (executionContext)
 {
    X3DBaseNode_default().call (this, executionContext);
 
-   this .addChildObjects ("dimension", new (Fields_default()).SFInt32 (40))
+   this .addChildObjects ((X3DConstants_default()).inputOutput, "dimension", new (Fields_default()).SFInt32 (40))
 
    this .circleVertices = X3DGeometryNode_default().createArray ();
    this .diskTexCoords  = X3DGeometryNode_default().createArray ();
@@ -759,9 +763,6 @@ var FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(FieldDefin
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Rendering/X3DLineGeometryNode\")"
 const X3DLineGeometryNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.6")] .require ("x_ite/Components/Rendering/X3DLineGeometryNode");
 var X3DLineGeometryNode_default = /*#__PURE__*/__webpack_require__.n(X3DLineGeometryNode_namespaceObject);
-;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DConstants\")"
-const X3DConstants_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.6")] .require ("x_ite/Base/X3DConstants");
-var X3DConstants_default = /*#__PURE__*/__webpack_require__.n(X3DConstants_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Algorithm\")"
 const Algorithm_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.6")] .require ("standard/Math/Algorithm");
 var Algorithm_default = /*#__PURE__*/__webpack_require__.n(Algorithm_namespaceObject);
@@ -1798,6 +1799,8 @@ Namespace_default().set ("x_ite/Components/Geometry2D/Polypoint2D", Polypoint2D_
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Vector2\")"
 const Vector2_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.6")] .require ("standard/Math/Numbers/Vector2");
 var Vector2_default = /*#__PURE__*/__webpack_require__.n(Vector2_namespaceObject);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Vector3\")"
+const Vector3_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.6")] .require ("standard/Math/Numbers/Vector3");
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Geometry2D/Rectangle2D.js
 /*******************************************************************************
  *

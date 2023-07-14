@@ -166,7 +166,7 @@ function X3DRigidJointNode (executionContext)
 
    this .addType ((X3DConstants_default()).X3DRigidJointNode);
 
-   this .addChildObjects ("collection", new (Fields_default()).SFNode ());
+   this .addChildObjects ((X3DConstants_default()).inputOutput, "collection", new (Fields_default()).SFNode ());
 
    this .bodyNode1             = null;
    this .bodyNode2             = null;
@@ -715,8 +715,8 @@ function X3DNBodyCollidableNode (executionContext)
 
    this .addType ((X3DConstants_default()).X3DNBodyCollidableNode);
 
-   this .addChildObjects ("body",                  new (Fields_default()).SFNode (),
-                          "compoundShape_changed", new (Fields_default()).SFTime ());
+   this .addChildObjects ((X3DConstants_default()).inputOutput, "body",                  new (Fields_default()).SFNode (),
+                          (X3DConstants_default()).outputOnly,  "compoundShape_changed", new (Fields_default()).SFTime ());
 
    // Units
 
@@ -3079,9 +3079,9 @@ function RigidBody (executionContext)
 
    this .addType ((X3DConstants_default()).RigidBody);
 
-   this .addChildObjects ("collection",    new (Fields_default()).SFNode (),
-                          "transform",     new (Fields_default()).SFTime (),
-                          "otherGeometry", new (Fields_default()).MFNode ());
+   this .addChildObjects ((X3DConstants_default()).inputOutput, "collection",    new (Fields_default()).SFNode (),
+                          (X3DConstants_default()).inputOutput, "transform",     new (Fields_default()).SFTime (),
+                          (X3DConstants_default()).inputOutput, "otherGeometry", new (Fields_default()).MFNode ());
 
    this ._position            .setUnit ("length");
    this ._linearVelocity      .setUnit ("speed");

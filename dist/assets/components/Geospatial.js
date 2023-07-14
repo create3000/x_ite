@@ -3579,8 +3579,8 @@ function GeoViewpoint (executionContext)
 
    this .addType ((X3DConstants_default()).GeoViewpoint);
 
-   this .addChildObjects ("navType",   new (Fields_default()).MFString ("EXAMINE", "ANY"),
-                          "headlight", new (Fields_default()).SFBool (true));
+   this .addChildObjects ((X3DConstants_default()).inputOutput, "navType",   new (Fields_default()).MFString ("EXAMINE", "ANY"),
+                          (X3DConstants_default()).inputOutput, "headlight", new (Fields_default()).SFBool (true));
 
    if (executionContext .getSpecificationVersion () <= 3.2)
    {

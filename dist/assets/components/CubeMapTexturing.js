@@ -317,7 +317,7 @@ function ComposedCubeMapTexture (executionContext)
       this .addAlias ("bottom", this ._bottomTexture);
    }
 
-   this .addChildObjects ("update", new (Fields_default()).SFTime ());
+   this .addChildObjects ((X3DConstants_default()).inputOutput, "update", new (Fields_default()).SFTime ());
 
    this .textureNodes = [null, null, null, null, null, null];
    this .textureBits  = new (BitSet_default()) ();

@@ -245,7 +245,6 @@ main.color-management #browser {
 
 #file {
    margin: 10px 40px 10px 20px;
-   border-color: white;
 }
 
 #file.loaded {
@@ -261,6 +260,10 @@ main.color-management #browser {
 
 #file.loaded a {
    border-color: #ffe32d;
+}
+
+#animations {
+   margin: 10px 40px 10px 20px;
 }
 
 #animations span {
@@ -438,11 +441,11 @@ main.color-management #browser {
          <div>
             <h1 id="version"></h1>
             <p id="file"></p>
+            <div id="animations"></div>
          </div>
       </header>
       <main>
          <div>
-            <div id="animations"></div>
             <form action="javascript:alert('form submitted')">
                <div id="transforms" style="transform-origin: 50% 50%;">
                   <x3d-canvas id="browser" splashScreen="true" contextMenu="true" cache="false" debug="true" preserveDrawingBuffer="false" oninitialized="$('#file') .addClass ('loaded')" x-baseURL="src/tests/" x-src="lines.x3d" update="auto">

@@ -11,11 +11,11 @@
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 936:
+/***/ 154:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* provided dependency */ var jQuery = __webpack_require__(479);
+/* provided dependency */ var jQuery = __webpack_require__(572);
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;
 
 /**
@@ -387,10 +387,10 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;
 
 /***/ }),
 
-/***/ 20:
+/***/ 299:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var jQuery = __webpack_require__(479);
+/* provided dependency */ var jQuery = __webpack_require__(572);
 /**
  * @preserve jquery.fullscreen 1.1.5
  * https://github.com/code-lts/jquery-fullscreen-plugin
@@ -586,7 +586,7 @@ installFullScreenHandlers();
 
 /***/ }),
 
-/***/ 828:
+/***/ 483:
 /***/ ((module, exports, __webpack_require__) => {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -600,7 +600,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 (function (factory) {
     if ( true ) {
         // AMD. Register as an anonymous module.
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(479)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(572)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 		(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -811,7 +811,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 479:
+/***/ 572:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -11523,7 +11523,7 @@ return jQuery;
 
 /***/ }),
 
-/***/ 831:
+/***/ 43:
 /***/ ((module) => {
 
 /**
@@ -16302,7 +16302,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 574:
+/***/ 614:
 /***/ (function(__unused_webpack_module, exports) {
 
 
@@ -19547,7 +19547,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 220:
+/***/ 829:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -33673,9 +33673,9 @@ function X3DBaseNode (executionContext, browser = executionContext .getBrowser (
 
    // Create fields.
 
-   this .addChildObjects ("name_changed",     new x_ite_Fields .SFTime (),
-                          "typeName_changed", new x_ite_Fields .SFTime (),
-                          "parents_changed",  new x_ite_Fields .SFTime ())
+   this .addChildObjects (Base_X3DConstants .outputOnly, "name_changed",     new x_ite_Fields .SFTime (),
+                          Base_X3DConstants .outputOnly, "typeName_changed", new x_ite_Fields .SFTime (),
+                          Base_X3DConstants .outputOnly, "parents_changed",  new x_ite_Fields .SFTime ())
 
    for (const fieldDefinition of this [_fieldDefinitions])
       this .addPredefinedField (fieldDefinition);
@@ -33765,7 +33765,7 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, Base_X3DChildObj
 
          // Add isLive event.
 
-         this .addChildObjects ("live", new x_ite_Fields .SFBool (this .getLiveState ()));
+         this .addChildObjects (Base_X3DConstants .outputOnly, "live", new x_ite_Fields .SFBool (this .getLiveState ()));
 
          // Event processing is done manually and immediately, so:
          this ._live .removeParent (this);
@@ -33867,18 +33867,19 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, Base_X3DChildObj
 
       return copy;
    },
-   addChildObjects (/* name, field, ... */)
+   addChildObjects (/* accessType, name, field, ... */)
    {
-      for (let i = 0, length = arguments .length; i < length; i += 2)
-         this .addChildObject (arguments [i], arguments [i + 1]);
+      for (let i = 0, length = arguments .length; i < length; i += 3)
+         this .addChildObject (arguments [i], arguments [i + 1], arguments [i + 2]);
    },
-   addChildObject (name, field)
+   addChildObject (accessType, name, field)
    {
       this [_childObjects] .push (field);
 
       field .setTainted (true);
       field .addParent (this);
       field .setName (name);
+      field .setAccessType (accessType);
 
       Object .defineProperty (this, `_${name}`,
       {
@@ -34086,6 +34087,12 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, Base_X3DChildObj
    {
       if (field .isTainted ())
          return;
+
+      // if (this .getTypeName () === "IndexedQuadSet")
+      // {
+      //    console .log (field .getName ());
+      //    console .trace ();
+      // }
 
       field .setTainted (true);
 
@@ -36503,11 +36510,8 @@ function X3DChildNode (executionContext)
 
    this .addType (Base_X3DConstants .X3DChildNode);
 
-   this .addChildObjects ("isCameraObject",   new x_ite_Fields .SFBool (),
-                          "isPickableObject", new x_ite_Fields .SFBool ());
-
-   this ._isCameraObject   .setAccessType (Base_X3DConstants .outputOnly);
-   this ._isPickableObject .setAccessType (Base_X3DConstants .outputOnly);
+   this .addChildObjects (Base_X3DConstants .outputOnly, "isCameraObject",   new x_ite_Fields .SFBool (),
+                          Base_X3DConstants .outputOnly, "isPickableObject", new x_ite_Fields .SFBool ());
 }
 
 Object .assign (Object .setPrototypeOf (X3DChildNode .prototype, Core_X3DNode .prototype),
@@ -37614,8 +37618,8 @@ function X3DUrlObject (executionContext)
 {
    this .addType (Base_X3DConstants .X3DUrlObject);
 
-   this .addChildObjects ("loadState", new x_ite_Fields .SFInt32 (Base_X3DConstants .NOT_STARTED_STATE),
-                          "loadData",  new x_ite_Fields .SFTime ());
+   this .addChildObjects (Base_X3DConstants .outputOnly,  "loadState", new x_ite_Fields .SFInt32 (Base_X3DConstants .NOT_STARTED_STATE),
+                          Base_X3DConstants .inputOutput, "loadData",  new x_ite_Fields .SFTime ());
 
    this [X3DUrlObject_cache]                = true;
    this [_autoRefreshStartTime] = Date .now ();
@@ -37914,7 +37918,7 @@ function X3DProtoDeclarationNode (executionContext)
 
    this .addType (Base_X3DConstants .X3DProtoDeclarationNode);
 
-   this .addChildObjects ("updateInstances", new x_ite_Fields .SFTime ());
+   this .addChildObjects (Base_X3DConstants .outputOnly, "updateInstances", new x_ite_Fields .SFTime ());
 }
 
 Object .assign (Object .setPrototypeOf (X3DProtoDeclarationNode .prototype, Base_X3DBaseNode .prototype),
@@ -37972,7 +37976,7 @@ const X3DProtoDeclarationNode_default_ = X3DProtoDeclarationNode;
 x_ite_Namespace .set ("x_ite/Prototype/X3DProtoDeclarationNode", X3DProtoDeclarationNode_default_);
 /* harmony default export */ const Prototype_X3DProtoDeclarationNode = (X3DProtoDeclarationNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/X3DParser.js
-/* provided dependency */ var $ = __webpack_require__(479);
+/* provided dependency */ var $ = __webpack_require__(572);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -38796,7 +38800,7 @@ const X3DProtoDeclaration_default_ = X3DProtoDeclaration;
 x_ite_Namespace .set ("x_ite/Prototype/X3DProtoDeclaration", X3DProtoDeclaration_default_);
 /* harmony default export */ const Prototype_X3DProtoDeclaration = (X3DProtoDeclaration_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/VRMLParser.js
-/* provided dependency */ var VRMLParser_$ = __webpack_require__(479);
+/* provided dependency */ var VRMLParser_$ = __webpack_require__(572);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -41348,7 +41352,7 @@ const VRMLParser_default_ = VRMLParser;
 x_ite_Namespace .set ("x_ite/Parser/VRMLParser", VRMLParser_default_);
 /* harmony default export */ const Parser_VRMLParser = (VRMLParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/XMLParser.js
-/* provided dependency */ var XMLParser_$ = __webpack_require__(479);
+/* provided dependency */ var XMLParser_$ = __webpack_require__(572);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -43320,7 +43324,7 @@ const URLs_default_ = URLs;
 x_ite_Namespace .set ("x_ite/Browser/Networking/URLs", URLs_default_);
 /* harmony default export */ const Networking_URLs = (URLs_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GLTF2Parser.js
-/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(479);
+/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(572);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -43367,7 +43371,6 @@ x_ite_Namespace .set ("x_ite/Browser/Networking/URLs", URLs_default_);
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
-
 
 
 
@@ -44370,8 +44373,12 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
          const scene = this .getScene ();
 
          skin .textureCoordinateNode = scene .createNode ("TextureCoordinate", false);
-         skin .normalNode            = scene .createNode ("Normal", false);
-         skin .coordinateNode        = scene .createNode ("Coordinate", false);
+         skin .normalNode            = scene .createNode ("Normal",            false);
+         skin .coordinateNode        = scene .createNode ("Coordinate",        false);
+
+         skin .textureCoordinateNode .setup ();
+         skin .normalNode            .setup ();
+         skin .coordinateNode        .setup ();
       }
 
       const shapeNodes = this .primitivesArray (mesh .primitives, skin);
@@ -44389,13 +44396,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
             scene .addNamedNode (scene .getUniqueName (name), shapeNode);
             scene .addExportedNode (scene .getUniqueExportName (name), shapeNode);
          }
-      }
-
-      if (skin instanceof Object)
-      {
-         skin .textureCoordinateNode .setup ();
-         skin .normalNode            .setup ();
-         skin .coordinateNode        .setup ();
       }
 
       return mesh .shapeNodes = shapeNodes;
@@ -44802,7 +44802,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
 
             humanoidNode ._name                  = skin .name;
             humanoidNode ._version               = "2.0";
-            humanoidNode ._skeletalConfiguration = "NONE";
+            humanoidNode ._skeletalConfiguration = "GLTF";
 
             const skeletonNode = this .nodeObject (this .nodes [skin .skeleton], skin .skeleton);
 
@@ -44821,10 +44821,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
                humanoidNode ._jointBindingScales .push (scale);
             }
 
-            humanoidNode ._skinBindingNormal = shapeNodes [0] ._geometry .normal ?.getValue () ?.copy ();
-            humanoidNode ._skinBindingCoord  = shapeNodes [0] ._geometry .coord ?.getValue () ?.copy ();
-            humanoidNode ._skinNormal        = shapeNodes [0] ._geometry .normal;
-            humanoidNode ._skinCoord         = shapeNodes [0] ._geometry .coord;
+            humanoidNode ._skinNormal = shapeNodes [0] ._geometry .normal;
+            humanoidNode ._skinCoord  = shapeNodes [0] ._geometry .coord;
             humanoidNode ._skin .push (transformNode);
 
             humanoidNode .setup ();
@@ -45100,7 +45098,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
          .filter (input => input ?.array .length)
          .reduce ((value, input) => Math .max (value, input .array .at (-1)), 0);
 
-      timeSensorNode ._loop          = DEVELOPMENT;
       timeSensorNode ._cycleInterval = cycleInterval;
 
       return channels
@@ -45198,9 +45195,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
       materialNode   .setup ();
       appearanceNode .setup ();
 
-      this .defaultAppearance = appearanceNode;
-
-      return appearanceNode;
+      return this .defaultAppearance = appearanceNode;
    },
    createMultiTextureTransform (materialNode)
    {
@@ -46046,7 +46041,7 @@ const GLTF2Parser_default_ = GLTF2Parser;
 x_ite_Namespace .set ("x_ite/Parser/GLTF2Parser", GLTF2Parser_default_);
 /* harmony default export */ const Parser_GLTF2Parser = (GLTF2Parser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GLB2Parser.js
-/* provided dependency */ var GLB2Parser_$ = __webpack_require__(479);
+/* provided dependency */ var GLB2Parser_$ = __webpack_require__(572);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -46198,7 +46193,7 @@ const GLB2Parser_default_ = GLB2Parser;
 x_ite_Namespace .set ("x_ite/Parser/GLB2Parser", GLB2Parser_default_);
 /* harmony default export */ const Parser_GLB2Parser = (GLB2Parser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/OBJParser.js
-/* provided dependency */ var OBJParser_$ = __webpack_require__(479);
+/* provided dependency */ var OBJParser_$ = __webpack_require__(572);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -49553,8 +49548,8 @@ const MatrixStack_default_ = MatrixStack;
 x_ite_Namespace .set ("standard/Math/Utility/MatrixStack", MatrixStack_default_);
 /* harmony default export */ const Utility_MatrixStack = (MatrixStack_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_$ = __webpack_require__(479);
-/* provided dependency */ var libtess = __webpack_require__(831);
+/* provided dependency */ var SVGParser_$ = __webpack_require__(572);
+/* provided dependency */ var libtess = __webpack_require__(43);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -52322,7 +52317,7 @@ const SVGParser_default_ = SVGParser;
 x_ite_Namespace .set ("x_ite/Parser/SVGParser", SVGParser_default_);
 /* harmony default export */ const Parser_SVGParser = (SVGParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GoldenGate.js
-/* provided dependency */ var GoldenGate_$ = __webpack_require__(479);
+/* provided dependency */ var GoldenGate_$ = __webpack_require__(572);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -52659,7 +52654,7 @@ const Plane3_default_ = Plane3;
 x_ite_Namespace .set ("standard/Math/Geometry/Plane3", Plane3_default_);
 /* harmony default export */ const Geometry_Plane3 = (Plane3_default_);
 ;// CONCATENATED MODULE: ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var Triangle3_libtess = __webpack_require__(831);
+/* provided dependency */ var Triangle3_libtess = __webpack_require__(43);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -56488,10 +56483,10 @@ function NavigationInfo (executionContext)
 
    this .addType (Base_X3DConstants .NavigationInfo);
 
-   this .addChildObjects ("transitionStart",  new x_ite_Fields .SFBool (),
-                          "transitionActive", new x_ite_Fields .SFBool (),
-                          "availableViewers", new x_ite_Fields .MFString (),
-                          "viewer",           new x_ite_Fields .SFString ("EXAMINE"));
+   this .addChildObjects (Base_X3DConstants .outputOnly, "transitionStart",  new x_ite_Fields .SFBool (),
+                          Base_X3DConstants .outputOnly, "transitionActive", new x_ite_Fields .SFBool (),
+                          Base_X3DConstants .outputOnly, "availableViewers", new x_ite_Fields .MFString (),
+                          Base_X3DConstants .outputOnly, "viewer",           new x_ite_Fields .SFString ("EXAMINE"));
 
    this ._avatarSize      .setUnit ("length");
    this ._speed           .setUnit ("speed");
@@ -57405,13 +57400,9 @@ function X3DGeometryNode (executionContext)
 
    this .addType (Base_X3DConstants .X3DGeometryNode);
 
-   this .addChildObjects ("transparent",  new x_ite_Fields .SFBool (),
-                          "bbox_changed", new x_ite_Fields .SFTime (),
-                          "rebuild",      new x_ite_Fields .SFTime ());
-
-   this ._transparent  .setAccessType (Base_X3DConstants .outputOnly);
-   this ._bbox_changed .setAccessType (Base_X3DConstants .outputOnly);
-   this ._rebuild      .setAccessType (Base_X3DConstants .outputOnly);
+   this .addChildObjects (Base_X3DConstants .outputOnly, "transparent",  new x_ite_Fields .SFBool (),
+                          Base_X3DConstants .outputOnly, "bbox_changed", new x_ite_Fields .SFTime (),
+                          Base_X3DConstants .outputOnly, "rebuild",      new x_ite_Fields .SFTime ());
 
    // Members
 
@@ -57451,37 +57442,36 @@ Object .defineProperty (X3DGeometryNode, "createArray",
    // Function to select ether Array or MFFloat for color/normal/vertex arrays.
    value (type = "MFFloat")
    {
-      if (false)
-         {}
+      return new x_ite_Fields [type] ();
 
-      const array = [ ];
+      // const array = [ ];
 
-      array .typedArray = new Float32Array ();
+      // array .typedArray = new Float32Array ();
 
-      array .assign = function (value)
-      {
-         const length = value .length;
+      // array .assign = function (value)
+      // {
+      //    const length = value .length;
 
-         for (let i = 0; i < length; ++ i)
-            this [i] = value [i];
+      //    for (let i = 0; i < length; ++ i)
+      //       this [i] = value [i];
 
-         this .length = length;
-      };
+      //    this .length = length;
+      // };
 
-      array .getValue = function ()
-      {
-         return this .typedArray;
-      };
+      // array .getValue = function ()
+      // {
+      //    return this .typedArray;
+      // };
 
-      array .shrinkToFit = function ()
-      {
-         if (this .length === this .typedArray .length)
-            this .typedArray .set (this);
-         else
-            this .typedArray = new Float32Array (this);
-      };
+      // array .shrinkToFit = function ()
+      // {
+      //    if (this .length === this .typedArray .length)
+      //       this .typedArray .set (this);
+      //    else
+      //       this .typedArray = new Float32Array (this);
+      // };
 
-      return array;
+      // return array;
    },
 })
 
@@ -57508,7 +57498,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, Core_X3DNode
 
       this .frontFace             = gl .CCW;
       this .backFace              = new Map ([[gl .CCW, gl .CW], [gl .CW, gl .CCW]]);
-      this .coordIndexBuffer    = gl .createBuffer ();
+      this .coordIndexBuffer      = gl .createBuffer ();
       this .attribBuffers         = [ ];
       this .textureCoordinateNode = browser .getDefaultTextureCoordinate ();
       this .texCoordBuffers       = Array .from ({length: browser .getMaxTexCoords ()}, () => gl .createBuffer ());
@@ -57647,10 +57637,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, Core_X3DNode
    {
       this .textureCoordinateNode .removeInterest ("updateTextureCoordinateMapping", this);
 
-      if (value)
-         this .textureCoordinateNode = value;
-      else
-         this .textureCoordinateNode = this .getBrowser () .getDefaultTextureCoordinate ();
+      this .textureCoordinateNode = value ?? this .getBrowser () .getDefaultTextureCoordinate ();
 
       this .textureCoordinateNode .addInterest ("updateTextureCoordinateMapping", this);
 
@@ -58112,22 +58099,6 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, Core_X3DNode
          this .clear ();
          this .build ();
 
-         const vertices = this .vertices .getValue ();
-
-         // Generate coord indices if needed.
-
-         if (!this .coordIndices .length)
-         {
-            const
-               numVertices  = vertices .length / 4,
-               coordIndices = this .coordIndices;
-
-            for (let i = 0; i < numVertices; ++ i)
-               coordIndices .push (i);
-         }
-
-         this .coordIndices .shrinkToFit ();
-
          // Shrink arrays before transferring them to graphics card.
 
          for (const attribArray of this .attribArrays)
@@ -58136,16 +58107,18 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, Core_X3DNode
          for (const multiTexCoord of this .multiTexCoords)
             multiTexCoord .shrinkToFit ();
 
-         this .fogDepths .shrinkToFit ();
-         this .colors    .shrinkToFit ();
-         this .normals   .shrinkToFit ();
-         this .vertices  .shrinkToFit ();
+         this .coordIndices .shrinkToFit ();
+         this .fogDepths    .shrinkToFit ();
+         this .colors       .shrinkToFit ();
+         this .normals      .shrinkToFit ();
+         this .vertices     .shrinkToFit ();
 
          // Determine bbox.
 
          const
-            min = this .min,
-            max = this .max;
+            vertices = this .vertices .getValue (),
+            min      = this .min,
+            max      = this .max;
 
          if (vertices .length)
          {
@@ -58324,7 +58297,8 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, Core_X3DNode
    {
       if (this .vertexArrayObject .enable (shaderNode))
       {
-         shaderNode .enableCoordIndexAttribute (gl, this .coordIndexBuffer, 0, 0);
+         if (this .coordIndices .length)
+            shaderNode .enableCoordIndexAttribute (gl, this .coordIndexBuffer, 0, 0);
 
          if (this .multiTexCoords .length)
             shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, 0);
@@ -58349,7 +58323,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, Core_X3DNode
       }
       else
       {
-         const backShaderNode = appearanceNode .getBackShader (this, renderContext)
+         const backShaderNode = appearanceNode .getBackShader (this, renderContext);
 
          this .displayGeometry (gl, renderContext, appearanceNode, backShaderNode, true,  false);
          this .displayGeometry (gl, renderContext, appearanceNode, shaderNode,     false, true);
@@ -58373,7 +58347,8 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, Core_X3DNode
 
       if (this .vertexArrayObject .enable (shaderNode))
       {
-         shaderNode .enableCoordIndexAttribute (gl, this .coordIndexBuffer, 0, 0);
+         if (this .coordIndices .length)
+            shaderNode .enableCoordIndexAttribute (gl, this .coordIndexBuffer, 0, 0);
 
          for (let i = 0, length = attribNodes .length; i < length; ++ i)
             attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
@@ -59602,9 +59577,7 @@ function X3DTextureNode (executionContext)
 
    this .addType (Base_X3DConstants .X3DTextureNode);
 
-   this .addChildObjects ("transparent", new x_ite_Fields .SFBool ());
-
-   this ._transparent .setAccessType (Base_X3DConstants .outputOnly);
+   this .addChildObjects (Base_X3DConstants .outputOnly, "transparent", new x_ite_Fields .SFBool ());
 }
 
 Object .assign (Object .setPrototypeOf (X3DTextureNode .prototype, Shape_X3DAppearanceChildNode .prototype),
@@ -60097,7 +60070,7 @@ const X3DTexture2DNode_default_ = X3DTexture2DNode;
 x_ite_Namespace .set ("x_ite/Components/Texturing/X3DTexture2DNode", X3DTexture2DNode_default_);
 /* harmony default export */ const Texturing_X3DTexture2DNode = (X3DTexture2DNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/ImageTexture.js
-/* provided dependency */ var ImageTexture_$ = __webpack_require__(479);
+/* provided dependency */ var ImageTexture_$ = __webpack_require__(572);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -61107,8 +61080,8 @@ function X3DTimeDependentNode (executionContext)
 {
    this .addType (Base_X3DConstants .X3DTimeDependentNode);
 
-   this .addChildObjects ("initialized", new x_ite_Fields .SFTime (),
-                          "isEvenLive",  new x_ite_Fields .SFBool ());
+   this .addChildObjects (Base_X3DConstants .outputOnly,  "initialized", new x_ite_Fields .SFTime (),
+                          Base_X3DConstants .inputOutput, "isEvenLive",  new x_ite_Fields .SFBool ());
 
    this .startTimeValue  = 0;
    this .pauseTimeValue  = 0;
@@ -61488,7 +61461,7 @@ function TimeSensor (executionContext)
 
    this .addType (Base_X3DConstants .TimeSensor);
 
-   this .addChildObjects ("range", new x_ite_Fields .MFFloat (0, 0, 1)); // current, first, last (in fractions) - play range starting at current
+   this .addChildObjects (Base_X3DConstants .inputOutput, "range", new x_ite_Fields .MFFloat (0, 0, 1)); // current, first, last (in fractions) - play range starting at current
 
    this .cycle    = 0;
    this .interval = 0;
@@ -62412,12 +62385,12 @@ function X3DViewpointNode (executionContext)
 
    this .addType (Base_X3DConstants .X3DViewpointNode);
 
-   this .addChildObjects ("positionOffset",         new x_ite_Fields .SFVec3f (),
-                          "orientationOffset",      new x_ite_Fields .SFRotation (),
-                          "scaleOffset",            new x_ite_Fields .SFVec3f (1, 1, 1),
-                          "scaleOrientationOffset", new x_ite_Fields .SFRotation (),
-                          "centerOfRotationOffset", new x_ite_Fields .SFVec3f (),
-                          "fieldOfViewScale",       new x_ite_Fields .SFFloat (1));
+   this .addChildObjects (Base_X3DConstants .inputOutput, "positionOffset",         new x_ite_Fields .SFVec3f (),
+                          Base_X3DConstants .inputOutput, "orientationOffset",      new x_ite_Fields .SFRotation (),
+                          Base_X3DConstants .inputOutput, "scaleOffset",            new x_ite_Fields .SFVec3f (1, 1, 1),
+                          Base_X3DConstants .inputOutput, "scaleOrientationOffset", new x_ite_Fields .SFRotation (),
+                          Base_X3DConstants .inputOutput, "centerOfRotationOffset", new x_ite_Fields .SFVec3f (),
+                          Base_X3DConstants .inputOutput, "fieldOfViewScale",       new x_ite_Fields .SFFloat (1));
 
    this .userPosition         = new Numbers_Vector3 (0, 1, 0);
    this .userOrientation      = new Numbers_Rotation4 ();
@@ -63200,12 +63173,11 @@ x_ite_Namespace .set ("x_ite/Components/Navigation/Viewpoint", Viewpoint_default
 
 
 
-
 function X3DBoundedObject (executionContext)
 {
    this .addType (Base_X3DConstants .X3DBoundedObject);
 
-   this .addChildObjects ("transformSensors_changed", new x_ite_Fields .SFTime ());
+   this .addChildObjects (Base_X3DConstants .outputOnly, "transformSensors_changed", new x_ite_Fields .SFTime ());
 
    this ._bboxSize   .setUnit ("length");
    this ._bboxCenter .setUnit ("length");
@@ -64532,7 +64504,7 @@ function X3DWorld (executionContext)
 
    this .addType (Base_X3DConstants .X3DWorld)
 
-   this .addChildObjects ("activeLayer", new Fields_SFNode (this .layer0));
+   this .addChildObjects (Base_X3DConstants .outputOnly, "activeLayer", new Fields_SFNode (this .layer0));
 
    this .defaultLayerSet = new Layering_LayerSet (executionContext);
    this .layerSet        = this .defaultLayerSet;
@@ -64637,7 +64609,7 @@ const X3DWorld_default_ = X3DWorld;
 x_ite_Namespace .set ("x_ite/Execution/X3DWorld", X3DWorld_default_);
 /* harmony default export */ const Execution_X3DWorld = (X3DWorld_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/InputOutput/FileLoader.js
-/* provided dependency */ var FileLoader_$ = __webpack_require__(479);
+/* provided dependency */ var FileLoader_$ = __webpack_require__(572);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -65045,10 +65017,10 @@ function X3DExternProtoDeclaration (executionContext, url)
 
    this .addType (Base_X3DConstants .X3DExternProtoDeclaration)
 
-   this .addChildObjects ("load",                 new x_ite_Fields .SFBool (true),
-                          "url",                  url .copy (), // Must be of type MFString.
-                          "autoRefresh",          new x_ite_Fields .SFTime (),
-                          "autoRefreshTimeLimit", new x_ite_Fields .SFTime (3600));
+   this .addChildObjects (Base_X3DConstants .inputOutput, "load",                 new x_ite_Fields .SFBool (true),
+                          Base_X3DConstants .inputOutput, "url",                  url .copy (), // Must be of type MFString.
+                          Base_X3DConstants .inputOutput, "autoRefresh",          new x_ite_Fields .SFTime (),
+                          Base_X3DConstants .inputOutput, "autoRefreshTimeLimit", new x_ite_Fields .SFTime (3600));
 }
 
 Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, Prototype_X3DProtoDeclarationNode .prototype),
@@ -66053,11 +66025,10 @@ function X3DExecutionContext (executionContext, outerNode = null, browser = exec
 
    this .addType (Base_X3DConstants .X3DExecutionContext)
 
-   this .addChildObjects ("rootNodes",          new x_ite_Fields .MFNode (),
-                          "worldInfos",         new x_ite_Fields .MFNode (),
-                          "sceneGraph_changed", new x_ite_Fields .SFTime ())
+   this .addChildObjects (Base_X3DConstants .initializeOnly, "rootNodes",          new x_ite_Fields .MFNode (),
+                          Base_X3DConstants .outputOnly,     "worldInfos",         new x_ite_Fields .MFNode (),
+                          Base_X3DConstants .outputOnly,     "sceneGraph_changed", new x_ite_Fields .SFTime ())
 
-   this ._rootNodes .setAccessType (Base_X3DConstants .initializeOnly);
    this ._rootNodes .collectCloneCount = () => 1;
 
    this [_outerNode]     = outerNode;
@@ -68751,7 +68722,7 @@ function X3DEnvironmentalSensorNode (executionContext)
 
    this .addType (Base_X3DConstants .X3DEnvironmentalSensorNode);
 
-   this .addChildObjects ("traversed", new x_ite_Fields .SFBool (true));
+   this .addChildObjects (Base_X3DConstants .outputOnly, "traversed", new x_ite_Fields .SFBool (true));
 
    this ._size   .setUnit ("length");
    this ._center .setUnit ("length");
@@ -80946,7 +80917,7 @@ function OrthoViewpoint (executionContext)
 
    this .addType (Base_X3DConstants .OrthoViewpoint);
 
-   this .addChildObjects ("fieldOfViewOffset", new x_ite_Fields .MFFloat (0, 0, 0, 0));
+   this .addChildObjects (Base_X3DConstants .inputOutput, "fieldOfViewOffset", new x_ite_Fields .MFFloat (0, 0, 0, 0));
 
    this ._position         .setUnit ("length");
    this ._centerOfRotation .setUnit ("length");
@@ -84753,9 +84724,7 @@ function X3DColorNode (executionContext)
 
    this .addType (Base_X3DConstants .X3DColorNode);
 
-   this .addChildObjects ("transparent", new x_ite_Fields .SFBool ());
-
-   this ._transparent .setAccessType (Base_X3DConstants .outputOnly);
+   this .addChildObjects (Base_X3DConstants .outputOnly, "transparent", new x_ite_Fields .SFBool ());
 }
 
 Object .assign (Object .setPrototypeOf (X3DColorNode .prototype, Rendering_X3DGeometricPropertyNode .prototype),
@@ -85622,7 +85591,9 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, Renderin
 
       if (this .vertexArrayObject .enable (shaderNode))
       {
-         shaderNode .enableCoordIndexAttribute  (gl, this .coordIndexBuffer, 0, 0);
+         if (this .coordIndices .length)
+            shaderNode .enableCoordIndexAttribute (gl, this .coordIndexBuffer, 0, 0);
+
          shaderNode .enableLineStippleAttribute (gl, this .lineStippleBuffer, 0, 0);
 
          if (this .hasNormals)
@@ -85705,8 +85676,11 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, Renderin
                   // for (let i = 0, length = attribNodes .length; i < length; ++ i)
                   //    attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
 
-                  transformShaderNode .enableFloatAttrib (gl, "x3d_CoordIndex0", this .coordIndexBuffer, 1, coordIndexStride, coordIndexOffset0);
-                  transformShaderNode .enableFloatAttrib (gl, "x3d_CoordIndex1", this .coordIndexBuffer, 1, coordIndexStride, coordIndexOffset1);
+                  if (this .coordIndices .length)
+                  {
+                     transformShaderNode .enableFloatAttrib (gl, "x3d_CoordIndex0", this .coordIndexBuffer, 1, coordIndexStride, coordIndexOffset0);
+                     transformShaderNode .enableFloatAttrib (gl, "x3d_CoordIndex1", this .coordIndexBuffer, 1, coordIndexStride, coordIndexOffset1);
+                  }
 
                   transformShaderNode .enableFloatAttrib (gl, "x3d_LineStipple0", this .lineStippleBuffer, 3, lineStippleStride, lineStippleOffset0);
                   transformShaderNode .enableFloatAttrib (gl, "x3d_LineStipple1", this .lineStippleBuffer, 3, lineStippleStride, lineStippleOffset1);
@@ -85816,7 +85790,8 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, Renderin
 
          if (this .vertexArrayObject .enable (shaderNode))
          {
-            shaderNode .enableCoordIndexAttribute (gl, this .coordIndexBuffer, 0, 0);
+            if (this .coordIndices .length)
+               shaderNode .enableCoordIndexAttribute (gl, this .coordIndexBuffer, 0, 0);
 
             for (let i = 0, length = attribNodes .length; i < length; ++ i)
                attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
@@ -87320,7 +87295,8 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, Renderi
 
       if (this .vertexArrayObject .enable (shaderNode))
       {
-         shaderNode .enableCoordIndexAttribute (gl, this .coordIndexBuffer, 0, 0);
+         if (this .coordIndices .length)
+            shaderNode .enableCoordIndexAttribute (gl, this .coordIndexBuffer, 0, 0);
 
          for (let i = 0, length = attribNodes .length; i < length; ++ i)
             attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
@@ -88284,7 +88260,7 @@ const X3DShaderNode_default_ = X3DShaderNode;
 x_ite_Namespace .set ("x_ite/Components/Shaders/X3DShaderNode", X3DShaderNode_default_);
 /* harmony default export */ const Shaders_X3DShaderNode = (X3DShaderNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js
-/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(479);
+/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(572);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -89939,7 +89915,7 @@ function X3DVertexAttributeNode (executionContext)
 
    this .addType (Base_X3DConstants .X3DVertexAttributeNode);
 
-   this .addChildObjects ("attribute_changed", new x_ite_Fields .SFTime ());
+   this .addChildObjects (Base_X3DConstants .outputOnly, "attribute_changed", new x_ite_Fields .SFTime ());
 }
 
 Object .assign (Object .setPrototypeOf (X3DVertexAttributeNode .prototype, Rendering_X3DGeometricPropertyNode .prototype),
@@ -93956,10 +93932,28 @@ getSkinningVertex (const in vec4 vertex)
 }
 
 #if defined (X3D_NORMALS)
+mat3
+getJointNormalMatrix (const in int joint)
+{
+   vec4 a = texelFetch (x3d_JointNormalMatricesTexture, joint * 4 + 0, 0);
+   vec4 b = texelFetch (x3d_JointNormalMatricesTexture, joint * 4 + 1, 0);
+   vec4 c = texelFetch (x3d_JointNormalMatricesTexture, joint * 4 + 2, 0);
+
+   return mat3 (a .xyz, vec3 (a .w, b .xy), vec3 (b .zw, c .x));
+}
+
 vec3
 getSkinningNormal (const in vec3 normal)
 {
-   return normal;
+   int   coordIndex = int (x3d_CoordIndex);
+   ivec4 joints     = ivec4 (texelFetch (x3d_JointsTexture, coordIndex, 0));
+   vec4  weights    = texelFetch (x3d_WeightsTexture, coordIndex, 0);
+   vec3  skin       = normal;
+
+   for (int i = 0; i < 4; ++ i)
+      skin += (getJointNormalMatrix (joints [i]) * normal - normal) * weights [i];
+
+   return skin;
 }
 #endif
 
@@ -94670,6 +94664,7 @@ out vec3 vertex;
 
 // Main
 
+#if defined (X3D_SKINNING) || defined (X3D_PARTICLE_SYSTEM)
 vec4
 texelFetch (const in sampler2D sampler, const in int index, const in int lod)
 {
@@ -94679,6 +94674,7 @@ texelFetch (const in sampler2D sampler, const in int index, const in int lod)
 
    return t;
 }
+#endif
 
 #pragma X3D include "Skinning.glsl"
 #pragma X3D include "Particle.glsl"
@@ -97100,7 +97096,7 @@ const ShaderCompiler_default_ = ShaderCompiler;
 x_ite_Namespace .set ("x_ite/Browser/Shaders/ShaderCompiler", ShaderCompiler_default_);
 /* harmony default export */ const Shaders_ShaderCompiler = (ShaderCompiler_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shaders/ShaderPart.js
-/* provided dependency */ var ShaderPart_$ = __webpack_require__(479);
+/* provided dependency */ var ShaderPart_$ = __webpack_require__(572);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -97721,9 +97717,7 @@ function X3DAppearanceNode (executionContext)
 
    this .addType (Base_X3DConstants .X3DAppearanceNode);
 
-   this .addChildObjects ("transparent", new x_ite_Fields .SFBool ());
-
-   this ._transparent .setAccessType (Base_X3DConstants .outputOnly);
+   this .addChildObjects (Base_X3DConstants .outputOnly, "transparent", new x_ite_Fields .SFBool ());
 }
 
 Object .assign (Object .setPrototypeOf (X3DAppearanceNode .prototype, Core_X3DNode .prototype),
@@ -97759,7 +97753,7 @@ const X3DAppearanceNode_default_ = X3DAppearanceNode;
 x_ite_Namespace .set ("x_ite/Components/Shape/X3DAppearanceNode", X3DAppearanceNode_default_);
 /* harmony default export */ const Shape_X3DAppearanceNode = (X3DAppearanceNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shape/Appearance.js
-/* provided dependency */ var Appearance_$ = __webpack_require__(479);
+/* provided dependency */ var Appearance_$ = __webpack_require__(572);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -98282,9 +98276,7 @@ function FillProperties (executionContext)
 
    this .addType (Base_X3DConstants .FillProperties);
 
-   this .addChildObjects ("transparent", new x_ite_Fields .SFBool ());
-
-   this ._transparent .setAccessType (Base_X3DConstants .outputOnly);
+   this .addChildObjects (Base_X3DConstants .outputOnly, "transparent", new x_ite_Fields .SFBool ());
 
    this .hatchColor = new Float32Array (3);
 }
@@ -98651,9 +98643,7 @@ function X3DMaterialNode (executionContext)
 
    this .addType (Base_X3DConstants .X3DMaterialNode);
 
-   this .addChildObjects ("transparent", new x_ite_Fields .SFBool ());
-
-   this ._transparent .setAccessType (Base_X3DConstants .outputOnly);
+   this .addChildObjects (Base_X3DConstants .outputOnly, "transparent", new x_ite_Fields .SFBool ());
 
    this .textureBits = new Utility_BitSet ();
    this .shaderNodes = this .getBrowser () .getShaders ();
@@ -98983,8 +98973,6 @@ function X3DOneSidedMaterialNode (executionContext)
    Shape_X3DMaterialNode .call (this, executionContext);
 
    this .addType (Base_X3DConstants .X3DOneSidedMaterialNode);
-
-   this .addChildObjects ("textures", new x_ite_Fields .SFTime ());
 
    this .emissiveColor = new Float32Array (3);
 }
@@ -101065,7 +101053,7 @@ function X3DSoundProcessingNode (executionContext)
 
    this .addType (Base_X3DConstants .X3DSoundProcessingNode);
 
-   this .addChildObjects ("loop", new x_ite_Fields .SFBool ());
+   this .addChildObjects (Base_X3DConstants .inputOutput, "loop", new x_ite_Fields .SFBool ());
 }
 
 Object .assign (Object .setPrototypeOf (X3DSoundProcessingNode .prototype, Core_X3DChildNode .prototype),
@@ -101458,7 +101446,7 @@ const X3DSoundSourceNode_default_ = X3DSoundSourceNode;
 x_ite_Namespace .set ("x_ite/Components/Sound/X3DSoundSourceNode", X3DSoundSourceNode_default_);
 /* harmony default export */ const Sound_X3DSoundSourceNode = (X3DSoundSourceNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/AudioClip.js
-/* provided dependency */ var AudioClip_$ = __webpack_require__(479);
+/* provided dependency */ var AudioClip_$ = __webpack_require__(572);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -101521,7 +101509,7 @@ function AudioClip (executionContext)
 
    this .addType (Base_X3DConstants .AudioClip);
 
-   this .addChildObjects ("speed", new x_ite_Fields .SFFloat (1));
+   this .addChildObjects (Base_X3DConstants .inputOutput, "speed", new x_ite_Fields .SFFloat (1));
 
    this .audio    = AudioClip_$("<audio></audio>");
    this .urlStack = new x_ite_Fields .MFString ();
@@ -102129,7 +102117,7 @@ function BufferAudioSource (executionContext)
 
    this .addType (Base_X3DConstants .BufferAudioSource);
 
-   this .addChildObjects ("speed", new x_ite_Fields .SFFloat (1));
+   this .addChildObjects (Base_X3DConstants .inputOutput, "speed", new x_ite_Fields .SFFloat (1));
 }
 
 Object .assign (Object .setPrototypeOf (BufferAudioSource .prototype, Sound_X3DSoundSourceNode .prototype),
@@ -103164,8 +103152,8 @@ function ListenerPointSource (executionContext)
 
    this .addType (Base_X3DConstants .ListenerPointSource);
 
-   this .addChildObjects ("loop",  new x_ite_Fields .SFBool (),
-                          "speed", new x_ite_Fields .SFFloat (1));
+   this .addChildObjects (Base_X3DConstants .inputOutput, "loop",  new x_ite_Fields .SFBool (),
+                          Base_X3DConstants .inputOutput, "speed", new x_ite_Fields .SFFloat (1));
 
    this ._position .setUnit ("length");
 }
@@ -103285,8 +103273,8 @@ function MicrophoneSource (executionContext)
 
    this .addType (Base_X3DConstants .MicrophoneSource);
 
-   this .addChildObjects ("loop",  new x_ite_Fields .SFBool (),
-                          "speed", new x_ite_Fields .SFFloat (1));
+   this .addChildObjects (Base_X3DConstants .inputOutput, "loop",  new x_ite_Fields .SFBool (),
+                          Base_X3DConstants .inputOutput, "speed", new x_ite_Fields .SFFloat (1));
 }
 
 Object .setPrototypeOf (MicrophoneSource .prototype, Sound_X3DSoundSourceNode .prototype);
@@ -103400,8 +103388,8 @@ function OscillatorSource (executionContext)
 
    this .addType (Base_X3DConstants .OscillatorSource);
 
-   this .addChildObjects ("loop",  new x_ite_Fields .SFBool (),
-                          "speed", new x_ite_Fields .SFFloat (1));
+   this .addChildObjects (Base_X3DConstants .inputOutput, "loop",  new x_ite_Fields .SFBool (),
+                          Base_X3DConstants .inputOutput, "speed", new x_ite_Fields .SFFloat (1));
 }
 
 Object .setPrototypeOf (OscillatorSource .prototype, Sound_X3DSoundSourceNode .prototype);
@@ -103629,7 +103617,7 @@ function Sound (executionContext)
 
    this .addType (Base_X3DConstants .Sound);
 
-   this .addChildObjects ("traversed", new x_ite_Fields .SFBool (true));
+   this .addChildObjects (Base_X3DConstants .outputOnly, "traversed", new x_ite_Fields .SFBool (true));
 
    this ._location .setUnit ("length");
    this ._minBack  .setUnit ("length");
@@ -104161,8 +104149,8 @@ function StreamAudioSource (executionContext)
 
    this .addType (Base_X3DConstants .StreamAudioSource);
 
-   this .addChildObjects ("loop",  new x_ite_Fields .SFBool (),
-                          "speed", new x_ite_Fields .SFFloat (1));
+   this .addChildObjects (Base_X3DConstants .inputOutput, "loop",  new x_ite_Fields .SFBool (),
+                          Base_X3DConstants .inputOutput, "speed", new x_ite_Fields .SFFloat (1));
 }
 
 Object .setPrototypeOf (StreamAudioSource .prototype, Sound_X3DSoundSourceNode .prototype);
@@ -104569,8 +104557,8 @@ const GIFMedia_default_ = GifMedia;
 x_ite_Namespace .set ("x_ite/Browser/Texturing/GIFMedia", GIFMedia_default_);
 /* harmony default export */ const GIFMedia = (GIFMedia_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var MovieTexture_$ = __webpack_require__(479);
-/* provided dependency */ var SuperGif = __webpack_require__(220);
+/* provided dependency */ var MovieTexture_$ = __webpack_require__(572);
+/* provided dependency */ var SuperGif = __webpack_require__(829);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -104926,7 +104914,7 @@ function MultiTexture (executionContext)
 
    this .addType (Base_X3DConstants .MultiTexture);
 
-   this .addChildObjects ("loadState", new x_ite_Fields .SFInt32 (Base_X3DConstants .NOT_STARTED_STATE));
+   this .addChildObjects (Base_X3DConstants .outputOnly, "loadState", new x_ite_Fields .SFInt32 (Base_X3DConstants .NOT_STARTED_STATE));
 
    const browser = this .getBrowser ();
 
@@ -105735,7 +105723,7 @@ const MultiTextureTransform_default_ = MultiTextureTransform;
 x_ite_Namespace .set ("x_ite/Components/Texturing/MultiTextureTransform", MultiTextureTransform_default_);
 /* harmony default export */ const Texturing_MultiTextureTransform = (MultiTextureTransform_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/PixelTexture.js
-/* provided dependency */ var PixelTexture_$ = __webpack_require__(479);
+/* provided dependency */ var PixelTexture_$ = __webpack_require__(572);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -105798,7 +105786,7 @@ function PixelTexture (executionContext)
 
    this .addType (Base_X3DConstants .PixelTexture);
 
-   this .addChildObjects ("loadState", new x_ite_Fields .SFInt32 (Base_X3DConstants .NOT_STARTED_STATE));
+   this .addChildObjects (Base_X3DConstants .outputOnly, "loadState", new x_ite_Fields .SFInt32 (Base_X3DConstants .NOT_STARTED_STATE));
 }
 
 Object .assign (Object .setPrototypeOf (PixelTexture .prototype, Texturing_X3DTexture2DNode .prototype),
@@ -107916,7 +107904,7 @@ const gettext_default_ = gettext;
 x_ite_Namespace .set ("locale/gettext", gettext_default_);
 /* harmony default export */ const locale_gettext = (gettext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserTimings.js
-/* provided dependency */ var BrowserTimings_$ = __webpack_require__(479);
+/* provided dependency */ var BrowserTimings_$ = __webpack_require__(572);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -108346,7 +108334,7 @@ const TextureQuality_default_ = TextureQuality;
 x_ite_Namespace .set ("x_ite/Browser/Core/TextureQuality", TextureQuality_default_);
 /* harmony default export */ const Core_TextureQuality = (TextureQuality_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserOptions.js
-/* provided dependency */ var BrowserOptions_$ = __webpack_require__(479);
+/* provided dependency */ var BrowserOptions_$ = __webpack_require__(572);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -108927,7 +108915,7 @@ const RenderingProperties_default_ = RenderingProperties;
 x_ite_Namespace .set ("x_ite/Browser/Core/RenderingProperties", RenderingProperties_default_);
 /* harmony default export */ const Core_RenderingProperties = (RenderingProperties_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/Notification.js
-/* provided dependency */ var Notification_$ = __webpack_require__(479);
+/* provided dependency */ var Notification_$ = __webpack_require__(572);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -108978,6 +108966,7 @@ x_ite_Namespace .set ("x_ite/Browser/Core/RenderingProperties", RenderingPropert
 
 
 
+
 Notification_$.fn.textWidth = function (string)
 {
    const
@@ -108995,7 +108984,7 @@ function Notification (executionContext)
 {
    Base_X3DBaseNode .call (this, executionContext);
 
-   this .addChildObjects ("string", new Fields_SFString ());
+   this .addChildObjects (Base_X3DConstants .inputOutput, "string", new Fields_SFString ());
 }
 
 Object .assign (Object .setPrototypeOf (Notification .prototype, Base_X3DBaseNode .prototype),
@@ -109049,8 +109038,8 @@ const Notification_default_ = Notification;
 x_ite_Namespace .set ("x_ite/Browser/Core/Notification", Notification_default_);
 /* harmony default export */ const Core_Notification = (Notification_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/ContextMenu.js
-/* provided dependency */ var jquery_fullscreen = __webpack_require__(20);
-/* provided dependency */ var ContextMenu_$ = __webpack_require__(479);
+/* provided dependency */ var jquery_fullscreen = __webpack_require__(299);
+/* provided dependency */ var ContextMenu_$ = __webpack_require__(572);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -110594,10 +110583,10 @@ function X3DScene (browser)
 
    this .addType (Base_X3DConstants .X3DScene)
 
-   this .addChildObjects ("profile_changed",  new x_ite_Fields .SFTime (),
-                          "metadata_changed", new x_ite_Fields .SFTime (),
-                          "initLoadCount",    new x_ite_Fields .SFInt32 (),
-                          "loadCount",        new x_ite_Fields .SFInt32 ())
+   this .addChildObjects (Base_X3DConstants .outputOnly, "profile_changed",  new x_ite_Fields .SFTime (),
+                          Base_X3DConstants .outputOnly, "metadata_changed", new x_ite_Fields .SFTime (),
+                          Base_X3DConstants .outputOnly, "initLoadCount",    new x_ite_Fields .SFInt32 (),
+                          Base_X3DConstants .outputOnly, "loadCount",        new x_ite_Fields .SFInt32 ())
 
    this [_specificationVersion] = X3D_LATEST_VERSION;
    this [_encoding]             = "SCRIPTED";
@@ -111768,7 +111757,7 @@ const DataStorage_default_ = DataStorage;
 x_ite_Namespace .set ("standard/Utility/DataStorage", DataStorage_default_);
 /* harmony default export */ const Utility_DataStorage = (DataStorage_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/X3DCoreContext.js
-/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(479);
+/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(572);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -111815,6 +111804,7 @@ x_ite_Namespace .set ("standard/Utility/DataStorage", DataStorage_default_);
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -111912,10 +111902,10 @@ function X3DCoreContext (element)
    this [_pixelPerPoint] = inches .height () / 720 || 1;
    inches .remove ();
 
-   this .addChildObjects ("controlKey", new x_ite_Fields .SFBool (),
-                          "shiftKey",   new x_ite_Fields .SFBool (),
-                          "altKey",     new x_ite_Fields .SFBool (),
-                          "altGrKey",   new x_ite_Fields .SFBool ());
+   this .addChildObjects (Base_X3DConstants .outputOnly, "controlKey", new x_ite_Fields .SFBool (),
+                          Base_X3DConstants .outputOnly, "shiftKey",   new x_ite_Fields .SFBool (),
+                          Base_X3DConstants .outputOnly, "altKey",     new x_ite_Fields .SFBool (),
+                          Base_X3DConstants .outputOnly, "altGrKey",   new x_ite_Fields .SFBool ());
 }
 
 Object .assign (X3DCoreContext .prototype,
@@ -112785,12 +112775,13 @@ x_ite_Namespace .set ("x_ite/Browser/Geometry3D/BoxOptions", BoxOptions_default_
 
 
 
+
 function ConeOptions (executionContext)
 {
    Base_X3DBaseNode .call (this, executionContext);
 
-   this .addChildObjects ("xDimension", new x_ite_Fields .SFInt32 (20),
-                          "yDimension", new x_ite_Fields .SFInt32 (1))
+   this .addChildObjects (Base_X3DConstants .inputOutput, "xDimension", new x_ite_Fields .SFInt32 (20),
+                          Base_X3DConstants .inputOutput, "yDimension", new x_ite_Fields .SFInt32 (1))
 }
 
 Object .setPrototypeOf (ConeOptions .prototype, Base_X3DBaseNode .prototype);
@@ -112860,12 +112851,13 @@ x_ite_Namespace .set ("x_ite/Browser/Geometry3D/ConeOptions", ConeOptions_defaul
 
 
 
+
 function CylinderOptions (executionContext)
 {
    Base_X3DBaseNode .call (this, executionContext);
 
-   this .addChildObjects ("xDimension", new x_ite_Fields .SFInt32 (20),
-                          "yDimension", new x_ite_Fields .SFInt32 (1))
+   this .addChildObjects (Base_X3DConstants .inputOutput, "xDimension", new x_ite_Fields .SFInt32 (20),
+                          Base_X3DConstants .inputOutput, "yDimension", new x_ite_Fields .SFInt32 (1))
 }
 
 Object .setPrototypeOf (CylinderOptions .prototype, Base_X3DBaseNode .prototype);
@@ -112941,12 +112933,13 @@ x_ite_Namespace .set ("x_ite/Browser/Geometry3D/CylinderOptions", CylinderOption
 
 
 
+
 function QuadSphereOptions (executionContext)
 {
    Base_X3DBaseNode .call (this, executionContext);
 
-   this .addChildObjects ("xDimension", new x_ite_Fields .SFInt32 (32),
-                          "yDimension", new x_ite_Fields .SFInt32 (15))
+   this .addChildObjects (Base_X3DConstants .inputOutput, "xDimension", new x_ite_Fields .SFInt32 (32),
+                          Base_X3DConstants .inputOutput, "yDimension", new x_ite_Fields .SFInt32 (15))
 }
 
 Object .assign (Object .setPrototypeOf (QuadSphereOptions .prototype, Base_X3DBaseNode .prototype),
@@ -113792,8 +113785,8 @@ const X3DViewer_default_ = X3DViewer;
 x_ite_Namespace .set ("x_ite/Browser/Navigation/X3DViewer", X3DViewer_default_);
 /* harmony default export */ const Navigation_X3DViewer = (X3DViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/ExamineViewer.js
-/* provided dependency */ var jquery_mousewheel = __webpack_require__(828);
-/* provided dependency */ var ExamineViewer_$ = __webpack_require__(479);
+/* provided dependency */ var jquery_mousewheel = __webpack_require__(483);
+/* provided dependency */ var ExamineViewer_$ = __webpack_require__(572);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -114665,8 +114658,8 @@ const ExamineViewer_default_ = ExamineViewer;
 x_ite_Namespace .set ("x_ite/Browser/Navigation/ExamineViewer", ExamineViewer_default_);
 /* harmony default export */ const Navigation_ExamineViewer = (ExamineViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/X3DFlyViewer.js
-/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(828);
-/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(479);
+/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(483);
+/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(572);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -115636,8 +115629,8 @@ const FlyViewer_default_ = FlyViewer;
 x_ite_Namespace .set ("x_ite/Browser/Navigation/FlyViewer", FlyViewer_default_);
 /* harmony default export */ const Navigation_FlyViewer = (FlyViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/PlaneViewer.js
-/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(828);
-/* provided dependency */ var PlaneViewer_$ = __webpack_require__(479);
+/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(483);
+/* provided dependency */ var PlaneViewer_$ = __webpack_require__(572);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -115968,8 +115961,8 @@ const NoneViewer_default_ = NoneViewer;
 x_ite_Namespace .set ("x_ite/Browser/Navigation/NoneViewer", NoneViewer_default_);
 /* harmony default export */ const Navigation_NoneViewer = (NoneViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/LookAtViewer.js
-/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(828);
-/* provided dependency */ var LookAtViewer_$ = __webpack_require__(479);
+/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(483);
+/* provided dependency */ var LookAtViewer_$ = __webpack_require__(572);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -116551,6 +116544,7 @@ x_ite_Namespace .set ("x_ite/Browser/Navigation/LookAtViewer", LookAtViewer_defa
 
 
 
+
 const
    _activeCollisions   = Symbol (),
    _viewerNode         = Symbol (),
@@ -116572,11 +116566,11 @@ function getHeadlight (browser)
 
 function X3DNavigationContext ()
 {
-   this .addChildObjects ("activeLayer",          new x_ite_Fields .SFNode (),
-                          "activeNavigationInfo", new x_ite_Fields .SFNode (),
-                          "activeViewpoint",      new x_ite_Fields .SFNode (),
-                          "availableViewers",     new x_ite_Fields .MFString (),
-                          "viewer",               new x_ite_Fields .SFString ("EXAMINE"));
+   this .addChildObjects (Base_X3DConstants .outputOnly, "activeLayer",          new x_ite_Fields .SFNode (),
+                          Base_X3DConstants .outputOnly, "activeNavigationInfo", new x_ite_Fields .SFNode (),
+                          Base_X3DConstants .outputOnly, "activeViewpoint",      new x_ite_Fields .SFNode (),
+                          Base_X3DConstants .outputOnly, "availableViewers",     new x_ite_Fields .MFString (),
+                          Base_X3DConstants .outputOnly, "viewer",               new x_ite_Fields .SFString ("EXAMINE"));
 
    this [_activeCollisions] = new Set ();
    this [_viewerNode]       = new Navigation_NoneViewer (this .getPrivateScene ());
@@ -116789,6 +116783,7 @@ x_ite_Namespace .set ("x_ite/Browser/Navigation/X3DNavigationContext", X3DNaviga
 
 
 
+
 const
    _loadingDisplay = Symbol (),
    _loadingTotal   = Symbol (),
@@ -116811,7 +116806,7 @@ function getBaseURI (element)
 
 function X3DNetworkingContext ()
 {
-   this .addChildObjects ("loadCount", new x_ite_Fields .SFInt32 ());
+   this .addChildObjects (Base_X3DConstants .outputOnly, "loadCount", new x_ite_Fields .SFInt32 ());
 
    this [_loadingDisplay] = 0;
    this [_loadingTotal]   = 0;
@@ -117106,8 +117101,8 @@ const X3DPickingContext_default_ = X3DPickingContext;
 x_ite_Namespace .set ("x_ite/Browser/Picking/X3DPickingContext", X3DPickingContext_default_);
 /* harmony default export */ const Picking_X3DPickingContext = (X3DPickingContext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/PointingDeviceSensor/PointingDevice.js
-/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(828);
-/* provided dependency */ var PointingDevice_$ = __webpack_require__(479);
+/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(483);
+/* provided dependency */ var PointingDevice_$ = __webpack_require__(572);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -118148,8 +118143,8 @@ const MultiSampleFrameBuffer_default_ = MultiSampleFrameBuffer;
 x_ite_Namespace .set ("x_ite/Rendering/MultiSampleFrameBuffer", MultiSampleFrameBuffer_default_);
 /* harmony default export */ const Rendering_MultiSampleFrameBuffer = (MultiSampleFrameBuffer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Rendering/X3DRenderingContext.js
-/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(479);
-/* provided dependency */ var ResizeSensor = __webpack_require__(936);
+/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(572);
+/* provided dependency */ var ResizeSensor = __webpack_require__(154);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -118949,10 +118944,11 @@ x_ite_Namespace .set ("x_ite/Browser/Shape/X3DShapeContext", X3DShapeContext_def
 
 
 
+
 function X3DSoundContext ()
 {
-   this .addChildObjects ("volume", new x_ite_Fields .SFFloat (1),
-                          "mute",   new x_ite_Fields .SFBool ());
+   this .addChildObjects (Base_X3DConstants .outputOnly, "volume", new x_ite_Fields .SFFloat (1),
+                          Base_X3DConstants .outputOnly, "mute",   new x_ite_Fields .SFBool ());
 }
 
 const X3DSoundContext_default_ = X3DSoundContext;
@@ -119899,6 +119895,7 @@ x_ite_Namespace .set ("x_ite/Configuration/ConcreteNodes", ConcreteNodes_default
 
 
 
+
 const
    _world           = Symbol (),
    _changedTime     = Symbol (),
@@ -119944,13 +119941,13 @@ function X3DBrowserContext (element)
    for (const browserContext of browserContexts)
       browserContext .call (this);
 
-   this .addChildObjects ("initialized",    new Fields_SFTime (),
-                          "shutdown",       new Fields_SFTime (),
-                          "prepareEvents",  new Fields_SFTime (),
-                          "timeEvents",     new Fields_SFTime (),
-                          "sensorEvents",   new Fields_SFTime (),
-                          "displayEvents",  new Fields_SFTime (),
-                          "finishedEvents", new Fields_SFTime ());
+   this .addChildObjects (Base_X3DConstants .outputOnly, "initialized",    new Fields_SFTime (),
+                          Base_X3DConstants .outputOnly, "shutdown",       new Fields_SFTime (),
+                          Base_X3DConstants .outputOnly, "prepareEvents",  new Fields_SFTime (),
+                          Base_X3DConstants .outputOnly, "timeEvents",     new Fields_SFTime (),
+                          Base_X3DConstants .outputOnly, "sensorEvents",   new Fields_SFTime (),
+                          Base_X3DConstants .outputOnly, "displayEvents",  new Fields_SFTime (),
+                          Base_X3DConstants .outputOnly, "finishedEvents", new Fields_SFTime ());
 
    this [_changedTime]    = 0;
    this [_previousTime]   = 0;
@@ -120374,7 +120371,7 @@ const Components_default_ = Components;
 x_ite_Namespace .set ("x_ite/Components", Components_default_);
 /* harmony default export */ const x_ite_Components = ((/* unused pure expression or super */ null && (Components_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/DOMIntegration.js
-/* provided dependency */ var DOMIntegration_$ = __webpack_require__(479);
+/* provided dependency */ var DOMIntegration_$ = __webpack_require__(572);
 /*******************************************************************************
  * MIT License
  *
@@ -120780,7 +120777,7 @@ const DOMIntegration_default_ = DOMIntegration;
 x_ite_Namespace .set ("x_ite/Browser/DOMIntegration", DOMIntegration_default_);
 /* harmony default export */ const Browser_DOMIntegration = (DOMIntegration_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Legacy.js
-/* provided dependency */ var Legacy_$ = __webpack_require__(479);
+/* provided dependency */ var Legacy_$ = __webpack_require__(572);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -121611,7 +121608,7 @@ const SupportedProfiles_default_ = SupportedProfiles;
 x_ite_Namespace .set ("x_ite/Configuration/SupportedProfiles", SupportedProfiles_default_);
 /* harmony default export */ const Configuration_SupportedProfiles = (SupportedProfiles_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/X3DBrowser.js
-/* provided dependency */ var X3DBrowser_$ = __webpack_require__(479);
+/* provided dependency */ var X3DBrowser_$ = __webpack_require__(572);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -122738,8 +122735,8 @@ const MicroTime_default_ = undefined;
 x_ite_Namespace .set ("standard/Time/MicroTime", MicroTime_default_);
 /* harmony default export */ const MicroTime = ((/* unused pure expression or super */ null && (MicroTime_default_)));
 ;// CONCATENATED MODULE: ./src/lib/jquery.js
-/* provided dependency */ var jquery_$ = __webpack_require__(479);
-/* provided dependency */ var pako = __webpack_require__(574);
+/* provided dependency */ var jquery_$ = __webpack_require__(572);
+/* provided dependency */ var pako = __webpack_require__(614);
 Object .assign (jquery_$,
 {
    decodeText (input)
@@ -122804,14 +122801,14 @@ const jquery_default_ = jquery_$;
 x_ite_Namespace .set ("lib/jquery", jquery_default_);
 /* harmony default export */ const jquery = ((/* unused pure expression or super */ null && (jquery_default_)));
 ;// CONCATENATED MODULE: ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(831);
+/* provided dependency */ var libtess_libtess = __webpack_require__(43);
 const libtess_default_ = libtess_libtess;
 ;
 
 x_ite_Namespace .set ("lib/libtess", libtess_default_);
 /* harmony default export */ const lib_libtess = ((/* unused pure expression or super */ null && (libtess_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/X3D.js
-/* provided dependency */ var X3D_$ = __webpack_require__(479);
+/* provided dependency */ var X3D_$ = __webpack_require__(572);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -123068,7 +123065,7 @@ const X3D_default_ = X3D;
 x_ite_Namespace .set ("x_ite/X3D", X3D_default_);
 /* harmony default export */ const x_ite_X3D = (X3D_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/X3DCanvasElement.js
-/* provided dependency */ var X3DCanvasElement_$ = __webpack_require__(479);
+/* provided dependency */ var X3DCanvasElement_$ = __webpack_require__(572);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.

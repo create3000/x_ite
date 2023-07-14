@@ -317,10 +317,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
 
       return function (type, renderObject)
       {
-         if (type !== TraverseType .DISPLAY)
-            return;
-
-         if (this .changed .lock ())
+         if (type !== TraverseType .DISPLAY || this .changed .lock ())
             return;
 
          // Determine inverse model matrix of humanoid.

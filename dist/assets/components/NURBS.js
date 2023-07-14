@@ -3317,7 +3317,7 @@ function NurbsOrientationInterpolator (executionContext)
 
    this .addType ((X3DConstants_default()).NurbsOrientationInterpolator);
 
-   this .addChildObjects ("rebuild", new (Fields_default()).SFTime ());
+   this .addChildObjects ((X3DConstants_default()).inputOutput, "rebuild", new (Fields_default()).SFTime ());
 
    this .interpolator  = new (OrientationInterpolator_default()) (executionContext);
    this .knots         = [ ];
@@ -4066,7 +4066,7 @@ function NurbsPositionInterpolator (executionContext)
 
    this .addType ((X3DConstants_default()).NurbsPositionInterpolator);
 
-   this .addChildObjects ("rebuild", new (Fields_default()).SFTime ());
+   this .addChildObjects ((X3DConstants_default()).inputOutput, "rebuild", new (Fields_default()).SFTime ());
 
    this .interpolator  = new (PositionInterpolator_default()) (executionContext);
    this .knots         = [ ];

@@ -1,7 +1,7 @@
 /* X_ITE v8.9.6 */(() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 282:
+/***/ 286:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 /**
@@ -14745,10 +14745,10 @@ function X3DFontStyleNode (executionContext)
 
    this .addType ((X3DConstants_default()).X3DFontStyleNode);
 
-   this .addChildObjects ("url",                  this ._family,
-                          "load",                 new (Fields_default()).SFBool (true),
-                          "autoRefresh",          new (Fields_default()).SFTime (),
-                          "autoRefreshTimeLimit", new (Fields_default()).SFTime (3600));
+   this .addChildObjects ((X3DConstants_default()).inputOutput, "url",                  this ._family,
+                          (X3DConstants_default()).inputOutput, "load",                 new (Fields_default()).SFBool (true),
+                          (X3DConstants_default()).inputOutput, "autoRefresh",          new (Fields_default()).SFTime (),
+                          (X3DConstants_default()).inputOutput, "autoRefreshTimeLimit", new (Fields_default()).SFTime (3600));
 
    this ._family .setName ("family");
 
@@ -16069,7 +16069,7 @@ Namespace_default().set ("x_ite/Components/Text/FontStyle", FontStyle_default_);
 /* harmony default export */ const Text_FontStyle = (FontStyle_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Text/X3DTextContext.js
 /* provided dependency */ var $ = __webpack_require__(355);
-/* provided dependency */ var opentype = __webpack_require__(282);
+/* provided dependency */ var opentype = __webpack_require__(286);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
