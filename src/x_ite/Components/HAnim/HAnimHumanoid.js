@@ -79,7 +79,7 @@ function HAnimHumanoid (executionContext)
    this .jointNodes           = [ ];
    this .jointBindingMatrices = [ ];
    this .skinCoordNode        = null;
-   this .changed              = new Lock ();
+   this .change               = new Lock ();
 }
 
 Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .prototype),
@@ -200,7 +200,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
 
       for (const jointNode of jointNodes)
       {
-         jointNode .removeInterest ("enable", this .changed);
+         jointNode .removeInterest ("enable", this .change);
          jointNode ._skinCoordIndex  .removeInterest ("addEvent", this ._jointTextures);
          jointNode ._skinCoordWeight .removeInterest ("addEvent", this ._jointTextures);
       }
@@ -232,7 +232,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
 
       for (const jointNode of jointNodes)
       {
-         jointNode .addInterest ("enable", this .changed);
+         jointNode .addInterest ("enable", this .change);
          jointNode ._skinCoordIndex  .addInterest ("addEvent", this ._jointTextures);
          jointNode ._skinCoordWeight .addInterest ("addEvent", this ._jointTextures);
       }
@@ -292,7 +292,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
       gl .bindTexture (gl .TEXTURE_2D, this .weightsTexture);
       gl .texImage2D (gl .TEXTURE_2D, 0, gl .getVersion () > 1 ? gl .RGBA32F : gl .RGBA, size, size, 0, gl .RGBA, gl .FLOAT, weightsArray);
 
-      this .changed .enable ();
+      this .change .enable ();
    },
    set_skinCoord__ ()
    {
@@ -317,7 +317,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
 
       return function (type, renderObject)
       {
-         if (type !== TraverseType .DISPLAY || this .changed .lock ())
+         if (type !== TraverseType .DISPLAY || this .change .lock ())
             return;
 
          // Determine inverse model matrix of humanoid.
