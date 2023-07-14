@@ -64,8 +64,8 @@ function HAnimJoint (executionContext)
                           X3DConstants .HAnimSegment,
                           X3DConstants .HAnimSite);
 
-   this .displacerNodes = [ ];
-   this .modelMatrix    = new Matrix4 ();
+   this .displacerNodes  = [ ];
+   this .modelViewMatrix = new Matrix4 ();
 }
 
 Object .assign (Object .setPrototypeOf (HAnimJoint .prototype, X3DTransformNode .prototype),
@@ -74,26 +74,17 @@ Object .assign (Object .setPrototypeOf (HAnimJoint .prototype, X3DTransformNode 
    {
       X3DTransformNode .prototype .initialize .call (this);
 
-      this ._skinCoordIndex .addInterest ("set_skinCoordIndex__", this);
-      this ._displacers     .addInterest ("set_displacers__",     this);
+      this ._displacers .addInterest ("set_displacers__", this);
 
       this .set_displacers__ ();
    },
-   setCameraObject (value)
+   getModelViewMatrix ()
    {
-      X3DTransformNode .prototype .setCameraObject .call (this, value || !! this ._skinCoordIndex .length);
-   },
-   getModelMatrix ()
-   {
-      return this .modelMatrix;
+      return this .modelViewMatrix;
    },
    getDisplacers ()
    {
       return this .displacerNodes;
-   },
-   set_skinCoordIndex__ ()
-   {
-      this .set_cameraObjects__ ();
    },
    set_displacers__ ()
    {
@@ -111,21 +102,22 @@ Object .assign (Object .setPrototypeOf (HAnimJoint .prototype, X3DTransformNode 
    },
    traverse (type, renderObject)
    {
-      if (type === TraverseType .CAMERA)
-      {
-         if (this ._skinCoordIndex .length)
-            this .modelMatrix .assign (this .getMatrix ()) .multRight (renderObject .getModelViewMatrix () .get ());
-      }
+      const modelViewMatrix = renderObject .getModelViewMatrix ();
 
-      X3DTransformNode .prototype .traverse .call (this, type, renderObject);
+      modelViewMatrix .push ();
+      modelViewMatrix .multLeft (this .getMatrix ());
+
+      if (type === TraverseType .DISPLAY)
+         this .modelViewMatrix .assign (modelViewMatrix .get ());
+
+      X3DTransformNode .prototype .groupTraverse .call (this, type, renderObject);
+
+      modelViewMatrix .pop ();
    },
    groupTraverse (type, renderObject)
    {
-      if (type === TraverseType .CAMERA)
-      {
-         if (this ._skinCoordIndex .length)
-            this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ());
-      }
+      if (type === TraverseType .DISPLAY)
+         this .modelViewMatrix .assign (renderObject .getModelViewMatrix () .get ());
 
       X3DTransformNode .prototype .groupTraverse .call (this, type, renderObject);
    },

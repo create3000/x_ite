@@ -1046,8 +1046,12 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          const scene = this .getScene ();
 
          skin .textureCoordinateNode = scene .createNode ("TextureCoordinate", false);
-         skin .normalNode            = scene .createNode ("Normal", false);
-         skin .coordinateNode        = scene .createNode ("Coordinate", false);
+         skin .normalNode            = scene .createNode ("Normal",            false);
+         skin .coordinateNode        = scene .createNode ("Coordinate",        false);
+
+         skin .textureCoordinateNode .setup ();
+         skin .normalNode            .setup ();
+         skin .coordinateNode        .setup ();
       }
 
       const shapeNodes = this .primitivesArray (mesh .primitives, skin);
@@ -1065,13 +1069,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             scene .addNamedNode (scene .getUniqueName (name), shapeNode);
             scene .addExportedNode (scene .getUniqueExportName (name), shapeNode);
          }
-      }
-
-      if (skin instanceof Object)
-      {
-         skin .textureCoordinateNode .setup ();
-         skin .normalNode            .setup ();
-         skin .coordinateNode        .setup ();
       }
 
       return mesh .shapeNodes = shapeNodes;
@@ -1873,9 +1870,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       materialNode   .setup ();
       appearanceNode .setup ();
 
-      this .defaultAppearance = appearanceNode;
-
-      return appearanceNode;
+      return this .defaultAppearance = appearanceNode;
    },
    createMultiTextureTransform (materialNode)
    {

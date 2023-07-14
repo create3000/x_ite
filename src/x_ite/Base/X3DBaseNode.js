@@ -92,6 +92,10 @@ function X3DBaseNode (executionContext, browser = executionContext .getBrowser (
                           "typeName_changed", new Fields .SFTime (),
                           "parents_changed",  new Fields .SFTime ())
 
+   this ._name_changed     .setAccessType (X3DConstants .outputOnly);
+   this ._typeName_changed .setAccessType (X3DConstants .outputOnly);
+   this ._parents_changed  .setAccessType (X3DConstants .outputOnly);
+
    for (const fieldDefinition of this [_fieldDefinitions])
       this .addPredefinedField (fieldDefinition);
 }
@@ -501,6 +505,12 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
    {
       if (field .isTainted ())
          return;
+
+      // if (this .getTypeName () === "IndexedQuadSet")
+      // {
+      //    console .log (field .getName ());
+      //    console .trace ();
+      // }
 
       field .setTainted (true);
 

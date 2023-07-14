@@ -178,15 +178,15 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
 
       // Skinning
 
-      this ._joints                .addInterest ("set_joints__",              this);
-      this ._jointBindingPositions .addInterest ("set_joints__",              this);
-      this ._jointBindingRotations .addInterest ("set_joints__",              this);
-      this ._jointBindingScales    .addInterest ("set_joints__",              this);
-      this ._jointTextures         .addInterest ("set_jointTextures__",       this);
-      this ._skinBindingNormal     .addInterest ("set_skinBindingNormal__",   this);
-      this ._skinBindingCoord      .addInterest ("set_skinBindingCoord__",    this);
-      this ._skinNormal            .addInterest ("set_skinNormal__",          this);
-      this ._skinCoord             .addInterest ("set_skinCoord__",           this);
+      this ._joints                .addInterest ("set_joints__",            this);
+      this ._jointBindingPositions .addInterest ("set_joints__",            this);
+      this ._jointBindingRotations .addInterest ("set_joints__",            this);
+      this ._jointBindingScales    .addInterest ("set_joints__",            this);
+      this ._jointTextures         .addInterest ("set_jointTextures__",     this);
+      this ._skinBindingNormal     .addInterest ("set_skinBindingNormal__", this);
+      this ._skinBindingCoord      .addInterest ("set_skinBindingCoord__",  this);
+      this ._skinNormal            .addInterest ("set_skinNormal__",        this);
+      this ._skinCoord             .addInterest ("set_skinCoord__",         this);
 
       this .set_joints__ ();
       this .set_skinBindingNormal__ ();
@@ -286,13 +286,13 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
       for (let i = 0; i < length; ++ i)
       {
          const
-            j = joints  [i] ?? [ ],
-            w = weights [i] ?? [ ];
+            j = joints  [i],
+            w = weights [i];
 
          for (let n = 0; n < 4; ++ n)
          {
-            jointsArray  [i * 4 + n] = j [n] ?? 0;
-            weightsArray [i * 4 + n] = w [n] ?? 0;
+            jointsArray  [i * 4 + n] = j ?.[n] ?? 0;
+            weightsArray [i * 4 + n] = w ?.[n] ?? 0;
          }
       }
 
@@ -324,15 +324,8 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
    {
       this .skinNormalNode = X3DCast (X3DConstants .X3DNormalNode, this ._skinNormal);
 
-      if (this .skinBindingNormal)
-      {
-         if (this .skinNormalNode)
-            this .skinNormalNode ._vector .assign (this .skinBindingNormal ._vector);
-      }
-      else
-      {
+      if (!this .skinBindingNormal)
          this .skinBindingNormal = this .skinNormalNode ?.copy ();
-      }
 
       this .changed = true;
    },
@@ -340,15 +333,8 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
    {
       this .skinCoordNode = X3DCast (X3DConstants .X3DCoordinateNode, this ._skinCoord);
 
-      if (this .skinBindingCoord)
-      {
-         if (this .skinCoordNode)
-            this .skinCoordNode ._point .assign (this .skinBindingCoord ._point);
-      }
-      else
-      {
+      if (!this .skinBindingCoord)
          this .skinBindingCoord = this .skinCoordNode ?.copy ();
-      }
 
       if (this .skinCoordNode)
          delete this .skinning;
@@ -365,11 +351,11 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
    },
    skinning: (() =>
    {
-      const invModelMatrix = new Matrix4 ();
+      const invModelViewMatrix = new Matrix4 ();
 
       return function (type, renderObject)
       {
-         if (type !== TraverseType .CAMERA)
+         if (type !== TraverseType .DISPLAY)
             return;
 
          if (!this .changed)
@@ -379,7 +365,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
 
          // Determine inverse model matrix of humanoid.
 
-         invModelMatrix .assign (this .transformNode .getMatrix ())
+         invModelViewMatrix .assign (this .transformNode .getMatrix ())
             .multRight (renderObject .getModelViewMatrix () .get ()) .inverse ();
 
          // Create joint matrices.
@@ -396,12 +382,14 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
             const
                jointNode          = jointNodes [i],
                jointBindingMatrix = jointBindingMatrices [i],
-               jointMatrix        = jointNode .getModelMatrix () .multRight (invModelMatrix) .multLeft (jointBindingMatrix),
+               jointMatrix        = jointNode .getModelViewMatrix () .multRight (invModelViewMatrix) .multLeft (jointBindingMatrix),
                jointNormalMatrix  = jointMatrix .submatrix .transpose () .inverse ();
 
             jointMatricesArray       .set (jointMatrix,       i * 16);
             jointNormalMatricesArray .set (jointNormalMatrix, i * 16);
          }
+
+         // console .log (new Float32Array (jointMatricesArray))
 
          // Upload textures.
 
