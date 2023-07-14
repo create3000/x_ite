@@ -117,40 +117,9 @@ function X3DGeometryNode (executionContext)
 
 Object .defineProperty (X3DGeometryNode, "createArray",
 {
-   // Function to select ether Array or MFFloat for color/normal/vertex arrays.
    value (type = "MFFloat")
    {
-      if (false)
-         return new Fields [type] ();
-
-      const array = [ ];
-
-      array .typedArray = new Float32Array ();
-
-      array .assign = function (value)
-      {
-         const length = value .length;
-
-         for (let i = 0; i < length; ++ i)
-            this [i] = value [i];
-
-         this .length = length;
-      };
-
-      array .getValue = function ()
-      {
-         return this .typedArray;
-      };
-
-      array .shrinkToFit = function ()
-      {
-         if (this .length === this .typedArray .length)
-            this .typedArray .set (this);
-         else
-            this .typedArray = new Float32Array (this);
-      };
-
-      return array;
+      return new Fields [type] ();
    },
 })
 

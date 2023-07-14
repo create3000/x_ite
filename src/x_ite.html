@@ -128,20 +128,24 @@ X3D (() =>
 
          for (const animation of animations .children)
          {
+            const timeSensor = animation .children [0];
+
             $("<span></span>")
                .text ("▶")
+               .attr ("title", timeSensor .description)
                .on ("click", () =>
                {
                   stop ();
 
-                  animation .children [0] .loop      = true;
-                  animation .children [0] .startTime = Date .now () / 1000;
+                  timeSensor .loop      = true;
+                  timeSensor .startTime = Date .now () / 1000;
                })
                .appendTo ($("#animations"));
          }
 
          $("<span></span>")
             .text ("◼")
+            .attr ("title", "Stop")
             .on ("click", stop)
             .appendTo ($("#animations"));
       }
