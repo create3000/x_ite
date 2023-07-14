@@ -1307,11 +1307,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          scene .addExportedNode (scene .getUniqueExportName (name), viewpointNode);
       }
 
-      if (camera .name)
-         viewpointNode ._description = camera .name;
-      else
-         viewpointNode ._description = `Viewpoint ${++ this .viewpoints}`;
-
+      viewpointNode ._description      = camera .name ? this .description (camera .name) : `Viewpoint ${++ this .viewpoints}`;
       viewpointNode ._position         = Vector3 .Zero;
       viewpointNode ._centerOfRotation = new Vector3 (0, 0, -10);
 
@@ -1750,7 +1746,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       scene .addExportedNode (scene .getUniqueExportName (name || `Animation${this .animations}`), groupNode);
       scene .addExportedNode (scene .getUniqueExportName (`Timer${this .animations}`), timeSensorNode);
 
-      timeSensorNode ._description = animation .name || `Animation ${this .animations}`;
+      timeSensorNode ._description = this .description (animation .name) || `Animation ${this .animations}`;
       groupNode ._children .push (timeSensorNode, ... channelNodes);
 
       timeSensorNode .setup ();
@@ -2705,6 +2701,10 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          return defaultValue;
 
       return value;
+   },
+   description (string)
+   {
+      return string .replace (/_+/g, " ") .trim ();
    },
 });
 
