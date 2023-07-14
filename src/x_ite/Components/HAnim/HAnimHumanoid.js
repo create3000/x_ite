@@ -252,17 +252,11 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
    set_jointSkinCoord_impl__ ()
    {
       // Create arrays.
-      
+
       const
          length  = this .skinCoordNode ?._point .length || 1,
-         joints  = [ ],
-         weights = [ ];
-
-      for (let i = 0; i < length; ++ i)
-      {
-         joints  [i] = [ ];
-         weights [i] = [ ];
-      }
+         joints  = Array .from ({ length }, () => [ ]),
+         weights = Array .from ({ length }, () => [ ]);
 
       for (const [j, jointNode] of this .jointNodes .entries ())
       {
