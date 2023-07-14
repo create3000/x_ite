@@ -97,6 +97,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
 
       this .jointsTexture              = gl .createTexture ();
       this .weightsTexture             = gl .createTexture ();
+      this .displacementsTexture       = gl .createTexture ();
       this .jointMatricesTexture       = gl .createTexture ();
       this .jointNormalMatricesTexture = gl .createTexture ();
 
@@ -202,6 +203,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
          jointNode .removeInterest ("enable", this .change);
          jointNode ._skinCoordIndex  .removeInterest ("addEvent", this ._jointTextures);
          jointNode ._skinCoordWeight .removeInterest ("addEvent", this ._jointTextures);
+         jointNode ._displacers      .removeInterest ("addEvent", this ._jointTextures);
       }
 
       jointNodes           .length = 0;
@@ -234,6 +236,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
          jointNode .addInterest ("enable", this .change);
          jointNode ._skinCoordIndex  .addInterest ("addEvent", this ._jointTextures);
          jointNode ._skinCoordWeight .addInterest ("addEvent", this ._jointTextures);
+         jointNode ._displacers      .addInterest ("addEvent", this ._jointTextures);
       }
 
       this .jointMatricesArray       = new Float32Array (jointNodes .length * 16),
@@ -246,9 +249,10 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
       // Create arrays.
 
       const
-         length  = this .skinCoordNode ?._point .length || 1,
-         joints  = Array .from ({ length }, () => [ ]),
-         weights = Array .from ({ length }, () => [ ]);
+         length        = this .skinCoordNode ?._point .length || 1,
+         joints        = Array .from ({ length }, () => [ ]),
+         weights       = Array .from ({ length }, () => [ ]),
+         displacements = Array .from ({ length }, () => [ ]);
 
       for (const [j, jointNode] of this .jointNodes .entries ())
       {
@@ -259,21 +263,34 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
             joints  [index] ?.push (j);
             weights [index] ?.push (skinCoordWeight [i])
          }
+
+         for (const displacerNode of jointNode .getDisplacers ())
+         {
+            const
+               weight         = displacerNode ._weight .getValue (),
+               displacements_ = displacerNode ._displacements;
+
+            for (const [i, index] of displacerNode ._coordIndex .entries ())
+               displacements [index] .push (j, ... displacements_ [i], weight);
+         }
       }
 
       const
-         size         = Math .ceil (Math .sqrt (length)) || 1,
-         jointsArray  = new Float32Array (size * size * 4),
-         weightsArray = new Float32Array (size * size * 4);
+         size               = Math .ceil (Math .sqrt (length)) || 1,
+         jointsArray        = new Float32Array (size * size * 4),
+         weightsArray       = new Float32Array (size * size * 4),
+         displacementsArray = new Float32Array (size * size * 5);
 
       for (let i = 0; i < length; ++ i)
       {
-         const j = joints [i], w = weights [i];
+         const j = joints [i], w = weights [i], d = displacements [i];
 
          j .length = w .length = Math .min (j .length, 4);
+         d .length = Math .min (d .length, 5);
 
-         jointsArray  .set (j, i * 4);
-         weightsArray .set (w, i * 4);
+         jointsArray        .set (j, i * 4);
+         weightsArray       .set (w, i * 4);
+         displacementsArray .set (d, i * 5);
       }
 
       // Upload textures.
@@ -287,6 +304,9 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
 
       gl .bindTexture (gl .TEXTURE_2D, this .weightsTexture);
       gl .texImage2D (gl .TEXTURE_2D, 0, gl .getVersion () > 1 ? gl .RGBA32F : gl .RGBA, size, size, 0, gl .RGBA, gl .FLOAT, weightsArray);
+
+      gl .bindTexture (gl .TEXTURE_2D, this .displacementsTexture);
+      gl .texImage2D (gl .TEXTURE_2D, 0, gl .getVersion () > 1 ? gl .RGBA32F : gl .RGBA, size, size, 0, gl .RGBA, gl .FLOAT, displacementsArray);
 
       this .change .enable ();
    },
