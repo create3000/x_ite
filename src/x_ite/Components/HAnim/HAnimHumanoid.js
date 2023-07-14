@@ -130,6 +130,16 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
       this .viewpointsNode .setPrivate (true);
       this .skinNode       .setPrivate (true);
 
+      this .skinNode .traverse = function (humanoidNode, type, renderObject)
+      {
+         renderObject .getHumanoids () .push (humanoidNode);
+
+         Group .prototype .traverse .call (this, type, renderObject);
+
+         renderObject .getHumanoids () .pop ();
+      }
+      .bind (this .skinNode, this);
+
       // Transform
 
       this ._translation      .addFieldInterest (this .transformNode ._translation);
@@ -349,13 +359,9 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
    },
    traverse (type, renderObject)
    {
-      renderObject .getHumanoids () .push (this);
-
       this .transformNode .traverse (type, renderObject);
 
       this .skinning (type, renderObject);
-
-      renderObject .getHumanoids () .pop ();
    },
    skinning: (() =>
    {
