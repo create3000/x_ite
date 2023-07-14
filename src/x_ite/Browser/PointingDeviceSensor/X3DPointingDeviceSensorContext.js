@@ -381,9 +381,6 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
       if (appearanceNode .getStyleProperties (geometryContext .geometryType))
          options .push ("X3D_STYLE_PROPERTIES");
 
-      if (+appearanceNode .getTextureBits () || +appearanceNode .getMaterial () .getTextureBits ())
-         options .push ("X3D_TEXTURE", "X3D_NUM_TEXTURE_COORDINATES 1")
-
       if (humanoidNode)
          options .push ("X3D_SKINNING");
 

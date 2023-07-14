@@ -270,8 +270,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
       {
          const j = joints [i], w = weights [i];
 
-         j .length = Math .min (j .length, 4);
-         w .length = Math .min (w .length, 4);
+         j .length = w .length = Math .min (j .length, 4);
 
          jointsArray  .set (j, i * 4);
          weightsArray .set (w, i * 4);
