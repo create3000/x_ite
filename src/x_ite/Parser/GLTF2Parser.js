@@ -2704,7 +2704,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    },
    description (string)
    {
-      return string .replace (/_+/g, " ") .trim ();
+      return string ?.replace (/_+/g, " ") .trim () ?? "";
    },
 });
 
