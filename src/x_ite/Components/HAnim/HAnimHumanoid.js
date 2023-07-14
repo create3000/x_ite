@@ -251,9 +251,18 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
    },
    set_jointSkinCoord_impl__ ()
    {
+      // Create arrays.
+      
       const
+         length  = this .skinCoordNode ?._point .length || 1,
          joints  = [ ],
          weights = [ ];
+
+      for (let i = 0; i < length; ++ i)
+      {
+         joints  [i] = [ ];
+         weights [i] = [ ];
+      }
 
       for (const [j, jointNode] of this .jointNodes .entries ())
       {
@@ -261,19 +270,12 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
 
          for (const [i, coordIndex] of jointNode ._skinCoordIndex .entries ())
          {
-            if (!joints [coordIndex])
-            {
-               joints  [coordIndex] = [ ];
-               weights [coordIndex] = [ ];
-            }
-
             joints  [coordIndex] .push (j);
             weights [coordIndex] .push (skinCoordWeight [i])
          }
       }
 
       const
-         length       = joints .length,
          size         = Math .ceil (Math .sqrt (length)),
          jointsArray  = new Float32Array (size * size * 4),
          weightsArray = new Float32Array (size * size * 4);
@@ -290,6 +292,8 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
             weightsArray [i * 4 + n] = w [n] ?? 0;
          }
       }
+
+      // Upload textures.
 
       const
          browser = this .getBrowser (),
@@ -317,11 +321,15 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
    {
       this .skinNormalNode = X3DCast (X3DConstants .X3DNormalNode, this ._skinNormal);
 
-      if (!this .skinBindingNormal)
+      if (this .skinBindingNormal)
+      {
+         if (this .skinNormalNode)
+            this .skinNormalNode ._vector .assign (this .skinBindingNormal ._vector);
+      }
+      else
+      {
          this .skinBindingNormal = this .skinNormalNode ?.copy ();
-
-      if (this .skinNormalNode)
-         this .skinNormalNode ._vector .assign (this .skinBindingNormal ._vector);
+      }
 
       this .changed = true;
    },
@@ -329,11 +337,15 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
    {
       this .skinCoordNode = X3DCast (X3DConstants .X3DCoordinateNode, this ._skinCoord);
 
-      if (!this .skinBindingCoord)
+      if (this .skinBindingCoord)
+      {
+         if (this .skinCoordNode)
+            this .skinCoordNode ._point .assign (this .skinBindingCoord ._point);
+      }
+      else
+      {
          this .skinBindingCoord = this .skinCoordNode ?.copy ();
-
-      if (this .skinCoordNode)
-         this .skinCoordNode ._point .assign (this .skinBindingCoord ._point);
+      }
 
       if (this .skinCoordNode)
          delete this .skinning;
