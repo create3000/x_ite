@@ -279,7 +279,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
       }
 
       const
-         size         = Math .ceil (Math .sqrt (length)),
+         size         = Math .ceil (Math .sqrt (length)) || 1,
          jointsArray  = new Float32Array (size * size * 4),
          weightsArray = new Float32Array (size * size * 4);
 
