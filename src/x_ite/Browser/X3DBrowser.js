@@ -216,7 +216,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
 
       if (component)
       {
-         return new ComponentInfo (name,
+         return new ComponentInfo (component .name,
             Algorithm .clamp (level || component .level, 1, component .level),
             component .title,
             component .providerUrl,
