@@ -785,20 +785,18 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          for (const multiTexCoord of this .multiTexCoords)
             multiTexCoord .shrinkToFit ();
 
-
          this .coordIndices .shrinkToFit ();
          this .fogDepths    .shrinkToFit ();
          this .colors       .shrinkToFit ();
          this .normals      .shrinkToFit ();
          this .vertices     .shrinkToFit ();
 
-         const vertices = this .vertices .getValue ();
-
          // Determine bbox.
 
          const
-            min = this .min,
-            max = this .max;
+            vertices = this .vertices .getValue (),
+            min      = this .min,
+            max      = this .max;
 
          if (vertices .length)
          {
