@@ -303,6 +303,8 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
       gl .bindTexture (gl .TEXTURE_2D, this .jointsTexture);
       gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, size, size, 0, gl .RGBA, gl .FLOAT, jointsArray);
 
+      // Trigger update.
+
       this .change .enable ();
    },
    set_displacementsTexture__ ()
@@ -404,6 +406,8 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
 
       gl .bindTexture (gl .TEXTURE_2D, this .displacementsTexture);
       gl .texSubImage2D (gl .TEXTURE_2D, 0, 0, size / 2, size, size / 2, gl .RGBA, gl .FLOAT, displacementWeightsArray)
+
+      // Trigger update.
 
       this .change .enable ();
    },
