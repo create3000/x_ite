@@ -1472,11 +1472,14 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       // Skin
 
-      if (skin)
+      if (!skin)
+         return;
+
+      const humanoidNode = skin .humanoidNode;
+
+      if (!humanoidNode .isInitialized ())
       {
-         const
-            humanoidNode = skin .humanoidNode,
-            name         = this .sanitizeName (skin .name);
+         const name = this .sanitizeName (skin .name);
 
          if (name)
             scene .addNamedNode (scene .getUniqueName (name), humanoidNode);
@@ -1494,7 +1497,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          {
             const
                jointNode         = this .nodes [joint] ?.transformNode,
-               inverseBindMatrix = skin .inverseBindMatrices [i] ?? Matrix4 .Identity;
+               inverseBindMatrix = skin .inverseBindMatrices [i] ?? Numbers_Matrix4 .Identity;
 
             if (!jointNode)
                continue;
@@ -1507,15 +1510,16 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             humanoidNode ._jointBindingScales    .push (scale);
          }
 
-         if (shapeNodes)
-         {
-            humanoidNode ._skinNormal = transformNode ._children [0] .geometry .normal;
-            humanoidNode ._skinCoord  = transformNode ._children [0] .geometry .coord;
-         }
-
-         humanoidNode ._skin .push (transformNode);
          humanoidNode .setup ();
       }
+
+      if (shapeNodes ?.length)
+      {
+         humanoidNode ._skinNormal = shapeNodes [0] .geometry .normal;
+         humanoidNode ._skinCoord  = shapeNodes [0] .geometry .coord;
+      }
+
+      humanoidNode ._skin .push (transformNode);
    },
    nodeObject (node, index)
    {
