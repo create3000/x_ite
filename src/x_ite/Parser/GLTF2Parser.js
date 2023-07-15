@@ -2310,7 +2310,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             case 5120: // Int8Array
             case 5122: // Int16Array
             case 5124: // Int32Array
-               return null;
+               break;
             case 5121: // Uint8Array
                colorNode ._color = array .map (v => v / 0xff);
                break;
