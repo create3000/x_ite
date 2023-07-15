@@ -1612,7 +1612,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       return matrices;
    },
-   scenesArray (scenes, sceneNumber)
+   scenesArray (scenes, sceneNumber = 0)
    {
       if (!(scenes instanceof Array))
          return;
