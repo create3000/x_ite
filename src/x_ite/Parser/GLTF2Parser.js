@@ -1452,13 +1452,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          skin       = this .skins [node .skin],
          shapeNodes = this .meshObject (this .meshes [node .mesh], skin);
 
-      if (shapeNodes)
-         transformNode ._children .push (... shapeNodes);
-
-      // Add children.
-
-      transformNode ._children .push (... this .nodeChildrenArray (node .children));
-
       // Add camera.
 
       const viewpointNode = this .cameraObject (this .cameras [node .camera]);
@@ -1469,6 +1462,15 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       // Add light.
 
       this .nodeExtensions (node .extensions, transformNode);
+
+      // Add children.
+
+      transformNode ._children .push (... this .nodeChildrenArray (node .children));
+
+      // Add Shape nodes.
+
+      if (shapeNodes)
+         transformNode ._children .push (... shapeNodes);
 
       // Skin
 
