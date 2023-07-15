@@ -1491,7 +1491,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          if (name)
             scene .addNamedNode (scene .getUniqueName (name), humanoidNode);
 
-         humanoidNode ._name                  = skin .name;
+         humanoidNode ._name                  = skin .name ?? "";
          humanoidNode ._version               = "2.0";
          humanoidNode ._skeletalConfiguration = "GLTF";
 
@@ -2148,7 +2148,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
       geometryNode ._normal          = this .createNormal (attributes .NORMAL);
       geometryNode ._coord           = this .createCoordinate (attributes .POSITION);
-      geometryNode ._normalPerVertex = !! geometryNode ._normal;
+      geometryNode ._normalPerVertex = !! geometryNode ._normal .getValue ();
 
       this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
       this .skinGeometry (skin, geometryNode);
@@ -2168,7 +2168,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
       geometryNode ._normal          = this .createNormal (attributes .NORMAL);
       geometryNode ._coord           = this .createCoordinate (attributes .POSITION);
-      geometryNode ._normalPerVertex = !! geometryNode ._normal;
+      geometryNode ._normalPerVertex = !! geometryNode ._normal .getValue ();
 
       this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
       this .skinGeometry (skin, geometryNode);
@@ -2189,7 +2189,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
       geometryNode ._normal          = this .createNormal (attributes .NORMAL);
       geometryNode ._coord           = this .createCoordinate (attributes .POSITION);
-      geometryNode ._normalPerVertex = !! geometryNode ._normal;
+      geometryNode ._normalPerVertex = !! geometryNode ._normal .getValue ();
 
       this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
       this .skinGeometry (skin, geometryNode);
@@ -2209,7 +2209,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
       geometryNode ._normal          = this .createNormal (attributes .NORMAL);
       geometryNode ._coord           = this .createCoordinate (attributes .POSITION);
-      geometryNode ._normalPerVertex = !! geometryNode ._normal;
+      geometryNode ._normalPerVertex = !! geometryNode ._normal .getValue ();
 
       const coord = geometryNode ._coord;
 
@@ -2238,7 +2238,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
       geometryNode ._normal          = this .createNormal (attributes .NORMAL);
       geometryNode ._coord           = this .createCoordinate (attributes .POSITION);
-      geometryNode ._normalPerVertex = !! geometryNode ._normal;
+      geometryNode ._normalPerVertex = !! geometryNode ._normal .getValue ();
 
       this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
       this .skinGeometry (skin, geometryNode);
@@ -2258,7 +2258,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
       geometryNode ._normal          = this .createNormal (attributes .NORMAL);
       geometryNode ._coord           = this .createCoordinate (attributes .POSITION);
-      geometryNode ._normalPerVertex = !! geometryNode ._normal;
+      geometryNode ._normalPerVertex = !! geometryNode ._normal .getValue ();
 
       const coord = geometryNode ._coord;
 
