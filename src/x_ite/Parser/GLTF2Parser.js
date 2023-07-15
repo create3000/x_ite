@@ -1041,9 +1041,11 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       if (mesh .shapeNodes)
          return mesh .shapeNodes;
 
-      if (skin instanceof Object)
+      if (skin instanceof Object && !skin .setup)
       {
          const scene = this .getScene ();
+
+         skin .setup = true;
 
          skin .textureCoordinateNode = scene .createNode ("TextureCoordinate", false);
          skin .normalNode            = scene .createNode ("Normal",            false);
@@ -1462,39 +1464,47 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
          if (skin && shapeNodes .length)
          {
-            var humanoidNode = scene .createNode ("HAnimHumanoid", false);
+            var humanoidNode = skin .humanoidNode
 
-            const name = this .sanitizeName (skin .name);
-
-            if (name)
-               scene .addNamedNode (scene .getUniqueName (name), humanoidNode);
-
-            humanoidNode ._name                  = skin .name;
-            humanoidNode ._version               = "2.0";
-            humanoidNode ._skeletalConfiguration = "GLTF";
-
-            const skeletonNode = this .nodeObject (this .nodes [skin .skeleton], skin .skeleton);
-
-            if (skeletonNode)
-               humanoidNode ._skeleton .push (skeletonNode);
-
-            for (const [i, joint] of skin .joints .entries ())
+            if (!humanoidNode)
             {
-               const inverseBindMatrix = skin .inverseBindMatrices [i] ?? Matrix4 .Identity;
+               var humanoidNode = scene .createNode ("HAnimHumanoid", false);
 
-               inverseBindMatrix .get (translation, rotation, scale);
+               const name = this .sanitizeName (skin .name);
 
-               humanoidNode ._joints .push (this .nodeObject (this .nodes [joint], joint));
-               humanoidNode ._jointBindingPositions .push (translation);
-               humanoidNode ._jointBindingRotations .push (rotation);
-               humanoidNode ._jointBindingScales .push (scale);
+               if (name)
+                  scene .addNamedNode (scene .getUniqueName (name), humanoidNode);
+
+               humanoidNode ._name                  = skin .name;
+               humanoidNode ._version               = "2.0";
+               humanoidNode ._skeletalConfiguration = "GLTF";
+
+               const skeletonNode = this .nodeObject (this .nodes [skin .skeleton], skin .skeleton);
+
+               if (skeletonNode)
+                  humanoidNode ._skeleton .push (skeletonNode);
+
+               for (const [i, joint] of skin .joints .entries ())
+               {
+                  const inverseBindMatrix = skin .inverseBindMatrices [i] ?? Matrix4 .Identity;
+
+                  inverseBindMatrix .get (translation, rotation, scale);
+
+                  humanoidNode ._joints .push (this .nodeObject (this .nodes [joint], joint));
+                  humanoidNode ._jointBindingPositions .push (translation);
+                  humanoidNode ._jointBindingRotations .push (rotation);
+                  humanoidNode ._jointBindingScales .push (scale);
+               }
+
+               humanoidNode .setup ();
+
+               skin .humanoidNode = humanoidNode;
             }
 
             humanoidNode ._skinNormal = shapeNodes [0] ._geometry .normal;
             humanoidNode ._skinCoord  = shapeNodes [0] ._geometry .coord;
-            humanoidNode ._skin .push (transformNode);
 
-            humanoidNode .setup ();
+            humanoidNode ._skin .push (transformNode);
          }
       }
 
