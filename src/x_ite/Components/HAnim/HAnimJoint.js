@@ -60,7 +60,8 @@ function HAnimJoint (executionContext)
 
    this .addType (X3DConstants .HAnimJoint);
 
-   this .addChildObjects (X3DConstants .outputOnly, "displacersTime", new Fields .SFTime ());
+   this .addChildObjects (X3DConstants .outputOnly, "displacements",       new Fields .SFTime (),
+                          X3DConstants .outputOnly, "displacementWeights", new Fields .SFTime ());
 
    this .setAllowedTypes (X3DConstants .HAnimJoint,
                           X3DConstants .HAnimSegment,
@@ -93,7 +94,12 @@ Object .assign (Object .setPrototypeOf (HAnimJoint .prototype, X3DTransformNode 
       const displacerNodes = this .displacerNodes;
 
       for (const displacerNode of displacerNodes)
-         displacerNode .removeInterest ("addEvent", this ._displacersTime);
+      {
+         displacerNode ._coordIndex    .removeInterest ("addEvent", this ._displacements);
+         displacerNode ._displacements .removeInterest ("addEvent", this ._displacements);
+         displacerNode ._coordIndex    .removeInterest ("addEvent", this ._displacementWeights);
+         displacerNode ._weight        .removeInterest ("addEvent", this ._displacementWeights);
+      }
 
       displacerNodes .length = 0;
 
@@ -106,7 +112,12 @@ Object .assign (Object .setPrototypeOf (HAnimJoint .prototype, X3DTransformNode 
       }
 
       for (const displacerNode of displacerNodes)
-         displacerNode .addInterest ("addEvent", this ._displacersTime);
+      {
+         displacerNode ._coordIndex    .addInterest ("addEvent", this ._displacements);
+         displacerNode ._displacements .addInterest ("addEvent", this ._displacements);
+         displacerNode ._coordIndex    .addInterest ("addEvent", this ._displacementWeights);
+         displacerNode ._weight        .addInterest ("addEvent", this ._displacementWeights);
+      }
    },
    traverse (type, renderObject)
    {

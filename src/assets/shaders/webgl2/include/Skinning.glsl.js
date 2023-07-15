@@ -10,7 +10,7 @@ uniform sampler2D x3d_JointMatricesTexture;
 mat4
 getJointMatrix (const in int joint)
 {
-   vec4 a = texelFetch (x3d_JointMatricesTexture, joint * 8 + 0, 0);
+   vec4 a = texelFetch (x3d_JointMatricesTexture, joint * 8,     0);
    vec4 b = texelFetch (x3d_JointMatricesTexture, joint * 8 + 1, 0);
    vec4 c = texelFetch (x3d_JointMatricesTexture, joint * 8 + 2, 0);
    vec4 d = texelFetch (x3d_JointMatricesTexture, joint * 8 + 3, 0);
@@ -29,16 +29,20 @@ getDisplacementJointMatrix (const in int joint)
 vec4
 getSkinningVertex (const in vec4 vertex)
 {
-   int   coordIndex = int (x3d_CoordIndex);
-   ivec4 joints     = ivec4 (texelFetch (x3d_JointsTexture, coordIndex * 2 + 0, 0));
-   vec4  weights    = texelFetch (x3d_JointsTexture, coordIndex * 2 + 1, 0);
-   vec4  d0         = texelFetch (x3d_DisplacementsTexture, coordIndex * 3 + 0, 0);
-   vec4  d1         = texelFetch (x3d_DisplacementsTexture, coordIndex * 3 + 1, 0);
-   vec4  d2         = texelFetch (x3d_DisplacementsTexture, coordIndex * 3 + 2, 0);
-   vec4  skin       = vertex;
+   int   coordIndex2 = int (x3d_CoordIndex) * 2;
+   ivec4 joints      = ivec4 (texelFetch (x3d_JointsTexture, coordIndex2, 0));
+   vec4  weights     = texelFetch (x3d_JointsTexture, coordIndex2 + 1, 0);
+   int   width       = textureSize (x3d_DisplacementsTexture, 0) .x;
+   int   offset      = (width * width) / 2;
+   vec4  skin        = vertex;
 
-   skin .xyz += (getDisplacementJointMatrix (int (d0 .x)) * d0 .yzw)              * d1 .x;
-   skin .xyz += (getDisplacementJointMatrix (int (d1 .y)) * vec3 (d1 .zw, d2 .x)) * d2 .y;
+   for (int i = 0; i < 2; ++ i)
+   {
+      vec4  displacement = texelFetch (x3d_DisplacementsTexture, coordIndex2 + i,      0);
+      float weight       = texelFetch (x3d_DisplacementsTexture, coordIndex2 + offset, 0) [i];
+
+      skin .xyz += (getDisplacementJointMatrix (int (displacement .w)) * displacement .xyz) * weight;
+   }
 
    for (int i = 0; i < 4; ++ i)
       skin += (getJointMatrix (joints [i]) * vertex - vertex) * weights [i];
@@ -60,10 +64,10 @@ getJointNormalMatrix (const in int joint)
 vec3
 getSkinningNormal (const in vec3 normal)
 {
-   int   coordIndex = int (x3d_CoordIndex);
-   ivec4 joints     = ivec4 (texelFetch (x3d_JointsTexture, coordIndex * 2 + 0, 0));
-   vec4  weights    = texelFetch (x3d_JointsTexture, coordIndex * 2 + 1, 0);
-   vec3  skin       = normal;
+   int   coordIndex2 = int (x3d_CoordIndex);
+   ivec4 joints      = ivec4 (texelFetch (x3d_JointsTexture, coordIndex2, 0));
+   vec4  weights     = texelFetch (x3d_JointsTexture, coordIndex2 + 1, 0);
+   vec3  skin        = normal;
 
    for (int i = 0; i < 4; ++ i)
       skin += (getJointNormalMatrix (joints [i]) * normal - normal) * weights [i];
