@@ -183,8 +183,6 @@ var TraverseType_default = /*#__PURE__*/__webpack_require__.n(TraverseType_names
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DCast\")"
 const X3DCast_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.6")] .require ("x_ite/Base/X3DCast");
 var X3DCast_default = /*#__PURE__*/__webpack_require__.n(X3DCast_namespaceObject);
-;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Vector3\")"
-const Vector3_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.6")] .require ("standard/Math/Numbers/Vector3");
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Matrix4\")"
 const Matrix4_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.6")] .require ("standard/Math/Numbers/Matrix4");
 var Matrix4_default = /*#__PURE__*/__webpack_require__.n(Matrix4_namespaceObject);
@@ -248,7 +246,6 @@ var Matrix4_default = /*#__PURE__*/__webpack_require__.n(Matrix4_namespaceObject
 
 
 
-
 function HAnimHumanoid (executionContext)
 {
    X3DChildNode_default().call (this, executionContext);
@@ -256,7 +253,8 @@ function HAnimHumanoid (executionContext)
 
    this .addType ((X3DConstants_default()).HAnimHumanoid);
 
-   this .addChildObjects ((X3DConstants_default()).inputOutput, "jointTextures", new (Fields_default()).SFTime ());
+   this .addChildObjects ((X3DConstants_default()).inputOutput, "jointTextures",        new (Fields_default()).SFTime (),
+                          (X3DConstants_default()).inputOutput, "displacementsTexture", new (Fields_default()).SFTime ());
 
    this ._translation .setUnit ("length");
    this ._center      .setUnit ("length");
@@ -270,7 +268,7 @@ function HAnimHumanoid (executionContext)
    this .jointNodes           = [ ];
    this .jointBindingMatrices = [ ];
    this .skinCoordNode        = null;
-   this .changed              = new Lock ();
+   this .change               = new Lock ();
 }
 
 Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (X3DChildNode_default()).prototype),
@@ -287,12 +285,11 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (X3DChildNode_
          browser = this .getBrowser (),
          gl      = browser .getContext ();
 
-      this .jointsTexture              = gl .createTexture ();
-      this .weightsTexture             = gl .createTexture ();
-      this .jointMatricesTexture       = gl .createTexture ();
-      this .jointNormalMatricesTexture = gl .createTexture ();
+      this .jointsTexture        = gl .createTexture ();
+      this .displacementsTexture = gl .createTexture ();
+      this .jointMatricesTexture = gl .createTexture ();
 
-      for (const texture of [this .jointsTexture, this .weightsTexture, this .jointMatricesTexture, this .jointNormalMatricesTexture])
+      for (const texture of [this .jointsTexture, this .displacementsTexture, this .jointMatricesTexture])
       {
          gl .bindTexture (gl .TEXTURE_2D, texture);
          gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_S,     gl .CLAMP_TO_EDGE);
@@ -366,12 +363,13 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (X3DChildNode_
 
       // Skinning
 
-      this ._joints                .addInterest ("set_joints__",        this);
-      this ._jointBindingPositions .addInterest ("set_joints__",        this);
-      this ._jointBindingRotations .addInterest ("set_joints__",        this);
-      this ._jointBindingScales    .addInterest ("set_joints__",        this);
-      this ._jointTextures         .addInterest ("set_jointTextures__", this);
-      this ._skinCoord             .addInterest ("set_skinCoord__",     this);
+      this ._joints                .addInterest ("set_joints__",               this);
+      this ._jointBindingPositions .addInterest ("set_joints__",               this);
+      this ._jointBindingRotations .addInterest ("set_joints__",               this);
+      this ._jointBindingScales    .addInterest ("set_joints__",               this);
+      this ._jointTextures         .addInterest ("set_jointTextures__",        this);
+      this ._displacementsTexture  .addInterest ("set_displacementsTexture__", this);
+      this ._skinCoord             .addInterest ("set_skinCoord__",            this);
 
       this .set_joints__ ();
       this .set_skinCoord__ ();
@@ -391,9 +389,10 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (X3DChildNode_
 
       for (const jointNode of jointNodes)
       {
-         jointNode .removeInterest ("enable", this .changed);
+         jointNode .removeInterest ("enable", this .change);
          jointNode ._skinCoordIndex  .removeInterest ("addEvent", this ._jointTextures);
          jointNode ._skinCoordWeight .removeInterest ("addEvent", this ._jointTextures);
+         jointNode ._displacersTime  .removeInterest ("addEvent", this ._displacementsTexture);
       }
 
       jointNodes           .length = 0;
@@ -423,15 +422,16 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (X3DChildNode_
 
       for (const jointNode of jointNodes)
       {
-         jointNode .addInterest ("enable", this .changed);
+         jointNode .addInterest ("enable", this .change);
          jointNode ._skinCoordIndex  .addInterest ("addEvent", this ._jointTextures);
          jointNode ._skinCoordWeight .addInterest ("addEvent", this ._jointTextures);
+         jointNode ._displacersTime  .addInterest ("addEvent", this ._displacementsTexture);
       }
 
-      this .jointMatricesArray       = new Float32Array (jointNodes .length * 16),
-      this .jointNormalMatricesArray = new Float32Array (jointNodes .length * 16);
+      this .jointMatricesArray = new Float32Array (jointNodes .length * 32),
 
-      this ._jointTextures .addEvent ();
+      this ._jointTextures        .addEvent ();
+      this ._displacementsTexture .addEvent ();
    },
    set_jointTextures__ ()
    {
@@ -444,31 +444,27 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (X3DChildNode_
 
       for (const [j, jointNode] of this .jointNodes .entries ())
       {
-         const skinCoordWeight = jointNode ._skinCoordWeight;
+         const skinCoordWeight = jointNode ._skinCoordWeight .getValue ();
 
-         for (const [i, coordIndex] of jointNode ._skinCoordIndex .entries ())
+         for (const [i, index] of jointNode ._skinCoordIndex .entries ())
          {
-            joints  [coordIndex] ?.push (j);
-            weights [coordIndex] ?.push (skinCoordWeight [i])
+            joints  [index] ?.push (j);
+            weights [index] ?.push (skinCoordWeight [i])
          }
       }
 
       const
-         size         = Math .ceil (Math .sqrt (length)) || 1,
-         jointsArray  = new Float32Array (size * size * 4),
-         weightsArray = new Float32Array (size * size * 4);
+         size        = Math .ceil (Math .sqrt (length * 2)) || 1,
+         jointsArray = new Float32Array (size * size * 4);
 
       for (let i = 0; i < length; ++ i)
       {
-         const
-            j = joints  [i],
-            w = weights [i];
+         const j = joints [i], w = weights [i];
 
-         for (let n = 0; n < 4; ++ n)
-         {
-            jointsArray  [i * 4 + n] = j ?.[n] ?? 0;
-            weightsArray [i * 4 + n] = w ?.[n] ?? 0;
-         }
+         j .length = w .length = Math .min (j .length, 4);
+
+         jointsArray .set (j, i * 8 + 0);
+         jointsArray .set (w, i * 8 + 4);
       }
 
       // Upload textures.
@@ -480,21 +476,77 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (X3DChildNode_
       gl .bindTexture (gl .TEXTURE_2D, this .jointsTexture);
       gl .texImage2D (gl .TEXTURE_2D, 0, gl .getVersion () > 1 ? gl .RGBA32F : gl .RGBA, size, size, 0, gl .RGBA, gl .FLOAT, jointsArray);
 
-      gl .bindTexture (gl .TEXTURE_2D, this .weightsTexture);
-      gl .texImage2D (gl .TEXTURE_2D, 0, gl .getVersion () > 1 ? gl .RGBA32F : gl .RGBA, size, size, 0, gl .RGBA, gl .FLOAT, weightsArray);
+      this .change .enable ();
+   },
+   set_displacementsTexture__ ()
+   {
+      // Create array.
 
-      this .changed .enable ();
+      const
+         length        = this .skinCoordNode ?._point .length || 1,
+         displacements = Array .from ({ length }, () => [ ]);
+
+      for (const [j, jointNode] of this .jointNodes .entries ())
+      {
+         for (const displacerNode of jointNode .getDisplacers ())
+         {
+            const
+               weight         = displacerNode ._weight .getValue (),
+               displacements_ = displacerNode ._displacements;
+
+            for (const [i, index] of displacerNode ._coordIndex .entries ())
+               displacements [index] ?.push (j, ... displacements_ [i], weight);
+         }
+      }
+
+      const
+         size               = Math .ceil (Math .sqrt (length)) || 1,
+         displacementsArray = new Float32Array (size * size * 12);
+
+      for (let i = 0; i < length; ++ i)
+      {
+         const d = displacements [i];
+
+         d .length = Math .min (d .length, 10);
+
+         displacementsArray .set (d, i * 12);
+      }
+
+      // Upload texture.
+
+      const
+         browser = this .getBrowser (),
+         gl      = browser .getContext ();
+
+      gl .bindTexture (gl .TEXTURE_2D, this .displacementsTexture);
+      gl .texImage2D (gl .TEXTURE_2D, 0, gl .getVersion () > 1 ? gl .RGBA32F : gl .RGBA, size, size, 0, gl .RGBA, gl .FLOAT, displacementsArray);
+
+      this .change .enable ();
    },
    set_skinCoord__ ()
    {
+      if (this .skinCoordNode)
+      {
+         this .skinCoordNode .removeInterest ("addEvent", this ._jointTextures);
+         this .skinCoordNode .removeInterest ("addEvent", this ._displacementsTexture);
+      }
+
       this .skinCoordNode = X3DCast_default() ((X3DConstants_default()).X3DCoordinateNode, this ._skinCoord);
 
       if (this .skinCoordNode)
+      {
          delete this .skinning;
-      else
-         this .skinning = Function .prototype;
 
-      this ._jointTextures .addEvent ();
+         this .skinCoordNode .addInterest ("addEvent", this ._jointTextures);
+         this .skinCoordNode .addInterest ("addEvent", this ._displacementsTexture);
+      }
+      else
+      {
+         this .skinning = Function .prototype;
+      }
+
+      this ._jointTextures        .addEvent ();
+      this ._displacementsTexture .addEvent ();
    },
    traverse (type, renderObject)
    {
@@ -508,10 +560,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (X3DChildNode_
 
       return function (type, renderObject)
       {
-         if (type !== (TraverseType_default()).DISPLAY)
-            return;
-
-         if (this .changed .lock ())
+         if (type !== (TraverseType_default()).DISPLAY || this .change .lock ())
             return;
 
          // Determine inverse model matrix of humanoid.
@@ -522,11 +571,10 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (X3DChildNode_
          // Create joint matrices.
 
          const
-            jointNodes               = this .jointNodes,
-            jointNodesLength         = jointNodes .length,
-            jointBindingMatrices     = this .jointBindingMatrices,
-            jointMatricesArray       = this .jointMatricesArray,
-            jointNormalMatricesArray = this .jointNormalMatricesArray;
+            jointNodes           = this .jointNodes,
+            jointNodesLength     = jointNodes .length,
+            jointBindingMatrices = this .jointBindingMatrices,
+            jointMatricesArray   = this .jointMatricesArray;
 
          for (let i = 0; i < jointNodesLength; ++ i)
          {
@@ -536,8 +584,8 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (X3DChildNode_
                jointMatrix        = jointNode .getModelViewMatrix () .multRight (invModelViewMatrix) .multLeft (jointBindingMatrix),
                jointNormalMatrix  = jointMatrix .submatrix .transpose () .inverse ();
 
-            jointMatricesArray       .set (jointMatrix,       i * 16);
-            jointNormalMatricesArray .set (jointNormalMatrix, i * 16);
+            jointMatricesArray .set (jointMatrix,       i * 32 + 0);
+            jointMatricesArray .set (jointNormalMatrix, i * 32 + 16);
          }
 
          // Upload textures.
@@ -547,139 +595,28 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (X3DChildNode_
             gl      = browser .getContext ();
 
          gl .bindTexture (gl .TEXTURE_2D, this .jointMatricesTexture);
-         gl .texImage2D (gl .TEXTURE_2D, 0, gl .getVersion () > 1 ? gl .RGBA32F : gl .RGBA, jointNodesLength * 4, 1, 0, gl .RGBA, gl .FLOAT, jointMatricesArray);
-
-         gl .bindTexture (gl .TEXTURE_2D, this .jointNormalMatricesTexture);
-         gl .texImage2D (gl .TEXTURE_2D, 0, gl .getVersion () > 1 ? gl .RGBA32F : gl .RGBA, jointNodesLength * 4, 1, 0, gl .RGBA, gl .FLOAT, jointNormalMatricesArray);
+         gl .texImage2D (gl .TEXTURE_2D, 0, gl .getVersion () > 1 ? gl .RGBA32F : gl .RGBA, jointNodesLength * 8, 1, 0, gl .RGBA, gl .FLOAT, jointMatricesArray);
       };
    })(),
    setShaderUniforms (gl, shaderObject)
    {
       const
-         jointsTextureTextureUnit       = this .getBrowser () .getTexture2DUnit (),
-         weightsTextureTextureUnit      = this .getBrowser () .getTexture2DUnit (),
-         jointMatricesTextureUnit       = this .getBrowser () .getTexture2DUnit (),
-         jointNormalMatricesTextureUnit = this .getBrowser () .getTexture2DUnit ();
+         jointsTextureTextureUnit        = this .getBrowser () .getTexture2DUnit (),
+         displacementsTextureTextureUnit = this .getBrowser () .getTexture2DUnit (),
+         jointMatricesTextureUnit        = this .getBrowser () .getTexture2DUnit ();
 
       gl .activeTexture (gl .TEXTURE0 + jointsTextureTextureUnit);
       gl .bindTexture (gl .TEXTURE_2D, this .jointsTexture);
       gl .uniform1i (shaderObject .x3d_JointsTexture, jointsTextureTextureUnit);
 
-      gl .activeTexture (gl .TEXTURE0 + weightsTextureTextureUnit);
-      gl .bindTexture (gl .TEXTURE_2D, this .weightsTexture);
-      gl .uniform1i (shaderObject .x3d_WeightsTexture, weightsTextureTextureUnit);
+      gl .activeTexture (gl .TEXTURE0 + displacementsTextureTextureUnit);
+      gl .bindTexture (gl .TEXTURE_2D, this .displacementsTexture);
+      gl .uniform1i (shaderObject .x3d_DisplacementsTexture, displacementsTextureTextureUnit);
 
       gl .activeTexture (gl .TEXTURE0 + jointMatricesTextureUnit);
       gl .bindTexture (gl .TEXTURE_2D, this .jointMatricesTexture);
       gl .uniform1i (shaderObject .x3d_JointMatricesTexture, jointMatricesTextureUnit);
-
-      gl .activeTexture (gl .TEXTURE0 + jointNormalMatricesTextureUnit);
-      gl .bindTexture (gl .TEXTURE_2D, this .jointNormalMatricesTexture);
-      gl .uniform1i (shaderObject .x3d_JointNormalMatricesTexture, jointNormalMatricesTextureUnit);
    },
-   // skinning: (() =>
-   // {
-   //    const
-   //       invModelMatrix = new Matrix4 (),
-   //       rest           = new Vector3 (0, 0, 0),
-   //       skin           = new Vector3 (0, 0, 0),
-   //       vector         = new Vector3 (0, 0, 0),
-   //       point          = new Vector3 (0, 0, 0);
-
-   //    return function (type, renderObject)
-   //    {
-   //       if (type !== TraverseType .CAMERA)
-   //          return;
-
-   //       if (!this .changed)
-   //          return;
-
-   //       this .changed = false;
-
-   //       const
-   //          jointNodes           = this .jointNodes,
-   //          jointNodesLength     = jointNodes .length,
-   //          jointBindingMatrices = this .jointBindingMatrices,
-   //          skinBindingNormal    = this .skinBindingNormal,
-   //          skinBindingCoord     = this .skinBindingCoord,
-   //          skinNormalNode       = this .skinNormalNode,
-   //          skinCoordNode        = this .skinCoordNode;
-
-   //       // Reset skin normals and coords.
-
-   //       if (skinNormalNode)
-   //          skinNormalNode ._vector .assign (skinBindingNormal ._vector);
-
-   //       skinCoordNode ._point .assign (skinBindingCoord ._point);
-
-   //       // Determine inverse model matrix of humanoid.
-
-   //       invModelMatrix .assign (this .transformNode .getMatrix ())
-   //          .multRight (renderObject .getModelViewMatrix () .get ()) .inverse ();
-
-   //       // Apply joint transformations.
-
-   //       for (let i = 0; i < jointNodesLength; ++ i)
-   //       {
-   //          const
-   //             jointNode            = jointNodes [i],
-   //             jointBindingMatrix   = jointBindingMatrices [i],
-   //             jointMatrix          = jointNode .getModelMatrix () .multRight (invModelMatrix) .multLeft (jointBindingMatrix),
-   //             displacerNodes       = jointNode .getDisplacers (),
-   //             skinCoordIndexLength = jointNode ._skinCoordIndex .length;
-
-   //          for (const displacerNode of displacerNodes)
-   //          {
-   //             const
-   //                coordIndex          = displacerNode ._coordIndex .getValue (),
-   //                coordIndexLength    = displacerNode ._coordIndex .length,
-   //                weight              = displacerNode ._weight .getValue (),
-   //                displacements       = displacerNode ._displacements .getValue (),
-   //                displacementsLength = displacerNode ._displacements .length;
-
-   //             for (let i = 0; i < coordIndexLength; ++ i)
-   //             {
-   //                const
-   //                   i3           = i * 3,
-   //                   index        = coordIndex [i],
-   //                   displacement = i < displacementsLength ? point .set (displacements [i3], displacements [i3 + 1], displacements [i3 + 2]) : point .assign (Vector3 .Zero);
-
-   //                skinCoordNode .get1Point (index, skin);
-   //                jointMatrix .multDirMatrix (displacement) .multiply (weight) .add (skin);
-   //                skinCoordNode .set1Point (index, displacement);
-   //             }
-   //          }
-
-   //          const
-   //             normalMatrix          = skinNormalNode ? jointMatrix .submatrix .transpose () .inverse () : null,
-   //             skinCoordIndex        = jointNode ._skinCoordIndex .getValue (),
-   //             skinCoordWeight       = jointNode ._skinCoordWeight .getValue (),
-   //             skinCoordWeightLength = jointNode ._skinCoordWeight .length;
-
-   //          for (let i = 0; i < skinCoordIndexLength; ++ i)
-   //          {
-   //             const
-   //                index  = skinCoordIndex [i],
-   //                weight = i < skinCoordWeightLength ? skinCoordWeight [i] : 1;
-
-   //             if (skinNormalNode)
-   //             {
-   //                rest .assign (skinBindingNormal .get1Vector (index, vector));
-   //                skinNormalNode .get1Vector (index, skin);
-   //                normalMatrix .multVecMatrix (vector) .subtract (rest) .multiply (weight) .add (skin);
-   //                skinNormalNode .set1Vector (index, vector);
-   //                // Let the shader normalize the normals.
-   //             }
-
-   //             //skin += (rest * J - rest) * weight
-   //             rest .assign (skinBindingCoord .get1Point (index, point));
-   //             skinCoordNode .get1Point (index, skin);
-   //             jointMatrix .multVecMatrix (point) .subtract (rest) .multiply (weight) .add (skin);
-   //             skinCoordNode .set1Point (index, point);
-   //          }
-   //       }
-   //    };
-   // })(),
    dispose ()
    {
       X3DBoundedObject_default().prototype .dispose .call (this);
@@ -838,6 +775,8 @@ function HAnimJoint (executionContext)
 
    this .addType ((X3DConstants_default()).HAnimJoint);
 
+   this .addChildObjects ((X3DConstants_default()).outputOnly, "displacersTime", new (Fields_default()).SFTime ());
+
    this .setAllowedTypes ((X3DConstants_default()).HAnimJoint,
                           (X3DConstants_default()).HAnimSegment,
                           (X3DConstants_default()).HAnimSite);
@@ -868,6 +807,9 @@ Object .assign (Object .setPrototypeOf (HAnimJoint .prototype, (X3DTransformNode
    {
       const displacerNodes = this .displacerNodes;
 
+      for (const displacerNode of displacerNodes)
+         displacerNode .removeInterest ("addEvent", this ._displacersTime);
+
       displacerNodes .length = 0;
 
       for (const node of this ._displacers)
@@ -877,6 +819,9 @@ Object .assign (Object .setPrototypeOf (HAnimJoint .prototype, (X3DTransformNode
          if (displacerNode)
             displacerNodes .push (displacerNode);
       }
+
+      for (const displacerNode of displacerNodes)
+         displacerNode .addInterest ("addEvent", this ._displacersTime);
    },
    traverse (type, renderObject)
    {
