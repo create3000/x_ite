@@ -354,6 +354,8 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
       for (let i = displacementWeights .length; i < length; ++ i)
          displacementWeights [i] = [ ];
 
+      displacementWeights .length = length;
+
       for (const jointNode of this .jointNodes)
       {
          for (const displacerNode of jointNode .getDisplacers ())
