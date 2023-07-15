@@ -144,6 +144,64 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
    {
       return this [_type];
    },
+   create (executionContext = this [_executionContext])
+   {
+      return new (this .constructor) (executionContext);
+   },
+   copy (executionContext)
+   {
+      const copy = this .create (executionContext);
+
+      for (const field of this [_predefinedFields])
+         copy .getPredefinedFields () .get (field .getName ()) .assign (field);
+
+      if (this .canUserDefinedFields ())
+      {
+         for (const field of this [_userDefinedFields])
+            copy .addUserDefinedField (field .getAccessType (), field .getName (), field .copy ());
+      }
+
+      copy .setup ();
+
+      return copy;
+   },
+   replaceWith (replacement, cache = false)
+   {
+      cache = cache && SFNodeCache .get (this);
+
+      for (const parent of new Set (this .getParents ()))
+      {
+         if (parent instanceof Fields .SFNode && parent !== cache)
+            parent .setValue (replacement)
+      }
+   },
+   setup ()
+   {
+      Object .freeze (this [_type]);
+
+      this [_fieldDefinitions]  .addParent (this);
+      this [_predefinedFields]  .addParent (this);
+      this [_userDefinedFields] .addParent (this);
+
+      for (const field of this [_childObjects])
+         field .setTainted (false);
+
+      for (const field of this [_predefinedFields])
+         field .setTainted (false);
+
+      for (const field of this [_userDefinedFields])
+         field .setTainted (false);
+
+      this .initialize ();
+
+      this [_initialized] = true;
+   },
+   initialize ()
+   { },
+   isInitialized ()
+   {
+      return this [_initialized];
+   },
    getInnerNode ()
    {
       return this;
@@ -233,54 +291,6 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
             live .processEvent ();
          }
       }
-   },
-   create (executionContext = this [_executionContext])
-   {
-      return new (this .constructor) (executionContext);
-   },
-   setup ()
-   {
-      Object .freeze (this [_type]);
-
-      this [_fieldDefinitions]  .addParent (this);
-      this [_predefinedFields]  .addParent (this);
-      this [_userDefinedFields] .addParent (this);
-
-      for (const field of this [_childObjects])
-         field .setTainted (false);
-
-      for (const field of this [_predefinedFields])
-         field .setTainted (false);
-
-      for (const field of this [_userDefinedFields])
-         field .setTainted (false);
-
-      this .initialize ();
-
-      this [_initialized] = true;
-   },
-   initialize ()
-   { },
-   isInitialized ()
-   {
-      return this [_initialized];
-   },
-   copy (executionContext)
-   {
-      const copy = this .create (executionContext);
-
-      for (const field of this [_predefinedFields])
-         copy .getPredefinedFields () .get (field .getName ()) .assign (field);
-
-      if (this .canUserDefinedFields ())
-      {
-         for (const field of this [_userDefinedFields])
-            copy .addUserDefinedField (field .getAccessType (), field .getName (), field .copy ());
-      }
-
-      copy .setup ();
-
-      return copy;
    },
    addChildObjects (/* accessType, name, field, ... */)
    {
