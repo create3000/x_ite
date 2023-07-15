@@ -64,7 +64,7 @@ getJointNormalMatrix (const in int joint)
 vec3
 getSkinningNormal (const in vec3 normal)
 {
-   int   coordIndex2 = int (x3d_CoordIndex);
+   int   coordIndex2 = int (x3d_CoordIndex) * 2;
    ivec4 joints      = ivec4 (texelFetch (x3d_JointsTexture, coordIndex2, 0));
    vec4  weights     = texelFetch (x3d_JointsTexture, coordIndex2 + 1, 0);
    vec3  skin        = normal;
