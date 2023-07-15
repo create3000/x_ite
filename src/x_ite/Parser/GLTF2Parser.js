@@ -1515,8 +1515,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       if (shapeNodes ?.length)
       {
-         humanoidNode ._skinNormal = shapeNodes [0] .geometry .normal;
-         humanoidNode ._skinCoord  = shapeNodes [0] .geometry .coord;
+         humanoidNode ._skinNormal = shapeNodes [0] ._geometry .normal;
+         humanoidNode ._skinCoord  = shapeNodes [0] ._geometry .coord;
       }
 
       humanoidNode ._skin .push (transformNode);
