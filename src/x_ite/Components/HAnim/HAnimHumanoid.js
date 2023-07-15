@@ -336,6 +336,12 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
    },
    set_skinCoord__ ()
    {
+      if (this .skinCoordNode)
+      {
+         this .skinCoordNode .removeInterest ("addEvent", this ._jointTextures);
+         this .skinCoordNode .removeInterest ("addEvent", this ._displacementsTexture);
+      }
+
       this .skinCoordNode = X3DCast (X3DConstants .X3DCoordinateNode, this ._skinCoord);
 
       if (this .skinCoordNode)
@@ -343,7 +349,14 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
       else
          this .skinning = Function .prototype;
 
-      this ._jointTextures .addEvent ();
+      if (this .skinCoordNode)
+      {
+         this .skinCoordNode .addInterest ("addEvent", this ._jointTextures);
+         this .skinCoordNode .addInterest ("addEvent", this ._displacementsTexture);
+      }
+
+      this ._jointTextures        .addEvent ();
+      this ._displacementsTexture .addEvent ();
    },
    traverse (type, renderObject)
    {
