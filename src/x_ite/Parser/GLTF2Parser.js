@@ -90,7 +90,6 @@ function GLTF2Parser (scene)
    this .nodes                 = [ ];
    this .skins                 = [ ];
    this .joints                = new Set ();
-   this .skeletons             = new Set ();
    this .animations            = 0;
 }
 
@@ -132,8 +131,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          "materials",
          "meshes",
          "cameras",
-         "nodes",
          "skins",
+         "nodes",
          "scenes",
          "scene",
          "animations",
@@ -205,8 +204,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       this .materialsArray  (glTF .materials);
       this .meshesArray     (glTF .meshes);
       this .camerasArray    (glTF .cameras);
-      this .nodesArray      (glTF .nodes);
       this .skinsArray      (glTF .skins);
+      this .nodesArray      (glTF .nodes);
       this .scenesArray     (glTF .scenes, glTF .scene);
       this .animationsArray (glTF .animations);
 
@@ -1364,15 +1363,115 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       if (!(nodes instanceof Array))
          return;
 
-      this .nodes = nodes;
+      this .nodes = nodes
+         .map ((node, index) => this .nodeObject (node, index))
+         .filter (node => node);
+
+      // // Get children.
+
+      for (const node of this .nodes)
+      {
+         const
+            skin          = this .skins [node .skin],
+            transformNode = node .transformNode,
+            shapeNodes    = this .meshObject (this .meshes [node .mesh], skin);
+
+         // Add
+
+         if (shapeNodes)
+            transformNode ._children .push (... shapeNodes);
+
+         // Add children.
+
+         transformNode ._children .push (... this .nodeChildrenArray (node .children));
+
+         // Add camera.
+
+         const viewpointNode = this .cameraObject (this .cameras [node .camera]);
+
+         if (viewpointNode)
+            transformNode ._children .push (viewpointNode);
+
+         // Add light.
+
+         this .nodeExtensions (node .extensions, transformNode);
+
+         // if (typeName === "Transform")
+         // {
+         //    if (!transformNode ._children .length)
+         //    {
+         //       node .transformNode = null;
+         //       return node;
+         //    }
+         // }
+
+         if (skin)
+         {
+            const
+               scene        = this .getExecutionContext (),
+               humanoidNode = skin .humanoidNode,
+               name         = this .sanitizeName (skin .name);
+
+            if (name)
+               scene .addNamedNode (scene .getUniqueName (name), humanoidNode);
+
+            humanoidNode ._name                  = skin .name;
+            humanoidNode ._version               = "2.0";
+            humanoidNode ._skeletalConfiguration = "GLTF";
+
+            const skeletonNode = this .nodes [skin .skeleton] ?.node;
+
+            if (skeletonNode)
+               humanoidNode ._skeleton .push (skeletonNode);
+
+            console .log (skin .skeleton, node)
+
+            // this .nodes [skin .skeleton] = node;
+
+            for (const [i, joint] of skin .joints .entries ())
+            {
+               const
+                  jointNode         = this .nodes [joint] ?.node,
+                  inverseBindMatrix = skin .inverseBindMatrices [i] ?? Matrix4 .Identity;
+
+               if (!jointNode)
+                  continue;
+
+               const
+                  translation = new Vector3 (0, 0, 0),
+                  rotation    = new Rotation4 (),
+                  scale       = new Vector3 (1, 1, 1);
+
+               inverseBindMatrix .get (translation, rotation, scale);
+
+               humanoidNode ._joints                .push (jointNode);
+               humanoidNode ._jointBindingPositions .push (translation);
+               humanoidNode ._jointBindingRotations .push (rotation);
+               humanoidNode ._jointBindingScales    .push (scale);
+            }
+
+            if (shapeNodes)
+            {
+               humanoidNode ._skinNormal = transformNode ._children [0] .geometry .normal;
+               humanoidNode ._skinCoord  = transformNode ._children [0] .geometry .coord;
+            }
+
+            console .log (transformNode .getId ())
+
+            humanoidNode ._skin .push (transformNode);
+            humanoidNode .setup ();
+         }
+      }
+
+      console .log (this .nodes)
    },
    nodeObject (node, index)
    {
       if (!(node instanceof Object))
          return;
 
-      if (node .childNode !== undefined)
-         return node .childNode;
+      if (node .transformNode)
+         return node;
 
       // Create Transform or HAnimJoint.
 
@@ -1397,10 +1496,10 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       const
          translation      = new Vector3 (0, 0, 0),
-         quaternion       = new Quaternion (0, 0, 0, 1),
          rotation         = new Rotation4 (),
          scale            = new Vector3 (1, 1, 1),
          scaleOrientation = new Rotation4 (),
+         quaternion       = new Quaternion (0, 0, 0, 1),
          matrix           = new Matrix4 ();
 
       if (this .vectorValue (node .matrix, matrix))
@@ -1424,90 +1523,27 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             transformNode ._scale = scale;
       }
 
-      // Add camera.
-
-      const viewpointNode = this .cameraObject (this .cameras [node .camera]);
-
-      if (viewpointNode)
-         transformNode ._children .push (viewpointNode);
-
-      // Add light.
-
-      this .nodeExtensions (node .extensions, transformNode);
-
-      // Add mesh.
-
-      const mesh = this .meshes [node .mesh];
-
-      if (mesh)
-      {
-         const
-            skin       = this .skins [node .skin],
-            shapeNodes = this .meshObject (mesh, skin);
-
-         transformNode ._children .push (... shapeNodes);
-
-         if (skin && shapeNodes .length)
-         {
-            var humanoidNode = skin .humanoidNode
-
-            if (!humanoidNode)
-            {
-               var humanoidNode = scene .createNode ("HAnimHumanoid", false);
-
-               const name = this .sanitizeName (skin .name);
-
-               if (name)
-                  scene .addNamedNode (scene .getUniqueName (name), humanoidNode);
-
-               humanoidNode ._name                  = skin .name;
-               humanoidNode ._version               = "2.0";
-               humanoidNode ._skeletalConfiguration = "GLTF";
-
-               const skeletonNode = this .nodeObject (this .nodes [skin .skeleton], skin .skeleton);
-
-               if (skeletonNode)
-                  humanoidNode ._skeleton .push (skeletonNode);
-
-               for (const [i, joint] of skin .joints .entries ())
-               {
-                  const inverseBindMatrix = skin .inverseBindMatrices [i] ?? Matrix4 .Identity;
-
-                  inverseBindMatrix .get (translation, rotation, scale);
-
-                  humanoidNode ._joints .push (this .nodeObject (this .nodes [joint], joint));
-                  humanoidNode ._jointBindingPositions .push (translation);
-                  humanoidNode ._jointBindingRotations .push (rotation);
-                  humanoidNode ._jointBindingScales .push (scale);
-               }
-
-               humanoidNode .setup ();
-
-               skin .humanoidNode = humanoidNode;
-            }
-
-            humanoidNode ._skinNormal = shapeNodes [0] ._geometry .normal;
-            humanoidNode ._skinCoord  = shapeNodes [0] ._geometry .coord;
-
-            humanoidNode ._skin .push (transformNode);
-         }
-      }
-
-      // Get children.
-
-      transformNode ._children .push (... this .nodeChildrenArray (node .children));
-
-      // Finish.
-
       transformNode .setup ();
 
-      if (typeName === "Transform")
+      node .transformNode = transformNode;
+
+      // Create humanoid.
+
+      const skin = this .skins [node .skin];
+
+      if (skin)
       {
-         if (!transformNode ._children .length)
-            return node .childNode = null;
+         if (!skin .humanoidNode)
+            skin .humanoidNode = scene .createNode ("HAnimHumanoid", false);
+
+         const humanoidNode = skin .humanoidNode;
+
+         node .humanoidNode = humanoidNode;
       }
 
-      return node .childNode = humanoidNode ?? transformNode;
+      node .node = node .humanoidNode || node .transformNode;
+
+      return node;
    },
    nodeExtensions (extensions, transformNode)
    {
@@ -1536,8 +1572,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          return [ ];
 
       return [... new Set (children
-         .filter (index => !this .skeletons .has (index))
-         .map (index => this .nodeObject (this .nodes [index], index))
+         .map (index => this .nodes [index] ?.node)
          .filter (node => node))];
    },
    skinsArray (skins)
@@ -1561,8 +1596,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       skin .skeleton            = skin .skeleton ?? this .skeleton (skin .joints);
       skin .inverseBindMatrices = this .inverseBindMatricesAccessors (this .accessors [skin .inverseBindMatrices]);
 
-      this .skeletons .add (skin .skeleton);
-
       skin .textureCoordinateNode = scene .createNode ("TextureCoordinate", false);
       skin .normalNode            = scene .createNode ("Normal",            false);
       skin .coordinateNode        = scene .createNode ("Coordinate",        false);
@@ -1583,7 +1616,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    skeleton: function (joints)
    {
       const children = new Set (joints
-         .map (index => this .nodes [index])
+         .map (index => this .nodes [index] ?.node)
          .filter (node => node instanceof Object)
          .filter (node => node .children instanceof Array)
          .flatMap (node => node .children));
@@ -1785,7 +1818,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       if (!(target instanceof Object))
          return null;
 
-      const node = this .nodeObject (this .nodes [target .node], target .node);
+      const node = this .nodes [target .node] ?.node;
 
       if (!node)
          return null;
@@ -2406,7 +2439,10 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
             const
                index     = skin .joints [jointsArray [v * 4 + i]],
-               jointNode = this .nodeObject (this .nodes [index], index);
+               jointNode = this .nodes [index] ?.node;
+
+            if (!jointNode)
+               continue;
 
             jointNode ._skinCoordIndex  .push (v + start);
             jointNode ._skinCoordWeight .push (w);
