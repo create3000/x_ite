@@ -2301,9 +2301,29 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             opaque         = appearanceNode ._alphaMode .getValue () === "OPAQUE",
             colorNode      = scene .createNode (opaque ? "Color" : typeName, false);
 
-         colorNode ._color = opaque && typeName !== "Color"
+         const array = opaque && typeName !== "Color"
             ? color .array .filter ((_, i) => (i + 1) % 4)
             : color .array;
+
+         switch (color .componentType)
+         {
+            case 5120: // Int8Array
+            case 5122: // Int16Array
+            case 5124: // Int32Array
+               return null;
+            case 5121: // Uint8Array
+               colorNode ._color = array .map (v => v / 0xff);
+               break;
+            case 5123: // Uint16Array
+               colorNode ._color = array .map (v => v / 0xffff);
+               break;
+            case 5125: // Uint32Array
+               colorNode ._color = array .map (v => v / 0xffffffff);
+               break;
+            case 5126: // Float32Array
+               colorNode ._color = array;
+               break;
+         }
 
          colorNode .setup ();
 
