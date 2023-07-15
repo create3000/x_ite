@@ -325,7 +325,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
       }
 
       const
-         size               = this .even (Math .ceil (Math .sqrt (length * 2)) || 1),
+         size               = even (Math .ceil (Math .sqrt (length * 2)) || 1),
          displacementsArray = new Float32Array (size * size * 8);
 
       for (let i = 0; i < length; ++ i)
@@ -378,7 +378,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
       }
 
       const
-         size                     = this .even (Math .ceil (Math .sqrt (length * 2)) || 1),
+         size                     = even (Math .ceil (Math .sqrt (length * 2)) || 1),
          displacementWeightsArray = this .displacementWeightsArray;
 
       for (let i = 0; i < length; ++ i)
@@ -400,10 +400,6 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
       gl .texSubImage2D (gl .TEXTURE_2D, 0, 0, size / 2, size, size / 2, gl .RGBA, gl .FLOAT, displacementWeightsArray)
 
       this .change .enable ();
-   },
-   even (value)
-   {
-      return value + value % 2;
    },
    set_skinCoord__ ()
    {
@@ -587,6 +583,11 @@ class Lock
 
       return locked;
    }
+}
+
+function even (value)
+{
+   return value + value % 2;
 }
 
 export default HAnimHumanoid;
