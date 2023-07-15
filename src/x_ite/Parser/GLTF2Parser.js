@@ -209,7 +209,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       this .scenesArray     (glTF .scenes, glTF .scene);
       this .animationsArray (glTF .animations);
 
-      //this .optimizeSceneGraph (this .getExecutionContext () .getRootNodes ());
+      this .optimizeSceneGraph (this .getExecutionContext () .getRootNodes ());
 
       return this .getScene ();
    },
@@ -1373,9 +1373,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       if (!(nodes instanceof Array))
          return;
 
-      this .nodes = nodes
-         .map ((node, index) => this .nodeObject (node, index))
-         .filter (node => node);
+      this .nodes = nodes .map ((node, index) => this .nodeObject (node, index));
 
       // Get children.
 
@@ -1393,9 +1391,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          return;
 
       const
-         skeleton      = this .nodes [skin .skeleton],
-         transformNode = skeleton .transformNode,
-         humanoidNode  = skin .humanoidNode;
+         skeleton     = this .nodes [skin .skeleton],
+         humanoidNode = skin .humanoidNode;
 
       skeleton .humanoidNode = humanoidNode;
       skeleton .node         = humanoidNode;
@@ -1473,14 +1470,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       this .nodeExtensions (node .extensions, transformNode);
 
-      // if (transformNode .getTypeName () === "Transform")
-      // {
-      //    if (!transformNode ._children .length)
-      //    {
-      //       node .transformNode = null;
-      //       return node;
-      //    }
-      // }
+      // Skin
 
       if (skin)
       {
@@ -1530,7 +1520,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    nodeObject (node, index)
    {
       if (!(node instanceof Object))
-         return;
+         return { };
 
       if (node .transformNode)
          return node;
@@ -1555,12 +1545,10 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          if (!skin .humanoidNode)
             skin .humanoidNode = scene .createNode ("HAnimHumanoid", false);
 
-         const humanoidNode = skin .humanoidNode;
-
-         node .humanoidNode = humanoidNode;
+         node .humanoidNode =skin .humanoidNode;
       }
 
-      node .node = node .humanoidNode || node .transformNode;
+      node .node = node .humanoidNode ?? node .transformNode;
 
       return node;
    },
