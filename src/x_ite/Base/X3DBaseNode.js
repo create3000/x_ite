@@ -165,16 +165,16 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
 
       return copy;
    },
-   replaceWith (replacement, cache = false)
-   {
-      cache = cache && SFNodeCache .get (this);
+   // replaceWith (replacement, cache = false)
+   // {
+   //    cache = cache && SFNodeCache .get (this);
 
-      for (const parent of new Set (this .getParents ()))
-      {
-         if (parent instanceof Fields .SFNode && parent !== cache)
-            parent .setValue (replacement)
-      }
-   },
+   //    for (const parent of new Set (this .getParents ()))
+   //    {
+   //       if (parent instanceof Fields .SFNode && parent !== cache)
+   //          parent .setValue (replacement)
+   //    }
+   // },
    setup ()
    {
       Object .freeze (this [_type]);
