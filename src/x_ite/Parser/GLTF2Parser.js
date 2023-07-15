@@ -1041,20 +1041,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       if (mesh .shapeNodes)
          return mesh .shapeNodes;
 
-      if (skin instanceof Object && !skin .setup)
-      {
-         const scene = this .getScene ();
-
-         skin .setup                 = true;
-         skin .textureCoordinateNode = scene .createNode ("TextureCoordinate", false);
-         skin .normalNode            = scene .createNode ("Normal",            false);
-         skin .coordinateNode        = scene .createNode ("Coordinate",        false);
-
-         skin .textureCoordinateNode .setup ();
-         skin .normalNode            .setup ();
-         skin .coordinateNode        .setup ();
-      }
-
       const shapeNodes = this .primitivesArray (mesh .primitives, skin);
 
       // Name Shape nodes.
@@ -1569,14 +1555,21 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       if (!(skin instanceof Object))
          return;
 
-      skin .joints = this .jointsArray (skin .joints);
+      const scene = this .getScene ();
 
-      if (skin .skeleton === undefined)
-         skin .skeleton = this .skeleton (skin .joints);
+      skin .joints              = this .jointsArray (skin .joints);
+      skin .skeleton            = skin .skeleton ?? this .skeleton (skin .joints);
+      skin .inverseBindMatrices = this .inverseBindMatricesAccessors (this .accessors [skin .inverseBindMatrices]);
 
       this .skeletons .add (skin .skeleton);
 
-      skin .inverseBindMatrices = this .inverseBindMatricesAccessors (this .accessors [skin .inverseBindMatrices]);
+      skin .textureCoordinateNode = scene .createNode ("TextureCoordinate", false);
+      skin .normalNode            = scene .createNode ("Normal",            false);
+      skin .coordinateNode        = scene .createNode ("Coordinate",        false);
+
+      skin .textureCoordinateNode .setup ();
+      skin .normalNode            .setup ();
+      skin .coordinateNode        .setup ();
    },
    jointsArray: function (joints)
    {
