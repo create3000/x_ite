@@ -82,6 +82,7 @@ function HAnimHumanoid (executionContext)
    this .displacementWeights  = [ ];
    this .skinCoordNode        = null;
    this .change               = new Lock ();
+   this .skinning             = Function .prototype;
 }
 
 Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .prototype),
@@ -152,12 +153,9 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
          gl      = browser .getContext ();
 
       if (gl .getVersion () === 1)
-      {
-         this .skinning = Function .prototype;
          return;
-      }
 
-      // Skinning
+      // Prepare skinNode.
 
       this .skinNode .traverse = function (humanoidNode, type, renderObject)
       {
