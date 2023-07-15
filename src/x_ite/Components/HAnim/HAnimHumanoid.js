@@ -306,7 +306,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
                displacements_ = displacerNode ._displacements;
 
             for (const [i, index] of displacerNode ._coordIndex .entries ())
-               displacements [index] .push (j, ... displacements_ [i], weight);
+               displacements [index] ?.push (j, ... displacements_ [i], weight);
          }
       }
 
