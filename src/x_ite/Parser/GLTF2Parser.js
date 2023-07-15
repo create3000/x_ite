@@ -1045,8 +1045,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       {
          const scene = this .getScene ();
 
-         skin .setup = true;
-
+         skin .setup                 = true;
          skin .textureCoordinateNode = scene .createNode ("TextureCoordinate", false);
          skin .normalNode            = scene .createNode ("Normal",            false);
          skin .coordinateNode        = scene .createNode ("Coordinate",        false);
@@ -1550,10 +1549,10 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       if (!(children instanceof Array))
          return [ ];
 
-      return children
+      return [... new Set (children
          .filter (index => !this .skeletons .has (index))
          .map (index => this .nodeObject (this .nodes [index], index))
-         .filter (node => node);
+         .filter (node => node))];
    },
    skinsArray (skins)
    {
