@@ -325,7 +325,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
       }
 
       const
-         size               = Math .ceil (Math .sqrt (length * 2)) || 1,
+         size               = this .even (Math .ceil (Math .sqrt (length * 2)) || 1),
          displacementsArray = new Float32Array (size * size * 8);
 
       for (let i = 0; i < length; ++ i)
@@ -337,7 +337,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
          displacementsArray .set (d, i * 8);
       }
 
-      this .displacementsArray = displacementsArray;
+      this .displacementWeightsArray = new Float32Array (size * size * 4);
 
       // Upload texture.
 
@@ -378,9 +378,8 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
       }
 
       const
-         size               = Math .ceil (Math .sqrt (length * 2)) || 1,
-         offset             = size * size * 4 / 2,
-         displacementsArray = this .displacementsArray;
+         size                     = this .even (Math .ceil (Math .sqrt (length * 2)) || 1),
+         displacementWeightsArray = this .displacementWeightsArray;
 
       for (let i = 0; i < length; ++ i)
       {
@@ -388,7 +387,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
 
          d .length = Math .min (d .length, 8);
 
-         displacementsArray .set (d, offset + i * 8);
+         displacementWeightsArray .set (d, i * 8);
       }
 
       // Upload texture.
@@ -398,9 +397,13 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
          gl      = browser .getContext ();
 
       gl .bindTexture (gl .TEXTURE_2D, this .displacementsTexture);
-      gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, size, size, 0, gl .RGBA, gl .FLOAT, displacementsArray);
+      gl .texSubImage2D (gl .TEXTURE_2D, 0, 0, size / 2, size, size / 2, gl .RGBA, gl .FLOAT, displacementWeightsArray)
 
       this .change .enable ();
+   },
+   even (value)
+   {
+      return value + value % 2;
    },
    set_skinCoord__ ()
    {
