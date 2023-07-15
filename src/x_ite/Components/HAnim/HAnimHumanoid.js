@@ -337,8 +337,6 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
          displacementsArray .set (d, i * 8);
       }
 
-      this .displacementWeightsArray = new Float32Array (size * size * 4);
-
       // Upload texture.
 
       const
@@ -347,6 +345,19 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
 
       gl .bindTexture (gl .TEXTURE_2D, this .displacementsTexture);
       gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, size, size, 0, gl .RGBA, gl .FLOAT, displacementsArray);
+
+      // Weights
+
+      const displacementWeights = this .displacementWeights;
+
+      for (let i = displacementWeights .length; i < length; ++ i)
+         displacementWeights [i] = [ ];
+
+      displacementWeights .length = length;
+
+      this .displacementWeightsArray = new Float32Array (size * size * 4);
+
+      // Trigger update.
 
       this .change .enable ();
    },
@@ -360,11 +371,6 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
 
       for (const d of displacementWeights)
          d .length = 0;
-
-      for (let i = displacementWeights .length; i < length; ++ i)
-         displacementWeights [i] = [ ];
-
-      displacementWeights .length = length;
 
       for (const jointNode of this .jointNodes)
       {
