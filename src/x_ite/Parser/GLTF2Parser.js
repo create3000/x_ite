@@ -1566,20 +1566,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       humanoidNode ._skin .push (transformNode);
    },
-   nodeBBox (node)
-   {
-      const humanoidNode = node .humanoidNode;
-
-      if (!humanoidNode)
-         return;
-
-      const bbox = new Box3 ();
-
-      for (const skeleton of humanoidNode ._skeleton)
-         bbox .add (skeleton .getValue () .getBBox (new Box3 ()));
-
-      this .shapeBBox (humanoidNode ._skin, bbox);
-   },
    nodeExtensions (extensions, transformNode)
    {
       if (!(extensions instanceof Object))
