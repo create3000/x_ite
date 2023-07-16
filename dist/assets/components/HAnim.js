@@ -798,6 +798,8 @@ Namespace_default().set ("x_ite/Components/HAnim/HAnimHumanoid", HAnimHumanoid_d
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Grouping/X3DTransformNode\")"
 const X3DTransformNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.6")] .require ("x_ite/Components/Grouping/X3DTransformNode");
 var X3DTransformNode_default = /*#__PURE__*/__webpack_require__.n(X3DTransformNode_namespaceObject);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Vector3\")"
+const Vector3_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.9.6")] .require ("standard/Math/Numbers/Vector3");
 ;// CONCATENATED MODULE: ./src/x_ite/Components/HAnim/HAnimJoint.js
 /*******************************************************************************
  *
@@ -845,6 +847,7 @@ var X3DTransformNode_default = /*#__PURE__*/__webpack_require__.n(X3DTransformNo
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
