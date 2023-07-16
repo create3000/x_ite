@@ -99,17 +99,18 @@ out vec3 vertex;
 // Main
 
 #pragma X3D include "Utils.glsl"
-#pragma X3D include "Skinning.glsl"
+#pragma X3D include "Skin.glsl"
 #pragma X3D include "Particle.glsl"
 #pragma X3D include "PointSize.glsl"
 
 void
 vertex_main ()
 {
-   vec4 x3d_TransformedVertex = getParticleVertex (getSkinningVertex (x3d_Vertex));
-
    #if defined (X3D_NORMALS)
-      vec3 x3d_TransformedNormal = getSkinningNormal (x3d_Normal);
+      vec4 x3d_TransformedVertex = getParticleVertex (getSkinVertex (x3d_Vertex, x3d_Normal));
+      vec3 x3d_TransformedNormal = getSkinNormal (x3d_Normal);
+   #else
+      vec4 x3d_TransformedVertex = getParticleVertex (getSkinVertex (x3d_Vertex, vec3 (0.0)));
    #endif
 
    vec4 position = x3d_ModelViewMatrix * x3d_TransformedVertex;

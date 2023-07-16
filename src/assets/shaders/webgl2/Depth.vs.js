@@ -12,14 +12,14 @@ in vec4 x3d_Vertex;
 out vec3 vertex;
 
 #pragma X3D include "include/Utils.glsl"
-#pragma X3D include "include/Skinning.glsl"
+#pragma X3D include "include/Skin.glsl"
 #pragma X3D include "include/Particle.glsl"
 #pragma X3D include "include/PointSize.glsl"
 
 void
 main ()
 {
-   vec4 x3d_TransformedVertex = getParticleVertex (getSkinningVertex (x3d_Vertex));
+   vec4 x3d_TransformedVertex = getParticleVertex (getSkinVertex (x3d_Vertex, vec3 (0.0)));
    vec4 position              = x3d_ModelViewMatrix * x3d_TransformedVertex;
 
    vertex = position .xyz;

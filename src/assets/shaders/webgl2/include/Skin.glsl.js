@@ -26,8 +26,22 @@ getDisplacementJointMatrix (const in int joint)
    return mat3 (m [0] .xyz, m [1] .xyz, m [2] .xyz);
 }
 
+#if defined (X3D_NORMALS)
+vec3 skinNormal = vec3 (0.0);
+
+mat3
+getJointNormalMatrix (const in int joint)
+{
+   vec4 a = texelFetch (x3d_JointMatricesTexture, joint * 8 + 4, 0);
+   vec4 b = texelFetch (x3d_JointMatricesTexture, joint * 8 + 5, 0);
+   vec4 c = texelFetch (x3d_JointMatricesTexture, joint * 8 + 6, 0);
+
+   return mat3 (a .xyz, vec3 (a .w, b .xy), vec3 (b .zw, c .x));
+}
+#endif
+
 vec4
-getSkinningVertex (const in vec4 vertex)
+getSkinVertex (const in vec4 vertex, const in vec3 normal)
 {
    int   coordIndex2 = int (x3d_CoordIndex) * 2;
    ivec4 joints      = ivec4 (texelFetch (x3d_JointsTexture, coordIndex2, 0));
@@ -47,37 +61,30 @@ getSkinningVertex (const in vec4 vertex)
    for (int i = 0; i < 4; ++ i)
       skin += (getJointMatrix (joints [i]) * vertex - vertex) * weights [i];
 
+   #if defined (X3D_NORMALS)
+   {
+      vec3 skin = normal;
+
+      for (int i = 0; i < 4; ++ i)
+         skin += (getJointNormalMatrix (joints [i]) * normal - normal) * weights [i];
+
+      skinNormal = skin;
+   }
+   #endif
+
    return skin;
 }
 
 #if defined (X3D_NORMALS)
-mat3
-getJointNormalMatrix (const in int joint)
-{
-   vec4 a = texelFetch (x3d_JointMatricesTexture, joint * 8 + 4, 0);
-   vec4 b = texelFetch (x3d_JointMatricesTexture, joint * 8 + 5, 0);
-   vec4 c = texelFetch (x3d_JointMatricesTexture, joint * 8 + 6, 0);
-
-   return mat3 (a .xyz, vec3 (a .w, b .xy), vec3 (b .zw, c .x));
-}
-
 vec3
-getSkinningNormal (const in vec3 normal)
+getSkinNormal (const in vec3)
 {
-   int   coordIndex2 = int (x3d_CoordIndex) * 2;
-   ivec4 joints      = ivec4 (texelFetch (x3d_JointsTexture, coordIndex2, 0));
-   vec4  weights     = texelFetch (x3d_JointsTexture, coordIndex2 + 1, 0);
-   vec3  skin        = normal;
-
-   for (int i = 0; i < 4; ++ i)
-      skin += (getJointNormalMatrix (joints [i]) * normal - normal) * weights [i];
-
-   return skin;
+   return skinNormal;
 }
 #endif
 
 #else
-   #define getSkinningVertex(vertex) (vertex)
-   #define getSkinningNormal(normal) (normal)
+   #define getSkinVertex(vertex,normal) (vertex)
+   #define getSkinNormal(normal) (normal)
 #endif
 `;
