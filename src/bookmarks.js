@@ -54,11 +54,13 @@ const Bookmarks = (() =>
    {
       this .browser = browser;
       this .element = element;
+
+      browser .addBrowserCallback (Symbol (), (event) => this .browserEvent (event));
    }
 
    Object .assign (Bookmarks .prototype,
    {
-      setup: function (array)
+      setup (array)
       {
          for (const bookmarks of array)
          {
@@ -120,7 +122,7 @@ const Bookmarks = (() =>
             this .browser .getLocalStorage () ["Bookmarks.scrollLeft"] = this .element .scrollLeft ();
          });
       },
-      loadURL: async function (url)
+      async loadURL (url)
       {
          const
             base  = url .replace (/(?:\.O)?\.[^\.]+$/, ""),
@@ -152,6 +154,59 @@ const Bookmarks = (() =>
 
          console .log (`Scene loaded in ${loadTime .toPrecision (3)}s.`)
       },
+      browserEvent (event)
+      {
+         try
+         {
+            if (event !== X3D .X3DConstants .INITIALIZED_EVENT)
+               return;
+
+            $("#animations") .empty ();
+
+            $("<span></span>")
+               .text ("▣")
+               .attr ("title", "View All")
+               .on ("click", () => this .browser .viewAll (0))
+               .appendTo ($("#animations"));
+
+            $("<span></span>") .addClass ("separator") .appendTo ($("#animations"));
+
+            const animations = this .browser .currentScene .getExportedNode ("Animations");
+
+            const stop = function ()
+            {
+               for (const animation of animations .children)
+                  animation .children [0] .stopTime = Date .now () / 1000;
+            };
+
+            for (const animation of animations .children)
+            {
+               const timeSensor = animation .children [0];
+
+               $("<span></span>")
+                  .text ("▶")
+                  .attr ("title", timeSensor .description)
+                  .on ("click", () =>
+                  {
+                     stop ();
+
+                     timeSensor .loop      = true;
+                     timeSensor .startTime = Date .now () / 1000;
+                  })
+                  .appendTo ($("#animations"));
+            }
+
+            $("<span></span>")
+               .text ("◼")
+               .attr ("title", "Stop")
+               .on ("click", stop)
+               .appendTo ($("#animations"));
+         }
+         catch (error)
+         {
+            console .log (error)
+         }
+      }
    });
 
    return Bookmarks;
