@@ -63,12 +63,10 @@ getSkinVertex (const in vec4 vertex, const in vec3 normal)
 
    #if defined (X3D_NORMALS)
    {
-      vec3 skin = normal;
+      skinNormal = normal;
 
       for (int i = 0; i < 4; ++ i)
-         skin += (getJointNormalMatrix (joints [i]) * normal - normal) * weights [i];
-
-      skinNormal = skin;
+         skinNormal += (getJointNormalMatrix (joints [i]) * normal - normal) * weights [i];
    }
    #endif
 
