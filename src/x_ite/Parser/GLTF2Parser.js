@@ -1375,10 +1375,12 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       this .nodes = nodes .map ((node, index) => this .nodeObject (node, index));
 
-      // Get children.
+      // Replace skeleton nodes with humanoid.
 
       for (const node of this .nodes)
          this .nodeSkeleton (node);
+
+      // Add children.
 
       for (const node of this .nodes)
          this .nodeChildren (node);
