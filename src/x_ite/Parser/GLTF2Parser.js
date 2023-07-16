@@ -1499,7 +1499,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          {
             const
                jointNode         = this .nodes [joint] ?.transformNode,
-               inverseBindMatrix = skin .inverseBindMatrices [i] ?? Numbers_Matrix4 .Identity;
+               inverseBindMatrix = skin .inverseBindMatrices [i] ?? Matrix4 .Identity;
 
             if (!jointNode)
                continue;
