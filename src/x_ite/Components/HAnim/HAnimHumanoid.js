@@ -198,7 +198,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
    },
    getBBox (bbox, shadows)
    {
-      return this .skeletonNode .getBBox (bbox, shadows);
+      return this .transformNode .getBBox (bbox, shadows);
    },
    set_joints__ ()
    {

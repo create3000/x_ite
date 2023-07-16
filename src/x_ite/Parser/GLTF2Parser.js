@@ -48,6 +48,7 @@
 import X3DParser    from "./X3DParser.js";
 import X3DOptimizer from "./X3DOptimizer.js";
 import URLs         from "../Browser/Networking/URLs.js";
+import Algorithm    from "../../standard/Math/Algorithm.js";
 import Vector2      from "../../standard/Math/Numbers/Vector2.js";
 import Vector3      from "../../standard/Math/Numbers/Vector3.js";
 import Quaternion   from "../../standard/Math/Numbers/Quaternion.js";
@@ -55,7 +56,7 @@ import Rotation4    from "../../standard/Math/Numbers/Rotation4.js";
 import Matrix4      from "../../standard/Math/Numbers/Matrix4.js";
 import Color3       from "../../standard/Math/Numbers/Color3.js";
 import Color4       from "../../standard/Math/Numbers/Color4.js";
-import Algorithm    from "../../standard/Math/Algorithm.js";
+import Box3         from "../../standard/Math/Geometry/Box3.js";
 
 // https://registry.khronos.org/glTF/specs/2.0/glTF-2.0.html
 // https://github.com/KhronosGroup/glTF-Sample-Models
@@ -1382,15 +1383,11 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       this .nodes = nodes .map ((node, index) => this .nodeObject (node, index));
 
-      // Replace skeleton nodes with humanoid.
+      // 1. Replace skeleton nodes with humanoid.
+      // 2. Add children.
 
-      for (const node of this .nodes)
-         this .nodeSkeleton (node);
-
-      // Add children.
-
-      for (const node of this .nodes)
-         this .nodeChildren (node);
+      this .nodes .forEach (node => this .nodeSkeleton (node));
+      this .nodes .forEach (node => this .nodeChildren (node));
    },
    nodeObject (node, index)
    {
@@ -1406,8 +1403,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          scene         = this .getExecutionContext (),
          typeName      = this .joints .has (index) ? "HAnimJoint" : "Transform",
          transformNode = scene .createNode (typeName, false);
-
-      transformNode .setup ();
 
       node .transformNode = transformNode;
 
@@ -1518,6 +1513,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       if (shapeNodes)
          transformNode ._children .push (... shapeNodes);
 
+      transformNode .setup ();
+
       // Skin
 
       if (!skin)
@@ -1568,6 +1565,20 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       }
 
       humanoidNode ._skin .push (transformNode);
+   },
+   nodeBBox (node)
+   {
+      const humanoidNode = node .humanoidNode;
+
+      if (!humanoidNode)
+         return;
+
+      const bbox = new Box3 ();
+
+      for (const skeleton of humanoidNode ._skeleton)
+         bbox .add (skeleton .getValue () .getBBox (new Box3 ()));
+
+      this .shapeBBox (humanoidNode ._skin, bbox);
    },
    nodeExtensions (extensions, transformNode)
    {
