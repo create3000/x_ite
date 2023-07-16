@@ -82,12 +82,6 @@ Object .assign (Object .setPrototypeOf (HAnimJoint .prototype, X3DTransformNode 
 
       this .set_displacers__ ();
    },
-   getBBox (bbox, shadows)
-   {
-      X3DTransformNode .prototype .getBBox .call (this, bbox, shadows);
-
-      return bbox .isEmpty () ? bbox .set (Vector3 .Zero, Vector3 .Zero) : bbox;
-   },
    getModelViewMatrix ()
    {
       return this .modelViewMatrix;
