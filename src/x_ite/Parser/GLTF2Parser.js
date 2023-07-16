@@ -609,19 +609,19 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
                // minFilter
 
-               const minificationFilter = MinificationFilters .get (sampler .minFilter) || ["AVG_PIXEL", false];
+               const minificationFilter = MinificationFilters .get (sampler .minFilter) ?? ["AVG_PIXEL", false];
 
                texturePropertiesNode ._minificationFilter = minificationFilter [0];
                texturePropertiesNode ._generateMipMaps    = minificationFilter [1];
 
                // magFilter
 
-               texturePropertiesNode ._magnificationFilter = MagnificationFilters .get (sampler .magFilter) || "AVG_PIXEL";
+               texturePropertiesNode ._magnificationFilter = MagnificationFilters .get (sampler .magFilter) ?? "AVG_PIXEL";
 
                // boundaryMode
 
-               texturePropertiesNode ._boundaryModeS = BoundaryModes .get (sampler .wrapS) || "REPEAT";
-               texturePropertiesNode ._boundaryModeT = BoundaryModes .get (sampler .wrapT) || "REPEAT";
+               texturePropertiesNode ._boundaryModeS = BoundaryModes .get (sampler .wrapS) ?? "REPEAT";
+               texturePropertiesNode ._boundaryModeT = BoundaryModes .get (sampler .wrapT) ?? "REPEAT";
 
                // setup
 
@@ -1383,6 +1383,43 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       for (const node of this .nodes)
          this .nodeChildren (node);
    },
+   nodeObject (node, index)
+   {
+      if (!(node instanceof Object))
+         return { };
+
+      if (node .transformNode)
+         return node;
+
+      // Create Transform or HAnimJoint.
+
+      const
+         scene         = this .getExecutionContext (),
+         typeName      = this .joints .has (index) ? "HAnimJoint" : "Transform",
+         transformNode = scene .createNode (typeName, false);
+
+      transformNode .setup ();
+
+      node .transformNode = transformNode;
+
+      // Create humanoid.
+
+      const skin = this .skins [node .skin];
+
+      if (skin)
+      {
+         // Skins can be cloned.
+
+         if (!skin .humanoidNode)
+            skin .humanoidNode = scene .createNode ("HAnimHumanoid", false);
+
+         node .humanoidNode = skin .humanoidNode;
+      }
+
+      node .childNode = node .humanoidNode ?? node .transformNode;
+
+      return node;
+   },
    nodeSkeleton (node)
    {
       const skin = this .skins [node .skin]
@@ -1522,41 +1559,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       }
 
       humanoidNode ._skin .push (transformNode);
-   },
-   nodeObject (node, index)
-   {
-      if (!(node instanceof Object))
-         return { };
-
-      if (node .transformNode)
-         return node;
-
-      // Create Transform or HAnimJoint.
-
-      const
-         scene         = this .getExecutionContext (),
-         typeName      = this .joints .has (index) ? "HAnimJoint" : "Transform",
-         transformNode = scene .createNode (typeName, false);
-
-      transformNode .setup ();
-
-      node .transformNode = transformNode;
-
-      // Create humanoid.
-
-      const skin = this .skins [node .skin];
-
-      if (skin)
-      {
-         if (!skin .humanoidNode)
-            skin .humanoidNode = scene .createNode ("HAnimHumanoid", false);
-
-         node .humanoidNode =skin .humanoidNode;
-      }
-
-      node .childNode = node .humanoidNode ?? node .transformNode;
-
-      return node;
    },
    nodeExtensions (extensions, transformNode)
    {
