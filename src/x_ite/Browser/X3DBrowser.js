@@ -99,8 +99,11 @@ function X3DBrowser (element)
    this [_console]             = document .getElementsByClassName ("x_ite-console");
 
    this [_browserCallbacks] = new Map ([
+      [X3DConstants .CONNECTION_ERROR,  new Map ()],
+      [X3DConstants .BROWSER_EVENT,     new Map ()],
       [X3DConstants .INITIALIZED_EVENT, new Map ()],
       [X3DConstants .SHUTDOWN_EVENT,    new Map ()],
+      [X3DConstants .INITIALIZED_ERROR, new Map ()],
    ]);
 
    this .setup ();

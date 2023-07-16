@@ -96,10 +96,24 @@ Object .assign (X3DOptimizer .prototype,
 
             return node;
          }
+         case "Collision":
          case "LOD":
          case "Switch":
          {
             this .optimizeNodes (node .children, false, removedNodes);
+            return node;
+         }
+         case "HAnimJoint":
+         case "HAnimSegment":
+         case "HAnimSite":
+         {
+            node .children = this .optimizeNodes (node .children, true, removedNodes);
+            return node;
+         }
+         case "HAnimHumanoid":
+         {
+            node .skeleton = this .optimizeNodes (node .skeleton, true, removedNodes);
+            node .skin     = this .optimizeNodes (node .skin,     true, removedNodes);
             return node;
          }
          default:
@@ -125,7 +139,7 @@ Object .assign (X3DOptimizer .prototype,
 
       if (node .getNodeTypeName () === "Transform")
       {
-         this .combineSingleChild (node, removedNodes);
+         node = this .combineSingleChild (node, removedNodes);
 
          if (!node .translation .getValue () .equals (Vector3 .Zero))
             return node;
@@ -137,22 +151,27 @@ Object .assign (X3DOptimizer .prototype,
             return node;
       }
 
-      removedNodes .push (node .getValue ());
+      if (node .children)
+      {
+         removedNodes .push (node);
 
-      return [... node .children];
+         return [... node .children];
+      }
+
+      return node;
    },
    combineSingleChild (node, removedNodes)
    {
       if (node .children .length !== 1)
-         return;
+         return node;
 
       const child = node .children [0];
 
-      if (child .getNodeTypeName () !== "Transform")
-         return;
+      if (!child .getNodeTypeName () .match (/^(?:Transform|HAnimHumanoid)$/))
+         return node;
 
       if (child .getValue () .hasRoutes ())
-         return;
+         return node;
 
       // Combine single Transform nodes.
 
@@ -165,26 +184,36 @@ Object .assign (X3DOptimizer .prototype,
          childMatrix      = new Matrix4 ();
 
       nodeMatrix .set (node .translation .getValue (),
-                        node .rotation .getValue (),
-                        node .scale .getValue (),
-                        node .scaleOrientation .getValue ());
+                       node .rotation .getValue (),
+                       node .scale .getValue (),
+                       node .scaleOrientation .getValue (),
+                       node .center .getValue ());
 
       childMatrix .set (child .translation .getValue (),
                         child .rotation .getValue (),
                         child .scale .getValue (),
-                        child .scaleOrientation .getValue ());
+                        child .scaleOrientation .getValue (),
+                        child .center .getValue ());
 
       nodeMatrix .multLeft (childMatrix);
 
-      nodeMatrix .get (translation, rotation, scale, scaleOrientation);
+      nodeMatrix .get (translation, rotation, scale, scaleOrientation, child .center .getValue ());
 
-      node .translation      = translation;
-      node .rotation         = rotation;
-      node .scale            = scale;
-      node .scaleOrientation = scaleOrientation;
-      node .children         = child .children;
+      child .translation      = translation;
+      child .rotation         = rotation;
+      child .scale            = scale;
+      child .scaleOrientation = scaleOrientation;
 
-      removedNodes .push (child .getValue ());
+      if (!child .getNodeTypeName () && node .getNodeTypeName ())
+      {
+         const executionContext = child .getExecutionContext ();
+
+         executionContext .addNamedNode (executionContext .getUniqueName (node .getNodeTypeName ()), child);
+      }
+
+      removedNodes .push (node);
+
+      return child;
    },
 });
 
