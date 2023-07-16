@@ -90,7 +90,7 @@ Object .assign (X3DTexturingContext .prototype,
 
       const maxCombinedTextureUnits = gl .getParameter (gl .MAX_COMBINED_TEXTURE_IMAGE_UNITS);
 
-      this [_combinedTextureUnits] = [...Array (maxCombinedTextureUnits) .keys ()];
+      this [_combinedTextureUnits] = [...Array (maxCombinedTextureUnits) .keys ()] .reverse ();
       this [_texture2DUnits]       = [this [_combinedTextureUnits] .pop ()];
       this [_texture3DUnits]       = [this [_combinedTextureUnits] .pop ()];
       this [_textureCubeUnits]     = [this [_combinedTextureUnits] .pop ()];

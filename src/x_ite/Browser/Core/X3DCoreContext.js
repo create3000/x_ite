@@ -122,14 +122,13 @@ function X3DCoreContext (element)
    $("<div></div>") .addClass ("x_ite-private-spinner-text") .appendTo (progress);
 
    this [_instanceId]   = ++ instanceId;
+   this [_localStorage] = new DataStorage (localStorage, "X_ITE.X3DBrowser(" + this [_instanceId] + ").");
+   this [_mobile]       = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i .test (navigator .userAgent);
    this [_element]      = element;
    this [_surface]      = surface;
    this [_canvas]       = $("<canvas></canvas>") .addClass ("x_ite-private-canvas") .prependTo (surface);
-   this [_context]      = Context .create (this [_canvas] [0], WEBGL_LATEST_VERSION, element .attr ("preserveDrawingBuffer") === "true");
+   this [_context]      = Context .create (this [_canvas] [0], WEBGL_LATEST_VERSION, element .attr ("preserveDrawingBuffer") === "true", this [_mobile]);
    this [_splashScreen] = splashScreen;
-
-   this [_localStorage] = new DataStorage (localStorage, "X_ITE.X3DBrowser(" + this [_instanceId] + ").");
-   this [_mobile]       = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i .test (navigator .userAgent);
 
    this [_renderingProperties] = new RenderingProperties (this .getPrivateScene ());
    this [_browserOptions]      = new BrowserOptions      (this .getPrivateScene ());

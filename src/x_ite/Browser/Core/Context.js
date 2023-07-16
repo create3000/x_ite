@@ -106,7 +106,7 @@ const extensions = [
 
 const Context =
 {
-   create (canvas, version, preserveDrawingBuffer)
+   create (canvas, version, preserveDrawingBuffer, mobile)
    {
       const options = { preserveDrawingBuffer: preserveDrawingBuffer };
 
@@ -142,6 +142,11 @@ const Context =
 
       if (!gl)
          throw new Error ("Couldn't create WebGL context.");
+
+      // Load extensions.
+
+      for (const extension of extensions)
+         gl .getExtension (extension);
 
       // Feature detection:
 
@@ -185,10 +190,15 @@ const Context =
          }
       }
 
-      // Load extensions.
+      if (mobile)
+      {
+         const color_buffer_half_float = gl .getExtension ("EXT_color_buffer_half_float");
 
-      for (const extension of extensions)
-         gl .getExtension (extension);
+         Object .defineProperty (gl, "RGBA32F",
+         {
+            value: gl .getVersion () === 1 ? color_buffer_half_float .RGBA16F_EXT : gl .RGBA16F,
+         });
+      }
 
       // Async functions
 
