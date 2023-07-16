@@ -96,8 +96,12 @@ function X3DBrowser (element)
    this [_supportedComponents] = SupportedComponents .copy ();
    this [_concreteNodes]       = ConcreteNodes .copy ();
    this [_abstractNodes]       = AbstractNodes .copy ();
-   this [_browserCallbacks]    = new Map ();
    this [_console]             = document .getElementsByClassName ("x_ite-console");
+
+   this [_browserCallbacks] = new Map ([
+      [X3DConstants .INITIALIZED_EVENT, new Map ()],
+      [X3DConstants .SHUTDOWN_EVENT,    new Map ()],
+   ]);
 
    this .setup ();
 };
@@ -666,30 +670,52 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    {
       // The string describes the name of the callback function to be called within the current ECMAScript context.
    },
-   addBrowserCallback (key, object)
+   addBrowserCallback (... args)
    {
-      this [_browserCallbacks] .set (key, object);
+      switch (args .length)
+      {
+         case 2:
+         {
+            const [key, object] = args;
+
+            this [_browserCallbacks] .forEach (map => map .set (key, object));
+            break;
+         }
+         case 3:
+         {
+            const [key, event, object] = args;
+
+            this [_browserCallbacks] .get (event) .set (key, object);
+            break;
+         }
+      }
    },
-   removeBrowserCallback (key)
+   removeBrowserCallback (key, event)
    {
-      this [_browserCallbacks] .delete (key);
+      if (arguments .length === 2)
+         this [_browserCallbacks] .get (event) .delete (key);
+      else
+         this [_browserCallbacks] .forEach (map => map .delete (key));
    },
-   getBrowserCallbacks ()
+   getBrowserCallbacks (event)
    {
-      return this [_browserCallbacks];
+      if (arguments .length === 1)
+         return this [_browserCallbacks] .get (event);
+      else
+         return new Map ([... this [_browserCallbacks]] .flatMap (([event, map]) => [... map]));
    },
    callBrowserCallbacks: (() =>
    {
-      const browserCallbacks = [ ];
+      const values = [ ];
 
-      return function (browserEvent)
+      return function (event)
       {
-         if (this [_browserCallbacks] .size)
+         const browserCallbacks = this [_browserCallbacks] .get (event);
+
+         if (browserCallbacks .size)
          {
-            for (const browserCallback of MapUtilities .values (browserCallbacks, this [_browserCallbacks]))
-            {
-               browserCallback (browserEvent);
-            }
+            for (const callback of MapUtilities .values (values, browserCallbacks))
+               callback (event);
          }
       };
    })(),

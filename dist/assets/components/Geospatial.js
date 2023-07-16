@@ -1735,8 +1735,8 @@ Object .assign (Object .setPrototypeOf (GeoElevationGrid .prototype, (X3DGeometr
          normals .push (normal);
       }
 
-      // if (!this ._normalPerVertex .getValue ())
-      //    return normals;
+      if (!this ._normalPerVertex .getValue ())
+         return normals;
 
       return this .refineNormals (normalIndex, normals, this ._creaseAngle .getValue ());
    },

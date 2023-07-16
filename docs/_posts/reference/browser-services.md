@@ -361,9 +361,9 @@ Returns a rendering property with the corresponding *name*.
    </tbody>
 </table>
 
-#### void **addBrowserCallback** (*Any key, Function callback*)
+#### void **addBrowserCallback** (*Any key [, event], Function callback*)
 
-Adds a browser *callback* function associated with *key,* where *key* can be of any type. The callback function is called when a browser event has been occurred. The signature of the callback function is `function (browserEvent)`, where browserEvent can be any value listed below:
+Adds a browser *callback* function associated with *key,* where *key* can be of any type. The callback function is called when a browser event has been occurred. If *event* is omitted, the callback function is added to all events. The signature of the callback function is `function (event)`, where event can be any value listed below:
 
 - X3DConstants .CONNECTION_ERROR
 - X3DConstants .BROWSER_EVENT
@@ -371,9 +371,9 @@ Adds a browser *callback* function associated with *key,* where *key* can be of 
 - X3DConstants .SHUTDOWN_EVENT
 - X3DConstants .INITIALIZED_ERROR
 
-#### void **removeBrowserCallback** (*Any key*)
+#### void **removeBrowserCallback** (*Any key [, event]*)
 
-Removes a browser callback function associated with *key*.
+Removes a browser callback function associated with *key* and *event*. If *event* is omitted, all callback associated whit key are removed.
 
 #### void **viewAll** (*[SFNode layerNode], [Number transitionTime = 1]*) <small><span class="yellow">non standard</span></small>
 

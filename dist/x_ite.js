@@ -11,11 +11,11 @@
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 890:
+/***/ 917:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* provided dependency */ var jQuery = __webpack_require__(538);
+/* provided dependency */ var jQuery = __webpack_require__(357);
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;
 
 /**
@@ -387,10 +387,10 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;
 
 /***/ }),
 
-/***/ 50:
+/***/ 605:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var jQuery = __webpack_require__(538);
+/* provided dependency */ var jQuery = __webpack_require__(357);
 /**
  * @preserve jquery.fullscreen 1.1.5
  * https://github.com/code-lts/jquery-fullscreen-plugin
@@ -586,7 +586,7 @@ installFullScreenHandlers();
 
 /***/ }),
 
-/***/ 289:
+/***/ 227:
 /***/ ((module, exports, __webpack_require__) => {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -600,7 +600,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 (function (factory) {
     if ( true ) {
         // AMD. Register as an anonymous module.
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(538)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(357)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 		(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -811,7 +811,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 538:
+/***/ 357:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -11523,7 +11523,7 @@ return jQuery;
 
 /***/ }),
 
-/***/ 617:
+/***/ 338:
 /***/ ((module) => {
 
 /**
@@ -16302,7 +16302,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 257:
+/***/ 486:
 /***/ (function(__unused_webpack_module, exports) {
 
 
@@ -19547,7 +19547,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 451:
+/***/ 366:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -33729,6 +33729,64 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, Base_X3DChildObj
    {
       return this [_type];
    },
+   create (executionContext = this [_executionContext])
+   {
+      return new (this .constructor) (executionContext);
+   },
+   copy (executionContext)
+   {
+      const copy = this .create (executionContext);
+
+      for (const field of this [_predefinedFields])
+         copy .getPredefinedFields () .get (field .getName ()) .assign (field);
+
+      if (this .canUserDefinedFields ())
+      {
+         for (const field of this [_userDefinedFields])
+            copy .addUserDefinedField (field .getAccessType (), field .getName (), field .copy ());
+      }
+
+      copy .setup ();
+
+      return copy;
+   },
+   // replaceWith (replacement, cache = false)
+   // {
+   //    cache = cache && SFNodeCache .get (this);
+
+   //    for (const parent of new Set (this .getParents ()))
+   //    {
+   //       if (parent instanceof Fields .SFNode && parent !== cache)
+   //          parent .setValue (replacement)
+   //    }
+   // },
+   setup ()
+   {
+      Object .freeze (this [_type]);
+
+      this [_fieldDefinitions]  .addParent (this);
+      this [_predefinedFields]  .addParent (this);
+      this [_userDefinedFields] .addParent (this);
+
+      for (const field of this [_childObjects])
+         field .setTainted (false);
+
+      for (const field of this [_predefinedFields])
+         field .setTainted (false);
+
+      for (const field of this [_userDefinedFields])
+         field .setTainted (false);
+
+      this .initialize ();
+
+      this [_initialized] = true;
+   },
+   initialize ()
+   { },
+   isInitialized ()
+   {
+      return this [_initialized];
+   },
    getInnerNode ()
    {
       return this;
@@ -33818,54 +33876,6 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, Base_X3DChildObj
             live .processEvent ();
          }
       }
-   },
-   create (executionContext = this [_executionContext])
-   {
-      return new (this .constructor) (executionContext);
-   },
-   setup ()
-   {
-      Object .freeze (this [_type]);
-
-      this [_fieldDefinitions]  .addParent (this);
-      this [_predefinedFields]  .addParent (this);
-      this [_userDefinedFields] .addParent (this);
-
-      for (const field of this [_childObjects])
-         field .setTainted (false);
-
-      for (const field of this [_predefinedFields])
-         field .setTainted (false);
-
-      for (const field of this [_userDefinedFields])
-         field .setTainted (false);
-
-      this .initialize ();
-
-      this [_initialized] = true;
-   },
-   initialize ()
-   { },
-   isInitialized ()
-   {
-      return this [_initialized];
-   },
-   copy (executionContext)
-   {
-      const copy = this .create (executionContext);
-
-      for (const field of this [_predefinedFields])
-         copy .getPredefinedFields () .get (field .getName ()) .assign (field);
-
-      if (this .canUserDefinedFields ())
-      {
-         for (const field of this [_userDefinedFields])
-            copy .addUserDefinedField (field .getAccessType (), field .getName (), field .copy ());
-      }
-
-      copy .setup ();
-
-      return copy;
    },
    addChildObjects (/* accessType, name, field, ... */)
    {
@@ -37976,7 +37986,7 @@ const X3DProtoDeclarationNode_default_ = X3DProtoDeclarationNode;
 x_ite_Namespace .set ("x_ite/Prototype/X3DProtoDeclarationNode", X3DProtoDeclarationNode_default_);
 /* harmony default export */ const Prototype_X3DProtoDeclarationNode = (X3DProtoDeclarationNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/X3DParser.js
-/* provided dependency */ var $ = __webpack_require__(538);
+/* provided dependency */ var $ = __webpack_require__(357);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -38800,7 +38810,7 @@ const X3DProtoDeclaration_default_ = X3DProtoDeclaration;
 x_ite_Namespace .set ("x_ite/Prototype/X3DProtoDeclaration", X3DProtoDeclaration_default_);
 /* harmony default export */ const Prototype_X3DProtoDeclaration = (X3DProtoDeclaration_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/VRMLParser.js
-/* provided dependency */ var VRMLParser_$ = __webpack_require__(538);
+/* provided dependency */ var VRMLParser_$ = __webpack_require__(357);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -41352,7 +41362,7 @@ const VRMLParser_default_ = VRMLParser;
 x_ite_Namespace .set ("x_ite/Parser/VRMLParser", VRMLParser_default_);
 /* harmony default export */ const Parser_VRMLParser = (VRMLParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/XMLParser.js
-/* provided dependency */ var XMLParser_$ = __webpack_require__(538);
+/* provided dependency */ var XMLParser_$ = __webpack_require__(357);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -43324,7 +43334,7 @@ const URLs_default_ = URLs;
 x_ite_Namespace .set ("x_ite/Browser/Networking/URLs", URLs_default_);
 /* harmony default export */ const Networking_URLs = (URLs_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GLTF2Parser.js
-/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(538);
+/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(357);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -43417,7 +43427,6 @@ function GLTF2Parser (scene)
    this .nodes                 = [ ];
    this .skins                 = [ ];
    this .joints                = new Set ();
-   this .skeletons             = new Set ();
    this .animations            = 0;
 }
 
@@ -43459,8 +43468,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
          "materials",
          "meshes",
          "cameras",
-         "nodes",
          "skins",
+         "nodes",
          "scenes",
          "scene",
          "animations",
@@ -43532,12 +43541,12 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
       this .materialsArray  (glTF .materials);
       this .meshesArray     (glTF .meshes);
       this .camerasArray    (glTF .cameras);
-      this .nodesArray      (glTF .nodes);
       this .skinsArray      (glTF .skins);
+      this .nodesArray      (glTF .nodes);
       this .scenesArray     (glTF .scenes, glTF .scene);
       this .animationsArray (glTF .animations);
 
-      //this .optimizeSceneGraph (this .getExecutionContext () .getRootNodes ());
+      this .optimizeSceneGraph (this .getExecutionContext () .getRootNodes ());
 
       return this .getScene ();
    },
@@ -43937,19 +43946,19 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
 
                // minFilter
 
-               const minificationFilter = MinificationFilters .get (sampler .minFilter) || ["AVG_PIXEL", false];
+               const minificationFilter = MinificationFilters .get (sampler .minFilter) ?? ["AVG_PIXEL", false];
 
                texturePropertiesNode ._minificationFilter = minificationFilter [0];
                texturePropertiesNode ._generateMipMaps    = minificationFilter [1];
 
                // magFilter
 
-               texturePropertiesNode ._magnificationFilter = MagnificationFilters .get (sampler .magFilter) || "AVG_PIXEL";
+               texturePropertiesNode ._magnificationFilter = MagnificationFilters .get (sampler .magFilter) ?? "AVG_PIXEL";
 
                // boundaryMode
 
-               texturePropertiesNode ._boundaryModeS = BoundaryModes .get (sampler .wrapS) || "REPEAT";
-               texturePropertiesNode ._boundaryModeT = BoundaryModes .get (sampler .wrapT) || "REPEAT";
+               texturePropertiesNode ._boundaryModeS = BoundaryModes .get (sampler .wrapS) ?? "REPEAT";
+               texturePropertiesNode ._boundaryModeT = BoundaryModes .get (sampler .wrapT) ?? "REPEAT";
 
                // setup
 
@@ -44366,20 +44375,16 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
          return;
 
       if (mesh .shapeNodes)
-         return mesh .shapeNodes;
-
-      if (skin instanceof Object && !skin .setup)
       {
-         const scene = this .getScene ();
+         const primitives = mesh .primitives;
 
-         skin .setup                 = true;
-         skin .textureCoordinateNode = scene .createNode ("TextureCoordinate", false);
-         skin .normalNode            = scene .createNode ("Normal",            false);
-         skin .coordinateNode        = scene .createNode ("Coordinate",        false);
+         if (!(primitives instanceof Array))
+            return mesh .shapeNodes;
 
-         skin .textureCoordinateNode .setup ();
-         skin .normalNode            .setup ();
-         skin .coordinateNode        .setup ();
+         for (const primitive of primitives)
+            this .attributesJointsArray (skin, primitive .attributes ?.JOINTS, primitive .attributes ?.WEIGHTS);
+
+         return mesh .shapeNodes;
       }
 
       const shapeNodes = this .primitivesArray (mesh .primitives, skin);
@@ -44705,22 +44710,74 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
       if (!(nodes instanceof Array))
          return;
 
-      this .nodes = nodes;
+      this .nodes = nodes .map ((node, index) => this .nodeObject (node, index));
+
+      // Replace skeleton nodes with humanoid.
+
+      for (const node of this .nodes)
+         this .nodeSkeleton (node);
+
+      // Add children.
+
+      for (const node of this .nodes)
+         this .nodeChildren (node);
    },
    nodeObject (node, index)
    {
       if (!(node instanceof Object))
-         return;
+         return { };
 
-      if (node .childNode !== undefined)
-         return node .childNode;
+      if (node .transformNode)
+         return node;
 
       // Create Transform or HAnimJoint.
 
       const
          scene         = this .getExecutionContext (),
          typeName      = this .joints .has (index) ? "HAnimJoint" : "Transform",
-         transformNode = scene .createNode (typeName, false),
+         transformNode = scene .createNode (typeName, false);
+
+      transformNode .setup ();
+
+      node .transformNode = transformNode;
+
+      // Create humanoid.
+
+      const skin = this .skins [node .skin];
+
+      if (skin)
+      {
+         // Skins can be cloned.
+
+         if (!skin .humanoidNode)
+            skin .humanoidNode = scene .createNode ("HAnimHumanoid", false);
+
+         node .humanoidNode = skin .humanoidNode;
+      }
+
+      node .childNode = node .humanoidNode ?? node .transformNode;
+
+      return node;
+   },
+   nodeSkeleton (node)
+   {
+      const skin = this .skins [node .skin]
+
+      if (!skin)
+         return;
+
+      const
+         skeleton     = this .nodes [skin .skeleton],
+         humanoidNode = skin .humanoidNode;
+
+      skeleton .humanoidNode = humanoidNode;
+      skeleton .childNode    = humanoidNode;
+   },
+   nodeChildren (node)
+   {
+      const
+         scene         = this .getExecutionContext (),
+         transformNode = node .transformNode,
          name          = this .sanitizeName (node .name);
 
       // Name
@@ -44730,7 +44787,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
          scene .addNamedNode (scene .getUniqueName (name), transformNode);
          scene .addExportedNode (scene .getUniqueExportName (name), transformNode);
 
-         if (typeName === "HAnimJoint")
+         if (transformNode .getTypeName () === "HAnimJoint")
             transformNode ._name = node .name;
       }
 
@@ -44738,10 +44795,10 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
 
       const
          translation      = new Numbers_Vector3 (0, 0, 0),
-         quaternion       = new Numbers_Quaternion (0, 0, 0, 1),
          rotation         = new Numbers_Rotation4 (),
          scale            = new Numbers_Vector3 (1, 1, 1),
          scaleOrientation = new Numbers_Rotation4 (),
+         quaternion       = new Numbers_Quaternion (0, 0, 0, 1),
          matrix           = new Numbers_Matrix4 ();
 
       if (this .vectorValue (node .matrix, matrix))
@@ -44765,6 +44822,12 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
             transformNode ._scale = scale;
       }
 
+      // Add mesh.
+
+      const
+         skin       = this .skins [node .skin],
+         shapeNodes = this .meshObject (this .meshes [node .mesh], skin);
+
       // Add camera.
 
       const viewpointNode = this .cameraObject (this .cameras [node .camera]);
@@ -44776,79 +44839,65 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
 
       this .nodeExtensions (node .extensions, transformNode);
 
-      // Add mesh.
-
-      const mesh = this .meshes [node .mesh];
-
-      if (mesh)
-      {
-         const
-            skin       = this .skins [node .skin],
-            shapeNodes = this .meshObject (mesh, skin);
-
-         transformNode ._children .push (... shapeNodes);
-
-         if (skin && shapeNodes .length)
-         {
-            var humanoidNode = skin .humanoidNode
-
-            if (!humanoidNode)
-            {
-               var humanoidNode = scene .createNode ("HAnimHumanoid", false);
-
-               const name = this .sanitizeName (skin .name);
-
-               if (name)
-                  scene .addNamedNode (scene .getUniqueName (name), humanoidNode);
-
-               humanoidNode ._name                  = skin .name;
-               humanoidNode ._version               = "2.0";
-               humanoidNode ._skeletalConfiguration = "GLTF";
-
-               const skeletonNode = this .nodeObject (this .nodes [skin .skeleton], skin .skeleton);
-
-               if (skeletonNode)
-                  humanoidNode ._skeleton .push (skeletonNode);
-
-               for (const [i, joint] of skin .joints .entries ())
-               {
-                  const inverseBindMatrix = skin .inverseBindMatrices [i] ?? Numbers_Matrix4 .Identity;
-
-                  inverseBindMatrix .get (translation, rotation, scale);
-
-                  humanoidNode ._joints .push (this .nodeObject (this .nodes [joint], joint));
-                  humanoidNode ._jointBindingPositions .push (translation);
-                  humanoidNode ._jointBindingRotations .push (rotation);
-                  humanoidNode ._jointBindingScales .push (scale);
-               }
-
-               humanoidNode .setup ();
-
-               skin .humanoidNode = humanoidNode;
-            }
-
-            humanoidNode ._skinNormal = shapeNodes [0] ._geometry .normal;
-            humanoidNode ._skinCoord  = shapeNodes [0] ._geometry .coord;
-
-            humanoidNode ._skin .push (transformNode);
-         }
-      }
-
-      // Get children.
+      // Add children.
 
       transformNode ._children .push (... this .nodeChildrenArray (node .children));
 
-      // Finish.
+      // Add Shape nodes.
 
-      transformNode .setup ();
+      if (shapeNodes)
+         transformNode ._children .push (... shapeNodes);
 
-      if (typeName === "Transform")
+      // Skin
+
+      if (!skin)
+         return;
+
+      const humanoidNode = skin .humanoidNode;
+
+      if (!humanoidNode .isInitialized ())
       {
-         if (!transformNode ._children .length)
-            return node .childNode = null;
+         const name = this .sanitizeName (skin .name);
+
+         if (name)
+            scene .addNamedNode (scene .getUniqueName (name), humanoidNode);
+
+         humanoidNode ._name                  = skin .name ?? "";
+         humanoidNode ._version               = "2.0";
+         humanoidNode ._skeletalConfiguration = "GLTF";
+
+         const skeletonNode = this .nodes [skin .skeleton] ?.transformNode;
+
+         if (skeletonNode)
+            humanoidNode ._skeleton .push (skeletonNode);
+
+         for (const [i, joint] of skin .joints .entries ())
+         {
+            const
+               jointNode         = this .nodes [joint] ?.transformNode,
+               inverseBindMatrix = skin .inverseBindMatrices [i] ?? Numbers_Matrix4 .Identity;
+
+            if (!jointNode)
+               continue;
+
+            inverseBindMatrix .get (translation, rotation, scale);
+
+            humanoidNode ._joints                .push (jointNode);
+            humanoidNode ._jointBindingPositions .push (translation);
+            humanoidNode ._jointBindingRotations .push (rotation);
+            humanoidNode ._jointBindingScales    .push (scale);
+         }
+
+         humanoidNode .setup ();
       }
 
-      return node .childNode = humanoidNode ?? transformNode;
+      if (shapeNodes ?.length)
+      {
+         humanoidNode ._skinNormal = shapeNodes [0] ._geometry .normal;
+         humanoidNode ._skinCoord  = shapeNodes [0] ._geometry .coord;
+      }
+
+      humanoidNode ._skin .push (transformNode);
    },
    nodeExtensions (extensions, transformNode)
    {
@@ -44876,10 +44925,13 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
       if (!(children instanceof Array))
          return [ ];
 
-      return [... new Set (children
-         .filter (index => !this .skeletons .has (index))
-         .map (index => this .nodeObject (this .nodes [index], index))
-         .filter (node => node))];
+      const nodes = [... new Set (children
+         .map (index => this .nodes [index] ?.childNode)
+         .filter (node => node)
+         .filter (node => node .getTypeName () !== "HAnimHumanoid" || !node .getCloneCount ())
+      )];
+
+      return nodes;
    },
    skinsArray (skins)
    {
@@ -44896,14 +44948,19 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
       if (!(skin instanceof Object))
          return;
 
-      skin .joints = this .jointsArray (skin .joints);
+      const scene = this .getScene ();
 
-      if (skin .skeleton === undefined)
-         skin .skeleton = this .skeleton (skin .joints);
-
-      this .skeletons .add (skin .skeleton);
-
+      skin .joints              = this .jointsArray (skin .joints);
+      skin .skeleton            = skin .skeleton ?? this .skeleton (skin .joints);
       skin .inverseBindMatrices = this .inverseBindMatricesAccessors (this .accessors [skin .inverseBindMatrices]);
+
+      skin .textureCoordinateNode = scene .createNode ("TextureCoordinate", false);
+      skin .normalNode            = scene .createNode ("Normal",            false);
+      skin .coordinateNode        = scene .createNode ("Coordinate",        false);
+
+      skin .textureCoordinateNode .setup ();
+      skin .normalNode            .setup ();
+      skin .coordinateNode        .setup ();
    },
    jointsArray: function (joints)
    {
@@ -44939,7 +44996,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
 
       return matrices;
    },
-   scenesArray (scenes, sceneNumber)
+   scenesArray (scenes, sceneNumber = 0)
    {
       if (!(scenes instanceof Array))
          return;
@@ -45119,7 +45176,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
       if (!(target instanceof Object))
          return null;
 
-      const node = this .nodeObject (this .nodes [target .node], target .node);
+      const node = this .nodes [target .node] ?.transformNode;
 
       if (!node)
          return null;
@@ -45426,7 +45483,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
       geometryNode ._normal          = this .createNormal (attributes .NORMAL);
       geometryNode ._coord           = this .createCoordinate (attributes .POSITION);
-      geometryNode ._normalPerVertex = !! geometryNode ._normal;
+      geometryNode ._normalPerVertex = !! geometryNode ._normal .getValue ();
 
       this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
       this .skinGeometry (skin, geometryNode);
@@ -45446,7 +45503,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
       geometryNode ._normal          = this .createNormal (attributes .NORMAL);
       geometryNode ._coord           = this .createCoordinate (attributes .POSITION);
-      geometryNode ._normalPerVertex = !! geometryNode ._normal;
+      geometryNode ._normalPerVertex = !! geometryNode ._normal .getValue ();
 
       this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
       this .skinGeometry (skin, geometryNode);
@@ -45467,7 +45524,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
       geometryNode ._normal          = this .createNormal (attributes .NORMAL);
       geometryNode ._coord           = this .createCoordinate (attributes .POSITION);
-      geometryNode ._normalPerVertex = !! geometryNode ._normal;
+      geometryNode ._normalPerVertex = !! geometryNode ._normal .getValue ();
 
       this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
       this .skinGeometry (skin, geometryNode);
@@ -45487,7 +45544,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
       geometryNode ._normal          = this .createNormal (attributes .NORMAL);
       geometryNode ._coord           = this .createCoordinate (attributes .POSITION);
-      geometryNode ._normalPerVertex = !! geometryNode ._normal;
+      geometryNode ._normalPerVertex = !! geometryNode ._normal .getValue ();
 
       const coord = geometryNode ._coord;
 
@@ -45516,7 +45573,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
       geometryNode ._normal          = this .createNormal (attributes .NORMAL);
       geometryNode ._coord           = this .createCoordinate (attributes .POSITION);
-      geometryNode ._normalPerVertex = !! geometryNode ._normal;
+      geometryNode ._normalPerVertex = !! geometryNode ._normal .getValue ();
 
       this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
       this .skinGeometry (skin, geometryNode);
@@ -45536,7 +45593,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
       geometryNode ._normal          = this .createNormal (attributes .NORMAL);
       geometryNode ._coord           = this .createCoordinate (attributes .POSITION);
-      geometryNode ._normalPerVertex = !! geometryNode ._normal;
+      geometryNode ._normalPerVertex = !! geometryNode ._normal .getValue ();
 
       const coord = geometryNode ._coord;
 
@@ -45579,9 +45636,29 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
             opaque         = appearanceNode ._alphaMode .getValue () === "OPAQUE",
             colorNode      = scene .createNode (opaque ? "Color" : typeName, false);
 
-         colorNode ._color = opaque && typeName !== "Color"
+         const array = opaque && typeName !== "Color"
             ? color .array .filter ((_, i) => (i + 1) % 4)
             : color .array;
+
+         switch (color .componentType)
+         {
+            case 5120: // Int8Array
+            case 5122: // Int16Array
+            case 5124: // Int32Array
+               break;
+            case 5121: // Uint8Array
+               colorNode ._color = array .map (v => v / 0xff);
+               break;
+            case 5123: // Uint16Array
+               colorNode ._color = array .map (v => v / 0xffff);
+               break;
+            case 5125: // Uint32Array
+               colorNode ._color = array .map (v => v / 0xffffffff);
+               break;
+            case 5126: // Float32Array
+               colorNode ._color = array;
+               break;
+         }
 
          colorNode .setup ();
 
@@ -45740,7 +45817,10 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
 
             const
                index     = skin .joints [jointsArray [v * 4 + i]],
-               jointNode = this .nodeObject (this .nodes [index], index);
+               jointNode = this .nodes [index] ?.transformNode;
+
+            if (!jointNode)
+               continue;
 
             jointNode ._skinCoordIndex  .push (v + start);
             jointNode ._skinCoordWeight .push (w);
@@ -46050,7 +46130,7 @@ const GLTF2Parser_default_ = GLTF2Parser;
 x_ite_Namespace .set ("x_ite/Parser/GLTF2Parser", GLTF2Parser_default_);
 /* harmony default export */ const Parser_GLTF2Parser = (GLTF2Parser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GLB2Parser.js
-/* provided dependency */ var GLB2Parser_$ = __webpack_require__(538);
+/* provided dependency */ var GLB2Parser_$ = __webpack_require__(357);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -46202,7 +46282,7 @@ const GLB2Parser_default_ = GLB2Parser;
 x_ite_Namespace .set ("x_ite/Parser/GLB2Parser", GLB2Parser_default_);
 /* harmony default export */ const Parser_GLB2Parser = (GLB2Parser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/OBJParser.js
-/* provided dependency */ var OBJParser_$ = __webpack_require__(538);
+/* provided dependency */ var OBJParser_$ = __webpack_require__(357);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -49557,8 +49637,8 @@ const MatrixStack_default_ = MatrixStack;
 x_ite_Namespace .set ("standard/Math/Utility/MatrixStack", MatrixStack_default_);
 /* harmony default export */ const Utility_MatrixStack = (MatrixStack_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_$ = __webpack_require__(538);
-/* provided dependency */ var libtess = __webpack_require__(617);
+/* provided dependency */ var SVGParser_$ = __webpack_require__(357);
+/* provided dependency */ var libtess = __webpack_require__(338);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -52326,7 +52406,7 @@ const SVGParser_default_ = SVGParser;
 x_ite_Namespace .set ("x_ite/Parser/SVGParser", SVGParser_default_);
 /* harmony default export */ const Parser_SVGParser = (SVGParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GoldenGate.js
-/* provided dependency */ var GoldenGate_$ = __webpack_require__(538);
+/* provided dependency */ var GoldenGate_$ = __webpack_require__(357);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -52663,7 +52743,7 @@ const Plane3_default_ = Plane3;
 x_ite_Namespace .set ("standard/Math/Geometry/Plane3", Plane3_default_);
 /* harmony default export */ const Geometry_Plane3 = (Plane3_default_);
 ;// CONCATENATED MODULE: ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var Triangle3_libtess = __webpack_require__(617);
+/* provided dependency */ var Triangle3_libtess = __webpack_require__(338);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -60043,7 +60123,7 @@ const X3DTexture2DNode_default_ = X3DTexture2DNode;
 x_ite_Namespace .set ("x_ite/Components/Texturing/X3DTexture2DNode", X3DTexture2DNode_default_);
 /* harmony default export */ const Texturing_X3DTexture2DNode = (X3DTexture2DNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/ImageTexture.js
-/* provided dependency */ var ImageTexture_$ = __webpack_require__(538);
+/* provided dependency */ var ImageTexture_$ = __webpack_require__(357);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -64582,7 +64662,7 @@ const X3DWorld_default_ = X3DWorld;
 x_ite_Namespace .set ("x_ite/Execution/X3DWorld", X3DWorld_default_);
 /* harmony default export */ const Execution_X3DWorld = (X3DWorld_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/InputOutput/FileLoader.js
-/* provided dependency */ var FileLoader_$ = __webpack_require__(538);
+/* provided dependency */ var FileLoader_$ = __webpack_require__(357);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -73312,8 +73392,8 @@ Object .assign (Object .setPrototypeOf (ElevationGrid .prototype, Rendering_X3DG
          normals .push (normal);
       }
 
-      // if (!this ._normalPerVertex .getValue ())
-      //    return normals;
+      if (!this ._normalPerVertex .getValue ())
+         return normals;
 
       return this .refineNormals (normalIndex, normals, this ._creaseAngle .getValue ());
    },
@@ -75016,8 +75096,8 @@ Object .assign (Object .setPrototypeOf (IndexedFaceSet .prototype, Rendering_X3D
             normal .negate ();
       }
 
-      // if (!this ._normalPerVertex .getValue ())
-      //    return normals;
+      if (!this ._normalPerVertex .getValue ())
+         return normals;
 
       return this .refineNormals (normalIndex, normals, this ._creaseAngle .getValue ());
    },
@@ -88233,7 +88313,7 @@ const X3DShaderNode_default_ = X3DShaderNode;
 x_ite_Namespace .set ("x_ite/Components/Shaders/X3DShaderNode", X3DShaderNode_default_);
 /* harmony default export */ const Shaders_X3DShaderNode = (X3DShaderNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js
-/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(538);
+/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(357);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -93866,8 +93946,8 @@ getShadowIntensity (const in int index, const in x3d_LightSourceParameters light
 
 x_ite_Namespace .set ("assets/shaders/webgl2/include/Shadow.glsl", include_Shadow_glsl_default_);
 /* harmony default export */ const include_Shadow_glsl = (include_Shadow_glsl_default_);
-;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/include/Skinning.glsl.js
-const Skinning_glsl_default_ = /* glsl */ `
+;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/include/Skin.glsl.js
+const Skin_glsl_default_ = /* glsl */ `
 #if defined (X3D_SKINNING)
 
 in float x3d_CoordIndex;
@@ -93879,7 +93959,7 @@ uniform sampler2D x3d_JointMatricesTexture;
 mat4
 getJointMatrix (const in int joint)
 {
-   vec4 a = texelFetch (x3d_JointMatricesTexture, joint * 8 + 0, 0);
+   vec4 a = texelFetch (x3d_JointMatricesTexture, joint * 8,     0);
    vec4 b = texelFetch (x3d_JointMatricesTexture, joint * 8 + 1, 0);
    vec4 c = texelFetch (x3d_JointMatricesTexture, joint * 8 + 2, 0);
    vec4 d = texelFetch (x3d_JointMatricesTexture, joint * 8 + 3, 0);
@@ -93895,27 +93975,9 @@ getDisplacementJointMatrix (const in int joint)
    return mat3 (m [0] .xyz, m [1] .xyz, m [2] .xyz);
 }
 
-vec4
-getSkinningVertex (const in vec4 vertex)
-{
-   int   coordIndex = int (x3d_CoordIndex);
-   ivec4 joints     = ivec4 (texelFetch (x3d_JointsTexture, coordIndex * 2 + 0, 0));
-   vec4  weights    = texelFetch (x3d_JointsTexture, coordIndex * 2 + 1, 0);
-   vec4  d0         = texelFetch (x3d_DisplacementsTexture, coordIndex * 3 + 0, 0);
-   vec4  d1         = texelFetch (x3d_DisplacementsTexture, coordIndex * 3 + 1, 0);
-   vec4  d2         = texelFetch (x3d_DisplacementsTexture, coordIndex * 3 + 2, 0);
-   vec4  skin       = vertex;
-
-   skin .xyz += (getDisplacementJointMatrix (int (d0 .x)) * d0 .yzw)              * d1 .x;
-   skin .xyz += (getDisplacementJointMatrix (int (d1 .y)) * vec3 (d1 .zw, d2 .x)) * d2 .y;
-
-   for (int i = 0; i < 4; ++ i)
-      skin += (getJointMatrix (joints [i]) * vertex - vertex) * weights [i];
-
-   return skin;
-}
-
 #if defined (X3D_NORMALS)
+vec3 skinNormal = vec3 (0.0);
+
 mat3
 getJointNormalMatrix (const in int joint)
 {
@@ -93925,31 +93987,58 @@ getJointNormalMatrix (const in int joint)
 
    return mat3 (a .xyz, vec3 (a .w, b .xy), vec3 (b .zw, c .x));
 }
+#endif
 
-vec3
-getSkinningNormal (const in vec3 normal)
+vec4
+getSkinVertex (const in vec4 vertex, const in vec3 normal)
 {
-   int   coordIndex = int (x3d_CoordIndex);
-   ivec4 joints     = ivec4 (texelFetch (x3d_JointsTexture, coordIndex * 2 + 0, 0));
-   vec4  weights    = texelFetch (x3d_JointsTexture, coordIndex * 2 + 1, 0);
-   vec3  skin       = normal;
+   int   coordIndex2 = int (x3d_CoordIndex) * 2;
+   ivec4 joints      = ivec4 (texelFetch (x3d_JointsTexture, coordIndex2, 0));
+   vec4  weights     = texelFetch (x3d_JointsTexture, coordIndex2 + 1, 0);
+   int   width       = textureSize (x3d_DisplacementsTexture, 0) .x;
+   int   offset      = (width * width) / 2;
+   vec4  skin        = vertex;
+
+   for (int i = 0; i < 2; ++ i)
+   {
+      vec4  displacement = texelFetch (x3d_DisplacementsTexture, coordIndex2 + i,      0);
+      float weight       = texelFetch (x3d_DisplacementsTexture, coordIndex2 + offset, 0) [i];
+
+      skin .xyz += (getDisplacementJointMatrix (int (displacement .w)) * displacement .xyz) * weight;
+   }
 
    for (int i = 0; i < 4; ++ i)
-      skin += (getJointNormalMatrix (joints [i]) * normal - normal) * weights [i];
+      skin += (getJointMatrix (joints [i]) * vertex - vertex) * weights [i];
+
+   #if defined (X3D_NORMALS)
+   {
+      skinNormal = normal;
+
+      for (int i = 0; i < 4; ++ i)
+         skinNormal += (getJointNormalMatrix (joints [i]) * normal - normal) * weights [i];
+   }
+   #endif
 
    return skin;
+}
+
+#if defined (X3D_NORMALS)
+vec3
+getSkinNormal (const in vec3)
+{
+   return skinNormal;
 }
 #endif
 
 #else
-   #define getSkinningVertex(vertex) (vertex)
-   #define getSkinningNormal(normal) (normal)
+   #define getSkinVertex(vertex,normal) (vertex)
+   #define getSkinNormal(normal) (normal)
 #endif
 `;
 ;
 
-x_ite_Namespace .set ("assets/shaders/webgl2/include/Skinning.glsl", Skinning_glsl_default_);
-/* harmony default export */ const Skinning_glsl = (Skinning_glsl_default_);
+x_ite_Namespace .set ("assets/shaders/webgl2/include/Skin.glsl", Skin_glsl_default_);
+/* harmony default export */ const Skin_glsl = (Skin_glsl_default_);
 ;// CONCATENATED MODULE: ./src/assets/shaders/webgl2/include/Stipple.glsl.js
 const Stipple_glsl_default_ = /* glsl */ `
 #if defined (X3D_GEOMETRY_1D) && defined (X3D_STYLE_PROPERTIES)
@@ -94667,17 +94756,18 @@ out vec3 vertex;
 // Main
 
 #pragma X3D include "Utils.glsl"
-#pragma X3D include "Skinning.glsl"
+#pragma X3D include "Skin.glsl"
 #pragma X3D include "Particle.glsl"
 #pragma X3D include "PointSize.glsl"
 
 void
 vertex_main ()
 {
-   vec4 x3d_TransformedVertex = getParticleVertex (getSkinningVertex (x3d_Vertex));
-
    #if defined (X3D_NORMALS)
-      vec3 x3d_TransformedNormal = getSkinningNormal (x3d_Normal);
+      vec4 x3d_TransformedVertex = getParticleVertex (getSkinVertex (x3d_Vertex, x3d_Normal));
+      vec3 x3d_TransformedNormal = getSkinNormal (x3d_Normal);
+   #else
+      vec4 x3d_TransformedVertex = getParticleVertex (getSkinVertex (x3d_Vertex, vec3 (0.0)));
    #endif
 
    vec4 position = x3d_ModelViewMatrix * x3d_TransformedVertex;
@@ -95741,7 +95831,7 @@ out vec3 normal;
 #endif
 
 #pragma X3D include "include/Utils.glsl"
-#pragma X3D include "include/Skinning.glsl"
+#pragma X3D include "include/Skin.glsl"
 #pragma X3D include "include/Particle.glsl"
 #pragma X3D include "include/PointSize.glsl"
 
@@ -95754,7 +95844,7 @@ main ()
       midPoint    = x3d_LineStipple .xy;
    #endif
 
-   vec4 x3d_TransformedVertex = getParticleVertex (getSkinningVertex (x3d_Vertex));
+   vec4 x3d_TransformedVertex = getParticleVertex (getSkinVertex (x3d_Vertex, vec3 (0.0)));
    vec4 position              = x3d_ModelViewMatrix * x3d_TransformedVertex;
 
    vertex = position .xyz;
@@ -95794,14 +95884,14 @@ in vec4 x3d_Vertex;
 out vec3 vertex;
 
 #pragma X3D include "include/Utils.glsl"
-#pragma X3D include "include/Skinning.glsl"
+#pragma X3D include "include/Skin.glsl"
 #pragma X3D include "include/Particle.glsl"
 #pragma X3D include "include/PointSize.glsl"
 
 void
 main ()
 {
-   vec4 x3d_TransformedVertex = getParticleVertex (getSkinningVertex (x3d_Vertex));
+   vec4 x3d_TransformedVertex = getParticleVertex (getSkinVertex (x3d_Vertex, vec3 (0.0)));
    vec4 position              = x3d_ModelViewMatrix * x3d_TransformedVertex;
 
    vertex = position .xyz;
@@ -96943,7 +97033,7 @@ const Shaders = {
          Point: include_Point_glsl,
          PointSize: include_PointSize_glsl,
          Shadow: include_Shadow_glsl,
-         Skinning: Skinning_glsl,
+         Skin: Skin_glsl,
          Stipple: Stipple_glsl,
          SpotFactor: include_SpotFactor_glsl,
          Texture: include_Texture_glsl,
@@ -97095,7 +97185,7 @@ const ShaderCompiler_default_ = ShaderCompiler;
 x_ite_Namespace .set ("x_ite/Browser/Shaders/ShaderCompiler", ShaderCompiler_default_);
 /* harmony default export */ const Shaders_ShaderCompiler = (ShaderCompiler_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shaders/ShaderPart.js
-/* provided dependency */ var ShaderPart_$ = __webpack_require__(538);
+/* provided dependency */ var ShaderPart_$ = __webpack_require__(357);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -97752,7 +97842,7 @@ const X3DAppearanceNode_default_ = X3DAppearanceNode;
 x_ite_Namespace .set ("x_ite/Components/Shape/X3DAppearanceNode", X3DAppearanceNode_default_);
 /* harmony default export */ const Shape_X3DAppearanceNode = (X3DAppearanceNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shape/Appearance.js
-/* provided dependency */ var Appearance_$ = __webpack_require__(538);
+/* provided dependency */ var Appearance_$ = __webpack_require__(357);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -101445,7 +101535,7 @@ const X3DSoundSourceNode_default_ = X3DSoundSourceNode;
 x_ite_Namespace .set ("x_ite/Components/Sound/X3DSoundSourceNode", X3DSoundSourceNode_default_);
 /* harmony default export */ const Sound_X3DSoundSourceNode = (X3DSoundSourceNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/AudioClip.js
-/* provided dependency */ var AudioClip_$ = __webpack_require__(538);
+/* provided dependency */ var AudioClip_$ = __webpack_require__(357);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -104556,8 +104646,8 @@ const GIFMedia_default_ = GifMedia;
 x_ite_Namespace .set ("x_ite/Browser/Texturing/GIFMedia", GIFMedia_default_);
 /* harmony default export */ const GIFMedia = (GIFMedia_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var MovieTexture_$ = __webpack_require__(538);
-/* provided dependency */ var SuperGif = __webpack_require__(451);
+/* provided dependency */ var MovieTexture_$ = __webpack_require__(357);
+/* provided dependency */ var SuperGif = __webpack_require__(366);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -105722,7 +105812,7 @@ const MultiTextureTransform_default_ = MultiTextureTransform;
 x_ite_Namespace .set ("x_ite/Components/Texturing/MultiTextureTransform", MultiTextureTransform_default_);
 /* harmony default export */ const Texturing_MultiTextureTransform = (MultiTextureTransform_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/PixelTexture.js
-/* provided dependency */ var PixelTexture_$ = __webpack_require__(538);
+/* provided dependency */ var PixelTexture_$ = __webpack_require__(357);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -107903,7 +107993,7 @@ const gettext_default_ = gettext;
 x_ite_Namespace .set ("locale/gettext", gettext_default_);
 /* harmony default export */ const locale_gettext = (gettext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserTimings.js
-/* provided dependency */ var BrowserTimings_$ = __webpack_require__(538);
+/* provided dependency */ var BrowserTimings_$ = __webpack_require__(357);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -108333,7 +108423,7 @@ const TextureQuality_default_ = TextureQuality;
 x_ite_Namespace .set ("x_ite/Browser/Core/TextureQuality", TextureQuality_default_);
 /* harmony default export */ const Core_TextureQuality = (TextureQuality_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserOptions.js
-/* provided dependency */ var BrowserOptions_$ = __webpack_require__(538);
+/* provided dependency */ var BrowserOptions_$ = __webpack_require__(357);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -108914,7 +109004,7 @@ const RenderingProperties_default_ = RenderingProperties;
 x_ite_Namespace .set ("x_ite/Browser/Core/RenderingProperties", RenderingProperties_default_);
 /* harmony default export */ const Core_RenderingProperties = (RenderingProperties_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/Notification.js
-/* provided dependency */ var Notification_$ = __webpack_require__(538);
+/* provided dependency */ var Notification_$ = __webpack_require__(357);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -109037,8 +109127,8 @@ const Notification_default_ = Notification;
 x_ite_Namespace .set ("x_ite/Browser/Core/Notification", Notification_default_);
 /* harmony default export */ const Core_Notification = (Notification_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/ContextMenu.js
-/* provided dependency */ var jquery_fullscreen = __webpack_require__(50);
-/* provided dependency */ var ContextMenu_$ = __webpack_require__(538);
+/* provided dependency */ var jquery_fullscreen = __webpack_require__(605);
+/* provided dependency */ var ContextMenu_$ = __webpack_require__(357);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -111756,7 +111846,7 @@ const DataStorage_default_ = DataStorage;
 x_ite_Namespace .set ("standard/Utility/DataStorage", DataStorage_default_);
 /* harmony default export */ const Utility_DataStorage = (DataStorage_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/X3DCoreContext.js
-/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(538);
+/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(357);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -113784,8 +113874,8 @@ const X3DViewer_default_ = X3DViewer;
 x_ite_Namespace .set ("x_ite/Browser/Navigation/X3DViewer", X3DViewer_default_);
 /* harmony default export */ const Navigation_X3DViewer = (X3DViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/ExamineViewer.js
-/* provided dependency */ var jquery_mousewheel = __webpack_require__(289);
-/* provided dependency */ var ExamineViewer_$ = __webpack_require__(538);
+/* provided dependency */ var jquery_mousewheel = __webpack_require__(227);
+/* provided dependency */ var ExamineViewer_$ = __webpack_require__(357);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -114657,8 +114747,8 @@ const ExamineViewer_default_ = ExamineViewer;
 x_ite_Namespace .set ("x_ite/Browser/Navigation/ExamineViewer", ExamineViewer_default_);
 /* harmony default export */ const Navigation_ExamineViewer = (ExamineViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/X3DFlyViewer.js
-/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(289);
-/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(538);
+/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(227);
+/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(357);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -115628,8 +115718,8 @@ const FlyViewer_default_ = FlyViewer;
 x_ite_Namespace .set ("x_ite/Browser/Navigation/FlyViewer", FlyViewer_default_);
 /* harmony default export */ const Navigation_FlyViewer = (FlyViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/PlaneViewer.js
-/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(289);
-/* provided dependency */ var PlaneViewer_$ = __webpack_require__(538);
+/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(227);
+/* provided dependency */ var PlaneViewer_$ = __webpack_require__(357);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -115960,8 +116050,8 @@ const NoneViewer_default_ = NoneViewer;
 x_ite_Namespace .set ("x_ite/Browser/Navigation/NoneViewer", NoneViewer_default_);
 /* harmony default export */ const Navigation_NoneViewer = (NoneViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/LookAtViewer.js
-/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(289);
-/* provided dependency */ var LookAtViewer_$ = __webpack_require__(538);
+/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(227);
+/* provided dependency */ var LookAtViewer_$ = __webpack_require__(357);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -117100,8 +117190,8 @@ const X3DPickingContext_default_ = X3DPickingContext;
 x_ite_Namespace .set ("x_ite/Browser/Picking/X3DPickingContext", X3DPickingContext_default_);
 /* harmony default export */ const Picking_X3DPickingContext = (X3DPickingContext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/PointingDeviceSensor/PointingDevice.js
-/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(289);
-/* provided dependency */ var PointingDevice_$ = __webpack_require__(538);
+/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(227);
+/* provided dependency */ var PointingDevice_$ = __webpack_require__(357);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -118143,8 +118233,8 @@ const MultiSampleFrameBuffer_default_ = MultiSampleFrameBuffer;
 x_ite_Namespace .set ("x_ite/Rendering/MultiSampleFrameBuffer", MultiSampleFrameBuffer_default_);
 /* harmony default export */ const Rendering_MultiSampleFrameBuffer = (MultiSampleFrameBuffer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Rendering/X3DRenderingContext.js
-/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(538);
-/* provided dependency */ var ResizeSensor = __webpack_require__(890);
+/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(357);
+/* provided dependency */ var ResizeSensor = __webpack_require__(917);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -120372,7 +120462,7 @@ const Components_default_ = Components;
 x_ite_Namespace .set ("x_ite/Components", Components_default_);
 /* harmony default export */ const x_ite_Components = ((/* unused pure expression or super */ null && (Components_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/DOMIntegration.js
-/* provided dependency */ var DOMIntegration_$ = __webpack_require__(538);
+/* provided dependency */ var DOMIntegration_$ = __webpack_require__(357);
 /*******************************************************************************
  * MIT License
  *
@@ -120778,7 +120868,7 @@ const DOMIntegration_default_ = DOMIntegration;
 x_ite_Namespace .set ("x_ite/Browser/DOMIntegration", DOMIntegration_default_);
 /* harmony default export */ const Browser_DOMIntegration = (DOMIntegration_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Legacy.js
-/* provided dependency */ var Legacy_$ = __webpack_require__(538);
+/* provided dependency */ var Legacy_$ = __webpack_require__(357);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -121609,7 +121699,7 @@ const SupportedProfiles_default_ = SupportedProfiles;
 x_ite_Namespace .set ("x_ite/Configuration/SupportedProfiles", SupportedProfiles_default_);
 /* harmony default export */ const Configuration_SupportedProfiles = (SupportedProfiles_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/X3DBrowser.js
-/* provided dependency */ var X3DBrowser_$ = __webpack_require__(538);
+/* provided dependency */ var X3DBrowser_$ = __webpack_require__(357);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -121708,8 +121798,12 @@ function X3DBrowser (element)
    this [_supportedComponents] = Configuration_SupportedComponents .copy ();
    this [_concreteNodes]       = ConcreteNodes .copy ();
    this [_abstractNodes]       = AbstractNodes .copy ();
-   this [_browserCallbacks]    = new Map ();
    this [_console]             = document .getElementsByClassName ("x_ite-console");
+
+   this [_browserCallbacks] = new Map ([
+      [Base_X3DConstants .INITIALIZED_EVENT, new Map ()],
+      [Base_X3DConstants .SHUTDOWN_EVENT,    new Map ()],
+   ]);
 
    this .setup ();
 };
@@ -122278,30 +122372,52 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, Browser_X3DBrowse
    {
       // The string describes the name of the callback function to be called within the current ECMAScript context.
    },
-   addBrowserCallback (key, object)
+   addBrowserCallback (... args)
    {
-      this [_browserCallbacks] .set (key, object);
+      switch (args .length)
+      {
+         case 2:
+         {
+            const [key, object] = args;
+
+            this [_browserCallbacks] .forEach (map => map .set (key, object));
+            break;
+         }
+         case 3:
+         {
+            const [key, event, object] = args;
+
+            this [_browserCallbacks] .get (event) .set (key, object);
+            break;
+         }
+      }
    },
-   removeBrowserCallback (key)
+   removeBrowserCallback (key, event)
    {
-      this [_browserCallbacks] .delete (key);
+      if (arguments .length === 2)
+         this [_browserCallbacks] .get (event) .delete (key);
+      else
+         this [_browserCallbacks] .forEach (map => map .delete (key));
    },
-   getBrowserCallbacks ()
+   getBrowserCallbacks (event)
    {
-      return this [_browserCallbacks];
+      if (arguments .length === 1)
+         return this [_browserCallbacks] .get (event);
+      else
+         return new Map ([... this [_browserCallbacks]] .flatMap (([event, map]) => [... map]));
    },
    callBrowserCallbacks: (() =>
    {
-      const browserCallbacks = [ ];
+      const values = [ ];
 
-      return function (browserEvent)
+      return function (event)
       {
-         if (this [_browserCallbacks] .size)
+         const browserCallbacks = this [_browserCallbacks] .get (event);
+
+         if (browserCallbacks .size)
          {
-            for (const browserCallback of Utility_MapUtilities .values (browserCallbacks, this [_browserCallbacks]))
-            {
-               browserCallback (browserEvent);
-            }
+            for (const callback of Utility_MapUtilities .values (values, browserCallbacks))
+               callback (event);
          }
       };
    })(),
@@ -122736,8 +122852,8 @@ const MicroTime_default_ = undefined;
 x_ite_Namespace .set ("standard/Time/MicroTime", MicroTime_default_);
 /* harmony default export */ const MicroTime = ((/* unused pure expression or super */ null && (MicroTime_default_)));
 ;// CONCATENATED MODULE: ./src/lib/jquery.js
-/* provided dependency */ var jquery_$ = __webpack_require__(538);
-/* provided dependency */ var pako = __webpack_require__(257);
+/* provided dependency */ var jquery_$ = __webpack_require__(357);
+/* provided dependency */ var pako = __webpack_require__(486);
 Object .assign (jquery_$,
 {
    decodeText (input)
@@ -122802,14 +122918,14 @@ const jquery_default_ = jquery_$;
 x_ite_Namespace .set ("lib/jquery", jquery_default_);
 /* harmony default export */ const jquery = ((/* unused pure expression or super */ null && (jquery_default_)));
 ;// CONCATENATED MODULE: ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(617);
+/* provided dependency */ var libtess_libtess = __webpack_require__(338);
 const libtess_default_ = libtess_libtess;
 ;
 
 x_ite_Namespace .set ("lib/libtess", libtess_default_);
 /* harmony default export */ const lib_libtess = ((/* unused pure expression or super */ null && (libtess_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/X3D.js
-/* provided dependency */ var X3D_$ = __webpack_require__(538);
+/* provided dependency */ var X3D_$ = __webpack_require__(357);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -123066,7 +123182,7 @@ const X3D_default_ = X3D;
 x_ite_Namespace .set ("x_ite/X3D", X3D_default_);
 /* harmony default export */ const x_ite_X3D = (X3D_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/X3DCanvasElement.js
-/* provided dependency */ var X3DCanvasElement_$ = __webpack_require__(538);
+/* provided dependency */ var X3DCanvasElement_$ = __webpack_require__(357);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
