@@ -55,7 +55,7 @@ const Bookmarks = (() =>
       this .browser = browser;
       this .element = element;
 
-      browser .addBrowserCallback (Symbol (), (event) => this .browserEvent (event));
+      browser .addBrowserCallback ("bookmarks", X3D .X3DConstants .INITIALIZED_EVENT, event => this .browserEvent (event));
    }
 
    Object .assign (Bookmarks .prototype,
@@ -158,9 +158,6 @@ const Bookmarks = (() =>
       {
          try
          {
-            if (event !== X3D .X3DConstants .INITIALIZED_EVENT)
-               return;
-
             $("#animations") .empty ();
 
             $("<span></span>")
