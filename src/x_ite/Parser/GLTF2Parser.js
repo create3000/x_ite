@@ -1395,7 +1395,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          humanoidNode = skin .humanoidNode;
 
       skeleton .humanoidNode = humanoidNode;
-      skeleton .node         = humanoidNode;
+      skeleton .childNode    = humanoidNode;
    },
    nodeChildren (node)
    {
@@ -1554,7 +1554,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          node .humanoidNode =skin .humanoidNode;
       }
 
-      node .node = node .humanoidNode ?? node .transformNode;
+      node .childNode = node .humanoidNode ?? node .transformNode;
 
       return node;
    },
@@ -1585,7 +1585,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          return [ ];
 
       const nodes = [... new Set (children
-         .map (index => this .nodes [index] ?.node)
+         .map (index => this .nodes [index] ?.childNode)
          .filter (node => node)
          .filter (node => node .getTypeName () !== "HAnimHumanoid" || !node .getCloneCount ())
       )];
