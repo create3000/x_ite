@@ -53,6 +53,7 @@ import TraverseType         from "../../Rendering/TraverseType.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import X3DCast              from "../../Base/X3DCast.js";
 import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
+import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
 
 function HAnimJoint (executionContext)
 {
@@ -80,6 +81,12 @@ Object .assign (Object .setPrototypeOf (HAnimJoint .prototype, X3DTransformNode 
       this ._displacers .addInterest ("set_displacers__", this);
 
       this .set_displacers__ ();
+   },
+   getBBox (bbox, shadows)
+   {
+      X3DTransformNode .prototype .getBBox .call (this, bbox, shadows);
+
+      return bbox .isEmpty () ? bbox .set (Vector3 .Zero, Vector3 .Zero) : bbox;
    },
    getModelViewMatrix ()
    {
