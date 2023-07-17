@@ -123,24 +123,36 @@ system "git", "checkout", "main";
 system "git", "merge", "developement";
 
 # docs
+# docs
 
+docs ($VERSION) unless $ALPHA;
 docs ($VERSION) unless $ALPHA;
 
 # tags
+# tags
 
+commit;
 commit;
 
 publish ("alpha");
 publish ($VERSION) unless $ALPHA;
 publish ("latest") unless $ALPHA;
+publish ("alpha");
+publish ($VERSION) unless $ALPHA;
+publish ("latest") unless $ALPHA;
 
+# code
 # code
 
 update ("alpha");
 update ("latest") unless $ALPHA;
+update ("alpha");
+update ("latest") unless $ALPHA;
 
 upload;
+upload;
 
+# x3d-tidy and Sunrize
 # x3d-tidy and Sunrize
 
 other unless $ALPHA;
