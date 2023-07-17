@@ -108,14 +108,14 @@ sub other {
 if (`git branch --show-current` ne "development\n")
 {
 	say "Wrong branch, must be development, cannot release version!";
-	exit;
+	exit 1;
 }
 
 say "Waiting for confirmation ...";
 
 my $result = system "zenity", "--question", "--text=Do you really want to publish X_ITE X3D v$VERSION now?", "--ok-label=Yes", "--cancel-label=No";
 
-exit unless $result == 0;
+exit 1 unless $result == 0;
 
 say "Publishing X_ITE X3D v$VERSION now.";
 
