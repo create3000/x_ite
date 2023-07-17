@@ -402,7 +402,7 @@ async function loadURL (filename, server, event)
                for (const element of $("#animations"))
                {
                   if (element !== event .target)
-                     $(element) .prop ("checked", false);
+                     element .checked = false;
                }
 
                for (const group of animations .children)
