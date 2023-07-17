@@ -1426,8 +1426,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    },
    nodeSkeleton (node)
    {
-      const
-         skin = this .skins [node .skin]
+      const skin = this .skins [node .skin];
 
       if (!skin)
          return;
