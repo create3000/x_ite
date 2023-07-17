@@ -5,6 +5,29 @@ nav: main
 categories: []
 tags: [New, Releases]
 ---
+## X_ITE v8.10.0 Released
+
+*Leipzig, 17th July 2023:* We right now released a new version.
+
+### New Features
+
+* The component/profile messages in the console from HAnim should be gone now.
+* HAnimHumanoid is now GPU accelerated, try high poly objects.
+* glTF skin object is now completely translated into HAnimHumanoid even with animations.
+
+With the [glTF Sample Viewer](https://create3000.github.io/x_ite/laboratory/gltf-sample-viewer) you can test glTF and HAnimHumanoid if you like. Files of interest are:
+
+#### glTF Random Models
+
+* Animated Bee (lots of joints)
+
+#### glTF Sample Models
+
+* Brain Stem (high poly)
+* Cesium man
+* Fox
+* Recursive Skeletons (stress test)
+
 ## X_ITE v8.7.0 Released
 
 *Leipzig, 14th May 2023:* This release comes with a breaking change: `Browser.createX3DFromString` is now asynchronous and returns now a Promise. This ensures that all components are loaded, and all necessary nodes can be provided.
