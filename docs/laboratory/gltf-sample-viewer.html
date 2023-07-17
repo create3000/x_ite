@@ -401,7 +401,7 @@ async function loadURL (filename, server, event)
             {
                if ($(event .target) .is (":checked"))
                {
-                  $("#animations") .each ((i, element) =>
+                  $("#animations") .children () .each ((i, element) =>
                   {
                      if (element !== event .target)
                         element .checked = false;
