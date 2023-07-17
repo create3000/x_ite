@@ -399,21 +399,21 @@ async function loadURL (filename, server, event)
             .attr ("type", "checkbox")
             .on ("change", event =>
             {
-               for (const element of $("#animations"))
-               {
-                  if (element !== event .target)
-                     element .checked = false;
-               }
-
-               for (const group of animations .children)
-                  group .children [0] .stopTime = Date .now () / 1000;
-
-               timeSensor .loop = true;
-
                if ($(event .target) .is (":checked"))
+               {
+                  for (const element of $("#animations"))
+                  {
+                     if (element !== event .target)
+                        element .checked = false;
+                  }
+
+                  timeSensor .loop      = true;
                   timeSensor .startTime = Date .now () / 1000;
+               }
                else
+               {
                   timeSensor .stopTime = Date .now () / 1000;
+               }
             })
             .appendTo ($("#animations"));
 
