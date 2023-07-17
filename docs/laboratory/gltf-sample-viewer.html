@@ -394,9 +394,6 @@ async function loadURL (filename, server, event)
       {
          const timeSensor = group .children [0];
 
-         timeSensor .stopTime = Date .now () / 1000;
-         timeSensor .loop     = true;
-
          $("<input></input>")
             .attr ("id", "animation" + i)
             .attr ("type", "checkbox")
@@ -407,6 +404,8 @@ async function loadURL (filename, server, event)
 
                for (const group of animations .children)
                   group .children [0] .stopTime = Date .now () / 1000;
+
+               timeSensor .loop = true;
 
                if ($(event .target) .is (":checked"))
                   timeSensor .startTime = Date .now () / 1000;
