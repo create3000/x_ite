@@ -401,11 +401,11 @@ async function loadURL (filename, server, event)
             {
                if ($(event .target) .is (":checked"))
                {
-                  for (const element of $("#animations"))
+                  $("#animations") .each ((i, element) =>
                   {
                      if (element !== event .target)
                         element .checked = false;
-                  }
+                  });
 
                   timeSensor .loop      = true;
                   timeSensor .startTime = Date .now () / 1000;
