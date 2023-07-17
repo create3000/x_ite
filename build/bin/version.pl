@@ -141,4 +141,10 @@ if ($result == 0)
 	# x3d-tidy and Sunrize
 
 	other unless $ALPHA;
+
+	# switch to development branch
+
+	system "git", "checkout", "development";
+	system "git", "merge", "main";
+	system "git", "push", "origin";
 }
