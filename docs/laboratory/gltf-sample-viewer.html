@@ -400,7 +400,10 @@ async function loadURL (filename, server, event)
             .on ("change", event =>
             {
                for (const element of $("#animations"))
-                  $(element) .removeAttr ("checked");
+               {
+                  if (element !== event .target)
+                     $(element) .prop ("checked", false);
+               }
 
                for (const group of animations .children)
                   group .children [0] .stopTime = Date .now () / 1000;
