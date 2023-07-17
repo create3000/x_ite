@@ -7,7 +7,7 @@ use Cwd;
 use List::MoreUtils qw(first_index);
 use HTML::Entities;
 
-
+say "Downloading X3dTooltips.html ..." unless -f "/tmp/tooltips.html";
 system "wget -q --output-document - https://www.web3d.org/x3d/content/X3dTooltips.html > /tmp/tooltips.html"
    unless -f "/tmp/tooltips.html";
 $tooltips = `cat /tmp/tooltips.html`;
