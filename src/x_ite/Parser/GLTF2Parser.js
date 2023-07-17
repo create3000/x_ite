@@ -1524,12 +1524,15 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       if (!humanoidNode .isInitialized ())
       {
-         const name = this .sanitizeName (skin .name);
+         const name = this .sanitizeName (skin .name) || transformNode .getName ();
 
          if (name)
+         {
             scene .addNamedNode (scene .getUniqueName (name), humanoidNode);
+            scene .addExportedNode (scene .getUniqueExportName (name), humanoidNode);
+         }
 
-         humanoidNode ._name                  = skin .name ?? "";
+         humanoidNode ._name                  = skin .name ?? node .name ?? "";
          humanoidNode ._version               = "2.0";
          humanoidNode ._skeletalConfiguration = "GLTF";
 
