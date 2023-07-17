@@ -105,7 +105,7 @@ sub other {
 	system "make", "publish";
 }
 
-if (`git branch --show-current` ne "main\n")
+if (`git branch --show-current` ne "development\n")
 {
 	say "Wrong branch, cannot release version!";
 	exit;
@@ -115,30 +115,38 @@ say "Waiting for confirmation ...";
 
 my $result = system "zenity", "--question", "--text=Do you really want to publish X_ITE X3D v$VERSION now?", "--ok-label=Yes", "--cancel-label=No";
 
-if ($result == 0)
-{
-	say "Publishing X_ITE X3D v$VERSION now.";
+exit 1 unless $result == 0;
 
-	# docs
+say "Publishing X_ITE X3D v$VERSION now.";
 
-	docs ($VERSION) unless $ALPHA;
+# merge development
 
-	# tags
+system "git", "checkout", "main";
+system "git", "merge", "developement";
 
-	commit;
+# docs
 
-	publish ("alpha");
-	publish ($VERSION) unless $ALPHA;
-	publish ("latest") unless $ALPHA;
+docs ($VERSION) unless $ALPHA;
 
-	# code
+# tags
 
-	update ("alpha");
-	update ("latest") unless $ALPHA;
+commit;
 
-	upload;
+publish ("alpha");
+publish ($VERSION) unless $ALPHA;
+publish ("latest") unless $ALPHA;
 
-	# x3d-tidy and Sunrize
+# code
 
-	other unless $ALPHA;
-}
+update ("alpha");
+update ("latest") unless $ALPHA;
+
+upload;
+
+# x3d-tidy and Sunrize
+
+other unless $ALPHA;
+
+system "git", "checkout", "development";
+system "git", "merge", "main";
+system "git", "push", "origin";
