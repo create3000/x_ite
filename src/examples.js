@@ -1,5 +1,6 @@
 const X_ITE_EXAMPLES = [
    { component: "CADGeometry", test: "QuadSet" },
+   { component: "Core", test: "glTF" },
    { component: "Core", test: "OBJ" },
    { component: "Core", test: "STL" },
    { component: "CubeMapTexturing", test: "ComposedCubeMapTexture" },
