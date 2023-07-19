@@ -68,6 +68,13 @@ Object .assign (Object .setPrototypeOf (MetadataSet .prototype, X3DNode .prototy
       X3DNode           .prototype .initialize .call (this);
       X3DMetadataObject .prototype .initialize .call (this);
    },
+   getContainerField (parser = false)
+   {
+      if (parser && this .getExecutionContext () .getSpecificationVersion () <= 3.3)
+         return "metadata";
+
+      return X3DNode .prototype .getContainerField .call (this);
+   },
    dispose ()
    {
       X3DMetadataObject .prototype .dispose .call (this);
@@ -89,7 +96,7 @@ Object .defineProperties (MetadataSet,
    },
    containerField:
    {
-      value: "metadata",
+      value: "value",
       enumerable: true,
    },
    specificationRange:

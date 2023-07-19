@@ -1022,7 +1022,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
 
       try
       {
-         const containerField = xmlElement .getAttribute ("containerField") || node ?.getContainerField ();
+         const containerField = xmlElement .getAttribute ("containerField") || node ?.getContainerField (true);
 
          if (!containerField)
             throw new Error ("Node must have a container field attribute.");
