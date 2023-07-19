@@ -1025,7 +1025,10 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
          const containerField = xmlElement .getAttribute ("containerField") || node ?.getContainerField (true);
 
          if (!containerField)
-            throw new Error ("Node must have a container field attribute.");
+         {
+            console .warn ("Node must have a container field attribute.");
+            return;
+         }
 
          const field = parent .getField (containerField);
 
@@ -1043,6 +1046,13 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
       catch (error)
       {
          // console .error (error);
+
+         if (node ?.getType () .includes (X3DConstants .X3DMetadataObject))
+         {
+            xmlElement .setAttribute ("containerField", "metadata");
+
+            this .addNode (xmlElement, node);
+         }
       }
    },
    // Overloaded by HTMLParser.
