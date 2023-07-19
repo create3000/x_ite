@@ -82,7 +82,7 @@ Object .defineProperties (Contact,
    },
    containerField:
    {
-      value: "children",
+      value: "contacts",
       enumerable: true,
    },
    specificationRange:

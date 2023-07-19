@@ -80,7 +80,7 @@ Object .defineProperties (HAnimMotion,
    },
    containerField:
    {
-      value: "children",
+      value: "motions",
       enumerable: true,
    },
    specificationRange:
