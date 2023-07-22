@@ -107,13 +107,15 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
          }
       }
 
-      // Create joints map.
+      // Create joints index.
 
-      this .jointsIndex .clear ();
+      const jointsIndex = this .jointsIndex;
 
-      jointNodes .forEach (jointNode => this .jointsIndex .set (jointNode ._name .getValue (), jointNode));
+      jointsIndex .clear ();
 
-      this .jointsIndex .delete ("IGNORED");
+      jointNodes .forEach (jointNode => jointsIndex .set (jointNode ._name .getValue () .trim (), jointNode));
+
+      jointsIndex .delete ("IGNORED");
 
       // Connect joints.
 
