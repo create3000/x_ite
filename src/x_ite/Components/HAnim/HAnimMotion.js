@@ -99,7 +99,9 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
 
                const
                   key      = j / (frameCount - 1),
-                  keyValue = new Vector3 (types .get ("Xposition") || types .get ("Yposition") || types .get ("Zposition"));
+                  keyValue = new Vector3 (types .get ("Xposition") ?? 0,
+                                          types .get ("Yposition") ?? 0,
+                                          types .get ("Zposition") ?? 0);
 
                interpolator ._key      .push (key);
                interpolator ._keyValue .push (keyValue);
@@ -112,7 +114,9 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
 
                const
                   key      = j / (frameCount - 1),
-                  keyValue = Rotation4 .fromEuler (types .get ("Xposition") || types .get ("Yposition") || types .get ("Zposition"));
+                  keyValue = Rotation4 .fromEuler (types .get ("Xposition") ?? 0,
+                                                   types .get ("Yposition") ?? 0,
+                                                   types .get ("Zposition") ?? 0);
 
                interpolator ._key      .push (key);
                interpolator ._keyValue .push (keyValue);
