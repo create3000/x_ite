@@ -125,9 +125,9 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
          timeSensor ._fraction_changed .removeFieldInterest (field);
 
       const channels = this ._channels .getValue ()
-         .replace (/^[\s\d]+|[\s\d]+$/sg, "")
-         .split (/\s+\d+\s+/s)
-         .map (string => string .split (/\s+/s));
+         .replace (/^[\s,\d]+|[\s,\d]+$/sg, "")
+         .split (/[\s,]+\d+[\s,]+/s)
+         .map (string => string .split (/[\s,]+/s));
 
       const
          values        = this ._values,
@@ -193,7 +193,7 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
       const
          timeSensor      = this .timeSensor,
          channelsEnabled = this ._channelsEnabled,
-         joints          = this ._joints .getValue () .trim () .split (/\s+/),
+         joints          = this ._joints .getValue () .trim () .split (/[\s,]+/),
          jointNodes      = this .jointNodes;
 
       if (!jointNodes .size)
