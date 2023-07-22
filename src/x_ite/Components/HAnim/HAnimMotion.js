@@ -64,7 +64,7 @@ function HAnimMotion (executionContext)
 
    this .timeSensor    = new TimeSensor (this .getExecutionContext ());
    this .interpolators = [ ];
-   this .jointNodes    = new Map ();
+   this .jointsIndex   = new Map ();
 }
 
 Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .prototype),
@@ -109,9 +109,11 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
 
       // Create joints map.
 
-      this .jointNodes .clear ();
+      this .jointsIndex .clear ();
 
-      jointNodes .forEach (jointNode => this .jointNodes .set (jointNode ._name .getValue (), jointNode));
+      jointNodes .forEach (jointNode => this .jointsIndex .set (jointNode ._name .getValue (), jointNode));
+
+      this .jointsIndex .delete ("IGNORED");
 
       // Connect joints.
 
@@ -194,9 +196,9 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
          timeSensor      = this .timeSensor,
          channelsEnabled = this ._channelsEnabled,
          joints          = this ._joints .getValue () .trim () .split (/[\s,]+/),
-         jointNodes      = this .jointNodes;
+         jointsIndex     = this .jointsIndex;
 
-      if (!jointNodes .size)
+      if (!jointsIndex .size)
          return;
 
       for (const [i, { positionInterpolator, orientationInterpolator }] of this .interpolators .entries ())
@@ -207,7 +209,7 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
          if (i >= joints .length)
             continue;
 
-         const jointNode = jointNodes .get (joints [i]);
+         const jointNode = jointsIndex .get (joints [i]);
 
          if (!jointNode)
             continue;
