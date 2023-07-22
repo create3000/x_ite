@@ -77,6 +77,7 @@ function HAnimHumanoid (executionContext)
    this .viewpointsNode       = new Group (executionContext);
    this .skinNode             = new Group (executionContext);
    this .transformNode        = new Transform (executionContext);
+   this .motionNodes          = [ ];
    this .jointNodes           = [ ];
    this .jointBindingMatrices = [ ];
    this .displacementWeights  = [ ];
@@ -184,6 +185,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
 
       // Events
 
+      this ._motions                    .addInterest ("set_motions__",                    this);
       this ._joints                     .addInterest ("set_joints__",                     this);
       this ._jointBindingPositions      .addInterest ("set_joints__",                     this);
       this ._jointBindingRotations      .addInterest ("set_joints__",                     this);
@@ -193,6 +195,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
       this ._displacementWeightsTexture .addInterest ("set_displacementWeightsTexture__", this);
       this ._skinCoord                  .addInterest ("set_skinCoord__",                  this);
 
+      this .set_motions__ ();
       this .set_joints__ ();
       this .set_skinCoord__ ();
    },
@@ -203,6 +206,26 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
    getMatrix ()
    {
       return this .transformNode .getMatrix ();
+   },
+   set_motions__ ()
+   {
+      const motionNodes = this .motionNodes;
+
+      for (const motionNode of motionNodes)
+         motionNode .setJoints ([ ]);
+
+      motionNodes .length = 0;
+
+      for (const [i, node] of this ._motions .entries ())
+      {
+         const motionNode = X3DCast (X3DConstants .HAnimMotion, node);
+
+         if (motionNode)
+            motionNodes .push (motionNode);
+      }
+
+      for (const motionNode of motionNodes)
+         motionNode .setJoints (this .jointNodes);
    },
    set_joints__ ()
    {
@@ -263,6 +286,9 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
       this ._jointTextures              .addEvent ();
       this ._displacementsTexture       .addEvent ();
       this ._displacementWeightsTexture .addEvent ();
+
+      for (const motionNode of this .motionNodes)
+         motionNode .setJoints (jointNodes);
    },
    set_jointTextures__ ()
    {

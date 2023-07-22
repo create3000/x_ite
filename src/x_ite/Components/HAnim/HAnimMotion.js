@@ -50,6 +50,7 @@ import X3DFieldDefinition      from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray    from "../../Base/FieldDefinitionArray.js";
 import X3DChildNode            from "../Core/X3DChildNode.js";
 import X3DConstants            from "../../Base/X3DConstants.js";
+import TimeSensor              from "../Time/TimeSensor.js";
 import PositionInterpolator    from "../Interpolation/PositionInterpolator.js";
 import OrientationInterpolator from "../Interpolation/OrientationInterpolator.js";
 import Vector3                 from "../../../standard/Math/Numbers/Vector3.js";
@@ -60,6 +61,10 @@ function HAnimMotion (executionContext)
    X3DChildNode .call (this, executionContext);
 
    this .addType (X3DConstants .HAnimMotion);
+
+   this .timeSensor    = new TimeSensor (this .getExecutionContext ());
+   this .interpolators = [ ];
+   this .jointNodes    = new Map ();
 }
 
 Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .prototype),
@@ -68,10 +73,57 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
    {
       X3DChildNode .prototype .initialize .call (this);
 
-      this .set_channels__ ();
+      this ._enabled .addFieldInterest (this .timeSensor ._enabled);
+
+      this .timeSensor ._cycleTime   .addFieldInterest (this ._cycleTime);
+      this .timeSensor ._elapsedTime .addFieldInterest (this ._elapsedTime);
+
+      // this .timeSensor ._cycleInterval = 10;
+      // this .timeSensor ._loop = true;
+
+      this .timeSensor .setup ();
+
+      this ._channels .addInterest ("set_interpolators__", this);
+      this ._values   .addInterest ("set_interpolators__", this);
+
+      this .set_interpolators__ ();
    },
-   set_channels__ ()
+   setJoints (jointNodes)
    {
+      // Disconnect old joint nodes.
+
+      for (const { positionInterpolator, orientationInterpolator } of this .interpolators)
+      {
+         if (positionInterpolator)
+         {
+            for (const field of positionInterpolator ._value_changed .getFieldInterests ())
+               positionInterpolator ._value_changed .removeFieldInterest (field);
+         }
+
+         if (orientationInterpolator)
+         {
+            for (const field of orientationInterpolator ._value_changed .getFieldInterests ())
+               orientationInterpolator ._value_changed .removeFieldInterest (field);
+         }
+      }
+
+      // Create joints map.
+
+      this .jointNodes .clear ();
+
+      jointNodes .forEach (jointNode => this .jointNodes .set (jointNode ._name .getValue (), jointNode));
+
+      // Connect joints.
+
+      this .set_joints__ ();
+   },
+   set_interpolators__ ()
+   {
+      const timeSensor = this .timeSensor;
+
+      for (const field of timeSensor ._fraction_changed .getFieldInterests ())
+         timeSensor ._fraction_changed .removeFieldInterest (field);
+
       const channels = this ._channels .getValue ()
          .replace (/^[\s\d]+|[\s\d]+$/sg, "")
          .split (/\s+\d+\s+/s)
@@ -82,6 +134,8 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
          frameCount    = values .length / channels .reduce ((v, c) => v + c .length, 0),
          types         = new Map (),
          interpolators = Array .from ({length: channels .length}, () => new Object ());
+
+      this .interpolators = interpolators;
 
       for (let frame = 0, v = 0; frame < frameCount; ++ frame)
       {
@@ -98,7 +152,7 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
                   ?? this .createPositionInterpolator (interpolators, j);
 
                const
-                  key      = j / (frameCount - 1),
+                  key      = frame / (frameCount - 1),
                   keyValue = new Vector3 (types .get ("Xposition") ?? 0,
                                           types .get ("Yposition") ?? 0,
                                           types .get ("Zposition") ?? 0);
@@ -109,14 +163,14 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
 
             if (types .has ("Xrotation") || types .has ("Yrotation") || types .has ("Zrotation"))
             {
-               const interpolator = interpolators [j] .orientationInterpolatorInterpolator
+               const interpolator = interpolators [j] .orientationInterpolator
                   ?? this .createOrientationInterpolator (interpolators, j);
 
                const
-                  key      = j / (frameCount - 1),
-                  keyValue = Rotation4 .fromEuler (types .get ("Xposition") ?? 0,
-                                                   types .get ("Yposition") ?? 0,
-                                                   types .get ("Zposition") ?? 0);
+                  key      = frame / (frameCount - 1),
+                  keyValue = Rotation4 .fromEuler (types .get ("Xrotation") ?? 0,
+                                                   types .get ("Yrotation") ?? 0,
+                                                   types .get ("Zrotation") ?? 0);
 
                interpolator ._key      .push (key);
                interpolator ._keyValue .push (keyValue);
@@ -124,9 +178,52 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
          }
       }
 
-      this ._frameCount = frameCount;
+      for (const { positionInterpolator, orientationInterpolator } of interpolators)
+      {
+         positionInterpolator    ?.setup ();
+         orientationInterpolator ?.setup ();
+      }
 
-      console .log (interpolators)
+      this .set_joints__ ();
+
+      this ._frameCount = frameCount;
+   },
+   set_joints__ ()
+   {
+      const
+         timeSensor      = this .timeSensor,
+         channelsEnabled = this ._channelsEnabled,
+         joints          = this ._joints .getValue () .trim () .split (/\s+/),
+         jointNodes      = this .jointNodes;
+
+      if (!jointNodes .size)
+         return;
+
+      for (const [i, { positionInterpolator, orientationInterpolator }] of this .interpolators .entries ())
+      {
+         if (i < channelsEnabled .length && !channelsEnabled [i])
+            continue;
+
+         if (i >= joints .length)
+            continue;
+
+         const jointNode = jointNodes .get (joints [i]);
+
+         if (!jointNode)
+            continue;
+
+         if (positionInterpolator)
+         {
+            timeSensor ._fraction_changed .addFieldInterest (positionInterpolator ._set_fraction);
+            positionInterpolator ._value_changed .addFieldInterest (jointNode ._translation);
+         }
+
+         if (orientationInterpolator)
+         {
+            timeSensor ._fraction_changed .addFieldInterest (orientationInterpolator ._set_fraction);
+            orientationInterpolator ._value_changed .addFieldInterest (jointNode ._rotation);
+         }
+      }
    },
    createPositionInterpolator (interpolators, j)
    {
