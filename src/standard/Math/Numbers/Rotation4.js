@@ -443,6 +443,22 @@ Object .defineProperties (Rotation4 .prototype,
 Object .assign (Rotation4,
 {
    Identity: new Rotation4 (),
+   fromEuler (x, y, z)
+   {
+      const
+         fAbsoluteX = Math .abs (x),
+         fAbsoluteY = Math .abs (y),
+         fAbsoluteZ = Math .abs (z);
+
+      const fMaxAngle = Math .max (fAbsoluteX, fAbsoluteY, fAbsoluteZ);
+
+      const fRatio = fMaxAngle > 0 ? 1 / fMaxAngle : 0; // avoid divide-by-zero problems
+
+      return new Rotation4 (x * fRatio,
+                            y * fRatio,
+                            z * fRatio,
+                            Math .abs (fMaxAngle * (Math .PI / 180)));
+   },
    spline (r0, r1, r2)
    {
       const copy = Object .create (this .prototype);

@@ -45,11 +45,15 @@
  *
  ******************************************************************************/
 
-import Fields               from "../../Fields.js";
-import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
-import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
-import X3DChildNode         from "../Core/X3DChildNode.js";
-import X3DConstants         from "../../Base/X3DConstants.js";
+import Fields                  from "../../Fields.js";
+import X3DFieldDefinition      from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray    from "../../Base/FieldDefinitionArray.js";
+import X3DChildNode            from "../Core/X3DChildNode.js";
+import X3DConstants            from "../../Base/X3DConstants.js";
+import PositionInterpolator    from "../Interpolation/PositionInterpolator.js";
+import OrientationInterpolator from "../Interpolation/OrientationInterpolator.js";
+import Vector3                 from "../../../standard/Math/Numbers/Vector3.js";
+import Rotation4               from "../../../standard/Math/Numbers/Rotation4.js";
 
 function HAnimMotion (executionContext)
 {
@@ -63,6 +67,70 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
    initialize ()
    {
       X3DChildNode .prototype .initialize .call (this);
+
+      this .set_channels__ ();
+   },
+   set_channels__ ()
+   {
+      const channels = this ._channels .getValue ()
+         .replace (/^[\s\d]+|[\s\d]+$/sg, "")
+         .split (/\s+\d+\s+/s)
+         .map (string => string .split (/\s+/s));
+
+      const
+         values        = this ._values,
+         frameCount    = values .length / channels .reduce ((v, c) => v + c .length, 0),
+         types         = new Map (),
+         interpolators = Array .from ({length: channels .length}, () => new Object ());
+
+      for (let frame = 0, v = 0; frame < frameCount; ++ frame)
+      {
+         for (const [j, joint] of channels .entries ())
+         {
+            types .clear ();
+
+            for (const channel of joint)
+               types .set (channel, values [v ++]);
+
+            if (types .has ("Xposition") || types .has ("Yposition") || types .has ("Zposition"))
+            {
+               const interpolator = interpolators [j] .positionInterpolator
+                  ?? this .createPositionInterpolator (interpolators, j);
+
+               const
+                  key      = j / (frameCount - 1),
+                  keyValue = new Vector3 (types .get ("Xposition") || types .get ("Yposition") || types .get ("Zposition"));
+
+               interpolator ._key      .push (key);
+               interpolator ._keyValue .push (keyValue);
+            }
+
+            if (types .has ("Xrotation") || types .has ("Yrotation") || types .has ("Zrotation"))
+            {
+               const interpolator = interpolators [j] .orientationInterpolatorInterpolator
+                  ?? this .createOrientationInterpolator (interpolators, j);
+
+               const
+                  key      = j / (frameCount - 1),
+                  keyValue = Rotation4 .fromEuler (types .get ("Xposition") || types .get ("Yposition") || types .get ("Zposition"));
+
+               interpolator ._key      .push (key);
+               interpolator ._keyValue .push (keyValue);
+            }
+         }
+      }
+
+      this ._frameCount = frameCount;
+
+      console .log (interpolators)
+   },
+   createPositionInterpolator (interpolators, j)
+   {
+      return interpolators [j] .positionInterpolator = new PositionInterpolator (this .getExecutionContext ());
+   },
+   createOrientationInterpolator (interpolators, j)
+   {
+      return interpolators [j] .orientationInterpolator = new OrientationInterpolator (this .getExecutionContext ());
    },
 });
 
