@@ -93,7 +93,7 @@ Object .assign (Object .setPrototypeOf (TimeSensor .prototype, X3DSensorNode .pr
       this .scale    = this .last - this .first;
       this .interval = cycleInterval * this .scale;
       this .fraction = Algorithm .fract ((currentFraction >= 1 ? 0 : currentFraction) + (this .interval ? (currentTime - startTime) / this .interval : 0));
-      this .cycle    = currentTime - (this .fraction -  this .first) * cycleInterval;
+      this .cycle    = currentTime - (this .fraction - this .first) * cycleInterval;
    },
    set_cycleInterval__ ()
    {
@@ -123,8 +123,8 @@ Object .assign (Object .setPrototypeOf (TimeSensor .prototype, X3DSensorNode .pr
    set_resume (pauseInterval)
    {
       const
-         currentTime   = this .getBrowser () .getCurrentTime (),
-         startTime     = this ._startTime .getValue ();
+         currentTime = this .getBrowser () .getCurrentTime (),
+         startTime   = this ._startTime .getValue ();
 
       this .setRange (this .interval ? Algorithm .fract (this .fraction - (currentTime - startTime) / this .interval) : 0, this ._range [1], this ._range [2]);
    },

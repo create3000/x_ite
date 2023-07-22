@@ -55,6 +55,7 @@ import PositionInterpolator    from "../Interpolation/PositionInterpolator.js";
 import OrientationInterpolator from "../Interpolation/OrientationInterpolator.js";
 import Vector3                 from "../../../standard/Math/Numbers/Vector3.js";
 import Rotation4               from "../../../standard/Math/Numbers/Rotation4.js";
+import Algorithm               from "../../../standard/Math/Algorithm.js";
 
 function HAnimMotion (executionContext)
 {
@@ -73,19 +74,25 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
    {
       X3DChildNode .prototype .initialize .call (this);
 
-      this ._enabled .addFieldInterest (this .timeSensor ._enabled);
+      this ._loop .addFieldInterest (this .timeSensor ._loop);
 
       this .timeSensor ._cycleTime   .addFieldInterest (this ._cycleTime);
       this .timeSensor ._elapsedTime .addFieldInterest (this ._elapsedTime);
 
-      // this .timeSensor ._cycleInterval = 10;
-      // this .timeSensor ._loop = true;
+      this .timeSensor ._loop = this ._loop;
 
       this .timeSensor .setup ();
 
-      this ._channels .addInterest ("set_interpolators__", this);
-      this ._values   .addInterest ("set_interpolators__", this);
+      this ._channels      .addInterest ("set_interpolators__", this);
+      this ._values        .addInterest ("set_interpolators__", this);
+      this ._startFrame    .addInterest ("set_startFrame__",    this);
+      this ._endFrame      .addInterest ("set_endFrame__",      this);
+      this ._frameIndex    .addInterest ("set_frameIndex__",    this);
+      this ._frameDuration .addInterest ("set_frameDuration__", this);
+      this ._next          .addInterest ("set_next__",          this);
+      this ._previous      .addInterest ("set_previous__",      this);
 
+      this .set_enabled__ ();
       this .set_interpolators__ ();
    },
    setJoints (jointNodes)
@@ -113,13 +120,21 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
 
       jointsIndex .clear ();
 
-      jointNodes .forEach (jointNode => jointsIndex .set (jointNode ._name .getValue () .trim (), jointNode));
+      for (const jointNode of jointNodes)
+         jointsIndex .set (jointNode ._name .getValue () .trim (), jointNode);
 
       jointsIndex .delete ("IGNORED");
 
       // Connect joints.
 
       this .set_joints__ ();
+   },
+   set_enabled__ ()
+   {
+      if (this ._enabled .getValue ())
+         this .timeSensor ._startTime = this .getBrowser () .getCurrentTime ();
+      else
+         this .timeSensor ._stopTime = this .getBrowser () .getCurrentTime ();
    },
    set_interpolators__ ()
    {
@@ -188,9 +203,11 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
          orientationInterpolator ?.setup ();
       }
 
-      this .set_joints__ ();
+      this ._frameCount        = frameCount;
+      this .timeSensor ._range = [0, 0, 1];
 
-      this ._frameCount = frameCount;
+      this .set_joints__ ();
+      this .set_frameDuration__ ();
    },
    set_joints__ ()
    {
@@ -228,6 +245,62 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
             orientationInterpolator ._value_changed .addFieldInterest (jointNode ._rotation);
          }
       }
+   },
+   set_startFrame__ ()
+   {
+      const
+         frameCount = this ._frameCount .getValue (),
+         startFrame = Algorithm .clamp (this ._startFrame .getValue (), 0, frameCount);
+
+      this .timeSensor ._range [1] = frameCount > 1 ? startFrame / (frameCount - 1) : 0;
+   },
+   set_endFrame__ ()
+   {
+      const
+         frameCount = this ._frameCount .getValue (),
+         endFrame   = Algorithm .clamp (this ._endFrame .getValue (), 0, frameCount);
+
+      this .timeSensor ._range [2] = frameCount > 1 ? endFrame / (frameCount - 1) : 0;
+   },
+   set_frameIndex__ ()
+   {
+      const
+         frameCount = this ._frameCount .getValue (),
+         frameIndex = Algorithm .clamp (this ._frameIndex .getValue (), 0, frameCount);
+
+      this .timeSensor ._range [0] = frameCount > 1 ? frameIndex / (frameCount - 1) : 0;
+   },
+   set_frameDuration__ ()
+   {
+      const
+         frameCount    = this ._frameCount .getValue (),
+         frameDuration = Math .max (this ._frameDuration .getValue (), 0);
+
+      this .timeSensor ._cycleInterval = frameCount * frameDuration;
+   },
+   set_next__ ()
+   {
+      if (!this ._next .getValue ())
+         return;
+
+      const
+         frameCount     = this ._frameCount .getValue (),
+         frameIndex     = Algorithm .clamp (this ._frameIndex .getValue (), 0, frameCount),
+         frameIncrement = this ._frameIncrement .getValue ();
+
+      this .timeSensor ._range [0] = ((frameIndex + frameIncrement) % frameCount) / (frameCount - 1);
+   },
+   set_previous__ ()
+   {
+      if (!this ._previous .getValue ())
+         return;
+
+      const
+         frameCount     = this ._frameCount .getValue (),
+         frameIndex     = Algorithm .clamp (this ._frameIndex .getValue (), 0, frameCount),
+         frameIncrement = this ._frameIncrement .getValue ();
+
+      this .timeSensor ._range [0] = ((frameIndex - frameIncrement) % frameCount) / (frameCount - 1);
    },
    createPositionInterpolator (interpolators, j)
    {
