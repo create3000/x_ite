@@ -145,7 +145,8 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
 
       const
          values        = this ._values,
-         frameCount    = values .length / channels .reduce ((v, c) => v + c .length, 0),
+         numChannels   = channels .reduce ((v, c) => v + c .length, 0),
+         frameCount    = numChannels ? values .length / numChannels : 0,
          types         = new Map (),
          interpolators = Array .from ({length: channels .length}, () => ({ }));
 
