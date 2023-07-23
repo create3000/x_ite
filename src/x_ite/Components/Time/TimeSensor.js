@@ -110,8 +110,10 @@ Object .assign (Object .setPrototypeOf (TimeSensor .prototype, X3DSensorNode .pr
 
       this .setRange (this ._range [0], this ._range [1], this ._range [2], false);
 
-      if (!this ._isPaused .getValue ())
-         this .set_fraction (this .getBrowser () .getCurrentTime ());
+      if (this ._isPaused .getValue ())
+         return;
+
+      this .set_fraction (this .getBrowser () .getCurrentTime ());
    },
    set_start ()
    {
