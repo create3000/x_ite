@@ -85,14 +85,15 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
 
       this .timeSensor .setup ();
 
-      this ._channels      .addInterest ("set_interpolators__", this);
-      this ._values        .addInterest ("set_interpolators__", this);
-      this ._startFrame    .addInterest ("set_startFrame__",    this);
-      this ._endFrame      .addInterest ("set_endFrame__",      this);
-      this ._frameIndex    .addInterest ("set_frameIndex__",    this);
-      this ._frameDuration .addInterest ("set_frameDuration__", this);
-      this ._next          .addInterest ("set_next__",          this);
-      this ._previous      .addInterest ("set_previous__",      this);
+      this ._channelsEnabled .addInterest ("set_connectInterpolators__", this)
+      this ._channels        .addInterest ("set_interpolators__",        this);
+      this ._values          .addInterest ("set_interpolators__",        this);
+      this ._startFrame      .addInterest ("set_startFrame__",           this);
+      this ._endFrame        .addInterest ("set_endFrame__",             this);
+      this ._frameIndex      .addInterest ("set_frameIndex__",           this);
+      this ._frameDuration   .addInterest ("set_frameDuration__",        this);
+      this ._next            .addInterest ("set_next__",                 this);
+      this ._previous        .addInterest ("set_previous__",             this);
 
       this .set_interpolators__ ();
    },
@@ -128,7 +129,7 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
 
       // Connect joints.
 
-      this .set_joints__ ();
+      this .set_connectInterpolators__ ();
    },
    set_interpolators__ ()
    {
@@ -200,10 +201,10 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
       this ._frameCount        = frameCount;
       this .timeSensor ._range = [0, 0, 1];
 
-      this .set_joints__ ();
+      this .set_connectInterpolators__ ();
       this .set_frameDuration__ ();
    },
-   set_joints__ ()
+   set_connectInterpolators__ ()
    {
       const
          timeSensor      = this .timeSensor,
