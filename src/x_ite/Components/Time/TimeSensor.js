@@ -81,52 +81,51 @@ Object .assign (Object .setPrototypeOf (TimeSensor .prototype, X3DSensorNode .pr
       this ._cycleInterval .addInterest ("set_cycleInterval__", this);
       this ._range         .addInterest ("set_range__",         this);
    },
-   setRange (currentFraction, firstFraction, lastFraction)
+   setRange (fraction, firstFraction, lastFraction, offset)
    {
       const
          currentTime   = this .getBrowser () .getCurrentTime (),
          startTime     = this ._startTime .getValue (),
          cycleInterval = this ._cycleInterval .getValue ();
 
-      this .first    = firstFraction;
-      this .last     = lastFraction;
+      this .first    = Algorithm .clamp (firstFraction, 0, 1);
+      this .last     = Algorithm .clamp (lastFraction, 0, 1);
       this .scale    = this .last - this .first;
       this .interval = cycleInterval * this .scale;
-      this .fraction = Algorithm .fract ((currentFraction >= 1 ? 0 : currentFraction) + (this .interval ? (currentTime - startTime) / this .interval : 0));
+      this .offset   = offset && this .interval ? (currentTime - startTime) / this .interval : 0;
+      this .fraction = Algorithm .fract (fraction + this .offset);
       this .cycle    = currentTime - (this .fraction - this .first) * cycleInterval;
    },
    set_cycleInterval__ ()
    {
-      if (this ._isActive .getValue ())
-         this .setRange (this .fraction, this ._range [1], this ._range [2]);
+      if (!this ._isActive .getValue ())
+         return;
+
+      this .setRange (this .fraction, this ._range [1], this ._range [2], false);
    },
    set_range__ ()
    {
-      if (this ._isActive .getValue ())
-      {
-         this .setRange (this ._range [0], this ._range [1], this ._range [2]);
+      if (!this ._isActive .getValue ())
+         return;
 
-         if (!this ._isPaused .getValue ())
-            this .set_fraction (this .getBrowser () .getCurrentTime ());
-      }
+      this .setRange (this ._range [0], this ._range [1], this ._range [2], false);
+
+      if (!this ._isPaused .getValue ())
+         this .set_fraction (this .getBrowser () .getCurrentTime ());
    },
    set_start ()
    {
-      this .setRange (this ._range [0], this ._range [1], this ._range [2]);
+      this .setRange (this ._range [0], this ._range [1], this ._range [2], true);
 
-      if (this .getLive () .getValue ())
-      {
-         this ._fraction_changed = this .fraction;
-         this ._time             = this .getBrowser () .getCurrentTime ();
-      }
+      if (!this .getLive () .getValue ())
+         return;
+
+      this ._fraction_changed = this .fraction;
+      this ._time             = this .getBrowser () .getCurrentTime ();
    },
    set_resume (pauseInterval)
    {
-      const
-         currentTime = this .getBrowser () .getCurrentTime (),
-         startTime   = this ._startTime .getValue ();
-
-      this .setRange (this .interval ? Algorithm .fract (this .fraction - (currentTime - startTime) / this .interval) : 0, this ._range [1], this ._range [2]);
+      this .setRange (this .fraction, this ._range [1], this ._range [2], false);
    },
    set_fraction (time)
    {

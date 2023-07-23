@@ -74,12 +74,14 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
    {
       X3DChildNode .prototype .initialize .call (this);
 
-      this ._loop .addFieldInterest (this .timeSensor ._loop);
+      this ._enabled .addFieldInterest (this .timeSensor ._enabled);
+      this ._loop    .addFieldInterest (this .timeSensor ._loop);
 
       this .timeSensor ._cycleTime   .addFieldInterest (this ._cycleTime);
       this .timeSensor ._elapsedTime .addFieldInterest (this ._elapsedTime);
 
-      this .timeSensor ._loop = this ._loop;
+      this .timeSensor ._enabled = this ._enabled;
+      this .timeSensor ._loop    = this ._loop;
 
       this .timeSensor .setup ();
 
@@ -92,7 +94,6 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
       this ._next          .addInterest ("set_next__",          this);
       this ._previous      .addInterest ("set_previous__",      this);
 
-      this .set_enabled__ ();
       this .set_interpolators__ ();
    },
    setJoints (jointNodes)
@@ -128,13 +129,6 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
       // Connect joints.
 
       this .set_joints__ ();
-   },
-   set_enabled__ ()
-   {
-      if (this ._enabled .getValue ())
-         this .timeSensor ._startTime = this .getBrowser () .getCurrentTime ();
-      else
-         this .timeSensor ._stopTime = this .getBrowser () .getCurrentTime ();
    },
    set_interpolators__ ()
    {
