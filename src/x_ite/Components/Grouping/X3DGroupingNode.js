@@ -287,6 +287,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
                   }
                   case X3DConstants .BooleanFilter:
                   case X3DConstants .BooleanToggle:
+                  case X3DConstants .HAnimMotion:
                   case X3DConstants .NurbsOrientationInterpolator:
                   case X3DConstants .NurbsPositionInterpolator:
                   case X3DConstants .NurbsSurfaceInterpolator:
@@ -425,6 +426,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
                   }
                   case X3DConstants .BooleanFilter:
                   case X3DConstants .BooleanToggle:
+                  case X3DConstants .HAnimMotion:
                   case X3DConstants .NurbsOrientationInterpolator:
                   case X3DConstants .NurbsPositionInterpolator:
                   case X3DConstants .NurbsSurfaceInterpolator:
