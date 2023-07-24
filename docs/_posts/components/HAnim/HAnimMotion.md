@@ -15,7 +15,7 @@ tags: [HAnimMotion, HAnim]
 
 An HAnimMotion node supports discrete frame-by-frame playback for HAnim motion data animation. Design characteristics include integration with HAnim figure data and HAnimJoint nodes, animation control, and playback of raw motion data.
 
-The HAnimMotion node belongs to the **HAnim** component and its default container field is *children.* It is available from X3D version 4.0 or higher.
+The HAnimMotion node belongs to the **HAnim** component and its default container field is *motions.* It is available from X3D version 4.0 or higher.
 
 ## Hierarchy
 
@@ -81,22 +81,6 @@ List of number of *channels* for transformation, followed by transformation type
 
 *values* field contains all transformation *values*, ordered first by frame, then by joint, and then by transformation Sets of floats in the *values* array matching the order listed in joints and channels fields.
 
-### SFInt32 [in, out] **startFrame** 0 <small>[0,∞)</small>
-
-*startFrame* indicates initial index of animated frame. Note that *startFrame* can precede, equal or follow endFrame.
-
-#### Hint
-
-- *startFrame* starts at 0 and is no greater than (frameCount - 1).
-
-### SFInt32 [in, out] **endFrame** 0 <small>[0,∞)</small>
-
-*endFrame* indicates final index of animated frame. Note that *endFrame* can precede, equal or follow *endFrame*. The default *endFrame* value is reset to (frameCount - 1) whenever frameCount is changed.
-
-#### Hint
-
-- *endFrame* starts at 0 and is no greater than (frameCount - 1).
-
 ### SFInt32 [in, out] **frameIndex** 0 <small>[0,∞)</small>
 
 *frameIndex* indicates index of current frame. Note that *frameIndex* can be modified whether the Motion node is enabled or not, and becomes effective when the next animation cycle occurs. Thus the *frameIndex* value indicates the frame currently (or next) being processed.
@@ -117,9 +101,21 @@ List of number of *channels* for transformation, followed by transformation type
 
 - Note that setting *frameIncrement* to 0 prevents automatic advancement of frameIndex and pauses animation of HAnimMotion node.
 
-### SFBool [in, out] **loop** FALSE
+### SFInt32 [in, out] **startFrame** 0 <small>[0,∞)</small>
 
-Repeat indefinitely when *loop*=true, repeat only once when *loop*=false.
+*startFrame* indicates initial index of animated frame. Note that *startFrame* can precede, equal or follow endFrame.
+
+#### Hint
+
+- *startFrame* starts at 0 and is no greater than (frameCount - 1).
+
+### SFInt32 [in, out] **endFrame** 0 <small>[0,∞)</small>
+
+*endFrame* indicates final index of animated frame. Note that *endFrame* can precede, equal or follow *endFrame*. The default *endFrame* value is reset to (frameCount - 1) whenever frameCount is changed.
+
+#### Hint
+
+- *endFrame* starts at 0 and is no greater than (frameCount - 1).
 
 ### SFBool [in] **next**
 
@@ -144,6 +140,10 @@ Send *previous* output value in keyValue array, and reset internal fraction fiel
 #### Warning
 
 - It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
+
+### SFBool [in, out] **loop** FALSE
+
+Repeat indefinitely when *loop*=true, repeat only once when *loop*=false.
 
 ### SFTime [out] **cycleTime**
 

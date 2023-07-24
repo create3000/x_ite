@@ -65,15 +65,17 @@ The *value* attribute is a strictly typed data array providing relevant metadata
 
 ### Hints
 
-- Use `containerField='value'` if the parent node is MetadataSet.
-- [Each of the Metadata nodes are allowed as top-level root nodes in a scene, be sure to explicitly define `containerField='metadata'.`](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-DIS/Part01/concepts.html#Rootnodes){:target="_blank"}
+- Typically use `containerField='value'` if the parent node is MetadataSet.
+- Explicitly defining containerField for Metadata nodes is always allowed and also unambiguous across each version of X3D.
+- [Each of the Metadata nodes are allowed as top-level root nodes in a scene, if doing that be sure to explicitly define `containerField='metadata'.`](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-DIS/Part01/concepts.html#Rootnodes){:target="_blank"}
 - If present, an IS statement is the first child within any other node.
 - An IS statement precedes any sibling Metadata* node, which in turn precedes any other sibling nodes.
 - Comments are not readable when a model file is loaded for viewing, but WorldInfo and Metadata* nodes are persistent and inspectable at run time.
 - [X3D for Web Authors, Chapter 15, Metadata Information](https://www.web3d.org/x3d/content/examples/X3dForWebAuthors/Chapter15-Metadata/Chapter15-MetadataInformation.html){:target="_blank"}
 
-### Warning
+### Warnings
 
+- Default `containerField='metadata'` in X3D 3 changed to default `containerField='value'` in X3D 4.0, allowing construction of much terser MetadataSet vocabulary structures.
 - Metadata nodes can only contain other Metadata nodes.
 
 ## See Also
