@@ -306,28 +306,28 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
 
       const
          frameIncrement = this ._frameIncrement .getValue (),
+         frameIndex     = this ._frameIndex .getValue () + frameIncrement * factor,
          startFrame     = Math .min (this .startFrame, this .endFrame),
          endFrame       = Math .max (this .startFrame, this .endFrame);
-
-      let frameIndex = this ._frameIndex .getValue () + frameIncrement * factor;
 
       if (frameIndex > endFrame)
       {
          if (!this ._loop .getValue ())
             return;
 
-         frameIndex = startFrame;
+         this ._frameIndex = startFrame;
       }
-
-      if (frameIndex < startFrame)
+      else if (frameIndex < startFrame)
       {
          if (!this ._loop .getValue ())
             return;
 
-         frameIndex = endFrame;
+         this ._frameIndex = endFrame;
       }
-
-      this ._frameIndex = frameIndex;
+      else
+      {
+         this ._frameIndex = frameIndex;
+      }
    },
    createPositionInterpolator (interpolators, j)
    {
