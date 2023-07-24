@@ -210,10 +210,10 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
          orientationInterpolator ?.setup ();
       }
 
-      this ._frameCount        = frameCount;
-      this .timeSensor ._range = [0, 0, 1];
-      this .startFrame         = 0;
-      this .endFrame           = frameCount - 1;
+      this ._frameIndex = 0;
+      this ._startFrame = 0;
+      this ._endFrame   = frameCount - 1;
+      this ._frameCount = frameCount;
 
       this .set_connectInterpolators__ ();
       this .set_frameDuration__ ();
@@ -261,8 +261,8 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
          frameCount = this ._frameCount .getValue (),
          startFrame = Algorithm .clamp (this ._startFrame .getValue (), 0, frameCount);
 
-      this .timeSensor ._range [1] = frameCount > 1 ? startFrame / (frameCount - 1) : 0;
       this .startFrame             = startFrame;
+      this .timeSensor ._range [1] = frameCount > 1 ? startFrame / (frameCount - 1) : 0;
    },
    set_endFrame__ ()
    {
@@ -270,8 +270,8 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
          frameCount = this ._frameCount .getValue (),
          endFrame   = Algorithm .clamp (this ._endFrame .getValue (), 0, frameCount);
 
-      this .timeSensor ._range [2] = frameCount > 1 ? endFrame / (frameCount - 1) : 0;
       this .endFrame               = endFrame;
+      this .timeSensor ._range [2] = frameCount > 1 ? endFrame / (frameCount - 1) : 0;
    },
    set_frameIndex__ ()
    {
