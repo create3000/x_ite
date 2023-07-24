@@ -296,7 +296,7 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
 
       this .timeSensor ._cycleInterval = frameCount * frameDuration;
    },
-   set_next__ (factor, field)
+   set_next__ (direction, field)
    {
       if (!field .getValue ())
          return;
@@ -306,7 +306,7 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
 
       const
          frameIncrement = this ._frameIncrement .getValue (),
-         frameIndex     = this ._frameIndex .getValue () + frameIncrement * factor,
+         frameIndex     = this ._frameIndex .getValue () + frameIncrement * direction,
          startFrame     = Math .min (this .startFrame, this .endFrame),
          endFrame       = Math .max (this .startFrame, this .endFrame);
 
