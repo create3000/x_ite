@@ -209,15 +209,20 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
    },
    set_motions__ ()
    {
-      const motionNodes = this .motionNodes;
+      const
+         motionsEnabled = this ._motionsEnabled,
+         motionNodes    = this .motionNodes;
 
       for (const motionNode of motionNodes)
          motionNode .setJoints ([ ]);
 
       motionNodes .length = 0;
 
-      for (const node of this ._motion)
+      for (const [i, node] of this ._motions .entries ())
       {
+         if (i < motionsEnabled .length && !motionsEnabled [i])
+            continue;
+
          const motionNode = X3DCast (X3DConstants .HAnimMotion, node);
 
          if (motionNode)
