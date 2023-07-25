@@ -187,10 +187,10 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
 
       this ._motionsEnabled             .addInterest ("set_motions__",                    this);
       this ._motions                    .addInterest ("set_motions__",                    this);
-      this ._joints                     .addInterest ("set_joints__",                     this);
       this ._jointBindingPositions      .addInterest ("set_joints__",                     this);
       this ._jointBindingRotations      .addInterest ("set_joints__",                     this);
       this ._jointBindingScales         .addInterest ("set_joints__",                     this);
+      this ._joints                     .addInterest ("set_joints__",                     this);
       this ._jointTextures              .addInterest ("set_jointTextures__",              this);
       this ._displacementsTexture       .addInterest ("set_displacementsTexture__",       this);
       this ._displacementWeightsTexture .addInterest ("set_displacementWeightsTexture__", this);
