@@ -144,10 +144,14 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
    },
    set_interpolators__ ()
    {
+      // Disconnect old interpolators.
+      
       const timeSensor = this .timeSensor;
 
       for (const field of timeSensor ._fraction_changed .getFieldInterests ())
          timeSensor ._fraction_changed .removeFieldInterest (field);
+
+      // Create interpolators.
 
       const channels = this ._channels .getValue ()
          .replace (/^[\s,\d]+|[\s,\d]+$/sg, "")
