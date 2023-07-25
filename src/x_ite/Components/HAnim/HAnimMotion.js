@@ -264,7 +264,7 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
       const
          frameCount = this ._frameCount .getValue (),
          startFrame = Algorithm .clamp (this ._startFrame .getValue (), 0, frameCount),
-         endFrame   = Algorithm .clamp (this ._endFrame .getValue (),   0, frameCount);
+         endFrame   = Algorithm .clamp (this ._endFrame   .getValue (), 0, frameCount);
 
       this .startFrame             = Math .min (startFrame, endFrame);
       this .endFrame               = Math .max (startFrame, endFrame);
