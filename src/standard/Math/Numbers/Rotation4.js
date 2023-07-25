@@ -303,6 +303,24 @@ Object .assign (Rotation4 .prototype,
    {
       return this [_quaternion] .getMatrix (matrix);
    },
+   setEuler (x, y, z)
+   {
+      const
+         absoluteX = Math .abs (x),
+         absoluteY = Math .abs (y),
+         absoluteZ = Math .abs (z);
+
+      const
+         maxAngle = Math .max (absoluteX, absoluteY, absoluteZ),
+         ratio    = maxAngle > 0 ? 1 / maxAngle : 0; // avoid divide-by-zero problems
+
+      this .set (x * ratio,
+                 y * ratio,
+                 z * ratio,
+                 Math .abs (maxAngle * (Math .PI / 180)));
+
+      return this;
+   },
    equals (rotation)
    {
       return this [_quaternion] .equals (rotation [_quaternion]);
@@ -445,19 +463,7 @@ Object .assign (Rotation4,
    Identity: new Rotation4 (),
    fromEuler (x, y, z)
    {
-      const
-         fAbsoluteX = Math .abs (x),
-         fAbsoluteY = Math .abs (y),
-         fAbsoluteZ = Math .abs (z);
-
-      const fMaxAngle = Math .max (fAbsoluteX, fAbsoluteY, fAbsoluteZ);
-
-      const fRatio = fMaxAngle > 0 ? 1 / fMaxAngle : 0; // avoid divide-by-zero problems
-
-      return new Rotation4 (x * fRatio,
-                            y * fRatio,
-                            z * fRatio,
-                            Math .abs (fMaxAngle * (Math .PI / 180)));
+      return new Rotation4 () .setEuler (x, y, z);
    },
    spline (r0, r1, r2)
    {
