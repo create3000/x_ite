@@ -185,6 +185,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
 
       // Events
 
+      this ._motionsEnabled             .addInterest ("set_motions__",                    this);
       this ._motions                    .addInterest ("set_motions__",                    this);
       this ._joints                     .addInterest ("set_joints__",                     this);
       this ._jointBindingPositions      .addInterest ("set_joints__",                     this);
