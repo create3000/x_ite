@@ -223,7 +223,7 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
       const
          timeSensor      = this .timeSensor,
          channelsEnabled = this ._channelsEnabled,
-         joints          = this ._joints .getValue () .trim () .split (/[\s,]+/),
+         joints          = this ._joints .getValue () .replace (/^[\s,]+|[\s,]+$/sg, "") .split (/[\s,]+/s),
          jointsIndex     = this .jointsIndex;
 
       if (!jointsIndex .size)
