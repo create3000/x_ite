@@ -138,14 +138,14 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
 
       jointsIndex .delete ("IGNORED");
 
-      // Connect joints.
+      // Connect joint nodes.
 
       this .set_connectInterpolators__ ();
    },
    set_interpolators__ ()
    {
       // Disconnect old interpolators.
-      
+
       const timeSensor = this .timeSensor;
 
       for (const field of timeSensor ._fraction_changed .getFieldInterests ())
