@@ -99,12 +99,12 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
       this ._channelsEnabled .addInterest ("set_connectInterpolators__", this);
       this ._channels        .addInterest ("set_interpolators__",        this);
       this ._values          .addInterest ("set_interpolators__",        this);
-      this ._startFrame      .addInterest ("set_startEndFrame__",        this);
-      this ._endFrame        .addInterest ("set_startEndFrame__",        this);
+      this ._startFrame      .addInterest ("set_start_or_endFrame__",    this);
+      this ._endFrame        .addInterest ("set_start_or_endFrame__",    this);
       this ._frameIndex      .addInterest ("set_frameIndex__",           this);
       this ._frameDuration   .addInterest ("set_frameDuration__",        this);
-      this ._next            .addInterest ("set_nextPrevious__",         this, 1);
-      this ._previous        .addInterest ("set_nextPrevious__",         this, -1);
+      this ._next            .addInterest ("set_next_or_previous__",     this, 1);
+      this ._previous        .addInterest ("set_next_or_previous__",     this, -1);
 
       this .set_interpolators__ ();
    },
@@ -259,7 +259,7 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
          }
       }
    },
-   set_startEndFrame__ ()
+   set_start_or_endFrame__ ()
    {
       const
          frameCount = this ._frameCount .getValue (),
@@ -294,7 +294,7 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
 
       this .timeSensor ._cycleInterval = frameCount * frameDuration;
    },
-   set_nextPrevious__ (direction, field)
+   set_next_or_previous__ (direction, field)
    {
       if (!field .getValue ())
          return;
