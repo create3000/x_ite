@@ -216,7 +216,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
 
       motionNodes .length = 0;
 
-      for (const [i, node] of this ._motions .entries ())
+      for (const node of this ._motion)
       {
          const motionNode = X3DCast (X3DConstants .HAnimMotion, node);
 
