@@ -56,6 +56,15 @@ Level Of Articulation 0..4 indicates complexity and detail of joints for given h
 - *loa* value of -1 indicates that no LOA conformance is provided.
 - [Humanoid Animation (HAnim) Specification, Part 1 Architecture, 4.8.4 Levels of articulation](https://www.web3d.org/documents/specifications/19774/V2.0/Architecture/concepts.html#LevelsOfArticulation){:target="_blank"}
 
+### SFString [in, out] **joints** ""
+
+*joints* field lists names of *joints* that raw motion data is to be applied to. The number and order of the names in the *joints* field shall match the number and order of the channels field information, and the number and order of the sets of values in the values field for each frame of the animation.
+
+#### Hints
+
+- Values are space or comma separated.
+- The joint name IGNORED shall be used for channel of motion data that is not used for any joint.
+
 ### MFBool [in, out] **channelsEnabled** [ ]
 
 Boolean values for each channel indicating whether enabled.
@@ -67,15 +76,6 @@ List of number of *channels* for transformation, followed by transformation type
 #### Hint
 
 - *channels* are enabled by default, unless otherwise indicated by channelsEnabled field.
-
-### SFString [in, out] **joints** ""
-
-*joints* field lists names of *joints* that raw motion data is to be applied to. The number and order of the names in the *joints* field shall match the number and order of the channels field information, and the number and order of the sets of values in the values field for each frame of the animation.
-
-#### Hints
-
-- Values are space or comma separated.
-- The joint name IGNORED shall be used for channel of motion data that is not used for any joint.
 
 ### MFFloat [in, out] **values** [ ] <small>(-∞,∞)</small>
 

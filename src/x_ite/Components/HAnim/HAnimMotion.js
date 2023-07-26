@@ -261,6 +261,8 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
             orientationInterpolator ._value_changed .addFieldInterest (jointNode ._rotation);
          }
       }
+
+      console .log (this .interpolators [0] .positionInterpolator .toVRMLString ())
    },
    set_start_or_endFrame__ ()
    {
@@ -367,9 +369,9 @@ Object .defineProperties (HAnimMotion,
          new X3DFieldDefinition (X3DConstants .inputOutput, "description",     new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",         new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "loa",             new Fields .SFInt32 (-1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "joints",          new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "channelsEnabled", new Fields .MFBool ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "channels",        new Fields .SFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "joints",          new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "values",          new Fields .MFFloat ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "frameIndex",      new Fields .SFInt32 (0)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "frameDuration",   new Fields .SFTime (0.1)),
