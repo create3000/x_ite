@@ -266,7 +266,7 @@ Object .defineProperties (DISEntityTypeMapping,
    },
    containerField:
    {
-      value: "mapping",
+      value: "children",
       enumerable: true,
    },
    specificationRange:

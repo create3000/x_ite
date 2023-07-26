@@ -266,6 +266,7 @@ function HAnimHumanoid (executionContext)
    this .viewpointsNode       = new (Group_default()) (executionContext);
    this .skinNode             = new (Group_default()) (executionContext);
    this .transformNode        = new (Transform_default()) (executionContext);
+   this .motionNodes          = [ ];
    this .jointNodes           = [ ];
    this .jointBindingMatrices = [ ];
    this .displacementWeights  = [ ];
@@ -373,15 +374,18 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (X3DChildNode_
 
       // Events
 
-      this ._joints                     .addInterest ("set_joints__",                     this);
+      this ._motionsEnabled             .addInterest ("set_motions__",                    this);
+      this ._motions                    .addInterest ("set_motions__",                    this);
       this ._jointBindingPositions      .addInterest ("set_joints__",                     this);
       this ._jointBindingRotations      .addInterest ("set_joints__",                     this);
       this ._jointBindingScales         .addInterest ("set_joints__",                     this);
+      this ._joints                     .addInterest ("set_joints__",                     this);
       this ._jointTextures              .addInterest ("set_jointTextures__",              this);
       this ._displacementsTexture       .addInterest ("set_displacementsTexture__",       this);
       this ._displacementWeightsTexture .addInterest ("set_displacementWeightsTexture__", this);
       this ._skinCoord                  .addInterest ("set_skinCoord__",                  this);
 
+      this .set_motions__ ();
       this .set_joints__ ();
       this .set_skinCoord__ ();
    },
@@ -392,6 +396,31 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (X3DChildNode_
    getMatrix ()
    {
       return this .transformNode .getMatrix ();
+   },
+   set_motions__ ()
+   {
+      const
+         motionsEnabled = this ._motionsEnabled,
+         motionNodes    = this .motionNodes;
+
+      for (const motionNode of motionNodes)
+         motionNode .setJoints ([ ]);
+
+      motionNodes .length = 0;
+
+      for (const [i, node] of this ._motions .entries ())
+      {
+         if (i < motionsEnabled .length && !motionsEnabled [i])
+            continue;
+
+         const motionNode = X3DCast_default() ((X3DConstants_default()).HAnimMotion, node);
+
+         if (motionNode)
+            motionNodes .push (motionNode);
+      }
+
+      for (const motionNode of motionNodes)
+         motionNode .setJoints (this .jointNodes);
    },
    set_joints__ ()
    {
@@ -452,6 +481,9 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (X3DChildNode_
       this ._jointTextures              .addEvent ();
       this ._displacementsTexture       .addEvent ();
       this ._displacementWeightsTexture .addEvent ();
+
+      for (const motionNode of this .motionNodes)
+         motionNode .setJoints (jointNodes);
    },
    set_jointTextures__ ()
    {
@@ -804,6 +836,7 @@ const X3DTransformNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.10.1"
 var X3DTransformNode_default = /*#__PURE__*/__webpack_require__.n(X3DTransformNode_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Vector3\")"
 const Vector3_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.10.1")] .require ("standard/Math/Numbers/Vector3");
+var Vector3_default = /*#__PURE__*/__webpack_require__.n(Vector3_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/HAnim/HAnimJoint.js
 /*******************************************************************************
  *
@@ -1007,6 +1040,21 @@ const HAnimJoint_default_ = HAnimJoint;
 
 Namespace_default().set ("x_ite/Components/HAnim/HAnimJoint", HAnimJoint_default_);
 /* harmony default export */ const HAnim_HAnimJoint = (HAnimJoint_default_);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Time/TimeSensor\")"
+const TimeSensor_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.10.1")] .require ("x_ite/Components/Time/TimeSensor");
+var TimeSensor_default = /*#__PURE__*/__webpack_require__.n(TimeSensor_namespaceObject);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Interpolation/PositionInterpolator\")"
+const PositionInterpolator_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.10.1")] .require ("x_ite/Components/Interpolation/PositionInterpolator");
+var PositionInterpolator_default = /*#__PURE__*/__webpack_require__.n(PositionInterpolator_namespaceObject);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Interpolation/OrientationInterpolator\")"
+const OrientationInterpolator_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.10.1")] .require ("x_ite/Components/Interpolation/OrientationInterpolator");
+var OrientationInterpolator_default = /*#__PURE__*/__webpack_require__.n(OrientationInterpolator_namespaceObject);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Rotation4\")"
+const Rotation4_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.10.1")] .require ("standard/Math/Numbers/Rotation4");
+var Rotation4_default = /*#__PURE__*/__webpack_require__.n(Rotation4_namespaceObject);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Algorithm\")"
+const Algorithm_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.10.1")] .require ("standard/Math/Algorithm");
+var Algorithm_default = /*#__PURE__*/__webpack_require__.n(Algorithm_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/HAnim/HAnimMotion.js
 /*******************************************************************************
  *
@@ -1061,11 +1109,22 @@ Namespace_default().set ("x_ite/Components/HAnim/HAnimJoint", HAnimJoint_default
 
 
 
+
+
+
+
+
+
 function HAnimMotion (executionContext)
 {
    X3DChildNode_default().call (this, executionContext);
 
+   this .addType ((X3DConstants_default()).X3DTimeDependentNode);
    this .addType ((X3DConstants_default()).HAnimMotion);
+
+   this .timeSensor    = new (TimeSensor_default()) (this .getExecutionContext ());
+   this .interpolators = [ ];
+   this .jointsIndex   = new Map ();
 }
 
 Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, (X3DChildNode_default()).prototype),
@@ -1073,6 +1132,267 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, (X3DChildNode_de
    initialize ()
    {
       X3DChildNode_default().prototype .initialize .call (this);
+
+      this ._enabled    .addFieldInterest (this .timeSensor ._enabled);
+      this ._loop       .addFieldInterest (this .timeSensor ._loop);
+      this ._startTime  .addFieldInterest (this .timeSensor ._startTime);
+      this ._resumeTime .addFieldInterest (this .timeSensor ._resumeTime);
+      this ._pauseTime  .addFieldInterest (this .timeSensor ._pauseTime);
+      this ._stopTime   .addFieldInterest (this .timeSensor ._stopTime);
+
+      this .timeSensor ._isPaused    .addFieldInterest (this ._isPaused);
+      this .timeSensor ._isActive    .addFieldInterest (this ._isActive);
+      this .timeSensor ._cycleTime   .addFieldInterest (this ._cycleTime);
+      this .timeSensor ._elapsedTime .addFieldInterest (this ._elapsedTime);
+
+      this .timeSensor ._enabled    = this ._enabled;
+      this .timeSensor ._loop       = this ._loop;
+      this .timeSensor ._startTime  = this ._startTime;
+      this .timeSensor ._resumeTime = this ._resumeTime;
+      this .timeSensor ._pauseTime  = this ._pauseTime;
+      this .timeSensor ._stopTime   = this ._stopTime;
+
+      this .timeSensor .setup ();
+
+      this ._channelsEnabled .addInterest ("set_connectInterpolators__", this);
+      this ._channels        .addInterest ("set_interpolators__",        this);
+      this ._joints          .addInterest ("set_connectInterpolators__", this);
+      this ._values          .addInterest ("set_interpolators__",        this);
+      this ._startFrame      .addInterest ("set_start_or_endFrame__",    this);
+      this ._endFrame        .addInterest ("set_start_or_endFrame__",    this);
+      this ._frameIndex      .addInterest ("set_frameIndex__",           this);
+      this ._frameDuration   .addInterest ("set_frameDuration__",        this);
+      this ._next            .addInterest ("set_next_or_previous__",     this, 1);
+      this ._previous        .addInterest ("set_next_or_previous__",     this, -1);
+
+      this .set_interpolators__ ();
+   },
+   setJoints (jointNodes)
+   {
+      // Create joints index.
+
+      const jointsIndex = this .jointsIndex;
+
+      jointsIndex .clear ();
+
+      for (const jointNode of jointNodes)
+         jointsIndex .set (jointNode ._name .getValue () .trim (), jointNode);
+
+      jointsIndex .delete ("IGNORED");
+
+      // Connect joint nodes.
+
+      this .set_connectInterpolators__ ();
+   },
+   set_interpolators__ ()
+   {
+      // Disconnect old interpolators.
+
+      const timeSensor = this .timeSensor;
+
+      for (const field of timeSensor ._fraction_changed .getFieldInterests ())
+         timeSensor ._fraction_changed .removeFieldInterest (field);
+
+      // Create interpolators.
+
+      const channels = this ._channels .getValue ()
+         .replace (/^[\s,\d]+|[\s,\d]+$/sg, "")
+         .split (/[\s,]+\d+[\s,]+/s)
+         .map (string => string .split (/[\s,]+/s));
+
+      const
+         values        = this ._values,
+         numChannels   = channels .reduce ((v, c) => v + c .length, 0),
+         frameCount    = Math .floor (numChannels ? values .length / numChannels : 0),
+         types         = new Map (),
+         interpolators = Array .from ({length: channels .length}, () => ({ }));
+
+      this .interpolators = interpolators;
+
+      for (let frame = 0, v = 0; frame < frameCount; ++ frame)
+      {
+         for (const [j, joint] of channels .entries ())
+         {
+            types .clear ();
+
+            for (const channel of joint)
+               types .set (channel, values [v ++]);
+
+            if (types .has ("Xposition") || types .has ("Yposition") || types .has ("Zposition"))
+            {
+               const interpolator = interpolators [j] .positionInterpolator
+                  ?? this .createPositionInterpolator (interpolators, j);
+
+               const
+                  key      = frame / (frameCount - 1),
+                  keyValue = new (Vector3_default()) (types .get ("Xposition") ?? 0,
+                                          types .get ("Yposition") ?? 0,
+                                          types .get ("Zposition") ?? 0);
+
+               interpolator ._key      .push (key);
+               interpolator ._keyValue .push (keyValue);
+            }
+
+            if (types .has ("Xrotation") || types .has ("Yrotation") || types .has ("Zrotation"))
+            {
+               const interpolator = interpolators [j] .orientationInterpolator
+                  ?? this .createOrientationInterpolator (interpolators, j);
+
+               const
+                  key      = frame / (frameCount - 1),
+                  keyValue = Rotation4_default().fromEuler (types .get ("Xrotation") ?? 0,
+                                                   types .get ("Yrotation") ?? 0,
+                                                   types .get ("Zrotation") ?? 0);
+
+               interpolator ._key      .push (key);
+               interpolator ._keyValue .push (keyValue);
+            }
+         }
+      }
+
+      for (const { positionInterpolator, orientationInterpolator } of interpolators)
+      {
+         positionInterpolator    ?.setup ();
+         orientationInterpolator ?.setup ();
+      }
+
+      this ._frameIndex = 0;
+      this ._startFrame = 0;
+      this ._endFrame   = frameCount - 1;
+      this ._frameCount = frameCount;
+
+      this .set_connectInterpolators__ ();
+      this .set_frameDuration__ ();
+   },
+   set_connectInterpolators__ ()
+   {
+      const
+         timeSensor      = this .timeSensor,
+         channelsEnabled = this ._channelsEnabled,
+         joints          = this ._joints .getValue () .replace (/^[\s,]+|[\s,]+$/sg, "") .split (/[\s,]+/s),
+         jointsIndex     = this .jointsIndex;
+
+      // Disconnect old joint nodes.
+
+      for (const { positionInterpolator, orientationInterpolator } of this .interpolators)
+      {
+         if (positionInterpolator)
+         {
+            for (const field of positionInterpolator ._value_changed .getFieldInterests ())
+               positionInterpolator ._value_changed .removeFieldInterest (field);
+         }
+
+         if (orientationInterpolator)
+         {
+            for (const field of orientationInterpolator ._value_changed .getFieldInterests ())
+               orientationInterpolator ._value_changed .removeFieldInterest (field);
+         }
+      }
+
+      // Connect interpolators.
+
+      if (!jointsIndex .size)
+         return;
+
+      for (const [j, { positionInterpolator, orientationInterpolator }] of this .interpolators .entries ())
+      {
+         if (j < channelsEnabled .length && !channelsEnabled [j])
+            continue;
+
+         if (j >= joints .length)
+            continue;
+
+         const jointNode = jointsIndex .get (joints [j]);
+
+         if (!jointNode)
+            continue;
+
+         if (positionInterpolator)
+         {
+            timeSensor ._fraction_changed .addFieldInterest (positionInterpolator ._set_fraction);
+            positionInterpolator ._value_changed .addFieldInterest (jointNode ._translation);
+         }
+
+         if (orientationInterpolator)
+         {
+            timeSensor ._fraction_changed .addFieldInterest (orientationInterpolator ._set_fraction);
+            orientationInterpolator ._value_changed .addFieldInterest (jointNode ._rotation);
+         }
+      }
+   },
+   set_start_or_endFrame__ ()
+   {
+      const
+         frameCount = this ._frameCount .getValue (),
+         startFrame = Algorithm_default().clamp (this ._startFrame .getValue (), 0, frameCount),
+         endFrame   = Algorithm_default().clamp (this ._endFrame   .getValue (), 0, frameCount);
+
+      this .startFrame             = Math .min (startFrame, endFrame);
+      this .endFrame               = Math .max (startFrame, endFrame);
+      this .timeSensor ._range [1] = frameCount > 1 ? this .startFrame / (frameCount - 1) : 0;
+      this .timeSensor ._range [2] = frameCount > 1 ? this .endFrame   / (frameCount - 1) : 0;
+   },
+   set_frameIndex__ ()
+   {
+      const
+         frameCount = this ._frameCount .getValue (),
+         frameIndex = Algorithm_default().clamp (this ._frameIndex .getValue (), 0, frameCount),
+         fraction   = frameCount > 1 ? frameIndex / (frameCount - 1) : 0;
+
+      this .timeSensor ._range [0] = fraction;
+
+      if (this ._enabled .getValue () && !this .timeSensor ._isActive .getValue ())
+      {
+         for (const field of this .timeSensor ._fraction_changed .getFieldInterests ())
+            field .setValue (fraction);
+      }
+   },
+   set_frameDuration__ ()
+   {
+      const
+         frameCount    = this ._frameCount .getValue (),
+         frameDuration = Math .max (this ._frameDuration .getValue (), 0);
+
+      this .timeSensor ._cycleInterval = frameCount * frameDuration;
+   },
+   set_next_or_previous__ (direction, field)
+   {
+      if (!field .getValue ())
+         return;
+
+      if (!this ._enabled .getValue ())
+         return;
+
+      const
+         frameIncrement = this ._frameIncrement .getValue (),
+         frameIndex     = this ._frameIndex .getValue () + frameIncrement * direction;
+
+      if (frameIndex > this .endFrame)
+      {
+         if (!this ._loop .getValue ())
+            return;
+
+         this ._frameIndex = this .startFrame;
+      }
+      else if (frameIndex < this .startFrame)
+      {
+         if (!this ._loop .getValue ())
+            return;
+
+         this ._frameIndex = this .endFrame;
+      }
+      else
+      {
+         this ._frameIndex = frameIndex;
+      }
+   },
+   createPositionInterpolator (interpolators, j)
+   {
+      return interpolators [j] .positionInterpolator = new (PositionInterpolator_default()) (this .getExecutionContext ());
+   },
+   createOrientationInterpolator (interpolators, j)
+   {
+      return interpolators [j] .orientationInterpolator = new (OrientationInterpolator_default()) (this .getExecutionContext ());
    },
 });
 
@@ -1090,7 +1410,7 @@ Object .defineProperties (HAnimMotion,
    },
    containerField:
    {
-      value: "children",
+      value: "motions",
       enumerable: true,
    },
    specificationRange:
@@ -1104,19 +1424,25 @@ Object .defineProperties (HAnimMotion,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",        new (Fields_default()).SFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "description",     new (Fields_default()).SFString ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "enabled",         new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,   "next",            new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,   "previous",        new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "startFrame",      new (Fields_default()).SFInt32 ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "endFrame",        new (Fields_default()).SFInt32 ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "frameDuration",   new (Fields_default()).SFTime (0.1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "frameIncrement",  new (Fields_default()).SFInt32 (1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "frameIndex",      new (Fields_default()).SFInt32 (0)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "loop",            new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "loa",             new (Fields_default()).SFInt32 (-1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "joints",          new (Fields_default()).SFString ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "channelsEnabled", new (Fields_default()).MFBool ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "channels",        new (Fields_default()).SFString ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "joints",          new (Fields_default()).SFString ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "loa",             new (Fields_default()).SFInt32 (-1)),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "values",          new (Fields_default()).MFFloat ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "frameIndex",      new (Fields_default()).SFInt32 (0)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "frameDuration",   new (Fields_default()).SFTime (0.1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "frameIncrement",  new (Fields_default()).SFInt32 (1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "startFrame",      new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "endFrame",        new (Fields_default()).SFInt32 ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,   "next",            new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,   "previous",        new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "loop",            new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "startTime",       new (Fields_default()).SFTime ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "resumeTime",      new (Fields_default()).SFTime ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "pauseTime",       new (Fields_default()).SFTime ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "stopTime",        new (Fields_default()).SFTime ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "isPaused",        new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "isActive",        new (Fields_default()).SFBool ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "cycleTime",       new (Fields_default()).SFTime ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "elapsedTime",     new (Fields_default()).SFTime ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "frameCount",      new (Fields_default()).SFInt32 ()),

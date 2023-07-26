@@ -256,13 +256,13 @@ Object .assign (Quaternion .prototype,
       const
          { x: qx, y: qy, z: qz, w: qw } = this,
          { x: vx, y: vy, z: vz } = vector,
-         a = qw * qw - qx * qx - qy * qy - qz * qz,
-         b = 2 * (vx * qx + vy * qy + vz * qz),
-         c = 2 * qw;
+         tx = 2 * (qy * vz - qz * vy),
+         ty = 2 * (qz * vx - qx * vz),
+         tz = 2 * (qx * vy - qy * vx);
 
-      vector .x = a * vx + b * qx + c * (qy * vz - qz * vy);
-      vector .y = a * vy + b * qy + c * (qz * vx - qx * vz);
-      vector .z = a * vz + b * qz + c * (qx * vy - qy * vx);
+      vector .x = vx + qw * tx + qy * tz - qz * ty;
+      vector .y = vy + qw * ty + qz * tx - qx * tz;
+      vector .z = vz + qw * tz + qx * ty - qy * tx;
 
       return vector;
    },
@@ -271,13 +271,13 @@ Object .assign (Quaternion .prototype,
       const
          { x: qx, y: qy, z: qz, w: qw } = this,
          { x: vx, y: vy, z: vz } = vector,
-         a = qw * qw - qx * qx - qy * qy - qz * qz,
-         b = 2 * (vx * qx + vy * qy + vz * qz),
-         c = 2 * qw;
+         tx = 2 * (qz * vy - qy * vz),
+         ty = 2 * (qx * vz - qz * vx),
+         tz = 2 * (qy * vx - qx * vy);
 
-      vector .x = a * vx + b * qx - c * (qy * vz - qz * vy);
-      vector .y = a * vy + b * qy - c * (qz * vx - qx * vz);
-      vector .z = a * vz + b * qz - c * (qx * vy - qy * vx);
+      vector .x = vx + qw * tx - qy * tz + qz * ty;
+      vector .y = vy + qw * ty - qz * tx + qx * tz;
+      vector .z = vz + qw * tz - qx * ty + qy * tx;
 
       return vector;
    },
