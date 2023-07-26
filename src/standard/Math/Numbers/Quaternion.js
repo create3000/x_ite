@@ -253,6 +253,8 @@ Object .assign (Quaternion .prototype,
    },
    multVecQuat (vector)
    {
+      // https://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles#Vector_rotation
+
       const
          { x: qx, y: qy, z: qz, w: qw } = this,
          { x: vx, y: vy, z: vz } = vector,
@@ -268,6 +270,8 @@ Object .assign (Quaternion .prototype,
    },
    multQuatVec (vector)
    {
+      // https://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles#Vector_rotation
+
       const
          { x: qx, y: qy, z: qz, w: qw } = this,
          { x: vx, y: vy, z: vz } = vector,
