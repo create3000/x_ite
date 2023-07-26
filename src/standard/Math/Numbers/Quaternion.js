@@ -165,9 +165,7 @@ Object .assign (Quaternion .prototype,
    },
    setEuler (x, y, z, order = "XYZ")
    {
-		// http://www.mathworks.com/matlabcentral/fileexchange/
-		// 	20696-function-to-convert-between-dcm-euler-angles-quaternions-and-euler-vectors/
-		//	content/SpinCalc.m
+		// http://www.mathworks.com/matlabcentral/fileexchange/20696-function-to-convert-between-dcm-euler-angles-quaternions-and-euler-vectors/content/SpinCalc.m
 
       const
 		   c1 = Math .cos (x / 2),
