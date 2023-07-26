@@ -262,9 +262,9 @@ Object .assign (Quaternion .prototype,
          ty = 2 * (qz * vx - qx * vz),
          tz = 2 * (qx * vy - qy * vx);
 
-      vector .x = vx + qw * tx + qy * tz - qz * ty;
-      vector .y = vy + qw * ty + qz * tx - qx * tz;
-      vector .z = vz + qw * tz + qx * ty - qy * tx;
+      vector .x += qw * tx + qy * tz - qz * ty;
+      vector .y += qw * ty + qz * tx - qx * tz;
+      vector .z += qw * tz + qx * ty - qy * tx;
 
       return vector;
    },
@@ -279,9 +279,9 @@ Object .assign (Quaternion .prototype,
          ty = 2 * (qx * vz - qz * vx),
          tz = 2 * (qy * vx - qx * vy);
 
-      vector .x = vx + qw * tx - qy * tz + qz * ty;
-      vector .y = vy + qw * ty - qz * tx + qx * tz;
-      vector .z = vz + qw * tz - qx * ty + qy * tx;
+      vector .x += qw * tx - qy * tz + qz * ty;
+      vector .y += qw * ty - qz * tx + qx * tz;
+      vector .z += qw * tz - qx * ty + qy * tx;
 
       return vector;
    },
