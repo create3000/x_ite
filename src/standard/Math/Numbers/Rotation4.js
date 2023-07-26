@@ -303,19 +303,15 @@ Object .assign (Rotation4 .prototype,
    {
       return this [_quaternion] .getMatrix (matrix);
    },
-   setEuler (x, y, z)
+   setEuler (x, y, z, order = "XYZ")
    {
-      const maxAngle = Math .max (Math .abs (x), Math .abs (y), Math .abs (z));
-
-      this .set (x, y, z, Math .abs (Algorithm .radians (maxAngle))) .update ();
-
-      return this;
-   },
-   getEuler (euler = [ ])
+		this [_quaternion] .setEuler (x, y, z, order) .normalize ();
+      this .update ();
+		return this;
+	},
+   getEuler (euler = [ ], order = "XYZ")
    {
-      const { x, y, z, w } = this [_quaternion];
-
-      return euler;
+      return this [_quaternion] .getEuler (euler, order);
    },
    equals (rotation)
    {
@@ -457,9 +453,9 @@ Object .defineProperties (Rotation4 .prototype,
 Object .assign (Rotation4,
 {
    Identity: new Rotation4 (),
-   fromEuler (x, y, z)
+   fromEuler (x, y, z, order = "XYZ")
    {
-      return new Rotation4 () .setEuler (x, y, z);
+      return new Rotation4 () .setEuler (x, y, z, order);
    },
    spline (r0, r1, r2)
    {

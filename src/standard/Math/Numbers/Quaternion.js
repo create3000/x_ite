@@ -163,6 +163,181 @@ Object .assign (Quaternion .prototype,
 
       return matrix;
    },
+   setEuler (x, y, z, order = "XYZ")
+   {
+		// http://www.mathworks.com/matlabcentral/fileexchange/
+		// 	20696-function-to-convert-between-dcm-euler-angles-quaternions-and-euler-vectors/
+		//	content/SpinCalc.m
+
+      const
+		   c1 = Math .cos (x / 2),
+		   c2 = Math .cos (y / 2),
+		   c3 = Math .cos (z / 2),
+		   s1 = Math .sin (x / 2),
+		   s2 = Math .sin (y / 2),
+		   s3 = Math .sin (z / 2);
+
+		switch (order)
+      {
+			case "XYZ":
+				this .x = s1 * c2 * c3 + c1 * s2 * s3,
+				this .y = c1 * s2 * c3 - s1 * c2 * s3,
+				this .z = c1 * c2 * s3 + s1 * s2 * c3,
+				this .w = c1 * c2 * c3 - s1 * s2 * s3
+				break;
+
+			case "YXZ":
+				this ._x = s1 * c2 * c3 + c1 * s2 * s3;
+				this ._y = c1 * s2 * c3 - s1 * c2 * s3;
+				this ._z = c1 * c2 * s3 - s1 * s2 * c3;
+				this ._w = c1 * c2 * c3 + s1 * s2 * s3;
+				break;
+
+			case "ZXY":
+				this .x = s1 * c2 * c3 - c1 * s2 * s3;
+				this .y = c1 * s2 * c3 + s1 * c2 * s3;
+				this .z = c1 * c2 * s3 + s1 * s2 * c3;
+				this .w = c1 * c2 * c3 - s1 * s2 * s3;
+				break;
+
+			case "ZYX":
+				this .x = s1 * c2 * c3 - c1 * s2 * s3;
+				this .y = c1 * s2 * c3 + s1 * c2 * s3;
+				this .z = c1 * c2 * s3 - s1 * s2 * c3;
+				this .w = c1 * c2 * c3 + s1 * s2 * s3;
+				break;
+
+			case "YZX":
+				this .x = s1 * c2 * c3 + c1 * s2 * s3;
+				this .y = c1 * s2 * c3 + s1 * c2 * s3;
+				this .z = c1 * c2 * s3 - s1 * s2 * c3;
+				this .w = c1 * c2 * c3 - s1 * s2 * s3;
+				break;
+
+			case "XZY":
+				this .x = s1 * c2 * c3 - c1 * s2 * s3;
+				this .y = c1 * s2 * c3 - s1 * c2 * s3;
+				this .z = c1 * c2 * s3 + s1 * s2 * c3;
+				this .w = c1 * c2 * c3 + s1 * s2 * s3;
+				break;
+		}
+
+		return this;
+	},
+   getEuler (euler = [ ], order = "XYZ")
+   {
+      const { 0: m0, 1: m1, 2: m2, 3: m3, 4: m4, 5: m5, 6: m6, 7: m7, 8: m8 } = this .getMatrix ();
+
+		switch (order)
+      {
+			case "XYZ":
+         {
+				euler [1] = Math .asin (Algorithm .clamp (m6, -1, 1));
+
+				if (Math .abs (m6) < 0.9999999)
+            {
+					euler [0] = Math .atan2 (-m7, m8);
+					euler [2] = Math .atan2 (-m3, m0);
+				}
+            else
+            {
+					euler [0] = Math .atan2 (m5, m4);
+					euler [2] = 0;
+				}
+
+				break;
+         }
+			case "YXZ":
+         {
+				euler [0] = Math .asin (- Algorithm .clamp (m7, -1, 1));
+
+				if (Math .abs (m7) < 0.9999999)
+            {
+					euler [1] = Math .atan2 (m6, m8);
+					euler [2] = Math .atan2 (m1, m4);
+
+				}
+            else
+            {
+					euler [1] = Math .atan2 (-m2, m0);
+					euler [2] = 0;
+				}
+
+				break;
+         }
+			case "ZXY":
+         {
+				euler [0] = Math .asin (Algorithm .clamp (m5, -1, 1));
+
+				if (Math .abs (m5) < 0.9999999)
+            {
+					euler [1] = Math .atan2 (-m2, m8);
+					euler [2] = Math .atan2 (-m3, m4);
+				}
+            else
+            {
+					euler [1] = 0;
+					euler [2] = Math .atan2 (m1, m0);
+				}
+
+				break;
+         }
+			case "ZYX":
+         {
+				euler [1] = Math .asin (- Algorithm .clamp (m2, -1, 1));
+
+				if (Math .abs (m2) < 0.9999999)
+            {
+					euler [0] = Math .atan2 (m5, m8);
+					euler [2] = Math .atan2 (m1, m0);
+				}
+            else
+            {
+					euler [0] = 0;
+					euler [2] = Math .atan2 (-m3, m4);
+				}
+
+				break;
+         }
+			case "YZX":
+         {
+				euler [2] = Math .asin (Algorithm .clamp (m1, -1, 1));
+
+				if (Math .abs (m1) < 0.9999999)
+            {
+					euler [0] = Math .atan2 (-m7, m4);
+					euler [1] = Math .atan2 (-m2, m0);
+				}
+            else
+            {
+					euler [0] = 0;
+					euler [1] = Math .atan2 (m6, m8);
+				}
+
+				break;
+         }
+			case "XZY":
+         {
+				euler [2] = Math .asin (- Algorithm .clamp (m3, -1, 1));
+
+				if (Math .abs (m3) < 0.9999999)
+            {
+					euler [0] = Math .atan2 (m5, m4);
+					euler [1] = Math .atan2 (m6, m0);
+
+				}
+            else
+            {
+					euler [0] = Math .atan2 (-m7, m8);
+					euler [1] = 0;
+				}
+
+				break;
+         }
+		}
+
+		return euler;
+   },
    isReal ()
    {
       return !(this .x || this .y || this .z);

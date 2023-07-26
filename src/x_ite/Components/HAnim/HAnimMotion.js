@@ -182,9 +182,9 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
 
                const
                   key      = frame / (frameCount - 1),
-                  keyValue = Rotation4 .fromEuler (types .get ("Xrotation") ?? 0,
-                                                   types .get ("Yrotation") ?? 0,
-                                                   types .get ("Zrotation") ?? 0);
+                  keyValue = Rotation4 .fromEuler (Algorithm .radians (types .get ("Xrotation") ?? 0),
+                                                   Algorithm .radians (types .get ("Yrotation") ?? 0),
+                                                   Algorithm .radians (types .get ("Zrotation") ?? 0));
 
                interpolator ._key      .push (key);
                interpolator ._keyValue .push (keyValue);
