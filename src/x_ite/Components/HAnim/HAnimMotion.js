@@ -244,7 +244,8 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
          if (j >= joints .length)
             continue;
 
-         const jointNode = jointsIndex .get (joints [j]);
+         const jointNode = jointsIndex .get (joints [j])
+            ?? (positionInterpolator && jointsIndex .get ("humanoid_root"));
 
          if (!jointNode)
             continue;
@@ -295,7 +296,7 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
          frameCount    = this ._frameCount .getValue (),
          frameDuration = Math .max (this ._frameDuration .getValue (), 0);
 
-      this .timeSensor ._cycleInterval = frameCount * frameDuration;
+      this .timeSensor ._cycleInterval = frameCount ? (frameCount - 1) * frameDuration : 0;
    },
    set_next_or_previous__ (direction, field)
    {
@@ -371,14 +372,14 @@ Object .defineProperties (HAnimMotion,
          new X3DFieldDefinition (X3DConstants .inputOutput, "channelsEnabled", new Fields .MFBool ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "channels",        new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "values",          new Fields .MFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "loop",            new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,   "next",            new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,   "previous",        new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "frameIndex",      new Fields .SFInt32 (0)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "frameDuration",   new Fields .SFTime (0.1)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "frameIncrement",  new Fields .SFInt32 (1)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "startFrame",      new Fields .SFInt32 ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "endFrame",        new Fields .SFInt32 ()),
-         new X3DFieldDefinition (X3DConstants .inputOnly,   "next",            new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .inputOnly,   "previous",        new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "loop",            new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "startTime",       new Fields .SFTime ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "resumeTime",      new Fields .SFTime ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "pauseTime",       new Fields .SFTime ()),
