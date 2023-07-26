@@ -454,6 +454,14 @@ Object .defineProperties (Rotation4 .prototype,
 Object .assign (Rotation4,
 {
    Identity: new Rotation4 (),
+   fromQuaternion (quaternion)
+   {
+      return new Rotation4 () .setQuaternion (quaternion);
+   },
+   fromMatrix (matrix)
+   {
+      return new Rotation4 () .setMatrix (matrix);
+   },
    fromEuler (x, y, z, order = "XYZ")
    {
       return new Rotation4 () .setEuler (x, y, z, order);

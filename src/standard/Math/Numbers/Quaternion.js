@@ -178,10 +178,10 @@ Object .assign (Quaternion .prototype,
 		switch (order)
       {
 			case "XYZ":
-				this .x = s1 * c2 * c3 + c1 * s2 * s3,
-				this .y = c1 * s2 * c3 - s1 * c2 * s3,
-				this .z = c1 * c2 * s3 + s1 * s2 * c3,
-				this .w = c1 * c2 * c3 - s1 * s2 * s3
+				this .x = s1 * c2 * c3 + c1 * s2 * s3;
+				this .y = c1 * s2 * c3 - s1 * c2 * s3;
+				this .z = c1 * c2 * s3 + s1 * s2 * c3;
+				this .w = c1 * c2 * c3 - s1 * s2 * s3;
 				break;
 
 			case "YXZ":
@@ -224,7 +224,7 @@ Object .assign (Quaternion .prototype,
 	},
    getEuler (euler = [ ], order = "XYZ")
    {
-      const { 0: m0, 1: m1, 2: m2, 3: m3, 4: m4, 5: m5, 6: m6, 7: m7, 8: m8 } = this .getMatrix ();
+      const { 0: m0, 1: m1, 2: m2, 3: m3, 4: m4, 5: m5, 6: m6, 7: m7, 8: m8 } = this .getMatrix (m);
 
 		switch (order)
       {
@@ -659,6 +659,7 @@ Object .assign (Quaternion,
 const
    t1 = new Quaternion (0, 0, 0, 1),
    t2 = new Quaternion (0, 0, 0, 1),
-   t3 = new Quaternion (0, 0, 0, 1);
+   t3 = new Quaternion (0, 0, 0, 1),
+   m  = new Matrix3 ();
 
 export default Quaternion;

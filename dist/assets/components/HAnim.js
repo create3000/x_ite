@@ -547,7 +547,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (X3DChildNode_
             const d = displacerNode ._displacements;
 
             for (const [i, index] of displacerNode ._coordIndex .entries ())
-               displacements [index] ?.push (... d [i]);
+               displacements [index] ?.push (... d [i], j);
          }
       }
 
@@ -1240,9 +1240,9 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, (X3DChildNode_de
 
                const
                   key      = frame / (frameCount - 1),
-                  keyValue = Rotation4_default().fromEuler (types .get ("Xrotation") ?? 0,
-                                                   types .get ("Yrotation") ?? 0,
-                                                   types .get ("Zrotation") ?? 0);
+                  keyValue = Rotation4_default().fromEuler (Algorithm_default().radians (types .get ("Xrotation") ?? 0),
+                                                   Algorithm_default().radians (types .get ("Yrotation") ?? 0),
+                                                   Algorithm_default().radians (types .get ("Zrotation") ?? 0));
 
                interpolator ._key      .push (key);
                interpolator ._keyValue .push (keyValue);
@@ -1302,7 +1302,8 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, (X3DChildNode_de
          if (j >= joints .length)
             continue;
 
-         const jointNode = jointsIndex .get (joints [j]);
+         const jointNode = jointsIndex .get (joints [j])
+            ?? (positionInterpolator && jointsIndex .get ("humanoid_root"));
 
          if (!jointNode)
             continue;
@@ -1353,7 +1354,7 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, (X3DChildNode_de
          frameCount    = this ._frameCount .getValue (),
          frameDuration = Math .max (this ._frameDuration .getValue (), 0);
 
-      this .timeSensor ._cycleInterval = frameCount * frameDuration;
+      this .timeSensor ._cycleInterval = frameCount ? (frameCount - 1) * frameDuration : 0;
    },
    set_next_or_previous__ (direction, field)
    {
@@ -1429,14 +1430,14 @@ Object .defineProperties (HAnimMotion,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "channelsEnabled", new (Fields_default()).MFBool ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "channels",        new (Fields_default()).SFString ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "values",          new (Fields_default()).MFFloat ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "loop",            new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,   "next",            new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,   "previous",        new (Fields_default()).SFBool ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "frameIndex",      new (Fields_default()).SFInt32 (0)),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "frameDuration",   new (Fields_default()).SFTime (0.1)),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "frameIncrement",  new (Fields_default()).SFInt32 (1)),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "startFrame",      new (Fields_default()).SFInt32 ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "endFrame",        new (Fields_default()).SFInt32 ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,   "next",            new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,   "previous",        new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "loop",            new (Fields_default()).SFBool ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "startTime",       new (Fields_default()).SFTime ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "resumeTime",      new (Fields_default()).SFTime ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "pauseTime",       new (Fields_default()).SFTime ()),
