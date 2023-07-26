@@ -305,7 +305,8 @@ Object .assign (Rotation4 .prototype,
    },
    setEuler (x, y, z, order = "XYZ")
    {
-		this [_quaternion] .setEuler (x, y, z, order) .normalize ();
+      // Quaternion is then already normalized.
+		this [_quaternion] .setEuler (x, y, z, order);
       this .update ();
 		return this;
 	},
