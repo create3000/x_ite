@@ -98,6 +98,7 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
 
       this ._channelsEnabled .addInterest ("set_connectInterpolators__", this);
       this ._channels        .addInterest ("set_interpolators__",        this);
+      this ._joints          .addInterest ("set_connectInterpolators__", this);
       this ._values          .addInterest ("set_interpolators__",        this);
       this ._startFrame      .addInterest ("set_start_or_endFrame__",    this);
       this ._endFrame        .addInterest ("set_start_or_endFrame__",    this);
@@ -110,23 +111,6 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
    },
    setJoints (jointNodes)
    {
-      // Disconnect old joint nodes.
-
-      for (const { positionInterpolator, orientationInterpolator } of this .interpolators)
-      {
-         if (positionInterpolator)
-         {
-            for (const field of positionInterpolator ._value_changed .getFieldInterests ())
-               positionInterpolator ._value_changed .removeFieldInterest (field);
-         }
-
-         if (orientationInterpolator)
-         {
-            for (const field of orientationInterpolator ._value_changed .getFieldInterests ())
-               orientationInterpolator ._value_changed .removeFieldInterest (field);
-         }
-      }
-
       // Create joints index.
 
       const jointsIndex = this .jointsIndex;
@@ -229,6 +213,25 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
          channelsEnabled = this ._channelsEnabled,
          joints          = this ._joints .getValue () .replace (/^[\s,]+|[\s,]+$/sg, "") .split (/[\s,]+/s),
          jointsIndex     = this .jointsIndex;
+
+      // Disconnect old joint nodes.
+
+      for (const { positionInterpolator, orientationInterpolator } of this .interpolators)
+      {
+         if (positionInterpolator)
+         {
+            for (const field of positionInterpolator ._value_changed .getFieldInterests ())
+               positionInterpolator ._value_changed .removeFieldInterest (field);
+         }
+
+         if (orientationInterpolator)
+         {
+            for (const field of orientationInterpolator ._value_changed .getFieldInterests ())
+               orientationInterpolator ._value_changed .removeFieldInterest (field);
+         }
+      }
+
+      // Connect interpolators.
 
       if (!jointsIndex .size)
          return;

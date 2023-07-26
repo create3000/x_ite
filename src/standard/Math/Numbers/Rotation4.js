@@ -305,21 +305,17 @@ Object .assign (Rotation4 .prototype,
    },
    setEuler (x, y, z)
    {
-      const
-         absoluteX = Math .abs (x),
-         absoluteY = Math .abs (y),
-         absoluteZ = Math .abs (z);
+      const maxAngle = Math .max (Math .abs (x), Math .abs (y), Math .abs (z));
 
-      const
-         maxAngle = Math .max (absoluteX, absoluteY, absoluteZ),
-         ratio    = maxAngle > 0 ? 1 / maxAngle : 0; // avoid divide-by-zero problems
-
-      this .set (x * ratio,
-                 y * ratio,
-                 z * ratio,
-                 Math .abs (maxAngle * (Math .PI / 180)));
+      this .set (x, y, z, Math .abs (Algorithm .radians (maxAngle))) .update ();
 
       return this;
+   },
+   getEuler (euler = [ ])
+   {
+      const { x, y, z, w } = this [_quaternion];
+
+      return euler;
    },
    equals (rotation)
    {
