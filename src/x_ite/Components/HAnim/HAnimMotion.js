@@ -261,8 +261,6 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
             orientationInterpolator ._value_changed .addFieldInterest (jointNode ._rotation);
          }
       }
-
-      console .log (this .interpolators [0] .positionInterpolator .toVRMLString ())
    },
    set_start_or_endFrame__ ()
    {
