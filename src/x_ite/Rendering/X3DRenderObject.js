@@ -1140,15 +1140,16 @@ function assign (lhs, rhs)
    lhs .length = length;
 }
 
-function transparencyCompare (a, b)
+function transparencyCompare ({ geometryType: aGeometryType, distance: aDistance },
+                              { geometryType: bGeometryType, distance: bDistance })
 {
-   if (a .geometryType > b .geometryType)
+   if (aGeometryType > bGeometryType)
       return true;
 
-   if (a .geometryType < b .geometryType)
+   if (aGeometryType < bGeometryType)
       return false;
 
-   return a .distance < b .distance;
+   return aDistance < bDistance;
 }
 
 export default X3DRenderObject;
