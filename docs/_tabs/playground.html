@@ -88,15 +88,24 @@ $(function ()
    console .info (X3D .getBrowser () .getWelcomeMessage ());
 
    const box = `<X3D profile='Full' version='4.0'>
-   <Scene>
-      <Shape>
-         <Appearance>
-            <Material
-                  diffuseColor='0 0.5 1'></Material>
-         </Appearance>
-         <Box></Box>
-      </Shape>
-   </Scene>
+  <Scene>
+    <Viewpoint
+        description='Initial View'
+        position='4.737889 4.718629 7.435519'
+        orientation='-0.640652763184828 0.744770464531058 0.186764536745701 0.746185800293648'/>
+    <ParticleSystem
+        geometryType='GEOMETRY'
+        maxParticles='10'>
+      <PointEmitter
+          direction='0 0 0'
+          speed='1'/>
+      <Appearance>
+        <Material
+            diffuseColor='0 0.5 1'/>
+      </Appearance>
+      <Box/>
+    </ParticleSystem>
+  </Scene>
 </X3D>
 `;
 
