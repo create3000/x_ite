@@ -112,6 +112,10 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
 
       jointsIndex .delete ("IGNORED");
 
+      // If there are no joints, disable timer.
+
+      this .timeSensor ._enabled = this .jointsIndex .size;
+
       // Connect joint nodes.
 
       this .set_enabled__ ();
@@ -119,7 +123,7 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
    },
    set_enabled__ ()
    {
-      if (this ._enabled .getValue () && this .jointsIndex .size)
+      if (this ._enabled .getValue ())
          this .timeSensor ._startTime = Date .now () / 1000;
       else
          this .timeSensor ._stopTime = Date .now () / 1000;
