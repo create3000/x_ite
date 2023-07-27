@@ -92,6 +92,10 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
          protoNode = this [_protoNode],
          proto     = protoNode .getProtoDeclaration ();
 
+      // Assign field definitions.
+
+      this [_fieldDefinitions] .assign (protoNode .getFieldDefinitions ());
+
       // If there is a proto, the externproto is completely loaded.
 
       if (protoNode .isExternProto)
@@ -171,10 +175,6 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
    },
    update ()
    {
-      // Assign field definitions.
-
-      this [_fieldDefinitions] .assign (this [_protoNode] .getFieldDefinitions ());
-
       // Remove old fields.
 
       const
@@ -188,7 +188,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
 
       this [_protoFields] = new Map (Array .from (this [_protoNode] .getUserDefinedFields (), f => [f, f .getName ()]));
 
-      for (const fieldDefinition of this .getFieldDefinitions ())
+      for (const fieldDefinition of this [_protoNode] .getFieldDefinitions ())
          this .addPredefinedField (fieldDefinition);
 
       // Reuse old fields, and therefor routes.
