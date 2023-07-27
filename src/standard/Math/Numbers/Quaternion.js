@@ -184,11 +184,18 @@ Object .assign (Quaternion .prototype,
 				this .w = c1 * c2 * c3 - s1 * s2 * s3;
 				break;
 
+         case "ZYX":
+            this .x = s1 * c2 * c3 - c1 * s2 * s3;
+            this .y = c1 * s2 * c3 + s1 * c2 * s3;
+            this .z = c1 * c2 * s3 - s1 * s2 * c3;
+            this .w = c1 * c2 * c3 + s1 * s2 * s3;
+            break;
+
 			case "YXZ":
-				this ._x = s1 * c2 * c3 + c1 * s2 * s3;
-				this ._y = c1 * s2 * c3 - s1 * c2 * s3;
-				this ._z = c1 * c2 * s3 - s1 * s2 * c3;
-				this ._w = c1 * c2 * c3 + s1 * s2 * s3;
+				this .x = s1 * c2 * c3 + c1 * s2 * s3;
+				this .y = c1 * s2 * c3 - s1 * c2 * s3;
+				this .z = c1 * c2 * s3 - s1 * s2 * c3;
+				this .w = c1 * c2 * c3 + s1 * s2 * s3;
 				break;
 
 			case "ZXY":
@@ -196,13 +203,6 @@ Object .assign (Quaternion .prototype,
 				this .y = c1 * s2 * c3 + s1 * c2 * s3;
 				this .z = c1 * c2 * s3 + s1 * s2 * c3;
 				this .w = c1 * c2 * c3 - s1 * s2 * s3;
-				break;
-
-			case "ZYX":
-				this .x = s1 * c2 * c3 - c1 * s2 * s3;
-				this .y = c1 * s2 * c3 + s1 * c2 * s3;
-				this .z = c1 * c2 * s3 - s1 * s2 * c3;
-				this .w = c1 * c2 * c3 + s1 * s2 * s3;
 				break;
 
 			case "YZX":
@@ -245,6 +245,23 @@ Object .assign (Quaternion .prototype,
 
 				break;
          }
+			case "ZYX":
+         {
+				euler [1] = Math .asin (- Algorithm .clamp (m2, -1, 1));
+
+				if (Math .abs (m2) < 0.9999999)
+            {
+					euler [0] = Math .atan2 (m5, m8);
+					euler [2] = Math .atan2 (m1, m0);
+				}
+            else
+            {
+					euler [0] = 0;
+					euler [2] = Math .atan2 (-m3, m4);
+				}
+
+				break;
+         }
 			case "YXZ":
          {
 				euler [0] = Math .asin (- Algorithm .clamp (m7, -1, 1));
@@ -276,23 +293,6 @@ Object .assign (Quaternion .prototype,
             {
 					euler [1] = 0;
 					euler [2] = Math .atan2 (m1, m0);
-				}
-
-				break;
-         }
-			case "ZYX":
-         {
-				euler [1] = Math .asin (- Algorithm .clamp (m2, -1, 1));
-
-				if (Math .abs (m2) < 0.9999999)
-            {
-					euler [0] = Math .atan2 (m5, m8);
-					euler [2] = Math .atan2 (m1, m0);
-				}
-            else
-            {
-					euler [0] = 0;
-					euler [2] = Math .atan2 (-m3, m4);
 				}
 
 				break;

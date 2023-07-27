@@ -1119,7 +1119,6 @@ function HAnimMotion (executionContext)
 {
    X3DChildNode_default().call (this, executionContext);
 
-   this .addType ((X3DConstants_default()).X3DTimeDependentNode);
    this .addType ((X3DConstants_default()).HAnimMotion);
 
    this .timeSensor    = new (TimeSensor_default()) (this .getExecutionContext ());
@@ -1133,27 +1132,17 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, (X3DChildNode_de
    {
       X3DChildNode_default().prototype .initialize .call (this);
 
-      this ._enabled    .addFieldInterest (this .timeSensor ._enabled);
-      this ._loop       .addFieldInterest (this .timeSensor ._loop);
-      this ._startTime  .addFieldInterest (this .timeSensor ._startTime);
-      this ._resumeTime .addFieldInterest (this .timeSensor ._resumeTime);
-      this ._pauseTime  .addFieldInterest (this .timeSensor ._pauseTime);
-      this ._stopTime   .addFieldInterest (this .timeSensor ._stopTime);
+      this ._loop .addFieldInterest (this .timeSensor ._loop);
 
-      this .timeSensor ._isPaused    .addFieldInterest (this ._isPaused);
-      this .timeSensor ._isActive    .addFieldInterest (this ._isActive);
       this .timeSensor ._cycleTime   .addFieldInterest (this ._cycleTime);
       this .timeSensor ._elapsedTime .addFieldInterest (this ._elapsedTime);
 
-      this .timeSensor ._enabled    = this ._enabled;
-      this .timeSensor ._loop       = this ._loop;
-      this .timeSensor ._startTime  = this ._startTime;
-      this .timeSensor ._resumeTime = this ._resumeTime;
-      this .timeSensor ._pauseTime  = this ._pauseTime;
-      this .timeSensor ._stopTime   = this ._stopTime;
+      this .timeSensor ._loop     = this ._loop;
+      this .timeSensor ._stopTime = 1;
 
       this .timeSensor .setup ();
 
+      this ._enabled         .addInterest ("set_enabled__",              this);
       this ._channelsEnabled .addInterest ("set_connectInterpolators__", this);
       this ._channels        .addInterest ("set_interpolators__",        this);
       this ._joints          .addInterest ("set_connectInterpolators__", this);
@@ -1165,6 +1154,7 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, (X3DChildNode_de
       this ._next            .addInterest ("set_next_or_previous__",     this, 1);
       this ._previous        .addInterest ("set_next_or_previous__",     this, -1);
 
+      this .set_enabled__ ();
       this .set_interpolators__ ();
    },
    setJoints (jointNodes)
@@ -1180,9 +1170,21 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, (X3DChildNode_de
 
       jointsIndex .delete ("IGNORED");
 
+      // If there are no joints, disable timer.
+
+      this .timeSensor ._enabled = this .jointsIndex .size;
+
       // Connect joint nodes.
 
+      this .set_enabled__ ();
       this .set_connectInterpolators__ ();
+   },
+   set_enabled__ ()
+   {
+      if (this ._enabled .getValue ())
+         this .timeSensor ._startTime = Date .now () / 1000;
+      else
+         this .timeSensor ._stopTime = Date .now () / 1000;
    },
    set_interpolators__ ()
    {
@@ -1342,11 +1344,11 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, (X3DChildNode_de
 
       this .timeSensor ._range [0] = fraction;
 
-      if (this ._enabled .getValue () && !this .timeSensor ._isActive .getValue ())
-      {
-         for (const field of this .timeSensor ._fraction_changed .getFieldInterests ())
-            field .setValue (fraction);
-      }
+      if (this .timeSensor ._isActive .getValue ())
+         return;
+
+      for (const field of this .timeSensor ._fraction_changed .getFieldInterests ())
+         field .setValue (fraction);
    },
    set_frameDuration__ ()
    {
@@ -1354,19 +1356,18 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, (X3DChildNode_de
          frameCount    = this ._frameCount .getValue (),
          frameDuration = Math .max (this ._frameDuration .getValue (), 0);
 
-      this .timeSensor ._cycleInterval = frameCount ? (frameCount - 1) * frameDuration : 0;
+      this .timeSensor ._cycleInterval = frameCount > 1 ? (frameCount - 1) * frameDuration : 0;
    },
    set_next_or_previous__ (direction, field)
    {
       if (!field .getValue ())
          return;
 
-      if (!this ._enabled .getValue ())
-         return;
-
       const
+         fraction       = this .getFraction (),
+         frameCount     = this ._frameCount .getValue (),
          frameIncrement = this ._frameIncrement .getValue (),
-         frameIndex     = this ._frameIndex .getValue () + frameIncrement * direction;
+         frameIndex     = (frameCount > 1 ? Math .floor (fraction * (frameCount - 1)) : 0) + frameIncrement * direction;
 
       if (frameIndex > this .endFrame)
       {
@@ -1394,6 +1395,13 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, (X3DChildNode_de
    createOrientationInterpolator (interpolators, j)
    {
       return interpolators [j] .orientationInterpolator = new (OrientationInterpolator_default()) (this .getExecutionContext ());
+   },
+   getFraction ()
+   {
+      for (const field of this .timeSensor ._fraction_changed .getFieldInterests ())
+         return field .getValue ();
+
+      return 0;
    },
 });
 
@@ -1438,12 +1446,6 @@ Object .defineProperties (HAnimMotion,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "frameIncrement",  new (Fields_default()).SFInt32 (1)),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "startFrame",      new (Fields_default()).SFInt32 ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "endFrame",        new (Fields_default()).SFInt32 ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "startTime",       new (Fields_default()).SFTime ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "resumeTime",      new (Fields_default()).SFTime ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "pauseTime",       new (Fields_default()).SFTime ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "stopTime",        new (Fields_default()).SFTime ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "isPaused",        new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "isActive",        new (Fields_default()).SFBool ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "cycleTime",       new (Fields_default()).SFTime ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "elapsedTime",     new (Fields_default()).SFTime ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "frameCount",      new (Fields_default()).SFInt32 ()),
