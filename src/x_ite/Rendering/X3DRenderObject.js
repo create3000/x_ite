@@ -97,7 +97,7 @@ function X3DRenderObject (executionContext)
    this .shadowShapes             = [ ];
    this .opaqueShapes             = [ ];
    this .transparentShapes        = [ ];
-   this .transparencySorter       = new MergeSort (this .transparentShapes, (a, b) => a .distance < b .distance);
+   this .transparencySorter       = new MergeSort (this .transparentShapes, transparencyCompare);
    this .speed                    = 0;
 
    try
@@ -641,7 +641,8 @@ Object .assign (X3DRenderObject .prototype,
 
                var renderContext = this .transparentShapes [num];
 
-               renderContext .distance = bboxCenter .z;
+               renderContext .geometryType = shapeNode .getGeometry () .getGeometryType ();
+               renderContext .distance     = bboxCenter .z;
             }
             else
             {
@@ -1137,6 +1138,17 @@ function assign (lhs, rhs)
       lhs [i] = rhs [i];
 
    lhs .length = length;
+}
+
+function transparencyCompare (a, b)
+{
+   if (a .geometryType > b .geometryType)
+      return true;
+
+   if (a .geometryType < b .geometryType)
+      return false;
+
+   return a .distance < b .distance;
 }
 
 export default X3DRenderObject;
