@@ -101,6 +101,10 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
    },
    setJoints (jointNodes)
    {
+      // Stop animation.
+
+      this .timeSensor ._stopTime = Date .now () / 1000;
+
       // Create joints index.
 
       const jointsIndex = this .jointsIndex;
