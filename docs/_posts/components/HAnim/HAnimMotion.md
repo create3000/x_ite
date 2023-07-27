@@ -81,6 +81,34 @@ List of number of *channels* for transformation, followed by transformation type
 
 *values* field contains all transformation *values*, ordered first by frame, then by joint, and then by transformation Sets of floats in the *values* array matching the order listed in joints and channels fields.
 
+### SFBool [in, out] **loop** FALSE
+
+Repeat indefinitely when *loop*=true, repeat only once when *loop*=false.
+
+### SFBool [in] **next**
+
+Send *next* output value in keyValue array, and reset internal fraction field to match corresponding value in key array.
+
+#### Hint
+
+- This input event will "wrap around" boundary of frame array, i.e. continue from endFrame next to startFrame if necessary.
+
+#### Warning
+
+- It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
+
+### SFBool [in] **previous**
+
+Send *previous* output value in keyValue array, and reset internal fraction field to match corresponding value in key array.
+
+#### Hint
+
+- This input event will "wrap around" boundary of frame array, i.e. continue from startFrame next to endFrame if necessary.
+
+#### Warning
+
+- It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
+
 ### SFInt32 [in, out] **frameIndex** 0 <small>[0,∞)</small>
 
 *frameIndex* indicates index of current frame. Note that *frameIndex* can be modified whether the Motion node is enabled or not, and becomes effective when the next animation cycle occurs. Thus the *frameIndex* value indicates the frame currently (or next) being processed.
@@ -116,34 +144,6 @@ List of number of *channels* for transformation, followed by transformation type
 #### Hint
 
 - *endFrame* starts at 0 and is no greater than (frameCount - 1).
-
-### SFBool [in] **next**
-
-Send *next* output value in keyValue array, and reset internal fraction field to match corresponding value in key array.
-
-#### Hint
-
-- This input event will "wrap around" boundary of frame array, i.e. continue from endFrame next to startFrame if necessary.
-
-#### Warning
-
-- It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
-
-### SFBool [in] **previous**
-
-Send *previous* output value in keyValue array, and reset internal fraction field to match corresponding value in key array.
-
-#### Hint
-
-- This input event will "wrap around" boundary of frame array, i.e. continue from startFrame next to endFrame if necessary.
-
-#### Warning
-
-- It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
-
-### SFBool [in, out] **loop** FALSE
-
-Repeat indefinitely when *loop*=true, repeat only once when *loop*=false.
 
 ### SFTime [out] **cycleTime**
 
