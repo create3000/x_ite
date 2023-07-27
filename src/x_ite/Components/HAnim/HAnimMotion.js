@@ -86,9 +86,9 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
       this .timeSensor .setup ();
 
       this ._enabled         .addInterest ("set_enabled__",              this);
+      this ._joints          .addInterest ("set_connectInterpolators__", this);
       this ._channelsEnabled .addInterest ("set_connectInterpolators__", this);
       this ._channels        .addInterest ("set_interpolators__",        this);
-      this ._joints          .addInterest ("set_connectInterpolators__", this);
       this ._values          .addInterest ("set_interpolators__",        this);
       this ._next            .addInterest ("set_next_or_previous__",     this,  1);
       this ._previous        .addInterest ("set_next_or_previous__",     this, -1);
