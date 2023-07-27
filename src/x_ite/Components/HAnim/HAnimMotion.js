@@ -112,18 +112,14 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
 
       jointsIndex .delete ("IGNORED");
 
-      // Stop animation if no joints.
-
-      if (!jointsIndex .size)
-         this .timeSensor ._stopTime = Date .now () / 1000;
-
       // Connect joint nodes.
 
+      this .set_enabled__ ();
       this .set_connectInterpolators__ ();
    },
    set_enabled__ ()
    {
-      if (this ._enabled .getValue ())
+      if (this ._enabled .getValue () && this .jointsIndex .size)
          this .timeSensor ._startTime = Date .now () / 1000;
       else
          this .timeSensor ._stopTime = Date .now () / 1000;
