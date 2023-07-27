@@ -202,9 +202,9 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
 
                const
                   key      = frame / (frameCount - 1),
-                  keyValue = new Vector3 (types .get ("Xscale") ?? 0,
-                                          types .get ("Yscale") ?? 0,
-                                          types .get ("Zscale") ?? 0);
+                  keyValue = new Vector3 (types .get ("Xscale") ?? 1,
+                                          types .get ("Yscale") ?? 1,
+                                          types .get ("Zscale") ?? 1);
 
                interpolator ._key      .push (key);
                interpolator ._keyValue .push (keyValue);
