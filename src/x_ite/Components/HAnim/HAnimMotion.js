@@ -191,13 +191,29 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
                interpolator ._key      .push (key);
                interpolator ._keyValue .push (keyValue);
             }
+
+            if (types .has ("Xscale") || types .has ("Yscale") || types .has ("Zscale"))
+            {
+               const interpolator = interpolators [j] .scaleInterpolator
+                  ?? this .createScaleInterpolator (interpolators, j);
+
+               const
+                  key      = frame / (frameCount - 1),
+                  keyValue = new Vector3 (types .get ("Xscale") ?? 0,
+                                          types .get ("Yscale") ?? 0,
+                                          types .get ("Zscale") ?? 0);
+
+               interpolator ._key      .push (key);
+               interpolator ._keyValue .push (keyValue);
+            }
          }
       }
 
-      for (const { positionInterpolator, orientationInterpolator } of interpolators)
+      for (const { positionInterpolator, orientationInterpolator, scaleInterpolator } of interpolators)
       {
          positionInterpolator    ?.setup ();
          orientationInterpolator ?.setup ();
+         scaleInterpolator       ?.setup ();
       }
 
       this ._frameIndex = 0;
@@ -218,7 +234,7 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
 
       // Disconnect old joint nodes.
 
-      for (const { positionInterpolator, orientationInterpolator } of this .interpolators)
+      for (const { positionInterpolator, orientationInterpolator, scaleInterpolator } of this .interpolators)
       {
          if (positionInterpolator)
          {
@@ -231,6 +247,12 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
             for (const field of orientationInterpolator ._value_changed .getFieldInterests ())
                orientationInterpolator ._value_changed .removeFieldInterest (field);
          }
+
+         if (scaleInterpolator)
+         {
+            for (const field of scaleInterpolator ._value_changed .getFieldInterests ())
+               scaleInterpolator ._value_changed .removeFieldInterest (field);
+         }
       }
 
       // Connect interpolators.
@@ -238,7 +260,7 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
       if (!jointsIndex .size)
          return;
 
-      for (const [j, { positionInterpolator, orientationInterpolator }] of this .interpolators .entries ())
+      for (const [j, { positionInterpolator, orientationInterpolator, scaleInterpolator }] of this .interpolators .entries ())
       {
          if (j < channelsEnabled .length && !channelsEnabled [j])
             continue;
@@ -262,6 +284,12 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
          {
             timeSensor ._fraction_changed .addFieldInterest (orientationInterpolator ._set_fraction);
             orientationInterpolator ._value_changed .addFieldInterest (jointNode ._rotation);
+         }
+
+         if (scaleInterpolator)
+         {
+            timeSensor ._fraction_changed .addFieldInterest (scaleInterpolator ._set_fraction);
+            scaleInterpolator ._value_changed .addFieldInterest (jointNode ._scale);
          }
       }
    },
@@ -337,6 +365,10 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
    createOrientationInterpolator (interpolators, j)
    {
       return interpolators [j] .orientationInterpolator = new OrientationInterpolator (this .getExecutionContext ());
+   },
+   createScaleInterpolator (interpolators, j)
+   {
+      return interpolators [j] .scaleInterpolator = new PositionInterpolator (this .getExecutionContext ());
    },
    getFraction ()
    {
