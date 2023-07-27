@@ -122,8 +122,12 @@ Object .assign (Object .setPrototypeOf (TimeSensor .prototype, X3DSensorNode .pr
       if (!this .getLive () .getValue ())
          return;
 
+      const time = this .getBrowser () .getCurrentTime ();
+
+      this ._elapsedTime      = 0;
+      this ._cycleTime        = time;
       this ._fraction_changed = this .fraction;
-      this ._time             = this .getBrowser () .getCurrentTime ();
+      this ._time             = time;
    },
    set_resume (pauseInterval)
    {
