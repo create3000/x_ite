@@ -641,7 +641,7 @@ Object .assign (X3DRenderObject .prototype,
 
                var renderContext = this .transparentShapes [num];
 
-               renderContext .geometryType = shapeNode .getGeometry () .getGeometryType ();
+               renderContext .geometryType = Math .min (shapeNode .getGeometry () .getGeometryType (), 2);
                renderContext .distance     = bboxCenter .z;
             }
             else
