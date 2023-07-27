@@ -1137,22 +1137,24 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, (X3DChildNode_de
       this .timeSensor ._cycleTime   .addFieldInterest (this ._cycleTime);
       this .timeSensor ._elapsedTime .addFieldInterest (this ._elapsedTime);
 
+      this .timeSensor ._enabled  = false;
       this .timeSensor ._loop     = this ._loop;
       this .timeSensor ._stopTime = 1;
 
       this .timeSensor .setup ();
 
       this ._enabled         .addInterest ("set_enabled__",              this);
+      this ._joints          .addInterest ("set_connectInterpolators__", this);
       this ._channelsEnabled .addInterest ("set_connectInterpolators__", this);
       this ._channels        .addInterest ("set_interpolators__",        this);
-      this ._joints          .addInterest ("set_connectInterpolators__", this);
       this ._values          .addInterest ("set_interpolators__",        this);
-      this ._startFrame      .addInterest ("set_start_or_endFrame__",    this);
-      this ._endFrame        .addInterest ("set_start_or_endFrame__",    this);
+      this ._next            .addInterest ("set_next_or_previous__",     this,  1);
+      this ._previous        .addInterest ("set_next_or_previous__",     this, -1);
       this ._frameIndex      .addInterest ("set_frameIndex__",           this);
       this ._frameDuration   .addInterest ("set_frameDuration__",        this);
-      this ._next            .addInterest ("set_next_or_previous__",     this, 1);
-      this ._previous        .addInterest ("set_next_or_previous__",     this, -1);
+      this ._frameIncrement  .addInterest ("set_timeSensor_enabled__",   this);
+      this ._startFrame      .addInterest ("set_start_or_endFrame__",    this);
+      this ._endFrame        .addInterest ("set_start_or_endFrame__",    this);
 
       this .set_enabled__ ();
       this .set_interpolators__ ();
@@ -1170,14 +1172,15 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, (X3DChildNode_de
 
       jointsIndex .delete ("IGNORED");
 
-      // If there are no joints, disable timer.
-
-      this .timeSensor ._enabled = this .jointsIndex .size;
-
       // Connect joint nodes.
 
+      this .set_timeSensor_enabled__ ();
       this .set_enabled__ ();
       this .set_connectInterpolators__ ();
+   },
+   set_timeSensor_enabled__ ()
+   {
+      this .timeSensor ._enabled = this .jointsIndex .size && this ._frameIncrement .getValue ();
    },
    set_enabled__ ()
    {
@@ -1249,13 +1252,29 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, (X3DChildNode_de
                interpolator ._key      .push (key);
                interpolator ._keyValue .push (keyValue);
             }
+
+            if (types .has ("Xscale") || types .has ("Yscale") || types .has ("Zscale"))
+            {
+               const interpolator = interpolators [j] .scaleInterpolator
+                  ?? this .createScaleInterpolator (interpolators, j);
+
+               const
+                  key      = frame / (frameCount - 1),
+                  keyValue = new (Vector3_default()) (types .get ("Xscale") ?? 1,
+                                          types .get ("Yscale") ?? 1,
+                                          types .get ("Zscale") ?? 1);
+
+               interpolator ._key      .push (key);
+               interpolator ._keyValue .push (keyValue);
+            }
          }
       }
 
-      for (const { positionInterpolator, orientationInterpolator } of interpolators)
+      for (const { positionInterpolator, orientationInterpolator, scaleInterpolator } of interpolators)
       {
          positionInterpolator    ?.setup ();
          orientationInterpolator ?.setup ();
+         scaleInterpolator       ?.setup ();
       }
 
       this ._frameIndex = 0;
@@ -1276,7 +1295,7 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, (X3DChildNode_de
 
       // Disconnect old joint nodes.
 
-      for (const { positionInterpolator, orientationInterpolator } of this .interpolators)
+      for (const { positionInterpolator, orientationInterpolator, scaleInterpolator } of this .interpolators)
       {
          if (positionInterpolator)
          {
@@ -1289,6 +1308,12 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, (X3DChildNode_de
             for (const field of orientationInterpolator ._value_changed .getFieldInterests ())
                orientationInterpolator ._value_changed .removeFieldInterest (field);
          }
+
+         if (scaleInterpolator)
+         {
+            for (const field of scaleInterpolator ._value_changed .getFieldInterests ())
+               scaleInterpolator ._value_changed .removeFieldInterest (field);
+         }
       }
 
       // Connect interpolators.
@@ -1296,7 +1321,7 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, (X3DChildNode_de
       if (!jointsIndex .size)
          return;
 
-      for (const [j, { positionInterpolator, orientationInterpolator }] of this .interpolators .entries ())
+      for (const [j, { positionInterpolator, orientationInterpolator, scaleInterpolator }] of this .interpolators .entries ())
       {
          if (j < channelsEnabled .length && !channelsEnabled [j])
             continue;
@@ -1321,42 +1346,13 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, (X3DChildNode_de
             timeSensor ._fraction_changed .addFieldInterest (orientationInterpolator ._set_fraction);
             orientationInterpolator ._value_changed .addFieldInterest (jointNode ._rotation);
          }
+
+         if (scaleInterpolator)
+         {
+            timeSensor ._fraction_changed .addFieldInterest (scaleInterpolator ._set_fraction);
+            scaleInterpolator ._value_changed .addFieldInterest (jointNode ._scale);
+         }
       }
-   },
-   set_start_or_endFrame__ ()
-   {
-      const
-         frameCount = this ._frameCount .getValue (),
-         startFrame = Algorithm_default().clamp (this ._startFrame .getValue (), 0, frameCount),
-         endFrame   = Algorithm_default().clamp (this ._endFrame   .getValue (), 0, frameCount);
-
-      this .startFrame             = Math .min (startFrame, endFrame);
-      this .endFrame               = Math .max (startFrame, endFrame);
-      this .timeSensor ._range [1] = frameCount > 1 ? this .startFrame / (frameCount - 1) : 0;
-      this .timeSensor ._range [2] = frameCount > 1 ? this .endFrame   / (frameCount - 1) : 0;
-   },
-   set_frameIndex__ ()
-   {
-      const
-         frameCount = this ._frameCount .getValue (),
-         frameIndex = Algorithm_default().clamp (this ._frameIndex .getValue (), 0, frameCount),
-         fraction   = frameCount > 1 ? frameIndex / (frameCount - 1) : 0;
-
-      this .timeSensor ._range [0] = fraction;
-
-      if (this .timeSensor ._isActive .getValue ())
-         return;
-
-      for (const field of this .timeSensor ._fraction_changed .getFieldInterests ())
-         field .setValue (fraction);
-   },
-   set_frameDuration__ ()
-   {
-      const
-         frameCount    = this ._frameCount .getValue (),
-         frameDuration = Math .max (this ._frameDuration .getValue (), 0);
-
-      this .timeSensor ._cycleInterval = frameCount > 1 ? (frameCount - 1) * frameDuration : 0;
    },
    set_next_or_previous__ (direction, field)
    {
@@ -1388,6 +1384,41 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, (X3DChildNode_de
          this ._frameIndex = frameIndex;
       }
    },
+   set_frameIndex__ ()
+   {
+      const
+         frameCount = this ._frameCount .getValue (),
+         frameIndex = Algorithm_default().clamp (this ._frameIndex .getValue (), 0, frameCount),
+         fraction   = frameCount > 1 ? frameIndex / (frameCount - 1) : 0;
+
+      this .timeSensor ._range [0] = fraction;
+
+      if (this .timeSensor ._isActive .getValue ())
+         return;
+
+      for (const field of this .timeSensor ._fraction_changed .getFieldInterests ())
+         field .setValue (fraction);
+   },
+   set_frameDuration__ ()
+   {
+      const
+         frameCount    = this ._frameCount .getValue (),
+         frameDuration = Math .max (this ._frameDuration .getValue (), 0);
+
+      this .timeSensor ._cycleInterval = frameCount > 1 ? (frameCount - 1) * frameDuration : 0;
+   },
+   set_start_or_endFrame__ ()
+   {
+      const
+         frameCount = this ._frameCount .getValue (),
+         startFrame = Algorithm_default().clamp (this ._startFrame .getValue (), 0, frameCount),
+         endFrame   = Algorithm_default().clamp (this ._endFrame   .getValue (), 0, frameCount);
+
+      this .startFrame             = Math .min (startFrame, endFrame);
+      this .endFrame               = Math .max (startFrame, endFrame);
+      this .timeSensor ._range [1] = frameCount > 1 ? this .startFrame / (frameCount - 1) : 0;
+      this .timeSensor ._range [2] = frameCount > 1 ? this .endFrame   / (frameCount - 1) : 0;
+   },
    createPositionInterpolator (interpolators, j)
    {
       return interpolators [j] .positionInterpolator = new (PositionInterpolator_default()) (this .getExecutionContext ());
@@ -1395,6 +1426,10 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, (X3DChildNode_de
    createOrientationInterpolator (interpolators, j)
    {
       return interpolators [j] .orientationInterpolator = new (OrientationInterpolator_default()) (this .getExecutionContext ());
+   },
+   createScaleInterpolator (interpolators, j)
+   {
+      return interpolators [j] .scaleInterpolator = new (PositionInterpolator_default()) (this .getExecutionContext ());
    },
    getFraction ()
    {

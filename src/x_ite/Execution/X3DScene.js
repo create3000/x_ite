@@ -614,6 +614,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
 
       generator .string += generator .Indent ();
       generator .string += "</X3D>";
+      generator .string += generator .TidyBreak ();
    },
    toJSONStream (generator)
    {
@@ -958,6 +959,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
       generator .string += generator .DecIndent ();
       generator .string += generator .Indent ();
       generator .string += '}';
+      generator .string += generator .TidyBreak ();
    },
 },
 {
