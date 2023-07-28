@@ -249,10 +249,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
 
       protoNode ._name_changed .addFieldInterest (this ._typeName_changed);
 
-      if (protoNode === oldProtoNode)
-         this .construct ();
-      else
-         this .update ();
+      protoNode === oldProtoNode ? this .construct () : this .update ();
    },
    getBody ()
    {
