@@ -53,7 +53,7 @@ function TextureBuffer (browser, width, height, float = false)
 {
    const gl = browser .getContext ();
 
-   this .browser = browser;
+   this .context = gl;
    this .width   = width;
    this .height  = height;
 
@@ -152,11 +152,7 @@ Object .assign (TextureBuffer .prototype,
    },
    readPixels ()
    {
-      const
-         gl     = this .browser .getContext (),
-         array  = this .array,
-         width  = this .width,
-         height = this .height;
+      const { context: gl, array, width, height } = this;
 
       gl .readPixels (0, 0, width, height, gl .RGBA, gl .UNSIGNED_BYTE, array);
 
@@ -170,11 +166,7 @@ Object .assign (TextureBuffer .prototype,
 
       return function (projectionMatrix, viewport)
       {
-         const
-            gl     = this .browser .getContext (),
-            array  = this .array,
-            width  = this .width,
-            height = this .height;
+         const { context: gl, array, width, height } = this;
 
          gl .readPixels (0, 0, width, height, gl .RGBA, gl .FLOAT, array);
 
@@ -207,7 +199,7 @@ Object .assign (TextureBuffer .prototype,
    })(),
    bind ()
    {
-      const gl = this .browser .getContext ();
+      const gl = this .context;
 
       this .lastBuffer = gl .getParameter (gl .FRAMEBUFFER_BINDING);
 
@@ -215,13 +207,13 @@ Object .assign (TextureBuffer .prototype,
    },
    unbind ()
    {
-      const gl = this .browser .getContext ();
+      const gl = this .context;
 
       gl .bindFramebuffer (gl .FRAMEBUFFER, this .lastBuffer);
    },
    delete ()
    {
-      const gl = this .browser .getContext ();
+      const gl = this .context;
 
       gl .deleteFramebuffer (this .frameBuffer);
       gl .deleteTexture (this .colorTexture);

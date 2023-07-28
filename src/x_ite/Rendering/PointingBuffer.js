@@ -49,7 +49,7 @@ function PointingBuffer (browser)
 {
    const gl = browser .getContext ();
 
-   this .browser = browser;
+   this .context = gl;
    this .array   = new Float32Array (4);
 
    // Create frame buffer.
@@ -124,7 +124,7 @@ Object .assign (PointingBuffer .prototype,
 {
    bind ()
    {
-      const gl = this .browser .getContext ();
+      const gl = this .context;
 
       this .lastBuffer = gl .getParameter (gl .FRAMEBUFFER_BINDING);
 
@@ -134,15 +134,13 @@ Object .assign (PointingBuffer .prototype,
    },
    unbind ()
    {
-      const gl = this .browser .getContext ();
+      const gl = this .context;
 
       gl .bindFramebuffer (gl .FRAMEBUFFER, this .lastBuffer);
    },
    getHit (hit)
    {
-      const
-         gl    = this .browser .getContext (),
-         array = this .array;
+      const { context: gl, array } = this;
 
       // Id, point
 
@@ -173,7 +171,7 @@ Object .assign (PointingBuffer .prototype,
    },
    dispose ()
    {
-      const gl = this .browser .getContext ();
+      const gl = this .context;
 
       gl .deleteFramebuffer (this .frameBuffer);
 
