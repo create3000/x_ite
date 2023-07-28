@@ -49,11 +49,12 @@ import MultiSampleFrameBuffer from "../../Rendering/MultiSampleFrameBuffer.js";
 import Vector4                from "../../../standard/Math/Numbers/Vector4.js";
 
 const
-   _viewport     = Symbol (),
-   _frameBuffer  = Symbol (),
-   _resizer      = Symbol (),
-   _localObjects = Symbol (),
-   _depthShaders = Symbol ();
+   _viewport      = Symbol (),
+   _frameBuffer   = Symbol (),
+   _resizer       = Symbol (),
+   _localObjects  = Symbol (),
+   _composeShader = Symbol (),
+   _depthShaders  = Symbol ();
 
 function X3DRenderingContext ()
 {
@@ -166,6 +167,13 @@ Object .assign (X3DRenderingContext .prototype,
    {
       return this [_frameBuffer];
    },
+   getComposeShader ()
+   {
+      if (this [_composeShader])
+         return this [_composeShader];
+
+      return this [_composeShader] = this .createShader ("ComposeShader", "Compose", "Compose");
+   },
    getDepthShader (numClipPlanes, shapeNode, humanoidNode)
    {
       const geometryContext = shapeNode .getGeometryContext ();
@@ -231,6 +239,7 @@ Object .assign (X3DRenderingContext .prototype,
          $canvas      = this .getCanvas (),
          contentScale = this .getRenderingProperty ("ContentScale"),
          samples      = this .getRenderingProperty ("Multisampling"),
+         oit          = this .getBrowserOption ("OrderIndependentTransparency"),
          width        = $canvas .width () * contentScale,
          height       = $canvas .height () * contentScale,
          canvas       = $canvas [0];
@@ -241,12 +250,13 @@ Object .assign (X3DRenderingContext .prototype,
       this [_viewport] [2] = width;
       this [_viewport] [3] = height;
 
-      if (width   !== this [_frameBuffer] .getWidth ()  ||
-          height  !== this [_frameBuffer] .getHeight () ||
-          samples !== this [_frameBuffer] .getSamples ())
+      if (width   !== this [_frameBuffer] .getWidth ()   ||
+          height  !== this [_frameBuffer] .getHeight ()  ||
+          samples !== this [_frameBuffer] .getSamples () ||
+          oit     !== this [_frameBuffer] .getOrderIndependentTransparency ())
       {
          this [_frameBuffer] .dispose ();
-         this [_frameBuffer] = new MultiSampleFrameBuffer (this, width, height, samples);
+         this [_frameBuffer] = new MultiSampleFrameBuffer (this, width, height, samples, oit);
       }
 
       this .addBrowserEvent ();

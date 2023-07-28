@@ -74,7 +74,12 @@ in vec3 vertex;
    in float depth;
 #endif
 
-out vec4 x3d_FragColor;
+#if defined (X3D_ORDER_INDEPENDENT_TRANSPARENCY)
+   layout(location = 0) out vec4 x3d_FragData0;
+   layout(location = 1) out vec4 x3d_FragData1;
+#else
+   out vec4 x3d_FragColor;
+#endif
 
 #pragma X3D include "Texture.glsl"
 #pragma X3D include "ClipPlanes.glsl"
@@ -128,7 +133,12 @@ fragment_main ()
       finalColor .a = 1.0;
    #endif
 
-   x3d_FragColor = finalColor;
+   #if defined (X3D_ORDER_INDEPENDENT_TRANSPARENCY)
+      x3d_FragData0 = finalColor;
+      x3d_FragData1 = finalColor;
+   #else
+      x3d_FragColor = finalColor;
+   #endif
 
    #if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
       //https://outerra.blogspot.com/2013/07/logarithmic-depth-buffer-optimizations.html

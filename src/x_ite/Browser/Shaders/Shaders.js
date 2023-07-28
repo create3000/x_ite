@@ -76,36 +76,38 @@ import Point2                 from "../../../assets/shaders/webgl2/include/Point
 import PointSize2             from "../../../assets/shaders/webgl2/include/PointSize.glsl.js";
 import Shadow2                from "../../../assets/shaders/webgl2/include/Shadow.glsl.js";
 import Skin2                  from "../../../assets/shaders/webgl2/include/Skin.glsl.js";
-import Stipple2               from "../../../assets/shaders/webgl2/include/Stipple.glsl.js";
 import SpotFactor2            from "../../../assets/shaders/webgl2/include/SpotFactor.glsl.js";
+import Stipple2               from "../../../assets/shaders/webgl2/include/Stipple.glsl.js";
 import Texture2               from "../../../assets/shaders/webgl2/include/Texture.glsl.js";
 import Utils2                 from "../../../assets/shaders/webgl2/include/Utils.glsl.js";
 import Vertex2                from "../../../assets/shaders/webgl2/include/Vertex.glsl.js";
 
 /* WebGL 1 */
 import DefaultVertex1         from "../../../assets/shaders/webgl1/Default.vs.js";
-import PointingVertex1        from "../../../assets/shaders/webgl1/Pointing.vs.js";
-import DepthVertex1           from "../../../assets/shaders/webgl1/Depth.vs.js";
-import GouraudVertex1         from "../../../assets/shaders/webgl1/Gouraud.vs.js";
-import PointingFragment1      from "../../../assets/shaders/webgl1/Pointing.fs.js";
 import DepthFragment1         from "../../../assets/shaders/webgl1/Depth.fs.js";
+import DepthVertex1           from "../../../assets/shaders/webgl1/Depth.vs.js";
 import GouraudFragment1       from "../../../assets/shaders/webgl1/Gouraud.fs.js";
+import GouraudVertex1         from "../../../assets/shaders/webgl1/Gouraud.vs.js";
 import PBRFragment1           from "../../../assets/shaders/webgl1/PBR.fs.js";
 import PhongFragment1         from "../../../assets/shaders/webgl1/Phong.fs.js";
+import PointingFragment1      from "../../../assets/shaders/webgl1/Pointing.fs.js";
+import PointingVertex1        from "../../../assets/shaders/webgl1/Pointing.vs.js";
 import UnlitFragment1         from "../../../assets/shaders/webgl1/Unlit.fs.js";
 
 /* WebGL 2 */
+import ComposeFragment2       from "../../../assets/shaders/webgl2/Compose.fs.js";
+import ComposeVertex2         from "../../../assets/shaders/webgl2/Compose.vs.js";
 import DefaultVertex2         from "../../../assets/shaders/webgl2/Default.vs.js";
-import PointingVertex2        from "../../../assets/shaders/webgl2/Pointing.vs.js";
-import DepthVertex2           from "../../../assets/shaders/webgl2/Depth.vs.js";
-import GouraudVertex2         from "../../../assets/shaders/webgl2/Gouraud.vs.js";
-import LineTransformVertex2   from "../../../assets/shaders/webgl2/LineTransform.vs.js";
-import PointingFragment2      from "../../../assets/shaders/webgl2/Pointing.fs.js";
 import DepthFragment2         from "../../../assets/shaders/webgl2/Depth.fs.js";
+import DepthVertex2           from "../../../assets/shaders/webgl2/Depth.vs.js";
 import GouraudFragment2       from "../../../assets/shaders/webgl2/Gouraud.fs.js";
+import GouraudVertex2         from "../../../assets/shaders/webgl2/Gouraud.vs.js";
 import LineTransformFragment2 from "../../../assets/shaders/webgl2/LineTransform.fs.js";
+import LineTransformVertex2   from "../../../assets/shaders/webgl2/LineTransform.vs.js";
 import PBRFragment2           from "../../../assets/shaders/webgl2/PBR.fs.js";
 import PhongFragment2         from "../../../assets/shaders/webgl2/Phong.fs.js";
+import PointingFragment2      from "../../../assets/shaders/webgl2/Pointing.fs.js";
+import PointingVertex2        from "../../../assets/shaders/webgl2/Pointing.vs.js";
 import UnlitFragment2         from "../../../assets/shaders/webgl2/Unlit.fs.js";
 
 const Shaders = {
@@ -141,8 +143,8 @@ const Shaders = {
          PointSize: PointSize2,
          Shadow: Shadow2,
          Skin: Skin2,
-         Stipple: Stipple2,
          SpotFactor: SpotFactor2,
+         Stipple: Stipple2,
          Texture: Texture2,
          Utils: Utils2,
          Vertex: Vertex2,
@@ -151,34 +153,36 @@ const Shaders = {
    vertex: {
       1: {
          Default: DefaultVertex1,
-         Pointing: PointingVertex1,
          Depth: DepthVertex1,
          Gouraud: GouraudVertex1,
+         Pointing: PointingVertex1,
       },
       2: {
+         Compose: ComposeVertex2,
          Default: DefaultVertex2,
-         Pointing: PointingVertex2,
          Depth: DepthVertex2,
          Gouraud: GouraudVertex2,
          LineTransform: LineTransformVertex2,
+         Pointing: PointingVertex2,
       },
    },
    fragment: {
       1: {
-         Pointing: PointingFragment1,
          Depth: DepthFragment1,
          Gouraud: GouraudFragment1,
          PBR: PBRFragment1,
          Phong: PhongFragment1,
+         Pointing: PointingFragment1,
          Unlit: UnlitFragment1,
       },
       2: {
-         Pointing: PointingFragment2,
+         Compose: ComposeFragment2,
          Depth: DepthFragment2,
          Gouraud: GouraudFragment2,
          LineTransform: LineTransformFragment2,
          PBR: PBRFragment2,
          Phong: PhongFragment2,
+         Pointing: PointingFragment2,
          Unlit: UnlitFragment2,
       },
    },

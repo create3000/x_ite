@@ -169,6 +169,9 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
       if (geometryContext .hasNormals)
          options .push ("X3D_NORMALS");
 
+      if (browser .getBrowserOption ("OrderIndependentTransparency"))
+         options .push ("X3D_ORDER_INDEPENDENT_TRANSPARENCY");
+
       if (renderContext)
       {
          const { renderObject, fogNode, shapeNode, appearanceNode, humanoidNode, objectsCount } = renderContext;
