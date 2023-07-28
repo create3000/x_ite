@@ -1069,6 +1069,7 @@ Object .assign (X3DRenderObject .prototype,
 
       // gl .enable (gl .BLEND);
       gl .depthMask (false);
+      gl .disable (gl .DEPTH_TEST);
 
       for (let i = 0, length = this .numTransparentShapes; i < length; ++ i)
       {
