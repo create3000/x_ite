@@ -16,9 +16,13 @@ void
 main ()
 {
    ivec2 fragCoord = ivec2 (gl_FragCoord .xy);
-   vec4  accum     = texelFetch (x3d_AccumTexture, fragCoord, 0);
+   vec4  accum     = texelFetch (x3d_AccumTexture,     fragCoord, 0);
    vec4  revealage = texelFetch (x3d_RevealageTexture, fragCoord, 0);
 
-   x3d_FragColor = accum;
+   float a = 1.0 - accum .a;
+
+   accum .a = revealage .r;
+
+   x3d_FragColor = vec4 (a * accum .rgb / clamp (accum .a, 0.001, 50000.0), a);
 }
 `;

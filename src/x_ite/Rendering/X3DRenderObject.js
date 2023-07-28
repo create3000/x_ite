@@ -703,9 +703,6 @@ Object .assign (X3DRenderObject .prototype,
 
          // Render all objects
 
-         gl .depthMask (true);
-         gl .enable (gl .DEPTH_TEST);
-         gl .disable (gl .BLEND);
          gl .disable (gl .CULL_FACE);
 
          for (let s = 0; s < numShapes; ++ s)
@@ -942,9 +939,6 @@ Object .assign (X3DRenderObject .prototype,
 
          // Render all objects
 
-         gl .depthMask (true);
-         gl .enable (gl .DEPTH_TEST);
-         gl .disable (gl .BLEND);
          gl .disable (gl .CULL_FACE);
 
          for (let s = 0; s < numShapes; ++ s)
@@ -1047,9 +1041,9 @@ Object .assign (X3DRenderObject .prototype,
 
       // Render opaque objects first
 
-      gl .depthMask (true);
-      gl .enable (gl .DEPTH_TEST);
-      gl .disable (gl .BLEND);
+      // gl .disable (gl .BLEND);
+      gl .enable (gl .BLEND);
+      gl .blendFuncSeparate (gl .ONE, gl .ONE, gl .ZERO, gl .ONE_MINUS_SRC_ALPHA);
 
       const opaqueShapes = this .opaqueShapes;
 
@@ -1069,12 +1063,12 @@ Object .assign (X3DRenderObject .prototype,
 
       // Render transparent objects
 
-      gl .depthMask (false);
-      gl .enable (gl .BLEND);
-
       const transparentShapes = this .transparentShapes;
 
-      this .transparencySorter .sort (0, this .numTransparentShapes);
+      // this .transparencySorter .sort (0, this .numTransparentShapes);
+
+      // gl .enable (gl .BLEND);
+      gl .depthMask (false);
 
       for (let i = 0, length = this .numTransparentShapes; i < length; ++ i)
       {

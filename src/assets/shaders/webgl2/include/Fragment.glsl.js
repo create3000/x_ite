@@ -91,6 +91,14 @@ in vec3 vertex;
 vec4
 getMaterialColor ();
 
+#if defined (X3D_ORDER_INDEPENDENT_TRANSPARENCY)
+float
+weight (const in float z, const in float a)
+{
+   return clamp (pow (min (1.0, a * 10.0) + 0.01, 3.0) * 1e8 * pow (1.0 - z * 0.9, 3.0), 1e-2, 3e3);
+}
+#endif
+
 void
 fragment_main ()
 {
@@ -134,8 +142,12 @@ fragment_main ()
    #endif
 
    #if defined (X3D_ORDER_INDEPENDENT_TRANSPARENCY)
-      x3d_FragData0 = finalColor;
-      x3d_FragData1 = finalColor * 0.5;
+      float w = weight (gl_FragCoord .z, finalColor .a);
+
+      finalColor.rgb *= finalColor .a;
+
+      x3d_FragData0 = vec4 (finalColor .rgb * w, finalColor .a);
+      x3d_FragData1 = vec4 (finalColor .a * w);
    #else
       x3d_FragColor = finalColor;
    #endif

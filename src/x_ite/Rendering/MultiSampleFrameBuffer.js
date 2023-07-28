@@ -274,10 +274,15 @@ Object .assign (MultiSampleFrameBuffer .prototype,
       gl .bindTexture (gl .TEXTURE_2D, this .revealageTexture);
 
       gl .bindFramebuffer (gl .FRAMEBUFFER, null);
+      gl .disable (gl .DEPTH_TEST);
+      gl .clearColor (0, 0, 0, 0);
       gl .clear (gl .COLOR_BUFFER_BIT);
+      gl .enable (gl .BLEND);
       gl .blendFunc (gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
       gl .bindVertexArray (this .quadArray);
       gl .drawArrays (gl .TRIANGLES, 0, 6);
+      gl .disable (gl .BLEND);
+      gl .enable (gl .DEPTH_TEST);
    },
    dispose ()
    {

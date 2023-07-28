@@ -692,6 +692,8 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
 
          gl .uniform3f (shaderNode .x3d_EmissiveColor, 1, 1, 1);
          gl .drawArrays (gl .LINES, 0, this .lineCount);
+
+         gl .enable (gl .DEPTH_TEST);
       };
    })(),
    disconnect ()
