@@ -63,6 +63,8 @@ const DEPTH_BUFFER_SIZE = 16;
 
 function X3DRenderObject (executionContext)
 {
+   const browser = executionContext .getBrowser ();
+
    this .viewVolumes              = [ ];
    this .cameraSpaceMatrix        = new MatrixStack (Matrix4);
    this .viewMatrix               = new MatrixStack (Matrix4);
@@ -99,17 +101,7 @@ function X3DRenderObject (executionContext)
    this .transparentShapes        = [ ];
    this .transparencySorter       = new MergeSort (this .transparentShapes, (a, b) => a .distance < b .distance);
    this .speed                    = 0;
-
-   try
-   {
-      this .depthBuffer = new TextureBuffer (executionContext .getBrowser (), DEPTH_BUFFER_SIZE, DEPTH_BUFFER_SIZE, true);
-   }
-   catch (error)
-   {
-      console .error (error);
-
-      this .getDepth = () => 0;
-   }
+   this .depthBuffer              = new TextureBuffer (browser, DEPTH_BUFFER_SIZE, DEPTH_BUFFER_SIZE, true);
 }
 
 Object .assign (X3DRenderObject .prototype,
