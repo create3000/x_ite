@@ -52,7 +52,7 @@ function MultiSampleFrameBuffer (browser, width, height, samples)
    if (gl .getVersion () === 1 || width === 0 || height === 0)
       return Fallback;
 
-   this .browser = browser;
+   this .context = gl;
    this .width   = width;
    this .height  = height;
    this .samples = Math .min (samples, gl .getParameter (gl .MAX_SAMPLES));
@@ -106,7 +106,7 @@ Object .assign (MultiSampleFrameBuffer .prototype,
    },
    bind ()
    {
-      const gl = this .browser .getContext ();
+      const gl = this .context;
 
       this .lastBuffer = gl .getParameter (gl .FRAMEBUFFER_BINDING);
 
@@ -114,28 +114,28 @@ Object .assign (MultiSampleFrameBuffer .prototype,
    },
    unbind ()
    {
-      const gl = this .browser .getContext ();
+      const gl = this .context;
 
       gl .bindFramebuffer (gl .FRAMEBUFFER, this .lastBuffer);
    },
    blit ()
    {
-      const gl = this .browser .getContext ();
+      const { context: gl, width, height } = this;
 
       // Reset viewport before blit, otherwise only last layer size is used.
-      gl .viewport (0, 0, this .width, this .height);
-      gl .scissor  (0, 0, this .width, this .height);
+      gl .viewport (0, 0, width, height);
+      gl .scissor  (0, 0, width, height);
 
       gl .bindFramebuffer (gl .READ_FRAMEBUFFER, this .frameBuffer);
       gl .bindFramebuffer (gl .DRAW_FRAMEBUFFER, null);
 
-      gl .blitFramebuffer (0, 0, this .width, this .height,
-                           0, 0, this .width, this .height,
+      gl .blitFramebuffer (0, 0, width, height,
+                           0, 0, width, height,
                            gl .COLOR_BUFFER_BIT, gl .LINEAR);
    },
    dispose ()
    {
-      const gl = this .browser .getContext ();
+      const gl = this .context;
 
       gl .deleteFramebuffer (this .frameBuffer);
       gl .deleteRenderbuffer (this .colorBuffer);
