@@ -90,11 +90,11 @@ function MultiSampleFrameBuffer (browser, width, height, samples, oit)
          gl .COLOR_ATTACHMENT1, // gl_FragData [1]
       ]);
 
-      // Create texture buffer.
+      // Create accum texture buffer.
 
-      this .textureBuffer = gl .createFramebuffer ();
+      this .accumTextureBuffer = gl .createFramebuffer ();
 
-      gl .bindFramebuffer (gl .FRAMEBUFFER, this .textureBuffer);
+      gl .bindFramebuffer (gl .FRAMEBUFFER, this .accumTextureBuffer);
 
       // Create accum texture.
 
@@ -108,6 +108,12 @@ function MultiSampleFrameBuffer (browser, width, height, samples, oit)
 
       gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, width, height, 0, gl .RGBA, gl .FLOAT, null);
       gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .TEXTURE_2D, this .accumTexture, 0);
+
+      // Create revealage texture buffer.
+
+      this .revealageTextureBuffer = gl .createFramebuffer ();
+
+      gl .bindFramebuffer (gl .FRAMEBUFFER, this .revealageTextureBuffer);
 
       // Create revealage texture.
 
@@ -227,8 +233,17 @@ Object .assign (MultiSampleFrameBuffer .prototype,
 
       if (oit)
       {
+         gl .readBuffer (gl .COLOR_ATTACHMENT0);
          gl .bindFramebuffer (gl .READ_FRAMEBUFFER, this .frameBuffer);
-         gl .bindFramebuffer (gl .DRAW_FRAMEBUFFER, this .textureBuffer);
+         gl .bindFramebuffer (gl .DRAW_FRAMEBUFFER, this .accumTextureBuffer);
+
+         gl .blitFramebuffer (0, 0, width, height,
+                              0, 0, width, height,
+                              gl .COLOR_BUFFER_BIT, gl .LINEAR);
+
+         gl .readBuffer (gl .COLOR_ATTACHMENT1);
+         gl .bindFramebuffer (gl .READ_FRAMEBUFFER, this .frameBuffer);
+         gl .bindFramebuffer (gl .DRAW_FRAMEBUFFER, this .revealageTextureBuffer);
 
          gl .blitFramebuffer (0, 0, width, height,
                               0, 0, width, height,
@@ -238,6 +253,7 @@ Object .assign (MultiSampleFrameBuffer .prototype,
       }
       else
       {
+         gl .readBuffer (gl .COLOR_ATTACHMENT0);
          gl .bindFramebuffer (gl .READ_FRAMEBUFFER, this .frameBuffer);
          gl .bindFramebuffer (gl .DRAW_FRAMEBUFFER, null);
 
@@ -271,7 +287,8 @@ Object .assign (MultiSampleFrameBuffer .prototype,
       gl .deleteRenderbuffer (this .colorBuffer);
       gl .deleteRenderbuffer (this .depthBuffer);
 
-      gl .deleteFramebuffer (this .textureBuffer);
+      gl .deleteFramebuffer (this .accumTextureBuffer);
+      gl .deleteFramebuffer (this .revealageTextureBuffer);
       gl .deleteRenderbuffer (this .accumBuffer);
       gl .deleteRenderbuffer (this .revealageBuffer);
       gl .deleteTexture (this .accumTexture);

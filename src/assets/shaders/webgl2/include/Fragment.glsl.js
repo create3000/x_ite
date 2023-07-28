@@ -135,7 +135,7 @@ fragment_main ()
 
    #if defined (X3D_ORDER_INDEPENDENT_TRANSPARENCY)
       x3d_FragData0 = finalColor;
-      x3d_FragData1 = finalColor;
+      x3d_FragData1 = finalColor * 0.5;
    #else
       x3d_FragColor = finalColor;
    #endif

@@ -19,6 +19,6 @@ main ()
    vec4  accum     = texelFetch (x3d_AccumTexture, fragCoord, 0);
    vec4  revealage = texelFetch (x3d_RevealageTexture, fragCoord, 0);
 
-   x3d_FragColor = revealage;
+   x3d_FragColor = accum;
 }
 `;
