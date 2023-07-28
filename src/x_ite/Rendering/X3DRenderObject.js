@@ -108,7 +108,7 @@ function X3DRenderObject (executionContext)
    {
       console .error (error);
 
-      this .getDepth = function () { return 0; };
+      this .getDepth = () => 0;
    }
 }
 
