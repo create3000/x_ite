@@ -65,113 +65,13 @@ function MultiSampleFrameBuffer (browser, width, height, samples, oit)
 
    gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffer);
 
-   if (oit)
-   {
-      // Create accum and revealage buffer.
+   // Create color buffer.
 
-      this .accumRevealageBuffer = gl .createRenderbuffer ();
+   this .colorBuffer = gl .createRenderbuffer ();
 
-      gl .bindRenderbuffer (gl .RENDERBUFFER, this .accumRevealageBuffer);
-      gl .renderbufferStorageMultisample (gl .RENDERBUFFER, this .samples, gl .RGBA32F, width, height);
-      gl .framebufferRenderbuffer (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .RENDERBUFFER, this .accumRevealageBuffer);
-
-      // Create alpha buffer.
-
-      this .alphaBuffer = gl .createRenderbuffer ();
-
-      gl .bindRenderbuffer (gl .RENDERBUFFER, this .alphaBuffer);
-      gl .renderbufferStorageMultisample (gl .RENDERBUFFER, this .samples, gl .RGBA32F, width, height);
-      gl .framebufferRenderbuffer (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT1, gl .RENDERBUFFER, this .alphaBuffer);
-
-      // Set draw buffers.
-
-      gl .drawBuffers ([
-         gl .COLOR_ATTACHMENT0, // gl_FragData [0]
-         gl .COLOR_ATTACHMENT1, // gl_FragData [1]
-      ]);
-
-      // Create accum texture buffer.
-
-      this .accumRevealageTextureBuffer = gl .createFramebuffer ();
-
-      gl .bindFramebuffer (gl .FRAMEBUFFER, this .accumRevealageTextureBuffer);
-
-      // Create accum texture.
-
-      this .accumRevealageTexture = gl .createTexture ();
-
-      gl .bindTexture (gl .TEXTURE_2D, this .accumRevealageTexture);
-      gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_S,     gl .CLAMP_TO_EDGE);
-      gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_T,     gl .CLAMP_TO_EDGE);
-      gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .LINEAR);
-      gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .LINEAR);
-
-      gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, width, height, 0, gl .RGBA, gl .FLOAT, null);
-      gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .TEXTURE_2D, this .accumRevealageTexture, 0);
-
-      // Create alpha texture buffer.
-
-      this .alphaTextureBuffer = gl .createFramebuffer ();
-
-      gl .bindFramebuffer (gl .FRAMEBUFFER, this .alphaTextureBuffer);
-
-      // Create alpha texture.
-
-      this .alphaTexture = gl .createTexture ();
-
-      gl .bindTexture (gl .TEXTURE_2D, this .alphaTexture);
-      gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_S,     gl .CLAMP_TO_EDGE);
-      gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_T,     gl .CLAMP_TO_EDGE);
-      gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .LINEAR);
-      gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .LINEAR);
-
-      gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, width, height, 0, gl .RGBA, gl .FLOAT, null);
-      gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT1, gl .TEXTURE_2D, this .alphaTexture, 0);
-
-      // Set draw buffers.
-
-      gl .drawBuffers ([
-         gl .COLOR_ATTACHMENT0, // gl_FragData [0]
-         gl .COLOR_ATTACHMENT1, // gl_FragData [1]
-      ]);
-
-      gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffer);
-
-      // Get compose shader and texture units.
-
-      this .shaderNode = browser .getComposeShader ();
-      this .program    = this .shaderNode .getProgram ();
-
-      gl .useProgram (this .program);
-
-      const
-         accumRevealageTextureUnit = gl .getUniformLocation (this .program, "x3d_AccumRevealageTexture"),
-         alphaTextureUnit          = gl .getUniformLocation (this .program, "x3d_AlphaTexture");
-
-      gl .uniform1i (accumRevealageTextureUnit, 0);
-      gl .uniform1i (alphaTextureUnit, 1);
-
-      // Quad for compose pass.
-
-      this .quadArray          = gl .createVertexArray ();
-      this .quadVerticesBuffer = gl .createBuffer ();
-
-      gl .bindVertexArray (this .quadArray);
-      gl .bindBuffer (gl .ARRAY_BUFFER, this .quadVerticesBuffer);
-      gl .bufferData (gl .ARRAY_BUFFER, new Float32Array([-1, 1, -1, -1, 1, -1, -1, 1, 1, -1, 1, 1]), gl .STATIC_DRAW);
-      gl .vertexAttribPointer (0, 2, gl .FLOAT, false, 0, 0);
-      gl .enableVertexAttribArray (0);
-   }
-   else
-   {
-      // Create color buffer.
-
-      this .colorBuffer = gl .createRenderbuffer ();
-
-      gl .bindRenderbuffer (gl .RENDERBUFFER, this .colorBuffer);
-      gl .renderbufferStorageMultisample (gl .RENDERBUFFER, this .samples, gl .RGBA8, width, height);
-      gl .framebufferRenderbuffer (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .RENDERBUFFER, this .colorBuffer);
-   }
+   gl .bindRenderbuffer (gl .RENDERBUFFER, this .colorBuffer);
+   gl .renderbufferStorageMultisample (gl .RENDERBUFFER, this .samples, gl .RGBA8, width, height);
+   gl .framebufferRenderbuffer (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .RENDERBUFFER, this .colorBuffer);
 
    // Create depth buffer.
 
@@ -189,6 +89,110 @@ function MultiSampleFrameBuffer (browser, width, height, samples, oit)
 
    if (!status)
       throw new Error ("Couldn't create frame buffer.");
+
+   if (!oit)
+      return;
+
+   // Create oit frame buffer.
+
+   this .oitFrameBuffer = gl .createFramebuffer ();
+
+   gl .bindFramebuffer (gl .FRAMEBUFFER, this .oitFrameBuffer);
+
+   // Create accum and revealage buffer.
+
+   this .accumRevealageBuffer = gl .createRenderbuffer ();
+
+   gl .bindRenderbuffer (gl .RENDERBUFFER, this .accumRevealageBuffer);
+   gl .renderbufferStorageMultisample (gl .RENDERBUFFER, this .samples, gl .RGBA32F, width, height);
+   gl .framebufferRenderbuffer (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .RENDERBUFFER, this .accumRevealageBuffer);
+
+   // Create alpha buffer.
+
+   this .alphaBuffer = gl .createRenderbuffer ();
+
+   gl .bindRenderbuffer (gl .RENDERBUFFER, this .alphaBuffer);
+   gl .renderbufferStorageMultisample (gl .RENDERBUFFER, this .samples, gl .RGBA32F, width, height);
+   gl .framebufferRenderbuffer (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT1, gl .RENDERBUFFER, this .alphaBuffer);
+
+   // Set draw buffers.
+
+   gl .drawBuffers ([
+      gl .COLOR_ATTACHMENT0, // gl_FragData [0]
+      gl .COLOR_ATTACHMENT1, // gl_FragData [1]
+   ]);
+
+   // Create accum texture buffer.
+
+   this .accumRevealageTextureBuffer = gl .createFramebuffer ();
+
+   gl .bindFramebuffer (gl .FRAMEBUFFER, this .accumRevealageTextureBuffer);
+
+   // Create accum texture.
+
+   this .accumRevealageTexture = gl .createTexture ();
+
+   gl .bindTexture (gl .TEXTURE_2D, this .accumRevealageTexture);
+   gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_S,     gl .CLAMP_TO_EDGE);
+   gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_T,     gl .CLAMP_TO_EDGE);
+   gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .LINEAR);
+   gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .LINEAR);
+
+   gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, width, height, 0, gl .RGBA, gl .FLOAT, null);
+   gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .TEXTURE_2D, this .accumRevealageTexture, 0);
+
+   // Create alpha texture buffer.
+
+   this .alphaTextureBuffer = gl .createFramebuffer ();
+
+   gl .bindFramebuffer (gl .FRAMEBUFFER, this .alphaTextureBuffer);
+
+   // Create alpha texture.
+
+   this .alphaTexture = gl .createTexture ();
+
+   gl .bindTexture (gl .TEXTURE_2D, this .alphaTexture);
+   gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_S,     gl .CLAMP_TO_EDGE);
+   gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_T,     gl .CLAMP_TO_EDGE);
+   gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .LINEAR);
+   gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .LINEAR);
+
+   gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, width, height, 0, gl .RGBA, gl .FLOAT, null);
+   gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT1, gl .TEXTURE_2D, this .alphaTexture, 0);
+
+   // Set draw buffers.
+
+   gl .drawBuffers ([
+      gl .COLOR_ATTACHMENT0, // gl_FragData [0]
+      gl .COLOR_ATTACHMENT1, // gl_FragData [1]
+   ]);
+
+   gl .bindFramebuffer (gl .FRAMEBUFFER, this .lastBuffer);
+
+   // Get compose shader and texture units.
+
+   this .shaderNode = browser .getComposeShader ();
+   this .program    = this .shaderNode .getProgram ();
+
+   gl .useProgram (this .program);
+
+   const
+      accumRevealageTextureUnit = gl .getUniformLocation (this .program, "x3d_AccumRevealageTexture"),
+      alphaTextureUnit          = gl .getUniformLocation (this .program, "x3d_AlphaTexture");
+
+   gl .uniform1i (accumRevealageTextureUnit, 0);
+   gl .uniform1i (alphaTextureUnit, 1);
+
+   // Quad for compose pass.
+
+   this .quadArray          = gl .createVertexArray ();
+   this .quadVerticesBuffer = gl .createBuffer ();
+
+   gl .bindVertexArray (this .quadArray);
+   gl .bindBuffer (gl .ARRAY_BUFFER, this .quadVerticesBuffer);
+   gl .bufferData (gl .ARRAY_BUFFER, new Float32Array([-1, 1, -1, -1, 1, -1, -1, 1, 1, -1, 1, 1]), gl .STATIC_DRAW);
+   gl .vertexAttribPointer (0, 2, gl .FLOAT, false, 0, 0);
+   gl .enableVertexAttribArray (0);
 }
 
 Object .assign (MultiSampleFrameBuffer .prototype,
@@ -217,54 +221,56 @@ Object .assign (MultiSampleFrameBuffer .prototype,
 
       gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffer);
    },
-   unbind ()
+   clear ()
    {
       const gl = this .context;
 
-      gl .bindFramebuffer (gl .FRAMEBUFFER, this .lastBuffer);
+      gl .clearColor (0, 0, 0, 0);
+      gl .clear (gl .COLOR_BUFFER_BIT);
    },
    blit ()
    {
-      const { context: gl, width, height, oit } = this;
+      const { context: gl, width, height } = this;
 
       // Reset viewport before blit, otherwise only last layer size is used.
       gl .viewport (0, 0, width, height);
       gl .scissor  (0, 0, width, height);
 
-      if (oit)
-      {
-         gl .readBuffer (gl .COLOR_ATTACHMENT0);
-         gl .bindFramebuffer (gl .READ_FRAMEBUFFER, this .frameBuffer);
-         gl .bindFramebuffer (gl .DRAW_FRAMEBUFFER, this .accumRevealageTextureBuffer);
+      gl .readBuffer (gl .COLOR_ATTACHMENT0);
+      gl .bindFramebuffer (gl .READ_FRAMEBUFFER, this .frameBuffer);
+      gl .bindFramebuffer (gl .DRAW_FRAMEBUFFER, null);
 
-         gl .blitFramebuffer (0, 0, width, height,
-                              0, 0, width, height,
-                              gl .COLOR_BUFFER_BIT, gl .LINEAR);
-
-         gl .readBuffer (gl .COLOR_ATTACHMENT1);
-         gl .bindFramebuffer (gl .READ_FRAMEBUFFER, this .frameBuffer);
-         gl .bindFramebuffer (gl .DRAW_FRAMEBUFFER, this .alphaTextureBuffer);
-
-         gl .blitFramebuffer (0, 0, width, height,
-                              0, 0, width, height,
-                              gl .COLOR_BUFFER_BIT, gl .LINEAR);
-
-         this .compose ();
-      }
-      else
-      {
-         gl .readBuffer (gl .COLOR_ATTACHMENT0);
-         gl .bindFramebuffer (gl .READ_FRAMEBUFFER, this .frameBuffer);
-         gl .bindFramebuffer (gl .DRAW_FRAMEBUFFER, null);
-
-         gl .blitFramebuffer (0, 0, width, height,
-                              0, 0, width, height,
-                              gl .COLOR_BUFFER_BIT, gl .LINEAR);
-      }
+      gl .blitFramebuffer (0, 0, width, height,
+                           0, 0, width, height,
+                           gl .COLOR_BUFFER_BIT, gl .LINEAR);
    },
    compose ()
    {
-      const { context: gl, program } = this;
+      const { context: gl, width, height, program } = this;
+
+      // Blit framebuffer to textures.
+
+      // Reset viewport before blit, otherwise only last layer size is used.
+      gl .viewport (0, 0, width, height);
+      gl .scissor  (0, 0, width, height);
+
+      gl .readBuffer (gl .COLOR_ATTACHMENT0);
+      gl .bindFramebuffer (gl .READ_FRAMEBUFFER, this .oitFrameBuffer);
+      gl .bindFramebuffer (gl .DRAW_FRAMEBUFFER, this .accumRevealageTextureBuffer);
+
+      gl .blitFramebuffer (0, 0, width, height,
+                           0, 0, width, height,
+                           gl .COLOR_BUFFER_BIT, gl .LINEAR);
+
+      gl .readBuffer (gl .COLOR_ATTACHMENT1);
+      gl .bindFramebuffer (gl .READ_FRAMEBUFFER, this .oitFrameBuffer);
+      gl .bindFramebuffer (gl .DRAW_FRAMEBUFFER, this .alphaTextureBuffer);
+
+      gl .blitFramebuffer (0, 0, width, height,
+                           0, 0, width, height,
+                           gl .COLOR_BUFFER_BIT, gl .LINEAR);
+
+      // Compose render pass
 
       gl .useProgram (program);
 
@@ -284,6 +290,12 @@ Object .assign (MultiSampleFrameBuffer .prototype,
       gl .disable (gl .BLEND);
       gl .enable (gl .DEPTH_TEST);
    },
+   unbind ()
+   {
+      const gl = this .context;
+
+      gl .bindFramebuffer (gl .FRAMEBUFFER, this .lastBuffer);
+   },
    dispose ()
    {
       const gl = this .context;
@@ -292,6 +304,7 @@ Object .assign (MultiSampleFrameBuffer .prototype,
       gl .deleteRenderbuffer (this .colorBuffer);
       gl .deleteRenderbuffer (this .depthBuffer);
 
+      gl .deleteFramebuffer (this .oitFrameBuffer);
       gl .deleteFramebuffer (this .accumRevealageTextureBuffer);
       gl .deleteFramebuffer (this .alphaTextureBuffer);
       gl .deleteRenderbuffer (this .accumRevealageBuffer);
@@ -308,8 +321,9 @@ const Fallback = {
    getHeight: Function .prototype,
    getSamples: Function .prototype,
    bind: Function .prototype,
-   unbind: Function .prototype,
+   clear: Function .prototype,
    blit: Function .prototype,
+   unbind: Function .prototype,
    dispose: Function .prototype,
 };
 

@@ -169,9 +169,6 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
       if (geometryContext .hasNormals)
          options .push ("X3D_NORMALS");
 
-      if (browser .getBrowserOption ("OrderIndependentTransparency"))
-         options .push ("X3D_ORDER_INDEPENDENT_TRANSPARENCY");
-
       if (renderContext)
       {
          const { renderObject, fogNode, shapeNode, appearanceNode, humanoidNode, objectsCount } = renderContext;
@@ -182,14 +179,24 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
          switch (appearanceNode .getNormalizedAlphaMode (renderContext .transparent))
          {
             case AlphaMode .OPAQUE:
+            {
                options .push ("X3D_ALPHA_MODE_OPAQUE");
                break;
+            }
             case AlphaMode .MASK:
+            {
                options .push ("X3D_ALPHA_MODE_MASK");
                break;
+            }
             case AlphaMode .BLEND:
+            {
                options .push ("X3D_ALPHA_MODE_BLEND");
+
+               if (browser .getBrowserOption ("OrderIndependentTransparency"))
+                  options .push ("X3D_ORDER_INDEPENDENT_TRANSPARENCY");
+
                break;
+            }
          }
 
          if (renderContext .shadows)
@@ -273,10 +280,33 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
       }
       else
       {
-         const { textureNode, objectsCount } = geometryContext;
+         const { alphaMode, textureNode, objectsCount } = geometryContext;
 
          if (this .logarithmicDepthBuffer)
             options .push ("X3D_LOGARITHMIC_DEPTH_BUFFER");
+
+         switch (alphaMode)
+         {
+            case AlphaMode .OPAQUE:
+            {
+               options .push ("X3D_ALPHA_MODE_OPAQUE");
+               break;
+            }
+            case AlphaMode .MASK:
+            {
+               options .push ("X3D_ALPHA_MODE_MASK");
+               break;
+            }
+            case AlphaMode .BLEND:
+            {
+               options .push ("X3D_ALPHA_MODE_BLEND");
+
+               if (browser .getBrowserOption ("OrderIndependentTransparency"))
+                  options .push ("X3D_ORDER_INDEPENDENT_TRANSPARENCY");
+
+               break;
+            }
+         }
 
          if (objectsCount [0])
          {

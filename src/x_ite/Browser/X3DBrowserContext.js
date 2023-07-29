@@ -301,12 +301,8 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
       this .addTaintedField (this ._displayEvents);
       this [_processEvents] ();
 
-      const gl = this .getContext ();
-
       this .getFrameBuffer () .bind ();
-
-      gl .clearColor (0, 0, 0, 0);
-      gl .clear (gl .COLOR_BUFFER_BIT);
+      this .getFrameBuffer () .clear ();
 
       this [_world] .traverse (TraverseType .DISPLAY);
 

@@ -466,9 +466,6 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
 
          // Setup context.
 
-         gl .enable (gl .BLEND);
-         gl .blendFuncSeparate (gl .ONE, gl .ONE, gl .ZERO, gl .ONE_MINUS_SRC_ALPHA);
-
          gl .depthMask (false);
          gl .disable (gl .DEPTH_TEST);
          gl .enable (gl .CULL_FACE);
@@ -496,6 +493,7 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
          if (+this .textureBits)
             this .drawCube (renderObject);
 
+         gl .disable (gl .BLEND);
          gl .enable (gl .DEPTH_TEST);
          gl .depthMask (true);
       };
@@ -533,10 +531,10 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
 
       // Draw.
 
-      // if (transparency)
-      //    gl .enable (gl .BLEND);
-      // else
-      //    gl .disable (gl .BLEND);
+      if (transparency)
+         gl .enable (gl .BLEND);
+      else
+         gl .disable (gl .BLEND);
 
       gl .drawArrays (gl .TRIANGLES, 0, this .sphereCount);
    },

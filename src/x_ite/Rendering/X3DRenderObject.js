@@ -983,7 +983,8 @@ Object .assign (X3DRenderObject .prototype,
          shadows                    = globalShadows .at (-1),
          headlight                  = this .getNavigationInfo () ._headlight .getValue (),
          numGlobalLights            = globalObjects .reduce ((n, c) => n + !!c .lightNode, 0),
-         numGlobalTextureProjectors = globalObjects .reduce ((n, c) => n + !!c .textureProjectorNode, 0);
+         numGlobalTextureProjectors = globalObjects .reduce ((n, c) => n + !!c .textureProjectorNode, 0),
+         oit                        = browser .getBrowserOption ("OrderIndependentTransparency");
 
 
       this .renderTime = Date .now ();
@@ -1034,16 +1035,13 @@ Object .assign (X3DRenderObject .prototype,
       // Draw background.
 
       gl .clear (gl .DEPTH_BUFFER_BIT);
+      gl .blendFuncSeparate (gl .SRC_ALPHA, gl .ONE_MINUS_SRC_ALPHA, gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
 
       this .getBackground () .display (gl, this, viewport);
 
-      // Sorted blend
+      // Sorted blend or order independent transparency
 
       // Render opaque objects first
-
-      // gl .disable (gl .BLEND);
-      gl .enable (gl .BLEND);
-      gl .blendFuncSeparate (gl .ONE, gl .ONE, gl .ZERO, gl .ONE_MINUS_SRC_ALPHA);
 
       const opaqueShapes = this .opaqueShapes;
 
@@ -1065,11 +1063,18 @@ Object .assign (X3DRenderObject .prototype,
 
       const transparentShapes = this .transparentShapes;
 
-      // this .transparencySorter .sort (0, this .numTransparentShapes);
+      if (oit)
+      {
+         gl .blendFuncSeparate (gl .ONE, gl .ONE, gl .ZERO, gl .ONE_MINUS_SRC_ALPHA);
+         gl .disable (gl .DEPTH_TEST);
+      }
+      else
+      {
+         this .transparencySorter .sort (0, this .numTransparentShapes);
+      }
 
-      // gl .enable (gl .BLEND);
+      gl .enable (gl .BLEND);
       gl .depthMask (false);
-      gl .disable (gl .DEPTH_TEST);
 
       for (let i = 0, length = this .numTransparentShapes; i < length; ++ i)
       {
