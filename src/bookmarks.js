@@ -208,7 +208,7 @@ const Bookmarks = (() =>
 
          const antialiased = $("<span></span>")
             .text ("antialiased")
-            .attr ("title", "Antialiased")
+            .attr ("title", "Toggle antialiasing.")
             .addClass ("selected")
             .on ("click", () =>
             {
@@ -224,7 +224,7 @@ const Bookmarks = (() =>
 
          const oit = $("<span></span>")
             .text ("oit")
-            .attr ("title", "Order Independent Transparency")
+            .attr ("title", "Toggle order independent transparency.")
             .on ("click", () =>
             {
                const value = !this .browser .getBrowserOption ("OrderIndependentTransparency");
