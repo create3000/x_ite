@@ -1066,17 +1066,9 @@ Object .assign (X3DRenderObject .prototype,
       const transparentShapes = this .transparentShapes;
 
       if (oit)
-      {
-         browser .getFrameBuffer () .bind (true);
-
-         gl .clearColor (0, 0, 0, 1);
-         gl .clear (gl .COLOR_BUFFER_BIT);
-         gl .blendFuncSeparate (gl .ONE, gl .ONE, gl .ZERO, gl .ONE_MINUS_SRC_ALPHA);
-      }
+         browser .getFrameBuffer () .bindForOrderIndependentTransparency ();
       else
-      {
          this .transparencySorter .sort (0, this .numTransparentShapes);
-      }
 
       gl .depthMask (false);
       gl .enable (gl .BLEND);
