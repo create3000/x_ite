@@ -52,6 +52,7 @@ import TextAlignment from "../../Browser/Text/TextAlignment.js";
 import FileLoader    from "../../InputOutput/FileLoader.js";
 import X3DConstants  from "../../Base/X3DConstants.js";
 import URLs          from "../../Browser/Networking/URLs.js";
+import Time                 from "../../../standard/Time/Time.js";
 
 /*
  * Font paths for default SERIF, SANS and TYPWRITER families.
@@ -220,7 +221,7 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
          if (this .URL .protocol !== "data:")
          {
             if (!this .getCache ())
-               this .URL .searchParams .set ("_", Date .now ());
+               this .URL .searchParams .set ("_", Time .now ());
          }
 
          this .getBrowser () .getFont (this .URL)

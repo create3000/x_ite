@@ -46,6 +46,7 @@
  ******************************************************************************/
 
 import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
+import Time    from "../../../standard/Time/Time.js";
 
 const
    _currentTime      = Symbol (),
@@ -55,7 +56,7 @@ const
 
 function X3DTimeContext ()
 {
-   this [_currentTime]      = Date .now () / 1000;
+   this [_currentTime]      = Time .now () / 1000;
    this [_currentFrameRate] = 60;
    this [_currentPosition]  = new Vector3 (0, 0, 0);
    this [_currentSpeed]     = 0;
@@ -82,7 +83,7 @@ Object .assign (X3DTimeContext .prototype,
       return function ()
       {
          const
-            time     = Date .now () / 1000,
+            time     = Time .now () / 1000,
             interval = time - this [_currentTime];
 
          this [_currentTime]      = time;

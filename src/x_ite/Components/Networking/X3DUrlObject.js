@@ -47,6 +47,7 @@
 
 import Fields       from "../../Fields.js";
 import X3DConstants from "../../Base/X3DConstants.js";
+import Time         from "../../../standard/Time/Time.js";
 
 const
    _cache                   = Symbol (),
@@ -62,7 +63,7 @@ function X3DUrlObject (executionContext)
                           X3DConstants .inputOutput, "loadData",  new Fields .SFTime ());
 
    this [_cache]                = true;
-   this [_autoRefreshStartTime] = Date .now ();
+   this [_autoRefreshStartTime] = Time .now ();
 }
 
 Object .assign (X3DUrlObject .prototype,
@@ -83,7 +84,7 @@ Object .assign (X3DUrlObject .prototype,
 
       if (value === X3DConstants .COMPLETE_STATE)
       {
-         this [_autoRefreshCompleteTime] = Date .now ();
+         this [_autoRefreshCompleteTime] = Time .now ();
          this .setAutoRefreshTimer (this ._autoRefresh .getValue ());
       }
 
@@ -227,7 +228,7 @@ Object .assign (X3DUrlObject .prototype,
 
       if (autoRefreshTimeLimit !== 0)
       {
-         if ((Date .now () - this [_autoRefreshStartTime]) / 1000 > autoRefreshTimeLimit - autoRefreshInterval)
+         if ((Time .now () - this [_autoRefreshStartTime]) / 1000 > autoRefreshTimeLimit - autoRefreshInterval)
             return;
       }
 
@@ -266,7 +267,7 @@ Object .assign (X3DUrlObject .prototype,
          return;
 
       const
-         elapsedTime = (Date .now () - this [_autoRefreshCompleteTime]) / 1000,
+         elapsedTime = (Time .now () - this [_autoRefreshCompleteTime]) / 1000,
          autoRefresh = this ._autoRefresh .getValue ();
 
       let autoRefreshInterval = autoRefresh - elapsedTime;

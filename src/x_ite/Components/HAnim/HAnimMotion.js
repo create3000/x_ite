@@ -127,9 +127,9 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
    set_enabled__ ()
    {
       if (this ._enabled .getValue ())
-         this .timeSensor ._startTime = Date .now () / 1000;
+         this .timeSensor ._startTime = Time .now () / 1000;
       else
-         this .timeSensor ._stopTime = Date .now () / 1000;
+         this .timeSensor ._stopTime = Time .now () / 1000;
    },
    set_interpolators__ ()
    {

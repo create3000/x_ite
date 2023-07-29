@@ -45,8 +45,8 @@
  *
  ******************************************************************************/
 
-import X3DBaseNode          from "../Base/X3DBaseNode.js";
-import X3DPrototypeInstance from "../Components/Core/X3DPrototypeInstance.js";
+import X3DBaseNode from "../Base/X3DBaseNode.js";
+import Time        from "../../standard/Time/Time.js";
 
 function BindableList (executionContext, defaultNode)
 {
@@ -171,7 +171,7 @@ Object .assign (Object .setPrototypeOf (BindableList .prototype, X3DBaseNode .pr
 
       // Advance updateTime time.
 
-      this .updateTime = Date .now ();
+      this .updateTime = Time .now ();
    },
 });
 

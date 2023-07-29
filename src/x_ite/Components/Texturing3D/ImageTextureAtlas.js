@@ -51,6 +51,7 @@ import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DTexture3DNode     from "./X3DTexture3DNode.js";
 import X3DUrlObject         from "../Networking/X3DUrlObject.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
+import Time                 from "../../../standard/Time/Time.js";
 import DEVELOPMENT          from "../../DEVELOPMENT.js";
 
 function ImageTextureAtlas (executionContext)
@@ -104,7 +105,7 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, X3DTexture
       if (this .URL .protocol !== "data:")
       {
          if (!this .getCache ())
-            this .URL .searchParams .set ("_", Date .now ());
+            this .URL .searchParams .set ("_", Time .now ());
       }
 
       this .image .attr ("src", this .URL .href);

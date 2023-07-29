@@ -76,7 +76,6 @@ import RouteArray                  from "./Routing/RouteArray.js";
 import X3DRoute                    from "./Routing/X3DRoute.js";
 import X3DConstants                from "./Base/X3DConstants.js";
 import Legacy                      from "./Browser/Legacy.js";
-import MicroTime                   from "../standard/Time/MicroTime.js";
 import jQuery                      from "../lib/jquery.js";
 import libtess                     from "../lib/libtess.js";
 

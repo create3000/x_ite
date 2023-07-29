@@ -48,6 +48,7 @@
 import Fields       from "../../Fields.js";
 import X3DChildNode from "../Core/X3DChildNode.js";
 import X3DConstants from "../../Base/X3DConstants.js";
+import Time         from "../../../standard/Time/Time.js";
 
 function X3DTimeDependentNode (executionContext)
 {
@@ -263,7 +264,7 @@ Object .assign (Object .setPrototypeOf (X3DTimeDependentNode .prototype, X3DChil
    },
    real_pause ()
    {
-      this .pause = Date .now ();
+      this .pause = Time .now ();
 
       this .set_pause ();
 
@@ -284,7 +285,7 @@ Object .assign (Object .setPrototypeOf (X3DTimeDependentNode .prototype, X3DChil
    },
    real_resume ()
    {
-      const interval = (Date .now () - this .pause) / 1000;
+      const interval = (Time .now () - this .pause) / 1000;
 
       this .pauseInterval += interval;
 

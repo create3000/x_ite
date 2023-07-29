@@ -47,38 +47,31 @@
 
 // Return a pseudo accurate timestamp.
 
-function microTime (now)
+const Time =
 {
-   let
-      offset = 0,
-      last   = 0;
-
-   return function ()
+   now: (function ()
    {
-      const current = now .call (this);
+      let
+         offset = 0,
+         last   = 0;
 
-      if (current > last)
+      return function ()
       {
-         offset = 0;
-         last   = current;
+         const current = Date .now ();
 
-         return current;
-      }
-      else
-      {
-         return last = current + (++ offset / 1000);
-      }
-   };
-}
+         if (current > last)
+         {
+            offset = 0;
+            last   = current;
 
-for (const object of [performance, Date])
-{
-   Object .defineProperty (object, "now",
-   {
-      value: microTime (object .now),
-      configurable: true,
-      writable: true,
-   });
-}
+            return current;
+         }
+         else
+         {
+            return last = current + (offset < 1000 ? ++ offset : offset) / 1000;
+         }
+      };
+   })(),
+};
 
-export default undefined;
+export default Time;

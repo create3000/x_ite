@@ -53,6 +53,7 @@ import X3DUrlObject              from "../Networking/X3DUrlObject.js";
 import X3DConstants              from "../../Base/X3DConstants.js";
 import Vector2                   from "../../../standard/Math/Numbers/Vector2.js";
 import Algorithm                 from "../../../standard/Math/Algorithm.js";
+import Time                      from "../../../standard/Time/Time.js";
 import DEVELOPMENT               from "../../DEVELOPMENT.js";
 
 const defaultData = new Uint8Array ([ 255, 255, 255, 255 ]);
@@ -128,7 +129,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
       if (this .URL .protocol !== "data:")
       {
          if (!this .getCache ())
-            this .URL .searchParams .set ("_", Date .now ());
+            this .URL .searchParams .set ("_", Time .now ());
       }
 
       this .image .attr ("src", this .URL .href);

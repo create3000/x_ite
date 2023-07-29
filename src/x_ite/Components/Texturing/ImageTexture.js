@@ -52,6 +52,7 @@ import X3DTexture2DNode     from "./X3DTexture2DNode.js";
 import X3DUrlObject         from "../Networking/X3DUrlObject.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import Algorithm            from "../../../standard/Math/Algorithm.js";
+import Time                 from "../../../standard/Time/Time.js";
 import DEVELOPMENT          from "../../DEVELOPMENT.js";
 
 function ImageTexture (executionContext)
@@ -108,7 +109,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
       if (this .URL .protocol !== "data:")
       {
          if (!this .getCache ())
-            this .URL .searchParams .set ("_", Date .now ());
+            this .URL .searchParams .set ("_", Time .now ());
       }
 
       this .image .attr ("src", this .URL .href);

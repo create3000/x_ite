@@ -54,6 +54,7 @@ import X3DUrlObject         from "../Networking/X3DUrlObject.js";
 import GifMedia             from "../../Browser/Texturing/GIFMedia.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import Algorithm            from "../../../standard/Math/Algorithm.js";
+import Time                 from "../../../standard/Time/Time.js";
 import DEVELOPMENT          from "../../DEVELOPMENT.js";
 
 function MovieTexture (executionContext)
@@ -126,7 +127,7 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
       if (this .URL .protocol !== "data:")
       {
          if (!this .getCache ())
-            this .URL .searchParams .set ("_", Date .now ());
+            this .URL .searchParams .set ("_", Time .now ());
       }
 
       if (this .URL .pathname .endsWith (".gif"))

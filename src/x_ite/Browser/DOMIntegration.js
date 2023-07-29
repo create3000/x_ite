@@ -359,9 +359,6 @@ class DOMIntegration
 			return;
 
 		field .addInterest ("fieldCallback", this, element);
-
-		if (this .trace)
-			field .addInterest ("fieldTraceCallback", this, element);
 	}
 
 	fieldCallback (element, field)
@@ -380,20 +377,6 @@ class DOMIntegration
 		});
 
 		element .dispatchEvent (event);
-	}
-
-	fieldTraceCallback (element, field)
-	{
-		const
-			now       = Date .now (),
-			timeStamp = node .getBrowser () .getCurrentTime (),
-			dt        = now - timeStamp * 1000,
-			node      = $.data (element, "node");
-
-		console .log ("%f: at %f dt of %s ms %s '%s' %s: %s",
-					     now, timeStamp, dt .toFixed (3),
-					     node .getTypeName (), node .getName (),
-					     field .getName (), field .valueOf ());
 	}
 };
 
