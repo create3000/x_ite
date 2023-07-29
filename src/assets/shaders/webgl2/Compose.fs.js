@@ -4,7 +4,10 @@ precision highp float;
 precision highp int;
 precision highp sampler2D;
 
+/* sum(rgb * a), prod(1 - a) */
 uniform sampler2D x3d_AccumRevealageTexture;
+
+/* sum(a) */
 uniform sampler2D x3d_AlphaTexture;
 
 out vec4 x3d_FragColor;
