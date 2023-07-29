@@ -268,20 +268,20 @@ Object .assign (MultiSampleFrameBuffer .prototype,
    },
    bind ()
    {
-      const gl = this .context;
+      const { context: gl, lastBuffer, frameBuffer } = this;
 
-      this .lastBuffer .push (gl .getParameter (gl .FRAMEBUFFER_BINDING));
+      lastBuffer .push (gl .getParameter (gl .FRAMEBUFFER_BINDING));
 
-      gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffer);
+      gl .bindFramebuffer (gl .FRAMEBUFFER, frameBuffer);
 
    },
    bindForOrderIndependentTransparency ()
    {
-      const gl = this .context;
+      const { context: gl, lastBuffer, oitFrameBuffer } = this;
 
-      this .lastBuffer .push (gl .getParameter (gl .FRAMEBUFFER_BINDING));
+      lastBuffer .push (gl .getParameter (gl .FRAMEBUFFER_BINDING));
 
-      gl .bindFramebuffer (gl .FRAMEBUFFER, this .oitFrameBuffer);
+      gl .bindFramebuffer (gl .FRAMEBUFFER, oitFrameBuffer);
 
       gl .clearColor (0, 0, 0, 1);
       gl .clear (gl .COLOR_BUFFER_BIT);
@@ -352,9 +352,9 @@ Object .assign (MultiSampleFrameBuffer .prototype,
    },
    unbind ()
    {
-      const gl = this .context;
+      const { context: gl, lastBuffer } = this;
 
-      gl .bindFramebuffer (gl .FRAMEBUFFER, this .lastBuffer .pop ());
+      gl .bindFramebuffer (gl .FRAMEBUFFER, lastBuffer .pop ());
    },
    dispose ()
    {
