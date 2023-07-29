@@ -21,30 +21,33 @@ X3D (() =>
 
    Browser .getContextMenu () .setUserMenu (() =>
    {
-      function antialiasing (antialiased, contentScale, imageRendering)
+      function antialiasing (contentScale, imageRendering)
       {
          $("#browser")
-            .attr ("antialiased", antialiased)
             .attr ("contentScale", contentScale)
             .css ("image-rendering", imageRendering);
       }
 
       return {
          ... (typeof createTestMenu !== "undefined" ? createTestMenu () : { }),
-         "antialiasing": {
-            "name": "Antialiasing",
+         "contentScale": {
+            "name": "Content Scale",
             "items": {
                "default": {
                   "name": "Default",
-                  "callback": () => antialiasing (null, null, ""),
+                  "callback": () => antialiasing (null, ""),
                },
                "auto": {
                   "name": "Auto",
-                  "callback": () => antialiasing (false, "auto", ""),
+                  "callback": () => antialiasing ("auto", ""),
+               },
+               "1.5": {
+                  "name": "1.5",
+                  "callback": () => antialiasing ("1.5", ""),
                },
                "pixelated": {
                   "name": "Pixelated",
-                  "callback": () => antialiasing (false, 0.1, "pixelated"),
+                  "callback": () => antialiasing (0.1, "pixelated"),
                },
             },
          },
@@ -218,19 +221,27 @@ main.color-management #browser {
    border-color: #ffe32d;
 }
 
-#animations {
+#toolbar {
    margin: 10px 40px 10px 20px;
 }
 
-#animations span {
+#toolbar span {
    cursor: pointer;
    padding: 0 3px;
    font-family: sans-serif;
 }
 
-#animations span.separator {
+#toolbar span.selected {
+   color: #ffe32d;
+}
+
+#toolbar span.separator {
    border-left: 1px solid white;
-   margin: 0 5px;
+   margin: 0 -1px 0 5px;
+}
+
+#toolbar span.separator + .separator {
+   display: none;
 }
 
 #browser {
@@ -403,7 +414,7 @@ main.color-management #browser {
          <div>
             <h1 id="version"></h1>
             <p id="file"></p>
-            <div id="animations"></div>
+            <div id="toolbar"></div>
          </div>
       </header>
       <main>

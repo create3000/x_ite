@@ -1073,10 +1073,11 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    displayParticles (gl, renderContext, particleSystem)
    {
       const
+         browser        = this .getBrowser (),
          appearanceNode = renderContext .appearanceNode,
          shaderNode     = appearanceNode .getShader (this, renderContext);
 
-      if (this .solid || !appearanceNode .getBackMaterial () || this .getBrowser () .getWireframe ())
+      if (this .solid || !appearanceNode .getBackMaterial () || browser .getBrowserOption ("OrderIndependentTransparency") || browser .getWireframe ())
       {
          this .displayParticlesGeometry (gl, renderContext, appearanceNode, shaderNode, true, true, particleSystem);
       }

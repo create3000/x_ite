@@ -250,6 +250,10 @@ Object .assign (X3DTexturingContext .prototype,
    {
       return this [_textureCubeUnits] [0];
    },
+   getDefaultTexture2D ()
+   {
+      return this [_defaultTexture2D];
+   },
    getTextureMemory ()
    {
       return NaN;

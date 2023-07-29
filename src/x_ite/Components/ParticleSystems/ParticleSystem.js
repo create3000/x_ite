@@ -928,7 +928,6 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
 
             gl .frontFace (positiveScale ? gl .CCW : gl .CW);
             gl .enable (gl .CULL_FACE);
-            gl .cullFace (gl .BACK);
 
             // [fall trough]
          }

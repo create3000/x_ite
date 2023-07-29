@@ -362,7 +362,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
          gl .uniform1i (uniform, browser .getDefaultTexture2DUnit ());
 
       gl .uniform1i (this .x3d_TexCoordRamp,         browser .getDefaultTexture2DUnit ());
-      gl .uniform1i (this .x3d_JoinsTexture,         browser .getDefaultTexture2DUnit ());
+      gl .uniform1i (this .x3d_JointsTexture,        browser .getDefaultTexture2DUnit ());
       gl .uniform1i (this .x3d_DisplacementsTexture, browser .getDefaultTexture2DUnit ());
       gl .uniform1i (this .x3d_JointMatricesTexture, browser .getDefaultTexture2DUnit ());
    },

@@ -52,12 +52,13 @@ function MultiSampleFrameBuffer (browser, width, height, samples, oit)
    if (gl .getVersion () === 1 || width === 0 || height === 0)
       return Fallback;
 
-   this .context    = gl;
-   this .width      = width;
-   this .height     = height;
-   this .samples    = samples;
-   this .oit        = oit;
-   this .lastBuffer = [ ];
+   this .context          = gl;
+   this .width            = width;
+   this .height           = height;
+   this .samples          = samples;
+   this .oit              = oit;
+   this .defaultTexture2D = browser .getDefaultTexture2D ();
+   this .lastBuffer       = [ ];
 
    // Create frame buffer.
 
@@ -215,6 +216,7 @@ function MultiSampleFrameBuffer (browser, width, height, samples, oit)
 
    const status2 = gl .checkFramebufferStatus (gl .FRAMEBUFFER) === gl .FRAMEBUFFER_COMPLETE;
 
+   gl .bindTexture (gl .TEXTURE_2D, null);
    gl .bindFramebuffer (gl .FRAMEBUFFER, this .lastBuffer .pop ());
 
    // Always check that our frame buffer is ok.
@@ -234,7 +236,7 @@ function MultiSampleFrameBuffer (browser, width, height, samples, oit)
       alphaTextureUnit          = gl .getUniformLocation (this .program, "x3d_AlphaTexture");
 
    gl .uniform1i (accumRevealageTextureUnit, 0);
-   gl .uniform1i (alphaTextureUnit, 1);
+   gl .uniform1i (alphaTextureUnit,          1);
 
    // Quad for compose pass.
 
@@ -245,7 +247,7 @@ function MultiSampleFrameBuffer (browser, width, height, samples, oit)
    gl .bindBuffer (gl .ARRAY_BUFFER, this .quadBuffer);
    gl .bufferData (gl .ARRAY_BUFFER, new Float32Array ([-1, 1, -1, -1, 1, -1, -1, 1, 1, -1, 1, 1]), gl .STATIC_DRAW);
    gl .vertexAttribPointer (0, 2, gl .FLOAT, false, 0, 0);
-   gl .enableVertexAttribArray (0);
+   gl .enableVertexAttribArray (null);
 }
 
 Object .assign (MultiSampleFrameBuffer .prototype,
@@ -312,7 +314,7 @@ Object .assign (MultiSampleFrameBuffer .prototype,
    },
    compose ()
    {
-      const { context: gl, width, height, samples, program } = this;
+      const { context: gl, width, height, samples, program, defaultTexture2D } = this;
 
       // Reset viewport before blit, otherwise only last layer size is used.
       gl .viewport (0, 0, width, height);
@@ -351,6 +353,11 @@ Object .assign (MultiSampleFrameBuffer .prototype,
       gl .bindVertexArray (this .quadArray);
       gl .drawArrays (gl .TRIANGLES, 0, 6);
       gl .disable (gl .BLEND);
+
+      gl .activeTexture (gl .TEXTURE0 + 0);
+      gl .bindTexture (gl .TEXTURE_2D, defaultTexture2D);
+      gl .activeTexture (gl .TEXTURE0 + 1);
+      gl .bindTexture (gl .TEXTURE_2D, defaultTexture2D);
    },
    unbind ()
    {
