@@ -55,15 +55,15 @@ X3D (() =>
             "items": {
                "default": {
                   "name": "Default",
-                  "callback": antialiasing .bind (this, null, null, ""),
+                  "callback": () => antialiasing (null, null, ""),
                },
                "auto": {
                   "name": "Auto",
-                  "callback": antialiasing .bind (this, true, "auto", ""),
+                  "callback": () => antialiasing (false, "auto", ""),
                },
                "pixelated": {
                   "name": "Pixelated",
-                  "callback": antialiasing .bind (this, false, 0.1, "pixelated"),
+                  "callback": () => antialiasing (false, 0.1, "pixelated"),
                },
             },
          },
