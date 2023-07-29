@@ -181,9 +181,7 @@ Object .assign (SpotLightContainer .prototype,
       if (this .shadowBuffer)
       {
          const textureUnit = this .global
-            ? (this .textureUnit = this .textureUnit !== undefined
-               ? this .textureUnit
-               : this .browser .popTexture2DUnit ())
+            ? (this .textureUnit = this .textureUnit ?? this .browser .popTexture2DUnit ())
             : this .browser .getTexture2DUnit ();
 
          if (textureUnit !== undefined)

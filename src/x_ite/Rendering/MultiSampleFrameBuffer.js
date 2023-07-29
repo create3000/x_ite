@@ -303,7 +303,6 @@ Object .assign (MultiSampleFrameBuffer .prototype,
       gl .viewport (0, 0, width, height);
       gl .scissor  (0, 0, width, height);
 
-      gl .readBuffer (gl .COLOR_ATTACHMENT0);
       gl .bindFramebuffer (gl .READ_FRAMEBUFFER, this .frameBuffer);
       gl .bindFramebuffer (gl .DRAW_FRAMEBUFFER, null);
 
