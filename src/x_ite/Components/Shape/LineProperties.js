@@ -79,6 +79,10 @@ Object .assign (Object .setPrototypeOf (LineProperties .prototype, X3DAppearance
       // Preload texture.
       this .getBrowser () .getLinetypeTexture ();
    },
+   getStyleKey ()
+   {
+      return this .applied ? 2 : 1;
+   },
    getApplied ()
    {
       return this .applied;

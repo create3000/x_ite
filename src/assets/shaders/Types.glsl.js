@@ -52,7 +52,9 @@ struct x3d_LinePropertiesParameters
 {
    mediump int   linetype;
    mediump float lineStippleScale;
+   #if defined (X3D_STYLE_PROPERTIES_TEXTURE)
    sampler2D     texture;
+   #endif
 };
 #endif
 
@@ -64,7 +66,9 @@ struct x3d_FillPropertiesParameters
    bool          filled;
    bool          hatched;
    mediump vec3  hatchColor;
+   #if defined (X3D_STYLE_PROPERTIES_TEXTURE)
    sampler2D     texture;
+   #endif
    mediump float scale;
 };
 #endif

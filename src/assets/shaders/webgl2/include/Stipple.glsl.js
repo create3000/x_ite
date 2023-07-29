@@ -25,8 +25,10 @@ stipple ()
       #endif
    #endif
 
-   if (x3d_LineProperties .linetype != 16)
-   {
+   #if defined (X3D_STYLE_PROPERTIES_TEXTURE)
+      if (x3d_LineProperties .linetype == 16)
+         return;
+
       int   linetype = x3d_LineProperties .linetype;
       int   height   = textureSize (x3d_LineProperties .texture, 0) .y;
       float t        = 1.0 - float (linetype * 2 + 1) / float (height * 2);
@@ -34,7 +36,7 @@ stipple ()
 
       if (alpha != 1.0)
          discard;
-   }
+   #endif
 }
 
 #endif

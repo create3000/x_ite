@@ -52,13 +52,12 @@ function MultiSampleFrameBuffer (browser, width, height, samples, oit)
    if (gl .getVersion () === 1 || width === 0 || height === 0)
       return Fallback;
 
-   this .context          = gl;
-   this .width            = width;
-   this .height           = height;
-   this .samples          = samples;
-   this .oit              = oit;
-   this .defaultTexture2D = browser .getDefaultTexture2D ();
-   this .lastBuffer       = [ ];
+   this .context    = gl;
+   this .width      = width;
+   this .height     = height;
+   this .samples    = samples;
+   this .oit        = oit;
+   this .lastBuffer = [ ];
 
    // Create frame buffer.
 
@@ -353,11 +352,6 @@ Object .assign (MultiSampleFrameBuffer .prototype,
       gl .bindVertexArray (this .quadArray);
       gl .drawArrays (gl .TRIANGLES, 0, 6);
       gl .disable (gl .BLEND);
-
-      gl .activeTexture (gl .TEXTURE0 + 0);
-      gl .bindTexture (gl .TEXTURE_2D, defaultTexture2D);
-      gl .activeTexture (gl .TEXTURE0 + 1);
-      gl .bindTexture (gl .TEXTURE_2D, defaultTexture2D);
    },
    unbind ()
    {

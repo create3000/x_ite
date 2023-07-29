@@ -119,7 +119,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
          key += shadows ? 1 : 0;
          key += fogNode ?.getFogType () ?? 0;
          key += shapeNode .getShapeKey ();
-         key += appearanceNode .getStyleProperties (geometryContext .geometryType) ? 1 : 0;
+         key += appearanceNode .getStyleProperties (geometryContext .geometryType) ?.getStyleKey () ?? 0;
          key += appearanceNode .getTextureTransformMapping () .size || 1;
          key += geometryContext .textureCoordinateMapping .size || 1;
          key += humanoidNode ? 1 : 0;
@@ -234,7 +234,12 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
          }
 
          if (appearanceNode .getStyleProperties (geometryContext .geometryType))
+         {
             options .push ("X3D_STYLE_PROPERTIES");
+
+            if (appearanceNode .getStyleProperties (geometryContext .geometryType) .getStyleKey () > 1)
+               options .push ("X3D_STYLE_PROPERTIES_TEXTURE");
+         }
 
          if (+this .textureBits)
             options .push ("X3D_MATERIAL_TEXTURES");

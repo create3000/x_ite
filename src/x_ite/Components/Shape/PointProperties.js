@@ -86,6 +86,10 @@ Object .assign (Object .setPrototypeOf (PointProperties .prototype, X3DAppearanc
       this .set_pointSizeMaxValue__ ();
       this .set_attenuation__ ();
    },
+   getStyleKey ()
+   {
+      return 1;
+   },
    set_contentScale__ ()
    {
       this .set_pointSizeScaleFactor__ ();

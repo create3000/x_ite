@@ -81,6 +81,10 @@ Object .assign (Object .setPrototypeOf (FillProperties .prototype, X3DAppearance
       // Preload texture.
       this .getBrowser () .getHatchStyleTexture (this .hatchStyle);
    },
+   getStyleKey ()
+   {
+      return this .hatched ? 2 : 1;
+   },
    set_filled__ ()
    {
       this .filled = this ._filled .getValue ();
