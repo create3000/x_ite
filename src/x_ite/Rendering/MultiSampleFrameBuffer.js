@@ -238,12 +238,12 @@ function MultiSampleFrameBuffer (browser, width, height, samples, oit)
 
    // Quad for compose pass.
 
-   this .quadArray          = gl .createVertexArray ();
-   this .quadVerticesBuffer = gl .createBuffer ();
+   this .quadArray  = gl .createVertexArray ();
+   this .quadBuffer = gl .createBuffer ();
 
    gl .bindVertexArray (this .quadArray);
-   gl .bindBuffer (gl .ARRAY_BUFFER, this .quadVerticesBuffer);
-   gl .bufferData (gl .ARRAY_BUFFER, new Float32Array([-1, 1, -1, -1, 1, -1, -1, 1, 1, -1, 1, 1]), gl .STATIC_DRAW);
+   gl .bindBuffer (gl .ARRAY_BUFFER, this .quadBuffer);
+   gl .bufferData (gl .ARRAY_BUFFER, new Float32Array ([-1, 1, -1, -1, 1, -1, -1, 1, 1, -1, 1, 1]), gl .STATIC_DRAW);
    gl .vertexAttribPointer (0, 2, gl .FLOAT, false, 0, 0);
    gl .enableVertexAttribArray (0);
 }
@@ -346,6 +346,8 @@ Object .assign (MultiSampleFrameBuffer .prototype,
       gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffer);
       gl .enable (gl .BLEND);
       gl .blendFunc (gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
+      gl .enable (gl .CULL_FACE);
+      gl .frontFace (gl .CCW);
       gl .bindVertexArray (this .quadArray);
       gl .drawArrays (gl .TRIANGLES, 0, 6);
       gl .disable (gl .BLEND);
@@ -372,7 +374,7 @@ Object .assign (MultiSampleFrameBuffer .prototype,
       gl .deleteTexture (this .accumRevealageTexture);
       gl .deleteTexture (this .alphaTexture)
       gl .deleteVertexArray (this .quadArray);
-      gl .deleteBuffer (this .quadVerticesBuffer);
+      gl .deleteBuffer (this .quadBuffer);
    },
 });
 

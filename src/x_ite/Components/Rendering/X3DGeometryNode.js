@@ -953,7 +953,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          appearanceNode = renderContext .appearanceNode,
          shaderNode     = appearanceNode .getShader (this, renderContext);
 
-      if (this .solid || !appearanceNode .getBackMaterial () || this .getBrowser () .getWireframe ())
+      if (this .solid || !appearanceNode .getBackMaterial () || this .getBrowser () .getBrowserOption ("OrderIndependentTransparency") || this .getBrowser () .getWireframe ())
       {
          this .displayGeometry (gl, renderContext, appearanceNode, shaderNode, true, true);
       }
