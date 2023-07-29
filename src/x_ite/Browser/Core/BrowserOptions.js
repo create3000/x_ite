@@ -249,24 +249,6 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
       if (straightenHorizon .getValue ())
          this .getBrowser () .getActiveLayer () ?.straightenView ();
    },
-   updateContentScale ()
-   {
-      const
-         browser = this .getBrowser (),
-         media   = window .matchMedia (`(resolution: ${window .devicePixelRatio}dppx)`),
-         update  = this .updateContentScale .bind (this);
-
-      if (this .removeUpdateContentScale)
-         this .removeUpdateContentScale ();
-
-      this .removeUpdateContentScale = function () { media .removeEventListener ("change", update) };
-
-      media .addEventListener ("change", update);
-
-      browser .getRenderingProperties () ._ContentScale = window .devicePixelRatio;
-
-      browser .reshape ();
-   },
    set_autoUpdate__ (autoUpdate)
    {
       const events = ["resize", "scroll", "load"]
@@ -315,6 +297,24 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
 
       browser .reshape ();
    },
+   updateContentScale ()
+   {
+      const
+         browser = this .getBrowser (),
+         media   = window .matchMedia (`(resolution: ${window .devicePixelRatio}dppx)`),
+         update  = this .updateContentScale .bind (this);
+
+      if (this .removeUpdateContentScale)
+         this .removeUpdateContentScale ();
+
+      this .removeUpdateContentScale = function () { media .removeEventListener ("change", update) };
+
+      media .addEventListener ("change", update);
+
+      browser .getRenderingProperties () ._ContentScale = window .devicePixelRatio;
+
+      browser .reshape ();
+   },
    set_logarithmicDepthBuffer__ (logarithmicDepthBuffer)
    {
       const
@@ -330,7 +330,7 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
          samples = Algorithm .clamp (multisampling .getValue (), 0, browser .getMaxSamples ());
 
       browser .getRenderingProperties () ._Multisampling = this ._Antialiased .getValue () ? samples : 0;
-      browser .getRenderingProperties () ._Antialiased   = browser .getAntialiased ();
+      browser .getRenderingProperties () ._Antialiased   = samples > 0;
 
       browser .reshape ();
    },

@@ -40,7 +40,7 @@ X3D (() =>
 
    Browser .getContextMenu () .setUserMenu (() =>
    {
-      function antialiasing (antialiased, contentScale, imageRendering)
+      function antialiasing (contentScale, imageRendering)
       {
          $("#browser")
             .attr ("contentScale", contentScale)
@@ -59,6 +59,10 @@ X3D (() =>
                "auto": {
                   "name": "Auto",
                   "callback": () => antialiasing ("auto", ""),
+               },
+               "1.5": {
+                  "name": "1.5",
+                  "callback": () => antialiasing ("1.5", ""),
                },
                "pixelated": {
                   "name": "Pixelated",

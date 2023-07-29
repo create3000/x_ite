@@ -143,7 +143,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
              `      WebGL version: ${this .getWebGLVersion ()}\n` +
              `      Shading language: ${this .getShadingLanguageVersion ()}\n` +
              `   Rendering Properties\n` +
-             `      Antialiased: ${this .getAntialiased ()}\n` +
+             `      Antialiased: ${this .getRenderingProperty ("Antialiased")}\n` +
              `      Max samples: ${this .getMaxSamples ()}\n` +
              `      Depth size: ${this .getDepthSize ()} bits\n` +
              `      Color depth: ${this .getColorDepth ()} bits\n` +

@@ -124,12 +124,6 @@ Object .assign (X3DRenderingContext .prototype,
 
       return gl .getParameter (gl .VERSION);
    },
-   getAntialiased ()
-   {
-      const gl = this .getContext ();
-
-      return gl .getParameter (gl .SAMPLES) > 0 || (gl .getVersion () > 1 && this .getRenderingProperty ("Multisampling") > 0);
-   },
    getMaxSamples ()
    {
       const gl = this .getContext ();
