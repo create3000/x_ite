@@ -1035,29 +1035,31 @@ Object .assign (X3DRenderObject .prototype,
       // Draw background.
 
       gl .clear (gl .DEPTH_BUFFER_BIT);
-      // gl .blendFuncSeparate (gl .SRC_ALPHA, gl .ONE_MINUS_SRC_ALPHA, gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
+      gl .blendFuncSeparate (gl .SRC_ALPHA, gl .ONE_MINUS_SRC_ALPHA, gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
 
-      // this .getBackground () .display (gl, this, viewport);
+      this .getBackground () .display (gl, this, viewport);
 
-      // // Sorted blend or order independent transparency
+      // Sorted blend or order independent transparency
 
-      // // Render opaque objects first
+      // Render opaque objects first
 
-      // const opaqueShapes = this .opaqueShapes;
+      gl .enable (gl .DEPTH_TEST);
 
-      // for (let i = 0, length = this .numOpaqueShapes; i < length; ++ i)
-      // {
-      //    const renderContext = opaqueShapes [i];
+      const opaqueShapes = this .opaqueShapes;
 
-      //    gl .scissor (... renderContext .scissor);
+      for (let i = 0, length = this .numOpaqueShapes; i < length; ++ i)
+      {
+         const renderContext = opaqueShapes [i];
 
-      //    renderContext .shadows           = renderContext .shadows || shadows;
-      //    renderContext .objectsCount [1] += numGlobalLights;
-      //    renderContext .objectsCount [2] += numGlobalTextureProjectors;
+         gl .scissor (... renderContext .scissor);
 
-      //    renderContext .shapeNode .display (gl, renderContext);
-      //    browser .resetTextureUnits ();
-      // }
+         renderContext .shadows           = renderContext .shadows || shadows;
+         renderContext .objectsCount [1] += numGlobalLights;
+         renderContext .objectsCount [2] += numGlobalTextureProjectors;
+
+         renderContext .shapeNode .display (gl, renderContext);
+         browser .resetTextureUnits ();
+      }
 
       // Render transparent objects
 
@@ -1077,8 +1079,8 @@ Object .assign (X3DRenderObject .prototype,
          this .transparencySorter .sort (0, this .numTransparentShapes);
       }
 
-      gl .enable (gl .BLEND);
       gl .depthMask (false);
+      gl .enable (gl .BLEND);
 
       for (let i = 0, length = this .numTransparentShapes; i < length; ++ i)
       {
@@ -1095,6 +1097,7 @@ Object .assign (X3DRenderObject .prototype,
       }
 
       gl .depthMask (true);
+      gl .disable (gl .DEPTH_TEST);
       gl .disable (gl .BLEND);
 
       if (oit)

@@ -119,6 +119,10 @@ function MultiSampleFrameBuffer (browser, width, height, samples, oit)
    gl .renderbufferStorageMultisample (gl .RENDERBUFFER, this .samples, gl .RGBA32F, width, height);
    gl .framebufferRenderbuffer (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT1, gl .RENDERBUFFER, this .alphaBuffer);
 
+   // Create depth buffer.
+
+   gl .framebufferRenderbuffer (gl .FRAMEBUFFER, gl .DEPTH_ATTACHMENT,  gl .RENDERBUFFER, this .depthBuffer);
+
    // Set draw buffers.
 
    gl .drawBuffers ([
@@ -234,7 +238,7 @@ Object .assign (MultiSampleFrameBuffer .prototype,
    },
    blit ()
    {
-      const { context: gl, width, height } = this;
+      const { context: gl, width, height, oit } = this;
 
       // Reset viewport before blit, otherwise only last layer size is used.
       gl .viewport (0, 0, width, height);
@@ -251,8 +255,6 @@ Object .assign (MultiSampleFrameBuffer .prototype,
    compose ()
    {
       const { context: gl, width, height, program } = this;
-
-      // Blit framebuffer to textures.
 
       // Reset viewport before blit, otherwise only last layer size is used.
       gl .viewport (0, 0, width, height);
@@ -274,8 +276,6 @@ Object .assign (MultiSampleFrameBuffer .prototype,
                            0, 0, width, height,
                            gl .COLOR_BUFFER_BIT, gl .LINEAR);
 
-      // Compose render pass
-
       gl .useProgram (program);
 
       gl .activeTexture (gl .TEXTURE0 + 0);
@@ -283,16 +283,12 @@ Object .assign (MultiSampleFrameBuffer .prototype,
       gl .activeTexture (gl .TEXTURE0 + 1);
       gl .bindTexture (gl .TEXTURE_2D, this .alphaTexture);
 
-      gl .bindFramebuffer (gl .FRAMEBUFFER, null);
-      gl .depthMask (false);
-      gl .disable (gl .DEPTH_TEST);
+      gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffer);
       gl .enable (gl .BLEND);
       gl .blendFunc (gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
       gl .bindVertexArray (this .quadArray);
       gl .drawArrays (gl .TRIANGLES, 0, 6);
       gl .disable (gl .BLEND);
-      gl .enable (gl .DEPTH_TEST);
-      gl .depthMask (true);
    },
    unbind ()
    {

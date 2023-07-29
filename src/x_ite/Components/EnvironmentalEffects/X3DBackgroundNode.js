@@ -467,7 +467,6 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
          // Setup context.
 
          gl .depthMask (false);
-         gl .disable (gl .DEPTH_TEST);
          gl .enable (gl .CULL_FACE);
          gl .frontFace (gl .CCW);
 
@@ -493,9 +492,8 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
          if (+this .textureBits)
             this .drawCube (renderObject);
 
-         gl .disable (gl .BLEND);
-         gl .enable (gl .DEPTH_TEST);
          gl .depthMask (true);
+         gl .disable (gl .BLEND);
       };
    })(),
    drawSphere (renderObject)
