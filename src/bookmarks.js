@@ -235,9 +235,9 @@ const Bookmarks = (() =>
             })
             .appendTo ($("#toolbar"));
 
-         this .browser .setBrowserOption ("Antialiased", false)
-         this .browser .setBrowserOption ("OrderIndependentTransparency", true)
-         this .browser .setBrowserOption ("ContentScale", -1)
+         // this .browser .setBrowserOption ("Antialiased", false)
+         // this .browser .setBrowserOption ("OrderIndependentTransparency", true)
+         // this .browser .setBrowserOption ("ContentScale", -1)
       }
    });
 

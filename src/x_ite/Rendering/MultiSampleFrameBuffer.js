@@ -313,7 +313,7 @@ Object .assign (MultiSampleFrameBuffer .prototype,
    },
    compose ()
    {
-      const { context: gl, width, height, samples, program, defaultTexture2D } = this;
+      const { context: gl, width, height, samples, program } = this;
 
       // Reset viewport before blit, otherwise only last layer size is used.
       gl .viewport (0, 0, width, height);
