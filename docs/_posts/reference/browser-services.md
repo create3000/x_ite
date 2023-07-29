@@ -270,6 +270,12 @@ Returns a browser option with the corresponding name.
          <td>true</td>
       </tr>
       <tr>
+         <td>OrderIndependentTransparency</td>
+         <td>Whether to use order independent transparency rendering technique. (non standard)</td>
+         <td>Boolean</td>
+         <td>false</td>
+      </tr>
+      <tr>
          <td>StraightenHorizon</td>
          <td>Whether the Examine viewer should straighten the horizon when navigating. (non standard)</td>
          <td>Boolean</td>
