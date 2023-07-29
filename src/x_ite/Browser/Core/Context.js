@@ -117,7 +117,7 @@ const Context =
          gl = canvas .getContext ("webgl2", { ... options, antialias: false });
 
          if (gl)
-            gl .getVersion = function () { return 2; };
+            gl .getVersion = () => 2;
       }
 
       if (version >= 1 && !gl)
@@ -127,7 +127,7 @@ const Context =
 
          if (gl)
          {
-            gl .getVersion = function () { return 1; };
+            gl .getVersion = () => 1;
 
             {
                const ext = gl .getExtension ("OES_vertex_array_object");
