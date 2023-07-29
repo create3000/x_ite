@@ -984,7 +984,7 @@ Object .assign (X3DRenderObject .prototype,
          headlight                  = this .getNavigationInfo () ._headlight .getValue (),
          numGlobalLights            = globalObjects .reduce ((n, c) => n + !!c .lightNode, 0),
          numGlobalTextureProjectors = globalObjects .reduce ((n, c) => n + !!c .textureProjectorNode, 0),
-         oit                        = browser .getBrowserOption ("OrderIndependentTransparency");
+         oit                        = browser .getFrameBuffer () .getOrderIndependentTransparency ();
 
 
       this .renderTime = Date .now ();
@@ -1035,29 +1035,29 @@ Object .assign (X3DRenderObject .prototype,
       // Draw background.
 
       gl .clear (gl .DEPTH_BUFFER_BIT);
-      gl .blendFuncSeparate (gl .SRC_ALPHA, gl .ONE_MINUS_SRC_ALPHA, gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
+      // gl .blendFuncSeparate (gl .SRC_ALPHA, gl .ONE_MINUS_SRC_ALPHA, gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
 
-      this .getBackground () .display (gl, this, viewport);
+      // this .getBackground () .display (gl, this, viewport);
 
-      // Sorted blend or order independent transparency
+      // // Sorted blend or order independent transparency
 
-      // Render opaque objects first
+      // // Render opaque objects first
 
-      const opaqueShapes = this .opaqueShapes;
+      // const opaqueShapes = this .opaqueShapes;
 
-      for (let i = 0, length = this .numOpaqueShapes; i < length; ++ i)
-      {
-         const renderContext = opaqueShapes [i];
+      // for (let i = 0, length = this .numOpaqueShapes; i < length; ++ i)
+      // {
+      //    const renderContext = opaqueShapes [i];
 
-         gl .scissor (... renderContext .scissor);
+      //    gl .scissor (... renderContext .scissor);
 
-         renderContext .shadows           = renderContext .shadows || shadows;
-         renderContext .objectsCount [1] += numGlobalLights;
-         renderContext .objectsCount [2] += numGlobalTextureProjectors;
+      //    renderContext .shadows           = renderContext .shadows || shadows;
+      //    renderContext .objectsCount [1] += numGlobalLights;
+      //    renderContext .objectsCount [2] += numGlobalTextureProjectors;
 
-         renderContext .shapeNode .display (gl, renderContext);
-         browser .resetTextureUnits ();
-      }
+      //    renderContext .shapeNode .display (gl, renderContext);
+      //    browser .resetTextureUnits ();
+      // }
 
       // Render transparent objects
 
@@ -1065,6 +1065,10 @@ Object .assign (X3DRenderObject .prototype,
 
       if (oit)
       {
+         browser .getFrameBuffer () .bind (true);
+
+         gl .clearColor (0, 0, 0, 1);
+         gl .clear (gl .COLOR_BUFFER_BIT);
          gl .blendFuncSeparate (gl .ONE, gl .ONE, gl .ZERO, gl .ONE_MINUS_SRC_ALPHA);
          gl .disable (gl .DEPTH_TEST);
       }
@@ -1093,6 +1097,11 @@ Object .assign (X3DRenderObject .prototype,
       gl .depthMask (true);
       gl .disable (gl .BLEND);
 
+      if (oit)
+      {
+         browser .getFrameBuffer () .compose ();
+         browser .getFrameBuffer () .unbind ();
+      }
 
       // POST DRAW
 
