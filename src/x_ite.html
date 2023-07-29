@@ -49,27 +49,6 @@ X3D (() =>
 
       return {
          ... (typeof createTestMenu !== "undefined" ? createTestMenu () : { }),
-         "contentScale": {
-            "name": "Content Scale",
-            "items": {
-               "default": {
-                  "name": "Default",
-                  "callback": () => antialiasing (null, ""),
-               },
-               "auto": {
-                  "name": "Auto",
-                  "callback": () => antialiasing ("auto", ""),
-               },
-               "1.5": {
-                  "name": "1.5",
-                  "callback": () => antialiasing ("1.5", ""),
-               },
-               "pixelated": {
-                  "name": "Pixelated",
-                  "callback": () => antialiasing (0.1, "pixelated"),
-               },
-            },
-         },
          "transforms": {
             "name": "CSS Transforms",
             "items": {
@@ -257,6 +236,11 @@ main.color-management #browser {
 #toolbar span.separator {
    border-left: 1px solid white;
    margin: 0 -1px 0 5px;
+}
+
+#toolbar span.dot::before {
+   content: "·";
+   margin: 0 3px 0 5px;
 }
 
 #toolbar span.separator + .separator {

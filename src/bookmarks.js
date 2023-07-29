@@ -220,7 +220,7 @@ const Bookmarks = (() =>
             })
             .appendTo ($("#toolbar"));
 
-         $("<span></span>") .addClass ("separator") .appendTo ($("#toolbar"));
+         $("<span></span>") .addClass ("dot") .appendTo ($("#toolbar"));
 
          const oit = $("<span></span>")
             .text ("oit")
@@ -235,8 +235,40 @@ const Bookmarks = (() =>
             })
             .appendTo ($("#toolbar"));
 
+         $("<span></span>") .addClass ("dot") .appendTo ($("#toolbar"));
+
+         const contentScale = $("<span></span>")
+            .text ("contentScale 1.0")
+            .attr ("title", "Toggle contentScale between 0.1, 1.0 and 2.0.")
+            .on ("click", () =>
+            {
+               const
+                  index = ((contentScale .attr ("cs") ?? 1) + 1) % 3,
+                  value = [0.1, 1, 2][index];
+
+               this .browser .setBrowserOption ("ContentScale", value);
+
+               contentScale
+                  .attr ("cs", index)
+                  .text ("contentScale " + value .toFixed (1))
+            })
+            .appendTo ($("#toolbar"));
+
+         $("<span></span>") .addClass ("dot") .appendTo ($("#toolbar"));
+
+         const pixelated = $("<span></span>")
+            .text ("pixelated")
+            .attr ("title", "Set CSS property image-rendering to pixelated.")
+            .on ("click", () =>
+            {
+               $("#browser") .css ("image-rendering", pixelated .hasClass ("selected") ? "unset" : "pixelated");
+
+               pixelated .toggleClass ("selected");
+            })
+            .appendTo ($("#toolbar"));
+
          // this .browser .setBrowserOption ("Antialiased", false)
-         this .browser .setBrowserOption ("OrderIndependentTransparency", true)
+         // this .browser .setBrowserOption ("OrderIndependentTransparency", true)
          // this .browser .setBrowserOption ("ContentScale", -1)
       }
    });
