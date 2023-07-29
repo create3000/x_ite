@@ -83,23 +83,25 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
          Timings:           this ._Timings           .getValue (),
       });
 
-      this ._Rubberband             .addInterest ("set_rubberband__",             this);
-      this ._Antialiased            .addInterest ("set_antialiased__",            this);
-      this ._PrimitiveQuality       .addInterest ("set_primitiveQuality__",       this);
-      this ._TextureQuality         .addInterest ("set_textureQuality__",         this);
-      this ._Shading                .addInterest ("set_shading__",                this);
-      this ._StraightenHorizon      .addInterest ("set_straightenHorizon__",      this);
-      this ._AutoUpdate             .addInterest ("set_autoUpdate__",             this);
-      this ._ContentScale           .addInterest ("set_contentScale__",           this);
-      this ._LogarithmicDepthBuffer .addInterest ("set_logarithmicDepthBuffer__", this);
-      this ._Multisampling          .addInterest ("set_multisampling__",          this);
-      this ._Timings                .addInterest ("set_timings__",                this);
+      this ._Rubberband                   .addInterest ("set_rubberband__",                   this);
+      this ._Antialiased                  .addInterest ("set_antialiased__",                  this);
+      this ._PrimitiveQuality             .addInterest ("set_primitiveQuality__",             this);
+      this ._TextureQuality               .addInterest ("set_textureQuality__",               this);
+      this ._Shading                      .addInterest ("set_shading__",                      this);
+      this ._StraightenHorizon            .addInterest ("set_straightenHorizon__",            this);
+      this ._AutoUpdate                   .addInterest ("set_autoUpdate__",                   this);
+      this ._ContentScale                 .addInterest ("set_contentScale__",                 this);
+      this ._LogarithmicDepthBuffer       .addInterest ("set_logarithmicDepthBuffer__",       this);
+      this ._Multisampling                .addInterest ("set_multisampling__",                this);
+      this ._OrderIndependentTransparency .addInterest ("set_orderIndependentTransparency__", this);
+      this ._Timings                      .addInterest ("set_timings__",                      this);
 
-      this .set_antialiased__            (this ._Antialiased);
-      this .set_shading__                (this ._Shading);
-      this .set_contentScale__           (this ._ContentScale);
-      this .set_logarithmicDepthBuffer__ (this ._LogarithmicDepthBuffer);
-      this .set_multisampling__          (this ._Multisampling);
+      this .set_antialiased__                  (this ._Antialiased);
+      this .set_shading__                      (this ._Shading);
+      this .set_contentScale__                 (this ._ContentScale);
+      this .set_logarithmicDepthBuffer__       (this ._LogarithmicDepthBuffer);
+      this .set_multisampling__                (this ._Multisampling);
+      this .set_orderIndependentTransparency__ (this ._OrderIndependentTransparency);
 
       this .configure ();
    },
@@ -332,6 +334,13 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
 
       browser .reshape ();
    },
+   set_orderIndependentTransparency__ ()
+   {
+      const browser = this .getBrowser ();
+
+      browser .getShaders () .clear ();
+      browser .reshape ();
+   },
    set_timings__ (timings)
    {
       this .localStorage .Timings = timings .getValue ();
@@ -367,7 +376,7 @@ Object .defineProperties (BrowserOptions,
          new X3DFieldDefinition (X3DConstants .inputOutput, "LogarithmicDepthBuffer",       new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "Notifications",                new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "Multisampling",                new Fields .SFInt32 (4)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "OrderIndependentTransparency", new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "OrderIndependentTransparency", new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "StraightenHorizon",            new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "Timings",                      new Fields .SFBool ()),
       ]),

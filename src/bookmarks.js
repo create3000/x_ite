@@ -158,15 +158,15 @@ const Bookmarks = (() =>
       {
          try
          {
-            $("#animations") .empty ();
+            $("#toolbar") .empty ();
 
             $("<span></span>")
                .text ("▣")
                .attr ("title", "View All")
                .on ("click", () => this .browser .viewAll (0))
-               .appendTo ($("#animations"));
+               .appendTo ($("#toolbar"));
 
-            $("<span></span>") .addClass ("separator") .appendTo ($("#animations"));
+            $("<span></span>") .addClass ("separator") .appendTo ($("#toolbar"));
 
             const animations = this .browser .currentScene .getExportedNode ("Animations");
 
@@ -190,19 +190,50 @@ const Bookmarks = (() =>
                      timeSensor .loop      = true;
                      timeSensor .startTime = Date .now () / 1000;
                   })
-                  .appendTo ($("#animations"));
+                  .appendTo ($("#toolbar"));
             }
 
             $("<span></span>")
                .text ("◼")
                .attr ("title", "Stop")
                .on ("click", stop)
-               .appendTo ($("#animations"));
+               .appendTo ($("#toolbar"));
          }
          catch (error)
          {
             // console .log (error)
          }
+
+         $("<span></span>") .addClass ("separator") .appendTo ($("#toolbar"));
+
+         const antialiased = $("<span></span>")
+            .text ("antialiased")
+            .attr ("title", "Antialiased")
+            .addClass ("selected")
+            .on ("click", () =>
+            {
+               const value = !this .browser .getBrowserOption ("Antialiased");
+
+               this .browser .setBrowserOption ("Antialiased", value);
+
+               antialiased .toggleClass ("selected");
+            })
+            .appendTo ($("#toolbar"));
+
+         $("<span></span>") .addClass ("separator") .appendTo ($("#toolbar"));
+
+         const oit = $("<span></span>")
+            .text ("oit")
+            .attr ("title", "Order Independent Transparency")
+            .on ("click", () =>
+            {
+               const value = !this .browser .getBrowserOption ("OrderIndependentTransparency");
+
+               this .browser .setBrowserOption ("OrderIndependentTransparency", value);
+
+               oit .toggleClass ("selected");
+            })
+            .appendTo ($("#toolbar"));
       }
    });
 
