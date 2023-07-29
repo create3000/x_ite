@@ -1072,7 +1072,6 @@ Object .assign (X3DRenderObject .prototype,
          gl .clearColor (0, 0, 0, 1);
          gl .clear (gl .COLOR_BUFFER_BIT);
          gl .blendFuncSeparate (gl .ONE, gl .ONE, gl .ZERO, gl .ONE_MINUS_SRC_ALPHA);
-         gl .disable (gl .DEPTH_TEST);
       }
       else
       {

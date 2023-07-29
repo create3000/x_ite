@@ -259,9 +259,9 @@ Object .assign (MultiSampleFrameBuffer .prototype,
       // Reset viewport before blit, otherwise only last layer size is used.
       gl .viewport (0, 0, width, height);
       gl .scissor  (0, 0, width, height);
+      gl .bindFramebuffer (gl .READ_FRAMEBUFFER, this .oitFrameBuffer);
 
       gl .readBuffer (gl .COLOR_ATTACHMENT0);
-      gl .bindFramebuffer (gl .READ_FRAMEBUFFER, this .oitFrameBuffer);
       gl .bindFramebuffer (gl .DRAW_FRAMEBUFFER, this .accumRevealageTextureBuffer);
 
       gl .blitFramebuffer (0, 0, width, height,
@@ -269,7 +269,6 @@ Object .assign (MultiSampleFrameBuffer .prototype,
                            gl .COLOR_BUFFER_BIT, gl .LINEAR);
 
       gl .readBuffer (gl .COLOR_ATTACHMENT1);
-      gl .bindFramebuffer (gl .READ_FRAMEBUFFER, this .oitFrameBuffer);
       gl .bindFramebuffer (gl .DRAW_FRAMEBUFFER, this .alphaTextureBuffer);
 
       gl .blitFramebuffer (0, 0, width, height,
