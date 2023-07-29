@@ -88,6 +88,8 @@ class X3DCanvasElement extends HTMLElement
          "notifications",
          "oninitialized",
          "onshutdown",
+         "orderIndependentTransparency",
+         "orderindependenttransparency",
          "splashScreen",
          "splashscreen",
          "src",

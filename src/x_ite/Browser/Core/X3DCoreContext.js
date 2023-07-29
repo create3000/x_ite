@@ -350,6 +350,12 @@ Object .assign (X3DCoreContext .prototype,
 
             break;
          }
+         case "orderIndependentTransparency":
+         case "orderindependenttransparency":
+         {
+            this .setBrowserOption ("OrderIndependentTransparency", this .parseBooleanAttribute (newValue, false));
+            break;
+         }
          case "splashScreen":
          case "splashscreen":
          {

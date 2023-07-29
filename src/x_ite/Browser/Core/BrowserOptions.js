@@ -116,6 +116,7 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
          "Debug",
          "Multisampling",
          "Notifications",
+         "OrderIndependentTransparency",
          "SplashScreen",
       ]);
 
