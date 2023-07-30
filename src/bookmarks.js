@@ -267,6 +267,21 @@ const Bookmarks = (() =>
             })
             .appendTo ($("#toolbar"));
 
+         $("<span></span>") .addClass ("separator") .appendTo ($("#toolbar"));
+
+         const log = $("<span></span>")
+            .text ("log")
+            .attr ("title", "Toggle logarithmic depth buffer.")
+            .on ("click", () =>
+            {
+               const value = !this .browser .getBrowserOption ("LogarithmicDepthBuffer");
+
+               this .browser .setBrowserOption ("LogarithmicDepthBuffer", value);
+
+               log .toggleClass ("selected");
+            })
+            .appendTo ($("#toolbar"));
+
          // this .browser .setBrowserOption ("Antialiased", false)
          // this .browser .setBrowserOption ("OrderIndependentTransparency", true)
          // this .browser .setBrowserOption ("ContentScale", -1)

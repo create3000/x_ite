@@ -65,18 +65,6 @@ function X3DMaterialNode (executionContext)
 
 Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanceChildNode .prototype),
 {
-   initialize ()
-   {
-      X3DAppearanceChildNode .prototype .initialize .call (this);
-
-      this .getBrowser () .getRenderingProperties () ._LogarithmicDepthBuffer .addInterest ("set_logarithmicDepthBuffer__", this);
-
-      this .set_logarithmicDepthBuffer__ ();
-   },
-   set_logarithmicDepthBuffer__ ()
-   {
-      this .logarithmicDepthBuffer = this .getBrowser () .getRenderingProperty ("LogarithmicDepthBuffer");
-   },
    setTransparent (value)
    {
       if (value !== this ._transparent .getValue ())
@@ -113,9 +101,9 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
       {
          const { renderObject, transparent, shadows, fogNode, shapeNode, appearanceNode, textureNode, humanoidNode, objectsCount } = renderContext;
 
-         key += this .logarithmicDepthBuffer || renderObject .getViewpoint () .getLogarithmicDepthBuffer () ? 1 : 0;
          key += appearanceNode .getNormalizedAlphaMode (transparent);
          key += this .getMaterialKey (shadows);
+         key += renderObject .getLogarithmicDepthBuffer () ? 1 : 0;
          key += shadows ? 1 : 0;
          key += fogNode ?.getFogType () ?? 0;
          key += shapeNode .getShapeKey ();
@@ -134,12 +122,13 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
       }
       else
       {
+         // Rubberband, X3DBackgroundNode
+
          const { textureNode, objectsCount } = geometryContext;
 
-         key += this .logarithmicDepthBuffer ? 1 : 0;
          key += geometryContext .alphaMode;
          key += this .getMaterialKey (false);
-         key += "0000110";
+         key += "00000110";
          key += ".";
          key += objectsCount [0]; // Clip planes
          key += ".";
@@ -173,7 +162,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
       {
          const { renderObject, fogNode, shapeNode, appearanceNode, humanoidNode, objectsCount } = renderContext;
 
-         if (this .logarithmicDepthBuffer || renderObject .getViewpoint () .getLogarithmicDepthBuffer ())
+         if (renderObject .getLogarithmicDepthBuffer ())
             options .push ("X3D_LOGARITHMIC_DEPTH_BUFFER");
 
          switch (appearanceNode .getNormalizedAlphaMode (renderContext .transparent))
@@ -286,9 +275,6 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
       else
       {
          const { alphaMode, textureNode, objectsCount } = geometryContext;
-
-         if (this .logarithmicDepthBuffer)
-            options .push ("X3D_LOGARITHMIC_DEPTH_BUFFER");
 
          switch (alphaMode)
          {

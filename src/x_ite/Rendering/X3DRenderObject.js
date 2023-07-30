@@ -153,6 +153,10 @@ Object .assign (X3DRenderObject .prototype,
    {
       return this .cameraSpaceMatrixArray;
    },
+   getLogarithmicDepthBuffer ()
+   {
+      return this .logarithmicDepthBuffer;
+   },
    getHitRay ()
    {
       return this .hitRay;
@@ -993,6 +997,8 @@ Object .assign (X3DRenderObject .prototype,
 
       this .renderTime = Time .now ();
 
+      this .logarithmicDepthBuffer = browser .getBrowserOption ("LogarithmicDepthBuffer")
+         || this .getViewpoint () .getLogarithmicDepthBuffer ();
 
       // PREPARATIONS
 
