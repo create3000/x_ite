@@ -309,6 +309,9 @@ Object .assign (MultiSampleFrameBuffer .prototype,
    {
       const { context: gl, width, height, samples, program } = this;
 
+      // TODO: Combining lights with lights with shadows, can cause feedback loop of texture.
+      // TODO: VolumeRendering shader is not made for OIT.
+
       // Reset viewport before blit, otherwise only last layer size is used.
       gl .viewport (0, 0, width, height);
       gl .scissor  (0, 0, width, height);
