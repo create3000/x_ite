@@ -69,13 +69,13 @@ Object .assign (Object .setPrototypeOf (VolumeMaterial .prototype, UnlitMaterial
 
       let key = "";
 
-      key += fogNode ? fogNode .getFogType () : 0;
+      key += fogNode ?.getFogType () ?? 0;
       key += ".";
       key += objectsCount [0]; // Clip planes
       key += ".";
       key += objectsCount [1]; // Lights
 
-      return this .volumeShaderNodes .get (key) || this .createShader (key, geometryContext, renderContext);
+      return this .volumeShaderNodes .get (key) ?? this .createShader (key, geometryContext, renderContext);
    },
    createShader (key, geometryContext, renderContext)
    {
