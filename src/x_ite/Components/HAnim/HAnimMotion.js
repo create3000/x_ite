@@ -56,6 +56,7 @@ import OrientationInterpolator from "../Interpolation/OrientationInterpolator.js
 import Vector3                 from "../../../standard/Math/Numbers/Vector3.js";
 import Rotation4               from "../../../standard/Math/Numbers/Rotation4.js";
 import Algorithm               from "../../../standard/Math/Algorithm.js";
+import Time                    from "../../../standard/Time/Time.js";
 
 function HAnimMotion (executionContext)
 {
