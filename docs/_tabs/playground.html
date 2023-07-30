@@ -5,7 +5,22 @@ order: 4
 icon: fas fa-rocket
 ---
 <style>
+#main {
+   position: relative;
+   padding: 0 !important;
+}
+
+#main > .row {
+   height: 100%;
+}
+
+#core-wrapper {
+   padding: 0 !important;
+}
+
 .post, .post-content {
+   margin: 0 !important;
+   padding: 0 !important;
    height: 100%;
 }
 
@@ -14,10 +29,43 @@ icon: fas fa-rocket
 }
 
 /* Table */
+.playground {
+   height: 100%;
+}
+
+.toolbar {
+   padding: 0 2rem;
+   height: 30px;
+   width: 100%;
+   background-color: var(--playground-toolbar-color);
+}
+
+.toolbar span {
+   cursor: pointer;
+   padding: 0 3px;
+}
+
+.toolbar span.selected {
+   color: var(--h2-color);
+}
+
+.toolbar span.separator {
+   border-left: 1px solid var(--text-color);
+   margin: 0 5px 0 10px;
+}
+
+.toolbar span.dot::before {
+   content: "·";
+   margin: 0 3px 0 4px;
+}
+
+.toolbar span.separator + .separator {
+   display: none;
+}
 
 .viewer-row {
    display: flex;
-   height: calc(100vh - 180px);
+   height: calc(100% - 30px);
 }
 
 .viewer-column {
@@ -166,12 +214,147 @@ $(function ()
          }
 
          monaco .editor .setModelLanguage (editor .getModel (), Browser .currentScene .encoding .toLowerCase ());
+
+         updateToolbar ($(".playground .toolbar"), $("x3d-canvas"));
       });
 
       if (!url)
          editor .setValue (box .replace (/ {3}/g, "  "));
    });
 })
+
+let shading = "PHONG";
+
+function updateToolbar (toolbar, canvas)
+{
+   const browser = canvas .prop ("browser");
+
+   toolbar .empty ();
+
+   const play = $("<span></span>")
+      .text ("▶")
+      .attr ("title", "Toggle browser update.")
+      .addClass (browser .isLive () ? "selected" : "")
+      .on ("click", () =>
+      {
+         if (browser .isLive ())
+            browser .endUpdate ();
+         else
+            browser .beginUpdate ();
+
+         play .toggleClass ("selected");
+      })
+      .appendTo (toolbar);
+
+   $("<span></span>") .addClass ("separator") .appendTo (toolbar);
+
+   const antialiased = $("<span></span>")
+      .text ("antialiased")
+      .attr ("title", "Toggle antialiasing.")
+      .addClass ("selected")
+      .on ("click", () =>
+      {
+         const value = !browser .getBrowserOption ("Antialiased");
+
+         canvas .attr ("antialiased", value);
+
+         antialiased .toggleClass ("selected");
+      })
+      .appendTo (toolbar);
+
+   $("<span></span>") .addClass ("dot") .appendTo (toolbar);
+
+   const oit = $("<span></span>")
+      .text ("oit")
+      .attr ("title", "Toggle order independent transparency.")
+      .on ("click", () =>
+      {
+         const value = !browser .getBrowserOption ("OrderIndependentTransparency");
+
+         canvas .attr ("orderIndependentTransparency", value);
+
+         oit .toggleClass ("selected");
+      })
+      .appendTo (toolbar);
+
+   $("<span></span>") .addClass ("dot") .appendTo (toolbar);
+
+   const contentScale = $("<span></span>")
+      .text ("contentScale 1.0")
+      .attr ("title", "Toggle contentScale between 0.1, 1.0 and 2.0.")
+      .on ("click", () =>
+      {
+         const
+            index = ((contentScale .attr ("index") ?? 1) + 1) % 3,
+            value = [0.1, 1, 2][index];
+
+          canvas .attr ("contentScale", value);
+
+         contentScale
+            .attr ("index", index)
+            .text ("contentScale " + value .toFixed (1))
+      })
+      .appendTo (toolbar);
+
+   $("<span></span>") .addClass ("dot") .appendTo (toolbar);
+
+   const pixelated = $("<span></span>")
+      .text ("pixelated")
+      .attr ("title", "Set CSS property image-rendering to pixelated.")
+      .on ("click", () =>
+      {
+         canvas .css ("image-rendering", pixelated .hasClass ("selected") ? "unset" : "pixelated");
+
+         pixelated .toggleClass ("selected");
+      })
+      .appendTo (toolbar);
+
+   $("<span></span>") .addClass ("separator") .appendTo (toolbar);
+
+   $("<span></span>")
+      .text ("point")
+      .attr ("title", "Set shading to POINT.")
+      .on ("click", () =>
+      {
+         browser .setBrowserOption ("Shading", shading = "POINT");
+      })
+      .appendTo (toolbar);
+
+    $("<span></span>") .addClass ("dot") .appendTo (toolbar);
+
+    $("<span></span>")
+      .text ("wireframe")
+      .attr ("title", "Set shading to WIREFRAME.")
+      .on ("click", () =>
+      {
+         browser .setBrowserOption ("Shading", shading = "WIREFRAME");
+      })
+      .appendTo (toolbar);
+
+    $("<span></span>") .addClass ("dot") .appendTo (toolbar);
+
+    $("<span></span>")
+      .text ("flat")
+      .attr ("title", "Set shading to FLAT.")
+      .on ("click", () =>
+      {
+        browser .setBrowserOption ("Shading", shading = "FLAT");
+      })
+      .appendTo (toolbar);
+
+    $("<span></span>") .addClass ("dot") .appendTo (toolbar);
+
+    $("<span></span>")
+      .text ("phong")
+      .attr ("title", "Set shading to PHONG.")
+      .on ("click", () =>
+      {
+        browser .setBrowserOption ("Shading", shading = "PHONG");
+      })
+      .appendTo (toolbar);
+
+    browser .setBrowserOption ("Shading", shading);
+}
 </script>
 </pre>
 
@@ -207,10 +390,13 @@ $(function ()
 })();
 </script>
 
-<div class="viewer-row">
-   <div class="viewer-column">
-      <x3d-canvas splashScreen="false"></x3d-canvas>
-      <div class="console"></div>
+<div class="playground">
+   <div class="toolbar"></div>
+   <div class="viewer-row">
+      <div class="viewer-column">
+         <x3d-canvas splashScreen="false"></x3d-canvas>
+         <div class="console"></div>
+      </div>
+      <div class="viewer-column"><div id="editor"></div></div>
    </div>
-   <div class="viewer-column"><div id="editor"></div></div>
 </div>
