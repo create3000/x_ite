@@ -206,26 +206,19 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
    },
    loadNext ()
    {
-      try
+      if (this .familyStack .length === 0)
       {
-         if (this .familyStack .length === 0)
-         {
-            this .setLoadState (X3DConstants .FAILED_STATE);
-            this .font = null;
-            return;
-         }
-
-         this .family = this .familyStack .shift ();
-         this .URL    = new URL (this .family, this .loader .getReferer ());
-
-         this .getBrowser () .getFont (this .URL, this .getCache ())
-            .then (this .setFont .bind (this))
-            .catch (this .setError .bind (this));
+         this .setLoadState (X3DConstants .FAILED_STATE);
+         this .font = null;
+         return;
       }
-      catch (error)
-      {
-         this .setError (error .message);
-      }
+
+      this .family = this .familyStack .shift ();
+      this .URL    = new URL (this .family, this .loader .getReferer ());
+
+      this .getBrowser () .getFont (this .URL, this .getCache ())
+         .then (this .setFont .bind (this))
+         .catch (this .setError .bind (this));
    },
    setError (error)
    {
