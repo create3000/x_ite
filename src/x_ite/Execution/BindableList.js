@@ -174,7 +174,7 @@ Object .assign (Object .setPrototypeOf (BindableList .prototype, X3DBaseNode .pr
 for (const key of Object .keys (BindableList .prototype))
    Object .defineProperty (BindableList .prototype, key, { enumerable: false });
 
-// Compares two nodess.
+// Compares two nodes.
 
 function equals (lhs, rhs)
 {
