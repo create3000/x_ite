@@ -218,15 +218,9 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
          this .family = this .familyStack .shift ();
          this .URL    = new URL (this .family, this .loader .getReferer ());
 
-         if (this .URL .protocol !== "data:")
-         {
-            if (!this .getCache ())
-               this .URL .searchParams .set ("_", Time .now ());
-         }
-
-         this .getBrowser () .getFont (this .URL)
-            .done (this .setFont .bind (this))
-            .fail (this .setError .bind (this));
+         this .getBrowser () .getFont (this .URL, this .getCache ())
+            .then (this .setFont .bind (this))
+            .catch (this .setError .bind (this));
       }
       catch (error)
       {
@@ -242,6 +236,8 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
    },
    setFont (font)
    {
+      console .info (this .URL .toString ())
+
       this .font = font;
 
       this .setLoadState (X3DConstants .COMPLETE_STATE);

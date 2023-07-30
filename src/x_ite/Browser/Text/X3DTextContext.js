@@ -72,27 +72,27 @@ Object .assign (X3DTextContext .prototype,
 
       return this [_defaultFontStyle];
    },
-   getFont (url)
+   getFont (url, cache = true)
    {
-      url = url .toString ();
-
-      let deferred = this [_fontCache] .get (url);
-
-      if (deferred === undefined)
+      return new Promise ((resolve, reject) =>
       {
-         this [_fontCache] .set (url, deferred = $.Deferred ());
+         url = url .toString ();
 
-         opentype .load (url, this .setFont .bind (this, deferred));
-      }
+         let deferred = this [_fontCache] .get (url);
 
-      return deferred;
-   },
-   setFont (deferred, error, font)
-   {
-      if (error)
-         deferred .reject (error);
-      else
-         deferred .resolve (font);
+         if (!deferred)
+         {
+            this [_fontCache] .set (url, deferred = $.Deferred ());
+
+            fetch (url, { cache: cache ? "default" : "reload"})
+               .then (response => response .arrayBuffer ())
+               .then (buffer => opentype .parse (buffer))
+               .then (font => deferred .resolve (font))
+               .catch (error => deferred .reject (error));
+         }
+
+         deferred .done (resolve) .fail (reject);
+      });
    },
    getGlyph (font, primitiveQuality, glyphIndex)
    {
