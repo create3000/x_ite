@@ -15,7 +15,7 @@ uniform mat4 x3d_ModelViewMatrix;
 #endif
 
 #if defined (X3D_COLOR_MATERIAL)
-   in vec4  x3d_Color;
+   in vec4 x3d_Color;
 #endif
 
 #if ! defined (X3D_GEOMETRY_0D) && ! defined (X3D_GEOMETRY_1D)

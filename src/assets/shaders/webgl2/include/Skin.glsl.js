@@ -75,7 +75,7 @@ getSkinVertex (const in vec4 vertex, const in vec3 normal)
 
 #if defined (X3D_NORMALS)
 vec3
-getSkinNormal (const in vec3)
+getSkinNormal (const in vec3 normal)
 {
    return skinNormal;
 }
