@@ -80,7 +80,7 @@ Object .assign (Object .setPrototypeOf (BindableStack .prototype, X3DBaseNode .p
    },
    update (layerNode, removedNodes, changedNodes)
    {
-      if (removedNodes .length === 0 && changedNodes .length === 0)
+      if (!removedNodes .length && !changedNodes .length)
          return;
 
       // Save top node for later use.
@@ -103,7 +103,7 @@ Object .assign (Object .setPrototypeOf (BindableStack .prototype, X3DBaseNode .p
 
       if (boundNode !== this .nodes [0])
       {
-         if (changedNodes .some (node => ! node ._set_bind .getValue () && node === boundNode))
+         if (changedNodes .some (node => !node ._set_bind .getValue () && node === boundNode))
          {
             this .nodes .pop ();
          }

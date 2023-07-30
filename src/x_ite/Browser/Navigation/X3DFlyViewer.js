@@ -53,7 +53,6 @@ import Vector3           from "../../../standard/Math/Numbers/Vector3.js";
 import Rotation4         from "../../../standard/Math/Numbers/Rotation4.js";
 import Matrix4           from "../../../standard/Math/Numbers/Matrix4.js";
 import Camera            from "../../../standard/Math/Geometry/Camera.js";
-import Time              from "../../../standard/Time/Time.js";
 
 typeof jquery_mousewheel; // import plugin
 
@@ -418,7 +417,7 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
          const
             navigationInfo = this .getNavigationInfo (),
             viewpoint      = this .getActiveViewpoint (),
-            now            = Time .now (),
+            now            = Date .now (),
             dt             = (now - this .startTime) / 1000;
 
          upVector .assign (viewpoint .getUpVector ());
@@ -488,7 +487,7 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
          const
             navigationInfo = this .getNavigationInfo (),
             viewpoint      = this .getActiveViewpoint (),
-            now            = Time .now (),
+            now            = Date .now (),
             dt             = (now - this .startTime) / 1000,
             upVector       = viewpoint .getUpVector ();
 
@@ -526,7 +525,7 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
       this .getBrowser () .prepareEvents () .addInterest ("fly", this);
       this .getBrowser () .addBrowserEvent ();
 
-      this .startTime = Time .now ();
+      this .startTime = Date .now ();
    },
    addPan ()
    {
@@ -537,7 +536,7 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
       this .getBrowser () .prepareEvents () .addInterest ("pan", this);
       this .getBrowser () .addBrowserEvent ();
 
-      this .startTime = Time .now ();
+      this .startTime = Date .now ();
    },
    addRoll: (() =>
    {

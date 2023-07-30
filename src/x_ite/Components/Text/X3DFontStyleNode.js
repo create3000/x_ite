@@ -52,7 +52,6 @@ import TextAlignment from "../../Browser/Text/TextAlignment.js";
 import FileLoader    from "../../InputOutput/FileLoader.js";
 import X3DConstants  from "../../Base/X3DConstants.js";
 import URLs          from "../../Browser/Networking/URLs.js";
-import Time                 from "../../../standard/Time/Time.js";
 
 /*
  * Font paths for default SERIF, SANS and TYPWRITER families.

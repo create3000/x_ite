@@ -46,7 +46,6 @@
  ******************************************************************************/
 
 import X3DObject   from "./X3DObject.js";
-import Time        from "../../standard/Time/Time.js";
 import DEVELOPMENT from "../DEVELOPMENT.js";
 
 const
@@ -98,14 +97,14 @@ if (DEVELOPMENT)
       },
       addEvent ()
       {
-         this .setModificationTime (Time .now ());
+         this .setModificationTime (Date .now ());
 
          for (const parent of this [_parents] .values ())
             parent .deref () ?.addEvent (this);
       },
       addEventObject (field, event)
       {
-         this .setModificationTime (Time .now ());
+         this .setModificationTime (Date .now ());
 
          for (const parent of this [_parents] .values ())
             parent .deref () ?.addEventObject (this, event);
@@ -205,14 +204,14 @@ else
       },
       addEvent ()
       {
-         this .setModificationTime (Time .now ());
+         this .setModificationTime (Date .now ());
 
          for (const parent of this [_parents])
             parent .addEvent (this);
       },
       addEventObject (field, event)
       {
-         this .setModificationTime (Time .now ());
+         this .setModificationTime (Date .now ());
 
          for (const parent of this [_parents])
             parent .addEventObject (this, event);

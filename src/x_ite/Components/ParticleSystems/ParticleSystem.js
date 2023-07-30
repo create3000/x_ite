@@ -60,7 +60,6 @@ import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
 import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
 import Matrix3              from "../../../standard/Math/Numbers/Matrix3.js";
 import BVH                  from "../../../standard/Math/Utility/BVH.js";
-import Time                 from "../../../standard/Time/Time.js";
 
 const PointGeometry = new Float32Array ([0, 0, 0, 1]);
 
@@ -262,7 +261,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
 
             if (this .pauseTime)
             {
-               this .creationTime += Time .now () / 1000 - this .pauseTime;
+               this .creationTime += Date .now () / 1000 - this .pauseTime;
                this .pauseTime     = 0;
             }
          }
@@ -274,7 +273,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
             this .getBrowser () .sensorEvents () .removeInterest ("animateParticles", this);
 
             if (this .pauseTime === 0)
-               this .pauseTime = Time .now () / 1000;
+               this .pauseTime = Date .now () / 1000;
          }
       }
    },
@@ -292,7 +291,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
             }
             else
             {
-               this .pauseTime = Time .now () / 1000;
+               this .pauseTime = Date .now () / 1000;
             }
 
             this ._isActive = true;
@@ -409,7 +408,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
       this .numParticles = Math .min (lastNumParticles, maxParticles);
 
       if (! this .emitterNode .isExplosive ())
-         this .creationTime = Time .now () / 1000;
+         this .creationTime = Date .now () / 1000;
 
       this .resizeBuffers (lastNumParticles);
       this .updateVertexArrays ();
@@ -696,7 +695,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
       if (emitterNode .isExplosive ())
       {
          const
-            now              = Time .now () / 1000,
+            now              = Date .now () / 1000,
             particleLifetime = this .particleLifetime + this .particleLifetime * this .lifetimeVariation;
 
          if (now - this .creationTime > particleLifetime)
@@ -717,7 +716,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
          if (this .numParticles < this .maxParticles)
          {
             const
-               now          = Time .now () / 1000,
+               now          = Date .now () / 1000,
                newParticles = Math .max (0, Math .floor ((now - this .creationTime) * this .maxParticles / this .particleLifetime));
 
             if (newParticles)

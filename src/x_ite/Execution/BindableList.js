@@ -46,7 +46,6 @@
  ******************************************************************************/
 
 import X3DBaseNode from "../Base/X3DBaseNode.js";
-import Time        from "../../standard/Time/Time.js";
 
 function BindableList (executionContext, defaultNode)
 {
@@ -129,10 +128,7 @@ Object .assign (Object .setPrototypeOf (BindableList .prototype, X3DBaseNode .pr
    },
    update (layerNode, stack)
    {
-      const
-         collectedNodes = this .collectedNodes,
-         changedNodes   = this .changedNodes,
-         removedNodes   = this .removedNodes;
+      const { collectedNodes, changedNodes, removedNodes } = this;
 
       for (const node of collectedNodes)
       {
@@ -171,7 +167,7 @@ Object .assign (Object .setPrototypeOf (BindableList .prototype, X3DBaseNode .pr
 
       // Advance updateTime time.
 
-      this .updateTime = Time .now ();
+      this .updateTime = Date .now ();
    },
 });
 

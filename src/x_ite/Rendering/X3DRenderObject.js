@@ -58,7 +58,6 @@ import Rotation4     from "../../standard/Math/Numbers/Rotation4.js";
 import Matrix4       from "../../standard/Math/Numbers/Matrix4.js";
 import MatrixStack   from "../../standard/Math/Utility/MatrixStack.js";
 import StopWatch     from "../../standard/Time/StopWatch.js";
-import Time          from "../../standard/Time/Time.js";
 
 const DEPTH_BUFFER_SIZE = 16;
 
@@ -992,7 +991,7 @@ Object .assign (X3DRenderObject .prototype,
          oit                        = browser .getFrameBuffer () .getOrderIndependentTransparency ();
 
 
-      this .renderTime = Time .now ();
+      this .renderTime = Date .now ();
 
       this .logarithmicDepthBuffer = browser .getBrowserOption ("LogarithmicDepthBuffer")
          || this .getViewpoint () .getLogarithmicDepthBuffer ();

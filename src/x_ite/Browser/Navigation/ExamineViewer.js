@@ -56,7 +56,6 @@ import TimeSensor           from "../../Components/Time/TimeSensor.js";
 import Vector2              from "../../../standard/Math/Numbers/Vector2.js";
 import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
 import Rotation4            from "../../../standard/Math/Numbers/Rotation4.js";
-import Time                 from "../../../standard/Time/Time.js";
 
 typeof jquery_mousewheel; // import plugin
 
@@ -165,7 +164,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
       if (this .button >= 0)
          return;
 
-      this .pressTime = Time .now ();
+      this .pressTime = Date .now ();
 
       const { x, y } = this .getBrowser () .getPointerFromEvent (event);
 
@@ -248,7 +247,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
 
             this .getBrowser () .setCursor ("DEFAULT");
 
-            if (Math .abs (this .rotation .angle) > SPIN_ANGLE && Time .now () - this .motionTime < SPIN_RELEASE_TIME)
+            if (Math .abs (this .rotation .angle) > SPIN_ANGLE && Date .now () - this .motionTime < SPIN_RELEASE_TIME)
                this .addSpinning (this .rotation);
 
             this ._isActive = false;
@@ -302,13 +301,13 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
 
                this .rotation .setFromToVec (toVector, this .fromVector);
 
-               if (Math .abs (this .rotation .angle) < SPIN_ANGLE && Time .now () - this .pressTime < MOTION_TIME)
+               if (Math .abs (this .rotation .angle) < SPIN_ANGLE && Date .now () - this .pressTime < MOTION_TIME)
                   return;
 
                this .addRotate (this .rotation);
 
                this .fromVector .assign (toVector);
-               this .motionTime = Time .now ();
+               this .motionTime = Date .now ();
                break;
             }
             case 1:

@@ -56,7 +56,6 @@ import OrientationInterpolator from "../Interpolation/OrientationInterpolator.js
 import Vector3                 from "../../../standard/Math/Numbers/Vector3.js";
 import Rotation4               from "../../../standard/Math/Numbers/Rotation4.js";
 import Algorithm               from "../../../standard/Math/Algorithm.js";
-import Time                    from "../../../standard/Time/Time.js";
 
 function HAnimMotion (executionContext)
 {
@@ -128,9 +127,9 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
    set_enabled__ ()
    {
       if (this ._enabled .getValue ())
-         this .timeSensor ._startTime = Time .now () / 1000;
+         this .timeSensor ._startTime = Date .now () / 1000;
       else
-         this .timeSensor ._stopTime = Time .now () / 1000;
+         this .timeSensor ._stopTime = Date .now () / 1000;
    },
    set_interpolators__ ()
    {
