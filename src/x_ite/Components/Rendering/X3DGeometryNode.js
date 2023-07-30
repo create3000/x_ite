@@ -954,7 +954,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          appearanceNode = renderContext .appearanceNode,
          shaderNode     = appearanceNode .getShader (this, renderContext);
 
-      if (this .solid || !appearanceNode .getBackMaterial () || browser .getBrowserOption ("OrderIndependentTransparency") || browser .getWireframe ())
+      if (this .solid || !appearanceNode .getBackMaterial () || renderContext .renderObject .getSinglePass ())
       {
          this .displayGeometry (gl, renderContext, appearanceNode, shaderNode, true, true);
       }
@@ -1077,7 +1077,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          appearanceNode = renderContext .appearanceNode,
          shaderNode     = appearanceNode .getShader (this, renderContext);
 
-      if (this .solid || !appearanceNode .getBackMaterial () || browser .getBrowserOption ("OrderIndependentTransparency") || browser .getWireframe ())
+      if (this .solid || !appearanceNode .getBackMaterial () || renderContext .renderObject .getSinglePass ())
       {
          this .displayParticlesGeometry (gl, renderContext, appearanceNode, shaderNode, true, true, particleSystem);
       }

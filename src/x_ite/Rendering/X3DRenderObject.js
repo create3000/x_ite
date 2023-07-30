@@ -153,6 +153,10 @@ Object .assign (X3DRenderObject .prototype,
    {
       return this .cameraSpaceMatrixArray;
    },
+   getSinglePass ()
+   {
+      return this .singlePass;
+   },
    getLogarithmicDepthBuffer ()
    {
       return this .logarithmicDepthBuffer;
@@ -996,6 +1000,9 @@ Object .assign (X3DRenderObject .prototype,
 
 
       this .renderTime = Time .now ();
+
+      this .singlePass = browser .getBrowserOption ("OrderIndependentTransparency")
+         || browser .getWireframe ();
 
       this .logarithmicDepthBuffer = browser .getBrowserOption ("LogarithmicDepthBuffer")
          || this .getViewpoint () .getLogarithmicDepthBuffer ();
