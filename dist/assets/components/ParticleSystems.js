@@ -1,11 +1,11 @@
-/* X_ITE v8.10.1 */(() => { // webpackBootstrap
+/* X_ITE v8.11.0 */(() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
 /***/ 355:
 /***/ ((module) => {
 
-module.exports = window [Symbol .for ("X_ITE.X3D-8.10.1")] .require ("lib/jquery");
+module.exports = window [Symbol .for ("X_ITE.X3D-8.11.0")] .require ("lib/jquery");
 
 /***/ })
 
@@ -73,22 +73,22 @@ var __webpack_exports__ = {};
 // UNUSED EXPORTS: default
 
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components\")"
-const Components_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.10.1")] .require ("x_ite/Components");
+const Components_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.11.0")] .require ("x_ite/Components");
 var Components_default = /*#__PURE__*/__webpack_require__.n(Components_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Fields\")"
-const Fields_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.10.1")] .require ("x_ite/Fields");
+const Fields_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.11.0")] .require ("x_ite/Fields");
 var Fields_default = /*#__PURE__*/__webpack_require__.n(Fields_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DFieldDefinition\")"
-const X3DFieldDefinition_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.10.1")] .require ("x_ite/Base/X3DFieldDefinition");
+const X3DFieldDefinition_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.11.0")] .require ("x_ite/Base/X3DFieldDefinition");
 var X3DFieldDefinition_default = /*#__PURE__*/__webpack_require__.n(X3DFieldDefinition_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/FieldDefinitionArray\")"
-const FieldDefinitionArray_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.10.1")] .require ("x_ite/Base/FieldDefinitionArray");
+const FieldDefinitionArray_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.11.0")] .require ("x_ite/Base/FieldDefinitionArray");
 var FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(FieldDefinitionArray_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Core/X3DNode\")"
-const X3DNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.10.1")] .require ("x_ite/Components/Core/X3DNode");
+const X3DNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.11.0")] .require ("x_ite/Components/Core/X3DNode");
 var X3DNode_default = /*#__PURE__*/__webpack_require__.n(X3DNode_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Namespace\")"
-const Namespace_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.10.1")] .require ("x_ite/Namespace");
+const Namespace_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.11.0")] .require ("x_ite/Namespace");
 var Namespace_default = /*#__PURE__*/__webpack_require__.n(Namespace_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/ParticleSystems/GeometryTypes.js
 /*******************************************************************************
@@ -155,7 +155,7 @@ const __default__ = GeometryTypes;
 Namespace_default().set ("x_ite/Browser/ParticleSystems/GeometryTypes", __default__);
 /* harmony default export */ const ParticleSystems_GeometryTypes = (__default__);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DConstants\")"
-const X3DConstants_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.10.1")] .require ("x_ite/Base/X3DConstants");
+const X3DConstants_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.11.0")] .require ("x_ite/Base/X3DConstants");
 var X3DConstants_default = /*#__PURE__*/__webpack_require__.n(X3DConstants_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/ParticleSystems/Line3.glsl.js
 const Line3_glsl_default_ = /* glsl*/ `
@@ -1634,7 +1634,7 @@ const X3DParticleEmitterNode_default_ = X3DParticleEmitterNode;
 Namespace_default().set ("x_ite/Components/ParticleSystems/X3DParticleEmitterNode", X3DParticleEmitterNode_default_);
 /* harmony default export */ const ParticleSystems_X3DParticleEmitterNode = (X3DParticleEmitterNode_default_);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Vector3\")"
-const Vector3_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.10.1")] .require ("standard/Math/Numbers/Vector3");
+const Vector3_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.11.0")] .require ("standard/Math/Numbers/Vector3");
 var Vector3_default = /*#__PURE__*/__webpack_require__.n(Vector3_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/ParticleSystems/PointEmitter.js
 /*******************************************************************************
@@ -1955,7 +1955,7 @@ const X3DParticlePhysicsModelNode_default_ = X3DParticlePhysicsModelNode;
 Namespace_default().set ("x_ite/Components/ParticleSystems/X3DParticlePhysicsModelNode", X3DParticlePhysicsModelNode_default_);
 /* harmony default export */ const ParticleSystems_X3DParticlePhysicsModelNode = (X3DParticlePhysicsModelNode_default_);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DCast\")"
-const X3DCast_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.10.1")] .require ("x_ite/Base/X3DCast");
+const X3DCast_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.11.0")] .require ("x_ite/Base/X3DCast");
 var X3DCast_default = /*#__PURE__*/__webpack_require__.n(X3DCast_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/ParticleSystems/BoundedPhysicsModel.js
 /*******************************************************************************
@@ -2529,28 +2529,28 @@ const ForcePhysicsModel_default_ = ForcePhysicsModel;
 Namespace_default().set ("x_ite/Components/ParticleSystems/ForcePhysicsModel", ForcePhysicsModel_default_);
 /* harmony default export */ const ParticleSystems_ForcePhysicsModel = (ForcePhysicsModel_default_);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Shape/X3DShapeNode\")"
-const X3DShapeNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.10.1")] .require ("x_ite/Components/Shape/X3DShapeNode");
+const X3DShapeNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.11.0")] .require ("x_ite/Components/Shape/X3DShapeNode");
 var X3DShapeNode_default = /*#__PURE__*/__webpack_require__.n(X3DShapeNode_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Browser/Rendering/GeometryContext\")"
-const GeometryContext_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.10.1")] .require ("x_ite/Browser/Rendering/GeometryContext");
+const GeometryContext_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.11.0")] .require ("x_ite/Browser/Rendering/GeometryContext");
 var GeometryContext_default = /*#__PURE__*/__webpack_require__.n(GeometryContext_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Rendering/VertexArray\")"
-const VertexArray_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.10.1")] .require ("x_ite/Rendering/VertexArray");
+const VertexArray_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.11.0")] .require ("x_ite/Rendering/VertexArray");
 var VertexArray_default = /*#__PURE__*/__webpack_require__.n(VertexArray_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Rendering/TraverseType\")"
-const TraverseType_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.10.1")] .require ("x_ite/Rendering/TraverseType");
+const TraverseType_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.11.0")] .require ("x_ite/Rendering/TraverseType");
 var TraverseType_default = /*#__PURE__*/__webpack_require__.n(TraverseType_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Browser/Shape/AlphaMode\")"
-const AlphaMode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.10.1")] .require ("x_ite/Browser/Shape/AlphaMode");
+const AlphaMode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.11.0")] .require ("x_ite/Browser/Shape/AlphaMode");
 var AlphaMode_default = /*#__PURE__*/__webpack_require__.n(AlphaMode_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Matrix4\")"
-const Matrix4_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.10.1")] .require ("standard/Math/Numbers/Matrix4");
+const Matrix4_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.11.0")] .require ("standard/Math/Numbers/Matrix4");
 var Matrix4_default = /*#__PURE__*/__webpack_require__.n(Matrix4_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Matrix3\")"
-const Matrix3_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.10.1")] .require ("standard/Math/Numbers/Matrix3");
+const Matrix3_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.11.0")] .require ("standard/Math/Numbers/Matrix3");
 var Matrix3_default = /*#__PURE__*/__webpack_require__.n(Matrix3_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Geometry/Plane3\")"
-const Plane3_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.10.1")] .require ("standard/Math/Geometry/Plane3");
+const Plane3_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.11.0")] .require ("standard/Math/Geometry/Plane3");
 var Plane3_default = /*#__PURE__*/__webpack_require__.n(Plane3_namespaceObject);
 ;// CONCATENATED MODULE: ./src/standard/Math/Algorithms/QuickSort.js
 /*******************************************************************************
@@ -3046,6 +3046,9 @@ const BVH_default_ = BVH;
 
 Namespace_default().set ("standard/Math/Utility/BVH", BVH_default_);
 /* harmony default export */ const Utility_BVH = (BVH_default_);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Time/Time\")"
+const Time_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.11.0")] .require ("standard/Time/Time");
+var Time_default = /*#__PURE__*/__webpack_require__.n(Time_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/ParticleSystems/ParticleSystem.js
 /* provided dependency */ var $ = __webpack_require__(355);
 /*******************************************************************************
@@ -3094,6 +3097,7 @@ Namespace_default().set ("standard/Math/Utility/BVH", BVH_default_);
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -3311,7 +3315,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (X3DShapeNode
 
             if (this .pauseTime)
             {
-               this .creationTime += Date .now () / 1000 - this .pauseTime;
+               this .creationTime += Time_default().now () / 1000 - this .pauseTime;
                this .pauseTime     = 0;
             }
          }
@@ -3323,7 +3327,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (X3DShapeNode
             this .getBrowser () .sensorEvents () .removeInterest ("animateParticles", this);
 
             if (this .pauseTime === 0)
-               this .pauseTime = Date .now () / 1000;
+               this .pauseTime = Time_default().now () / 1000;
          }
       }
    },
@@ -3341,7 +3345,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (X3DShapeNode
             }
             else
             {
-               this .pauseTime = Date .now () / 1000;
+               this .pauseTime = Time_default().now () / 1000;
             }
 
             this ._isActive = true;
@@ -3458,7 +3462,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (X3DShapeNode
       this .numParticles = Math .min (lastNumParticles, maxParticles);
 
       if (! this .emitterNode .isExplosive ())
-         this .creationTime = Date .now () / 1000;
+         this .creationTime = Time_default().now () / 1000;
 
       this .resizeBuffers (lastNumParticles);
       this .updateVertexArrays ();
@@ -3745,7 +3749,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (X3DShapeNode
       if (emitterNode .isExplosive ())
       {
          const
-            now              = Date .now () / 1000,
+            now              = Time_default().now () / 1000,
             particleLifetime = this .particleLifetime + this .particleLifetime * this .lifetimeVariation;
 
          if (now - this .creationTime > particleLifetime)
@@ -3766,7 +3770,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (X3DShapeNode
          if (this .numParticles < this .maxParticles)
          {
             const
-               now          = Date .now () / 1000,
+               now          = Time_default().now () / 1000,
                newParticles = Math .max (0, Math .floor ((now - this .creationTime) * this .maxParticles / this .particleLifetime));
 
             if (newParticles)
@@ -3949,19 +3953,19 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (X3DShapeNode
    },
    display (gl, renderContext)
    {
+      if (!this .numParticles)
+         return;
+
       // Display geometry.
 
       switch (this .geometryType)
       {
          case ParticleSystems_GeometryTypes .GEOMETRY:
          {
-            if (this .numParticles)
-            {
-               const geometryNode = this .getGeometry ();
+            const geometryNode = this .getGeometry ();
 
-               if (geometryNode)
-                  geometryNode .displayParticles (gl, renderContext, this);
-            }
+            if (geometryNode)
+               geometryNode .displayParticles (gl, renderContext, this);
 
             break;
          }
@@ -3977,7 +3981,6 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (X3DShapeNode
 
             gl .frontFace (positiveScale ? gl .CCW : gl .CW);
             gl .enable (gl .CULL_FACE);
-            gl .cullFace (gl .BACK);
 
             // [fall trough]
          }
@@ -3989,60 +3992,56 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (X3DShapeNode
                shaderNode     = appearanceNode .getShader (this .geometryContext, renderContext),
                primitiveMode  = browser .getPrimitiveMode (this .primitiveMode);
 
-            if (this .numParticles)
+            // Setup shader.
+
+            const blendModeNode = appearanceNode .getBlendMode ();
+
+            blendModeNode ?.enable (gl);
+
+            shaderNode .enable (gl);
+            shaderNode .setUniforms (gl, this .geometryContext, renderContext);
+
+            if (this .numTexCoords)
             {
-               // Setup shader.
+               const textureUnit = browser .getTexture2DUnit ();
 
-               const blendModeNode = appearanceNode .getBlendMode ();
-
-               blendModeNode ?.enable (gl);
-
-               shaderNode .enable (gl);
-               shaderNode .setUniforms (gl, this .geometryContext, renderContext);
-
-               if (this .numTexCoords)
-               {
-                  const textureUnit = browser .getTexture2DUnit ();
-
-                  gl .activeTexture (gl .TEXTURE0 + textureUnit);
-                  gl .bindTexture (gl .TEXTURE_2D, this .texCoordRampTexture);
-                  gl .uniform1i (shaderNode .x3d_TexCoordRamp, textureUnit);
-               }
-
-               // Setup vertex attributes.
-
-               const outputParticles = this .outputParticles;
-
-               if (outputParticles .vertexArrayObject .enable (shaderNode))
-               {
-                  const particleStride = this .particleStride;
-
-                  shaderNode .enableParticleAttribute       (gl, outputParticles, particleStride, this .particleOffset, 1);
-                  shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, this .matrixOffset,   1);
-
-                  if (this .geometryContext .colorMaterial)
-                  {
-                     shaderNode .enableColorAttribute (gl, outputParticles, particleStride, this .colorOffset);
-                     shaderNode .colorAttributeDivisor (gl, 1);
-                  }
-
-                  if (this .texCoordCount)
-                     shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, this .texCoordOffset);
-
-                  if (this .hasNormals)
-                  {
-                     shaderNode .enableNormalAttribute (gl, this .geometryBuffer, 0, this .normalOffset);
-                     shaderNode .normalAttributeDivisor (gl, this .maxParticles);
-                  }
-
-                  shaderNode .enableVertexAttribute (gl, this .geometryBuffer, 0, this .verticesOffset);
-               }
-
-               gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, this .numParticles);
-
-               blendModeNode ?.disable (gl);
+               gl .activeTexture (gl .TEXTURE0 + textureUnit);
+               gl .bindTexture (gl .TEXTURE_2D, this .texCoordRampTexture);
+               gl .uniform1i (shaderNode .x3d_TexCoordRamp, textureUnit);
             }
 
+            // Setup vertex attributes.
+
+            const outputParticles = this .outputParticles;
+
+            if (outputParticles .vertexArrayObject .enable (shaderNode))
+            {
+               const particleStride = this .particleStride;
+
+               shaderNode .enableParticleAttribute       (gl, outputParticles, particleStride, this .particleOffset, 1);
+               shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, this .matrixOffset,   1);
+
+               if (this .geometryContext .colorMaterial)
+               {
+                  shaderNode .enableColorAttribute (gl, outputParticles, particleStride, this .colorOffset);
+                  shaderNode .colorAttributeDivisor (gl, 1);
+               }
+
+               if (this .texCoordCount)
+                  shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, this .texCoordOffset);
+
+               if (this .hasNormals)
+               {
+                  shaderNode .enableNormalAttribute (gl, this .geometryBuffer, 0, this .normalOffset);
+                  shaderNode .normalAttributeDivisor (gl, this .maxParticles);
+               }
+
+               shaderNode .enableVertexAttribute (gl, this .geometryBuffer, 0, this .verticesOffset);
+            }
+
+            gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, this .numParticles);
+
+            blendModeNode ?.disable (gl);
             break;
          }
       }
@@ -4139,7 +4138,7 @@ const ParticleSystem_default_ = ParticleSystem;
 Namespace_default().set ("x_ite/Components/ParticleSystems/ParticleSystem", ParticleSystem_default_);
 /* harmony default export */ const ParticleSystems_ParticleSystem = (ParticleSystem_default_);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Rendering/IndexedLineSet\")"
-const IndexedLineSet_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.10.1")] .require ("x_ite/Components/Rendering/IndexedLineSet");
+const IndexedLineSet_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.11.0")] .require ("x_ite/Components/Rendering/IndexedLineSet");
 var IndexedLineSet_default = /*#__PURE__*/__webpack_require__.n(IndexedLineSet_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/ParticleSystems/PolylineEmitter.js
 /*******************************************************************************
@@ -4391,7 +4390,7 @@ const PolylineEmitter_default_ = PolylineEmitter;
 Namespace_default().set ("x_ite/Components/ParticleSystems/PolylineEmitter", PolylineEmitter_default_);
 /* harmony default export */ const ParticleSystems_PolylineEmitter = (PolylineEmitter_default_);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Geometry/Triangle3\")"
-const Triangle3_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.10.1")] .require ("standard/Math/Geometry/Triangle3");
+const Triangle3_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.11.0")] .require ("standard/Math/Geometry/Triangle3");
 var Triangle3_default = /*#__PURE__*/__webpack_require__.n(Triangle3_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/ParticleSystems/SurfaceEmitter.js
 /*******************************************************************************
@@ -4651,7 +4650,7 @@ const SurfaceEmitter_default_ = SurfaceEmitter;
 Namespace_default().set ("x_ite/Components/ParticleSystems/SurfaceEmitter", SurfaceEmitter_default_);
 /* harmony default export */ const ParticleSystems_SurfaceEmitter = (SurfaceEmitter_default_);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Geometry3D/IndexedFaceSet\")"
-const IndexedFaceSet_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.10.1")] .require ("x_ite/Components/Geometry3D/IndexedFaceSet");
+const IndexedFaceSet_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.11.0")] .require ("x_ite/Components/Geometry3D/IndexedFaceSet");
 var IndexedFaceSet_default = /*#__PURE__*/__webpack_require__.n(IndexedFaceSet_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/ParticleSystems/VolumeEmitter.js
 /*******************************************************************************
@@ -4948,7 +4947,7 @@ const VolumeEmitter_default_ = VolumeEmitter;
 Namespace_default().set ("x_ite/Components/ParticleSystems/VolumeEmitter", VolumeEmitter_default_);
 /* harmony default export */ const ParticleSystems_VolumeEmitter = (VolumeEmitter_default_);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Algorithm\")"
-const Algorithm_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.10.1")] .require ("standard/Math/Algorithm");
+const Algorithm_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.11.0")] .require ("standard/Math/Algorithm");
 var Algorithm_default = /*#__PURE__*/__webpack_require__.n(Algorithm_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/ParticleSystems/WindPhysicsModel.js
 /*******************************************************************************

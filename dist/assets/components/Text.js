@@ -1,7 +1,7 @@
-/* X_ITE v8.10.1 */(() => { // webpackBootstrap
+/* X_ITE v8.11.0 */(() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 691:
+/***/ 519:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 /**
@@ -14488,7 +14488,7 @@
 /***/ ((module) => {
 
 "use strict";
-module.exports = window [Symbol .for ("X_ITE.X3D-8.10.1")] .require ("lib/jquery");
+module.exports = window [Symbol .for ("X_ITE.X3D-8.11.0")] .require ("lib/jquery");
 
 /***/ }),
 
@@ -14564,25 +14564,25 @@ var __webpack_exports__ = {};
 // UNUSED EXPORTS: default
 
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components\")"
-const Components_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.10.1")] .require ("x_ite/Components");
+const Components_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.11.0")] .require ("x_ite/Components");
 var Components_default = /*#__PURE__*/__webpack_require__.n(Components_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Fields\")"
-const Fields_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.10.1")] .require ("x_ite/Fields");
+const Fields_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.11.0")] .require ("x_ite/Fields");
 var Fields_default = /*#__PURE__*/__webpack_require__.n(Fields_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DFieldDefinition\")"
-const X3DFieldDefinition_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.10.1")] .require ("x_ite/Base/X3DFieldDefinition");
+const X3DFieldDefinition_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.11.0")] .require ("x_ite/Base/X3DFieldDefinition");
 var X3DFieldDefinition_default = /*#__PURE__*/__webpack_require__.n(X3DFieldDefinition_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/FieldDefinitionArray\")"
-const FieldDefinitionArray_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.10.1")] .require ("x_ite/Base/FieldDefinitionArray");
+const FieldDefinitionArray_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.11.0")] .require ("x_ite/Base/FieldDefinitionArray");
 var FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(FieldDefinitionArray_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Core/X3DNode\")"
-const X3DNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.10.1")] .require ("x_ite/Components/Core/X3DNode");
+const X3DNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.11.0")] .require ("x_ite/Components/Core/X3DNode");
 var X3DNode_default = /*#__PURE__*/__webpack_require__.n(X3DNode_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Networking/X3DUrlObject\")"
-const X3DUrlObject_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.10.1")] .require ("x_ite/Components/Networking/X3DUrlObject");
+const X3DUrlObject_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.11.0")] .require ("x_ite/Components/Networking/X3DUrlObject");
 var X3DUrlObject_default = /*#__PURE__*/__webpack_require__.n(X3DUrlObject_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Namespace\")"
-const Namespace_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.10.1")] .require ("x_ite/Namespace");
+const Namespace_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.11.0")] .require ("x_ite/Namespace");
 var Namespace_default = /*#__PURE__*/__webpack_require__.n(Namespace_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Text/TextAlignment.js
 /*******************************************************************************
@@ -14648,14 +14648,16 @@ const __default__ = TextAlignment;
 Namespace_default().set ("x_ite/Browser/Text/TextAlignment", __default__);
 /* harmony default export */ const Text_TextAlignment = (__default__);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/InputOutput/FileLoader\")"
-const FileLoader_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.10.1")] .require ("x_ite/InputOutput/FileLoader");
+const FileLoader_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.11.0")] .require ("x_ite/InputOutput/FileLoader");
 var FileLoader_default = /*#__PURE__*/__webpack_require__.n(FileLoader_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DConstants\")"
-const X3DConstants_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.10.1")] .require ("x_ite/Base/X3DConstants");
+const X3DConstants_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.11.0")] .require ("x_ite/Base/X3DConstants");
 var X3DConstants_default = /*#__PURE__*/__webpack_require__.n(X3DConstants_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Browser/Networking/URLs\")"
-const URLs_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.10.1")] .require ("x_ite/Browser/Networking/URLs");
+const URLs_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.11.0")] .require ("x_ite/Browser/Networking/URLs");
 var URLs_default = /*#__PURE__*/__webpack_require__.n(URLs_namespaceObject);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Time/Time\")"
+const Time_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.11.0")] .require ("standard/Time/Time");
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Text/X3DFontStyleNode.js
 /*******************************************************************************
  *
@@ -14703,6 +14705,7 @@ var URLs_default = /*#__PURE__*/__webpack_require__.n(URLs_namespaceObject);
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -14864,32 +14867,19 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, (X3DNode_de
    },
    loadNext ()
    {
-      try
+      if (this .familyStack .length === 0)
       {
-         if (this .familyStack .length === 0)
-         {
-            this .setLoadState ((X3DConstants_default()).FAILED_STATE);
-            this .font = null;
-            return;
-         }
-
-         this .family = this .familyStack .shift ();
-         this .URL    = new URL (this .family, this .loader .getReferer ());
-
-         if (this .URL .protocol !== "data:")
-         {
-            if (!this .getCache ())
-               this .URL .searchParams .set ("_", Date .now ());
-         }
-
-         this .getBrowser () .getFont (this .URL)
-            .done (this .setFont .bind (this))
-            .fail (this .setError .bind (this));
+         this .setLoadState ((X3DConstants_default()).FAILED_STATE);
+         this .font = null;
+         return;
       }
-      catch (error)
-      {
-         this .setError (error .message);
-      }
+
+      this .family = this .familyStack .shift ();
+      this .URL    = new URL (this .family, this .loader .getReferer ());
+
+      this .getBrowser () .getFont (this .URL, this .getCache ())
+         .then (this .setFont .bind (this))
+         .catch (this .setError .bind (this));
    },
    setError (error)
    {
@@ -14900,6 +14890,8 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, (X3DNode_de
    },
    setFont (font)
    {
+      console .info (this .URL .toString ())
+
       this .font = font;
 
       this .setLoadState ((X3DConstants_default()).COMPLETE_STATE);
@@ -14936,19 +14928,19 @@ const X3DFontStyleNode_default_ = X3DFontStyleNode;
 Namespace_default().set ("x_ite/Components/Text/X3DFontStyleNode", X3DFontStyleNode_default_);
 /* harmony default export */ const Text_X3DFontStyleNode = (X3DFontStyleNode_default_);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Browser/Core/PrimitiveQuality\")"
-const PrimitiveQuality_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.10.1")] .require ("x_ite/Browser/Core/PrimitiveQuality");
+const PrimitiveQuality_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.11.0")] .require ("x_ite/Browser/Core/PrimitiveQuality");
 var PrimitiveQuality_default = /*#__PURE__*/__webpack_require__.n(PrimitiveQuality_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Geometry/Box2\")"
-const Box2_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.10.1")] .require ("standard/Math/Geometry/Box2");
+const Box2_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.11.0")] .require ("standard/Math/Geometry/Box2");
 var Box2_default = /*#__PURE__*/__webpack_require__.n(Box2_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Geometry/Box3\")"
-const Box3_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.10.1")] .require ("standard/Math/Geometry/Box3");
+const Box3_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.11.0")] .require ("standard/Math/Geometry/Box3");
 var Box3_default = /*#__PURE__*/__webpack_require__.n(Box3_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Vector2\")"
-const Vector2_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.10.1")] .require ("standard/Math/Numbers/Vector2");
+const Vector2_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.11.0")] .require ("standard/Math/Numbers/Vector2");
 var Vector2_default = /*#__PURE__*/__webpack_require__.n(Vector2_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Vector3\")"
-const Vector3_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.10.1")] .require ("standard/Math/Numbers/Vector3");
+const Vector3_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.11.0")] .require ("standard/Math/Numbers/Vector3");
 var Vector3_default = /*#__PURE__*/__webpack_require__.n(Vector3_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Text/X3DTextGeometry.js
 /*******************************************************************************
@@ -15570,13 +15562,13 @@ const X3DTextGeometry_default_ = X3DTextGeometry;
 Namespace_default().set ("x_ite/Browser/Text/X3DTextGeometry", X3DTextGeometry_default_);
 /* harmony default export */ const Text_X3DTextGeometry = (X3DTextGeometry_default_);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Matrix4\")"
-const Matrix4_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.10.1")] .require ("standard/Math/Numbers/Matrix4");
+const Matrix4_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.11.0")] .require ("standard/Math/Numbers/Matrix4");
 var Matrix4_default = /*#__PURE__*/__webpack_require__.n(Matrix4_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Algorithms/Bezier\")"
-const Bezier_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.10.1")] .require ("standard/Math/Algorithms/Bezier");
+const Bezier_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.11.0")] .require ("standard/Math/Algorithms/Bezier");
 var Bezier_default = /*#__PURE__*/__webpack_require__.n(Bezier_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"lib/libtess\")"
-const libtess_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.10.1")] .require ("lib/libtess");
+const libtess_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.11.0")] .require ("lib/libtess");
 var libtess_default = /*#__PURE__*/__webpack_require__.n(libtess_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Text/PolygonText.js
 /*******************************************************************************
@@ -16066,7 +16058,7 @@ Namespace_default().set ("x_ite/Components/Text/FontStyle", FontStyle_default_);
 /* harmony default export */ const Text_FontStyle = (FontStyle_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Text/X3DTextContext.js
 /* provided dependency */ var $ = __webpack_require__(355);
-/* provided dependency */ var opentype = __webpack_require__(691);
+/* provided dependency */ var opentype = __webpack_require__(519);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -16141,27 +16133,27 @@ Object .assign (X3DTextContext .prototype,
 
       return this [_defaultFontStyle];
    },
-   getFont (url)
+   getFont (url, cache = true)
    {
-      url = url .toString ();
-
-      let deferred = this [_fontCache] .get (url);
-
-      if (deferred === undefined)
+      return new Promise ((resolve, reject) =>
       {
-         this [_fontCache] .set (url, deferred = $.Deferred ());
+         url = url .toString ();
 
-         opentype .load (url, this .setFont .bind (this, deferred));
-      }
+         let deferred = this [_fontCache] .get (url);
 
-      return deferred;
-   },
-   setFont (deferred, error, font)
-   {
-      if (error)
-         deferred .reject (error);
-      else
-         deferred .resolve (font);
+         if (!deferred)
+         {
+            this [_fontCache] .set (url, deferred = $.Deferred ());
+
+            fetch (url, { cache: cache ? "default" : "reload"})
+               .then (response => response .arrayBuffer ())
+               .then (buffer => opentype .parse (buffer))
+               .then (font => deferred .resolve (font))
+               .catch (error => deferred .reject (error));
+         }
+
+         deferred .done (resolve) .fail (reject);
+      });
    },
    getGlyph (font, primitiveQuality, glyphIndex)
    {
@@ -16190,10 +16182,10 @@ const X3DTextContext_default_ = X3DTextContext;
 Namespace_default().set ("x_ite/Browser/Text/X3DTextContext", X3DTextContext_default_);
 /* harmony default export */ const Text_X3DTextContext = (X3DTextContext_default_);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Rendering/X3DGeometryNode\")"
-const X3DGeometryNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.10.1")] .require ("x_ite/Components/Rendering/X3DGeometryNode");
+const X3DGeometryNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.11.0")] .require ("x_ite/Components/Rendering/X3DGeometryNode");
 var X3DGeometryNode_default = /*#__PURE__*/__webpack_require__.n(X3DGeometryNode_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DCast\")"
-const X3DCast_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.10.1")] .require ("x_ite/Base/X3DCast");
+const X3DCast_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.11.0")] .require ("x_ite/Base/X3DCast");
 var X3DCast_default = /*#__PURE__*/__webpack_require__.n(X3DCast_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Text/Text.js
 /*******************************************************************************
