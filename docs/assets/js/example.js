@@ -19,6 +19,8 @@ $("table.examples a") .on ("click", function ()
       toolbar = $("<p></p>") .addClass ("toolbar") .appendTo (div);
       canvas  = $("<x3d-canvas></x3d-canvas>") .appendTo (div);
 
+      canvas .on ("initialized", () => updateToolbar (toolbar, canvas));
+
       $("<i></i>") .addClass (["fas", "fa-solid", "fa-circle-xmark", "fa-fw"]) .appendTo (div) .on ("click", function ()
       {
          canvas .prop ("browser") .endUpdate ();
@@ -33,8 +35,6 @@ $("table.examples a") .on ("click", function ()
    header .text ($(this) .attr ("title"));
    canvas .attr ("src", $(this) .attr ("href"));
    zip    .attr ("href", $(this) .attr ("href") .replace (/\.x3d$/, ".zip"));
-
-   updateToolbar (toolbar, canvas)
 
    console .log (`Loading ${$(this) .attr ("title")} ...`);
 
