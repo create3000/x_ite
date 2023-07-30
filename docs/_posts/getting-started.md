@@ -430,10 +430,13 @@ X_ITE needs your support, with a small contribution you can make a big differenc
       <a href="https://create3000.github.io/media/examples/Rendering/LineSet/LineSet.x3d" title="Rendering » LineSet"><img src="https://create3000.github.io/media/examples/Rendering/LineSet/screenshot-small.png" alt="LineSet"/></a>
     </td>
     <td>
-      <a href="https://create3000.github.io/media/examples/Rendering/PointSet/PointSet.x3d" title="Rendering » PointSet"><img src="https://create3000.github.io/media/examples/Rendering/PointSet/screenshot-small.png" alt="PointSet"/></a>
+      <a href="https://create3000.github.io/media/examples/Rendering/OrderIndependentTransparency/OrderIndependentTransparency.x3d" title="Rendering » OrderIndependentTransparency"><img src="https://create3000.github.io/media/examples/Rendering/OrderIndependentTransparency/screenshot-small.png" alt="OrderIndependentTransparency"/></a>
     </td>
   </tr>
   <tr>
+    <td>
+      <a href="https://create3000.github.io/media/examples/Rendering/PointSet/PointSet.x3d" title="Rendering » PointSet"><img src="https://create3000.github.io/media/examples/Rendering/PointSet/screenshot-small.png" alt="PointSet"/></a>
+    </td>
     <td>
       <a href="https://create3000.github.io/media/examples/RigidBodyPhysics/BallJoint/BallJoint.x3d" title="RigidBodyPhysics » BallJoint"><img src="https://create3000.github.io/media/examples/RigidBodyPhysics/BallJoint/screenshot-small.png" alt="BallJoint"/></a>
     </td>
@@ -452,11 +455,11 @@ X_ITE needs your support, with a small contribution you can make a big differenc
     <td>
       <a href="https://create3000.github.io/media/examples/RigidBodyPhysics/SingleAxisHingeJoint/SingleAxisHingeJoint.x3d" title="RigidBodyPhysics » SingleAxisHingeJoint"><img src="https://create3000.github.io/media/examples/RigidBodyPhysics/SingleAxisHingeJoint/screenshot-small.png" alt="SingleAxisHingeJoint"/></a>
     </td>
+  </tr>
+  <tr>
     <td>
       <a href="https://create3000.github.io/media/examples/RigidBodyPhysics/SliderJoint/SliderJoint.x3d" title="RigidBodyPhysics » SliderJoint"><img src="https://create3000.github.io/media/examples/RigidBodyPhysics/SliderJoint/screenshot-small.png" alt="SliderJoint"/></a>
     </td>
-  </tr>
-  <tr>
     <td>
       <a href="https://create3000.github.io/media/examples/Shaders/ComposedShader/ComposedShader.x3d" title="Shaders » ComposedShader"><img src="https://create3000.github.io/media/examples/Shaders/ComposedShader/screenshot-small.png" alt="ComposedShader"/></a>
     </td>
@@ -475,11 +478,11 @@ X_ITE needs your support, with a small contribution you can make a big differenc
     <td>
       <a href="https://create3000.github.io/media/examples/Shape/LineProperties/LineProperties.x3d" title="Shape » LineProperties"><img src="https://create3000.github.io/media/examples/Shape/LineProperties/screenshot-small.png" alt="LineProperties"/></a>
     </td>
+  </tr>
+  <tr>
     <td>
       <a href="https://create3000.github.io/media/examples/Shape/Material/Material.x3d" title="Shape » Material"><img src="https://create3000.github.io/media/examples/Shape/Material/screenshot-small.png" alt="Material"/></a>
     </td>
-  </tr>
-  <tr>
     <td>
       <a href="https://create3000.github.io/media/examples/Shape/TwoSidedMaterial/TwoSidedMaterial.x3d" title="Shape » TwoSidedMaterial"><img src="https://create3000.github.io/media/examples/Shape/TwoSidedMaterial/screenshot-small.png" alt="TwoSidedMaterial"/></a>
     </td>
@@ -498,11 +501,11 @@ X_ITE needs your support, with a small contribution you can make a big differenc
     <td>
       <a href="https://create3000.github.io/media/examples/Texturing/ImageTexture/ImageTexture.x3d" title="Texturing » ImageTexture"><img src="https://create3000.github.io/media/examples/Texturing/ImageTexture/screenshot-small.png" alt="ImageTexture"/></a>
     </td>
+  </tr>
+  <tr>
     <td>
       <a href="https://create3000.github.io/media/examples/Texturing/MovieTexture/MovieTexture.x3d" title="Texturing » MovieTexture"><img src="https://create3000.github.io/media/examples/Texturing/MovieTexture/screenshot-small.png" alt="MovieTexture"/></a>
     </td>
-  </tr>
-  <tr>
     <td>
       <a href="https://create3000.github.io/media/examples/Texturing/MultiTexture/MultiTexture.x3d" title="Texturing » MultiTexture"><img src="https://create3000.github.io/media/examples/Texturing/MultiTexture/screenshot-small.png" alt="MultiTexture"/></a>
     </td>
@@ -521,11 +524,11 @@ X_ITE needs your support, with a small contribution you can make a big differenc
     <td>
       <a href="https://create3000.github.io/media/examples/VolumeRendering/EdgeEnhancementVolumeStyle/EdgeEnhancementVolumeStyle.x3d" title="VolumeRendering » EdgeEnhancementVolumeStyle"><img src="https://create3000.github.io/media/examples/VolumeRendering/EdgeEnhancementVolumeStyle/screenshot-small.png" alt="EdgeEnhancementVolumeStyle"/></a>
     </td>
+  </tr>
+  <tr>
     <td>
       <a href="https://create3000.github.io/media/examples/VolumeRendering/IsoSurfaceVolumeData/IsoSurfaceVolumeData.x3d" title="VolumeRendering » IsoSurfaceVolumeData"><img src="https://create3000.github.io/media/examples/VolumeRendering/IsoSurfaceVolumeData/screenshot-small.png" alt="IsoSurfaceVolumeData"/></a>
     </td>
-  </tr>
-  <tr>
     <td>
       <a href="https://create3000.github.io/media/examples/VolumeRendering/SegmentedVolumeData/SegmentedVolumeData.x3d" title="VolumeRendering » SegmentedVolumeData"><img src="https://create3000.github.io/media/examples/VolumeRendering/SegmentedVolumeData/screenshot-small.png" alt="SegmentedVolumeData"/></a>
     </td>
