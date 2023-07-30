@@ -148,6 +148,8 @@ const Bookmarks = (() =>
 
          const t0 = performance .now ();
 
+         this .browser .getBrowserOptions () .reset ();
+
          await this .browser .loadURL (new X3D .MFString (url)) .catch (Function .prototype);
 
          const loadTime = (performance .now () - t0) / 1000;
@@ -209,7 +211,7 @@ const Bookmarks = (() =>
          const antialiased = $("<span></span>")
             .text ("antialiased")
             .attr ("title", "Toggle antialiasing.")
-            .addClass ("selected")
+            .addClass (this .browser .getBrowserOption ("Antialiased") ? "selected" : "")
             .on ("click", () =>
             {
                const value = !this .browser .getBrowserOption ("Antialiased");
@@ -244,6 +246,7 @@ const Bookmarks = (() =>
          const pixelated = $("<span></span>")
             .text ("pixelated")
             .attr ("title", "Set CSS property image-rendering to pixelated.")
+            .addClass ($("#browser") .css ("image-rendering") === "pixelated" ? "selected" : "")
             .on ("click", () =>
             {
                $("#browser") .css ("image-rendering", pixelated .hasClass ("selected") ? "unset" : "pixelated");
@@ -257,6 +260,7 @@ const Bookmarks = (() =>
          const oit = $("<span></span>")
             .text ("oit")
             .attr ("title", "Toggle order independent transparency.")
+            .addClass (this .browser .getBrowserOption ("OrderIndependentTransparency") ? "selected" : "")
             .on ("click", () =>
             {
                const value = !this .browser .getBrowserOption ("OrderIndependentTransparency");
@@ -272,6 +276,7 @@ const Bookmarks = (() =>
          const log = $("<span></span>")
             .text ("log")
             .attr ("title", "Toggle logarithmic depth buffer.")
+            .addClass (this .browser .getBrowserOption ("LogarithmicDepthBuffer") ? "selected" : "")
             .on ("click", () =>
             {
                const value = !this .browser .getBrowserOption ("LogarithmicDepthBuffer");

@@ -103,9 +103,9 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
       this .set_multisampling__                (this ._Multisampling);
       this .set_orderIndependentTransparency__ (this ._OrderIndependentTransparency);
 
-      this .configure ();
+      this .reset ();
    },
-   configure: (() =>
+   reset: (() =>
    {
       const attributes = new Set ([
          "Antialiased",

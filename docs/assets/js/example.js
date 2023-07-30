@@ -28,6 +28,8 @@ $("table.examples a") .on ("click", function ()
       zip = $("<a></a>") .addClass ("zip") .text ("Download ZIP Archive") .appendTo ($("<p></p>") .appendTo (div));
    }
 
+   canvas .prop ("browser") .getBrowserOptions () .reset ();
+
    header .text ($(this) .attr ("title"));
    canvas .attr ("src", $(this) .attr ("href"));
    zip    .attr ("href", $(this) .attr ("href") .replace (/\.x3d$/, ".zip"));
@@ -48,7 +50,7 @@ function updateToolbar (toolbar, canvas)
    const antialiased = $("<span></span>")
       .text ("antialiased")
       .attr ("title", "Toggle antialiasing.")
-      .addClass ("selected")
+      .addClass (browser .getBrowserOption ("Antialiased") ? "selected" : "")
       .on ("click", () =>
       {
          const value = !browser .getBrowserOption ("Antialiased");
@@ -83,6 +85,7 @@ function updateToolbar (toolbar, canvas)
    const pixelated = $("<span></span>")
       .text ("pixelated")
       .attr ("title", "Set CSS property image-rendering to pixelated.")
+      .addClass (canvas .css ("image-rendering") === "pixelated" ? "selected" : "")
       .on ("click", () =>
       {
          canvas .css ("image-rendering", pixelated .hasClass ("selected") ? "unset" : "pixelated");
@@ -96,6 +99,7 @@ function updateToolbar (toolbar, canvas)
    const oit = $("<span></span>")
       .text ("oit")
       .attr ("title", "Toggle order independent transparency.")
+      .addClass (browser .getBrowserOption ("OrderIndependentTransparency") ? "selected" : "")
       .on ("click", () =>
       {
          const value = !browser .getBrowserOption ("OrderIndependentTransparency");
@@ -111,6 +115,7 @@ function updateToolbar (toolbar, canvas)
    const log = $("<span></span>")
       .text ("log")
       .attr ("title", "Toggle logarithmic depth buffer.")
+      .addClass (browser .getBrowserOption ("LogarithmicDepthBuffer") ? "selected" : "")
       .on ("click", () =>
       {
          const value = !browser .getBrowserOption ("LogarithmicDepthBuffer");

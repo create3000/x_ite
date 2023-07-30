@@ -432,7 +432,6 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
          // Replace.
 
          this .setDescription ("");
-         this .getBrowserOptions () .configure ();
          this .setBrowserLoading (true);
          this ._loadCount .addInterest ("checkLoadCount", this, resolve);
 
