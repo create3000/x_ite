@@ -103,6 +103,8 @@ sub other {
 
 	chdir "$CWD/../sunrize";
 	system "make", "publish";
+
+	chdir $CWD;
 }
 
 if (`git branch --show-current` ne "development\n")
