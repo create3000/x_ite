@@ -468,6 +468,7 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
 
          gl .depthMask (false);
          gl .enable (gl .CULL_FACE);
+         gl .disable (gl .DEPTH_TEST);
          gl .frontFace (gl .CCW);
 
          // Get projection matrix.
@@ -493,6 +494,7 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
             this .drawCube (renderObject);
 
          gl .depthMask (true);
+         gl .enable (gl .DEPTH_TEST);
          gl .disable (gl .BLEND);
       };
    })(),

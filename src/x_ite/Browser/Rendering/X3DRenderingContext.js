@@ -73,6 +73,7 @@ Object .assign (X3DRenderingContext .prototype,
       const gl = this .getContext ();
 
       gl .enable (gl .SCISSOR_TEST);
+      gl .enable (gl .DEPTH_TEST);
       gl .depthFunc (gl .LEQUAL);
       gl .clearDepth (1);
 

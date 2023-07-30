@@ -685,12 +685,16 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
 
          // Draw a black and a white line.
 
+         gl .disable (gl .DEPTH_TEST);
+
          gl .uniform3f (shaderNode .x3d_EmissiveColor, 0, 0, 0);
          gl .uniform1f (shaderNode .x3d_Transparency,  0);
          gl .drawArrays (gl .LINES, 0, this .lineCount);
 
          gl .uniform3f (shaderNode .x3d_EmissiveColor, 1, 1, 1);
          gl .drawArrays (gl .LINES, 0, this .lineCount);
+
+         gl .enable (gl .DEPTH_TEST);
       };
    })(),
    disconnect ()

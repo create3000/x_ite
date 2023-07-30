@@ -344,6 +344,7 @@ Object .assign (MultiSampleFrameBuffer .prototype,
       gl .bindTexture (gl .TEXTURE_2D, this .alphaTexture);
 
       gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffer);
+      gl .disable (gl .DEPTH_TEST);
       gl .enable (gl .BLEND);
       gl .blendFunc (gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
       gl .enable (gl .CULL_FACE);
@@ -351,6 +352,7 @@ Object .assign (MultiSampleFrameBuffer .prototype,
       gl .bindVertexArray (this .quadArray);
       gl .drawArrays (gl .TRIANGLES, 0, 6);
       gl .disable (gl .BLEND);
+      gl .enable (gl .DEPTH_TEST);
    },
    unbind ()
    {

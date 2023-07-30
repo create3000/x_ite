@@ -949,7 +949,6 @@ Object .assign (X3DRenderObject .prototype,
          // Render all objects
 
          gl .disable (gl .CULL_FACE);
-         gl .enable (gl .DEPTH_TEST);
 
          for (let s = 0; s < numShapes; ++ s)
          {
@@ -977,8 +976,6 @@ Object .assign (X3DRenderObject .prototype,
             shapeNode .displaySimple (gl, renderContext, shaderNode);
             browser .resetTextureUnits ();
          }
-
-         gl .disable (gl .DEPTH_TEST);
       };
    })(),
    draw ()
@@ -1060,8 +1057,6 @@ Object .assign (X3DRenderObject .prototype,
 
       // Render opaque objects first
 
-      gl .enable (gl .DEPTH_TEST);
-
       const opaqueShapes = this .opaqueShapes;
 
       for (let i = 0, length = this .numOpaqueShapes; i < length; ++ i)
@@ -1105,7 +1100,6 @@ Object .assign (X3DRenderObject .prototype,
       }
 
       gl .depthMask (true);
-      gl .disable (gl .DEPTH_TEST);
       gl .disable (gl .BLEND);
 
       if (oit)
