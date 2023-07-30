@@ -1055,6 +1055,9 @@ var Rotation4_default = /*#__PURE__*/__webpack_require__.n(Rotation4_namespaceOb
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Algorithm\")"
 const Algorithm_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.11.1")] .require ("standard/Math/Algorithm");
 var Algorithm_default = /*#__PURE__*/__webpack_require__.n(Algorithm_namespaceObject);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Time/Time\")"
+const Time_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.11.1")] .require ("standard/Time/Time");
+var Time_default = /*#__PURE__*/__webpack_require__.n(Time_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/HAnim/HAnimMotion.js
 /*******************************************************************************
  *
@@ -1102,6 +1105,7 @@ var Algorithm_default = /*#__PURE__*/__webpack_require__.n(Algorithm_namespaceOb
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -1185,9 +1189,9 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, (X3DChildNode_de
    set_enabled__ ()
    {
       if (this ._enabled .getValue ())
-         this .timeSensor ._startTime = Time .now () / 1000;
+         this .timeSensor ._startTime = Time_default().now () / 1000;
       else
-         this .timeSensor ._stopTime = Time .now () / 1000;
+         this .timeSensor ._stopTime = Time_default().now () / 1000;
    },
    set_interpolators__ ()
    {
