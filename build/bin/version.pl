@@ -117,7 +117,7 @@ my $result = system "zenity", "--question", "--text=Do you really want to publis
 
 exit 1 unless $result == 0;
 
-say "Publishing X_ITE X3D v$VERSION now."
+say "Publishing X_ITE X3D v$VERSION now.";
 
 system "git", "add", "-A";
 system "git", "commit", "-am", "Build version $VERSION";
