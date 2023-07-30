@@ -17,7 +17,7 @@ $tab-count: {{ site.tabs | size | plus: 1 }}; // plus 1 for home tab
   --h3-color-strong: rgb(232, 201, 133);
   --h4-color: rgb(60, 107, 184);
   --h4-color-strong: rgb(175, 206, 255);
-  --example-background-color: rgba(27, 27, 30, 0.4);
+  --example-background-color: rgba(0, 0, 0, 0.471);
   --button-background-color: black;
   --system-red: rgb(255, 69, 58);
   --system-yellow: rgb(255, 214, 10);
@@ -32,6 +32,7 @@ $tab-count: {{ site.tabs | size | plus: 1 }}; // plus 1 for home tab
   --h3-color-strong: rgb(173, 81, 0);
   --h4-color: rgb(29, 80, 163);
   --h4-color-strong: rgb(10, 80, 144);
+  --example-background-color: rgba(235, 235, 255, 0.644);
   --button-background-color: white;
   --system-red: rgb(255, 59, 48);
   --system-yellow: rgb(255, 204, 0);
@@ -228,7 +229,33 @@ small, .small {
 .example p {
   margin-top: 0;
   margin-bottom: 0;
-  text-shadow: 1px 1px 0px var(--button-background-color);
+}
+
+.example .toolbar {
+  background-color: var(--example-background-color);
+}
+
+.example .toolbar span {
+   cursor: pointer;
+   padding: 0 3px;
+}
+
+.example .toolbar span.selected {
+   color: var(--h2-color);
+}
+
+.example .toolbar span.separator {
+   border-left: 1px solid var(--text-color);
+   margin: 0 0 0 5px;
+}
+
+.example .toolbar span.dot::before {
+   content: "·";
+   margin: 0 3px 0 4px;
+}
+
+.example .toolbar span.separator + .separator {
+   display: none;
 }
 
 .example x3d-canvas {

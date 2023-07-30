@@ -736,7 +736,7 @@ A Boolean value (`true` or `false`). If the value is true the drawing buffers wi
 
 ### orderIndependentTransparency
 
-A Boolean value (`true` or `false`) to indicate whether order independent transparency rendering technique should be used. The default value for the *orderIndependentTransparency* attribute is `false`. Can slow down rendering speed, if *antialiased* is `true`, but can be used in conjunction with *contentScale*.
+A Boolean value (`true` or `false`) to indicate whether order independent transparency rendering technique should be used. The default value for the *orderIndependentTransparency* attribute is `false`. Can slow down rendering speed if *antialiased* is `true`, but can be used in conjunction with *contentScale*.
 
 ### splashScreen
 

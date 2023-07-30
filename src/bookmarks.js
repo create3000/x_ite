@@ -243,13 +243,13 @@ const Bookmarks = (() =>
             .on ("click", () =>
             {
                const
-                  index = ((contentScale .attr ("cs") ?? 1) + 1) % 3,
+                  index = ((contentScale .attr ("index") ?? 1) + 1) % 3,
                   value = [0.1, 1, 2][index];
 
                this .browser .setBrowserOption ("ContentScale", value);
 
                contentScale
-                  .attr ("cs", index)
+                  .attr ("index", index)
                   .text ("contentScale " + value .toFixed (1))
             })
             .appendTo ($("#toolbar"));
