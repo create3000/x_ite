@@ -275,6 +275,8 @@ Object .assign (MultiSampleFrameBuffer .prototype,
 
       gl .bindFramebuffer (gl .FRAMEBUFFER, frameBuffer);
 
+      gl .clearColor (0, 0, 0, 0);
+      gl .clear (gl .COLOR_BUFFER_BIT);
    },
    bindForOrderIndependentTransparency ()
    {
@@ -287,13 +289,6 @@ Object .assign (MultiSampleFrameBuffer .prototype,
       gl .clearColor (0, 0, 0, 1);
       gl .clear (gl .COLOR_BUFFER_BIT);
       gl .blendFuncSeparate (gl .ONE, gl .ONE, gl .ZERO, gl .ONE_MINUS_SRC_ALPHA);
-   },
-   clear ()
-   {
-      const gl = this .context;
-
-      gl .clearColor (0, 0, 0, 0);
-      gl .clear (gl .COLOR_BUFFER_BIT);
    },
    blit ()
    {

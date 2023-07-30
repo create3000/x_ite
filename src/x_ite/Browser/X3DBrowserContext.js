@@ -302,7 +302,6 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
       this [_processEvents] ();
 
       this .getFrameBuffer () .bind ();
-      this .getFrameBuffer () .clear ();
 
       this [_world] .traverse (TraverseType .DISPLAY);
 
