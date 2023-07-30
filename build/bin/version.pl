@@ -144,12 +144,12 @@ update ("latest") unless $ALPHA;
 
 upload;
 
-# x3d-tidy and Sunrize
-
-other unless $ALPHA;
-
 # switch to development branch
 
 system "git", "checkout", "development";
 system "git", "merge", "main";
 system "git", "push", "origin";
+
+# publish x3d-tidy and sunrize
+
+other unless $ALPHA;
