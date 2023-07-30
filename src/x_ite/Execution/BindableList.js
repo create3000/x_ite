@@ -184,7 +184,7 @@ function equals (lhs, rhs)
    for (let i = 0; i < lhs .length; ++ i)
    {
       if (lhs [i] !== rhs [i])
-         return false
+         return false;
    }
 
    return true;
