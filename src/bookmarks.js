@@ -222,21 +222,6 @@ const Bookmarks = (() =>
 
          $("<span></span>") .addClass ("dot") .appendTo ($("#toolbar"));
 
-         const oit = $("<span></span>")
-            .text ("oit")
-            .attr ("title", "Toggle order independent transparency.")
-            .on ("click", () =>
-            {
-               const value = !this .browser .getBrowserOption ("OrderIndependentTransparency");
-
-               this .browser .setBrowserOption ("OrderIndependentTransparency", value);
-
-               oit .toggleClass ("selected");
-            })
-            .appendTo ($("#toolbar"));
-
-         $("<span></span>") .addClass ("dot") .appendTo ($("#toolbar"));
-
          const contentScale = $("<span></span>")
             .text ("contentScale 1.0")
             .attr ("title", "Toggle contentScale between 0.1, 1.0 and 2.0.")
@@ -268,6 +253,21 @@ const Bookmarks = (() =>
             .appendTo ($("#toolbar"));
 
          $("<span></span>") .addClass ("separator") .appendTo ($("#toolbar"));
+
+         const oit = $("<span></span>")
+            .text ("oit")
+            .attr ("title", "Toggle order independent transparency.")
+            .on ("click", () =>
+            {
+               const value = !this .browser .getBrowserOption ("OrderIndependentTransparency");
+
+               this .browser .setBrowserOption ("OrderIndependentTransparency", value);
+
+               oit .toggleClass ("selected");
+            })
+            .appendTo ($("#toolbar"));
+
+         $("<span></span>") .addClass ("dot") .appendTo ($("#toolbar"));
 
          const log = $("<span></span>")
             .text ("log")

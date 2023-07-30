@@ -234,6 +234,10 @@ small, .small {
 }
 
 .example .toolbar {
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
   background-color: var(--example-background-color);
 }
 
