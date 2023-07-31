@@ -132,12 +132,10 @@ Object .assign (Object .setPrototypeOf (BindableStack .prototype, X3DBaseNode .p
       {
          // First unbind last bound node.
 
-         boundNode ._set_bind = false;
-         boundNode ._isBound  = false;
+         boundNode ._isBound = false;
 
          // Now bind new top node.
 
-         top ._set_bind = true;
          top ._isBound  = true;
          top ._bindTime = this .getBrowser () .getCurrentTime ();
       }
