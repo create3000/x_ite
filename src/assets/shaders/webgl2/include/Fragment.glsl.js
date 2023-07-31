@@ -142,12 +142,14 @@ fragment_main ()
    #endif
 
    #if defined (X3D_ORDER_INDEPENDENT_TRANSPARENCY)
-      float w = weight (gl_FragCoord .z, finalColor .a);
+      float a = finalColor .a;
+      float w = weight (gl_FragCoord .z, a);
 
-      finalColor.rgb *= finalColor .a;
+      finalColor.rgb *= a;
+      finalColor     *= w;
 
-      x3d_FragData0 = vec4 (finalColor .rgb * w, finalColor .a);
-      x3d_FragData1 = vec4 (finalColor .a * w);
+      x3d_FragData0 = vec4 (finalColor .rgb, a);
+      x3d_FragData1 = vec4 (finalColor .a);
    #else
       x3d_FragColor = finalColor;
    #endif
