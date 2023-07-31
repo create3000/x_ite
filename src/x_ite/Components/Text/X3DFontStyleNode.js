@@ -228,8 +228,6 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
    },
    setFont (font)
    {
-      console .info (this .URL .toString ())
-
       this .font = font;
 
       this .setLoadState (X3DConstants .COMPLETE_STATE);
