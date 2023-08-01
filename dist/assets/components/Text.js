@@ -1,7 +1,7 @@
 /* X_ITE v8.11.5 */(() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 461:
+/***/ 463:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 /**
@@ -16053,7 +16053,7 @@ Namespace_default().set ("x_ite/Components/Text/FontStyle", FontStyle_default_);
 /* harmony default export */ const Text_FontStyle = (FontStyle_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Text/X3DTextContext.js
 /* provided dependency */ var $ = __webpack_require__(355);
-/* provided dependency */ var opentype = __webpack_require__(461);
+/* provided dependency */ var opentype = __webpack_require__(463);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -16130,7 +16130,7 @@ Object .assign (X3DTextContext .prototype,
    },
    getFont (url, cache = true)
    {
-      return new Promise ((resolve, reject) =>
+      return new Promise (async (resolve, reject) =>
       {
          url = url .toString ();
 
@@ -16138,13 +16138,29 @@ Object .assign (X3DTextContext .prototype,
 
          if (!deferred)
          {
-            this [_fontCache] .set (url, deferred = $.Deferred ());
+            try
+            {
+               this [_fontCache] .set (url, deferred = $.Deferred ());
 
-            fetch (url, { cache: cache ? "default" : "reload"})
-               .then (response => response .arrayBuffer ())
-               .then (buffer => opentype .parse (buffer))
-               .then (font => deferred .resolve (font))
-               .catch (error => deferred .reject (error));
+               const response = await fetch (url, { cache: cache ? "default" : "reload"});
+
+               if (response .ok)
+               {
+                  const
+                     buffer = await response .arrayBuffer (),
+                     font   = opentype .parse (buffer);
+
+                  deferred .resolve (font);
+               }
+               else
+               {
+                  throw new Error (response .statusText || response .status);
+               }
+            }
+            catch (error)
+            {
+               deferred .reject (error);
+            }
          }
 
          deferred .done (resolve) .fail (reject);

@@ -162,11 +162,15 @@ Object .assign (Object .setPrototypeOf (X3DTextureProjectorNode .prototype, (X3D
    },
    getNearDistance ()
    {
-      return this ._nearDistance .getValue ();
+      const nearDistance = this ._nearDistance .getValue ();
+
+      return nearDistance === -1 ? 0.125 : nearDistance;
    },
    getFarDistance ()
    {
-      return this ._farDistance .getValue ();
+      const farDistance = this ._farDistance .getValue ();
+
+      return farDistance === -1 ? 100_000 : farDistance;
    },
    getTexture ()
    {
@@ -403,11 +407,11 @@ Object .assign (TextureProjectorContainer .prototype,
       invTextureSpaceMatrix .inverse ();
 
       const
-         width            = textureProjectorNode .getTexture () .getWidth (),
-         height           = textureProjectorNode .getTexture () .getHeight (),
-         nearDistance     = textureProjectorNode .getNearDistance (),
-         farDistance      = textureProjectorNode .getFarDistance (),
-         fieldOfView      = textureProjectorNode .getFieldOfView ();
+         width        = textureProjectorNode .getTexture () .getWidth (),
+         height       = textureProjectorNode .getTexture () .getHeight (),
+         nearDistance = textureProjectorNode .getNearDistance (),
+         farDistance  = textureProjectorNode .getFarDistance (),
+         fieldOfView  = textureProjectorNode .getFieldOfView ();
 
       Camera_default().perspective (fieldOfView, nearDistance, farDistance, width, height, this .projectionMatrix);
 
