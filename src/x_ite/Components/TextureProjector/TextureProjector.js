@@ -98,11 +98,11 @@ Object .assign (TextureProjectorContainer .prototype,
       invTextureSpaceMatrix .inverse ();
 
       const
-         width            = textureProjectorNode .getTexture () .getWidth (),
-         height           = textureProjectorNode .getTexture () .getHeight (),
-         nearDistance     = textureProjectorNode .getNearDistance (),
-         farDistance      = textureProjectorNode .getFarDistance (),
-         fieldOfView      = textureProjectorNode .getFieldOfView ();
+         width        = textureProjectorNode .getTexture () .getWidth (),
+         height       = textureProjectorNode .getTexture () .getHeight (),
+         nearDistance = textureProjectorNode .getNearDistance (),
+         farDistance  = textureProjectorNode .getFarDistance (),
+         fieldOfView  = textureProjectorNode .getFieldOfView ();
 
       Camera .perspective (fieldOfView, nearDistance, farDistance, width, height, this .projectionMatrix);
 

@@ -88,11 +88,15 @@ Object .assign (Object .setPrototypeOf (X3DTextureProjectorNode .prototype, X3DC
    },
    getNearDistance ()
    {
-      return this ._nearDistance .getValue ();
+      const nearDistance = this ._nearDistance .getValue ();
+
+      return nearDistance === -1 ? 0.125 : nearDistance;
    },
    getFarDistance ()
    {
-      return this ._farDistance .getValue ();
+      const farDistance = this ._farDistance .getValue ();
+
+      return farDistance === -1 ? 100_000 : farDistance;
    },
    getTexture ()
    {
