@@ -17,7 +17,7 @@ const float M_PI = 3.14159265359;
 #pragma X3D include "includes/ClipPlanes.glsl"
 #pragma X3D include "includes/Fog.glsl"
 
-// VOLUME_STYLES_UNIFORMS
+__VOLUME_STYLES_UNIFORMS__
 
 out vec4 x3d_FragColor;
 
@@ -37,7 +37,7 @@ getTextureColor (in vec3 texCoord)
 
    // Apply volume styles.
 
-// VOLUME_STYLES_FUNCTIONS
+   __VOLUME_STYLES_FUNCTIONS__
 
    return textureColor;
 }

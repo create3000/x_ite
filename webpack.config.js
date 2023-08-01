@@ -61,6 +61,42 @@ export default __default__;`;
       ],
    }
 
+   const compress_glsl = {
+      test: /\.js$/,
+      use: [
+         {
+            loader: StringReplacePlugin .replace ({
+               replacements: [
+                  {
+                     pattern: /\/\*\s*glsl\s*\*\/\s*`(.*?)`;/sg,
+                     replacement: function (match, m, offset, string)
+                     {
+                        const e = [ ];
+
+                        return "/* glsl */ `" + m
+                           .replace (/\$\{(?:[^}{]|\{(?:[^}{]|\{(?:[^}{]|\{[^}{]*\})*\})*\})*\}/sg, s =>
+                           {
+                              return `__EXPRESSION${e .push (s) - 1}__`
+                           })
+                           .replace (/\/\*.*?\*\//sg, "")
+                           .replace (/\/\/.*?\n/sg, "\n")
+                           .replace (/(#.*?)\n/sg, "$1__PREPROCESSOR__")
+                           .replace (/\s+/sg, " ")
+                           .replace (/\s*([(){}\[\],;=<>!+\-*\/&|?:\.])\s*/sg, "$1")
+                           .replace (/(#.*?)__PREPROCESSOR__\s*/sg, "$1\n")
+                           .replace (/(.)#/sg, "$1\n#")
+                           .replace (/^\s+/, "")
+                           .replace (/$/, "\n")
+                           .replace (/\n+/sg, "\n")
+                           .replace (/__EXPRESSION(\d+)__/sg, (_, i) => `\n${e [i]}\n`) + "`"
+                     },
+                  },
+               ],
+            }),
+         },
+      ],
+   }
+
    targets .push ({
       entry: {
          "x_ite": "./src/x_ite.js",
@@ -77,7 +113,7 @@ export default __default__;`;
       },
       mode: "production",
       module: {
-         rules: [namespace],
+         rules: [namespace, compress_glsl],
       },
       optimization: {
          minimize: true,
@@ -196,7 +232,7 @@ export default __default__;`;
          },
          mode: "production",
          module: {
-            rules: [namespace],
+            rules: [namespace, compress_glsl],
          },
          optimization: {
             minimize: true,
@@ -272,7 +308,7 @@ export default __default__;`;
 
                for (const deps of component_deps)
                {
-                  if (! deps .has (filename))
+                  if (!deps .has (filename))
                      continue
 
                   const module = path .relative (path .resolve (__dirname, "src"), filename) .replace (/\.js$/, "")

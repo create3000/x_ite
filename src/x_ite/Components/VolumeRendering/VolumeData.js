@@ -128,8 +128,9 @@ Object .assign (Object .setPrototypeOf (VolumeData .prototype, X3DVolumeDataNode
          styleFunctions += this .renderStyleNode .getFunctionsText ();
       }
 
-      fs = fs .replace (/\/\/ VOLUME_STYLES_UNIFORMS\n/,  styleUniforms);
-      fs = fs .replace (/\/\/ VOLUME_STYLES_FUNCTIONS\n/, styleFunctions);
+      fs = fs
+         .replace (/__VOLUME_STYLES_UNIFORMS__/,  styleUniforms)
+         .replace (/__VOLUME_STYLES_FUNCTIONS__/, styleFunctions);
 
       // if (DEVELOPMENT)
       //    this .getBrowser () .print (fs);

@@ -164,7 +164,7 @@ Object .assign (Object .setPrototypeOf (ShaderPart .prototype, X3DNode .prototyp
             gl .shaderSource (shader, source);
             gl .compileShader (shader);
 
-            if (! gl .getShaderParameter (shader, gl .COMPILE_STATUS))
+            if (!gl .getShaderParameter (shader, gl .COMPILE_STATUS))
             {
                const
                   typeName = this .getTypeName (),

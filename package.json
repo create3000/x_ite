@@ -56,8 +56,8 @@
 		}
 	],
 	"funding": {
-	  "type": "patreon",
-	  "url": "https://patreon.com/X_ITE"
+		"type": "patreon",
+		"url": "https://patreon.com/X_ITE"
 	},
 	"devDependencies": {
 		"ammojs": "^0.0.2",

@@ -186,8 +186,9 @@ Object .assign (Object .setPrototypeOf (SegmentedVolumeData .prototype, X3DVolum
          styleFunctions += "   }\n";
       }
 
-      fs = fs .replace (/\/\/ VOLUME_STYLES_UNIFORMS\n/,  styleUniforms);
-      fs = fs .replace (/\/\/ VOLUME_STYLES_FUNCTIONS\n/, styleFunctions);
+      fs = fs
+         .replace (/__VOLUME_STYLES_UNIFORMS__/,  styleUniforms)
+         .replace (/__VOLUME_STYLES_FUNCTIONS__/, styleFunctions);
 
       // if (DEVELOPMENT)
       //    this .getBrowser () .print (fs);

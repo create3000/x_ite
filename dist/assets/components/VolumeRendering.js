@@ -1853,96 +1853,27 @@ const UnlitMaterial_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.11.5")] 
 var UnlitMaterial_default = /*#__PURE__*/__webpack_require__.n(UnlitMaterial_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/VolumeRendering/VolumeStyle.vs.js
 const VolumeStyle_vs_default_ = /* glsl */ `#version 300 es
-
-precision highp float;
-precision highp int;
-
-uniform mat4 x3d_ProjectionMatrix;
-uniform mat4 x3d_ModelViewMatrix;
-uniform mat4 x3d_TextureMatrix [1];
-
-in vec4  x3d_TexCoord0;
-in vec4  x3d_Vertex;
-
-out vec3 vertex;
-out vec4 texCoord;
-
-void
-main ()
-{
-   vec4 position = x3d_ModelViewMatrix * x3d_Vertex;
-
-   vertex   = position .xyz;
-   texCoord = x3d_TextureMatrix [0] * x3d_TexCoord0;
-
-   gl_Position = x3d_ProjectionMatrix * position;
-}
-`;
+precision highp float;precision highp int;uniform mat4 x3d_ProjectionMatrix;uniform mat4 x3d_ModelViewMatrix;uniform mat4 x3d_TextureMatrix[1];in vec4 x3d_TexCoord0;in vec4 x3d_Vertex;out vec3 vertex;out vec4 texCoord;void main(){vec4 position=x3d_ModelViewMatrix*x3d_Vertex;vertex=position.xyz;texCoord=x3d_TextureMatrix[0]*x3d_TexCoord0;gl_Position=x3d_ProjectionMatrix*position;}
+`
 ;
 
 Namespace_default().set ("x_ite/Browser/VolumeRendering/VolumeStyle.vs", VolumeStyle_vs_default_);
 /* harmony default export */ const VolumeStyle_vs = (VolumeStyle_vs_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/VolumeRendering/VolumeStyle.fs.js
 const VolumeStyle_fs_default_ = /* glsl */ `#version 300 es
-
-precision highp float;
-precision highp int;
-precision highp sampler3D;
-
-in vec3 vertex;
-in vec4 texCoord;
-
-uniform sampler3D x3d_Texture3D [1];
-uniform mat3 x3d_TextureNormalMatrix;
-
-uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];
-
-const float M_PI = 3.14159265359;
-
+precision highp float;precision highp int;precision highp sampler3D;in vec3 vertex;in vec4 texCoord;uniform sampler3D x3d_Texture3D[1];uniform mat3 x3d_TextureNormalMatrix;uniform x3d_LightSourceParameters x3d_LightSource[x3d_MaxLights];const float M_PI=3.14159265359;
 #pragma X3D include "includes/ClipPlanes.glsl"
 #pragma X3D include "includes/Fog.glsl"
-
-// VOLUME_STYLES_UNIFORMS
-
-out vec4 x3d_FragColor;
-
-vec4
-getTextureColor (in vec3 texCoord)
-{
-   if (texCoord .s < 0.0 || texCoord .s > 1.0)
-      discard;
-
-   if (texCoord .t < 0.0 || texCoord .t > 1.0)
-      discard;
-
-   if (texCoord .p < 0.0 || texCoord .p > 1.0)
-      discard;
-
-   vec4 textureColor = texture (x3d_Texture3D [0], texCoord);
-
-   // Apply volume styles.
-
-// VOLUME_STYLES_FUNCTIONS
-
-   return textureColor;
-}
-
-void
-main ()
-{
-   #if defined (X3D_CLIP_PLANES)
-      clip ();
-   #endif
-
-   vec4 finalColor = getTextureColor (texCoord .stp / texCoord .q);
-
-   #if defined (X3D_FOG)
-      finalColor .rgb = getFogColor (finalColor .rgb);
-   #endif
-
-   x3d_FragColor = finalColor;
-}
-`;
+__VOLUME_STYLES_UNIFORMS__ out vec4 x3d_FragColor;vec4 getTextureColor(in vec3 texCoord){if(texCoord.s<0.0||texCoord.s>1.0)discard;if(texCoord.t<0.0||texCoord.t>1.0)discard;if(texCoord.p<0.0||texCoord.p>1.0)discard;vec4 textureColor=texture(x3d_Texture3D[0],texCoord);__VOLUME_STYLES_FUNCTIONS__ return textureColor;}void main(){
+#if defined(X3D_CLIP_PLANES)
+clip();
+#endif
+vec4 finalColor=getTextureColor(texCoord.stp/texCoord.q);
+#if defined(X3D_FOG)
+finalColor.rgb=getFogColor(finalColor.rgb);
+#endif
+x3d_FragColor=finalColor;}
+`
 ;
 
 Namespace_default().set ("x_ite/Browser/VolumeRendering/VolumeStyle.fs", VolumeStyle_fs_default_);
@@ -2626,8 +2557,9 @@ Object .assign (Object .setPrototypeOf (IsoSurfaceVolumeData .prototype, VolumeR
          styleFunctions += "\n";
       }
 
-      fs = fs .replace (/\/\/ VOLUME_STYLES_UNIFORMS\n/,  styleUniforms);
-      fs = fs .replace (/\/\/ VOLUME_STYLES_FUNCTIONS\n/, styleFunctions);
+      fs = fs
+         .replace (/__VOLUME_STYLES_UNIFORMS__/,  styleUniforms)
+         .replace (/__VOLUME_STYLES_FUNCTIONS__/, styleFunctions);
 
       // if (DEVELOPMENT)
       //    this .getBrowser () .print (fs);
@@ -3147,8 +3079,9 @@ Object .assign (Object .setPrototypeOf (SegmentedVolumeData .prototype, VolumeRe
          styleFunctions += "   }\n";
       }
 
-      fs = fs .replace (/\/\/ VOLUME_STYLES_UNIFORMS\n/,  styleUniforms);
-      fs = fs .replace (/\/\/ VOLUME_STYLES_FUNCTIONS\n/, styleFunctions);
+      fs = fs
+         .replace (/__VOLUME_STYLES_UNIFORMS__/,  styleUniforms)
+         .replace (/__VOLUME_STYLES_FUNCTIONS__/, styleFunctions);
 
       // if (DEVELOPMENT)
       //    this .getBrowser () .print (fs);
@@ -4033,8 +3966,9 @@ Object .assign (Object .setPrototypeOf (VolumeData .prototype, VolumeRendering_X
          styleFunctions += this .renderStyleNode .getFunctionsText ();
       }
 
-      fs = fs .replace (/\/\/ VOLUME_STYLES_UNIFORMS\n/,  styleUniforms);
-      fs = fs .replace (/\/\/ VOLUME_STYLES_FUNCTIONS\n/, styleFunctions);
+      fs = fs
+         .replace (/__VOLUME_STYLES_UNIFORMS__/,  styleUniforms)
+         .replace (/__VOLUME_STYLES_FUNCTIONS__/, styleFunctions);
 
       // if (DEVELOPMENT)
       //    this .getBrowser () .print (fs);
