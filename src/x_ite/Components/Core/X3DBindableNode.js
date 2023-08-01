@@ -48,21 +48,39 @@
 import X3DChildNode from "./X3DChildNode.js";
 import X3DConstants from "../../Base/X3DConstants.js";
 
+let modificationCount = 0;
+
 function X3DBindableNode (executionContext)
 {
    X3DChildNode .call (this, executionContext);
 
    this .addType (X3DConstants .X3DBindableNode);
+
+   this .modificationCount = 0;
 }
 
 Object .assign (Object .setPrototypeOf (X3DBindableNode .prototype, X3DChildNode .prototype),
 {
+   initialize ()
+   {
+      X3DChildNode .prototype .initialize .call (this);
+
+      this ._set_bind .addInterest ("set_bind__", this);
+   },
+   getModificationCount ()
+   {
+      return this .modificationCount;
+   },
    isCameraObject ()
    {
       return true;
    },
    transitionStart ()
    { },
+   set_bind__ ()
+   {
+      this .modificationCount = ++ modificationCount;
+   }
 });
 
 Object .defineProperties (X3DBindableNode,
@@ -76,6 +94,14 @@ Object .defineProperties (X3DBindableNode,
    {
       value: "Core",
       enumerable: true,
+   },
+   getModificationCount:
+   {
+      value: function ()
+      {
+         return modificationCount;
+      },
+      enumerable: false,
    },
 });
 

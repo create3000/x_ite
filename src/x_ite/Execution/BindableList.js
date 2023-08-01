@@ -45,17 +45,18 @@
  *
  ******************************************************************************/
 
-import X3DBaseNode from "../Base/X3DBaseNode.js";
+import X3DBaseNode     from "../Base/X3DBaseNode.js";
+import X3DBindableNode from "../Components/Core/X3DBindableNode.js";
 
 function BindableList (executionContext, defaultNode)
 {
    X3DBaseNode .call (this, executionContext);
 
-   this .updateTime     = 0;
-   this .nodes          = [ defaultNode ];
-   this .collectedNodes = [ defaultNode ];
-   this .changedNodes   = [ ];
-   this .removedNodes   = [ ];
+   this .modificationCount = 0;
+   this .nodes             = [ defaultNode ];
+   this .collectedNodes    = [ defaultNode ];
+   this .changedNodes      = [ ];
+   this .removedNodes      = [ ];
 }
 
 Object .assign (Object .setPrototypeOf (BindableList .prototype, X3DBaseNode .prototype),
@@ -132,7 +133,7 @@ Object .assign (Object .setPrototypeOf (BindableList .prototype, X3DBaseNode .pr
 
       for (const node of collectedNodes)
       {
-         if (node ._set_bind .getModificationTime () > this .updateTime)
+         if (node .getModificationCount () > this .modificationCount)
             changedNodes .push (node);
       }
 
@@ -165,9 +166,9 @@ Object .assign (Object .setPrototypeOf (BindableList .prototype, X3DBaseNode .pr
       changedNodes .length = 0;
       removedNodes .length = 0;
 
-      // Advance updateTime time.
+      // Advance modificationCount time.
 
-      this .updateTime = Date .now ();
+      this .modificationCount = X3DBindableNode .getModificationCount ();
    },
 });
 
