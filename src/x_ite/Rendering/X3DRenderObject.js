@@ -991,7 +991,7 @@ Object .assign (X3DRenderObject .prototype,
          oit                        = browser .getFrameBuffer () .getOrderIndependentTransparency ();
 
 
-      this .renderTime = Date .now ();
+      ++ this .renderTime;
 
       this .logarithmicDepthBuffer = browser .getBrowserOption ("LogarithmicDepthBuffer")
          || this .getViewpoint () .getLogarithmicDepthBuffer ();
