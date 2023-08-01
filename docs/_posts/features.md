@@ -43,6 +43,8 @@ To add special effects and environment sound to your scenes there is support for
 
 You can create text quick and easy. Use the Text node which can load remote font files in TrueType and OpenType format but there are also build in fonts.
 
+With [DOM integration](dom-integration), X3D content can be used as if it were HTML and manipulated using common JavaScript DOM manipulation methods as used to do from X3DOM.
+
 If this is not enough for you have a look at [Supported Nodes](supported-nodes) there's sure to be something there for you.
 
 ## Code Features
