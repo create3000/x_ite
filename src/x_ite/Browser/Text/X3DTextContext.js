@@ -74,7 +74,7 @@ Object .assign (X3DTextContext .prototype,
    },
    getFont (url, cache = true)
    {
-      return new Promise ((resolve, reject) =>
+      return new Promise (async (resolve, reject) =>
       {
          url = url .toString ();
 
@@ -82,13 +82,29 @@ Object .assign (X3DTextContext .prototype,
 
          if (!deferred)
          {
-            this [_fontCache] .set (url, deferred = $.Deferred ());
+            try
+            {
+               this [_fontCache] .set (url, deferred = $.Deferred ());
 
-            fetch (url, { cache: cache ? "default" : "reload"})
-               .then (response => response .arrayBuffer ())
-               .then (buffer => opentype .parse (buffer))
-               .then (font => deferred .resolve (font))
-               .catch (error => deferred .reject (error));
+               const response = await fetch (url, { cache: cache ? "default" : "reload"});
+
+               if (response .ok)
+               {
+                  const
+                     buffer = await response .arrayBuffer (),
+                     font   = opentype .parse (buffer);
+
+                  deferred .resolve (font);
+               }
+               else
+               {
+                  throw new Error (response .statusText || response .status);
+               }
+            }
+            catch (error)
+            {
+               deferred .reject (error);
+            }
          }
 
          deferred .done (resolve) .fail (reject);
