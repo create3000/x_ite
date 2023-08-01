@@ -55,6 +55,10 @@
 			"url": "https://github.com/splace"
 		}
 	],
+	"funding": {
+	  "type": "patreon",
+	  "url": "https://patreon.com/X_ITE"
+	},
 	"devDependencies": {
 		"ammojs": "^0.0.2",
 		"CharLS.js": "^2.0.1",
