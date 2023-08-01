@@ -988,9 +988,9 @@ Object .assign (X3DProgrammableShaderObject .prototype,
 
          // Set global uniforms.
 
-         if (this .renderTime !== renderObject .getRenderTime ())
+         if (this .renderCount !== renderObject .getRenderCount ())
          {
-            this .renderTime = renderObject .getRenderTime ();
+            this .renderCount = renderObject .getRenderCount ();
 
             // Set viewport.
 
