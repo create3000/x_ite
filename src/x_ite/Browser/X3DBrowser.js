@@ -788,6 +788,8 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
          return;
 
       layerNode .viewAll (transitionTime, 1, this .getBrowserOption ("StraightenHorizon"));
+
+      return new Promise (resolve => requestAnimationFrame (resolve));
    },
    firstViewpoint (layerNode)
    {
