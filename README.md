@@ -45,3 +45,9 @@ Make sure that `contextIsolation` is set to `false` when creating a BrowserWindo
 ## License
 
 X_ITE is free software: you can redistribute it and/or modify it under the terms of the [GNU General Public License version 3](LICENSE.md) only, as published by the Free Software Foundation.
+
+## See Also
+
+* [x3d-tidy](https://www.npmjs.com/package/x3d-tidy) — X3D converter, beautifier and minimizer
+* [x3d-image](https://www.npmjs.com/package/x3d-image) — Render image files from X3D
+* [sunrize](https://www.npmjs.com/package/sunrize) — A Multi-Platform X3D Editor
