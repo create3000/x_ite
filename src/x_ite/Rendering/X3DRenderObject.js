@@ -65,6 +65,7 @@ function X3DRenderObject (executionContext)
 {
    const browser = executionContext .getBrowser ();
 
+   this .renderTime               = 0;
    this .viewVolumes              = [ ];
    this .cameraSpaceMatrix        = new MatrixStack (Matrix4);
    this .viewMatrix               = new MatrixStack (Matrix4);
