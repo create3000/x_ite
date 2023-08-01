@@ -61,6 +61,8 @@ import StopWatch     from "../../standard/Time/StopWatch.js";
 
 const DEPTH_BUFFER_SIZE = 16;
 
+let renderTime = 0;
+
 function X3DRenderObject (executionContext)
 {
    const browser = executionContext .getBrowser ();
@@ -992,7 +994,7 @@ Object .assign (X3DRenderObject .prototype,
          oit                        = browser .getFrameBuffer () .getOrderIndependentTransparency ();
 
 
-      ++ this .renderTime;
+      this .renderTime = ++ renderTime;
 
       this .logarithmicDepthBuffer = browser .getBrowserOption ("LogarithmicDepthBuffer")
          || this .getViewpoint () .getLogarithmicDepthBuffer ();
