@@ -67,13 +67,13 @@ Object .assign (Object .setPrototypeOf (X3DBindableNode .prototype, X3DChildNode
 
       this ._set_bind .addInterest ("set_bind__", this);
    },
-   getModificationCount ()
-   {
-      return this .modificationCount;
-   },
    isCameraObject ()
    {
       return true;
+   },
+   getModificationCount ()
+   {
+      return this .modificationCount;
    },
    transitionStart ()
    { },
