@@ -305,14 +305,14 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
 
       this [_world] .traverse (TraverseType .DISPLAY);
 
+      this .addTaintedField (this ._finishedEvents);
+      this [_processEvents] ();
+
       this .getFrameBuffer () .blit ();
 
       this [_displayTime] .stop ();
 
       // Finish
-
-      this .addTaintedField (this ._finishedEvents);
-      this [_processEvents] ();
 
       this [_browserTime] .stop ();
       this [_systemTime] .start ();
