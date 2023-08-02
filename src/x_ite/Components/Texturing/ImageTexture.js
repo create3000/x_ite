@@ -195,7 +195,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
          this .setError ({ type: error .message });
       }
    },
-   getImageData: async function (image)
+   getImageData: async function (image, colorspace = true)
    {
       const
          gl          = this .getBrowser () .getContext (),
@@ -205,9 +205,9 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
 
       gl .bindFramebuffer (gl .FRAMEBUFFER, framebuffer);
       gl .bindTexture (gl .TEXTURE_2D, texture);
-      //gl .pixelStorei (gl .UNPACK_COLORSPACE_CONVERSION_WEBGL, colorspace ? gl .BROWSER_DEFAULT_WEBGL : gl .NONE);
+      gl .pixelStorei (gl .UNPACK_COLORSPACE_CONVERSION_WEBGL, colorspace ? gl .BROWSER_DEFAULT_WEBGL : gl .NONE);
       gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA, gl .RGBA, gl .UNSIGNED_BYTE, image);
-      //gl .pixelStorei (gl .UNPACK_COLORSPACE_CONVERSION_WEBGL, gl .BROWSER_DEFAULT_WEBGL);
+      gl .pixelStorei (gl .UNPACK_COLORSPACE_CONVERSION_WEBGL, gl .BROWSER_DEFAULT_WEBGL);
       gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .TEXTURE_2D, texture, 0);
       await gl .readPixelsAsync (0, 0, image .width, image .height, gl .RGBA, gl .UNSIGNED_BYTE, data);
       gl .deleteFramebuffer (framebuffer);
