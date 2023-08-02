@@ -53,9 +53,9 @@ import DEVELOPMENT from "../DEVELOPMENT.js";
 
 const
    ECMAScript = /^\s*(?:vrmlscript|javascript|ecmascript)\:(.*)$/s,
-   dataURL    = /^data:(.*?)(?:;charset=(.*?))?(?:;(base64))?,(.*)$/s;
+   dataURL    = /^data:(.*?)(?:;charset=(.*?))?(?:;(base64))?,/s;
 
-const textMimeTypes = ["x-shader/x-vertex", "x-shader/x-fragment"];
+const x_iteMimeTypes = ["x-shader/x-vertex-x_ite", "x-shader/x-fragment-x_ite"];
 
 const foreignExtensions = new RegExp ("\.(?:html|htm|xhtml)$");
 
@@ -237,20 +237,16 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
          {
             const mimeType = result [1];
 
-            if (textMimeTypes .includes (mimeType))
+            if (x_iteMimeTypes .includes (mimeType))
             {
                // Decode base64 or unescape.
 
-               let data = result [4];
+               let data = url .substring (result [0] .length);
 
                if (result [3] === "base64")
                   data = atob (data);
                else
                   data = unescape (data); // Don't use decodeURIComponent!
-
-               // Remove BOM
-
-               data = $.removeBOM (data);
 
                this .callback (data);
                return;

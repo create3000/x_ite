@@ -144,16 +144,16 @@ X3D (() =>
 
    $("#website") .attr ("href", location .origin + ":4000/x_ite/");
 
-   // (async () =>
-   // {
-   //    const
-   //       response = await fetch (new URL ("tests/base64-with-bom.url", location)),
-   //       text     = await response .text ();
+   (async () =>
+   {
+      const
+         response = await fetch (new URL ("tests/base64-with-bom.url", location)),
+         text     = await response .text ();
 
-   //    console .log (text.length);
+      console .log (text.length);
 
-   //    $("#browser") .attr ("src", text);
-   // })();
+      $("#browser") .attr ("src", text);
+   })();
 });
       </script>
       <style>

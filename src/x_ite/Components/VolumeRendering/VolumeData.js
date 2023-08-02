@@ -136,7 +136,7 @@ Object .assign (Object .setPrototypeOf (VolumeData .prototype, X3DVolumeDataNode
       //    this .getBrowser () .print (fs);
 
       const vertexShader = new ShaderPart (this .getExecutionContext ());
-      vertexShader ._url .push (encodeURI ("data:x-shader/x-vertex," + vs));
+      vertexShader ._url .push (encodeURI ("data:x-shader/x-vertex-x_ite," + vs));
       vertexShader .setPrivate (true);
       vertexShader .setName ("VolumeDataVertexShader");
       vertexShader .setOptions (options);
@@ -144,7 +144,7 @@ Object .assign (Object .setPrototypeOf (VolumeData .prototype, X3DVolumeDataNode
 
       const fragmentShader = new ShaderPart (this .getExecutionContext ());
       fragmentShader ._type = "FRAGMENT";
-      fragmentShader ._url .push (encodeURI ("data:x-shader/x-fragment," + fs));
+      fragmentShader ._url .push (encodeURI ("data:x-shader/x-fragment-x_ite," + fs));
       fragmentShader .setPrivate (true);
       fragmentShader .setName ("VolumeDataFragmentShader");
       fragmentShader .setOptions (options);

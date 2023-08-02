@@ -1,12 +1,5 @@
 Object .assign ($,
 {
-   removeBOM (input)
-   {
-      if (input .startsWith ("ï»¿"))
-         return input .substring (3);
-
-      return input;
-   },
    decodeText (input)
    {
       if (typeof input === "string")
