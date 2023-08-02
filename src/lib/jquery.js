@@ -1,11 +1,18 @@
 Object .assign ($,
 {
+   removeBOM (input)
+   {
+      if (input .startsWith ("ï»¿"))
+         input = input .substring (3);
+
+      return input;
+   },
    decodeText (input)
    {
-      if (typeof input === "string")
-         return input;
+      if (typeof input !== "string")
+         input = new TextDecoder () .decode (input);
 
-      return new TextDecoder () .decode (input);
+      return $.removeBOM (input);
    },
    ungzip (arrayBuffer)
    {

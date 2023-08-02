@@ -235,7 +235,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
          {
             //const mimeType = result [1];
 
-            // ??? If called from loadURL and mime type is text/html do a window.open or window.location=URL and return; ???
+            // Decode base64 or unescape.
 
             let data = result [4];
 
@@ -243,6 +243,10 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
                data = atob (data);
             else
                data = unescape (data); // Don't use decodeURIComponent!
+
+            // Remove BOM
+
+            data = $.removeBOM (data);
 
             this .callback (data);
             return;

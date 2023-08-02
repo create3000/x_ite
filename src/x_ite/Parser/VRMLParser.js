@@ -280,7 +280,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
    {
       let
          input     = this .input,
-         lastIndex = this .lastIndex,
+         lastIndex = Math .min (this .lastIndex, this .input .length - 1),
          line      = "";
 
       if (lastIndex < input .length && (input [lastIndex] !== "\n" || input [lastIndex] !== "\r"))
