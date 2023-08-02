@@ -221,7 +221,7 @@ const Context =
                   {
                      case this .WAIT_FAILED:
                      {
-                        reject ();
+                        reject (new Error ("clientWaitSync: WAIT_FAILED"));
                         return;
                      }
                      case this .TIMEOUT_EXPIRED:
