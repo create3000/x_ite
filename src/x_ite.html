@@ -115,7 +115,7 @@ X3D (() =>
    const bookmarks = new Bookmarks (Browser, $("#examples-box"));
 
    bookmarks .setup ([X_ITE_EXAMPLES, X_ITE_TESTS]);
-   // loadURL (localStorage ["Bookmarks.url"] || "https://create3000.github.io/media/x_ite/info/info.x3d");
+   loadURL (localStorage ["Bookmarks.url"] || "https://create3000.github.io/media/x_ite/info/info.x3d");
 
    $("#version") .text (Browser .name + " v" + Browser .version);
    $("#location-entry") .val (localStorage ["Bookmarks.history"] [index])
@@ -144,16 +144,16 @@ X3D (() =>
 
    $("#website") .attr ("href", location .origin + ":4000/x_ite/");
 
-   (async () =>
-   {
-      const
-         response = await fetch (new URL ("tests/base64-with-bom.url", location)),
-         text     = await response .text ();
+   // (async () =>
+   // {
+   //    const
+   //       response = await fetch (new URL ("tests/base64-with-bom.url", location)),
+   //       text     = await response .text ();
 
-      console .log (text.length);
+   //    console .log (text.length);
 
-      $("#browser") .attr ("src", text);
-   })();
+   //    $("#browser") .attr ("src", text);
+   // })();
 });
       </script>
       <style>
