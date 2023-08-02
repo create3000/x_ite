@@ -55,6 +55,8 @@ const
    ECMAScript = /^\s*(?:vrmlscript|javascript|ecmascript)\:(.*)$/s,
    dataURL    = /^data:(.*?)(?:;charset=(.*?))?(?:;(base64))?,(.*)$/s;
 
+const textMimeTypes = ["x-shader/x-vertex", "x-shader/x-fragment"];
+
 const foreignExtensions = new RegExp ("\.(?:html|htm|xhtml)$");
 
 const foreign = {
@@ -233,54 +235,60 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
 
          if (result)
          {
-            //const mimeType = result [1];
+            const mimeType = result [1];
 
-            // Decode base64 or unescape.
+            if (textMimeTypes .includes (mimeType))
+            {
+               // Decode base64 or unescape.
 
-            let data = result [4];
+               let data = result [4];
 
-            if (result [3] === "base64")
-               data = atob (data);
-            else
-               data = unescape (data); // Don't use decodeURIComponent!
+               if (result [3] === "base64")
+                  data = atob (data);
+               else
+                  data = unescape (data); // Don't use decodeURIComponent!
 
-            // Remove BOM
+               // Remove BOM
 
-            data = $.removeBOM (data);
+               data = $.removeBOM (data);
 
-            this .callback (data);
-            return;
+               this .callback (data);
+               return;
+            }
          }
       }
 
       this .URL = new URL (url, this .getReferer ());
 
-      if (this .bindViewpoint)
+      if (this .URL .protocol !== "data:")
       {
-			const referer = new URL (this .getReferer ());
-
-         if (this .URL .protocol === referer .protocol &&
-				 this .URL .hostname === referer .hostname &&
-				 this .URL .port === referer .port &&
-				 this .URL .pathname === referer .pathname &&
-             this .URL .hash)
+         if (this .bindViewpoint)
          {
-            this .bindViewpoint (decodeURIComponent (this .URL .hash .substr (1)));
-            return;
+            const referer = new URL (this .getReferer ());
+
+            if (this .URL .protocol === referer .protocol &&
+                this .URL .hostname === referer .hostname &&
+                this .URL .port === referer .port &&
+                this .URL .pathname === referer .pathname &&
+                this .URL .hash)
+            {
+               this .bindViewpoint (decodeURIComponent (this .URL .hash .substr (1)));
+               return;
+            }
          }
-      }
 
-      if (this .foreign)
-      {
-         // Handle target
+         if (this .foreign)
+         {
+            // Handle target
 
-         if (this .target .length && this .target !== "_self")
-            return this .foreign (this .URL .href, this .target);
+            if (this .target .length && this .target !== "_self")
+               return this .foreign (this .URL .href, this .target);
 
-         // Handle well known foreign content depending on extension or if path looks like directory.
+            // Handle well known foreign content depending on extension or if path looks like directory.
 
-         if (this .URL .href .match (foreignExtensions))
-            return this .foreign (this .URL .href, this .target);
+            if (this .URL .href .match (foreignExtensions))
+               return this .foreign (this .URL .href, this .target);
+         }
       }
 
       // Load URL async
@@ -292,8 +300,6 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
 
       if (this .foreign)
       {
-         // console .log (contentType);
-
          if (foreign [contentType])
             return this .foreign (this .URL .href, this .target);
       }
