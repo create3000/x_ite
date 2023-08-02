@@ -53,9 +53,7 @@ import DEVELOPMENT from "../DEVELOPMENT.js";
 
 const
    ECMAScript = /^\s*(?:vrmlscript|javascript|ecmascript)\:(.*)$/s,
-   dataURL    = /^data:(.*?)(?:;charset=(.*?))?(?:;(base64))?,/s;
-
-const x_iteMimeTypes = ["x-shader/x-vertex-x_ite", "x-shader/x-fragment-x_ite"];
+   dataURL    = /^data:(.*?)(?:;charset=(.*?))?(?:;(base64))?,(.*)$/s;
 
 const foreignExtensions = new RegExp ("\.(?:html|htm|xhtml)$");
 
@@ -231,60 +229,59 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
 
       // Data URL
       {
-         const result = dataURL .exec (url);
+         const result = url .match (dataURL);
 
          if (result)
          {
-            const mimeType = result [1];
+            //const mimeType = result [1];
 
-            if (x_iteMimeTypes .includes (mimeType))
-            {
-               // Decode base64 or unescape.
+            // Decode base64 or unescape.
 
-               let data = url .substring (result [0] .length);
+            let data = url .substring (result [0] .length);
 
-               if (result [3] === "base64")
-                  data = atob (data);
-               else
-                  data = unescape (data); // Don't use decodeURIComponent!
+            if (result [3] === "base64")
+               data = atob (data);
+            else
+               data = unescape (data); // Don't use decodeURIComponent!
 
-               this .callback (data);
-               return;
-            }
+            // Remove BOM
+
+            if (data .startsWith ("ï»¿"))
+               data = data .substring (3);
+
+            this .callback (data);
+            return;
          }
       }
 
       this .URL = new URL (url, this .getReferer ());
 
-      if (this .URL .protocol !== "data:")
+      if (this .bindViewpoint)
       {
-         if (this .bindViewpoint)
+			const referer = new URL (this .getReferer ());
+
+         if (this .URL .protocol === referer .protocol &&
+				 this .URL .hostname === referer .hostname &&
+				 this .URL .port === referer .port &&
+				 this .URL .pathname === referer .pathname &&
+             this .URL .hash)
          {
-            const referer = new URL (this .getReferer ());
-
-            if (this .URL .protocol === referer .protocol &&
-                this .URL .hostname === referer .hostname &&
-                this .URL .port === referer .port &&
-                this .URL .pathname === referer .pathname &&
-                this .URL .hash)
-            {
-               this .bindViewpoint (decodeURIComponent (this .URL .hash .substr (1)));
-               return;
-            }
+            this .bindViewpoint (decodeURIComponent (this .URL .hash .substr (1)));
+            return;
          }
+      }
 
-         if (this .foreign)
-         {
-            // Handle target
+      if (this .foreign)
+      {
+         // Handle target
 
-            if (this .target .length && this .target !== "_self")
-               return this .foreign (this .URL .href, this .target);
+         if (this .target .length && this .target !== "_self")
+            return this .foreign (this .URL .href, this .target);
 
-            // Handle well known foreign content depending on extension or if path looks like directory.
+         // Handle well known foreign content depending on extension or if path looks like directory.
 
-            if (this .URL .href .match (foreignExtensions))
-               return this .foreign (this .URL .href, this .target);
-         }
+         if (this .URL .href .match (foreignExtensions))
+            return this .foreign (this .URL .href, this .target);
       }
 
       // Load URL async
@@ -296,6 +293,8 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
 
       if (this .foreign)
       {
+         // console .log (contentType);
+
          if (foreign [contentType])
             return this .foreign (this .URL .href, this .target);
       }
