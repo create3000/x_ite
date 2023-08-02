@@ -77,7 +77,7 @@ Object .assign (Object .setPrototypeOf (GoldenGate .prototype, X3DParser .protot
                parser = new Parser (this .getScene ()),
                input  = this .getInput (parser .getEncoding (), x3dSyntax);
 
-            if (input === undefined)
+            if (Array .isArray (input) ? input .some (i => i === undefined) : input === undefined)
                continue;
 
             parser .setInput (input);
