@@ -231,7 +231,9 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
    {
       //console .error (error);
 
-      const string = error .message;
+      const
+         string     = error .message,
+         unexpected = this .lastIndex === this .input .length ? "Unexpected end of file. " : "";
 
       let
          rest     = this .getLine (),
@@ -256,7 +258,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
          + `${lastLine}\n`
          + `${line}\n`
          + `${Array (linePos) .join (" ")}^\n`
-         + `${string}\n`
+         + `${unexpected}${string}\n`
          + `********************************************************************************\n`
       ;
 
