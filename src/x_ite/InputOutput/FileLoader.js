@@ -53,7 +53,7 @@ import DEVELOPMENT from "../DEVELOPMENT.js";
 
 const
    ECMAScript = /^\s*(?:vrmlscript|javascript|ecmascript)\:(.*)$/s,
-   dataURL    = /^data:(.*?)(?:;charset=(.*?))?(?:;(base64))?,(.*)$/s;
+   dataURL    = /^data:(.*?)(?:;charset=(.*?))?(?:;(base64))?,/s;
 
 const foreignExtensions = new RegExp ("\.(?:html|htm|xhtml)$");
 
