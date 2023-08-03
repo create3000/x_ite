@@ -231,18 +231,15 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
       {
          const result = url .match (dataURL);
 
-         if (result)
+         if (result && result [3] !== "base64")
          {
-            //const mimeType = result [1];
+            // const mimeType = result [1];
 
             // Decode base64 or unescape.
 
             let data = url .substring (result [0] .length);
 
-            if (result [3] === "base64")
-               data = atob (data);
-            else
-               data = unescape (data); // Don't use decodeURIComponent!
+            data = unescape (data); // Don't use decodeURIComponent!
 
             // Remove BOM
 
@@ -256,14 +253,14 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
 
       this .URL = new URL (url, this .getReferer ());
 
-      if (this .bindViewpoint)
+      if (this .URL .protocol !== "data:" && this .bindViewpoint)
       {
-			const referer = new URL (this .getReferer ());
+         const referer = new URL (this .getReferer ());
 
          if (this .URL .protocol === referer .protocol &&
-				 this .URL .hostname === referer .hostname &&
-				 this .URL .port === referer .port &&
-				 this .URL .pathname === referer .pathname &&
+             this .URL .hostname === referer .hostname &&
+             this .URL .port     === referer .port &&
+             this .URL .pathname === referer .pathname &&
              this .URL .hash)
          {
             this .bindViewpoint (decodeURIComponent (this .URL .hash .substr (1)));
@@ -280,7 +277,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
 
          // Handle well known foreign content depending on extension or if path looks like directory.
 
-         if (this .URL .href .match (foreignExtensions))
+         if (this .URL .protocol !== "data:" && this .URL .href .match (foreignExtensions))
             return this .foreign (this .URL .href, this .target);
       }
 
