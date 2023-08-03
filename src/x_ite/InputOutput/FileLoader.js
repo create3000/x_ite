@@ -277,7 +277,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
 
       const
          options     = { cache: this .node .getCache () ? "default" : "reload", signal: this .controller .signal },
-         response    = this .checkResponse (await fetch (this .URL .href, options)),
+         response    = this .checkResponse (await fetch (this .URL, options)),
          contentType = response .headers .get ("content-type") ?.replace (/;.*$/, "");
 
       if (this .foreign)
