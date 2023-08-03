@@ -96,7 +96,7 @@ function X3DFlyViewer (executionContext, navigationInfo)
    this .geometryContext       = new GeometryContext ({ geometryType: 1, colorMaterial: true });
 
    gl .bindBuffer (gl .ELEMENT_ARRAY_BUFFER, this .lineIndexBuffer);
-   gl .bufferData (gl .ELEMENT_ARRAY_BUFFER, new Uint16Array ([0, 1, 2, 0, 2, 3, 4, 5, 6, 4, 6, 7]), gl .STATIC_DRAW);
+   gl .bufferData (gl .ELEMENT_ARRAY_BUFFER, new Uint8Array ([0, 1, 2, 0, 2, 3, 4, 5, 6, 4, 6, 7]), gl .STATIC_DRAW);
    gl .bindBuffer (gl .ARRAY_BUFFER, this .lineColorBuffer);
    gl .bufferData (gl .ARRAY_BUFFER, new Float32Array ([0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]), gl .STATIC_DRAW);
 }
@@ -722,7 +722,7 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
          // Draw a black and a white line.
 
          gl .disable (gl .DEPTH_TEST);
-         gl .drawElements (gl .TRIANGLES, 12, gl .UNSIGNED_SHORT, 0);
+         gl .drawElements (gl .TRIANGLES, 12, gl .UNSIGNED_BYTE, 0);
          gl .enable (gl .DEPTH_TEST);
       };
    })(),
