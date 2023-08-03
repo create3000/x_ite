@@ -277,13 +277,13 @@ function updateToolbar (toolbar, canvas)
       {
          const
             index = (parseInt (contentScale .attr ("index")) + 1) % 4,
-            value = [0.1, 1, 2, -1][index];
+            value = [0.1, 1, 2, "auto"][index];
 
-         browser .setBrowserOption ("ContentScale", value);
+         canvas .attr ("contentScale", value);
 
          contentScale
             .attr ("index", index)
-            .text ("contentScale " + (value === -1 ? "auto" : value .toFixed (1)))
+            .text ("contentScale " + (value === "auto" ? "auto" : value .toFixed (1)))
       })
       .appendTo (toolbar);
 
