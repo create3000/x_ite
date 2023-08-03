@@ -227,16 +227,10 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
          {
             // const mimeType = result [1];
 
-            // Unescape data.
-
             let data = url .substring (result [0] .length);
 
-            data = unescape (data); // Don't use decodeURIComponent!
-
-            // Remove BOM
-
-            if (data .startsWith ("ï»¿"))
-               data = data .substring (3);
+            data = unescape (data);            // Unescape data, don't use decodeURIComponent!
+            data = data .replace (/^ï»¿/, ""); // Remove BOM.
 
             this .callback (data);
             return;
