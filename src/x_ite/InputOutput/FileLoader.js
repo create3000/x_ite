@@ -235,7 +235,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
          {
             // const mimeType = result [1];
 
-            // Decode base64 or unescape.
+            // Unescape data.
 
             let data = url .substring (result [0] .length);
 
