@@ -40,13 +40,6 @@ X3D (() =>
 
    Browser .getContextMenu () .setUserMenu (() =>
    {
-      function antialiasing (contentScale, imageRendering)
-      {
-         $("#browser")
-            .attr ("contentScale", contentScale)
-            .css ("image-rendering", imageRendering);
-      }
-
       return {
          ... (typeof createTestMenu !== "undefined" ? createTestMenu () : { }),
          "transforms": {
