@@ -277,7 +277,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
 
       const
          options     = { cache: this .node .getCache () ? "default" : "reload", signal: this .controller .signal },
-         response    = this .handleErrors (await fetch (this .URL .href, options)),
+         response    = this .checkResponse (await fetch (this .URL .href, options)),
          contentType = response .headers .get ("content-type") ?.replace (/;.*$/, "");
 
       if (this .foreign)
@@ -290,7 +290,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
 
       this .callback ($.ungzip (await response .arrayBuffer ()), this .URL);
    },
-   handleErrors (response)
+   checkResponse (response)
    {
       if (response .ok)
          return response;
