@@ -65,7 +65,7 @@ function updateToolbar (toolbar, canvas)
 
    const contentScale = $("<span></span>")
       .text ("contentScale 1.0")
-      .attr ("index", new Map ([[0.1, 0], [1, 1], [2, 2], [-1, 3]]) .get (browser .getBrowserOption ("ContentScale")))
+      .attr ("index", { "0.1": 0, "1": 1, "2": 2, "-1": 3 } [browser .getBrowserOption ("ContentScale")])
       .attr ("title", "Toggle contentScale between 0.1, 1.0, 2.0, auto.")
       .on ("click", () =>
       {

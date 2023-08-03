@@ -226,7 +226,7 @@ const Bookmarks = (() =>
 
          const contentScale = $("<span></span>")
             .text ("contentScale 1.0")
-            .attr ("index", 1)
+            .attr ("index", { "0.1": 0, "1": 1, "2": 2, "-1": 3 } [this .browser .getBrowserOption ("ContentScale")])
             .attr ("title", "Toggle contentScale between 0.1, 1.0, 2.0, auto.")
             .on ("click", () =>
             {
