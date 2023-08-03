@@ -219,12 +219,12 @@ $(function ()
          }
 
          monaco .editor .setModelLanguage (editor .getModel (), Browser .currentScene .encoding .toLowerCase ());
-
-         updateToolbar ($(".playground .toolbar"), $("x3d-canvas"));
       });
 
       if (!url)
          editor .setValue (box .replace (/ {3}/g, "  "));
+
+      updateToolbar ($(".playground .toolbar"), $("x3d-canvas"));
    });
 })
 
