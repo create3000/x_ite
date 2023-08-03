@@ -51,18 +51,10 @@ import GoldenGate  from "../Parser/GoldenGate.js";
 import X3DWorld    from "../Execution/X3DWorld.js";
 import DEVELOPMENT from "../DEVELOPMENT.js";
 
-const
-   ECMAScript = /^\s*(?:vrmlscript|javascript|ecmascript)\:(.*)$/s,
-   dataURL    = /^data:(.*?)(?:;charset=(.*?))?(?:;(base64))?,/s;
-
-const foreignExtensions = new RegExp ("\.(?:html|htm|xhtml)$");
-
-const foreign = {
-   "text/html":             true,
-   "application/xhtml+xml": true,
-};
-
-const defaultParameter = new Fields .MFString ();
+const foreignContentTypes = new Set ([
+   "text/html",
+   "application/xhtml+xml",
+])
 
 function FileLoader (node)
 {
@@ -186,7 +178,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
    {
       this .bindViewpoint = bindViewpoint;
       this .foreign       = foreign;
-      this .target        = this .getTarget (parameter || defaultParameter);
+      this .target        = this .getTarget (parameter || new Fields .MFString ());
 
       return this .loadDocument (url, this .createX3DFromURLAsync .bind (this, callback));
    },
@@ -218,7 +210,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
 
       // Script
       {
-         const result = ECMAScript .exec (url);
+         const result = url .match (/^\s*(?:vrmlscript|javascript|ecmascript)\:(.*)$/s);
 
          if (result)
          {
@@ -229,7 +221,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
 
       // Data URL
       {
-         const result = url .match (dataURL);
+         const result = url .match (/^data:(.*?)(?:;charset=(.*?))?(?:;(base64))?,/s);
 
          if (result && result [3] !== "base64")
          {
@@ -277,7 +269,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
 
          // Handle well known foreign content depending on extension or if path looks like directory.
 
-         if (this .URL .protocol !== "data:" && this .URL .href .match (foreignExtensions))
+         if (this .URL .protocol !== "data:" && this .URL .href .match (/\.(?:html|htm|xhtml)$/))
             return this .foreign (this .URL .href, this .target);
       }
 
@@ -292,7 +284,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
       {
          // console .log (contentType);
 
-         if (foreign [contentType])
+         if (foreignContentTypes .has (contentType))
             return this .foreign (this .URL .href, this .target);
       }
 
