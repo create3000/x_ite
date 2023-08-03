@@ -21,13 +21,6 @@ X3D (() =>
 
    Browser .getContextMenu () .setUserMenu (() =>
    {
-      function antialiasing (contentScale, imageRendering)
-      {
-         $("#browser")
-            .attr ("contentScale", contentScale)
-            .css ("image-rendering", imageRendering);
-      }
-
       return {
          ... (typeof createTestMenu !== "undefined" ? createTestMenu () : { }),
          "transforms": {
@@ -124,17 +117,6 @@ X3D (() =>
    });
 
    $("#website") .attr ("href", location .origin + ":4000/x_ite/");
-
-   // (async () =>
-   // {
-   //    const
-   //       response = await fetch (new URL ("src/tests/error_src.txt", location)),
-   //       text     = await response .text ();
-
-   //    console .log (text.length);
-
-   //    $("#browser") .attr ("src", text);
-   // })();
 });
       </script>
       <style>
