@@ -301,7 +301,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
    {
       // Output error.
 
-      this .setError (error);
+      this .printError (error);
 
       // Try to load next URL.
 
@@ -315,7 +315,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
          this .callback (null);
       }
    },
-   setError (error)
+   printError (error)
    {
       if (this .URL .protocol === "data:")
          console .error (`Couldn't load data URL.`, error);
