@@ -80,19 +80,25 @@ function X3DFlyViewer (executionContext, navigationInfo)
       browser = this .getBrowser (),
       gl      = browser .getContext ();
 
-   this .button            = -1;
-   this .fromVector        = new Vector3 (0, 0, 0);
-   this .toVector          = new Vector3 (0, 0, 0);
-   this .direction         = new Vector3 (0, 0, 0);
-   this .startTime         = 0;
-   this .event             = null;
-   this .lookAround        = false;
-   this .orientationChaser = new OrientationChaser (executionContext);
-   this .lineCount         = 2;
-   this .lineArray         = new Float32Array (this .lineCount * 4) .fill (1);
-   this .lineBuffer        = gl .createBuffer ();
-   this .lineArrayObject   = new VertexArray (gl);
-   this .geometryContext   = new GeometryContext ({ geometryType: 1 });
+   this .button                = -1;
+   this .fromVector            = new Vector3 (0, 0, 0);
+   this .toVector              = new Vector3 (0, 0, 0);
+   this .direction             = new Vector3 (0, 0, 0);
+   this .startTime             = 0;
+   this .event                 = null;
+   this .lookAround            = false;
+   this .orientationChaser     = new OrientationChaser (executionContext);
+   this .lineIndexBuffer       = gl .createBuffer ();
+   this .lineColorBuffer       = gl .createBuffer ();
+   this .lineVertexBuffer      = gl .createBuffer ();
+   this .lineVertexArrayObject = new VertexArray (gl);
+   this .lineVertexArray       = new Float32Array (8 * 4) .fill (1);
+   this .geometryContext       = new GeometryContext ({ geometryType: 1, colorMaterial: true });
+
+   gl .bindBuffer (gl .ELEMENT_ARRAY_BUFFER, this .lineIndexBuffer);
+   gl .bufferData (gl .ELEMENT_ARRAY_BUFFER, new Uint16Array ([0, 1, 2, 0, 2, 3, 4, 5, 6, 4, 6, 7]), gl .STATIC_DRAW);
+   gl .bindBuffer (gl .ARRAY_BUFFER, this .lineColorBuffer);
+   gl .bufferData (gl .ARRAY_BUFFER, new Float32Array ([0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]), gl .STATIC_DRAW);
 }
 
 Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prototype),
@@ -623,6 +629,8 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
       const
          fromPoint             = new Vector3 (0, 0, 0),
          toPoint               = new Vector3 (0, 0, 0),
+         normal                = new Vector3 (0, 0, 0),
+         vertex                = new Vector3 (0, 0, 0),
          projectionMatrix      = new Matrix4 (),
          projectionMatrixArray = new Float32Array (Matrix4 .Identity),
          modelViewMatrixArray  = new Float32Array (Matrix4 .Identity),
@@ -633,11 +641,12 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
          // Configure HUD
 
          const
-            browser  = this .getBrowser (),
-            gl       = browser .getContext (),
-            viewport = browser .getViewport (),
-            width    = viewport [2],
-            height   = viewport [3];
+            browser      = this .getBrowser (),
+            gl           = browser .getContext (),
+            viewport     = browser .getViewport (),
+            width        = viewport [2],
+            height       = viewport [3],
+            contentScale = browser .getRenderingProperty ("ContentScale");
 
          projectionMatrixArray .set (Camera .ortho (0, width, 0, height, -1, 1, projectionMatrix));
 
@@ -659,15 +668,36 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
             }
          }
 
-         // Set line vertices.
+         // Set black line quad vertices.
 
-         this .lineArray .set (fromPoint, 0);
-         this .lineArray .set (toPoint,   4);
+         normal .assign (toPoint)
+            .subtract (fromPoint)
+            .normalize ()
+            .multiply (contentScale)
+            .set (-normal .y, normal .x, 0);
+
+         this .lineVertexArray .set (vertex .assign (fromPoint) .add (normal),      0);
+         this .lineVertexArray .set (vertex .assign (fromPoint) .subtract (normal), 4);
+         this .lineVertexArray .set (vertex .assign (toPoint)   .subtract (normal), 8);
+         this .lineVertexArray .set (vertex .assign (toPoint)   .add (normal),      12);
+
+         // Set white line quad vertices.
+
+         normal .assign (toPoint)
+            .subtract (fromPoint)
+            .normalize ()
+            .multiply (contentScale / 2)
+            .set (-normal .y, normal .x, 0);
+
+         this .lineVertexArray .set (vertex .assign (fromPoint) .add (normal),      16);
+         this .lineVertexArray .set (vertex .assign (fromPoint) .subtract (normal), 20);
+         this .lineVertexArray .set (vertex .assign (toPoint)   .subtract (normal), 24);
+         this .lineVertexArray .set (vertex .assign (toPoint)   .add (normal),      28);
 
          // Transfer line.
 
-         gl .bindBuffer (gl .ARRAY_BUFFER, this .lineBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, this .lineArray, gl .DYNAMIC_DRAW);
+         gl .bindBuffer (gl .ARRAY_BUFFER, this .lineVertexBuffer);
+         gl .bufferData (gl .ARRAY_BUFFER, this .lineVertexArray, gl .DYNAMIC_DRAW);
 
          // Set uniforms and attributes.
 
@@ -678,21 +708,21 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
 
          gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, projectionMatrixArray);
          gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrixArray);
+         gl .uniform3f        (shaderNode .x3d_EmissiveColor, 0, 0, 0);
+         gl .uniform1f        (shaderNode .x3d_Transparency,  0);
 
-         if (this .lineArrayObject .enable (shaderNode))
-            shaderNode .enableVertexAttribute (gl, this .lineBuffer, 0, 0);
+         if (this .lineVertexArrayObject .enable (shaderNode))
+         {
+            gl .bindBuffer (gl .ELEMENT_ARRAY_BUFFER, this .lineIndexBuffer);
+
+            shaderNode .enableColorAttribute  (gl, this .lineColorBuffer,  0, 0);
+            shaderNode .enableVertexAttribute (gl, this .lineVertexBuffer, 0, 0);
+         }
 
          // Draw a black and a white line.
 
          gl .disable (gl .DEPTH_TEST);
-
-         gl .uniform3f (shaderNode .x3d_EmissiveColor, 0, 0, 0);
-         gl .uniform1f (shaderNode .x3d_Transparency,  0);
-         gl .drawArrays (gl .LINES, 0, this .lineCount);
-
-         gl .uniform3f (shaderNode .x3d_EmissiveColor, 1, 1, 1);
-         gl .drawArrays (gl .LINES, 0, this .lineCount);
-
+         gl .drawElements (gl .TRIANGLES, 12, gl .UNSIGNED_SHORT, 0);
          gl .enable (gl .DEPTH_TEST);
       };
    })(),
@@ -714,8 +744,8 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
    {
       const gl = this .getBrowser () .getContext ();
 
-      gl .deleteBuffer (this .lineBuffer);
-      this .lineArrayObject .delete (gl);
+      gl .deleteBuffer (this .lineVertexBuffer);
+      this .lineVertexArrayObject .delete (gl);
 
       this .disconnect ();
       this .getBrowser () ._controlKey .removeInterest ("set_controlKey__", this);
