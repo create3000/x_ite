@@ -6,6 +6,9 @@
 	"author": "Holger Seelig <holger.seelig@gmail.com>",
 	"license": "GPL-3.0",
 	"main": "dist/x_ite.js",
+	"files": [
+		"dist/*"
+	],
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/create3000/x_ite.git"
