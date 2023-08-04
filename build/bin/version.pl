@@ -101,6 +101,9 @@ sub other {
 	chdir "$CWD/../x3d-tidy";
 	system "make", "publish";
 
+	chdir "$CWD/../x3d-image";
+	system "make", "publish";
+
 	chdir "$CWD/../sunrize";
 	system "make", "publish";
 
