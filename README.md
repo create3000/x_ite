@@ -42,13 +42,13 @@ const X3D = require ("x_ite")
 
 Make sure that `contextIsolation` is set to `false` when creating a BrowserWindow instance.
 
-## License
-
-X_ITE is free software: you can redistribute it and/or modify it under the terms of the [GNU General Public License version 3](LICENSE.md) only, as published by the Free Software Foundation.
-
 ## Funding
 
 X_ITE needs your support. If you become a [Patreon](https://patreon.com/X_ITE), we can improve X_ITE even better.
+
+## License
+
+X_ITE is free software: you can redistribute it and/or modify it under the terms of the [GNU General Public License version 3](LICENSE.md) only, as published by the Free Software Foundation.
 
 ## See Also
 
