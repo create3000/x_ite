@@ -46,6 +46,10 @@ Make sure that `contextIsolation` is set to `false` when creating a BrowserWindo
 
 X_ITE is free software: you can redistribute it and/or modify it under the terms of the [GNU General Public License version 3](LICENSE.md) only, as published by the Free Software Foundation.
 
+## Funding
+
+X_ITE needs your support. If you become a [Patreon](https://patreon.com/X_ITE), we can improve X_ITE even better.
+
 ## See Also
 
 * [x3d-tidy](https://www.npmjs.com/package/x3d-tidy) — X3D converter, beautifier and minimizer
