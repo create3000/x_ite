@@ -982,6 +982,11 @@ Object .defineProperties (X3DBrowser .prototype,
       value: VERSION,
       enumerable: true,
    },
+   providerUrl:
+   {
+      get: X3DBrowser .prototype .getProviderUrl,
+      enumerable: true,
+   },
    currentFrameRate:
    {
       get: X3DBrowser .prototype .getCurrentFrameRate,
