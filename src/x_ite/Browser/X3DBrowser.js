@@ -987,7 +987,7 @@ Object .defineProperties (X3DBrowser .prototype,
       get: X3DBrowser .prototype .getProviderURL,
       enumerable: true,
    },
-   providerUrl:
+   providerUrl: // legacy
    {
       get: X3DBrowser .prototype .getProviderURL,
       enumerable: false,

@@ -54,7 +54,6 @@ function ProfileInfo (name, title, providerURL, components)
       name: { value: name, enumerable: true },
       title: { value: title, enumerable: true },
       providerURL: { value: providerURL, enumerable: true },
-      providerUrl: { get: function () { return this .providerURL; } },
       components: { value: components, enumerable: true },
    });
 }
@@ -87,6 +86,14 @@ Object .defineProperties (ProfileInfo,
    {
       value: "ProfileInfo",
       enumerable: true,
+   },
+});
+
+Object .defineProperties (ProfileInfo .prototype,
+{
+   providerUrl: // legacy
+   {
+      get: function () { return this .providerURL; },
    },
 });
 

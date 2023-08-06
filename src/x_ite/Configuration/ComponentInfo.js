@@ -56,7 +56,6 @@ function ComponentInfo (name, level, title, providerURL, external = false, depen
       level: { value: level, enumerable: true },
       title: { value: title, enumerable: true },
       providerURL: { value: providerURL || URLs .getProviderURL (external && name), enumerable: true },
-      providerUrl: { get: function () { return this .providerURL; } },
       external: { value: external },
       dependencies: { value: dependencies },
    });
@@ -132,6 +131,14 @@ Object .defineProperties (ComponentInfo,
    {
       value: "ComponentInfo",
       enumerable: true,
+   },
+});
+
+Object .defineProperties (ComponentInfo .prototype,
+{
+   providerUrl: // legacy
+   {
+      get: function () { return this .providerURL; },
    },
 });
 
