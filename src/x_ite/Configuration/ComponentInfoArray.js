@@ -55,9 +55,9 @@ function ComponentInfoArray (values = [ ])
 
 Object .assign (Object .setPrototypeOf (ComponentInfoArray .prototype, X3DInfoArray .prototype),
 {
-   add (name, { level, title, providerUrl, external = false, dependencies = [ ] })
+   add (name, { level, title, providerURL, external = false, dependencies = [ ] })
    {
-      X3DInfoArray .prototype .add .call (this, name, new ComponentInfo (name, level, title, providerUrl, external, dependencies));
+      X3DInfoArray .prototype .add .call (this, name, new ComponentInfo (name, level, title, providerURL, external, dependencies));
    },
 });
 

@@ -226,7 +226,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
          return new ComponentInfo (component .name,
             Algorithm .clamp (level || component .level, 1, component .level),
             component .title,
-            component .providerUrl,
+            component .providerURL,
             component .external,
             component .dependencies);
       }
@@ -265,7 +265,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
          return Promise .all (components .map (component => loadComponent .call (this, component, seen)))
       }
 
-      async function loadComponent ({ name, providerUrl, external, dependencies }, seen)
+      async function loadComponent ({ name, providerURL, external, dependencies }, seen)
       {
          if (seen .has (name)) return; seen .add (name);
 
@@ -278,12 +278,12 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
          {
             case "NODE":
             {
-               global .require (global .require ("url") .fileURLToPath (providerUrl))
+               global .require (global .require ("url") .fileURLToPath (providerURL))
                break;
             }
             case "BROWSER":
             {
-               await import (/* webpackIgnore: true */ providerUrl);
+               await import (/* webpackIgnore: true */ providerURL);
                break;
             }
          }
@@ -982,10 +982,15 @@ Object .defineProperties (X3DBrowser .prototype,
       value: VERSION,
       enumerable: true,
    },
+   providerURL:
+   {
+      get: X3DBrowser .prototype .getProviderURL,
+      enumerable: true,
+   },
    providerUrl:
    {
-      get: X3DBrowser .prototype .getProviderUrl,
-      enumerable: true,
+      get: X3DBrowser .prototype .getProviderURL,
+      enumerable: false,
    },
    currentFrameRate:
    {

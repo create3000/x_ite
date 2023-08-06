@@ -70,7 +70,7 @@ const URLs =
          return src;
       };
    })(),
-   getProviderUrl (component)
+   getProviderURL (component)
    {
       if (component)
       {

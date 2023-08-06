@@ -389,7 +389,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
             className: "context-menu-icon x_ite-private-icon-help-about",
             callback ()
             {
-               window .open (browser .getProviderUrl ());
+               window .open (browser .getProviderURL ());
             },
          },
       });

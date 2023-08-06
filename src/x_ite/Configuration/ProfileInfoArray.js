@@ -56,9 +56,9 @@ function ProfileInfoArray (values = [ ])
 
 Object .assign (Object .setPrototypeOf (ProfileInfoArray .prototype, X3DInfoArray .prototype),
 {
-   add (name, { title, providerUrl, components })
+   add (name, { title, providerURL, components })
    {
-      X3DInfoArray .prototype .add .call (this, name, new ProfileInfo (name, title, providerUrl, new ComponentInfoArray (components)));
+      X3DInfoArray .prototype .add .call (this, name, new ProfileInfo (name, title, providerURL, new ComponentInfoArray (components)));
    },
 });
 

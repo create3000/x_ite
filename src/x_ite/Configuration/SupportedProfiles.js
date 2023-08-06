@@ -54,7 +54,7 @@ const SupportedProfiles = new ProfileInfoArray ();
 SupportedProfiles .add ("CADInterchange",
 {
    title: "Computer-Aided Design (CAD) interchange",
-   providerUrl: URLs .getProviderUrl (),
+   providerURL: URLs .getProviderURL (),
    components: [
       SupportedComponents .get ("CADGeometry"),
       SupportedComponents .get ("Core"),
@@ -72,7 +72,7 @@ SupportedProfiles .add ("CADInterchange",
 SupportedProfiles .add ("Core",
 {
    title: "Core",
-   providerUrl: URLs .getProviderUrl (),
+   providerURL: URLs .getProviderURL (),
    components: [
       SupportedComponents .get ("Core"),
    ],
@@ -81,7 +81,7 @@ SupportedProfiles .add ("Core",
 SupportedProfiles .add ("Full",
 {
    title: "Full",
-   providerUrl: URLs .getProviderUrl (),
+   providerURL: URLs .getProviderURL (),
    components: [
       //SupportedComponents .get ("Annotation"),
       SupportedComponents .get ("CADGeometry"),
@@ -126,7 +126,7 @@ SupportedProfiles .add ("Full",
 SupportedProfiles .add ("Immersive",
 {
    title: "Immersive",
-   providerUrl: URLs .getProviderUrl (),
+   providerURL: URLs .getProviderURL (),
    components: [
       SupportedComponents .get ("Core"),
       SupportedComponents .get ("EnvironmentalEffects"),
@@ -154,7 +154,7 @@ SupportedProfiles .add ("Immersive",
 SupportedProfiles .add ("Interactive",
 {
    title: "Interactive",
-   providerUrl: URLs .getProviderUrl (),
+   providerURL: URLs .getProviderURL (),
    components: [
       SupportedComponents .get ("Core"),
       SupportedComponents .get ("EnvironmentalEffects"),
@@ -178,7 +178,7 @@ SupportedProfiles .add ("Interactive",
 SupportedProfiles .add ("Interchange",
 {
    title: "Interchange",
-   providerUrl: URLs .getProviderUrl (),
+   providerURL: URLs .getProviderURL (),
    components: [
       SupportedComponents .get ("Core"),
       SupportedComponents .get ("EnvironmentalEffects"),
@@ -198,7 +198,7 @@ SupportedProfiles .add ("Interchange",
 SupportedProfiles .add ("MedicalInterchange",
 {
    title: "Medical interchange",
-   providerUrl: URLs .getProviderUrl (),
+   providerURL: URLs .getProviderURL (),
    components: [
       SupportedComponents .get ("Core"),
       SupportedComponents .get ("EnvironmentalEffects"),
@@ -223,7 +223,7 @@ SupportedProfiles .add ("MedicalInterchange",
 SupportedProfiles .add ("MPEG-4",
 {
    title: "MPEG-4 interactive",
-   providerUrl: URLs .getProviderUrl (),
+   providerURL: URLs .getProviderURL (),
    components: [
       SupportedComponents .get ("Core"),
       SupportedComponents .get ("EnvironmentalEffects"),

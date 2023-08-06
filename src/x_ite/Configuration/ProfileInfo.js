@@ -47,13 +47,14 @@
 
 import X3DObject from "../Base/X3DObject.js";
 
-function ProfileInfo (name, title, providerUrl, components)
+function ProfileInfo (name, title, providerURL, components)
 {
    Object .defineProperties (this,
    {
       name: { value: name, enumerable: true },
       title: { value: title, enumerable: true },
-      providerUrl: { value: providerUrl, enumerable: true },
+      providerURL: { value: providerURL, enumerable: true },
+      providerUrl: { get: function () { return this .providerURL; } },
       components: { value: components, enumerable: true },
    });
 }

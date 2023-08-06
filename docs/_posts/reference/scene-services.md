@@ -201,7 +201,7 @@ A number of the level of support of this instance. This property is read only.
 
 A generic, freeform title string provided by the browser manufacturer. This property is read only.
 
-#### **providerUrl**
+#### **providerURL**
 
 If provided, the URL to the entity that wrote this component. This assumes that extensions to the browser may not necessarily be provided by the browser writer's themselves. This property is read only.
 
@@ -235,7 +235,7 @@ A number of the level of support of this instance. This property is read only.
 
 A generic, freeform title string provided by the browser manufacturer. This property is read only.
 
-#### **providerUrl**
+#### **providerURL**
 
 If provided, the URL to the entity that wrote this component. This assumes that extensions to the browser may not necessarily be provided by the browser writer's themselves. This property is read only.
 

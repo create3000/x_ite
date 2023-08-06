@@ -87,9 +87,9 @@ Object .assign (X3DNetworkingContext .prototype,
    {
       this ._loadCount .addInterest (_set_loadCount, this);
    },
-   getProviderUrl ()
+   getProviderURL ()
    {
-      return URLs .getProviderUrl ();
+      return URLs .getProviderURL ();
    },
    getBaseURL ()
    {

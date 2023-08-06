@@ -23,6 +23,10 @@ A browser-implementation specific string describing the browser.
 
 A browser-implementation specific string describing the browser version.
 
+#### **providerURL**
+
+If provided, the URL to the entity that wrote this browser.
+
 #### **currentSpeed**
 
 The current speed of the avatar in m/s.

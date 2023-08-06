@@ -48,14 +48,15 @@
 import X3DObject from "../Base/X3DObject.js";
 import URLs      from "../Browser/Networking/URLs.js";
 
-function ComponentInfo (name, level, title, providerUrl, external = false, dependencies = [ ])
+function ComponentInfo (name, level, title, providerURL, external = false, dependencies = [ ])
 {
    Object .defineProperties (this,
    {
       name: { value: name, enumerable: true },
       level: { value: level, enumerable: true },
       title: { value: title, enumerable: true },
-      providerUrl: { value: providerUrl || URLs .getProviderUrl (external && name), enumerable: true },
+      providerURL: { value: providerURL || URLs .getProviderURL (external && name), enumerable: true },
+      providerUrl: { get: function () { return this .providerURL; } },
       external: { value: external },
       dependencies: { value: dependencies },
    });
