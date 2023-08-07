@@ -145,9 +145,7 @@ Object .assign (Object .setPrototypeOf (IndexedFaceSet .prototype, X3DComposedGe
 
       for (const polygon of polygons)
       {
-         const
-            triangles = polygon .triangles,
-            face      = polygon .face;
+         const { triangles, face } = polygon;
 
          for (const i of triangles)
          {
@@ -314,9 +312,9 @@ Object .assign (Object .setPrototypeOf (IndexedFaceSet .prototype, X3DComposedGe
 
       for (const polygon of polygons)
       {
-         for (const triangle of polygon .triangles)
+         for (const i of polygon .triangles)
          {
-            const normal = normals [triangle];
+            const normal = normals [i];
 
             normalArray .push (normal .x, normal .y, normal .z);
          }
@@ -342,16 +340,16 @@ Object .assign (Object .setPrototypeOf (IndexedFaceSet .prototype, X3DComposedGe
             case 3:
             {
                var normal = coord .getNormal (coordIndex [vertices [0]],
-                                                coordIndex [vertices [1]],
-                                                coordIndex [vertices [2]]);
+                                              coordIndex [vertices [1]],
+                                              coordIndex [vertices [2]]);
                break;
             }
             case 4:
             {
                var normal = coord .getQuadNormal (coordIndex [vertices [0]],
-                                                   coordIndex [vertices [1]],
-                                                   coordIndex [vertices [2]],
-                                                   coordIndex [vertices [3]]);
+                                                  coordIndex [vertices [1]],
+                                                  coordIndex [vertices [2]],
+                                                  coordIndex [vertices [3]]);
                break;
             }
             default:
