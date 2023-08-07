@@ -107,10 +107,6 @@ Object .assign (Object .setPrototypeOf (TextureCoordinateGenerator .prototype, X
 
       this .parameter .fill (0, length);
    },
-   get1Point (index, vector)
-   {
-      return vector;
-   },
    getPoints (array)
    {
       return array;

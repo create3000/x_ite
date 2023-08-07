@@ -106,13 +106,6 @@ Object .assign (Object .setPrototypeOf (MultiTextureCoordinate .prototype, X3DTe
    {
       return 0;
    },
-   get1Point (index, vector)
-   {
-      for (const textureCoordinateNode of this .textureCoordinateNodes)
-         return textureCoordinateNode .get1Point (index, vector);
-
-      return vector .set (0, 0, 0, 1);
-   },
    getPoints (array)
    {
       for (const textureCoordinateNode of this .textureCoordinateNodes)

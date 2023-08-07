@@ -90,7 +90,7 @@ Object .assign (Object .setPrototypeOf (Color .prototype, X3DColorNode .prototyp
          index %= this .length;
          index *= 3;
 
-         return result .set (color [index], color [index + 1], color [index + 2]);
+         return result .push (color [index], color [index + 1], color [index + 2], 1);
       }
       else
       {

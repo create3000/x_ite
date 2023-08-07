@@ -92,7 +92,7 @@ Object .assign (Object .setPrototypeOf (ColorRGBA .prototype, X3DColorNode .prot
          index %= this .length;
          index *= 4;
 
-         return result .set (color [index], color [index + 1], color [index + 2], color [index + 3]);
+         return result .push (color [index], color [index + 1], color [index + 2], color [index + 3]);
       }
       else
       {

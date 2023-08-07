@@ -74,34 +74,6 @@ Object .assign (Object .setPrototypeOf (Normal .prototype, X3DNormalNode .protot
       this .vector = this ._vector .getValue ();
       this .length = this ._vector .length;
    },
-   set1Vector (index, vector)
-   {
-      this ._vector [index] = vector;
-   },
-   get1Vector (index, result)
-   {
-      if (index >= 0 && index < this .length)
-      {
-         const vector = this .vector;
-
-         index *= 3;
-
-         return result .set (vector [index], vector [index + 1], vector [index + 2]);
-      }
-      else if (index >= 0 && this .length)
-      {
-         const vector = this .vector;
-
-         index %= this .length;
-         index *= 3;
-
-         return result .set (vector [index], vector [index + 1], vector [index + 2]);
-      }
-      else
-      {
-         return result .set (0, 0, 0);
-      }
-   },
    addVector (index, array)
    {
       if (index >= 0 && index < this .length)

@@ -82,30 +82,6 @@ Object .assign (Object .setPrototypeOf (TextureCoordinate .prototype, X3DSingleT
    {
       return this .length;
    },
-   get1Point (index, vector)
-   {
-      if (index >= 0 && index < this .length)
-      {
-         const point = this .point;
-
-         index *= 2;
-
-         return vector .set (point [index], point [index + 1], 0, 1);
-      }
-      else if (index >= 0 && this .length)
-      {
-         const point = this .point;
-
-         index %= this .length;
-         index *= 2;
-
-         return vector .set (point [index], point [index + 1], 0, 1);
-      }
-      else
-      {
-         return vector .set (0, 0, 0, 1);
-      }
-   },
    getPoints (array)
    {
       const
