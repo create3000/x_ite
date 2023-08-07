@@ -85,13 +85,14 @@ Object .assign (Object .setPrototypeOf (ColorRGBA .prototype, X3DColorNode .prot
 
          array .push (color [index], color [index + 1], color [index + 2], color [index + 3]);
       }
-      else if (this .length)
+      else if (index >= 0 && this .length)
       {
          const color = this .color;
 
-         index = (this .length - 1) * 4;
+         index %= this .length;
+         index *= 4;
 
-         array .push (color [index], color [index + 1], color [index + 2], color [index + 3]);
+         return result .set (color [index], color [index + 1], color [index + 2], color [index + 3]);
       }
       else
       {

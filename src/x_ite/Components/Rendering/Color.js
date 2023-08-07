@@ -83,13 +83,14 @@ Object .assign (Object .setPrototypeOf (Color .prototype, X3DColorNode .prototyp
 
          array .push (color [index], color [index + 1], color [index + 2], 1);
       }
-      else if (this .length)
+      else if (index >= 0 && this .length)
       {
          const color = this .color;
 
-         index = (this .length - 1) * 3;
+         index %= this .length;
+         index *= 3;
 
-         array .push (color [index], color [index + 1], color [index + 2], 1);
+         return result .set (color [index], color [index + 1], color [index + 2]);
       }
       else
       {
