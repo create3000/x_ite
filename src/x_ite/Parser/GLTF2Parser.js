@@ -56,7 +56,6 @@ import Rotation4    from "../../standard/Math/Numbers/Rotation4.js";
 import Matrix4      from "../../standard/Math/Numbers/Matrix4.js";
 import Color3       from "../../standard/Math/Numbers/Color3.js";
 import Color4       from "../../standard/Math/Numbers/Color4.js";
-import Box3         from "../../standard/Math/Geometry/Box3.js";
 
 // https://registry.khronos.org/glTF/specs/2.0/glTF-2.0.html
 // https://github.com/KhronosGroup/glTF-Sample-Models
