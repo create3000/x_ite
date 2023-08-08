@@ -342,7 +342,7 @@ Object .assign (Generator .prototype,
    },
    ExistsRouteNode (routeNode)
    {
-      return this .routeNodes .has (routeNode);
+      return this .namesByNode .get (routeNode) || this .routeNodes .has (routeNode);
    },
    IsSharedNode (baseNode)
    {

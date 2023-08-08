@@ -87,6 +87,19 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DNode .pro
    {
       return this [_importedName];
    },
+   hasRoutes (baseNode)
+   {
+      for (const route of this [_routes])
+      {
+         if (route .sourceNode === baseNode)
+            return true;
+
+         if (route .destinationNode === baseNode)
+            return true;
+      }
+
+      return false;
+   },
    addRoute (sourceNode, sourceField, destinationNode, destinationField)
    {
       // Add route.
@@ -225,7 +238,6 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DNode .pro
                      ? destinationNode .getImportedName ()
                      : generator .Name (destinationNode);
 
-                  generator .string += generator .Break ();
                   generator .string += generator .TidyBreak ();
                   generator .string += generator .Indent ();
                   generator .string += "ROUTE";
@@ -300,7 +312,6 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DNode .pro
                      ? destinationNode .getImportedName ()
                      : generator .Name (destinationNode);
 
-                  generator .string += generator .Break ();
                   generator .string += generator .TidyBreak ();
                   generator .string += generator .Indent ();
                   generator .string += "<ROUTE";
