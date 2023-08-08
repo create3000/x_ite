@@ -2413,7 +2413,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       {
          normal .vector = normalNode ._vector .copy ();
 
-         const vectors = this .applyWeights (normalNode ._vector, targets, "NORMAL", weights, 0);
+         const vectors = this .applyTargetsAndWeights (normalNode ._vector, targets, "NORMAL", weights, 0);
 
          normalNode ._vector .length = 0;
 
@@ -2450,7 +2450,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       {
          position .point = coordinateNode ._point .copy ();
 
-         const points = this .applyWeights (coordinateNode ._point, targets, "POSITION", weights, 0);
+         const points = this .applyTargetsAndWeights (coordinateNode ._point, targets, "POSITION", weights, 0);
 
          coordinateNode ._point .length = 0;
 
@@ -2836,7 +2836,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
             for (const t of times .keys ())
             {
-               for (const point of this .applyWeights (accessor .point, targets, "POSITION", weights, t))
+               for (const point of this .applyTargetsAndWeights (accessor .point, targets, "POSITION", weights, t))
                   interpolatorNode ._keyValue .push (point);
             }
 
@@ -2872,7 +2872,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
             for (const t of times .keys ())
             {
-               for (const vector of this .applyWeights (accessor .vector, targets, "NORMAL", weights, t))
+               for (const vector of this .applyTargetsAndWeights (accessor .vector, targets, "NORMAL", weights, t))
                   interpolatorNode ._keyValue .push (vector);
             }
 
@@ -2886,7 +2886,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          }
       }
    },
-   applyWeights: (function ()
+   applyTargetsAndWeights: (function ()
    {
       const value = new Vector3 (0, 0, 0);
 
@@ -2896,6 +2896,11 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
          for (const [i, target] of targets .entries ())
          {
+            const weight = weights [t * targets .length + i];
+
+            if (!weight)
+               continue;
+
             const accessor = this .accessors [target [key]];
 
             if (!(accessor instanceof Object))
@@ -2906,8 +2911,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
             const
                array  = accessor .array,
-               length = array .length,
-               weight = weights [t * targets .length + i] ?? 0;
+               length = array .length;
 
             for (let i = 0, p = 0; i < length; i += 3, ++ p)
                vectors [p] .add (value .set (array [i + 0], array [i + 1], array [i + 2]) .multiply (weight));
