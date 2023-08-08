@@ -2895,8 +2895,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
                array  = accessor .array,
                length = array .length;
 
-            for (let i = 0, p = 0; i < length; i += 3, ++ p)
-               vectors [p] .add (value .set (array [i + 0], array [i + 1], array [i + 2]) .multiply (weight));
+            for (let a = 0, p = 0; a < length; a += 3, ++ p)
+               vectors [p] .add (value .set (array [a], array [a + 1], array [a + 2]) .multiply (weight));
          }
 
          return vectors;
