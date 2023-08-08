@@ -2372,10 +2372,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    },
    createTextureCoordinate (texCoord, mapping)
    {
-      if (!(texCoord instanceof Object))
-         return null;
-
-      if (texCoord .type !== "VEC2")
+      if (texCoord ?.type !== "VEC2")
          return null;
 
       if (texCoord [mapping])
@@ -2394,10 +2391,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    },
    createNormal (normal, targets, weights)
    {
-      if (!(normal instanceof Object))
-         return null;
-
-      if (normal .type !== "VEC3")
+      if (normal ?.type !== "VEC3")
          return null;
 
       if (normal .normalNode)
@@ -2431,10 +2425,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    },
    createCoordinate (position, targets, weights)
    {
-      if (!(position instanceof Object))
-         return null;
-
-      if (position .type !== "VEC3")
+      if (position ?.type !== "VEC3")
          return null;
 
       if (position .coordinateNode)
@@ -2482,16 +2473,10 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    },
    attributesJointsObject: function (skin, joints, weights)
    {
-      if (!(joints instanceof Object))
+      if (joints ?.type !== "VEC4")
          return;
 
-      if (!(weights instanceof Object))
-         return;
-
-      if (joints .type !== "VEC4")
-         return;
-
-      if (weights .type !== "VEC4")
+      if (weights ?.type !== "VEC4")
          return;
 
       const
@@ -2903,10 +2888,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
             const accessor = this .accessors [target [key]];
 
-            if (!(accessor instanceof Object))
-               continue;
-
-            if (accessor .type !== "VEC3")
+            if (accessor ?.type !== "VEC3")
                continue;
 
             const
