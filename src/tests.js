@@ -11,6 +11,7 @@ const X_ITE_TESTS = [
    { path: "ComposedCubeMapTexture/GeneratedCubeMapTexture.x3d" },
    { path: "ComposedCubeMapTexture/ImageCubeMapTexture.x3d" },
    { component: "Core" },
+   { path: "Core/base64-with-bom.x3dv" },
    { path: "Core/Comment.x3d" },
    { path: "Core/DataURL.x3d" },
    { path: "Core/EXPORT.wrl" },

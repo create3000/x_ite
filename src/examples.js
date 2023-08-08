@@ -90,6 +90,7 @@ const X_ITE_EXAMPLES = [
    { component: "Rendering", test: "IndexedTriangleFanSet" },
    { component: "Rendering", test: "IndexedTriangleSet" },
    { component: "Rendering", test: "LineSet" },
+   { component: "Rendering", test: "OrderIndependentTransparency" },
    { component: "Rendering", test: "PointSet" },
    { component: "RigidBodyPhysics", test: "BallJoint" },
    { component: "RigidBodyPhysics", test: "CollidableShape" },

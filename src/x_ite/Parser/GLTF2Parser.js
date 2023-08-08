@@ -1058,7 +1058,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          return mesh .shapeNodes;
       }
 
-      const shapeNodes = this .primitivesArray (mesh .primitives, skin);
+      const shapeNodes = this .primitivesArray (mesh, skin);
 
       // Name Shape nodes.
 
@@ -1077,7 +1077,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       return mesh .shapeNodes = shapeNodes;
    },
-   primitivesArray (primitives, skin)
+   primitivesArray ({ primitives, weights }, skin)
    {
       if (!(primitives instanceof Array))
          return [ ];
@@ -1085,11 +1085,11 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       const shapeNodes = [ ];
 
       for (const primitive of primitives)
-         this .primitiveObject (primitive, skin, shapeNodes);
+         this .primitiveObject (primitive, weights, skin, shapeNodes);
 
       return shapeNodes;
    },
-   primitiveObject (primitive, skin, shapeNodes)
+   primitiveObject (primitive, weights, skin, shapeNodes)
    {
       if (!(primitive instanceof Object))
          return;
@@ -1102,7 +1102,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       this .primitiveExtensionsObject (primitive .extensions, primitive)
 
-      shapeNodes .push (this .createShape (primitive, skin));
+      shapeNodes .push (primitive .shapeNode = this .createShape (primitive, weights, skin));
    },
    attributesObject (attributes)
    {
@@ -1836,56 +1836,45 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       timeSensorNode ._cycleInterval = cycleInterval;
 
       return channels
-         .map (channel => this .animationChannelObject (channel, samplers, timeSensorNode))
-         .filter (node => node);
+         .flatMap (channel => this .animationChannelObject (channel, samplers, timeSensorNode));
    },
    animationChannelObject (channel, samplers, timeSensorNode)
    {
       if (!(channel instanceof Object))
-         return null;
+         return [ ];
 
       const target = channel .target;
 
       if (!(target instanceof Object))
-         return null;
+         return [ ];
 
       const node = this .nodes [target .node] ?.transformNode;
 
       if (!node)
-         return null;
+         return [ ];
 
       const sampler = samplers [channel .sampler];
 
       if (!sampler)
-         return null;
+         return [ ];
 
       const input = this .accessors [sampler .input];
 
       if (!input)
-         return null;
+         return [ ];
 
       if (!input .array .length)
-         return null;
+         return [ ];
 
       const output = this .accessors [sampler .output];
 
       if (!output)
-         return null;
+         return [ ];
 
       if (!output .array .length)
-         return null;
+         return [ ];
 
-      const
-         scene            = this .getExecutionContext (),
-         interpolatorNode = this .createInterpolator (target .path, sampler .interpolation, input .array, output .array, timeSensorNode ._cycleInterval .getValue ());
-
-      if (!interpolatorNode)
-         return null;
-
-      scene .addRoute (timeSensorNode, "fraction_changed", interpolatorNode, "set_fraction");
-      scene .addRoute (interpolatorNode, "value_changed", node, target .path);
-
-      return interpolatorNode;
+      return this .createInterpolator (timeSensorNode, node, target, sampler .interpolation, input .array, output .array, timeSensorNode ._cycleInterval .getValue ());
    },
    createNavigationInfo ()
    {
@@ -1899,13 +1888,13 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       return navigationInfoNode;
    },
-   createShape (primitive, skin)
+   createShape (primitive, weights, skin)
    {
       const
          scene          = this .getExecutionContext (),
          shapeNode      = scene .createNode ("Shape", false),
          appearanceNode = this .materialObject (primitive .material),
-         geometryNode   = this .createGeometry (primitive, skin);
+         geometryNode   = this .createGeometry (primitive, weights, skin);
 
       shapeNode ._appearance = appearanceNode;
       shapeNode ._geometry   = geometryNode;
@@ -1976,62 +1965,62 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          }
       }
    },
-   createGeometry (primitive, skin)
+   createGeometry (primitive, weights, skin)
    {
       switch (primitive .mode)
       {
          case 0: // POINTS
          {
-            return this .createPointSet (primitive, skin);
+            return this .createPointSet (primitive, weights, skin);
          }
          case 1: // LINES
          {
             if (primitive .indices)
-               return this .createIndexedLineSet (primitive, skin, 1);
+               return this .createIndexedLineSet (primitive, weights, skin, 1);
 
-            return this .createLineSet (primitive, skin);
+            return this .createLineSet (primitive, weights, skin);
          }
          case 2: // LINE_LOOP
          {
-            return this .createIndexedLineSet (primitive, skin, 2);
+            return this .createIndexedLineSet (primitive, weights, skin, 2);
          }
          case 3: // LINE_STRIP
          {
-            return this .createIndexedLineSet (primitive, skin, 3);
+            return this .createIndexedLineSet (primitive, weights, skin, 3);
          }
          default:
          case 4: // TRIANGLES
          {
             if (primitive .indices)
-               return this .createIndexedTriangleSet (primitive, skin);
+               return this .createIndexedTriangleSet (primitive, weights, skin);
 
-            return this .createTriangleSet (primitive, skin);
+            return this .createTriangleSet (primitive, weights, skin);
          }
          case 5: // TRIANGLE_STRIP
          {
             if (primitive .indices)
-               return this .createIndexedTriangleStripSet (primitive, skin);
+               return this .createIndexedTriangleStripSet (primitive, weights, skin);
 
-            return this .createTriangleStripSet (primitive, skin);
+            return this .createTriangleStripSet (primitive, weights, skin);
          }
          case 6: // TRIANGLE_FAN
          {
             if (primitive .indices)
-               return this .createIndexedTriangleFanSet (primitive, skin);
+               return this .createIndexedTriangleFanSet (primitive, weights, skin);
 
-            return this .createTriangleFanSet (primitive, skin);
+            return this .createTriangleFanSet (primitive, weights, skin);
          }
       }
    },
-   createPointSet ({ attributes, material }, skin)
+   createPointSet ({ attributes, material, targets }, weights, skin)
    {
       const
          scene        = this .getExecutionContext (),
          geometryNode = scene .createNode ("PointSet", false);
 
       geometryNode ._color  = this .createColor (attributes .COLOR [0], material);
-      geometryNode ._normal = this .createNormal (attributes .NORMAL);
-      geometryNode ._coord  = this .createCoordinate (attributes .POSITION);
+      geometryNode ._normal = this .createNormal (attributes .NORMAL, targets, weights);
+      geometryNode ._coord  = this .createCoordinate (attributes .POSITION, targets, weights);
 
       this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
       this .skinGeometry (skin, geometryNode);
@@ -2040,15 +2029,15 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       return geometryNode;
    },
-   createIndexedLineSet ({ attributes, indices, material }, skin, mode)
+   createIndexedLineSet ({ attributes, indices, material, targets }, weights, skin, mode)
    {
       const
          scene        = this .getExecutionContext (),
          geometryNode = scene .createNode ("IndexedLineSet", false);
 
       geometryNode ._color  = this .createColor (attributes .COLOR [0], material);
-      geometryNode ._normal = this .createNormal (attributes .NORMAL);
-      geometryNode ._coord  = this .createCoordinate (attributes .POSITION);
+      geometryNode ._normal = this .createNormal (attributes .NORMAL, targets, weights);
+      geometryNode ._coord  = this .createCoordinate (attributes .POSITION, targets, weights);
 
       switch (mode)
       {
@@ -2127,15 +2116,15 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       return geometryNode;
    },
-   createLineSet ({ attributes, material }, skin)
+   createLineSet ({ attributes, material, targets }, weights, skin)
    {
       const
          scene        = this .getExecutionContext (),
          geometryNode = scene .createNode ("LineSet", false);
 
       geometryNode ._color  = this .createColor (attributes .COLOR [0], material);
-      geometryNode ._normal = this .createNormal (attributes .NORMAL);
-      geometryNode ._coord  = this .createCoordinate (attributes .POSITION);
+      geometryNode ._normal = this .createNormal (attributes .NORMAL, targets, weights);
+      geometryNode ._coord  = this .createCoordinate (attributes .POSITION, targets, weights);
 
       this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
       this .skinGeometry (skin, geometryNode);
@@ -2144,7 +2133,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       return geometryNode;
    },
-   createIndexedTriangleSet ({ attributes, indices, material }, skin)
+   createIndexedTriangleSet ({ attributes, indices, material, targets }, weights, skin)
    {
       const
          scene        = this .getExecutionContext (),
@@ -2154,8 +2143,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       geometryNode ._index           = indices .array;
       geometryNode ._color           = this .createColor (attributes .COLOR [0], material);
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
-      geometryNode ._normal          = this .createNormal (attributes .NORMAL);
-      geometryNode ._coord           = this .createCoordinate (attributes .POSITION);
+      geometryNode ._normal          = this .createNormal (attributes .NORMAL, targets, weights);
+      geometryNode ._coord           = this .createCoordinate (attributes .POSITION, targets, weights);
       geometryNode ._normalPerVertex = !! geometryNode ._normal .getValue ();
 
       this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
@@ -2165,7 +2154,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       return geometryNode;
    },
-   createTriangleSet ({ attributes, material }, skin)
+   createTriangleSet ({ attributes, material, targets }, weights, skin)
    {
       const
          scene        = this .getExecutionContext (),
@@ -2174,8 +2163,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       geometryNode ._solid           = !material ?.doubleSided;
       geometryNode ._color           = this .createColor (attributes .COLOR [0], material);
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
-      geometryNode ._normal          = this .createNormal (attributes .NORMAL);
-      geometryNode ._coord           = this .createCoordinate (attributes .POSITION);
+      geometryNode ._normal          = this .createNormal (attributes .NORMAL, targets, weights);
+      geometryNode ._coord           = this .createCoordinate (attributes .POSITION, targets, weights);
       geometryNode ._normalPerVertex = !! geometryNode ._normal .getValue ();
 
       this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
@@ -2185,7 +2174,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       return geometryNode;
    },
-   createIndexedTriangleStripSet ({ attributes, indices, material }, skin)
+   createIndexedTriangleStripSet ({ attributes, indices, material, targets }, weights, skin)
    {
       const
          scene        = this .getExecutionContext (),
@@ -2195,8 +2184,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       geometryNode ._index           = indices .array;
       geometryNode ._color           = this .createColor (attributes .COLOR [0], material);
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
-      geometryNode ._normal          = this .createNormal (attributes .NORMAL);
-      geometryNode ._coord           = this .createCoordinate (attributes .POSITION);
+      geometryNode ._normal          = this .createNormal (attributes .NORMAL, targets, weights);
+      geometryNode ._coord           = this .createCoordinate (attributes .POSITION, targets, weights);
       geometryNode ._normalPerVertex = !! geometryNode ._normal .getValue ();
 
       this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
@@ -2206,7 +2195,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       return geometryNode;
    },
-   createTriangleStripSet ({ attributes, material }, skin)
+   createTriangleStripSet ({ attributes, material, targets }, weights, skin)
    {
       const
          scene        = this .getExecutionContext (),
@@ -2215,8 +2204,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       geometryNode ._solid           = !material ?.doubleSided;
       geometryNode ._color           = this .createColor (attributes .COLOR [0], material);
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
-      geometryNode ._normal          = this .createNormal (attributes .NORMAL);
-      geometryNode ._coord           = this .createCoordinate (attributes .POSITION);
+      geometryNode ._normal          = this .createNormal (attributes .NORMAL, targets, weights);
+      geometryNode ._coord           = this .createCoordinate (attributes .POSITION, targets, weights);
       geometryNode ._normalPerVertex = !! geometryNode ._normal .getValue ();
 
       const coord = geometryNode ._coord;
@@ -2234,7 +2223,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       return geometryNode;
    },
-   createIndexedTriangleFanSet ({ attributes, indices, material }, skin)
+   createIndexedTriangleFanSet ({ attributes, indices, material, targets }, weights, skin)
    {
       const
          scene        = this .getExecutionContext (),
@@ -2244,8 +2233,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       geometryNode ._index           = indices .array;
       geometryNode ._color           = this .createColor (attributes .COLOR [0], material);
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
-      geometryNode ._normal          = this .createNormal (attributes .NORMAL);
-      geometryNode ._coord           = this .createCoordinate (attributes .POSITION);
+      geometryNode ._normal          = this .createNormal (attributes .NORMAL, targets, weights);
+      geometryNode ._coord           = this .createCoordinate (attributes .POSITION, targets, weights);
       geometryNode ._normalPerVertex = !! geometryNode ._normal .getValue ();
 
       this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
@@ -2255,7 +2244,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       return geometryNode;
    },
-   createTriangleFanSet ({ attributes, material }, skin)
+   createTriangleFanSet ({ attributes, material, targets }, weights, skin)
    {
       const
          scene        = this .getExecutionContext (),
@@ -2264,8 +2253,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       geometryNode ._solid           = !material ?.doubleSided;
       geometryNode ._color           = this .createColor (attributes .COLOR [0], material);
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
-      geometryNode ._normal          = this .createNormal (attributes .NORMAL);
-      geometryNode ._coord           = this .createCoordinate (attributes .POSITION);
+      geometryNode ._normal          = this .createNormal (attributes .NORMAL, targets, weights);
+      geometryNode ._coord           = this .createCoordinate (attributes .POSITION, targets, weights);
       geometryNode ._normalPerVertex = !! geometryNode ._normal .getValue ();
 
       const coord = geometryNode ._coord;
@@ -2403,7 +2392,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       return texCoord [mapping] = textureCoordinateNode;
    },
-   createNormal (normal)
+   createNormal (normal, targets, weights)
    {
       if (!(normal instanceof Object))
          return null;
@@ -2420,11 +2409,21 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       normalNode ._vector = normal .array;
 
+      if ((targets instanceof Array) && (weights instanceof Array))
+      {
+         const vectors = this .applyWeights (normalNode ._vector, targets, "NORMAL", weights, 0)
+
+         normalNode ._vector .length = 0;
+
+         for (const vector of vectors)
+            normalNode ._vector .push (vector);
+      }
+
       normalNode .setup ();
 
       return normal .normalNode = normalNode;
    },
-   createCoordinate (position)
+   createCoordinate (position, targets, weights)
    {
       if (!(position instanceof Object))
          return null;
@@ -2440,6 +2439,16 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          coordinateNode = scene .createNode ("Coordinate", false);
 
       coordinateNode ._point = position .array;
+
+      if ((targets instanceof Array) && (weights instanceof Array))
+      {
+         const vectors = this .applyWeights (coordinateNode ._point, targets, "POSITION", weights, 0)
+
+         coordinateNode ._point .length = 0;
+
+         for (const vector of vectors)
+            coordinateNode ._point .push (vector);
+      }
 
       coordinateNode .setup ();
 
@@ -2541,17 +2550,20 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          geometryNode ._coord = skinCoordinateNode;
       }
    },
-   createInterpolator (path, interpolation, times, keyValues, cycleInterval)
+   createInterpolator (timeSensorNode, node, target, interpolation, times, keyValues, cycleInterval)
    {
       const scene = this .getExecutionContext ();
 
-      switch (path)
+      switch (target .path)
       {
          case "translation":
          {
             const interpolatorNode = this .createPositionInterpolator (interpolation, times, keyValues, cycleInterval);
 
             scene .addNamedNode (scene .getUniqueName ("TranslationInterpolator"), interpolatorNode);
+
+            scene .addRoute (timeSensorNode, "fraction_changed", interpolatorNode, "set_fraction");
+            scene .addRoute (interpolatorNode, "value_changed", node, "set_translation");
 
             return interpolatorNode;
          }
@@ -2561,6 +2573,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
             scene .addNamedNode (scene .getUniqueName ("RotationInterpolator"), interpolatorNode);
 
+            scene .addRoute (timeSensorNode, "fraction_changed", interpolatorNode, "set_fraction");
+            scene .addRoute (interpolatorNode, "value_changed", node, "set_rotation");
+
             return interpolatorNode;
          }
          case "scale":
@@ -2569,12 +2584,55 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
             scene .addNamedNode (scene .getUniqueName ("ScaleInterpolator"), interpolatorNode);
 
+            scene .addRoute (timeSensorNode, "fraction_changed", interpolatorNode, "set_fraction");
+            scene .addRoute (interpolatorNode, "value_changed", node, "set_scale");
+
             return interpolatorNode;
          }
          case "weights":
+         {
+            const
+               node              = this .nodes [target .node],
+               mesh              = this .meshes [node .mesh],
+               primitives        = mesh ?.primitives,
+               interpolatorNodes = [ ];
+
+            if (!(primitives instanceof Array))
+               return null;
+
+            for (const { shapeNode, targets } of primitives)
+            {
+               const geometryNode = shapeNode ._geometry .getValue ();
+
+               if (!geometryNode)
+                  continue;
+
+               const coordinateInterpolatorNode = this .createCoordinateInterpolator (interpolation, times, keyValues, cycleInterval, targets, geometryNode);
+
+               if (coordinateInterpolatorNode)
+               {
+                  interpolatorNodes .push (coordinateInterpolatorNode);
+
+                  scene .addRoute (timeSensorNode, "fraction_changed", coordinateInterpolatorNode, "set_fraction");
+                  scene .addRoute (coordinateInterpolatorNode, "value_changed", geometryNode ._coord, "set_point");
+               }
+
+               const normalInterpolatorNode = this .createNormalInterpolator (interpolation, times, keyValues, cycleInterval, targets, geometryNode);
+
+               if (normalInterpolatorNode)
+               {
+                  interpolatorNodes .push (normalInterpolatorNode);
+
+                  scene .addRoute (timeSensorNode, "fraction_changed", normalInterpolatorNode, "set_fraction");
+                  scene .addRoute (normalInterpolatorNode, "value_changed", geometryNode ._normal, "set_vector");
+               }
+            }
+
+            return interpolatorNodes;
+         }
          default:
          {
-            return null;
+            return [ ];
          }
       }
    },
@@ -2744,6 +2802,115 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          }
       }
    },
+   createCoordinateInterpolator (interpolation, times, weights, cycleInterval, targets, geometryNode)
+   {
+      const
+         scene          = this .getExecutionContext (),
+         coordinateNode = geometryNode ._coord .getValue ();
+
+      if (!coordinateNode)
+         return null;
+
+      switch (interpolation)
+      {
+         case "STEP":
+         {
+            return null;
+         }
+         default:
+         case "LINEAR":
+         {
+            const interpolatorNode = scene .createNode ("CoordinateInterpolator", false);
+
+            interpolatorNode ._key = times .map (t => t / cycleInterval);
+
+            for (const t of times .keys ())
+            {
+               for (const point of this .applyWeights (coordinateNode ._point, targets, "POSITION", weights, t))
+                  interpolatorNode ._keyValue .push (point);
+            }
+
+            interpolatorNode .setup ();
+
+            return interpolatorNode;
+         }
+         case "CUBICSPLINE":
+         {
+            return null;
+         }
+      }
+   },
+   createNormalInterpolator (interpolation, times, weights, cycleInterval, targets, geometryNode)
+   {
+      if (!geometryNode ._normal)
+         return null;
+
+      const
+         scene      = this .getExecutionContext (),
+         normalNode = geometryNode ._normal .getValue ();
+
+      if (!normalNode)
+         return null;
+
+      switch (interpolation)
+      {
+         case "STEP":
+         {
+            return null;
+         }
+         default:
+         case "LINEAR":
+         {
+            const interpolatorNode = scene .createNode ("NormalInterpolator", false);
+
+            interpolatorNode ._key = times .map (t => t / cycleInterval);
+
+            for (const t of times .keys ())
+            {
+               for (const vector of this .applyWeights (normalNode ._vector, targets, "NORMAL", weights, t))
+                  interpolatorNode ._keyValue .push (vector);
+            }
+
+            interpolatorNode .setup ();
+
+            return interpolatorNode;
+         }
+         case "CUBICSPLINE":
+         {
+            return null;
+         }
+      }
+   },
+   applyWeights: (function ()
+   {
+      const value = new Vector3 (0, 0, 0);
+
+      return function (array, targets, key, weights, t)
+      {
+         const vectors = Array .from (array, v => v .getValue () .copy ());
+
+         for (const [i, target] of targets .entries ())
+         {
+            const accessor = this .accessors [target [key]];
+
+            if (!(accessor instanceof Object))
+               continue;
+
+            if (accessor .type !== "VEC3")
+               continue;
+
+            const
+               array  = accessor .array,
+               length = array .length,
+               weight = weights [t * targets .length + i];
+
+            for (let i = 0, p = 0; i < length; i += 3, ++ p)
+               vectors [p] .add (value .set (array [i + 0], array [i + 1], array [i + 2]) .multiply (weight));
+         }
+
+         return vectors;
+      };
+   })(),
    cubicSpline (time, times, values)
    {
       const
