@@ -2407,7 +2407,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       {
          normal .vector = normalNode ._vector .copy ();
 
-         const vectors = this .applyTargetsAndWeights (normalNode ._vector, targets, "NORMAL", weights, 0);
+         const vectors = this .applyMorphTargets (normalNode ._vector, targets, "NORMAL", weights, 0);
 
          normalNode ._vector .length = 0;
 
@@ -2441,7 +2441,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       {
          position .point = coordinateNode ._point .copy ();
 
-         const points = this .applyTargetsAndWeights (coordinateNode ._point, targets, "POSITION", weights, 0);
+         const points = this .applyMorphTargets (coordinateNode ._point, targets, "POSITION", weights, 0);
 
          coordinateNode ._point .length = 0;
 
@@ -2821,7 +2821,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
             for (const t of times .keys ())
             {
-               for (const point of this .applyTargetsAndWeights (accessor .point, targets, "POSITION", weights, t))
+               for (const point of this .applyMorphTargets (accessor .point, targets, "POSITION", weights, t))
                   interpolatorNode ._keyValue .push (point);
             }
 
@@ -2857,7 +2857,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
             for (const t of times .keys ())
             {
-               for (const vector of this .applyTargetsAndWeights (accessor .vector, targets, "NORMAL", weights, t))
+               for (const vector of this .applyMorphTargets (accessor .vector, targets, "NORMAL", weights, t))
                   interpolatorNode ._keyValue .push (vector);
             }
 
@@ -2871,7 +2871,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          }
       }
    },
-   applyTargetsAndWeights: (function ()
+   applyMorphTargets: (function ()
    {
       const value = new Vector3 (0, 0, 0);
 
