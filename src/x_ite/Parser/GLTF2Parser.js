@@ -1077,7 +1077,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       return mesh .shapeNodes = shapeNodes;
    },
-   primitivesArray ({ primitives, weights }, skin)
+   primitivesArray ({ primitives, weights = [ ] }, skin)
    {
       if (!(primitives instanceof Array))
          return [ ];
@@ -2409,14 +2409,20 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       normalNode ._vector = normal .array;
 
-      if ((targets instanceof Array) && (weights instanceof Array))
+      if (targets instanceof Array)
       {
-         const vectors = this .applyWeights (normalNode ._vector, targets, "NORMAL", weights, 0)
+         normal .vector = normalNode ._vector .copy ();
+
+         const vectors = this .applyWeights (normalNode ._vector, targets, "NORMAL", weights, 0);
 
          normalNode ._vector .length = 0;
 
          for (const vector of vectors)
             normalNode ._vector .push (vector);
+      }
+      else
+      {
+         normal .vector = normalNode ._vector;
       }
 
       normalNode .setup ();
@@ -2440,14 +2446,20 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       coordinateNode ._point = position .array;
 
-      if ((targets instanceof Array) && (weights instanceof Array))
+      if (targets instanceof Array)
       {
-         const vectors = this .applyWeights (coordinateNode ._point, targets, "POSITION", weights, 0)
+         position .point = coordinateNode ._point .copy ();
+
+         const points = this .applyWeights (coordinateNode ._point, targets, "POSITION", weights, 0);
 
          coordinateNode ._point .length = 0;
 
-         for (const vector of vectors)
-            coordinateNode ._point .push (vector);
+         for (const point of points)
+            coordinateNode ._point .push (point);
+      }
+      else
+      {
+         position .point = coordinateNode ._point;
       }
 
       coordinateNode .setup ();
@@ -2600,14 +2612,14 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             if (!(primitives instanceof Array))
                return null;
 
-            for (const { shapeNode, targets } of primitives)
+            for (const { shapeNode, targets, attributes } of primitives)
             {
                const geometryNode = shapeNode ._geometry .getValue ();
 
                if (!geometryNode)
                   continue;
 
-               const coordinateInterpolatorNode = this .createCoordinateInterpolator (interpolation, times, keyValues, cycleInterval, targets, geometryNode);
+               const coordinateInterpolatorNode = this .createCoordinateInterpolator (interpolation, times, keyValues, cycleInterval, targets, attributes .POSITION);
 
                if (coordinateInterpolatorNode)
                {
@@ -2617,7 +2629,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
                   scene .addRoute (coordinateInterpolatorNode, "value_changed", geometryNode ._coord, "set_point");
                }
 
-               const normalInterpolatorNode = this .createNormalInterpolator (interpolation, times, keyValues, cycleInterval, targets, geometryNode);
+               const normalInterpolatorNode = this .createNormalInterpolator (interpolation, times, keyValues, cycleInterval, targets, attributes .NORMAL);
 
                if (normalInterpolatorNode)
                {
@@ -2802,13 +2814,11 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          }
       }
    },
-   createCoordinateInterpolator (interpolation, times, weights, cycleInterval, targets, geometryNode)
+   createCoordinateInterpolator (interpolation, times, weights, cycleInterval, targets, accessor)
    {
-      const
-         scene          = this .getExecutionContext (),
-         coordinateNode = geometryNode ._coord .getValue ();
+      const scene = this .getExecutionContext ();
 
-      if (!coordinateNode)
+      if (!accessor)
          return null;
 
       switch (interpolation)
@@ -2826,7 +2836,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
             for (const t of times .keys ())
             {
-               for (const point of this .applyWeights (coordinateNode ._point, targets, "POSITION", weights, t))
+               for (const point of this .applyWeights (accessor .point, targets, "POSITION", weights, t))
                   interpolatorNode ._keyValue .push (point);
             }
 
@@ -2840,16 +2850,11 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          }
       }
    },
-   createNormalInterpolator (interpolation, times, weights, cycleInterval, targets, geometryNode)
+   createNormalInterpolator (interpolation, times, weights, cycleInterval, targets, accessor)
    {
-      if (!geometryNode ._normal)
-         return null;
+      const scene = this .getExecutionContext ();
 
-      const
-         scene      = this .getExecutionContext (),
-         normalNode = geometryNode ._normal .getValue ();
-
-      if (!normalNode)
+      if (!accessor)
          return null;
 
       switch (interpolation)
@@ -2867,7 +2872,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
             for (const t of times .keys ())
             {
-               for (const vector of this .applyWeights (normalNode ._vector, targets, "NORMAL", weights, t))
+               for (const vector of this .applyWeights (accessor .vector, targets, "NORMAL", weights, t))
                   interpolatorNode ._keyValue .push (vector);
             }
 
@@ -2902,7 +2907,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             const
                array  = accessor .array,
                length = array .length,
-               weight = weights [t * targets .length + i];
+               weight = weights [t * targets .length + i] ?? 0;
 
             for (let i = 0, p = 0; i < length; i += 3, ++ p)
                vectors [p] .add (value .set (array [i + 0], array [i + 1], array [i + 2]) .multiply (weight));
