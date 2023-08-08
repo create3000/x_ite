@@ -1077,7 +1077,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       return mesh .shapeNodes = shapeNodes;
    },
-   primitivesArray ({ primitives, weights = [ ] }, skin)
+   primitivesArray ({ primitives, weights }, skin)
    {
       if (!(primitives instanceof Array))
          return [ ];
@@ -2409,7 +2409,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       normalNode ._vector = normal .array;
 
-      if (targets instanceof Array)
+      if ((targets instanceof Array) && (weights instanceof Array))
       {
          normal .vector = normalNode ._vector .copy ();
 
@@ -2446,7 +2446,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       coordinateNode ._point = position .array;
 
-      if (targets instanceof Array)
+      if ((targets instanceof Array) && (weights instanceof Array))
       {
          position .point = coordinateNode ._point .copy ();
 
