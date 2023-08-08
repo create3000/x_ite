@@ -2405,9 +2405,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       if ((targets instanceof Array) && (weights instanceof Array))
       {
-         normal .vector = normalNode ._vector .copy ();
+         normal .field = normalNode ._vector .copy ();
 
-         const vectors = this .applyMorphTargets (normalNode ._vector, targets, "NORMAL", weights, 0);
+         const vectors = this .applyMorphTargets (normalNode ._vector, targets, "NORMAL", weights);
 
          normalNode ._vector .length = 0;
 
@@ -2416,7 +2416,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       }
       else
       {
-         normal .vector = normalNode ._vector;
+         normal .field = normalNode ._vector;
       }
 
       normalNode .setup ();
@@ -2439,9 +2439,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       if ((targets instanceof Array) && (weights instanceof Array))
       {
-         position .point = coordinateNode ._point .copy ();
+         position .field = coordinateNode ._point .copy ();
 
-         const points = this .applyMorphTargets (coordinateNode ._point, targets, "POSITION", weights, 0);
+         const points = this .applyMorphTargets (coordinateNode ._point, targets, "POSITION", weights);
 
          coordinateNode ._point .length = 0;
 
@@ -2450,7 +2450,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       }
       else
       {
-         position .point = coordinateNode ._point;
+         position .field = coordinateNode ._point;
       }
 
       coordinateNode .setup ();
@@ -2604,7 +2604,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
                if (!geometryNode)
                   continue;
 
-               const coordinateInterpolatorNode = this .createCoordinateInterpolator (interpolation, times, keyValues, cycleInterval, targets, attributes .POSITION);
+               const coordinateInterpolatorNode = this .createArrayInterpolator ("Coordinate", interpolation, times, keyValues, cycleInterval, targets, attributes, "POSITION");
 
                if (coordinateInterpolatorNode)
                {
@@ -2614,7 +2614,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
                   scene .addRoute (coordinateInterpolatorNode, "value_changed", geometryNode ._coord, "set_point");
                }
 
-               const normalInterpolatorNode = this .createNormalInterpolator (interpolation, times, keyValues, cycleInterval, targets, attributes .NORMAL);
+               const normalInterpolatorNode = this .createArrayInterpolator ("Normal", interpolation, times, keyValues, cycleInterval, targets, attributes, "NORMAL");
 
                if (normalInterpolatorNode)
                {
@@ -2697,14 +2697,13 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             for (const t of samples)
             {
                interpolatorNode ._key      .push (t / cycleInterval);
-               interpolatorNode ._keyValue .push (this .cubicSpline (t, times, vectors));
+               interpolatorNode ._keyValue .push (this .cubicSplineVector (t, times, vectors));
             }
 
             interpolatorNode .setup ();
 
             return interpolatorNode;
          }
-
       }
    },
    createOrientationInterpolator (interpolation, times, keyValues, cycleInterval)
@@ -2787,7 +2786,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
             for (const t of samples)
             {
-               const q = this .cubicSpline (t, times, quaternions) .normalize ();
+               const q = this .cubicSplineVector (t, times, quaternions) .normalize ();
 
                interpolatorNode ._key      .push (t / cycleInterval);
                interpolatorNode ._keyValue .push (new Rotation4 (q));
@@ -2799,9 +2798,11 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          }
       }
    },
-   createCoordinateInterpolator (interpolation, times, weights, cycleInterval, targets, accessor)
+   createArrayInterpolator (Type, interpolation, times, weights, cycleInterval, targets, accessors, key)
    {
-      const scene = this .getExecutionContext ();
+      const
+         scene    = this .getExecutionContext (),
+         accessor = accessors [key];
 
       if (!accessor)
          return null;
@@ -2810,20 +2811,61 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       {
          case "STEP":
          {
-            return null;
+            const interpolatorNode = scene .createNode (`${Type}Interpolator`, false);
+
+            // Key
+
+            interpolatorNode ._key .push (times [0] / cycleInterval);
+
+            for (let i = 1, length = times .length; i < length; ++ i)
+               interpolatorNode ._key .push (times [i] / cycleInterval, times [i] / cycleInterval);
+
+            // KeyValue
+
+            const w = Array .from (targets .keys (), i => weights [i]);
+
+            for (const value of this .applyMorphTargets (accessor .field, targets, key, w))
+               interpolatorNode ._keyValue .push (value);
+
+            for (let t = 1, length = times .length; t < length; ++ t)
+            {
+               const
+                  w      = Array .from (targets .keys (), i => weights [t * targets .length + i]),
+                  values = this .applyMorphTargets (accessor .field, targets, key, w);
+
+               for (const value of values)
+                  interpolatorNode ._keyValue .push (value);
+
+               for (const value of values)
+                  interpolatorNode ._keyValue .push (value);
+            }
+
+            // Finish
+
+            interpolatorNode .setup ();
+
+            return interpolatorNode;
          }
          default:
          case "LINEAR":
          {
-            const interpolatorNode = scene .createNode ("CoordinateInterpolator", false);
+            const interpolatorNode = scene .createNode (`${Type}Interpolator`, false);
+
+            // Key
 
             interpolatorNode ._key = times .map (t => t / cycleInterval);
 
+            // KeyValue
+
             for (const t of times .keys ())
             {
-               for (const point of this .applyMorphTargets (accessor .point, targets, "POSITION", weights, t))
-                  interpolatorNode ._keyValue .push (point);
+               const w = Array .from (targets .keys (), i => weights [t * targets .length + i]);
+
+               for (const value of this .applyMorphTargets (accessor .field, targets, key, w))
+                  interpolatorNode ._keyValue .push (value);
             }
+
+            // Finish
 
             interpolatorNode .setup ();
 
@@ -2831,43 +2873,24 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          }
          case "CUBICSPLINE":
          {
-            return null;
-         }
-      }
-   },
-   createNormalInterpolator (interpolation, times, weights, cycleInterval, targets, accessor)
-   {
-      const scene = this .getExecutionContext ();
+            const interpolatorNode = scene .createNode (`${Type}Interpolator`, false);
 
-      if (!accessor)
-         return null;
+            const samples = [... Array (Math .floor (times .at (-1) * SAMPLES_PER_SECOND)) .keys ()]
+               .map ((_, i, array) => i / (array .length - 1) * times .at (-1));
 
-      switch (interpolation)
-      {
-         case "STEP":
-         {
-            return null;
-         }
-         default:
-         case "LINEAR":
-         {
-            const interpolatorNode = scene .createNode ("NormalInterpolator", false);
-
-            interpolatorNode ._key = times .map (t => t / cycleInterval);
-
-            for (const t of times .keys ())
+            for (const t of samples)
             {
-               for (const vector of this .applyMorphTargets (accessor .vector, targets, "NORMAL", weights, t))
-                  interpolatorNode ._keyValue .push (vector);
+               interpolatorNode ._key .push (t / cycleInterval);
+
+               const w = Array .from (targets .keys (), i => this .cubicSplineScalarArray (t, times, weights, targets .length, i));
+
+               for (const value of this .applyMorphTargets (accessor .field, targets, key, w))
+                  interpolatorNode ._keyValue .push (value);
             }
 
             interpolatorNode .setup ();
 
             return interpolatorNode;
-         }
-         case "CUBICSPLINE":
-         {
-            return null;
          }
       }
    },
@@ -2875,13 +2898,13 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    {
       const value = new Vector3 (0, 0, 0);
 
-      return function (array, targets, key, weights, t)
+      return function (array, targets, key, weights)
       {
          const vectors = Array .from (array, v => v .getValue () .copy ());
 
          for (const [i, target] of targets .entries ())
          {
-            const weight = weights [t * targets .length + i];
+            const weight = weights [i];
 
             if (!weight)
                continue;
@@ -2902,7 +2925,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          return vectors;
       };
    })(),
-   cubicSpline (time, times, values)
+   cubicSplineVector (time, times, values)
    {
       const
          index1 = Algorithm .clamp (Algorithm .upperBound (times, 0, times .length, time), 1, times .length - 1),
@@ -2922,6 +2945,27 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       a1 .multiply (td * (t3 - t2));
 
       return v0 .add (b0) .add (v1) .add (a1);
+   },
+   cubicSplineScalarArray (time, times, values, length, i)
+   {
+      const
+         index1 = Algorithm .clamp (Algorithm .upperBound (times, 0, times .length, time), 1, times .length - 1),
+         index0 = index1 - 1,
+         td     = times [index1] - times [index0],
+         t1     = (time - times [index0]) / td,
+         t2     = t1 * t1,
+         t3     = t2 * t1,
+         v0     = values [(index0 + 1) * length + i],
+         b0     = values [(index0 + 2) * length + i],
+         v1     = values [(index1 + 1) * length + i],
+         a1     = values [(index1 + 0) * length + i];
+
+      v0 *= 2 * t3 - 3 * t2 + 1;
+      b0 *= td * (t3 - 2 * t2 + t1);
+      v1 *= -2 * t3 + 3 * t2;
+      a1 *= td * (t3 - t2);
+
+      return v0 + b0 + v1 + a1;
    },
    vectorValue (array, vector)
    {
