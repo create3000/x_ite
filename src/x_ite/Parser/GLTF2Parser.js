@@ -2875,8 +2875,12 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          {
             const interpolatorNode = scene .createNode (`${Type}Interpolator`, false);
 
+            // Key
+
             const samples = [... Array (Math .floor (times .at (-1) * SAMPLES_PER_SECOND)) .keys ()]
                .map ((_, i, array) => i / (array .length - 1) * times .at (-1));
+
+            // KeyValue
 
             for (const t of samples)
             {
@@ -2887,6 +2891,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
                for (const value of this .applyMorphTargets (accessor .field, targets, key, w))
                   interpolatorNode ._keyValue .push (value);
             }
+
+            // Finish
 
             interpolatorNode .setup ();
 
