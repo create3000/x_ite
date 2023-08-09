@@ -221,7 +221,7 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
    setError (error)
    {
       if (this .URL .protocol !== "data:")
-         console .warn (`Error loading font '${decodeURI (this .URL ?.href)}':`, error);
+         console .warn (`Error loading font '${decodeURI (this .URL .href)}':`, error);
 
       this .loadNext ();
    },

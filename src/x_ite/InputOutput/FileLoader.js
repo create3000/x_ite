@@ -171,7 +171,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
       if (DEVELOPMENT)
       {
          if (this .URL .protocol !== "data:")
-            console .info (`Done loading scene '${decodeURI (this .URL ?.href)}'`);
+            console .info (`Done loading scene '${decodeURI (this .URL .href)}'`);
       }
    },
    createX3DFromURL (url, parameter, callback, bindViewpoint, foreign)
@@ -314,7 +314,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
       if (this .URL .protocol === "data:")
          console .error (`Couldn't load data URL.`, error);
       else
-         console .error (`Couldn't load URL '${decodeURI (this .URL ?.href)}'.`, error);
+         console .error (`Couldn't load URL '${decodeURI (this .URL .href)}'.`, error);
    },
 });
 
