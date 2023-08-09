@@ -40,6 +40,10 @@ A reference to the UnitInfoArray object used by this execution context. This pro
 
 A string containing the URL of this execution context. This property is read only.
 
+#### **baseURL**
+
+A string containing the URL against which relative URLs are resolved. This property is read only.
+
 #### **rootNodes**
 
 When used inside a prototype instance, this property is not writable. The MFNode object instance is also not be writable. When used anywhere else, it is writable.
