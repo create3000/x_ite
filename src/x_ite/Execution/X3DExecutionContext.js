@@ -129,6 +129,10 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
    {
       return this .getExecutionContext () .getWorldURL ();
    },
+   getBaseURL ()
+   {
+      return this .getExecutionContext () .getBaseURL ();
+   },
    getProfile ()
    {
       return this .getExecutionContext () .getProfile ();
