@@ -410,7 +410,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          return this .buffers [i];
 
       const
-         url         = new URL (buffer .uri, this .getExecutionContext () .getWorldURL ()),
+         url         = new URL (buffer .uri, this .getExecutionContext () .getBaseURL ()),
          response    = await fetch (url),
          blob        = await response .blob (),
          arrayBuffer = await blob .arrayBuffer ();

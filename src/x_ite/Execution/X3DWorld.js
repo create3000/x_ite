@@ -135,7 +135,7 @@ Object .assign (Object .setPrototypeOf (X3DWorld .prototype, X3DBaseNode .protot
 
       const worldURL = this .getExecutionContext () .getWorldURL ();
 
-      this .layerSet .bindBindables (decodeURIComponent (new URL (worldURL, worldURL) .hash .substr (1)));
+      this .layerSet .bindBindables (decodeURIComponent (new URL (worldURL) .hash .substring (1)));
    },
    traverse (type, renderObject)
    {

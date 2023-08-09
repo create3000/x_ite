@@ -125,7 +125,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
 
          // Get URL.
 
-         this .URL = new URL (this .urlStack .shift (), this .getExecutionContext () .getWorldURL ());
+         this .URL = new URL (this .urlStack .shift (), this .getExecutionContext () .getBaseURL ());
 
          if (this .URL .protocol !== "data:")
          {

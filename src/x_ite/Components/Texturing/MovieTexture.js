@@ -123,7 +123,7 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
 
          // Get URL.
 
-         this .URL = new URL (this .urlStack .shift (), this .getExecutionContext () .getWorldURL ());
+         this .URL = new URL (this .urlStack .shift (), this .getExecutionContext () .getBaseURL ());
 
          if (this .URL .protocol !== "data:")
          {

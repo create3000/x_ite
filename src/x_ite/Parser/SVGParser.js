@@ -1255,7 +1255,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
 
       const
          scene = this .getExecutionContext (),
-         hash  = new URL (attribute, scene .getWorldURL ()) .hash .slice (1);
+         hash  = new URL (attribute, scene .getBaseURL ()) .hash .slice (1);
 
       return this .document .getElementById (hash);
    },

@@ -66,7 +66,7 @@ function FileLoader (node)
    this .executionContext = this .external ? node .getExecutionContext () : this .browser .currentScene;
    this .target           = "";
    this .url              = [ ];
-   this .URL              = new URL (this .getReferer (), this .getReferer ());
+   this .URL              = new URL (this .getBaseURL (), this .getBaseURL ());
    this .controller       = new AbortController ();
 }
 
@@ -82,7 +82,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
    {
       return this .URL;
    },
-   getReferer ()
+   getBaseURL ()
    {
       if (this .node instanceof X3DWorld)
       {
@@ -90,7 +90,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
             return this .browser .getBaseURL ();
       }
 
-      return this .executionContext .getWorldURL ();
+      return this .executionContext .getBaseURL ();
    },
    getTarget (parameters)
    {
@@ -118,7 +118,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
          else
             scene .setExecutionContext (this .executionContext);
 
-         scene .setWorldURL (new URL (worldURL, this .getReferer ()) .href);
+         scene .setWorldURL (new URL (worldURL, this .getBaseURL ()) .href);
 
          if (resolve)
             resolve = this .setScene .bind (this, scene, resolve, reject);
@@ -237,11 +237,11 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
          }
       }
 
-      this .URL = new URL (url, this .getReferer ());
+      this .URL = new URL (url, this .getBaseURL ());
 
       if (this .URL .protocol !== "data:" && this .bindViewpoint)
       {
-         const referer = new URL (this .getReferer ());
+         const referer = new URL (this .getBaseURL ());
 
          if (this .URL .protocol === referer .protocol &&
              this .URL .hostname === referer .hostname &&

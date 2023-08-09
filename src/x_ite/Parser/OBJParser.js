@@ -275,7 +275,7 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
       {
          const
             scene       = this .getExecutionContext (),
-            url         = new URL (path, scene .getWorldURL ()),
+            url         = new URL (path, scene .getBaseURL ()),
             response    = await fetch (url),
             arrayBuffer = await response .arrayBuffer (),
             input       = $.decodeText ($.ungzip (arrayBuffer)),

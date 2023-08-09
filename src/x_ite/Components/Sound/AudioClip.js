@@ -117,7 +117,7 @@ Object .assign (Object .setPrototypeOf (AudioClip .prototype, X3DSoundSourceNode
 
          // Get URL.
 
-         this .URL = new URL (this .urlStack .shift (), this .getExecutionContext () .getWorldURL ());
+         this .URL = new URL (this .urlStack .shift (), this .getExecutionContext () .getBaseURL ());
 
          if (this .URL .protocol !== "data:")
          {
