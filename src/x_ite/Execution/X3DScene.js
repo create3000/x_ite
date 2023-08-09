@@ -171,7 +171,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
       if (name instanceof ComponentInfo)
          var { name, level } = name;
 
-      const component = this [_profile] ?.components .get (name) ?? this [_components] .get (name);
+      const component = this [_profile] .components .get (name) ?? this [_components] .get (name);
 
       if (component)
          return level <= component .level;
