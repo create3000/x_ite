@@ -974,6 +974,11 @@ Object .defineProperties (X3DExecutionContext .prototype,
       get: X3DExecutionContext .prototype .getWorldURL,
       enumerable: true,
    },
+   baseURL:
+   {
+      get: X3DExecutionContext .prototype .getBaseURL,
+      enumerable: true,
+   },
    units:
    {
       get: X3DExecutionContext .prototype .getUnits,
