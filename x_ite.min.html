@@ -55,7 +55,7 @@ X3D (() =>
 
       localStorage ["Bookmarks.url"] = url;
 
-      if (url !== history .at (-1))
+      if (url !== history .at (-1) && !url .match (/^(?:data|blob):/))
       {
          history .push (url);
          history .splice (0, history .length - 100);

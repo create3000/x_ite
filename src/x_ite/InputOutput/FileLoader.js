@@ -66,7 +66,7 @@ function FileLoader (node)
    this .executionContext = this .external ? node .getExecutionContext () : this .browser .currentScene;
    this .target           = "";
    this .url              = [ ];
-   this .URL              = new URL (this .getBaseURL (), this .getBaseURL ());
+   this .URL              = new URL (this .getBaseURL ());
    this .controller       = new AbortController ();
 }
 
@@ -219,6 +219,8 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
          }
       }
 
+      this .URL = new URL (url, this .getBaseURL ());
+
       // Data URL
       {
          const result = url .match (/^data:(.*?)(?:;charset=(.*?))?(?:;(base64))?,/s);
@@ -236,8 +238,6 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
             return;
          }
       }
-
-      this .URL = new URL (url, this .getBaseURL ());
 
       if (this .URL .protocol !== "data:" && this .bindViewpoint)
       {
