@@ -277,8 +277,16 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          switch (extension)
          {
             case "KHR_texture_transform":
-               scene .addComponent (browser .getComponent ("Texturing3D", 2));
+            {
+               try
+               {
+                  scene .addComponent (browser .getComponent ("Texturing3D", 2));
+               }
+               catch
+               { }
+
                break;
+            }
          }
       }
    },
