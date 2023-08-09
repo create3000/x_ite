@@ -94,35 +94,28 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
    },
    loadNext ()
    {
-      try
+      if (this .urlStack .length === 0)
       {
-         if (this .urlStack .length === 0)
-         {
-            this .clearTexture ();
-            this .setLoadState (X3DConstants .FAILED_STATE);
-            return;
-         }
-
-         // Get URL.
-
-         this .URL = new URL (this .urlStack .shift (), this .getExecutionContext () .getBaseURL ());
-
-         if (this .URL .protocol !== "data:")
-         {
-            if (!this .getCache ())
-               this .URL .searchParams .set ("_", Date .now ());
-         }
-
-         this .image .attr ("src", this .URL .href);
+         this .clearTexture ();
+         this .setLoadState (X3DConstants .FAILED_STATE);
+         return;
       }
-      catch (error)
+
+      // Get URL.
+
+      this .URL = new URL (this .urlStack .shift (), this .getExecutionContext () .getBaseURL ());
+
+      if (this .URL .protocol !== "data:")
       {
-         this .setError ({ type: error .message });
+         if (!this .getCache ())
+            this .URL .searchParams .set ("_", Date .now ());
       }
+
+      this .image .attr ("src", this .URL .href);
    },
    setError (event)
    {
-      if (this .URL ?.protocol !== "data:")
+      if (this .URL .protocol !== "data:")
          console .warn (`Error loading image '${decodeURI (this .URL ?.href)}'`, event .type);
 
       this .loadNext ();

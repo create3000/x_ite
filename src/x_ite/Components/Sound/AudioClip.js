@@ -105,33 +105,26 @@ Object .assign (Object .setPrototypeOf (AudioClip .prototype, X3DSoundSourceNode
    },
    loadNext ()
    {
-      try
+      if (this .urlStack .length === 0)
       {
-         if (this .urlStack .length === 0)
-         {
-            this .audio .off ("canplaythrough");
-            this ._duration_changed = -1;
-            this .setLoadState (X3DConstants .FAILED_STATE);
-            return;
-         }
-
-         // Get URL.
-
-         this .URL = new URL (this .urlStack .shift (), this .getExecutionContext () .getBaseURL ());
-
-         if (this .URL .protocol !== "data:")
-         {
-            if (!this .getCache ())
-               this .URL .searchParams .set ("_", Date .now ());
-         }
-
-         this .audio .attr ("src", this .URL .href);
-         this .audio .get (0) .load ();
+         this .audio .off ("canplaythrough");
+         this ._duration_changed = -1;
+         this .setLoadState (X3DConstants .FAILED_STATE);
+         return;
       }
-      catch (error)
+
+      // Get URL.
+
+      this .URL = new URL (this .urlStack .shift (), this .getExecutionContext () .getBaseURL ());
+
+      if (this .URL .protocol !== "data:")
       {
-         this .setError ({ type: error .message });
+         if (!this .getCache ())
+            this .URL .searchParams .set ("_", Date .now ());
       }
+
+      this .audio .attr ("src", this .URL .href);
+      this .audio .get (0) .load ();
    },
    setTimeout (event)
    {
@@ -144,7 +137,7 @@ Object .assign (Object .setPrototypeOf (AudioClip .prototype, X3DSoundSourceNode
    },
    setError (event)
    {
-      if (this .URL ?.protocol !== "data:")
+      if (this .URL .protocol !== "data:")
          console .warn (`Error loading audio '${decodeURI (this .URL ?.href)}'`, event .type);
 
       this .loadNext ();

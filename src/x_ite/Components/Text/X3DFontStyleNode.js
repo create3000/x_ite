@@ -204,30 +204,23 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
    },
    loadNext ()
    {
-      try
+      if (this .familyStack .length === 0)
       {
-         if (this .familyStack .length === 0)
-         {
-            this .setLoadState (X3DConstants .FAILED_STATE);
-            this .font = null;
-            return;
-         }
-
-         this .family = this .familyStack .shift ();
-         this .URL    = new URL (this .family, this .getExecutionContext () .getBaseURL ());
-
-         this .getBrowser () .getFont (this .URL, this .getCache ())
-            .then (this .setFont .bind (this))
-            .catch (this .setError .bind (this));
+         this .setLoadState (X3DConstants .FAILED_STATE);
+         this .font = null;
+         return;
       }
-      catch (error)
-      {
-         this .setError (error);
-      }
+
+      this .family = this .familyStack .shift ();
+      this .URL    = new URL (this .family, this .getExecutionContext () .getBaseURL ());
+
+      this .getBrowser () .getFont (this .URL, this .getCache ())
+         .then (this .setFont .bind (this))
+         .catch (this .setError .bind (this));
    },
    setError (error)
    {
-      if (this .URL ?.protocol !== "data:")
+      if (this .URL .protocol !== "data:")
          console .warn (`Error loading font '${decodeURI (this .URL ?.href)}':`, error);
 
       this .loadNext ();
