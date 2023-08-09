@@ -66,7 +66,7 @@ function FileLoader (node)
    this .executionContext = this .external ? node .getExecutionContext () : this .browser .currentScene;
    this .target           = "";
    this .url              = [ ];
-   this .URL              = new URL (this .getReferer (), this .getReferer ());
+   this .URL              = new URL (this .executionContext .getWorldURL ());
    this .controller       = new AbortController ();
 }
 
@@ -81,16 +81,6 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
    getURL ()
    {
       return this .URL;
-   },
-   getReferer ()
-   {
-      if (this .node instanceof X3DWorld)
-      {
-         if (this .external)
-            return this .browser .getBaseURL ();
-      }
-
-      return this .executionContext .getWorldURL ();
    },
    getTarget (parameters)
    {
@@ -118,7 +108,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
          else
             scene .setExecutionContext (this .executionContext);
 
-         scene .setWorldURL (new URL (worldURL, this .getReferer ()) .href);
+         scene .setWorldURL (new URL (worldURL, this .executionContext .getWorldURL ()) .href);
 
          if (resolve)
             resolve = this .setScene .bind (this, scene, resolve, reject);
@@ -170,7 +160,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
 
       if (DEVELOPMENT)
       {
-         if (this .URL ?.protocol !== "data:")
+         if (this .URL .protocol !== "data:")
             console .info (`Done loading scene '${decodeURI (this .URL ?.href)}'`);
       }
    },
@@ -237,11 +227,11 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
          }
       }
 
-      this .URL = new URL (url, this .getReferer ());
+      this .URL = new URL (url, this .executionContext .getWorldURL ());
 
       if (this .URL .protocol !== "data:" && this .bindViewpoint)
       {
-         const referer = new URL (this .getReferer ());
+         const referer = new URL (this .executionContext .getWorldURL ());
 
          if (this .URL .protocol === referer .protocol &&
              this .URL .hostname === referer .hostname &&

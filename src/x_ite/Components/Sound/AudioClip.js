@@ -119,7 +119,7 @@ Object .assign (Object .setPrototypeOf (AudioClip .prototype, X3DSoundSourceNode
 
          this .URL = new URL (this .urlStack .shift (), this .getExecutionContext () .getWorldURL ());
 
-         if (this .URL ?.protocol !== "data:")
+         if (this .URL .protocol !== "data:")
          {
             if (!this .getCache ())
                this .URL .searchParams .set ("_", Date .now ());
@@ -153,7 +153,7 @@ Object .assign (Object .setPrototypeOf (AudioClip .prototype, X3DSoundSourceNode
    {
       if (DEVELOPMENT)
       {
-         if (this .URL ?.protocol !== "data:")
+         if (this .URL .protocol !== "data:")
             console .info (`Done loading audio '${decodeURI (this .URL ?.href)}'`);
       }
 

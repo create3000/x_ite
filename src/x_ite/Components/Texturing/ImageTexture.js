@@ -107,7 +107,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
 
          this .URL = new URL (this .urlStack .shift (), this .getExecutionContext () .getWorldURL ());
 
-         if (this .URL ?.protocol !== "data:")
+         if (this .URL .protocol !== "data:")
          {
             if (!this .getCache ())
                this .URL .searchParams .set ("_", Date .now ());
@@ -131,7 +131,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
    {
       if (DEVELOPMENT)
       {
-         if (this .URL ?.protocol !== "data:")
+         if (this .URL .protocol !== "data:")
             console .info (`Done loading image '${decodeURI (this .URL ?.href)}'`);
       }
 

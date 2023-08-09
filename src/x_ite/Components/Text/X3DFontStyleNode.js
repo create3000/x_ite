@@ -95,7 +95,6 @@ function X3DFontStyleNode (executionContext)
 
    this .familyStack = [ ];
    this .alignments  = [ ];
-   this .loader      = new FileLoader (this);
 }
 
 Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .prototype),
@@ -215,7 +214,7 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
          }
 
          this .family = this .familyStack .shift ();
-         this .URL    = new URL (this .family, this .loader .getReferer ());
+         this .URL    = new URL (this .family, this .getExecutionContext () .getWorldURL ());
 
          this .getBrowser () .getFont (this .URL, this .getCache ())
             .then (this .setFont .bind (this))

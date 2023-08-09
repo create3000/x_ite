@@ -127,7 +127,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
 
          this .URL = new URL (this .urlStack .shift (), this .getExecutionContext () .getWorldURL ());
 
-         if (this .URL ?.protocol !== "data:")
+         if (this .URL .protocol !== "data:")
          {
             if (!this .getCache ())
                this .URL .searchParams .set ("_", Date .now ());
@@ -151,7 +151,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
    {
       if (DEVELOPMENT)
       {
-          if (this .URL ?.protocol !== "data:")
+          if (this .URL .protocol !== "data:")
             console .info (`Done loading image cube map texture '${decodeURI (this .URL ?.href)}'`);
       }
 

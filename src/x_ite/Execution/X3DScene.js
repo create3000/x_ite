@@ -138,6 +138,9 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
    },
    getWorldURL ()
    {
+      if (this [_worldURL] .match (/^(?:data|blob):/))
+         return this .getBrowser () .getBaseURL ();
+
       return this [_worldURL];
    },
    setProfile (profile)
