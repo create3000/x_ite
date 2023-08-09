@@ -693,7 +693,7 @@ A Boolean value (`true` or `false`) to indicate whether rendering should use har
 
 ### baseURL
 
-A String value containing the URL against which relative URLs are resolved. By default, this is the address of the web page itself. Although this feature is rarely needed, it can be useful when loading a `data:` or `blob:` URL with the *src* attribute, or with `Browser.loadURL`, or when using `Browser.createX3DFromString`.
+A String value containing the URL against which relative URLs are resolved. By default, this is the address of the web page itself. Although this feature is rarely needed, it can be useful when loading a `data:` or `blob:` URL with the *src* attribute, or with `Browser.loadURL`, or when using `Browser.createX3DFromString`. The value of *baseURL* will only be used with the external browser.
 
 ### cache
 
