@@ -94,29 +94,36 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
    },
    loadNext ()
    {
-      if (this .urlStack .length === 0)
+      try
       {
-         this .clearTexture ();
-         this .setLoadState (X3DConstants .FAILED_STATE);
-         return;
+         if (this .urlStack .length === 0)
+         {
+            this .clearTexture ();
+            this .setLoadState (X3DConstants .FAILED_STATE);
+            return;
+         }
+
+         // Get URL.
+
+         this .URL = new URL (this .urlStack .shift (), this .getExecutionContext () .getWorldURL ());
+
+         if (this .URL ?.protocol !== "data:")
+         {
+            if (!this .getCache ())
+               this .URL .searchParams .set ("_", Date .now ());
+         }
+
+         this .image .attr ("src", this .URL .href);
       }
-
-      // Get URL.
-
-      this .URL = new URL (this .urlStack .shift (), this .getExecutionContext () .getWorldURL ());
-
-      if (this .URL .protocol !== "data:")
+      catch (error)
       {
-         if (!this .getCache ())
-            this .URL .searchParams .set ("_", Date .now ());
+         this .setError ({ type: error .message });
       }
-
-      this .image .attr ("src", this .URL .href);
    },
    setError (event)
    {
-      if (this .URL .protocol !== "data:")
-         console .warn (`Error loading image '${decodeURI (this .URL .href)}'`, event .type);
+      if (this .URL ?.protocol !== "data:")
+         console .warn (`Error loading image '${decodeURI (this .URL ?.href)}'`, event .type);
 
       this .loadNext ();
    },
@@ -124,8 +131,8 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
    {
       if (DEVELOPMENT)
       {
-         if (this .URL .protocol !== "data:")
-            console .info (`Done loading image '${decodeURI (this .URL .href)}'`);
+         if (this .URL ?.protocol !== "data:")
+            console .info (`Done loading image '${decodeURI (this .URL ?.href)}'`);
       }
 
       try

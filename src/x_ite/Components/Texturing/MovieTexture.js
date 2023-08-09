@@ -110,39 +110,46 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
    },
    loadNext ()
    {
-      if (this .urlStack .length === 0)
+      try
       {
-         this .video .off ("canplaythrough");
-         this ._duration_changed = -1;
-         this .clearTexture ();
-         this .setLoadState (X3DConstants .FAILED_STATE);
-         return;
+         if (this .urlStack .length === 0)
+         {
+            this .video .off ("canplaythrough");
+            this ._duration_changed = -1;
+            this .clearTexture ();
+            this .setLoadState (X3DConstants .FAILED_STATE);
+            return;
+         }
+
+         // Get URL.
+
+         this .URL = new URL (this .urlStack .shift (), this .getExecutionContext () .getWorldURL ());
+
+         if (this .URL ?.protocol !== "data:")
+         {
+            if (!this .getCache ())
+               this .URL .searchParams .set ("_", Date .now ());
+         }
+
+         if (this .URL .pathname .endsWith (".gif"))
+         {
+            const
+               img = $("<img></img>") .appendTo ($("<div></div>")),
+               gif = new SuperGif ({ gif: img [0], on_error: type => this .setError ({ type: type }) });
+
+            gif .load_url (this .URL, this .setGif .bind (this, gif));
+
+            this .setTimeout ({ type: "timeout" });
+         }
+         else
+         {
+            this .video .attr ("src", this .URL .href);
+            this .video .get (0) .load ();
+         }
       }
-
-      // Get URL.
-
-      this .URL = new URL (this .urlStack .shift (), this .getExecutionContext () .getWorldURL ());
-
-      if (this .URL .protocol !== "data:")
+      catch (error)
       {
-         if (!this .getCache ())
-            this .URL .searchParams .set ("_", Date .now ());
-      }
-
-      if (this .URL .pathname .endsWith (".gif"))
-      {
-         const
-            img = $("<img></img>") .appendTo ($("<div></div>")),
-            gif = new SuperGif ({ gif: img [0], on_error: type => this .setError ({ type: type }) });
-
-         gif .load_url (this .URL, this .setGif .bind (this, gif));
-
-         this .setTimeout ({ type: "timeout" });
-      }
-      else
-      {
-         this .video .attr ("src", this .URL .href);
-         this .video .get (0) .load ();
+         this .setError ({ type: error .message });
       }
    },
    setTimeout (event)
@@ -156,8 +163,8 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
    },
    setError (event)
    {
-      if (this .URL .protocol !== "data:")
-         console .warn (`Error loading movie '${decodeURI (this .URL .href)}'`, event .type);
+      if (this .URL ?.protocol !== "data:")
+         console .warn (`Error loading movie '${decodeURI (this .URL ?.href)}'`, event .type);
 
       this .loadNext ();
    },
@@ -165,8 +172,8 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
    {
       if (DEVELOPMENT)
       {
-         if (this .URL .protocol !== "data:")
-            console .info (`Done loading movie '${decodeURI (this .URL .href)}'`);
+         if (this .URL ?.protocol !== "data:")
+            console .info (`Done loading movie '${decodeURI (this .URL ?.href)}'`);
       }
 
       try

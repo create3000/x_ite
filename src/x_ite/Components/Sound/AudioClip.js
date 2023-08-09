@@ -105,26 +105,33 @@ Object .assign (Object .setPrototypeOf (AudioClip .prototype, X3DSoundSourceNode
    },
    loadNext ()
    {
-      if (this .urlStack .length === 0)
+      try
       {
-         this .audio .off ("canplaythrough");
-         this ._duration_changed = -1;
-         this .setLoadState (X3DConstants .FAILED_STATE);
-         return;
+         if (this .urlStack .length === 0)
+         {
+            this .audio .off ("canplaythrough");
+            this ._duration_changed = -1;
+            this .setLoadState (X3DConstants .FAILED_STATE);
+            return;
+         }
+
+         // Get URL.
+
+         this .URL = new URL (this .urlStack .shift (), this .getExecutionContext () .getWorldURL ());
+
+         if (this .URL ?.protocol !== "data:")
+         {
+            if (!this .getCache ())
+               this .URL .searchParams .set ("_", Date .now ());
+         }
+
+         this .audio .attr ("src", this .URL .href);
+         this .audio .get (0) .load ();
       }
-
-      // Get URL.
-
-      this .URL = new URL (this .urlStack .shift (), this .getExecutionContext () .getWorldURL ());
-
-      if (this .URL .protocol !== "data:")
+      catch (error)
       {
-         if (!this .getCache ())
-            this .URL .searchParams .set ("_", Date .now ());
+         this .setError ({ type: error .message });
       }
-
-      this .audio .attr ("src", this .URL .href);
-      this .audio .get (0) .load ();
    },
    setTimeout (event)
    {
@@ -137,8 +144,8 @@ Object .assign (Object .setPrototypeOf (AudioClip .prototype, X3DSoundSourceNode
    },
    setError (event)
    {
-      if (this .URL .protocol !== "data:")
-         console .warn (`Error loading audio '${decodeURI (this .URL .href)}'`, event .type);
+      if (this .URL ?.protocol !== "data:")
+         console .warn (`Error loading audio '${decodeURI (this .URL ?.href)}'`, event .type);
 
       this .loadNext ();
    },
@@ -146,8 +153,8 @@ Object .assign (Object .setPrototypeOf (AudioClip .prototype, X3DSoundSourceNode
    {
       if (DEVELOPMENT)
       {
-         if (this .URL .protocol !== "data:")
-            console .info (`Done loading audio '${decodeURI (this .URL .href)}'`);
+         if (this .URL ?.protocol !== "data:")
+            console .info (`Done loading audio '${decodeURI (this .URL ?.href)}'`);
       }
 
       this .audio .unbind ("canplaythrough");
