@@ -133,7 +133,7 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
       this [_scene] = value;
 
       const
-         protoName = decodeURIComponent (new URL (this [_scene] .getWorldURL ()) .hash .substr (1)),
+         protoName = decodeURIComponent (new URL (this [_scene] .getWorldURL ()) .hash .substring (1)),
          proto     = protoName ? this [_scene] .protos .get (protoName) : this [_scene] .protos [0];
 
       if (!proto)
