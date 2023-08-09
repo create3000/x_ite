@@ -1,7 +1,7 @@
 /* X_ITE v8.11.13 */(() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 167:
+/***/ 68:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 /**
@@ -14879,7 +14879,7 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, (X3DNode_de
    setError (error)
    {
       if (this .URL .protocol !== "data:")
-         console .warn (`Error loading font '${decodeURI (this .URL ?.href)}':`, error);
+         console .warn (`Error loading font '${decodeURI (this .URL .href)}':`, error);
 
       this .loadNext ();
    },
@@ -16051,7 +16051,7 @@ Namespace_default().set ("x_ite/Components/Text/FontStyle", FontStyle_default_);
 /* harmony default export */ const Text_FontStyle = (FontStyle_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Text/X3DTextContext.js
 /* provided dependency */ var $ = __webpack_require__(355);
-/* provided dependency */ var opentype = __webpack_require__(167);
+/* provided dependency */ var opentype = __webpack_require__(68);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.

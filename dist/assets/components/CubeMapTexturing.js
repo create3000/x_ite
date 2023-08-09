@@ -1119,7 +1119,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapT
    setError (event)
    {
       if (this .URL .protocol !== "data:")
-         console .warn (`Error loading image '${decodeURI (this .URL ?.href)}'`, event .type);
+         console .warn (`Error loading image '${decodeURI (this .URL .href)}'`, event .type);
 
       this .loadNext ();
    },
@@ -1128,7 +1128,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapT
       if ((DEVELOPMENT_default()))
       {
           if (this .URL .protocol !== "data:")
-            console .info (`Done loading image cube map texture '${decodeURI (this .URL ?.href)}'`);
+            console .info (`Done loading image cube map texture '${decodeURI (this .URL .href)}'`);
       }
 
       try

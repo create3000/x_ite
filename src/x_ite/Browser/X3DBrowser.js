@@ -460,10 +460,11 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    createVrmlFromString (vrmlSyntax)
    {
       const
-         currentScene = this .currentScene,
          external     = this .isExternal (),
+         currentScene = this .currentScene,
+         worldURL     = external ? this .getBaseURL () : currentScene .getWorldURL (),
          fileLoader   = new FileLoader (this .getWorld ()),
-         scene        = fileLoader .createX3DFromString (currentScene .getWorldURL (), `#VRML V2.0 utf8\n\n${vrmlSyntax}`);
+         scene        = fileLoader .createX3DFromString (worldURL, `#VRML V2.0 utf8\n\n${vrmlSyntax}`);
 
       if (!external)
       {
@@ -479,13 +480,14 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
       x3dSyntax = String (x3dSyntax);
 
       const
-         currentScene = this .currentScene,
          external     = this .isExternal (),
+         currentScene = this .currentScene,
+         worldURL     = external ? this .getBaseURL () : currentScene .getWorldURL (),
          fileLoader   = new FileLoader (this .getWorld ());
 
       const scene = await new Promise ((resolve, reject) =>
       {
-         fileLoader .createX3DFromString (currentScene .getWorldURL (), x3dSyntax, resolve, reject);
+         fileLoader .createX3DFromString (worldURL, x3dSyntax, resolve, reject);
       });
 
       if (!external)
