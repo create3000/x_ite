@@ -137,9 +137,9 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
    {
       return this .getExecutionContext () .getProfile ();
    },
-   hasComponent (... args)
+   hasComponent (name, level)
    {
-      return this .getExecutionContext () .hasComponent (... args);
+      return this .getExecutionContext () .hasComponent (name, level);
    },
    getComponents ()
    {
