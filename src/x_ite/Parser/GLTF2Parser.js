@@ -278,8 +278,10 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          {
             case "KHR_texture_transform":
             {
-               if (!scene .hasComponent ("Texturing3D"))
-                  scene .addComponent (browser .getComponent ("Texturing3D", 2));
+               const component = browser .getComponent ("Texturing3D", 2);
+
+               if (!scene .hasComponent (component))
+                  scene .addComponent (component);
 
                break;
             }

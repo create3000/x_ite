@@ -48,6 +48,7 @@
 import Fields              from "../Fields.js";
 import X3DExecutionContext from "./X3DExecutionContext.js";
 import { getUniqueName }   from "./NamedNodesHandling.js";
+import ComponentInfo       from "../Configuration/ComponentInfo.js";
 import ComponentInfoArray  from "../Configuration/ComponentInfoArray.js";
 import UnitInfo            from "../Configuration/UnitInfo.js";
 import UnitInfoArray       from "../Configuration/UnitInfoArray.js";
@@ -162,9 +163,20 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
    {
       return this [_profile];
    },
-   hasComponent (name)
+   hasComponent (name, level = 0)
    {
-      return (this [_profile] ?.components .has (name) ?? true) || this [_components] .has (name);
+      if (!this [_profile])
+         return true;
+
+      if (name instanceof ComponentInfo)
+         var { name, level } = name;
+
+      const component = this [_profile] ?.components .get (name) ?? this [_components] .get (name);
+
+      if (component)
+         return level <= component .level;
+
+      return false;
    },
    addComponent (component)
    {
