@@ -56,9 +56,10 @@ Orientation (axis, angle in radians) of children relative to local coordinate sy
 
 Non-uniform x-y-z *scale* of child coordinate system, adjusted by center and scaleOrientation.
 
-#### Hint
+#### Hints
 
 - The order of operation is first apply the center offset, then scaleOrientation and *scale*, then rotation, then restore the center offset, then translation.
+- Negative *scale* values allowed beginning with X3D version 3.1
 
 ### SFRotation [in, out] **scaleOrientation** 0 0 1 0 <small>[-1,1] or (-∞,∞)</small>
 
