@@ -740,7 +740,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       this .materials = materials;
    },
-   materialObject ({ material, mode })
+   materialObject ({ material, mode = 4 })
    {
       if (!(material instanceof Object))
          return this .getDefaultAppearance (mode);
