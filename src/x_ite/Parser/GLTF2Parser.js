@@ -83,6 +83,7 @@ function GLTF2Parser (scene)
    this .accessors             = [ ];
    this .samplers              = [ ];
    this .materials             = [ ];
+   this .defaultAppearance     = [ ];
    this .textureTransformNodes = [ ];
    this .meshes                = [ ];
    this .cameras               = [ ];
@@ -739,10 +740,10 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       this .materials = materials;
    },
-   materialObject (material)
+   materialObject ({ material, mode })
    {
       if (!(material instanceof Object))
-         return this .getDefaultAppearance ();
+         return this .getDefaultAppearance (mode);
 
       if (material .appearanceNode)
          return material .appearanceNode;
@@ -757,7 +758,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       const
          scene          = this .getExecutionContext (),
          appearanceNode = scene .createNode ("Appearance", false),
-         materialNode   = this .createMaterial (material),
+         materialNode   = this .refineMaterial (mode, this .createMaterial (material, mode)),
          name           = this .sanitizeName (material .name);
 
       const emissiveFactor = new Color3 (0, 0, 0);
@@ -809,6 +810,47 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       return material .appearanceNode = appearanceNode;
    },
+   refineMaterial (mode, materialNode)
+   {
+      if (mode > 3)
+         return materialNode
+
+      switch (materialNode .getTypeName ())
+      {
+         default:
+         {
+            return materialNode;
+         }
+         case "Material":
+         {
+            const
+               scene             = this .getExecutionContext (),
+               unlitMaterialNode = scene .createNode ("UnlitMaterial", false);
+
+            unlitMaterialNode ._emissiveColor          = materialNode ._diffuseColor;
+            unlitMaterialNode ._emissiveTextureMapping = materialNode ._diffuseTextureMapping;
+            unlitMaterialNode ._emissiveTexture        = materialNode ._diffuseTexture;
+
+            materialNode .dispose ();
+
+            return unlitMaterialNode;
+         }
+         case "PhysicalMaterial":
+         {
+            const
+               scene             = this .getExecutionContext (),
+               unlitMaterialNode = scene .createNode ("UnlitMaterial", false);
+
+            unlitMaterialNode ._emissiveColor          = materialNode ._baseColor;
+            unlitMaterialNode ._emissiveTextureMapping = materialNode ._baseTextureMapping;
+            unlitMaterialNode ._emissiveTexture        = materialNode ._baseTexture;
+
+            materialNode .dispose ();
+
+            return unlitMaterialNode;
+         }
+      }
+   },
    texCoordIndices (key, object, indices = new Set ())
    {
       if (!(object instanceof Object))
@@ -822,23 +864,23 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       return indices;
    },
-   createMaterial (material)
+   createMaterial (material, mode)
    {
       const materials = [
-         this .pbrMetallicRoughnessObject .bind (this, material .pbrMetallicRoughness),
+         this .pbrMetallicRoughnessObject  .bind (this, material .pbrMetallicRoughness),
          this .pbrSpecularGlossinessObject .bind (this, material .extensions ?.KHR_materials_pbrSpecularGlossiness),
-         this .pbrMetallicRoughnessObject .bind (this, { }),
+         this .pbrMetallicRoughnessObject  .bind (this, { }),
       ];
 
       for (const material of materials)
       {
-         const materialNode = material ();
+         const materialNode = material (mode);
 
          if (materialNode)
             return materialNode;
       }
    },
-   pbrMetallicRoughnessObject (pbrMetallicRoughness)
+   pbrMetallicRoughnessObject (pbrMetallicRoughness, mode)
    {
       if (!(pbrMetallicRoughness instanceof Object))
          return null;
@@ -1898,7 +1940,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       const
          scene          = this .getExecutionContext (),
          shapeNode      = scene .createNode ("Shape", false),
-         appearanceNode = this .materialObject (primitive .material),
+         appearanceNode = this .materialObject (primitive),
          geometryNode   = this .createGeometry (primitive, weights, skin);
 
       shapeNode ._appearance = appearanceNode;
@@ -1908,15 +1950,17 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       return shapeNode;
    },
-   getDefaultAppearance ()
+   getDefaultAppearance (mode)
    {
-      if (this .defaultAppearance)
-         return this .defaultAppearance;
+      mode = mode > 3;
+
+      if (this .defaultAppearance [mode])
+         return this .defaultAppearance [mode];
 
       const
          scene          = this .getExecutionContext (),
-         appearanceNode = scene .createNode ("Appearance",       false),
-         materialNode   = scene .createNode ("PhysicalMaterial", false);
+         appearanceNode = scene .createNode ("Appearance", false),
+         materialNode   = scene .createNode (mode ? "PhysicalMaterial" : "UnlitMaterial", false);
 
       appearanceNode ._alphaMode = "OPAQUE";
       appearanceNode ._material  = materialNode;
@@ -1924,7 +1968,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       materialNode   .setup ();
       appearanceNode .setup ();
 
-      return this .defaultAppearance = appearanceNode;
+      return this .defaultAppearance [mode] = appearanceNode;
    },
    createMultiTextureTransform (materialNode)
    {
@@ -2299,7 +2343,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
          const
             scene          = this .getExecutionContext (),
-            appearanceNode = this .materialObject (material),
+            appearanceNode = this .materialObject ({ material }),
             opaque         = appearanceNode ._alphaMode .getValue () === "OPAQUE",
             colorNode      = scene .createNode (opaque ? "Color" : typeName, false);
 
@@ -2334,7 +2378,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    })(),
    createMultiTextureCoordinate (texCoords, material)
    {
-      const appearanceNode = this .materialObject (material);
+      const appearanceNode = this .materialObject ({ material });
 
       if (!+appearanceNode ._material .getValue () .getTextureBits ())
          return null;
