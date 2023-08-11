@@ -223,6 +223,7 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProto
                   {
                      generator .PushContainerField (field);
 
+                     generator .string += ">";
                      generator .string += generator .TidyBreak ();
 
                      generator .IncIndent ();
