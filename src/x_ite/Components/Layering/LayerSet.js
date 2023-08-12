@@ -73,7 +73,7 @@ Object .assign (Object .setPrototypeOf (LayerSet .prototype, X3DNode .prototype)
 
       this .layerNode0 .setPrivate (true);
       this .layerNode0 .setup ();
-      this .layerNode0 .isLayer0 (true);
+      this .layerNode0 .setLayer0 (true);
 
       this ._activeLayer .addInterest ("set_activeLayer__", this);
       this ._order       .addInterest ("set_layers__", this);

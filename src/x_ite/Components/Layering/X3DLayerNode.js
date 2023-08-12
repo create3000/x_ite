@@ -137,7 +137,11 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
 
       this ._hidden = value;
    },
-   isLayer0 (value)
+   getBBox (bbox, shadows)
+   {
+      return this .groupNode .getBBox (bbox, shadows);
+   },
+   setLayer0 (value)
    {
       this .layer0 = value;
       this .defaultBackground .setHidden (!value);
@@ -145,10 +149,6 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
    getLayer ()
    {
       return this;
-   },
-   getBBox (bbox, shadows)
-   {
-      return this .groupNode .getBBox (bbox, shadows);
    },
    getGroup ()
    {
