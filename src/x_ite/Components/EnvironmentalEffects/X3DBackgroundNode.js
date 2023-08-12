@@ -45,6 +45,7 @@
  *
  ******************************************************************************/
 
+import Fields          from "../../Fields.js";
 import X3DBindableNode from "../Core/X3DBindableNode.js";
 import GeometryContext from "../../Browser/Rendering/GeometryContext.js";
 import VertexArray     from "../../Rendering/VertexArray.js";
@@ -68,10 +69,11 @@ function X3DBackgroundNode (executionContext)
 
    this .addType (X3DConstants .X3DBackgroundNode);
 
+   this .addChildObjects (X3DConstants .inputOutput, "hidden", new Fields .SFBool ());
+
    this ._skyAngle    .setUnit ("angle");
    this ._groundAngle .setUnit ("angle");
 
-   this .hidden                = false;
    this .projectionMatrixArray = new Float32Array (16);
    this .modelMatrix           = new Matrix4 ();
    this .modelViewMatrixArray  = new Float32Array (16);
@@ -113,22 +115,18 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
    },
    isHidden ()
    {
-      return this .hidden;
+      return this ._hidden .getValue ();
    },
    setHidden (value)
    {
-      value = !! value;
-      
-      if (value === this .hidden)
+      if (value === this ._hidden .getValue ())
          return;
 
-      this .hidden = value;
-
-      this .getBrowser () .addBrowserEvent ();
+      this ._hidden = value;
    },
    isTransparent ()
    {
-      if (this .hidden)
+      if (this ._hidden .getValue ())
          return true;
 
       if (this ._transparency .getValue () <= 0)
@@ -466,7 +464,7 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
 
       return function (gl, renderObject, viewport)
       {
-         if (this .hidden)
+         if (this ._hidden .getValue ())
             return;
 
          // Setup context.

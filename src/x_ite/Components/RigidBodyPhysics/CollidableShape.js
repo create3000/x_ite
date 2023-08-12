@@ -154,7 +154,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
          this .shapeNode ._isCameraObject   .removeFieldInterest (this ._isCameraObject);
          this .shapeNode ._isPickableObject .removeFieldInterest (this ._isPickableObject);
 
-         this .shapeNode ._visible     .removeInterest ("set_visible__",     this);
+         this .shapeNode ._display     .removeInterest ("set_display__",     this);
          this .shapeNode ._bboxDisplay .removeInterest ("set_bboxDisplay__", this);
 
          this .shapeNode ._geometry .removeInterest ("set_geometry__", this);
@@ -167,7 +167,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
          this .shapeNode ._isCameraObject   .addFieldInterest (this ._isCameraObject);
          this .shapeNode ._isPickableObject .addFieldInterest (this ._isPickableObject);
 
-         this .shapeNode ._visible     .addInterest ("set_visible__",     this);
+         this .shapeNode ._display     .addInterest ("set_display__",     this);
          this .shapeNode ._bboxDisplay .addInterest ("set_bboxDisplay__", this);
 
          this .shapeNode ._geometry .addInterest ("set_geometry__", this);
@@ -185,7 +185,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
          this .traverse = Function .prototype;
       }
 
-      this .set_visible__ ();
+      this .set_display__ ();
       this .set_bboxDisplay__ ();
       this .set_geometry__ ();
    },
@@ -193,10 +193,10 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
    {
       this .setCameraObject (!!this .visibleNode ?.isCameraObject ());
    },
-   set_visible__ ()
+   set_display__ ()
    {
       if (this .shapeNode)
-         this .visibleNode = this .shapeNode ._visible .getValue () ? this .shapeNode : null;
+         this .visibleNode = this .shapeNode ._display .getValue () ? this .shapeNode : null;
       else
          this .visibleNode = this .shapeNode;
 

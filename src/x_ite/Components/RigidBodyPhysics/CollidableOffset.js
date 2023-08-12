@@ -90,7 +90,7 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, X3DNBodyCol
          this .collidableNode ._isCameraObject   .removeFieldInterest (this ._isCameraObject);
          this .collidableNode ._isPickableObject .removeFieldInterest (this ._isPickableObject);
 
-         this .collidableNode ._visible     .removeInterest ("set_visible__",     this);
+         this .collidableNode ._display     .removeInterest ("set_display__",     this);
          this .collidableNode ._bboxDisplay .removeInterest ("set_bboxDisplay__", this);
       }
 
@@ -104,7 +104,7 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, X3DNBodyCol
          this .collidableNode ._isCameraObject   .addFieldInterest (this ._isCameraObject);
          this .collidableNode ._isPickableObject .addFieldInterest (this ._isPickableObject);
 
-         this .collidableNode ._visible     .addInterest ("set_visible__",     this);
+         this .collidableNode ._display     .addInterest ("set_display__",     this);
          this .collidableNode ._bboxDisplay .addInterest ("set_bboxDisplay__", this);
 
          this .setCameraObject   (this .collidableNode .isCameraObject ());
@@ -120,7 +120,7 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, X3DNBodyCol
          this .traverse = Function .prototype;
       }
 
-      this .set_visible__ ();
+      this .set_display__ ();
       this .set_bboxDisplay__ ();
       this .set_collidableGeometry__ ();
    },
@@ -128,10 +128,10 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, X3DNBodyCol
    {
       this .setCameraObject (!!this .visibleNode ?.isCameraObject ());
    },
-   set_visible__ ()
+   set_display__ ()
    {
       if (this .collidableNode)
-         this .visibleNode = this .collidableNode ._visible .getValue () ? this .collidableNode : null;
+         this .visibleNode = this .collidableNode ._display .getValue () ? this .collidableNode : null;
       else
          this .visibleNode = this .collidableNode;
 

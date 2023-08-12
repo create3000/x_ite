@@ -45,6 +45,7 @@
  *
  ******************************************************************************/
 
+import Fields          from "../../Fields.js";
 import X3DNode         from "../Core/X3DNode.js";
 import X3DRenderObject from "../../Rendering/X3DRenderObject.js";
 import BindableStack   from "../../Execution/BindableStack.js";
@@ -66,10 +67,12 @@ function X3DLayerNode (executionContext, defaultViewpoint, groupNode)
 
    this .addType (X3DConstants .X3DLayerNode);
 
+   this .addChildObjects (X3DConstants .inputOutput, "hidden", new Fields .SFBool (),
+                          X3DConstants .outputOnly,  "display", new Fields .SFBool ());
+
    if (executionContext .getSpecificationVersion () <= 3.3)
       this .addAlias ("isPickable", this ._pickable);
 
-   this .hidden       = false;
    this .groupNode    = groupNode;
    this .viewportNode = null;
 
@@ -116,29 +119,23 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
       this .backgrounds     .setup ();
       this .fogs            .setup ();
 
-      this ._viewport .addInterest ("set_viewport__", this);
+      this ._hidden   .addInterest ("set_visible_and_hidden__", this);
+      this ._visible  .addInterest ("set_visible_and_hidden__", this);
+      this ._viewport .addInterest ("set_viewport__",           this);
 
+      this .set_visible_and_hidden__ ();
       this .set_viewport__ ();
    },
    isHidden ()
    {
-      return this .hidden;
+      return this ._hidden .getValue ();
    },
    setHidden (value)
    {
-      value = !! value;
-
-      if (value === this .hidden)
+      if (value === this ._hidden .getValue ())
          return;
 
-      this .hidden = value;
-
-      if (value)
-         this .traverse = Function .prototype;
-      else
-         delete this .traverse;
-
-      this .getBrowser () .addBrowserEvent ();
+      this ._hidden = value;
    },
    isLayer0 (value)
    {
@@ -241,6 +238,10 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
    {
       this .getViewpoint () .straightenView (this);
    },
+   set_visible_and_hidden__ ()
+   {
+      this ._display = this ._visible .getValue () && !this ._hidden .getValue ();
+   },
    set_viewport__ ()
    {
       this .viewportNode = X3DCast (X3DConstants .X3DViewportNode, this ._viewport);
@@ -331,7 +332,7 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
    },
    camera (type, renderObject)
    {
-      if (this ._visible .getValue ())
+      if (this ._display .getValue ())
       {
          this .getModelViewMatrix () .pushMatrix (Matrix4 .Identity);
 
@@ -368,7 +369,7 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
 
       return function (type, renderObject)
       {
-         if (this ._visible .getValue ())
+         if (this ._display .getValue ())
          {
             const navigationInfo = this .getNavigationInfo ();
 
@@ -397,7 +398,7 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
    })(),
    display (type, renderObject)
    {
-      if (this ._visible .getValue ())
+      if (this ._display .getValue ())
       {
          this .getNavigationInfo () .enable (type, renderObject);
          this .getModelViewMatrix () .pushMatrix (this .getViewMatrix () .get ());

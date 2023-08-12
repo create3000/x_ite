@@ -58,7 +58,6 @@ function X3DGroupingNode (executionContext)
 
    this .addType (X3DConstants .X3DGroupingNode);
 
-   this .hidden                    = false;
    this .allowedTypes              = new Set ();
    this .clipPlaneNodes            = [ ];
    this .localFogNodes             = [ ];
@@ -103,22 +102,6 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
          return X3DBoundedObject .prototype .getBBox .call (this, this .visibleNodes, bbox, shadows);
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
-   },
-   isHidden ()
-   {
-      return this .hidden;
-   },
-   setHidden (value)
-   {
-      value = !! value;
-
-      if (value === this .hidden)
-         return;
-
-      this .hidden = value;
-
-      this .set_children__ ();
-      this .getBrowser () .addBrowserEvent ();
    },
    setAllowedTypes (/* type, ... */)
    {
@@ -193,8 +176,8 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
 
          if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
          {
-            childNode ._visible     .removeInterest ("set_visibles__",      this);
-            childNode ._bboxDisplay .removeInterest ("set_bboxDisplays__",  this);
+            childNode ._display     .removeInterest ("set_displays_",     this);
+            childNode ._bboxDisplay .removeInterest ("set_bboxDisplays__", this);
          }
       }
 
@@ -209,109 +192,106 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
    },
    add (children)
    {
-      if (!this .hidden)
+      for (const child of children)
       {
-         for (const child of children)
+         const childNode = X3DCast (X3DConstants .X3DChildNode, child);
+
+         if (!childNode)
+            continue;
+
+         const type = childNode .getType ();
+
+         for (let t = type .length - 1; t >= 0; -- t)
          {
-            const childNode = X3DCast (X3DConstants .X3DChildNode, child);
+            // if (this .allowedTypes .size)
+            // {
+            //    if (!childNode .getType () .some (Set .prototype .has, this .allowedTypes))
+            //       continue;
+            // }
 
-            if (!childNode)
-               continue;
-
-            const type = childNode .getType ();
-
-            for (let t = type .length - 1; t >= 0; -- t)
+            switch (type [t])
             {
-               // if (this .allowedTypes .size)
-               // {
-               //    if (!childNode .getType () .some (Set .prototype .has, this .allowedTypes))
-               //       continue;
-               // }
-
-               switch (type [t])
+               case X3DConstants .X3DPointingDeviceSensorNode:
                {
-                  case X3DConstants .X3DPointingDeviceSensorNode:
-                  {
-                     this .pointingDeviceSensorNodes .push (childNode);
-                     break;
-                  }
-                  case X3DConstants .ClipPlane:
-                  {
-                     this .clipPlaneNodes .push (childNode);
-                     break;
-                  }
-                  case X3DConstants .LocalFog:
-                  {
-                     this .localFogNodes .push (childNode);
-                     break;
-                  }
-                  case X3DConstants .X3DTextureProjectorNode:
-                  {
-                     this .textureProjectorNodes .push (childNode);
-                     break;
-                  }
-                  case X3DConstants .X3DLightNode:
-                  {
-                     this .lightNodes .push (childNode);
-                     break;
-                  }
-                  case X3DConstants .X3DBindableNode:
-                  {
-                     this .maybeCameraObjects .push (childNode);
-                     break;
-                  }
-                  case X3DConstants .TransformSensor:
-                  case X3DConstants .X3DPickSensorNode:
-                  {
-                     childNode ._isPickableObject .addInterest ("set_pickableObjects__", this);
-
-                     this .maybePickableSensorNodes .push (childNode);
-                     break;
-                  }
-                  case X3DConstants .X3DBackgroundNode:
-                  case X3DConstants .X3DChildNode:
-                  {
-                     childNode ._isCameraObject   .addInterest ("set_cameraObjects__",   this);
-                     childNode ._isPickableObject .addInterest ("set_pickableObjects__", this);
-
-                     if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
-                     {
-                        childNode ._visible     .addInterest ("set_visibles__",     this);
-                        childNode ._bboxDisplay .addInterest ("set_bboxDisplays__", this);
-                     }
-
-                     this .maybeCameraObjects .push (childNode);
-                     this .childNodes .push (childNode);
-                     break;
-                  }
-                  case X3DConstants .BooleanFilter:
-                  case X3DConstants .BooleanToggle:
-                  case X3DConstants .HAnimMotion:
-                  case X3DConstants .NurbsOrientationInterpolator:
-                  case X3DConstants .NurbsPositionInterpolator:
-                  case X3DConstants .NurbsSurfaceInterpolator:
-                  case X3DConstants .TimeSensor:
-                  case X3DConstants .X3DFollowerNode:
-                  case X3DConstants .X3DInfoNode:
-                  case X3DConstants .X3DInterpolatorNode:
-                  case X3DConstants .X3DKeyDeviceSensorNode:
-                  case X3DConstants .X3DLayoutNode:
-                  case X3DConstants .X3DScriptNode:
-                  case X3DConstants .X3DSequencerNode:
-                  case X3DConstants .X3DTriggerNode:
-                     break;
-                  default:
-                     continue;
+                  this .pointingDeviceSensorNodes .push (childNode);
+                  break;
                }
+               case X3DConstants .ClipPlane:
+               {
+                  this .clipPlaneNodes .push (childNode);
+                  break;
+               }
+               case X3DConstants .LocalFog:
+               {
+                  this .localFogNodes .push (childNode);
+                  break;
+               }
+               case X3DConstants .X3DTextureProjectorNode:
+               {
+                  this .textureProjectorNodes .push (childNode);
+                  break;
+               }
+               case X3DConstants .X3DLightNode:
+               {
+                  this .lightNodes .push (childNode);
+                  break;
+               }
+               case X3DConstants .X3DBindableNode:
+               {
+                  this .maybeCameraObjects .push (childNode);
+                  break;
+               }
+               case X3DConstants .TransformSensor:
+               case X3DConstants .X3DPickSensorNode:
+               {
+                  childNode ._isPickableObject .addInterest ("set_pickableObjects__", this);
 
-               break;
+                  this .maybePickableSensorNodes .push (childNode);
+                  break;
+               }
+               case X3DConstants .X3DBackgroundNode:
+               case X3DConstants .X3DChildNode:
+               {
+                  childNode ._isCameraObject   .addInterest ("set_cameraObjects__",   this);
+                  childNode ._isPickableObject .addInterest ("set_pickableObjects__", this);
+
+                  if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
+                  {
+                     childNode ._display     .addInterest ("set_displays_",     this);
+                     childNode ._bboxDisplay .addInterest ("set_bboxDisplays__", this);
+                  }
+
+                  this .maybeCameraObjects .push (childNode);
+                  this .childNodes .push (childNode);
+                  break;
+               }
+               case X3DConstants .BooleanFilter:
+               case X3DConstants .BooleanToggle:
+               case X3DConstants .HAnimMotion:
+               case X3DConstants .NurbsOrientationInterpolator:
+               case X3DConstants .NurbsPositionInterpolator:
+               case X3DConstants .NurbsSurfaceInterpolator:
+               case X3DConstants .TimeSensor:
+               case X3DConstants .X3DFollowerNode:
+               case X3DConstants .X3DInfoNode:
+               case X3DConstants .X3DInterpolatorNode:
+               case X3DConstants .X3DKeyDeviceSensorNode:
+               case X3DConstants .X3DLayoutNode:
+               case X3DConstants .X3DScriptNode:
+               case X3DConstants .X3DSequencerNode:
+               case X3DConstants .X3DTriggerNode:
+                  break;
+               default:
+                  continue;
             }
+
+            break;
          }
       }
 
       this .set_pickableObjects__ ()
       this .set_displayNodes__ ()
-      this .set_visibles__ ()
+      this .set_displays_ ()
       this .set_bboxDisplays__ ();
    },
    remove (children)
@@ -403,7 +383,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
 
                   if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
                   {
-                     childNode ._visible     .removeInterest ("set_visibles__",     this);
+                     childNode ._display     .removeInterest ("set_displays_",     this);
                      childNode ._bboxDisplay .removeInterest ("set_bboxDisplays__", this);
                   }
 
@@ -444,7 +424,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
       }
 
       this .set_displayNodes__ ();
-      this .set_visibles__ ();
+      this .set_displays_ ();
       this .set_bboxDisplays__ ();
    },
    set_cameraObjects__ ()
@@ -460,7 +440,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
 
          if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
          {
-            if (childNode ._visible .getValue ())
+            if (childNode ._display .getValue ())
                cameraObjects .push (childNode);
          }
          else
@@ -516,7 +496,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
       for (const node of this .textureProjectorNodes)
          displayNodes .push (node);
    },
-   set_visibles__ ()
+   set_displays_ ()
    {
       const visibleNodes = this .visibleNodes;
 
@@ -526,7 +506,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
       {
          if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
          {
-            if (childNode ._visible .getValue ())
+            if (childNode ._display .getValue ())
                visibleNodes .push (childNode);
          }
          else

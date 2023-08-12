@@ -61,7 +61,6 @@ function CADFace (executionContext)
 
    this .addType (X3DConstants .CADFace);
 
-   this .hidden        = false;
    this .childNode     = null;
    this .visibleNode   = null;
    this .boundedObject = null;
@@ -86,22 +85,6 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
-   isHidden ()
-   {
-      return this .hidden;
-   },
-   setHidden (value)
-   {
-      value = !! value;
-
-      if (value === this .hidden)
-         return;
-
-      this .hidden = value;
-
-      this .set_shape__ ();
-      this .getBrowser () .addBrowserEvent ();
-   },
    set_shape__ ()
    {
       if (this .childNode)
@@ -109,43 +92,40 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
          this .childNode ._isCameraObject   .removeInterest ("set_cameraObject__",     this);
          this .childNode ._isPickableObject .removeInterest ("set_transformSensors__", this);
 
-         this .childNode ._visible     .removeInterest ("set_visible__",     this);
+         this .childNode ._display     .removeInterest ("set_display__",     this);
          this .childNode ._bboxDisplay .removeInterest ("set_bboxDisplay__", this);
       }
 
       this .childNode = null;
 
-      if (!this .hidden)
+      const node = X3DCast (X3DConstants .X3DChildNode, this ._shape);
+
+      if (node)
       {
-         const node = X3DCast (X3DConstants .X3DChildNode, this ._shape);
+         const type = node .getType ();
 
-         if (node)
+         for (let t = type .length - 1; t >= 0; -- t)
          {
-            const type = node .getType ();
-
-            for (let t = type .length - 1; t >= 0; -- t)
+            switch (type [t])
             {
-               switch (type [t])
+               case X3DConstants .LOD:
+               case X3DConstants .Transform:
+               case X3DConstants .X3DShapeNode:
                {
-                  case X3DConstants .LOD:
-                  case X3DConstants .Transform:
-                  case X3DConstants .X3DShapeNode:
-                  {
-                     node ._isCameraObject   .addInterest ("set_cameraObject__",     this);
-                     node ._isPickableObject .addInterest ("set_transformSensors__", this);
+                  node ._isCameraObject   .addInterest ("set_cameraObject__",     this);
+                  node ._isPickableObject .addInterest ("set_transformSensors__", this);
 
-                     node ._visible     .addInterest ("set_visible__",     this);
-                     node ._bboxDisplay .addInterest ("set_bboxDisplay__", this);
+                  node ._display     .addInterest ("set_display__",     this);
+                  node ._bboxDisplay .addInterest ("set_bboxDisplay__", this);
 
-                     this .childNode = node;
-                     break;
-                  }
-                  default:
-                     continue;
+                  this .childNode = node;
+                  break;
                }
-
-               break;
+               default:
+                  continue;
             }
+
+            break;
          }
       }
 
@@ -158,7 +138,7 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
          this .traverse = Function .prototype;
       }
 
-      this .set_visible__ ();
+      this .set_display__ ();
       this .set_bboxDisplay__ ();
    },
    set_cameraObject__ ()
@@ -169,10 +149,10 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
    {
       this .setPickableObject (!!this .visibleNode ?.isPickableObject ());
    },
-   set_visible__ ()
+   set_display__ ()
    {
       if (this .childNode)
-         this .visibleNode = this .childNode ._visible .getValue () ? this .childNode : null;
+         this .visibleNode = this .childNode ._display .getValue () ? this .childNode : null;
       else
          this .visibleNode = null;
 

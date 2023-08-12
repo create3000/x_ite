@@ -55,7 +55,9 @@ function X3DBoundedObject (executionContext)
 {
    this .addType (X3DConstants .X3DBoundedObject);
 
-   this .addChildObjects (X3DConstants .outputOnly, "transformSensors_changed", new Fields .SFTime ());
+   this .addChildObjects (X3DConstants .inputOutput, "hidden",                   new Fields .SFBool (),
+                          X3DConstants .outputOnly,  "display",                  new Fields .SFBool (),
+                          X3DConstants .outputOnly,  "transformSensors_changed", new Fields .SFTime ());
 
    this ._bboxSize   .setUnit ("length");
    this ._bboxCenter .setUnit ("length");
@@ -66,7 +68,28 @@ function X3DBoundedObject (executionContext)
 
 Object .assign (X3DBoundedObject .prototype,
 {
-   initialize () { },
+   initialize ()
+   {
+      this ._hidden  .addInterest ("set_visible_and_hidden__", this);
+      this ._visible .addInterest ("set_visible_and_hidden__", this);
+
+      this .set_visible_and_hidden__ ();
+   },
+   set_visible_and_hidden__ ()
+   {
+      this ._display = this ._visible .getValue () && !this ._hidden .getValue ();
+   },
+   isHidden ()
+   {
+      return this ._hidden .getValue ();
+   },
+   setHidden (value)
+   {
+      if (value === this ._hidden .getValue ())
+         return;
+
+      this ._hidden = value;
+   },
    getDefaultBBoxSize: (() =>
    {
       const defaultBBoxSize = new Vector3 (-1, -1, -1);

@@ -45,8 +45,8 @@
  *
  ******************************************************************************/
 
+import Fields       from "../../Fields.js";
 import X3DConstants from "../../Base/X3DConstants.js";
-import Matrix3      from "../../../standard/Math/Numbers/Matrix3.js";
 import ObjectCache  from "../../../standard/Utility/ObjectCache.js";
 
 const Fogs = ObjectCache (FogContainer);
@@ -89,9 +89,10 @@ function X3DFogObject (executionContext)
 {
    this .addType (X3DConstants .X3DFogObject);
 
+   this .addChildObjects (X3DConstants .inputOutput, "hidden", new Fields .SFBool ());
+
    this ._visibilityRange .setUnit ("length");
 
-   this .hidden     = false;
    this .colorArray = new Float32Array (3);
 }
 
@@ -99,6 +100,7 @@ Object .assign (X3DFogObject .prototype,
 {
    initialize ()
    {
+      this ._hidden          .addInterest ("set_fogType__",         this);
       this ._fogType         .addInterest ("set_fogType__",         this);
       this ._color           .addInterest ("set_color__",           this);
       this ._visibilityRange .addInterest ("set_visibilityRange__", this);
@@ -108,19 +110,14 @@ Object .assign (X3DFogObject .prototype,
    },
    isHidden ()
    {
-      return this .hidden;
+      return this ._hidden .getValue ();
    },
    setHidden (value)
    {
-      value = !! value;
-
-      if (value === this .hidden)
+      if (value === this ._hidden .getValue ())
          return;
 
-      this .hidden = value;
-
-      this .set_fogType__ ();
-      this .getBrowser () .addBrowserEvent ();
+      this ._hidden = value;
    },
    getFogType ()
    {
@@ -139,7 +136,7 @@ Object .assign (X3DFogObject .prototype,
 
       return function ()
       {
-         if (this .hidden || this .visibilityRange === 0)
+         if (this ._hidden .getValue () || this .visibilityRange === 0)
             this .fogType = 0;
          else
             this .fogType = fogTypes .get (this ._fogType .getValue ()) || 1;

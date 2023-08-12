@@ -110,7 +110,7 @@ Object .assign (Object .setPrototypeOf (LOD .prototype, X3DGroupingNode .prototy
 
       if (X3DCast (X3DConstants .X3DBoundedObject, this .childNode))
       {
-         this .childNode ._visible     .removeInterest ("set_visible__",     this);
+         this .childNode ._display     .removeInterest ("set_display__",     this);
          this .childNode ._bboxDisplay .removeInterest ("set_bboxDisplay__", this);
       }
 
@@ -125,7 +125,7 @@ Object .assign (Object .setPrototypeOf (LOD .prototype, X3DGroupingNode .prototy
 
             if (X3DCast (X3DConstants .X3DBoundedObject, this .childNode))
             {
-               this .childNode ._visible     .addInterest ("set_visible__",     this);
+               this .childNode ._display     .addInterest ("set_display__",     this);
                this .childNode ._bboxDisplay .addInterest ("set_bboxDisplay__", this);
             }
 
@@ -139,7 +139,7 @@ Object .assign (Object .setPrototypeOf (LOD .prototype, X3DGroupingNode .prototy
          //this .traverse = Function .prototype; // Don't do that.
       }
 
-      this .set_visible__ ();
+      this .set_display__ ();
       this .set_bboxDisplay__ ();
    },
    set_cameraObject__ ()
@@ -150,10 +150,10 @@ Object .assign (Object .setPrototypeOf (LOD .prototype, X3DGroupingNode .prototy
    {
       this .setPickableObject (!!(this .getTransformSensors () .size || this .visibleNode ?.isPickableObject ()));
    },
-   set_visible__ ()
+   set_display__ ()
    {
       if (X3DCast (X3DConstants .X3DBoundedObject, this .childNode))
-         this .visibleNode = this .childNode ._visible .getValue () ? this .childNode : null;
+         this .visibleNode = this .childNode ._display .getValue () ? this .childNode : null;
       else
          this .visibleNode = this .childNode;
 
