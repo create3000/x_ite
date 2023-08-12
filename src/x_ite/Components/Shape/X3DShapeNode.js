@@ -114,6 +114,8 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
    },
    setHidden (value)
    {
+      value = !! value;
+
       if (value === this .hidden)
          return;
 

@@ -92,6 +92,8 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
    },
    setHidden (value)
    {
+      value = !! value;
+
       if (value === this .hidden)
          return;
 

@@ -117,6 +117,8 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
    },
    setHidden (value)
    {
+      value = !! value;
+      
       if (value === this .hidden)
          return;
 

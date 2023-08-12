@@ -112,6 +112,8 @@ Object .assign (X3DFogObject .prototype,
    },
    setHidden (value)
    {
+      value = !! value;
+
       if (value === this .hidden)
          return;
 
