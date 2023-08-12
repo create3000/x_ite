@@ -2131,7 +2131,6 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, (X3DChildN
          this .set_dimensions__ ();
       }
 
-      this ._visible     .addFieldInterest (this .transformNode ._visible);
       this ._bboxDisplay .addFieldInterest (this .transformNode ._bboxDisplay);
 
       this .proximitySensorNode ._size         = new (Fields_default()).SFVec3f (-1, -1, -1);

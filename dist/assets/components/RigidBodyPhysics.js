@@ -920,7 +920,7 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, RigidBodyPh
          this .collidableNode ._isCameraObject   .removeFieldInterest (this ._isCameraObject);
          this .collidableNode ._isPickableObject .removeFieldInterest (this ._isPickableObject);
 
-         this .collidableNode ._visible     .removeInterest ("set_visible__",     this);
+         this .collidableNode ._display     .removeInterest ("set_display__",     this);
          this .collidableNode ._bboxDisplay .removeInterest ("set_bboxDisplay__", this);
       }
 
@@ -934,7 +934,7 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, RigidBodyPh
          this .collidableNode ._isCameraObject   .addFieldInterest (this ._isCameraObject);
          this .collidableNode ._isPickableObject .addFieldInterest (this ._isPickableObject);
 
-         this .collidableNode ._visible     .addInterest ("set_visible__",     this);
+         this .collidableNode ._display     .addInterest ("set_display__",     this);
          this .collidableNode ._bboxDisplay .addInterest ("set_bboxDisplay__", this);
 
          this .setCameraObject   (this .collidableNode .isCameraObject ());
@@ -950,7 +950,7 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, RigidBodyPh
          this .traverse = Function .prototype;
       }
 
-      this .set_visible__ ();
+      this .set_display__ ();
       this .set_bboxDisplay__ ();
       this .set_collidableGeometry__ ();
    },
@@ -958,10 +958,10 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, RigidBodyPh
    {
       this .setCameraObject (!!this .visibleNode ?.isCameraObject ());
    },
-   set_visible__ ()
+   set_display__ ()
    {
       if (this .collidableNode)
-         this .visibleNode = this .collidableNode ._visible .getValue () ? this .collidableNode : null;
+         this .visibleNode = this .collidableNode ._display .getValue () ? this .collidableNode : null;
       else
          this .visibleNode = this .collidableNode;
 
@@ -1250,7 +1250,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, RigidBodyPhy
          this .shapeNode ._isCameraObject   .removeFieldInterest (this ._isCameraObject);
          this .shapeNode ._isPickableObject .removeFieldInterest (this ._isPickableObject);
 
-         this .shapeNode ._visible     .removeInterest ("set_visible__",     this);
+         this .shapeNode ._display     .removeInterest ("set_display__",     this);
          this .shapeNode ._bboxDisplay .removeInterest ("set_bboxDisplay__", this);
 
          this .shapeNode ._geometry .removeInterest ("set_geometry__", this);
@@ -1263,7 +1263,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, RigidBodyPhy
          this .shapeNode ._isCameraObject   .addFieldInterest (this ._isCameraObject);
          this .shapeNode ._isPickableObject .addFieldInterest (this ._isPickableObject);
 
-         this .shapeNode ._visible     .addInterest ("set_visible__",     this);
+         this .shapeNode ._display     .addInterest ("set_display__",     this);
          this .shapeNode ._bboxDisplay .addInterest ("set_bboxDisplay__", this);
 
          this .shapeNode ._geometry .addInterest ("set_geometry__", this);
@@ -1281,7 +1281,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, RigidBodyPhy
          this .traverse = Function .prototype;
       }
 
-      this .set_visible__ ();
+      this .set_display__ ();
       this .set_bboxDisplay__ ();
       this .set_geometry__ ();
    },
@@ -1289,10 +1289,10 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, RigidBodyPhy
    {
       this .setCameraObject (!!this .visibleNode ?.isCameraObject ());
    },
-   set_visible__ ()
+   set_display__ ()
    {
       if (this .shapeNode)
-         this .visibleNode = this .shapeNode ._visible .getValue () ? this .shapeNode : null;
+         this .visibleNode = this .shapeNode ._display .getValue () ? this .shapeNode : null;
       else
          this .visibleNode = this .shapeNode;
 
