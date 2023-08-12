@@ -67,8 +67,8 @@ function X3DLayerNode (executionContext, defaultViewpoint, groupNode)
 
    this .addType (X3DConstants .X3DLayerNode);
 
-   this .addChildObjects (X3DConstants .inputOutput, "hidden", new Fields .SFBool (),
-                          X3DConstants .outputOnly,  "display", new Fields .SFBool ());
+   this .addChildObjects (X3DConstants .inputOutput, "hidden",  new Fields .SFBool (),
+                          X3DConstants .outputOnly,  "display", new Fields .SFBool (true));
 
    if (executionContext .getSpecificationVersion () <= 3.3)
       this .addAlias ("isPickable", this ._pickable);
@@ -240,7 +240,12 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
    },
    set_visible_and_hidden__ ()
    {
-      this ._display = this ._visible .getValue () && !this ._hidden .getValue ();
+      const value = this ._visible .getValue () && !this ._hidden .getValue ();
+
+      if (value === this ._display .getValue ())
+         return;
+
+      this ._display = value;
    },
    set_viewport__ ()
    {

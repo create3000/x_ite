@@ -56,7 +56,7 @@ function X3DBoundedObject (executionContext)
    this .addType (X3DConstants .X3DBoundedObject);
 
    this .addChildObjects (X3DConstants .inputOutput, "hidden",                   new Fields .SFBool (),
-                          X3DConstants .outputOnly,  "display",                  new Fields .SFBool (),
+                          X3DConstants .outputOnly,  "display",                  new Fields .SFBool (true),
                           X3DConstants .outputOnly,  "transformSensors_changed", new Fields .SFTime ());
 
    this ._bboxSize   .setUnit ("length");
@@ -74,10 +74,6 @@ Object .assign (X3DBoundedObject .prototype,
       this ._visible .addInterest ("set_visible_and_hidden__", this);
 
       this .set_visible_and_hidden__ ();
-   },
-   set_visible_and_hidden__ ()
-   {
-      this ._display = this ._visible .getValue () && !this ._hidden .getValue ();
    },
    isHidden ()
    {
@@ -152,6 +148,15 @@ Object .assign (X3DBoundedObject .prototype,
    getTransformSensors ()
    {
       return this .transformSensorNodes;
+   },
+   set_visible_and_hidden__ ()
+   {
+      const value = this ._visible .getValue () && !this ._hidden .getValue ();
+
+      if (value === this ._display .getValue ())
+         return;
+
+      this ._display = value;
    },
    dispose () { },
 });
