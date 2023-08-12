@@ -69,6 +69,7 @@ function X3DLayerNode (executionContext, defaultViewpoint, groupNode)
    if (executionContext .getSpecificationVersion () <= 3.3)
       this .addAlias ("isPickable", this ._pickable);
 
+   this .hidden       = false;
    this .groupNode    = groupNode;
    this .viewportNode = null;
 
@@ -118,6 +119,24 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
       this ._viewport .addInterest ("set_viewport__", this);
 
       this .set_viewport__ ();
+   },
+   isHidden ()
+   {
+      return this .hidden;
+   },
+   setHidden (value)
+   {
+      if (value === this .hidden)
+         return;
+
+      this .hidden = value;
+
+      if (value)
+         this .traverse = Function .prototype;
+      else
+         delete this .traverse;
+
+      this .getBrowser () .addBrowserEvent ();
    },
    isLayer0 (value)
    {
