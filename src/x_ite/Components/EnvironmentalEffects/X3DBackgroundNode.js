@@ -117,6 +117,9 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
    },
    setHidden (value)
    {
+      if (value === this .hidden)
+         return;
+
       this .hidden = value;
 
       this .getBrowser () .addBrowserEvent ();

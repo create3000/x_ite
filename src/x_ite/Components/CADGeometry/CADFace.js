@@ -92,6 +92,9 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
    },
    setHidden (value)
    {
+      if (value === this .hidden)
+         return;
+
       this .hidden = value;
 
       this .set_shape__ ();

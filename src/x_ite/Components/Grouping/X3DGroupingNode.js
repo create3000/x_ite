@@ -110,6 +110,9 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
    },
    setHidden (value)
    {
+      if (value === this .hidden)
+         return;
+
       this .hidden = value;
 
       this .set_children__ ();

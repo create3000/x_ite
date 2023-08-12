@@ -112,6 +112,9 @@ Object .assign (X3DFogObject .prototype,
    },
    setHidden (value)
    {
+      if (value === this .hidden)
+         return;
+
       this .hidden = value;
 
       this .set_fogType__ ();
