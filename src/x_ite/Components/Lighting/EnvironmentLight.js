@@ -66,10 +66,6 @@ Object .assign (EnvironmentLightContainer .prototype,
    set (lightNode, groupNode, modelViewMatrix)
    {
    },
-   setGroup (groupNode)
-   {
-      this .groupNode = groupNode;
-   },
    getModelViewMatrix ()
    {
       return this .modelViewMatrix;

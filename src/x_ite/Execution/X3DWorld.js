@@ -81,7 +81,7 @@ Object .assign (Object .setPrototypeOf (X3DWorld .prototype, X3DBaseNode .protot
       this .set_rootNodes__ ();
 
       this .layer0 .setPrivate (true);
-      this .layer0 .isLayer0 (true);
+      this .layer0 .setLayer0 (true);
       this .layer0 .setup ();
 
       this .set_activeLayer__ ();

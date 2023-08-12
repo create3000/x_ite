@@ -68,6 +68,7 @@ import Features            from "../Features.js";
 import Algorithm           from "../../standard/Math/Algorithm.js";
 import MapUtilities        from "../../standard/Utility/MapUtilities.js";
 import _                   from "../../locale/gettext.js";
+import DEVELOPMENT         from "../DEVELOPMENT.js";
 
 const
    _DOMIntegration      = Symbol (),
@@ -115,7 +116,8 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    {
       X3DBrowserContext .prototype .initialize .call (this);
 
-      this .replaceWorld (this .createScene ()) .catch (Function .prototype);
+      this .replaceWorld (this .createScene ())
+         .catch (DEVELOPMENT ? error => console .error (error) : Function .prototype);
 
       this [_DOMIntegration] = new DOMIntegration (this);
 
