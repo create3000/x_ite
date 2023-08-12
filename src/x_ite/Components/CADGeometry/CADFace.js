@@ -52,6 +52,7 @@ import X3DProductStructureChildNode from "./X3DProductStructureChildNode.js";
 import X3DBoundedObject             from "../Grouping/X3DBoundedObject.js";
 import X3DConstants                 from "../../Base/X3DConstants.js";
 import TraverseType                 from "../../Rendering/TraverseType.js";
+import X3DCast                      from "../../Base/X3DCast.js";
 
 function CADFace (executionContext)
 {
@@ -60,6 +61,7 @@ function CADFace (executionContext)
 
    this .addType (X3DConstants .CADFace);
 
+   this .hidden        = false;
    this .childNode     = null;
    this .visibleNode   = null;
    this .boundedObject = null;
@@ -84,6 +86,17 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
+   isHidden ()
+   {
+      return this .hidden;
+   },
+   setHidden (value)
+   {
+      this .hidden = value;
+
+      this .set_shape__ ();
+      this .getBrowser () .addBrowserEvent ();
+   },
    set_shape__ ()
    {
       if (this .childNode)
@@ -97,38 +110,39 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
 
       this .childNode = null;
 
-      try
+      if (!this .hidden)
       {
-         const
-            node = this ._shape .getValue () .getInnerNode (),
-            type = node .getType ();
+         const node = X3DCast (X3DConstants .X3DChildNode, this ._shape);
 
-         for (let t = type .length - 1; t >= 0; -- t)
+         if (node)
          {
-            switch (type [t])
+            const type = node .getType ();
+
+            for (let t = type .length - 1; t >= 0; -- t)
             {
-               case X3DConstants .LOD:
-               case X3DConstants .Transform:
-               case X3DConstants .X3DShapeNode:
+               switch (type [t])
                {
-                  node ._isCameraObject   .addInterest ("set_cameraObject__",     this);
-                  node ._isPickableObject .addInterest ("set_transformSensors__", this);
+                  case X3DConstants .LOD:
+                  case X3DConstants .Transform:
+                  case X3DConstants .X3DShapeNode:
+                  {
+                     node ._isCameraObject   .addInterest ("set_cameraObject__",     this);
+                     node ._isPickableObject .addInterest ("set_transformSensors__", this);
 
-                  node ._visible     .addInterest ("set_visible__",     this);
-                  node ._bboxDisplay .addInterest ("set_bboxDisplay__", this);
+                     node ._visible     .addInterest ("set_visible__",     this);
+                     node ._bboxDisplay .addInterest ("set_bboxDisplay__", this);
 
-                  this .childNode = node;
-                  break;
+                     this .childNode = node;
+                     break;
+                  }
+                  default:
+                     continue;
                }
-               default:
-                  continue;
-            }
 
-            break;
+               break;
+            }
          }
       }
-      catch
-      { }
 
       if (this .childNode)
       {

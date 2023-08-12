@@ -63,6 +63,7 @@ function X3DShapeNode (executionContext)
    this .bbox       = new Box3 ();
    this .bboxSize   = new Vector3 (0, 0, 0);
    this .bboxCenter = new Vector3 (0, 0, 0);
+   this .hidden     = false;
 }
 
 Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .prototype),
@@ -107,13 +108,16 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
    {
       return this .bboxCenter;
    },
-   getAppearance ()
+   isHidden ()
    {
-      return this .appearanceNode;
+      return this .hidden;
    },
-   getGeometry ()
+   setHidden (value)
    {
-      return this .geometryNode;
+      this .hidden = value;
+
+      this .set_geometry__ ();
+      this .getBrowser () .addBrowserEvent ();
    },
    setTransparent (value)
    {
@@ -122,6 +126,14 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
    isTransparent ()
    {
       return this .transparent;
+   },
+   getAppearance ()
+   {
+      return this .appearanceNode;
+   },
+   getGeometry ()
+   {
+      return this .geometryNode;
    },
    set_bbox__ ()
    {
@@ -166,7 +178,7 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
          this .geometryNode ._bbox_changed .addInterest ("set_bbox__",        this);
       }
 
-      this .geometryNode = X3DCast (X3DConstants .X3DGeometryNode, this ._geometry);
+      this .geometryNode = this .hidden ? null : X3DCast (X3DConstants .X3DGeometryNode, this ._geometry);
 
       if (this .geometryNode)
       {
