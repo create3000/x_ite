@@ -329,23 +329,11 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
    {
       const VRML =
       [
-         "Core",
-         "EnvironmentalEffects",
          "EnvironmentalSensor",
-         "Geometry3D",
-         "Grouping",
-         "Interpolation",
-         "Lighting",
-         "Navigation",
-         "Networking",
          "PointingDeviceSensor",
-         "Rendering",
          "Scripting",
-         "Shape",
          "Sound",
          "Text",
-         "Texturing",
-         "Time",
       ];
 
       return function ()
@@ -358,7 +346,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
          if (this .getScene () .getSpecificationVersion () === "2.0")
          {
-            this .getScene () .setProfile (this .getBrowser () .getProfile ("Core"));
+            this .getScene () .setProfile (this .getBrowser () .getProfile ("Interchange"));
 
             for (const componentName of VRML)
                this .getScene () .updateComponent (this .getBrowser () .getComponent (componentName));
