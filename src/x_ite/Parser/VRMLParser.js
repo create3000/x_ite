@@ -338,18 +338,22 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
       return function ()
       {
+         const
+            browser = this .getBrowser (),
+            scene   = this .getScene ();
+
          this .headerStatement ();
          this .profileStatement ();
          this .componentStatements ();
          this .unitStatements ();
          this .metaStatements ();
 
-         if (this .getScene () .getSpecificationVersion () === "2.0")
+         if (scene .getSpecificationVersion () === "2.0")
          {
-            this .getScene () .setProfile (this .getBrowser () .getProfile ("Interchange"));
+            scene .setProfile (browser .getProfile ("Interchange"));
 
             for (const componentName of VRML)
-               this .getScene () .updateComponent (this .getBrowser () .getComponent (componentName));
+               scene .updateComponent (browser .getComponent (componentName));
          }
 
          if (this .resolve)
@@ -363,7 +367,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
                   if (this .lastIndex < this .input .length)
                      throw new Error ("Unknown statement.");
 
-                  this .resolve (this .getScene ());
+                  this .resolve (scene);
                }
                catch (error)
                {
