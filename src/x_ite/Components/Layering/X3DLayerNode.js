@@ -122,7 +122,7 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
    isLayer0 (value)
    {
       this .layer0 = value;
-      this .defaultBackground .setHidden (! value);
+      this .defaultBackground .setHidden (!value);
    },
    getLayer ()
    {
@@ -224,7 +224,7 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
    {
       this .viewportNode = X3DCast (X3DConstants .X3DViewportNode, this ._viewport);
 
-      if (! this .viewportNode)
+      if (!this .viewportNode)
          this .viewportNode = this .getBrowser () .getDefaultViewport ();
    },
    bindBindables (viewpointName)
