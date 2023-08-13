@@ -52,8 +52,8 @@ import X3DChildNode         from "../Core/X3DChildNode.js";
 import ProximitySensor      from "../EnvironmentalSensor/ProximitySensor.js";
 import TraverseType         from "../../Rendering/TraverseType.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
+import X3DCast              from "../../Base/X3DCast.js";
 import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
-import X3DCast from "../../Base/X3DCast.js";
 
 function ViewpointGroup (executionContext)
 {
