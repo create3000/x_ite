@@ -78,6 +78,7 @@ function X3DRenderObject (executionContext)
    this .cameraSpaceMatrixArray   = new Float32Array (16);
    this .hitRay                   = new Line3 (Vector3 .Zero, Vector3 .Zero);
    this .sensors                  = [[ ]];
+   this .viewpointGroups          = [ ];
    this .localObjectsCount        = [0, 0, 0];
    this .globalObjects            = [ ];
    this .localObjects             = [ ];
@@ -166,6 +167,10 @@ Object .assign (X3DRenderObject .prototype,
    getSensors ()
    {
       return this .sensors;
+   },
+   getViewpointGroups ()
+   {
+      return this .viewpointGroups;
    },
    getGlobalObjects ()
    {

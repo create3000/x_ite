@@ -439,7 +439,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
 
       for (const viewpoint of viewpoints)
       {
-         const description = viewpoint ._description .getValue ();
+         const description = viewpoint .getDescriptions () .join (" » ");
 
          if (description === "")
             continue;

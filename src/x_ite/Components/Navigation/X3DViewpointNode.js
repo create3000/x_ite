@@ -74,6 +74,7 @@ function X3DViewpointNode (executionContext)
                           X3DConstants .inputOutput, "centerOfRotationOffset", new Fields .SFVec3f (),
                           X3DConstants .inputOutput, "fieldOfViewScale",       new Fields .SFFloat (1));
 
+   this .descriptions         = [ ];
    this .userPosition         = new Vector3 (0, 1, 0);
    this .userOrientation      = new Rotation4 ();
    this .userCenterOfRotation = new Vector3 (0, 0, 0);
@@ -196,6 +197,10 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
          return;
 
       navigationInfoNode ._transitionComplete = true;
+   },
+   getDescriptions ()
+   {
+      return this .descriptions;
    },
    setInterpolators () { },
    getPosition ()
@@ -559,6 +564,22 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
 
       if (this .navigationInfoNode)
          this .navigationInfoNode .traverse (type, renderObject);
+
+      this .descriptions .length = 0;
+
+      if (this ._description .getValue ())
+      {
+         if (renderObject .getViewpointGroups () .every (viewpointGroupNode => viewpointGroupNode ._displayed .getValue ()))
+         {
+            for (const viewpointGroupNode of renderObject .getViewpointGroups ())
+            {
+               if (viewpointGroupNode ._description .getValue ())
+                  this .descriptions .push (viewpointGroupNode ._description .getValue ());
+            }
+
+            this .descriptions .push (this ._description .getValue ());
+         }
+      }
 
       renderObject .getLayer () .getViewpoints () .push (this);
 
