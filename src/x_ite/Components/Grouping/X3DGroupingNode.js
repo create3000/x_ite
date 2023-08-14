@@ -281,6 +281,11 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
                case X3DConstants .X3DSequencerNode:
                case X3DConstants .X3DTriggerNode:
                   break;
+               case X3DConstants .X3DVisibleObject:
+               {
+                  this .childNodes .push (childNode);
+                  continue;
+               }
                default:
                   continue;
             }

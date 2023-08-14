@@ -143,4 +143,6 @@ Object .defineProperty (X3DConstants, "addNode",
    },
 });
 
+X3DConstants .addNode ({ typeName: "X3DVisibleObject" });
+
 export default X3DConstants;
