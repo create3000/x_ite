@@ -119,18 +119,32 @@ Object .assign (X3DObject .prototype,
    },
    getUserData (key)
    {
-      return this [_userData] .get (key);
+      return this [_userData] .get (key)
+         ?? this [_userData] .map ?.get (key);
    },
    setUserData (key, value)
    {
-      if (this [_userData] === X3DObject .prototype [_userData])
-         this [_userData] = new Map ();
+      try
+      {
+         if (this [_userData] === X3DObject .prototype [_userData])
+            this [_userData] = new WeakMap ();
 
-      this [_userData] .set (key, value);
+         this [_userData] .set (key, value);
+      }
+      catch
+      {
+         if (!this [_userData] .map)
+            this [_userData] .map = new Map ();
+
+         this [_userData] .map .set (key, value);
+      }
    },
    removeUserData (key)
    {
-      this [_userData] .delete (key);
+      if (this [_userData] .delete (key))
+         return;
+
+      this [_userData] .map ?.delete (key);
    },
    toString (options = Object .prototype)
    {
