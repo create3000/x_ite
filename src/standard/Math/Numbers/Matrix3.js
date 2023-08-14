@@ -649,7 +649,6 @@ Object .defineProperties (Matrix3 .prototype,
 
 Object .assign (Matrix3,
 {
-   Zero: new Matrix3 (0,0,0, 0,0,0, 0,0,0),
    Identity: new Matrix3 (),
    Rotation (rotation)
    {

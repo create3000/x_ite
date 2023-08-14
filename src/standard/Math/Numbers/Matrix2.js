@@ -268,7 +268,6 @@ Object .defineProperties (Matrix2 .prototype,
 
 Object .assign (Matrix2,
 {
-   Zero: new Matrix2 (0,0, 0,0),
    Identity: new Matrix2 (),
 });
 
