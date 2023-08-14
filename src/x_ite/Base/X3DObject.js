@@ -197,7 +197,7 @@ Object .assign (X3DObject .prototype,
    dispose ()
    {
       this [_interests] .clear ();
-      this [_userData]  .clear ();
+      this [_userData] .map ?.clear ();
    },
 });
 
