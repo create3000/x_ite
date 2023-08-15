@@ -201,9 +201,6 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
 
          const type = childNode .getType ();
 
-         if (type [0] === X3DConstants .X3DVisibleObject)
-            this .childNodes .push (childNode);
-
          for (let t = type .length - 1; t >= 0; -- t)
          {
             // if (this .allowedTypes .size)
@@ -290,6 +287,12 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
 
             break;
          }
+
+         if (childNode .getMustDisplay ())
+         {
+            if (!this .childNodes .includes (childNode))
+               this .childNodes .push (childNode);
+         }
       }
 
       this .set_pickableObjects__ ()
@@ -306,15 +309,15 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
          if (!childNode)
             continue;
 
-         const type = childNode .getType ();
-
-         if (type [0] === X3DConstants .X3DVisibleObject)
+         if (childNode .getMustDisplay ())
          {
             const index = this .childNodes .indexOf (childNode);
 
             if (index >= 0)
                this .childNodes .splice (index, 1);
          }
+
+         const type = childNode .getType ();
 
          for (let t = type .length - 1; t >= 0; -- t)
          {

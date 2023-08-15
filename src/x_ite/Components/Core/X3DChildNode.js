@@ -82,6 +82,10 @@ Object .assign (Object .setPrototypeOf (X3DChildNode .prototype, X3DNode .protot
    {
       return this ._isPickableObject .getValue ();
    },
+   getMustDisplay ()
+   {
+      return false
+   },
 });
 
 Object .defineProperties (X3DChildNode,
