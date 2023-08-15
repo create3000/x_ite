@@ -35,7 +35,7 @@ module .exports = async () =>
    const namespace =
    {
       test: /\.js$/,
-      exclude: /Namespace\.js$/,
+      exclude: /Namespace\.js$|X3D\.js/,
       use: [
          {
             loader: StringReplacePlugin .replace ({
@@ -45,13 +45,14 @@ module .exports = async () =>
                      replacement: function (match, m, offset, string)
                      {
                         const
-                           ns  = path .resolve (__dirname, "src/x_ite/Namespace.js"),
-                           rel = path .relative (path .dirname (this .resourcePath), ns),
-                           key = path .relative (path .resolve (__dirname, "src"), this .resourcePath) .replace (/\.js$/, "")
+                           ns   = path .resolve (__dirname, "src/x_ite/Namespace.js"),
+                           rel  = path .relative (path .dirname (this .resourcePath), ns),
+                           key  = path .relative (path .resolve (__dirname, "src"), this .resourcePath) .replace (/\.js$/, ""),
+                           base = path .basename (key)
 
                         return `const __default__ = ${m};
 import Namespace from "./${rel}";
-Namespace .set ("${key}", __default__);
+Namespace .add ("${base}", "${key}", __default__);
 export default __default__;`;
                      },
                   },

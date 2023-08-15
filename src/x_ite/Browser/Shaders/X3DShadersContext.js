@@ -46,7 +46,7 @@
  ******************************************************************************/
 
 import Shading        from "../Core/Shading.js";
-import Shaders        from "./Shaders.js";
+import Shaders        from "./ShaderRegistry.js";
 import ComposedShader from "../../Components/Shaders/ComposedShader.js";
 import ShaderPart     from "../../Components/Shaders/ShaderPart.js";
 

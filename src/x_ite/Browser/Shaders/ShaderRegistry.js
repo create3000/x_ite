@@ -110,7 +110,7 @@ import PointingFragment2      from "../../../assets/shaders/webgl2/Pointing.fs.j
 import PointingVertex2        from "../../../assets/shaders/webgl2/Pointing.vs.js";
 import UnlitFragment2         from "../../../assets/shaders/webgl2/Unlit.fs.js";
 
-const Shaders = {
+const ShaderRegistry = {
    includes: {
       1: {
          ClipPlanes: ClipPlanes1,
@@ -188,4 +188,4 @@ const Shaders = {
    },
 };
 
-export default Shaders;
+export default ShaderRegistry;

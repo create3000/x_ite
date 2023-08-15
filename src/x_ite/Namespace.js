@@ -47,6 +47,21 @@
 
 const Namespace = new Map ();
 
-Namespace .set ("x_ite/Namespace", Namespace);
+Object .assign (Namespace,
+{
+   add (name, path, module)
+   {
+      if (Namespace .has (name))
+         console .warn (`Module ${name} (${path}) already defined.`);
+
+      if (window [Symbol .for ("X_ITE.X3D")])
+         window [Symbol .for ("X_ITE.X3D")] = module;
+
+      this [name] = module;
+
+      Namespace .set (name, module);
+      Namespace .set (path, module);
+   },
+});
 
 export default Namespace;

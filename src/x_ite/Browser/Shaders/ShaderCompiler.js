@@ -45,13 +45,13 @@
  *
  ******************************************************************************/
 
-import Shaders from "./Shaders.js";
+import ShaderRegistry from "./ShaderRegistry.js";
 
 const include = /^\s*#pragma\s+X3D\s+include\s+".*?([^\/]+)\.glsl"\s*$/;
 
 function ShaderCompiler (gl)
 {
-   this .includes          = Shaders .includes [gl .getVersion ()];
+   this .includes          = ShaderRegistry .includes [gl .getVersion ()];
    this .sourceFileNumbers = { };
 
    for (const [i, name] of Object .getOwnPropertyNames (this .includes) .entries ())
