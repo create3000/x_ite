@@ -284,6 +284,17 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
 
       throw new Error ("SFNode.getFieldDefinitions: node is null.");
    },
+   getField (name)
+   {
+      const
+         target = this [_target],
+         value  = target .getValue ();
+
+      if (value)
+         return value .getField (name);
+
+      throw new Error ("SFNode is disposed.")
+   },
    addFieldCallback (name, key, object)
    {
       const target = this [_target];
