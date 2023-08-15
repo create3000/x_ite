@@ -413,9 +413,11 @@ The callback has a signature of *function (value),* where value is the current v
 
 Returns a list of fields defined for the SFNode object.
 
+<!--
 #### X3DField **getField** (*name*)
 
 Returns the corresponding X3DField object associated with *name*.
+-->
 
 #### String **getNodeName** ()
 
