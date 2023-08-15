@@ -130,7 +130,7 @@ function X3D (callback, fallback)
    });
 }
 
-Object .assign (X3D, Namespace,
+Object .assign (X3D, Namespace, Namespace .Fields,
 {
    require (id)
    {
