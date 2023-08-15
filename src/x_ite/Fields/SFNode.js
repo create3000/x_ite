@@ -269,7 +269,7 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
          value  = target .getValue ();
 
       if (value)
-         return Array .from (value .valueOf () .getType ()); // Use valueOf for tool support.
+         return Array .from (value .getType ());
 
       throw new Error ("SFNode.getNodeType: node is null.");
    },
