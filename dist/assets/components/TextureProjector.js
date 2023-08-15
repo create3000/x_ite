@@ -298,7 +298,7 @@ Object .defineProperties (X3DTextureProjectorNode,
 const __default__ = X3DTextureProjectorNode;
 ;
 
-Namespace_default().set ("x_ite/Components/TextureProjector/X3DTextureProjectorNode", __default__);
+Namespace_default().add ("X3DTextureProjectorNode", "x_ite/Components/TextureProjector/X3DTextureProjectorNode", __default__);
 /* harmony default export */ const TextureProjector_X3DTextureProjectorNode = (__default__);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Geometry/Camera\")"
 const Camera_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.11.16")] .require ("standard/Math/Geometry/Camera");
@@ -522,7 +522,7 @@ Object .defineProperties (TextureProjector,
 const TextureProjector_default_ = TextureProjector;
 ;
 
-Namespace_default().set ("x_ite/Components/TextureProjector/TextureProjector", TextureProjector_default_);
+Namespace_default().add ("TextureProjector", "x_ite/Components/TextureProjector/TextureProjector", TextureProjector_default_);
 /* harmony default export */ const TextureProjector_TextureProjector = (TextureProjector_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/TextureProjector/TextureProjectorParallel.js
 /*******************************************************************************
@@ -795,7 +795,7 @@ Object .defineProperties (TextureProjectorParallel,
 const TextureProjectorParallel_default_ = TextureProjectorParallel;
 ;
 
-Namespace_default().set ("x_ite/Components/TextureProjector/TextureProjectorParallel", TextureProjectorParallel_default_);
+Namespace_default().add ("TextureProjectorParallel", "x_ite/Components/TextureProjector/TextureProjectorParallel", TextureProjectorParallel_default_);
 /* harmony default export */ const TextureProjector_TextureProjectorParallel = (TextureProjectorParallel_default_);
 ;// CONCATENATED MODULE: ./src/assets/components/TextureProjector.js
 /*******************************************************************************
@@ -866,7 +866,7 @@ Components_default().add ({
 const components_TextureProjector_default_ = undefined;
 ;
 
-Namespace_default().set ("assets/components/TextureProjector", components_TextureProjector_default_);
+Namespace_default().add ("TextureProjector", "assets/components/TextureProjector", components_TextureProjector_default_);
 /* harmony default export */ const components_TextureProjector = ((/* unused pure expression or super */ null && (components_TextureProjector_default_)));
 /******/ })()
 ;

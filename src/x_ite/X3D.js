@@ -45,7 +45,7 @@
  *
  ******************************************************************************/
 
-import Namespace                   from "./Namespace"
+import Namespace                   from "./Namespace.js"
 import X3DBaseNode                 from "./Base/X3DBaseNode.js";
 import X3DFieldDefinition          from "./Base/X3DFieldDefinition.js";
 import FieldDefinitionArray        from "./Base/FieldDefinitionArray.js";

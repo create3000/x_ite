@@ -1,7 +1,7 @@
 /* X_ITE v8.11.16 */(() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 285:
+/***/ 132:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 /**
@@ -14645,7 +14645,7 @@ const TextAlignment =
 const __default__ = TextAlignment;
 ;
 
-Namespace_default().set ("x_ite/Browser/Text/TextAlignment", __default__);
+Namespace_default().add ("TextAlignment", "x_ite/Browser/Text/TextAlignment", __default__);
 /* harmony default export */ const Text_TextAlignment = (__default__);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/InputOutput/FileLoader\")"
 const FileLoader_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.11.16")] .require ("x_ite/InputOutput/FileLoader");
@@ -14918,7 +14918,7 @@ Object .defineProperties (X3DFontStyleNode,
 const X3DFontStyleNode_default_ = X3DFontStyleNode;
 ;
 
-Namespace_default().set ("x_ite/Components/Text/X3DFontStyleNode", X3DFontStyleNode_default_);
+Namespace_default().add ("X3DFontStyleNode", "x_ite/Components/Text/X3DFontStyleNode", X3DFontStyleNode_default_);
 /* harmony default export */ const Text_X3DFontStyleNode = (X3DFontStyleNode_default_);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Browser/Core/PrimitiveQuality\")"
 const PrimitiveQuality_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.11.16")] .require ("x_ite/Browser/Core/PrimitiveQuality");
@@ -15552,7 +15552,7 @@ Object .assign (X3DTextGeometry .prototype,
 const X3DTextGeometry_default_ = X3DTextGeometry;
 ;
 
-Namespace_default().set ("x_ite/Browser/Text/X3DTextGeometry", X3DTextGeometry_default_);
+Namespace_default().add ("X3DTextGeometry", "x_ite/Browser/Text/X3DTextGeometry", X3DTextGeometry_default_);
 /* harmony default export */ const Text_X3DTextGeometry = (X3DTextGeometry_default_);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Matrix4\")"
 const Matrix4_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.11.16")] .require ("standard/Math/Numbers/Matrix4");
@@ -15926,7 +15926,7 @@ Object .assign (Object .setPrototypeOf (PolygonText .prototype, Text_X3DTextGeom
 const PolygonText_default_ = PolygonText;
 ;
 
-Namespace_default().set ("x_ite/Browser/Text/PolygonText", PolygonText_default_);
+Namespace_default().add ("PolygonText", "x_ite/Browser/Text/PolygonText", PolygonText_default_);
 /* harmony default export */ const Text_PolygonText = (PolygonText_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Text/FontStyle.js
 /*******************************************************************************
@@ -16047,11 +16047,11 @@ Object .defineProperties (FontStyle,
 const FontStyle_default_ = FontStyle;
 ;
 
-Namespace_default().set ("x_ite/Components/Text/FontStyle", FontStyle_default_);
+Namespace_default().add ("FontStyle", "x_ite/Components/Text/FontStyle", FontStyle_default_);
 /* harmony default export */ const Text_FontStyle = (FontStyle_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Text/X3DTextContext.js
 /* provided dependency */ var $ = __webpack_require__(355);
-/* provided dependency */ var opentype = __webpack_require__(285);
+/* provided dependency */ var opentype = __webpack_require__(132);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -16188,7 +16188,7 @@ Object .assign (X3DTextContext .prototype,
 const X3DTextContext_default_ = X3DTextContext;
 ;
 
-Namespace_default().set ("x_ite/Browser/Text/X3DTextContext", X3DTextContext_default_);
+Namespace_default().add ("X3DTextContext", "x_ite/Browser/Text/X3DTextContext", X3DTextContext_default_);
 /* harmony default export */ const Text_X3DTextContext = (X3DTextContext_default_);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Rendering/X3DGeometryNode\")"
 const X3DGeometryNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.11.16")] .require ("x_ite/Components/Rendering/X3DGeometryNode");
@@ -16384,7 +16384,7 @@ Object .defineProperties (Text,
 const Text_default_ = Text;
 ;
 
-Namespace_default().set ("x_ite/Components/Text/Text", Text_default_);
+Namespace_default().add ("Text", "x_ite/Components/Text/Text", Text_default_);
 /* harmony default export */ const Text_Text = (Text_default_);
 ;// CONCATENATED MODULE: ./src/assets/components/Text.js
 /*******************************************************************************
@@ -16457,7 +16457,7 @@ Components_default().add ({
 const components_Text_default_ = undefined;
 ;
 
-Namespace_default().set ("assets/components/Text", components_Text_default_);
+Namespace_default().add ("Text", "assets/components/Text", components_Text_default_);
 /* harmony default export */ const components_Text = ((/* unused pure expression or super */ null && (components_Text_default_)));
 })();
 

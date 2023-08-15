@@ -52,16 +52,25 @@ Object .assign (Namespace,
    add (name, path, module)
    {
       if (Namespace .has (name))
-         console .warn (`Module ${name} (${path}) already defined.`);
+      {
+         // if (!path .match (/\/components\/\w+$/i))
+         //    console .warn (`Module ${name} (${path}) already defined.`);
+      }
+      else
+      {
+         const X3D = window [Symbol .for ("X_ITE.X3D")];
 
-      if (window [Symbol .for ("X_ITE.X3D")])
-         window [Symbol .for ("X_ITE.X3D")] = module;
+         if (X3D)
+            X3D [name] = module;
 
-      this [name] = module;
+         Namespace [name] = module;
+         Namespace .set (name, module);
+      }
 
-      Namespace .set (name, module);
       Namespace .set (path, module);
    },
 });
+
+Namespace .add ("Namespace", "x_ite/Namespace", Namespace);
 
 export default Namespace;

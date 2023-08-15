@@ -5,7 +5,7 @@ import isNdarrayLike       from "./src/utils/is-ndarray-like.js";
 import createAccessors     from "./src/utils/create-accessors.js";
 import numericalDerivative from "./src/numerical-derivative.js";
 import isArrayLike         from "./src/utils/is-array-like.js";
-import createEvaluator     from "./src/evaluate.js";
+import createEvaluator     from "./src/evaluator.js";
 import createTransform     from "./src/transform.js";
 import createSupport       from "./src/support.js";
 import sample              from "./extras/sample.js";

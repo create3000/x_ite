@@ -50,7 +50,7 @@ import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DNode              from "../Core/X3DNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
-import Geospatial           from "../../Browser/Geospatial/Geospatial.js";
+import GeospatialObject     from "../../Browser/Geospatial/GeospatialObject.js";
 
 function GeoOrigin (executionContext)
 {
@@ -73,7 +73,7 @@ Object .assign (Object .setPrototypeOf (GeoOrigin .prototype, X3DNode .prototype
    },
    set_geoSystem__ ()
    {
-      this .referenceFrame = Geospatial .getReferenceFrame (this ._geoSystem, this .radians);
+      this .referenceFrame = GeospatialObject .getReferenceFrame (this ._geoSystem, this .radians);
    },
    getOrigin (result)
    {

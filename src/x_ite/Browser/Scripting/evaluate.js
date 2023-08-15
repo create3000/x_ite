@@ -45,7 +45,7 @@
  *
  ******************************************************************************/
 
-function evaluate (globalObject, sourceText)
+function evaluator (globalObject, sourceText)
 {
    return Function (/* js */ `with (arguments [0])
    {
@@ -65,4 +65,4 @@ function evaluate (globalObject, sourceText)
    (globalObject, sourceText);
 }
 
-export default evaluate;
+export default evaluator;

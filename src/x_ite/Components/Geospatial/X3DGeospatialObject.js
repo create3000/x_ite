@@ -45,13 +45,13 @@
  *
  ******************************************************************************/
 
-import X3DConstants from "../../Base/X3DConstants.js";
-import Geospatial   from "../../Browser/Geospatial/Geospatial.js";
-import X3DCast      from "../../Base/X3DCast.js";
-import Vector3      from "../../../standard/Math/Numbers/Vector3.js";
-import Matrix4      from "../../../standard/Math/Numbers/Matrix4.js";
+import X3DConstants     from "../../Base/X3DConstants.js";
+import GeospatialObject from "../../Browser/Geospatial/GeospatialObject.js";
+import X3DCast          from "../../Base/X3DCast.js";
+import Vector3          from "../../../standard/Math/Numbers/Vector3.js";
+import Matrix4          from "../../../standard/Math/Numbers/Matrix4.js";
 
-var
+const
    vector = new Vector3 (0, 0, 0),
    result = new Vector3 (0, 0, 0),
    t      = new Vector3 (0, 0, 0),
@@ -81,10 +81,10 @@ Object .assign (X3DGeospatialObject .prototype,
    },
    set_geoSystem__ ()
    {
-      this .coordinateSystem = Geospatial .getCoordinateSystem (this ._geoSystem);
-      this .referenceFrame   = Geospatial .getReferenceFrame   (this ._geoSystem, this .radians);
-      this .elevationFrame   = Geospatial .getElevationFrame   (this ._geoSystem, this .radians);
-      this .standardOrder    = Geospatial .isStandardOrder     (this ._geoSystem);
+      this .coordinateSystem = GeospatialObject .getCoordinateSystem (this ._geoSystem);
+      this .referenceFrame   = GeospatialObject .getReferenceFrame   (this ._geoSystem, this .radians);
+      this .elevationFrame   = GeospatialObject .getElevationFrame   (this ._geoSystem, this .radians);
+      this .standardOrder    = GeospatialObject .isStandardOrder     (this ._geoSystem);
    },
    set_geoOrigin__ ()
    {

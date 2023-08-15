@@ -68,7 +68,7 @@ const CoordinateSystems = {
 
 const Zone = /^Z(\d+)$/;
 
-const Geospatial =
+const GeospatialObject =
 {
    GD: GD,
    UTM: UTM,
@@ -202,4 +202,4 @@ const Geospatial =
    },
 };
 
-export default Geospatial;
+export default GeospatialObject;
