@@ -378,6 +378,7 @@ const X_ITE_TESTS = [
    { path: "Texturing3D/Volume.x3d" },
    { component: "Time" },
    { path: "Time/Clock.x3d" },
+   { path: "Time/CycleInterval.x3d" },
    { path: "Time/TimeProto.x3d" },
    { component: "VolumeRendering" },
    { path: "VolumeRendering/BasicInternals.x3d" },
