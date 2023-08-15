@@ -51,7 +51,7 @@ Object .assign (Namespace,
 {
    add (name, path, module)
    {
-      if (Namespace .has (name))
+      if (Namespace .hasOwnProperty (name))
       {
          // if (!path .match (/\/components\/\w+$/i))
          //    console .warn (`Module ${name} (${path}) already defined.`);
@@ -64,7 +64,6 @@ Object .assign (Namespace,
             X3D [name] = module;
 
          Namespace [name] = module;
-         Namespace .set (name, module);
       }
 
       Namespace .set (path, module);
