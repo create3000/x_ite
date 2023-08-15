@@ -105,7 +105,7 @@ Object .assign (DataStorage .prototype,
    {
       return new DataStorage (this .getStorage (), this .getNameSpace () + namespace);
    },
-   addDefaultValues (object)
+   setDefaultValues (object)
    {
       Object .assign (defaults .get (this .target), object);
    },

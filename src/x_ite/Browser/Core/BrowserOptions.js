@@ -75,7 +75,7 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
    {
       X3DBaseNode .prototype .initialize .call (this);
 
-      this .localStorage .addDefaultValues ({
+      this .localStorage .setDefaultValues ({
          Rubberband:        this ._Rubberband        .getValue (),
          PrimitiveQuality:  this ._PrimitiveQuality  .getValue (),
          TextureQuality:    this ._TextureQuality    .getValue (),

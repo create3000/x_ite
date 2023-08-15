@@ -65,7 +65,7 @@ Object .assign (Object .setPrototypeOf (BrowserTimings .prototype, X3DBaseNode .
 
       this .getBrowser () .getBrowserOptions () ._Timings .addInterest ("set_enabled__", this);
 
-      this .localStorage .addDefaultValues ({ type: "LESS" });
+      this .localStorage .setDefaultValues ({ type: "LESS" });
 
       this .element = $("<div></div>")
          .hide ()
