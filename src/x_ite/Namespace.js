@@ -49,7 +49,7 @@ const Namespace = new Map ();
 
 Object .assign (Namespace,
 {
-   add (name, path, module)
+   addModule (name, path, module)
    {
       if (Namespace .hasOwnProperty (name))
       {
