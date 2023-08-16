@@ -45,7 +45,7 @@
  *
  ******************************************************************************/
 
-function evaluator (globalObject, sourceText)
+function evaluate (thisArg, globalObject, sourceText)
 {
    return Function (/* js */ `with (arguments [0])
    {
@@ -62,7 +62,7 @@ function evaluator (globalObject, sourceText)
       })
       ());
    }`)
-   (globalObject, sourceText);
+   .call (thisArg, globalObject, sourceText);
 }
 
-export default evaluator;
+export default evaluate;

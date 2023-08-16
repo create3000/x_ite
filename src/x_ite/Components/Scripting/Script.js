@@ -78,6 +78,7 @@ import evaluate                    from "../../Browser/Scripting/evaluate.js";
 import X3DScriptNode               from "./X3DScriptNode.js";
 import FileLoader                  from "../../InputOutput/FileLoader.js";
 import X3DConstants                from "../../Base/X3DConstants.js";
+import SFNodeCache                 from "../../Fields/SFNodeCache.js";
 
 function Script (executionContext)
 {
@@ -139,6 +140,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
          if (data === null)
          {
             // No URL could be loaded.
+            this .initialize__ ("");
             this .setLoadState (X3DConstants .FAILED_STATE);
          }
          else
@@ -148,61 +150,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
          }
       });
    },
-   getContext (sourceText)
-   {
-      try
-      {
-         const callbacks = ["initialize", "prepareEvents", "eventsProcessed", "shutdown"];
-
-         for (const field of this .getUserDefinedFields ())
-         {
-            switch (field .getAccessType ())
-            {
-               case X3DConstants .inputOnly:
-                  callbacks .push (field .getName ());
-                  break;
-               case X3DConstants .inputOutput:
-                  callbacks .push ("set_" + field .getName ());
-                  break;
-            }
-         }
-
-         sourceText += ";\n[" + callbacks .map (c => `typeof ${c} !== "undefined" ? ${c} : undefined`) .join (",") + "];";
-
-         this .globalObject = this .getGlobalObject ();
-
-         const
-            result  = this .evaluate (sourceText),
-            context = new Map ();
-
-         for (let i = 0; i < callbacks .length; ++ i)
-            context .set (callbacks [i], result [i]);
-
-         return context;
-      }
-      catch (error)
-      {
-         this .setError ("while evaluating script source", error);
-
-         return new Map ();
-      }
-   },
-   evaluate (sourceText)
-   {
-      const browser = this .getBrowser ();
-
-      browser .getScriptStack () .push (this);
-
-      try
-      {
-         return evaluate (this .globalObject, sourceText);
-      }
-      finally
-      {
-         browser .getScriptStack () .pop ();
-      }
-   },
-   getGlobalObject ()
+   createGlobalObject ()
    {
       const browser = this .getBrowser ();
 
@@ -329,6 +277,61 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
 
       return Object .create (Object .prototype, globalObject);
    },
+   createContext (sourceText)
+   {
+      try
+      {
+         const callbacks = ["initialize", "prepareEvents", "eventsProcessed", "shutdown"];
+
+         for (const field of this .getUserDefinedFields ())
+         {
+            switch (field .getAccessType ())
+            {
+               case X3DConstants .inputOnly:
+                  callbacks .push (field .getName ());
+                  break;
+               case X3DConstants .inputOutput:
+                  callbacks .push ("set_" + field .getName ());
+                  break;
+            }
+         }
+
+         sourceText += ";\n[" + callbacks .map (c => `typeof ${c} !== "undefined" ? ${c} : undefined`) .join (",") + "];";
+
+         const
+            result  = this .evaluate (sourceText),
+            context = new Map ();
+
+         for (let i = 0; i < callbacks .length; ++ i)
+            context .set (callbacks [i], result [i]);
+
+         return context;
+      }
+      catch (error)
+      {
+         this .setError ("while evaluating script source", error);
+
+         return new Map ();
+      }
+   },
+   evaluate (sourceText)
+   {
+      const browser = this .getBrowser ();
+
+      try
+      {
+         browser .getScriptStack () .push (this);
+
+         if (!this .globalObject)
+            this .globalObject = this .createGlobalObject ();
+
+         return evaluate (SFNodeCache .get (this), this .globalObject, sourceText);
+      }
+      finally
+      {
+         browser .getScriptStack () .pop ();
+      }
+   },
    initialize__ (sourceText)
    {
       this .disconnect ();
@@ -337,7 +340,8 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
 
       // Create context.
 
-      this .context = this .getContext (sourceText);
+      this .globalObject = this .createGlobalObject ();
+      this .context      = this .createContext (sourceText);
 
       // Connect shutdown.
 
@@ -402,7 +406,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
 
       try
       {
-         callback (browser .getCurrentTime ());
+         callback .call (SFNodeCache .get (this), browser .getCurrentTime ());
       }
       catch (error)
       {
@@ -420,7 +424,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
 
       try
       {
-         callback (field .valueOf (), browser .getCurrentTime ());
+         callback .call (SFNodeCache .get (this), field .valueOf (), browser .getCurrentTime ());
       }
       catch (error)
       {

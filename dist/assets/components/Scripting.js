@@ -213,7 +213,7 @@ var Namespace_default = /*#__PURE__*/__webpack_require__.n(Namespace_namespaceOb
  *
  ******************************************************************************/
 
-function evaluator (globalObject, sourceText)
+function evaluate (thisArg, globalObject, sourceText)
 {
    return Function (/* js */ `with (arguments [0])
    {
@@ -230,14 +230,14 @@ function evaluator (globalObject, sourceText)
       })
       ());
    }`)
-   (globalObject, sourceText);
+   .call (thisArg, globalObject, sourceText);
 }
 
-const __default__ = evaluator;
+const __default__ = evaluate;
 ;
 
 Namespace_default().add ("evaluate", "x_ite/Browser/Scripting/evaluate", __default__);
-/* harmony default export */ const evaluate = (__default__);
+/* harmony default export */ const Scripting_evaluate = (__default__);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Core/X3DChildNode\")"
 const X3DChildNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.11.16")] .require ("x_ite/Components/Core/X3DChildNode");
 var X3DChildNode_default = /*#__PURE__*/__webpack_require__.n(X3DChildNode_namespaceObject);
@@ -344,6 +344,9 @@ Namespace_default().add ("X3DScriptNode", "x_ite/Components/Scripting/X3DScriptN
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/InputOutput/FileLoader\")"
 const FileLoader_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.11.16")] .require ("x_ite/InputOutput/FileLoader");
 var FileLoader_default = /*#__PURE__*/__webpack_require__.n(FileLoader_namespaceObject);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Fields/SFNodeCache\")"
+const SFNodeCache_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.11.16")] .require ("x_ite/Fields/SFNodeCache");
+var SFNodeCache_default = /*#__PURE__*/__webpack_require__.n(SFNodeCache_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Scripting/Script.js
 /* provided dependency */ var $ = __webpack_require__(355);
 /*******************************************************************************
@@ -392,6 +395,7 @@ var FileLoader_default = /*#__PURE__*/__webpack_require__.n(FileLoader_namespace
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -487,6 +491,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, Scripting_X3DScriptNo
          if (data === null)
          {
             // No URL could be loaded.
+            this .initialize__ ("");
             this .setLoadState ((X3DConstants_default()).FAILED_STATE);
          }
          else
@@ -496,61 +501,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, Scripting_X3DScriptNo
          }
       });
    },
-   getContext (sourceText)
-   {
-      try
-      {
-         const callbacks = ["initialize", "prepareEvents", "eventsProcessed", "shutdown"];
-
-         for (const field of this .getUserDefinedFields ())
-         {
-            switch (field .getAccessType ())
-            {
-               case (X3DConstants_default()).inputOnly:
-                  callbacks .push (field .getName ());
-                  break;
-               case (X3DConstants_default()).inputOutput:
-                  callbacks .push ("set_" + field .getName ());
-                  break;
-            }
-         }
-
-         sourceText += ";\n[" + callbacks .map (c => `typeof ${c} !== "undefined" ? ${c} : undefined`) .join (",") + "];";
-
-         this .globalObject = this .getGlobalObject ();
-
-         const
-            result  = this .evaluate (sourceText),
-            context = new Map ();
-
-         for (let i = 0; i < callbacks .length; ++ i)
-            context .set (callbacks [i], result [i]);
-
-         return context;
-      }
-      catch (error)
-      {
-         this .setError ("while evaluating script source", error);
-
-         return new Map ();
-      }
-   },
-   evaluate (sourceText)
-   {
-      const browser = this .getBrowser ();
-
-      browser .getScriptStack () .push (this);
-
-      try
-      {
-         return evaluate (this .globalObject, sourceText);
-      }
-      finally
-      {
-         browser .getScriptStack () .pop ();
-      }
-   },
-   getGlobalObject ()
+   createGlobalObject ()
    {
       const browser = this .getBrowser ();
 
@@ -677,6 +628,61 @@ Object .assign (Object .setPrototypeOf (Script .prototype, Scripting_X3DScriptNo
 
       return Object .create (Object .prototype, globalObject);
    },
+   createContext (sourceText)
+   {
+      try
+      {
+         const callbacks = ["initialize", "prepareEvents", "eventsProcessed", "shutdown"];
+
+         for (const field of this .getUserDefinedFields ())
+         {
+            switch (field .getAccessType ())
+            {
+               case (X3DConstants_default()).inputOnly:
+                  callbacks .push (field .getName ());
+                  break;
+               case (X3DConstants_default()).inputOutput:
+                  callbacks .push ("set_" + field .getName ());
+                  break;
+            }
+         }
+
+         sourceText += ";\n[" + callbacks .map (c => `typeof ${c} !== "undefined" ? ${c} : undefined`) .join (",") + "];";
+
+         const
+            result  = this .evaluate (sourceText),
+            context = new Map ();
+
+         for (let i = 0; i < callbacks .length; ++ i)
+            context .set (callbacks [i], result [i]);
+
+         return context;
+      }
+      catch (error)
+      {
+         this .setError ("while evaluating script source", error);
+
+         return new Map ();
+      }
+   },
+   evaluate (sourceText)
+   {
+      const browser = this .getBrowser ();
+
+      try
+      {
+         browser .getScriptStack () .push (this);
+
+         if (!this .globalObject)
+            this .globalObject = this .createGlobalObject ();
+
+         return Scripting_evaluate (SFNodeCache_default().get (this), this .globalObject, sourceText);
+      }
+      finally
+      {
+         browser .getScriptStack () .pop ();
+      }
+   },
    initialize__ (sourceText)
    {
       this .disconnect ();
@@ -685,7 +691,8 @@ Object .assign (Object .setPrototypeOf (Script .prototype, Scripting_X3DScriptNo
 
       // Create context.
 
-      this .context = this .getContext (sourceText);
+      this .globalObject = this .createGlobalObject ();
+      this .context      = this .createContext (sourceText);
 
       // Connect shutdown.
 
@@ -750,7 +757,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, Scripting_X3DScriptNo
 
       try
       {
-         callback (browser .getCurrentTime ());
+         callback .call (SFNodeCache_default().get (this), browser .getCurrentTime ());
       }
       catch (error)
       {
@@ -768,7 +775,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, Scripting_X3DScriptNo
 
       try
       {
-         callback (field .valueOf (), browser .getCurrentTime ());
+         callback .call (SFNodeCache_default().get (this), field .valueOf (), browser .getCurrentTime ());
       }
       catch (error)
       {
