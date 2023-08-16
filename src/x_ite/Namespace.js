@@ -47,9 +47,9 @@
 
 const Namespace = new Map ();
 
-Object .assign (Namespace,
+Object .defineProperty (Namespace, "add",
 {
-   addModule (name, path, module)
+   value (name, path, module)
    {
       if (Namespace .hasOwnProperty (name))
       {
@@ -70,6 +70,6 @@ Object .assign (Namespace,
    },
 });
 
-Namespace .addModule ("Namespace", "x_ite/Namespace", Namespace);
+Namespace .add ("Namespace", "x_ite/Namespace", Namespace);
 
 export default Namespace;
