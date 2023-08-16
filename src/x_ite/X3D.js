@@ -52,6 +52,7 @@ import FieldDefinitionArray        from "./Base/FieldDefinitionArray.js";
 import X3DField                    from "./Base/X3DField.js";
 import X3DArrayField               from "./Base/X3DArrayField.js";
 import Fields                      from "./Fields.js";
+import Legacy                      from "./Browser/Legacy.js";
 import X3DBrowser                  from "./Browser/X3DBrowser.js";
 import ComponentInfo               from "./Configuration/ComponentInfo.js";
 import ComponentInfoArray          from "./Configuration/ComponentInfoArray.js";
@@ -76,7 +77,7 @@ import X3DProtoDeclarationNode     from "./Prototype/X3DProtoDeclarationNode.js"
 import RouteArray                  from "./Routing/RouteArray.js";
 import X3DRoute                    from "./Routing/X3DRoute.js";
 import X3DConstants                from "./Base/X3DConstants.js";
-import Legacy                      from "./Browser/Legacy.js";
+import X3DCanvasElement            from "./X3DCanvasElement.js";
 import jQuery                      from "../lib/jquery.js";
 import libtess                     from "../lib/libtess.js";
 

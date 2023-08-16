@@ -224,7 +224,7 @@ Object .assign (X3DLayoutContext .prototype,
 const __default__ = X3DLayoutContext;
 ;
 
-Namespace_default().add ("X3DLayoutContext", "x_ite/Browser/Layout/X3DLayoutContext", __default__);
+Namespace_default().addModule ("X3DLayoutContext", "x_ite/Browser/Layout/X3DLayoutContext", __default__);
 /* harmony default export */ const Layout_X3DLayoutContext = (__default__);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Fields\")"
 const Fields_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.11.16")] .require ("x_ite/Fields");
@@ -318,7 +318,7 @@ Object .defineProperties (X3DLayoutNode,
 const X3DLayoutNode_default_ = X3DLayoutNode;
 ;
 
-Namespace_default().add ("X3DLayoutNode", "x_ite/Components/Layout/X3DLayoutNode", X3DLayoutNode_default_);
+Namespace_default().addModule ("X3DLayoutNode", "x_ite/Components/Layout/X3DLayoutNode", X3DLayoutNode_default_);
 /* harmony default export */ const Layout_X3DLayoutNode = (X3DLayoutNode_default_);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DCast\")"
 const X3DCast_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.11.16")] .require ("x_ite/Base/X3DCast");
@@ -974,7 +974,7 @@ Object .defineProperties (Layout,
 const Layout_default_ = Layout;
 ;
 
-Namespace_default().add ("Layout", "x_ite/Components/Layout/Layout", Layout_default_);
+Namespace_default().addModule ("Layout", "x_ite/Components/Layout/Layout", Layout_default_);
 /* harmony default export */ const Layout_Layout = (Layout_default_);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Grouping/X3DGroupingNode\")"
 const X3DGroupingNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.11.16")] .require ("x_ite/Components/Grouping/X3DGroupingNode");
@@ -1173,7 +1173,7 @@ Object .defineProperties (LayoutGroup,
 const LayoutGroup_default_ = LayoutGroup;
 ;
 
-Namespace_default().add ("LayoutGroup", "x_ite/Components/Layout/LayoutGroup", LayoutGroup_default_);
+Namespace_default().addModule ("LayoutGroup", "x_ite/Components/Layout/LayoutGroup", LayoutGroup_default_);
 /* harmony default export */ const Layout_LayoutGroup = (LayoutGroup_default_);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Layering/X3DLayerNode\")"
 const X3DLayerNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.11.16")] .require ("x_ite/Components/Layering/X3DLayerNode");
@@ -1308,7 +1308,7 @@ Object .defineProperties (LayoutLayer,
 const LayoutLayer_default_ = LayoutLayer;
 ;
 
-Namespace_default().add ("LayoutLayer", "x_ite/Components/Layout/LayoutLayer", LayoutLayer_default_);
+Namespace_default().addModule ("LayoutLayer", "x_ite/Components/Layout/LayoutLayer", LayoutLayer_default_);
 /* harmony default export */ const Layout_LayoutLayer = (LayoutLayer_default_);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Text/X3DFontStyleNode\")"
 const X3DFontStyleNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.11.16")] .require ("x_ite/Components/Text/X3DFontStyleNode");
@@ -1744,7 +1744,7 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, (X3DTextGeometry_
 const ScreenText_default_ = ScreenText;
 ;
 
-Namespace_default().add ("ScreenText", "x_ite/Browser/Layout/ScreenText", ScreenText_default_);
+Namespace_default().addModule ("ScreenText", "x_ite/Browser/Layout/ScreenText", ScreenText_default_);
 /* harmony default export */ const Layout_ScreenText = (ScreenText_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Layout/ScreenFontStyle.js
 /*******************************************************************************
@@ -1869,7 +1869,7 @@ Object .defineProperties (ScreenFontStyle,
 const ScreenFontStyle_default_ = ScreenFontStyle;
 ;
 
-Namespace_default().add ("ScreenFontStyle", "x_ite/Components/Layout/ScreenFontStyle", ScreenFontStyle_default_);
+Namespace_default().addModule ("ScreenFontStyle", "x_ite/Components/Layout/ScreenFontStyle", ScreenFontStyle_default_);
 /* harmony default export */ const Layout_ScreenFontStyle = (ScreenFontStyle_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Layout/ScreenGroup.js
 /*******************************************************************************
@@ -2012,7 +2012,7 @@ Object .defineProperties (ScreenGroup,
 const ScreenGroup_default_ = ScreenGroup;
 ;
 
-Namespace_default().add ("ScreenGroup", "x_ite/Components/Layout/ScreenGroup", ScreenGroup_default_);
+Namespace_default().addModule ("ScreenGroup", "x_ite/Components/Layout/ScreenGroup", ScreenGroup_default_);
 /* harmony default export */ const Layout_ScreenGroup = (ScreenGroup_default_);
 ;// CONCATENATED MODULE: ./src/assets/components/Layout.js
 /*******************************************************************************
@@ -2091,7 +2091,7 @@ Components_default().add ({
 const components_Layout_default_ = undefined;
 ;
 
-Namespace_default().add ("Layout", "assets/components/Layout", components_Layout_default_);
+Namespace_default().addModule ("Layout", "assets/components/Layout", components_Layout_default_);
 /* harmony default export */ const components_Layout = ((/* unused pure expression or super */ null && (components_Layout_default_)));
 })();
 

@@ -1,7 +1,7 @@
 /* X_ITE v8.11.16 */(() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 970:
+/***/ 945:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -38,7 +38,7 @@ var Ib=[cx,_q,cr,Yr,as,fs,hs,Hu,Su,cx,cx,cx,cx,cx,cx,cx];var Jb=[dx,si,gi,Wh,Kh,
 
 /***/ }),
 
-/***/ 184:
+/***/ 919:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -72,7 +72,7 @@ var _a=[yj,od,ef,yj];var $a=[zj,Li,di,bi,Kb,Lb,Mb,Nb,Rc,Sc,Uc,jd,xd,Ye,lf,yd,zd,
 
 /***/ }),
 
-/***/ 233:
+/***/ 709:
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 /*! dicom-parser - 1.8.12 - 2023-02-20 | (c) 2017 Chris Hafey | https://github.com/cornerstonejs/dicomParser */
@@ -4028,7 +4028,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_zlib__;
 
 /***/ }),
 
-/***/ 477:
+/***/ 95:
 /***/ ((module) => {
 
 /* -*- tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- /
@@ -5183,7 +5183,7 @@ function decode(jpegData, userOpts = {}) {
 
 /***/ }),
 
-/***/ 227:
+/***/ 654:
 /***/ ((module) => {
 
 (function(f){if(true){module.exports=f()}else { var g; }})(function(){var define,module,exports;return (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c=undefined;if(!f&&c)return require(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u=undefined,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
@@ -7252,7 +7252,7 @@ Object .defineProperties (X3DTexture3DNode,
 const __default__ = X3DTexture3DNode;
 ;
 
-Namespace_default().add ("X3DTexture3DNode", "x_ite/Components/Texturing3D/X3DTexture3DNode", __default__);
+Namespace_default().addModule ("X3DTexture3DNode", "x_ite/Components/Texturing3D/X3DTexture3DNode", __default__);
 /* harmony default export */ const Texturing3D_X3DTexture3DNode = (__default__);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DCast\")"
 const X3DCast_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.11.16")] .require ("x_ite/Base/X3DCast");
@@ -7461,7 +7461,7 @@ Object .defineProperties (ComposedTexture3D,
 const ComposedTexture3D_default_ = ComposedTexture3D;
 ;
 
-Namespace_default().add ("ComposedTexture3D", "x_ite/Components/Texturing3D/ComposedTexture3D", ComposedTexture3D_default_);
+Namespace_default().addModule ("ComposedTexture3D", "x_ite/Components/Texturing3D/ComposedTexture3D", ComposedTexture3D_default_);
 /* harmony default export */ const Texturing3D_ComposedTexture3D = (ComposedTexture3D_default_);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Networking/X3DUrlObject\")"
 const X3DUrlObject_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.11.16")] .require ("x_ite/Components/Networking/X3DUrlObject");
@@ -7933,14 +7933,14 @@ Object .assign (NRRDParser .prototype,
 const NRRDParser_default_ = NRRDParser;
 ;
 
-Namespace_default().add ("NRRDParser", "x_ite/Browser/Texturing3D/NRRDParser", NRRDParser_default_);
+Namespace_default().addModule ("NRRDParser", "x_ite/Browser/Texturing3D/NRRDParser", NRRDParser_default_);
 /* harmony default export */ const Texturing3D_NRRDParser = (NRRDParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Texturing3D/DICOMParser.js
-/* provided dependency */ var dicomParser = __webpack_require__(233);
-/* provided dependency */ var JpegImage = __webpack_require__(477);
-/* provided dependency */ var jpeg = __webpack_require__(227);
-/* provided dependency */ var CharLS = __webpack_require__(970);
-/* provided dependency */ var OpenJPEG = __webpack_require__(184);
+/* provided dependency */ var dicomParser = __webpack_require__(709);
+/* provided dependency */ var JpegImage = __webpack_require__(95);
+/* provided dependency */ var jpeg = __webpack_require__(654);
+/* provided dependency */ var CharLS = __webpack_require__(945);
+/* provided dependency */ var OpenJPEG = __webpack_require__(919);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -9040,7 +9040,7 @@ Object .assign (DicomParser .prototype,
 const DICOMParser_default_ = DicomParser;
 ;
 
-Namespace_default().add ("DICOMParser", "x_ite/Browser/Texturing3D/DICOMParser", DICOMParser_default_);
+Namespace_default().addModule ("DICOMParser", "x_ite/Browser/Texturing3D/DICOMParser", DICOMParser_default_);
 /* harmony default export */ const DICOMParser = (DICOMParser_default_);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/InputOutput/FileLoader\")"
 const FileLoader_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.11.16")] .require ("x_ite/InputOutput/FileLoader");
@@ -9231,7 +9231,7 @@ Object .defineProperties (ImageTexture3D,
 const ImageTexture3D_default_ = ImageTexture3D;
 ;
 
-Namespace_default().add ("ImageTexture3D", "x_ite/Components/Texturing3D/ImageTexture3D", ImageTexture3D_default_);
+Namespace_default().addModule ("ImageTexture3D", "x_ite/Components/Texturing3D/ImageTexture3D", ImageTexture3D_default_);
 /* harmony default export */ const Texturing3D_ImageTexture3D = (ImageTexture3D_default_);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/DEVELOPMENT\")"
 const DEVELOPMENT_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.11.16")] .require ("x_ite/DEVELOPMENT");
@@ -9485,7 +9485,7 @@ Object .defineProperties (ImageTextureAtlas,
 const ImageTextureAtlas_default_ = ImageTextureAtlas;
 ;
 
-Namespace_default().add ("ImageTextureAtlas", "x_ite/Components/Texturing3D/ImageTextureAtlas", ImageTextureAtlas_default_);
+Namespace_default().addModule ("ImageTextureAtlas", "x_ite/Components/Texturing3D/ImageTextureAtlas", ImageTextureAtlas_default_);
 /* harmony default export */ const Texturing3D_ImageTextureAtlas = (ImageTextureAtlas_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing3D/PixelTexture3D.js
 /*******************************************************************************
@@ -9711,7 +9711,7 @@ Object .defineProperties (PixelTexture3D,
 const PixelTexture3D_default_ = PixelTexture3D;
 ;
 
-Namespace_default().add ("PixelTexture3D", "x_ite/Components/Texturing3D/PixelTexture3D", PixelTexture3D_default_);
+Namespace_default().addModule ("PixelTexture3D", "x_ite/Components/Texturing3D/PixelTexture3D", PixelTexture3D_default_);
 /* harmony default export */ const Texturing3D_PixelTexture3D = (PixelTexture3D_default_);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Texturing/X3DSingleTextureCoordinateNode\")"
 const X3DSingleTextureCoordinateNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.11.16")] .require ("x_ite/Components/Texturing/X3DSingleTextureCoordinateNode");
@@ -9876,7 +9876,7 @@ Object .defineProperties (TextureCoordinate3D,
 const TextureCoordinate3D_default_ = TextureCoordinate3D;
 ;
 
-Namespace_default().add ("TextureCoordinate3D", "x_ite/Components/Texturing3D/TextureCoordinate3D", TextureCoordinate3D_default_);
+Namespace_default().addModule ("TextureCoordinate3D", "x_ite/Components/Texturing3D/TextureCoordinate3D", TextureCoordinate3D_default_);
 /* harmony default export */ const Texturing3D_TextureCoordinate3D = (TextureCoordinate3D_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing3D/TextureCoordinate4D.js
 /*******************************************************************************
@@ -10036,7 +10036,7 @@ Object .defineProperties (TextureCoordinate4D,
 const TextureCoordinate4D_default_ = TextureCoordinate4D;
 ;
 
-Namespace_default().add ("TextureCoordinate4D", "x_ite/Components/Texturing3D/TextureCoordinate4D", TextureCoordinate4D_default_);
+Namespace_default().addModule ("TextureCoordinate4D", "x_ite/Components/Texturing3D/TextureCoordinate4D", TextureCoordinate4D_default_);
 /* harmony default export */ const Texturing3D_TextureCoordinate4D = (TextureCoordinate4D_default_);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Texturing/X3DSingleTextureTransformNode\")"
 const X3DSingleTextureTransformNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.11.16")] .require ("x_ite/Components/Texturing/X3DSingleTextureTransformNode");
@@ -10204,7 +10204,7 @@ Object .defineProperties (TextureTransform3D,
 const TextureTransform3D_default_ = TextureTransform3D;
 ;
 
-Namespace_default().add ("TextureTransform3D", "x_ite/Components/Texturing3D/TextureTransform3D", TextureTransform3D_default_);
+Namespace_default().addModule ("TextureTransform3D", "x_ite/Components/Texturing3D/TextureTransform3D", TextureTransform3D_default_);
 /* harmony default export */ const Texturing3D_TextureTransform3D = (TextureTransform3D_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing3D/TextureTransformMatrix3D.js
 /*******************************************************************************
@@ -10323,7 +10323,7 @@ Object .defineProperties (TextureTransformMatrix3D,
 const TextureTransformMatrix3D_default_ = TextureTransformMatrix3D;
 ;
 
-Namespace_default().add ("TextureTransformMatrix3D", "x_ite/Components/Texturing3D/TextureTransformMatrix3D", TextureTransformMatrix3D_default_);
+Namespace_default().addModule ("TextureTransformMatrix3D", "x_ite/Components/Texturing3D/TextureTransformMatrix3D", TextureTransformMatrix3D_default_);
 /* harmony default export */ const Texturing3D_TextureTransformMatrix3D = (TextureTransformMatrix3D_default_);
 ;// CONCATENATED MODULE: ./src/assets/components/Texturing3D.js
 /*******************************************************************************
@@ -10406,7 +10406,7 @@ Components_default().add ({
 const Texturing3D_default_ = undefined;
 ;
 
-Namespace_default().add ("Texturing3D", "assets/components/Texturing3D", Texturing3D_default_);
+Namespace_default().addModule ("Texturing3D", "assets/components/Texturing3D", Texturing3D_default_);
 /* harmony default export */ const Texturing3D = ((/* unused pure expression or super */ null && (Texturing3D_default_)));
 })();
 

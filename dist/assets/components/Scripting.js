@@ -236,7 +236,7 @@ function evaluator (globalObject, sourceText)
 const __default__ = evaluator;
 ;
 
-Namespace_default().add ("evaluate", "x_ite/Browser/Scripting/evaluate", __default__);
+Namespace_default().addModule ("evaluate", "x_ite/Browser/Scripting/evaluate", __default__);
 /* harmony default export */ const evaluate = (__default__);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Core/X3DChildNode\")"
 const X3DChildNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.11.16")] .require ("x_ite/Components/Core/X3DChildNode");
@@ -339,7 +339,7 @@ Object .defineProperties (X3DScriptNode,
 const X3DScriptNode_default_ = X3DScriptNode;
 ;
 
-Namespace_default().add ("X3DScriptNode", "x_ite/Components/Scripting/X3DScriptNode", X3DScriptNode_default_);
+Namespace_default().addModule ("X3DScriptNode", "x_ite/Components/Scripting/X3DScriptNode", X3DScriptNode_default_);
 /* harmony default export */ const Scripting_X3DScriptNode = (X3DScriptNode_default_);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/InputOutput/FileLoader\")"
 const FileLoader_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.11.16")] .require ("x_ite/InputOutput/FileLoader");
@@ -858,7 +858,7 @@ Object .defineProperties (Script,
 const Script_default_ = Script;
 ;
 
-Namespace_default().add ("Script", "x_ite/Components/Scripting/Script", Script_default_);
+Namespace_default().addModule ("Script", "x_ite/Components/Scripting/Script", Script_default_);
 /* harmony default export */ const Scripting_Script = (Script_default_);
 ;// CONCATENATED MODULE: ./src/assets/components/Scripting.js
 /*******************************************************************************
@@ -927,7 +927,7 @@ Components_default().add ({
 const Scripting_default_ = undefined;
 ;
 
-Namespace_default().add ("Scripting", "assets/components/Scripting", Scripting_default_);
+Namespace_default().addModule ("Scripting", "assets/components/Scripting", Scripting_default_);
 /* harmony default export */ const Scripting = ((/* unused pure expression or super */ null && (Scripting_default_)));
 })();
 

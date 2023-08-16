@@ -70,6 +70,6 @@ Object .assign (Namespace,
    },
 });
 
-Namespace .add ("Namespace", "x_ite/Namespace", Namespace);
+Namespace .addModule ("Namespace", "x_ite/Namespace", Namespace);
 
 export default Namespace;
