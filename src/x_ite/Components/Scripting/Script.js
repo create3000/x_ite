@@ -140,7 +140,6 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
          if (data === null)
          {
             // No URL could be loaded.
-            this .initialize__ ("");
             this .setLoadState (X3DConstants .FAILED_STATE);
          }
          else
