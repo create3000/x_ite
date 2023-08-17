@@ -336,7 +336,7 @@ function set_active (value, this)
 
 ## Accessing Fields
 
-The initializeOnly fields, inputOnly fields, outputOnly fields, and inputOutput fields of a Script node are accessible from its ECMAScript functions. As in all other nodes the fields are accessible only within the Script. The Script's inputOnly fields can be routed to and its outputOnly fields can be routed from. Another Script node with a pointer to this node can access its inputOnly fields and outputOnly fields just like any other node.
+The initializeOnly, inputOnly, outputOnly, and inputOutput fields of a Script node are accessible from its ECMAScript functions. As in all other nodes the fields are accessible only within the Script. The Script's inputOnly fields can be routed to and its outputOnly fields can be routed from. Another Script node with a pointer to this node can access its inputOnly fields and outputOnly fields just like any other node.
 
 ### Accessing initializeOnly and outputOnly Fields of the Script
 
@@ -344,7 +344,7 @@ Fields defined in the Script node are available to the script by using its name.
 
 ### Accessing initializeOnly and outputOnly Fields of Other Nodes
 
-The script can access any inputOutput field, inputOnly fields or outputOnly fields of any node to which it has a pointer:
+The script can access any inputOutput, inputOnly or outputOnly fields of any node to which it has a pointer:
 
 ```js
 DEF SomeNode Transform { }
