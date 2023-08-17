@@ -85,14 +85,20 @@ Object .assign (Object .setPrototypeOf (FogCoordinate .prototype, X3DGeometricPr
    },
    addDepth (index, array)
    {
-      if (index < this .length)
-         array .push (this .depth [index]);
+      if (index >= 0 && index < this .length)
+      {
+         return array .push (this .depth [index]);
+      }
+      else if (index >= 0 && this .length)
+      {
+         index %= this .length;
 
-      else if (this .length)
-         array .push (this .depth [this .length - 1]);
-
+         return array .push (this .depth [index]);
+      }
       else
+      {
          array .push (0);
+      }
    },
    addDepths (array, min)
    {
