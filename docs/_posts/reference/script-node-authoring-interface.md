@@ -321,7 +321,7 @@ function initialize ()
   // Add route from TouchSensor to this Script.
   const scene = Browser .currentScene;
   const route = scene .addRoute (touch, 'isActive', this, 'set_active');
-  print (this);
+  print (this .getNodeName ());
 }
 
 // Callback for 'inputOnly SFBool set_active'.
