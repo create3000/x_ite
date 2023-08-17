@@ -304,7 +304,7 @@ The *shutdown* function takes no parameters. Events generated from it are given 
 
 ## Accessing the Script Directly
 
-Sometimes it is necessary to access the Script node directly. For this case, there is a special variable *this* in each callback function that holds a SFNode reference to the Script node.
+Sometimes it is necessary to get access to the corresponding Script node. For this case, there is a special variable *this* in each callback function that holds a SFNode reference to the Script node.
 
 ```js
 DEF Touch TouchSensor { }
