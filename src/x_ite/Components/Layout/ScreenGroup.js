@@ -82,8 +82,12 @@ Object .assign (Object .setPrototypeOf (ScreenGroup .prototype, X3DGroupingNode 
             // No clone support for shadows, generated cube map texture and bbox
             break;
          default:
-            this .getBrowser () .getScreenScaleMatrix (renderObject, this .matrix);
+         {
+            const browser = this .getBrowser ();
+
+            browser .getScreenScaleMatrix (renderObject, this .matrix, browser .getRenderingProperty ("ContentScale"));
             break;
+         }
       }
 
       const modelViewMatrix = renderObject .getModelViewMatrix ();

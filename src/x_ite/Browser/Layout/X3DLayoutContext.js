@@ -85,7 +85,7 @@ Object .assign (X3DLayoutContext .prototype,
          screenPoint  = new Vector3 (0, 0, 0),
          screenMatrix = new Matrix4 ();
 
-      return function (renderObject, matrix)
+      return function (renderObject, matrix, contentScale)
       {
          // throws domain error
 
@@ -100,9 +100,9 @@ Object .assign (X3DLayoutContext .prototype,
          renderObject .getViewpoint () .getScreenScale (modelViewMatrix .origin, viewport, screenScale); // in meter/pixel
 
          const
-            x = modelViewMatrix .xAxis .normalize () .multiply (screenScale .x),
-            y = modelViewMatrix .yAxis .normalize () .multiply (screenScale .y),
-            z = modelViewMatrix .zAxis .normalize () .multiply (screenScale .x);
+            x = modelViewMatrix .xAxis .normalize () .multiply (screenScale .x * contentScale),
+            y = modelViewMatrix .yAxis .normalize () .multiply (screenScale .y * contentScale),
+            z = modelViewMatrix .zAxis .normalize () .multiply (screenScale .x * contentScale);
 
          screenMatrix .set (x .x, x .y, x .z, 0,
                             y .x, y .y, y .z, 0,
