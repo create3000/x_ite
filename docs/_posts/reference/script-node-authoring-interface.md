@@ -79,7 +79,7 @@ function anInputField (value, time)
   b      = anOutputField;  // 'b' now contains a different number
   aField = aVector;        // ERROR, can't assign SFVec3f to SFFloat!
 
-  let currentScene = Browser .currentScene; // Get current scene from browser.
+  const scene = Browser .currentScene; // Get current scene from browser.
 }"
 }
 ```
@@ -302,15 +302,47 @@ Authors may define a function named *shutdown* which is called when the correspo
 
 The *shutdown* function takes no parameters. Events generated from it are given the timestamp of when the Script node was deleted.
 
+## Accessing the Script Directly
+
+Sometimes it is necessary to access the Script node directly. For this case, there is a special variable *this* in each callback function that holds a SFNode reference to the Script node.
+
+```js
+DEF Touch TouchSensor { }
+
+Script {
+  inputOnly      SFBool set_active
+  initializeOnly SFNode touch USE Touch
+  url "ecmascript:
+...
+
+// Initialize callback.
+function initialize ()
+{
+  // Add route from TouchSensor to this Script.
+  const scene = Browser .currentScene;
+  const route = scene .addRoute (touch, 'isActive', this, 'set_active');
+  print (this);
+}
+
+// Callback for 'inputOnly SFBool set_active'.
+function set_active (value, this)
+{
+  // ...
+}
+  "
+  directOutput TRUE
+}
+```
+
 ## Accessing Fields
 
 The initializeOnly fields, inputOnly fields, outputOnly fields, and inputOutput fields of a Script node are accessible from its ECMAScript functions. As in all other nodes the fields are accessible only within the Script. The Script's inputOnly fields can be routed to and its outputOnly fields can be routed from. Another Script node with a pointer to this node can access its inputOnly fields and outputOnly fields just like any other node.
 
-### Accessing InitializeOnly and OutputOnly Fields of the Script
+### Accessing initializeOnly and outputOnly Fields of the Script
 
 Fields defined in the Script node are available to the script by using its name. It's value can be read or written. This value is persistent across function calls. outputOnly fields defined in the script node can also be read. The value is the last value sent.
 
-### Accessing InitializeOnly Fields and OutputOnly Fields of Other Nodes
+### Accessing initializeOnly and outputOnly Fields of Other Nodes
 
 The script can access any inputOutput field, inputOnly fields or outputOnly fields of any node to which it has a pointer:
 
