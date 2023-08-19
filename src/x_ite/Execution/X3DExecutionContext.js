@@ -789,6 +789,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
    {
       generator .PushExecutionContext (this);
       generator .EnterScope ();
+      generator .NamedNodes (this .getNamedNodes ());
       generator .ImportedNodes (this .getImportedNodes ());
 
       // Output extern protos
@@ -849,6 +850,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
    {
       generator .PushExecutionContext (this);
       generator .EnterScope ();
+      generator .NamedNodes (this .getNamedNodes ());
       generator .ImportedNodes (this .getImportedNodes ());
 
       // Output extern protos
@@ -885,6 +887,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
    {
       generator .PushExecutionContext (this);
       generator .EnterScope ();
+      generator .NamedNodes (this .getNamedNodes ());
       generator .ImportedNodes (this .getImportedNodes ());
 
 

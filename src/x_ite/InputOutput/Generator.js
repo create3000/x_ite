@@ -304,19 +304,27 @@ Object .assign (Generator .prototype,
          this .importedNames .clear ();
       }
    },
+   NamedNodes (namedNodes)
+   {
+      const
+         names       = this .names .get (this .ExecutionContext ()),
+         namesByNode = this .namesByNode;
+
+      for (const node of namedNodes)
+      {
+         if (node .getNodeName () .match (/_\d+$/))
+            continue;
+
+         names .add (node .getNodeName ());
+         namesByNode .set (node .getValue (), node .getNodeName ())
+      }
+   },
    ExportedNodes (exportedNodes)
    {
       const index = this .exportedNodesIndex .get (this .ExecutionContext ());
 
       for (const exportedNode of exportedNodes)
-      {
-         try
-         {
-            index .add (exportedNode .getLocalNode ())
-         }
-         catch
-         { }
-      }
+         index .add (exportedNode .getLocalNode ())
    },
    ImportedNodes (importedNodes)
    {
@@ -370,26 +378,14 @@ Object .assign (Generator .prototype,
       }
       else
       {
-         const
-            name  = baseNode .getName (),
-            match = name .match (/^(.*?)(_\d+)?$/),
-            names = this .names .get (this .ExecutionContext ());
+         const names = this .names .get (this .ExecutionContext ());
 
-         if (match [1])
-         {
-            // The node has a name.
+         // The node has no name.
 
-            var newName = getUniqueName (names, name, !! match [2]);
-         }
-         else
-         {
-            // The node has no name.
+         if (!this .NeedsName (baseNode))
+            return "";
 
-            if (!this .NeedsName (baseNode))
-               return "";
-
-            var newName = `_${++ names .index}`;
-         }
+         const newName = `_${++ names .index}`;
 
          // Add to indices.
 
