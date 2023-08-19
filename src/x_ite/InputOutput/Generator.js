@@ -45,19 +45,18 @@
  *
  ******************************************************************************/
 
-import X3DConstants      from "../Base/X3DConstants.js";
-import { getUniqueName } from "../Execution/NamedNodesHandling.js";
-import Algorithm         from "../../standard/Math/Algorithm.js";
+import X3DConstants from "../Base/X3DConstants.js";
+import Algorithm    from "../../standard/Math/Algorithm.js";
 
 function Generator ({ style = "TIDY", indent = "", precision = 7, doublePrecision = 15, html = false, closingTags = false })
 {
-   this .string           = "";
-   this .indent           = indent;
-   this .listIndent       = indent;
-   this .precision        = Algorithm .clamp (precision, 1, 21);
-   this .doublePrecision  = Algorithm .clamp (doublePrecision, 1, 21);
-   this .html             = html;
-   this .closingTags      = html || closingTags;
+   this .string          = "";
+   this .indent          = indent;
+   this .listIndent      = indent;
+   this .precision       = Algorithm .clamp (precision, 1, 21);
+   this .doublePrecision = Algorithm .clamp (doublePrecision, 1, 21);
+   this .html            = html;
+   this .closingTags     = html || closingTags;
 
    this .floatFormat = new Intl .NumberFormat ("en", {
       notation: "standard",
