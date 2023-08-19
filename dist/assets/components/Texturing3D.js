@@ -1,7 +1,7 @@
 /* X_ITE v8.11.16 */(() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 549:
+/***/ 574:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -38,7 +38,7 @@ var Ib=[cx,_q,cr,Yr,as,fs,hs,Hu,Su,cx,cx,cx,cx,cx,cx,cx];var Jb=[dx,si,gi,Wh,Kh,
 
 /***/ }),
 
-/***/ 902:
+/***/ 729:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -72,7 +72,7 @@ var _a=[yj,od,ef,yj];var $a=[zj,Li,di,bi,Kb,Lb,Mb,Nb,Rc,Sc,Uc,jd,xd,Ye,lf,yd,zd,
 
 /***/ }),
 
-/***/ 163:
+/***/ 464:
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 /*! dicom-parser - 1.8.12 - 2023-02-20 | (c) 2017 Chris Hafey | https://github.com/cornerstonejs/dicomParser */
@@ -4028,7 +4028,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_zlib__;
 
 /***/ }),
 
-/***/ 842:
+/***/ 826:
 /***/ ((module) => {
 
 /* -*- tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- /
@@ -5183,7 +5183,7 @@ function decode(jpegData, userOpts = {}) {
 
 /***/ }),
 
-/***/ 662:
+/***/ 309:
 /***/ ((module) => {
 
 (function(f){if(true){module.exports=f()}else { var g; }})(function(){var define,module,exports;return (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c=undefined;if(!f&&c)return require(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u=undefined,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
@@ -7936,11 +7936,11 @@ const NRRDParser_default_ = NRRDParser;
 Namespace_default().add ("NRRDParser", "x_ite/Browser/Texturing3D/NRRDParser", NRRDParser_default_);
 /* harmony default export */ const Texturing3D_NRRDParser = (NRRDParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Texturing3D/DICOMParser.js
-/* provided dependency */ var dicomParser = __webpack_require__(163);
-/* provided dependency */ var JpegImage = __webpack_require__(842);
-/* provided dependency */ var jpeg = __webpack_require__(662);
-/* provided dependency */ var CharLS = __webpack_require__(549);
-/* provided dependency */ var OpenJPEG = __webpack_require__(902);
+/* provided dependency */ var dicomParser = __webpack_require__(464);
+/* provided dependency */ var JpegImage = __webpack_require__(826);
+/* provided dependency */ var jpeg = __webpack_require__(309);
+/* provided dependency */ var CharLS = __webpack_require__(574);
+/* provided dependency */ var OpenJPEG = __webpack_require__(729);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -9816,15 +9816,7 @@ Object .assign (Object .setPrototypeOf (TextureCoordinate3D .prototype, (X3DSing
    },
    addPointToChannel (index, array)
    {
-      if (index >= 0 && index < this .length)
-      {
-         const point = this .point;
-
-         index *= 3;
-
-         array .push (point [index], point [index + 1], point [index + 2], 1);
-      }
-      else if (index >= 0 && this .length)
+      if (index >= 0 && this .length)
       {
          const point = this .point;
 
@@ -9976,15 +9968,7 @@ Object .assign (Object .setPrototypeOf (TextureCoordinate4D .prototype, (X3DSing
    },
    addPointToChannel (index, array)
    {
-      if (index >= 0 && index < this .length)
-      {
-         const point = this .point;
-
-         index *= 4;
-
-         array .push (point [index], point [index + 1], point [index + 2], point [index + 3]);
-      }
-      else if (index >= 0 && this .length)
+      if (index >= 0 && this .length)
       {
          const point = this .point;
 
