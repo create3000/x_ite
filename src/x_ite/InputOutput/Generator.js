@@ -85,7 +85,7 @@ function Generator ({ style = "TIDY", indent = "", precision = 7, doublePrecisio
 
    this .Style (style);
 
-   this .executionContextStack = [ null ];
+   this .executionContextStack = [ ];
    this .importedNodesIndex    = new Map ();
    this .exportedNodesIndex    = new Map ();
    this .nodes                 = new Set ();
@@ -98,7 +98,7 @@ function Generator ({ style = "TIDY", indent = "", precision = 7, doublePrecisio
    this .units                 = true;
    this .unitCategories        = [ ];
 
-   this .names .set (null, Object .assign (new Set (), { index: 0 }));
+   this .PushExecutionContext (null);
 }
 
 Object .assign (Generator .prototype,
