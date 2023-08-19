@@ -107,13 +107,13 @@ Object .assign (Object .setPrototypeOf (TextureCoordinateGenerator .prototype, X
 
       this .parameter .fill (0, length);
    },
-   getPoints (array)
-   {
-      return array;
-   },
    addPointToChannel (index, array)
    {
       array .push (0, 0, 0, 1);
+   },
+   addPoints (array)
+   {
+      return array;
    },
    setShaderUniforms (gl, shaderObject, channel = 0)
    {

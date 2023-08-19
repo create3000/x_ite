@@ -106,13 +106,6 @@ Object .assign (Object .setPrototypeOf (MultiTextureCoordinate .prototype, X3DTe
    {
       return 0;
    },
-   getPoints (array)
-   {
-      for (const textureCoordinateNode of this .textureCoordinateNodes)
-         return textureCoordinateNode .getPoints (array);
-
-      return array;
-   },
    init (multiArray)
    {
       const
@@ -130,6 +123,13 @@ Object .assign (Object .setPrototypeOf (MultiTextureCoordinate .prototype, X3DTe
 
       for (let i = 0; i < length; ++ i)
          textureCoordinateNodes [i] .addPointToChannel (index, multiArray [i]);
+   },
+   addPoints (array)
+   {
+      for (const textureCoordinateNode of this .textureCoordinateNodes)
+         return textureCoordinateNode .addPoints (array);
+
+      return array;
    },
    getTextureCoordinateMapping (textureCoordinateMapping)
    {

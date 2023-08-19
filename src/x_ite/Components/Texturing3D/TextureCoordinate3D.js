@@ -82,17 +82,6 @@ Object .assign (Object .setPrototypeOf (TextureCoordinate3D .prototype, X3DSingl
    {
       return this .length;
    },
-   getPoints (array)
-   {
-      const
-         point  = this .point,
-         length = this .length;
-
-      for (let i = 0, p = 0; i < length; ++ i, p += 3)
-         array .push (point [p], point [p + 1], point [p + 2], 1);
-
-      return array;
-   },
    addPointToChannel (index, array)
    {
       if (index >= 0 && this .length)
@@ -108,6 +97,17 @@ Object .assign (Object .setPrototypeOf (TextureCoordinate3D .prototype, X3DSingl
       {
          array .push (0, 0, 0, 1);
       }
+   },
+   addPoints (array)
+   {
+      const
+         point  = this .point,
+         length = this .length;
+
+      for (let i = 0, p = 0; i < length; ++ i, p += 3)
+         array .push (point [p], point [p + 1], point [p + 2], 1);
+
+      return array;
    },
 });
 
