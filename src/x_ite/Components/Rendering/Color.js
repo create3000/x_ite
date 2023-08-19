@@ -89,7 +89,7 @@ Object .assign (Object .setPrototypeOf (Color .prototype, X3DColorNode .prototyp
          array .push (1, 1, 1, 1);
       }
    },
-   addColors (array, min)
+   addColors (array, min = this .length)
    {
       const length = this .length;
 

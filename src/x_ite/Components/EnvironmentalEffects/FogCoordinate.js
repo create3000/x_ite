@@ -94,7 +94,7 @@ Object .assign (Object .setPrototypeOf (FogCoordinate .prototype, X3DGeometricPr
          array .push (0);
       }
    },
-   addDepths (array, min)
+   addDepths (array, min = this .length)
    {
       const length = this .length;
 

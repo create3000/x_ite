@@ -90,7 +90,7 @@ Object .assign (Object .setPrototypeOf (Normal .prototype, X3DNormalNode .protot
          return array .push (0, 0, 0);
       }
    },
-   addNormals (array, min)
+   addNormals (array, min = this .length)
    {
       const length = this .length;
 

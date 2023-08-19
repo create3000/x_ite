@@ -91,7 +91,7 @@ Object .assign (Object .setPrototypeOf (ColorRGBA .prototype, X3DColorNode .prot
          array .push (1, 1, 1, 1);
       }
    },
-   addColors (array, min)
+   addColors (array, min = this .length)
    {
       const length = this .length;
 
