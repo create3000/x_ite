@@ -99,24 +99,17 @@ Object .assign (Object .setPrototypeOf (Color .prototype, X3DColorNode .prototyp
    },
    addColors (array, min)
    {
-      if (this .length)
+      const length = this .length;
+
+      if (length)
       {
          const color = this .color;
 
-         for (var index = 0, length = Math .min (min, this .length) * 3; index < length; index += 3)
-            array .push (color [index], color [index + 1], color [index + 2], 1);
-
-         if (this .length < min)
+         for (let index = 0; index < min; ++ index)
          {
-            var index = (this .length - 1) * 3;
+            const i = (index % length) * 3;
 
-            const
-               r = color [index],
-               g = color [index + 1],
-               b = color [index + 2];
-
-            for (var index = length, length = min * 3; index < length; index += 3)
-               array .push (r, g, b, 1);
+            array .push (color [i], color [i + 1], color [i + 2], 1);
          }
       }
       else

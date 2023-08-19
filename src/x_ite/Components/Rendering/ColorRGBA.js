@@ -101,25 +101,17 @@ Object .assign (Object .setPrototypeOf (ColorRGBA .prototype, X3DColorNode .prot
    },
    addColors (array, min)
    {
-      if (this .length)
+      const length = this .length;
+
+      if (length)
       {
          const color = this .color;
 
-         for (var index = 0, length = Math .min (min, this .length) * 4; index < length; index += 4)
-            array .push (color [index], color [index + 1], color [index + 2], color [index + 3]);
-
-         if (this .length < min)
+         for (let index = 0; index < min; ++ index)
          {
-            var index = (this .length - 1) * 4;
+            const i = (index % length) * 4;
 
-            const
-               r = color [index],
-               g = color [index + 1],
-               b = color [index + 2],
-               a = color [index + 2];
-
-            for (var index = length, length = min * 4; index < length; index += 4)
-               array .push (r, g, b, a);
+            array .push (color [i], color [i + 1], color [i + 2], color [i + 3]);
          }
       }
       else

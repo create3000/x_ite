@@ -108,19 +108,18 @@ Object .assign (Object .setPrototypeOf (FogCoordinate .prototype, X3DGeometricPr
       {
          const depth = this .depth;
 
-         for (let index = 0; index < length; ++ index)
-            array .push (depth [index]);
-
-         const last = depth [length - 1];
-
-         for (let index = length; index < min; ++ index)
-            array .push (last);
+         for (let index = 0; index < min; ++ index)
+         {
+            array .push (depth [i % length]);
+         }
       }
       else
       {
          for (let index = 0; index < min; ++ index)
             array .push (0);
       }
+
+      return array;
    },
 });
 

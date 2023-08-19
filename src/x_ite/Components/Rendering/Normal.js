@@ -100,24 +100,17 @@ Object .assign (Object .setPrototypeOf (Normal .prototype, X3DNormalNode .protot
    },
    addNormals (array, min)
    {
-      if (this .length)
+      const length = this .length;
+
+      if (length)
       {
          const vector = this .vector;
 
-         for (var index = 0, length = Math .min (min, this .length) * 3; index < length; index += 3)
-            array .push (vector [index], vector [index + 1], vector [index + 2]);
-
-         if (this .length < min)
+         for (let index = 0; index < min; ++ index)
          {
-            var index = (this .length - 1) * 3;
+            const i = (index % length) * 3;
 
-            const
-               x = vector [index],
-               y = vector [index + 1],
-               z = vector [index + 2];
-
-            for (var index = length, length = min * 3; index < length; index += 3)
-               array .push (x, y, z);
+            array .push (vector [i], vector [i + 1], vector [i + 2]);
          }
       }
       else
