@@ -491,7 +491,6 @@ Object .assign (Object .setPrototypeOf (Script .prototype, Scripting_X3DScriptNo
          if (data === null)
          {
             // No URL could be loaded.
-            this .initialize__ ("");
             this .setLoadState ((X3DConstants_default()).FAILED_STATE);
          }
          else

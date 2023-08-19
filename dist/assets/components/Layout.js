@@ -178,7 +178,7 @@ Object .assign (X3DLayoutContext .prototype,
          screenPoint  = new (Vector3_default()) (0, 0, 0),
          screenMatrix = new (Matrix4_default()) ();
 
-      return function (renderObject, matrix)
+      return function (renderObject, matrix, contentScale)
       {
          // throws domain error
 
@@ -193,9 +193,9 @@ Object .assign (X3DLayoutContext .prototype,
          renderObject .getViewpoint () .getScreenScale (modelViewMatrix .origin, viewport, screenScale); // in meter/pixel
 
          const
-            x = modelViewMatrix .xAxis .normalize () .multiply (screenScale .x),
-            y = modelViewMatrix .yAxis .normalize () .multiply (screenScale .y),
-            z = modelViewMatrix .zAxis .normalize () .multiply (screenScale .x);
+            x = modelViewMatrix .xAxis .normalize () .multiply (screenScale .x * contentScale),
+            y = modelViewMatrix .yAxis .normalize () .multiply (screenScale .y * contentScale),
+            z = modelViewMatrix .zAxis .normalize () .multiply (screenScale .x * contentScale);
 
          screenMatrix .set (x .x, x .y, x .z, 0,
                             y .x, y .y, y .z, 0,
@@ -1709,7 +1709,7 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, (X3DTextGeometry_
 
       return function (type, renderObject)
       {
-         this .getBrowser () .getScreenScaleMatrix (renderObject, this .matrix);
+         this .getBrowser () .getScreenScaleMatrix (renderObject, this .matrix, 1);
 
          // Update Text bbox.
 
@@ -1956,8 +1956,12 @@ Object .assign (Object .setPrototypeOf (ScreenGroup .prototype, (X3DGroupingNode
             // No clone support for shadows, generated cube map texture and bbox
             break;
          default:
-            this .getBrowser () .getScreenScaleMatrix (renderObject, this .matrix);
+         {
+            const browser = this .getBrowser ();
+
+            browser .getScreenScaleMatrix (renderObject, this .matrix, browser .getRenderingProperty ("ContentScale"));
             break;
+         }
       }
 
       const modelViewMatrix = renderObject .getModelViewMatrix ();
