@@ -311,7 +311,7 @@ Object .assign (Generator .prototype,
 
       for (const node of namedNodes)
       {
-         if (node .getNodeName () .match (/_\d+$/))
+         if (node .getNodeName () .match (/^_\d+$/))
             continue;
 
          names .add (node .getNodeName ());
