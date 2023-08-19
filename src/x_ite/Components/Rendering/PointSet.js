@@ -179,7 +179,7 @@ Object .assign (Object .setPrototypeOf (PointSet .prototype, X3DPointGeometryNod
       colorNode    ?.addColors  (colorArray,    numPoints);
       normalNode   ?.addNormals (normalArray,   numPoints);
 
-      coordNode .addPoints (vertexArray, numPoints);
+      coordNode .addPoints (vertexArray);
    },
 });
 

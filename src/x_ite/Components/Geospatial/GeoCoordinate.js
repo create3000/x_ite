@@ -129,19 +129,20 @@ Object .assign (Object .setPrototypeOf (GeoCoordinate .prototype, X3DCoordinateN
          p = new Vector3 (0, 0, 0),
          g = new Vector3 (0, 0, 0);
 
-      return function (array, min)
+      return function (array)
       {
-         const point = this .point;
+         const
+            point  = this .point,
+            length = this .length * 3;
 
-         for (let index = 0, length = this .length * 3; index < length; index += 3)
+         for (let index = 0; index < length; index += 3)
          {
             this .getCoord (p .set (point [index], point [index + 1], point [index + 2]), g);
 
             array .push (g [0], g [1], g [2], 1);
          }
 
-         for (let index = this .length * 3, length = min * 3; index < length; index += 3)
-            array .push (0, 0, 0, 1);
+         return array;
       };
    })(),
    getNormal: (() =>

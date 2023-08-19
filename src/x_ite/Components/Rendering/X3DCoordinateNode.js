@@ -114,15 +114,16 @@ Object .assign (Object .setPrototypeOf (X3DCoordinateNode .prototype, X3DGeometr
          array .push (0, 0, 0, 1);
       }
    },
-   addPoints (array, min)
+   addPoints (array)
    {
-      const point = this .point;
+      const
+         point  = this .point,
+         length = this .length * 3;
 
-      for (var index = 0, length = this .length * 3; index < length; index += 3)
+      for (let index = 0; index < length; index += 3)
          array .push (point [index], point [index + 1], point [index + 2], 1);
 
-      for (var index = length, length = min * 3; index < length; index += 3)
-         array .push (0, 0, 0, 1);
+      return array;
    },
    getNormal: (() =>
    {

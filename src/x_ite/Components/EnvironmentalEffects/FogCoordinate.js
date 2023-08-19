@@ -109,9 +109,7 @@ Object .assign (Object .setPrototypeOf (FogCoordinate .prototype, X3DGeometricPr
          const depth = this .depth;
 
          for (let index = 0; index < min; ++ index)
-         {
-            array .push (depth [i % length]);
-         }
+            array .push (depth [index % length]);
       }
       else
       {
