@@ -75,15 +75,7 @@ Object .assign (Object .setPrototypeOf (Color .prototype, X3DColorNode .prototyp
    },
    addColor (index, array)
    {
-      if (index >= 0 && index < this .length)
-      {
-         const color = this .color;
-
-         index *= 3;
-
-         array .push (color [index], color [index + 1], color [index + 2], 1);
-      }
-      else if (index >= 0 && this .length)
+      if (index >= 0 && this .length)
       {
          const color = this .color;
 

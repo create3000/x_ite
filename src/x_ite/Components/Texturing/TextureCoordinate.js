@@ -95,15 +95,7 @@ Object .assign (Object .setPrototypeOf (TextureCoordinate .prototype, X3DSingleT
    },
    addPointToChannel (index, array)
    {
-      if (index >= 0 && index < this .length)
-      {
-         const point = this .point;
-
-         index *= 2;
-
-         array .push (point [index], point [index + 1], 0, 1);
-      }
-      else if (index >= 0 && this .length)
+      if (index >= 0 && this .length)
       {
          const point = this .point;
 
