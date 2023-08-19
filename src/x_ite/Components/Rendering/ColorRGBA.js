@@ -79,12 +79,11 @@ Object .assign (Object .setPrototypeOf (ColorRGBA .prototype, X3DColorNode .prot
    {
       if (index >= 0 && this .length)
       {
-         const color = this .color;
+         const
+            color = this .color,
+            i     = (index % this .length) * 4;
 
-         index %= this .length;
-         index *= 4;
-
-         return array .push (color [index], color [index + 1], color [index + 2], color [index + 3]);
+         return array .push (color [i], color [i + 1], color [i + 2], color [i + 3]);
       }
       else
       {

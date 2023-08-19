@@ -77,12 +77,11 @@ Object .assign (Object .setPrototypeOf (Color .prototype, X3DColorNode .prototyp
    {
       if (index >= 0 && this .length)
       {
-         const color = this .color;
+         const
+            color = this .color,
+            i     = (index % this .length) * 3;
 
-         index %= this .length;
-         index *= 3;
-
-         return array .push (color [index], color [index + 1], color [index + 2], 1);
+         return array .push (color [i], color [i + 1], color [i + 2], 1);
       }
       else
       {

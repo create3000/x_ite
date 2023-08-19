@@ -86,12 +86,11 @@ Object .assign (Object .setPrototypeOf (TextureCoordinate3D .prototype, X3DSingl
    {
       if (index >= 0 && this .length)
       {
-         const point = this .point;
+         const
+            point = this .point,
+            i     = (index % this .length) * 3;
 
-         index %= this .length;
-         index *= 3;
-
-         array .push (point [index], point [index + 1], point [index + 2], 1);
+         array .push (point [i], point [i + 1], point [i + 2], 1);
       }
       else
       {

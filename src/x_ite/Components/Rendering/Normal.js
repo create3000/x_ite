@@ -78,12 +78,11 @@ Object .assign (Object .setPrototypeOf (Normal .prototype, X3DNormalNode .protot
    {
       if (index >= 0 && this .length)
       {
-         const vector = this .vector;
+         const
+            vector = this .vector,
+            i      = (index % this .length) * 3;
 
-         index %= this .length;
-         index *= 3;
-
-         array .push (vector [index], vector [index + 1], vector [index + 2]);
+         array .push (vector [i], vector [i + 1], vector [i + 2]);
       }
       else
       {
