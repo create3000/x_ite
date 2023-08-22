@@ -73,7 +73,8 @@ Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, X3DChildN
    {
       if (this .media)
       {
-         this .media .muted = true;
+         this .gainNode .gain .value = 0;
+         this .media .muted          = true;
          this .media .pause ();
       }
 
