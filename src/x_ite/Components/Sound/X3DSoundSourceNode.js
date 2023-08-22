@@ -76,18 +76,23 @@ Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, X3DChildN
    setElement (element)
    {
       const
-         audioContext = new AudioContext (),
-         source       = audioContext .createMediaElementSource (element),
+         audioContext = this .getBrowser () .getAudioContext (),
+         sourceNode   = audioContext .createMediaElementSource (element),
          stereoNode   = new StereoPannerNode (audioContext, { pan: 0 }),
          gainNode     = new GainNode (audioContext, { gain: 0 });
 
       element .volume = 0;
 
-      source .connect (gainNode) .connect (stereoNode) .connect (audioContext .destination);
+      sourceNode .connect (gainNode) .connect (stereoNode) .connect (audioContext .destination);
 
       this .element    = element;
+      this .sourceNode = sourceNode;
       this .gainNode   = gainNode;
       this .stereoNode = stereoNode;
+   },
+   getSource ()
+   {
+      return this .sourceNode;
    },
    setMedia (value)
    {

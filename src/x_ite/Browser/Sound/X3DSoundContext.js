@@ -48,10 +48,23 @@
 import X3DConstants from "../../Base/X3DConstants.js";
 import Fields       from "../../Fields.js";
 
+const _audioContext = Symbol ();
+
+
 function X3DSoundContext ()
 {
    this .addChildObjects (X3DConstants .outputOnly, "volume", new Fields .SFFloat (1),
                           X3DConstants .outputOnly, "mute",   new Fields .SFBool ());
+
+   this [_audioContext] = new AudioContext ()
 }
+
+Object .assign (X3DSoundContext .prototype,
+{
+   getAudioContext ()
+   {
+      return this [_audioContext];
+   },
+});
 
 export default X3DSoundContext;
