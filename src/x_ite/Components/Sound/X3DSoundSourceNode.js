@@ -81,8 +81,6 @@ Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, X3DChildN
 
       if (value)
       {
-         try
-         {
          // Create audio context.
 
          const
@@ -95,11 +93,6 @@ Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, X3DChildN
 
          this .gainNode   = gainNode;
          this .stereoNode = stereoNode;
-         }
-         catch (error)
-         {
-            console .log (error)
-         }
 
          // Init media.
 
