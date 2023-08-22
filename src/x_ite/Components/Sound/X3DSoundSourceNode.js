@@ -146,12 +146,6 @@ Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, X3DChildN
       if (!this .media)
          return;
 
-      const
-         mute      = this .getBrowser () ._mute .getValue (),
-         intensity = Algorithm .clamp (this .getBrowser () ._volume .getValue (), 0, 1);
-
-      volume = (!mute) * intensity * volume;
-
       this .media .muted            = volume === 0;
       this .gainNode   .gain .value = volume;
       this .stereoNode .pan  .value = pan;

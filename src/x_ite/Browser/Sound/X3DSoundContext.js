@@ -50,12 +50,8 @@ import Fields       from "../../Fields.js";
 
 const _audioContext = Symbol ();
 
-
 function X3DSoundContext ()
 {
-   this .addChildObjects (X3DConstants .outputOnly, "volume", new Fields .SFFloat (1),
-                          X3DConstants .outputOnly, "mute",   new Fields .SFBool ());
-
    this [_audioContext] = new AudioContext ()
 }
 
