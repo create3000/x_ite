@@ -129,7 +129,7 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
    },
    update ()
    {
-      if (! this .getTraversed ())
+      if (!this .getTraversed ())
       {
          if (this .sourceNode)
             this .sourceNode .setVolume (0);
@@ -148,10 +148,10 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
          if (type !== TraverseType .DISPLAY)
             return;
 
-         if (! this .sourceNode)
+         if (!this .sourceNode)
             return;
 
-         if (! this .sourceNode ._isActive .getValue () || this .sourceNode ._isPaused .getValue ())
+         if (!this .sourceNode ._isActive .getValue () || this .sourceNode ._isPaused .getValue ())
             return;
 
          this .setTraversed (true);
@@ -159,20 +159,22 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
          const modelViewMatrix = renderObject .getModelViewMatrix () .get ();
 
          this .getEllipsoidParameter (modelViewMatrix,
-                                       Math .max (this ._maxBack  .getValue (), 0),
-                                       Math .max (this ._maxFront .getValue (), 0),
-                                       max);
+                                      Math .max (this ._maxBack  .getValue (), 0),
+                                      Math .max (this ._maxFront .getValue (), 0),
+                                      max);
 
          if (max .distance < 1) // Sphere radius is 1
          {
             this .getEllipsoidParameter (modelViewMatrix,
-                                          Math .max (this ._minBack  .getValue (), 0),
-                                          Math .max (this ._minFront .getValue (), 0),
-                                          min);
+                                         Math .max (this ._minBack  .getValue (), 0),
+                                         Math .max (this ._minFront .getValue (), 0),
+                                         min);
+
+            const pan = this .getPan (modelViewMatrix);
 
             if (min .distance < 1) // Sphere radius is 1
             {
-               this .sourceNode .setVolume (this ._intensity .getValue ());
+               this .sourceNode .setVolume (this ._intensity .getValue (), pan);
             }
             else
             {
@@ -183,7 +185,7 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
                   intensity = Algorithm .clamp (this ._intensity .getValue (), 0, 1),
                   volume    = intensity * d;
 
-               this .sourceNode .setVolume (volume);
+               this .sourceNode .setVolume (volume, pan);
             }
          }
          else
@@ -251,6 +253,22 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
 
          value .intersection .assign (sphereMatrix .multVecMatrix (enterPoint));
          value .distance = viewer .magnitude ();
+      };
+   })(),
+   getPan: (function ()
+   {
+      const location = new Vector3 (0, 0, 0);
+
+      return function (modelViewMatrix)
+      {
+         if (!this ._spatialize .getValue ())
+            return 0.5;
+
+         const
+            l = modelViewMatrix .multVecMatrix (location .assign (this ._location .getValue ())) .normalize (),
+            p = l .dot (Vector3 .xAxis);
+
+         return p;
       };
    })(),
 });

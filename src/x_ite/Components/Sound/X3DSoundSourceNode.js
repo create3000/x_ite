@@ -69,23 +69,6 @@ Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, X3DChildN
       X3DChildNode         .prototype .initialize .call (this);
       X3DTimeDependentNode .prototype .initialize .call (this);
    },
-   set_live__ ()
-   {
-      X3DTimeDependentNode .prototype .set_live__ .call (this);
-
-      if (this .getDisabled ())
-      {
-         this .getBrowser () ._volume .removeInterest ("set_volume__", this);
-         this .getBrowser () ._mute   .removeInterest ("set_volume__", this);
-      }
-      else
-      {
-         this .getBrowser () ._volume .addInterest ("set_volume__", this);
-         this .getBrowser () ._mute   .addInterest ("set_volume__", this);
-
-         this .set_volume__ ();
-      }
-   },
    setMedia (value)
    {
       if (this .media)
@@ -98,26 +81,23 @@ Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, X3DChildN
 
       if (value)
       {
+         try
+         {
          // Create audio context.
 
          const
-            audioContext  = new AudioContext(),
-            source        = audioContext .createMediaElementSource (value),
-            splitter      = audioContext .createChannelSplitter (2),
-            gainLeft      = audioContext .createGain(),
-            gainRight     = audioContext .createGain();
+            audioContext = new AudioContext (),
+            source       = audioContext .createMediaElementSource (value),
+            stereoNode   = new StereoPannerNode (audioContext, { pan: 0 });
 
-         source    .connect (splitter, 0, 0);
-         splitter  .connect (gainLeft,  0);
-         splitter  .connect (gainRight, 1);
-         gainLeft  .connect (audioContext .destination, 0);
-         gainRight .connect (audioContext .destination, 0);
+         source .connect (stereoNode) .connect (audioContext .destination);
 
-         gainLeft  .gain .value = 0;
-         gainRight .gain .value = 0;
-
-         this .gainLeft  = gainLeft;
-         this .gainRight = gainRight
+         this .stereoNode = stereoNode;
+         }
+         catch (error)
+         {
+            console .log (error)
+         }
 
          // Init media.
 
@@ -152,31 +132,25 @@ Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, X3DChildN
          }
       }
    },
-   setVolume (volume)
-   {
-      this .volume = Algorithm .clamp (volume, 0, 1);
-
-      this .set_volume__ ();
-   },
-   set_loop ()
-   {
-      if (this .media)
-         this .media .loop = this ._loop .getValue ();
-   },
-   set_volume__ ()
+   setVolume (volume, pan = 0.5)
    {
       if (!this .media)
          return;
 
       const
          mute      = this .getBrowser () ._mute .getValue (),
-         intensity = Algorithm .clamp (this .getBrowser () ._volume .getValue (), 0, 1),
-         volume    = (!mute) * intensity * this .volume;
+         intensity = Algorithm .clamp (this .getBrowser () ._volume .getValue (), 0, 1);
 
-      this .media .muted = volume === 0;
+      volume = (!mute) * intensity * volume;
 
-      this .gainLeft  .gain .value = volume;
-      this .gainRight .gain .value = volume;
+      this .media .muted           = volume === 0;
+      this .media .volume          = volume;
+      this .stereoNode .pan .value = pan;
+   },
+   set_loop ()
+   {
+      if (this .media)
+         this .media .loop = this ._loop .getValue ();
    },
    set_speed ()
    { },
