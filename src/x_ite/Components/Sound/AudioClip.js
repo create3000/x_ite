@@ -81,7 +81,6 @@ Object .assign (Object .setPrototypeOf (AudioClip .prototype, X3DSoundSourceNode
 
       this .audio .prop ("crossOrigin", "Anonymous");
       this .audio .prop ("preload",     "auto");
-      this .audio .prop ("muted",       true);
 
       this .requestImmediateLoad () .catch (Function .prototype);
    },

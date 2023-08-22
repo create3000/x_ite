@@ -85,7 +85,6 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
 
       this .video .prop ("crossOrigin", "Anonymous");
       this .video .prop ("preload",     "auto");
-      this .video .prop ("muted",       true);
 
       this .requestImmediateLoad () .catch (Function .prototype);
    },
