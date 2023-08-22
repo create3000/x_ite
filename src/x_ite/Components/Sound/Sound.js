@@ -82,6 +82,23 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
    {
       X3DSoundNode .prototype .initialize .call (this);
 
+      const
+         audioContext  = this .getBrowser () .getAudioContext (),
+         splitterNode  = new ChannelSplitterNode (audioContext, { numberOfOutputs: 2 }),
+         mergerNode    = new ChannelMergerNode (audioContext, { numberOfInputs: 2 }),
+         gainLeftNode  = new GainNode (audioContext, { gain: 0 }),
+         gainRightNode = new GainNode (audioContext, { gain: 0 });
+
+      splitterNode  .connect (gainLeftNode, 0);
+      splitterNode  .connect (gainRightNode, 1);
+      gainLeftNode  .connect (mergerNode, 0, 0);
+      gainRightNode .connect (mergerNode, 0, 1);
+      mergerNode    .connect (audioContext .destination);
+
+      this .splitterNode  = splitterNode;
+      this .gainLeftNode  = gainLeftNode;
+      this .gainRightNode = gainRightNode;
+
       this .getLive ()  .addInterest ("set_live__", this);
       this ._traversed .addInterest ("set_live__", this);
 
@@ -109,6 +126,18 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
    {
       return this .currentTraversed;
    },
+   setVolume (volume, pan = 0.5)
+   {
+      const media = this .sourceNode ?.getMedia ();
+
+      if (!media)
+         return;
+
+      media .muted = volume === 0;
+
+      this .gainLeftNode  .gain .value = volume * (1 - Math .pow (pan, 2));
+      this .gainRightNode .gain .value = volume * (1 - Math .pow (1 - pan, 2));
+   },
    set_live__ ()
    {
       if (this .getLive () .getValue () && this ._traversed .getValue ())
@@ -123,16 +152,19 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
    set_source__ ()
    {
       if (this .sourceNode)
-         this .sourceNode .setVolume (0);
+         this .sourceNode .getSource () .disconnect (this .splitterNode);
 
       this .sourceNode = X3DCast (X3DConstants .X3DSoundSourceNode, this ._source);
+
+      if (this .sourceNode)
+         this .sourceNode .getSource () .connect (this .splitterNode);
    },
    update ()
    {
       if (!this .getTraversed ())
       {
          if (this .sourceNode)
-            this .sourceNode .setVolume (0);
+            this .setVolume (0);
       }
 
       this .setTraversed (false);
@@ -174,7 +206,7 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
 
             if (min .distance < 1) // Sphere radius is 1
             {
-               this .sourceNode .setVolume (this ._intensity .getValue (), pan);
+               this .setVolume (Algorithm .clamp (this ._intensity .getValue (), 0, 1), pan);
             }
             else
             {
@@ -185,12 +217,12 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
                   intensity = Algorithm .clamp (this ._intensity .getValue (), 0, 1),
                   volume    = intensity * d;
 
-               this .sourceNode .setVolume (volume, pan);
+               this .setVolume (volume, pan);
             }
          }
          else
          {
-            this .sourceNode .setVolume (0);
+            this .setVolume (0);
          }
       };
    })(),

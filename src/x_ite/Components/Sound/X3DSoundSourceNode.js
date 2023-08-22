@@ -76,31 +76,22 @@ Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, X3DChildN
    setElement (element)
    {
       const
-         audioContext  = this .getBrowser () .getAudioContext (),
-         sourceNode    = audioContext .createMediaElementSource (element),
-         splitterNode  = new ChannelSplitterNode (audioContext, { numberOfOutputs: 2 }),
-         mergerNode    = new ChannelMergerNode (audioContext, { numberOfInputs: 2 }),
-         gainLeftNode  = new GainNode (audioContext, { gain: 0 }),
-         gainRightNode = new GainNode (audioContext, { gain: 0 });
+         audioContext = this .getBrowser () .getAudioContext (),
+         sourceNode   = audioContext .createMediaElementSource (element);
 
       element .muted  = true;
       element .volume = 0;
 
-      sourceNode    .connect (splitterNode);
-      splitterNode  .connect (gainLeftNode, 0);
-      splitterNode  .connect (gainRightNode, 1);
-      gainLeftNode  .connect (mergerNode, 0, 0);
-      gainRightNode .connect (mergerNode, 0, 1);
-      mergerNode    .connect (audioContext .destination);
-
-      this .element       = element;
-      this .sourceNode    = sourceNode;
-      this .gainLeftNode  = gainLeftNode;
-      this .gainRightNode = gainRightNode;
+      this .element    = element;
+      this .sourceNode = sourceNode;
    },
    getSource ()
    {
       return this .sourceNode;
+   },
+   getMedia ()
+   {
+      return this .media;
    },
    setMedia (value)
    {
@@ -112,9 +103,6 @@ Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, X3DChildN
 
       this .media = value;
 
-      this .gainLeftNode  .gain .value = 0;
-      this .gainRightNode .gain .value = 0;
-
       if (value)
       {
          // Init media.
@@ -124,7 +112,7 @@ Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, X3DChildN
 
          // Handle events.
 
-         this .setVolume (0);
+         this .media .muted      = true;
          this ._duration_changed = this .media .duration;
 
          this .resetElapsedTime ();
@@ -148,16 +136,6 @@ Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, X3DChildN
             this .set_stop ();
          }
       }
-   },
-   setVolume (volume, pan = 0.5)
-   {
-      if (!this .media)
-         return;
-
-      this .media .muted = volume === 0;
-
-      this .gainLeftNode  .gain .value = volume * (1 - Math .pow (pan, 2));
-      this .gainRightNode .gain .value = volume * (1 - Math .pow (1 - pan, 2));
    },
    set_loop ()
    {

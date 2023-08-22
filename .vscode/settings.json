@@ -31,6 +31,7 @@
       "opentype",
       "pako",
       "polylines",
+      "spatialize",
       "srand",
       "Struct",
       "tessellator",
