@@ -265,10 +265,10 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
             return 0.5;
 
          const
-            l = modelViewMatrix .multVecMatrix (location .assign (this ._location .getValue ())) .normalize (),
-            p = l .dot (Vector3 .xAxis);
+            d = modelViewMatrix .multVecMatrix (location .assign (this ._location .getValue ())),
+            p = Math .acos (Algorithm .clamp (-d .dot (Vector3 .xAxis), -1, 1)) / Math .PI;
 
-         return (p + 1) / 2;
+         return p;
       };
    })(),
 });
