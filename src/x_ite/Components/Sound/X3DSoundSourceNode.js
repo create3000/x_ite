@@ -112,7 +112,8 @@ Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, X3DChildN
       {
          // Init media.
 
-         this .media .loop = this ._loop .getValue ();
+         this .set_loop ();
+         this .set_speed ();
 
          // Handle events.
 
@@ -156,7 +157,10 @@ Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, X3DChildN
          this .media .loop = this ._loop .getValue ();
    },
    set_speed ()
-   { },
+   {
+      if (this .media)
+         this .media .playbackRate = this ._speed .getValue ();
+   },
    set_pitch ()
    { },
    set_start ()

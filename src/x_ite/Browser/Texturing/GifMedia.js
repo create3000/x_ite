@@ -48,8 +48,9 @@
 function GifMedia (gif, movieTexture)
 {
    let
-      cycle = 0,
-      loop  = false;
+      playbackRate = 1;
+      cycle        = 0,
+      loop         = false;
 
    Object .defineProperties (gif,
    {
@@ -60,7 +61,7 @@ function GifMedia (gif, movieTexture)
             if (!loop && cycle < this .cycle)
                return this .duration;
 
-            return movieTexture ._elapsedTime % this .duration;
+            return (movieTexture ._elapsedTime * playbackRate) % this .duration;
          },
          set: Function .prototype,
       },
@@ -105,6 +106,17 @@ function GifMedia (gif, movieTexture)
          {
             cycle = this .cycle;
             return Promise .resolve ();
+         },
+      },
+      playbackRate:
+      {
+         get ()
+         {
+            return playbackRate;
+         },
+         set (value)
+         {
+            playbackRate = value;
          },
       },
    });
