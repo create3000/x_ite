@@ -88,10 +88,12 @@ Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, X3DChildN
          const
             audioContext = new AudioContext (),
             source       = audioContext .createMediaElementSource (value),
-            stereoNode   = new StereoPannerNode (audioContext, { pan: 0 });
+            stereoNode   = new StereoPannerNode (audioContext, { pan: 0 }),
+            gainNode     = new GainNode (audioContext, { gain: 0 });
 
-         source .connect (stereoNode) .connect (audioContext .destination);
+         source .connect (gainNode) .connect (stereoNode) .connect (audioContext .destination);
 
+         this .gainNode   = gainNode;
          this .stereoNode = stereoNode;
          }
          catch (error)
@@ -144,7 +146,7 @@ Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, X3DChildN
       volume = (!mute) * intensity * volume;
 
       this .media .muted           = volume === 0;
-      this .media .volume          = volume;
+      this .gainNode .gain .value  = volume;
       this .stereoNode .pan .value = pan;
    },
    set_loop ()
