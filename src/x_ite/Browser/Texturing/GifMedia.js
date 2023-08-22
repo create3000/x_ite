@@ -48,7 +48,7 @@
 function GifMedia (gif, movieTexture)
 {
    let
-      playbackRate = 1;
+      playbackRate = 1,
       cycle        = 0,
       loop         = false;
 
