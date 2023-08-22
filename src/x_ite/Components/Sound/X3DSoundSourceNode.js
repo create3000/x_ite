@@ -79,9 +79,6 @@ Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, X3DChildN
          audioContext = this .getBrowser () .getAudioContext (),
          sourceNode   = audioContext .createMediaElementSource (element);
 
-      element .muted  = true;
-      element .volume = 0;
-
       this .element    = element;
       this .sourceNode = sourceNode;
    },
@@ -96,10 +93,7 @@ Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, X3DChildN
    setMedia (value)
    {
       if (this .media)
-      {
-         this .media .muted = true;
          this .media .pause ();
-      }
 
       this .media = value;
 
@@ -112,7 +106,6 @@ Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, X3DChildN
 
          // Handle events.
 
-         this .media .muted      = true;
          this ._duration_changed = this .media .duration;
 
          this .resetElapsedTime ();

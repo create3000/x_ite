@@ -128,13 +128,6 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
    },
    setVolume (volume, pan = 0.5)
    {
-      const media = this .sourceNode ?.getMedia ();
-
-      if (!media)
-         return;
-
-      media .muted = volume === 0;
-
       this .gainLeftNode  .gain .value = volume * (1 - Math .pow (pan, 2));
       this .gainRightNode .gain .value = volume * (1 - Math .pow (1 - pan, 2));
    },
@@ -147,6 +140,7 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
       else
       {
          this .getBrowser () .sensorEvents () .removeInterest ("update", this);
+         this .setVolume (0);
       }
    },
    set_source__ ()
@@ -162,10 +156,7 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
    update ()
    {
       if (!this .getTraversed ())
-      {
-         if (this .sourceNode)
-            this .setVolume (0);
-      }
+         this .setVolume (0);
 
       this .setTraversed (false);
    },
