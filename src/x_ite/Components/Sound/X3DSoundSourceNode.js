@@ -98,9 +98,34 @@ Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, X3DChildN
 
       if (value)
       {
+         // Create audio context.
+
+         const
+            audioContext  = new AudioContext(),
+            source        = audioContext .createMediaElementSource (value),
+            splitter      = audioContext .createChannelSplitter (2),
+            gainLeft      = audioContext .createGain(),
+            gainRight     = audioContext .createGain();
+
+         source    .connect (splitter, 0, 0);
+         splitter  .connect (gainLeft,  0);
+         splitter  .connect (gainRight, 1);
+         gainLeft  .connect (audioContext .destination, 0);
+         gainRight .connect (audioContext .destination, 0);
+
+         gainLeft  .gain .value = 0;
+         gainRight .gain .value = 0;
+
+         this .gainLeft  = gainLeft;
+         this .gainRight = gainRight
+
+         // Init media.
+
          this .media .muted  = true;
          this .media .volume = 0;
          this .media .loop   = this ._loop .getValue ();
+
+         // Handle events.
 
          this .setVolume (0);
          this ._duration_changed = this .media .duration;
@@ -140,16 +165,18 @@ Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, X3DChildN
    },
    set_volume__ ()
    {
-      if (! this .media)
+      if (!this .media)
          return;
 
       const
          mute      = this .getBrowser () ._mute .getValue (),
          intensity = Algorithm .clamp (this .getBrowser () ._volume .getValue (), 0, 1),
-         volume    = (! mute) * intensity * this .volume;
+         volume    = (!mute) * intensity * this .volume;
 
-      this .media .muted  = volume === 0;
-      this .media .volume = volume;
+      this .media .muted = volume === 0;
+
+      this .gainLeft  .gain .value = volume;
+      this .gainRight .gain .value = volume;
    },
    set_speed ()
    { },
@@ -193,7 +220,7 @@ Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, X3DChildN
    },
    set_time ()
    {
-      if (! this .media)
+      if (!this .media)
          return;
 
       this ._elapsedTime = this .getElapsedTime ();
