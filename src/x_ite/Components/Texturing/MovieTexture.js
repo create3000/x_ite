@@ -66,6 +66,8 @@ function MovieTexture (executionContext)
 
    this .video    = $("<video></video>");
    this .urlStack = new Fields .MFString ();
+
+   this .setElement (this .video [0]);
 }
 
 Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNode .prototype),

@@ -64,6 +64,8 @@ function AudioClip (executionContext)
 
    this .audio    = $("<audio></audio>");
    this .urlStack = new Fields .MFString ();
+
+   this .setElement (this .audio [0]);
 }
 
 Object .assign (Object .setPrototypeOf (AudioClip .prototype, X3DSoundSourceNode .prototype),
@@ -82,10 +84,6 @@ Object .assign (Object .setPrototypeOf (AudioClip .prototype, X3DSoundSourceNode
       this .audio .prop ("muted",       true);
 
       this .requestImmediateLoad () .catch (Function .prototype);
-   },
-   getElement ()
-   {
-      return this .audio [0];
    },
    set_live__ ()
    {

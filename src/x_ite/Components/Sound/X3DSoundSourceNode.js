@@ -69,37 +69,41 @@ Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, X3DChildN
       X3DChildNode         .prototype .initialize .call (this);
       X3DTimeDependentNode .prototype .initialize .call (this);
    },
+   getElement ()
+   {
+      return this .element;
+   },
+   setElement (element)
+   {
+      const
+         audioContext = new AudioContext (),
+         source       = audioContext .createMediaElementSource (element),
+         stereoNode   = new StereoPannerNode (audioContext, { pan: 0 }),
+         gainNode     = new GainNode (audioContext, { gain: 0 });
+
+      element .volume = 0;
+
+      source .connect (gainNode) .connect (stereoNode) .connect (audioContext .destination);
+
+      this .element    = element;
+      this .gainNode   = gainNode;
+      this .stereoNode = stereoNode;
+   },
    setMedia (value)
    {
-      if (this .media)
-      {
-         this .gainNode .gain .value = 0;
-         this .media .muted          = true;
-         this .media .pause ();
-      }
+      this .media ?.pause ();
+
+      this .gainNode   .gain .value = 0;
+      this .stereoNode .pan  .value = 0;
 
       this .media = value;
 
       if (value)
       {
-         // Create audio context.
-
-         const
-            audioContext = new AudioContext (),
-            source       = audioContext .createMediaElementSource (value),
-            stereoNode   = new StereoPannerNode (audioContext, { pan: 0 }),
-            gainNode     = new GainNode (audioContext, { gain: 0 });
-
-         source .connect (gainNode) .connect (stereoNode) .connect (audioContext .destination);
-
-         this .gainNode   = gainNode;
-         this .stereoNode = stereoNode;
-
          // Init media.
 
-         this .media .muted  = true;
-         this .media .volume = 0;
-         this .media .loop   = this ._loop .getValue ();
+         this .media .muted = true;
+         this .media .loop  = this ._loop .getValue ();
 
          // Handle events.
 
@@ -139,9 +143,9 @@ Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, X3DChildN
 
       volume = (!mute) * intensity * volume;
 
-      this .media .muted           = volume === 0;
-      this .gainNode .gain .value  = volume;
-      this .stereoNode .pan .value = pan;
+      this .media .muted            = volume === 0;
+      this .gainNode   .gain .value = volume;
+      this .stereoNode .pan  .value = pan;
    },
    set_loop ()
    {
