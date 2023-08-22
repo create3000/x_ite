@@ -268,7 +268,7 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
             l = modelViewMatrix .multVecMatrix (location .assign (this ._location .getValue ())) .normalize (),
             p = l .dot (Vector3 .xAxis);
 
-         return p;
+         return (p + 1) / 2;
       };
    })(),
 });
