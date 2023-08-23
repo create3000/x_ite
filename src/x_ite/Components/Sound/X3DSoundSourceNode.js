@@ -158,10 +158,10 @@ Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, X3DChildN
    },
    set_time ()
    {
+      this ._elapsedTime = this .getElapsedTime ();
+
       if (!this .media)
          return;
-
-      this ._elapsedTime = this .getElapsedTime ();
 
       if (this .media .currentTime < this .media .duration)
          return;
