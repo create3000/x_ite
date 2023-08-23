@@ -49,6 +49,7 @@ import Fields               from "../../Fields.js";
 import X3DChildNode         from "../Core/X3DChildNode.js";
 import X3DTimeDependentNode from "../Time/X3DTimeDependentNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
+import X3DCast              from "../../Base/X3DCast.js";
 
 function X3DSoundProcessingNode (executionContext)
 {
@@ -58,6 +59,11 @@ function X3DSoundProcessingNode (executionContext)
    this .addType (X3DConstants .X3DSoundProcessingNode);
 
    this .addChildObjects (X3DConstants .inputOutput, "loop", new Fields .SFBool ());
+
+   const audioContext = this .getBrowser () .getAudioContext ();
+
+   this .childNodes = [ ];
+   this .gainNode   = new GainNode (audioContext);
 }
 
 Object .assign (Object .setPrototypeOf (X3DSoundProcessingNode .prototype, X3DChildNode .prototype),
@@ -67,6 +73,74 @@ Object .assign (Object .setPrototypeOf (X3DSoundProcessingNode .prototype, X3DCh
    {
       X3DChildNode         .prototype .initialize .call (this);
       X3DTimeDependentNode .prototype .initialize .call (this);
+
+      this ._gain     .addInterest ("set_gain__",     this);
+      this ._children .addInterest ("set_children__", this);
+
+      this .set_gain__ ();
+      this .set_children__ ();
+   },
+   getSource ()
+   {
+      return this .gainNode;
+   },
+   set_gain__ ()
+   {
+      this .gainNode .gain .value = this ._gain .getValue ();
+   },
+   set_children__ ()
+   {
+      if (this ._isActive .getValue () && !this ._isPaused .getValue ())
+         this .set_stop ();
+
+      this .childNodes .length = 0;
+
+      for (const child of this ._children)
+      {
+         const childNode = X3DCast (X3DConstants .X3DChildNode, child);
+
+         if (!childNode)
+            continue;
+
+         const type = childNode .getType ();
+
+         for (let t = type .length - 1; t >= 0; -- t)
+         {
+            switch (type [t])
+            {
+               case X3DConstants .X3DSoundChannelNode:
+               case X3DConstants .X3DSoundProcessingNode:
+               case X3DConstants .X3DSoundSourceNode:
+                  this .childNodes .push (childNode);
+                  break;
+               default:
+                  continue;
+            }
+
+            break;
+         }
+      }
+
+      if (this ._isActive .getValue () && !this ._isPaused .getValue ())
+         this .set_start ();
+   },
+   set_start ()
+   {
+      for (const childNode of this .childNodes)
+         childNode .getSource () .connect (this .gainNode);
+   },
+   set_pause ()
+   {
+      this .set_stop ();
+   },
+   set_resume ()
+   {
+      this .set_start ();
+   },
+   set_stop ()
+   {
+      for (const childNode of this .childNodes)
+         childNode .getSource () .disconnect (this .gainNode);
    },
    dispose ()
    {

@@ -69,14 +69,6 @@ The *gain* field is a factor that represents the amount of linear amplification 
 
 - [W3C Web Audio API](https://www.w3.org/TR/webaudio/#dom-audionode-channelcount){:target="_blank"}
 
-### SFInt32 [out] **channelCount**
-
-*channelCount* reports number of channels provided by input nodes.
-
-#### Hint
-
-- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#dom-audionode-channelcount){:target="_blank"}
-
 ### SFString [in, out] **channelCountMode** "MAX" <small>["MAX", "CLAMPED-MAX", "EXPLICIT"]</small>
 
 *channelCountMode* determines how individual channels are counted when up-mixing and down-mixing connections to any inputs.
@@ -92,6 +84,14 @@ The *gain* field is a factor that represents the amount of linear amplification 
 #### Hint
 
 - [W3C Web Audio API](https://www.w3.org/TR/webaudio/#dom-audionode-channelinterpretation){:target="_blank"}
+
+### SFInt32 [out] **channelCount**
+
+*channelCount* reports number of channels provided by input nodes.
+
+#### Hint
+
+- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#dom-audionode-channelcount){:target="_blank"}
 
 ### SFString [out] **mediaDeviceID**
 
