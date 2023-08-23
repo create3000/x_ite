@@ -98,11 +98,11 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
 
       this .childNode = null;
 
-      const node = X3DCast (X3DConstants .X3DChildNode, this ._shape);
+      const childNode = X3DCast (X3DConstants .X3DChildNode, this ._shape);
 
-      if (node)
+      if (childNode)
       {
-         const type = node .getType ();
+         const type = childNode .getType ();
 
          for (let t = type .length - 1; t >= 0; -- t)
          {
@@ -112,13 +112,13 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
                case X3DConstants .Transform:
                case X3DConstants .X3DShapeNode:
                {
-                  node ._isCameraObject   .addInterest ("set_cameraObject__",     this);
-                  node ._isPickableObject .addInterest ("set_transformSensors__", this);
+                  childNode ._isCameraObject   .addInterest ("set_cameraObject__",     this);
+                  childNode ._isPickableObject .addInterest ("set_transformSensors__", this);
 
-                  node ._display     .addInterest ("set_display__",     this);
-                  node ._bboxDisplay .addInterest ("set_bboxDisplay__", this);
+                  childNode ._display     .addInterest ("set_display__",     this);
+                  childNode ._bboxDisplay .addInterest ("set_bboxDisplay__", this);
 
-                  this .childNode = node;
+                  this .childNode = childNode;
                   break;
                }
                default:

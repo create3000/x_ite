@@ -73,6 +73,7 @@ function Sound (executionContext)
    this ._maxBack  .setUnit ("length");
    this ._maxFront .setUnit ("length");
 
+   this .childNodes       = [ ];
    this .currentTraversed = true;
 }
 
@@ -146,13 +147,39 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
    },
    set_children__ ()
    {
-      if (this .sourceNode)
-         this .sourceNode .getSource () .disconnect (this .splitterNode);
+      for (const childNode of this .childNodes)
+         childNode .getSource () .disconnect (this .splitterNode);
 
-      this .sourceNode = X3DCast (X3DConstants .X3DSoundSourceNode, this ._source);
+      this .childNodes .length = 0;
 
-      if (this .sourceNode)
-         this .sourceNode .getSource () .connect (this .splitterNode);
+      const sourceNode = X3DCast (X3DConstants .X3DSoundSourceNode, this ._source);
+
+      if (sourceNode)
+         this .childNodes .push (sourceNode)
+
+      for (const child of this ._children)
+      {
+         const childNode = X3DCast (X3DConstants .X3DChildNode, child);
+
+         if (!childNode)
+            continue;
+
+         const type = childNode .getType ();
+
+         for (let t = type .length - 1; t >= 0; -- t)
+         {
+            switch (type [t])
+            {
+               case X3DConstants .X3DSoundChannelNode:
+               case X3DConstants .X3DSoundProcessingNode:
+               case X3DConstants .X3DSoundSourceNode:
+                  this .childNodes .push (childNode);
+            }
+         }
+      }
+
+      for (const childNode of this .childNodes)
+         childNode .getSource () .connect (this .splitterNode);
    },
    update ()
    {
@@ -172,7 +199,7 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
          if (type !== TraverseType .DISPLAY)
             return;
 
-         if (!this .sourceNode)
+         if (!this .childNodes .length)
             return;
 
          // if (!this .sourceNode ._isActive .getValue () || this .sourceNode ._isPaused .getValue ())
