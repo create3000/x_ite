@@ -186,9 +186,9 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
                                       Math .max (this ._maxFront .getValue (), 0),
                                       max);
 
-         if (max .distance < 1) // Sphere radius is 1
+         if (max .distance < 1) // Radius of normalized sphere is 1.
          {
-            // this .getBrowser () .getAudioContext () .resume () .catch (Function .prototype);
+            this .getBrowser () .getAudioContext () .resume () .catch (Function .prototype);
 
             this .getEllipsoidParameter (modelViewMatrix,
                                          Math .max (this ._minBack  .getValue (), 0),
@@ -197,7 +197,7 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
 
             const pan = this .getPan (modelViewMatrix);
 
-            if (min .distance < 1) // Sphere radius is 1
+            if (min .distance < 1) // Radius of normalized sphere is 1.
             {
                this .setVolume (Algorithm .clamp (this ._intensity .getValue (), 0, 1), pan);
             }
