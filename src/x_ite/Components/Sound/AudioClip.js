@@ -60,8 +60,6 @@ function AudioClip (executionContext)
 
    this .addType (X3DConstants .AudioClip);
 
-   this .addChildObjects (X3DConstants .inputOutput, "speed", new Fields .SFFloat (1));
-
    const audioContext = this .getBrowser () .getAudioContext ();
 
    this .urlStack   = new Fields .MFString ();
@@ -91,10 +89,6 @@ Object .assign (Object .setPrototypeOf (AudioClip .prototype, X3DSoundSourceNode
    {
       X3DSoundSourceNode .prototype .set_live__ .call (this);
       X3DUrlObject       .prototype .set_live__ .call (this);
-   },
-   getElement ()
-   {
-      return this .audio [0];
    },
    unloadData ()
    {
@@ -148,15 +142,22 @@ Object .assign (Object .setPrototypeOf (AudioClip .prototype, X3DSoundSourceNode
    },
    setAudio ()
    {
-      if (DEVELOPMENT)
+      try
       {
-         if (this .URL .protocol !== "data:")
-            console .info (`Done loading audio '${decodeURI (this .URL .href)}'`);
-      }
+         if (DEVELOPMENT)
+         {
+            if (this .URL .protocol !== "data:")
+               console .info (`Done loading audio '${decodeURI (this .URL .href)}'`);
+         }
 
-      this .audio .unbind ("canplaythrough");
-      this .setMedia (this .audio [0]);
-      this .setLoadState (X3DConstants .COMPLETE_STATE);
+         this .audio .unbind ("canplaythrough");
+         this .setMedia (this .audio [0]);
+         this .setLoadState (X3DConstants .COMPLETE_STATE);
+      }
+      catch (error)
+      {
+         this .setError ({ type: error .message });
+      }
    },
    dispose ()
    {

@@ -58,8 +58,6 @@ function BufferAudioSource (executionContext)
    X3DUrlObject       .call (this, executionContext);
 
    this .addType (X3DConstants .BufferAudioSource);
-
-   this .addChildObjects (X3DConstants .inputOutput, "speed", new Fields .SFFloat (1));
 }
 
 Object .assign (Object .setPrototypeOf (BufferAudioSource .prototype, X3DSoundSourceNode .prototype),

@@ -83,7 +83,7 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
       X3DSoundSourceNode .prototype .initialize .call (this);
       X3DUrlObject       .prototype .initialize .call (this);
 
-      this ._speed .addInterest ("set_speed", this);
+      this ._speed .addInterest ("set_speed__", this);
 
       this .video
          .on ("abort error", this .setError .bind (this))
@@ -97,10 +97,6 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
    {
       X3DSoundSourceNode .prototype .set_live__ .call (this);
       X3DUrlObject       .prototype .set_live__ .call (this);
-   },
-   getElement ()
-   {
-      return this .video [0];
    },
    unloadData ()
    {
@@ -169,14 +165,14 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
    },
    setVideo ()
    {
-      if (DEVELOPMENT)
-      {
-         if (this .URL .protocol !== "data:")
-            console .info (`Done loading movie '${decodeURI (this .URL .href)}'`);
-      }
-
       try
       {
+         if (DEVELOPMENT)
+         {
+            if (this .URL .protocol !== "data:")
+               console .info (`Done loading movie '${decodeURI (this .URL .href)}'`);
+         }
+
          this .video .unbind ("canplaythrough");
 
          const
@@ -184,12 +180,14 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
             width  = video .videoWidth,
             height = video .videoHeight;
 
-         if (! Algorithm .isPowerOfTwo (width) || ! Algorithm .isPowerOfTwo (height))
+         if (!Algorithm .isPowerOfTwo (width) || !Algorithm .isPowerOfTwo (height))
             throw new Error ("The movie texture is a non power-of-two texture.");
 
          this .setMedia (this .video [0]);
          this .setTexture (width, height, false, video, true);
          this .setLoadState (X3DConstants .COMPLETE_STATE);
+
+         this .set_speed__ ();
       }
       catch (error)
       {
@@ -210,12 +208,21 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
          this .setMedia (gif);
          this .setTexture (gif .get_canvas () .width, gif .get_canvas () .height, false, gif .get_frames () [0] .data, true);
          this .setLoadState (X3DConstants .COMPLETE_STATE);
+
+         this .set_speed__ ();
       }
       catch (error)
       {
          // Catch security error from cross origin requests.
          this .setError ({ type: error .message });
       }
+   },
+   set_speed__ ()
+   {
+      if (this .gif)
+         this .gif .playbackRate = this ._speed .getValue ();
+
+      this .video [0] .playbackRate = this ._speed .getValue ();
    },
    set_time ()
    {

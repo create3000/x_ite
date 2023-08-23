@@ -89,7 +89,6 @@ Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, X3DChildN
          // Init media.
 
          this .set_loop ();
-         this .set_speed ();
 
          // Handle events.
 
@@ -121,11 +120,6 @@ Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, X3DChildN
    {
       this .gainNode .gain .value = this ._gain .getValue ();
    },
-   set_speed ()
-   {
-      if (this .media)
-         this .media .playbackRate = this ._speed .getValue ();
-   },
    set_pitch ()
    { },
    set_loop ()
@@ -137,11 +131,8 @@ Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, X3DChildN
    {
       if (this .media)
       {
-         if (this ._speed .getValue ())
-         {
-            this .media .currentTime = 0;
-            this .media .play () .catch (Function .prototype);
-         }
+         this .media .currentTime = 0;
+         this .media .play () .catch (Function .prototype);
       }
    },
    set_pause ()
@@ -152,10 +143,7 @@ Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, X3DChildN
    set_resume ()
    {
       if (this .media)
-      {
-         if (this ._speed .getValue ())
-            this .media .play () .catch (Function .prototype);
-      }
+         this .media .play () .catch (Function .prototype);
    },
    set_stop ()
    {
