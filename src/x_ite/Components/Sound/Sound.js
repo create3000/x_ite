@@ -148,7 +148,7 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
    set_children__ ()
    {
       for (const childNode of this .childNodes)
-         childNode .getSource () .disconnect (this .splitterNode);
+         childNode .getAudioSource () .disconnect (this .splitterNode);
 
       this .childNodes .length = 0;
 
@@ -184,7 +184,7 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
       }
 
       for (const childNode of this .childNodes)
-         childNode .getSource () .connect (this .splitterNode);
+         childNode .getAudioSource () .connect (this .splitterNode);
    },
    update ()
    {

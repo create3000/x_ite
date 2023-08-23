@@ -142,7 +142,7 @@ Object .assign (Object .setPrototypeOf (OscillatorSource .prototype, X3DSoundSou
 
       this .oscillatorNode .connect (this .mergerNode, 0, 0);
       this .oscillatorNode .connect (this .mergerNode, 0, 1);
-      this .mergerNode     .connect (this .getSource ());
+      this .mergerNode     .connect (this .getAudioSource ());
 
       this .oscillatorNode .start ();
    },
@@ -152,7 +152,7 @@ Object .assign (Object .setPrototypeOf (OscillatorSource .prototype, X3DSoundSou
    },
    set_resume ()
    {
-      this .mergerNode .connect (this .getSource ());
+      this .mergerNode .connect (this .getAudioSource ());
    },
    set_stop ()
    {

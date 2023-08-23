@@ -72,7 +72,7 @@ Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, X3DChildN
 
       this .set_gain__ ();
    },
-   getSource ()
+   getAudioSource ()
    {
       return this .gainNode;
    },

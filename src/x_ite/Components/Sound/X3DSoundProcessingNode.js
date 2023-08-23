@@ -80,7 +80,7 @@ Object .assign (Object .setPrototypeOf (X3DSoundProcessingNode .prototype, X3DCh
       this .set_gain__ ();
       this .set_children__ ();
    },
-   getSource ()
+   getAudioSource ()
    {
       return this .gainNode;
    },
@@ -127,7 +127,7 @@ Object .assign (Object .setPrototypeOf (X3DSoundProcessingNode .prototype, X3DCh
    set_start ()
    {
       for (const childNode of this .childNodes)
-         childNode .getSource () .connect (this .gainNode);
+         childNode .getAudioSource () .connect (this .gainNode);
    },
    set_pause ()
    {
@@ -140,7 +140,7 @@ Object .assign (Object .setPrototypeOf (X3DSoundProcessingNode .prototype, X3DCh
    set_stop ()
    {
       for (const childNode of this .childNodes)
-         childNode .getSource () .disconnect (this .gainNode);
+         childNode .getAudioSource () .disconnect (this .gainNode);
    },
    set_time ()
    {

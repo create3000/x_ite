@@ -66,7 +66,7 @@ function AudioClip (executionContext)
    this .audio      = $("<audio></audio>");
    this .sourceNode = audioContext .createMediaElementSource (this .audio [0]);
 
-   this .sourceNode .connect (this .getSource ());
+   this .sourceNode .connect (this .getAudioSource ());
 }
 
 Object .assign (Object .setPrototypeOf (AudioClip .prototype, X3DSoundSourceNode .prototype),
