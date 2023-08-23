@@ -56,25 +56,32 @@ function PeriodicWave (executionContext)
    X3DSoundNode .call (this, executionContext);
 
    this .addType (X3DConstants .PeriodicWave);
+
+   this .real = new Float32Array (2);
+   this .imag = new Float32Array (2);
 }
 
 Object .assign (Object .setPrototypeOf (PeriodicWave .prototype, X3DSoundNode .prototype),
 {
-   createPeriodicWave: (function ()
+   createPeriodicWave ()
    {
-      const defaultOption = new Float32Array (2);
+      const
+         audioContext = this .getBrowser () .getAudioContext (),
+         optionsReal  = this ._optionsReal .shrinkToFit (),
+         optionsImag  = this ._optionsImag .shrinkToFit (),
+         length       = Math .max (optionsReal .length, optionsImag .length, 2);
 
-      return function ()
+      if (this .real .length !== length)
       {
-         const
-            audioContext = this .getBrowser () .getAudioContext (),
-            real         = this ._optionsReal .length < 2 ? defaultOption : this ._optionsReal .shrinkToFit (),
-            imag         = this ._optionsImag .length < 2 ? defaultOption : this ._optionsImag .shrinkToFit (),
-            periodicWave = audioContext .createPeriodicWave (real, imag);
+         this .real = new Float32Array (length);
+         this .imag = new Float32Array (length);
+      }
 
-         return periodicWave;
-      };
-   })(),
+      this .real .set (optionsReal);
+      this .imag .set (optionsImag);
+
+      return audioContext .createPeriodicWave (this .real, this .imag);
+   },
 });
 
 Object .defineProperties (PeriodicWave,
