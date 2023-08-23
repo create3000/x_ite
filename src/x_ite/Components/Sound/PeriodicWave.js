@@ -58,7 +58,24 @@ function PeriodicWave (executionContext)
    this .addType (X3DConstants .PeriodicWave);
 }
 
-Object .setPrototypeOf (PeriodicWave .prototype, X3DSoundNode .prototype);
+Object .assign (Object .setPrototypeOf (PeriodicWave .prototype, X3DSoundNode .prototype),
+{
+   createPeriodicWave: (function ()
+   {
+      const defaultOption = new Float32Array (2);
+
+      return function ()
+      {
+         const
+            audioContext = this .getBrowser () .getAudioContext (),
+            real         = this ._optionsReal .length < 2 ? defaultOption : this ._optionsReal .shrinkToFit (),
+            imag         = this ._optionsImag .length < 2 ? defaultOption : this ._optionsImag .shrinkToFit (),
+            periodicWave = audioContext .createPeriodicWave (real, imag);
+
+         return periodicWave;
+      };
+   })(),
+});
 
 Object .defineProperties (PeriodicWave,
 {

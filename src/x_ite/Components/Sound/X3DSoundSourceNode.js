@@ -48,7 +48,6 @@
 import X3DChildNode         from "../Core/X3DChildNode.js";
 import X3DTimeDependentNode from "../Time/X3DTimeDependentNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
-import Algorithm            from "../../../standard/Math/Algorithm.js";
 
 function X3DSoundSourceNode (executionContext)
 {

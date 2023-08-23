@@ -102,10 +102,11 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
       this .getLive ()  .addInterest ("set_live__", this);
       this ._traversed .addInterest ("set_live__", this);
 
-      this ._source .addInterest ("set_source__", this);
+      this ._source   .addInterest ("set_children__", this);
+      this ._children .addInterest ("set_children__", this);
 
       this .set_live__ ();
-      this .set_source__ ();
+      this .set_children__ ();
    },
    setTraversed (value)
    {
@@ -143,7 +144,7 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
          this .setVolume (0);
       }
    },
-   set_source__ ()
+   set_children__ ()
    {
       if (this .sourceNode)
          this .sourceNode .getSource () .disconnect (this .splitterNode);
@@ -174,8 +175,8 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
          if (!this .sourceNode)
             return;
 
-         if (!this .sourceNode ._isActive .getValue () || this .sourceNode ._isPaused .getValue ())
-            return;
+         // if (!this .sourceNode ._isActive .getValue () || this .sourceNode ._isPaused .getValue ())
+         //    return;
 
          this .setTraversed (true);
 

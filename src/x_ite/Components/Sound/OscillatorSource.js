@@ -50,6 +50,7 @@ import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DSoundSourceNode   from "./X3DSoundSourceNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
+import X3DCast              from "../../Base/X3DCast.js";
 
 function OscillatorSource (executionContext)
 {
@@ -58,9 +59,107 @@ function OscillatorSource (executionContext)
    this .addType (X3DConstants .OscillatorSource);
 
    this .addChildObjects (X3DConstants .inputOutput, "loop", new Fields .SFBool ());
+
+   const audioContext = this .getBrowser () .getAudioContext ();
+
+   this .oscillatorNode = new OscillatorNode (audioContext);
+   this .mergerNode     = new ChannelMergerNode (audioContext, { numberOfInputs: 2 });
 }
 
-Object .setPrototypeOf (OscillatorSource .prototype, X3DSoundSourceNode .prototype);
+Object .assign (Object .setPrototypeOf (OscillatorSource .prototype, X3DSoundSourceNode .prototype),
+{
+   initialize ()
+   {
+      X3DSoundSourceNode .prototype .initialize .call (this);
+
+      this ._detune       .addInterest ("set_detune__",       this);
+      this ._frequency    .addInterest ("set_frequency__",    this);
+      this ._periodicWave .addInterest ("set_periodicWave__", this);
+
+      this .set_periodicWave__ ();
+   },
+   set_type__: (function ()
+   {
+      const types = new Set ([
+         "sine",
+         "square",
+         "sawtooth",
+         "triangle",
+      ]);
+
+      return function ()
+      {
+         this .periodicWaveNode ._optionsReal .removeInterest ("set_periodicWaveOptions__", this);
+         this .periodicWaveNode ._optionsImag .removeInterest ("set_periodicWaveOptions__", this);
+
+         const type = this .periodicWaveNode ._type .getValue () .toLowerCase ();
+
+         if (type === "custom")
+         {
+            this .periodicWaveNode ._optionsReal .addInterest ("set_periodicWaveOptions__", this);
+            this .periodicWaveNode ._optionsImag .addInterest ("set_periodicWaveOptions__", this);
+
+            this .set_periodicWaveOptions__ ();
+         }
+         else
+         {
+            this .oscillatorNode .type = types .has (type) ? type : "square";
+         }
+      };
+   })(),
+   set_detune__ ()
+   {
+      this .oscillatorNode .detune .value = this ._detune .getValue ();
+   },
+   set_frequency__ ()
+   {
+      this .oscillatorNode .frequency .value = this ._frequency .getValue ();
+   },
+   set_periodicWave__ ()
+   {
+      this .periodicWaveNode ?._type .removeInterest ("set_type__", this);
+
+      this .periodicWaveNode = X3DCast (X3DConstants .PeriodicWave, this ._periodicWave)
+         ?? this .getBrowser () .getDefaultPeriodicWave ();
+
+      this .periodicWaveNode ._type .addInterest ("set_type__", this);
+
+      this .set_type__ ();
+   },
+   set_periodicWaveOptions__ ()
+   {
+      this .oscillatorNode .setPeriodicWave (this .periodicWaveNode .createPeriodicWave ());
+   },
+   set_start ()
+   {
+      const audioContext = this .getBrowser () .getAudioContext ();
+
+      this .oscillatorNode = new OscillatorNode (audioContext);
+
+      this .set_type__ ();
+      this .set_detune__ ();
+      this .set_frequency__ ();
+
+      this .oscillatorNode .connect (this .mergerNode, 0, 0);
+      this .oscillatorNode .connect (this .mergerNode, 0, 1);
+      this .mergerNode     .connect (this .getSource ());
+
+      this .oscillatorNode .start ();
+   },
+   set_pause ()
+   {
+      this .mergerNode .disconnect ();
+   },
+   set_resume ()
+   {
+      this .mergerNode .connect (this .getSource ());
+   },
+   set_stop ()
+   {
+      this .oscillatorNode .stop ();
+      this .oscillatorNode .disconnect ();
+   },
+});
 
 Object .defineProperties (OscillatorSource,
 {

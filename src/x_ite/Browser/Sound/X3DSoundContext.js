@@ -45,7 +45,11 @@
  *
  ******************************************************************************/
 
-const _audioContext = Symbol ();
+import PeriodicWave from "../../Components/Sound/PeriodicWave.js";
+
+const
+   _audioContext        = Symbol (),
+   _defaultPeriodicWave = Symbol ();
 
 function X3DSoundContext ()
 {
@@ -57,6 +61,18 @@ Object .assign (X3DSoundContext .prototype,
    getAudioContext ()
    {
       return this [_audioContext];
+   },
+   getDefaultPeriodicWave ()
+   {
+      this [_defaultPeriodicWave] = new PeriodicWave (this .getPrivateScene ());
+      this [_defaultPeriodicWave] .setPrivate (true);
+      this [_defaultPeriodicWave] .setup ();
+
+      this .getDefaultPeriodicWave = function () { return this [_defaultPeriodicWave]; };
+
+      Object .defineProperty (this, "getDefaultPeriodicWave", { enumerable: false });
+
+      return this [_defaultPeriodicWave];
    },
 });
 
