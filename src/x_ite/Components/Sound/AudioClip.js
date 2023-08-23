@@ -69,7 +69,7 @@ function AudioClip (executionContext)
       audioContext = this .getBrowser () .getAudioContext (),
       sourceNode   = audioContext .createMediaElementSource (this .audio [0]);
 
-   this .setAudioNode (sourceNode);
+   this .setNode (sourceNode);
 }
 
 Object .assign (Object .setPrototypeOf (AudioClip .prototype, X3DSoundSourceNode .prototype),

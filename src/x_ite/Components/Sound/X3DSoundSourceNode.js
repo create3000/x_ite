@@ -73,7 +73,7 @@ Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, X3DChildN
 
       this .set_gain__ ();
    },
-   setAudioNode (node)
+   setNode (node)
    {
       const
          audioContext = this .getBrowser () .getAudioContext (),
@@ -81,6 +81,7 @@ Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, X3DChildN
 
       node .connect (gainNode);
 
+      this .node     = node;
       this .gainNode = gainNode;
    },
    getSource ()

@@ -71,7 +71,7 @@ function MovieTexture (executionContext)
       audioContext = this .getBrowser () .getAudioContext (),
       sourceNode   = audioContext .createMediaElementSource (this .video [0]);
 
-   this .setAudioNode (sourceNode);
+   this .setNode (sourceNode);
 }
 
 Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNode .prototype),
