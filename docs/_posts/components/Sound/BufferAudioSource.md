@@ -35,7 +35,7 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/components/core.html#Metadata){:target="_blank"}
 
 ### SFString [in, out] **description** ""
 
@@ -110,14 +110,6 @@ The *gain* field is a factor that represents the amount of linear amplification 
 
 - Decibel values shall not be used.
 
-### MFFloat [in, out] **buffer** [ ] <small>[−1,1]</small>
-
-*buffer* is a memory-resident audio asset that can contain one or more channels. *buffer* data format is non-interleaved 32-bit floating-point linear PCM values with a normal range of [−1,1], but values are not limited to this range.
-
-#### Hint
-
-- [Wikipedia Pulse-Code Modulation (PCM)](https://en.wikipedia.org/wiki/Pulse-code_modulation){:target="_blank"}
-
 ### SFFloat [in, out] **detune** 0 <small>[0,∞)</small>
 
 The *detune* field forms a compound field together with playbackRate that together determine a computedPlaybackRate value.
@@ -126,6 +118,14 @@ The *detune* field forms a compound field together with playbackRate that togeth
 
 - ComputedPlaybackRate(t) = playbackRate(t) * pow(2, *detune*(t) / 1200)
 
+### MFFloat [in, out] **buffer** [ ] <small>[−1,1]</small>
+
+*buffer* is a memory-resident audio asset that can contain one or more channels. *buffer* data format is non-interleaved 32-bit floating-point linear PCM values with a normal range of [−1,1], but values are not limited to this range.
+
+#### Hint
+
+- [Wikipedia Pulse-Code Modulation (PCM)](https://en.wikipedia.org/wiki/Pulse-code_modulation){:target="_blank"}
+
 ### SFTime [in, out] **bufferDuration** 0 <small>[0,∞)</small>
 
 *bufferDuration* is duration in seconds to use from buffer field.
@@ -133,6 +133,32 @@ The *detune* field forms a compound field together with playbackRate that togeth
 #### Hint
 
 - Duration is a nonnegative SFTime duration interval, not an absolute clock time.
+
+### SFInt32 [out] **bufferLength**
+
+*bufferLength* is length of buffer field in sample-frames.
+
+### SFInt32 [in, out] **numberOfChannels** 0 <small>[0,∞)</small>
+
+*numberOfChannels* is number of audio channels found in this buffer source.
+
+### SFFloat [in, out] **sampleRate** 0 <small>[0,∞)</small>
+
+*sampleRate* field is sample-frames per second.
+
+#### Hints
+
+- Sample-rate converters (variable speed processors) are not supported in real-time processing.
+- Nyquist frequency is half this *sampleRate* value.
+- [Wikipedia Nyquist frequency](https://en.wikipedia.org/wiki/Nyquist_frequency){:target="_blank"}
+
+### SFFloat [in, out] **playbackRate** 1 <small>(-∞,∞)</small>
+
+*playbackRate* field is speed at which to render the audio stream, and forms a compound field together with detune field
+
+#### Hint
+
+- Negative values play in reverse.
 
 ### SFTime [in, out] **loopStart** 0 <small>[0,∞)</small>
 
@@ -149,32 +175,6 @@ The *detune* field forms a compound field together with playbackRate that togeth
 #### Hint
 
 - *loopEnd* represents a nonnegative SFTime duration interval, not an absolute clock time.
-
-### SFInt32 [in, out] **numberOfChannels** 0 <small>[0,∞)</small>
-
-*numberOfChannels* is number of audio channels found in this buffer source.
-
-### SFFloat [in, out] **playbackRate** 1 <small>(-∞,∞)</small>
-
-*playbackRate* field is speed at which to render the audio stream, and forms a compound field together with detune field
-
-#### Hint
-
-- Negative values play in reverse.
-
-### SFFloat [in, out] **sampleRate** 0 <small>[0,∞)</small>
-
-*sampleRate* field is sample-frames per second.
-
-#### Hints
-
-- Sample-rate converters (variable speed processors) are not supported in real-time processing.
-- Nyquist frequency is half this *sampleRate* value.
-- [Wikipedia Nyquist frequency](https://en.wikipedia.org/wiki/Nyquist_frequency){:target="_blank"}
-
-### SFInt32 [out] **bufferLength**
-
-*bufferLength* is length of buffer field in sample-frames.
 
 ### SFInt32 [out] **channelCount**
 

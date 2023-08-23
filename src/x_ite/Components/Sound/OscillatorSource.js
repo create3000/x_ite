@@ -107,13 +107,13 @@ Object .assign (Object .setPrototypeOf (OscillatorSource .prototype, X3DSoundSou
          }
       };
    })(),
-   set_detune__ ()
-   {
-      this .oscillatorNode .detune .value = this ._detune .getValue ();
-   },
    set_frequency__ ()
    {
       this .oscillatorNode .frequency .value = this ._frequency .getValue ();
+   },
+   set_detune__ ()
+   {
+      this .oscillatorNode .detune .value = this ._detune .getValue ();
    },
    set_periodicWave__ ()
    {
@@ -137,8 +137,8 @@ Object .assign (Object .setPrototypeOf (OscillatorSource .prototype, X3DSoundSou
       this .oscillatorNode = new OscillatorNode (audioContext);
 
       this .set_type__ ();
-      this .set_detune__ ();
       this .set_frequency__ ();
+      this .set_detune__ ();
 
       this .oscillatorNode .connect (this .mergerNode, 0, 0);
       this .oscillatorNode .connect (this .mergerNode, 0, 1);
@@ -186,22 +186,22 @@ Object .defineProperties (OscillatorSource,
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "description",   new Fields .SFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",       new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",     new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "description",  new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",      new Fields .SFBool (true)),
 
-         new X3DFieldDefinition (X3DConstants .inputOutput, "gain",          new Fields .SFFloat (1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "detune",        new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "frequency",     new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "periodicWave",  new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "gain",         new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "frequency",    new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "detune",       new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "periodicWave", new Fields .SFNode ()),
 
-         new X3DFieldDefinition (X3DConstants .inputOutput, "startTime",     new Fields .SFTime ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "resumeTime",    new Fields .SFTime ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "pauseTime",     new Fields .SFTime ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "stopTime",      new Fields .SFTime ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "isPaused",      new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",      new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "elapsedTime",   new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "startTime",    new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "resumeTime",   new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "pauseTime",    new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "stopTime",     new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "isPaused",     new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",     new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "elapsedTime",  new Fields .SFTime ()),
       ]),
       enumerable: true,
    },

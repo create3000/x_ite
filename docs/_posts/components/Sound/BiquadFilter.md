@@ -35,7 +35,7 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/components/core.html#Metadata){:target="_blank"}
 
 ### SFString [in, out] **description** ""
 
@@ -49,22 +49,6 @@ Author-provided prose that describes intended purpose of the url asset.
 
 Enables/disables node operation.
 
-### SFFloat [in, out] **detune** 0 <small>[0,∞)</small>
-
-The *detune* field forms a compound field together with playbackRate that together determine a computedPlaybackRate value.
-
-#### Hint
-
-- ComputedPlaybackRate(t) = playbackRate(t) * pow(2, *detune*(t) / 1200)
-
-### SFFloat [in, out] **frequency** 350 <small>[0,∞)</small>
-
-*frequency* at which the BiquadFilterNode operates, in Hz.
-
-#### Hint
-
-- [Wikipedia Hertz](https://en.wikipedia.org/wiki/Hertz){:target="_blank"}
-
 ### SFFloat [in, out] **gain** 1 <small>(-∞,∞)</small>
 
 The *gain* field is a factor that represents the amount of linear amplification to apply to the output of the node.
@@ -77,6 +61,30 @@ The *gain* field is a factor that represents the amount of linear amplification 
 
 - Decibel values shall not be used.
 
+### SFFloat [in, out] **frequency** 350 <small>[0,∞)</small>
+
+*frequency* at which the BiquadFilterNode operates, in Hz.
+
+#### Hint
+
+- [Wikipedia Hertz](https://en.wikipedia.org/wiki/Hertz){:target="_blank"}
+
+### SFFloat [in, out] **detune** 0 <small>[0,∞)</small>
+
+The *detune* field forms a compound field together with playbackRate that together determine a computedPlaybackRate value.
+
+#### Hint
+
+- ComputedPlaybackRate(t) = playbackRate(t) * pow(2, *detune*(t) / 1200)
+
+### SFString [in, out] **type** "LOWPASS" <small>["LOWPASS", "HIGHPASS", "BANDPASS", "LOWSHELF", "HIGHSHELF", "PEAKING", "NOTCH", "ALLPASS"]</small>
+
+*type* selects which BiquadFilter algorithm is used.
+
+#### Hint
+
+- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#enumdef-biquadfiltertype){:target="_blank"}
+
 ### SFFloat [in, out] **qualityFactor** 1 <small>[0,∞)</small>
 
 *qualityFactor* is Quality Factor (Q) of the respective filter algorithm.
@@ -88,14 +96,6 @@ The *gain* field is a factor that represents the amount of linear amplification 
 ### SFTime [in, out] **tailTime** 0 <small>[0,∞)</small>
 
 *tailTime* is duration of time that a node continues to provide output signal after the input signal becomes silent.
-
-### SFString [in, out] **type** "LOWPASS" <small>["LOWPASS", "HIGHPASS", "BANDPASS", "LOWSHELF", "HIGHSHELF", "PEAKING", "NOTCH", "ALLPASS"]</small>
-
-*type* selects which BiquadFilter algorithm is used.
-
-#### Hint
-
-- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#enumdef-biquadfiltertype){:target="_blank"}
 
 ### SFInt32 [out] **channelCount**
 

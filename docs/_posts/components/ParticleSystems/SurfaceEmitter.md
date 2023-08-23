@@ -33,7 +33,7 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 
 #### Hint
 
-- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/core.html#Metadata){:target="_blank"}
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/components/core.html#Metadata){:target="_blank"}
 
 ### SFBool [in, out] **on** TRUE
 
@@ -59,7 +59,7 @@ Basic *mass* of each particle, defined in *mass* base units (default is kilogram
 
 - *mass* is needed if gravity or other force-related calculations are performed on a per-particle basis.
 - [Kilogram](https://en.wikipedia.org/wiki/Kilogram){:target="_blank"}
-- [X3D Architecture 4.3.6 Standard units and coordinate system](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/concepts.html#Standardunitscoordinates){:target="_blank"}
+- [X3D Architecture 4.3.6 Standard units and coordinate system](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/concepts.html#Standardunitscoordinates){:target="_blank"}
 
 ### SFFloat [ ] **surfaceArea** 0 <small>[0,∞)</small>
 
