@@ -142,6 +142,10 @@ Object .assign (Object .setPrototypeOf (X3DSoundProcessingNode .prototype, X3DCh
       for (const childNode of this .childNodes)
          childNode .getSource () .disconnect (this .gainNode);
    },
+   set_time ()
+   {
+      this ._elapsedTime = this .getElapsedTime ();
+   },
    dispose ()
    {
       X3DTimeDependentNode .prototype .dispose .call (this);
