@@ -67,7 +67,11 @@ function MovieTexture (executionContext)
    this .video    = $("<video></video>");
    this .urlStack = new Fields .MFString ();
 
-   this .setElement (this .video [0]);
+   const
+      audioContext = this .getBrowser () .getAudioContext (),
+      sourceNode   = audioContext .createMediaElementSource (this .video [0]);
+
+   this .setAudioNode (sourceNode);
 }
 
 Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNode .prototype),
@@ -80,22 +84,24 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
       X3DSoundSourceNode .prototype .initialize .call (this);
       X3DUrlObject       .prototype .initialize .call (this);
 
-      this .video .on ("abort error",     this .setError   .bind (this));
-      this .video .on ("suspend stalled", this .setTimeout .bind (this));
+      this ._speed .addInterest ("set_speed", this);
 
-      this .video .prop ("crossOrigin", "Anonymous");
-      this .video .prop ("preload",     "auto");
+      this .video
+         .on ("abort error", this .setError .bind (this))
+         .on ("suspend stalled", this .setTimeout .bind (this))
+         .prop ("crossOrigin", "Anonymous")
+         .prop ("preload", "auto");
 
       this .requestImmediateLoad () .catch (Function .prototype);
-   },
-   getElement ()
-   {
-      return this .video [0];
    },
    set_live__ ()
    {
       X3DSoundSourceNode .prototype .set_live__ .call (this);
       X3DUrlObject       .prototype .set_live__ .call (this);
+   },
+   getElement ()
+   {
+      return this .video [0];
    },
    unloadData ()
    {

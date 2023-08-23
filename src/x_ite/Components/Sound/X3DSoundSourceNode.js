@@ -68,27 +68,24 @@ Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, X3DChildN
    {
       X3DChildNode         .prototype .initialize .call (this);
       X3DTimeDependentNode .prototype .initialize .call (this);
+
+      this ._gain .addInterest ("set_gain__", this);
+
+      this .set_gain__ ();
    },
-   getElement ()
-   {
-      return this .element;
-   },
-   setElement (element)
+   setAudioNode (node)
    {
       const
          audioContext = this .getBrowser () .getAudioContext (),
-         sourceNode   = audioContext .createMediaElementSource (element);
+         gainNode     = new GainNode (audioContext, { gain: 1 });
 
-      this .element    = element;
-      this .sourceNode = sourceNode;
+      node .connect (gainNode);
+
+      this .gainNode = gainNode;
    },
    getSource ()
    {
-      return this .sourceNode;
-   },
-   getMedia ()
-   {
-      return this .media;
+      return this .gainNode;
    },
    setMedia (value)
    {
@@ -130,10 +127,9 @@ Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, X3DChildN
          }
       }
    },
-   set_loop ()
+   set_gain__ ()
    {
-      if (this .media)
-         this .media .loop = this ._loop .getValue ();
+      this .gainNode .gain .value = this ._gain .getValue ();
    },
    set_speed ()
    {
@@ -142,6 +138,11 @@ Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, X3DChildN
    },
    set_pitch ()
    { },
+   set_loop ()
+   {
+      if (this .media)
+         this .media .loop = this ._loop .getValue ();
+   },
    set_start ()
    {
       if (this .media)

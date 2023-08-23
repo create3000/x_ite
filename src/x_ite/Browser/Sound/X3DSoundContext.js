@@ -45,14 +45,11 @@
  *
  ******************************************************************************/
 
-import X3DConstants from "../../Base/X3DConstants.js";
-import Fields       from "../../Fields.js";
-
 const _audioContext = Symbol ();
 
 function X3DSoundContext ()
 {
-   this [_audioContext] = new AudioContext ()
+   this [_audioContext] = new AudioContext ();
 }
 
 Object .assign (X3DSoundContext .prototype,

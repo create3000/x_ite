@@ -65,7 +65,11 @@ function AudioClip (executionContext)
    this .audio    = $("<audio></audio>");
    this .urlStack = new Fields .MFString ();
 
-   this .setElement (this .audio [0]);
+   const
+      audioContext = this .getBrowser () .getAudioContext (),
+      sourceNode   = audioContext .createMediaElementSource (this .audio [0]);
+
+   this .setAudioNode (sourceNode);
 }
 
 Object .assign (Object .setPrototypeOf (AudioClip .prototype, X3DSoundSourceNode .prototype),
@@ -76,11 +80,11 @@ Object .assign (Object .setPrototypeOf (AudioClip .prototype, X3DSoundSourceNode
       X3DSoundSourceNode .prototype .initialize .call (this);
       X3DUrlObject       .prototype .initialize .call (this);
 
-      this .audio .on ("abort error",     this .setError   .bind (this));
-      this .audio .on ("suspend stalled", this .setTimeout .bind (this));
-
-      this .audio .prop ("crossOrigin", "Anonymous");
-      this .audio .prop ("preload",     "auto");
+      this .audio
+         .on ("abort error", this .setError .bind (this))
+         .on ("suspend stalled", this .setTimeout .bind (this))
+         .prop ("crossOrigin", "Anonymous")
+         .prop ("preload", "auto");
 
       this .requestImmediateLoad () .catch (Function .prototype);
    },
@@ -88,6 +92,10 @@ Object .assign (Object .setPrototypeOf (AudioClip .prototype, X3DSoundSourceNode
    {
       X3DSoundSourceNode .prototype .set_live__ .call (this);
       X3DUrlObject       .prototype .set_live__ .call (this);
+   },
+   getElement ()
+   {
+      return this .audio [0];
    },
    unloadData ()
    {
