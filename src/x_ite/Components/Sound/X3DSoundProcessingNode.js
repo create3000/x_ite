@@ -96,7 +96,7 @@ Object .assign (Object .setPrototypeOf (X3DSoundProcessingNode .prototype, X3DCh
    },
    set_channelCount__ ()
    {
-      this .gainNode .channelCount = this ._channelCount .getValue ();
+      this .gainNode .channelCount = Math .max (this ._channelCount .getValue (), 1);
    },
    set_channelCountMode__: (function ()
    {
@@ -117,7 +117,7 @@ Object .assign (Object .setPrototypeOf (X3DSoundProcessingNode .prototype, X3DCh
       {
          const channelInterpretation = this ._channelInterpretation .getValue () .toLowerCase ();
 
-         this .gainNode .channelCountMode = channelInterpretations .has (channelInterpretation) ? channelInterpretation : "speakers";
+         this .gainNode .channelInterpretation = channelInterpretations .has (channelInterpretation) ? channelInterpretation : "speakers";
       };
    })(),
    set_children__ ()
