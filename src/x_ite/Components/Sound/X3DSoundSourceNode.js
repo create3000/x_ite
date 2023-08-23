@@ -57,8 +57,8 @@ function X3DSoundSourceNode (executionContext)
 
    this .addType (X3DConstants .X3DSoundSourceNode);
 
-   this .volume = 0;
-   this .media  = null;
+   this .gainNode = this .getBrowser () .getAudioContext () .createGain ();
+   this .media    = null;
 }
 
 Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, X3DChildNode .prototype),
@@ -72,17 +72,6 @@ Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, X3DChildN
       this ._gain .addInterest ("set_gain__", this);
 
       this .set_gain__ ();
-   },
-   setNode (node)
-   {
-      const
-         audioContext = this .getBrowser () .getAudioContext (),
-         gainNode     = new GainNode (audioContext, { gain: 1 });
-
-      node .connect (gainNode);
-
-      this .node     = node;
-      this .gainNode = gainNode;
    },
    getSource ()
    {

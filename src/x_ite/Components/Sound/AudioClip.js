@@ -62,14 +62,13 @@ function AudioClip (executionContext)
 
    this .addChildObjects (X3DConstants .inputOutput, "speed", new Fields .SFFloat (1));
 
-   this .audio    = $("<audio></audio>");
-   this .urlStack = new Fields .MFString ();
+   const audioContext = this .getBrowser () .getAudioContext ();
 
-   const
-      audioContext = this .getBrowser () .getAudioContext (),
-      sourceNode   = audioContext .createMediaElementSource (this .audio [0]);
+   this .urlStack   = new Fields .MFString ();
+   this .audio      = $("<audio></audio>");
+   this .sourceNode = audioContext .createMediaElementSource (this .audio [0]);
 
-   this .setNode (sourceNode);
+   this .sourceNode .connect (this .getSource ());
 }
 
 Object .assign (Object .setPrototypeOf (AudioClip .prototype, X3DSoundSourceNode .prototype),

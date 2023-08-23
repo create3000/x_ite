@@ -64,14 +64,13 @@ function MovieTexture (executionContext)
 
    this .addType (X3DConstants .MovieTexture);
 
-   this .video    = $("<video></video>");
-   this .urlStack = new Fields .MFString ();
+   const audioContext = this .getBrowser () .getAudioContext ();
 
-   const
-      audioContext = this .getBrowser () .getAudioContext (),
-      sourceNode   = audioContext .createMediaElementSource (this .video [0]);
+   this .urlStack   = new Fields .MFString ();
+   this .video      = $("<video></video>");
+   this .sourceNode = audioContext .createMediaElementSource (this .video [0]);
 
-   this .setNode (sourceNode);
+   this .sourceNode .connect (this .getSource ());
 }
 
 Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNode .prototype),
