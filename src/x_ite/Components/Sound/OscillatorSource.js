@@ -136,9 +136,10 @@ Object .assign (Object .setPrototypeOf (OscillatorSource .prototype, X3DSoundSou
 
       this .oscillatorNode = new OscillatorNode (audioContext);
 
-      this .set_type__ ();
+      this .set_gain__ ();
       this .set_frequency__ ();
       this .set_detune__ ();
+      this .set_type__ ();
 
       this .oscillatorNode .connect (this .mergerNode, 0, 0);
       this .oscillatorNode .connect (this .mergerNode, 0, 1);
@@ -156,8 +157,15 @@ Object .assign (Object .setPrototypeOf (OscillatorSource .prototype, X3DSoundSou
    },
    set_stop ()
    {
-      this .oscillatorNode .stop ();
-      this .oscillatorNode .disconnect ();
+      const audioContext = this .getBrowser () .getAudioContext ();
+
+      this .gainNode .gain .setTargetAtTime (0, audioContext .currentTime, 0.005);
+
+      setTimeout (() =>
+      {
+         this .oscillatorNode .stop ();
+         this .oscillatorNode .disconnect ();
+      }, 30)
    },
 });
 
