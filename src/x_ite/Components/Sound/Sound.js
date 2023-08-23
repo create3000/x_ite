@@ -155,7 +155,7 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
       const sourceNode = X3DCast (X3DConstants .X3DSoundSourceNode, this ._source);
 
       if (sourceNode)
-         this .childNodes .push (sourceNode)
+         this .childNodes .push (sourceNode);
 
       for (const child of this ._children)
       {
@@ -174,7 +174,12 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
                case X3DConstants .X3DSoundProcessingNode:
                case X3DConstants .X3DSoundSourceNode:
                   this .childNodes .push (childNode);
+                  break;
+               default:
+                  continue;
             }
+
+            break;
          }
       }
 
