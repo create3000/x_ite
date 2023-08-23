@@ -94,9 +94,9 @@ Object .defineProperties (WaveShaper,
          new X3DFieldDefinition (X3DConstants .inputOutput, "oversample",            new Fields .SFString ("NONE")),
          new X3DFieldDefinition (X3DConstants .inputOutput, "tailTime",              new Fields .SFTime ()),
 
+         new X3DFieldDefinition (X3DConstants .inputOutput, "channelCount",          new Fields .SFInt32 ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "channelCountMode",      new Fields .SFString ("MAX")),
          new X3DFieldDefinition (X3DConstants .inputOutput, "channelInterpretation", new Fields .SFString ("SPEAKERS")),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "channelCount",          new Fields .SFInt32 ()),
 
          new X3DFieldDefinition (X3DConstants .inputOutput, "startTime",             new Fields .SFTime ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "resumeTime",            new Fields .SFTime ()),

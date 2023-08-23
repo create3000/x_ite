@@ -176,6 +176,14 @@ The *detune* field forms a compound field together with playbackRate that togeth
 
 - *loopEnd* represents a nonnegative SFTime duration interval, not an absolute clock time.
 
+### SFInt32 [out] **channelCount**
+
+*channelCount* reports number of channels provided by input nodes.
+
+#### Hint
+
+- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#dom-audionode-channelcount){:target="_blank"}
+
 ### SFString [in, out] **channelCountMode** "MAX" <small>["MAX", "CLAMPED-MAX", "EXPLICIT"]</small>
 
 *channelCountMode* determines how individual channels are counted when up-mixing and down-mixing connections to any inputs.
@@ -191,14 +199,6 @@ The *detune* field forms a compound field together with playbackRate that togeth
 #### Hint
 
 - [W3C Web Audio API](https://www.w3.org/TR/webaudio/#dom-audionode-channelinterpretation){:target="_blank"}
-
-### SFInt32 [out] **channelCount**
-
-*channelCount* reports number of channels provided by input nodes.
-
-#### Hint
-
-- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#dom-audionode-channelcount){:target="_blank"}
 
 ### SFBool [in, out] **loop** FALSE
 

@@ -74,10 +74,16 @@ Object .assign (Object .setPrototypeOf (X3DSoundProcessingNode .prototype, X3DCh
       X3DChildNode         .prototype .initialize .call (this);
       X3DTimeDependentNode .prototype .initialize .call (this);
 
-      this ._gain     .addInterest ("set_gain__",     this);
-      this ._children .addInterest ("set_children__", this);
+      this ._gain                  .addInterest ("set_gain__",                  this);
+      this ._channelCount          .addInterest ("set_channelCount__",          this);
+      this ._channelCountMode      .addInterest ("set_channelCountMode__",      this);
+      this ._channelInterpretation .addInterest ("set_channelInterpretation__", this);
+      this ._children              .addInterest ("set_children__",              this);
 
       this .set_gain__ ();
+      this .set_channelCount__ ();
+      this .set_channelCountMode__ ();
+      this .set_channelInterpretation__ ();
       this .set_children__ ();
    },
    getAudioSource ()
@@ -88,6 +94,32 @@ Object .assign (Object .setPrototypeOf (X3DSoundProcessingNode .prototype, X3DCh
    {
       this .gainNode .gain .value = this ._gain .getValue ();
    },
+   set_channelCount__ ()
+   {
+      this .gainNode .channelCount = this ._channelCount .getValue ();
+   },
+   set_channelCountMode__: (function ()
+   {
+      const channelCountModes = new Set (["max", "clamped-max", "explicit"]);
+
+      return function ()
+      {
+         const channelCountMode = this ._channelCountMode .getValue () .toLowerCase ();
+
+         this .gainNode .channelCountMode = channelCountModes .has (channelCountMode) ? channelCountMode : "max";
+      };
+   })(),
+   set_channelInterpretation__: (function ()
+   {
+      const channelInterpretations = new Set (["speakers", "discrete"]);
+
+      return function ()
+      {
+         const channelInterpretation = this ._channelInterpretation .getValue () .toLowerCase ();
+
+         this .gainNode .channelCountMode = channelInterpretations .has (channelInterpretation) ? channelInterpretation : "speakers";
+      };
+   })(),
    set_children__ ()
    {
       if (this ._isActive .getValue () && !this ._isPaused .getValue ())
