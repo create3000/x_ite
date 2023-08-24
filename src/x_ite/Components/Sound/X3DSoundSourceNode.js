@@ -56,7 +56,9 @@ function X3DSoundSourceNode (executionContext)
 
    this .addType (X3DConstants .X3DSoundSourceNode);
 
-   this .gainNode = this .getBrowser () .getAudioContext () .createGain ();
+   const audioContext = this .getBrowser () .getAudioContext ();
+
+   this .gainNode = new GainNode (audioContext);
    this .media    = null;
 }
 
