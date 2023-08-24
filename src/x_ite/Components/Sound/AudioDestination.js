@@ -56,6 +56,12 @@ function AudioDestination (executionContext)
    X3DSoundDestinationNode .call (this, executionContext);
 
    this .addType (X3DConstants .AudioDestination);
+
+   const audioContext = this .getBrowser () .getAudioContext ();
+
+   this .audioElement            = new Audio ();
+   this .mediaStreamDestination  = audioContext .createMediaStreamDestination ();
+   this .audioElement .srcObject = this .mediaStreamDestination .stream;
 }
 
 Object .assign (Object .setPrototypeOf (AudioDestination .prototype, X3DSoundDestinationNode .prototype),
@@ -64,32 +70,36 @@ Object .assign (Object .setPrototypeOf (AudioDestination .prototype, X3DSoundDes
    {
       X3DSoundDestinationNode .prototype .initialize .call (this);
 
+      const audioContext = this .getBrowser () .getAudioContext ();
+
       this ._mediaDeviceID .addInterest ("set_mediaDeviceID__", this);
+
+      this ._maxChannelCount = audioContext .destination .maxChannelCount;
 
       this .set_mediaDeviceID__ ();
    },
    getSoundDestination ()
    {
-      return this .getBrowser () .getAudioContext () .destination;
+      return this .mediaStreamDestination;
+   },
+   set_enabled__ ()
+   {
+      X3DSoundDestinationNode .prototype .set_enabled__ .call (this);
+
+      if (this ._enabled .getValue ())
+         this .audioElement .play ();
+      else
+         this .audioElement .stop ();
    },
    set_mediaDeviceID__ ()
    {
-      const audioContext = this .getBrowser () .getAudioContext ();
-
-      // Safari still has no support, Aug 2023.
-      if (!audioContext .setSinkId)
-      {
-         this ._maxChannelCount = this .getSoundDestination () .maxChannelCount;
+      // Safari has no support yet, as of Aug 2023.
+      if (!this .audioElement .setSinkId)
          return;
-      }
 
-      audioContext .setSinkId (this ._mediaDeviceID .getValue ()) .then (() =>
+      this .audioElement .setSinkId (this ._mediaDeviceID .getValue ()) .catch (error =>
       {
-         this ._maxChannelCount = this .getSoundDestination () .maxChannelCount;
-      })
-      .catch (error =>
-      {
-         audioContext .setSinkId ("default") .catch (Function .prototype);
+         this .audioElement .setSinkId ("default") .catch (Function .prototype);
       });
    },
 });
