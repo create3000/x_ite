@@ -100,7 +100,7 @@ Object .assign (Object .setPrototypeOf (AudioDestination .prototype, X3DSoundDes
       this .audioElement .setSinkId (this ._mediaDeviceID .getValue ()) .catch (error =>
       {
          console .error (error .message);
-         
+
          this .audioElement .setSinkId ("default") .catch (Function .prototype);
       });
    },
