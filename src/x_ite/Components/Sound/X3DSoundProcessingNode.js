@@ -132,7 +132,7 @@ Object .assign (Object .setPrototypeOf (X3DSoundProcessingNode .prototype, X3DCh
    })(),
    set_children__ ()
    {
-      this .disconnect ();
+      this .set_disconnect__ ();
 
       this .childNodes .length = 0;
 
@@ -164,7 +164,7 @@ Object .assign (Object .setPrototypeOf (X3DSoundProcessingNode .prototype, X3DCh
 
       this .set_active__ ();
    },
-   disconnect ()
+   set_disconnect__ ()
    {
       try
       {
@@ -188,7 +188,7 @@ Object .assign (Object .setPrototypeOf (X3DSoundProcessingNode .prototype, X3DCh
    },
    set_active__ ()
    {
-      this .disconnect ();
+      this .set_disconnect__ ();
 
       if (this ._active .getValue ())
       {
