@@ -64,7 +64,7 @@ function Analyser (executionContext)
    this .byteFrequencyData  = new Uint8Array (this .analyzerNode .frequencyBinCount);
    this .byteTimeDomainData = new Uint8Array (this .analyzerNode .frequencyBinCount);
 
-   this .setSoundProcessor (this .analyzerNode);
+   this .analyzerNode .connect (this .getAudioSource ());
 }
 
 Object .assign (Object .setPrototypeOf (Analyser .prototype, X3DSoundProcessingNode .prototype),
@@ -81,6 +81,10 @@ Object .assign (Object .setPrototypeOf (Analyser .prototype, X3DSoundProcessingN
       this .set_fftSize__ ();
       this .set_decibels__ ();
       this .set_smoothingTimeConstant__ ();
+   },
+   getSoundProcessor ()
+   {
+      return this .analyzerNode;
    },
    set_fftSize__ ()
    {

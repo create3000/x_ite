@@ -63,9 +63,8 @@ function X3DSoundProcessingNode (executionContext)
 
    const audioContext = this .getBrowser () .getAudioContext ();
 
-   this .childNodes     = [ ];
-   this .gainNode       = new GainNode (audioContext);
-   this .soundProcessor = this .gainNode;
+   this .childNodes = [ ];
+   this .gainNode   = new GainNode (audioContext);
 }
 
 Object .assign (Object .setPrototypeOf (X3DSoundProcessingNode .prototype, X3DChildNode .prototype),
@@ -94,11 +93,9 @@ Object .assign (Object .setPrototypeOf (X3DSoundProcessingNode .prototype, X3DCh
    {
       return this .gainNode;
    },
-   setSoundProcessor (value)
+   getSoundProcessor ()
    {
-      this .soundProcessor = value;
-
-      this .soundProcessor .connect (this .gainNode);
+      return this .gainNode;
    },
    set_gain__ ()
    {
@@ -106,7 +103,7 @@ Object .assign (Object .setPrototypeOf (X3DSoundProcessingNode .prototype, X3DCh
    },
    set_channelCount__ ()
    {
-      this .soundProcessor .channelCount = Math .max (this ._channelCount .getValue (), 1);
+      this .getSoundProcessor () .channelCount = Math .max (this ._channelCount .getValue (), 1);
    },
    set_channelCountMode__: (function ()
    {
@@ -116,7 +113,7 @@ Object .assign (Object .setPrototypeOf (X3DSoundProcessingNode .prototype, X3DCh
       {
          const channelCountMode = this ._channelCountMode .getValue () .toLowerCase ();
 
-         this .soundProcessor .channelCountMode = channelCountModes .has (channelCountMode) ? channelCountMode : "max";
+         this .getSoundProcessor () .channelCountMode = channelCountModes .has (channelCountMode) ? channelCountMode : "max";
       };
    })(),
    set_channelInterpretation__: (function ()
@@ -127,7 +124,7 @@ Object .assign (Object .setPrototypeOf (X3DSoundProcessingNode .prototype, X3DCh
       {
          const channelInterpretation = this ._channelInterpretation .getValue () .toLowerCase ();
 
-         this .soundProcessor .channelInterpretation = channelInterpretations .has (channelInterpretation) ? channelInterpretation : "speakers";
+         this .getSoundProcessor () .channelInterpretation = channelInterpretations .has (channelInterpretation) ? channelInterpretation : "speakers";
       };
    })(),
    set_children__ ()
@@ -179,7 +176,7 @@ Object .assign (Object .setPrototypeOf (X3DSoundProcessingNode .prototype, X3DCh
       try
       {
          for (const childNode of this .childNodes)
-            childNode .getAudioSource () .disconnect (this .soundProcessor);
+            childNode .getAudioSource () .disconnect (this .getSoundProcessor ());
       }
       catch (error)
       {
@@ -193,7 +190,7 @@ Object .assign (Object .setPrototypeOf (X3DSoundProcessingNode .prototype, X3DCh
       if (this ._active .getValue ())
       {
          for (const childNode of this .childNodes)
-            childNode .getAudioSource () .connect (this .soundProcessor);
+            childNode .getAudioSource () .connect (this .getSoundProcessor ());
       }
       else
       {
