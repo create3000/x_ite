@@ -56,9 +56,25 @@ function StreamAudioDestination (executionContext)
    X3DSoundDestinationNode .call (this, executionContext);
 
    this .addType (X3DConstants .StreamAudioDestination);
+
+   const audioContext = this .getBrowser () .getAudioContext ();
+
+   this .mediaStreamDestination = audioContext .createMediaStreamDestination ();
 }
 
-Object .setPrototypeOf (StreamAudioDestination .prototype, X3DSoundDestinationNode .prototype);
+Object .assign (Object .setPrototypeOf (StreamAudioDestination .prototype, X3DSoundDestinationNode .prototype),
+{
+   initialize ()
+   {
+      X3DSoundDestinationNode .prototype .initialize .call (this);
+
+      this ._streamIdentifier [0] = this .mediaStreamDestination .stream .id;
+   },
+   getSoundDestination ()
+   {
+      return this .mediaStreamDestination;
+   },
+});
 
 Object .defineProperties (StreamAudioDestination,
 {
@@ -90,14 +106,14 @@ Object .defineProperties (StreamAudioDestination,
          new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",               new Fields .SFBool (true)),
 
          new X3DFieldDefinition (X3DConstants .inputOutput, "gain",                  new Fields .SFFloat (1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "streamIdentifier",      new Fields .MFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "mediaDeviceID",         new Fields .SFString ()),
 
          new X3DFieldDefinition (X3DConstants .inputOutput, "channelCount",          new Fields .SFInt32 ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "channelCountMode",      new Fields .SFString ("MAX")),
          new X3DFieldDefinition (X3DConstants .inputOutput, "channelInterpretation", new Fields .SFString ("SPEAKERS")),
 
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "mediaDeviceID",         new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",              new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "streamIdentifier",      new Fields .MFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "children",              new Fields .MFNode ()),
       ]),
       enumerable: true,

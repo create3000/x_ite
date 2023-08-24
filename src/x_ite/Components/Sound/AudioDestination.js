@@ -60,9 +60,37 @@ function AudioDestination (executionContext)
 
 Object .assign (Object .setPrototypeOf (AudioDestination .prototype, X3DSoundDestinationNode .prototype),
 {
+   initialize ()
+   {
+      X3DSoundDestinationNode .prototype .initialize .call (this);
+
+      this ._mediaDeviceID .addInterest ("set_mediaDeviceID__", this);
+
+      this .set_mediaDeviceID__ ();
+   },
    getSoundDestination ()
    {
       return this .getBrowser () .getAudioContext () .destination;
+   },
+   set_mediaDeviceID__ ()
+   {
+      const audioContext = this .getBrowser () .getAudioContext ();
+
+      // Safari still has no support, Aug 2023.
+      if (!audioContext .setSinkId)
+      {
+         this ._maxChannelCount = this .getSoundDestination () .maxChannelCount;
+         return;
+      }
+
+      audioContext .setSinkId (this ._mediaDeviceID .getValue ()) .then (() =>
+      {
+         this ._maxChannelCount = this .getSoundDestination () .maxChannelCount;
+      })
+      .catch (error =>
+      {
+         audioContext .setSinkId ("default") .catch (Function .prototype);
+      });
    },
 });
 
@@ -91,19 +119,19 @@ Object .defineProperties (AudioDestination,
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",             new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "description",          new Fields .SFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",              new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",              new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "description",           new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",               new Fields .SFBool (true)),
 
          new X3DFieldDefinition (X3DConstants .inputOutput, "gain",                  new Fields .SFFloat (1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "maxChannelCount",       new Fields .SFInt32 (2)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "mediaDeviceID",         new Fields .SFString ()),
 
          new X3DFieldDefinition (X3DConstants .inputOutput, "channelCount",          new Fields .SFInt32 ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "channelCountMode",      new Fields .SFString ("MAX")),
          new X3DFieldDefinition (X3DConstants .inputOutput, "channelInterpretation", new Fields .SFString ("SPEAKERS")),
 
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "mediaDeviceID",         new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",              new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "maxChannelCount",       new Fields .SFInt32 ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "children",              new Fields .MFNode ()),
       ]),
       enumerable: true,
