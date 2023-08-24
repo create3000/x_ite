@@ -58,7 +58,13 @@ function AudioDestination (executionContext)
    this .addType (X3DConstants .AudioDestination);
 }
 
-Object .setPrototypeOf (AudioDestination .prototype, X3DSoundDestinationNode .prototype);
+Object .assign (Object .setPrototypeOf (AudioDestination .prototype, X3DSoundDestinationNode .prototype),
+{
+   getSoundDestination ()
+   {
+      return this .getBrowser () .getAudioContext () .destination;
+   },
+});
 
 Object .defineProperties (AudioDestination,
 {
