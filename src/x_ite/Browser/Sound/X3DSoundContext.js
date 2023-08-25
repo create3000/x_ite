@@ -97,7 +97,7 @@ Object .assign (X3DSoundContext .prototype,
       {
          audioElement [functionName] ()
             .then (() => this .getElement () .off (`.${id}`))
-            .catch (() => this .getElement () .off (`${event .type}.${id}`));
+            .catch (Function .prototype);
       });
    },
 });
