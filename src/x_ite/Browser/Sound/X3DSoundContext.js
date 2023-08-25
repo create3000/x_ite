@@ -81,17 +81,22 @@ Object .assign (X3DSoundContext .prototype,
    },
    startAudioElement (audioElement, functionName = "play")
    {
-      const
-         id   = `X3DSoundContext-${X3DObject .getId (audioElement)}`,
-         keys = [ ];
+      const id = `X3DSoundContext-${X3DObject .getId (audioElement)}`;
 
-      for (const k in this .getElement () [0])
-         keys .push (k)
-
-      const events = keys
-         .filter (key => key .startsWith ("on"))
-         .map (key => key .substring (2))
-         .map (event => `${event}.${id}`);
+      const events = [
+         "blur",
+         "click",
+         "contextmenu",
+         "dblclick",
+         "focus",
+         "keydown",
+         "keyup",
+         "mousedown",
+         "mouseup",
+         "pointerup",
+         "touchend",
+      ]
+      .map (event => `${event}.${id}`);
 
       this .getElement () .on (events .join (" "), event =>
       {
