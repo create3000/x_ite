@@ -221,8 +221,6 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
 
          if (max .distance < 1) // Radius of normalized sphere is 1.
          {
-            this .getBrowser () .getAudioContext () .resume () .catch (Function .prototype);
-
             this .getEllipsoidParameter (modelViewMatrix,
                                          Math .max (this ._minBack  .getValue (), 0),
                                          Math .max (this ._minFront .getValue (), 0),

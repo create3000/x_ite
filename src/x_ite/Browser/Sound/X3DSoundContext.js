@@ -46,6 +46,7 @@
  ******************************************************************************/
 
 import PeriodicWave from "../../Components/Sound/PeriodicWave.js";
+import X3DObject    from "../../Base/X3DObject.js";
 
 const
    _audioContext        = Symbol (),
@@ -58,6 +59,10 @@ function X3DSoundContext ()
 
 Object .assign (X3DSoundContext .prototype,
 {
+   initialize ()
+   {
+      this .startAudioElement (this [_audioContext], "resume");
+   },
    getAudioContext ()
    {
       return this [_audioContext];
@@ -73,6 +78,25 @@ Object .assign (X3DSoundContext .prototype,
       Object .defineProperty (this, "getDefaultPeriodicWave", { enumerable: false });
 
       return this [_defaultPeriodicWave];
+   },
+   startAudioElement (audioElement, functionName = "play")
+   {
+      const keys = [ ];
+
+      for (const k in this .getElement () [0])
+         keys .push (k)
+
+      const events = keys
+         .filter (key => key .startsWith ("on"))
+         .map (key => key .substring (2))
+         .map (event => `${event}.X3DSoundContext-${X3DObject .getId (audioElement)}`);
+
+      this .getElement () .on (events .join (" "), event =>
+      {
+         audioElement [functionName] ()
+            .then (() => this .getElement () .off (events .join (" ")))
+            .catch (Function .prototype);
+      });
    },
 });
 

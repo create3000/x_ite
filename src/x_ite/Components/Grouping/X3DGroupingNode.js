@@ -249,6 +249,8 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
                   this .maybePickableSensorNodes .push (childNode);
                   break;
                }
+               case X3DConstants .Sound:
+               case X3DConstants .SpatialSound:
                case X3DConstants .X3DBackgroundNode:
                case X3DConstants .X3DChildNode:
                {
@@ -279,6 +281,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
                case X3DConstants .X3DLayoutNode:
                case X3DConstants .X3DScriptNode:
                case X3DConstants .X3DSequencerNode:
+               case X3DConstants .X3DSoundNode:
                case X3DConstants .X3DTriggerNode:
                   break;
                default:
@@ -389,6 +392,8 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
 
                   break;
                }
+               case X3DConstants .Sound:
+               case X3DConstants .SpatialSound:
                case X3DConstants .X3DBackgroundNode:
                case X3DConstants .X3DChildNode:
                {
@@ -427,6 +432,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
                case X3DConstants .X3DLayoutNode:
                case X3DConstants .X3DScriptNode:
                case X3DConstants .X3DSequencerNode:
+               case X3DConstants .X3DSoundNode:
                case X3DConstants .X3DTriggerNode:
                   break;
                default:

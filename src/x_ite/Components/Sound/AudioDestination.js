@@ -87,7 +87,7 @@ Object .assign (Object .setPrototypeOf (AudioDestination .prototype, X3DSoundDes
       X3DSoundDestinationNode .prototype .set_enabled__ .call (this);
 
       if (this ._enabled .getValue ())
-         this .audioElement .play ();
+         this .audioElement .play () .catch (() => this .getBrowser () .startAudioElement (this .audioElement));
       else
          this .audioElement .stop ();
    },
