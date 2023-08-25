@@ -81,7 +81,9 @@ Object .assign (X3DSoundContext .prototype,
    },
    startAudioElement (audioElement, functionName = "play")
    {
-      const keys = [ ];
+      const
+         id   = `X3DSoundContext-${X3DObject .getId (audioElement)}`,
+         keys = [ ];
 
       for (const k in this .getElement () [0])
          keys .push (k)
@@ -89,13 +91,13 @@ Object .assign (X3DSoundContext .prototype,
       const events = keys
          .filter (key => key .startsWith ("on"))
          .map (key => key .substring (2))
-         .map (event => `${event}.X3DSoundContext-${X3DObject .getId (audioElement)}`);
+         .map (event => `${event}.${id}`);
 
       this .getElement () .on (events .join (" "), event =>
       {
          audioElement [functionName] ()
-            .then (() => this .getElement () .off (events .join (" ")))
-            .catch (Function .prototype);
+            .then (() => this .getElement () .off (`.${id}`))
+            .catch (() => this .getElement () .off (`${event .type}.${id}`));
       });
    },
 });
