@@ -217,6 +217,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
          SFMatrix4f:    { value: Fields .SFMatrix4f },
          SFNode:        { value: SFNode },
          SFRotation:    { value: Fields .SFRotation },
+         SFString:      { value: Fields .SFString },
          SFVec2d:       { value: Fields .SFVec2d },
          SFVec2f:       { value: Fields .SFVec2f },
          SFVec3d:       { value: Fields .SFVec3d },
