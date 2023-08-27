@@ -111,7 +111,7 @@ Object .assign (Object .setPrototypeOf (X3DSoundProcessingNode .prototype, X3DCh
 
       return function ()
       {
-         const channelCountMode = this ._channelCountMode .getValue () .toLowerCase ();
+         const channelCountMode = this ._channelCountMode .getValue () .toLowerCase () .replaceAll ("_", "-");
 
          this .getSoundProcessor () .channelCountMode = channelCountModes .has (channelCountMode) ? channelCountMode : "max";
       };

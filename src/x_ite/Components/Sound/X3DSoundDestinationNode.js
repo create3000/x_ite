@@ -108,7 +108,7 @@ Object .assign (Object .setPrototypeOf (X3DSoundDestinationNode .prototype, X3DS
 
       return function ()
       {
-         const channelCountMode = this ._channelCountMode .getValue () .toLowerCase ();
+         const channelCountMode = this ._channelCountMode .getValue () .toLowerCase () .replaceAll ("_", "-");
 
          this .getSoundDestination () .channelCountMode = channelCountModes .has (channelCountMode) ? channelCountMode : "max";
       };

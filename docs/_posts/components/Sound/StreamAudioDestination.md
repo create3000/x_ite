@@ -61,13 +61,9 @@ The *gain* field is a factor that represents the amount of linear amplification 
 
 - Decibel values shall not be used.
 
-### MFString [in, out] **streamIdentifier** [ ]
+### SFString [out] **mediaDeviceID**
 
-Stream identification TBD
-
-#### Hint
-
-- [W3C Media Capture and Streams](https://www.w3.org/TR/mediacapture-streams){:target="_blank"}
+*mediaDeviceID* field provides ID parameter functionality. (TODO experimental)
 
 ### SFInt32 [out] **channelCount**
 
@@ -93,10 +89,6 @@ Stream identification TBD
 
 - [W3C Web Audio API](https://www.w3.org/TR/webaudio/#dom-audionode-channelinterpretation){:target="_blank"}
 
-### SFString [out] **mediaDeviceID**
-
-*mediaDeviceID* field provides ID parameter functionality. (TODO experimental)
-
 ### SFBool [out] **isActive**
 
 *isActive* true/false events are sent when playback starts/stops.
@@ -104,6 +96,14 @@ Stream identification TBD
 #### Warning
 
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
+
+### MFString [in, out] **streamIdentifier** [ ]
+
+Stream identification TBD
+
+#### Hint
+
+- [W3C Media Capture and Streams](https://www.w3.org/TR/mediacapture-streams){:target="_blank"}
 
 ### MFNode [in, out] **children** [ ] <small>[X3DSoundChannelNode,X3DSoundProcessingNode,X3DSoundSourceNode]</small>
 

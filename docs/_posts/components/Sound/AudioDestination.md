@@ -61,13 +61,9 @@ The *gain* field is a factor that represents the amount of linear amplification 
 
 - Decibel values shall not be used.
 
-### SFInt32 [in, out] **maxChannelCount** 2 <small>[0,∞)</small>
+### SFString [out] **mediaDeviceID**
 
-[*maxChannelCount*.
-
-#### Hint
-
-- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#dom-audionode-channelcount){:target="_blank"}
+*mediaDeviceID* field provides ID parameter functionality. (TODO experimental)
 
 ### SFInt32 [out] **channelCount**
 
@@ -93,10 +89,6 @@ The *gain* field is a factor that represents the amount of linear amplification 
 
 - [W3C Web Audio API](https://www.w3.org/TR/webaudio/#dom-audionode-channelinterpretation){:target="_blank"}
 
-### SFString [out] **mediaDeviceID**
-
-*mediaDeviceID* field provides ID parameter functionality. (TODO experimental)
-
 ### SFBool [out] **isActive**
 
 *isActive* true/false events are sent when playback starts/stops.
@@ -104,6 +96,14 @@ The *gain* field is a factor that represents the amount of linear amplification 
 #### Warning
 
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
+
+### SFInt32 [in, out] **maxChannelCount** 2 <small>[0,∞)</small>
+
+[*maxChannelCount*.
+
+#### Hint
+
+- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#dom-audionode-channelcount){:target="_blank"}
 
 ### MFNode [in, out] **children** [ ] <small>[X3DSoundChannelNode,X3DSoundProcessingNode,X3DSoundSourceNode]</small>
 

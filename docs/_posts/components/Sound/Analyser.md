@@ -69,10 +69,6 @@ The *gain* field is a factor that represents the amount of linear amplification 
 
 - [Fast Fourier Transform (FFT)](https://en.wikipedia.org/wiki/Fast_Fourier_transform){:target="_blank"}
 
-### SFInt32 [in, out] **frequencyBinCount** 1024 <small>[0,∞)</small>
-
-*frequencyBinCount* is half of fftSize and generally equates to number of data values available for the visualization.
-
 ### SFFloat [in, out] **minDecibels** -100 <small>(-∞,∞)</small>
 
 *minDecibels* represents minimum power value in scaling range for FFT analysis data.
@@ -92,6 +88,10 @@ The *gain* field is a factor that represents the amount of linear amplification 
 #### Hint
 
 - *tailTime* always has a value of zero for Analyser.
+
+### SFInt32 [in, out] **frequencyBinCount** 1024 <small>[0,∞)</small>
+
+*frequencyBinCount* is half of fftSize and generally equates to number of data values available for the visualization.
 
 ### SFInt32 [out] **channelCount**
 
