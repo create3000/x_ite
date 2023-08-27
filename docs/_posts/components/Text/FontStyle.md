@@ -15,7 +15,7 @@ tags: [FontStyle, Text]
 
 FontStyle is an X3DFontStyleNode that defines the size, family, justification, and other styles used by Text nodes.
 
-The FontStyle node belongs to the **Text** component and its default container field is *fontStyle.* It is available from X3D version 2.0 or higher.
+The FontStyle node belongs to the **Text** component and its default container field is *fontStyle.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 

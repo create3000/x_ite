@@ -157,6 +157,7 @@ sub update_node {
    $string .= " ";
    $string .= "It is available from X3D version $from or higher." if $to eq "Infinity";
    $string .= "It is available from X3D version $from to $to."    if $to ne "Infinity";
+   $string =~ s/It is available from X3D version 2.0/It is available since VRML 2.0 and from X3D version 3.0/sgo if $from eq "2.0";
    $string .= "\n";
    $string .= "\n";
    $string .= ">Deprecated: This node is deprecated as of X3D version $to. Future versions of the standard may remove this node.\n{: .prompt-danger }\n\n" if $to ne "Infinity";
