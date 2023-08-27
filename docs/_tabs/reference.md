@@ -1,5 +1,5 @@
 ---
-title: Script Node Authoring Interface
+title: Scripting Reference
 date: 2022-11-28
 nav: reference
 tags: [Script, Node, Authoring, Interface]
@@ -7,6 +7,7 @@ layout: x_ite
 icon: fas fa-flag
 order: 2
 ---
+<!-- #Script Node Authoring Interface -->
 ## Overview
 
 This is a reference for ECMAScript, a scripting language for X3D Script nodes. ECMAScript grew out of the need for a lightweight script language in X3D. It is a subset of the JavaScript language, with X3D data types supported as JavaScript built-in objects.
