@@ -156,7 +156,7 @@ sub update_node {
    $string .= "The $typeName node belongs to the **$componentName** component and its default container field is *$containerField.*";
    $string .= " ";
    $string .= "It is available from X3D version $from or higher." if $to eq "Infinity";
-   $string .= "It is available from X3D version $from to $to."    if $to ne "Infinity";
+   $string .= "It is available from X3D version $from up to $to." if $to ne "Infinity";
    $string =~ s/It is available from X3D version 2.0/It is available since VRML 2.0 and from X3D version 3.0/sgo if $from eq "2.0";
    $string .= "\n";
    $string .= "\n";
