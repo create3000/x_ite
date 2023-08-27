@@ -1,6 +1,9 @@
 ---
-# the default layout is 'page'
 title: Laboratory
+date: 2022-11-28
+nav: laboratory
+tags: [Laboratory]
+layout: x_ite
 icon: fas fa-flask-vial
 order: 5
 ---

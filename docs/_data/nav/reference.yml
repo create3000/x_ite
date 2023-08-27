@@ -1,7 +1,7 @@
-- title: "JavaScript Reference"
+- title: "X3D JavaScript Reference"
   children:
     - title: "Script Node Authoring Interface"
-      url: /reference/script-node-authoring-interface
+      url: /reference/
     - title: "ECMAScript Object and Function Definitions"
       url: /reference/ecmascript-object-and-function-definitions
     - title: "Browser Services"

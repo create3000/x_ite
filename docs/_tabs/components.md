@@ -1,7 +1,11 @@
 ---
 title: Components
-order: 1
+date: 2022-11-28
+nav: components
+tags: [Components]
+layout: x_ite
 icon: fas fa-th-large
+order: 1
 ---
 This index lists the components and nodes in alphabetical order for quick access to the X3D documentation.
 

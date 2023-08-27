@@ -109,6 +109,10 @@ small, .small {
   }
 }
 
+.post > .dynamic-title {
+  display: none;
+}
+
 .post h1 {
   color: var(--link-color);
   font-weight: bold;
