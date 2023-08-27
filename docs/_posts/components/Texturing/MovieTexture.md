@@ -261,4 +261,4 @@ Single contained TextureProperties node that can specify additional visual attri
 
 ## See Also
 
-- [X3D Specification of MovieTexture Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/texturing.html#MovieTexture){:target="_blank"}
+- [X3D Specification of MovieTexture node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/texturing.html#MovieTexture){:target="_blank"}

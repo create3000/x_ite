@@ -168,4 +168,4 @@ Current elapsed time since AudioClip activated/running, cumulative in seconds, a
 
 ## See Also
 
-- [X3D Specification of ListenerPointSource Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#ListenerPointSource){:target="_blank"}
+- [X3D Specification of ListenerPointSource node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#ListenerPointSource){:target="_blank"}

@@ -118,7 +118,7 @@ Single contained BlendMode node that defines blend mode properties.
 - Insert a Shape node before adding geometry or Appearance. Interchange profile hint: only Material and ImageTexture children are allowed.
 - DEF/USE copies of a single node can provide a similar "look + feel" style for related shapes in a scene.
 - Advanced uses can contain MultiTexture, MultiTextureTransform/TextureTransformMatrix3D/TextureTransform3D, ComposedShader/PackagedShader/ProgramShader, ComposedTexture3D/ImageTexture3D/PixelTexture3D, or ComposedCubeMapTexture/GeneratedCubeMapTexture/ImageCubeMapTexture.
-- [X3D Architecture 12.2.2 Appearance Node](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/components/shape.html#Appearancenode){:target="_blank"}
+- [X3D Architecture 12.2.2 Appearance node](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/components/shape.html#Appearancenode){:target="_blank"}
 - [X3D Architecture 17.2.2 Lighting model](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/components/lighting.html#Lightingmodel){:target="_blank"}
 
 ## Example
@@ -127,4 +127,4 @@ Single contained BlendMode node that defines blend mode properties.
 
 ## See Also
 
-- [X3D Specification of Appearance Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#Appearance){:target="_blank"}
+- [X3D Specification of Appearance node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#Appearance){:target="_blank"}
