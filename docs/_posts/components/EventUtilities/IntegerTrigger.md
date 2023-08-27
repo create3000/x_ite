@@ -73,4 +73,4 @@ If input event *set_boolean* is true, trigger output of integer value.
 
 ## See Also
 
-- [X3D Specification of IntegerTrigger node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/eventUtilities.html#IntegerTrigger){:target="_blank"}
+- [X3D Specification of IntegerTrigger Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/eventUtilities.html#IntegerTrigger){:target="_blank"}

@@ -81,4 +81,4 @@ The *value* attribute is a strictly typed data array providing relevant metadata
 
 ## See Also
 
-- [X3D Specification of MetadataDouble node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/core.html#MetadataDouble){:target="_blank"}
+- [X3D Specification of MetadataDouble Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/core.html#MetadataDouble){:target="_blank"}

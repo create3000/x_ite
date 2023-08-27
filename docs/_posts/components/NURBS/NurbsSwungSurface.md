@@ -73,4 +73,4 @@ Setting *solid* true means draw only one side of polygons (backface culling on),
 
 ## See Also
 
-- [X3D Specification of NurbsSwungSurface node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/nurbs.html#NurbsSwungSurface){:target="_blank"}
+- [X3D Specification of NurbsSwungSurface Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/nurbs.html#NurbsSwungSurface){:target="_blank"}

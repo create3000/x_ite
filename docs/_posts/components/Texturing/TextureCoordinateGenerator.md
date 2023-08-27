@@ -71,4 +71,4 @@ Parameter field defines the algorithm used to compute texture coordinates.
 
 ## See Also
 
-- [X3D Specification of TextureCoordinateGenerator node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/texturing.html#TextureCoordinateGenerator){:target="_blank"}
+- [X3D Specification of TextureCoordinateGenerator Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/texturing.html#TextureCoordinateGenerator){:target="_blank"}

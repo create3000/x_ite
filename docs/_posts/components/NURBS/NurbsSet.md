@@ -114,4 +114,4 @@ The children form a closed loop with first point of first child repeated as last
 
 ## See Also
 
-- [X3D Specification of NurbsSet node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/nurbs.html#NurbsSet){:target="_blank"}
+- [X3D Specification of NurbsSet Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/nurbs.html#NurbsSet){:target="_blank"}

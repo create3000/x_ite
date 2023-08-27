@@ -60,4 +60,4 @@ Enables/disables node operation.
 
 ## See Also
 
-- [X3D Specification of BoundaryEnhancementVolumeStyle node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/volume.html#BoundaryEnhancementVolumeStyle){:target="_blank"}
+- [X3D Specification of BoundaryEnhancementVolumeStyle Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/volume.html#BoundaryEnhancementVolumeStyle){:target="_blank"}

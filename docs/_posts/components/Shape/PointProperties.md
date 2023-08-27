@@ -80,4 +80,4 @@ Are set to default values if undefined. Together these parameters define *attenu
 
 ## See Also
 
-- [X3D Specification of PointProperties node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#LineProperties){:target="_blank"}
+- [X3D Specification of PointProperties Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#LineProperties){:target="_blank"}

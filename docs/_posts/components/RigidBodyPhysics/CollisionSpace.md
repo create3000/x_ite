@@ -103,4 +103,4 @@ Collection of collidable objects as well as nested CollisionSpace collections
 
 ## See Also
 
-- [X3D Specification of CollisionSpace node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rigidBodyPhysics.html#CollisionSpace){:target="_blank"}
+- [X3D Specification of CollisionSpace Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rigidBodyPhysics.html#CollisionSpace){:target="_blank"}

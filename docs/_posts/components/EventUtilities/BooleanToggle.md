@@ -64,4 +64,4 @@ Persistent state value that gets toggled or reset.
 
 ## See Also
 
-- [X3D Specification of BooleanToggle node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/eventUtilities.html#BooleanToggle){:target="_blank"}
+- [X3D Specification of BooleanToggle Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/eventUtilities.html#BooleanToggle){:target="_blank"}

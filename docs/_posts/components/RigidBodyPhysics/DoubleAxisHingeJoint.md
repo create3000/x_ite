@@ -161,4 +161,4 @@ The body1 and *body2* fields indicate the two RigidBody nodes connected by this 
 
 ## See Also
 
-- [X3D Specification of DoubleAxisHingeJoint node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rigidBodyPhysics.html#DoubleAxisHingeJoint){:target="_blank"}
+- [X3D Specification of DoubleAxisHingeJoint Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rigidBodyPhysics.html#DoubleAxisHingeJoint){:target="_blank"}

@@ -59,4 +59,4 @@ Required *name* for this particular VertexAttribute instance.
 
 ## See Also
 
-- [X3D Specification of Matrix4VertexAttribute node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shaders.html#Matrix4VertexAttribute){:target="_blank"}
+- [X3D Specification of Matrix4VertexAttribute Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shaders.html#Matrix4VertexAttribute){:target="_blank"}

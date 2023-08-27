@@ -138,4 +138,4 @@ Interpolated coordinate in the geographic coordinate system specified by geoSyst
 
 ## See Also
 
-- [X3D Specification of GeoPositionInterpolator node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geospatial.html#GeoPositionInterpolator){:target="_blank"}
+- [X3D Specification of GeoPositionInterpolator Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geospatial.html#GeoPositionInterpolator){:target="_blank"}

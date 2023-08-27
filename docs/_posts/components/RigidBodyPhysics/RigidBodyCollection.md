@@ -133,4 +133,4 @@ The *joints* field is used to register all *joints* between bodies contained in 
 
 ## See Also
 
-- [X3D Specification of RigidBodyCollection node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rigidBodyPhysics.html#RigidBodyCollection){:target="_blank"}
+- [X3D Specification of RigidBodyCollection Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rigidBodyPhysics.html#RigidBodyCollection){:target="_blank"}

@@ -75,4 +75,4 @@ Non-uniform planar scaling of texture about center (opposite effect appears on g
 
 ## See Also
 
-- [X3D Specification of TextureTransform3D node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/texture3D.html#TextureTransform3D){:target="_blank"}
+- [X3D Specification of TextureTransform3D Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/texture3D.html#TextureTransform3D){:target="_blank"}

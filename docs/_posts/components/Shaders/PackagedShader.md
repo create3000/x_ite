@@ -134,4 +134,4 @@ The *language* field indicates to the X3D player which shading *language* is use
 
 ## See Also
 
-- [X3D Specification of PackagedShader node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shaders.html#PackagedShader){:target="_blank"}
+- [X3D Specification of PackagedShader Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shaders.html#PackagedShader){:target="_blank"}

@@ -96,4 +96,4 @@ Grouping nodes contain an ordered list of *children* nodes.
 
 ## See Also
 
-- [X3D Specification of LayoutLayer node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/layout.html#LayoutLayer){:target="_blank"}
+- [X3D Specification of LayoutLayer Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/layout.html#LayoutLayer){:target="_blank"}

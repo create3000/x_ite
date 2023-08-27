@@ -95,4 +95,4 @@ Simulation/exercise *siteID* of the participating LAN or organization.
 
 ## See Also
 
-- [X3D Specification of DISEntityManager node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/dis.html#DISEntityManager){:target="_blank"}
+- [X3D Specification of DISEntityManager Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/dis.html#DISEntityManager){:target="_blank"}

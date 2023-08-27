@@ -161,4 +161,4 @@ The *justify* field determines horizontal and vertical alignment of text layout,
 
 ## See Also
 
-- [X3D Specification of ScreenFontStyle node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/layout.html#ScreenFontStyle){:target="_blank"}
+- [X3D Specification of ScreenFontStyle Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/layout.html#ScreenFontStyle){:target="_blank"}

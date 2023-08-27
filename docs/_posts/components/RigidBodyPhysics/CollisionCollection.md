@@ -92,4 +92,4 @@ CollisionCollection node holds a collection of objects in the *collidables* fiel
 
 ## See Also
 
-- [X3D Specification of CollisionCollection node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rigidBodyPhysics.html#CollisionCollection){:target="_blank"}
+- [X3D Specification of CollisionCollection Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rigidBodyPhysics.html#CollisionCollection){:target="_blank"}

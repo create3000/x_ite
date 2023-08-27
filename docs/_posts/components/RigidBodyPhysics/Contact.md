@@ -118,4 +118,4 @@ The body1 and *body2* fields specify two top-level nodes that should be evaluate
 
 ## See Also
 
-- [X3D Specification of Contact node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rigidBodyPhysics.html#Contact){:target="_blank"}
+- [X3D Specification of Contact Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rigidBodyPhysics.html#Contact){:target="_blank"}
