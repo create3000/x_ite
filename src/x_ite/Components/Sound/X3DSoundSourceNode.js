@@ -80,8 +80,7 @@ Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, X3DChildN
    },
    setMedia (value)
    {
-      if (this .media)
-         this .media .pause ();
+      this .media ?.pause ();
 
       this .media = value;
 
