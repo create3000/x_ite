@@ -139,9 +139,8 @@ Object .assign (Object .setPrototypeOf (ProximitySensor .prototype, X3DEnvironme
                   .multRight (invModelMatrix .assign (modelMatrix) .inverse ())
                   .get (centerOfRotation);
 
-               modelMatrix
-                  .multRight (viewpointNode .getViewMatrix ())
-                  .inverse ()
+               invModelMatrix
+                  .multLeft (viewpointNode .getCameraSpaceMatrix ())
                   .get (position, orientation);
 
                if (this ._isActive .getValue ())
