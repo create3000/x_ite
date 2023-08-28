@@ -133,19 +133,16 @@ Object .assign (Object .setPrototypeOf (ProximitySensor .prototype, X3DEnvironme
                   viewpointNode = this .layerNode .getViewpoint (),
                   modelMatrix   = this .modelMatrix;
 
-               centerOfRotationMatrix .assign (viewpointNode .getModelMatrix ());
-               centerOfRotationMatrix .translate (viewpointNode .getUserCenterOfRotation ());
-               centerOfRotationMatrix .multRight (invModelMatrix .assign (modelMatrix) .inverse ());
+               centerOfRotationMatrix
+                  .assign (viewpointNode .getModelMatrix ())
+                  .translate (viewpointNode .getUserCenterOfRotation ())
+                  .multRight (invModelMatrix .assign (modelMatrix) .inverse ())
+                  .get (centerOfRotation);
 
-               modelMatrix .multRight (viewpointNode .getViewMatrix ());
-               modelMatrix .get (null, orientation);
-               modelMatrix .inverse ();
-
-               position .set (modelMatrix [12], modelMatrix [13], modelMatrix [14]);
-
-               orientation .inverse ();
-
-               centerOfRotation .set (centerOfRotationMatrix [12], centerOfRotationMatrix [13], centerOfRotationMatrix [14]);
+               modelMatrix
+                  .multRight (viewpointNode .getViewMatrix ())
+                  .inverse ()
+                  .get (position, orientation);
 
                if (this ._isActive .getValue ())
                {

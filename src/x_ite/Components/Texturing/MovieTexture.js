@@ -70,7 +70,7 @@ function MovieTexture (executionContext)
    this .video      = $("<video></video>");
    this .sourceNode = audioContext .createMediaElementSource (this .video [0]);
 
-   this .sourceNode .connect (this .getSource ());
+   this .sourceNode .connect (this .getAudioSource ());
 }
 
 Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNode .prototype),
