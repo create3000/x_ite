@@ -117,7 +117,6 @@ Object .assign (Object .setPrototypeOf (ProximitySensor .prototype, X3DEnvironme
    update: (() =>
    {
       const
-         invModelMatrix         = new Matrix4 (),
          centerOfRotationMatrix = new Matrix4 (),
          position               = new Vector3 (0, 0, 0),
          orientation            = new Rotation4 (),
@@ -136,10 +135,10 @@ Object .assign (Object .setPrototypeOf (ProximitySensor .prototype, X3DEnvironme
                centerOfRotationMatrix
                   .assign (viewpointNode .getModelMatrix ())
                   .translate (viewpointNode .getUserCenterOfRotation ())
-                  .multRight (invModelMatrix .assign (modelMatrix) .inverse ())
+                  .multRight (modelMatrix .inverse ())
                   .get (centerOfRotation);
 
-               invModelMatrix
+               modelMatrix // Is now inverted.
                   .multLeft (viewpointNode .getCameraSpaceMatrix ())
                   .get (position, orientation);
 
