@@ -57,7 +57,7 @@ function MicrophoneSource (executionContext)
 
    this .addType (X3DConstants .MicrophoneSource);
 
-   this .addChildObjects (X3DConstants .inputOutput, "loop", new Fields .SFBool ());
+   this .addChildObjects (X3DConstants .inputOutput, "loop", new Fields .SFBool (true));
 }
 
 Object .assign (Object .setPrototypeOf (MicrophoneSource .prototype, X3DSoundSourceNode .prototype),
@@ -71,7 +71,7 @@ Object .assign (Object .setPrototypeOf (MicrophoneSource .prototype, X3DSoundSou
       this .set_mediaDeviceID__ ();
    },
    set_mediaDeviceID__ ()
-{
+   {
       if (!navigator .mediaDevices)
          return;
 
@@ -89,7 +89,8 @@ Object .assign (Object .setPrototypeOf (MicrophoneSource .prototype, X3DSoundSou
       {
          this .mediaStreamSource = audioContext .createMediaStreamSource (stream);
 
-         this .mediaStreamSource .connect (this .getAudioSource ());
+         if (this ._isActive .getValue () && !this ._isPaused .getValue ())
+            this .set_start ();
       }).
       catch (error =>
       {
@@ -97,6 +98,14 @@ Object .assign (Object .setPrototypeOf (MicrophoneSource .prototype, X3DSoundSou
 
          console .error (error .message);
       });
+   },
+   set_start ()
+   {
+      this .mediaStreamSource ?.connect (this .getAudioSource ());
+   },
+   set_top ()
+   {
+      this .mediaStreamSource ?.disconnect (this .getAudioSource ());
    },
 });
 
