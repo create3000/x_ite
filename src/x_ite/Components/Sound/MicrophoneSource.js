@@ -60,7 +60,46 @@ function MicrophoneSource (executionContext)
    this .addChildObjects (X3DConstants .inputOutput, "loop", new Fields .SFBool ());
 }
 
-Object .setPrototypeOf (MicrophoneSource .prototype, X3DSoundSourceNode .prototype);
+Object .assign (Object .setPrototypeOf (MicrophoneSource .prototype, X3DSoundSourceNode .prototype),
+{
+   initialize ()
+   {
+      X3DSoundSourceNode .prototype .initialize .call (this);
+
+      this ._mediaDeviceID .addInterest ("set_mediaDeviceID__", this);
+
+      this .set_mediaDeviceID__ ();
+   },
+   async set_mediaDeviceID__ ()
+   {
+      try
+      {
+         if (!navigator .mediaDevices)
+            return;
+
+         this .mediaStreamSource ?.disconnect (this .getAudioSource ());
+
+         const audioContext = this .getBrowser () .getAudioContext ();
+
+         const stream = await navigator .mediaDevices .getUserMedia ({
+            audio:
+            {
+               deviceId: this ._mediaDeviceID .getValue (),
+            },
+         });
+
+         this .mediaStreamSource = audioContext .createMediaStreamSource (stream);
+
+         this .mediaStreamSource .connect (this .getAudioSource ());
+      }
+      catch (error)
+      {
+         this .mediaStreamSource = null;
+
+         console .error (error .message);
+      }
+   },
+});
 
 Object .defineProperties (MicrophoneSource,
 {
