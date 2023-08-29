@@ -70,34 +70,33 @@ Object .assign (Object .setPrototypeOf (MicrophoneSource .prototype, X3DSoundSou
 
       this .set_mediaDeviceID__ ();
    },
-   async set_mediaDeviceID__ ()
-   {
-      try
+   set_mediaDeviceID__ ()
+{
+      if (!navigator .mediaDevices)
+         return;
+
+      this .mediaStreamSource ?.disconnect (this .getAudioSource ());
+
+      const audioContext = this .getBrowser () .getAudioContext ();
+
+      navigator .mediaDevices .getUserMedia ({
+         audio:
+         {
+            deviceId: this ._mediaDeviceID .getValue (),
+         },
+      })
+      .then (stream =>
       {
-         if (!navigator .mediaDevices)
-            return;
-
-         this .mediaStreamSource ?.disconnect (this .getAudioSource ());
-
-         const audioContext = this .getBrowser () .getAudioContext ();
-
-         const stream = await navigator .mediaDevices .getUserMedia ({
-            audio:
-            {
-               deviceId: this ._mediaDeviceID .getValue (),
-            },
-         });
-
          this .mediaStreamSource = audioContext .createMediaStreamSource (stream);
 
          this .mediaStreamSource .connect (this .getAudioSource ());
-      }
-      catch (error)
+      }).
+      catch (error =>
       {
          this .mediaStreamSource = null;
 
          console .error (error .message);
-      }
+      });
    },
 });
 
