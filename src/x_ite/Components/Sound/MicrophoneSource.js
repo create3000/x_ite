@@ -103,7 +103,7 @@ Object .assign (Object .setPrototypeOf (MicrophoneSource .prototype, X3DSoundSou
    {
       this .mediaStreamSource ?.connect (this .getAudioSource ());
    },
-   set_top ()
+   set_stop ()
    {
       this .mediaStreamSource ?.disconnect (this .getAudioSource ());
    },
