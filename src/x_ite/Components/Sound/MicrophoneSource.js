@@ -108,16 +108,18 @@ Object .assign (Object .setPrototypeOf (MicrophoneSource .prototype, X3DSoundSou
       if (!this .mediaStreamSource)
          return;
 
-      if (this ._active .getValue ())
+      const active = this ._active .getValue ();
+
+      if (active)
          this .mediaStreamSource .connect (this .getAudioSource ());
       else
          this .mediaStreamSource .disconnect (this .getAudioSource ());
 
       for (const track of this .mediaStreamSource .mediaStream .getAudioTracks ())
-         track .enabled = this ._active .getValue ();
+         track .enabled = active;
 
       for (const track of this .mediaStreamSource .mediaStream .getVideoTracks ())
-         track .enabled = this ._active .getValue ();
+         track .enabled = active;
    },
 });
 
