@@ -601,7 +601,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
 
          // Start loading.
 
-         const fileLoader = this [_fileLoader] = new FileLoader (this .getWorld ());
+         const fileLoader = new FileLoader (this .getWorld ());
 
          fileLoader .createX3DFromURL (url, parameter, (scene) =>
          {
