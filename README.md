@@ -38,6 +38,8 @@ It can be used in [Electron](https://www.electronjs.org) apps in the **renderer 
 
 ```js
 const X3D = require ("x_ite")
+// or as ES module
+import X3D from "x_ite";
 ```
 
 Make sure that `contextIsolation` is set to `false` when creating a BrowserWindow instance.
