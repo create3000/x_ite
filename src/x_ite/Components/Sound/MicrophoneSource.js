@@ -76,6 +76,11 @@ Object .assign (Object .setPrototypeOf (MicrophoneSource .prototype, X3DSoundSou
       if (!navigator .mediaDevices)
          return;
 
+      if (this ._active .getValue ())
+         this .mediaStreamSource ?.disconnect (this .getAudioSource ());
+
+      this .mediaStreamSource = null;
+
       navigator .mediaDevices .getUserMedia ({
          audio:
          {
@@ -85,9 +90,6 @@ Object .assign (Object .setPrototypeOf (MicrophoneSource .prototype, X3DSoundSou
       .then (stream =>
       {
          const audioContext = this .getBrowser () .getAudioContext ();
-
-         if (this ._active .getValue ())
-            this .mediaStreamSource ?.disconnect (this .getAudioSource ());
 
          this .mediaStreamSource = audioContext .createMediaStreamSource (stream);
 
