@@ -4,6 +4,12 @@
 	"description": "X_ITE X3D Browser, view and manipulate X3D and VRML scenes in HTML.",
 	"main": "dist/x_ite.js",
 	"module": "dist/x_ite.mjs",
+	"exports": {
+		".": {
+			"require": "./dist/x_ite.js",
+			"import": "./dist/x_ite.mjs"
+		}
+	},
 	"files": [
 		"dist/*"
 	],
