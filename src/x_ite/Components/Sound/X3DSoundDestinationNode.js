@@ -105,6 +105,9 @@ Object .assign (Object .setPrototypeOf (X3DSoundDestinationNode .prototype, X3DS
    },
    set_channelCount__ ()
    {
+      if (!this .getSoundDestination ())
+         return;
+
       this .getSoundDestination () .channelCount = Math .max (this ._channelCount .getValue (), 1);
    },
    set_channelCountMode__: (function ()
@@ -113,6 +116,9 @@ Object .assign (Object .setPrototypeOf (X3DSoundDestinationNode .prototype, X3DS
 
       return function ()
       {
+         if (!this .getSoundDestination ())
+            return;
+
          const channelCountMode = this ._channelCountMode .getValue () .toLowerCase () .replaceAll ("_", "-");
 
          this .getSoundDestination () .channelCountMode = channelCountModes .has (channelCountMode) ? channelCountMode : "max";
@@ -124,6 +130,9 @@ Object .assign (Object .setPrototypeOf (X3DSoundDestinationNode .prototype, X3DS
 
       return function ()
       {
+         if (!this .getSoundDestination ())
+            return;
+
          const channelInterpretation = this ._channelInterpretation .getValue () .toLowerCase ();
 
          this .getSoundDestination () .channelInterpretation = channelInterpretations .has (channelInterpretation) ? channelInterpretation : "speakers";

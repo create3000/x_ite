@@ -57,10 +57,7 @@ function AudioDestination (executionContext)
 
    this .addType (X3DConstants .AudioDestination);
 
-   const audioContext = this .getBrowser () .getAudioContext ();
-
-   this .audioElement           = new Audio ();
-   this .mediaStreamDestination = audioContext .createMediaStreamDestination ();
+   this .audioElement = new Audio ();
 }
 
 Object .assign (Object .setPrototypeOf (AudioDestination .prototype, X3DSoundDestinationNode .prototype),
