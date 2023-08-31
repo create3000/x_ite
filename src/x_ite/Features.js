@@ -45,10 +45,20 @@
  *
  ******************************************************************************/
 
+import DEVELOPMENT from "./DEVELOPMENT.js";
+
+const MODULE = false;
+
 const Features =
 {
    get ENVIRONMENT ()
    {
+      if (DEVELOPMENT)
+         return "BROWSER";
+
+      if (MODULE)
+         return "MODULE";
+
       if ((typeof process === "object") && (process .release .name .search (/node|io.js/) !== -1))
          return "NODE";
 

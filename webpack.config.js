@@ -197,6 +197,139 @@ export default __default__;`;
       },
    })
 
+   targets .push ({
+      entry: {
+         "x_ite": "./src/x_ite.js",
+         "x_ite.min": "./src/x_ite.js",
+      },
+      output: {
+         path: path .resolve (__dirname, "dist"),
+         filename: "[name].mjs",
+         library: {
+            type: "module",
+         },
+      },
+      experiments: {
+         outputModule: true,
+      },
+      mode: "production",
+      module: {
+         parser: {
+            javascript : { importMeta: false },
+         },
+         rules: [namespace, compress_glsl,
+            {
+               test: /URLs\.js$/,
+               use: [
+                  {
+                     loader: StringReplacePlugin .replace ({
+                        replacements: [
+                           {
+                              pattern: /\/\/ var/sg,
+                              replacement: function (match, m, offset, string)
+                              {
+                                 return "var"
+                              },
+                           },
+                        ],
+                     }),
+                  },
+               ],
+            },
+            {
+               test: /Features\.js$/,
+               use: [
+                  {
+                     loader: StringReplacePlugin .replace ({
+                        replacements: [
+                           {
+                              pattern: /MODULE = false/sg,
+                              replacement: function (match, m, offset, string)
+                              {
+                                 return "MODULE = true"
+                              },
+                           },
+                        ],
+                     }),
+                  },
+               ],
+            },
+         ],
+      },
+      optimization: {
+         minimize: true,
+         minimizer: [
+            new TerserPlugin ({
+               include: /\.min\.mjs$/,
+               parallel: true,
+               extractComments: true,
+               terserOptions: {
+                  compress: true,
+                  mangle: true,
+                  format: {
+                     comments: false,
+                  },
+               },
+            }),
+         ],
+      },
+      plugins: [
+         new webpack .ProvidePlugin ({
+            $: "jquery",
+            jQuery: "jquery",
+            jquery_fullscreen: "jquery-fullscreen-plugin/jquery.fullscreen.js",
+            jquery_mousewheel: "jquery-mousewheel/jquery.mousewheel.js",
+            libtess: "libtess/libtess.cat.js",
+            pako: "pako/dist/pako_inflate.js",
+            ResizeSensor: "css-element-queries/src/ResizeSensor.js",
+            SuperGif: path .resolve (__dirname, "src/lib/libgif/libgif.js"),
+         }),
+         new WebpackShellPluginNext ({
+            logging: false,
+            onBuildStart: {
+               scripts: [
+                  `echo 'Bundling x_ite module ...'`,
+                  `perl -p0i -e 's|".*?"|'\`npm pkg get version\`'|sg' src/x_ite/Browser/VERSION.js`,
+                  `perl -p0i -e 's/export default (?:true|false);/export default false;/sg' src/x_ite/DEVELOPMENT.js`,
+               ],
+               blocking: true,
+               parallel: false,
+            },
+            onBuildEnd: {
+               scripts: [
+                  // Version
+                  `perl -p0i -e 's|"X_ITE.X3D"|"X_ITE.X3D-'$npm_package_version'"|sg' dist/x_ite{,.min}.mjs`,
+                  `perl -p0i -e 's|^(/\\*.*?\\*/)?\\s*|/* X_ITE v'$npm_package_version' */|sg' dist/x_ite{,.min}.mjs`,
+                  // Source Maps
+                  `perl -p0i -e 's|sourceMappingURL=.*?\\.map||sg' dist/x_ite{,.min}.mjs`,
+                  // Debug
+                  `perl -p0i -e 's/export default (?:true|false);/export default true;/sg' src/x_ite/DEVELOPMENT.js`,
+                  // License
+                  `rm dist/x_ite.min.mjs.LICENSE.txt`,
+               ],
+               blocking: false,
+               parallel: false,
+            },
+        }),
+      ],
+      node: {
+         __filename: false,
+      },
+      resolve: {
+         fallback: {
+            process: false,
+            path: false,
+            fs: false,
+         },
+      },
+      stats: "errors-warnings",
+      performance: {
+         hints: "warning",
+         maxEntrypointSize: 10_000_000,
+         maxAssetSize: 10_000_000,
+      },
+   })
+
    const dependencies = {
       "Layout": ["Text"],
       "Picking": ["RigidBodyPhysics"],

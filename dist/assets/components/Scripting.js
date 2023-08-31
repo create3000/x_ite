@@ -568,6 +568,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, Scripting_X3DScriptNo
          SFMatrix4f:    { value: (Fields_default()).SFMatrix4f },
          SFNode:        { value: SFNode },
          SFRotation:    { value: (Fields_default()).SFRotation },
+         SFString:      { value: (Fields_default()).SFString },
          SFVec2d:       { value: (Fields_default()).SFVec2d },
          SFVec2f:       { value: (Fields_default()).SFVec2f },
          SFVec3d:       { value: (Fields_default()).SFVec3d },

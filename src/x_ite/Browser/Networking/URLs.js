@@ -63,6 +63,11 @@ const URLs =
             var src = document .currentScript ?.src ?? document .location .href;
             break;
          }
+         case "MODULE":
+         {
+            // var src = import .meta .url;
+            break;
+         }
       }
 
       return function ()

@@ -284,6 +284,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
                break;
             }
             case "BROWSER":
+            case "MODULE":
             {
                await import (/* webpackIgnore: true */ providerURL);
                break;

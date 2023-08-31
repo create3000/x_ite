@@ -1,7 +1,7 @@
 /* X_ITE v8.11.17 */(() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 566:
+/***/ 830:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 /**
@@ -14718,22 +14718,22 @@ var URLs_default = /*#__PURE__*/__webpack_require__.n(URLs_namespaceObject);
 const Fonts =
 {
    SERIF: {
-      PLAIN:      URLs_default().getFontsUrl ("DroidSerif-Regular.ttf"),
-      ITALIC:     URLs_default().getFontsUrl ("DroidSerif-Italic.ttf"),
-      BOLD:       URLs_default().getFontsUrl ("DroidSerif-Bold.ttf"),
-      BOLDITALIC: URLs_default().getFontsUrl ("DroidSerif-BoldItalic.ttf"),
+      PLAIN:      URLs_default().getFontsURL ("DroidSerif-Regular.ttf"),
+      ITALIC:     URLs_default().getFontsURL ("DroidSerif-Italic.ttf"),
+      BOLD:       URLs_default().getFontsURL ("DroidSerif-Bold.ttf"),
+      BOLDITALIC: URLs_default().getFontsURL ("DroidSerif-BoldItalic.ttf"),
    },
    SANS: {
-      PLAIN:      URLs_default().getFontsUrl ("Ubuntu-R.ttf"),
-      ITALIC:     URLs_default().getFontsUrl ("Ubuntu-RI.ttf"),
-      BOLD:       URLs_default().getFontsUrl ("Ubuntu-B.ttf"),
-      BOLDITALIC: URLs_default().getFontsUrl ("Ubuntu-BI.ttf"),
+      PLAIN:      URLs_default().getFontsURL ("Ubuntu-R.ttf"),
+      ITALIC:     URLs_default().getFontsURL ("Ubuntu-RI.ttf"),
+      BOLD:       URLs_default().getFontsURL ("Ubuntu-B.ttf"),
+      BOLDITALIC: URLs_default().getFontsURL ("Ubuntu-BI.ttf"),
    },
    TYPEWRITER: {
-      PLAIN:      URLs_default().getFontsUrl ("UbuntuMono-R.ttf"),
-      ITALIC:     URLs_default().getFontsUrl ("UbuntuMono-RI.ttf"),
-      BOLD:       URLs_default().getFontsUrl ("UbuntuMono-B.ttf"),
-      BOLDITALIC: URLs_default().getFontsUrl ("UbuntuMono-BI.ttf"),
+      PLAIN:      URLs_default().getFontsURL ("UbuntuMono-R.ttf"),
+      ITALIC:     URLs_default().getFontsURL ("UbuntuMono-RI.ttf"),
+      BOLD:       URLs_default().getFontsURL ("UbuntuMono-B.ttf"),
+      BOLDITALIC: URLs_default().getFontsURL ("UbuntuMono-BI.ttf"),
    },
 };
 
@@ -16051,7 +16051,7 @@ Namespace_default().add ("FontStyle", "x_ite/Components/Text/FontStyle", FontSty
 /* harmony default export */ const Text_FontStyle = (FontStyle_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Text/X3DTextContext.js
 /* provided dependency */ var $ = __webpack_require__(355);
-/* provided dependency */ var opentype = __webpack_require__(566);
+/* provided dependency */ var opentype = __webpack_require__(830);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
