@@ -45,6 +45,7 @@
  *
  ******************************************************************************/
 
+import Fields               from "../../Fields.js";
 import X3DChildNode         from "../Core/X3DChildNode.js";
 import X3DTimeDependentNode from "../Time/X3DTimeDependentNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
@@ -55,6 +56,8 @@ function X3DSoundSourceNode (executionContext)
    X3DTimeDependentNode .call (this, executionContext);
 
    this .addType (X3DConstants .X3DSoundSourceNode);
+
+   this .addChildObjects (X3DConstants .inputOutput, "active", new Fields .SFBool ());
 
    const audioContext = this .getBrowser () .getAudioContext ();
 
@@ -129,6 +132,8 @@ Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, X3DChildN
    },
    set_start ()
    {
+      this ._active = true;
+
       if (this .media)
       {
          this .media .currentTime = 0;
@@ -137,16 +142,22 @@ Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, X3DChildN
    },
    set_pause ()
    {
+      this ._active = false;
+
       if (this .media)
          this .media .pause ();
    },
    set_resume ()
    {
+      this ._active = true;
+
       if (this .media)
          this .media .play () .catch (Function .prototype);
    },
    set_stop ()
    {
+      this ._active = false;
+
       if (this .media)
          this .media .pause ();
    },

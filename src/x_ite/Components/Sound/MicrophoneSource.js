@@ -67,6 +67,7 @@ Object .assign (Object .setPrototypeOf (MicrophoneSource .prototype, X3DSoundSou
       X3DSoundSourceNode .prototype .initialize .call (this);
 
       this ._mediaDeviceID .addInterest ("set_mediaDeviceID__", this);
+      this ._active        .addInterest ("set_active__",        this);
 
       this .set_mediaDeviceID__ ();
    },
@@ -89,8 +90,7 @@ Object .assign (Object .setPrototypeOf (MicrophoneSource .prototype, X3DSoundSou
 
          this .mediaStreamSource = audioContext .createMediaStreamSource (stream);
 
-         if (this ._isActive .getValue () && !this ._isPaused .getValue ())
-            this .set_start ();
+         this .set_active__ ();
       }).
       catch (error =>
       {
@@ -99,13 +99,12 @@ Object .assign (Object .setPrototypeOf (MicrophoneSource .prototype, X3DSoundSou
          console .error (error .message);
       });
    },
-   set_start ()
+   set_active__ ()
    {
-      this .mediaStreamSource ?.connect (this .getAudioSource ());
-   },
-   set_stop ()
-   {
-      this .mediaStreamSource ?.disconnect (this .getAudioSource ());
+      if (this ._active .getValue ())
+         this .mediaStreamSource ?.connect (this .getAudioSource ());
+      else
+         this .mediaStreamSource ?.disconnect (this .getAudioSource ());
    },
 });
 
