@@ -92,11 +92,11 @@ Object .assign (Object .setPrototypeOf (AudioClip .prototype, X3DSoundSourceNode
    },
    unloadData ()
    {
-      this .setMedia (null);
+      this .setMediaElement (null);
    },
    loadData ()
    {
-      this .setMedia (null);
+      this .setMediaElement (null);
       this .urlStack .setValue (this ._url);
       this .audio .on ("canplaythrough", this .setAudio .bind (this));
       this .loadNext ();
@@ -151,7 +151,7 @@ Object .assign (Object .setPrototypeOf (AudioClip .prototype, X3DSoundSourceNode
          }
 
          this .audio .unbind ("canplaythrough");
-         this .setMedia (this .audio [0]);
+         this .setMediaElement (this .audio [0]);
          this .setLoadState (X3DConstants .COMPLETE_STATE);
       }
       catch (error)

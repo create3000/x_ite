@@ -105,7 +105,7 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
    loadData ()
    {
       delete this .gif;
-      this .setMedia (null);
+      this .setMediaElement (null);
       this .urlStack .setValue (this ._url);
       this .video .on ("canplaythrough", this .setVideo .bind (this));
       this .loadNext ();
@@ -183,7 +183,7 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
          if (!Algorithm .isPowerOfTwo (width) || !Algorithm .isPowerOfTwo (height))
             throw new Error ("The movie texture is a non power-of-two texture.");
 
-         this .setMedia (this .video [0]);
+         this .setMediaElement (this .video [0]);
          this .setTexture (width, height, false, video, true);
          this .setLoadState (X3DConstants .COMPLETE_STATE);
 
@@ -205,7 +205,7 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
 
          gif .pause ();
 
-         this .setMedia (gif);
+         this .setMediaElement (gif);
          this .setTexture (gif .get_canvas () .width, gif .get_canvas () .height, false, gif .get_frames () [0] .data, true);
          this .setLoadState (X3DConstants .COMPLETE_STATE);
 

@@ -59,7 +59,7 @@ function X3DSoundSourceNode (executionContext)
    const audioContext = this .getBrowser () .getAudioContext ();
 
    this .gainNode = new GainNode (audioContext);
-   this .media    = null;
+   this .mediaElement    = null;
 }
 
 Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, X3DChildNode .prototype),
@@ -78,21 +78,21 @@ Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, X3DChildN
    {
       return this .gainNode;
    },
-   setMedia (value)
+   setMediaElement (value)
    {
-      this .media ?.pause ();
+      this .mediaElement ?.pause ();
 
-      this .media = value;
+      this .mediaElement = value;
 
       if (value)
       {
-         // Init media.
+         // Init mediaElement.
 
          this .set_loop ();
 
          // Handle events.
 
-         this ._duration_changed = this .media .duration;
+         this ._duration_changed = this .mediaElement .duration;
 
          this .resetElapsedTime ();
 
@@ -124,31 +124,28 @@ Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, X3DChildN
    { },
    set_loop ()
    {
-      if (this .media)
-         this .media .loop = this ._loop .getValue ();
+      if (this .mediaElement)
+         this .mediaElement .loop = this ._loop .getValue ();
    },
    set_start ()
    {
-      if (this .media)
+      if (this .mediaElement)
       {
-         this .media .currentTime = 0;
-         this .media .play () .catch (() => this .getBrowser () .startAudioElement (this .media));
+         this .mediaElement .currentTime = 0;
+         this .mediaElement .play () .catch (() => this .getBrowser () .startAudioElement (this .mediaElement));
       }
    },
    set_pause ()
    {
-      if (this .media)
-         this .media .pause ();
+      this .mediaElement ?.pause ();
    },
    set_resume ()
    {
-      if (this .media)
-         this .media .play () .catch (Function .prototype);
+      this .mediaElement ?.play () .catch (Function .prototype);
    },
    set_stop ()
    {
-      if (this .media)
-         this .media .pause ();
+      this .mediaElement ?.pause ();
    },
    set_end ()
    {
@@ -161,10 +158,10 @@ Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, X3DChildN
    {
       this ._elapsedTime = this .getElapsedTime ();
 
-      if (!this .media)
+      if (!this .mediaElement)
          return;
 
-      if (this .media .currentTime < this .media .duration)
+      if (this .mediaElement .currentTime < this .mediaElement .duration)
          return;
 
       this .set_end ();
