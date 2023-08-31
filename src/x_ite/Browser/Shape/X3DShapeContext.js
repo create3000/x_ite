@@ -127,7 +127,7 @@ Object .assign (X3DShapeContext .prototype,
    getLinetypeTexture ()
    {
       this [_linetypeTextures] = new ImageTexture (this .getPrivateScene ());
-      this [_linetypeTextures] ._url [0]           = URLs .getLinetypeUrl ();
+      this [_linetypeTextures] ._url [0]           = URLs .getLinetypeURL ();
       this [_linetypeTextures] ._textureProperties = this .getLineFillTextureProperties ();
       this [_linetypeTextures] .setPrivate (true);
       this [_linetypeTextures] .setup ();
@@ -147,7 +147,7 @@ Object .assign (X3DShapeContext .prototype,
 
       hatchStyleTexture = this [_hatchStyleTextures] [index] = new ImageTexture (this .getPrivateScene ());
 
-      hatchStyleTexture ._url [0]           = URLs .getHatchingUrl (index);
+      hatchStyleTexture ._url [0]           = URLs .getHatchingURL (index);
       hatchStyleTexture ._textureProperties = this .getLineFillTextureProperties ();
       hatchStyleTexture .setPrivate (true);
       hatchStyleTexture .setup ();

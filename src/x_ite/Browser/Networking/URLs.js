@@ -49,7 +49,7 @@ import Features from "../../Features.js";
 
 const URLs =
 {
-   getScriptUrl: (() =>
+   getScriptURL: (() =>
    {
       switch (Features .ENVIRONMENT)
       {
@@ -74,29 +74,29 @@ const URLs =
    {
       if (component)
       {
-         if (this .getScriptUrl () .match (/\.min\.js$/))
+         if (this .getScriptURL () .match (/\.min\.js$/))
             component += ".min";
 
-         return new URL ("assets/components/" + component + ".js", this .getScriptUrl ()) .href;
+         return new URL ("assets/components/" + component + ".js", this .getScriptURL ()) .href;
       }
 
       return "https://create3000.github.io/x_ite/";
    },
-   getFontsUrl (file)
+   getFontsURL (file)
    {
-      return new URL ("assets/fonts/" + file, this .getScriptUrl ()) .href;
+      return new URL ("assets/fonts/" + file, this .getScriptURL ()) .href;
    },
-   getLinetypeUrl ()
+   getLinetypeURL ()
    {
-      return new URL ("assets/linetype/linetypes.png", this .getScriptUrl ()) .href;
+      return new URL ("assets/linetype/linetypes.png", this .getScriptURL ()) .href;
    },
-   getHatchingUrl (index)
+   getHatchingURL (index)
    {
-      return new URL ("assets/hatching/" + index + ".png", this .getScriptUrl ()) .href;
+      return new URL ("assets/hatching/" + index + ".png", this .getScriptURL ()) .href;
    },
-   getLibUrl (file)
+   getLibraryURL (file)
    {
-      return new URL ("assets/lib/" + file, this .getScriptUrl ()) .href;
+      return new URL ("assets/lib/" + file, this .getScriptURL ()) .href;
    },
 };
 

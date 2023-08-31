@@ -60,22 +60,22 @@ import URLs          from "../../Browser/Networking/URLs.js";
 const Fonts =
 {
    SERIF: {
-      PLAIN:      URLs .getFontsUrl ("DroidSerif-Regular.ttf"),
-      ITALIC:     URLs .getFontsUrl ("DroidSerif-Italic.ttf"),
-      BOLD:       URLs .getFontsUrl ("DroidSerif-Bold.ttf"),
-      BOLDITALIC: URLs .getFontsUrl ("DroidSerif-BoldItalic.ttf"),
+      PLAIN:      URLs .getFontsURL ("DroidSerif-Regular.ttf"),
+      ITALIC:     URLs .getFontsURL ("DroidSerif-Italic.ttf"),
+      BOLD:       URLs .getFontsURL ("DroidSerif-Bold.ttf"),
+      BOLDITALIC: URLs .getFontsURL ("DroidSerif-BoldItalic.ttf"),
    },
    SANS: {
-      PLAIN:      URLs .getFontsUrl ("Ubuntu-R.ttf"),
-      ITALIC:     URLs .getFontsUrl ("Ubuntu-RI.ttf"),
-      BOLD:       URLs .getFontsUrl ("Ubuntu-B.ttf"),
-      BOLDITALIC: URLs .getFontsUrl ("Ubuntu-BI.ttf"),
+      PLAIN:      URLs .getFontsURL ("Ubuntu-R.ttf"),
+      ITALIC:     URLs .getFontsURL ("Ubuntu-RI.ttf"),
+      BOLD:       URLs .getFontsURL ("Ubuntu-B.ttf"),
+      BOLDITALIC: URLs .getFontsURL ("Ubuntu-BI.ttf"),
    },
    TYPEWRITER: {
-      PLAIN:      URLs .getFontsUrl ("UbuntuMono-R.ttf"),
-      ITALIC:     URLs .getFontsUrl ("UbuntuMono-RI.ttf"),
-      BOLD:       URLs .getFontsUrl ("UbuntuMono-B.ttf"),
-      BOLDITALIC: URLs .getFontsUrl ("UbuntuMono-BI.ttf"),
+      PLAIN:      URLs .getFontsURL ("UbuntuMono-R.ttf"),
+      ITALIC:     URLs .getFontsURL ("UbuntuMono-RI.ttf"),
+      BOLD:       URLs .getFontsURL ("UbuntuMono-B.ttf"),
+      BOLDITALIC: URLs .getFontsURL ("UbuntuMono-BI.ttf"),
    },
 };
 

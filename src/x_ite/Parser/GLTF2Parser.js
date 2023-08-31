@@ -1319,7 +1319,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       else
       {
          const
-            response = await fetch (URLs .getLibUrl ("draco_decoder_gltf.js")),
+            response = await fetch (URLs .getLibraryURL ("draco_decoder_gltf.js")),
             text     = await response .text (),
             draco    = await new Function (text) () ();
 
