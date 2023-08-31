@@ -571,7 +571,9 @@ If you are a developer or you always wanna be up to date:
 ```html
 <script src="https://create3000.github.io/code/x_ite/latest/x_ite.min.js"></script>
 <!-- or as ES module -->
-<script type="module" src="https://create3000.github.io/code/x_ite/latest/x_ite.min.mjs"></script>
+<script type="module">
+import X3D from "https://create3000.github.io/code/x_ite/latest/x_ite.min.mjs";
+</script>
 ```
 
 >**Info:** It is no longer necessary to include the CSS file.
@@ -588,7 +590,9 @@ You can always replace »latest« by the version number you prefer.
 ```html
 <script src="https://cdn.jsdelivr.net/npm/x_ite@latest/dist/x_ite.min.js"></script>
 <!-- or as ES module -->
-<script type="module" src="https://cdn.jsdelivr.net/npm/x_ite@latest/dist/x_ite.min.mjs"></script>
+<script type="module">
+import X3D from "https://cdn.jsdelivr.net/npm/x_ite@latest/dist/x_ite.min.mjs";
+</script>
 ```
 
 #### For Production
@@ -598,7 +602,9 @@ If you are in production and everything is working well, then use a fixed versio
 ```html
 <script src="https://cdn.jsdelivr.net/npm/x_ite@{{ site.version }}/dist/x_ite.min.js"></script>
 <!-- or as ES module -->
-<script type="module" src="https://cdn.jsdelivr.net/npm/x_ite@{{ site.version }}/dist/x_ite.min.mjs"></script>
+<script type="module">
+import X3D from "https://cdn.jsdelivr.net/npm/x_ite@{{ site.version }}/dist/x_ite.min.js";
+</script>
 ```
 
 ### You can also get it from NPM
