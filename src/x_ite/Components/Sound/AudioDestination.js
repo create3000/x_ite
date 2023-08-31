@@ -101,6 +101,8 @@ Object .assign (Object .setPrototypeOf (AudioDestination .prototype, X3DSoundDes
 
          for (const track of this .mediaStreamDestination .stream .getVideoTracks ())
             track .stop ();
+
+         this .mediaStreamDestination = null;
       }
 
       X3DSoundDestinationNode .prototype .set_enabled__ .call (this);
