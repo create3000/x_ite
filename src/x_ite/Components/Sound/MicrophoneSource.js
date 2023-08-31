@@ -103,11 +103,9 @@ Object .assign (Object .setPrototypeOf (MicrophoneSource .prototype, X3DSoundSou
          {
             this .set_stop ();
          }
-      }).
-      catch (error =>
+      })
+      .catch (error =>
       {
-         this .mediaStreamSource = null;
-
          console .error (error .message);
       });
    },
@@ -116,7 +114,7 @@ Object .assign (Object .setPrototypeOf (MicrophoneSource .prototype, X3DSoundSou
       if (!this .mediaStreamSource)
          return;
 
-      this .mediaStreamSource .disconnect (this .getAudioSource ());
+      $.try (() => this .mediaStreamSource .disconnect (this .getAudioSource ()));
 
       for (const track of this .mediaStreamSource .mediaStream .getAudioTracks ())
          track .enabled = false;
@@ -142,12 +140,7 @@ Object .assign (Object .setPrototypeOf (MicrophoneSource .prototype, X3DSoundSou
       if (!this .mediaStreamSource)
          return;
 
-      try
-      {
-         this .mediaStreamSource .disconnect (this .getAudioSource ());
-      }
-      catch
-      { }
+      $.try (() => this .mediaStreamSource .disconnect (this .getAudioSource ()));
 
       for (const track of this .mediaStreamSource .mediaStream .getAudioTracks ())
          track .stop ();
