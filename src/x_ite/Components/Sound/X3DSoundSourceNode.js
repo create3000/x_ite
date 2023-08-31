@@ -132,7 +132,8 @@ Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, X3DChildN
    },
    set_start ()
    {
-      this ._active = true;
+      if (!this ._active .getValue ())
+         this ._active = true;
 
       if (this .media)
       {
@@ -142,21 +143,24 @@ Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, X3DChildN
    },
    set_pause ()
    {
-      this ._active = false;
+      if (this ._active .getValue ())
+         this ._active = false;
 
       if (this .media)
          this .media .pause ();
    },
    set_resume ()
    {
-      this ._active = true;
+      if (!this ._active .getValue ())
+         this ._active = true;
 
       if (this .media)
          this .media .play () .catch (Function .prototype);
    },
    set_stop ()
    {
-      this ._active = false;
+      if (this ._active .getValue ())
+         this ._active = false;
 
       if (this .media)
          this .media .pause ();

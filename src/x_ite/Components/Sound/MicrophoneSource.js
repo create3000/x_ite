@@ -90,7 +90,8 @@ Object .assign (Object .setPrototypeOf (MicrophoneSource .prototype, X3DSoundSou
 
          this .mediaStreamSource = audioContext .createMediaStreamSource (stream);
 
-         this .set_active__ ();
+         if (this ._active .getValue ())
+            this .set_active__ ();
       }).
       catch (error =>
       {

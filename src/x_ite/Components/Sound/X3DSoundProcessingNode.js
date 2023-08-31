@@ -200,19 +200,23 @@ Object .assign (Object .setPrototypeOf (X3DSoundProcessingNode .prototype, X3DCh
    },
    set_start ()
    {
-      this ._active = true;
+      if (!this ._active .getValue ())
+         this ._active = true;
    },
    set_pause ()
    {
-      this ._active = false;
+      if (this ._active .getValue ())
+         this ._active = false;
    },
    set_resume ()
    {
-      this ._active = true;
+      if (!this ._active .getValue ())
+         this ._active = true;
    },
    set_stop ()
    {
-      this ._active = false;
+      if (this ._active .getValue ())
+         this ._active = false;
    },
    set_time ()
    {
