@@ -133,8 +133,6 @@ Object .assign (Object .setPrototypeOf (X3DTimeDependentNode .prototype, X3DChil
    },
    set_enabled__ ()
    {
-      console .log ("set_enabled__")
-
       if (this ._enabled .getValue ())
          this .set_loop__ ();
 
