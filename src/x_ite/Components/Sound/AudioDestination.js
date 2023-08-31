@@ -59,9 +59,8 @@ function AudioDestination (executionContext)
 
    const audioContext = this .getBrowser () .getAudioContext ();
 
-   this .audioElement            = new Audio ();
-   this .mediaStreamDestination  = audioContext .createMediaStreamDestination ();
-   this .audioElement .srcObject = this .mediaStreamDestination .stream;
+   this .audioElement           = new Audio ();
+   this .mediaStreamDestination = audioContext .createMediaStreamDestination ();
 }
 
 Object .assign (Object .setPrototypeOf (AudioDestination .prototype, X3DSoundDestinationNode .prototype),
@@ -84,12 +83,30 @@ Object .assign (Object .setPrototypeOf (AudioDestination .prototype, X3DSoundDes
    },
    set_enabled__ ()
    {
-      X3DSoundDestinationNode .prototype .set_enabled__ .call (this);
+      if (this ._enabled .getValue () === this ._isActive .getValue ())
+         return;
 
       if (this ._enabled .getValue ())
+      {
+         const audioContext = this .getBrowser () .getAudioContext ();
+
+         this .mediaStreamDestination  = audioContext .createMediaStreamDestination ();
+         this .audioElement .srcObject = this .mediaStreamDestination .stream;
+
          this .audioElement .play () .catch (() => this .getBrowser () .startAudioElement (this .audioElement));
+      }
       else
-         this .audioElement .stop ();
+      {
+         this .audioElement .pause ();
+
+         for (const track of this .mediaStreamDestination .stream .getAudioTracks ())
+            track .stop ();
+
+         for (const track of this .mediaStreamDestination .stream .getVideoTracks ())
+            track .stop ();
+      }
+
+      X3DSoundDestinationNode .prototype .set_enabled__ .call (this);
    },
    set_mediaDeviceID__ ()
    {

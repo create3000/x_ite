@@ -76,9 +76,6 @@ Object .assign (Object .setPrototypeOf (X3DSoundDestinationNode .prototype, X3DS
 
       this .set_enabled__ ();
       this .set_gain__ ();
-      this .set_channelCount__ ();
-      this .set_channelCountMode__ ();
-      this .set_channelInterpretation__ ();
       this .set_children__ ();
    },
    getAudioSource ()
@@ -88,9 +85,17 @@ Object .assign (Object .setPrototypeOf (X3DSoundDestinationNode .prototype, X3DS
    set_enabled__ ()
    {
       if (this ._enabled .getValue ())
+      {
+         this .set_channelCount__ ();
+         this .set_channelCountMode__ ();
+         this .set_channelInterpretation__ ();
+
          this .gainNode .connect (this .getSoundDestination ());
+      }
       else
+      {
          this .gainNode .disconnect ();
+      }
 
       this ._isActive = this ._enabled;
    },
