@@ -67,19 +67,18 @@ Object .assign (Object .setPrototypeOf (MicrophoneSource .prototype, X3DSoundSou
       X3DSoundSourceNode .prototype .initialize .call (this);
 
       this ._mediaDeviceID .addInterest ("set_mediaDeviceID__", this);
-      this ._active        .addInterest ("set_active__",        this);
-
-      this .set_mediaDeviceID__ ();
    },
    set_mediaDeviceID__ ()
    {
+      this .set_stop ();
+
+      if (this ._isActive .getValue ())
+         this .set_start ();
+   },
+   set_start ()
+   {
       if (!navigator .mediaDevices)
          return;
-
-      if (this ._active .getValue ())
-         this .mediaStreamSource ?.disconnect (this .getAudioSource ());
-
-      this .mediaStreamSource = null;
 
       navigator .mediaDevices .getUserMedia ({
          audio:
@@ -93,8 +92,17 @@ Object .assign (Object .setPrototypeOf (MicrophoneSource .prototype, X3DSoundSou
 
          this .mediaStreamSource = audioContext .createMediaStreamSource (stream);
 
-         if (this ._active .getValue ())
-            this .set_active__ ();
+         if (this ._isActive .getValue ())
+         {
+            if (this ._isPaused .getValue ())
+               this .set_pause ();
+            else
+               this .set_resume ();
+         }
+         else
+         {
+            this .set_stop ();
+         }
       }).
       catch (error =>
       {
@@ -103,23 +111,51 @@ Object .assign (Object .setPrototypeOf (MicrophoneSource .prototype, X3DSoundSou
          console .error (error .message);
       });
    },
-   set_active__ ()
+   set_pause ()
    {
       if (!this .mediaStreamSource)
          return;
 
-      const active = this ._active .getValue ();
-
-      if (active)
-         this .mediaStreamSource .connect (this .getAudioSource ());
-      else
-         this .mediaStreamSource .disconnect (this .getAudioSource ());
+      this .mediaStreamSource .disconnect (this .getAudioSource ());
 
       for (const track of this .mediaStreamSource .mediaStream .getAudioTracks ())
-         track .enabled = active;
+         track .enabled = false;
 
       for (const track of this .mediaStreamSource .mediaStream .getVideoTracks ())
-         track .enabled = active;
+         track .enabled = false;
+   },
+   set_resume ()
+   {
+      if (!this .mediaStreamSource)
+         return;
+
+      this .mediaStreamSource .connect (this .getAudioSource ());
+
+      for (const track of this .mediaStreamSource .mediaStream .getAudioTracks ())
+         track .enabled = true;
+
+      for (const track of this .mediaStreamSource .mediaStream .getVideoTracks ())
+         track .enabled = true;
+   },
+   set_stop ()
+   {
+      if (!this .mediaStreamSource)
+         return;
+
+      try
+      {
+         this .mediaStreamSource .disconnect (this .getAudioSource ());
+      }
+      catch
+      { }
+
+      for (const track of this .mediaStreamSource .mediaStream .getAudioTracks ())
+         track .stop ();
+
+      for (const track of this .mediaStreamSource .mediaStream .getVideoTracks ())
+         track .stop ();
+
+      this .mediaStreamSource = null;
    },
 });
 
