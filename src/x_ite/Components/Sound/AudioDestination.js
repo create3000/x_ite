@@ -58,7 +58,6 @@ function AudioDestination (executionContext)
    this .addType (X3DConstants .AudioDestination);
 
    this .audioElement = new Audio ();
-   this .active       = false;
 }
 
 Object .assign (Object .setPrototypeOf (AudioDestination .prototype, X3DSoundDestinationNode .prototype),
@@ -83,7 +82,7 @@ Object .assign (Object .setPrototypeOf (AudioDestination .prototype, X3DSoundDes
    {
       const active = this ._enabled .getValue () && this .getLive () .getValue ();
 
-      if (this .active === active)
+      if (!!this .mediaStreamDestination === active)
          return;
 
       if (active)
@@ -107,8 +106,6 @@ Object .assign (Object .setPrototypeOf (AudioDestination .prototype, X3DSoundDes
 
          this .mediaStreamDestination = null;
       }
-
-      this .active = active;
 
       X3DSoundDestinationNode .prototype .set_enabled__ .call (this);
    },
