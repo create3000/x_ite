@@ -22,9 +22,17 @@ Object .assign ($,
    {
       return string [0] .toLowerCase () + string .slice (1);
    },
-   try (callback)
+   try (callback, logError = false)
    {
-      try { return callback () } catch { }
+      try
+      {
+         return callback ();
+      }
+      catch (error)
+      {
+         if (logError)
+            console .error (error .message);
+      }
    },
    enum (object, property, defaultValue)
    {

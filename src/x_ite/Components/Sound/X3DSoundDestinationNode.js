@@ -137,7 +137,7 @@ Object .assign (Object .setPrototypeOf (X3DSoundDestinationNode .prototype, X3DS
    set_children__ ()
    {
       for (const childNode of this .childNodes)
-         childNode .getAudioSource () .disconnect (this .gainNode);
+         $.try (() => childNode .getAudioSource () .disconnect (this .gainNode));
 
       this .childNodes .length = 0;
 
@@ -168,7 +168,7 @@ Object .assign (Object .setPrototypeOf (X3DSoundDestinationNode .prototype, X3DS
       }
 
       for (const childNode of this .childNodes)
-         childNode .getAudioSource () .connect (this .gainNode);
+         $.try (() => childNode .getAudioSource () .connect (this .gainNode), true);
    },
 });
 

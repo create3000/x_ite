@@ -163,25 +163,11 @@ Object .assign (Object .setPrototypeOf (X3DSoundProcessingNode .prototype, X3DCh
    },
    set_disconnect__ ()
    {
-      try
-      {
-         for (const childNode of this .childNodes)
-            childNode .getAudioSource () .disconnect (this .gainNode);
-      }
-      catch (error)
-      {
-         // console .log (error .message)
-      }
+      for (const childNode of this .childNodes)
+         $.try (() => childNode .getAudioSource () .disconnect (this .gainNode));
 
-      try
-      {
-         for (const childNode of this .childNodes)
-            childNode .getAudioSource () .disconnect (this .getSoundProcessor ());
-      }
-      catch (error)
-      {
-         // console .log (error .message)
-      }
+      for (const childNode of this .childNodes)
+         $.try (() => childNode .getAudioSource () .disconnect (this .getSoundProcessor ()));
    },
    set_active__ ()
    {
@@ -190,12 +176,12 @@ Object .assign (Object .setPrototypeOf (X3DSoundProcessingNode .prototype, X3DCh
       if (this ._active .getValue ())
       {
          for (const childNode of this .childNodes)
-            childNode .getAudioSource () .connect (this .getSoundProcessor ());
+            $.try (() => childNode .getAudioSource () .connect (this .getSoundProcessor ()), true);
       }
       else
       {
          for (const childNode of this .childNodes)
-            childNode .getAudioSource () .connect (this .gainNode);
+            $.try (() => childNode .getAudioSource () .connect (this .gainNode), true);
       }
    },
    set_start ()
