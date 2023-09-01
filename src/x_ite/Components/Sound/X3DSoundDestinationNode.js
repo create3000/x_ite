@@ -67,6 +67,8 @@ Object .assign (Object .setPrototypeOf (X3DSoundDestinationNode .prototype, X3DS
    {
       X3DSoundNode .prototype .initialize .call (this);
 
+      this .getLive () .addInterest ("set_enabled__", this);
+
       this ._enabled  .addInterest ("set_enabled__",  this);
       this ._gain     .addInterest ("set_gain__",     this);
       this ._children .addInterest ("set_children__", this);
@@ -81,7 +83,7 @@ Object .assign (Object .setPrototypeOf (X3DSoundDestinationNode .prototype, X3DS
    },
    set_enabled__ ()
    {
-      if (this ._enabled .getValue ())
+      if (this ._enabled .getValue () && this .getLive () .getValue ())
       {
          this ._channelCount          .addInterest ("set_channelCount__",          this);
          this ._channelCountMode      .addInterest ("set_channelCountMode__",      this);

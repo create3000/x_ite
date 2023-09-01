@@ -44,8 +44,12 @@ Object .assign ($,
 // function iife (target, key, descriptor)
 // {
 //    descriptor .value = descriptor .value ();
-
+//
 //    return descriptor;
+// }
+//
+// class C {
+//   @iffe fn (... args) { return function () { }; }
 // }
 
 Object .assign ($.fn,

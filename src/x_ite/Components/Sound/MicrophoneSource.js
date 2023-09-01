@@ -80,6 +80,8 @@ Object .assign (Object .setPrototypeOf (MicrophoneSource .prototype, X3DSoundSou
       if (!navigator .mediaDevices)
          return;
 
+      this .restore = false;
+
       navigator .mediaDevices .getUserMedia ({
          audio:
          {
@@ -94,7 +96,7 @@ Object .assign (Object .setPrototypeOf (MicrophoneSource .prototype, X3DSoundSou
 
          if (this ._isActive .getValue ())
          {
-            if (this ._isPaused .getValue ())
+            if (this ._isPaused .getValue () || !this .getLive () .getValue ())
                this .set_pause ();
             else
                this .set_resume ();
@@ -114,16 +116,26 @@ Object .assign (Object .setPrototypeOf (MicrophoneSource .prototype, X3DSoundSou
       if (!this .mediaStreamSource)
          return;
 
-      $.try (() => this .mediaStreamSource .disconnect (this .getAudioSource ()));
+      if (this .getLive () .getValue ())
+      {
+         $.try (() => this .mediaStreamSource .disconnect (this .getAudioSource ()));
 
-      for (const track of this .mediaStreamSource .mediaStream .getAudioTracks ())
-         track .enabled = false;
+         for (const track of this .mediaStreamSource .mediaStream .getAudioTracks ())
+            track .enabled = false;
 
-      for (const track of this .mediaStreamSource .mediaStream .getVideoTracks ())
-         track .enabled = false;
+         for (const track of this .mediaStreamSource .mediaStream .getVideoTracks ())
+            track .enabled = false;
+      }
+      else
+      {
+         this .set_stop (true);
+      }
    },
    set_resume ()
    {
+      if (this .restore)
+         this .set_start ();
+
       if (!this .mediaStreamSource)
          return;
 
@@ -135,7 +147,7 @@ Object .assign (Object .setPrototypeOf (MicrophoneSource .prototype, X3DSoundSou
       for (const track of this .mediaStreamSource .mediaStream .getVideoTracks ())
          track .enabled = true;
    },
-   set_stop ()
+   set_stop (restore = false)
    {
       if (!this .mediaStreamSource)
          return;
@@ -149,6 +161,7 @@ Object .assign (Object .setPrototypeOf (MicrophoneSource .prototype, X3DSoundSou
          track .stop ();
 
       this .mediaStreamSource = null;
+      this .restore           = restore;
    },
 });
 
