@@ -134,7 +134,7 @@ Object .assign (Object .setPrototypeOf (MicrophoneSource .prototype, X3DSoundSou
    set_resume ()
    {
       if (this .restore)
-         this .set_start ();
+         return this .set_start ();
 
       if (!this .mediaStreamSource)
          return;
