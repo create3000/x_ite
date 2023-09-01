@@ -83,7 +83,7 @@ Object .assign (Object .setPrototypeOf (WindPhysicsModel .prototype, X3DParticle
             const
                surfaceArea = emitterNode ._surfaceArea .getValue (),
                speed       = this .getRandomSpeed (emitterNode),
-               pressure    = Math .pow (10, 2 * Math .log (speed)) * 0.64615;
+               pressure    = 10 ** (2 * Math .log (speed)) * 0.64615;
 
             if (this ._direction .getValue () .equals (Vector3 .Zero))
                emitterNode .getRandomNormal (force);

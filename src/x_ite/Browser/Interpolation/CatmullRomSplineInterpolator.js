@@ -170,7 +170,7 @@ Object .assign (CatmullRomSplineInterpolator .prototype,
 
       return function (index0, index1, weight, keyValue)
       {
-         S .set (Math .pow (weight, 3), Math .pow (weight, 2), weight, 1);
+         S .set (weight ** 3, weight ** 2, weight, 1);
 
          // Taking dot product from SH and C;
 

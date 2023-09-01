@@ -130,8 +130,8 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
    },
    setVolume (volume, pan = 0.5)
    {
-      this .gainLeftNode  .gain .value = volume * (1 - Math .pow (pan, 2));
-      this .gainRightNode .gain .value = volume * (1 - Math .pow (1 - pan, 2));
+      this .gainLeftNode  .gain .value = volume * (1 - pan ** 2);
+      this .gainRightNode .gain .value = volume * (1 - (1 - pan) ** 2);
    },
    set_live__ ()
    {

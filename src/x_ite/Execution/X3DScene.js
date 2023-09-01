@@ -238,11 +238,11 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
          case "angularRate":
             return value * this .getUnits () .get ("angle") .conversionFactor;
          case "area":
-            return value * Math .pow (this .getUnits () .get ("length") .conversionFactor, 2);
+            return value * this .getUnits () .get ("length") .conversionFactor ** 2;
          case "speed":
             return value * this .getUnits () .get ("length") .conversionFactor;
          case "volume":
-            return value * Math .pow (this .getUnits () .get ("length") .conversionFactor, 3);
+            return value * this .getUnits () .get ("length") .conversionFactor ** 3;
       }
 
       return value;
@@ -266,11 +266,11 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
          case "angularRate":
             return value / this .getUnits () .get ("angle") .conversionFactor;
          case "area":
-            return value / Math .pow (this .getUnits () .get ("length") .conversionFactor, 2);
+            return value / this .getUnits () .get ("length") .conversionFactor ** 2;
          case "speed":
             return value / this .getUnits () .get ("length") .conversionFactor;
          case "volume":
-            return value / Math .pow (this .getUnits () .get ("length") .conversionFactor, 3);
+            return value / this .getUnits () .get ("length") .conversionFactor ** 3;
       }
 
       return value;
