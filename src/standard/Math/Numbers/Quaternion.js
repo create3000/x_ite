@@ -498,13 +498,13 @@ Object .assign (Quaternion .prototype,
          return this .assign (e .assign (exponent) .multRight (this .log ()) .exp ());
 
       if (this .isReal ())
-         return this .set (0, 0, 0, Math .pow (this .w, exponent));
+         return this .set (0, 0, 0, this .w ** exponent);
 
       const
          l     = this .magnitude (),
          theta = Math .acos (this .w / l),
          li    = this .imag .magnitude (),
-         ltoe  = Math .pow (l, exponent),
+         ltoe  = l ** exponent,
          et    = exponent * theta,
          scale = ltoe / li * Math .sin (et);
 

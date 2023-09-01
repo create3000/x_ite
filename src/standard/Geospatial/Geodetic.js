@@ -59,7 +59,7 @@ function Geodetic (spheroid, latitudeFirst, radians)
    this .degrees        = ! radians;
    this .a              = spheroid .getSemiMajorAxis ();
    this .c              = spheroid .getSemiMinorAxis ();
-   this .c2a2           = Math .pow (spheroid .getSemiMinorAxis () / this .a, 2);
+   this .c2a2           = (spheroid .getSemiMinorAxis () / this .a) ** 2;
    this .ecc2           = 1 - this .c2a2;
 }
 
@@ -94,7 +94,7 @@ Object .assign (Geodetic .prototype,
    {
       const
          slat  = Math .sin (latitude),
-         slat2 = Math .pow (slat, 2),
+         slat2 = slat ** 2,
          clat  = Math .cos (latitude),
          N     = this .a / Math .sqrt (1 - this .ecc2 * slat2),
          Nhl   = (N + elevation) * clat;
