@@ -52,7 +52,6 @@ import _            from "../../../locale/gettext.js";
 
 const
    _baseURL        = Symbol (),
-   _loadUrlObjects = Symbol (),
    _loadingDisplay = Symbol (),
    _loadingTotal   = Symbol (),
    _loadingObjects = Symbol (),
@@ -76,7 +75,6 @@ function X3DNetworkingContext ()
    this .addChildObjects (X3DConstants .outputOnly, "loadCount", new Fields .SFInt32 ());
 
    this [_baseURL]        = getBaseURI (this .getElement ());
-   this [_loadUrlObjects] = true;
    this [_loadingDisplay] = 0;
    this [_loadingTotal]   = 0;
    this [_loadingObjects] = new Set ();
@@ -104,14 +102,6 @@ Object .assign (X3DNetworkingContext .prototype,
          url  = new URL (value, base);
 
       this [_baseURL] = url .protocol .match (/^(?:data|blob):$/) ? base : url .href;
-   },
-   setLoadUrlObjects (value)
-   {
-      this [_loadUrlObjects] = value;
-   },
-   getLoadUrlObjects ()
-   {
-      return this [_loadUrlObjects];
    },
    getBrowserLoading ()
    {

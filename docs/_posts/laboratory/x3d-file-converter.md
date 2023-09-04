@@ -114,6 +114,7 @@ $(() =>
                url     = URL .createObjectURL (file);
 
             Browser .endUpdate ();
+            Browser .setBrowserOption ("LoadUrlObjects",   false);
             Browser .setBrowserOption ("PrimitiveQuality", "HIGH");
             Browser .setBrowserOption ("TextureQuality",   "HIGH");
 
