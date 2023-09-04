@@ -1176,7 +1176,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
       {
          generator .string += generator .Indent ();
          generator .string += '"';
-         generator .string += "#sourceText";
+         generator .string += "#sourceCode";
          generator .string += '"';
          generator .string += ':';
          generator .string += generator .TidySpace ();
