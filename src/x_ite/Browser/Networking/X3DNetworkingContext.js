@@ -51,13 +51,14 @@ import URLs         from "./URLs.js";
 import _            from "../../../locale/gettext.js";
 
 const
+   _baseURL        = Symbol (),
+   _loadUrlObjects = Symbol (),
    _loadingDisplay = Symbol (),
    _loadingTotal   = Symbol (),
    _loadingObjects = Symbol (),
    _loading        = Symbol (),
-   _baseURL        = Symbol (),
-   _defaultScene   = Symbol (),
-   _set_loadCount  = Symbol ();
+   _set_loadCount  = Symbol (),
+   _defaultScene   = Symbol ();
 
 function getBaseURI (element)
 {
@@ -74,11 +75,12 @@ function X3DNetworkingContext ()
 {
    this .addChildObjects (X3DConstants .outputOnly, "loadCount", new Fields .SFInt32 ());
 
+   this [_baseURL]        = getBaseURI (this .getElement ());
+   this [_loadUrlObjects] = true;
    this [_loadingDisplay] = 0;
    this [_loadingTotal]   = 0;
    this [_loadingObjects] = new Set ();
    this [_loading]        = false;
-   this [_baseURL]        = getBaseURI (this .getElement ());
 }
 
 Object .assign (X3DNetworkingContext .prototype,
@@ -103,18 +105,13 @@ Object .assign (X3DNetworkingContext .prototype,
 
       this [_baseURL] = url .protocol .match (/^(?:data|blob):$/) ? base : url .href;
    },
-   getDefaultScene ()
+   setLoadUrlObjects (value)
    {
-      // Inline node's empty scene.
-
-      this [_defaultScene] = this .createScene ();
-      this [_defaultScene] .setLive (true);
-
-      this .getDefaultScene = function () { return this [_defaultScene]; };
-
-      Object .defineProperty (this, "getDefaultScene", { enumerable: false });
-
-      return this [_defaultScene];
+      this [_loadUrlObjects] = value;
+   },
+   getLoadUrlObjects ()
+   {
+      return this [_loadUrlObjects];
    },
    getBrowserLoading ()
    {
@@ -221,6 +218,19 @@ Object .assign (X3DNetworkingContext .prototype,
       }
 
       this [_loadingDisplay] = loadingDisplay;
+   },
+   getDefaultScene ()
+   {
+      // Inline node's empty scene.
+
+      this [_defaultScene] = this .createScene ();
+      this [_defaultScene] .setLive (true);
+
+      this .getDefaultScene = function () { return this [_defaultScene]; };
+
+      Object .defineProperty (this, "getDefaultScene", { enumerable: false });
+
+      return this [_defaultScene];
    },
 });
 

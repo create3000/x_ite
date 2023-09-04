@@ -168,6 +168,14 @@ Object .assign (X3DUrlObject .prototype,
             }
          }
 
+         const browser = this .getBrowser ();
+
+         if (!browser .getLoadUrlObjects () && this .getExecutionContext () !== browser .getPrivateScene () && !this .isExternProto)
+         {
+            resolve ();
+            return;
+         }
+
          if (!this ._load .getValue ())
          {
             reject ();
