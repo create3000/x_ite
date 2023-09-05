@@ -72,7 +72,7 @@ See Walk Viewer to learn how movement is controlled.
 
 ## Plane Viewer
 
-The Plane Viewer is useful especially for 2D scenes and in conjunction with the [OrthoViewpoint](../components/navigation/orthoviewpoint).
+The Plane Viewer is useful especially for 2D scenes and in conjunction with the [OrthoViewpoint](../components/navigation/orthoviewpoint) node.
 
 ### Viewer Controls
 
