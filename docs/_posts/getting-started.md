@@ -570,7 +570,7 @@ If you are a developer or you always wanna be up to date:
 
 ```html
 <script src="https://create3000.github.io/code/x_ite/latest/x_ite.min.js"></script>
-<!-- or as ES module -->
+<!-- or as ES module for use in scripts -->
 <script type="module">
 import X3D from "https://create3000.github.io/code/x_ite/latest/x_ite.min.mjs";
 </script>
@@ -589,7 +589,7 @@ You can always replace »latest« by the version number you prefer.
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/x_ite@latest/dist/x_ite.min.js"></script>
-<!-- or as ES module -->
+<!-- or as ES module for use in scripts -->
 <script type="module">
 import X3D from "https://cdn.jsdelivr.net/npm/x_ite@latest/dist/x_ite.min.mjs";
 </script>
@@ -601,9 +601,9 @@ If you are in production and everything is working well, then use a fixed versio
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/x_ite@{{ site.version }}/dist/x_ite.min.js"></script>
-<!-- or as ES module -->
+<!-- or as ES module for use in scripts -->
 <script type="module">
-import X3D from "https://cdn.jsdelivr.net/npm/x_ite@{{ site.version }}/dist/x_ite.min.js";
+import X3D from "https://cdn.jsdelivr.net/npm/x_ite@{{ site.version }}/dist/x_ite.min.mjs";
 </script>
 ```
 
