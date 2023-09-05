@@ -58,7 +58,8 @@ The other viewer, called the Walk Viewer, lets you navigate through a scene by m
 - **Tilt:** scroll your mouse wheel to look up and down without moving.
 - **Free Tilt:** You can enable free tilt by hold down the *Ctrl* or *Command*-key and then drag to look up and down or from side to side without moving.
 
-**Note:** Gravity is always enabled when in Walk Viewer mode. Put a floor under the viewer to prevent falling down.
+>**Note:** Gravity is always enabled when in Walk Viewer mode. Put a floor under the viewer to prevent falling down.
+{: .prompt-info }
 
 ## Fly Viewer
 
@@ -66,11 +67,12 @@ The Fly Viewer work the same way like the Walk Viewer except gravity is always t
 
 See Walk Viewer to learn how movement is controlled.
 
-**Note:** The author of the X3D world determines whether collision with objects is enabled.
+>**Note:** The author of the X3D world determines whether collision with objects is enabled.
+{: .prompt-info }
 
 ## Plane Viewer
 
-The Plane Viewer is useful especially for 2D scenes and in conjunction with the OrthoCamera.
+The Plane Viewer is useful especially for 2D scenes and in conjunction with the [OrthoViewpoint](../components/Navigation/OrthoViewpoint).
 
 ### Viewer Controls
 
