@@ -79,7 +79,7 @@ The Plane Viewer is useful especially for 2D scenes and in conjunction with the 
 - **Pan:** Drag while holding down the middle mouse button (or scroll wheel) to move the scene. Alternatively hold down the *Alt* or *Option*-key and drag to move the scene.
 - **Zoom:** Scroll the mouse wheel to move closer or farther away.
 
-An X3D author can enable the Plane Viewer by setting the *type* field of the [NavigationInfo](../components/navigation/navigationinfo) node to "PLANE_create3000.github.io".
+An X3D author can enable the Plane Viewer by setting the *type* field of the [NavigationInfo](../components/navigation/navigationinfo) node to "PLANE_create3000.github.io" or "PLANE".
 
 ## None Viewer
 
