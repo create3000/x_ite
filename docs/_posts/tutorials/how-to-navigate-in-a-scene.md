@@ -39,7 +39,7 @@ As a result, it seems like the Examine Viewer treats all the objects in your sce
 ### Viewer Controls
 
 - **Rotate:** Drag while holding down the left mouse button to rotate the scene.
-- **Pan:** Drag while holding down the middle mouse button (or scroll wheel) to move the scene. Alternatively hold down the *Option* or *Alt*-key and drag to move the scene.
+- **Pan:** Drag while holding down the middle mouse button (or scroll wheel) to move the scene. Alternatively hold down the *Alt* or *Option*-key and drag to move the scene.
 - **Zoom:** Scroll the mouse wheel to move closer or farther away.
 
 ## Walk Viewer
@@ -54,9 +54,9 @@ The other viewer, called the Walk Viewer, lets you navigate through a scene by m
 ### Viewer Controls
 
 - **Go:** is the default Movement control. Click in the scene and hold down the left mouse button and then drag the pointer in the scene window to move in the world. Drag up to go forward, drag down to go backward, drag left to turn left, and drag right to turn right. Go turns your view in the direction of travel. Hold down *Shift*-key to go faster.
-- **Slide:** click and hold down the middle mouse button (or scroll wheel) and then drag to jump straight up or down, or to slide right or left. Slide does not turn your view in the direction of travel. Hold down the *Shift*-key to slide faster. Alternatively hold down the *Option* or *Alt*-key and drag to slide.
+- **Slide:** click and hold down the middle mouse button (or scroll wheel) and then drag to jump straight up or down, or to slide right or left. Slide does not turn your view in the direction of travel. Hold down the *Shift*-key to slide faster. Alternatively hold down the *Alt* or *Option*-key and drag to slide.
 - **Tilt:** scroll your mouse wheel to look up and down without moving.
-- **Free Tilt:** You can enable free tilt by hold down the *Command* or *Ctrl*-key and then drag to look up and down or from side to side without moving.
+- **Free Tilt:** You can enable free tilt by hold down the *Ctrl* or *Command*-key and then drag to look up and down or from side to side without moving.
 
 **Note:** Gravity is always enabled when in Walk Viewer mode. Put a floor under the viewer to prevent falling down.
 
@@ -74,7 +74,7 @@ The Plane Viewer is useful especially for 2D scenes and in conjunction with the 
 
 ### Viewer Controls
 
-- **Pan:** Drag while holding down the middle mouse button (or scroll wheel) to move the scene. Alternatively hold down the *Option* or *Alt*-key and drag to move the scene.
+- **Pan:** Drag while holding down the middle mouse button (or scroll wheel) to move the scene. Alternatively hold down the *Alt* or *Option*-key and drag to move the scene.
 - **Zoom:** Scroll the mouse wheel to move closer or farther away.
 
 An X3D author can enable the Plane Viewer by setting the *type* field of the NavigationInfo node to "PLANE_create3000.github.io".
