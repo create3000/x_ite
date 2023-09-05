@@ -171,7 +171,7 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
             this .getBrowser () .setCursor ("MOVE");
             this .addCollision ();
 
-            if (this .getBrowser () .getControlKey () || this .lookAround)
+            if (this .getBrowser () .getControlKey () || this .getBrowser () .getCommandKey () || this .lookAround)
             {
                // Look around.
 
@@ -258,7 +258,7 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
       {
          case 0:
          {
-            if (browser .getControlKey () || this .lookAround)
+            if (browser .getControlKey () || browser .getCommandKey () || this .lookAround)
             {
                // Stop event propagation.
                event .preventDefault ();

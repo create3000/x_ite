@@ -53,6 +53,7 @@ Textures, Lights, and Environment
 - [Adding Sound](adding-sound)
 - [Controlling the Viewpoint](controlling-the-viewpoint)
 - [Controlling Navigation](controlling-navigation)
+- [How to Navigate in a Scene](how-to-navigate-in-a-scene)
 - [Sensing the Viewer](sensing-the-viewer)
 
 Scripts and Prototypes

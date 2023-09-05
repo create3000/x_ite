@@ -144,6 +144,7 @@ function X3DCoreContext (element)
    this .addChildObjects (X3DConstants .outputOnly, "controlKey", new Fields .SFBool (),
                           X3DConstants .outputOnly, "shiftKey",   new Fields .SFBool (),
                           X3DConstants .outputOnly, "altKey",     new Fields .SFBool (),
+                          X3DConstants .outputOnly, "commandKey", new Fields .SFBool (),
                           X3DConstants .outputOnly, "altGrKey",   new Fields .SFBool ());
 }
 
@@ -479,14 +480,16 @@ Object .assign (X3DCoreContext .prototype,
    {
       return this ._altKey .getValue ();
    },
+   getCommandKey ()
+   {
+      return this ._commandKey .getValue ();
+   },
    getAltGrKey ()
    {
       return this ._altGrKey .getValue ();
    },
    [_keydown] (event)
    {
-      //console .log (event .keyCode);
-
       switch (event .keyCode)
       {
          case 16: // Shift
@@ -591,6 +594,11 @@ Object .assign (X3DCoreContext .prototype,
                }
             }
 
+            break;
+         }
+         case 91: // Command
+         {
+            this ._commandKey = true;
             break;
          }
          case 225: // Alt Gr
@@ -731,6 +739,11 @@ Object .assign (X3DCoreContext .prototype,
          case 18: // Alt
          {
             this ._altKey = false;
+            break;
+         }
+         case 91: // Command
+         {
+            this ._commandKey = false;
             break;
          }
          case 225: // Alt Gr
