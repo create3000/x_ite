@@ -490,7 +490,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
                   }
                   catch (error)
                   {
-                     console .log (error .message);
+                     console .warn (error .message);
                      return true;
                   }
                }
