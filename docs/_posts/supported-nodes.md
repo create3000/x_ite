@@ -316,7 +316,13 @@ X_ITE supports a limited set of nodes defined by the X3D specification. There ar
 
 ### Sound
 
+- [Analyser](components/sound/analyser)
 - [AudioClip](components/sound/audioclip)
+- [AudioDestination](components/sound/audiodestination)
+- [Gain](components/sound/gain)
+- [MicrophoneSource](components/sound/microphonesource)
+- [OscillatorSource](components/sound/oscillatorsource)
+- [PeriodicWave](components/sound/periodicwave)
 - [Sound](components/sound/sound)
 
 ### Text

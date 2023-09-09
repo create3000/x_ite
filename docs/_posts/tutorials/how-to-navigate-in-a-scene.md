@@ -42,6 +42,8 @@ As a result, it seems like the Examine Viewer treats all the objects in your sce
 - **Pan:** Drag while holding down the middle mouse button (or scroll wheel) to move the scene. Alternatively hold down the *Alt* or *Option*-key and drag to move the scene.
 - **Zoom:** Scroll the mouse wheel to move closer or farther away.
 
+When using the Examine Viewer you will notice, that the horizon is always horizontal. You can disable this behavior in the context menu under "Straighten Horizon", when disabled there are no such constrains and navigation feels more freely. There is also a [browser option](../reference/browser-services#string-getbrowseroption-string-name) "StraightenHorizon" which can be read and written.
+
 ## Walk Viewer
 
 The other viewer, called the Walk Viewer, lets you navigate through a scene by moving the camera using a walking or driving metaphor. For example, use the Walk Viewer to look at architectural models from the inside, or to walk between buildings or across landscapes.
