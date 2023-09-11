@@ -5,7 +5,7 @@ export interface X3D {
    createBrowser(): HTMLElement;
    getBrowser(via?: string | HTMLElement): X3DBrowser;
    noConflict(): X3D;
-   X3DConstants: X3DConstant;
+   X3DConstants: X3DConstants;
    SFBool(arg: unknown): boolean;
    // NB. in all of the following `typeof Class` is an expression that
    // extracts the type of the constructor for Class.
@@ -270,7 +270,7 @@ export interface X3DExternProtoDeclaration {
    readonly fields: FieldDefinitionArray;
    readonly urls: X3DArrayField<string>;
    isExternProto: false;
-   readonly loadState: number; // A Load State Constant from X3DConstant
+   readonly loadState: number; // A Load State Constant from X3DConstants
    newInstance(): SFNode;
    loadNow(): Promise<void>;
    toVRMLString(options?: VRMLOptions): string;
@@ -293,7 +293,7 @@ declare class X3DField {
    assign(other: X3DField): void;
    setValue(value: unknown): void;
    getValue(): unknown;
-   getType(): number; // one of the Field Type Constants from X3DConstant
+   getType(): number; // one of the Field Type Constants from X3DConstants
    getAccessType(): number; // one of the Access Type Constants
    isInitializable(): boolean;
    isInput(): boolean;
@@ -458,7 +458,7 @@ export interface SFNode extends X3DField {
    getField(name: string): X3DField;
    getNodeName(): string;
    getNodeDisplayName(): string;
-   getNodeType(): number[]; // Array of Node Type constants from X3DConstant
+   getNodeType(): number[]; // Array of Node Type constants from X3DConstants
    getNodeTypeName(): string;
    getNodeUserData(key: unknown): unknown;
    removeFieldCallback(key: unknown): void;
@@ -1761,7 +1761,7 @@ export class X3DArrayField<T> extends X3DField {
 }
 
 // would be better to make these enums...
-export interface X3DConstant {
+export interface X3DConstants {
    // Browser Event Constants
    CONNECTION_ERROR: 0;
    BROWSER_EVENT: 1;
