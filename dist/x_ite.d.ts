@@ -350,7 +350,7 @@ export class SFColorRGBA extends X3DField {
    getHSVA(result: number[]): number[];
    setHSVA(h: number, s: number, v: number): void;
    lerp(destination: SFColor, t: number): SFColorRGBA;
-   static typeName: 'SFColor';
+   static typeName: 'SFColorRGBA';
 }
 
 export class SFDouble extends X3DField {
