@@ -1,1 +1,3 @@
-import X3D from "../dist/x_ite.mjs"
+import X3D from "../"
+
+const browser = X3D .getBrowser ()
