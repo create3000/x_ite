@@ -2,8 +2,8 @@ declare const X3D: X3D;
 export default X3D;
 export interface X3D {
    (callback?: () => void, fallback?: (error: Error) => void): Promise<void>;
-   createBrowser(): HTMLElement;
-   getBrowser(via?: string | HTMLElement): X3DBrowser;
+   createBrowser(): X3DCanvasElement;
+   getBrowser(via?: string | X3DCanvasElement): X3DBrowser;
    noConflict(): X3D;
    X3DConstants: X3DConstants;
    SFBool(arg: unknown): boolean;
@@ -59,6 +59,10 @@ export interface X3D {
    MFVec3f: typeof X3DArrayField<SFVec3>;
    MFVec4d: typeof X3DArrayField<SFVec4>;
    MFVec4f: typeof X3DArrayField<SFVec4>;
+}
+
+export interface X3DCanvasElement extends HTMLElement {
+   readonly browser: string;
 }
 
 type JSONValue =
