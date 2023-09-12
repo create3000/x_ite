@@ -34,15 +34,7 @@ If you are a developer or you always wanna be up to date:
 $ npm install x_ite
 ```
 
-It can be used in [Electron](https://www.electronjs.org) apps in the **renderer process** in a way like this:
-
-```js
-const X3D = require ("x_ite");
-// or as ES module
-import X3D from "x_ite";
-```
-
-Make sure that `contextIsolation` is set to `false` when creating a BrowserWindow instance.
+Maybe you are curious now [how to use X_ITE with Electron](https://create3000.github.io/x_ite/how-to-use-x-ite-with-electron)?
 
 ## Funding
 
