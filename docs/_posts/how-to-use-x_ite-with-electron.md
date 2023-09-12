@@ -57,7 +57,7 @@ window .addEventListener ("DOMContentLoaded", () =>
 
 ### window.html
 
-This is the HTML page, which will be displayed in you browser window.
+This is the HTML page, which will be displayed in your browser window.
 
 ```html
 <!DOCTYPE html>
