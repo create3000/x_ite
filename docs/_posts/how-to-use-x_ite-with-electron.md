@@ -1,5 +1,5 @@
 ---
-title: How To Use X_ITE With Electron?
+title: How to Use X_ITE With Electron
 date: 2023-09-12
 nav: main
 categories: []

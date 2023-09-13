@@ -18,9 +18,9 @@
       url: /custom-shaders
     - title: "Setup a localhost Server"
       url: /setup-a-localhost-server
-    - title: "How To Configure Your Web Server"
+    - title: "How to Configure Your Web Server"
       url: /how-to-configure-your-web-server
-    - title: "How To Use X_ITE With Electron?"
+    - title: "How to Use X_ITE With Electron"
       url: /how-to-use-x-ite-with-electron
     - title: "Glossary"
       url: /glossary
