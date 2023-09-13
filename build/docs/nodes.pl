@@ -234,6 +234,8 @@ sub spelling {
    $string =~ s/gemoetry/geometry/sgo;
    $string =~ s/spedification/specification/sgo;
    $string =~ s/browsesr/browser/sgo;
+   $string =~ s/Hanim/HAnim/sgo;
+   $string =~ s/abitrary/arbitrary/sgo;
 
    $string =~ s|(https://en.wikipedia.org/wiki/Kilogram)|Kilogram $1|sgo;
 

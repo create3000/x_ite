@@ -292,7 +292,7 @@ Single Normal node utilized by indexed mesh definitions for skin. The *skinNorma
 
 #### Warnings
 
-- Index values for HanimHumanoid skin IndexedFaceSet, skinCoord and *skinNormal* nodes must all be consistently defined together with HAnimJoint HAnimSegment and HAnimDisplacer nodes for proper skin animation.
+- Index values for HAnimHumanoid skin IndexedFaceSet, skinCoord and *skinNormal* nodes must all be consistently defined together with HAnimJoint HAnimSegment and HAnimDisplacer nodes for proper skin animation.
 - Top-level Normal node must include `containerField='skinNormal'` for proper validation and operation.
 - (X3D version 4.0 draft) requires X3D `profile='Full'` or else include `<component name='HAnim' level='2'/>`
 - For X3D3 HAnim1, spelling of component name is 'H-Anim' (including hyphen).
@@ -307,10 +307,10 @@ Coordinate node utilized by indexed mesh definitions for skin. The *skinCoord* f
 
 #### Warnings
 
-- Index values for HanimHumanoid skin IndexedFaceSet, *skinCoord* and skinNormal nodes must all be consistently defined together with HAnimJoint HAnimSegment and HAnimDisplacer nodes for proper skin animation.
+- Index values for HAnimHumanoid skin IndexedFaceSet, *skinCoord* and skinNormal nodes must all be consistently defined together with HAnimJoint HAnimSegment and HAnimDisplacer nodes for proper skin animation.
 - Top-level Coordinate or CoordinateDouble node must include `containerField='skinCoord'` for proper validation and operation.
 - (X3D version 4.0 draft) requires X3D `profile='Full'` or else include `<component name='HAnim' level='2'/>`
-- For X3D3 HAnim1, spelling of component name is 'H-Anim' (including hyphen)
+- For X3D3 HAnim1, previous spelling of component name was 'H-Anim' (including hyphen)
 
 ### MFNode [in, out] **skin** [ ] <small>[X3DChildNode]</small>
 
@@ -322,10 +322,10 @@ List of one or more indexed mesh definitions (such as IndexedFaceSet) that utili
 
 #### Warnings
 
-- Index values for HanimHumanoid *skin* IndexedFaceSet, skinCoord and skinNormal nodes must all be consistently defined together with HAnimJoint HAnimSegment and HAnimDisplacer nodes for proper *skin* animation.
+- Index values for HAnimHumanoid *skin* IndexedFaceSet, skinCoord and skinNormal nodes must all be consistently defined together with HAnimJoint HAnimSegment and HAnimDisplacer nodes for proper *skin* animation.
 - Top-level node must include `containerField='skin'` for proper validation and operation.
 - (X3D version 4.0 draft) requires X3D `profile='Full'` or else include `<component name='HAnim' level='2'/>`
-- For X3D3 HAnim1, spelling of component name is 'H-Anim' (including hyphen)
+- For X3D3 HAnim1, previous spelling of component name was 'H-Anim' (including hyphen)
 
 ## Advisories
 
@@ -340,7 +340,7 @@ List of one or more indexed mesh definitions (such as IndexedFaceSet) that utili
 ### Warnings
 
 - Requires X3D `profile='Full'` or else include `<component name='HAnim' level='1'/>`
-- For X3D3 HAnim1, spelling of component name is 'H-Anim' (including hyphen)
+- For X3D3 HAnim1, previous spelling of component name was 'H-Anim' (including hyphen)
 
 ## Example
 

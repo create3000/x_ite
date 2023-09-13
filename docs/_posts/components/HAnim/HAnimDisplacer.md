@@ -99,9 +99,9 @@ The weigh factor has typical range [0,1] and defines the scale factor applied to
 ### Warnings
 
 - Allowed name suffixes include _feature, _action and _config.
-- Index values for HanimHumanoid skin IndexedFaceSet, skinCoord and skinNormal nodes must all be consistently defined together with HAnimJoint HAnimSegment and HAnimDisplacer nodes for proper skin animation.
+- Index values for HAnimHumanoid skin IndexedFaceSet, skinCoord and skinNormal nodes must all be consistently defined together with HAnimJoint HAnimSegment and HAnimDisplacer nodes for proper skin animation.
 - Requires X3D `profile='Full'` or else include `<component name='HAnim' level='1'/>`
-- For X3D3 HAnim1, spelling of component name is 'H-Anim' (including hyphen).
+- For X3D3 HAnim1, previous spelling of component name was 'H-Anim' (including hyphen).
 
 ## See Also
 

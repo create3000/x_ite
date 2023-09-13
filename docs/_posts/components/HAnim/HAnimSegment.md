@@ -50,11 +50,12 @@ Unique *name* attribute must be defined so that HAnimSegment node can be identif
 
 #### Hints
 
-- For abitrary humanoids, HAnimSegment *name* can describe geometry between parent HAnimJoint and sibling HAnimJoint nodes (for example LeftHip_to_LeftKnee).
+- For arbitrary humanoids, HAnimSegment *name* can describe geometry between parent HAnimJoint and sibling HAnimJoint nodes (for example LeftHip_to_LeftKnee).
 - [HAnim Specification part 1, Humanoid Joint-Segment Hierarchy](https://www.web3d.org/documents/specifications/19774/V2.0/Architecture/concepts.html#Hierarchy){:target="_blank"}
 - Well-defined names can simplify design and debugging through improved author understanding.
 - [X3D Scene Authoring Hints, Naming Conventions](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#NamingConventions){:target="_blank"}
 - [HAnim2 Names HAnim1 Alias Tables](https://www.web3d.org/x3d/content/examples/HumanoidAnimation/HAnim2NameHAnim1AliasTables.txt){:target="_blank"}
+- Candidate names found in the HAnim Specification are sacrum, pelvis, l_thigh, l_calf, l_talus, l_navicular, l_cuneiform_1, l_metatarsal_1, l_tarsal_proximal_phalanx_1, l_tarsal_distal_phalanx_1, l_cuneiform_2, l_metatarsal_2, l_tarsal_proximal_phalanx_2, l_tarsal_middle_phalanx_2, l_tarsal_distal_phalanx_2, l_cuneiform_3, l_metatarsal_3, l_tarsal_proximal_phalanx_3, l_tarsal_middle_phalanx_3, l_tarsal_distal_phalanx_3, l_calcaneus, l_cuboid, l_metatarsal_4, l_tarsal_proximal_phalanx_4, l_tarsal_middle_phalanx_4, l_tarsal_distal_phalanx_4, l_metatarsal_5, l_tarsal_proximal_phalanx_5, l_tarsal_middle_phalanx_5, l_tarsal_distal_phalanx_5, r_thigh, r_calf, r_talus, r_navicular, r_cuneiform_1, r_metatarsal_1, r_tarsal_proximal_phalanx_1, r_tarsal_distal_phalanx_1, r_cuneiform_2, r_metatarsal_2, r_tarsal_proximal_phalanx_2, r_tarsal_middle_phalanx_2, r_tarsal_distal_phalanx_2, r_cuneiform_3, r_metatarsal_3, r_tarsal_proximal_phalanx_3, r_tarsal_middle_phalanx_3, r_tarsal_distal_phalanx_3, r_calcaneus, r_cuboid, r_metatarsal_4, r_tarsal_proximal_phalanx_4, r_tarsal_middle_phalanx_4, r_tarsal_distal_phalanx_4, r_metatarsal_5, r_tarsal_proximal_phalanx_5, r_tarsal_middle_phalanx_5, r_tarsal_distal_phalanx_5, l5, l4, l3, l2, l1, t12, t11, t10, t9, t8, t7, t6, t5, t4, t3, t2, t1, c7, c6, c5, c4, c3, c2, c1, skull, l_eyelid, r_eyelid, l_eyeball, r_eyeball, l_eyebrow, r_eyebrow, jaw, l_clavicle, l_scapula, l_upperarm, l_forearm, l_carpal, l_trapezium, l_metacarpal_1, l_carpal_proximal_phalanx_1, l_carpal_distal_phalanx_1, l_trapezoid, l_metacarpal_2, l_carpal_proximal_phalanx_2, l_carpal_middle_phalanx_2, l_carpal_distal_phalanx_2, l_capitate, l_metacarpal_3, l_carpal_proximal_phalanx_3, l_carpal_middle_phalanx_3, l_carpal_distal_phalanx_3, l_hamate, l_metacarpal_4, l_carpal_proximal_phalanx_4, l_carpal_middle_phalanx_4, l_carpal_distal_phalanx_4, l_metacarpal_5, l_carpal_proximal_phalanx_5, l_carpal_middle_phalanx_5, l_carpal_distal_phalanx_5, r_clavicle, r_scapula, r_upperarm, r_forearm, r_carpal, r_trapezium, r_metacarpal_1, r_carpal_proximal_phalanx_1, r_carpal_distal_phalanx_1, r_trapezoid, r_metacarpal_2, r_carpal_proximal_phalanx_2, r_carpal_middle_phalanx_2, r_carpal_distal_phalanx_2, r_capitate, r_metacarpal_3, r_carpal_proximal_phalanx_3, r_carpal_middle_phalanx_3, r_carpal_distal_phalanx_3, r_hamate, r_metacarpal_4, r_carpal_proximal_phalanx_4, r_carpal_middle_phalanx_4, r_carpal_distal_phalanx_4, r_metacarpal_5, r_carpal_proximal_phalanx_5, r_carpal_middle_phalanx_5, r_carpal_distal_phalanx_5
 
 #### Warnings
 
@@ -84,7 +85,7 @@ The *displacers* field stores HAnimDisplacer objects for a particular HAnimSegme
 
 #### Warning
 
-- Index values for HanimHumanoid skin IndexedFaceSet, skinCoord and skinNormal nodes must all be consistently defined together with HAnimJoint HAnimSegment and HAnimDisplacer nodes for proper skin animation.
+- Index values for HAnimHumanoid skin IndexedFaceSet, skinCoord and skinNormal nodes must all be consistently defined together with HAnimJoint HAnimSegment and HAnimDisplacer nodes for proper skin animation.
 
 ### SFNode [in, out] **coord** NULL <small>[X3DCoordinateNode]</small>
 
@@ -92,7 +93,7 @@ The *coord* field is used for HAnimSegment objects that have deformable meshes a
 
 #### Warning
 
-- Index values for HanimHumanoid skin IndexedFaceSet, skinCoord and skinNormal nodes must all be consistently defined together with HAnimJoint HAnimSegment and HAnimDisplacer nodes for proper skin animation.
+- Index values for HAnimHumanoid skin IndexedFaceSet, skinCoord and skinNormal nodes must all be consistently defined together with HAnimJoint HAnimSegment and HAnimDisplacer nodes for proper skin animation.
 
 ### SFBool [in, out] **visible** TRUE
 
@@ -164,7 +165,7 @@ Grouping nodes contain an ordered list of *children* nodes.
 ### Warnings
 
 - Requires X3D `profile='Full'` or else include `<component name='HAnim' level='1'/>`
-- For X3D3 HAnim1, spelling of component name is 'H-Anim' (including hyphen).
+- For X3D3 HAnim1, previous spelling of component name was 'H-Anim' (including hyphen).
 - The number of contained \<HAnimSegment USE='*' `containerField='segments'/>` nodes at top level of HAnimHumanoid needs to match the number of corresponding HAnimJoint node instances found within the preceding skeleton hierarchy.
 
 ## See Also

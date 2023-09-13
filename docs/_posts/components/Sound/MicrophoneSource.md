@@ -140,6 +140,10 @@ Current elapsed time since AudioClip activated/running, cumulative in seconds, a
 
 - Multiple security and privacy condiderations need to be observed.
 
+## Example
+
+<x3d-canvas src="https://create3000.github.io/media/examples/Sound/MicrophoneSource/MicrophoneSource.x3d" update="auto"></x3d-canvas>
+
 ## See Also
 
 - [X3D Specification of MicrophoneSource node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#MicrophoneSource){:target="_blank"}
