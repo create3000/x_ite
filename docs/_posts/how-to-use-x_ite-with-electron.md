@@ -9,7 +9,15 @@ Embarking on your journey into [Electron](https://www.electronjs.org/docs/latest
 
 ## What Files Are Needed?
 
-To get started, there are at least 3 files needed to start an Electron window.
+To get started, there are at least 4 files needed to open an Electron window:
+
+* app-folder
+  * main.js
+  * window.html
+  * window.js
+  * application.js
+
+Let us now look at the individual files.
 
 ### main.js
 
@@ -42,19 +50,6 @@ async function main ()
 main ();
 ```
 
-### window.js
-
-A small wrapper to load application.js.
-
-```js
-"use strict";
-
-window .addEventListener ("DOMContentLoaded", () =>
-{
-   require ("./application");
-});
-```
-
 ### window.html
 
 This is the HTML page, which will be displayed in your browser window.
@@ -69,12 +64,25 @@ This is the HTML page, which will be displayed in your browser window.
 </html>
 ```
 
+### window.js
+
+A small wrapper to load application.js.
+
+```js
+"use strict";
+
+window .addEventListener ("DOMContentLoaded", () =>
+{
+   require ("./application");
+});
+```
+
 ### application.js
 
 Your browser window environment, where you can do the magic stuff to bring you app alive.
 
 ```js
-"use strict"
+"use strict";
 
 const X3D = require ("x_ite");
 
