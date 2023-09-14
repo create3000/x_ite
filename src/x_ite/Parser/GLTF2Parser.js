@@ -735,9 +735,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    },
    textureImageObject (texture)
    {
-      const images = [ ];
-
-      const EXT_texture_webp = texture .extensions ?.EXT_texture_webp;
+      const
+         images           = [ ],
+         EXT_texture_webp = texture .extensions ?.EXT_texture_webp;
 
       if (EXT_texture_webp)
          images .push (this .images [EXT_texture_webp .source]);
