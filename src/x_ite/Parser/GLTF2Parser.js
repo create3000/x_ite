@@ -703,9 +703,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       if (!(texture instanceof Object))
          return;
 
-      const image = this .textureImageObject (texture .source);
+      const images = this .textureImageObject (texture .source);
 
-      if (!image)
+      if (!images .length)
          return null;
 
       if (texture .textureNode)
@@ -714,7 +714,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       const
          scene       = this .getExecutionContext (),
          textureNode = scene .createNode ("ImageTexture", false),
-         name        = this .sanitizeName (texture .name || image .name);
+         name        = this .sanitizeName (texture .name || images [0] .name);
 
       if (name)
       {
@@ -722,7 +722,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          scene .addExportedNode (scene .getUniqueExportName (name), textureNode);
       }
 
-      textureNode ._url = [image .uri];
+      textureNode ._url = images .map (image => image .uri);
 
       const sampler = this .samplers [texture .sampler];
 
@@ -735,12 +735,16 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    },
    textureImageObject (texture)
    {
+      const images = [ ];
+
       const EXT_texture_webp = texture .extensions ?.EXT_texture_webp;
 
       if (EXT_texture_webp)
-         return this .images [EXT_texture_webp .source];
+         images .push (this .images [EXT_texture_webp .source]);
 
-      return this .images [texture .source];
+      images .push (this .images [texture .source]);
+
+      return images .filter (image => image);
    },
    materialsArray (materials)
    {
