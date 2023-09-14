@@ -108,6 +108,7 @@ const X_ITE_EXAMPLES = [
    { component: "Shape", test: "Material" },
    { component: "Shape", test: "TwoSidedMaterial" },
    { component: "Sound", test: "AudioClip" },
+   { component: "Sound", test: "MicrophoneSource" },
    { component: "Text", test: "FontStyle" },
    { component: "Text", test: "Text" },
    { component: "TextureProjector", test: "TextureProjector" },

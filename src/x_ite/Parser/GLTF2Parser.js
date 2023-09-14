@@ -703,7 +703,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       if (!(texture instanceof Object))
          return;
 
-      const image = this .images [texture .source];
+      const image = this .textureImageObject (texture .source);
 
       if (!image)
          return null;
@@ -732,6 +732,15 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       textureNode .setup ();
 
       return texture .textureNode = textureNode;
+   },
+   textureImageObject (texture)
+   {
+      const EXT_texture_webp = texture .extensions ?.EXT_texture_webp;
+
+      if (EXT_texture_webp)
+         return this .images [EXT_texture_webp .source];
+
+      return this .images [texture .source];
    },
    materialsArray (materials)
    {
