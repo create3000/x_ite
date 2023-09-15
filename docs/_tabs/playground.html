@@ -186,6 +186,8 @@ $(function ()
       {
          const Browser = X3D .getBrowser ();
 
+         Browser .endUpdate ();
+
          Browser .baseURL = url;
 
          await Browser .loadURL (new X3D .MFString (url)) .catch (Function .prototype);
@@ -195,6 +197,8 @@ $(function ()
          monaco .editor .setModelLanguage (editor .getModel (), encoding .toLowerCase ());
 
          editor .setValue (Browser .currentScene [`to${encoding}String`] ());
+
+         Browser .beginUpdate ();
       }
 
       editor .getModel () .onDidChangeContent (async (event) =>
