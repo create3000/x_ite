@@ -735,11 +735,12 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    },
    textureImageObject (texture)
    {
-      return [
-         this .images [texture .extensions ?.EXT_texture_webp ?.source],
-         this .images [texture .source],
-      ]
-      .filter (image => image);
+      const images = [this .images [texture .source]];
+
+      if (this .extensions .has ("EXT_texture_webp"))
+         images .unshift (this .images [texture .extensions ?.EXT_texture_webp ?.source]);
+
+      return images .filter (image => image);
    },
    materialsArray (materials)
    {
