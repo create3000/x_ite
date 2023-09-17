@@ -195,7 +195,7 @@ type MinimalArray<T> = {[index: number]: T, length: number}
 type ComponentInfoArray = MinimalArray<ComponentInfo>;
 interface ComponentInfo {
    readonly name: string;
-   readonly level?: number;
+   readonly level: number;
    readonly title: string;
    readonly providerURL: string;
 }
