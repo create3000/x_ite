@@ -256,17 +256,8 @@ type UserMenuItem = {
 }
 
 interface XiteContextMenu {
-   getAvailableViewers(): Record<string, ViewerInfo>;
-   getViewerName(viewer: ViewerInfo): string;
-   // getViewpoints(): unknown; // couldn't get this to return anything...
    getUserMenu(): UserMenuCallback;
    setUserMenu(cb: UserMenuCallback): void;
-}
-
-export interface ViewerInfo {
-   // not sure what properties are supposed to be "public"
-   // I think perhaps none. But TypeScript does not provide
-   // "opaque types". Anyhow, try just an empty interface for now.
 }
 
 export interface X3DScene {
