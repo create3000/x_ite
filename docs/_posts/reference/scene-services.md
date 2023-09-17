@@ -197,10 +197,6 @@ None. This object cannot be instantiated by the user.
 
 A string of the formal name of this profile. This property is read only.
 
-#### **level**
-
-A number of the level of support of this instance. This property is read only.
-
 #### **title**
 
 A generic, freeform title string provided by the browser manufacturer. This property is read only.

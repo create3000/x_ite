@@ -204,6 +204,7 @@ type ProfileInfoArray = MinimalArray<ProfileInfo>;
 interface ProfileInfo {
    readonly name: string;
    readonly title: string;
+   readonly providerURL: string;
    readonly components: ComponentInfoArray
 }
 
