@@ -381,12 +381,12 @@ declare class X3DField {
    addFieldCallback(key: unknown, callback: FieldCallback): void;
    removeFieldCallback(key: unknown): void;
    getFieldCallbacks(): Map<unknown, FieldCallback>;
-   addInputRoute(route: unknown): void; // what's the proper type for route?
-   removeInputRoute(route: unknown): void;
-   getInputRoutes(): Set<unknown>;
-   addOutputRoute(route: unknown): void; // ditto
-   removeOutputRoute(route: unknown): void;
-   getOutputRoutes(): Set<unknown>;
+   addInputRoute(route: X3DRoute): void;
+   removeInputRoute(route: X3DRoute): void;
+   getInputRoutes(): Set<X3DRoute>;
+   addOutputRoute(route: X3DRoute): void;
+   removeOutputRoute(route: X3DRoute): void;
+   getOutputRoutes(): Set<X3DRoute>;
    addRouteCallback(key: unknown, callback: FieldCallback): void;
    removeRouteCallback(key: unknown): void;
    getRouteCallbacks(): Map<unknown, FieldCallback>;
