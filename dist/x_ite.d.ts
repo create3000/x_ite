@@ -156,6 +156,7 @@ export interface X3DBrowser {
       op: T, value: BrowserOption[T]): void;
    getRenderingProperty<T extends keyof RenderingProperty>(
       prop: T): RenderingProperty[T];
+   getContextMenu(): XiteContextMenu;
    addBrowserCallback(key: unknown, cb?: BrowserCallback): void;
    addBrowserCallback(
       key: unknown, event: number, // A Browser Event Constant
@@ -202,6 +203,70 @@ interface ComponentInfo {
 type ProfileInfoArray = MinimalArray<ProfileInfo>;
 interface ProfileInfo extends ComponentInfo {
    readonly components: ComponentInfoArray
+}
+
+type JQueryCtxMenuOpts = {
+   selector: string,
+   items: UserMenuItems,
+   appendTo?: string | HTMLElement,
+   triggers: string,
+   hideOnSecondTrigger?: boolean,
+   selectableSubMenu?: boolean,
+   reposition?: boolean,
+   delay?: number,
+   autoHide?: boolean,
+   zindex?: number | (($trigger: string, opt: JQueryCtxMenuOpts) => number)
+   className?: string,
+   classNames?: Record<string, string>,
+   animation?: {duration: number, show: string, hide: string},
+   events?: Record<string, (opt: JQueryCtxMenuOpts) => boolean>,
+   position?: (opt: unknown, x?: number|string, y?: number|string) => void,
+   determinePosition?: (menu: unknown) => void,
+   callback?: MenuCallback,
+   build?: ($triggerElement: unknown, e: Event) => JQueryCtxMenuOpts,
+   itemClickEvent?: string
+}
+
+type UserMenuCallback = () => UserMenuItems
+type UserMenuItems = Record<string, UserMenuItem>
+type MenuCallback = (
+   itemKey: string, opt: JQueryCtxMenuOpts, event: Event) => (boolean | void)
+type MenuIconCallback = (
+   opt: JQueryCtxMenuOpts, $itemElement: HTMLElement,
+   itemKey: string, item: unknown) => string
+type MenuBoolCallback = (itemKey: string, opt: JQueryCtxMenuOpts) => boolean
+type UserMenuItem = {
+   name: string,
+   isHtmlName?: boolean,
+   callback: MenuCallback,
+   className?: string,
+   icon?: string | MenuIconCallback,
+   disabled?: boolean | MenuBoolCallback,
+   visible?: boolean | MenuBoolCallback,
+   type?: string,
+   events?: Record<string, unknown>,
+   value?: string,
+   selected?: boolean | string,
+   radio?: string,
+   options?: Record<string|number, string>,
+   height?: number,
+   items?: UserMenuItems,
+   accesskey?: string,
+   dataAttr?: Record<string, string>
+}
+
+interface XiteContextMenu {
+   getAvailableViewers(): Record<string, ViewerInfo>;
+   getViewerName(viewer: ViewerInfo): string;
+   // getViewpoints(): unknown; // couldn't get this to return anything...
+   getUserMenu(): UserMenuCallback;
+   setUserMenu(cb: UserMenuCallback): void;
+}
+
+export interface ViewerInfo {
+   // not sure what properties are supposed to be "public"
+   // I think perhaps none. But TypeScript does not provide
+   // "opaque types". Anyhow, try just an empty interface for now.
 }
 
 export interface X3DScene {
