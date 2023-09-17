@@ -201,7 +201,9 @@ interface ComponentInfo {
 }
 
 type ProfileInfoArray = MinimalArray<ProfileInfo>;
-interface ProfileInfo extends ComponentInfo {
+interface ProfileInfo {
+   readonly name: string;
+   readonly title: string;
    readonly components: ComponentInfoArray
 }
 
