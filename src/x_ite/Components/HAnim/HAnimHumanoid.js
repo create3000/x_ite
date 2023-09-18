@@ -309,19 +309,22 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
 
          for (const [i, index] of jointNode ._skinCoordIndex .entries ())
          {
+            const
+               j = joints  [index],
+               w = weights [index];
+
+            if (!j)
+               continue;
+
             const weight = skinCoordWeight [i];
 
             if (weight === 0)
                continue;
 
-            const
-               j = joints  [index],
-               w = weights [index];
+            j .push (joint);
+            w .push (weight);
 
-            j ?.push (joint);
-            w ?.push (weight);
-
-            if (j ?.length > 4)
+            if (j .length > 4)
             {
                // Try to optimize model, works at least for Leif, Lily, and Tufani at
                // https://www.web3d.org/x3d/content/examples/HumanoidAnimation/WinterAndSpring/LilyIndex.html
