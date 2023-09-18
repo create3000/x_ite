@@ -331,7 +331,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
 
                // Remove lowest weight.
 
-               const r = w .reduce ((l, n, i) => Math .abs (n) <  Math .abs (w [l]) ? i : l, 0);
+               const r = w .reduce ((l, n, i) => Math .abs (n) < Math .abs (w [l]) ? i : l, 0);
 
                j .splice (r, 1);
                w .splice (r, 1);
