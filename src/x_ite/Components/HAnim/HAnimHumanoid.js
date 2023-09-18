@@ -303,14 +303,36 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
          joints  = Array .from ({ length }, () => [ ]),
          weights = Array .from ({ length }, () => [ ]);
 
-      for (const [j, jointNode] of this .jointNodes .entries ())
+      for (const [joint, jointNode] of this .jointNodes .entries ())
       {
          const skinCoordWeight = jointNode ._skinCoordWeight .getValue ();
 
          for (const [i, index] of jointNode ._skinCoordIndex .entries ())
          {
-            joints  [index] ?.push (j);
-            weights [index] ?.push (skinCoordWeight [i])
+            const weight = skinCoordWeight [i];
+
+            if (weight === 0)
+               continue;
+
+            const
+               j = joints  [index],
+               w = weights [index];
+
+            j ?.push (joint);
+            w ?.push (weight);
+
+            if (j ?.length > 4)
+            {
+               // Try to optimize model, works at least for Leif, Lily, and Tufani at
+               // https://www.web3d.org/x3d/content/examples/HumanoidAnimation/WinterAndSpring/LilyIndex.html
+
+               // Remove lowest weight.
+
+               const r = w .reduce ((l, n, i) => Math .abs (n) <  Math .abs (w [l]) ? i : l, 0);
+
+               j .splice (r, 1);
+               w .splice (r, 1);
+            }
          }
       }
 
@@ -320,12 +342,8 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
 
       for (let i = 0; i < length; ++ i)
       {
-         const j = joints [i], w = weights [i];
-
-         j .length = w .length = Math .min (j .length, 4);
-
-         jointsArray .set (j, i * 8 + 0);
-         jointsArray .set (w, i * 8 + 4);
+         jointsArray .set (joints  [i], i * 8 + 0);
+         jointsArray .set (weights [i], i * 8 + 4);
       }
 
       // Upload textures.
