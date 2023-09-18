@@ -327,7 +327,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
             if (j .length > 4)
             {
                // Try to optimize model, works at least for Leif, Lily, and Tufani at
-               // https://www.web3d.org/x3d/content/examples/HumanoidAnimation/WinterAndSpring/LilyIndex.html
+               // https://www.web3d.org/x3d/content/examples/HumanoidAnimation/WinterAndSpring/.
 
                // Remove lowest weight.
 
