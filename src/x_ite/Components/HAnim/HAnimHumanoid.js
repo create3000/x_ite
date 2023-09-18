@@ -324,18 +324,18 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
             j .push (joint);
             w .push (weight);
 
-            if (j .length > 4)
-            {
-               // Try to optimize model, works at least for Leif, Lily, and Tufani at
-               // https://www.web3d.org/x3d/content/examples/HumanoidAnimation/WinterAndSpring/.
+            if (j .length <= 4)
+               continue;
 
-               // Remove lowest weight.
+            // Try to optimize model, works at least for Leif, Lily, and Tufani at
+            // https://www.web3d.org/x3d/content/examples/HumanoidAnimation/WinterAndSpring/.
 
-               const r = w .reduce ((l, n, i) => Math .abs (n) < Math .abs (w [l]) ? i : l, 0);
+            // Remove lowest weight.
 
-               j .splice (r, 1);
-               w .splice (r, 1);
-            }
+            const r = w .reduce ((l, n, i) => Math .abs (n) < Math .abs (w [l]) ? i : l, 0);
+
+            j .splice (r, 1);
+            w .splice (r, 1);
          }
       }
 
