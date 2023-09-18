@@ -1,4 +1,4 @@
-/* X_ITE v8.12.1 */(() => { // webpackBootstrap
+/* X_ITE v8.12.2 */(() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
 /******/ 	var __webpack_require__ = {};
@@ -39,25 +39,25 @@ var __webpack_exports__ = {};
 // UNUSED EXPORTS: default
 
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components\")"
-const Components_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.12.1")] .require ("x_ite/Components");
+const Components_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.12.2")] .require ("x_ite/Components");
 var Components_default = /*#__PURE__*/__webpack_require__.n(Components_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Fields\")"
-const Fields_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.12.1")] .require ("x_ite/Fields");
+const Fields_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.12.2")] .require ("x_ite/Fields");
 var Fields_default = /*#__PURE__*/__webpack_require__.n(Fields_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DFieldDefinition\")"
-const X3DFieldDefinition_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.12.1")] .require ("x_ite/Base/X3DFieldDefinition");
+const X3DFieldDefinition_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.12.2")] .require ("x_ite/Base/X3DFieldDefinition");
 var X3DFieldDefinition_default = /*#__PURE__*/__webpack_require__.n(X3DFieldDefinition_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/FieldDefinitionArray\")"
-const FieldDefinitionArray_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.12.1")] .require ("x_ite/Base/FieldDefinitionArray");
+const FieldDefinitionArray_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.12.2")] .require ("x_ite/Base/FieldDefinitionArray");
 var FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(FieldDefinitionArray_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Rendering/X3DGeometricPropertyNode\")"
-const X3DGeometricPropertyNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.12.1")] .require ("x_ite/Components/Rendering/X3DGeometricPropertyNode");
+const X3DGeometricPropertyNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.12.2")] .require ("x_ite/Components/Rendering/X3DGeometricPropertyNode");
 var X3DGeometricPropertyNode_default = /*#__PURE__*/__webpack_require__.n(X3DGeometricPropertyNode_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DConstants\")"
-const X3DConstants_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.12.1")] .require ("x_ite/Base/X3DConstants");
+const X3DConstants_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.12.2")] .require ("x_ite/Base/X3DConstants");
 var X3DConstants_default = /*#__PURE__*/__webpack_require__.n(X3DConstants_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Namespace\")"
-const Namespace_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.12.1")] .require ("x_ite/Namespace");
+const Namespace_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.12.2")] .require ("x_ite/Namespace");
 var Namespace_default = /*#__PURE__*/__webpack_require__.n(Namespace_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/HAnim/HAnimDisplacer.js
 /*******************************************************************************
@@ -166,25 +166,25 @@ const __default__ = HAnimDisplacer;
 Namespace_default().add ("HAnimDisplacer", "x_ite/Components/HAnim/HAnimDisplacer", __default__);
 /* harmony default export */ const HAnim_HAnimDisplacer = (__default__);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Core/X3DChildNode\")"
-const X3DChildNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.12.1")] .require ("x_ite/Components/Core/X3DChildNode");
+const X3DChildNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.12.2")] .require ("x_ite/Components/Core/X3DChildNode");
 var X3DChildNode_default = /*#__PURE__*/__webpack_require__.n(X3DChildNode_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Grouping/Group\")"
-const Group_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.12.1")] .require ("x_ite/Components/Grouping/Group");
+const Group_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.12.2")] .require ("x_ite/Components/Grouping/Group");
 var Group_default = /*#__PURE__*/__webpack_require__.n(Group_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Grouping/Transform\")"
-const Transform_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.12.1")] .require ("x_ite/Components/Grouping/Transform");
+const Transform_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.12.2")] .require ("x_ite/Components/Grouping/Transform");
 var Transform_default = /*#__PURE__*/__webpack_require__.n(Transform_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Grouping/X3DBoundedObject\")"
-const X3DBoundedObject_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.12.1")] .require ("x_ite/Components/Grouping/X3DBoundedObject");
+const X3DBoundedObject_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.12.2")] .require ("x_ite/Components/Grouping/X3DBoundedObject");
 var X3DBoundedObject_default = /*#__PURE__*/__webpack_require__.n(X3DBoundedObject_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Rendering/TraverseType\")"
-const TraverseType_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.12.1")] .require ("x_ite/Rendering/TraverseType");
+const TraverseType_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.12.2")] .require ("x_ite/Rendering/TraverseType");
 var TraverseType_default = /*#__PURE__*/__webpack_require__.n(TraverseType_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DCast\")"
-const X3DCast_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.12.1")] .require ("x_ite/Base/X3DCast");
+const X3DCast_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.12.2")] .require ("x_ite/Base/X3DCast");
 var X3DCast_default = /*#__PURE__*/__webpack_require__.n(X3DCast_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Matrix4\")"
-const Matrix4_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.12.1")] .require ("standard/Math/Numbers/Matrix4");
+const Matrix4_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.12.2")] .require ("standard/Math/Numbers/Matrix4");
 var Matrix4_default = /*#__PURE__*/__webpack_require__.n(Matrix4_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/HAnim/HAnimHumanoid.js
 /*******************************************************************************
@@ -492,14 +492,39 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (X3DChildNode_
          joints  = Array .from ({ length }, () => [ ]),
          weights = Array .from ({ length }, () => [ ]);
 
-      for (const [j, jointNode] of this .jointNodes .entries ())
+      for (const [joint, jointNode] of this .jointNodes .entries ())
       {
          const skinCoordWeight = jointNode ._skinCoordWeight .getValue ();
 
          for (const [i, index] of jointNode ._skinCoordIndex .entries ())
          {
-            joints  [index] ?.push (j);
-            weights [index] ?.push (skinCoordWeight [i])
+            const
+               j = joints  [index],
+               w = weights [index];
+
+            if (!j)
+               continue;
+
+            const weight = skinCoordWeight [i];
+
+            if (weight === 0)
+               continue;
+
+            j .push (joint);
+            w .push (weight);
+
+            if (j .length <= 4)
+               continue;
+
+            // Try to optimize model, works at least for Leif, Lily, and Tufani at
+            // https://www.web3d.org/x3d/content/examples/HumanoidAnimation/WinterAndSpring/.
+
+            // Remove lowest weight.
+
+            const r = w .reduce ((l, n, i) => Math .abs (n) < Math .abs (w [l]) ? i : l, 0);
+
+            j .splice (r, 1);
+            w .splice (r, 1);
          }
       }
 
@@ -509,12 +534,8 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (X3DChildNode_
 
       for (let i = 0; i < length; ++ i)
       {
-         const j = joints [i], w = weights [i];
-
-         j .length = w .length = Math .min (j .length, 4);
-
-         jointsArray .set (j, i * 8 + 0);
-         jointsArray .set (w, i * 8 + 4);
+         jointsArray .set (joints  [i], i * 8 + 0);
+         jointsArray .set (weights [i], i * 8 + 4);
       }
 
       // Upload textures.
@@ -830,10 +851,10 @@ const HAnimHumanoid_default_ = HAnimHumanoid;
 Namespace_default().add ("HAnimHumanoid", "x_ite/Components/HAnim/HAnimHumanoid", HAnimHumanoid_default_);
 /* harmony default export */ const HAnim_HAnimHumanoid = (HAnimHumanoid_default_);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Grouping/X3DTransformNode\")"
-const X3DTransformNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.12.1")] .require ("x_ite/Components/Grouping/X3DTransformNode");
+const X3DTransformNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.12.2")] .require ("x_ite/Components/Grouping/X3DTransformNode");
 var X3DTransformNode_default = /*#__PURE__*/__webpack_require__.n(X3DTransformNode_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Vector3\")"
-const Vector3_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.12.1")] .require ("standard/Math/Numbers/Vector3");
+const Vector3_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.12.2")] .require ("standard/Math/Numbers/Vector3");
 var Vector3_default = /*#__PURE__*/__webpack_require__.n(Vector3_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/HAnim/HAnimJoint.js
 /*******************************************************************************
@@ -1039,19 +1060,19 @@ const HAnimJoint_default_ = HAnimJoint;
 Namespace_default().add ("HAnimJoint", "x_ite/Components/HAnim/HAnimJoint", HAnimJoint_default_);
 /* harmony default export */ const HAnim_HAnimJoint = (HAnimJoint_default_);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Time/TimeSensor\")"
-const TimeSensor_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.12.1")] .require ("x_ite/Components/Time/TimeSensor");
+const TimeSensor_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.12.2")] .require ("x_ite/Components/Time/TimeSensor");
 var TimeSensor_default = /*#__PURE__*/__webpack_require__.n(TimeSensor_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Interpolation/PositionInterpolator\")"
-const PositionInterpolator_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.12.1")] .require ("x_ite/Components/Interpolation/PositionInterpolator");
+const PositionInterpolator_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.12.2")] .require ("x_ite/Components/Interpolation/PositionInterpolator");
 var PositionInterpolator_default = /*#__PURE__*/__webpack_require__.n(PositionInterpolator_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Interpolation/OrientationInterpolator\")"
-const OrientationInterpolator_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.12.1")] .require ("x_ite/Components/Interpolation/OrientationInterpolator");
+const OrientationInterpolator_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.12.2")] .require ("x_ite/Components/Interpolation/OrientationInterpolator");
 var OrientationInterpolator_default = /*#__PURE__*/__webpack_require__.n(OrientationInterpolator_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Rotation4\")"
-const Rotation4_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.12.1")] .require ("standard/Math/Numbers/Rotation4");
+const Rotation4_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.12.2")] .require ("standard/Math/Numbers/Rotation4");
 var Rotation4_default = /*#__PURE__*/__webpack_require__.n(Rotation4_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Algorithm\")"
-const Algorithm_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.12.1")] .require ("standard/Math/Algorithm");
+const Algorithm_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.12.2")] .require ("standard/Math/Algorithm");
 var Algorithm_default = /*#__PURE__*/__webpack_require__.n(Algorithm_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/HAnim/HAnimMotion.js
 /*******************************************************************************
@@ -1493,7 +1514,7 @@ const HAnimMotion_default_ = HAnimMotion;
 Namespace_default().add ("HAnimMotion", "x_ite/Components/HAnim/HAnimMotion", HAnimMotion_default_);
 /* harmony default export */ const HAnim_HAnimMotion = (HAnimMotion_default_);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Grouping/X3DGroupingNode\")"
-const X3DGroupingNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.12.1")] .require ("x_ite/Components/Grouping/X3DGroupingNode");
+const X3DGroupingNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.12.2")] .require ("x_ite/Components/Grouping/X3DGroupingNode");
 var X3DGroupingNode_default = /*#__PURE__*/__webpack_require__.n(X3DGroupingNode_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/HAnim/HAnimSegment.js
 /*******************************************************************************
