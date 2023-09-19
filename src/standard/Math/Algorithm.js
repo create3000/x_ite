@@ -78,6 +78,10 @@ const Algorithm =
 
       return value;
    },
+   roundToMultiple (value, multiple)
+   {
+      return Math .ceil (value / multiple) * multiple;
+   },
    lerp (source, destination, t)
    {
       return source + t * (destination - source);

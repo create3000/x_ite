@@ -56,6 +56,7 @@ import TraverseType         from "../../Rendering/TraverseType.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import X3DCast              from "../../Base/X3DCast.js";
 import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
+import Algorithm from "../../../standard/Math/Algorithm.js";
 
 function HAnimHumanoid (executionContext)
 {
@@ -334,7 +335,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
       }
 
       const
-         numJoints   = Math .ceil (joints .reduce ((p, n) => Math .max (p, n .length), 0) / 4) * 4,
+         numJoints   = Algorithm .roundToMultiple (joints .reduce ((p, n) => Math .max (p, n .length), 0), 4),
          numJoints2  = numJoints * 2,
          size        = Math .ceil (Math .sqrt (length * numJoints2)) || 1,
          jointsArray = new Float32Array (size * size * 4);
@@ -382,7 +383,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
       const
          numDisplacements   = displacements .reduce ((p, n) => Math .max (p, n .length), 0) / 4,
          numElements        = numDisplacements * 4,
-         size               = even (Math .ceil (Math .sqrt (length * numDisplacements * 2)) || 1),
+         size               = Algorithm .roundToMultiple (Math .ceil (Math .sqrt (length * numDisplacements * 2)) || 1, 2),
          displacementsArray = new Float32Array (size * size * 4);
 
       for (let i = 0; i < length; ++ i)
@@ -439,7 +440,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
       const
          numDisplacements         = this .numDisplacements,
          numElements              = numDisplacements * 4,
-         size                     = even (Math .ceil (Math .sqrt (length * numDisplacements * 2)) || 1),
+         size                     = Algorithm .roundToMultiple (Math .ceil (Math .sqrt (length * numDisplacements * 2)) || 1, 2),
          displacementWeightsArray = this .displacementWeightsArray;
 
       for (let i = 0; i < length; ++ i)
@@ -641,11 +642,6 @@ class Lock
 
       return locked;
    }
-}
-
-function even (value)
-{
-   return value + value % 2;
 }
 
 export default HAnimHumanoid;

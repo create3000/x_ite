@@ -152,8 +152,8 @@ Object .defineProperties (HAnimDisplacer,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",      new (Fields_default()).SFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "description",   new (Fields_default()).SFString ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "name",          new (Fields_default()).SFString ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "coordIndex",    new (Fields_default()).MFInt32 ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "weight",        new (Fields_default()).SFFloat ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "coordIndex",    new (Fields_default()).MFInt32 ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "displacements", new (Fields_default()).MFVec3f ()),
       ]),
       enumerable: true,
@@ -186,6 +186,9 @@ var X3DCast_default = /*#__PURE__*/__webpack_require__.n(X3DCast_namespaceObject
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Matrix4\")"
 const Matrix4_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.12.2")] .require ("standard/Math/Numbers/Matrix4");
 var Matrix4_default = /*#__PURE__*/__webpack_require__.n(Matrix4_namespaceObject);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Algorithm\")"
+const Algorithm_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.12.2")] .require ("standard/Math/Algorithm");
+var Algorithm_default = /*#__PURE__*/__webpack_require__.n(Algorithm_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/HAnim/HAnimHumanoid.js
 /*******************************************************************************
  *
@@ -246,6 +249,7 @@ var Matrix4_default = /*#__PURE__*/__webpack_require__.n(Matrix4_namespaceObject
 
 
 
+
 function HAnimHumanoid (executionContext)
 {
    X3DChildNode_default().call (this, executionContext);
@@ -270,6 +274,8 @@ function HAnimHumanoid (executionContext)
    this .jointNodes           = [ ];
    this .jointBindingMatrices = [ ];
    this .displacementWeights  = [ ];
+   this .numJoints            = 0;
+   this .numDisplacements     = 0;
    this .skinCoordNode        = null;
    this .change               = new Lock ();
    this .skinning             = Function .prototype;
@@ -395,6 +401,18 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (X3DChildNode_
    {
       return this .transformNode .getMatrix ();
    },
+   getHumanoidKey ()
+   {
+      return this .numJoints + "." + this .numDisplacements;
+   },
+   getNumJoints ()
+   {
+      return this .numJoints;
+   },
+   getNumDisplacements ()
+   {
+      return this .numDisplacements;
+   },
    set_motions__ ()
    {
       const
@@ -498,45 +516,29 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (X3DChildNode_
 
          for (const [i, index] of jointNode ._skinCoordIndex .entries ())
          {
-            const
-               j = joints  [index],
-               w = weights [index];
-
-            if (!j)
-               continue;
-
             const weight = skinCoordWeight [i];
 
             if (weight === 0)
                continue;
 
-            j .push (joint);
-            w .push (weight);
-
-            if (j .length <= 4)
-               continue;
-
-            // Try to optimize model, works at least for Leif, Lily, and Tufani at
-            // https://www.web3d.org/x3d/content/examples/HumanoidAnimation/WinterAndSpring/.
-
-            // Remove lowest weight.
-
-            const r = w .reduce ((l, n, i) => Math .abs (n) < Math .abs (w [l]) ? i : l, 0);
-
-            j .splice (r, 1);
-            w .splice (r, 1);
+            joints  [index] ?.push (joint);
+            weights [index] ?.push (weight);
          }
       }
 
       const
-         size        = Math .ceil (Math .sqrt (length * 2)) || 1,
+         numJoints   = Algorithm_default().roundToMultiple (joints .reduce ((p, n) => Math .max (p, n .length), 0), 4),
+         numJoints2  = numJoints * 2,
+         size        = Math .ceil (Math .sqrt (length * numJoints2)) || 1,
          jointsArray = new Float32Array (size * size * 4);
 
       for (let i = 0; i < length; ++ i)
       {
-         jointsArray .set (joints  [i], i * 8 + 0);
-         jointsArray .set (weights [i], i * 8 + 4);
+         jointsArray .set (joints  [i], i * numJoints2);
+         jointsArray .set (weights [i], i * numJoints2 + numJoints);
       }
+
+      this .numJoints = numJoints;
 
       // Upload textures.
 
@@ -559,29 +561,27 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (X3DChildNode_
          length        = this .skinCoordNode ?._point .length || 1,
          displacements = Array .from ({ length }, () => [ ]);
 
-      for (const [j, jointNode] of this .jointNodes .entries ())
+      for (const [joint, jointNode] of this .jointNodes .entries ())
       {
          for (const displacerNode of jointNode .getDisplacers ())
          {
             const d = displacerNode ._displacements;
 
             for (const [i, index] of displacerNode ._coordIndex .entries ())
-               displacements [index] ?.push (... d [i], j);
+               displacements [index] ?.push (... d [i], joint);
          }
       }
 
       const
-         size               = even (Math .ceil (Math .sqrt (length * 2)) || 1),
-         displacementsArray = new Float32Array (size * size * 8);
+         numDisplacements   = displacements .reduce ((p, n) => Math .max (p, n .length), 0) / 4,
+         numElements        = numDisplacements * 4,
+         size               = Algorithm_default().roundToMultiple (Math .ceil (Math .sqrt (length * numDisplacements * 2)) || 1, 2),
+         displacementsArray = new Float32Array (size * size * 4);
 
       for (let i = 0; i < length; ++ i)
-      {
-         const d = displacements [i];
+         displacementsArray .set (displacements [i], i * numElements);
 
-         d .length = Math .min (d .length, 8);
-
-         displacementsArray .set (d, i * 8);
-      }
+      this .numDisplacements = numDisplacements;
 
       // Upload texture.
 
@@ -601,7 +601,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (X3DChildNode_
 
       displacementWeights .length = length;
 
-      this .displacementWeightsArray = new Float32Array (size * size * 4);
+      this .displacementWeightsArray = new Float32Array (size * size * 2);
 
       // Trigger update.
 
@@ -625,22 +625,18 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (X3DChildNode_
             const weight = displacerNode ._weight;
 
             for (const index of displacerNode ._coordIndex)
-               displacementWeights [index] ?.push (weight);
+               displacementWeights [index] ?.push (weight, 0, 0, 0);
          }
       }
 
       const
-         size                     = even (Math .ceil (Math .sqrt (length * 2)) || 1),
+         numDisplacements         = this .numDisplacements,
+         numElements              = numDisplacements * 4,
+         size                     = Algorithm_default().roundToMultiple (Math .ceil (Math .sqrt (length * numDisplacements * 2)) || 1, 2),
          displacementWeightsArray = this .displacementWeightsArray;
 
       for (let i = 0; i < length; ++ i)
-      {
-         const d = displacementWeights [i];
-
-         d .length = Math .min (d .length, 8);
-
-         displacementWeightsArray .set (d, i * 8);
-      }
+         displacementWeightsArray .set (displacementWeights [i], i * numElements);
 
       // Upload texture.
 
@@ -838,11 +834,6 @@ class Lock
 
       return locked;
    }
-}
-
-function even (value)
-{
-   return value + value % 2;
 }
 
 const HAnimHumanoid_default_ = HAnimHumanoid;
@@ -1071,9 +1062,6 @@ var OrientationInterpolator_default = /*#__PURE__*/__webpack_require__.n(Orienta
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Rotation4\")"
 const Rotation4_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.12.2")] .require ("standard/Math/Numbers/Rotation4");
 var Rotation4_default = /*#__PURE__*/__webpack_require__.n(Rotation4_namespaceObject);
-;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Algorithm\")"
-const Algorithm_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.12.2")] .require ("standard/Math/Algorithm");
-var Algorithm_default = /*#__PURE__*/__webpack_require__.n(Algorithm_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/HAnim/HAnimMotion.js
 /*******************************************************************************
  *
