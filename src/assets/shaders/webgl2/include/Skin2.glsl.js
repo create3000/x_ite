@@ -38,6 +38,8 @@ getJointNormalMatrix (const in int joint)
 
    return mat3 (a .xyz, vec3 (a .w, b .xy), vec3 (b .zw, c .x));
 }
+
+#define getSkinNormal(normal) (skinNormal)
 #endif
 
 vec4
@@ -86,15 +88,6 @@ getSkinVertex (const in vec4 vertex, const in vec3 normal)
 
    return skin;
 }
-
-#if defined (X3D_NORMALS)
-vec3
-getSkinNormal (const in vec3 normal)
-{
-   return skinNormal;
-}
-#endif
-
 #else
    #define getSkinVertex(vertex,normal) (vertex)
    #define getSkinNormal(normal) (normal)
