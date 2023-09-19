@@ -81,6 +81,7 @@ function HAnimHumanoid (executionContext)
    this .jointNodes           = [ ];
    this .jointBindingMatrices = [ ];
    this .displacementWeights  = [ ];
+   this .numJoints            = 0;
    this .numDisplacements     = 0;
    this .skinCoordNode        = null;
    this .change               = new Lock ();
@@ -209,7 +210,11 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
    },
    getHumanoidKey ()
    {
-      return this .numDisplacements;
+      return this .numJoints + "." + this .numDisplacements;
+   },
+   getNumJoints ()
+   {
+      return this .numJoints;
    },
    getNumDisplacements ()
    {
@@ -318,40 +323,29 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
 
          for (const [i, index] of jointNode ._skinCoordIndex .entries ())
          {
-            const
-               j = joints  [index],
-               w = weights [index];
+            const weight = skinCoordWeight [i];
 
-            if (!j)
+            if (weight === 0)
                continue;
 
-            j .push (joint);
-            w .push (skinCoordWeight [i]);
-
-            if (j .length <= 4)
-               continue;
-
-            // Try to optimize model, works at least for Leif, Lily, and Tufani at
-            // https://www.web3d.org/x3d/content/examples/HumanoidAnimation/WinterAndSpring/.
-
-            // Remove lowest weight.
-
-            const r = w .reduce ((l, n, i) => Math .abs (n) < Math .abs (w [l]) ? i : l, 0);
-
-            j .splice (r, 1);
-            w .splice (r, 1);
+            joints  [index] ?.push (joint);
+            weights [index] ?.push (weight);
          }
       }
 
       const
-         size        = Math .ceil (Math .sqrt (length * 2)) || 1,
+         numJoints   = Math .ceil (joints .reduce ((p, n) => Math .max (p, n .length), 0) / 4) * 4,
+         numJoints2  = numJoints * 2,
+         size        = Math .ceil (Math .sqrt (length * numJoints2)) || 1,
          jointsArray = new Float32Array (size * size * 4);
 
       for (let i = 0; i < length; ++ i)
       {
-         jointsArray .set (joints  [i], i * 8 + 0);
-         jointsArray .set (weights [i], i * 8 + 4);
+         jointsArray .set (joints  [i], i * numJoints2);
+         jointsArray .set (weights [i], i * numJoints2 + numJoints);
       }
+
+      this .numJoints = numJoints;
 
       // Upload textures.
 

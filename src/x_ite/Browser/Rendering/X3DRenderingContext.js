@@ -179,7 +179,9 @@ Object .assign (X3DRenderingContext .prototype,
       key += ".";
       key += shapeNode .getShapeKey ();
       key += geometryContext .geometryType;
-      key += humanoidNode ? 1 : 0;
+      key += ".";
+      key += humanoidNode ?.getHumanoidKey () ?? "";
+      key += ".";
 
       if (geometryContext .geometryType >= 2)
       {
@@ -222,9 +224,10 @@ Object .assign (X3DRenderingContext .prototype,
       if (humanoidNode)
       {
          options .push ("X3D_SKINNING");
+         options .push (`X3D_NUM_JOINTS ${humanoidNode .getNumJoints ()}`);
          options .push (`X3D_NUM_DISPLACEMENTS ${humanoidNode .getNumDisplacements ()}`);
       }
-      
+
       const shaderNode = this .createShader ("DepthShader", "Depth", "Depth", options);
 
       this [_depthShaders] .set (key, shaderNode);
