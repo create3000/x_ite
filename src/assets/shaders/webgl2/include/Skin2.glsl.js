@@ -46,6 +46,10 @@ getSkinVertex (const in vec4 vertex, const in vec3 normal)
    int  coordIndex = int (x3d_CoordIndex);
    vec4 skin       = vertex;
 
+   #if defined (X3D_NORMALS)
+      skinNormal = normal;
+   #endif
+
    #if X3D_NUM_DISPLACEMENTS > 0
    {
       int coordIndexD = coordIndex * X3D_NUM_DISPLACEMENTS;
@@ -74,8 +78,6 @@ getSkinVertex (const in vec4 vertex, const in vec3 normal)
 
       #if defined (X3D_NORMALS)
       {
-         skinNormal = normal;
-
          for (int i = 0; i < 4; ++ i)
             skinNormal += (getJointNormalMatrix (joints [i]) * normal - normal) * weights [i];
       }
