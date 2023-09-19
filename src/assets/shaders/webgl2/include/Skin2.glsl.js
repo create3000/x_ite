@@ -62,12 +62,14 @@ getSkinVertex (const in vec4 vertex, const in vec3 normal)
    }
    #endif
 
-   int coordIndexJ = coordIndex * (X3D_NUM_JOINTS / 4) * 2;
+   #define NUM_JOINT_SETS (X3D_NUM_JOINTS / 4)
 
-   for (int i = 0; i < X3D_NUM_JOINTS / 4; ++ i)
+   int coordIndexJ = coordIndex * NUM_JOINT_SETS * 2;
+
+   for (int i = 0; i < NUM_JOINT_SETS; ++ i)
    {
       ivec4 joints  = ivec4 (texelFetch (x3d_JointsTexture, coordIndexJ + i, 0));
-      vec4  weights = texelFetch (x3d_JointsTexture, coordIndexJ + (X3D_NUM_JOINTS / 4) + i, 0);
+      vec4  weights = texelFetch (x3d_JointsTexture, coordIndexJ + NUM_JOINT_SETS + i, 0);
 
       for (int i = 0; i < 4; ++ i)
          skin += (getJointMatrix (joints [i]) * vertex - vertex) * weights [i];
