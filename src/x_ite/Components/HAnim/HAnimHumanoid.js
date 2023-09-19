@@ -444,7 +444,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
             const weight = displacerNode ._weight;
 
             for (const index of displacerNode ._coordIndex)
-               displacementWeights [index] ?.push (weight);
+               displacementWeights [index] ?.push (weight, 0, 0, 0);
          }
       }
 
