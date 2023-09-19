@@ -66,7 +66,7 @@ getSkinVertex (const in vec4 vertex, const in vec3 normal)
    }
    #endif
 
-   int coordIndexJ = coordIndex * X3D_NUM_JOINT_SETS * 2;
+   int coordIndexJ = coordIndex * (X3D_NUM_JOINT_SETS * 2);
 
    for (int i = 0; i < X3D_NUM_JOINT_SETS; ++ i)
    {
