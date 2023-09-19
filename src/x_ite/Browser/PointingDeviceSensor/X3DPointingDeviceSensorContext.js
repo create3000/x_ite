@@ -386,7 +386,7 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
       if (humanoidNode)
       {
          options .push ("X3D_SKINNING");
-         options .push (`X3D_NUM_JOINTS ${humanoidNode .getNumJoints ()}`);
+         options .push (`X3D_NUM_JOINT_SETS ${humanoidNode .getNumJoints () / 4}`);
          options .push (`X3D_NUM_DISPLACEMENTS ${humanoidNode .getNumDisplacements ()}`);
       }
 
