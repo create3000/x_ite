@@ -45,7 +45,7 @@ Language codes consist of a primary code and a (possibly empty) series of subcod
 - [See RFC3066 Tags for the Identification of Languages](https://tools.ietf.org/html/rfc3066){:target="_blank"}
 - [See ISO3166 or](http://xml.coverpages.org/languageIdentifiers.html){:target="_blank"}
 - [Relates to Internationalization (i18n)](http://www.w3.org/standards/webdesign/i18n){:target="_blank"}
-- (X3D version 4.0 draft) accessType relaxed to inputOutput in order to support animation and user accessibility.
+- (X3D version 4.0 ISO.proof draft) accessType relaxed to inputOutput in order to support animation and user accessibility.
 
 #### Warning
 
@@ -64,7 +64,7 @@ Array of quoted font *family* names in preference order, browsers use the first 
 - MFString arrays can have multiple values, so "separate each individual string" "by using quote marks".
 - [See 15.2.2.2 Font *family* and style](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/components/text.html#Fontfamilyandstyle){:target="_blank"} for details.
 - [Relates to Internationalization (i18n)](http://www.w3.org/standards/webdesign/i18n){:target="_blank"}
-- (X3D version 4.0 draft) accessType relaxed to inputOutput in order to support animation and user accessibility.
+- (X3D version 4.0 ISO.proof draft) accessType relaxed to inputOutput in order to support animation and user accessibility.
 
 #### Warning
 
@@ -83,7 +83,7 @@ Pick one of four values for text *style* (PLAIN or BOLD or ITALIC or BOLDITALIC)
 - [CSS Snapshot](https://www.w3.org/TR/css-2018){:target="_blank"}
 - Https://www.w3.org/TR/css-*style*-attr
 - [Wikibooks, XML - Managing Data Exchange/XSLT and Style Sheets](https://en.wikibooks.org/wiki/XML_-_Managing_Data_Exchange/XSLT_and_Style_Sheets){:target="_blank"}
-- (X3D version 4.0 draft) accessType relaxed to inputOutput in order to support animation and user accessibility.
+- (X3D version 4.0 ISO.proof draft) accessType relaxed to inputOutput in order to support animation and user accessibility.
 
 #### Warnings
 
@@ -96,7 +96,7 @@ Nominal height (in local coordinate system) of text glyphs, also sets default sp
 
 #### Hint
 
-- (X3D version 4.0 draft) accessType relaxed to inputOutput in order to support animation and user accessibility.
+- (X3D version 4.0 ISO.proof draft) accessType relaxed to inputOutput in order to support animation and user accessibility.
 
 ### SFFloat [in, out] **spacing** 1 <small>[0,∞)</small>
 
@@ -104,7 +104,7 @@ Adjustment factor for line *spacing* between adjacent lines of text.
 
 #### Hint
 
-- (X3D version 4.0 draft) accessType relaxed to inputOutput in order to support animation and user accessibility.
+- (X3D version 4.0 ISO.proof draft) accessType relaxed to inputOutput in order to support animation and user accessibility.
 
 ### SFBool [in, out] **horizontal** TRUE
 
@@ -114,7 +114,7 @@ Whether text direction is *horizontal* (true) or vertical (false).
 
 - [See 15.2.2.3 Direction and justification](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/components/text.html#Directionandjustification){:target="_blank"} for details.
 - [Relates to Internationalization (i18n)](http://www.w3.org/standards/webdesign/i18n){:target="_blank"}
-- (X3D version 4.0 draft) accessType relaxed to inputOutput in order to support animation and user accessibility.
+- (X3D version 4.0 ISO.proof draft) accessType relaxed to inputOutput in order to support animation and user accessibility.
 
 ### SFBool [in, out] **leftToRight** TRUE
 
@@ -124,7 +124,7 @@ Whether text direction is left-to-right (true) or right-to-left (false).
 
 - [See 15.2.2.3 Direction and justification](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/components/text.html#Directionandjustification){:target="_blank"} for details.
 - [Relates to Internationalization (i18n)](http://www.w3.org/standards/webdesign/i18n){:target="_blank"}
-- (X3D version 4.0 draft) accessType relaxed to inputOutput in order to support animation and user accessibility.
+- (X3D version 4.0 ISO.proof draft) accessType relaxed to inputOutput in order to support animation and user accessibility.
 
 ### SFBool [in, out] **topToBottom** TRUE
 
@@ -134,7 +134,7 @@ Whether text direction is top-to-bottom (true) or bottom-to-top (false).
 
 - [See 15.2.2.3 Direction and justification](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/components/text.html#Directionandjustification){:target="_blank"} for details.
 - [Relates to Internationalization (i18n)](http://www.w3.org/standards/webdesign/i18n){:target="_blank"}
-- (X3D version 4.0 draft) accessType relaxed to inputOutput in order to support animation and user accessibility.
+- (X3D version 4.0 ISO.proof draft) accessType relaxed to inputOutput in order to support animation and user accessibility.
 
 ### MFString [in, out] **justify** "BEGIN" <small>["BEGIN", "END", "FIRST", "MIDDLE", ""]</small>
 
@@ -145,7 +145,7 @@ The *justify* field determines horizontal and vertical alignment of text layout,
 - Preferred value is usually *justify*=' "MIDDLE" "MIDDLE" ' for centered justification horizontally and vertically.
 - MFString arrays can have multiple values, so "separate each individual string" "by using quote marks".
 - [See 15.2.2.3 Direction and justification](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/components/text.html#Directionandjustification){:target="_blank"} for details.
-- (X3D version 4.0 draft) accessType relaxed to inputOutput in order to support animation and user accessibility.
+- (X3D version 4.0 ISO.proof draft) accessType relaxed to inputOutput in order to support animation and user accessibility.
 
 #### Warnings
 

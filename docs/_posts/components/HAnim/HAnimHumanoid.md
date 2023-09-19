@@ -294,7 +294,7 @@ Single Normal node utilized by indexed mesh definitions for skin. The *skinNorma
 
 - Index values for HAnimHumanoid skin IndexedFaceSet, skinCoord and *skinNormal* nodes must all be consistently defined together with HAnimJoint HAnimSegment and HAnimDisplacer nodes for proper skin animation.
 - Top-level Normal node must include `containerField='skinNormal'` for proper validation and operation.
-- (X3D version 4.0 draft) requires X3D `profile='Full'` or else include `<component name='HAnim' level='2'/>`
+- (X3D version 4.0 ISO.proof draft) requires X3D `profile='Full'` or else include `<component name='HAnim' level='2'/>`
 - For X3D3 HAnim1, spelling of component name is 'H-Anim' (including hyphen).
 
 ### SFNode [in, out] **skinCoord** NULL <small>[X3DCoordinateNode]</small>
@@ -309,7 +309,7 @@ Coordinate node utilized by indexed mesh definitions for skin. The *skinCoord* f
 
 - Index values for HAnimHumanoid skin IndexedFaceSet, *skinCoord* and skinNormal nodes must all be consistently defined together with HAnimJoint HAnimSegment and HAnimDisplacer nodes for proper skin animation.
 - Top-level Coordinate or CoordinateDouble node must include `containerField='skinCoord'` for proper validation and operation.
-- (X3D version 4.0 draft) requires X3D `profile='Full'` or else include `<component name='HAnim' level='2'/>`
+- (X3D version 4.0 ISO.proof draft) requires X3D `profile='Full'` or else include `<component name='HAnim' level='2'/>`
 - For X3D3 HAnim1, previous spelling of component name was 'H-Anim' (including hyphen)
 
 ### MFNode [in, out] **skin** [ ] <small>[X3DChildNode]</small>
@@ -324,7 +324,7 @@ List of one or more indexed mesh definitions (such as IndexedFaceSet) that utili
 
 - Index values for HAnimHumanoid *skin* IndexedFaceSet, skinCoord and skinNormal nodes must all be consistently defined together with HAnimJoint HAnimSegment and HAnimDisplacer nodes for proper *skin* animation.
 - Top-level node must include `containerField='skin'` for proper validation and operation.
-- (X3D version 4.0 draft) requires X3D `profile='Full'` or else include `<component name='HAnim' level='2'/>`
+- (X3D version 4.0 ISO.proof draft) requires X3D `profile='Full'` or else include `<component name='HAnim' level='2'/>`
 - For X3D3 HAnim1, previous spelling of component name was 'H-Anim' (including hyphen)
 
 ## Advisories

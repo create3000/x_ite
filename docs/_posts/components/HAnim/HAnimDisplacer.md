@@ -61,14 +61,6 @@ Unique *name* attribute must be defined so that HAnimDisplacer node can be ident
 - *name* prefix must match ancestor HAnimHumanoid *name* followed by underscore character, if more than one humanoid appears within a scene file. For example, 'Nancy_' prepended before location *name*.
 - *name* field is not included if this instance is a USE node, in order to avoid potential mismatches.
 
-### MFInt32 [in, out] **coordIndex** [ ] <small>[0,∞) or -1</small>
-
-Defines index values into the parent HAnimSegment or HAnimBody/HAnimHumanoid coordinate array for the mesh of vertices affected by this HAnimDisplacer. Values start at index 0.
-
-#### Warning
-
-- -1 sentinel values are not allowed.
-
 ### SFFloat [in, out] **weight** 0 <small>(-∞,∞)</small>
 
 The weigh factor has typical range [0,1] and defines the scale factor applied to displacement values before adding them to neutral vertex positions.
@@ -76,6 +68,14 @@ The weigh factor has typical range [0,1] and defines the scale factor applied to
 #### Hint
 
 - Apply a non-zero *weight* factor to see the effect of HAnimDisplacer displacements.
+
+### MFInt32 [in, out] **coordIndex** [ ] <small>[0,∞) or -1</small>
+
+Defines index values into the parent HAnimSegment or HAnimBody/HAnimHumanoid coordinate array for the mesh of vertices affected by this HAnimDisplacer. Values start at index 0.
+
+#### Warning
+
+- -1 sentinel values are not allowed.
 
 ### MFVec3f [in, out] **displacements** [ ]
 
