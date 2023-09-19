@@ -386,13 +386,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
          displacementsArray = new Float32Array (size * size * 4);
 
       for (let i = 0; i < length; ++ i)
-      {
-         const d = displacements [i];
-
-         d .length = Math .min (d .length, numElements);
-
-         displacementsArray .set (d, i * numElements);
-      }
+         displacementsArray .set (displacements [i], i * numElements);
 
       this .numDisplacements = numDisplacements;
 
@@ -449,13 +443,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
          displacementWeightsArray = this .displacementWeightsArray;
 
       for (let i = 0; i < length; ++ i)
-      {
-         const d = displacementWeights [i];
-
-         d .length = Math .min (d .length, numElements);
-
-         displacementWeightsArray .set (d, i * numElements);
-      }
+         displacementWeightsArray .set (displacementWeights [i], i * numElements);
 
       // Upload texture.
 
