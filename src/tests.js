@@ -103,6 +103,7 @@ const X_ITE_TESTS = [
    { path: "Grouping/StaticGroup.x3d" },
    { component: "HAnim" },
    { path: "HAnim/BoxManC.x3d" },
+   { path: "HAnim/Displacers.x3d" },
    { component: "Interpolation" },
    { path: "Interpolation/ComposeSFVec3f.wrl" },
    { path: "Interpolation/Cube.wrl" },
