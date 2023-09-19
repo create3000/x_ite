@@ -81,6 +81,7 @@ function HAnimHumanoid (executionContext)
    this .jointNodes           = [ ];
    this .jointBindingMatrices = [ ];
    this .displacementWeights  = [ ];
+   this .numDisplacements     = 0;
    this .skinCoordNode        = null;
    this .change               = new Lock ();
    this .skinning             = Function .prototype;
@@ -205,6 +206,14 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
    getMatrix ()
    {
       return this .transformNode .getMatrix ();
+   },
+   getHumanoidKey ()
+   {
+      return this .numDisplacements;
+   },
+   getNumDisplacements ()
+   {
+      return this .numDisplacements;
    },
    set_motions__ ()
    {
@@ -377,17 +386,21 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
       }
 
       const
-         size               = even (Math .ceil (Math .sqrt (length * 2)) || 1),
-         displacementsArray = new Float32Array (size * size * 8);
+         numDisplacements   = displacements .reduce ((p, n) => Math .max (p, n .length), 0) / 4,
+         numElements        = numDisplacements * 4,
+         size               = even (Math .ceil (Math .sqrt (length * numDisplacements * 2)) || 1),
+         displacementsArray = new Float32Array (size * size * 4);
 
       for (let i = 0; i < length; ++ i)
       {
          const d = displacements [i];
 
-         d .length = Math .min (d .length, 8);
+         d .length = Math .min (d .length, numElements);
 
-         displacementsArray .set (d, i * 8);
+         displacementsArray .set (d, i * numElements);
       }
+
+      this .numDisplacements = numDisplacements;
 
       // Upload texture.
 
@@ -407,7 +420,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
 
       displacementWeights .length = length;
 
-      this .displacementWeightsArray = new Float32Array (size * size * 4);
+      this .displacementWeightsArray = new Float32Array (size * size * 2);
 
       // Trigger update.
 
@@ -436,16 +449,18 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
       }
 
       const
-         size                     = even (Math .ceil (Math .sqrt (length * 2)) || 1),
+         numDisplacements         = this .numDisplacements,
+         numElements              = numDisplacements * 4,
+         size                     = even (Math .ceil (Math .sqrt (length * numDisplacements * 2)) || 1),
          displacementWeightsArray = this .displacementWeightsArray;
 
       for (let i = 0; i < length; ++ i)
       {
          const d = displacementWeights [i];
 
-         d .length = Math .min (d .length, 8);
+         d .length = Math .min (d .length, numElements);
 
-         displacementWeightsArray .set (d, i * 8);
+         displacementWeightsArray .set (d, i * numElements);
       }
 
       // Upload texture.

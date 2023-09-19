@@ -220,8 +220,11 @@ Object .assign (X3DRenderingContext .prototype,
          options .push ("X3D_STYLE_PROPERTIES");
 
       if (humanoidNode)
+      {
          options .push ("X3D_SKINNING");
-
+         options .push (`X3D_NUM_DISPLACEMENTS ${humanoidNode .getNumDisplacements ()}`);
+      }
+      
       const shaderNode = this .createShader ("DepthShader", "Depth", "Depth", options);
 
       this [_depthShaders] .set (key, shaderNode);

@@ -43,20 +43,27 @@ getJointNormalMatrix (const in int joint)
 vec4
 getSkinVertex (const in vec4 vertex, const in vec3 normal)
 {
-   int   coordIndex2 = int (x3d_CoordIndex) * 2;
+   int   coordIndex  = int (x3d_CoordIndex);
+   int   coordIndex2 = coordIndex * 2;
    ivec4 joints      = ivec4 (texelFetch (x3d_JointsTexture, coordIndex2, 0));
    vec4  weights     = texelFetch (x3d_JointsTexture, coordIndex2 + 1, 0);
-   int   width       = textureSize (x3d_DisplacementsTexture, 0) .x;
-   int   offset      = (width * width) / 2;
    vec4  skin        = vertex;
 
-   for (int i = 0; i < 2; ++ i)
+   #if X3D_NUM_DISPLACEMENTS > 0
    {
-      vec4  displacement = texelFetch (x3d_DisplacementsTexture, coordIndex2 + i,      0);
-      float weight       = texelFetch (x3d_DisplacementsTexture, coordIndex2 + offset, 0) [i];
+      int coordIndexD = coordIndex * X3D_NUM_DISPLACEMENTS;
+      int width       = textureSize (x3d_DisplacementsTexture, 0) .x;
+      int offset      = (width * width) / 2;
 
-      skin .xyz += (getDisplacementJointMatrix (int (displacement .w)) * displacement .xyz) * weight;
+      for (int i = 0; i < X3D_NUM_DISPLACEMENTS; ++ i)
+      {
+         vec4  displacement = texelFetch (x3d_DisplacementsTexture, coordIndexD + i,      0);
+         float weight       = texelFetch (x3d_DisplacementsTexture, coordIndex  + offset, 0) [i];
+
+         skin .xyz += getDisplacementJointMatrix (int (displacement .w)) * displacement .xyz * weight;
+      }
    }
+   #endif
 
    for (int i = 0; i < 4; ++ i)
       skin += (getJointMatrix (joints [i]) * vertex - vertex) * weights [i];

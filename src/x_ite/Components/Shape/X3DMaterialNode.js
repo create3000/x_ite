@@ -110,7 +110,8 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
          key += appearanceNode .getStyleProperties (geometryContext .geometryType) ?.getStyleKey () ?? 0;
          key += appearanceNode .getTextureTransformMapping () .size || 1;
          key += geometryContext .textureCoordinateMapping .size || 1;
-         key += humanoidNode ? 1 : 0;
+         key += ".";
+         key += humanoidNode ?.getHumanoidKey () ?? 0;
          key += ".";
          key += objectsCount [0]; // Clip planes
          key += ".";
@@ -128,8 +129,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
 
          key += geometryContext .alphaMode;
          key += this .getMaterialKey (false);
-         key += "00000110";
-         key += ".";
+         key += "0000011.0.";
          key += objectsCount [0]; // Clip planes
          key += ".";
          key += objectsCount [1]; // Lights
@@ -202,7 +202,10 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
          }
 
          if (humanoidNode)
+         {
             options .push ("X3D_SKINNING");
+            options .push (`X3D_NUM_DISPLACEMENTS ${humanoidNode .getNumDisplacements ()}`);
+         }
 
          if (objectsCount [0])
          {
