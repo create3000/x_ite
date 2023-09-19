@@ -43,8 +43,8 @@ getJointNormalMatrix (const in int joint)
 vec4
 getSkinVertex (const in vec4 vertex, const in vec3 normal)
 {
-   int   coordIndex  = int (x3d_CoordIndex);
-   vec4  skin        = vertex;
+   int  coordIndex = int (x3d_CoordIndex);
+   vec4 skin       = vertex;
 
    #if X3D_NUM_DISPLACEMENTS > 0
    {
