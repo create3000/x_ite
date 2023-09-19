@@ -100,6 +100,7 @@ const X_ITE_TESTS = [
    { path: "Geospatial/YUp.x3d" },
    { component: "Grouping" },
    { path: "Grouping/AddRemoveChildren.x3dv" },
+   { path: "Grouping/NegativeScale.x3d" },
    { path: "Grouping/StaticGroup.x3d" },
    { component: "HAnim" },
    { path: "HAnim/BoxManC.x3d" },
