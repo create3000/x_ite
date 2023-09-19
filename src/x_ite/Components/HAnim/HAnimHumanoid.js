@@ -368,14 +368,14 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
          length        = this .skinCoordNode ?._point .length || 1,
          displacements = Array .from ({ length }, () => [ ]);
 
-      for (const [j, jointNode] of this .jointNodes .entries ())
+      for (const [joint, jointNode] of this .jointNodes .entries ())
       {
          for (const displacerNode of jointNode .getDisplacers ())
          {
             const d = displacerNode ._displacements;
 
             for (const [i, index] of displacerNode ._coordIndex .entries ())
-               displacements [index] ?.push (... d [i], j);
+               displacements [index] ?.push (... d [i], joint);
          }
       }
 
