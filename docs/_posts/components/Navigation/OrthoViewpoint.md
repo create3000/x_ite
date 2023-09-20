@@ -204,6 +204,8 @@ The *navigationInfo* field defines a dedicated NavigationInfo node for this X3DV
 
 <x3d-canvas src="https://create3000.github.io/media/examples/Navigation/OrthoViewpoint/OrthoViewpoint.x3d" update="auto"></x3d-canvas>
 
+[View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Navigation/OrthoViewpoint/OrthoViewpoint.x3d)
+
 ## See Also
 
 - [X3D Specification of OrthoViewpoint node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/navigation.html#OrthoViewpoint){:target="_blank"}

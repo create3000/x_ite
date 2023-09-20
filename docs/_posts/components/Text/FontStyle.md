@@ -166,6 +166,8 @@ The *justify* field determines horizontal and vertical alignment of text layout,
 
 <x3d-canvas src="https://create3000.github.io/media/examples/Text/FontStyle/FontStyle.x3d" update="auto"></x3d-canvas>
 
+[View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Text/FontStyle/FontStyle.x3d)
+
 ## See Also
 
 - [X3D Specification of FontStyle node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/text.html#FontStyle){:target="_blank"}

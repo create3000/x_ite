@@ -5,7 +5,8 @@ $("table.examples a") .on ("click", function ()
       header   = div .find (".header"),
       toolbar  = div .find (".toolbar"),
       canvas   = div .find ("x3d-canvas"),
-      zip      = div .find ("zip");
+      zip      = div .find (".zip"),
+      source   = div .find (".source");
 
    if (div .length)
    {
@@ -27,7 +28,19 @@ $("table.examples a") .on ("click", function ()
          div .hide ();
       });
 
-      zip = $("<a></a>") .addClass ("zip") .text ("Download ZIP Archive") .appendTo ($("<p></p>") .appendTo (div));
+      const footer = $("<p></p>") .addClass ("footer") .appendTo (div);
+
+      zip = $("<a></a>")
+         .addClass ("zip")
+         .text ("Download ZIP Archive")
+         .appendTo (footer);
+
+      $("<span></span>") .addClass ("dot") .appendTo (footer);
+
+      source = $("<a></a>")
+         .addClass ("source")
+         .text ("View Source in Playground")
+         .appendTo (footer);
    }
 
    canvas .prop ("browser") .getBrowserOptions () .reset ();
@@ -35,6 +48,7 @@ $("table.examples a") .on ("click", function ()
    header .text ($(this) .attr ("title"));
    canvas .attr ("src", $(this) .attr ("href"));
    zip    .attr ("href", $(this) .attr ("href") .replace (/\.x3d$/, ".zip"));
+   source .attr ("href", `/x_ite/playground/?url=${$(this) .attr ("href")}`);
 
    console .log (`Loading ${$(this) .attr ("title")} ...`);
 

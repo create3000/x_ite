@@ -57,6 +57,8 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 
 <x3d-canvas src="https://create3000.github.io/media/examples/Geometry2D/Polypoint2D/Polypoint2D.x3d" update="auto"></x3d-canvas>
 
+[View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Geometry2D/Polypoint2D/Polypoint2D.x3d)
+
 ## See Also
 
 - [X3D Specification of Polypoint2D node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry2D.html#Polypoint2D){:target="_blank"}

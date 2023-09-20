@@ -182,6 +182,8 @@ Time continuously sends the absolute *time* (value 0.0 matches 1 January 1970) i
 
 <x3d-canvas src="https://create3000.github.io/media/examples/Time/TimeSensor/TimeSensor.x3d" update="auto"></x3d-canvas>
 
+[View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Time/TimeSensor/TimeSensor.x3d)
+
 ## See Also
 
 - [X3D Specification of TimeSensor node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/time.html#TimeSensor){:target="_blank"}

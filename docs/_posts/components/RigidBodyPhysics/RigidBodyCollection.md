@@ -131,6 +131,8 @@ The *joints* field is used to register all *joints* between bodies contained in 
 
 <x3d-canvas src="https://create3000.github.io/media/examples/RigidBodyPhysics/RigidBodyCollection/RigidBodyCollection.x3d" update="auto"></x3d-canvas>
 
+[View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/RigidBodyPhysics/RigidBodyCollection/RigidBodyCollection.x3d)
+
 ## See Also
 
 - [X3D Specification of RigidBodyCollection node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rigidBodyPhysics.html#RigidBodyCollection){:target="_blank"}

@@ -225,6 +225,8 @@ Event sent when node becomes active/inactive.
 
 <x3d-canvas src="https://create3000.github.io/media/examples/EnvironmentalEffects/Background/Background.x3d" update="auto"></x3d-canvas>
 
+[View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/EnvironmentalEffects/Background/Background.x3d)
+
 ## See Also
 
 - [X3D Specification of Background node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/environmentalEffects.html#Background){:target="_blank"}

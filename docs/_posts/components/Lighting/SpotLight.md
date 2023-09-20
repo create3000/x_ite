@@ -140,6 +140,8 @@ Size of the shadow map in pixels, must be power of two.
 
 <x3d-canvas src="https://create3000.github.io/media/examples/Lighting/SpotLight/SpotLight.x3d" update="auto"></x3d-canvas>
 
+[View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Lighting/SpotLight/SpotLight.x3d)
+
 ## See Also
 
 - [X3D Specification of SpotLight node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/lighting.html#SpotLight){:target="_blank"}

@@ -96,6 +96,8 @@ Specifies the alpha blend equation, how the alpha component of the source and de
 
 <x3d-canvas src="https://create3000.github.io/media/examples/X_ITE/BlendMode/BlendMode.x3d" update="auto"></x3d-canvas>
 
+[View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/X_ITE/BlendMode/BlendMode.x3d)
+
 ## See Also
 
 - [X3D Visual Blend Mode Online Editor](/x_ite/laboratory/x3d-visual-blend-mode-editor)

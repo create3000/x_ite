@@ -144,6 +144,8 @@ Current elapsed time since AudioClip activated/running, cumulative in seconds, a
 
 <x3d-canvas src="https://create3000.github.io/media/examples/Sound/MicrophoneSource/MicrophoneSource.x3d" update="auto"></x3d-canvas>
 
+[View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Sound/MicrophoneSource/MicrophoneSource.x3d)
+
 ## See Also
 
 - [X3D Specification of MicrophoneSource node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#MicrophoneSource){:target="_blank"}

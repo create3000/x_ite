@@ -245,27 +245,36 @@ small, .small {
   background-color: var(--example-background-color);
 }
 
-.example .toolbar span {
+.example .toolbar > * {
    cursor: pointer;
    padding: 0 3px;
 }
 
-.example .toolbar span.selected {
+.example .toolbar > .selected {
    color: var(--h2-color);
 }
 
-.example .toolbar span.separator {
+.example .toolbar > .separator {
    border-left: 1px solid var(--text-color);
    margin: 0 0 0 5px;
 }
 
-.example .toolbar span.dot::before {
+.example .toolbar > .separator + .separator {
+  display: none;
+}
+
+.example .toolbar > .dot::before {
    content: "·";
    margin: 0 3px 0 4px;
 }
 
-.example .toolbar span.separator + .separator {
-   display: none;
+.example .footer > * {
+  padding: 0 3px;
+}
+
+.example .footer > .dot::before {
+  content: "·";
+  margin: 0 3px 0 4px;
 }
 
 .example x3d-canvas {
