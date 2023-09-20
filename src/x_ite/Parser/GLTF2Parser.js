@@ -1688,6 +1688,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       skin .normalNode                 = scene .createNode ("Normal",                 false);
       skin .coordinateNode             = scene .createNode ("Coordinate",             false);
 
+      skin .textureCoordinateNode ._mapping = "TEXCOORD_0";
+
       skin .textureCoordinateNode      .setup ();
       skin .multiTextureCoordinateNode .setup ();
       skin .normalNode                 .setup ();
@@ -2605,17 +2607,26 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
                for (const t of textureCoordinateNode ._texCoord)
                {
-                  let s = skinMultiTextureCoordinateNode ._texCoord .find (s => s .mapping === t .mapping);
+                  let s = skinMultiTextureCoordinateNode ._texCoord .find (s => s .mapping === t .mapping) ?.getValue ();
 
                   if (!s)
                   {
-                     s          = this .getScene () .createNode ("TextureCoordinate");
-                     s .mapping = t .mapping;
+                     if (t .mapping === "TEXCOORD_0")
+                     {
+                        s = skin .textureCoordinateNode;
+                     }
+                     else
+                     {
+                        s           = this .getScene () .createNode ("TextureCoordinate", false);
+                        s ._mapping = t .mapping;
+
+                        s .setup ();
+                     }
 
                      skinMultiTextureCoordinateNode ._texCoord .push (s);
                   }
 
-                  const point = s .point;
+                  const point = s ._point;
 
                   t .point .forEach ((p, i) => point [i + start] = p);
                }
