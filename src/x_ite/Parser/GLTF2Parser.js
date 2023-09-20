@@ -1683,13 +1683,15 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       skin .skeleton            = skin .skeleton ?? this .skeleton (skin .joints);
       skin .inverseBindMatrices = this .inverseBindMatricesAccessors (this .accessors [skin .inverseBindMatrices]);
 
-      skin .textureCoordinateNode = scene .createNode ("TextureCoordinate", false);
-      skin .normalNode            = scene .createNode ("Normal",            false);
-      skin .coordinateNode        = scene .createNode ("Coordinate",        false);
+      skin .textureCoordinateNode      = scene .createNode ("TextureCoordinate",      false);
+      skin .multiTextureCoordinateNode = scene .createNode ("MultiTextureCoordinate", false);
+      skin .normalNode                 = scene .createNode ("Normal",                 false);
+      skin .coordinateNode             = scene .createNode ("Coordinate",             false);
 
-      skin .textureCoordinateNode .setup ();
-      skin .normalNode            .setup ();
-      skin .coordinateNode        .setup ();
+      skin .textureCoordinateNode      .setup ();
+      skin .multiTextureCoordinateNode .setup ();
+      skin .normalNode                 .setup ();
+      skin .coordinateNode             .setup ();
    },
    jointsArray: function (joints)
    {
@@ -2570,13 +2572,11 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          return;
 
       const
-         skinTextureCoordinateNode = skin .textureCoordinateNode,
-         skinNormalNode            = skin .normalNode,
-         skinCoordinateNode        = skin .coordinateNode,
-         start                     = skinCoordinateNode ._point .length,
-         textureCoordinateNode     = geometryNode ._texCoord ?.getValue (),
-         normalNode                = geometryNode ._normal ?.getValue (),
-         coordinateNode            = geometryNode ._coord ?.getValue ();
+         skinCoordinateNode    = skin .coordinateNode,
+         start                 = skinCoordinateNode ._point .length,
+         textureCoordinateNode = geometryNode ._texCoord ?.getValue (),
+         normalNode            = geometryNode ._normal ?.getValue (),
+         coordinateNode        = geometryNode ._coord ?.getValue ();
 
       if (geometryNode ._coordIndex)
          geometryNode ._coordIndex = geometryNode ._coordIndex .map (index => index < 0 ? -1 : index + start);
@@ -2586,14 +2586,52 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       if (textureCoordinateNode)
       {
-         const point = skinTextureCoordinateNode ._point;
-         textureCoordinateNode ._point .forEach ((p, i) => point [i + start] = p);
-         geometryNode ._texCoord = skinTextureCoordinateNode;
+         switch (textureCoordinateNode .getTypeName ())
+         {
+            case "TextureCoordinate":
+            {
+               const
+                  skinTextureCoordinateNode = skin .textureCoordinateNode,
+                  point                     = skinTextureCoordinateNode ._point;
+
+               textureCoordinateNode ._point .forEach ((p, i) => point [i + start] = p);
+               geometryNode ._texCoord = skinTextureCoordinateNode;
+
+               break;
+            }
+            case "MultiTextureCoordinate":
+            {
+               const skinMultiTextureCoordinateNode = skin .multiTextureCoordinateNode;
+
+               for (const t of textureCoordinateNode ._texCoord)
+               {
+                  let s = skinMultiTextureCoordinateNode ._texCoord .find (s => s .mapping === t .mapping);
+
+                  if (!s)
+                  {
+                     s          = this .getScene () .createNode ("TextureCoordinate");
+                     s .mapping = t .mapping;
+
+                     skinMultiTextureCoordinateNode ._texCoord .push (s);
+                  }
+
+                  const point = s .point;
+
+                  t .point .forEach ((p, i) => point [i + start] = p);
+               }
+
+               geometryNode ._texCoord = skinMultiTextureCoordinateNode;
+               break;
+            }
+         }
       }
 
       if (normalNode)
       {
-         const vector = skinNormalNode ._vector;
+         const
+            skinNormalNode = skin .normalNode,
+            vector         = skinNormalNode ._vector;
+
          normalNode ._vector .forEach ((v, i) => vector [i + start] = v);
          geometryNode ._normal = skinNormalNode;
       }
