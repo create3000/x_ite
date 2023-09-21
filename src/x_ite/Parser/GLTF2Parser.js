@@ -722,7 +722,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          scene .addExportedNode (scene .getUniqueExportName (name), textureNode);
       }
 
-      textureNode ._url = images .map (image => image .uri);
+      textureNode ._url                  = images .map (image => image .uri);
+      textureNode ._colorSpaceConversion = false;
 
       const sampler = this .samplers [texture .sampler];
 

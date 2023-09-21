@@ -73,6 +73,8 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
       X3DTexture2DNode .prototype .initialize .call (this);
       X3DUrlObject     .prototype .initialize .call (this);
 
+      this ._colorSpaceConversion .addInterest ("loadNow", this);
+
       this .image .on ("load",        this .setImage .bind (this));
       this .image .on ("abort error", this .setError .bind (this));
       this .image .prop ("crossOrigin", "Anonymous");
@@ -174,7 +176,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
          else
          {
             const
-               data        = await this .getImageData (image),
+               data        = await this .getImageData (image, this ._colorSpaceConversion .getValue ()),
                transparent = this .isImageTransparent (data),
                width       = image .width,
                height      = image .height;
@@ -195,7 +197,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
          this .setError ({ type: error .message });
       }
    },
-   getImageData: async function (image, colorspaceConversion = true)
+   getImageData: async function (image, colorSpaceConversion = true)
    {
       const
          gl          = this .getBrowser () .getContext (),
@@ -205,7 +207,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
 
       gl .bindFramebuffer (gl .FRAMEBUFFER, framebuffer);
       gl .bindTexture (gl .TEXTURE_2D, texture);
-      gl .pixelStorei (gl .UNPACK_COLORSPACE_CONVERSION_WEBGL, colorspaceConversion ? gl .BROWSER_DEFAULT_WEBGL : gl .NONE);
+      gl .pixelStorei (gl .UNPACK_COLORSPACE_CONVERSION_WEBGL, colorSpaceConversion ? gl .BROWSER_DEFAULT_WEBGL : gl .NONE);
       gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA, gl .RGBA, gl .UNSIGNED_BYTE, image);
       gl .pixelStorei (gl .UNPACK_COLORSPACE_CONVERSION_WEBGL, gl .BROWSER_DEFAULT_WEBGL);
       gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .TEXTURE_2D, texture, 0);
@@ -283,6 +285,7 @@ Object .defineProperties (ImageTexture,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "colorSpaceConversion", new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatS",              new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatT",              new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties",    new Fields .SFNode ()),
