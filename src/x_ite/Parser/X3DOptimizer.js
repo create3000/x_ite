@@ -179,7 +179,7 @@ Object .assign (X3DOptimizer .prototype,
          if (!sourceNode .getNodeType () .includes (X3DConstants .X3DInterpolatorNode))
             continue;
 
-         if (sourceNode .keyValue .length !== 1)
+         if (sourceNode .key .length !== 1)
             continue;
 
          node [route .destinationField] = sourceNode .keyValue [0];
