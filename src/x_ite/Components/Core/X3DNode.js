@@ -1355,7 +1355,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
             if (!(secondParent instanceof Fields .MFNode))
                continue;
 
-            secondParent .assign (secondParent .filter (node => node ?.getValue () !== this))
+            secondParent .setValue ([... secondParent] .filter (node => node ?.getValue () !== this))
          }
       }
 

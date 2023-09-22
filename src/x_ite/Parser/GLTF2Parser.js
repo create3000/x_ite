@@ -69,9 +69,10 @@ function GLTF2Parser (scene)
 
    // Optimizer
 
-   this .removeGroups         = false;
-   this .removeEmptyGroups    = true;
-   this .combineGroupingNodes = true;
+   this .removeGroups          = false;
+   this .removeEmptyGroups     = true;
+   this .combineGroupingNodes  = true;
+   this .optimizeInterpolators = true;
 
    // Globals
 
@@ -212,7 +213,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       try
       {
-      this .optimizeSceneGraph (this .getExecutionContext () .getRootNodes ());
+         this .optimizeSceneGraph (this .getExecutionContext () .getRootNodes ());
       }
       catch (error)
       {

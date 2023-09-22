@@ -45,9 +45,10 @@
  *
  ******************************************************************************/
 
-import Vector3   from "../../standard/Math/Numbers/Vector3.js";
-import Rotation4 from "../../standard/Math/Numbers/Rotation4.js";
-import Matrix4   from "../../standard/Math/Numbers/Matrix4.js";
+import Vector3      from "../../standard/Math/Numbers/Vector3.js";
+import Rotation4    from "../../standard/Math/Numbers/Rotation4.js";
+import Matrix4      from "../../standard/Math/Numbers/Matrix4.js";
+import X3DConstants from "../Base/X3DConstants.js";
 
 function X3DOptimizer () { }
 
@@ -56,6 +57,7 @@ Object .assign (X3DOptimizer .prototype,
    removeGroups: false,
    removeEmptyGroups: false,
    combineGroupingNodes: false,
+   optimizeInterpolators: false,
    optimizeSceneGraph (nodes)
    {
       const removedNodes = [ ];
@@ -72,6 +74,9 @@ Object .assign (X3DOptimizer .prototype,
    {
       if (!node)
          return [ ];
+
+      if (this .optimizeInterpolators)
+         this .removeInterpolatorsWithOnlyOneValue (node, removedNodes);
 
       switch (node .getNodeTypeName ())
       {
@@ -159,6 +164,30 @@ Object .assign (X3DOptimizer .prototype,
       }
 
       return node;
+   },
+   removeInterpolatorsWithOnlyOneValue (node, removedNodes)
+   {
+      for (const field of node .getValue () .getFields ())
+      {
+         if (field .getInputRoutes () .size !== 1)
+            continue;
+
+         const
+            route      = Array .from (field .getInputRoutes ()) [0],
+            sourceNode = route .sourceNode;
+
+         if (!sourceNode .getNodeType () .includes (X3DConstants .X3DInterpolatorNode))
+            continue;
+
+         if (sourceNode .keyValue .length !== 1)
+            continue;
+
+         node [route .destinationField] = sourceNode .keyValue [0];
+
+         removedNodes .push (sourceNode);
+
+         route .dispose ();
+      }
    },
    combineSingleChild (node, removedNodes)
    {
