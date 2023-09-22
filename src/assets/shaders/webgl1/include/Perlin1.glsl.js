@@ -1,12 +1,12 @@
 export default /* glsl */ `
 //https://gist.github.com/patriciogonzalezvivo/670c22f3966e662d2f83
 
-float rand (vec2 co) { return fract (sin (dot (co.xy, vec2 (12.9898,78.233))) * 43758.5453); }
-float rand (vec2 co, float l) { return rand (vec2 (rand (co), l)); }
-float rand (vec2 co, float l, float t) { return rand (vec2 (rand (co, l), t)); }
+float rand (const in vec2 co) { return fract (sin (dot (co.xy, vec2 (12.9898,78.233))) * 43758.5453); }
+float rand (const in vec2 co, const in float l) { return rand (vec2 (rand (co), l)); }
+float rand (const in vec2 co, const in float l, const in float t) { return rand (vec2 (rand (co, l), t)); }
 
 float
-perlin (vec2 p, float dim, float time)
+perlin (const in vec2 p, const in float dim, const in float time)
 {
    const float M_PI = 3.14159265358979323846;
 
@@ -32,7 +32,7 @@ perlin (vec2 p, float dim, float time)
 }
 
 vec3
-perlin (vec3 p)
+perlin (const in vec3 p)
 {
    return vec3 (perlin (p.xy, 1.0, 0.0),
                 perlin (p.yz, 1.0, 0.0),
