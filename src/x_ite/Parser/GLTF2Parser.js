@@ -343,7 +343,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       if (name)
       {
-         scene .addNamedNode (scene .getUniqueName (name), lightNode);
+         scene .addNamedNode    (scene .getUniqueName       (name), lightNode);
          scene .addExportedNode (scene .getUniqueExportName (name), lightNode);
       }
 
@@ -617,7 +617,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
                if (name)
                {
-                  scene .addNamedNode (scene .getUniqueName (name), texturePropertiesNode);
+                  scene .addNamedNode    (scene .getUniqueName       (name), texturePropertiesNode);
                   scene .addExportedNode (scene .getUniqueExportName (name), texturePropertiesNode);
                }
 
@@ -718,7 +718,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       if (name)
       {
-         scene .addNamedNode (scene .getUniqueName (name), textureNode);
+         scene .addNamedNode    (scene .getUniqueName       (name), textureNode);
          scene .addExportedNode (scene .getUniqueExportName (name), textureNode);
       }
 
@@ -807,7 +807,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       if (name)
       {
-         scene .addNamedNode (scene .getUniqueName (name), appearanceNode);
+         scene .addNamedNode    (scene .getUniqueName       (name), appearanceNode);
          scene .addExportedNode (scene .getUniqueExportName (name), appearanceNode);
       }
 
@@ -1127,7 +1127,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       {
          for (const shapeNode of shapeNodes)
          {
-            scene .addNamedNode (scene .getUniqueName (name), shapeNode);
+            scene .addNamedNode    (scene .getUniqueName       (name), shapeNode);
             scene .addExportedNode (scene .getUniqueExportName (name), shapeNode);
          }
       }
@@ -1364,7 +1364,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       if (name)
       {
-         scene .addNamedNode (scene .getUniqueName (name), viewpointNode);
+         scene .addNamedNode    (scene .getUniqueName       (name), viewpointNode);
          scene .addExportedNode (scene .getUniqueExportName (name), viewpointNode);
       }
 
@@ -1509,7 +1509,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       if (name)
       {
-         scene .addNamedNode (scene .getUniqueName (name), transformNode);
+         scene .addNamedNode    (scene .getUniqueName       (name), transformNode);
          scene .addExportedNode (scene .getUniqueExportName (name), transformNode);
 
          if (transformNode .getTypeName () === "HAnimJoint")
@@ -1588,7 +1588,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
          if (name)
          {
-            scene .addNamedNode (scene .getUniqueName (name), humanoidNode);
+            scene .addNamedNode    (scene .getUniqueName       (name), humanoidNode);
             scene .addExportedNode (scene .getUniqueExportName (name), humanoidNode);
          }
 
@@ -1767,7 +1767,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
             const switchNode = scene .createNode ("Switch", false);
 
-            scene .addNamedNode (scene .getUniqueName ("Scenes"), switchNode);
+            scene .addNamedNode    (scene .getUniqueName       ("Scenes"), switchNode);
             scene .addExportedNode (scene .getUniqueExportName ("Scenes"), switchNode);
 
             // Scenes.
@@ -1808,7 +1808,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
             if (name)
             {
-               scene .addNamedNode (scene .getUniqueName (name), groupNode);
+               scene .addNamedNode    (scene .getUniqueName       (name), groupNode);
                scene .addExportedNode (scene .getUniqueExportName (name), groupNode);
             }
 
@@ -1840,7 +1840,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          scene     = this .getExecutionContext (),
          groupNode = scene .createNode ("Group", false);
 
-      scene .addNamedNode (scene .getUniqueName ("Animations"), groupNode);
+      scene .addNamedNode    (scene .getUniqueName       ("Animations"), groupNode);
       scene .addExportedNode (scene .getUniqueExportName ("Animations"), groupNode);
 
       groupNode ._children = animationNodes;
