@@ -39,7 +39,7 @@ sub glTF {
 
    @models = `find '$samples/glTF-Sample-Models/2.0'    -type f -name "*.gltf" -not -path '*/\.*' | grep "/glTF/" | sort`;
    @assets = `find '$samples/glTF-Sample-Assets/Models' -type f -name "*.gltf" -not -path '*/\.*' | grep "/glTF/" | sort`;
-   @files  = (@models, @assets);
+   @files  = grep { !m/\/glTF-Draco\/|\/glTF-Embedded\/|\/glTF-Quantized\/|glTF-KTX/  } (@models, @assets);
 
    s|/glTF-Sample-Models/|/glTF-Sample-Models/master/| foreach @files;
    s|/glTF-Sample-Assets/|/glTF-Sample-Assets/master/| foreach @files;
