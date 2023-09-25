@@ -20,8 +20,8 @@ timezone:
 # ↓ --------------------------
 
 title: X_ITE X3D Browser               # the main title
-version: 8.12.2                         # x_ite latest version
-size: 285                              # size in kb
+version: 8.12.3                         # x_ite latest version
+size: 286                              # size in kb
 x3d_latest_version: 4.0                # x3d latest version
 
 tagline: Step Into The Future          # it will display as the sub-title
