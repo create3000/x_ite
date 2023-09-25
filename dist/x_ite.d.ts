@@ -62,7 +62,7 @@ export interface X3D {
 }
 
 export interface X3DCanvasElement extends HTMLElement {
-   readonly browser: string;
+   readonly browser: X3DBrowser;
 }
 
 type JSONValue =
