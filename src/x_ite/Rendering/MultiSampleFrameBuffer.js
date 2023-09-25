@@ -73,7 +73,7 @@ function MultiSampleFrameBuffer (browser, width, height, samples, oit)
 
    gl .bindRenderbuffer (gl .RENDERBUFFER, this .colorBuffer);
 
-   if (samples)
+   if (samples && !oit)
       gl .renderbufferStorageMultisample (gl .RENDERBUFFER, samples, gl .RGBA8, width, height);
    else
       gl .renderbufferStorage (gl .RENDERBUFFER, gl .RGBA8, width, height);
@@ -86,7 +86,7 @@ function MultiSampleFrameBuffer (browser, width, height, samples, oit)
 
    gl .bindRenderbuffer (gl .RENDERBUFFER, this .depthBuffer);
 
-   if (samples)
+   if (samples && !oit)
       gl .renderbufferStorageMultisample (gl .RENDERBUFFER, samples, gl .DEPTH_COMPONENT24, width, height);
    else
       gl .renderbufferStorage (gl .RENDERBUFFER, gl .DEPTH_COMPONENT24, width, height);
@@ -140,7 +140,11 @@ function MultiSampleFrameBuffer (browser, width, height, samples, oit)
 
       // Add depth buffer.
 
-      gl .framebufferRenderbuffer (gl .FRAMEBUFFER, gl .DEPTH_ATTACHMENT, gl .RENDERBUFFER, this .depthBuffer);
+      this .oitDepthBuffer = gl .createRenderbuffer ();
+
+      gl .bindRenderbuffer (gl .RENDERBUFFER, this .oitDepthBuffer);
+      gl .renderbufferStorageMultisample (gl .RENDERBUFFER, samples, gl .DEPTH_COMPONENT24, width, height);
+      gl .framebufferRenderbuffer (gl .FRAMEBUFFER, gl .DEPTH_ATTACHMENT, gl .RENDERBUFFER, this .oitDepthBuffer);
 
       // Create accum texture buffer.
 
@@ -210,7 +214,11 @@ function MultiSampleFrameBuffer (browser, width, height, samples, oit)
 
       // Add depth buffer.
 
-      gl .framebufferRenderbuffer (gl .FRAMEBUFFER, gl .DEPTH_ATTACHMENT, gl .RENDERBUFFER, this .depthBuffer);
+      this .oitDepthBuffer = gl .createRenderbuffer ();
+
+      gl .bindRenderbuffer (gl .RENDERBUFFER, this .oitDepthBuffer);
+      gl .renderbufferStorage (gl .RENDERBUFFER, gl .DEPTH_COMPONENT24, width, height);
+      gl .framebufferRenderbuffer (gl .FRAMEBUFFER, gl .DEPTH_ATTACHMENT, gl .RENDERBUFFER, this .oitDepthBuffer);
    }
 
    const status2 = gl .checkFramebufferStatus (gl .FRAMEBUFFER) === gl .FRAMEBUFFER_COMPLETE;
@@ -278,6 +286,21 @@ Object .assign (MultiSampleFrameBuffer .prototype,
       gl .clearColor (0, 0, 0, 0);
       gl .clear (gl .COLOR_BUFFER_BIT);
    },
+   blit ()
+   {
+      const { context: gl, width, height, samples, frameBuffer, oit } = this;
+
+      // Reset viewport before blit, otherwise only last layer size is used.
+      gl .viewport (0, 0, width, height);
+      gl .scissor  (0, 0, width, height);
+
+      gl .bindFramebuffer (gl .READ_FRAMEBUFFER, frameBuffer);
+      gl .bindFramebuffer (gl .DRAW_FRAMEBUFFER, null);
+
+      gl .blitFramebuffer (0, 0, width, height,
+                           0, 0, width, height,
+                           gl .COLOR_BUFFER_BIT, samples && !oit ? gl .LINEAR : gl .NEAREST);
+   },
    bindForOrderIndependentTransparency ()
    {
       const { context: gl, lastBuffer, oitFrameBuffer } = this;
@@ -290,20 +313,11 @@ Object .assign (MultiSampleFrameBuffer .prototype,
       gl .clear (gl .COLOR_BUFFER_BIT);
       gl .blendFuncSeparate (gl .ONE, gl .ONE, gl .ZERO, gl .ONE_MINUS_SRC_ALPHA);
    },
-   blit ()
+   unbind ()
    {
-      const { context: gl, width, height, samples } = this;
+      const { context: gl, lastBuffer } = this;
 
-      // Reset viewport before blit, otherwise only last layer size is used.
-      gl .viewport (0, 0, width, height);
-      gl .scissor  (0, 0, width, height);
-
-      gl .bindFramebuffer (gl .READ_FRAMEBUFFER, this .frameBuffer);
-      gl .bindFramebuffer (gl .DRAW_FRAMEBUFFER, null);
-
-      gl .blitFramebuffer (0, 0, width, height,
-                           0, 0, width, height,
-                           gl .COLOR_BUFFER_BIT, samples ? gl .LINEAR : gl .NEAREST);
+      gl .bindFramebuffer (gl .FRAMEBUFFER, lastBuffer .pop ());
    },
    compose ()
    {
@@ -352,12 +366,6 @@ Object .assign (MultiSampleFrameBuffer .prototype,
       gl .disable (gl .BLEND);
       gl .enable (gl .DEPTH_TEST);
    },
-   unbind ()
-   {
-      const { context: gl, lastBuffer } = this;
-
-      gl .bindFramebuffer (gl .FRAMEBUFFER, lastBuffer .pop ());
-   },
    dispose ()
    {
       const gl = this .context;
@@ -369,6 +377,7 @@ Object .assign (MultiSampleFrameBuffer .prototype,
       gl .deleteFramebuffer (this .oitFrameBuffer);
       gl .deleteFramebuffer (this .accumRevealageTextureBuffer);
       gl .deleteFramebuffer (this .alphaTextureBuffer);
+      gl .deleteRenderbuffer (this .oitDepthBuffer);
       gl .deleteRenderbuffer (this .accumRevealageBuffer);
       gl .deleteRenderbuffer (this .alphaBuffer);
       gl .deleteTexture (this .accumRevealageTexture);

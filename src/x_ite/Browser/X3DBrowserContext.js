@@ -309,6 +309,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
       this [_processEvents] ();
 
       this .getFrameBuffer () .blit ();
+      this .getFrameBuffer () .unbind ();
 
       this [_displayTime] .stop ();
 
