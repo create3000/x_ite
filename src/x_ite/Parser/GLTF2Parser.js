@@ -1669,7 +1669,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             translation = this .accessors [attributes ?.TRANSLATION],
             rotation    = this .accessors [attributes ?.ROTATION],
             scale       = this .accessors [attributes ?.SCALE],
-            count       = (translation ?? rotation ?? scale) ?.count;
+            count       = Math .max (translation ?.count ?? 0, rotation ?.count ?? 0, scale ?.count ?? 0);
 
          if (!count)
             return shapeNodes;
