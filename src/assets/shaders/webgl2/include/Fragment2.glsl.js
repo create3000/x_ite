@@ -145,8 +145,8 @@ fragment_main ()
       float a = finalColor .a;
       float w = weight (gl_FragCoord .z, a);
 
-      finalColor.rgb *= a;
-      finalColor     *= w;
+      finalColor .rgb *= a;
+      finalColor      *= w;
 
       x3d_FragData0 = vec4 (finalColor .rgb, a);
       x3d_FragData1 = vec4 (finalColor .a);
@@ -155,7 +155,7 @@ fragment_main ()
    #endif
 
    #if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
-      //https://outerra.blogspot.com/2013/07/logarithmic-depth-buffer-optimizations.html
+      // https://outerra.blogspot.com/2013/07/logarithmic-depth-buffer-optimizations.html
       gl_FragDepth = log2 (depth) * x3d_LogarithmicFarFactor1_2;
    #endif
 }
