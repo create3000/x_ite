@@ -1658,100 +1658,81 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       transformNode ._children .push (lightNode);
    },
-   meshInstancing (EXT_mesh_gpu_instancing, shapeNodes)
+   meshInstancing: (function ()
    {
-      let
-         attributes  = EXT_mesh_gpu_instancing .attributes,
-         translation = this .accessors [attributes ?.TRANSLATION],
-         rotation    = this .accessors [attributes ?.ROTATION],
-         scale       = this .accessors [attributes ?.SCALE],
-         count       = (translation ?? rotation ?? scale) ?.count;
+      const divisors = new Map ([[5120, 127], [5122, 32767], [5126, 1]]);
 
-      if (!count)
-         return shapeNodes;
-
-      if (translation)
+      return function (EXT_mesh_gpu_instancing, shapeNodes)
       {
-         if (translation .type !== "VEC3" || translation .componentType !== 5126)
-            translation = null;
-      }
+         let
+            attributes  = EXT_mesh_gpu_instancing .attributes,
+            translation = this .accessors [attributes ?.TRANSLATION],
+            rotation    = this .accessors [attributes ?.ROTATION],
+            scale       = this .accessors [attributes ?.SCALE],
+            count       = (translation ?? rotation ?? scale) ?.count;
 
-      if (rotation)
-      {
-         if (rotation .type !== "VEC4" || !(rotation .componentType === 5120 || rotation .componentType === 5122 || rotation .componentType === 5126))
-            rotation = null;
-      }
+         if (!count)
+            return shapeNodes;
 
-      if (scale)
-      {
-         if (scale .type !== "VEC3" || scale .componentType !== 5126)
-            scale = null;
-      }
-
-      const
-         scene          = this .getScene (),
-         transformNodes = [ ];
-
-      for (let i = 0; i < count; ++ i)
-      {
-         const transformNode = scene .createNode ("Transform", false);
-
-         if (translation && i < translation .count)
+         if (translation)
          {
-            transformNode ._translation = new Vector3 (translation .array [i * 3 + 0],
-                                                       translation .array [i * 3 + 1],
-                                                       translation .array [i * 3 + 2]);
+            if (translation .type !== "VEC3" || translation .componentType !== 5126)
+               translation = null;
          }
 
-         if (rotation && i < rotation .count)
+         if (rotation)
          {
-            switch (rotation .componentType)
+            if (rotation .type !== "VEC4" || !(rotation .componentType === 5120 || rotation .componentType === 5122 || rotation .componentType === 5126))
+               rotation = null;
+         }
+
+         if (scale)
+         {
+            if (scale .type !== "VEC3" || scale .componentType !== 5126)
+               scale = null;
+         }
+
+         const
+            scene          = this .getScene (),
+            transformNodes = [ ];
+
+         for (let i = 0; i < count; ++ i)
+         {
+            const transformNode = scene .createNode ("Transform", false);
+
+            if (translation && i < translation .count)
             {
-               case 5120: // Int8Array
-               {
-                  transformNode ._rotation = new Rotation4 (new Quaternion (rotation .array [i * 4 + 0] / 127,
-                                                                            rotation .array [i * 4 + 1] / 127,
-                                                                            rotation .array [i * 4 + 2] / 127,
-                                                                            rotation .array [i * 4 + 3] / 127));
-
-                  break;
-               }
-               case 5122: // Int16Array
-               {
-                  transformNode ._rotation = new Rotation4 (new Quaternion (rotation .array [i * 4 + 0] / 32767,
-                                                                            rotation .array [i * 4 + 1] / 32767,
-                                                                            rotation .array [i * 4 + 2] / 32767,
-                                                                            rotation .array [i * 4 + 3] / 32767));
-
-                  break;
-               }
-               case 5126: // float
-               {
-                  transformNode ._rotation = new Rotation4 (new Quaternion (rotation .array [i * 4 + 0],
-                                                                            rotation .array [i * 4 + 1],
-                                                                            rotation .array [i * 4 + 2],
-                                                                            rotation .array [i * 4 + 3]));
-
-                  break;
-               }
+               transformNode ._translation = new Vector3 (translation .array [i * 3 + 0],
+                                                          translation .array [i * 3 + 1],
+                                                          translation .array [i * 3 + 2]);
             }
+
+            if (rotation && i < rotation .count)
+            {
+               const divisor = divisors .get (rotation .componentType);
+
+               transformNode ._rotation = new Rotation4 (new Quaternion (rotation .array [i * 4 + 0] / divisor,
+                                                                         rotation .array [i * 4 + 1] / divisor,
+                                                                         rotation .array [i * 4 + 2] / divisor,
+                                                                         rotation .array [i * 4 + 3] / divisor));
+            }
+
+            if (scale && i < scale .count)
+            {
+               transformNode ._scale = new Vector3 (scale .array [i * 3 + 0],
+                                                    scale .array [i * 3 + 1],
+                                                    scale .array [i * 3 + 2]);
+            }
+
+            transformNode ._children = shapeNodes;
+
+            transformNode .setup ();
+            transformNodes .push (transformNode);
          }
 
-         if (scale && i < scale .count)
-         {
-            transformNode ._scale = new Vector3 (scale .array [i * 3 + 0],
-                                                 scale .array [i * 3 + 1],
-                                                 scale .array [i * 3 + 2]);
-         }
-
-         transformNode ._children = shapeNodes;
-
-         transformNode .setup ();
-         transformNodes .push (transformNode);
-      }
-
-      return transformNodes;
-   },
+         return transformNodes;
+      };
+   })(),
    nodeChildrenArray (children)
    {
       if (!(children instanceof Array))
