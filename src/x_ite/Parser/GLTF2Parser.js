@@ -524,6 +524,42 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             },
             configurable: true,
          });
+
+         Object .defineProperty (accessor, "floatArray",
+         {
+            get: () =>
+            {
+               switch (accessor .componentType)
+               {
+                  case 5120: // Int8Array
+                     var value = Float32Array .from (accessor .array, v => Math .max (v / 127, -1));
+                     break;
+                  case 5122: // Int16Array
+                     var value = Float32Array .from (accessor .array, v => Math .max (v / 32767, -1));
+                     break;
+                  case 5124: // Int32Array
+                     var value = Float32Array .from (accessor .array, v => Math .max (v / 2147483647, -1));
+                     break;
+                  case 5121: // Uint8Array
+                     var value = Float32Array .from (accessor .array, v => v / 255);
+                     break;
+                  case 5123: // Uint16Array
+                     var value = Float32Array .from (accessor .array, v => v / 65535);
+                     break;
+                  case 5125: // Uint32Array
+                     var value = Float32Array .from (accessor .array, v => v / 4294967295);
+                     break;
+                  case 5126: // Float32Array
+                     var value = accessor .array;
+                     break;
+               }
+
+               Object .defineProperty (accessor, "floatArray", { value: value });
+
+               return value;
+            },
+            configurable: true,
+         });
       };
    })(),
    sparseObject: (() =>
@@ -1658,81 +1694,74 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       transformNode ._children .push (lightNode);
    },
-   meshInstancing: (function ()
+   meshInstancing (EXT_mesh_gpu_instancing, shapeNodes)
    {
-      const divisors = new Map ([[5120, 127], [5122, 32767], [5126, 1]]);
+      let
+         attributes  = EXT_mesh_gpu_instancing .attributes,
+         translation = this .accessors [attributes ?.TRANSLATION],
+         rotation    = this .accessors [attributes ?.ROTATION],
+         scale       = this .accessors [attributes ?.SCALE],
+         count       = Math .max (translation ?.count ?? 0, rotation ?.count ?? 0, scale ?.count ?? 0);
 
-      return function (EXT_mesh_gpu_instancing, shapeNodes)
+      if (!count)
+         return shapeNodes;
+
+      if (translation)
       {
-         let
-            attributes  = EXT_mesh_gpu_instancing .attributes,
-            translation = this .accessors [attributes ?.TRANSLATION],
-            rotation    = this .accessors [attributes ?.ROTATION],
-            scale       = this .accessors [attributes ?.SCALE],
-            count       = Math .max (translation ?.count ?? 0, rotation ?.count ?? 0, scale ?.count ?? 0);
+         if (translation .type !== "VEC3" || translation .componentType !== 5126)
+            translation = null;
+      }
 
-         if (!count)
-            return shapeNodes;
+      if (rotation)
+      {
+         if (rotation .type !== "VEC4" || !(rotation .componentType === 5120 || rotation .componentType === 5122 || rotation .componentType === 5126))
+            rotation = null;
+      }
 
-         if (translation)
+      if (scale)
+      {
+         if (scale .type !== "VEC3" || scale .componentType !== 5126)
+            scale = null;
+      }
+
+      const
+         scene          = this .getScene (),
+         transformNodes = [ ];
+
+      for (let i = 0; i < count; ++ i)
+      {
+         const transformNode = scene .createNode ("Transform", false);
+
+         if (translation && i < translation .count)
          {
-            if (translation .type !== "VEC3" || translation .componentType !== 5126)
-               translation = null;
+            transformNode ._translation = new Vector3 (translation .array [i * 3 + 0],
+                                                       translation .array [i * 3 + 1],
+                                                       translation .array [i * 3 + 2]);
          }
 
-         if (rotation)
+         if (rotation && i < rotation .count)
          {
-            if (rotation .type !== "VEC4" || !(rotation .componentType === 5120 || rotation .componentType === 5122 || rotation .componentType === 5126))
-               rotation = null;
+            transformNode ._rotation = new Rotation4 (new Quaternion (rotation .floatArray [i * 4 + 0],
+                                                                      rotation .floatArray [i * 4 + 1],
+                                                                      rotation .floatArray [i * 4 + 2],
+                                                                      rotation .floatArray [i * 4 + 3]));
          }
 
-         if (scale)
+         if (scale && i < scale .count)
          {
-            if (scale .type !== "VEC3" || scale .componentType !== 5126)
-               scale = null;
+            transformNode ._scale = new Vector3 (scale .array [i * 3 + 0],
+                                                 scale .array [i * 3 + 1],
+                                                 scale .array [i * 3 + 2]);
          }
 
-         const
-            scene          = this .getScene (),
-            transformNodes = [ ];
+         transformNode ._children = shapeNodes;
 
-         for (let i = 0; i < count; ++ i)
-         {
-            const transformNode = scene .createNode ("Transform", false);
+         transformNode .setup ();
+         transformNodes .push (transformNode);
+      }
 
-            if (translation && i < translation .count)
-            {
-               transformNode ._translation = new Vector3 (translation .array [i * 3 + 0],
-                                                          translation .array [i * 3 + 1],
-                                                          translation .array [i * 3 + 2]);
-            }
-
-            if (rotation && i < rotation .count)
-            {
-               const divisor = divisors .get (rotation .componentType);
-
-               transformNode ._rotation = new Rotation4 (new Quaternion (rotation .array [i * 4 + 0] / divisor,
-                                                                         rotation .array [i * 4 + 1] / divisor,
-                                                                         rotation .array [i * 4 + 2] / divisor,
-                                                                         rotation .array [i * 4 + 3] / divisor));
-            }
-
-            if (scale && i < scale .count)
-            {
-               transformNode ._scale = new Vector3 (scale .array [i * 3 + 0],
-                                                    scale .array [i * 3 + 1],
-                                                    scale .array [i * 3 + 2]);
-            }
-
-            transformNode ._children = shapeNodes;
-
-            transformNode .setup ();
-            transformNodes .push (transformNode);
-         }
-
-         return transformNodes;
-      };
-   })(),
+      return transformNodes;
+   },
    nodeChildrenArray (children)
    {
       if (!(children instanceof Array))
@@ -2444,29 +2473,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             opaque         = appearanceNode ._alphaMode .getValue () === "OPAQUE",
             colorNode      = scene .createNode (opaque ? "Color" : typeName, false);
 
-         const array = opaque && typeName !== "Color"
-            ? color .array .filter ((_, i) => (i + 1) % 4)
-            : color .array;
-
-         switch (color .componentType)
-         {
-            case 5120: // Int8Array
-            case 5122: // Int16Array
-            case 5124: // Int32Array
-               break;
-            case 5121: // Uint8Array
-               colorNode ._color = array .map (v => v / 0xff);
-               break;
-            case 5123: // Uint16Array
-               colorNode ._color = array .map (v => v / 0xffff);
-               break;
-            case 5125: // Uint32Array
-               colorNode ._color = array .map (v => v / 0xffffffff);
-               break;
-            case 5126: // Float32Array
-               colorNode ._color = array;
-               break;
-         }
+         colorNode ._color = opaque && typeName !== "Color"
+            ? color .floatArray .filter ((_, i) => (i + 1) % 4)
+            : color .floatArray;
 
          colorNode .setup ();
 
