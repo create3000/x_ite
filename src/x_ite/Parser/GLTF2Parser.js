@@ -534,17 +534,17 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
                   case 5120: // Int8Array
                      var value = Float32Array .from (accessor .array, v => Math .max (v / 127, -1));
                      break;
-                  case 5122: // Int16Array
-                     var value = Float32Array .from (accessor .array, v => Math .max (v / 32767, -1));
-                     break;
-                  case 5124: // Int32Array
-                     var value = Float32Array .from (accessor .array, v => Math .max (v / 2147483647, -1));
-                     break;
                   case 5121: // Uint8Array
                      var value = Float32Array .from (accessor .array, v => v / 255);
                      break;
+                  case 5122: // Int16Array
+                     var value = Float32Array .from (accessor .array, v => Math .max (v / 32767, -1));
+                     break;
                   case 5123: // Uint16Array
                      var value = Float32Array .from (accessor .array, v => v / 65535);
+                     break;
+                  case 5124: // Int32Array
+                     var value = Float32Array .from (accessor .array, v => Math .max (v / 2147483647, -1));
                      break;
                   case 5125: // Uint32Array
                      var value = Float32Array .from (accessor .array, v => v / 4294967295);
@@ -2550,7 +2550,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          scene      = this .getExecutionContext (),
          normalNode = scene .createNode ("Normal", false);
 
-      normalNode ._vector = normal .array;
+      normalNode ._vector = normal .normalizedArray;
 
       if ((targets instanceof Array) && (weights instanceof Array))
       {
@@ -2798,7 +2798,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
                if (!geometryNode)
                   continue;
 
-               const coordinateInterpolatorNode = this .createArrayInterpolator ("Coordinate", interpolation, times, keyValues .normalizedArray, cycleInterval, targets, attributes, "POSITION");
+               const coordinateInterpolatorNode = this .createArrayInterpolator ("CoordinateInterpolator", interpolation, times, keyValues .normalizedArray, cycleInterval, targets, attributes, "POSITION", false);
 
                if (coordinateInterpolatorNode)
                {
@@ -2808,7 +2808,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
                   scene .addRoute (coordinateInterpolatorNode, "value_changed", geometryNode ._coord, "set_point");
                }
 
-               const normalInterpolatorNode = this .createArrayInterpolator ("Normal", interpolation, times, keyValues .normalizedArray, cycleInterval, targets, attributes, "NORMAL");
+               const normalInterpolatorNode = this .createArrayInterpolator ("NormalInterpolator", interpolation, times, keyValues .normalizedArray, cycleInterval, targets, attributes, "NORMAL", true);
 
                if (normalInterpolatorNode)
                {
@@ -2885,8 +2885,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
                                            keyValues [i + 2]));
             }
 
-            const samples = [... Array (Math .floor (times .at (-1) * SAMPLES_PER_SECOND)) .keys ()]
-               .map ((_, i, array) => i / (array .length - 1) * times .at (-1));
+            const
+               length  = Math .floor (times .at (-1) * SAMPLES_PER_SECOND),
+               samples = Array .from ({ length: length }, (_, i) => i / (length - 1) * times .at (-1))
 
             for (const t of samples)
             {
@@ -2975,8 +2976,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
                                                   keyValues [i + 3]));
             }
 
-            const samples = [... Array (Math .floor (times .at (-1) * SAMPLES_PER_SECOND)) .keys ()]
-               .map ((_, i, array) => i / (array .length - 1) * times .at (-1));
+            const
+               length  = Math .floor (times .at (-1) * SAMPLES_PER_SECOND),
+               samples = Array .from ({ length: length }, (_, i) => i / (length - 1) * times .at (-1))
 
             for (const t of samples)
             {
@@ -2992,7 +2994,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          }
       }
    },
-   createArrayInterpolator (Type, interpolation, times, weights, cycleInterval, targets, accessors, key)
+   createArrayInterpolator (typeName, interpolation, times, weights, cycleInterval, targets, accessors, key, normalized)
    {
       const
          scene    = this .getExecutionContext (),
@@ -3005,7 +3007,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       {
          case "STEP":
          {
-            const interpolatorNode = scene .createNode (`${Type}Interpolator`, false);
+            const interpolatorNode = scene .createNode (typeName, false);
 
             // Key
 
@@ -3018,14 +3020,14 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
             const w = Array .from (targets .keys (), i => weights [i]);
 
-            for (const value of this .applyMorphTargets (accessor .field, targets, key, w))
+            for (const value of this .applyMorphTargets (accessor .field, targets, key, w, normalized))
                interpolatorNode ._keyValue .push (value);
 
             for (let t = 1, length = times .length; t < length; ++ t)
             {
                const
                   w      = Array .from (targets .keys (), i => weights [t * targets .length + i]),
-                  values = this .applyMorphTargets (accessor .field, targets, key, w);
+                  values = this .applyMorphTargets (accessor .field, targets, key, w, normalized);
 
                for (const value of values)
                   interpolatorNode ._keyValue .push (value);
@@ -3043,7 +3045,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          default:
          case "LINEAR":
          {
-            const interpolatorNode = scene .createNode (`${Type}Interpolator`, false);
+            const interpolatorNode = scene .createNode (typeName, false);
 
             // Key
 
@@ -3055,7 +3057,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             {
                const w = Array .from (targets .keys (), i => weights [t * targets .length + i]);
 
-               for (const value of this .applyMorphTargets (accessor .field, targets, key, w))
+               for (const value of this .applyMorphTargets (accessor .field, targets, key, w, normalized))
                   interpolatorNode ._keyValue .push (value);
             }
 
@@ -3067,12 +3069,13 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          }
          case "CUBICSPLINE":
          {
-            const interpolatorNode = scene .createNode (`${Type}Interpolator`, false);
+            const interpolatorNode = scene .createNode (typeName, false);
 
             // Key
 
-            const samples = [... Array (Math .floor (times .at (-1) * SAMPLES_PER_SECOND)) .keys ()]
-               .map ((_, i, array) => i / (array .length - 1) * times .at (-1));
+            const
+               length  = Math .floor (times .at (-1) * SAMPLES_PER_SECOND),
+               samples = Array .from ({ length: length }, (_, i) => i / (length - 1) * times .at (-1))
 
             // KeyValue
 
@@ -3082,7 +3085,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
                const w = Array .from (targets .keys (), i => this .cubicSplineScalarArray (t, times, weights, targets .length, i));
 
-               for (const value of this .applyMorphTargets (accessor .field, targets, key, w))
+               for (const value of this .applyMorphTargets (accessor .field, targets, key, w, normalized))
                   interpolatorNode ._keyValue .push (value);
             }
 
@@ -3098,7 +3101,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    {
       const value = new Vector3 (0, 0, 0);
 
-      return function (array, targets, key, weights)
+      return function (array, targets, key, weights, normalized)
       {
          const vectors = Array .from (array, v => v .getValue () .copy ());
 
@@ -3115,7 +3118,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
                continue;
 
             const
-               array  = accessor .normalizedArray,
+               array  = accessor [normalized ? "normalizedArray" : "array"],
                length = array .length;
 
             for (let a = 0, p = 0; a < length; a += 3, ++ p)
