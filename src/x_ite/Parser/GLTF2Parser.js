@@ -525,7 +525,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             configurable: true,
          });
 
-         Object .defineProperty (accessor, "floatArray",
+         Object .defineProperty (accessor, "normalizedArray",
          {
             get: () =>
             {
@@ -554,7 +554,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
                      break;
                }
 
-               Object .defineProperty (accessor, "floatArray", { value: value });
+               Object .defineProperty (accessor, "normalizedArray", { value: value });
 
                return value;
             },
@@ -1719,7 +1719,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          scene          = this .getScene (),
          transformNodes = [ ],
          tArray         = translation ?.array,
-         rArray         = rotation ?.floatArray,
+         rArray         = rotation ?.normalizedArray,
          sArray         = scale ?.array;
 
       for (let i = 0; i < count; ++ i)
@@ -2468,8 +2468,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             colorNode      = scene .createNode (opaque ? "Color" : typeName, false);
 
          colorNode ._color = opaque && typeName !== "Color"
-            ? color .floatArray .filter ((_, i) => (i + 1) % 4)
-            : color .floatArray;
+            ? color .normalizedArray .filter ((_, i) => (i + 1) % 4)
+            : color .normalizedArray;
 
          colorNode .setup ();
 
@@ -2532,7 +2532,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          textureCoordinateNode = scene .createNode ("TextureCoordinate", false);
 
       textureCoordinateNode ._mapping = mapping;
-      textureCoordinateNode ._point   = texCoord .floatArray;
+      textureCoordinateNode ._point   = texCoord .normalizedArray;
 
       textureCoordinateNode .setup ();
 
@@ -2631,7 +2631,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       const
          start        = skin .coordinateNode ._point .length,
          jointsArray  = joints .array,
-         weightsArray = weights .floatArray,
+         weightsArray = weights .normalizedArray,
          numVertices  = jointsArray .length / 4;
 
       for (let v = 0; v < numVertices; ++ v)
@@ -2760,7 +2760,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          }
          case "rotation":
          {
-            const interpolatorNode = this .createOrientationInterpolator (interpolation, times, keyValues .floatArray, cycleInterval);
+            const interpolatorNode = this .createOrientationInterpolator (interpolation, times, keyValues .normalizedArray, cycleInterval);
 
             scene .addNamedNode (scene .getUniqueName ("RotationInterpolator"), interpolatorNode);
 
@@ -2798,7 +2798,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
                if (!geometryNode)
                   continue;
 
-               const coordinateInterpolatorNode = this .createArrayInterpolator ("Coordinate", interpolation, times, keyValues .floatArray, cycleInterval, targets, attributes, "POSITION");
+               const coordinateInterpolatorNode = this .createArrayInterpolator ("Coordinate", interpolation, times, keyValues .normalizedArray, cycleInterval, targets, attributes, "POSITION");
 
                if (coordinateInterpolatorNode)
                {
@@ -2808,7 +2808,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
                   scene .addRoute (coordinateInterpolatorNode, "value_changed", geometryNode ._coord, "set_point");
                }
 
-               const normalInterpolatorNode = this .createArrayInterpolator ("Normal", interpolation, times, keyValues .floatArray, cycleInterval, targets, attributes, "NORMAL");
+               const normalInterpolatorNode = this .createArrayInterpolator ("Normal", interpolation, times, keyValues .normalizedArray, cycleInterval, targets, attributes, "NORMAL");
 
                if (normalInterpolatorNode)
                {
@@ -3115,7 +3115,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
                continue;
 
             const
-               array  = accessor .array,
+               array  = accessor .normalizedArray,
                length = array .length;
 
             for (let a = 0, p = 0; a < length; a += 3, ++ p)
