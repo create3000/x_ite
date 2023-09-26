@@ -1717,7 +1717,10 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       const
          scene          = this .getScene (),
-         transformNodes = [ ];
+         transformNodes = [ ],
+         tArray         = translation ?.array,
+         rArray         = rotation ?.floatArray,
+         sArray         = scale ?.array;
 
       for (let i = 0; i < count; ++ i)
       {
@@ -1725,24 +1728,24 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
          if (translation && i < translation .count)
          {
-            transformNode ._translation = new Vector3 (translation .array [i * 3 + 0],
-                                                       translation .array [i * 3 + 1],
-                                                       translation .array [i * 3 + 2]);
+            transformNode ._translation = new Vector3 (tArray [i * 3 + 0],
+                                                       tArray [i * 3 + 1],
+                                                       tArray [i * 3 + 2]);
          }
 
          if (rotation && i < rotation .count)
          {
-            transformNode ._rotation = new Rotation4 (new Quaternion (rotation .floatArray [i * 4 + 0],
-                                                                      rotation .floatArray [i * 4 + 1],
-                                                                      rotation .floatArray [i * 4 + 2],
-                                                                      rotation .floatArray [i * 4 + 3]));
+            transformNode ._rotation = new Rotation4 (new Quaternion (rArray [i * 4 + 0],
+                                                                      rArray [i * 4 + 1],
+                                                                      rArray [i * 4 + 2],
+                                                                      rArray [i * 4 + 3]));
          }
 
          if (scale && i < scale .count)
          {
-            transformNode ._scale = new Vector3 (scale .array [i * 3 + 0],
-                                                 scale .array [i * 3 + 1],
-                                                 scale .array [i * 3 + 2]);
+            transformNode ._scale = new Vector3 (sArray [i * 3 + 0],
+                                                 sArray [i * 3 + 1],
+                                                 sArray [i * 3 + 2]);
          }
 
          transformNode ._children = shapeNodes;
