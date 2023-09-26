@@ -1706,23 +1706,14 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       if (!count)
          return shapeNodes;
 
-      if (translation)
-      {
-         if (translation .type !== "VEC3" || translation .componentType !== 5126)
-            translation = null;
-      }
+      if (translation ?.type !== "VEC3")
+         translation = null;
 
-      if (rotation)
-      {
-         if (rotation .type !== "VEC4" || !(rotation .componentType === 5120 || rotation .componentType === 5122 || rotation .componentType === 5126))
-            rotation = null;
-      }
+      if (rotation ?.type !== "VEC4")
+         rotation = null;
 
-      if (scale)
-      {
-         if (scale .type !== "VEC3" || scale .componentType !== 5126)
-            scale = null;
-      }
+      if (scale ?.type !== "VEC3")
+         scale = null;
 
       const
          scene          = this .getScene (),
