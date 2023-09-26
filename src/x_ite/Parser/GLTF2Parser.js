@@ -304,12 +304,12 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          }
       }
    },
-   khrLightsPunctualObject (khrLightsPunctual)
+   khrLightsPunctualObject (KHR_lights_punctual)
    {
-      if (!(khrLightsPunctual instanceof Object))
+      if (!(KHR_lights_punctual instanceof Object))
          return;
 
-      this .lightsArray (khrLightsPunctual .lights);
+      this .lightsArray (KHR_lights_punctual .lights);
    },
    lightsArray (lights)
    {
@@ -1666,12 +1666,12 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       humanoidNode ._skin .push (transformNode);
    },
-   nodeLight (khrLightsPunctual, transformNode)
+   nodeLight (KHR_lights_punctual, transformNode)
    {
-      if (!(khrLightsPunctual instanceof Object))
+      if (!(KHR_lights_punctual instanceof Object))
          return;
 
-      const lightNode = this .lightObject (this .lights [khrLightsPunctual .light]);
+      const lightNode = this .lightObject (this .lights [KHR_lights_punctual .light]);
 
       if (!lightNode)
          return;
@@ -1682,7 +1682,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    },
    meshInstancing (EXT_mesh_gpu_instancing, shapeNodes)
    {
-      if (!EXT_mesh_gpu_instancing)
+      if (!(EXT_mesh_gpu_instancing instanceof Object))
          return shapeNodes;
 
       let
