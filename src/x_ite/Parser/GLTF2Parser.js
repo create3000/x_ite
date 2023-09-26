@@ -797,7 +797,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       const texCoordIndices = this .texCoordIndices ("", material);
 
-      this .texCoordIndex         = [... texCoordIndices] .reduce (Math .max, -1);
+      this .texCoordIndex         = Array .from (texCoordIndices) .reduce (Math .max, -1);
       this .textureTransformNodes = [ ];
       this .texCoordMappings      = new Map ();
       material .texCoordMappings  = this .texCoordMappings;
@@ -1761,11 +1761,11 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       if (!(children instanceof Array))
          return [ ];
 
-      const nodes = [... new Set (children
+      const nodes = Array .from (new Set (children
          .map (index => this .nodes [index] ?.childNode)
          .filter (node => node)
          .filter (node => node .getTypeName () !== "HAnimHumanoid" || !node .getCloneCount ())
-      )];
+      ));
 
       return nodes;
    },
@@ -2494,13 +2494,11 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          }
          case 1:
          {
-            return texCoords .textureCoordinateNode = [... material .texCoordMappings .entries ()]
-               .map (([mapping, i]) => this .createTextureCoordinate (texCoords [i], mapping)) [0];
+            return texCoords .textureCoordinateNode = Array .from (material .texCoordMappings .entries (), ([mapping, i]) => this .createTextureCoordinate (texCoords [i], mapping)) [0];
          }
          default:
          {
-            const textureCoordinateNodes = [... material .texCoordMappings .entries ()]
-               .map (([mapping, i]) => this .createTextureCoordinate (texCoords [i], mapping))
+            const textureCoordinateNodes = Array .from (material .texCoordMappings .entries (), ([mapping, i]) => this .createTextureCoordinate (texCoords [i], mapping))
                .filter (node => node)
                .sort ((a, b) => Algorithm .cmp (a ._mapping .getValue (), b ._mapping .getValue ()));
 
