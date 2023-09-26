@@ -1608,14 +1608,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       // Add Shape nodes.
 
       if (shapeNodes)
-      {
-         const EXT_mesh_gpu_instancing = node .extensions ?.EXT_mesh_gpu_instancing;
-
-         if (EXT_mesh_gpu_instancing)
-            transformNode ._children .push (... this .meshInstancing (EXT_mesh_gpu_instancing, shapeNodes));
-         else
-            transformNode ._children .push (... shapeNodes);
-      }
+         transformNode ._children .push (... this .meshInstancing (node .extensions ?.EXT_mesh_gpu_instancing, shapeNodes));
 
       transformNode .setup ();
 
@@ -1696,6 +1689,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    },
    meshInstancing (EXT_mesh_gpu_instancing, shapeNodes)
    {
+      if (!EXT_mesh_gpu_instancing)
+         return shapeNodes;
+      
       let
          attributes  = EXT_mesh_gpu_instancing .attributes,
          translation = this .accessors [attributes ?.TRANSLATION],
