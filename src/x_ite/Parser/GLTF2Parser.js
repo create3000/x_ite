@@ -2047,7 +2047,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       if (!output .array .length)
          return [ ];
 
-      return this .createInterpolator (timeSensorNode, node, target, sampler .interpolation, input .array, output .array, timeSensorNode ._cycleInterval .getValue ());
+      return this .createInterpolator (timeSensorNode, node, target, sampler .interpolation, input .array, output, timeSensorNode ._cycleInterval .getValue ());
    },
    createNavigationInfo ()
    {
@@ -2538,7 +2538,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          textureCoordinateNode = scene .createNode ("TextureCoordinate", false);
 
       textureCoordinateNode ._mapping = mapping;
-      textureCoordinateNode ._point   = texCoord .array;
+      textureCoordinateNode ._point   = texCoord .floatArray;
 
       textureCoordinateNode .setup ();
 
@@ -2637,7 +2637,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       const
          start        = skin .coordinateNode ._point .length,
          jointsArray  = joints .array,
-         weightsArray = weights .array,
+         weightsArray = weights .floatArray,
          numVertices  = jointsArray .length / 4;
 
       for (let v = 0; v < numVertices; ++ v)
@@ -2755,7 +2755,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       {
          case "translation":
          {
-            const interpolatorNode = this .createPositionInterpolator (interpolation, times, keyValues, cycleInterval);
+            const interpolatorNode = this .createPositionInterpolator (interpolation, times, keyValues .array, cycleInterval);
 
             scene .addNamedNode (scene .getUniqueName ("TranslationInterpolator"), interpolatorNode);
 
@@ -2766,7 +2766,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          }
          case "rotation":
          {
-            const interpolatorNode = this .createOrientationInterpolator (interpolation, times, keyValues, cycleInterval);
+            const interpolatorNode = this .createOrientationInterpolator (interpolation, times, keyValues .floatArray, cycleInterval);
 
             scene .addNamedNode (scene .getUniqueName ("RotationInterpolator"), interpolatorNode);
 
@@ -2777,7 +2777,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          }
          case "scale":
          {
-            const interpolatorNode = this .createPositionInterpolator (interpolation, times, keyValues, cycleInterval);
+            const interpolatorNode = this .createPositionInterpolator (interpolation, times, keyValues .array, cycleInterval);
 
             scene .addNamedNode (scene .getUniqueName ("ScaleInterpolator"), interpolatorNode);
 
@@ -2804,7 +2804,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
                if (!geometryNode)
                   continue;
 
-               const coordinateInterpolatorNode = this .createArrayInterpolator ("Coordinate", interpolation, times, keyValues, cycleInterval, targets, attributes, "POSITION");
+               const coordinateInterpolatorNode = this .createArrayInterpolator ("Coordinate", interpolation, times, keyValues .floatArray, cycleInterval, targets, attributes, "POSITION");
 
                if (coordinateInterpolatorNode)
                {
@@ -2814,7 +2814,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
                   scene .addRoute (coordinateInterpolatorNode, "value_changed", geometryNode ._coord, "set_point");
                }
 
-               const normalInterpolatorNode = this .createArrayInterpolator ("Normal", interpolation, times, keyValues, cycleInterval, targets, attributes, "NORMAL");
+               const normalInterpolatorNode = this .createArrayInterpolator ("Normal", interpolation, times, keyValues .floatArray, cycleInterval, targets, attributes, "NORMAL");
 
                if (normalInterpolatorNode)
                {
