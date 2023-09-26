@@ -1599,7 +1599,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       // Add light.
 
-      this .nodeExtensions (node .extensions, transformNode);
+      this .nodeLight (node .extensions ?.KHR_lights_punctual, transformNode);
 
       // Add children.
 
@@ -1666,13 +1666,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       humanoidNode ._skin .push (transformNode);
    },
-   nodeExtensions (extensions, transformNode)
-   {
-      if (!(extensions instanceof Object))
-         return;
-
-      this .nodeLight (extensions .KHR_lights_punctual, transformNode);
-   },
    nodeLight (khrLightsPunctual, transformNode)
    {
       if (!(khrLightsPunctual instanceof Object))
@@ -1691,7 +1684,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    {
       if (!EXT_mesh_gpu_instancing)
          return shapeNodes;
-      
+
       let
          attributes  = EXT_mesh_gpu_instancing .attributes,
          translation = this .accessors [attributes ?.TRANSLATION],
