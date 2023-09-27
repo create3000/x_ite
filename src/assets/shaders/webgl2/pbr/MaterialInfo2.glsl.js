@@ -72,11 +72,11 @@ getBaseColor ()
       #if defined (X3D_DIFFUSE_TEXTURE)
          vec3 texCoord = getTexCoord (x3d_Diffuse .textureTransformMapping, x3d_Diffuse .textureCoordinateMapping);
          #if defined (X3D_DIFFUSE_TEXTURE_2D)
-            baseColor *= texture (x3d_Diffuse .texture2D, texCoord .st);
+            baseColor *= sRGBToLinear (texture (x3d_Diffuse .texture2D, texCoord .st));
          #elif defined (X3D_DIFFUSE_TEXTURE_3D)
-            baseColor *= texture (x3d_Diffuse .texture3D, texCoord);
+            baseColor *= sRGBToLinear (texture (x3d_Diffuse .texture3D, texCoord));
          #elif defined (X3D_DIFFUSE_TEXTURE_CUBE)
-            baseColor *= texture (x3d_Diffuse .textureCube, texCoord);
+            baseColor *= sRGBToLinear (texture (x3d_Diffuse .textureCube, texCoord));
          #endif
       #elif defined (X3D_TEXTURE)
          baseColor = getTextureColor (baseColor, vec4 (vec3 (1.0), alpha));
@@ -85,11 +85,11 @@ getBaseColor ()
       #if defined (X3D_BASE_TEXTURE)
          vec3 texCoord = getTexCoord (x3d_BaseTexture .textureTransformMapping, x3d_BaseTexture .textureCoordinateMapping);
          #if defined (X3D_BASE_TEXTURE_2D)
-            baseColor *= texture (x3d_BaseTexture .texture2D, texCoord .st);
+            baseColor *= sRGBToLinear (texture (x3d_BaseTexture .texture2D, texCoord .st));
          #elif defined (X3D_BASE_TEXTURE_3D)
-            baseColor *= texture (x3d_BaseTexture .texture3D, texCoord);
+            baseColor *= sRGBToLinear (texture (x3d_BaseTexture .texture3D, texCoord));
          #elif defined (X3D_BASE_TEXTURE_CUBE)
-            baseColor *= texture (x3d_BaseTexture .textureCube, texCoord);
+            baseColor *= sRGBToLinear (texture (x3d_BaseTexture .textureCube, texCoord));
          #endif
       #elif defined (X3D_TEXTURE)
          baseColor = getTextureColor (baseColor, vec4 (vec3 (1.0), alpha));
@@ -160,11 +160,11 @@ getEmissiveColor ()
       vec3 texCoord = getTexCoord (x3d_EmissiveTexture .textureTransformMapping, x3d_EmissiveTexture .textureCoordinateMapping);
 
       #if defined (X3D_EMISSIVE_TEXTURE_2D)
-         return emissiveParameter * texture (x3d_EmissiveTexture .texture2D, texCoord .st) .rgb;
+         return emissiveParameter * sRGBToLinear (texture (x3d_EmissiveTexture .texture2D, texCoord .st)) .rgb;
       #elif defined (X3D_EMISSIVE_TEXTURE_3D)
-         return emissiveParameter * texture (x3d_EmissiveTexture .texture3D, texCoord) .rgb;
+         return emissiveParameter * sRGBToLinear (texture (x3d_EmissiveTexture .texture3D, texCoord)) .rgb;
       #elif defined (X3D_EMISSIVE_TEXTURE_CUBE)
-         return emissiveParameter * texture (x3d_EmissiveTexture .textureCube, texCoord) .rgb;
+         return emissiveParameter * sRGBToLinear (texture (x3d_EmissiveTexture .textureCube, texCoord)) .rgb;
       #endif
    #else
       return emissiveParameter .rgb;
