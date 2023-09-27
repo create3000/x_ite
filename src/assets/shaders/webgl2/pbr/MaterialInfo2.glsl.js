@@ -1,5 +1,48 @@
 export default /* glsl */ `
 
+struct MaterialInfo
+{
+   float ior;
+   float perceptualRoughness;      // roughness value, as authored by the model creator (input to shader)
+   vec3 f0;                        // full reflectance color (n incidence angle)
+
+   float alphaRoughness;           // roughness mapped to a more linear change in the roughness (proposed by [2])
+   vec3 c_diff;
+
+   vec3 f90;                       // reflectance color at grazing angle
+   float metallic;
+
+   vec3 baseColor;
+
+   float sheenRoughnessFactor;
+   vec3 sheenColorFactor;
+
+   vec3 clearcoatF0;
+   vec3 clearcoatF90;
+   float clearcoatFactor;
+   vec3 clearcoatNormal;
+   float clearcoatRoughness;
+
+   // KHR_materials_specular
+   float specularWeight; // product of specularFactor and specularTexture.a
+
+   float transmissionFactor;
+
+   float thickness;
+   vec3 attenuationColor;
+   float attenuationDistance;
+
+   // KHR_materials_iridescence
+   float iridescenceFactor;
+   float iridescenceIor;
+   float iridescenceThickness;
+
+   // KHR_materials_anisotropy
+   vec3 anisotropicT;
+   vec3 anisotropicB;
+   float anisotropyStrength;
+};
+
 #if defined (X3D_MATERIAL_SPECULAR_GLOSSINESS)
    #if defined (X3D_DIFFUSE_TEXTURE)
       uniform x3d_DiffuseTextureParameters x3d_DiffuseTexture;
@@ -59,4 +102,44 @@ getBaseColor ()
 
    return baseColor;
 }
+
+#if defined (X3D_MATERIAL_METALLIC_ROUGHNESS)
+#if defined (X3D_METALLIC_ROUGHNESS_TEXTURE)
+   uniform x3d_MetallicRoughnessTextureParameters x3d_MetallicRoughnessTexture;
+#endif
+
+MaterialInfo
+getMetallicRoughnessInfo (MaterialInfo info)
+{
+   // Metallic and Roughness material properties are packed together
+   // In glTF, these factors can be specified by fixed scalar values
+   // or from a metallic-roughness map
+   info .metallic            = x3d_Material .metallic;
+   info .perceptualRoughness = x3d_Material .roughness;
+
+   // Get texture color.
+
+   #if defined (X3D_METALLIC_ROUGHNESS_TEXTURE)
+      vec3 texCoord = getTexCoord (x3d_MetallicRoughnessTexture .textureTransformMapping, x3d_MetallicRoughnessTexture .textureCoordinateMapping);
+      // Roughness is stored in the 'g' channel, metallic is stored in the 'b' channel.
+      // This layout intentionally reserves the 'r' channel for (optional) occlusion map data
+      #if defined (X3D_METALLIC_ROUGHNESS_TEXTURE_2D)
+         vec4 mrSample = texture (x3d_MetallicRoughnessTexture .texture2D, texCoord .st);
+      #elif defined (X3D_METALLIC_ROUGHNESS_TEXTURE_3D)
+         vec4 mrSample = texture (x3d_MetallicRoughnessTexture .texture3D, texCoord);
+      #elif defined (X3D_METALLIC_ROUGHNESS_TEXTURE_CUBE)
+         vec4 mrSample = texture (x3d_MetallicRoughnessTexture .textureCube, texCoord);
+      #endif
+
+      info .metallic            *= mrSample .b;
+      info .perceptualRoughness *= mrSample .g;
+   #endif
+
+   // Achromatic f0 based on IOR.
+   info .c_diff = mix (info .baseColor .rgb,  vec3 (0.0), info .metallic);
+   info .f0     = mix (info .f0, info .baseColor .rgb, info .metallic);
+
+   return info;
+}
+#endif
 `;

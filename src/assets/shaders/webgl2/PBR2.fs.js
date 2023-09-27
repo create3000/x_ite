@@ -20,42 +20,8 @@ precision highp samplerCube;
 
 uniform x3d_PhysicalMaterialParameters x3d_Material;
 
+#pragma X3D include "pbr/Functions.glsl"
 #pragma X3D include "pbr/MaterialInfo.glsl"
-
-// #if defined (X3D_BASE_TEXTURE)
-// uniform x3d_BaseTextureParameters x3d_BaseTexture;
-// #endif
-
-// vec4
-// getBaseColor ()
-// {
-//    // Get base parameter.
-
-//    float alpha = 1.0 - x3d_Material .transparency;
-
-//    #if defined (X3D_COLOR_MATERIAL)
-//       vec4 baseParameter = vec4 (color .rgb, color .a * alpha);
-//    #else
-//       vec4 baseParameter = vec4 (x3d_Material .baseColor, alpha);
-//    #endif
-
-//    // Get texture color.
-
-//    #if defined (X3D_BASE_TEXTURE)
-//       vec3 texCoord = getTexCoord (x3d_BaseTexture .textureTransformMapping, x3d_BaseTexture .textureCoordinateMapping);
-//       #if defined (X3D_BASE_TEXTURE_2D)
-//          return baseParameter * SRGBtoLINEAR (texture (x3d_BaseTexture .texture2D, texCoord .st));
-//       #elif defined (X3D_BASE_TEXTURE_3D)
-//          return baseParameter * SRGBtoLINEAR (texture (x3d_BaseTexture .texture3D, texCoord));
-//       #elif defined (X3D_BASE_TEXTURE_CUBE)
-//          return baseParameter * SRGBtoLINEAR (texture (x3d_BaseTexture .textureCube, texCoord));
-//       #endif
-//    #elif defined (X3D_TEXTURE)
-//       return getTextureColor (baseParameter, vec4 (vec3 (1.0), alpha));
-//    #else
-//       return baseParameter;
-//    #endif
-// }
 
 // #if defined (X3D_EMISSIVE_TEXTURE)
 // uniform x3d_EmissiveTextureParameters x3d_EmissiveTexture;
@@ -82,41 +48,6 @@ uniform x3d_PhysicalMaterialParameters x3d_Material;
 //       #endif
 //    #else
 //       return emissiveParameter .rgb;
-//    #endif
-// }
-
-// #if defined (X3D_METALLIC_ROUGHNESS_TEXTURE)
-// uniform x3d_MetallicRoughnessTextureParameters x3d_MetallicRoughnessTexture;
-// #endif
-
-// vec2
-// getMetallicRoughness ()
-// {
-//    // Metallic and Roughness material properties are packed together
-//    // In glTF, these factors can be specified by fixed scalar values
-//    // or from a metallic-roughness map
-//    float metallic            = x3d_Material .metallic;
-//    float perceptualRoughness = x3d_Material .roughness;
-
-//    // Get texture color.
-
-//    #if defined (X3D_METALLIC_ROUGHNESS_TEXTURE)
-//       vec3 texCoord = getTexCoord (x3d_MetallicRoughnessTexture .textureTransformMapping, x3d_MetallicRoughnessTexture .textureCoordinateMapping);
-//       // Roughness is stored in the 'g' channel, metallic is stored in the 'b' channel.
-//       // This layout intentionally reserves the 'r' channel for (optional) occlusion map data
-//       #if defined (X3D_METALLIC_ROUGHNESS_TEXTURE_2D)
-//          vec4 mrSample = texture (x3d_MetallicRoughnessTexture .texture2D, texCoord .st);
-//       #elif defined (X3D_METALLIC_ROUGHNESS_TEXTURE_3D)
-//          vec4 mrSample = texture (x3d_MetallicRoughnessTexture .texture3D, texCoord);
-//       #elif defined (X3D_METALLIC_ROUGHNESS_TEXTURE_CUBE)
-//          vec4 mrSample = texture (x3d_MetallicRoughnessTexture .textureCube, texCoord);
-//       #endif
-//       metallic            *= mrSample .b;
-//       perceptualRoughness *= mrSample .g;
-
-//       return vec2 (metallic, perceptualRoughness);
-//    #else
-//       return vec2 (metallic, perceptualRoughness);
 //    #endif
 // }
 
@@ -148,6 +79,21 @@ vec4
 getMaterialColor ()
 {
    vec4 baseColor = getBaseColor ();
+
+   vec3 n = getNormalVector (x3d_Material .normalScale);
+   vec3 v = normalize (-vertex);
+
+   MaterialInfo materialInfo;
+
+   // The default index of refraction of 1.5 yields a dielectric normal incidence reflectance of 0.04.
+   materialInfo .baseColor      = baseColor .rgb;
+   materialInfo .ior            = 1.5;
+   materialInfo .f0             = vec3 (0.04);
+   materialInfo .specularWeight = 1.0;
+
+   #ifdef X3D_MATERIAL_METALLIC_ROUGHNESS
+      materialInfo = getMetallicRoughnessInfo (materialInfo);
+   #endif
 
    return baseColor;
 }
