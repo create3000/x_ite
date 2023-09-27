@@ -32,13 +32,15 @@ getSpotAttenuation (const in vec3 pointToLight, const in vec3 spotDirection, con
 }
 
 vec3
-getLightIntensity (const in x3d_LightSourceParameters light, const in vec3 pointToLight)
+getLightIntensity (const in x3d_LightSourceParameters light, const in vec3 pointToLight, const in float dL)
 {
+   float attenuation      = 1.0;
    float rangeAttenuation = 1.0;
    float spotAttenuation  = 1.0;
 
    if (light .type != x3d_DirectionalLight)
    {
+      attenuation      = 1.0 / max (dot (light .attenuation, vec3 (1.0, dL, dL * dL)), 1.0);
       rangeAttenuation = getRangeAttenuation (light .radius, length (pointToLight));
    }
 
@@ -47,6 +49,6 @@ getLightIntensity (const in x3d_LightSourceParameters light, const in vec3 point
       spotAttenuation = getSpotAttenuation (pointToLight, light .direction, cos (light .cutOffAngle), cos (light .beamWidth));
    }
 
-   return rangeAttenuation * spotAttenuation * light .intensity * light .color;
+   return attenuation * rangeAttenuation * spotAttenuation * light .intensity * light .color;
 }
 `;
