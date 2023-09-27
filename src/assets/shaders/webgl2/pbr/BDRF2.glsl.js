@@ -40,7 +40,7 @@ D_GGX (float NdotH, float alphaRoughness)
 {
    float alphaRoughnessSq = alphaRoughness * alphaRoughness;
    float f                = (NdotH * NdotH) * (alphaRoughnessSq - 1.0) + 1.0;
-   
+
    return alphaRoughnessSq / (M_PI * f * f);
 }
 
