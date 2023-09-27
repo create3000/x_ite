@@ -142,4 +142,56 @@ getMetallicRoughnessInfo (MaterialInfo info)
    return info;
 }
 #endif
+
+#if defined (X3D_EMISSIVE_TEXTURE)
+   uniform x3d_EmissiveTextureParameters x3d_EmissiveTexture;
+#endif
+
+vec3
+getEmissiveColor ()
+{
+   // Get emissive parameter.
+
+   vec3 emissiveParameter = x3d_Material .emissiveColor;
+
+   // Get texture color.
+
+   #if defined (X3D_EMISSIVE_TEXTURE)
+      vec3 texCoord = getTexCoord (x3d_EmissiveTexture .textureTransformMapping, x3d_EmissiveTexture .textureCoordinateMapping);
+
+      #if defined (X3D_EMISSIVE_TEXTURE_2D)
+         return emissiveParameter * texture (x3d_EmissiveTexture .texture2D, texCoord .st) .rgb;
+      #elif defined (X3D_EMISSIVE_TEXTURE_3D)
+         return emissiveParameter * texture (x3d_EmissiveTexture .texture3D, texCoord) .rgb;
+      #elif defined (X3D_EMISSIVE_TEXTURE_CUBE)
+         return emissiveParameter * texture (x3d_EmissiveTexture .textureCube, texCoord) .rgb;
+      #endif
+   #else
+      return emissiveParameter .rgb;
+   #endif
+}
+
+#if defined (X3D_OCCLUSION_TEXTURE)
+   uniform x3d_OcclusionTextureParameters x3d_OcclusionTexture;
+#endif
+
+float
+getOcclusionFactor ()
+{
+   // Get texture color.
+
+   #if defined (X3D_OCCLUSION_TEXTURE)
+      vec3 texCoord = getTexCoord (x3d_OcclusionTexture .textureTransformMapping, x3d_OcclusionTexture .textureCoordinateMapping);
+
+      #if defined (X3D_OCCLUSION_TEXTURE_2D)
+         return texture (x3d_OcclusionTexture .texture2D, texCoord .st) .r;
+      #elif defined (X3D_OCCLUSION_TEXTURE_3D)
+         return texture (x3d_OcclusionTexture .texture3D, texCoord) .r;
+      #elif defined (X3D_OCCLUSION_TEXTURE_CUBE)
+         return texture (x3d_OcclusionTexture .textureCube, texCoord) .r;
+      #endif
+   #else
+      return 1.0;
+   #endif
+}
 `;

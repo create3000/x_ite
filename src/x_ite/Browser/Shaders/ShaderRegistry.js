@@ -63,7 +63,6 @@ import Vertex1                from "../../../assets/shaders/webgl1/include/Verte
 
 /* WebGL 2 */
 import ClipPlanes2            from "../../../assets/shaders/webgl2/include/ClipPlanes2.glsl.js";
-import Colors2                from "../../../assets/shaders/webgl2/include/Colors2.glsl.js";
 import Fog2                   from "../../../assets/shaders/webgl2/include/Fog2.glsl.js";
 import Fragment2              from "../../../assets/shaders/webgl2/include/Fragment2.glsl.js";
 import Hatch2                 from "../../../assets/shaders/webgl2/include/Hatch2.glsl.js";
@@ -111,8 +110,10 @@ import PointingVertex2        from "../../../assets/shaders/webgl2/Pointing2.vs.
 import UnlitFragment2         from "../../../assets/shaders/webgl2/Unlit2.fs.js";
 
 /* PBR */
-import Functions2             from "../../../assets/shaders/webgl2/pbr/Functions.glsl.js"
+import BDRF2                  from "../../../assets/shaders/webgl2/pbr/BDRF2.glsl.js";
+import Punctual2              from "../../../assets/shaders/webgl2/pbr/Punctual2.glsl.js";
 import MaterialInfo2          from "../../../assets/shaders/webgl2/pbr/MaterialInfo2.glsl.js";
+import ToneMapping2           from "../../../assets/shaders/webgl2/pbr/ToneMapping2.glsl.js";
 
 const ShaderRegistry = {
    includes: {
@@ -134,7 +135,6 @@ const ShaderRegistry = {
       },
       2: {
          ClipPlanes: ClipPlanes2,
-         Colors: Colors2,
          Fog: Fog2,
          Fragment: Fragment2,
          Hatch: Hatch2,
@@ -153,8 +153,10 @@ const ShaderRegistry = {
          Utils: Utils2,
          Vertex: Vertex2,
          // PBR
+         BDRF: BDRF2,
          MaterialInfo: MaterialInfo2,
-         Functions: Functions2,
+         Punctual: Punctual2,
+         ToneMapping: ToneMapping2,
       },
    },
    vertex: {
