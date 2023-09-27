@@ -110,6 +110,9 @@ import PointingFragment2      from "../../../assets/shaders/webgl2/Pointing2.fs.
 import PointingVertex2        from "../../../assets/shaders/webgl2/Pointing2.vs.js";
 import UnlitFragment2         from "../../../assets/shaders/webgl2/Unlit2.fs.js";
 
+/* PBR */
+import MaterialInfo2          from "../../../assets/shaders/webgl2/pbr/MaterialInfo2.glsl.js";
+
 const ShaderRegistry = {
    includes: {
       1: {
@@ -148,6 +151,8 @@ const ShaderRegistry = {
          Texture: Texture2,
          Utils: Utils2,
          Vertex: Vertex2,
+         // PBR
+         MaterialInfo: MaterialInfo2,
       },
    },
    vertex: {

@@ -171,7 +171,7 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
 
       if (geometryContext .hasNormals)
       {
-         options .push ("X3D_PHYSICAL_MATERIAL", "MANUAL_SRGB");
+         options .push ("X3D_PHYSICAL_MATERIAL", "X3D_MATERIAL_METALLIC_ROUGHNESS", "MANUAL_SRGB");
 
          if (+this .getTextureBits ())
          {
