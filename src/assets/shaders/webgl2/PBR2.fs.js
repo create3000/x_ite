@@ -104,16 +104,14 @@ getMaterialColor ()
 
       if (NdotL > 0.0 || NdotV > 0.0)
       {
-         float shadow = 1.0;
+         // Calculation of analytical light
+         // https://github.com/KhronosGroup/glTF/tree/master/specification/2.0#acknowledgments AppendixB
+         vec3 intensity = getLightIntensity (light, pointToLight);
 
          #if defined (X3D_SHADOWS)
             if (light .shadowIntensity > 0.0)
-               shadow -= getShadowIntensity (i, light);
+               intensity = mix (intensity, light .shadowColor, getShadowIntensity (i, light));
          #endif
-
-         // Calculation of analytical light
-         // https://github.com/KhronosGroup/glTF/tree/master/specification/2.0#acknowledgments AppendixB
-         vec3 intensity = shadow * getLightIntensity (light, pointToLight);
 
          f_diffuse  += intensity * NdotL * BRDF_lambertian (materialInfo .f0, materialInfo .f90, materialInfo .c_diff, materialInfo .specularWeight, VdotH);
          f_specular += intensity * NdotL * BRDF_specularGGX (materialInfo .f0, materialInfo .f90, materialInfo .alphaRoughness, materialInfo .specularWeight, VdotH, NdotL, NdotV, NdotH);
