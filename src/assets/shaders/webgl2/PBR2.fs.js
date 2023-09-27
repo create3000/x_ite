@@ -93,7 +93,7 @@ getMaterialColor ()
 
       float dL = length (light .matrix * pointToLight); // Distance to light
 
-      if (light .type == x3d_DirectionalLight || dL <= light .radius)
+      if (light .type == x3d_DirectionalLight || dL <= light .radius || light .radius < 0.0)
       {
          // BSTF
          vec3 l = normalize (pointToLight);   // Direction from surface point to light

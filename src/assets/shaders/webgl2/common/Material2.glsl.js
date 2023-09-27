@@ -25,7 +25,7 @@ getMaterialColor (const in vec3 vertex, const in vec3 N, const in vec3 ambientCo
       float dL = length (light .matrix * vL);
       bool  di = light .type == x3d_DirectionalLight;
 
-      if (di || dL <= light .radius)
+      if (di || dL <= light .radius || light .radius < 0.0)
       {
          vec3 d = light .direction;
          vec3 c = light .attenuation;

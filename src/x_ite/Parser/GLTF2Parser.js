@@ -376,7 +376,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          scene     = this .getExecutionContext (),
          lightNode = scene .createNode ("SpotLight", false);
 
-      lightNode ._radius      = this .numberValue (light .range, 0) || 1_000_000_000;
+      lightNode ._radius      = this .numberValue (light .range, 0) || -1;
       lightNode ._cutOffAngle = this .numberValue (light .outerConeAngle, Math .PI / 4);
       lightNode ._beamWidth   = this .numberValue (light .innerConeAngle, 0);
 
@@ -388,7 +388,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          scene     = this .getExecutionContext (),
          lightNode = scene .createNode ("PointLight", false);
 
-      lightNode ._radius = this .numberValue (light .range, 0) || 1_000_000_000;
+      lightNode ._radius = this .numberValue (light .range, 0) || -1;
 
       return lightNode;
    },
