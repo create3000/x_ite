@@ -1,6 +1,6 @@
 export default /* glsl */ `#version 300 es
 
-// https://github.com/cx20/gltf-test/blob/master/examples/khronos-gltf-loader/shaders/pbr-frag.glsl
+// https://github.com/KhronosGroup/glTF-Sample-Viewer/blob/main/source/Renderer/shaders/pbr.frag
 
 precision highp float;
 precision highp int;
