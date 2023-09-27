@@ -53,7 +53,7 @@ getMaterialColor ()
    // Compute reflectance.
    float reflectance = max (max (materialInfo .f0 .r, materialInfo .f0 .g), materialInfo .f0 .b);
 
-   // Anything less than 2% is physically impossible and is instead considered to be shadowing. Compare to "Real-Time-Rendering" 4th editon on page 325.
+   // Anything less than 2% is physically impossible and is instead considered to be shadowing. Compare to "Real-Time-Rendering" 4th edition on page 325.
    materialInfo .f90 = vec3 (1.0);
 
    // LIGHTING
@@ -122,7 +122,7 @@ getMaterialColor ()
 
     // Layer blending
 
-   float clearcoatFactor   = 0.0;
+   float clearcoatFactor  = 0.0;
    vec3  clearcoatFresnel = vec3 (0.0);
    vec3  diffuse;
    vec3  specular;
