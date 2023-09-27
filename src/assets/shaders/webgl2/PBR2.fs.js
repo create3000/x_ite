@@ -86,11 +86,10 @@ getMaterialColor ()
 
       vec3 pointToLight;
 
-      if (light .type == x3d_DirectionalLight)
-         pointToLight = -light .direction;
-
-      else
+      if (light .type != x3d_DirectionalLight)
          pointToLight = light .location - vertex;
+      else
+         pointToLight = -light .direction;
 
       // BSTF
       vec3 l = normalize (pointToLight);   // Direction from surface point to light
