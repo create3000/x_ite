@@ -8,9 +8,9 @@ precision highp sampler2D;
 precision highp sampler3D;
 precision highp samplerCube;
 
-#pragma X3D include "include/Fragment.glsl"
-#pragma X3D include "include/Normal.glsl"
-#pragma X3D include "include/Shadow.glsl"
+#pragma X3D include "common/Fragment.glsl"
+#pragma X3D include "common/Normal.glsl"
+#pragma X3D include "common/Shadow.glsl"
 
 #if defined (X3D_LIGHTING)
    uniform x3d_LightSourceParameters x3d_LightSource [X3D_NUM_LIGHTS];

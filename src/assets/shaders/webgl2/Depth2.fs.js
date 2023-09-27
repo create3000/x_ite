@@ -8,8 +8,8 @@ in vec3 vertex;
 
 out vec4 x3d_FragColor;
 
-#pragma X3D include "include/ClipPlanes.glsl"
-#pragma X3D include "include/Point.glsl"
+#pragma X3D include "common/ClipPlanes.glsl"
+#pragma X3D include "common/Point.glsl"
 
 void
 main ()

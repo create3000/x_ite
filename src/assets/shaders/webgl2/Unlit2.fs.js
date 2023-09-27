@@ -6,7 +6,7 @@ precision highp sampler2D;
 precision highp sampler3D;
 precision highp samplerCube;
 
-#pragma X3D include "include/Fragment.glsl"
+#pragma X3D include "common/Fragment.glsl"
 
 uniform x3d_UnlitMaterialParameters x3d_Material;
 
