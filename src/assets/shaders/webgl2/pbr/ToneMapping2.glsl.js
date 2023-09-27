@@ -42,6 +42,7 @@ sRGBToLinear (const in vec4 srgbIn)
    return vec4 (sRGBToLinear (srgbIn .xyz), srgbIn .w);
 }
 
+#if defined (TONEMAP_ACES_NARKOWICZ)
 // ACES tone map (faster approximation)
 // see: https://knarkowicz.wordpress.com/2016/01/06/aces-filmic-tone-mapping-curve/
 vec3
@@ -55,7 +56,9 @@ toneMapACES_Narkowicz (const in vec3 color)
 
    return clamp ((color * (A * color + B)) / (color * (C * color + D) + E), 0.0, 1.0);
 }
+#endif
 
+#if defined (TONEMAP_ACES_HILL) || defined (TONEMAP_ACES_HILL_EXPOSURE_BOOST)
 // ACES filmic tone map approximation
 // see https://github.com/TheRealMJP/BakingLab/blob/master/BakingLab/ACES.hlsl
 vec3
@@ -83,21 +86,22 @@ toneMapACES_Hill (in vec3 color)
 
    return color;
 }
+#endif
 
 vec3
 toneMap (in vec3 color)
 {
    color *= exposure;
 
-   #ifdef TONEMAP_ACES_NARKOWICZ
+   #if defined (TONEMAP_ACES_NARKOWICZ)
       color = toneMapACES_Narkowicz (color);
    #endif
 
-   #ifdef TONEMAP_ACES_HILL
+   #if defined (TONEMAP_ACES_HILL)
       color = toneMapACES_Hill (color);
    #endif
 
-   #ifdef TONEMAP_ACES_HILL_EXPOSURE_BOOST
+   #if defined (TONEMAP_ACES_HILL_EXPOSURE_BOOST)
       // boost exposure as discussed in https://github.com/mrdoob/three.js/pull/19621
       // this factor is based on the exposure correction of Krzysztof Narkowicz in his
       // implemetation of ACES tone mapping

@@ -66,7 +66,7 @@ getMaterialColor ()
 
    float albedoSheenScaling = 1.0;
 
-   #ifdef USE_IBL
+   #if defined (USE_IBL)
    #endif
 
    vec3 f_diffuse_ibl   = f_diffuse;
@@ -151,7 +151,7 @@ getMaterialColor ()
       color = color * (1.0 - clearcoatFactor * clearcoatFresnel) + clearcoat;
    #endif
 
-   #ifdef X3D_LINEAR_OUTPUT
+   #if defined (X3D_LINEAR_OUTPUT)
       return vec4 (color .rgb, baseColor .a);
    #else
       return vec4 (toneMap (color), baseColor .a);
