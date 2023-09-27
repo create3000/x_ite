@@ -1,13 +1,13 @@
 export default /* glsl */ `
 
 #if defined (X3D_MATERIAL_SPECULAR_GLOSSINESS)
-#if defined (X3D_DIFFUSE_TEXTURE)
-   uniform x3d_DiffuseTextureParameters x3d_DiffuseTexture;
-#endif
+   #if defined (X3D_DIFFUSE_TEXTURE)
+      uniform x3d_DiffuseTextureParameters x3d_DiffuseTexture;
+   #endif
 #elif defined (X3D_MATERIAL_METALLIC_ROUGHNESS)
-#if defined (X3D_BASE_TEXTURE)
-   uniform x3d_BaseTextureParameters x3d_BaseTexture;
-#endif
+   #if defined (X3D_BASE_TEXTURE)
+      uniform x3d_BaseTextureParameters x3d_BaseTexture;
+   #endif
 #endif
 
 vec4
