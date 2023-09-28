@@ -51,7 +51,7 @@ import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DTexture2DNode     from "./X3DTexture2DNode.js";
 import X3DSoundSourceNode   from "../Sound/X3DSoundSourceNode.js";
 import X3DUrlObject         from "../Networking/X3DUrlObject.js";
-import GifMedia             from "../../Browser/Texturing/GIFMedia.js";
+import GifMedia             from "../../Browser/Texturing/GifMedia.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import Algorithm            from "../../../standard/Math/Algorithm.js";
 import DEVELOPMENT          from "../../DEVELOPMENT.js";

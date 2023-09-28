@@ -48,16 +48,10 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 }
 
 .x_ite-private-surface {
-  position: absolute; /* Must be absolute to get ResizeSensor work. */
   margin: 0;
   border: 0;
   border-radius: 0;
   padding: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  inset: 0;
 }
 
 .x_ite-private-canvas {

@@ -141,7 +141,6 @@ export default __default__;`;
             jquery_mousewheel: "jquery-mousewheel/jquery.mousewheel.js",
             libtess: "libtess/libtess.cat.js",
             pako: "pako/dist/pako_inflate.js",
-            ResizeSensor: "css-element-queries/src/ResizeSensor.js",
             SuperGif: path .resolve (__dirname, "src/lib/libgif/libgif.js"),
          }),
          new WebpackShellPluginNext ({
@@ -281,7 +280,6 @@ export default __default__;`;
             jquery_mousewheel: "jquery-mousewheel/jquery.mousewheel.js",
             libtess: "libtess/libtess.cat.js",
             pako: "pako/dist/pako_inflate.js",
-            ResizeSensor: "css-element-queries/src/ResizeSensor.js",
             SuperGif: path .resolve (__dirname, "src/lib/libgif/libgif.js"),
          }),
          new WebpackShellPluginNext ({

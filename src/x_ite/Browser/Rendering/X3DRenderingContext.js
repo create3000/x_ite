@@ -84,10 +84,8 @@ Object .assign (X3DRenderingContext .prototype,
 
       $(document) .on ('webkitfullscreenchange mozfullscreenchange fullscreenchange MSFullscreenChange', this .onfullscreen .bind (this));
 
-      //https://github.com/sdecima/javascript-detect-element-resize
-      this [_resizer] = new ResizeSensor (this .getSurface (), this .reshape .bind (this));
-
-		this .getSurface () .css ("position", ""); // Reset position, set from ResizeSensor.
+      this [_resizer] = new ResizeObserver (this .reshape .bind (this));
+      this [_resizer] .observe (this .getSurface ());
 
       this .reshape ();
    },
