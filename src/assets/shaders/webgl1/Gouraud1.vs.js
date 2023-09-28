@@ -4,8 +4,8 @@ precision highp int;
 precision highp sampler2D;
 precision highp samplerCube;
 
-#pragma X3D include "include/Vertex.glsl"
-#pragma X3D include "include/Material.glsl"
+#pragma X3D include "common/Vertex.glsl"
+#pragma X3D include "common/Material.glsl"
 
 varying vec4 frontColor;
 

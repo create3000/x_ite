@@ -4,9 +4,9 @@ precision highp int;
 precision highp sampler2D;
 precision highp samplerCube;
 
-#pragma X3D include "include/Fragment.glsl"
-#pragma X3D include "include/Material.glsl"
-#pragma X3D include "include/Normal.glsl"
+#pragma X3D include "common/Fragment.glsl"
+#pragma X3D include "common/Material.glsl"
+#pragma X3D include "common/Normal.glsl"
 
 #if defined (X3D_AMBIENT_TEXTURE)
    uniform x3d_AmbientTextureParameters x3d_AmbientTexture;

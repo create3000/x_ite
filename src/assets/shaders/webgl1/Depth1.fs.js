@@ -5,8 +5,8 @@ precision highp sampler2D;
 
 varying vec3 vertex;
 
-#pragma X3D include "include/ClipPlanes.glsl"
-#pragma X3D include "include/Point.glsl"
+#pragma X3D include "common/ClipPlanes.glsl"
+#pragma X3D include "common/Point.glsl"
 
 void
 main ()

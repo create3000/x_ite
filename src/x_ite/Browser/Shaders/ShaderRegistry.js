@@ -46,20 +46,20 @@
  ******************************************************************************/
 
 /* WebGL 1 */
-import ClipPlanes1            from "../../../assets/shaders/webgl1/include/ClipPlanes1.glsl.js";
-import Colors1                from "../../../assets/shaders/webgl1/include/Colors1.glsl.js";
-import Fog1                   from "../../../assets/shaders/webgl1/include/Fog1.glsl.js";
-import Fragment1              from "../../../assets/shaders/webgl1/include/Fragment1.glsl.js";
-import Hatch1                 from "../../../assets/shaders/webgl1/include/Hatch1.glsl.js";
-import Material1              from "../../../assets/shaders/webgl1/include/Material1.glsl.js";
-import Normal1                from "../../../assets/shaders/webgl1/include/Normal1.glsl.js";
-import Perlin1                from "../../../assets/shaders/webgl1/include/Perlin1.glsl.js";
-import Point1                 from "../../../assets/shaders/webgl1/include/Point1.glsl.js";
-import PointSize1             from "../../../assets/shaders/webgl1/include/PointSize1.glsl.js";
-import Shadow1                from "../../../assets/shaders/webgl1/include/Shadow1.glsl.js";
-import SpotFactor1            from "../../../assets/shaders/webgl1/include/SpotFactor1.glsl.js";
-import Texture1               from "../../../assets/shaders/webgl1/include/Texture1.glsl.js";
-import Vertex1                from "../../../assets/shaders/webgl1/include/Vertex1.glsl.js";
+import ClipPlanes1            from "../../../assets/shaders/webgl1/common/ClipPlanes1.glsl.js";
+import Colors1                from "../../../assets/shaders/webgl1/common/Colors1.glsl.js";
+import Fog1                   from "../../../assets/shaders/webgl1/common/Fog1.glsl.js";
+import Fragment1              from "../../../assets/shaders/webgl1/common/Fragment1.glsl.js";
+import Hatch1                 from "../../../assets/shaders/webgl1/common/Hatch1.glsl.js";
+import Material1              from "../../../assets/shaders/webgl1/common/Material1.glsl.js";
+import Normal1                from "../../../assets/shaders/webgl1/common/Normal1.glsl.js";
+import Perlin1                from "../../../assets/shaders/webgl1/common/Perlin1.glsl.js";
+import Point1                 from "../../../assets/shaders/webgl1/common/Point1.glsl.js";
+import PointSize1             from "../../../assets/shaders/webgl1/common/PointSize1.glsl.js";
+import Shadow1                from "../../../assets/shaders/webgl1/common/Shadow1.glsl.js";
+import SpotFactor1            from "../../../assets/shaders/webgl1/common/SpotFactor1.glsl.js";
+import Texture1               from "../../../assets/shaders/webgl1/common/Texture1.glsl.js";
+import Vertex1                from "../../../assets/shaders/webgl1/common/Vertex1.glsl.js";
 
 /* WebGL 2 */
 import ClipPlanes2            from "../../../assets/shaders/webgl2/common/ClipPlanes2.glsl.js";
@@ -109,7 +109,13 @@ import PointingFragment2      from "../../../assets/shaders/webgl2/Pointing2.fs.
 import PointingVertex2        from "../../../assets/shaders/webgl2/Pointing2.vs.js";
 import UnlitFragment2         from "../../../assets/shaders/webgl2/Unlit2.fs.js";
 
-/* PBR */
+/* PBR 1 */
+import BDRF1                  from "../../../assets/shaders/webgl1/pbr/BDRF1.glsl.js";
+import Punctual1              from "../../../assets/shaders/webgl1/pbr/Punctual1.glsl.js";
+import MaterialInfo1          from "../../../assets/shaders/webgl1/pbr/MaterialInfo1.glsl.js";
+import ToneMapping1           from "../../../assets/shaders/webgl1/pbr/ToneMapping1.glsl.js";
+
+/* PBR 2 */
 import BDRF2                  from "../../../assets/shaders/webgl2/pbr/BDRF2.glsl.js";
 import Punctual2              from "../../../assets/shaders/webgl2/pbr/Punctual2.glsl.js";
 import MaterialInfo2          from "../../../assets/shaders/webgl2/pbr/MaterialInfo2.glsl.js";
@@ -132,6 +138,11 @@ const ShaderRegistry = {
          SpotFactor: SpotFactor1,
          Texture: Texture1,
          Vertex: Vertex1,
+         // PBR
+         BDRF: BDRF1,
+         MaterialInfo: MaterialInfo1,
+         Punctual: Punctual1,
+         ToneMapping: ToneMapping1,
       },
       2: {
          ClipPlanes: ClipPlanes2,

@@ -9,7 +9,7 @@ attribute vec4 x3d_Vertex;
 
 varying vec3 vertex;
 
-#pragma X3D include "include/PointSize.glsl"
+#pragma X3D include "common/PointSize.glsl"
 
 void
 main ()
