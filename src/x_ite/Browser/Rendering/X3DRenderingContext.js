@@ -85,7 +85,7 @@ Object .assign (X3DRenderingContext .prototype,
       $(document) .on ('webkitfullscreenchange mozfullscreenchange fullscreenchange MSFullscreenChange', this .onfullscreen .bind (this));
 
       this [_resizer] = new ResizeObserver (this .reshape .bind (this));
-      this [_resizer] .observe (this .getSurface ());
+      this [_resizer] .observe (this .getSurface () [0]);
 
       this .reshape ();
    },

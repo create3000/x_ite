@@ -52,6 +52,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   border: 0;
   border-radius: 0;
   padding: 0;
+  height: 100%;
 }
 
 .x_ite-private-canvas {
