@@ -11,7 +11,7 @@ precision highp samplerCube;
 uniform x3d_UnlitMaterialParameters x3d_Material;
 
 #if defined (X3D_EMISSIVE_TEXTURE)
-uniform x3d_EmissiveTextureParameters x3d_EmissiveTexture;
+   uniform x3d_EmissiveTextureParameters x3d_EmissiveTexture;
 #endif
 
 vec4
