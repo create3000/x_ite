@@ -82,7 +82,6 @@
 	"devDependencies": {
 		"ammojs": "^0.0.2",
 		"CharLS.js": "^2.0.1",
-		"css-element-queries": "^1.2.3",
 		"dicom-parser": "^1.8.21",
 		"jpeg-js": "^0.4.4",
 		"jpeg-lossless-decoder-js": "^2.0.7",
