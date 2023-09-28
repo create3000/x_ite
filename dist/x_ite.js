@@ -11,386 +11,10 @@
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 45:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* provided dependency */ var jQuery = __webpack_require__(864);
-var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;
-
-/**
- * Copyright Marc J. Schmidt. See the LICENSE file at the top-level
- * directory of this distribution and at
- * https://github.com/marcj/css-element-queries/blob/master/LICENSE.
- */
-(function (root, factory) {
-    if (true) {
-        !(__WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
-		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
-		(__WEBPACK_AMD_DEFINE_FACTORY__.call(exports, __webpack_require__, exports, module)) :
-		__WEBPACK_AMD_DEFINE_FACTORY__),
-		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-    } else {}
-}(typeof window !== 'undefined' ? window : this, function () {
-
-    // Make sure it does not throw in a SSR (Server Side Rendering) situation
-    if (typeof window === "undefined") {
-        return null;
-    }
-    // https://github.com/Semantic-Org/Semantic-UI/issues/3855
-    // https://github.com/marcj/css-element-queries/issues/257
-    var globalWindow = typeof window != 'undefined' && window.Math == Math
-        ? window
-        : typeof self != 'undefined' && self.Math == Math
-            ? self
-            : Function('return this')();
-    // Only used for the dirty checking, so the event callback count is limited to max 1 call per fps per sensor.
-    // In combination with the event based resize sensor this saves cpu time, because the sensor is too fast and
-    // would generate too many unnecessary events.
-    var requestAnimationFrame = globalWindow.requestAnimationFrame ||
-        globalWindow.mozRequestAnimationFrame ||
-        globalWindow.webkitRequestAnimationFrame ||
-        function (fn) {
-            return globalWindow.setTimeout(fn, 20);
-        };
-
-    var cancelAnimationFrame = globalWindow.cancelAnimationFrame ||
-        globalWindow.mozCancelAnimationFrame ||
-        globalWindow.webkitCancelAnimationFrame ||
-        function (timer) {
-            globalWindow.clearTimeout(timer);
-        };
-
-    /**
-     * Iterate over each of the provided element(s).
-     *
-     * @param {HTMLElement|HTMLElement[]} elements
-     * @param {Function}                  callback
-     */
-    function forEachElement(elements, callback){
-        var elementsType = Object.prototype.toString.call(elements);
-        var isCollectionTyped = ('[object Array]' === elementsType
-            || ('[object NodeList]' === elementsType)
-            || ('[object HTMLCollection]' === elementsType)
-            || ('[object Object]' === elementsType)
-            || ('undefined' !== typeof jQuery && elements instanceof jQuery) //jquery
-            || ('undefined' !== typeof Elements && elements instanceof Elements) //mootools
-        );
-        var i = 0, j = elements.length;
-        if (isCollectionTyped) {
-            for (; i < j; i++) {
-                callback(elements[i]);
-            }
-        } else {
-            callback(elements);
-        }
-    }
-
-    /**
-    * Get element size
-    * @param {HTMLElement} element
-    * @returns {Object} {width, height}
-    */
-    function getElementSize(element) {
-        if (!element.getBoundingClientRect) {
-            return {
-                width: element.offsetWidth,
-                height: element.offsetHeight
-            }
-        }
-
-        var rect = element.getBoundingClientRect();
-        return {
-            width: Math.round(rect.width),
-            height: Math.round(rect.height)
-        }
-    }
-
-    /**
-     * Apply CSS styles to element.
-     *
-     * @param {HTMLElement} element
-     * @param {Object} style
-     */
-    function setStyle(element, style) {
-        Object.keys(style).forEach(function(key) {
-            element.style[key] = style[key];
-        });
-    }
-
-    /**
-     * Class for dimension change detection.
-     *
-     * @param {Element|Element[]|Elements|jQuery} element
-     * @param {Function} callback
-     *
-     * @constructor
-     */
-    var ResizeSensor = function(element, callback) {
-        //Is used when checking in reset() only for invisible elements
-        var lastAnimationFrameForInvisibleCheck = 0;
-
-        /**
-         *
-         * @constructor
-         */
-        function EventQueue() {
-            var q = [];
-            this.add = function(ev) {
-                q.push(ev);
-            };
-
-            var i, j;
-            this.call = function(sizeInfo) {
-                for (i = 0, j = q.length; i < j; i++) {
-                    q[i].call(this, sizeInfo);
-                }
-            };
-
-            this.remove = function(ev) {
-                var newQueue = [];
-                for(i = 0, j = q.length; i < j; i++) {
-                    if(q[i] !== ev) newQueue.push(q[i]);
-                }
-                q = newQueue;
-            };
-
-            this.length = function() {
-                return q.length;
-            }
-        }
-
-        /**
-         *
-         * @param {HTMLElement} element
-         * @param {Function}    resized
-         */
-        function attachResizeEvent(element, resized) {
-            if (!element) return;
-            if (element.resizedAttached) {
-                element.resizedAttached.add(resized);
-                return;
-            }
-
-            element.resizedAttached = new EventQueue();
-            element.resizedAttached.add(resized);
-
-            element.resizeSensor = document.createElement('div');
-            element.resizeSensor.dir = 'ltr';
-            element.resizeSensor.className = 'resize-sensor';
-
-            var style = {
-                pointerEvents: 'none',
-                position: 'absolute',
-                left: '0px',
-                top: '0px',
-                right: '0px',
-                bottom: '0px',
-                overflow: 'hidden',
-                zIndex: '-1',
-                visibility: 'hidden',
-                maxWidth: '100%'
-            };
-            var styleChild = {
-                position: 'absolute',
-                left: '0px',
-                top: '0px',
-                transition: '0s',
-            };
-
-            setStyle(element.resizeSensor, style);
-
-            var expand = document.createElement('div');
-            expand.className = 'resize-sensor-expand';
-            setStyle(expand, style);
-
-            var expandChild = document.createElement('div');
-            setStyle(expandChild, styleChild);
-            expand.appendChild(expandChild);
-
-            var shrink = document.createElement('div');
-            shrink.className = 'resize-sensor-shrink';
-            setStyle(shrink, style);
-
-            var shrinkChild = document.createElement('div');
-            setStyle(shrinkChild, styleChild);
-            setStyle(shrinkChild, { width: '200%', height: '200%' });
-            shrink.appendChild(shrinkChild);
-
-            element.resizeSensor.appendChild(expand);
-            element.resizeSensor.appendChild(shrink);
-            element.appendChild(element.resizeSensor);
-
-            var computedStyle = window.getComputedStyle(element);
-            var position = computedStyle ? computedStyle.getPropertyValue('position') : null;
-            if ('absolute' !== position && 'relative' !== position && 'fixed' !== position && 'sticky' !== position) {
-                element.style.position = 'relative';
-            }
-
-            var dirty = false;
-
-            //last request animation frame id used in onscroll event
-            var rafId = 0;
-            var size = getElementSize(element);
-            var lastWidth = 0;
-            var lastHeight = 0;
-            var initialHiddenCheck = true;
-            lastAnimationFrameForInvisibleCheck = 0;
-
-            var resetExpandShrink = function () {
-                var width = element.offsetWidth;
-                var height = element.offsetHeight;
-
-                expandChild.style.width = (width + 10) + 'px';
-                expandChild.style.height = (height + 10) + 'px';
-
-                expand.scrollLeft = width + 10;
-                expand.scrollTop = height + 10;
-
-                shrink.scrollLeft = width + 10;
-                shrink.scrollTop = height + 10;
-            };
-
-            var reset = function() {
-                // Check if element is hidden
-                if (initialHiddenCheck) {
-                    var invisible = element.offsetWidth === 0 && element.offsetHeight === 0;
-                    if (invisible) {
-                        // Check in next frame
-                        if (!lastAnimationFrameForInvisibleCheck){
-                            lastAnimationFrameForInvisibleCheck = requestAnimationFrame(function(){
-                                lastAnimationFrameForInvisibleCheck = 0;
-                                reset();
-                            });
-                        }
-
-                        return;
-                    } else {
-                        // Stop checking
-                        initialHiddenCheck = false;
-                    }
-                }
-
-                resetExpandShrink();
-            };
-            element.resizeSensor.resetSensor = reset;
-
-            var onResized = function() {
-                rafId = 0;
-
-                if (!dirty) return;
-
-                lastWidth = size.width;
-                lastHeight = size.height;
-
-                if (element.resizedAttached) {
-                    element.resizedAttached.call(size);
-                }
-            };
-
-            var onScroll = function() {
-                size = getElementSize(element);
-                dirty = size.width !== lastWidth || size.height !== lastHeight;
-
-                if (dirty && !rafId) {
-                    rafId = requestAnimationFrame(onResized);
-                }
-
-                reset();
-            };
-
-            var addEvent = function(el, name, cb) {
-                if (el.attachEvent) {
-                    el.attachEvent('on' + name, cb);
-                } else {
-                    el.addEventListener(name, cb);
-                }
-            };
-
-            addEvent(expand, 'scroll', onScroll);
-            addEvent(shrink, 'scroll', onScroll);
-
-            // Fix for custom Elements and invisible elements
-            lastAnimationFrameForInvisibleCheck = requestAnimationFrame(function(){
-                lastAnimationFrameForInvisibleCheck = 0;
-                reset();
-            });
-        }
-
-        forEachElement(element, function(elem){
-            attachResizeEvent(elem, callback);
-        });
-
-        this.detach = function(ev) {
-            // clean up the unfinished animation frame to prevent a potential endless requestAnimationFrame of reset
-            if (!lastAnimationFrameForInvisibleCheck) {
-                cancelAnimationFrame(lastAnimationFrameForInvisibleCheck);
-                lastAnimationFrameForInvisibleCheck = 0;
-            }
-            ResizeSensor.detach(element, ev);
-        };
-
-        this.reset = function() {
-            element.resizeSensor.resetSensor();
-        };
-    };
-
-    ResizeSensor.reset = function(element) {
-        forEachElement(element, function(elem){
-            elem.resizeSensor.resetSensor();
-        });
-    };
-
-    ResizeSensor.detach = function(element, ev) {
-        forEachElement(element, function(elem){
-            if (!elem) return;
-            if(elem.resizedAttached && typeof ev === "function"){
-                elem.resizedAttached.remove(ev);
-                if(elem.resizedAttached.length()) return;
-            }
-            if (elem.resizeSensor) {
-                if (elem.contains(elem.resizeSensor)) {
-                    elem.removeChild(elem.resizeSensor);
-                }
-                delete elem.resizeSensor;
-                delete elem.resizedAttached;
-            }
-        });
-    };
-
-    if (typeof MutationObserver !== "undefined") {
-        var observer = new MutationObserver(function (mutations) {
-            for (var i in mutations) {
-                if (mutations.hasOwnProperty(i)) {
-                    var items = mutations[i].addedNodes;
-                    for (var j = 0; j < items.length; j++) {
-                        if (items[j].resizeSensor) {
-                            ResizeSensor.reset(items[j]);
-                        }
-                    }
-                }
-            }
-        });
-
-        document.addEventListener("DOMContentLoaded", function (event) {
-            observer.observe(document.body, {
-                childList: true,
-                subtree: true,
-            });
-        });
-    }
-
-    return ResizeSensor;
-
-}));
-
-
-/***/ }),
-
-/***/ 543:
+/***/ 960:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var jQuery = __webpack_require__(864);
+/* provided dependency */ var jQuery = __webpack_require__(405);
 /**
  * @preserve jquery.fullscreen 1.1.5
  * https://github.com/code-lts/jquery-fullscreen-plugin
@@ -586,7 +210,7 @@ installFullScreenHandlers();
 
 /***/ }),
 
-/***/ 273:
+/***/ 465:
 /***/ ((module, exports, __webpack_require__) => {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -600,7 +224,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 (function (factory) {
     if ( true ) {
         // AMD. Register as an anonymous module.
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(864)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(405)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 		(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -811,7 +435,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 864:
+/***/ 405:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -11535,7 +11159,7 @@ return jQuery;
 
 /***/ }),
 
-/***/ 180:
+/***/ 398:
 /***/ ((module) => {
 
 /**
@@ -16314,7 +15938,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 61:
+/***/ 26:
 /***/ (function(__unused_webpack_module, exports) {
 
 
@@ -19559,7 +19183,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 27:
+/***/ 40:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -34407,7 +34031,7 @@ const X3DBaseNode_default_ = X3DBaseNode;
 x_ite_Namespace .add ("X3DBaseNode", "x_ite/Base/X3DBaseNode", X3DBaseNode_default_);
 /* harmony default export */ const Base_X3DBaseNode = (X3DBaseNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Legacy.js
-/* provided dependency */ var $ = __webpack_require__(864);
+/* provided dependency */ var $ = __webpack_require__(405);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -38432,7 +38056,7 @@ const X3DProtoDeclarationNode_default_ = X3DProtoDeclarationNode;
 x_ite_Namespace .add ("X3DProtoDeclarationNode", "x_ite/Prototype/X3DProtoDeclarationNode", X3DProtoDeclarationNode_default_);
 /* harmony default export */ const Prototype_X3DProtoDeclarationNode = (X3DProtoDeclarationNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/X3DParser.js
-/* provided dependency */ var X3DParser_$ = __webpack_require__(864);
+/* provided dependency */ var X3DParser_$ = __webpack_require__(405);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -39257,7 +38881,7 @@ const X3DProtoDeclaration_default_ = X3DProtoDeclaration;
 x_ite_Namespace .add ("X3DProtoDeclaration", "x_ite/Prototype/X3DProtoDeclaration", X3DProtoDeclaration_default_);
 /* harmony default export */ const Prototype_X3DProtoDeclaration = (X3DProtoDeclaration_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/VRMLParser.js
-/* provided dependency */ var VRMLParser_$ = __webpack_require__(864);
+/* provided dependency */ var VRMLParser_$ = __webpack_require__(405);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -41802,7 +41426,7 @@ const VRMLParser_default_ = VRMLParser;
 x_ite_Namespace .add ("VRMLParser", "x_ite/Parser/VRMLParser", VRMLParser_default_);
 /* harmony default export */ const Parser_VRMLParser = (VRMLParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/XMLParser.js
-/* provided dependency */ var XMLParser_$ = __webpack_require__(864);
+/* provided dependency */ var XMLParser_$ = __webpack_require__(405);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -43857,7 +43481,7 @@ const URLs_default_ = URLs;
 x_ite_Namespace .add ("URLs", "x_ite/Browser/Networking/URLs", URLs_default_);
 /* harmony default export */ const Networking_URLs = (URLs_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GLTF2Parser.js
-/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(864);
+/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(405);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -44164,12 +43788,12 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
          }
       }
    },
-   khrLightsPunctualObject (khrLightsPunctual)
+   khrLightsPunctualObject (KHR_lights_punctual)
    {
-      if (!(khrLightsPunctual instanceof Object))
+      if (!(KHR_lights_punctual instanceof Object))
          return;
 
-      this .lightsArray (khrLightsPunctual .lights);
+      this .lightsArray (KHR_lights_punctual .lights);
    },
    lightsArray (lights)
    {
@@ -44381,6 +44005,42 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
 
                   return value;
                }
+            },
+            configurable: true,
+         });
+
+         Object .defineProperty (accessor, "normalizedArray",
+         {
+            get: () =>
+            {
+               switch (accessor .componentType)
+               {
+                  case 5120: // Int8Array
+                     var value = Float32Array .from (accessor .array, v => Math .max (v / 127, -1));
+                     break;
+                  case 5121: // Uint8Array
+                     var value = Float32Array .from (accessor .array, v => v / 255);
+                     break;
+                  case 5122: // Int16Array
+                     var value = Float32Array .from (accessor .array, v => Math .max (v / 32767, -1));
+                     break;
+                  case 5123: // Uint16Array
+                     var value = Float32Array .from (accessor .array, v => v / 65535);
+                     break;
+                  case 5124: // Int32Array
+                     var value = Float32Array .from (accessor .array, v => Math .max (v / 2147483647, -1));
+                     break;
+                  case 5125: // Uint32Array
+                     var value = Float32Array .from (accessor .array, v => v / 4294967295);
+                     break;
+                  case 5126: // Float32Array
+                     var value = accessor .array;
+                     break;
+               }
+
+               Object .defineProperty (accessor, "normalizedArray", { value: value });
+
+               return value;
             },
             configurable: true,
          });
@@ -44621,7 +44281,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
 
       const texCoordIndices = this .texCoordIndices ("", material);
 
-      this .texCoordIndex         = [... texCoordIndices] .reduce (Math .max, -1);
+      this .texCoordIndex         = Array .from (texCoordIndices) .reduce (Math .max, -1);
       this .textureTransformNodes = [ ];
       this .texCoordMappings      = new Map ();
       material .texCoordMappings  = this .texCoordMappings;
@@ -45423,7 +45083,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
 
       // Add light.
 
-      this .nodeExtensions (node .extensions, transformNode);
+      this .nodeLight (node .extensions ?.KHR_lights_punctual, transformNode);
 
       // Add children.
 
@@ -45432,7 +45092,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
       // Add Shape nodes.
 
       if (shapeNodes)
-         transformNode ._children .push (... shapeNodes);
+         transformNode ._children .push (... this .meshInstancing (node .extensions ?.EXT_mesh_gpu_instancing, shapeNodes));
 
       transformNode .setup ();
 
@@ -45490,19 +45150,12 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
 
       humanoidNode ._skin .push (transformNode);
    },
-   nodeExtensions (extensions, transformNode)
+   nodeLight (KHR_lights_punctual, transformNode)
    {
-      if (!(extensions instanceof Object))
+      if (!(KHR_lights_punctual instanceof Object))
          return;
 
-      this .nodeLight (extensions .KHR_lights_punctual, transformNode);
-   },
-   nodeLight (khrLightsPunctual, transformNode)
-   {
-      if (!(khrLightsPunctual instanceof Object))
-         return;
-
-      const lightNode = this .lightObject (this .lights [khrLightsPunctual .light]);
+      const lightNode = this .lightObject (this .lights [KHR_lights_punctual .light]);
 
       if (!lightNode)
          return;
@@ -45511,16 +45164,81 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
 
       transformNode ._children .push (lightNode);
    },
+   meshInstancing (EXT_mesh_gpu_instancing, shapeNodes)
+   {
+      if (!(EXT_mesh_gpu_instancing instanceof Object))
+         return shapeNodes;
+
+      let
+         attributes  = EXT_mesh_gpu_instancing .attributes,
+         translation = this .accessors [attributes ?.TRANSLATION],
+         rotation    = this .accessors [attributes ?.ROTATION],
+         scale       = this .accessors [attributes ?.SCALE],
+         count       = Math .max (translation ?.count ?? 0, rotation ?.count ?? 0, scale ?.count ?? 0);
+
+      if (!count)
+         return shapeNodes;
+
+      if (translation ?.type !== "VEC3")
+         translation = null;
+
+      if (rotation ?.type !== "VEC4")
+         rotation = null;
+
+      if (scale ?.type !== "VEC3")
+         scale = null;
+
+      const
+         scene          = this .getScene (),
+         transformNodes = [ ],
+         tArray         = translation ?.array,
+         rArray         = rotation ?.normalizedArray,
+         sArray         = scale ?.array;
+
+      for (let i = 0; i < count; ++ i)
+      {
+         const transformNode = scene .createNode ("Transform", false);
+
+         if (translation && i < translation .count)
+         {
+            transformNode ._translation = new Numbers_Vector3 (tArray [i * 3 + 0],
+                                                       tArray [i * 3 + 1],
+                                                       tArray [i * 3 + 2]);
+         }
+
+         if (rotation && i < rotation .count)
+         {
+            transformNode ._rotation = new Numbers_Rotation4 (new Numbers_Quaternion (rArray [i * 4 + 0],
+                                                                      rArray [i * 4 + 1],
+                                                                      rArray [i * 4 + 2],
+                                                                      rArray [i * 4 + 3]));
+         }
+
+         if (scale && i < scale .count)
+         {
+            transformNode ._scale = new Numbers_Vector3 (sArray [i * 3 + 0],
+                                                 sArray [i * 3 + 1],
+                                                 sArray [i * 3 + 2]);
+         }
+
+         transformNode ._children = shapeNodes;
+
+         transformNode .setup ();
+         transformNodes .push (transformNode);
+      }
+
+      return transformNodes;
+   },
    nodeChildrenArray (children)
    {
       if (!(children instanceof Array))
          return [ ];
 
-      const nodes = [... new Set (children
+      const nodes = Array .from (new Set (children
          .map (index => this .nodes [index] ?.childNode)
          .filter (node => node)
          .filter (node => node .getTypeName () !== "HAnimHumanoid" || !node .getCloneCount ())
-      )];
+      ));
 
       return nodes;
    },
@@ -45796,7 +45514,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
       if (!output .array .length)
          return [ ];
 
-      return this .createInterpolator (timeSensorNode, node, target, sampler .interpolation, input .array, output .array, timeSensorNode ._cycleInterval .getValue ());
+      return this .createInterpolator (timeSensorNode, node, target, sampler .interpolation, input .array, output, timeSensorNode ._cycleInterval .getValue ());
    },
    createNavigationInfo ()
    {
@@ -46222,29 +45940,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
             opaque         = appearanceNode ._alphaMode .getValue () === "OPAQUE",
             colorNode      = scene .createNode (opaque ? "Color" : typeName, false);
 
-         const array = opaque && typeName !== "Color"
-            ? color .array .filter ((_, i) => (i + 1) % 4)
-            : color .array;
-
-         switch (color .componentType)
-         {
-            case 5120: // Int8Array
-            case 5122: // Int16Array
-            case 5124: // Int32Array
-               break;
-            case 5121: // Uint8Array
-               colorNode ._color = array .map (v => v / 0xff);
-               break;
-            case 5123: // Uint16Array
-               colorNode ._color = array .map (v => v / 0xffff);
-               break;
-            case 5125: // Uint32Array
-               colorNode ._color = array .map (v => v / 0xffffffff);
-               break;
-            case 5126: // Float32Array
-               colorNode ._color = array;
-               break;
-         }
+         colorNode ._color = opaque && typeName !== "Color"
+            ? color .normalizedArray .filter ((_, i) => (i + 1) % 4)
+            : color .normalizedArray;
 
          colorNode .setup ();
 
@@ -46269,13 +45967,11 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
          }
          case 1:
          {
-            return texCoords .textureCoordinateNode = [... material .texCoordMappings .entries ()]
-               .map (([mapping, i]) => this .createTextureCoordinate (texCoords [i], mapping)) [0];
+            return texCoords .textureCoordinateNode = Array .from (material .texCoordMappings .entries (), ([mapping, i]) => this .createTextureCoordinate (texCoords [i], mapping)) [0];
          }
          default:
          {
-            const textureCoordinateNodes = [... material .texCoordMappings .entries ()]
-               .map (([mapping, i]) => this .createTextureCoordinate (texCoords [i], mapping))
+            const textureCoordinateNodes = Array .from (material .texCoordMappings .entries (), ([mapping, i]) => this .createTextureCoordinate (texCoords [i], mapping))
                .filter (node => node)
                .sort ((a, b) => Math_Algorithm .cmp (a ._mapping .getValue (), b ._mapping .getValue ()));
 
@@ -46307,7 +46003,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
          textureCoordinateNode = scene .createNode ("TextureCoordinate", false);
 
       textureCoordinateNode ._mapping = mapping;
-      textureCoordinateNode ._point   = texCoord .array;
+      textureCoordinateNode ._point   = texCoord .normalizedArray;
 
       textureCoordinateNode .setup ();
 
@@ -46325,7 +46021,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
          scene      = this .getExecutionContext (),
          normalNode = scene .createNode ("Normal", false);
 
-      normalNode ._vector = normal .array;
+      normalNode ._vector = normal .normalizedArray;
 
       if ((targets instanceof Array) && (weights instanceof Array))
       {
@@ -46406,7 +46102,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
       const
          start        = skin .coordinateNode ._point .length,
          jointsArray  = joints .array,
-         weightsArray = weights .array,
+         weightsArray = weights .normalizedArray,
          numVertices  = jointsArray .length / 4;
 
       for (let v = 0; v < numVertices; ++ v)
@@ -46524,7 +46220,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
       {
          case "translation":
          {
-            const interpolatorNode = this .createPositionInterpolator (interpolation, times, keyValues, cycleInterval);
+            const interpolatorNode = this .createPositionInterpolator (interpolation, times, keyValues .array, cycleInterval);
 
             scene .addNamedNode (scene .getUniqueName ("TranslationInterpolator"), interpolatorNode);
 
@@ -46535,7 +46231,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
          }
          case "rotation":
          {
-            const interpolatorNode = this .createOrientationInterpolator (interpolation, times, keyValues, cycleInterval);
+            const interpolatorNode = this .createOrientationInterpolator (interpolation, times, keyValues .normalizedArray, cycleInterval);
 
             scene .addNamedNode (scene .getUniqueName ("RotationInterpolator"), interpolatorNode);
 
@@ -46546,7 +46242,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
          }
          case "scale":
          {
-            const interpolatorNode = this .createPositionInterpolator (interpolation, times, keyValues, cycleInterval);
+            const interpolatorNode = this .createPositionInterpolator (interpolation, times, keyValues .array, cycleInterval);
 
             scene .addNamedNode (scene .getUniqueName ("ScaleInterpolator"), interpolatorNode);
 
@@ -46573,7 +46269,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
                if (!geometryNode)
                   continue;
 
-               const coordinateInterpolatorNode = this .createArrayInterpolator ("Coordinate", interpolation, times, keyValues, cycleInterval, targets, attributes, "POSITION");
+               const coordinateInterpolatorNode = this .createArrayInterpolator ("CoordinateInterpolator", interpolation, times, keyValues .normalizedArray, cycleInterval, targets, attributes, "POSITION", false);
 
                if (coordinateInterpolatorNode)
                {
@@ -46583,7 +46279,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
                   scene .addRoute (coordinateInterpolatorNode, "value_changed", geometryNode ._coord, "set_point");
                }
 
-               const normalInterpolatorNode = this .createArrayInterpolator ("Normal", interpolation, times, keyValues, cycleInterval, targets, attributes, "NORMAL");
+               const normalInterpolatorNode = this .createArrayInterpolator ("NormalInterpolator", interpolation, times, keyValues .normalizedArray, cycleInterval, targets, attributes, "NORMAL", true);
 
                if (normalInterpolatorNode)
                {
@@ -46660,8 +46356,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
                                            keyValues [i + 2]));
             }
 
-            const samples = [... Array (Math .floor (times .at (-1) * SAMPLES_PER_SECOND)) .keys ()]
-               .map ((_, i, array) => i / (array .length - 1) * times .at (-1));
+            const
+               length  = Math .floor (times .at (-1) * SAMPLES_PER_SECOND),
+               samples = Array .from ({ length: length }, (_, i) => i / (length - 1) * times .at (-1))
 
             for (const t of samples)
             {
@@ -46750,8 +46447,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
                                                   keyValues [i + 3]));
             }
 
-            const samples = [... Array (Math .floor (times .at (-1) * SAMPLES_PER_SECOND)) .keys ()]
-               .map ((_, i, array) => i / (array .length - 1) * times .at (-1));
+            const
+               length  = Math .floor (times .at (-1) * SAMPLES_PER_SECOND),
+               samples = Array .from ({ length: length }, (_, i) => i / (length - 1) * times .at (-1))
 
             for (const t of samples)
             {
@@ -46767,7 +46465,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
          }
       }
    },
-   createArrayInterpolator (Type, interpolation, times, weights, cycleInterval, targets, accessors, key)
+   createArrayInterpolator (typeName, interpolation, times, weights, cycleInterval, targets, accessors, key, normalized)
    {
       const
          scene    = this .getExecutionContext (),
@@ -46780,7 +46478,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
       {
          case "STEP":
          {
-            const interpolatorNode = scene .createNode (`${Type}Interpolator`, false);
+            const interpolatorNode = scene .createNode (typeName, false);
 
             // Key
 
@@ -46793,14 +46491,14 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
 
             const w = Array .from (targets .keys (), i => weights [i]);
 
-            for (const value of this .applyMorphTargets (accessor .field, targets, key, w))
+            for (const value of this .applyMorphTargets (accessor .field, targets, key, w, normalized))
                interpolatorNode ._keyValue .push (value);
 
             for (let t = 1, length = times .length; t < length; ++ t)
             {
                const
                   w      = Array .from (targets .keys (), i => weights [t * targets .length + i]),
-                  values = this .applyMorphTargets (accessor .field, targets, key, w);
+                  values = this .applyMorphTargets (accessor .field, targets, key, w, normalized);
 
                for (const value of values)
                   interpolatorNode ._keyValue .push (value);
@@ -46818,7 +46516,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
          default:
          case "LINEAR":
          {
-            const interpolatorNode = scene .createNode (`${Type}Interpolator`, false);
+            const interpolatorNode = scene .createNode (typeName, false);
 
             // Key
 
@@ -46830,7 +46528,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
             {
                const w = Array .from (targets .keys (), i => weights [t * targets .length + i]);
 
-               for (const value of this .applyMorphTargets (accessor .field, targets, key, w))
+               for (const value of this .applyMorphTargets (accessor .field, targets, key, w, normalized))
                   interpolatorNode ._keyValue .push (value);
             }
 
@@ -46842,12 +46540,13 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
          }
          case "CUBICSPLINE":
          {
-            const interpolatorNode = scene .createNode (`${Type}Interpolator`, false);
+            const interpolatorNode = scene .createNode (typeName, false);
 
             // Key
 
-            const samples = [... Array (Math .floor (times .at (-1) * SAMPLES_PER_SECOND)) .keys ()]
-               .map ((_, i, array) => i / (array .length - 1) * times .at (-1));
+            const
+               length  = Math .floor (times .at (-1) * SAMPLES_PER_SECOND),
+               samples = Array .from ({ length: length }, (_, i) => i / (length - 1) * times .at (-1))
 
             // KeyValue
 
@@ -46857,7 +46556,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
 
                const w = Array .from (targets .keys (), i => this .cubicSplineScalarArray (t, times, weights, targets .length, i));
 
-               for (const value of this .applyMorphTargets (accessor .field, targets, key, w))
+               for (const value of this .applyMorphTargets (accessor .field, targets, key, w, normalized))
                   interpolatorNode ._keyValue .push (value);
             }
 
@@ -46873,7 +46572,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
    {
       const value = new Numbers_Vector3 (0, 0, 0);
 
-      return function (array, targets, key, weights)
+      return function (array, targets, key, weights, normalized)
       {
          const vectors = Array .from (array, v => v .getValue () .copy ());
 
@@ -46890,7 +46589,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
                continue;
 
             const
-               array  = accessor .array,
+               array  = accessor [normalized ? "normalizedArray" : "array"],
                length = array .length;
 
             for (let a = 0, p = 0; a < length; a += 3, ++ p)
@@ -46980,7 +46679,7 @@ const GLTF2Parser_default_ = GLTF2Parser;
 x_ite_Namespace .add ("GLTF2Parser", "x_ite/Parser/GLTF2Parser", GLTF2Parser_default_);
 /* harmony default export */ const Parser_GLTF2Parser = (GLTF2Parser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GLB2Parser.js
-/* provided dependency */ var GLB2Parser_$ = __webpack_require__(864);
+/* provided dependency */ var GLB2Parser_$ = __webpack_require__(405);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -47132,7 +46831,7 @@ const GLB2Parser_default_ = GLB2Parser;
 x_ite_Namespace .add ("GLB2Parser", "x_ite/Parser/GLB2Parser", GLB2Parser_default_);
 /* harmony default export */ const Parser_GLB2Parser = (GLB2Parser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/OBJParser.js
-/* provided dependency */ var OBJParser_$ = __webpack_require__(864);
+/* provided dependency */ var OBJParser_$ = __webpack_require__(405);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -50487,8 +50186,8 @@ const MatrixStack_default_ = MatrixStack;
 x_ite_Namespace .add ("MatrixStack", "standard/Math/Utility/MatrixStack", MatrixStack_default_);
 /* harmony default export */ const Utility_MatrixStack = (MatrixStack_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_$ = __webpack_require__(864);
-/* provided dependency */ var libtess = __webpack_require__(180);
+/* provided dependency */ var SVGParser_$ = __webpack_require__(405);
+/* provided dependency */ var libtess = __webpack_require__(398);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -53256,7 +52955,7 @@ const SVGParser_default_ = SVGParser;
 x_ite_Namespace .add ("SVGParser", "x_ite/Parser/SVGParser", SVGParser_default_);
 /* harmony default export */ const Parser_SVGParser = (SVGParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GoldenGate.js
-/* provided dependency */ var GoldenGate_$ = __webpack_require__(864);
+/* provided dependency */ var GoldenGate_$ = __webpack_require__(405);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -53593,7 +53292,7 @@ const Plane3_default_ = Plane3;
 x_ite_Namespace .add ("Plane3", "standard/Math/Geometry/Plane3", Plane3_default_);
 /* harmony default export */ const Geometry_Plane3 = (Plane3_default_);
 ;// CONCATENATED MODULE: ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var Triangle3_libtess = __webpack_require__(180);
+/* provided dependency */ var Triangle3_libtess = __webpack_require__(398);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -60978,7 +60677,7 @@ const X3DTexture2DNode_default_ = X3DTexture2DNode;
 x_ite_Namespace .add ("X3DTexture2DNode", "x_ite/Components/Texturing/X3DTexture2DNode", X3DTexture2DNode_default_);
 /* harmony default export */ const Texturing_X3DTexture2DNode = (X3DTexture2DNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/ImageTexture.js
-/* provided dependency */ var ImageTexture_$ = __webpack_require__(864);
+/* provided dependency */ var ImageTexture_$ = __webpack_require__(405);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -65583,7 +65282,7 @@ const X3DWorld_default_ = X3DWorld;
 x_ite_Namespace .add ("X3DWorld", "x_ite/Execution/X3DWorld", X3DWorld_default_);
 /* harmony default export */ const Execution_X3DWorld = (X3DWorld_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/InputOutput/FileLoader.js
-/* provided dependency */ var FileLoader_$ = __webpack_require__(864);
+/* provided dependency */ var FileLoader_$ = __webpack_require__(405);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -89092,7 +88791,7 @@ const X3DShaderNode_default_ = X3DShaderNode;
 x_ite_Namespace .add ("X3DShaderNode", "x_ite/Components/Shaders/X3DShaderNode", X3DShaderNode_default_);
 /* harmony default export */ const Shaders_X3DShaderNode = (X3DShaderNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js
-/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(864);
+/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(405);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -94484,7 +94183,7 @@ const ShaderCompiler_default_ = ShaderCompiler;
 x_ite_Namespace .add ("ShaderCompiler", "x_ite/Browser/Shaders/ShaderCompiler", ShaderCompiler_default_);
 /* harmony default export */ const Shaders_ShaderCompiler = (ShaderCompiler_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shaders/ShaderPart.js
-/* provided dependency */ var ShaderPart_$ = __webpack_require__(864);
+/* provided dependency */ var ShaderPart_$ = __webpack_require__(405);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -95141,7 +94840,7 @@ const X3DAppearanceNode_default_ = X3DAppearanceNode;
 x_ite_Namespace .add ("X3DAppearanceNode", "x_ite/Components/Shape/X3DAppearanceNode", X3DAppearanceNode_default_);
 /* harmony default export */ const Shape_X3DAppearanceNode = (X3DAppearanceNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shape/Appearance.js
-/* provided dependency */ var Appearance_$ = __webpack_require__(864);
+/* provided dependency */ var Appearance_$ = __webpack_require__(405);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -98422,7 +98121,7 @@ const Components_Shape_default_ = {
 x_ite_Namespace .add ("Shape", "x_ite/Components/Shape", Components_Shape_default_);
 /* harmony default export */ const Components_Shape = (Components_Shape_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/X3DSoundProcessingNode.js
-/* provided dependency */ var X3DSoundProcessingNode_$ = __webpack_require__(864);
+/* provided dependency */ var X3DSoundProcessingNode_$ = __webpack_require__(405);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -99062,7 +98761,7 @@ const X3DSoundSourceNode_default_ = X3DSoundSourceNode;
 x_ite_Namespace .add ("X3DSoundSourceNode", "x_ite/Components/Sound/X3DSoundSourceNode", X3DSoundSourceNode_default_);
 /* harmony default export */ const Sound_X3DSoundSourceNode = (X3DSoundSourceNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/AudioClip.js
-/* provided dependency */ var AudioClip_$ = __webpack_require__(864);
+/* provided dependency */ var AudioClip_$ = __webpack_require__(405);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -99364,7 +99063,7 @@ const X3DSoundNode_default_ = X3DSoundNode;
 x_ite_Namespace .add ("X3DSoundNode", "x_ite/Components/Sound/X3DSoundNode", X3DSoundNode_default_);
 /* harmony default export */ const Sound_X3DSoundNode = (X3DSoundNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/X3DSoundDestinationNode.js
-/* provided dependency */ var X3DSoundDestinationNode_$ = __webpack_require__(864);
+/* provided dependency */ var X3DSoundDestinationNode_$ = __webpack_require__(405);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -101014,7 +100713,7 @@ const ListenerPointSource_default_ = ListenerPointSource;
 x_ite_Namespace .add ("ListenerPointSource", "x_ite/Components/Sound/ListenerPointSource", ListenerPointSource_default_);
 /* harmony default export */ const Sound_ListenerPointSource = (ListenerPointSource_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/MicrophoneSource.js
-/* provided dependency */ var MicrophoneSource_$ = __webpack_require__(864);
+/* provided dependency */ var MicrophoneSource_$ = __webpack_require__(405);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -102552,7 +102251,7 @@ const Components_Sound_default_ = {
 
 x_ite_Namespace .add ("Sound", "x_ite/Components/Sound", Components_Sound_default_);
 /* harmony default export */ const Components_Sound = (Components_Sound_default_);
-;// CONCATENATED MODULE: ./src/x_ite/Browser/Texturing/GIFMedia.js
+;// CONCATENATED MODULE: ./src/x_ite/Browser/Texturing/GifMedia.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -102677,14 +102376,14 @@ function GifMedia (gif, movieTexture)
    });
 }
 
-const GIFMedia_default_ = GifMedia;
+const GifMedia_default_ = GifMedia;
 ;
 
-x_ite_Namespace .add ("GIFMedia", "x_ite/Browser/Texturing/GIFMedia", GIFMedia_default_);
-/* harmony default export */ const GIFMedia = (GIFMedia_default_);
+x_ite_Namespace .add ("GifMedia", "x_ite/Browser/Texturing/GifMedia", GifMedia_default_);
+/* harmony default export */ const Texturing_GifMedia = (GifMedia_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var MovieTexture_$ = __webpack_require__(864);
-/* provided dependency */ var SuperGif = __webpack_require__(27);
+/* provided dependency */ var MovieTexture_$ = __webpack_require__(405);
+/* provided dependency */ var SuperGif = __webpack_require__(40);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -102888,7 +102587,7 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, Texturing_X3DTe
       {
          this .gif = gif;
 
-         GIFMedia (gif, this);
+         Texturing_GifMedia (gif, this);
 
          gif .pause ();
 
@@ -103855,7 +103554,7 @@ const MultiTextureTransform_default_ = MultiTextureTransform;
 x_ite_Namespace .add ("MultiTextureTransform", "x_ite/Components/Texturing/MultiTextureTransform", MultiTextureTransform_default_);
 /* harmony default export */ const Texturing_MultiTextureTransform = (MultiTextureTransform_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/PixelTexture.js
-/* provided dependency */ var PixelTexture_$ = __webpack_require__(864);
+/* provided dependency */ var PixelTexture_$ = __webpack_require__(405);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -106009,7 +105708,7 @@ const gettext_default_ = gettext;
 x_ite_Namespace .add ("gettext", "locale/gettext", gettext_default_);
 /* harmony default export */ const locale_gettext = (gettext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserTimings.js
-/* provided dependency */ var BrowserTimings_$ = __webpack_require__(864);
+/* provided dependency */ var BrowserTimings_$ = __webpack_require__(405);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -106439,7 +106138,7 @@ const TextureQuality_default_ = TextureQuality;
 x_ite_Namespace .add ("TextureQuality", "x_ite/Browser/Core/TextureQuality", TextureQuality_default_);
 /* harmony default export */ const Core_TextureQuality = (TextureQuality_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserOptions.js
-/* provided dependency */ var BrowserOptions_$ = __webpack_require__(864);
+/* provided dependency */ var BrowserOptions_$ = __webpack_require__(405);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -107032,7 +106731,7 @@ const RenderingProperties_default_ = RenderingProperties;
 x_ite_Namespace .add ("RenderingProperties", "x_ite/Browser/Core/RenderingProperties", RenderingProperties_default_);
 /* harmony default export */ const Core_RenderingProperties = (RenderingProperties_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/Notification.js
-/* provided dependency */ var Notification_$ = __webpack_require__(864);
+/* provided dependency */ var Notification_$ = __webpack_require__(405);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -107155,8 +106854,8 @@ const Notification_default_ = Notification;
 x_ite_Namespace .add ("Notification", "x_ite/Browser/Core/Notification", Notification_default_);
 /* harmony default export */ const Core_Notification = (Notification_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/ContextMenu.js
-/* provided dependency */ var jquery_fullscreen = __webpack_require__(543);
-/* provided dependency */ var ContextMenu_$ = __webpack_require__(864);
+/* provided dependency */ var jquery_fullscreen = __webpack_require__(960);
+/* provided dependency */ var ContextMenu_$ = __webpack_require__(405);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -109908,7 +109607,7 @@ const DataStorage_default_ = DataStorage;
 x_ite_Namespace .add ("DataStorage", "standard/Utility/DataStorage", DataStorage_default_);
 /* harmony default export */ const Utility_DataStorage = (DataStorage_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/X3DCoreContext.js
-/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(864);
+/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(405);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -111954,8 +111653,8 @@ const X3DViewer_default_ = X3DViewer;
 x_ite_Namespace .add ("X3DViewer", "x_ite/Browser/Navigation/X3DViewer", X3DViewer_default_);
 /* harmony default export */ const Navigation_X3DViewer = (X3DViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/ExamineViewer.js
-/* provided dependency */ var jquery_mousewheel = __webpack_require__(273);
-/* provided dependency */ var ExamineViewer_$ = __webpack_require__(864);
+/* provided dependency */ var jquery_mousewheel = __webpack_require__(465);
+/* provided dependency */ var ExamineViewer_$ = __webpack_require__(405);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -112827,8 +112526,8 @@ const ExamineViewer_default_ = ExamineViewer;
 x_ite_Namespace .add ("ExamineViewer", "x_ite/Browser/Navigation/ExamineViewer", ExamineViewer_default_);
 /* harmony default export */ const Navigation_ExamineViewer = (ExamineViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/X3DFlyViewer.js
-/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(273);
-/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(864);
+/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(465);
+/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(405);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -113832,8 +113531,8 @@ const FlyViewer_default_ = FlyViewer;
 x_ite_Namespace .add ("FlyViewer", "x_ite/Browser/Navigation/FlyViewer", FlyViewer_default_);
 /* harmony default export */ const Navigation_FlyViewer = (FlyViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/PlaneViewer.js
-/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(273);
-/* provided dependency */ var PlaneViewer_$ = __webpack_require__(864);
+/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(465);
+/* provided dependency */ var PlaneViewer_$ = __webpack_require__(405);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -114164,8 +113863,8 @@ const NoneViewer_default_ = NoneViewer;
 x_ite_Namespace .add ("NoneViewer", "x_ite/Browser/Navigation/NoneViewer", NoneViewer_default_);
 /* harmony default export */ const Navigation_NoneViewer = (NoneViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/LookAtViewer.js
-/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(273);
-/* provided dependency */ var LookAtViewer_$ = __webpack_require__(864);
+/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(465);
+/* provided dependency */ var LookAtViewer_$ = __webpack_require__(405);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -115304,8 +115003,8 @@ const X3DPickingContext_default_ = X3DPickingContext;
 x_ite_Namespace .add ("X3DPickingContext", "x_ite/Browser/Picking/X3DPickingContext", X3DPickingContext_default_);
 /* harmony default export */ const Picking_X3DPickingContext = (X3DPickingContext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/PointingDeviceSensor/PointingDevice.js
-/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(273);
-/* provided dependency */ var PointingDevice_$ = __webpack_require__(864);
+/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(465);
+/* provided dependency */ var PointingDevice_$ = __webpack_require__(405);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -116493,6 +116192,12 @@ Object .assign (MultiSampleFrameBuffer .prototype,
                            0, 0, width, height,
                            gl .COLOR_BUFFER_BIT, samples && !oit ? gl .LINEAR : gl .NEAREST);
    },
+   unbind ()
+   {
+      const { context: gl, lastBuffer } = this;
+
+      gl .bindFramebuffer (gl .FRAMEBUFFER, lastBuffer .pop ());
+   },
    bindForOrderIndependentTransparency ()
    {
       const { context: gl, lastBuffer, oitFrameBuffer } = this;
@@ -116504,12 +116209,6 @@ Object .assign (MultiSampleFrameBuffer .prototype,
       gl .clearColor (0, 0, 0, 1);
       gl .clear (gl .COLOR_BUFFER_BIT);
       gl .blendFuncSeparate (gl .ONE, gl .ONE, gl .ZERO, gl .ONE_MINUS_SRC_ALPHA);
-   },
-   unbind ()
-   {
-      const { context: gl, lastBuffer } = this;
-
-      gl .bindFramebuffer (gl .FRAMEBUFFER, lastBuffer .pop ());
    },
    compose ()
    {
@@ -116598,8 +116297,7 @@ const MultiSampleFrameBuffer_default_ = MultiSampleFrameBuffer;
 x_ite_Namespace .add ("MultiSampleFrameBuffer", "x_ite/Rendering/MultiSampleFrameBuffer", MultiSampleFrameBuffer_default_);
 /* harmony default export */ const Rendering_MultiSampleFrameBuffer = (MultiSampleFrameBuffer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Rendering/X3DRenderingContext.js
-/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(864);
-/* provided dependency */ var ResizeSensor = __webpack_require__(45);
+/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(405);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -118887,7 +118585,7 @@ const Components_default_ = Components;
 x_ite_Namespace .add ("Components", "x_ite/Components", Components_default_);
 /* harmony default export */ const x_ite_Components = ((/* unused pure expression or super */ null && (Components_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/DOMIntegration.js
-/* provided dependency */ var DOMIntegration_$ = __webpack_require__(864);
+/* provided dependency */ var DOMIntegration_$ = __webpack_require__(405);
 /*******************************************************************************
  * MIT License
  *
@@ -120025,7 +119723,7 @@ const SupportedProfiles_default_ = SupportedProfiles;
 x_ite_Namespace .add ("SupportedProfiles", "x_ite/Configuration/SupportedProfiles", SupportedProfiles_default_);
 /* harmony default export */ const Configuration_SupportedProfiles = (SupportedProfiles_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/X3DBrowser.js
-/* provided dependency */ var X3DBrowser_$ = __webpack_require__(864);
+/* provided dependency */ var X3DBrowser_$ = __webpack_require__(405);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -121106,7 +120804,7 @@ const X3DBrowser_default_ = X3DBrowser;
 x_ite_Namespace .add ("X3DBrowser", "x_ite/Browser/X3DBrowser", X3DBrowser_default_);
 /* harmony default export */ const Browser_X3DBrowser = (X3DBrowser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/X3DCanvasElement.js
-/* provided dependency */ var X3DCanvasElement_$ = __webpack_require__(864);
+/* provided dependency */ var X3DCanvasElement_$ = __webpack_require__(405);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -121238,8 +120936,8 @@ const X3DCanvasElement_default_ = X3DCanvasElement;
 x_ite_Namespace .add ("X3DCanvasElement", "x_ite/X3DCanvasElement", X3DCanvasElement_default_);
 /* harmony default export */ const x_ite_X3DCanvasElement = (X3DCanvasElement_default_);
 ;// CONCATENATED MODULE: ./src/lib/jquery.js
-/* provided dependency */ var jquery_$ = __webpack_require__(864);
-/* provided dependency */ var pako = __webpack_require__(61);
+/* provided dependency */ var jquery_$ = __webpack_require__(405);
+/* provided dependency */ var pako = __webpack_require__(26);
 Object .assign (jquery_$,
 {
    decodeText (input)
@@ -121316,14 +121014,14 @@ const jquery_default_ = jquery_$;
 x_ite_Namespace .add ("jquery", "lib/jquery", jquery_default_);
 /* harmony default export */ const jquery = ((/* unused pure expression or super */ null && (jquery_default_)));
 ;// CONCATENATED MODULE: ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(180);
+/* provided dependency */ var libtess_libtess = __webpack_require__(398);
 const libtess_default_ = libtess_libtess;
 ;
 
 x_ite_Namespace .add ("libtess", "lib/libtess", libtess_default_);
 /* harmony default export */ const lib_libtess = ((/* unused pure expression or super */ null && (libtess_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/X3D.js
-/* provided dependency */ var X3D_$ = __webpack_require__(864);
+/* provided dependency */ var X3D_$ = __webpack_require__(405);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
