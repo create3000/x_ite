@@ -1,4 +1,6 @@
 export default /* glsl */ `
+#if defined (X3D_LIGHTING)
+
 float
 getAttenuation (const in vec3 attenuation, const in float distanceToLight)
 {
@@ -57,4 +59,6 @@ getLightIntensity (const in x3d_LightSourceParameters light, const in vec3 point
 
    return attenuation * rangeAttenuation * spotAttenuation * light .intensity * light .color;
 }
+
+#endif
 `;
