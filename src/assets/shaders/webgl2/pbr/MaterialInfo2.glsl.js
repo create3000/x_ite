@@ -66,6 +66,10 @@ getBaseColor ()
       vec4 baseColor = vec4 (x3d_Material .baseColor, alpha);
    #endif
 
+   #if defined (X3D_COLOR_MATERIAL)
+      baseColor *= color;
+   #endif
+
    // Get texture color.
 
    #if defined (X3D_MATERIAL_SPECULAR_GLOSSINESS)
@@ -94,10 +98,6 @@ getBaseColor ()
       #elif defined (X3D_TEXTURE)
          baseColor = getTextureColor (baseColor, vec4 (vec3 (1.0), alpha));
       #endif
-   #endif
-
-   #if defined (X3D_COLOR_MATERIAL)
-      baseColor *= color;
    #endif
 
    return baseColor;
@@ -160,15 +160,15 @@ getEmissiveColor ()
       vec3 texCoord = getTexCoord (x3d_EmissiveTexture .textureTransformMapping, x3d_EmissiveTexture .textureCoordinateMapping);
 
       #if defined (X3D_EMISSIVE_TEXTURE_2D)
-         return emissiveParameter * sRGBToLinear (texture (x3d_EmissiveTexture .texture2D, texCoord .st)) .rgb;
+         emissiveParameter *= sRGBToLinear (texture (x3d_EmissiveTexture .texture2D, texCoord .st)) .rgb;
       #elif defined (X3D_EMISSIVE_TEXTURE_3D)
-         return emissiveParameter * sRGBToLinear (texture (x3d_EmissiveTexture .texture3D, texCoord)) .rgb;
+         emissiveParameter *= sRGBToLinear (texture (x3d_EmissiveTexture .texture3D, texCoord)) .rgb;
       #elif defined (X3D_EMISSIVE_TEXTURE_CUBE)
-         return emissiveParameter * sRGBToLinear (texture (x3d_EmissiveTexture .textureCube, texCoord)) .rgb;
+         emissiveParameter *= sRGBToLinear (texture (x3d_EmissiveTexture .textureCube, texCoord)) .rgb;
       #endif
-   #else
-      return emissiveParameter .rgb;
    #endif
+
+   return emissiveParameter .rgb;
 }
 
 #if defined (X3D_OCCLUSION_TEXTURE)

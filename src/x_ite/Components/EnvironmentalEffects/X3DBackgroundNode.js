@@ -521,6 +521,7 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
       gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, this .projectionMatrixArray);
       gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, this .modelViewMatrixArray);
 
+      gl .uniform3f (shaderNode .x3d_EmissiveColor,                      1, 1, 1)
       gl .uniform1f (shaderNode .x3d_Transparency,                       transparency)
       gl .uniform1i (shaderNode .x3d_TextureCoordinateGeneratorMode [0], 0);
 

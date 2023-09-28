@@ -24,10 +24,10 @@ getMaterialColor (const in vec3 N,
 
    float alpha = 1.0 - x3d_Material .transparency;
 
+   vec4 diffuseParameter = vec4 (x3d_Material .diffuseColor, alpha);
+
    #if defined (X3D_COLOR_MATERIAL)
-      vec4 diffuseParameter = vec4 (color .rgb, color .a * alpha);
-   #else
-      vec4 diffuseParameter = vec4 (x3d_Material .diffuseColor, alpha);
+      diffuseParameter *= color;
    #endif
 
    // Get material color.
