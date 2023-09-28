@@ -1,4 +1,10 @@
 export default /* glsl */ `
+float
+getAttenuation (const in vec3 attenuation, const in float distanceToLight)
+{
+   return 1.0 / max (dot (attenuation, vec3 (1.0, distanceToLight, distanceToLight * distanceToLight)), 1.0);
+}
+
 // https://github.com/KhronosGroup/glTF/blob/master/extensions/2.0/Khronos/KHR_lights_punctual/README.md#range-property
 float
 getRangeAttenuation (const in float range, const in float _distance)
@@ -32,7 +38,7 @@ getSpotAttenuation (const in vec3 pointToLight, const in vec3 spotDirection, con
 }
 
 vec3
-getLightIntensity (const in x3d_LightSourceParameters light, const in vec3 pointToLight, const in float dL)
+getLightIntensity (const in x3d_LightSourceParameters light, const in vec3 pointToLight, const in float distanceToLight)
 {
    float attenuation      = 1.0;
    float rangeAttenuation = 1.0;
@@ -40,7 +46,7 @@ getLightIntensity (const in x3d_LightSourceParameters light, const in vec3 point
 
    if (light .type != x3d_DirectionalLight)
    {
-      attenuation      = 1.0 / max (dot (light .attenuation, vec3 (1.0, dL, dL * dL)), 1.0);
+      attenuation      = getAttenuation (light .attenuation, distanceToLight);
       rangeAttenuation = getRangeAttenuation (light .radius, length (pointToLight));
    }
 

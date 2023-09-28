@@ -84,16 +84,21 @@ getMaterialColor ()
    {
       x3d_LightSourceParameters light = x3d_LightSource [i];
 
-      vec3 pointToLight;
+      vec3  pointToLight;
+      float distanceToLight;
 
       if (light .type != x3d_DirectionalLight)
-         pointToLight = light .location - vertex;
+      {
+         pointToLight    = light .location - vertex;
+         distanceToLight = length (light .matrix * pointToLight);
+      }
       else
-         pointToLight = -light .direction;
+      {
+         pointToLight    = -light .direction;
+         distanceToLight = -1.0;
+      }
 
-      float dL = length (light .matrix * pointToLight); // Distance to light
-
-      if (light .type == x3d_DirectionalLight || dL <= light .radius || light .radius < 0.0)
+      if (distanceToLight <= light .radius || light .radius < 0.0)
       {
          // BSTF
          vec3 l = normalize (pointToLight);   // Direction from surface point to light
@@ -102,14 +107,14 @@ getMaterialColor ()
          float NdotL = clamp (dot (n, l), 0.0, 1.0);
          float NdotV = clamp (dot (n, v), 0.0, 1.0);
          float NdotH = clamp (dot (n, h), 0.0, 1.0);
-         float LdotH = clamp (dot (l, h), 0.0, 1.0);
+         // float LdotH = clamp (dot (l, h), 0.0, 1.0);
          float VdotH = clamp (dot (v, h), 0.0, 1.0);
 
          if (NdotL > 0.0 || NdotV > 0.0)
          {
             // Calculation of analytical light
             // https://github.com/KhronosGroup/glTF/tree/master/specification/2.0#acknowledgments AppendixB
-            vec3 intensity = getLightIntensity (light, pointToLight, dL);
+            vec3 intensity = getLightIntensity (light, pointToLight, distanceToLight);
 
             #if defined (X3D_SHADOWS)
                if (light .shadowIntensity > 0.0)
