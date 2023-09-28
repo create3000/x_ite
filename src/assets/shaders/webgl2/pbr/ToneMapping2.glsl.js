@@ -26,7 +26,7 @@ sRGBToLinear (const in vec4 srgbIn)
    return vec4 (sRGBToLinear (srgbIn .xyz), srgbIn .w);
 }
 
-#if defined (TONEMAP_ACES_NARKOWICZ)
+#if defined (X3D_TONEMAP_ACES_NARKOWICZ)
 // ACES tone map (faster approximation)
 // see: https://knarkowicz.wordpress.com/2016/01/06/aces-filmic-tone-mapping-curve/
 vec3
@@ -42,7 +42,7 @@ toneMapACES_Narkowicz (const in vec3 color)
 }
 #endif
 
-#if defined (TONEMAP_ACES_HILL) || defined (TONEMAP_ACES_HILL_EXPOSURE_BOOST)
+#if defined (X3D_TONEMAP_ACES_HILL) || defined (X3D_TONEMAP_ACES_HILL_EXPOSURE_BOOST)
 // sRGB => XYZ => D65_2_D60 => AP1 => RRT_SAT
 const mat3 ACESInputMat = mat3
 (
@@ -93,15 +93,15 @@ toneMap (in vec3 color)
 {
    color *= exposure;
 
-   #if defined (TONEMAP_ACES_NARKOWICZ)
+   #if defined (X3D_TONEMAP_ACES_NARKOWICZ)
       color = toneMapACES_Narkowicz (color);
    #endif
 
-   #if defined (TONEMAP_ACES_HILL)
+   #if defined (X3D_TONEMAP_ACES_HILL)
       color = toneMapACES_Hill (color);
    #endif
 
-   #if defined (TONEMAP_ACES_HILL_EXPOSURE_BOOST)
+   #if defined (X3D_TONEMAP_ACES_HILL_EXPOSURE_BOOST)
       // boost exposure as discussed in https://github.com/mrdoob/three.js/pull/19621
       // this factor is based on the exposure correction of Krzysztof Narkowicz in his
       // implemetation of ACES tone mapping

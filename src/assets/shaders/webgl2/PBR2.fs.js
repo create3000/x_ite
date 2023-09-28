@@ -66,7 +66,7 @@ getMaterialColor ()
 
    float albedoSheenScaling = 1.0;
 
-   #if defined (USE_IBL)
+   #if defined (X3D_USE_IBL)
    #endif
 
    vec3 f_diffuse_ibl   = f_diffuse;
