@@ -7,9 +7,9 @@ tags: [DOM, Integration, XHTML, HTML]
 ---
 ## Overview
 
-DOM integration allows you to integrate 3D content seamlessly into your web page, with just a JavaScript file included, the scene can be written directly into the XHTML or HTML markup and manipulated using common JavaScript DOM manipulation methods.
+DOM integration allows you to integrate 3D content seamlessly into your web page, with just a JavaScript file included, the scene can be written directly into the HTML or XHTML markup and manipulated using common JavaScript DOM manipulation methods.
 
-Andreas Plesch has written a nice plugin for X3D DOM integration. It allows JavaScript authors to use X3D content as if it were HTML. It links the X3D DOM nodes to the X3D scene graph, allowing control of the X3D scene using regular DOM manipulation methods.
+If you have an X3D file or a [file that can be loaded by X_ITE](https://create3000.github.io/x_ite/#supported-file-formats), then you can convert this file to an HTML document using the [Online X3D File Format Converter](https://create3000.github.io/x_ite/laboratory/x3d-file-converter).
 
 **HTML DOM integration is now an integral part of X_ITE.**
 
