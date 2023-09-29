@@ -42,123 +42,11 @@ x_ite: true
 </style>
 
 <script defer src="https://create3000.github.io/media/laboratory/l-system/FileSaver.js-2.0.0/dist/FileSaver.min.js"></script>
-<script defer>
-$(() =>
-{
-   $("#drop-zone") .on ("dragover", event =>
-   {
-      event .stopPropagation ();
-      event .preventDefault ();
-
-      event .originalEvent .dataTransfer .dropEffect = "copy";
-   });
-
-   $("#drop-zone") .on ("drop", event =>
-   {
-      event .stopPropagation ();
-      event .preventDefault ();
-
-      read (event .originalEvent .dataTransfer .files);
-   });
-
-   $("#open-files a") .on ("click", event =>
-   {
-      const input = $("<input></input>")
-         .attr ("type", "file")
-         .appendTo ($("#open-files"));
-
-      input .on ("change", event =>
-      {
-         read (event .target .files);
-         input .remove ();
-      });
-
-      input .trigger ("click");
-      return false;
-   });
-
-   function read (files)
-   {
-      read .files = [... files];
-
-      $("#open-files") .hide ();
-      $("#convert-files") .show ();
-   }
-
-   $("#convert-files a") .on ("click", event =>
-   {
-      $("#convert-files") .hide ();
-      $("#converting-files") .show ();
-
-      convert ($("#drop-zone select") .val (), read .files);
-
-      return false;
-   });
-
-   const formats = {
-      "XML":  ["model/x3d+xml",  ".x3d",  "toXMLString"],
-      "VRML": ["model/x3d+vrml", ".x3dv", "toVRMLString"],
-      "JSON": ["model/x3d+json", ".x3dj", "toJSONString"],
-   };
-
-   async function convert (encoding, files)
-   {
-      const [mimeType, extension, toString] = formats [encoding];
-
-      for (const file of files)
-      {
-         try
-         {
-            const
-               Browser = X3D .createBrowser () .browser,
-               url     = URL .createObjectURL (file);
-
-            Browser .endUpdate ();
-            Browser .setBrowserOption ("LoadUrlObjects",   false);
-            Browser .setBrowserOption ("PrimitiveQuality", "HIGH");
-            Browser .setBrowserOption ("TextureQuality",   "HIGH");
-
-            await Browser .loadURL (new X3D .MFString (url));
-
-            Browser .currentScene .setMetaData ("generator", `${Browser .name} V${Browser .version}, ${Browser .providerURL}`);
-            Browser .currentScene .setMetaData ("modified", new Date () .toUTCString ());
-
-            link (mimeType, file .name .replace (/\.[^.]+$/, "") + extension, Browser .currentScene [toString] ());
-         }
-         catch (error)
-         {
-            console .error (error);
-         }
-      }
-
-      $("#converting-files") .hide ();
-      $("#open-files") .show ();
-   }
-
-   function link (mimeType, name, x3dSyntax)
-   {
-      const a = $("<a></a>")
-         .text (name)
-         .attr ("href", "#")
-         .on ("click", download .bind (null, mimeType, name, x3dSyntax));
-
-      $("<li></li>") .append (a) .appendTo ($("#download-links"));
-   }
-
-   function download (mimeType, name, x3dSyntax)
-   {
-      const blob = new Blob ([x3dSyntax], { type: `${mimeType};charset=utf-8` });
-
-      saveAs (blob, name);
-
-      return false;
-   }
-});
-</script>
+<script defer src="../assets/js/x3d-file-converter.js"></script>
 
 ## Upload and Convert
 
-Convert **X3D, VRML, glTF (GLB), OBJ, STL, PLY,** and **SVG** to an X3D format of your choice.
+Convert **X3D, VRML (.wrl), glTF (GLB), OBJ, STL, PLY,** and **SVG** to an X3D format of your choice.
 
 <div id="drop-zone">
    <p id="open-files" class="center">
@@ -171,6 +59,7 @@ Convert **X3D, VRML, glTF (GLB), OBJ, STL, PLY,** and **SVG** to an X3D format o
          <option value="XML" selected>X3D XML Encoding</option>
          <option value="VRML">X3D VRML Encoding</option>
          <option value="JSON">X3D JSON Encoding</option>
+         <option value="HTML">HTML Document</option>
       </select>
    </p>
    <p id="converting-files" class="center">
