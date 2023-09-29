@@ -63,7 +63,7 @@ Convert **X3D, VRML (.wrl), glTF (GLB), OBJ, STL, PLY,** and **SVG** to an X3D f
       </select>
    </p>
    <p id="converting-files" class="center">
-      Converting file ...
+      Converting files ...
    </p>
 </div>
 
