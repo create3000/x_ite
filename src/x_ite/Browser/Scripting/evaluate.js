@@ -47,7 +47,7 @@
 
 function evaluate (thisArg, globalObject, sourceText)
 {
-   return Function (/* js */ `with (arguments [0])
+   return new Function (/* js */ `with (arguments [0])
    {
       return eval ((() =>
       {
