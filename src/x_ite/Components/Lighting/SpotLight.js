@@ -284,7 +284,7 @@ Object .assign (Object .setPrototypeOf (SpotLight .prototype, X3DLightNode .prot
    },
    getRadius ()
    {
-      return Math .max (0, this ._radius .getValue ());
+      return this ._radius .getValue ();
    },
    getBeamWidth ()
    {

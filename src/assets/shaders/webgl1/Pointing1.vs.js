@@ -19,7 +19,7 @@ varying vec3 normal;
    varying vec4 texCoord0;
 #endif
 
-#pragma X3D include "include/PointSize.glsl"
+#pragma X3D include "common/PointSize.glsl"
 
 void
 main ()

@@ -11,10 +11,10 @@ in vec4 x3d_Vertex;
 
 out vec3 vertex;
 
-#pragma X3D include "include/Utils.glsl"
-#pragma X3D include "include/Skin.glsl"
-#pragma X3D include "include/Particle.glsl"
-#pragma X3D include "include/PointSize.glsl"
+#pragma X3D include "common/Utils.glsl"
+#pragma X3D include "common/Skin.glsl"
+#pragma X3D include "common/Particle.glsl"
+#pragma X3D include "common/PointSize.glsl"
 
 void
 main ()

@@ -6,7 +6,7 @@ precision highp sampler2D;
 precision highp sampler3D;
 precision highp samplerCube;
 
-#pragma X3D include "include/Fragment.glsl"
+#pragma X3D include "common/Fragment.glsl"
 
 in vec4 frontColor;
 

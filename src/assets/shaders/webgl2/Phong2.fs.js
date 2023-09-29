@@ -6,12 +6,12 @@ precision highp sampler2D;
 precision highp sampler3D;
 precision highp samplerCube;
 
-#pragma X3D include "include/Fragment.glsl"
-#pragma X3D include "include/Material.glsl"
-#pragma X3D include "include/Normal.glsl"
+#pragma X3D include "common/Fragment.glsl"
+#pragma X3D include "common/Material.glsl"
+#pragma X3D include "common/Normal.glsl"
 
 #if defined (X3D_AMBIENT_TEXTURE)
-uniform x3d_AmbientTextureParameters x3d_AmbientTexture;
+   uniform x3d_AmbientTextureParameters x3d_AmbientTexture;
 #endif
 
 vec3
@@ -27,19 +27,19 @@ getAmbientColor (const in vec3 diffuseColor)
       vec3 texCoord = getTexCoord (x3d_AmbientTexture .textureTransformMapping, x3d_AmbientTexture .textureCoordinateMapping);
 
       #if defined (X3D_AMBIENT_TEXTURE_2D)
-         return ambientParameter * texture (x3d_AmbientTexture .texture2D, texCoord .st) .rgb;
+         ambientParameter *= texture (x3d_AmbientTexture .texture2D, texCoord .st) .rgb;
       #elif defined (X3D_AMBIENT_TEXTURE_3D)
-         return ambientParameter * texture (x3d_AmbientTexture .texture3D, texCoord) .rgb;
+         ambientParameter *= texture (x3d_AmbientTexture .texture3D, texCoord) .rgb;
       #elif defined (X3D_AMBIENT_TEXTURE_CUBE)
-         return ambientParameter * texture (x3d_AmbientTexture .textureCube, texCoord) .rgb;
+         ambientParameter *= texture (x3d_AmbientTexture .textureCube, texCoord) .rgb;
       #endif
-   #else
-      return ambientParameter;
    #endif
+
+   return ambientParameter;
 }
 
 #if defined (X3D_DIFFUSE_TEXTURE)
-uniform x3d_DiffuseTextureParameters x3d_DiffuseTexture;
+   uniform x3d_DiffuseTextureParameters x3d_DiffuseTexture;
 #endif
 
 vec4
@@ -49,10 +49,10 @@ getDiffuseColor ()
 
    float alpha = 1.0 - x3d_Material .transparency;
 
+   vec4 diffuseParameter = vec4 (x3d_Material .diffuseColor, alpha);
+
    #if defined (X3D_COLOR_MATERIAL)
-      vec4 diffuseParameter = vec4 (color .rgb, color .a * alpha);
-   #else
-      vec4 diffuseParameter = vec4 (x3d_Material .diffuseColor, alpha);
+      diffuseParameter *= color;
    #endif
 
    // Get texture color.
@@ -61,21 +61,21 @@ getDiffuseColor ()
       vec3 texCoord = getTexCoord (x3d_DiffuseTexture .textureTransformMapping, x3d_DiffuseTexture .textureCoordinateMapping);
 
       #if defined (X3D_DIFFUSE_TEXTURE_2D)
-         return diffuseParameter * texture (x3d_DiffuseTexture .texture2D, texCoord .st);
+         diffuseParameter *= texture (x3d_DiffuseTexture .texture2D, texCoord .st);
       #elif defined (X3D_DIFFUSE_TEXTURE_3D)
-         return diffuseParameter * texture (x3d_DiffuseTexture .texture3D, texCoord);
+         diffuseParameter *= texture (x3d_DiffuseTexture .texture3D, texCoord);
       #elif defined (X3D_DIFFUSE_TEXTURE_CUBE)
-         return diffuseParameter * texture (x3d_DiffuseTexture .textureCube, texCoord);
+         diffuseParameter *= texture (x3d_DiffuseTexture .textureCube, texCoord);
       #endif
    #elif defined (X3D_TEXTURE)
-      return getTextureColor (diffuseParameter, vec4 (x3d_Material .specularColor, alpha));
-   #else
-      return diffuseParameter;
+      diffuseParameter = getTextureColor (diffuseParameter, vec4 (x3d_Material .specularColor, alpha));
    #endif
+
+   return diffuseParameter;
 }
 
 #if defined (X3D_SPECULAR_TEXTURE)
-uniform x3d_SpecularTextureParameters x3d_SpecularTexture;
+   uniform x3d_SpecularTextureParameters x3d_SpecularTexture;
 #endif
 
 vec3
@@ -91,19 +91,19 @@ getSpecularColor ()
       vec3 texCoord = getTexCoord (x3d_SpecularTexture .textureTransformMapping, x3d_SpecularTexture .textureCoordinateMapping);
 
       #if defined (X3D_SPECULAR_TEXTURE_2D)
-         return specularParameter * texture (x3d_SpecularTexture .texture2D, texCoord .st) .rgb;
+         specularParameter *= texture (x3d_SpecularTexture .texture2D, texCoord .st) .rgb;
       #elif defined (X3D_SPECULAR_TEXTURE_3D)
-         return specularParameter * texture (x3d_SpecularTexture .texture3D, texCoord) .rgb;
+         specularParameter *= texture (x3d_SpecularTexture .texture3D, texCoord) .rgb;
       #elif defined (X3D_SPECULAR_TEXTURE_CUBE)
-         return specularParameter * texture (x3d_SpecularTexture .textureCube, texCoord) .rgb;
+         specularParameter *= texture (x3d_SpecularTexture .textureCube, texCoord) .rgb;
       #endif
-   #else
-      return specularParameter;
    #endif
+
+   return specularParameter;
 }
 
 #if defined (X3D_EMISSIVE_TEXTURE)
-uniform x3d_EmissiveTextureParameters x3d_EmissiveTexture;
+   uniform x3d_EmissiveTextureParameters x3d_EmissiveTexture;
 #endif
 
 vec3
@@ -119,19 +119,19 @@ getEmissiveColor ()
       vec3 texCoord = getTexCoord (x3d_EmissiveTexture .textureTransformMapping, x3d_EmissiveTexture .textureCoordinateMapping);
 
       #if defined (X3D_EMISSIVE_TEXTURE_2D)
-         return emissiveParameter * texture (x3d_EmissiveTexture .texture2D, texCoord .st) .rgb;
+         emissiveParameter *= texture (x3d_EmissiveTexture .texture2D, texCoord .st) .rgb;
       #elif defined (X3D_EMISSIVE_TEXTURE_3D)
-         return emissiveParameter * texture (x3d_EmissiveTexture .texture3D, texCoord) .rgb;
+         emissiveParameter *= texture (x3d_EmissiveTexture .texture3D, texCoord) .rgb;
       #elif defined (X3D_EMISSIVE_TEXTURE_CUBE)
-         return emissiveParameter * texture (x3d_EmissiveTexture .textureCube, texCoord) .rgb;
+         emissiveParameter *= texture (x3d_EmissiveTexture .textureCube, texCoord) .rgb;
       #endif
-   #else
-      return emissiveParameter;
    #endif
+
+   return emissiveParameter;
 }
 
 #if defined (X3D_SHININESS_TEXTURE)
-uniform x3d_ShininessTextureParameters x3d_ShininessTexture;
+   uniform x3d_ShininessTextureParameters x3d_ShininessTexture;
 #endif
 
 float
@@ -147,19 +147,19 @@ getShininessFactor ()
       vec3 texCoord = getTexCoord (x3d_ShininessTexture .textureTransformMapping, x3d_ShininessTexture .textureCoordinateMapping);
 
       #if defined (X3D_SHININESS_TEXTURE_2D)
-         return shininess * texture (x3d_ShininessTexture .texture2D, texCoord .st) .a;
+         shininess *= texture (x3d_ShininessTexture .texture2D, texCoord .st) .a;
       #elif defined (X3D_SHININESS_TEXTURE_3D)
-         return shininess * texture (x3d_ShininessTexture .texture3D, texCoord) .a;
+         shininess *= texture (x3d_ShininessTexture .texture3D, texCoord) .a;
       #elif defined (X3D_SHININESS_TEXTURE_CUBE)
-         return shininess * texture (x3d_ShininessTexture .textureCube, texCoord) .a;
+         shininess *= texture (x3d_ShininessTexture .textureCube, texCoord) .a;
       #endif
-   #else
-      return shininess;
    #endif
+
+   return shininess;
 }
 
 #if defined (X3D_OCCLUSION_TEXTURE)
-uniform x3d_OcclusionTextureParameters x3d_OcclusionTexture;
+   uniform x3d_OcclusionTextureParameters x3d_OcclusionTexture;
 #endif
 
 float

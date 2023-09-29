@@ -14,8 +14,8 @@ varying vec3 normal;
    vec4 texCoord0 = vec4 (0.0, 0.0, 0.0, 1.0);
 #endif
 
-#pragma X3D include "include/ClipPlanes.glsl"
-#pragma X3D include "include/Point.glsl"
+#pragma X3D include "common/ClipPlanes.glsl"
+#pragma X3D include "common/Point.glsl"
 
 uniform float x3d_Id;
 

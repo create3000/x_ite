@@ -228,6 +228,11 @@ getTexture (const in int i, const in vec3 texCoord)
    uniform x3d_MultiTextureParameters x3d_MultiTexture [X3D_NUM_TEXTURES];
 #endif
 
+#if defined (X3D_PHYSICAL_MATERIAL)
+vec4
+sRGBToLinear (const in vec4 srgbIn);
+#endif
+
 int
 minI (const in int a, const in int b)
 {
@@ -246,6 +251,10 @@ getTextureColor (const in vec4 diffuseColor, const in vec4 specularColor)
 
          vec3 texCoord     = getTexCoord (minI (i, X3D_NUM_TEXTURE_TRANSFORMS - 1), minI (i, X3D_NUM_TEXTURE_COORDINATES - 1));
          vec4 textureColor = getTexture (i, texCoord);
+
+         #if defined (X3D_PHYSICAL_MATERIAL)
+            textureColor = sRGBToLinear (textureColor);
+         #endif
 
          // Multi texturing
 
@@ -464,6 +473,10 @@ getTextureColor (const in vec4 diffuseColor, const in vec4 specularColor)
          vec4 textureColor = textureCube (x3d_TextureCube [0], texCoord .stp);
       #else
          vec4 textureColor = vec4 (0.0);
+      #endif
+
+      #if defined (X3D_PHYSICAL_MATERIAL)
+         textureColor = sRGBToLinear (textureColor);
       #endif
 
       return diffuseColor * textureColor;

@@ -285,7 +285,7 @@ Object .assign (Object .setPrototypeOf (PointLight .prototype, X3DLightNode .pro
    },
    getRadius ()
    {
-      return Math .max (0, this ._radius .getValue ());
+      return this ._radius .getValue ();
    },
    getLights ()
    {

@@ -46,41 +46,40 @@
  ******************************************************************************/
 
 /* WebGL 1 */
-import ClipPlanes1            from "../../../assets/shaders/webgl1/include/ClipPlanes1.glsl.js";
-import Colors1                from "../../../assets/shaders/webgl1/include/Colors1.glsl.js";
-import Fog1                   from "../../../assets/shaders/webgl1/include/Fog1.glsl.js";
-import Fragment1              from "../../../assets/shaders/webgl1/include/Fragment1.glsl.js";
-import Hatch1                 from "../../../assets/shaders/webgl1/include/Hatch1.glsl.js";
-import Material1              from "../../../assets/shaders/webgl1/include/Material1.glsl.js";
-import Normal1                from "../../../assets/shaders/webgl1/include/Normal1.glsl.js";
-import Perlin1                from "../../../assets/shaders/webgl1/include/Perlin1.glsl.js";
-import Point1                 from "../../../assets/shaders/webgl1/include/Point1.glsl.js";
-import PointSize1             from "../../../assets/shaders/webgl1/include/PointSize1.glsl.js";
-import Shadow1                from "../../../assets/shaders/webgl1/include/Shadow1.glsl.js";
-import SpotFactor1            from "../../../assets/shaders/webgl1/include/SpotFactor1.glsl.js";
-import Texture1               from "../../../assets/shaders/webgl1/include/Texture1.glsl.js";
-import Vertex1                from "../../../assets/shaders/webgl1/include/Vertex1.glsl.js";
+import ClipPlanes1            from "../../../assets/shaders/webgl1/common/ClipPlanes1.glsl.js";
+import Colors1                from "../../../assets/shaders/webgl1/common/Colors1.glsl.js";
+import Fog1                   from "../../../assets/shaders/webgl1/common/Fog1.glsl.js";
+import Fragment1              from "../../../assets/shaders/webgl1/common/Fragment1.glsl.js";
+import Hatch1                 from "../../../assets/shaders/webgl1/common/Hatch1.glsl.js";
+import Material1              from "../../../assets/shaders/webgl1/common/Material1.glsl.js";
+import Normal1                from "../../../assets/shaders/webgl1/common/Normal1.glsl.js";
+import Perlin1                from "../../../assets/shaders/webgl1/common/Perlin1.glsl.js";
+import Point1                 from "../../../assets/shaders/webgl1/common/Point1.glsl.js";
+import PointSize1             from "../../../assets/shaders/webgl1/common/PointSize1.glsl.js";
+import Shadow1                from "../../../assets/shaders/webgl1/common/Shadow1.glsl.js";
+import SpotFactor1            from "../../../assets/shaders/webgl1/common/SpotFactor1.glsl.js";
+import Texture1               from "../../../assets/shaders/webgl1/common/Texture1.glsl.js";
+import Vertex1                from "../../../assets/shaders/webgl1/common/Vertex1.glsl.js";
 
 /* WebGL 2 */
-import ClipPlanes2            from "../../../assets/shaders/webgl2/include/ClipPlanes2.glsl.js";
-import Colors2                from "../../../assets/shaders/webgl2/include/Colors2.glsl.js";
-import Fog2                   from "../../../assets/shaders/webgl2/include/Fog2.glsl.js";
-import Fragment2              from "../../../assets/shaders/webgl2/include/Fragment2.glsl.js";
-import Hatch2                 from "../../../assets/shaders/webgl2/include/Hatch2.glsl.js";
-import Line22                 from "../../../assets/shaders/webgl2/include/Line22.glsl.js";
-import Material2              from "../../../assets/shaders/webgl2/include/Material2.glsl.js";
-import Normal2                from "../../../assets/shaders/webgl2/include/Normal2.glsl.js";
-import Particle2              from "../../../assets/shaders/webgl2/include/Particle2.glsl.js";
-import Perlin2                from "../../../assets/shaders/webgl2/include/Perlin2.glsl.js";
-import Point2                 from "../../../assets/shaders/webgl2/include/Point2.glsl.js";
-import PointSize2             from "../../../assets/shaders/webgl2/include/PointSize2.glsl.js";
-import Shadow2                from "../../../assets/shaders/webgl2/include/Shadow2.glsl.js";
-import Skin2                  from "../../../assets/shaders/webgl2/include/Skin2.glsl.js";
-import SpotFactor2            from "../../../assets/shaders/webgl2/include/SpotFactor2.glsl.js";
-import Stipple2               from "../../../assets/shaders/webgl2/include/Stipple2.glsl.js";
-import Texture2               from "../../../assets/shaders/webgl2/include/Texture2.glsl.js";
-import Utils2                 from "../../../assets/shaders/webgl2/include/Utils2.glsl.js";
-import Vertex2                from "../../../assets/shaders/webgl2/include/Vertex2.glsl.js";
+import ClipPlanes2            from "../../../assets/shaders/webgl2/common/ClipPlanes2.glsl.js";
+import Fog2                   from "../../../assets/shaders/webgl2/common/Fog2.glsl.js";
+import Fragment2              from "../../../assets/shaders/webgl2/common/Fragment2.glsl.js";
+import Hatch2                 from "../../../assets/shaders/webgl2/common/Hatch2.glsl.js";
+import Line22                 from "../../../assets/shaders/webgl2/common/Line22.glsl.js";
+import Material2              from "../../../assets/shaders/webgl2/common/Material2.glsl.js";
+import Normal2                from "../../../assets/shaders/webgl2/common/Normal2.glsl.js";
+import Particle2              from "../../../assets/shaders/webgl2/common/Particle2.glsl.js";
+import Perlin2                from "../../../assets/shaders/webgl2/common/Perlin2.glsl.js";
+import Point2                 from "../../../assets/shaders/webgl2/common/Point2.glsl.js";
+import PointSize2             from "../../../assets/shaders/webgl2/common/PointSize2.glsl.js";
+import Shadow2                from "../../../assets/shaders/webgl2/common/Shadow2.glsl.js";
+import Skin2                  from "../../../assets/shaders/webgl2/common/Skin2.glsl.js";
+import SpotFactor2            from "../../../assets/shaders/webgl2/common/SpotFactor2.glsl.js";
+import Stipple2               from "../../../assets/shaders/webgl2/common/Stipple2.glsl.js";
+import Texture2               from "../../../assets/shaders/webgl2/common/Texture2.glsl.js";
+import Utils2                 from "../../../assets/shaders/webgl2/common/Utils2.glsl.js";
+import Vertex2                from "../../../assets/shaders/webgl2/common/Vertex2.glsl.js";
 
 /* WebGL 1 */
 import DefaultVertex1         from "../../../assets/shaders/webgl1/Default1.vs.js";
@@ -110,6 +109,18 @@ import PointingFragment2      from "../../../assets/shaders/webgl2/Pointing2.fs.
 import PointingVertex2        from "../../../assets/shaders/webgl2/Pointing2.vs.js";
 import UnlitFragment2         from "../../../assets/shaders/webgl2/Unlit2.fs.js";
 
+/* PBR 1 */
+import BDRF1                  from "../../../assets/shaders/webgl1/pbr/BDRF1.glsl.js";
+import Punctual1              from "../../../assets/shaders/webgl1/pbr/Punctual1.glsl.js";
+import MaterialInfo1          from "../../../assets/shaders/webgl1/pbr/MaterialInfo1.glsl.js";
+import ToneMapping1           from "../../../assets/shaders/webgl1/pbr/ToneMapping1.glsl.js";
+
+/* PBR 2 */
+import BDRF2                  from "../../../assets/shaders/webgl2/pbr/BDRF2.glsl.js";
+import Punctual2              from "../../../assets/shaders/webgl2/pbr/Punctual2.glsl.js";
+import MaterialInfo2          from "../../../assets/shaders/webgl2/pbr/MaterialInfo2.glsl.js";
+import ToneMapping2           from "../../../assets/shaders/webgl2/pbr/ToneMapping2.glsl.js";
+
 const ShaderRegistry = {
    includes: {
       1: {
@@ -127,10 +138,14 @@ const ShaderRegistry = {
          SpotFactor: SpotFactor1,
          Texture: Texture1,
          Vertex: Vertex1,
+         // PBR
+         BDRF: BDRF1,
+         MaterialInfo: MaterialInfo1,
+         Punctual: Punctual1,
+         ToneMapping: ToneMapping1,
       },
       2: {
          ClipPlanes: ClipPlanes2,
-         Colors: Colors2,
          Fog: Fog2,
          Fragment: Fragment2,
          Hatch: Hatch2,
@@ -148,6 +163,11 @@ const ShaderRegistry = {
          Texture: Texture2,
          Utils: Utils2,
          Vertex: Vertex2,
+         // PBR
+         BDRF: BDRF2,
+         MaterialInfo: MaterialInfo2,
+         Punctual: Punctual2,
+         ToneMapping: ToneMapping2,
       },
    },
    vertex: {

@@ -1,0 +1,187 @@
+export default /* glsl */ `
+
+struct MaterialInfo
+{
+   float ior;
+   float perceptualRoughness;      // roughness value, as authored by the model creator (input to shader)
+   vec3 f0;                        // full reflectance color (n incidence angle)
+
+   float alphaRoughness;           // roughness mapped to a more linear change in the roughness (proposed by [2])
+   vec3 c_diff;
+
+   vec3 f90;                       // reflectance color at grazing angle
+   float metallic;
+
+   vec3 baseColor;
+
+   float sheenRoughnessFactor;
+   vec3 sheenColorFactor;
+
+   vec3 clearcoatF0;
+   vec3 clearcoatF90;
+   float clearcoatFactor;
+   vec3 clearcoatNormal;
+   float clearcoatRoughness;
+
+   // KHR_materials_specular
+   float specularWeight; // product of specularFactor and specularTexture.a
+
+   float transmissionFactor;
+
+   float thickness;
+   vec3 attenuationColor;
+   float attenuationDistance;
+
+   // KHR_materials_iridescence
+   float iridescenceFactor;
+   float iridescenceIor;
+   float iridescenceThickness;
+
+   // KHR_materials_anisotropy
+   vec3 anisotropicT;
+   vec3 anisotropicB;
+   float anisotropyStrength;
+};
+
+#if defined (X3D_MATERIAL_SPECULAR_GLOSSINESS)
+   #if defined (X3D_DIFFUSE_TEXTURE)
+      uniform x3d_DiffuseTextureParameters x3d_DiffuseTexture;
+   #endif
+#elif defined (X3D_MATERIAL_METALLIC_ROUGHNESS)
+   #if defined (X3D_BASE_TEXTURE)
+      uniform x3d_BaseTextureParameters x3d_BaseTexture;
+   #endif
+#endif
+
+vec4
+getBaseColor ()
+{
+   // Get base parameter.
+
+   float alpha = 1.0 - x3d_Material .transparency;
+
+   #if defined (X3D_MATERIAL_SPECULAR_GLOSSINESS)
+      vec4 baseColor = vec4 (x3d_Material .diffuseColor, alpha);
+   #elif defined (X3D_MATERIAL_METALLIC_ROUGHNESS)
+      vec4 baseColor = vec4 (x3d_Material .baseColor, alpha);
+   #endif
+
+   #if defined (X3D_COLOR_MATERIAL)
+      baseColor *= color;
+   #endif
+
+   // Get texture color.
+
+   #if defined (X3D_MATERIAL_SPECULAR_GLOSSINESS)
+      #if defined (X3D_DIFFUSE_TEXTURE)
+         vec3 texCoord = getTexCoord (x3d_Diffuse .textureTransformMapping, x3d_Diffuse .textureCoordinateMapping);
+         #if defined (X3D_DIFFUSE_TEXTURE_2D)
+            baseColor *= sRGBToLinear (texture2D (x3d_Diffuse .texture2D, texCoord .st));
+         #elif defined (X3D_DIFFUSE_TEXTURE_CUBE)
+            baseColor *= sRGBToLinear (textureCube (x3d_Diffuse .textureCube, texCoord));
+         #endif
+      #elif defined (X3D_TEXTURE)
+         baseColor = getTextureColor (baseColor, vec4 (vec3 (1.0), alpha));
+      #endif
+   #elif defined (X3D_MATERIAL_METALLIC_ROUGHNESS)
+      #if defined (X3D_BASE_TEXTURE)
+         vec3 texCoord = getTexCoord (x3d_BaseTexture .textureTransformMapping, x3d_BaseTexture .textureCoordinateMapping);
+         #if defined (X3D_BASE_TEXTURE_2D)
+            baseColor *= sRGBToLinear (texture2D (x3d_BaseTexture .texture2D, texCoord .st));
+         #elif defined (X3D_BASE_TEXTURE_CUBE)
+            baseColor *= sRGBToLinear (textureCube (x3d_BaseTexture .textureCube, texCoord));
+         #endif
+      #elif defined (X3D_TEXTURE)
+         baseColor = getTextureColor (baseColor, vec4 (vec3 (1.0), alpha));
+      #endif
+   #endif
+
+   return baseColor;
+}
+
+#if defined (X3D_MATERIAL_METALLIC_ROUGHNESS)
+#if defined (X3D_METALLIC_ROUGHNESS_TEXTURE)
+   uniform x3d_MetallicRoughnessTextureParameters x3d_MetallicRoughnessTexture;
+#endif
+
+MaterialInfo
+getMetallicRoughnessInfo (MaterialInfo info)
+{
+   // Metallic and Roughness material properties are packed together
+   // In glTF, these factors can be specified by fixed scalar values
+   // or from a metallic-roughness map
+   info .metallic            = x3d_Material .metallic;
+   info .perceptualRoughness = x3d_Material .roughness;
+
+   // Get texture color.
+
+   #if defined (X3D_METALLIC_ROUGHNESS_TEXTURE)
+      vec3 texCoord = getTexCoord (x3d_MetallicRoughnessTexture .textureTransformMapping, x3d_MetallicRoughnessTexture .textureCoordinateMapping);
+      // Roughness is stored in the 'g' channel, metallic is stored in the 'b' channel.
+      // This layout intentionally reserves the 'r' channel for (optional) occlusion map data
+      #if defined (X3D_METALLIC_ROUGHNESS_TEXTURE_2D)
+         vec4 mrSample = texture2D (x3d_MetallicRoughnessTexture .texture2D, texCoord .st);
+      #elif defined (X3D_METALLIC_ROUGHNESS_TEXTURE_CUBE)
+         vec4 mrSample = textureCube (x3d_MetallicRoughnessTexture .textureCube, texCoord);
+      #endif
+
+      info .metallic            *= mrSample .b;
+      info .perceptualRoughness *= mrSample .g;
+   #endif
+
+   // Achromatic f0 based on IOR.
+   info .c_diff = mix (info .baseColor .rgb,  vec3 (0.0), info .metallic);
+   info .f0     = mix (info .f0, info .baseColor .rgb, info .metallic);
+
+   return info;
+}
+#endif
+
+#if defined (X3D_EMISSIVE_TEXTURE)
+   uniform x3d_EmissiveTextureParameters x3d_EmissiveTexture;
+#endif
+
+vec3
+getEmissiveColor ()
+{
+   // Get emissive parameter.
+
+   vec3 emissiveParameter = x3d_Material .emissiveColor;
+
+   // Get texture color.
+
+   #if defined (X3D_EMISSIVE_TEXTURE)
+      vec3 texCoord = getTexCoord (x3d_EmissiveTexture .textureTransformMapping, x3d_EmissiveTexture .textureCoordinateMapping);
+
+      #if defined (X3D_EMISSIVE_TEXTURE_2D)
+         emissiveParameter *= sRGBToLinear (texture2D (x3d_EmissiveTexture .texture2D, texCoord .st)) .rgb;
+      #elif defined (X3D_EMISSIVE_TEXTURE_CUBE)
+         emissiveParameter *= sRGBToLinear (textureCube (x3d_EmissiveTexture .textureCube, texCoord)) .rgb;
+      #endif
+   #endif
+
+   return emissiveParameter .rgb;
+}
+
+#if defined (X3D_OCCLUSION_TEXTURE)
+   uniform x3d_OcclusionTextureParameters x3d_OcclusionTexture;
+#endif
+
+float
+getOcclusionFactor ()
+{
+   // Get texture color.
+
+   #if defined (X3D_OCCLUSION_TEXTURE)
+      vec3 texCoord = getTexCoord (x3d_OcclusionTexture .textureTransformMapping, x3d_OcclusionTexture .textureCoordinateMapping);
+
+      #if defined (X3D_OCCLUSION_TEXTURE_2D)
+         return texture2D (x3d_OcclusionTexture .texture2D, texCoord .st) .r;
+      #elif defined (X3D_OCCLUSION_TEXTURE_CUBE)
+         return textureCube (x3d_OcclusionTexture .textureCube, texCoord) .r;
+      #endif
+   #else
+      return 1.0;
+   #endif
+}
+`;

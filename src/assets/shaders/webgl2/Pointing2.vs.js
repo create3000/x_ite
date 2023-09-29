@@ -31,10 +31,10 @@ out vec3 normal;
    out vec2       midPoint;
 #endif
 
-#pragma X3D include "include/Utils.glsl"
-#pragma X3D include "include/Skin.glsl"
-#pragma X3D include "include/Particle.glsl"
-#pragma X3D include "include/PointSize.glsl"
+#pragma X3D include "common/Utils.glsl"
+#pragma X3D include "common/Skin.glsl"
+#pragma X3D include "common/Particle.glsl"
+#pragma X3D include "common/PointSize.glsl"
 
 void
 main ()

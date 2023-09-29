@@ -6,12 +6,12 @@ precision highp sampler2D;
 precision highp sampler3D;
 precision highp samplerCube;
 
-#pragma X3D include "include/Fragment.glsl"
+#pragma X3D include "common/Fragment.glsl"
 
 uniform x3d_UnlitMaterialParameters x3d_Material;
 
 #if defined (X3D_EMISSIVE_TEXTURE)
-uniform x3d_EmissiveTextureParameters x3d_EmissiveTexture;
+   uniform x3d_EmissiveTextureParameters x3d_EmissiveTexture;
 #endif
 
 vec4
@@ -21,10 +21,10 @@ getEmissiveColor ()
 
    float alpha = 1.0 - x3d_Material .transparency;
 
+   vec4 emissiveParameter = vec4 (x3d_Material .emissiveColor, alpha);
+
    #if defined (X3D_COLOR_MATERIAL)
-      vec4 emissiveParameter = vec4 (color .rgb, color .a * alpha);
-   #else
-      vec4 emissiveParameter = vec4 (x3d_Material .emissiveColor, alpha);
+      emissiveParameter *= color;
    #endif
 
    // Get texture color.
@@ -33,17 +33,17 @@ getEmissiveColor ()
       vec3 texCoord = getTexCoord (x3d_EmissiveTexture .textureTransformMapping, x3d_EmissiveTexture .textureCoordinateMapping);
 
       #if defined (X3D_EMISSIVE_TEXTURE_2D)
-         return emissiveParameter * texture (x3d_EmissiveTexture .texture2D, texCoord .st);
+         emissiveParameter *= texture (x3d_EmissiveTexture .texture2D, texCoord .st);
       #elif defined (X3D_EMISSIVE_TEXTURE_3D)
-         return emissiveParameter * texture (x3d_EmissiveTexture .texture3D, texCoord);
+         emissiveParameter *= texture (x3d_EmissiveTexture .texture3D, texCoord);
       #elif defined (X3D_EMISSIVE_TEXTURE_CUBE)
-         return emissiveParameter * texture (x3d_EmissiveTexture .textureCube, texCoord);
+         emissiveParameter *= texture (x3d_EmissiveTexture .textureCube, texCoord);
       #endif
    #elif defined (X3D_TEXTURE)
-      return getTextureColor (emissiveParameter, vec4 (vec3 (1.0), alpha));
-   #else
-      return emissiveParameter;
+      emissiveParameter = getTextureColor (emissiveParameter, vec4 (vec3 (1.0), alpha));
    #endif
+
+   return emissiveParameter;
 }
 
 vec4

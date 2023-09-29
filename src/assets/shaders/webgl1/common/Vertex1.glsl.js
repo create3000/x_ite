@@ -134,7 +134,7 @@ vertex_main ()
    #endif
 
    #if defined (X3D_NORMALS)
-      normal      = x3d_NormalMatrix * x3d_Normal;
+      normal = x3d_NormalMatrix * x3d_Normal;
 
       #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
          localNormal = x3d_Normal;
