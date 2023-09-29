@@ -708,7 +708,7 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
 
          gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, projectionMatrixArray);
          gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrixArray);
-         gl .uniform3f        (shaderNode .x3d_EmissiveColor, 0, 0, 0);
+         gl .uniform3f        (shaderNode .x3d_EmissiveColor, 1, 1, 1);
          gl .uniform1f        (shaderNode .x3d_Transparency,  0);
 
          if (this .lineVertexArrayObject .enable (shaderNode))
