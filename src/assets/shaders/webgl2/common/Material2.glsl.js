@@ -23,14 +23,14 @@ getMaterialColor (const in vec3 vertex, const in vec3 N, const in vec3 ambientCo
 
       vec3  vL = light .location - vertex;
       float dL = length (light .matrix * vL);
-      bool  di = light .type == x3d_DirectionalLight;
 
-      if (di || dL <= light .radius || light .radius < 0.0)
+      if (dL <= light .radius || light .radius < 0.0)
       {
-         vec3 d = light .direction;
-         vec3 c = light .attenuation;
-         vec3 L = di ? -d : normalize (vL);      // Normalized vector from point on geometry to light source i position.
-         vec3 H = normalize (L + V);             // Specular term
+         bool di = light .type == x3d_DirectionalLight;
+         vec3 d  = light .direction;
+         vec3 c  = light .attenuation;
+         vec3 L  = di ? -d : normalize (vL);      // Normalized vector from point on geometry to light source i position.
+         vec3 H  = normalize (L + V);             // Specular term
 
          float lightAngle     = max (dot (N, L), 0.0);      // Angle between normal and light ray.
          vec3  diffuseTerm    = diffuseColor * lightAngle;
