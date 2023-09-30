@@ -195,6 +195,7 @@ Object .assign (DirectionalLightContainer .prototype,
       gl .uniform1f (shaderObject .x3d_LightIntensity [i],        lightNode .getIntensity ());
       gl .uniform1f (shaderObject .x3d_LightAmbientIntensity [i], lightNode .getAmbientIntensity ());
       gl .uniform3f (shaderObject .x3d_LightDirection [i],        direction .x, direction .y, direction .z);
+      gl .uniform1f (shaderObject .x3d_LightRadius [i],           -1);
 
       if (this .shadowBuffer)
       {
