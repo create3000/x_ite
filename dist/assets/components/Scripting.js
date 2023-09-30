@@ -215,7 +215,7 @@ var Namespace_default = /*#__PURE__*/__webpack_require__.n(Namespace_namespaceOb
 
 function evaluate (thisArg, globalObject, sourceText)
 {
-   return Function (/* js */ `with (arguments [0])
+   return new Function (/* js */ `with (arguments [0])
    {
       return eval ((() =>
       {
