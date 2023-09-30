@@ -284,6 +284,7 @@ Object .assign (Object .setPrototypeOf (SpotLight .prototype, X3DLightNode .prot
    },
    getRadius ()
    {
+      // Negative values mean infinity.
       return this ._radius .getValue ();
    },
    getBeamWidth ()
