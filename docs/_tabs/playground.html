@@ -243,7 +243,7 @@ function updateToolbar (toolbar, canvas)
 
    const play = $("<span></span>")
       .text ("▶")
-      .attr ("title", "Toggle browser update.")
+      .attr ("title", "Toggle browser update on/off.")
       .addClass (browser .isLive () ? "selected" : "")
       .on ("click", () =>
       {
@@ -260,7 +260,7 @@ function updateToolbar (toolbar, canvas)
 
    const antialiased = $("<span></span>")
       .text ("antialiased")
-      .attr ("title", "Toggle antialiasing.")
+      .attr ("title", "Toggle antialiasing on/off.")
       .addClass ("selected")
       .on ("click", () =>
       {
@@ -309,7 +309,7 @@ function updateToolbar (toolbar, canvas)
 
    const oit = $("<span></span>")
       .text ("oit")
-      .attr ("title", "Toggle order independent transparency.")
+      .attr ("title", "Toggle order independent transparency on/off.")
       .on ("click", () =>
       {
          const value = !browser .getBrowserOption ("OrderIndependentTransparency");
