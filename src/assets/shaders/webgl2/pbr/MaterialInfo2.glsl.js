@@ -66,6 +66,7 @@ getBaseColor ()
       vec4 baseColor = vec4 (x3d_Material .baseColor, alpha);
    #endif
 
+   // In addition to the material properties, if a primitive specifies a vertex color using the attribute semantic property COLOR_0, then this value acts as an additional linear multiplier to base color.
    #if defined (X3D_COLOR_MATERIAL)
       baseColor *= color;
    #endif
