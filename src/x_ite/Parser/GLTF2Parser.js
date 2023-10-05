@@ -1936,6 +1936,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       scene .addNamedNode    (scene .getUniqueName       ("Animations"), groupNode);
       scene .addExportedNode (scene .getUniqueExportName ("Animations"), groupNode);
 
+      groupNode ._visible  = false;
       groupNode ._children = animationNodes;
 
       groupNode .setup ();
@@ -1967,6 +1968,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       scene .addExportedNode (scene .getUniqueExportName (`Timer${this .animations}`), timeSensorNode);
 
       timeSensorNode ._description = this .description (animation .name) || `Animation ${this .animations}`;
+      groupNode ._visible = false;
       groupNode ._children .push (timeSensorNode, ... channelNodes);
 
       timeSensorNode .setup ();
