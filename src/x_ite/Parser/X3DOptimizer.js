@@ -259,6 +259,7 @@ Object .assign (X3DOptimizer .prototype,
    combineLight (node, child, removedNodes)
    {
       // Combine single light nodes.
+      
       const nodeMatrix = new Matrix4 ();
 
       nodeMatrix .set (node .translation .getValue (),
