@@ -259,12 +259,19 @@ Object .assign (X3DOptimizer .prototype,
    combineLight (node, child, removedNodes)
    {
       // Combine single light nodes.
+      const nodeMatrix = new Matrix4 ();
+
+      nodeMatrix .set (node .translation .getValue (),
+                       node .rotation .getValue (),
+                       node .scale .getValue (),
+                       node .scaleOrientation .getValue (),
+                       node .center .getValue ());
 
       if (child .location)
-         child .location = child .location .add (node .translation);
+         child .location = nodeMatrix .multVecMatrix (child .location .getValue ());
 
       if (child .direction)
-         child .direction = node .rotation .multVec (child .direction);
+         child .direction = nodeMatrix .multDirMatrix (child .direction .getValue ()) .normalize ();
 
       removedNodes .push (node);
 
