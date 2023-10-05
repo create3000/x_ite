@@ -146,13 +146,13 @@ Object .assign (X3DOptimizer .prototype,
       {
          node = this .combineSingleChild (node, removedNodes);
 
-         if (!node .translation .getValue () .equals (Vector3 .Zero))
+         if (!node .translation ?.getValue () .equals (Vector3 .Zero))
             return node;
 
-         if (!node .rotation .getValue () .equals (Rotation4 .Identity))
+         if (!node .rotation ?.getValue () .equals (Rotation4 .Identity))
             return node;
 
-         if (!node .scale .getValue () .equals (Vector3 .One))
+         if (!node .scale ?.getValue () .equals (Vector3 .One))
             return node;
       }
 
@@ -196,12 +196,24 @@ Object .assign (X3DOptimizer .prototype,
 
       const child = node .children [0];
 
-      if (!child .getNodeTypeName () .match (/^(?:Transform|HAnimHumanoid)$/))
-         return node;
-
       if (child .getValue () .hasRoutes ())
          return node;
 
+      switch (child .getNodeTypeName ())
+      {
+         case "Transform":
+         case "HAnimHumanoid":
+            return this .combineTransform (node, child, removedNodes);
+         case "DirectionalLight":
+         case "PointLight":
+         case "SpotLight":
+            return this .combineLight (node, child, removedNodes);
+         default:
+            return node;
+      }
+   },
+   combineTransform (node, child, removedNodes)
+   {
       // Combine single Transform nodes.
 
       const
@@ -239,6 +251,20 @@ Object .assign (X3DOptimizer .prototype,
 
          executionContext .addNamedNode (executionContext .getUniqueName (node .getNodeTypeName ()), child);
       }
+
+      removedNodes .push (node);
+
+      return child;
+   },
+   combineLight (node, child, removedNodes)
+   {
+      // Combine single light nodes.
+
+      if (child .location)
+         child .location = child .location .add (node .translation);
+
+      if (child .direction)
+         child .direction = node .rotation .multVec (child .direction);
 
       removedNodes .push (node);
 
