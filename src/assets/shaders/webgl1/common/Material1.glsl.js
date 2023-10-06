@@ -3,7 +3,7 @@ uniform x3d_MaterialParameters x3d_Material;
 
 #if defined (X3D_LIGHTING)
 
-#pragma X3D include "SpotFactor.glsl"
+#pragma X3D include "Lighting.glsl"
 #pragma X3D include "Shadow.glsl"
 
 uniform x3d_LightSourceParameters x3d_LightSource [X3D_NUM_LIGHTS];
@@ -37,8 +37,8 @@ getMaterialColor (const in vec3 vertex, const in vec3 N, const in vec3 ambientCo
          float specularFactor = shininess > 0.0 ? pow (max (dot (N, H), 0.0), shininess * 128.0) : 1.0;
          vec3  specularTerm   = specularColor * specularFactor;
 
-         float attenuationFactor     = di ? 1.0 : 1.0 / max (dot (c, vec3 (1.0, dL, dL * dL)), 1.0);
-         float spotFactor            = light .type == x3d_SpotLight ? getSpotFactor (light .cutOffAngle, light .beamWidth, L, d) : 1.0;
+         float attenuationFactor     = di ? 1.0 : getAttenuation (c, dL);
+         float spotFactor            = light .type == x3d_SpotLight ? getSpotFactor (d, light .cutOffAngle, light .beamWidth, L) : 1.0;
          float attenuationSpotFactor = attenuationFactor * spotFactor;
          vec3  ambientTerm           = light .ambientIntensity * ambientColor;
          vec3  diffuseSpecularTerm   = light .intensity * (diffuseTerm + specularTerm);

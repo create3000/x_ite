@@ -51,13 +51,13 @@ import Colors1                from "../../../assets/shaders/webgl1/common/Colors
 import Fog1                   from "../../../assets/shaders/webgl1/common/Fog1.glsl.js";
 import Fragment1              from "../../../assets/shaders/webgl1/common/Fragment1.glsl.js";
 import Hatch1                 from "../../../assets/shaders/webgl1/common/Hatch1.glsl.js";
+import Lighting1              from "../../../assets/shaders/webgl1/common/Lighting1.glsl.js";
 import Material1              from "../../../assets/shaders/webgl1/common/Material1.glsl.js";
 import Normal1                from "../../../assets/shaders/webgl1/common/Normal1.glsl.js";
 import Perlin1                from "../../../assets/shaders/webgl1/common/Perlin1.glsl.js";
 import Point1                 from "../../../assets/shaders/webgl1/common/Point1.glsl.js";
 import PointSize1             from "../../../assets/shaders/webgl1/common/PointSize1.glsl.js";
 import Shadow1                from "../../../assets/shaders/webgl1/common/Shadow1.glsl.js";
-import SpotFactor1            from "../../../assets/shaders/webgl1/common/SpotFactor1.glsl.js";
 import Texture1               from "../../../assets/shaders/webgl1/common/Texture1.glsl.js";
 import Vertex1                from "../../../assets/shaders/webgl1/common/Vertex1.glsl.js";
 
@@ -66,6 +66,7 @@ import ClipPlanes2            from "../../../assets/shaders/webgl2/common/ClipPl
 import Fog2                   from "../../../assets/shaders/webgl2/common/Fog2.glsl.js";
 import Fragment2              from "../../../assets/shaders/webgl2/common/Fragment2.glsl.js";
 import Hatch2                 from "../../../assets/shaders/webgl2/common/Hatch2.glsl.js";
+import Lighting2              from "../../../assets/shaders/webgl2/common/Lighting2.glsl.js";
 import Line22                 from "../../../assets/shaders/webgl2/common/Line22.glsl.js";
 import Material2              from "../../../assets/shaders/webgl2/common/Material2.glsl.js";
 import Normal2                from "../../../assets/shaders/webgl2/common/Normal2.glsl.js";
@@ -75,7 +76,6 @@ import Point2                 from "../../../assets/shaders/webgl2/common/Point2
 import PointSize2             from "../../../assets/shaders/webgl2/common/PointSize2.glsl.js";
 import Shadow2                from "../../../assets/shaders/webgl2/common/Shadow2.glsl.js";
 import Skin2                  from "../../../assets/shaders/webgl2/common/Skin2.glsl.js";
-import SpotFactor2            from "../../../assets/shaders/webgl2/common/SpotFactor2.glsl.js";
 import Stipple2               from "../../../assets/shaders/webgl2/common/Stipple2.glsl.js";
 import Texture2               from "../../../assets/shaders/webgl2/common/Texture2.glsl.js";
 import Utils2                 from "../../../assets/shaders/webgl2/common/Utils2.glsl.js";
@@ -129,13 +129,13 @@ const ShaderRegistry = {
          Fog: Fog1,
          Fragment: Fragment1,
          Hatch: Hatch1,
+         Lighting: Lighting1,
          Material: Material1,
          Normal: Normal1,
          Perlin: Perlin1,
          Point: Point1,
          PointSize: PointSize1,
          Shadow: Shadow1,
-         SpotFactor: SpotFactor1,
          Texture: Texture1,
          Vertex: Vertex1,
          // PBR
@@ -149,6 +149,7 @@ const ShaderRegistry = {
          Fog: Fog2,
          Fragment: Fragment2,
          Hatch: Hatch2,
+         Lighting: Lighting2,
          Line2: Line22,
          Material: Material2,
          Normal: Normal2,
@@ -158,7 +159,6 @@ const ShaderRegistry = {
          PointSize: PointSize2,
          Shadow: Shadow2,
          Skin: Skin2,
-         SpotFactor: SpotFactor2,
          Stipple: Stipple2,
          Texture: Texture2,
          Utils: Utils2,
