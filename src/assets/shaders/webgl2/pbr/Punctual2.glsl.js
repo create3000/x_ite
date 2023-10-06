@@ -1,6 +1,7 @@
 export default /* glsl */ `
 #if defined (X3D_LIGHTING)
 
+// X3D attenuation
 float
 getAttenuation (const in vec3 attenuation, const in float distanceToLight)
 {
@@ -17,7 +18,7 @@ getRangeAttenuation (const in float range, const in float _distance)
       return 1.0 / pow (_distance, 2.0);
    }
 
-   return max (min (1.0 - pow (_distance / range, 4.0), 1.0), 0.0) / pow (_distance, 2.0);
+   return clamp (1.0 - pow (_distance / range, 4.0), 0.0, 1.0) / pow (_distance, 2.0);
 }
 
 // https://github.com/KhronosGroup/glTF/blob/master/extensions/2.0/Khronos/KHR_lights_punctual/README.md#inner-and-outer-cone-angles
