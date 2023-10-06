@@ -117,6 +117,7 @@ import ToneMapping1           from "../../../assets/shaders/webgl1/pbr/ToneMappi
 
 /* PBR 2 */
 import BDRF2                  from "../../../assets/shaders/webgl2/pbr/BDRF2.glsl.js";
+import IBL2                   from "../../../assets/shaders/webgl2/pbr/IBL2.glsl.js";
 import Punctual2              from "../../../assets/shaders/webgl2/pbr/Punctual2.glsl.js";
 import MaterialInfo2          from "../../../assets/shaders/webgl2/pbr/MaterialInfo2.glsl.js";
 import ToneMapping2           from "../../../assets/shaders/webgl2/pbr/ToneMapping2.glsl.js";
@@ -165,6 +166,7 @@ const ShaderRegistry = {
          Vertex: Vertex2,
          // PBR
          BDRF: BDRF2,
+         IBL: IBL2,
          MaterialInfo: MaterialInfo2,
          Punctual: Punctual2,
          ToneMapping: ToneMapping2,

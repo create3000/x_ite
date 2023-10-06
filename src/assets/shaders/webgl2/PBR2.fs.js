@@ -22,6 +22,7 @@ uniform x3d_PhysicalMaterialParameters x3d_Material;
 #pragma X3D include "pbr/ToneMapping.glsl"
 #pragma X3D include "pbr/MaterialInfo.glsl"
 #pragma X3D include "pbr/Punctual.glsl"
+#pragma X3D include "pbr/IBL.glsl"
 
 vec4
 getMaterialColor ()
@@ -67,6 +68,8 @@ getMaterialColor ()
    float albedoSheenScaling = 1.0;
 
    #if defined (X3D_USE_IBL)
+      f_specular += getIBLRadianceGGX (n, v, materialInfo .perceptualRoughness, materialInfo .f0, materialInfo .specularWeight);
+      f_diffuse  += getIBLRadianceLambertian (n, v, materialInfo .perceptualRoughness, materialInfo .c_diff, materialInfo .f0, materialInfo .specularWeight);
    #endif
 
    vec3 f_diffuse_ibl   = f_diffuse;
