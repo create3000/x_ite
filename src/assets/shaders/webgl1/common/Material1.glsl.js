@@ -38,7 +38,7 @@ getMaterialColor (const in vec3 vertex, const in vec3 N, const in vec3 ambientCo
          vec3  specularTerm   = specularColor * specularFactor;
 
          float attenuationFactor     = di ? 1.0 : getAttenuation (c, dL);
-         float spotFactor            = light .type == x3d_SpotLight ? getSpotFactor (d, light .cutOffAngle, light .beamWidth, L) : 1.0;
+         float spotFactor            = light .type == x3d_SpotLight ? getSpotFactor (L, d, light .cutOffAngle, light .beamWidth) : 1.0;
          float attenuationSpotFactor = attenuationFactor * spotFactor;
          vec3  ambientTerm           = light .ambientIntensity * ambientColor;
          vec3  diffuseSpecularTerm   = light .intensity * (diffuseTerm + specularTerm);

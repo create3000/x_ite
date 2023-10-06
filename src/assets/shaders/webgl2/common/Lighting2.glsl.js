@@ -8,7 +8,7 @@ getAttenuation (const in vec3 attenuation, const in float distanceToLight)
 }
 
 float
-getSpotFactor (const in vec3 direction, const in float cutOffAngle, const in float beamWidth, const in vec3 pointToLight)
+getSpotFactor (const in vec3 pointToLight, const in vec3 direction, const in float cutOffAngle, const in float beamWidth)
 {
    float spotAngle = acos (clamp (dot (-pointToLight, direction), -1.0, 1.0));
 

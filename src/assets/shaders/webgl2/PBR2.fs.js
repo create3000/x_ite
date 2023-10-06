@@ -114,7 +114,7 @@ getMaterialColor ()
          {
             // Calculation of analytical light
             // https://github.com/KhronosGroup/glTF/tree/master/specification/2.0#acknowledgments AppendixB
-            vec3 intensity = getLightIntensity (light, pointToLight);
+            vec3 intensity = getLightIntensity (light, l, distanceToLight);
 
             #if defined (X3D_SHADOWS)
                if (light .shadowIntensity > 0.0)
