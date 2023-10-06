@@ -40,8 +40,6 @@ Metadata are not part of the X3D world and not interpreted by the X3D browser, b
 
 Enables/disables this light source.
 
-### SFRotation [in, out] **rotation** 0 0 1 0 <small>[-1,1] or (-∞,∞)</small>
-
 ### SFColor [in, out] **color** 1 1 1 <small>[0,1]</small>
 
 *color* of light, applied to colors of objects.
@@ -54,11 +52,13 @@ Brightness of direct emission from the light.
 
 Brightness of ambient (nondirectional background) emission from the light.
 
-### MFFloat [in, out] **diffuseCoefficients** [ ]
+### SFRotation [in, out] **rotation** 0 0 1 0 <small>[-1,1] or (-∞,∞)</small>
 
 ### SFNode [in, out] **diffuse** NULL <small>[X3DSingleTextureNode]</small>
 
 ### SFNode [in, out] **diffuseTexture** NULL <small>[X3DEnvironmentTextureNode]</small>
+
+### MFFloat [in, out] **diffuseCoefficients** [ ]
 
 ### SFNode [in, out] **specularTexture** NULL <small>[X3DEnvironmentTextureNode]</small>
 
