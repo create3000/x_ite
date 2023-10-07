@@ -290,14 +290,15 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
       gl .uniform1i (shaderNode .x3d_PanoramaTexture, textureUnit);
 
       gl .bindFramebuffer (gl .FRAMEBUFFER, framebuffer);
-      gl .disable (gl .DEPTH_TEST);
       gl .viewport (0, 0, cubeMapSize, cubeMapSize);
+      gl .disable (gl .DEPTH_TEST);
+      gl .enable (gl .CULL_FACE);
+      gl .frontFace (gl .CCW);
       gl .clearColor (0, 0, 0, 0);
 
       for (let i = 0; i < 6; ++ i)
       {
          gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, this .getTargets () [i], this .getTexture (), 0);
-
          gl .clear (gl .COLOR_BUFFER_BIT);
 
          gl .uniform1i (shaderNode .x3d_CurrentFace, i);
