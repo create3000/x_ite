@@ -35,9 +35,9 @@ dirToUV (const in vec3 dir)
 vec3
 panoramaToCubeMap (const in int face, const in vec2 texCoord)
 {
-	vec3 scan        = uvToXYZ (face, texCoord);
-	vec3 direction   = normalize (scan);
-	vec2 src         = dirToUV (direction);
+	vec3 scan      = uvToXYZ (face, texCoord);
+	vec3 direction = normalize (scan);
+	vec2 src       = dirToUV (direction);
 
 	return texture (x3d_PanoramaTexture, src) .rgb;
 }
