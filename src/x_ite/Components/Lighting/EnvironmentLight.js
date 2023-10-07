@@ -66,6 +66,7 @@ Object .assign (EnvironmentLightContainer .prototype,
 {
    set (lightNode, groupNode, modelViewMatrix)
    {
+      this .lightNode = lightNode;
    },
    getModelViewMatrix ()
    {
@@ -79,6 +80,10 @@ Object .assign (EnvironmentLightContainer .prototype,
    },
    setShaderUniforms (gl, shaderObject)
    {
+      const lightNode = this .lightNode;
+
+      gl .uniform1f        (shaderObject .x3d_EnvironmentLightIntensity,       lightNode .getIntensity ());
+      gl .uniformMatrix3fv (shaderObject .x3d_EnvironmentLightRotation, false, lightNode .getRotation ());
    },
    dispose ()
    {
@@ -103,15 +108,21 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
    {
       X3DLightNode .prototype .initialize .call (this);
 
-      this ._rotation       .addInterest ("set_rotation__",       this);
-      this ._diffuseTexture .addInterest ("set_diffuseTexture__", this);
+      this ._rotation        .addInterest ("set_rotation__",        this);
+      this ._diffuseTexture  .addInterest ("set_diffuseTexture__",  this);
+      this ._specularTexture .addInterest ("set_specularTexture__", this);
 
       this .set_rotation__ ();
       this .set_diffuseTexture__ ();
+      this .set_specularTexture__ ();
    },
    getRotation ()
    {
       return this .rotationMatrix;
+   },
+   getLights ()
+   {
+      return EnvironmentLights;
    },
    set_rotation__ ()
    {
@@ -121,9 +132,9 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
    {
       this .diffuseTexture = X3DCast (X3DConstants .X3DEnvironmentTextureNode, this ._diffuseTexture);
    },
-   getLights ()
+   set_specularTexture__ ()
    {
-      return EnvironmentLights;
+      this .specularTexture = X3DCast (X3DConstants .X3DEnvironmentTextureNode, this ._specularTexture);
    },
 });
 

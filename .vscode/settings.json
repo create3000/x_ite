@@ -25,6 +25,7 @@
       "highp",
       "libgif",
       "libtess",
+      "mediump",
       "mousewheel",
       "mult",
       "oninitialized",
