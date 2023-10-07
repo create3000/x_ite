@@ -230,7 +230,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
          this .setError ({ type: error .message });
       }
    },
-   panoramaToCubeMap ()
+   panoramaToCubeMap (image)
    {
       const
          browser     = this .getBrowser (),
