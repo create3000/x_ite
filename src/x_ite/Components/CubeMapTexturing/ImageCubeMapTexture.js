@@ -290,7 +290,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
       gl .uniform1i (shaderNode .x3d_PanoramaTexture, textureUnit);
 
       gl .bindFramebuffer (gl .FRAMEBUFFER, framebuffer);
-      gl .depthMask (false);
+      gl .disable (gl .DEPTH_TEST);
       gl .viewport (0, 0, cubeMapSize, cubeMapSize);
       gl .clearColor (0, 0, 0, 0);
 
@@ -305,7 +305,6 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
          gl .drawArrays (gl .TRIANGLES, 0, 3);
       }
 
-      gl .depthMask (true);
       gl .deleteFramebuffer (framebuffer);
       gl .deleteTexture (panoramaTexture);
 
