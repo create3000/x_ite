@@ -269,10 +269,10 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
       gl .bindTexture (gl .TEXTURE_2D, panoramaTexture);
       gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA, gl .RGBA, gl .UNSIGNED_BYTE, this .image [0]);
 
-      gl .texParameteri(gl .TEXTURE_2D, gl .TEXTURE_WRAP_S, gl .MIRRORED_REPEAT);
-      gl .texParameteri(gl .TEXTURE_2D, gl .TEXTURE_WRAP_T, gl .MIRRORED_REPEAT);
-      gl .texParameteri(gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .LINEAR);
-      gl .texParameteri(gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .LINEAR);
+      gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_S, gl .MIRRORED_REPEAT);
+      gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_T, gl .MIRRORED_REPEAT);
+      gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .LINEAR);
+      gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .LINEAR);
 
       // Init cube map texture.
 
@@ -281,7 +281,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
       for (let i = 0; i < 6; ++ i)
          gl .texImage2D  (this .getTargets () [i], 0, gl .RGBA, cubeMapSize, cubeMapSize, 0, gl .RGBA, gl .UNSIGNED_BYTE, null);
 
-      // Render.
+      // Render faces.
 
       gl .useProgram (shaderNode .getProgram ());
 
@@ -310,6 +310,35 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
       gl .deleteTexture (panoramaTexture);
 
       browser .resetTextureUnits ();
+
+      // Determine image alpha.
+
+      const
+         image  = this .image [0],
+         canvas = this .canvas [0],
+         cx     = canvas .getContext ("2d", { willReadFrequently: true });
+
+      canvas .width  = image .width;
+      canvas .height = image .height;
+
+      cx .drawImage (image, 0, 0);
+
+      const data = cx .getImageData (0, 0, image .width, image .height) .data;
+
+      let opaque = false;
+
+      for (let a = 3; a < data .length; a += 4)
+      {
+         if (data [a] !== 255)
+         {
+            opaque = false;
+            break;
+         }
+      }
+
+      // Update transparent field.
+
+      this .setTransparent (!opaque);
    },
    dispose ()
    {
