@@ -321,7 +321,7 @@ Object .assign (MultiSampleFrameBuffer .prototype,
       gl .blendFunc (gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
       gl .enable (gl .CULL_FACE);
       gl .frontFace (gl .CCW);
-      gl .drawArrays (gl .TRIANGLES, 0, 3);
+      gl .drawArrays (gl .TRIANGLES, 0, 6);
       gl .disable (gl .BLEND);
       gl .enable (gl .DEPTH_TEST);
    },

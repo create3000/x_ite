@@ -303,7 +303,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
 
          gl .uniform1i (shaderNode .x3d_CurrentFace, i);
 
-         gl .drawArrays (gl .TRIANGLES, 0, 3);
+         gl .drawArrays (gl .TRIANGLES, 0, 6);
       }
 
       gl .deleteFramebuffer (framebuffer);
