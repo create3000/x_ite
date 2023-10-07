@@ -50,6 +50,7 @@ import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DLightNode         from "./X3DLightNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
+import X3DCast              from "../../Base/X3DCast.js";
 import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
 import MatrixStack          from "../../../standard/Math/Utility/MatrixStack.js";
 import ObjectCache          from "../../../standard/Utility/ObjectCache.js";
@@ -92,10 +93,34 @@ function EnvironmentLight (executionContext)
    X3DLightNode .call (this, executionContext);
 
    this .addType (X3DConstants .EnvironmentLight);
+
+   this .rotationMatrix = new Float32Array (9);
 }
 
 Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNode .prototype),
 {
+   initialize ()
+   {
+      X3DLightNode .prototype .initialize .call (this);
+
+      this ._rotation       .addInterest ("set_rotation__",       this);
+      this ._diffuseTexture .addInterest ("set_diffuseTexture__", this);
+
+      this .set_rotation__ ();
+      this .set_diffuseTexture__ ();
+   },
+   getRotation ()
+   {
+      return this .rotationMatrix;
+   },
+   set_rotation__ ()
+   {
+      this ._rotation .getValue () .getMatrix (this .rotationMatrix);
+   },
+   set_diffuseTexture__ ()
+   {
+      this .diffuseTexture = X3DCast (X3DConstants .X3DEnvironmentTextureNode, this ._diffuseTexture);
+   },
    getLights ()
    {
       return EnvironmentLights;
