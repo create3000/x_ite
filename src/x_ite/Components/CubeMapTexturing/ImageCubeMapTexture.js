@@ -172,6 +172,14 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
          new Vector2 (1, 2), // Top, must be exchanged with bottom
       ];
 
+      //     -----
+      //     | t |
+      // -----------------
+      // | l | f | r | b |
+      // -----------------
+      //     | b |
+      //     -----
+
       return function ()
       {
          const
@@ -245,6 +253,8 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
    })(),
    panoramaToCubeMap ()
    {
+      // Mercator Projection
+      
       const
          browser     = this .getBrowser (),
          gl          = browser .getContext (),
