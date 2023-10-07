@@ -3,7 +3,7 @@ precision highp float;
 precision highp int;
 precision highp sampler2D;
 
-out vec2 texCoord;
+out vec2 texCoord; // [-1,1]
 
 void
 main ()
