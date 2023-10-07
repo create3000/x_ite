@@ -94,7 +94,6 @@ import PointingVertex1        from "../../../assets/shaders/webgl1/Pointing1.vs.
 import UnlitFragment1         from "../../../assets/shaders/webgl1/Unlit1.fs.js";
 
 /* WebGL 2 */
-import ComposeFragment2       from "../../../assets/shaders/webgl2/Compose2.fs.js";
 import FullScreenVertex2      from "../../../assets/shaders/webgl2/FullScreen2.vs.js";
 import DefaultVertex2         from "../../../assets/shaders/webgl2/Default2.vs.js";
 import DepthFragment2         from "../../../assets/shaders/webgl2/Depth2.fs.js";
@@ -103,6 +102,7 @@ import GouraudFragment2       from "../../../assets/shaders/webgl2/Gouraud2.fs.j
 import GouraudVertex2         from "../../../assets/shaders/webgl2/Gouraud2.vs.js";
 import LineTransformFragment2 from "../../../assets/shaders/webgl2/LineTransform2.fs.js";
 import LineTransformVertex2   from "../../../assets/shaders/webgl2/LineTransform2.vs.js";
+import OITComposeFragment2    from "../../../assets/shaders/webgl2/OITCompose2.fs.js";
 import PBRFragment2           from "../../../assets/shaders/webgl2/PBR2.fs.js";
 import PhongFragment2         from "../../../assets/shaders/webgl2/Phong2.fs.js";
 import PointingFragment2      from "../../../assets/shaders/webgl2/Pointing2.fs.js";
@@ -198,10 +198,10 @@ const ShaderRegistry = {
          Unlit: UnlitFragment1,
       },
       2: {
-         Compose: ComposeFragment2,
          Depth: DepthFragment2,
          Gouraud: GouraudFragment2,
          LineTransform: LineTransformFragment2,
+         OITCompose: OITComposeFragment2,
          PBR: PBRFragment2,
          Phong: PhongFragment2,
          Pointing: PointingFragment2,

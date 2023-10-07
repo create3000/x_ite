@@ -225,7 +225,7 @@ function MultiSampleFrameBuffer (browser, width, height, samples, oit)
 
    // Get compose shader and texture units.
 
-   this .shaderNode = browser .getComposeShader ();
+   this .shaderNode = browser .getOITComposeShader ();
    this .program    = this .shaderNode .getProgram ();
 
    gl .useProgram (this .program);

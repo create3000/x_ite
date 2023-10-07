@@ -160,12 +160,12 @@ Object .assign (X3DRenderingContext .prototype,
    {
       return this [_frameBuffer];
    },
-   getComposeShader ()
+   getOITComposeShader ()
    {
       if (this [_composeShader])
          return this [_composeShader];
 
-      return this [_composeShader] = this .createShader ("ComposeShader", "FullScreen", "Compose");
+      return this [_composeShader] = this .createShader ("OITComposeShader", "FullScreen", "OITCompose");
    },
    getDepthShader (numClipPlanes, shapeNode, humanoidNode)
    {
