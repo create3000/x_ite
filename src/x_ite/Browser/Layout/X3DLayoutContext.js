@@ -53,8 +53,7 @@ import ViewVolume        from "../../../standard/Math/Geometry/ViewVolume.js";
 const
    _screenTextureProperties = Symbol ();
 
-function X3DLayoutContext ()
-{ }
+function X3DLayoutContext () { }
 
 Object .assign (X3DLayoutContext .prototype,
 {

@@ -45,26 +45,23 @@
  *
  ******************************************************************************/
 
-import Components                 from "../../x_ite/Components.js";
-import X3DCubeMapTexturingContext from "../../x_ite/Browser/CubeMapTexturing/X3DCubeMapTexturingContext.js";
-import ComposedCubeMapTexture     from "../../x_ite/Components/CubeMapTexturing/ComposedCubeMapTexture.js";
-import GeneratedCubeMapTexture    from "../../x_ite/Components/CubeMapTexturing/GeneratedCubeMapTexture.js";
-import ImageCubeMapTexture        from "../../x_ite/Components/CubeMapTexturing/ImageCubeMapTexture.js";
-import X3DEnvironmentTextureNode  from "../../x_ite/Components/CubeMapTexturing/X3DEnvironmentTextureNode.js";
+import PanoramaVS from "./Panorama.vs.js";
+import PanoramaFS from "./Panorama.fs.js";
 
-Components .add ({
-   name: "CubeMapTexturing",
-   concreteNodes:
-   [
-      ComposedCubeMapTexture,
-      GeneratedCubeMapTexture,
-      ImageCubeMapTexture,
-   ],
-   abstractNodes:
-   [
-      X3DEnvironmentTextureNode,
-   ],
-   browserContext: X3DCubeMapTexturingContext,
+const
+   _panoramaShader = Symbol ();
+
+function X3DCubeMapTexturingContext () { }
+
+Object .assign (X3DCubeMapTexturingContext .prototype,
+{
+   getPanoramaShader ()
+   {
+      if (this [_panoramaShader])
+         return this [_panoramaShader];
+
+      return this [_panoramaShader] = this .createShader ("Panorama", "data:x-shader/x-vertex," + PanoramaVS, "data:x-shader/x-fragment," + PanoramaFS, [ ], ["x3d_PanoramaTexture", "x3d_CurrentFace"]);
+   },
 });
 
-export default undefined;
+export default X3DCubeMapTexturingContext;

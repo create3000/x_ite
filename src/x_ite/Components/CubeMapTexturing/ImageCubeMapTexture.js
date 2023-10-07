@@ -254,26 +254,45 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
    panoramaToCubeMap ()
    {
       // Mercator Projection
-      
-      const
-         browser     = this .getBrowser (),
-         gl          = browser .getContext (),
-         framebuffer = gl .createFramebuffer ();
 
-      const vertexHash   = this.shaderCache.selectShader("fullscreen.vert", []);
-      const fragmentHash = this.shaderCache.selectShader("panorama_to_cubemap.frag", []);
-      const shader       = this.shaderCache.getShaderProgram (fragmentHash, vertexHash);
+      const
+         browser         = this .getBrowser (),
+         gl              = browser .getContext (),
+         shaderNode      = browser .getPanoramaShader (),
+         framebuffer     = gl .createFramebuffer (),
+         panoramaTexture = gl .createTexture (),
+         textureUnit     = browser .getTextureCubeUnit (),
+         cubeMapSize     = this .image .prop ("height") / 2;
+
+      // Create panorama texture.
+
+      gl .bindTexture (gl .TEXTURE_2D, panoramaTexture);
+      gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA, gl .RGBA, gl .UNSIGNED_BYTE, this .image [0]);
+
+      gl .texParameteri(gl .TEXTURE_2D, gl .TEXTURE_WRAP_S, gl .MIRRORED_REPEAT);
+      gl .texParameteri(gl .TEXTURE_2D, gl .TEXTURE_WRAP_T, gl .MIRRORED_REPEAT);
+      gl .texParameteri(gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .LINEAR);
+      gl .texParameteri(gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .LINEAR);
+
+      // Init cube map texture.
+
+      gl .bindTexture (this .getTarget (), this .getTexture ());
+
+      for (let i = 0; i < 6; ++ i)
+         gl .texImage2D  (this .getTargets () [i], 0, gl .RGBA, cubeMapSize, cubeMapSize, 0, gl .RGBA, gl .UNSIGNED_BYTE, null);
+
+      // Render.
 
       gl .useProgram (shaderNode .getProgram ());
 
-      gl .activeTexture (gl .TEXTURE0);
-      gl .bindTexture (gl .TEXTURE_2D, this .inputTextureID);
-      gl .uniform1i (gl .getUniformLocation (shaderNode .getProgram (), "u_panorama"), 0);
+      gl .activeTexture (gl .TEXTURE0 + textureUnit);
+      gl .bindTexture (gl .TEXTURE_2D, panoramaTexture);
+      gl .uniform1i (shaderNode .x3d_PanoramaTexture, textureUnit);
 
-      gl .bindFramebuffer (gl .FRAMEBUFFER, this .framebuffer);
+      gl .bindFramebuffer (gl .FRAMEBUFFER, framebuffer);
       gl .depthMask (false);
-      gl .viewport (0, 0, this .textureSize, this .textureSize);
-      gl .clearColor (1.0, 1.0, 1.0, 1.0);
+      gl .viewport (0, 0, cubeMapSize, cubeMapSize);
+      gl .clearColor (0, 0, 0, 0);
 
       for (let i = 0; i < 6; ++ i)
       {
@@ -281,13 +300,16 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
 
          gl .clear (gl .COLOR_BUFFER_BIT);
 
-         gl .uniform1i (gl .getUniformLocation (shaderNode .getProgram (), "u_currentFace"), i);
+         gl .uniform1i (shaderNode .x3d_CurrentFace, i);
 
          gl .drawArrays (gl .TRIANGLES, 0, 3);
       }
 
       gl .depthMask (true);
       gl .deleteFramebuffer (framebuffer);
+      gl .deleteTexture (panoramaTexture);
+
+      browser .resetTextureUnits ();
    },
    dispose ()
    {
