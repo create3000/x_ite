@@ -13,6 +13,6 @@ main ()
 
    texCoord = vec2 (x, y) - 1.0;
 
-   gl_Position = vec4 (texCoord, 0, 1);
+   gl_Position = vec4 (texCoord, 0.0, 1.0);
 }
 `;
