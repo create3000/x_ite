@@ -9,7 +9,7 @@ in  vec2 texCoord;
 out vec4 x3d_FragColor;
 
 uniform sampler2D x3d_PanoramaTexture;
-uniform int x3d_CurrentFace;
+uniform int       x3d_CurrentFace;
 
 vec3
 uvToXYZ (const in int face, const in vec2 uv)
