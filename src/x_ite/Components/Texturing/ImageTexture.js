@@ -217,16 +217,6 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
 
       return data;
    },
-   isImageTransparent (data)
-   {
-      for (let i = 3, length = data .length; i < length; i += 4)
-      {
-         if (data [i] !== 255)
-            return true;
-      }
-
-      return false;
-   },
    flipImage (data, width, height, components)
    {
       const

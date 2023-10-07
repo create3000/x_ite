@@ -219,7 +219,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
 
          const gl = this .getBrowser () .getContext ();
 
-         let opaque = true;
+         let transparent = false;
 
          gl .bindTexture (this .getTarget (), this .getTexture ());
 
@@ -229,17 +229,8 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
 
             // Determine image alpha.
 
-            if (opaque)
-            {
-               for (let a = 3; a < data .length; a += 4)
-               {
-                  if (data [a] !== 255)
-                  {
-                     opaque = false;
-                     break;
-                  }
-               }
-            }
+            if (!transparent)
+               transparent = this .isImageTransparent (data);
 
             // Transfer image.
 
@@ -248,7 +239,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
 
          // Update transparent field.
 
-         this .setTransparent (!opaque);
+         this .setTransparent (transparent);
       };
    })(),
    panoramaToCubeMap ()
@@ -325,20 +316,9 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
 
       const data = cx .getImageData (0, 0, image .width, image .height) .data;
 
-      let opaque = false;
-
-      for (let a = 3; a < data .length; a += 4)
-      {
-         if (data [a] !== 255)
-         {
-            opaque = false;
-            break;
-         }
-      }
-
       // Update transparent field.
 
-      this .setTransparent (!opaque);
+      this .setTransparent (this .isImageTransparent (data));
    },
    dispose ()
    {
