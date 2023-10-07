@@ -57,15 +57,6 @@ import DEVELOPMENT               from "../../DEVELOPMENT.js";
 
 const defaultData = new Uint8Array ([ 255, 255, 255, 255 ]);
 
-const offsets = [
-   new Vector2 (1, 1), // Front
-   new Vector2 (3, 1), // Back
-   new Vector2 (0, 1), // Left
-   new Vector2 (2, 1), // Right
-   new Vector2 (1, 0), // Bottom, must be exchanged with top
-   new Vector2 (1, 2), // Top, must be exchanged with bottom
-];
-
 function ImageCubeMapTexture (executionContext)
 {
    X3DEnvironmentTextureNode .call (this, executionContext);
@@ -150,6 +141,39 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
 
       try
       {
+         const ratio = this .image .prop ("height") / this .image .prop ("width");
+
+         if (Math .abs (ratio - 3/4) < 0.01)
+            this .skyBoxToCubeMap ();
+
+         if (Math .abs (ratio - 1/2) < 0.01)
+            this .panoramaToCubeMap ();
+
+         this .updateTextureParameters ();
+
+         // Update load state.
+
+         this .setLoadState (X3DConstants .COMPLETE_STATE);
+      }
+      catch (error)
+      {
+         // Catch security error from cross origin requests.
+         this .setError ({ type: error .message });
+      }
+   },
+   skyBoxToCubeMap: (function ()
+   {
+      const offsets = [
+         new Vector2 (1, 1), // Front
+         new Vector2 (3, 1), // Back
+         new Vector2 (0, 1), // Left
+         new Vector2 (2, 1), // Right
+         new Vector2 (1, 0), // Bottom, must be exchanged with top
+         new Vector2 (1, 2), // Top, must be exchanged with bottom
+      ];
+
+      return function ()
+      {
          const
             image  = this .image [0],
             canvas = this .canvas [0],
@@ -163,7 +187,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
 
          // Scale image.
 
-         if (! Algorithm .isPowerOfTwo (width1_4) || ! Algorithm .isPowerOfTwo (height1_3) || width1_4 * 4 !== width || height1_3 * 3 !== height)
+         if (!Algorithm .isPowerOfTwo (width1_4) || !Algorithm .isPowerOfTwo (height1_3) || width1_4 * 4 !== width || height1_3 * 3 !== height)
          {
             width1_4  = Algorithm .nextPowerOfTwo (width1_4);
             height1_3 = Algorithm .nextPowerOfTwo (height1_3);
@@ -214,23 +238,12 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
             gl .texImage2D (this .getTargets () [i], 0, gl .RGBA, width1_4, height1_3, false, gl .RGBA, gl .UNSIGNED_BYTE, new Uint8Array (data .buffer));
          }
 
-         this .updateTextureParameters ();
-
          // Update transparent field.
 
-         this .setTransparent (! opaque);
-
-         // Update load state.
-
-         this .setLoadState (X3DConstants .COMPLETE_STATE);
-      }
-      catch (error)
-      {
-         // Catch security error from cross origin requests.
-         this .setError ({ type: error .message });
-      }
-   },
-   panoramaToCubeMap (image)
+         this .setTransparent (!opaque);
+      };
+   })(),
+   panoramaToCubeMap ()
    {
       const
          browser     = this .getBrowser (),
