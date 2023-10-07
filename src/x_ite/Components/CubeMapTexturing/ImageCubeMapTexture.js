@@ -103,7 +103,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
       this .urlStack .setValue (this ._url);
       this .loadNext ();
    },
-   loadNext ()
+   async loadNext ()
    {
       if (this .urlStack .length === 0)
       {
@@ -120,6 +120,15 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
       {
          if (!this .getCache ())
             this .URL .searchParams .set ("_", Date .now ());
+      }
+
+      if (this .URL .pathname .match (/\.ktx2?$/))
+      {
+         const
+            decoder = await this .getBrowser () .getKTXDecoder (),
+            texture = await decoder .loadKtxFromUri (this .URL);
+
+         console .log (texture);
       }
 
       this .image .attr ("src", this .URL .href);

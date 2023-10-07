@@ -49,6 +49,8 @@ import TextureProperties from "../../Components/Texturing/TextureProperties.js";
 import TextureTransform  from "../../Components/Texturing/TextureTransform.js";
 import TextureCoordinate from "../../Components/Texturing/TextureCoordinate.js";
 import TextureQuality    from "../Core/TextureQuality.js";
+import KTXDecoder        from "./KTXDecoder.js";
+import URLs              from "../Networking/URLs.js";
 
 const
    _maxTextures              = Symbol (),
@@ -64,7 +66,8 @@ const
    _defaultTextureCube       = Symbol (),
    _defaultTextureProperties = Symbol (),
    _defaultTextureTransform  = Symbol (),
-   _defaultTextureCoordinate = Symbol ();
+   _defaultTextureCoordinate = Symbol (),
+   _libktx                   = Symbol ();
 
 function X3DTexturingContext ()
 {
@@ -334,6 +337,22 @@ Object .assign (X3DTexturingContext .prototype,
             break;
          }
       }
+   },
+   async getKTXDecoder ()
+   {
+      return new KTXDecoder (this .getContext (), await this .getLibKTX (), URLs .getLibraryURL (""));
+   },
+   async getLibKTX ()
+   {
+      if (this [_libktx])
+         return this [_libktx];
+
+      const
+         response = await fetch (URLs .getLibraryURL ("libktx.js")),
+         text     = await response .text (),
+         libktx   = await new Function (text) ();
+
+      return this [_libktx] = libktx;
    },
 });
 
