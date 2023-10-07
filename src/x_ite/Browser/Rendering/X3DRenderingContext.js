@@ -165,7 +165,7 @@ Object .assign (X3DRenderingContext .prototype,
       if (this [_composeShader])
          return this [_composeShader];
 
-      return this [_composeShader] = this .createShader ("ComposeShader", "Compose", "Compose");
+      return this [_composeShader] = this .createShader ("ComposeShader", "FullScreen", "Compose");
    },
    getDepthShader (numClipPlanes, shapeNode, humanoidNode)
    {

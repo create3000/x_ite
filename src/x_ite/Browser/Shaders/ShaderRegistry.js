@@ -95,7 +95,7 @@ import UnlitFragment1         from "../../../assets/shaders/webgl1/Unlit1.fs.js"
 
 /* WebGL 2 */
 import ComposeFragment2       from "../../../assets/shaders/webgl2/Compose2.fs.js";
-import ComposeVertex2         from "../../../assets/shaders/webgl2/Compose2.vs.js";
+import FullScreenVertex2      from "../../../assets/shaders/webgl2/FullScreen2.vs.js";
 import DefaultVertex2         from "../../../assets/shaders/webgl2/Default2.vs.js";
 import DepthFragment2         from "../../../assets/shaders/webgl2/Depth2.fs.js";
 import DepthVertex2           from "../../../assets/shaders/webgl2/Depth2.vs.js";
@@ -180,9 +180,9 @@ const ShaderRegistry = {
          Pointing: PointingVertex1,
       },
       2: {
-         Compose: ComposeVertex2,
          Default: DefaultVertex2,
          Depth: DepthVertex2,
+         FullScreen: FullScreenVertex2,
          Gouraud: GouraudVertex2,
          LineTransform: LineTransformVertex2,
          Pointing: PointingVertex2,
