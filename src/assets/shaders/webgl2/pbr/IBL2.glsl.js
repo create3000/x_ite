@@ -10,8 +10,6 @@ export default /* glsl */ `
 // uniform sampler2D u_SheenELUT;
 // uniform mat3 u_EnvRotation;
 
-const int x3d_MipCount = 1;
-
 uniform x3d_EnvironmentLightSourceParameters x3d_EnvironmentLightSource;
 
 vec3
@@ -30,7 +28,7 @@ vec3
 getIBLRadianceGGX (const in vec3 n, const in vec3 v, const in float roughness, const in vec3 F0, const in float specularWeight)
 {
    float NdotV      = clamp (dot (n, v), vec3 (0.0), vec3 (1.0));
-   float lod        = roughness * float (x3d_MipCount - 1);
+   float lod        = roughness * float (x3d_EnvironmentLightSource .specularMipCount - 1);
    vec3  reflection = normalize (reflect (-v, n));
 
    vec2 brdfSamplePoint = clamp (vec2 (NdotV, roughness), vec2 (0.0), vec2 (1.0));
