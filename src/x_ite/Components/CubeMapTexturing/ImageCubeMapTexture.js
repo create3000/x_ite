@@ -230,6 +230,42 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
          this .setError ({ type: error .message });
       }
    },
+   panoramaToCubeMap ()
+   {
+      const
+         browser     = this .getBrowser (),
+         gl          = browser .getContext (),
+         framebuffer = gl .createFramebuffer ();
+
+      const vertexHash   = this.shaderCache.selectShader("fullscreen.vert", []);
+      const fragmentHash = this.shaderCache.selectShader("panorama_to_cubemap.frag", []);
+      const shader       = this.shaderCache.getShaderProgram (fragmentHash, vertexHash);
+
+      gl .useProgram (shaderNode .getProgram ());
+
+      gl .activeTexture (gl .TEXTURE0);
+      gl .bindTexture (gl .TEXTURE_2D, this .inputTextureID);
+      gl .uniform1i (gl .getUniformLocation (shaderNode .getProgram (), "u_panorama"), 0);
+
+      gl .bindFramebuffer (gl .FRAMEBUFFER, this .framebuffer);
+      gl .depthMask (false);
+      gl .viewport (0, 0, this .textureSize, this .textureSize);
+      gl .clearColor (1.0, 1.0, 1.0, 1.0);
+
+      for (let i = 0; i < 6; ++ i)
+      {
+         gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, this .getTargets () [i], this .getTexture (), 0);
+
+         gl .clear (gl .COLOR_BUFFER_BIT);
+
+         gl .uniform1i (gl .getUniformLocation (shaderNode .getProgram (), "u_currentFace"), i);
+
+         gl .drawArrays (gl .TRIANGLES, 0, 3);
+      }
+
+      gl .depthMask (true);
+      gl .deleteFramebuffer (framebuffer);
+   },
    dispose ()
    {
       X3DUrlObject              .prototype .dispose .call (this);
