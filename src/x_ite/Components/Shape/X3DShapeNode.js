@@ -83,7 +83,6 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
 
       this .set_appearance__ ();
       this .set_geometry__ ();
-      this .set_transparent__ ();
    },
    getBBox (bbox, shadows)
    {
@@ -127,28 +126,13 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
    {
       return this .geometryNode;
    },
-   set_bbox__ ()
-   {
-      if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
-      {
-         if (this .getGeometry ())
-            this .bbox .assign (this .getGeometry () .getBBox ());
-
-         else
-            this .bbox .set ();
-      }
-      else
-      {
-         this .bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
-      }
-
-      this .bboxSize   .assign (this .bbox .size);
-      this .bboxCenter .assign (this .bbox .center);
-   },
    set_appearance__ ()
    {
       if (this .appearanceNode)
+      {
+         this .appearanceNode ._alphaMode   .removeInterest ("set_transparent__", this);
          this .appearanceNode ._transparent .removeInterest ("set_transparent__", this);
+      }
 
       this .appearanceNode = X3DCast (X3DConstants .X3DAppearanceNode, this ._appearance);
 
@@ -161,6 +145,8 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
       {
          this .appearanceNode = this .getBrowser () .getDefaultAppearance ();
       }
+
+      this .set_transparent__ ();
    },
    set_geometry__ ()
    {
@@ -178,6 +164,7 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
          this .geometryNode ._bbox_changed .addInterest ("set_bbox__",        this);
       }
 
+      this .set_transparent__ ();
       this .set_bbox__ ();
    },
    set_transparent__ ()
@@ -192,6 +179,24 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
       }
 
       this .alphaMode = this .appearanceNode .getNormalizedAlphaMode (this .transparent);
+   },
+   set_bbox__ ()
+   {
+      if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
+      {
+         if (this .getGeometry ())
+            this .bbox .assign (this .getGeometry () .getBBox ());
+
+         else
+            this .bbox .set ();
+      }
+      else
+      {
+         this .bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
+      }
+
+      this .bboxSize   .assign (this .bbox .size);
+      this .bboxCenter .assign (this .bbox .center);
    },
    dispose ()
    {
