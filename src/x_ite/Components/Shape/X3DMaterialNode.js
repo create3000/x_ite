@@ -102,7 +102,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
          const { renderObject, transparent, shadows, fogNode, shapeNode, appearanceNode, textureNode, humanoidNode, objectsCount } = renderContext;
 
          key += appearanceNode .getNormalizedAlphaMode (transparent);
-         key += this .getMaterialKey (shadows);
+         key += this .getMaterialKey ();
          key += renderObject .getLogarithmicDepthBuffer () ? 1 : 0;
          key += shadows ? 1 : 0;
          key += fogNode ?.getFogType () ?? 0;
