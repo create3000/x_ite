@@ -99,9 +99,9 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
 
       if (renderContext)
       {
-         const { renderObject, transparent, shadows, fogNode, shapeNode, appearanceNode, textureNode, humanoidNode, objectsCount } = renderContext;
+         const { renderObject, shadows, fogNode, shapeNode, appearanceNode, textureNode, humanoidNode, objectsCount } = renderContext;
 
-         key += appearanceNode .getNormalizedAlphaMode (transparent);
+         key += shapeNode .getAlphaMode ();
          key += this .getMaterialKey ();
          key += renderObject .getLogarithmicDepthBuffer () ? 1 : 0;
          key += shadows ? 1 : 0;
@@ -125,9 +125,9 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
       {
          // Rubberband, X3DBackgroundNode
 
-         const { textureNode, objectsCount } = geometryContext;
+         const { alphaMode, textureNode, objectsCount } = geometryContext;
 
-         key += geometryContext .alphaMode;
+         key += alphaMode;
          key += this .getMaterialKey (false);
          key += "0000011.0.";
          key += objectsCount [0]; // Clip planes
@@ -165,7 +165,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
          if (renderObject .getLogarithmicDepthBuffer ())
             options .push ("X3D_LOGARITHMIC_DEPTH_BUFFER");
 
-         switch (appearanceNode .getNormalizedAlphaMode (renderContext .transparent))
+         switch (shapeNode .getAlphaMode ())
          {
             case AlphaMode .OPAQUE:
             {

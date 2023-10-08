@@ -115,6 +115,10 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
    {
       return this .transparent;
    },
+   getAlphaMode ()
+   {
+      return this .alphaMode;
+   },
    getAppearance ()
    {
       return this .appearanceNode;
@@ -186,6 +190,8 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
       {
          this .transparent = this .appearanceNode .isTransparent ();
       }
+
+      this .alphaMode = this .appearanceNode .getNormalizedAlphaMode (this .transparent);
    },
    dispose ()
    {
