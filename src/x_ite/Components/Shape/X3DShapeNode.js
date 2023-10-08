@@ -106,13 +106,13 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
    {
       return this .bboxCenter;
    },
-   setTransparent (value)
-   {
-      this .transparent = value;
-   },
    isTransparent ()
    {
       return this .transparent;
+   },
+   setTransparent (value)
+   {
+      this .transparent = value;
    },
    getAlphaMode ()
    {
