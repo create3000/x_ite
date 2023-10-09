@@ -178,7 +178,7 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
       }
       else
       {
-         this .transparent = this .appearanceNode .isTransparent ();
+         this .transparent = alphaMode === AlphaMode .BLEND;
          this .alphaMode   = alphaMode;
       }
    },
