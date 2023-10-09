@@ -2076,6 +2076,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       appearanceNode ._alphaMode = "OPAQUE";
       appearanceNode ._material  = materialNode;
 
+      if (mode)
+         materialNode ._metallic = 0;
+
       materialNode   .setup ();
       appearanceNode .setup ();
 
