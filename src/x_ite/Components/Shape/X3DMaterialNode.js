@@ -119,7 +119,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
       }
       else
       {
-         // Rubberband, X3DBackgroundNode
+         // Rubberband, X3DBackgroundNode, ParticleSystem
 
          const { alphaMode, textureNode, objectsKeys } = geometryContext;
 
