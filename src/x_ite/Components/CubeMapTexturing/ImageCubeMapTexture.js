@@ -141,12 +141,12 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
 
       try
       {
-         const ratio = this .image .prop ("height") / this .image .prop ("width");
+         const aspectRatio = this .image .prop ("width") / this .image .prop ("height");
 
-         if (Math .abs (ratio - 3/4) < 0.01)
+         if (Math .abs (aspectRatio - 4/3) < 0.01)
             this .skyBoxToCubeMap ();
 
-         if (Math .abs (ratio - 1/2) < 0.01)
+         if (Math .abs (aspectRatio - 2/1) < 0.01)
             this .panoramaToCubeMap ();
 
          this .updateTextureParameters ();
