@@ -46,9 +46,12 @@
  ******************************************************************************/
 
 import TextureBuffer from "../../Rendering/TextureBuffer.js";
+import ImageTexture  from "../../Components/Texturing/ImageTexture.js";
+import URLs          from "../Networking/URLs.js";
 
 const
    _maxLights     = Symbol (),
+   _GGXLUTTexture = Symbol (),
    _shadowBuffers = Symbol ();
 
 function X3DLightingContext ()
@@ -70,6 +73,18 @@ Object .assign (X3DLightingContext .prototype,
    getMaxLights ()
    {
       return this [_maxLights];
+   },
+   getGGXLUTTexture ()
+   {
+      this [_GGXLUTTexture] = new ImageTexture (this .getPrivateScene ());
+      this [_GGXLUTTexture] ._url  = [URLs .getLibraryURL ("lut_ggx.png")];
+      this [_GGXLUTTexture] .setup ();
+
+      this .getGGXLUTTexture = function () { return this [_GGXLUTTexture]; };
+
+      Object .defineProperty (this, "getGGXLUTTexture", { enumerable: false });
+
+      return this [_GGXLUTTexture];
    },
    popShadowBuffer (shadowMapSize)
    {

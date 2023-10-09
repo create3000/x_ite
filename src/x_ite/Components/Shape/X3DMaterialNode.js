@@ -206,8 +206,6 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
             numEnvironmentLights = objectsKeys .reduce ((a, c) => a + (c === 2), 0),
             numTextureProjectors = objectsKeys .reduce ((a, c) => a + (c === 3), 0);
 
-         console .log (objectsKeys, numClipPlanes, numLights, numEnvironmentLights, numTextureProjectors)
-
          if (numClipPlanes)
          {
             options .push ("X3D_CLIP_PLANES")
@@ -218,6 +216,12 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
          {
             options .push ("X3D_LIGHTING")
             options .push (`X3D_NUM_LIGHTS ${Math .min (numLights, browser .getMaxLights ())}`);
+         }
+
+         if (numEnvironmentLights)
+         {
+            options .push ("X3D_USE_IBL")
+            options .push (`X3D_NUM_ENVIRONMENT_LIGHTS ${Math .min (numEnvironmentLights, browser .getMaxLights ())}`);
          }
 
          if (numTextureProjectors)
@@ -319,6 +323,12 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
          {
             options .push ("X3D_LIGHTING")
             options .push (`X3D_NUM_LIGHTS ${Math .min (numLights, browser .getMaxLights ())}`);
+         }
+
+         if (numEnvironmentLights)
+         {
+            options .push ("X3D_USE_IBL")
+            options .push (`X3D_NUM_ENVIRONMENT_LIGHTS ${Math .min (numEnvironmentLights, browser .getMaxLights ())}`);
          }
 
          if (numTextureProjectors)

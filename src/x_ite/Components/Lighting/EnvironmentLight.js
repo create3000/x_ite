@@ -66,6 +66,7 @@ Object .assign (EnvironmentLightContainer .prototype,
 {
    set (lightNode, groupNode, modelViewMatrix)
    {
+      this .browser   = lightNode .getBrowser ();
       this .lightNode = lightNode;
    },
    getLightKey ()
@@ -84,15 +85,31 @@ Object .assign (EnvironmentLightContainer .prototype,
    },
    setShaderUniforms (gl, shaderObject)
    {
-      const lightNode = this .lightNode;
+      const { browser, lightNode } = this;
 
       gl .uniform1f        (shaderObject .x3d_EnvironmentLightIntensity,        lightNode .getIntensity ());
       gl .uniformMatrix3fv (shaderObject .x3d_EnvironmentLightRotation, false,  lightNode .getRotation ());
       gl .uniform1i        (shaderObject .x3d_EnvironmentLightSpecularMipCount, 1);
 
-      gl .uniform1i (shaderObject .x3d_EnvironmentLightDiffuseTexture, 0);
-      gl .uniform1i (shaderObject .x3d_EnvironmentLightSecularTexture, 1);
-      gl .uniform1i (shaderObject .x3d_EnvironmentLightGGXLUT,         2);
+      const
+         diffuseTexture      = lightNode .getDiffuseTexture (),
+         diffuseTextureUnit  = browser .getTextureCubeUnit (),
+         specularTexture     = lightNode .getSpecularTexture (),
+         specularTextureUnit = browser .getTextureCubeUnit (),
+         GGXLUTTexture       = browser .getGGXLUTTexture (),
+         GGXLUTTextureUnit   = browser .getTexture2DUnit ();
+
+      gl .activeTexture (gl .TEXTURE0 + diffuseTextureUnit);
+      gl .bindTexture (gl .TEXTURE_CUBE_MAP, diffuseTexture ?.getTexture () ?? browser .getDefaultTextureCubeBlack ());
+      gl .uniform1i (shaderObject .x3d_EnvironmentLightDiffuseTexture, diffuseTextureUnit);
+
+      gl .activeTexture (gl .TEXTURE0 + specularTextureUnit);
+      gl .bindTexture (gl .TEXTURE_CUBE_MAP, specularTexture ?.getTexture () ?? browser .getDefaultTextureCubeBlack ());
+      gl .uniform1i (shaderObject .x3d_EnvironmentLightSpecularTexture, specularTextureUnit);
+
+      gl .activeTexture (gl .TEXTURE0 + GGXLUTTextureUnit);
+      gl .bindTexture (gl .TEXTURE_2D, GGXLUTTexture .getTexture ());
+      gl .uniform1i (shaderObject .x3d_EnvironmentLightGGXLUTTexture, GGXLUTTextureUnit);
    },
    dispose ()
    {
@@ -132,6 +149,14 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
    getRotation ()
    {
       return this .rotationMatrix;
+   },
+   getDiffuseTexture ()
+   {
+      return this .diffuseTexture;
+   },
+   getSpecularTexture ()
+   {
+      return this .specularTexture;
    },
    getLights ()
    {

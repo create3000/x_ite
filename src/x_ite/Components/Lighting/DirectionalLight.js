@@ -101,13 +101,13 @@ Object .assign (DirectionalLightContainer .prototype,
       {
          this .shadowBuffer = this .browser .popShadowBuffer (shadowMapSize);
 
-         if (! this .shadowBuffer)
+         if (!this .shadowBuffer)
             console .warn ("Couldn't create shadow buffer.");
       }
    },
    renderShadowMap (renderObject)
    {
-      if (! this .shadowBuffer)
+      if (!this .shadowBuffer)
          return;
 
       const
@@ -149,7 +149,7 @@ Object .assign (DirectionalLightContainer .prototype,
    {
       this .modelViewMatrix .get () .multDirMatrix (this .direction .assign (this .lightNode .getDirection ())) .normalize ();
 
-      if (! this .shadowBuffer)
+      if (!this .shadowBuffer)
          return;
 
       this .shadowMatrix .assign (renderObject .getCameraSpaceMatrix () .get ()) .multRight (this .invLightSpaceProjectionMatrix);
@@ -186,9 +186,8 @@ Object .assign (DirectionalLightContainer .prototype,
          return;
 
       const
-         lightNode = this .lightNode,
-         color     = lightNode .getColor (),
-         direction = this .direction;
+         { lightNode, direction} = this,
+         color                   = lightNode .getColor ();
 
       gl .uniform1i (shaderObject .x3d_LightType [i],             1);
       gl .uniform3f (shaderObject .x3d_LightColor [i],            color .r, color .g, color .b);

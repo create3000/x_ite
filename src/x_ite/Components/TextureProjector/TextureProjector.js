@@ -131,7 +131,7 @@ Object .assign (TextureProjectorContainer .prototype,
          textureUnit = this .browser .getTexture2DUnit ();
 
       gl .activeTexture (gl .TEXTURE0 + textureUnit);
-      gl .bindTexture (gl .TEXTURE_2D, texture ?.getTexture () ?? this .browser .getDefaultTexture2D ());
+      gl .bindTexture (gl .TEXTURE_2D, texture ?.getTexture () ?? this .browser .getDefaultTexture2DWhite ());
       gl .uniform1i (shaderObject .x3d_ProjectiveTexture [i], textureUnit);
 
       gl .uniformMatrix4fv (shaderObject .x3d_ProjectiveTextureMatrix [i], false, this .projectiveTextureMatrixArray);

@@ -27,12 +27,12 @@ getSpecularSample (const in vec3 reflection, const in float lod)
 vec3
 getIBLRadianceGGX (const in vec3 n, const in vec3 v, const in float roughness, const in vec3 F0, const in float specularWeight)
 {
-   float NdotV      = clamp (dot (n, v), vec3 (0.0), vec3 (1.0));
+   float NdotV      = clamp (dot (n, v), 0.0, 1.0);
    float lod        = roughness * float (x3d_EnvironmentLightSource .specularMipCount - 1);
    vec3  reflection = normalize (reflect (-v, n));
 
    vec2 brdfSamplePoint = clamp (vec2 (NdotV, roughness), vec2 (0.0), vec2 (1.0));
-   vec2 f_ab            = texture (x3d_EnvironmentLightSource .GGXLUT, brdfSamplePoint) .rg;
+   vec2 f_ab            = texture (x3d_EnvironmentLightSource .GGXLUTTexture, brdfSamplePoint) .rg;
    vec4 specularSample  = getSpecularSample (reflection, lod);
 
    vec3 specularLight = specularSample .rgb;
@@ -50,9 +50,9 @@ getIBLRadianceGGX (const in vec3 n, const in vec3 v, const in float roughness, c
 vec3
 getIBLRadianceLambertian (const in vec3 n, const in vec3 v, const in float roughness, const in vec3 diffuseColor, const in vec3 F0, const in float specularWeight)
 {
-   float NdotV           = clamp (dot (n, v), vec3 (0.0), vec3 (1.0));
+   float NdotV           = clamp (dot (n, v), 0.0, 1.0);
    vec2  brdfSamplePoint = clamp (vec2 (NdotV, roughness), vec2 (0.0), vec2 (1.0));
-   vec2  f_ab            = texture (x3d_EnvironmentLightSource .GGXLUT, brdfSamplePoint) .rg;
+   vec2  f_ab            = texture (x3d_EnvironmentLightSource .GGXLUTTexture, brdfSamplePoint) .rg;
 
    vec3 irradiance = getDiffuseLight (n);
 

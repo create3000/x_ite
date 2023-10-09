@@ -195,7 +195,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       this .x3d_EnvironmentLightDiffuseTexture   = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.diffuseTexture");
       this .x3d_EnvironmentLightSpecularTexture  = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.specularTexture");
       this .x3d_EnvironmentLightSpecularMipCount = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.specularMipCount");
-      this .x3d_EnvironmentLightGGXLUT           = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.GGXLUT");
+      this .x3d_EnvironmentLightGGXLUTTexture    = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.GGXLUTTexture");
 
       this .x3d_AmbientIntensity  = this .getUniformLocation (gl, program, "x3d_Material.ambientIntensity", "x3d_FrontMaterial.ambientIntensity");
       this .x3d_DiffuseColor      = this .getUniformLocation (gl, program, "x3d_Material.diffuseColor",     "x3d_FrontMaterial.diffuseColor");
@@ -356,6 +356,10 @@ Object .assign (X3DProgrammableShaderObject .prototype,
 
       for (const uniform of this .x3d_ShadowMap)
          gl .uniform1i (uniform, browser .getDefaultTexture2DUnit ());
+
+      gl .uniform1i (this .x3d_EnvironmentLightDiffuseTexture,  browser .getDefaultTextureCubeUnit ());
+      gl .uniform1i (this .x3d_EnvironmentLightSpecularTexture, browser .getDefaultTextureCubeUnit ());
+      gl .uniform1i (this .x3d_EnvironmentLightGGXLUTTexture,   browser .getDefaultTexture2DUnit ());
 
       for (const uniform of this .x3d_ProjectiveTexture)
          gl .uniform1i (uniform, browser .getDefaultTexture2DUnit ());

@@ -59,9 +59,12 @@ const
    _texture2DUnitIndex       = Symbol (),
    _texture3DUnitIndex       = Symbol (),
    _textureCubeUnitIndex     = Symbol (),
-   _defaultTexture2D         = Symbol (),
-   _defaultTexture3D         = Symbol (),
-   _defaultTextureCube       = Symbol (),
+   _defaultTexture2DBlack    = Symbol (),
+   _defaultTexture2DWhite    = Symbol (),
+   _defaultTexture3DBlack    = Symbol (),
+   _defaultTexture3DWhite    = Symbol (),
+   _defaultTextureCubeBlack  = Symbol (),
+   _defaultTextureCubeWhite  = Symbol (),
    _defaultTextureProperties = Symbol (),
    _defaultTextureTransform  = Symbol (),
    _defaultTextureCoordinate = Symbol ();
@@ -97,37 +100,46 @@ Object .assign (X3DTexturingContext .prototype,
 
       // Default Texture 2D Unit
 
-      const defaultData = new Uint8Array ([ 255, 255, 255, 255 ]);
+      const defaultData = [new Uint8Array (4), new Uint8Array ([ 255, 255, 255, 255 ])];
 
-      this [_defaultTexture2D] = gl .createTexture ();
+      for (const [i, _defaultTexture2D] of [_defaultTexture2DBlack, _defaultTexture2DWhite] .entries ())
+      {
+         this [_defaultTexture2D] = gl .createTexture ();
 
-      gl .activeTexture (gl .TEXTURE0 + this [_texture2DUnits] [0]);
-      gl .bindTexture (gl .TEXTURE_2D, this [_defaultTexture2D]);
-      gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
+         gl .activeTexture (gl .TEXTURE0 + this [_texture2DUnits] [0]);
+         gl .bindTexture (gl .TEXTURE_2D, this [_defaultTexture2D]);
+         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData [i]);
+      }
 
       // Default Texture 3D Unit
 
       if (gl .getVersion () >= 2)
       {
-         this [_defaultTexture3D] = gl .createTexture ();
+         for (const [i, _defaultTexture3D] of [_defaultTexture3DBlack, _defaultTexture3DWhite] .entries ())
+         {
+            this [_defaultTexture3D] = gl .createTexture ();
 
-         gl .activeTexture (gl .TEXTURE0 + this [_texture3DUnits] [0]);
-         gl .bindTexture (gl .TEXTURE_3D, this [_defaultTexture3D]);
-         gl .texImage3D (gl .TEXTURE_3D, 0, gl .RGBA, 1, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
+            gl .activeTexture (gl .TEXTURE0 + this [_texture3DUnits] [0]);
+            gl .bindTexture (gl .TEXTURE_3D, this [_defaultTexture3D]);
+            gl .texImage3D (gl .TEXTURE_3D, 0, gl .RGBA, 1, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData [i]);
+         }
       }
 
       // Default Texture Cube Unit
 
-      this [_defaultTextureCube] = gl .createTexture ();
+      for (const [i, _defaultTextureCube] of [_defaultTextureCubeBlack, _defaultTextureCubeWhite] .entries ())
+      {
+         this [_defaultTextureCube] = gl .createTexture ();
 
-      gl .activeTexture (gl .TEXTURE0 + this [_textureCubeUnits] [0]);
-      gl .bindTexture (gl .TEXTURE_CUBE_MAP, this [_defaultTextureCube]);
-      gl .texImage2D (gl .TEXTURE_CUBE_MAP_POSITIVE_Z, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
-      gl .texImage2D (gl .TEXTURE_CUBE_MAP_NEGATIVE_Z, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
-      gl .texImage2D (gl .TEXTURE_CUBE_MAP_NEGATIVE_X, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
-      gl .texImage2D (gl .TEXTURE_CUBE_MAP_POSITIVE_X, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
-      gl .texImage2D (gl .TEXTURE_CUBE_MAP_POSITIVE_Y, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
-      gl .texImage2D (gl .TEXTURE_CUBE_MAP_NEGATIVE_Y, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
+         gl .activeTexture (gl .TEXTURE0 + this [_textureCubeUnits] [0]);
+         gl .bindTexture (gl .TEXTURE_CUBE_MAP, this [_defaultTextureCube]);
+         gl .texImage2D (gl .TEXTURE_CUBE_MAP_POSITIVE_Z, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData [i]);
+         gl .texImage2D (gl .TEXTURE_CUBE_MAP_NEGATIVE_Z, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData [i]);
+         gl .texImage2D (gl .TEXTURE_CUBE_MAP_NEGATIVE_X, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData [i]);
+         gl .texImage2D (gl .TEXTURE_CUBE_MAP_POSITIVE_X, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData [i]);
+         gl .texImage2D (gl .TEXTURE_CUBE_MAP_POSITIVE_Y, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData [i]);
+         gl .texImage2D (gl .TEXTURE_CUBE_MAP_NEGATIVE_Y, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData [i]);
+      }
 
       // Init texture units.
 
@@ -254,17 +266,29 @@ Object .assign (X3DTexturingContext .prototype,
    {
       return NaN;
    },
-   getDefaultTexture2D ()
+   getDefaultTexture2DBlack ()
    {
-      return this [_defaultTexture2D];
+      return this [_defaultTexture2DBlack];
    },
-   getDefaultTexture3D ()
+   getDefaultTexture2DWhite ()
    {
-      return this [_defaultTexture3D];
+      return this [_defaultTexture2DWhite];
    },
-   getDefaultTextureCube ()
+   getDefaultTexture3DBlack ()
    {
-      return this [_defaultTextureCube];
+      return this [_defaultTexture3DBlack];
+   },
+   getDefaultTexture3DWhite ()
+   {
+      return this [_defaultTexture3DWhite];
+   },
+   getDefaultTextureCubeBlack ()
+   {
+      return this [_defaultTextureCubeBlack];
+   },
+   getDefaultTextureCubeWhite ()
+   {
+      return this [_defaultTextureCubeWhite];
    },
    getDefaultTextureProperties ()
    {

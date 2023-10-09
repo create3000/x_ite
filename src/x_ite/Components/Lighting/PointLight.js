@@ -135,7 +135,7 @@ Object .assign (PointLightContainer .prototype,
    },
    renderShadowMap (renderObject)
    {
-      if (! this .shadowBuffer)
+      if (!this .shadowBuffer)
          return;
 
       const
@@ -181,7 +181,7 @@ Object .assign (PointLightContainer .prototype,
    {
       this .modelViewMatrix .get () .multVecMatrix (this .location .assign (this .lightNode ._location .getValue ()));
 
-      if (! this .shadowBuffer)
+      if (!this .shadowBuffer)
          return;
 
       this .shadowMatrix .assign (renderObject .getCameraSpaceMatrix () .get ()) .multRight (this .invLightSpaceProjectionMatrix);
@@ -218,10 +218,9 @@ Object .assign (PointLightContainer .prototype,
          return;
 
       const
-         lightNode   = this .lightNode,
-         color       = lightNode .getColor (),
-         attenuation = lightNode .getAttenuation (),
-         location    = this .location;
+         { lightNode, location } = this,
+         color                   = lightNode .getColor (),
+         attenuation             = lightNode .getAttenuation ();
 
       gl .uniform1i        (shaderObject .x3d_LightType [i],             2);
       gl .uniform3f        (shaderObject .x3d_LightColor [i],            color .r, color .g, color .b);
