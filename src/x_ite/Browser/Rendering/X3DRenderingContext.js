@@ -165,7 +165,7 @@ Object .assign (X3DRenderingContext .prototype,
       if (this [_composeShader])
          return this [_composeShader];
 
-      return this [_composeShader] = this .createShader ("OITComposeShader", "FullScreen", "OITCompose");
+      return this [_composeShader] = this .createShader ("OITCompose", "FullScreen", "OITCompose");
    },
    getDepthShader (numClipPlanes, shapeNode, humanoidNode)
    {
@@ -226,7 +226,7 @@ Object .assign (X3DRenderingContext .prototype,
          options .push (`X3D_NUM_DISPLACEMENTS ${humanoidNode .getNumDisplacements ()}`);
       }
 
-      const shaderNode = this .createShader ("DepthShader", "Depth", "Depth", options);
+      const shaderNode = this .createShader ("Depth", "Depth", "Depth", options);
 
       this [_depthShaders] .set (key, shaderNode);
 

@@ -235,14 +235,14 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
             {
                if (!renderContext ?.shadows)
                {
-                  var shaderNode = browser .createShader ("GouraudShader", "Gouraud", "Gouraud", options);
+                  var shaderNode = browser .createShader ("Gouraud", "Gouraud", "Gouraud", options);
                   break;
                }
 
                // Proceed with next case:
             }
             case "2":
-               var shaderNode = browser .createShader ("PhongShader", "Default", "Phong", options);
+               var shaderNode = browser .createShader ("Phong", "Default", "Phong", options);
                break;
          }
       }
@@ -250,7 +250,7 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
       {
          options .push ("X3D_UNLIT_MATERIAL");
 
-         var shaderNode = browser .createShader ("UnlitShader", "Default", "Unlit", options);
+         var shaderNode = browser .createShader ("Unlit", "Default", "Unlit", options);
 
          browser .getShaders () .set (key .replace (/^(\d{1,2})\d*/, "$1") .replace (/\d$/, "0"), shaderNode);
       }

@@ -93,7 +93,7 @@ Object .assign (Object .setPrototypeOf (UnlitMaterial .prototype, X3DOneSidedMat
 
       options .push ("X3D_UNLIT_MATERIAL");
 
-      const shaderNode = browser .createShader ("UnlitShader", "Default", "Unlit", options);
+      const shaderNode = browser .createShader ("Unlit", "Default", "Unlit", options);
 
       browser .getShaders () .set (key, shaderNode);
 
