@@ -110,10 +110,6 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
    {
       return this .alphaMode;
    },
-   getNormalizedAlphaMode (transparent)
-   {
-      return this .alphaMode || (transparent ? AlphaMode .BLEND : AlphaMode .OPAQUE);
-   },
    getAlphaCutoff ()
    {
       return this .alphaCutoff;

@@ -169,16 +169,18 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
    },
    set_transparent__ ()
    {
-      if (this .appearanceNode .getAlphaMode () === AlphaMode .AUTO)
+      const alphaMode = this .appearanceNode .getAlphaMode ();
+
+      if (alphaMode === AlphaMode .AUTO)
       {
          this .transparent = !!(this .appearanceNode .isTransparent () || this .geometryNode ?.isTransparent ());
+         this .alphaMode   = this .transparent ? AlphaMode .BLEND : AlphaMode .OPAQUE;
       }
       else
       {
          this .transparent = this .appearanceNode .isTransparent ();
+         this .alphaMode   = alphaMode;
       }
-
-      this .alphaMode = this .appearanceNode .getNormalizedAlphaMode (this .transparent);
    },
    set_bbox__ ()
    {
