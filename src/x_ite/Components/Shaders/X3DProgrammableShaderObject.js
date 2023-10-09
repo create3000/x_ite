@@ -188,6 +188,15 @@ Object .assign (X3DProgrammableShaderObject .prototype,
          this .x3d_ShadowMap [i]       = gl .getUniformLocation (program, "x3d_ShadowMap[" + i + "]");
       }
 
+      this .x3d_EnvironmentLightColor            = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.color");
+      this .x3d_EnvironmentLightIntensity        = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.intensity");
+      this .x3d_EnvironmentLightAmbientIntensity = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.ambientIntensity");
+      this .x3d_EnvironmentLightRotation         = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.rotation");
+      this .x3d_EnvironmentLightDiffuseTexture   = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.diffuseTexture");
+      this .x3d_EnvironmentLightSpecularTexture  = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.specularTexture");
+      this .x3d_EnvironmentLightSpecularMipCount = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.specularMipCount");
+      this .x3d_EnvironmentLightGGXLUT           = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.GGXLUT");
+
       this .x3d_AmbientIntensity  = this .getUniformLocation (gl, program, "x3d_Material.ambientIntensity", "x3d_FrontMaterial.ambientIntensity");
       this .x3d_DiffuseColor      = this .getUniformLocation (gl, program, "x3d_Material.diffuseColor",     "x3d_FrontMaterial.diffuseColor");
       this .x3d_SpecularColor     = this .getUniformLocation (gl, program, "x3d_Material.specularColor",    "x3d_FrontMaterial.specularColor");

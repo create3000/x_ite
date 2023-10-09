@@ -86,9 +86,9 @@ Object .assign (EnvironmentLightContainer .prototype,
    {
       const lightNode = this .lightNode;
 
-      gl .uniform1f        (shaderObject .x3d_EnvironmentLightIntensity,       lightNode .getIntensity ());
-      gl .uniformMatrix3fv (shaderObject .x3d_EnvironmentLightRotation, false, lightNode .getRotation ());
-      gl .uniform1i        (shaderObject .x3d_EnvironmentLightSecularMipCount, 1);
+      gl .uniform1f        (shaderObject .x3d_EnvironmentLightIntensity,        lightNode .getIntensity ());
+      gl .uniformMatrix3fv (shaderObject .x3d_EnvironmentLightRotation, false,  lightNode .getRotation ());
+      gl .uniform1i        (shaderObject .x3d_EnvironmentLightSpecularMipCount, 1);
 
       gl .uniform1i (shaderObject .x3d_EnvironmentLightDiffuseTexture, 0);
       gl .uniform1i (shaderObject .x3d_EnvironmentLightSecularTexture, 1);
