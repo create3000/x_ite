@@ -15,13 +15,13 @@ uniform x3d_EnvironmentLightSourceParameters x3d_EnvironmentLightSource;
 vec3
 getDiffuseLight (const in vec3 n)
 {
-   return texture (x3d_EnvironmentLightSource .diffuseTexture, x3d_EnvironmentLightSource .rotation * n) .rgb * x3d_EnvironmentLightSource .intensity;
+   return texture (x3d_EnvironmentLightSource .diffuseTexture, x3d_EnvironmentLightSource .rotation * n) .rgb * x3d_EnvironmentLightSource .color * x3d_EnvironmentLightSource .intensity;
 }
 
-vec4
-getSpecularSample (const in vec3 reflection, const in float lod)
+vec3
+getSpecularLight (const in vec3 reflection, const in float lod)
 {
-   return textureLod (x3d_EnvironmentLightSource .specularTexture, x3d_EnvironmentLightSource .rotation * reflection, lod) * x3d_EnvironmentLightSource .intensity;
+   return textureLod (x3d_EnvironmentLightSource .specularTexture, x3d_EnvironmentLightSource .rotation * reflection, lod) .rgb * x3d_EnvironmentLightSource .color * x3d_EnvironmentLightSource .intensity;
 }
 
 vec3
@@ -33,9 +33,7 @@ getIBLRadianceGGX (const in vec3 n, const in vec3 v, const in float roughness, c
 
    vec2 brdfSamplePoint = clamp (vec2 (NdotV, roughness), vec2 (0.0), vec2 (1.0));
    vec2 f_ab            = texture (x3d_EnvironmentLightSource .GGXLUTTexture, brdfSamplePoint) .rg;
-   vec4 specularSample  = getSpecularSample (reflection, lod);
-
-   vec3 specularLight = specularSample .rgb;
+   vec3 specularLight   = getSpecularLight (reflection, lod);
 
    // see https://bruop.github.io/ibl/#single_scattering_results at Single Scattering Results
    // Roughness dependent fresnel, from Fdez-Aguera

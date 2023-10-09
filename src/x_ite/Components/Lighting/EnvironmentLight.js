@@ -85,8 +85,11 @@ Object .assign (EnvironmentLightContainer .prototype,
    },
    setShaderUniforms (gl, shaderObject)
    {
-      const { browser, lightNode } = this;
+      const
+         { browser, lightNode } = this,
+         color                  = lightNode .getColor ();
 
+      gl .uniform3f        (shaderObject .x3d_EnvironmentLightColor,            color .r, color .g, color .b);
       gl .uniform1f        (shaderObject .x3d_EnvironmentLightIntensity,        lightNode .getIntensity ());
       gl .uniformMatrix3fv (shaderObject .x3d_EnvironmentLightRotation, false,  lightNode .getRotation ());
       gl .uniform1i        (shaderObject .x3d_EnvironmentLightSpecularMipCount, 1);
