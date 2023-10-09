@@ -388,8 +388,7 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
    },
    traverse (type, renderObject)
    {
-      if (this .textureNode)
-         this .textureNode .traverse (type, renderObject);
+      this .textureNode ?.traverse (type, renderObject);
    },
 });
 
