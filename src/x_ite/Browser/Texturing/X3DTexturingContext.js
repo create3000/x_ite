@@ -254,6 +254,18 @@ Object .assign (X3DTexturingContext .prototype,
    {
       return NaN;
    },
+   getDefaultTexture2D ()
+   {
+      return this [_defaultTexture2D];
+   },
+   getDefaultTexture3D ()
+   {
+      return this [_defaultTexture3D];
+   },
+   getDefaultTextureCube ()
+   {
+      return this [_defaultTextureCube];
+   },
    getDefaultTextureProperties ()
    {
       this [_defaultTextureProperties] = new TextureProperties (this .getPrivateScene ());

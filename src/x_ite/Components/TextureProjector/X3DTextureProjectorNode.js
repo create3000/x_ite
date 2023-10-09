@@ -148,13 +148,11 @@ Object .assign (Object .setPrototypeOf (X3DTextureProjectorNode .prototype, X3DL
    })(),
    set_texture__ ()
    {
-      if (this .textureNode)
-         this .textureNode .removeInterest ("set_aspectRatio__", this);
+      this .textureNode ?.removeInterest ("set_aspectRatio__", this);
 
       this .textureNode = X3DCast (X3DConstants .X3DTexture2DNode, this ._texture);
 
-      if (this .textureNode)
-         this .textureNode .addInterest ("set_aspectRatio__", this);
+      this .textureNode ?.addInterest ("set_aspectRatio__", this);
 
       this .set_aspectRatio__ ();
    },
