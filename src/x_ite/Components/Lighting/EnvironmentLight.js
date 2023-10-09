@@ -68,6 +68,10 @@ Object .assign (EnvironmentLightContainer .prototype,
    {
       this .lightNode = lightNode;
    },
+   getLightKey ()
+   {
+      return 1;
+   },
    getModelViewMatrix ()
    {
       return this .modelViewMatrix;
@@ -120,6 +124,10 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
       this .set_rotation__ ();
       this .set_diffuseTexture__ ();
       this .set_specularTexture__ ();
+   },
+   getLightKey ()
+   {
+      return 2;
    },
    getRotation ()
    {
@@ -181,11 +189,11 @@ Object .defineProperties (EnvironmentLight,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "diffuseCoefficients", new Fields .MFFloat ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "specularTexture",     new Fields .SFNode ()),
 
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "shadows",             new  Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowColor",         new  Fields .SFColor ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowIntensity",     new  Fields .SFFloat (1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowBias",          new  Fields .SFFloat (0.005)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "shadowMapSize",       new  Fields .SFInt32 (1024)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "shadows",             new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowColor",         new Fields .SFColor ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowIntensity",     new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowBias",          new Fields .SFFloat (0.005)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "shadowMapSize",       new Fields .SFInt32 (1024)),
       ]),
       enumerable: true,
    },

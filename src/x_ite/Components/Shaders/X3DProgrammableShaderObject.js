@@ -103,17 +103,7 @@ function X3DProgrammableShaderObject (executionContext)
 Object .assign (X3DProgrammableShaderObject .prototype,
 {
    initialize ()
-   {
-      const browser = this .getBrowser ();
-
-      browser .getRenderingProperties () ._LogarithmicDepthBuffer .addInterest ("set_logarithmicDepthBuffer__", this);
-
-      this .set_logarithmicDepthBuffer__ ();
-   },
-   set_logarithmicDepthBuffer__ ()
-   {
-      this .logarithmicDepthBuffer = this .getBrowser () .getRenderingProperty ("LogarithmicDepthBuffer");
-   },
+   { },
    canUserDefinedFields ()
    {
       return true;
@@ -1012,21 +1002,19 @@ Object .assign (X3DProgrammableShaderObject .prototype,
             this .lightNodes .length             = 0;
             this .projectiveTextureNodes .length = 0;
 
-            const globalObjects = renderObject .getGlobalObjects ();
-
-            for (const globalObject of globalObjects)
-               globalObject .setShaderUniforms (gl, this, renderObject);
+            for (const globalLights of renderObject .getGlobalLights ())
+               globalLights .setShaderUniforms (gl, this, renderObject);
 
             this .numGlobalLights             = this .numLights;
             this .numGlobalProjectiveTextures = this .numProjectiveTextures;
 
             // Logarithmic depth buffer support
 
-            const viewpoint = renderObject .getViewpoint ();
-
-            if (this .logarithmicDepthBuffer || viewpoint .getLogarithmicDepthBuffer ())
+            if (renderObject .getLogarithmicDepthBuffer ())
             {
-               const navigationInfo = renderObject .getNavigationInfo ();
+               const
+                  viewpoint      = renderObject .getViewpoint (),
+                  navigationInfo = renderObject .getNavigationInfo ();
 
                gl .uniform1f (this .x3d_LogarithmicFarFactor1_2, 1 / Math .log2 (navigationInfo .getFarValue (viewpoint) + 1));
             }

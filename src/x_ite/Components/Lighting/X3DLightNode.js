@@ -81,6 +81,10 @@ Object .assign (Object .setPrototypeOf (X3DLightNode .prototype, X3DChildNode .p
          this .pop  = Function .prototype;
       }
    },
+   getLightKey ()
+   {
+      return 1;
+   },
    getGlobal ()
    {
       return this ._global .getValue ();
@@ -146,8 +150,8 @@ Object .assign (Object .setPrototypeOf (X3DLightNode .prototype, X3DChildNode .p
                                  renderObject .getLayer () .getGroup (),
                                  renderObject .getModelViewMatrix () .get ());
 
-            renderObject .getGlobalObjects () .push (lightContainer);
-            renderObject .getLights ()        .push (lightContainer);
+            renderObject .getGlobalLights () .push (lightContainer);
+            renderObject .getLights ()       .push (lightContainer);
 
             renderObject .pushGlobalShadows (!! this .getShadowIntensity ());
          }
@@ -161,8 +165,7 @@ Object .assign (Object .setPrototypeOf (X3DLightNode .prototype, X3DChildNode .p
             renderObject .getLights ()       .push (lightContainer);
 
             renderObject .pushLocalShadows (!! this .getShadowIntensity ());
-
-            ++ renderObject .getLocalObjectsCount () [1];
+            renderObject .getLocalObjectsKeys () .push (this .getLightKey ());
          }
       }
       else
@@ -173,8 +176,8 @@ Object .assign (Object .setPrototypeOf (X3DLightNode .prototype, X3DChildNode .p
 
          if (this ._global .getValue ())
          {
-            renderObject .getGlobalObjects () .push (lightContainer);
-            renderObject .getLights ()        .push (lightContainer);
+            renderObject .getGlobalLights () .push (lightContainer);
+            renderObject .getLights ()       .push (lightContainer);
 
             renderObject .pushGlobalShadows (!! this .getShadowIntensity ());
          }
@@ -184,8 +187,7 @@ Object .assign (Object .setPrototypeOf (X3DLightNode .prototype, X3DChildNode .p
             renderObject .getLights ()       .push (lightContainer);
 
             renderObject .pushLocalShadows (!! this .getShadowIntensity ());
-
-            ++ renderObject .getLocalObjectsCount () [1];
+            renderObject .getLocalObjectsKeys () .push (this .getLightKey ());
          }
       }
    },
@@ -200,8 +202,7 @@ Object .assign (Object .setPrototypeOf (X3DLightNode .prototype, X3DChildNode .p
          this .getBrowser () .getLocalObjects () .push (lightContainer);
 
       renderObject .popLocalShadows ();
-
-      -- renderObject .getLocalObjectsCount () [1];
+      renderObject .getLocalObjectsKeys () .pop ();
    },
 });
 

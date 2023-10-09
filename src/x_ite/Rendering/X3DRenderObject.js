@@ -79,8 +79,8 @@ function X3DRenderObject (executionContext)
    this .hitRay                   = new Line3 (Vector3 .Zero, Vector3 .Zero);
    this .sensors                  = [[ ]];
    this .viewpointGroups          = [ ];
-   this .localObjectsCount        = [0, 0, 0];
-   this .globalObjects            = [ ];
+   this .localObjectsKeys         = [ ];
+   this .globalLights             = [ ];
    this .localObjects             = [ ];
    this .lights                   = [ ];
    this .globalShadows            = [ false ];
@@ -88,7 +88,6 @@ function X3DRenderObject (executionContext)
    this .localFogs                = [ null ];
    this .layouts                  = [ ];
    this .humanoids                = [ ];
-   this .textureProjectors        = [ ];
    this .generatedCubeMapTextures = [ ];
    this .collisions               = [ ];
    this .collisionTime            = new StopWatch ();
@@ -172,17 +171,17 @@ Object .assign (X3DRenderObject .prototype,
    {
       return this .viewpointGroups;
    },
-   getGlobalObjects ()
+   getGlobalLights ()
    {
-      return this .globalObjects;
+      return this .globalLights;
    },
    getLocalObjects ()
    {
       return this .localObjects;
    },
-   getLocalObjectsCount ()
+   getLocalObjectsKeys ()
    {
-      return this .localObjectsCount;
+      return this .localObjectsKeys;
    },
    getLights ()
    {
@@ -240,10 +239,6 @@ Object .assign (X3DRenderObject .prototype,
    getHumanoids ()
    {
       return this .humanoids;
-   },
-   getTextureProjectors ()
-   {
-      return this .textureProjectors;
    },
    getGeneratedCubeMapTextures ()
    {
@@ -667,8 +662,8 @@ Object .assign (X3DRenderObject .prototype,
 
             // Clip planes and local lights
 
-            assign (renderContext .localObjects, this .localObjects);
-            assign (renderContext .objectsCount, this .localObjectsCount);
+            assign (renderContext .localObjects, this .localObjects); // Fog, ClipPane, X3DLightNode
+            assign (renderContext .objectsKeys,  this .localObjectsKeys);
 
             return true;
          }
@@ -684,7 +679,7 @@ Object .assign (X3DRenderObject .prototype,
          modelViewMatrix: new Float32Array (16),
          scissor: new Vector4 (0, 0, 0, 0),
          localObjects: [ ],
-         objectsCount: [0, 0, 0], // [clip planes, lights, texture projectors]
+         objectsKeys: [ ], // [clip planes, lights]
       };
    },
    pointing: (() =>
@@ -984,26 +979,23 @@ Object .assign (X3DRenderObject .prototype,
    draw ()
    {
       const
-         browser                    = this .getBrowser (),
-         gl                         = browser .getContext (),
-         viewport                   = this .getViewVolume () .getViewport (),
-         globalObjects              = this .globalObjects,
-         lights                     = this .lights,
-         textureProjectors          = this .textureProjectors,
-         generatedCubeMapTextures   = this .generatedCubeMapTextures,
-         globalShadows              = this .globalShadows,
-         shadows                    = globalShadows .at (-1),
-         headlight                  = this .getNavigationInfo () ._headlight .getValue (),
-         numGlobalLights            = globalObjects .reduce ((n, c) => n + !!c .lightNode, 0),
-         numGlobalTextureProjectors = globalObjects .reduce ((n, c) => n + !!c .textureProjectorNode, 0),
-         oit                        = browser .getFrameBuffer () .getOrderIndependentTransparency ();
+         browser                  = this .getBrowser (),
+         gl                       = browser .getContext (),
+         viewport                 = this .getViewVolume () .getViewport (),
+         lights                   = this .lights,
+         globalLights             = this .globalLights,
+         generatedCubeMapTextures = this .generatedCubeMapTextures,
+         globalShadows            = this .globalShadows,
+         shadows                  = globalShadows .at (-1),
+         headlight                = this .getNavigationInfo () ._headlight .getValue (),
+         globalLightsKeys         = globalLights .map (l => l .lightNode .getLightKey ()),
+         oit                      = browser .getFrameBuffer () .getOrderIndependentTransparency ();
 
 
       this .renderCount = ++ renderCount;
 
       this .logarithmicDepthBuffer = browser .getBrowserOption ("LogarithmicDepthBuffer")
          || this .getViewpoint () .getLogarithmicDepthBuffer ();
-
 
       // PREPARATIONS
 
@@ -1028,9 +1020,6 @@ Object .assign (X3DRenderObject .prototype,
 
       for (const light of lights)
          light .setGlobalVariables (this);
-
-      for (const textureProjector of textureProjectors)
-         textureProjector .setGlobalVariables (this);
 
       // Set global uniforms.
 
@@ -1066,9 +1055,8 @@ Object .assign (X3DRenderObject .prototype,
 
          gl .scissor (... renderContext .scissor);
 
-         renderContext .shadows           = renderContext .shadows || shadows;
-         renderContext .objectsCount [1] += numGlobalLights;
-         renderContext .objectsCount [2] += numGlobalTextureProjectors;
+         renderContext .shadows = renderContext .shadows || shadows;
+         renderContext .objectsKeys .push (... globalLightsKeys);
 
          renderContext .shapeNode .display (gl, renderContext);
          browser .resetTextureUnits ();
@@ -1092,9 +1080,8 @@ Object .assign (X3DRenderObject .prototype,
 
          gl .scissor (... renderContext .scissor);
 
-         renderContext .shadows           = renderContext .shadows || shadows;
-         renderContext .objectsCount [1] += numGlobalLights;
-         renderContext .objectsCount [2] += numGlobalTextureProjectors;
+         renderContext .shadows = renderContext .shadows || shadows;
+         renderContext .objectsKeys .push (... globalLightsKeys);
 
          renderContext .shapeNode .display (gl, renderContext);
          browser .resetTextureUnits ();
@@ -1124,16 +1111,15 @@ Object .assign (X3DRenderObject .prototype,
 
          // Recycle global lights and global projective textures.
 
-         for (const globalObject of globalObjects)
+         for (const globalObject of globalLights)
             globalObject .dispose ();
       }
 
       // Reset containers.
 
-      globalObjects            .length = 0;
+      globalLights             .length = 0;
       lights                   .length = 0;
       globalShadows            .length = 1;
-      textureProjectors        .length = 0;
       generatedCubeMapTextures .length = 0;
    },
 });

@@ -69,7 +69,7 @@ function Inline (executionContext)
 
    this .scene        = this .getBrowser () .getDefaultScene ();
    this .groupNode    = new Group (executionContext);
-   this .localObjects = [ ];
+   this .localLights  = [ ];
    this .localShadows = false;
 }
 
@@ -195,21 +195,19 @@ Object .assign (Object .setPrototypeOf (Inline .prototype, X3DChildNode .prototy
             else
             {
                const
-                  globalObjects        = renderObject .getGlobalObjects (),
-                  globalShadows        = renderObject .getGlobalShadows (),
-                  globalsBegin         = globalObjects .length,
-                  shadowsBegin         = globalShadows .length,
-                  localObjects         = this .localObjects,
-                  numLocalObjects      = localObjects .length,
-                  numLights            = localObjects .reduce ((n, c) => n + !!c .lightNode, 0),
-                  numTextureProjectors = localObjects .reduce ((n, c) => n + !!c .textureProjectorNode, 0);
+                  globalLights    = renderObject .getGlobalLights (),
+                  globalShadows   = renderObject .getGlobalShadows (),
+                  globalsBegin    = globalLights .length,
+                  shadowsBegin    = globalShadows .length,
+                  localLights     = this .localLights,
+                  numLocalObjects = localLights .length,
+                  lightsKeys      = localLights .map (c => c .lightNode .getLightKey ());
 
                if (numLocalObjects)
                {
-                  renderObject .getLocalObjects () .push (... localObjects);
+                  renderObject .getLocalObjects () .push (... localLights);
                   renderObject .pushLocalShadows (this .localShadows);
-                  renderObject .getLocalObjectsCount () [1] += numLights;
-                  renderObject .getLocalObjectsCount () [2] += numTextureProjectors;
+                  renderObject .getLocalObjectsKeys () .push (... lightsKeys);
                }
 
                this .groupNode .traverse (type, renderObject);
@@ -230,26 +228,25 @@ Object .assign (Object .setPrototypeOf (Inline .prototype, X3DChildNode .prototy
                   }
 
                   renderObject .popLocalShadows ();
-                  renderObject .getLocalObjectsCount () [1] -= numLights;
-                  renderObject .getLocalObjectsCount () [2] -= numTextureProjectors;
+                  renderObject .getLocalObjectsKeys () .length -= lightsKeys .length;
                }
 
-               const numGlobalObjects = globalObjects .length - globalsBegin;
+               const numGlobalLights = globalLights .length - globalsBegin;
 
-               for (let i = 0; i < numGlobalObjects; ++ i)
+               for (let i = 0; i < numGlobalLights; ++ i)
                {
-                  const globalObject = globalObjects [globalsBegin + i];
+                  const globalLight = globalLights [globalsBegin + i];
 
-                  globalObject .groupNode = this .groupNode;
-                  globalObject .global    = false;
+                  globalLight .groupNode = this .groupNode;
+                  globalLight .global    = false;
 
-                  localObjects [i] = globalObject;
+                  localLights [i] = globalLight;
                }
 
-               localObjects .length = numGlobalObjects;
-               this .localShadows   = globalShadows .at (-1);
+               localLights .length = numGlobalLights;
+               this .localShadows  = globalShadows .at (-1);
 
-               globalObjects .length = globalsBegin;
+               globalLights  .length = globalsBegin;
                globalShadows .length = shadowsBegin;
             }
 

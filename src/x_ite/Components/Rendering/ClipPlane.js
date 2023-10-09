@@ -105,6 +105,10 @@ function ClipPlane (executionContext)
 
 Object .assign (Object .setPrototypeOf (ClipPlane .prototype, X3DChildNode .prototype),
 {
+   getClipPlaneKey ()
+   {
+      return 0;
+   },
    initialize ()
    {
       X3DChildNode .prototype .initialize .call (this);
@@ -128,9 +132,8 @@ Object .assign (Object .setPrototypeOf (ClipPlane .prototype, X3DChildNode .prot
 
          clipPlaneContainer .set (this, renderObject .getModelViewMatrix () .get ());
 
-         renderObject .getLocalObjects () .push (clipPlaneContainer);
-
-         ++ renderObject .getLocalObjectsCount () [0];
+         renderObject .getLocalObjects ()     .push (clipPlaneContainer);
+         renderObject .getLocalObjectsKeys () .push (this .getClipPlaneKey ());
       }
    },
    pop (renderObject)
@@ -138,8 +141,7 @@ Object .assign (Object .setPrototypeOf (ClipPlane .prototype, X3DChildNode .prot
       if (this .enabled)
       {
          this .getBrowser () .getLocalObjects () .push (renderObject .getLocalObjects () .pop ());
-
-         -- renderObject .getLocalObjectsCount () [0];
+         renderObject .getLocalObjectsKeys () .pop ();
       }
    },
 });
