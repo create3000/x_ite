@@ -111,6 +111,7 @@ import UnlitFragment2         from "../../../assets/shaders/webgl2/Unlit2.fs.js"
 
 /* PBR 1 */
 import BDRF1                  from "../../../assets/shaders/webgl1/pbr/BDRF1.glsl.js";
+import IBL1                   from "../../../assets/shaders/webgl1/pbr/IBL1.glsl.js";
 import Punctual1              from "../../../assets/shaders/webgl1/pbr/Punctual1.glsl.js";
 import MaterialInfo1          from "../../../assets/shaders/webgl1/pbr/MaterialInfo1.glsl.js";
 import ToneMapping1           from "../../../assets/shaders/webgl1/pbr/ToneMapping1.glsl.js";
@@ -141,6 +142,7 @@ const ShaderRegistry = {
          Vertex: Vertex1,
          // PBR
          BDRF: BDRF1,
+         IBL: IBL1,
          MaterialInfo: MaterialInfo1,
          Punctual: Punctual1,
          ToneMapping: ToneMapping1,

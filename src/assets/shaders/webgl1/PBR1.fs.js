@@ -1,5 +1,9 @@
 export default /* glsl */ `
 
+#extension GL_OES_standard_derivatives : enable
+#extension GL_EXT_frag_depth : enable
+#extension GL_EXT_shader_texture_lod : enable
+
 // https://github.com/KhronosGroup/glTF-Sample-Viewer/blob/main/source/Renderer/shaders/pbr.frag
 
 precision highp float;
@@ -21,6 +25,7 @@ uniform x3d_PhysicalMaterialParameters x3d_Material;
 #pragma X3D include "pbr/ToneMapping.glsl"
 #pragma X3D include "pbr/MaterialInfo.glsl"
 #pragma X3D include "pbr/Punctual.glsl"
+#pragma X3D include "pbr/IBL.glsl"
 
 vec4
 getMaterialColor ()
@@ -66,6 +71,8 @@ getMaterialColor ()
    float albedoSheenScaling = 1.0;
 
    #if defined (X3D_USE_IBL)
+      f_specular += getIBLRadianceGGX (n, v, materialInfo .perceptualRoughness, materialInfo .f0, materialInfo .specularWeight);
+      f_diffuse  += getIBLRadianceLambertian (n, v, materialInfo .perceptualRoughness, materialInfo .c_diff, materialInfo .f0, materialInfo .specularWeight);
    #endif
 
    vec3 f_diffuse_ibl   = f_diffuse;
