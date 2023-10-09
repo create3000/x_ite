@@ -80,6 +80,7 @@ function X3DRenderObject (executionContext)
    this .sensors                  = [[ ]];
    this .viewpointGroups          = [ ];
    this .localObjectsKeys         = [ ];
+   this .globalLightsKeys         = [ ];
    this .globalLights             = [ ];
    this .localObjects             = [ ];
    this .lights                   = [ ];
@@ -983,12 +984,12 @@ Object .assign (X3DRenderObject .prototype,
          gl                       = browser .getContext (),
          viewport                 = this .getViewVolume () .getViewport (),
          lights                   = this .lights,
+         globalLightsKeys         = this .globalLightsKeys,
          globalLights             = this .globalLights,
          generatedCubeMapTextures = this .generatedCubeMapTextures,
          globalShadows            = this .globalShadows,
          shadows                  = globalShadows .at (-1),
          headlight                = this .getNavigationInfo () ._headlight .getValue (),
-         globalLightsKeys         = globalLights .map (l => l .lightNode .getLightKey ()),
          oit                      = browser .getFrameBuffer () .getOrderIndependentTransparency ();
 
 
@@ -996,6 +997,7 @@ Object .assign (X3DRenderObject .prototype,
 
       this .logarithmicDepthBuffer = browser .getBrowserOption ("LogarithmicDepthBuffer")
          || this .getViewpoint () .getLogarithmicDepthBuffer ();
+
 
       // PREPARATIONS
 
@@ -1020,6 +1022,9 @@ Object .assign (X3DRenderObject .prototype,
 
       for (const light of lights)
          light .setGlobalVariables (this);
+
+      for (const light of globalLights)
+         globalLightsKeys .push (light .lightNode .getLightKey ());
 
       // Set global uniforms.
 
@@ -1117,6 +1122,7 @@ Object .assign (X3DRenderObject .prototype,
 
       // Reset containers.
 
+      globalLightsKeys         .length = 0;
       globalLights             .length = 0;
       lights                   .length = 0;
       globalShadows            .length = 1;
