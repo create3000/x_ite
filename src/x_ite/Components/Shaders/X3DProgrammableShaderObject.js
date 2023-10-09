@@ -89,8 +89,8 @@ function X3DProgrammableShaderObject (executionContext)
    this .x3d_TexCoord                            = [ ];
    this .x3d_TextureMatrix                       = [ ];
 
-   this .numClipPlanes               = 0;
    this .fogNode                     = null;
+   this .numClipPlanes               = 0;
    this .numLights                   = 0;
    this .numGlobalLights             = 0;
    this .lightNodes                  = [ ];
