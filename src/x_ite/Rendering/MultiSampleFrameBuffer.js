@@ -52,6 +52,7 @@ function MultiSampleFrameBuffer (browser, width, height, samples, oit)
    if (gl .getVersion () === 1 || width === 0 || height === 0)
       return Fallback;
 
+   this .browser    = browser;
    this .context    = gl;
    this .width      = width;
    this .height     = height;
@@ -281,7 +282,7 @@ Object .assign (MultiSampleFrameBuffer .prototype,
    },
    compose ()
    {
-      const { context: gl, width, height, samples, program } = this;
+      const { browser, context: gl, width, height, samples, program } = this;
 
       // TODO: Combining lights and lights with shadows, can cause feedback loop of texture.
       // TODO: VolumeRendering shader is not made for OIT.
@@ -321,6 +322,7 @@ Object .assign (MultiSampleFrameBuffer .prototype,
       gl .blendFunc (gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
       gl .enable (gl .CULL_FACE);
       gl .frontFace (gl .CCW);
+      gl .bindVertexArray (browser .getFullscreenVertexArrayObject ());
       gl .drawArrays (gl .TRIANGLES, 0, 6);
       gl .disable (gl .BLEND);
       gl .enable (gl .DEPTH_TEST);

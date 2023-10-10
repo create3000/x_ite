@@ -45,7 +45,8 @@
  *
  ******************************************************************************/
 
-import PanoramaFS from "./Panorama.fs.js";
+import Panorama1FS from "./Panorama1.fs.js";
+import Panorama2FS from "./Panorama2.fs.js";
 
 const
    _panoramaShader = Symbol ();
@@ -59,7 +60,7 @@ Object .assign (X3DCubeMapTexturingContext .prototype,
       if (this [_panoramaShader])
          return this [_panoramaShader];
 
-      return this [_panoramaShader] = this .createShader ("Panorama", "FullScreen", "data:x-shader/x-fragment," + PanoramaFS, [ ], ["x3d_PanoramaTexture", "x3d_CurrentFace"]);
+      return this [_panoramaShader] = this .createShader ("Panorama", "FullScreen", "data:x-shader/x-fragment," + ["", Panorama1FS, Panorama2FS][this .getContext () .getVersion ()], [ ], ["x3d_PanoramaTexture", "x3d_CurrentFace"]);
    },
 });
 

@@ -82,6 +82,7 @@ import Utils2                 from "../../../assets/shaders/webgl2/common/Utils2
 import Vertex2                from "../../../assets/shaders/webgl2/common/Vertex2.glsl.js";
 
 /* WebGL 1 */
+import FullScreenVertex1      from "../../../assets/shaders/webgl1/FullScreen1.vs.js";
 import DefaultVertex1         from "../../../assets/shaders/webgl1/Default1.vs.js";
 import DepthFragment1         from "../../../assets/shaders/webgl1/Depth1.fs.js";
 import DepthVertex1           from "../../../assets/shaders/webgl1/Depth1.vs.js";
@@ -178,6 +179,7 @@ const ShaderRegistry = {
       1: {
          Default: DefaultVertex1,
          Depth: DepthVertex1,
+         FullScreen: FullScreenVertex1,
          Gouraud: GouraudVertex1,
          Pointing: PointingVertex1,
       },

@@ -49,12 +49,14 @@ import MultiSampleFrameBuffer from "../../Rendering/MultiSampleFrameBuffer.js";
 import Vector4                from "../../../standard/Math/Numbers/Vector4.js";
 
 const
-   _viewport      = Symbol (),
-   _frameBuffer   = Symbol (),
-   _resizer       = Symbol (),
-   _localObjects  = Symbol (),
-   _composeShader = Symbol (),
-   _depthShaders  = Symbol ();
+   _viewport         = Symbol (),
+   _frameBuffer      = Symbol (),
+   _resizer          = Symbol (),
+   _localObjects     = Symbol (),
+   _fullscreenArray  = Symbol (),
+   _fullscreenBuffer = Symbol (),
+   _composeShader    = Symbol (),
+   _depthShaders     = Symbol ();
 
 function X3DRenderingContext ()
 {
@@ -159,6 +161,27 @@ Object .assign (X3DRenderingContext .prototype,
    getFrameBuffer ()
    {
       return this [_frameBuffer];
+   },
+   getFullscreenVertexArrayObject ()
+   {
+      // Quad for fullscreen rendering.
+
+      const gl = this .getContext ();
+
+      this [_fullscreenArray]  = gl .createVertexArray ();
+      this [_fullscreenBuffer] = gl .createBuffer ();
+
+      gl .bindVertexArray (this [_fullscreenArray]);
+      gl .bindBuffer (gl .ARRAY_BUFFER, this [_fullscreenBuffer]);
+      gl .bufferData (gl .ARRAY_BUFFER, new Float32Array ([-1, 1, -1, -1, 1, -1, -1, 1, 1, -1, 1, 1]), gl .STATIC_DRAW);
+      gl .vertexAttribPointer (0, 2, gl .FLOAT, false, 0, 0);
+      gl .enableVertexAttribArray (null);
+
+      this .getFullscreenVertexArrayObject = function () { return this [_fullscreenArray]; };
+
+      Object .defineProperty (this, "getFullscreenVertexArrayObject", { enumerable: false });
+
+      return this [_fullscreenArray];
    },
    getOITComposeShader ()
    {

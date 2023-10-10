@@ -286,6 +286,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
       gl .enable (gl .CULL_FACE);
       gl .frontFace (gl .CCW);
       gl .clearColor (0, 0, 0, 0);
+      gl .bindVertexArray (browser .getFullscreenVertexArrayObject ());
 
       for (let i = 0; i < 6; ++ i)
       {

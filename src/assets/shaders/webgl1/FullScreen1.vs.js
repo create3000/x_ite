@@ -1,11 +1,11 @@
-export default /* glsl */ `#version 300 es
+export default /* glsl */ `
 
 precision highp float;
 precision highp int;
 precision highp sampler2D;
 
-in  vec2 x3d_Vertex;
-out vec2 texCoord; // [-1,1]
+attribute vec2 x3d_Vertex;
+varying   vec2 texCoord; // [-1,1]
 
 void
 main ()
