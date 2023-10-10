@@ -69,10 +69,6 @@ Object .assign (EnvironmentLightContainer .prototype,
       this .browser   = lightNode .getBrowser ();
       this .lightNode = lightNode;
    },
-   getLightKey ()
-   {
-      return 1;
-   },
    renderShadowMap (renderObject)
    { },
    setGlobalVariables (renderObject)
