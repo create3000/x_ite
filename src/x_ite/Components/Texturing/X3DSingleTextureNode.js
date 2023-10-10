@@ -55,7 +55,8 @@ function X3DSingleTextureNode (executionContext)
 
    this .addType (X3DConstants .X3DSingleTextureNode);
 
-   this .levels = 1;
+   this .levels          = 1;
+   this .generateMipmaps = true;
 }
 
 Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, X3DTextureNode .prototype),
@@ -95,6 +96,14 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, X3DText
    setLevels (value)
    {
       this .levels = value;
+   },
+   getGenerateMipmaps ()
+   {
+      return this .generateMipmaps;
+   },
+   setGenerateMipmaps (value)
+   {
+      this .generateMipmaps = value;
    },
    set_textureProperties__ (update)
    {
@@ -137,12 +146,15 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, X3DText
          }
          else
          {
-            this .levels = textureProperties ._generateMipMaps .getValue ()
-               ? 1 + Math .log2 (Math .max (width, height))
-               : 1;
+            if (this .generateMipmaps)
+            {
+               this .levels = textureProperties ._generateMipMaps .getValue ()
+                  ? 1 + Math .log2 (Math .max (width, height))
+                  : 1;
 
-            if (textureProperties ._generateMipMaps .getValue ())
-               gl .generateMipmap (target);
+               if (textureProperties ._generateMipMaps .getValue ())
+                  gl .generateMipmap (target);
+            }
 
             gl .texParameteri (target, gl .TEXTURE_MIN_FILTER, gl [textureProperties .getMinificationFilter ()]);
             gl .texParameteri (target, gl .TEXTURE_MAG_FILTER, gl [textureProperties .getMagnificationFilter ()]);
