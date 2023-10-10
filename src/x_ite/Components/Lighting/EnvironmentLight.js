@@ -50,6 +50,7 @@ import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DLightNode         from "./X3DLightNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
+import X3DCast              from "../../Base/X3DCast.js";
 import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
 import MatrixStack          from "../../../standard/Math/Utility/MatrixStack.js";
 import ObjectCache          from "../../../standard/Utility/ObjectCache.js";
@@ -65,6 +66,12 @@ Object .assign (EnvironmentLightContainer .prototype,
 {
    set (lightNode, groupNode, modelViewMatrix)
    {
+      this .browser   = lightNode .getBrowser ();
+      this .lightNode = lightNode;
+   },
+   getLightKey ()
+   {
+      return 1;
    },
    getModelViewMatrix ()
    {
@@ -78,6 +85,34 @@ Object .assign (EnvironmentLightContainer .prototype,
    },
    setShaderUniforms (gl, shaderObject)
    {
+      const
+         { browser, lightNode } = this,
+         color                  = lightNode .getColor ();
+
+      gl .uniform3f        (shaderObject .x3d_EnvironmentLightColor,            color .r, color .g, color .b);
+      gl .uniform1f        (shaderObject .x3d_EnvironmentLightIntensity,        lightNode .getIntensity ());
+      gl .uniformMatrix3fv (shaderObject .x3d_EnvironmentLightRotation, false,  lightNode .getRotation ());
+      gl .uniform1i        (shaderObject .x3d_EnvironmentLightSpecularMipCount, lightNode .getSpecularMipCount ());
+
+      const
+         diffuseTexture      = lightNode .getDiffuseTexture (),
+         diffuseTextureUnit  = browser .getTextureCubeUnit (),
+         specularTexture     = lightNode .getSpecularTexture (),
+         specularTextureUnit = browser .getTextureCubeUnit (),
+         GGXLUTTexture       = browser .getGGXLUTTexture (),
+         GGXLUTTextureUnit   = browser .getTexture2DUnit ();
+
+      gl .activeTexture (gl .TEXTURE0 + diffuseTextureUnit);
+      gl .bindTexture (gl .TEXTURE_CUBE_MAP, diffuseTexture ?.getTexture () ?? browser .getDefaultTextureCubeBlack ());
+      gl .uniform1i (shaderObject .x3d_EnvironmentLightDiffuseTexture, diffuseTextureUnit);
+
+      gl .activeTexture (gl .TEXTURE0 + specularTextureUnit);
+      gl .bindTexture (gl .TEXTURE_CUBE_MAP, specularTexture ?.getTexture () ?? browser .getDefaultTextureCubeBlack ());
+      gl .uniform1i (shaderObject .x3d_EnvironmentLightSpecularTexture, specularTextureUnit);
+
+      gl .activeTexture (gl .TEXTURE0 + GGXLUTTextureUnit);
+      gl .bindTexture (gl .TEXTURE_2D, GGXLUTTexture .getTexture ());
+      gl .uniform1i (shaderObject .x3d_EnvironmentLightGGXLUTTexture, GGXLUTTextureUnit);
    },
    dispose ()
    {
@@ -92,13 +127,62 @@ function EnvironmentLight (executionContext)
    X3DLightNode .call (this, executionContext);
 
    this .addType (X3DConstants .EnvironmentLight);
+
+   this .rotationMatrix = new Float32Array (9);
 }
 
 Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNode .prototype),
 {
+   initialize ()
+   {
+      X3DLightNode .prototype .initialize .call (this);
+
+      this ._rotation        .addInterest ("set_rotation__",        this);
+      this ._diffuseTexture  .addInterest ("set_diffuseTexture__",  this);
+      this ._specularTexture .addInterest ("set_specularTexture__", this);
+
+      this .set_rotation__ ();
+      this .set_diffuseTexture__ ();
+      this .set_specularTexture__ ();
+   },
+   getLightKey ()
+   {
+      return 2;
+   },
+   getRotation ()
+   {
+      return this .rotationMatrix;
+   },
+   getDiffuseTexture ()
+   {
+      return this .diffuseTexture;
+   },
+   getSpecularTexture ()
+   {
+      return this .specularTexture;
+   },
+   getSpecularMipCount ()
+   {
+      if (this .specularTexture ?.hasMipMaps ())
+         return 1 + Math .floor (Math .log2 (this .specularTexture .getSize ()));
+      else
+         return 1;
+   },
    getLights ()
    {
       return EnvironmentLights;
+   },
+   set_rotation__ ()
+   {
+      this ._rotation .getValue () .getMatrix (this .rotationMatrix);
+   },
+   set_diffuseTexture__ ()
+   {
+      this .diffuseTexture = X3DCast (X3DConstants .X3DEnvironmentTextureNode, this ._diffuseTexture);
+   },
+   set_specularTexture__ ()
+   {
+      this .specularTexture = X3DCast (X3DConstants .X3DEnvironmentTextureNode, this ._specularTexture);
    },
 });
 
@@ -140,11 +224,11 @@ Object .defineProperties (EnvironmentLight,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "diffuseCoefficients", new Fields .MFFloat ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "specularTexture",     new Fields .SFNode ()),
 
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "shadows",             new  Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowColor",         new  Fields .SFColor ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowIntensity",     new  Fields .SFFloat (1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowBias",          new  Fields .SFFloat (0.005)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "shadowMapSize",       new  Fields .SFInt32 (1024)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "shadows",             new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowColor",         new Fields .SFColor ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowIntensity",     new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowBias",          new Fields .SFFloat (0.005)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "shadowMapSize",       new Fields .SFInt32 (1024)),
       ]),
       enumerable: true,
    },

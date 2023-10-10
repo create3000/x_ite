@@ -196,6 +196,9 @@ Object .assign (X3DOptimizer .prototype,
 
       const child = node .children [0];
 
+      if (child .getValue () .getCloneCount () <= 1)
+         return node;
+
       if (child .getValue () .hasRoutes ())
          return node;
 
@@ -259,7 +262,7 @@ Object .assign (X3DOptimizer .prototype,
    combineLight (node, child, removedNodes)
    {
       // Combine single light nodes.
-      
+
       const nodeMatrix = new Matrix4 ();
 
       nodeMatrix .set (node .translation .getValue (),

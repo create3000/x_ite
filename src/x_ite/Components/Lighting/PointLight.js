@@ -135,7 +135,7 @@ Object .assign (PointLightContainer .prototype,
    },
    renderShadowMap (renderObject)
    {
-      if (! this .shadowBuffer)
+      if (!this .shadowBuffer)
          return;
 
       const
@@ -181,7 +181,7 @@ Object .assign (PointLightContainer .prototype,
    {
       this .modelViewMatrix .get () .multVecMatrix (this .location .assign (this .lightNode ._location .getValue ()));
 
-      if (! this .shadowBuffer)
+      if (!this .shadowBuffer)
          return;
 
       this .shadowMatrix .assign (renderObject .getCameraSpaceMatrix () .get ()) .multRight (this .invLightSpaceProjectionMatrix);
@@ -218,10 +218,9 @@ Object .assign (PointLightContainer .prototype,
          return;
 
       const
-         lightNode   = this .lightNode,
-         color       = lightNode .getColor (),
-         attenuation = lightNode .getAttenuation (),
-         location    = this .location;
+         { lightNode, location } = this,
+         color                   = lightNode .getColor (),
+         attenuation             = lightNode .getAttenuation ();
 
       gl .uniform1i        (shaderObject .x3d_LightType [i],             2);
       gl .uniform3f        (shaderObject .x3d_LightColor [i],            color .r, color .g, color .b);
@@ -329,11 +328,11 @@ Object .defineProperties (PointLight,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "location",         new Fields .SFVec3f ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "radius",           new Fields .SFFloat (100)),
 
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "shadows",         new  Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowColor",     new  Fields .SFColor ()),        // Color of shadows.
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowIntensity", new  Fields .SFFloat (1)),        // Intensity of shadow color in the range (0, 1).
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowBias",      new  Fields .SFFloat (0.005)),   // Bias of the shadow.
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "shadowMapSize",   new  Fields .SFInt32 (1024)),    // Size of the shadow map in pixels in the range (0, inf).
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "shadows",         new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowColor",     new Fields .SFColor ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowIntensity", new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowBias",      new Fields .SFFloat (0.005)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "shadowMapSize",   new Fields .SFInt32 (1024)),
       ]),
       enumerable: true,
    },

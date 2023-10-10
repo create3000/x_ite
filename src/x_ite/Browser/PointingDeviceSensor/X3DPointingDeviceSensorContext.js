@@ -390,7 +390,7 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
          options .push (`X3D_NUM_DISPLACEMENTS ${humanoidNode .getNumDisplacements ()}`);
       }
 
-      const shaderNode = this .createShader ("PointingShader", "Pointing", "Pointing", options);
+      const shaderNode = this .createShader ("Pointing", "Pointing", "Pointing", options);
 
       this [_pointingShaders] .set (key, shaderNode);
 

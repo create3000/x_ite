@@ -82,6 +82,7 @@ import Utils2                 from "../../../assets/shaders/webgl2/common/Utils2
 import Vertex2                from "../../../assets/shaders/webgl2/common/Vertex2.glsl.js";
 
 /* WebGL 1 */
+import FullScreenVertex1      from "../../../assets/shaders/webgl1/FullScreen1.vs.js";
 import DefaultVertex1         from "../../../assets/shaders/webgl1/Default1.vs.js";
 import DepthFragment1         from "../../../assets/shaders/webgl1/Depth1.fs.js";
 import DepthVertex1           from "../../../assets/shaders/webgl1/Depth1.vs.js";
@@ -111,6 +112,7 @@ import UnlitFragment2         from "../../../assets/shaders/webgl2/Unlit2.fs.js"
 
 /* PBR 1 */
 import BDRF1                  from "../../../assets/shaders/webgl1/pbr/BDRF1.glsl.js";
+import IBL1                   from "../../../assets/shaders/webgl1/pbr/IBL1.glsl.js";
 import Punctual1              from "../../../assets/shaders/webgl1/pbr/Punctual1.glsl.js";
 import MaterialInfo1          from "../../../assets/shaders/webgl1/pbr/MaterialInfo1.glsl.js";
 import ToneMapping1           from "../../../assets/shaders/webgl1/pbr/ToneMapping1.glsl.js";
@@ -141,6 +143,7 @@ const ShaderRegistry = {
          Vertex: Vertex1,
          // PBR
          BDRF: BDRF1,
+         IBL: IBL1,
          MaterialInfo: MaterialInfo1,
          Punctual: Punctual1,
          ToneMapping: ToneMapping1,
@@ -176,6 +179,7 @@ const ShaderRegistry = {
       1: {
          Default: DefaultVertex1,
          Depth: DepthVertex1,
+         FullScreen: FullScreenVertex1,
          Gouraud: GouraudVertex1,
          Pointing: PointingVertex1,
       },

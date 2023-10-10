@@ -65,15 +65,13 @@ Object .assign (Object .setPrototypeOf (VolumeMaterial .prototype, UnlitMaterial
    },
    getShader (geometryContext, renderContext)
    {
-      const { fogNode, objectsCount } = renderContext;
+      const { fogNode, objectsKeys } = renderContext;
 
       let key = "";
 
       key += fogNode ?.getFogType () ?? 0;
       key += ".";
-      key += objectsCount [0]; // Clip planes
-      key += ".";
-      key += objectsCount [1]; // Lights
+      key += objectsKeys .sort () .join (""); // ClipPlane, X3DLightNode
 
       return this .volumeShaderNodes .get (key) ?? this .createShader (key, geometryContext, renderContext);
    },
@@ -83,7 +81,7 @@ Object .assign (Object .setPrototypeOf (VolumeMaterial .prototype, UnlitMaterial
          browser = this .getBrowser (),
          options = [ ];
 
-      const { fogNode, objectsCount } = renderContext;
+      const { fogNode, objectsKeys } = renderContext;
 
       switch (fogNode ?.getFogType ())
       {
@@ -95,16 +93,22 @@ Object .assign (Object .setPrototypeOf (VolumeMaterial .prototype, UnlitMaterial
             break;
       }
 
-      if (objectsCount [0])
+      const
+         numClipPlanes        = objectsKeys .reduce ((a, c) => a + (c === 0), 0),
+         numLights            = objectsKeys .reduce ((a, c) => a + (c === 1), 0),
+         numEnvironmentLights = objectsKeys .reduce ((a, c) => a + (c === 2), 0),
+         numTextureProjectors = objectsKeys .reduce ((a, c) => a + (c === 3), 0);
+
+      if (numClipPlanes)
       {
          options .push ("X3D_CLIP_PLANES")
-         options .push (`X3D_NUM_CLIP_PLANES ${Math .min (objectsCount [0], browser .getMaxClipPlanes ())}`);
+         options .push (`X3D_NUM_CLIP_PLANES ${Math .min (numClipPlanes, browser .getMaxClipPlanes ())}`);
       }
 
-      if (objectsCount [1])
+      if (numLights)
       {
          options .push ("X3D_LIGHTING")
-         options .push (`X3D_NUM_LIGHTS ${Math .min (objectsCount [1], browser .getMaxLights ())}`);
+         options .push (`X3D_NUM_LIGHTS ${Math .min (numLights, browser .getMaxLights ())}`);
       }
 
       const shaderNode = this .volumeDataNode .createShader (options, vs, fs);

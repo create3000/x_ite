@@ -449,8 +449,14 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
 
             clipPlanes .length = c;
 
-            this .sphereContext   .objectsCount [0] = clipPlanes .length;
-            this .texturesContext .objectsCount [0] = clipPlanes .length;
+            for (let i = 0; i < c; ++ i)
+            {
+               this .sphereContext   .objectsKeys [i] = 0;
+               this .texturesContext .objectsKeys [i] = 0;
+            }
+
+            this .sphereContext   .objectsKeys .length = c;
+            this .texturesContext .objectsKeys .length = c;
             return;
          }
       }

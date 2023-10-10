@@ -62,7 +62,6 @@ function X3DGroupingNode (executionContext)
    this .clipPlaneNodes            = [ ];
    this .localFogNodes             = [ ];
    this .lightNodes                = [ ];
-   this .textureProjectorNodes     = [ ];
    this .pointingDeviceSensorNodes = [ ];
    this .maybeCameraObjects        = [ ];
    this .cameraObjects             = [ ];
@@ -184,7 +183,6 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
       this .clipPlaneNodes            .length = 0;
       this .localFogNodes             .length = 0;
       this .lightNodes                .length = 0;
-      this .textureProjectorNodes     .length = 0;
       this .pointingDeviceSensorNodes .length = 0;
       this .maybeCameraObjects        .length = 0;
       this .maybePickableSensorNodes  .length = 0;
@@ -224,11 +222,6 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
                case X3DConstants .LocalFog:
                {
                   this .localFogNodes .push (childNode);
-                  break;
-               }
-               case X3DConstants .X3DTextureProjectorNode:
-               {
-                  this .textureProjectorNodes .push (childNode);
                   break;
                }
                case X3DConstants .X3DLightNode:
@@ -350,15 +343,6 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
 
                   if (index >= 0)
                      this .localFogNodes .splice (index, 1);
-
-                  break;
-               }
-               case X3DConstants .X3DTextureProjectorNode:
-               {
-                  const index = this .textureProjectorNodes .indexOf (childNode);
-
-                  if (index >= 0)
-                     this .textureProjectorNodes .splice (index, 1);
 
                   break;
                }
@@ -511,9 +495,6 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
          displayNodes .push (node);
 
       for (const node of this .lightNodes)
-         displayNodes .push (node);
-
-      for (const node of this .textureProjectorNodes)
          displayNodes .push (node);
    },
    set_displays_ ()

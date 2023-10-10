@@ -229,13 +229,20 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
                options .push ("X3D_OCCLUSION_TEXTURE", `X3D_OCCLUSION_TEXTURE_${this .occlusionTextureNode .getTextureTypeString ()}`);
          }
 
-         switch (this .getMaterialKey (renderContext && renderContext .shadows))
+         switch (this .getMaterialKey ())
          {
             case "1":
-               var shaderNode = browser .createShader ("GouraudShader", "Gouraud", "Gouraud", options);
-               break;
+            {
+               if (!renderContext ?.shadows)
+               {
+                  var shaderNode = browser .createShader ("Gouraud", "Gouraud", "Gouraud", options);
+                  break;
+               }
+
+               // Proceed with next case:
+            }
             case "2":
-               var shaderNode = browser .createShader ("PhongShader", "Default", "Phong", options);
+               var shaderNode = browser .createShader ("Phong", "Default", "Phong", options);
                break;
          }
       }
@@ -243,7 +250,7 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
       {
          options .push ("X3D_UNLIT_MATERIAL");
 
-         var shaderNode = browser .createShader ("UnlitShader", "Default", "Unlit", options);
+         var shaderNode = browser .createShader ("Unlit", "Default", "Unlit", options);
 
          browser .getShaders () .set (key .replace (/^(\d{1,2})\d*/, "$1") .replace (/\d$/, "0"), shaderNode);
       }
@@ -338,21 +345,14 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
    },
 });
 
-function getMaterialKey (shadows)
+function getMaterialKey ()
 {
-   if (shadows || +this .getTextureBits ())
+   switch (this .getBrowser () .getBrowserOptions () .getShading ())
    {
-      return "2";
-   }
-   else
-   {
-      switch (this .getBrowser () .getBrowserOptions () .getShading ())
-      {
-         default:
-            return "1";
-         case Shading .PHONG:
-            return "2";
-      }
+      default:
+         return "1";
+      case Shading .PHONG:
+         return "2";
    }
 }
 

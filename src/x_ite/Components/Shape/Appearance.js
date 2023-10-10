@@ -110,10 +110,6 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
    {
       return this .alphaMode;
    },
-   getNormalizedAlphaMode (transparent)
-   {
-      return this .alphaMode || (transparent ? AlphaMode .BLEND : AlphaMode .OPAQUE);
-   },
    getAlphaCutoff ()
    {
       return this .alphaCutoff;
@@ -384,31 +380,15 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
    },
    set_transparent__ ()
    {
-      switch (this .alphaMode)
-      {
-         case AlphaMode .AUTO:
-            this .setTransparent (!!(this .stylePropertiesNode [3] ?.isTransparent () ||
-                                     this .materialNode ?.isTransparent () ||
-                                     this .backMaterialNode ?.isTransparent () ||
-                                     this .textureNode ?.isTransparent () ||
-                                     this .blendModeNode));
-            break;
-         case AlphaMode .OPAQUE:
-            this .setTransparent (false);
-            break;
-         case AlphaMode .MASK:
-            // Alpha testing using alphaCutoff.
-            this .setTransparent (false);
-            break;
-         case AlphaMode .BLEND:
-            this .setTransparent (true);
-            break;
-      }
+      this .setTransparent (!!(this .stylePropertiesNode [3] ?.isTransparent () ||
+                               this .materialNode ?.isTransparent () ||
+                               this .backMaterialNode ?.isTransparent () ||
+                               this .textureNode ?.isTransparent () ||
+                               this .blendModeNode));
    },
    traverse (type, renderObject)
    {
-      if (this .textureNode)
-         this .textureNode .traverse (type, renderObject);
+      this .textureNode ?.traverse (type, renderObject);
    },
 });
 

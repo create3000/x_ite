@@ -75,46 +75,48 @@ function TextureProjectorContainer ()
 
 Object .assign (TextureProjectorContainer .prototype,
 {
-   set (textureProjectorNode, modelViewMatrix)
+   set (lightNode, groupNode, modelViewMatrix)
    {
-      this .browser              = textureProjectorNode .getBrowser ();
-      this .textureProjectorNode = textureProjectorNode;
+      this .browser   = lightNode .getBrowser ();
+      this .lightNode = lightNode;
 
       this .modelViewMatrix .assign (modelViewMatrix);
    },
+   renderShadowMap (renderObject)
+   { },
    setGlobalVariables (renderObject)
    {
       const
-         textureProjectorNode  = this .textureProjectorNode,
+         lightNode             = this .lightNode,
          cameraSpaceMatrix     = renderObject .getCameraSpaceMatrix () .get (),
          modelMatrix           = this .modelMatrix .assign (this .modelViewMatrix) .multRight (cameraSpaceMatrix),
-         invTextureSpaceMatrix = this .invTextureSpaceMatrix .assign (textureProjectorNode .getGlobal () ? modelMatrix : Matrix4 .Identity);
+         invTextureSpaceMatrix = this .invTextureSpaceMatrix .assign (lightNode .getGlobal () ? modelMatrix : Matrix4 .Identity);
 
-      this .rotation .setFromToVec (Vector3 .zAxis, this .direction .assign (textureProjectorNode .getDirection ()) .negate ());
-      textureProjectorNode .straightenHorizon (this .rotation);
+      this .rotation .setFromToVec (Vector3 .zAxis, this .direction .assign (lightNode .getDirection ()) .negate ());
+      lightNode .straightenHorizon (this .rotation);
 
-      invTextureSpaceMatrix .translate (textureProjectorNode .getLocation ());
+      invTextureSpaceMatrix .translate (lightNode .getLocation ());
       invTextureSpaceMatrix .rotate (this .rotation);
       invTextureSpaceMatrix .inverse ();
 
       const
-         width        = textureProjectorNode .getTexture () .getWidth (),
-         height       = textureProjectorNode .getTexture () .getHeight (),
-         nearDistance = textureProjectorNode .getNearDistance (),
-         farDistance  = textureProjectorNode .getFarDistance (),
-         fieldOfView  = textureProjectorNode .getFieldOfView ();
+         width        = lightNode .getTexture () .getWidth (),
+         height       = lightNode .getTexture () .getHeight (),
+         nearDistance = lightNode .getNearDistance (),
+         farDistance  = lightNode .getFarDistance (),
+         fieldOfView  = lightNode .getFieldOfView ();
 
       Camera .perspective (fieldOfView, nearDistance, farDistance, width, height, this .projectionMatrix);
 
-      if (! textureProjectorNode .getGlobal ())
+      if (! lightNode .getGlobal ())
          invTextureSpaceMatrix .multLeft (modelMatrix .inverse ());
 
-      this .invTextureSpaceProjectionMatrix .assign (invTextureSpaceMatrix) .multRight (this .projectionMatrix) .multRight (textureProjectorNode .getBiasMatrix ());
+      this .invTextureSpaceProjectionMatrix .assign (invTextureSpaceMatrix) .multRight (this .projectionMatrix) .multRight (lightNode .getBiasMatrix ());
 
       this .projectiveTextureMatrix .assign (cameraSpaceMatrix) .multRight (this .invTextureSpaceProjectionMatrix);
       this .projectiveTextureMatrixArray .set (this .projectiveTextureMatrix);
 
-      this .modelViewMatrix .multVecMatrix (this .location .assign (textureProjectorNode ._location .getValue ()));
+      this .modelViewMatrix .multVecMatrix (this .location .assign (lightNode ._location .getValue ()));
       this .locationArray .set (this .location);
    },
    setShaderUniforms (gl, shaderObject, renderObject)
@@ -125,11 +127,11 @@ Object .assign (TextureProjectorContainer .prototype,
          return;
 
       const
-         texture     = this .textureProjectorNode .getTexture (),
+         texture     = this .lightNode .getTexture (),
          textureUnit = this .browser .getTexture2DUnit ();
 
       gl .activeTexture (gl .TEXTURE0 + textureUnit);
-      gl .bindTexture (gl .TEXTURE_2D, texture .getTexture ());
+      gl .bindTexture (gl .TEXTURE_2D, texture ?.getTexture () ?? this .browser .getDefaultTexture2DWhite ());
       gl .uniform1i (shaderObject .x3d_ProjectiveTexture [i], textureUnit);
 
       gl .uniformMatrix4fv (shaderObject .x3d_ProjectiveTextureMatrix [i], false, this .projectiveTextureMatrixArray);
@@ -162,7 +164,7 @@ Object .assign (Object .setPrototypeOf (TextureProjector .prototype, X3DTextureP
 
       return fov > 0 && fov < Math .PI ? fov : Math .PI / 4;
    },
-   getTextureProjectors ()
+   getLights ()
    {
       return TextureProjectorCache;
    },
@@ -193,18 +195,28 @@ Object .defineProperties (TextureProjector,
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",     new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "description",  new Fields .SFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "on",           new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "global",       new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "location",     new Fields .SFVec3f (0, 0, 0)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "direction",    new Fields .SFVec3f (0, 0, 1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "upVector",     new Fields .SFVec3f (0, 0, 1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "fieldOfView",  new Fields .SFFloat (0.785398)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "nearDistance", new Fields .SFFloat (-1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "farDistance",  new Fields .SFFloat (-1)),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "aspectRatio",  new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "texture",      new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",         new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "description",      new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "global",           new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "on",               new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "color",            new Fields .SFColor (1, 1, 1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "intensity",        new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "ambientIntensity", new Fields .SFFloat ()),
+
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "location",         new Fields .SFVec3f (0, 0, 0)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "direction",        new Fields .SFVec3f (0, 0, 1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "upVector",         new Fields .SFVec3f (0, 0, 1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "fieldOfView",      new Fields .SFFloat (0.785398)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "nearDistance",     new Fields .SFFloat (-1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "farDistance",      new Fields .SFFloat (-1)),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "aspectRatio",      new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "texture",          new Fields .SFNode ()),
+
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "shadows",          new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowColor",      new Fields .SFColor ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowIntensity",  new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowBias",       new Fields .SFFloat (0.005)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "shadowMapSize",    new Fields .SFInt32 (1024)),
       ]),
       enumerable: true,
    },

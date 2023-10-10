@@ -99,10 +99,10 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
 
       if (renderContext)
       {
-         const { renderObject, transparent, shadows, fogNode, shapeNode, appearanceNode, textureNode, humanoidNode, objectsCount } = renderContext;
+         const { renderObject, shadows, fogNode, shapeNode, appearanceNode, textureNode, humanoidNode, objectsKeys } = renderContext;
 
-         key += appearanceNode .getNormalizedAlphaMode (transparent);
-         key += this .getMaterialKey (shadows);
+         key += shapeNode .getAlphaMode ();
+         key += this .getMaterialKey ();
          key += renderObject .getLogarithmicDepthBuffer () ? 1 : 0;
          key += shadows ? 1 : 0;
          key += fogNode ?.getFogType () ?? 0;
@@ -113,28 +113,20 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
          key += ".";
          key += humanoidNode ?.getHumanoidKey () ?? "";
          key += ".";
-         key += objectsCount [0]; // Clip planes
-         key += ".";
-         key += objectsCount [1]; // Lights
-         key += ".";
-         key += objectsCount [2]; // Texture projectors
+         key += objectsKeys .sort () .join (""); // ClipPlane, X3DLightNode
          key += ".";
          key += textureNode ? 1 : appearanceNode .getTextureBits () .toString (4);
       }
       else
       {
-         // Rubberband, X3DBackgroundNode
+         // Rubberband, X3DBackgroundNode, ParticleSystem
 
-         const { textureNode, objectsCount } = geometryContext;
+         const { alphaMode, textureNode, objectsKeys } = geometryContext;
 
-         key += geometryContext .alphaMode;
+         key += alphaMode;
          key += this .getMaterialKey (false);
          key += "0000011.0.";
-         key += objectsCount [0]; // Clip planes
-         key += ".";
-         key += objectsCount [1]; // Lights
-         key += ".";
-         key += objectsCount [2]; // Texture projectors
+         key += objectsKeys .sort () .join (""); // ClipPlane, X3DLightNode
          key += ".";
          key += textureNode ? 1 : 0;
       }
@@ -160,12 +152,12 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
 
       if (renderContext)
       {
-         const { renderObject, fogNode, shapeNode, appearanceNode, humanoidNode, objectsCount } = renderContext;
+         const { renderObject, fogNode, shapeNode, appearanceNode, humanoidNode, objectsKeys } = renderContext;
 
          if (renderObject .getLogarithmicDepthBuffer ())
             options .push ("X3D_LOGARITHMIC_DEPTH_BUFFER");
 
-         switch (appearanceNode .getNormalizedAlphaMode (renderContext .transparent))
+         switch (shapeNode .getAlphaMode ())
          {
             case AlphaMode .OPAQUE:
             {
@@ -208,22 +200,34 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
             options .push (`X3D_NUM_DISPLACEMENTS ${humanoidNode .getNumDisplacements ()}`);
          }
 
-         if (objectsCount [0])
+         const
+            numClipPlanes        = objectsKeys .reduce ((a, c) => a + (c === 0), 0),
+            numLights            = objectsKeys .reduce ((a, c) => a + (c === 1), 0),
+            numEnvironmentLights = objectsKeys .reduce ((a, c) => a + (c === 2), 0),
+            numTextureProjectors = objectsKeys .reduce ((a, c) => a + (c === 3), 0);
+
+         if (numClipPlanes)
          {
             options .push ("X3D_CLIP_PLANES")
-            options .push (`X3D_NUM_CLIP_PLANES ${Math .min (objectsCount [0], browser .getMaxClipPlanes ())}`);
+            options .push (`X3D_NUM_CLIP_PLANES ${Math .min (numClipPlanes, browser .getMaxClipPlanes ())}`);
          }
 
-         if (objectsCount [1])
+         if (numLights)
          {
             options .push ("X3D_LIGHTING")
-            options .push (`X3D_NUM_LIGHTS ${Math .min (objectsCount [1], browser .getMaxLights ())}`);
+            options .push (`X3D_NUM_LIGHTS ${Math .min (numLights, browser .getMaxLights ())}`);
          }
 
-         if (objectsCount [2])
+         if (numEnvironmentLights)
+         {
+            options .push ("X3D_USE_IBL")
+            options .push (`X3D_NUM_ENVIRONMENT_LIGHTS ${Math .min (numEnvironmentLights, browser .getMaxLights ())}`);
+         }
+
+         if (numTextureProjectors)
          {
             options .push ("X3D_PROJECTIVE_TEXTURE_MAPPING")
-            options .push (`X3D_NUM_TEXTURE_PROJECTORS ${Math .min (objectsCount [2], browser .getMaxTextures ())}`);
+            options .push (`X3D_NUM_TEXTURE_PROJECTORS ${Math .min (numTextureProjectors, browser .getMaxTextures ())}`);
          }
 
          if (appearanceNode .getStyleProperties (geometryContext .geometryType))
@@ -278,7 +282,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
       }
       else
       {
-         const { alphaMode, textureNode, objectsCount } = geometryContext;
+         const { alphaMode, textureNode, objectsKeys } = geometryContext;
 
          switch (alphaMode)
          {
@@ -303,22 +307,34 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
             }
          }
 
-         if (objectsCount [0])
+         const
+            numClipPlanes        = objectsKeys .reduce ((a, c) => a + (c === 0), 0),
+            numLights            = objectsKeys .reduce ((a, c) => a + (c === 1), 0),
+            numEnvironmentLights = objectsKeys .reduce ((a, c) => a + (c === 2), 0),
+            numTextureProjectors = objectsKeys .reduce ((a, c) => a + (c === 3), 0);
+
+         if (numClipPlanes)
          {
             options .push ("X3D_CLIP_PLANES")
-            options .push (`X3D_NUM_CLIP_PLANES ${Math .min (objectsCount [0], browser .getMaxClipPlanes ())}`);
+            options .push (`X3D_NUM_CLIP_PLANES ${Math .min (numClipPlanes, browser .getMaxClipPlanes ())}`);
          }
 
-         if (objectsCount [1])
+         if (numLights)
          {
             options .push ("X3D_LIGHTING")
-            options .push (`X3D_NUM_LIGHTS ${Math .min (objectsCount [1], browser .getMaxLights ())}`);
+            options .push (`X3D_NUM_LIGHTS ${Math .min (numLights, browser .getMaxLights ())}`);
          }
 
-         if (objectsCount [2])
+         if (numEnvironmentLights)
+         {
+            options .push ("X3D_USE_IBL")
+            options .push (`X3D_NUM_ENVIRONMENT_LIGHTS ${Math .min (numEnvironmentLights, browser .getMaxLights ())}`);
+         }
+
+         if (numTextureProjectors)
          {
             options .push ("X3D_PROJECTIVE_TEXTURE_MAPPING")
-            options .push (`X3D_NUM_TEXTURE_PROJECTORS ${Math .min (objectsCount [2], browser .getMaxTextures ())}`);
+            options .push (`X3D_NUM_TEXTURE_PROJECTORS ${Math .min (numTextureProjectors, browser .getMaxTextures ())}`);
          }
 
          if (textureNode)

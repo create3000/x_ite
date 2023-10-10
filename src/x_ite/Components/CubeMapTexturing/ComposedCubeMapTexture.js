@@ -166,6 +166,8 @@ Object .assign (Object .setPrototypeOf (ComposedCubeMapTexture .prototype, X3DEn
                width       = textureNode .getWidth (),
                height      = textureNode .getHeight ();
 
+            this .setSize (width);
+
             // Copy color texture.
 
             switch (textureNode .getType () .at (-1))

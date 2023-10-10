@@ -45,7 +45,7 @@
  *
  ******************************************************************************/
 
-import X3DChildNode from "../Core/X3DChildNode.js";
+import X3DLightNode from "../Lighting/X3DLightNode.js";
 import X3DConstants from "../../Base/X3DConstants.js";
 import X3DCast      from "../../Base/X3DCast.js";
 import Vector3      from "../../../standard/Math/Numbers/Vector3.js";
@@ -54,7 +54,7 @@ import Matrix4      from "../../../standard/Math/Numbers/Matrix4.js";
 
 function X3DTextureProjectorNode (executionContext)
 {
-   X3DChildNode .call (this, executionContext);
+   X3DLightNode .call (this, executionContext);
 
    this .addType (X3DConstants .X3DTextureProjectorNode);
 
@@ -63,16 +63,19 @@ function X3DTextureProjectorNode (executionContext)
    this ._location    .setUnit ("length");
 }
 
-Object .assign (Object .setPrototypeOf (X3DTextureProjectorNode .prototype, X3DChildNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DTextureProjectorNode .prototype, X3DLightNode .prototype),
 {
    initialize ()
    {
-      X3DChildNode .prototype .initialize .call (this);
+      X3DLightNode .prototype .initialize .call (this);
 
-      this ._on      .addInterest ("set_on__",      this);
       this ._texture .addInterest ("set_texture__", this);
 
       this .set_texture__ ();
+   },
+   getLightKey ()
+   {
+      return 3;
    },
    getGlobal ()
    {
@@ -143,67 +146,22 @@ Object .assign (Object .setPrototypeOf (X3DTextureProjectorNode .prototype, X3DC
          return orientation .multRight (rotation);
       };
    })(),
-   set_on__ ()
-   {
-      if (this ._on .getValue () && this .textureNode)
-      {
-         delete this .push;
-         delete this .pop;
-      }
-      else
-      {
-         this .push = Function .prototype;
-         this .pop  = Function .prototype;
-      }
-   },
    set_texture__ ()
    {
-      if (this .textureNode)
-         this .textureNode .removeInterest ("set_aspectRatio__", this);
+      this .textureNode ?.removeInterest ("set_aspectRatio__", this);
 
       this .textureNode = X3DCast (X3DConstants .X3DTexture2DNode, this ._texture);
 
-      if (this .textureNode)
-         this .textureNode .addInterest ("set_aspectRatio__", this);
+      this .textureNode ?.addInterest ("set_aspectRatio__", this);
 
       this .set_aspectRatio__ ();
-      this .set_on__ ();
    },
    set_aspectRatio__ ()
    {
       if (this .textureNode)
          this ._aspectRatio = this .textureNode .getWidth () / this .textureNode .getHeight ();
       else
-         this ._aspectRatio = 0;
-   },
-   push (renderObject)
-   {
-      const textureProjectorContainer = this .getTextureProjectors () .pop ();
-
-      textureProjectorContainer .set (this,
-                                      renderObject .getModelViewMatrix () .get ());
-
-      if (this ._global .getValue ())
-      {
-         renderObject .getGlobalObjects ()     .push (textureProjectorContainer);
-         renderObject .getTextureProjectors () .push (textureProjectorContainer);
-      }
-      else
-      {
-         renderObject .getLocalObjects ()      .push (textureProjectorContainer);
-         renderObject .getTextureProjectors () .push (textureProjectorContainer);
-
-         ++ renderObject .getLocalObjectsCount () [2];
-      }
-   },
-   pop (renderObject)
-   {
-      if (this ._global .getValue ())
-         return;
-
-      renderObject .getLocalObjects () .pop ();
-
-      -- renderObject .getLocalObjectsCount () [2];
+         this ._aspectRatio = 1;
    },
 });
 

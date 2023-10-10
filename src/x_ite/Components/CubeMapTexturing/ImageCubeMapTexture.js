@@ -150,12 +150,12 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
 
       try
       {
-         const ratio = this .image .prop ("height") / this .image .prop ("width");
+         const aspectRatio = this .image .prop ("width") / this .image .prop ("height");
 
-         if (Math .abs (ratio - 3/4) < 0.01)
+         if (Math .abs (aspectRatio - 4/3) < 0.01)
             this .skyBoxToCubeMap ();
 
-         if (Math .abs (ratio - 1/2) < 0.01)
+         if (Math .abs (aspectRatio - 2/1) < 0.01)
             this .panoramaToCubeMap ();
 
          this .updateTextureParameters ();
@@ -177,8 +177,8 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
          new Vector2 (3, 1), // Back
          new Vector2 (0, 1), // Left
          new Vector2 (2, 1), // Right
-         new Vector2 (1, 0), // Bottom, must be exchanged with top
-         new Vector2 (1, 2), // Top, must be exchanged with bottom
+         new Vector2 (1, 0), // Top
+         new Vector2 (1, 2), // Bottom
       ];
 
       //     -----
@@ -228,7 +228,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
 
          const gl = this .getBrowser () .getContext ();
 
-         let opaque = true;
+         let transparent = false;
 
          gl .bindTexture (this .getTarget (), this .getTexture ());
 
@@ -238,26 +238,18 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
 
             // Determine image alpha.
 
-            if (opaque)
-            {
-               for (let a = 3; a < data .length; a += 4)
-               {
-                  if (data [a] !== 255)
-                  {
-                     opaque = false;
-                     break;
-                  }
-               }
-            }
+            if (!transparent)
+               transparent = this .isImageTransparent (data);
 
             // Transfer image.
 
             gl .texImage2D (this .getTargets () [i], 0, gl .RGBA, width1_4, height1_3, false, gl .RGBA, gl .UNSIGNED_BYTE, new Uint8Array (data .buffer));
          }
 
-         // Update transparent field.
+         // Update size and transparent field.
 
-         this .setTransparent (!opaque);
+         this .setTransparent (transparent);
+         this .setSize (width1_4);
       };
    })(),
    panoramaToCubeMap ()
@@ -304,6 +296,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
       gl .enable (gl .CULL_FACE);
       gl .frontFace (gl .CCW);
       gl .clearColor (0, 0, 0, 0);
+      gl .bindVertexArray (browser .getFullscreenVertexArrayObject ());
 
       for (let i = 0; i < 6; ++ i)
       {
@@ -334,20 +327,10 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
 
       const data = cx .getImageData (0, 0, image .width, image .height) .data;
 
-      let opaque = false;
+      // Update size and transparent field.
 
-      for (let a = 3; a < data .length; a += 4)
-      {
-         if (data [a] !== 255)
-         {
-            opaque = false;
-            break;
-         }
-      }
-
-      // Update transparent field.
-
-      this .setTransparent (!opaque);
+      this .setTransparent (this .isImageTransparent (data));
+      this .setSize (cubeMapSize);
    },
    dispose ()
    {

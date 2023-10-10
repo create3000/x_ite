@@ -185,13 +185,13 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
                options .push ("X3D_OCCLUSION_TEXTURE", `X3D_OCCLUSION_TEXTURE_${this .occlusionTextureNode .getTextureTypeString ()}`);
          }
 
-         var shaderNode = browser .createShader ("PBRShader", "Default", "PBR", options);
+         var shaderNode = browser .createShader ("PBR", "Default", "PBR", options);
       }
       else
       {
          options .push ("X3D_UNLIT_MATERIAL");
 
-         var shaderNode = browser .createShader ("UnlitShader", "Default", "Unlit", options);
+         var shaderNode = browser .createShader ("Unlit", "Default", "Unlit", options);
 
          browser .getShaders () .set (key .replace (/^(\d{1,2})\d*/, "$1") .replace (/\d$/, "0"), shaderNode);
       }

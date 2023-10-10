@@ -78,6 +78,7 @@ function GLTF2Parser (scene)
 
    this .extensions            = new Set ();
    this .lights                = [ ];
+   this .envLights             = [ ];
    this .usedLights            = 0;
    this .buffers               = [ ];
    this .bufferViews           = [ ];
@@ -278,6 +279,15 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
          switch (extension)
          {
+            case "EXT_lights_image_based":
+            {
+               const component = browser .getComponent ("CubeMapTexturing", 3);
+
+               if (!scene .hasComponent (component))
+                  scene .addComponent (component);
+
+               break;
+            }
             case "KHR_texture_transform":
             {
                const component = browser .getComponent ("Texturing3D", 2);
@@ -301,6 +311,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          {
             case "KHR_lights_punctual":
                return this .khrLightsPunctualObject (value);
+            case "EXT_lights_image_based":
+               return this .khrLightsImageBased (value);
          }
       }
    },
@@ -322,6 +334,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    {
       if (!(light instanceof Object))
          return null;
+
+      if (light .node)
+         return light .node;
 
       const lightNode = this .lightType (light);
 
@@ -348,7 +363,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          scene .addExportedNode (scene .getUniqueExportName (name), lightNode);
       }
 
-      return lightNode;
+      return light .node = lightNode;
    },
    lightType (light)
    {
@@ -393,6 +408,71 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       lightNode ._attenuation = new Vector3 (0, 0, 1);
 
       return lightNode;
+   },
+   khrLightsImageBased (EXT_lights_image_based)
+   {
+      if (!(KHR_lights_punctual instanceof Object))
+         return;
+
+      this .envLightsArray (EXT_lights_image_based .lights);
+   },
+   envLightsArray (lights)
+   {
+      if (!(lights instanceof Array))
+         return;
+
+      this .envLights = lights;
+   },
+   envLightObject (light)
+   {
+      if (!(light instanceof Object))
+         return null;
+
+      if (light .node)
+         return light .node;
+
+      const
+         scene      = this .getExecutionContext (),
+         lightNode  = scene .createNode ("EnvironmentLight", false),
+         quaternion = new Quaternion (0, 0, 0, 1);
+
+      lightNode ._intensity = this .numberValue (light .intensity, 1);
+
+      if (this .vectorValue (lightNode .rotation, quaternion))
+         lightNode ._rotation = new Rotation4 (quaternion);
+
+      if (light .irradianceCoefficients instanceof Array)
+         lightNode ._diffuseCoefficients = light .irradianceCoefficients;
+
+      if (light .specularImages instanceof Array)
+      {
+         const
+            specularTexture = scene .createNode ("ComposedCubeMapTexture"),
+            baseImages      = light .specularImages [0];
+
+         if (baseImages instanceof Array)
+         {
+            const faces = ["right", "left", "top", "bottom", "front", "back"];
+
+            for (const [i, image] of baseImages)
+            {
+               const texture = scene .createNode ("ImageTexture", false);
+
+               texture ._url = this .images [image] ? [this .images [image] .uri] : [ ];
+               texture .setup ();
+
+               specularTexture [`_${faces [i]}Texture`] = texture;
+            }
+
+            specularTexture .setup ();
+
+            lightNode ._specularTexture = specularTexture;
+         }
+      }
+
+      lightNode .setup ();
+
+      return light .node = lightNode;
    },
    buffersArray: async function (buffers)
    {
@@ -1882,7 +1962,12 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       if (!(scene instanceof Object))
          return null;
 
-      const nodes = this .sceneNodesArray (scene .nodes);
+      const
+         lightNode = this .envLightObject (this .envLights [scene .extensions ?.EXT_lights_image_based ?.light]),
+         nodes     = this .sceneNodesArray (scene .nodes);
+
+      if (lightNode)
+         nodes .unshift (lightNode);
 
       switch (nodes .length)
       {
@@ -2075,6 +2160,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       appearanceNode ._alphaMode = "OPAQUE";
       appearanceNode ._material  = materialNode;
+
+      if (mode)
+         materialNode ._metallic = 0;
 
       materialNode   .setup ();
       appearanceNode .setup ();

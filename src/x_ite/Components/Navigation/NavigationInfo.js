@@ -288,7 +288,7 @@ Object .assign (Object .setPrototypeOf (NavigationInfo .prototype, X3DBindableNo
          return;
 
       if (this ._headlight .getValue ())
-         renderObject .getGlobalObjects () .push (this .getBrowser () .getHeadlight ());
+         renderObject .getGlobalLights () .push (this .getBrowser () .getHeadlight ());
    },
    traverse (type, renderObject)
    {

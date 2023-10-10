@@ -89,8 +89,8 @@ function X3DProgrammableShaderObject (executionContext)
    this .x3d_TexCoord                            = [ ];
    this .x3d_TextureMatrix                       = [ ];
 
-   this .numClipPlanes               = 0;
    this .fogNode                     = null;
+   this .numClipPlanes               = 0;
    this .numLights                   = 0;
    this .numGlobalLights             = 0;
    this .lightNodes                  = [ ];
@@ -103,17 +103,7 @@ function X3DProgrammableShaderObject (executionContext)
 Object .assign (X3DProgrammableShaderObject .prototype,
 {
    initialize ()
-   {
-      const browser = this .getBrowser ();
-
-      browser .getRenderingProperties () ._LogarithmicDepthBuffer .addInterest ("set_logarithmicDepthBuffer__", this);
-
-      this .set_logarithmicDepthBuffer__ ();
-   },
-   set_logarithmicDepthBuffer__ ()
-   {
-      this .logarithmicDepthBuffer = this .getBrowser () .getRenderingProperty ("LogarithmicDepthBuffer");
-   },
+   { },
    canUserDefinedFields ()
    {
       return true;
@@ -197,6 +187,15 @@ Object .assign (X3DProgrammableShaderObject .prototype,
          this .x3d_ShadowMapSize [i]   = gl .getUniformLocation (program, "x3d_LightSource[" + i + "].shadowMapSize");
          this .x3d_ShadowMap [i]       = gl .getUniformLocation (program, "x3d_ShadowMap[" + i + "]");
       }
+
+      this .x3d_EnvironmentLightColor            = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.color");
+      this .x3d_EnvironmentLightIntensity        = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.intensity");
+      this .x3d_EnvironmentLightAmbientIntensity = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.ambientIntensity");
+      this .x3d_EnvironmentLightRotation         = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.rotation");
+      this .x3d_EnvironmentLightDiffuseTexture   = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.diffuseTexture");
+      this .x3d_EnvironmentLightSpecularTexture  = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.specularTexture");
+      this .x3d_EnvironmentLightSpecularMipCount = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.specularMipCount");
+      this .x3d_EnvironmentLightGGXLUTTexture    = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.GGXLUTTexture");
 
       this .x3d_AmbientIntensity  = this .getUniformLocation (gl, program, "x3d_Material.ambientIntensity", "x3d_FrontMaterial.ambientIntensity");
       this .x3d_DiffuseColor      = this .getUniformLocation (gl, program, "x3d_Material.diffuseColor",     "x3d_FrontMaterial.diffuseColor");
@@ -357,6 +356,10 @@ Object .assign (X3DProgrammableShaderObject .prototype,
 
       for (const uniform of this .x3d_ShadowMap)
          gl .uniform1i (uniform, browser .getDefaultTexture2DUnit ());
+
+      gl .uniform1i (this .x3d_EnvironmentLightDiffuseTexture,  browser .getDefaultTextureCubeUnit ());
+      gl .uniform1i (this .x3d_EnvironmentLightSpecularTexture, browser .getDefaultTextureCubeUnit ());
+      gl .uniform1i (this .x3d_EnvironmentLightGGXLUTTexture,   browser .getDefaultTexture2DUnit ());
 
       for (const uniform of this .x3d_ProjectiveTexture)
          gl .uniform1i (uniform, browser .getDefaultTexture2DUnit ());
@@ -1012,21 +1015,19 @@ Object .assign (X3DProgrammableShaderObject .prototype,
             this .lightNodes .length             = 0;
             this .projectiveTextureNodes .length = 0;
 
-            const globalObjects = renderObject .getGlobalObjects ();
-
-            for (const globalObject of globalObjects)
-               globalObject .setShaderUniforms (gl, this, renderObject);
+            for (const globalLights of renderObject .getGlobalLights ())
+               globalLights .setShaderUniforms (gl, this, renderObject);
 
             this .numGlobalLights             = this .numLights;
             this .numGlobalProjectiveTextures = this .numProjectiveTextures;
 
             // Logarithmic depth buffer support
 
-            const viewpoint = renderObject .getViewpoint ();
-
-            if (this .logarithmicDepthBuffer || viewpoint .getLogarithmicDepthBuffer ())
+            if (renderObject .getLogarithmicDepthBuffer ())
             {
-               const navigationInfo = renderObject .getNavigationInfo ();
+               const
+                  viewpoint      = renderObject .getViewpoint (),
+                  navigationInfo = renderObject .getNavigationInfo ();
 
                gl .uniform1f (this .x3d_LogarithmicFarFactor1_2, 1 / Math .log2 (navigationInfo .getFarValue (viewpoint) + 1));
             }

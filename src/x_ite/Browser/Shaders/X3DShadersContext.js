@@ -152,7 +152,7 @@ Object .assign (X3DShadersContext .prototype,
    createShader (name, vs, fs = vs, options = [ ], uniformNames = [ ], transformFeedbackVaryings = [ ])
    {
       if (this .getBrowserOption ("Debug"))
-         console .info ("Initializing " + name);
+         console .info (`Initializing ${name}Shader`);
 
       const
          gl      = this .getContext (),
@@ -161,7 +161,7 @@ Object .assign (X3DShadersContext .prototype,
       const vertexShader = new ShaderPart (this .getPrivateScene ());
       vertexShader ._url .push (encodeURI (vs .startsWith ("data:") ? vs : "data:x-shader/x-vertex," + Shaders .vertex [version] [vs]));
       vertexShader .setPrivate (true);
-      vertexShader .setName (name + "Vertex");
+      vertexShader .setName (`${name}VertexShader`);
       vertexShader .setOptions (options);
       vertexShader .setup ();
 
@@ -169,7 +169,7 @@ Object .assign (X3DShadersContext .prototype,
       fragmentShader ._type  = "FRAGMENT";
       fragmentShader ._url .push (encodeURI (fs .startsWith ("data:") ? fs : "data:x-shader/x-fragment," + Shaders .fragment [version] [fs]));
       fragmentShader .setPrivate (true);
-      fragmentShader .setName (name + "Fragment");
+      fragmentShader .setName (`${name}FragmentShader`);
       fragmentShader .setOptions (options);
       fragmentShader .setup ();
 
@@ -178,7 +178,7 @@ Object .assign (X3DShadersContext .prototype,
       shaderNode ._parts .push (vertexShader);
       shaderNode ._parts .push (fragmentShader);
       shaderNode .setPrivate (true);
-      shaderNode .setName (name);
+      shaderNode .setName (`${name}Shader`);
       shaderNode .setUniformNames (uniformNames);
       shaderNode .setTransformFeedbackVaryings (transformFeedbackVaryings);
       shaderNode .setup ();

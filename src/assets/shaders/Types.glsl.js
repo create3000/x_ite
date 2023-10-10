@@ -35,6 +35,21 @@ struct x3d_LightSourceParameters {
 
 //uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];
 
+#if defined (X3D_USE_IBL)
+struct x3d_EnvironmentLightSourceParameters {
+   mediump vec3        color;
+   mediump float       intensity;
+   mediump float       ambientIntensity;
+   mediump mat3        rotation;
+   mediump samplerCube diffuseTexture;
+   mediump samplerCube specularTexture;
+   mediump int         specularMipCount;
+   mediump sampler2D   GGXLUTTexture;
+};
+#endif
+
+//uniform x3d_EnvironmentLightSourceParameters x3d_EnvironmentLightSource;
+
 #if defined (X3D_GEOMETRY_0D) && defined (X3D_STYLE_PROPERTIES)
 struct x3d_PointPropertiesParameters
 {

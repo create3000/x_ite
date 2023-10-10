@@ -15,13 +15,13 @@ uniform x3d_EnvironmentLightSourceParameters x3d_EnvironmentLightSource;
 vec3
 getDiffuseLight (const in vec3 n)
 {
-   return texture (x3d_EnvironmentLightSource .diffuseTexture, x3d_EnvironmentLightSource .rotation * n) .rgb * x3d_EnvironmentLightSource .color * x3d_EnvironmentLightSource .intensity;
+   return textureCube (x3d_EnvironmentLightSource .diffuseTexture, x3d_EnvironmentLightSource .rotation * n) .rgb * x3d_EnvironmentLightSource .color * x3d_EnvironmentLightSource .intensity;
 }
 
 vec3
 getSpecularLight (const in vec3 reflection, const in float lod)
 {
-   return textureLod (x3d_EnvironmentLightSource .specularTexture, x3d_EnvironmentLightSource .rotation * reflection, lod) .rgb * x3d_EnvironmentLightSource .color * x3d_EnvironmentLightSource .intensity;
+   return textureCubeLodEXT (x3d_EnvironmentLightSource .specularTexture, x3d_EnvironmentLightSource .rotation * reflection, lod) .rgb * x3d_EnvironmentLightSource .color * x3d_EnvironmentLightSource .intensity;
 }
 
 vec3
@@ -32,7 +32,7 @@ getIBLRadianceGGX (const in vec3 n, const in vec3 v, const in float roughness, c
    vec3  reflection = normalize (reflect (-v, n));
 
    vec2 brdfSamplePoint = clamp (vec2 (NdotV, roughness), vec2 (0.0), vec2 (1.0));
-   vec2 f_ab            = texture (x3d_EnvironmentLightSource .GGXLUTTexture, brdfSamplePoint) .rg;
+   vec2 f_ab            = texture2D (x3d_EnvironmentLightSource .GGXLUTTexture, brdfSamplePoint) .rg;
    vec3 specularLight   = getSpecularLight (reflection, lod);
 
    // see https://bruop.github.io/ibl/#single_scattering_results at Single Scattering Results
@@ -50,7 +50,7 @@ getIBLRadianceLambertian (const in vec3 n, const in vec3 v, const in float rough
 {
    float NdotV           = clamp (dot (n, v), 0.0, 1.0);
    vec2  brdfSamplePoint = clamp (vec2 (NdotV, roughness), vec2 (0.0), vec2 (1.0));
-   vec2  f_ab            = texture (x3d_EnvironmentLightSource .GGXLUTTexture, brdfSamplePoint) .rg;
+   vec2  f_ab            = texture2D (x3d_EnvironmentLightSource .GGXLUTTexture, brdfSamplePoint) .rg;
 
    vec3 irradiance = getDiffuseLight (n);
 

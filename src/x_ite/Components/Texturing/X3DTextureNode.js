@@ -69,6 +69,16 @@ Object .assign (Object .setPrototypeOf (X3DTextureNode .prototype, X3DAppearance
    {
       return this ._transparent .getValue ();
    },
+   isImageTransparent (data)
+   {
+      for (let i = 3, length = data .length; i < length; i += 4)
+      {
+         if (data [i] !== 255)
+            return true;
+      }
+
+      return false;
+   },
 });
 
 Object .defineProperties (X3DTextureNode,
