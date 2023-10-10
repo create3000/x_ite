@@ -119,7 +119,7 @@ Object .assign (Object .setPrototypeOf (X3DTexture2DNode .prototype, X3DSingleTe
       this .updateTextureParameters ();
       this .addNodeEvent ();
    },
-   updateTexture (data, flipY)
+   updateTextureFromData (data, flipY)
    {
       const gl = this .getBrowser () .getContext ();
 
