@@ -45,9 +45,25 @@ Author-provided prose that describes intended purpose of the url asset.
 
 Global texture projection illuminates all objects within their volume of influence. Scoped texture projection (*global* false) only illuminates objects within the same transformation hierarchy.
 
+### SFColor [in, out] **color** 1 1 1 <small>[0,1]</small>
+
+*color* of light, applied to colors of objects.
+
+#### Hint
+
+- [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color){:target="_blank"}
+
 ### SFBool [in, out] **on** TRUE
 
 Enables/disables this texture projection source.
+
+### SFFloat [in, out] **intensity** 1 <small>[0,∞)</small>
+
+Brightness of direct emission from the light.
+
+### SFFloat [in, out] **ambientIntensity** 0 <small>[0,1]</small>
+
+Brightness of ambient (nondirectional background) emission from the light.
 
 ### SFVec3f [in, out] **location** 0 0 0 <small>(-∞,∞)</small>
 
@@ -84,6 +100,13 @@ Maximum distance necessary for texture display.
 ### SFNode [in, out] **texture** NULL <small>[X3DTexture2DNode]</small>
 
 Single contained *texture* node (ImageTexture, MovieTexture, PixelTexture, MultiTexture) that maps image(s) to surface geometry.
+
+#### Hints
+
+- If *texture* node is NULL or unspecified, corresponding Shape geometry for this Appearance is not textured.
+- [X3D Scene Authoring Hints, Images](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Images){:target="_blank"}
+- [X3D Architecture 18 Texturing component](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/components/texturing.html){:target="_blank"}
+- [X3D Architecture 33 Texturing3D component](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/components/texture3D.html){:target="_blank"}
 
 ### SFBool [in, out] **shadows** FALSE
 

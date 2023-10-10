@@ -45,9 +45,25 @@ Author-provided prose that describes intended purpose of the url asset.
 
 Global texture projection illuminates all objects within their volume of influence. Scoped texture projection (*global* false) only illuminates objects within the same transformation hierarchy.
 
+### SFColor [in, out] **color** 1 1 1 <small>[0,1]</small>
+
+*color* of light, applied to colors of objects.
+
+#### Hint
+
+- [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color){:target="_blank"}
+
 ### SFBool [in, out] **on** TRUE
 
 Enables/disables this texture projection source.
+
+### SFFloat [in, out] **intensity** 1 <small>[0,∞)</small>
+
+Brightness of direct emission from the light.
+
+### SFFloat [in, out] **ambientIntensity** 0 <small>[0,1]</small>
+
+Brightness of ambient (nondirectional background) emission from the light.
 
 ### SFVec3f [in, out] **location** 0 0 0 <small>(-∞,∞)</small>
 
@@ -89,6 +105,26 @@ Maximum distance necessary for texture display.
 ### SFNode [in, out] **texture** NULL <small>[X3DTexture2DNode]</small>
 
 Single contained *texture* node (ImageTexture, MovieTexture, PixelTexture, MultiTexture) that maps image(s) to surface geometry.
+
+### SFBool [in, out] **shadows** FALSE
+
+*shadows* field indicates whether or not this light casts a shadow behind illuminated X3DShapeNode geometry.
+
+### SFColor [in, out] **shadowColor** 0 0 0 <small>[0,1]</small> <small class="yellow">non standard</small>
+
+Color of shadow, applied to colors of objects.
+
+### SFFloat [in, out] **shadowIntensity** 1 <small>[0,1]</small>
+
+*shadowIntensity* field defines how much light is obscured by shapes that cast shadows, ranging from 0 (light not obscured, no visible shadows) to 1 (light completely obscured, full-intensity shadows).
+
+### SFFloat [in, out] **shadowBias** 0.005 <small>[0,1]</small> <small class="yellow">non standard</small>
+
+The shadowBias value controls the visibility of *shadow acne*.
+
+### SFInt32 [ ] **shadowMapSize** 1024 <small>[0,∞)</small> <small class="yellow">non standard</small>
+
+Size of the shadow map in pixels, must be power of two.
 
 #### Hints
 
