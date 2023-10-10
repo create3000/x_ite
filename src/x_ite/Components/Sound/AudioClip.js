@@ -131,7 +131,7 @@ Object .assign (Object .setPrototypeOf (AudioClip .prototype, X3DSoundSourceNode
          if (this .checkLoadState () === X3DConstants .IN_PROGRESS_STATE)
             this .setError (event);
       },
-      3000);
+      30_000);
    },
    setError (event)
    {

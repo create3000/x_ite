@@ -139,7 +139,7 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
 
          gif .load_url (this .URL, this .setGif .bind (this, gif));
 
-         this .setTimeout ({ type: "timeout" });
+         // this .setTimeout ({ type: "timeout" });
       }
       else
       {
@@ -154,7 +154,7 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
          if (this .checkLoadState () === X3DConstants .IN_PROGRESS_STATE)
             this .setError (event);
       },
-      3000);
+      30_000);
    },
    setError (event)
    {
