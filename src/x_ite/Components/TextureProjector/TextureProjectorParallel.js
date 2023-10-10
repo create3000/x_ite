@@ -82,6 +82,11 @@ Object .assign (TextureProjectorParallelContainer .prototype,
       this .lightNode = lightNode;
 
       this .modelViewMatrix .assign (modelViewMatrix);
+
+      if (lightNode .getTexture ())
+         this .textureMatrix .set (... lightNode .getTexture () .getMatrix ());
+      else
+         this .textureMatrix .identity ();
    },
    renderShadowMap (renderObject)
    { },
@@ -130,14 +135,12 @@ Object .assign (TextureProjectorParallelContainer .prototype,
          Camera .ortho (minimumX, maximumX, center - size1_2, center + size1_2, nearDistance, farDistance, this .projectionMatrix);
       }
 
-      if (! lightNode .getGlobal ())
+      if (!lightNode .getGlobal ())
          invTextureSpaceMatrix .multLeft (modelMatrix .inverse ());
 
       this .invTextureSpaceProjectionMatrix .assign (invTextureSpaceMatrix) .multRight (this .projectionMatrix) .multRight (lightNode .getBiasMatrix ());
 
-      this .projectiveTextureMatrix .assign (cameraSpaceMatrix) .multRight (this .invTextureSpaceProjectionMatrix);
-      if (lightNode .getTexture ())
-         this .projectiveTextureMatrix .multRight (this .textureMatrix .set (... lightNode .getTexture () .getMatrix ()))
+      this .projectiveTextureMatrix .assign (cameraSpaceMatrix) .multRight (this .invTextureSpaceProjectionMatrix) .multRight (this .textureMatrix);
       this .projectiveTextureMatrixArray .set (this .projectiveTextureMatrix);
 
       this .modelViewMatrix .multVecMatrix (this .location .assign (lightNode ._location .getValue ()));
