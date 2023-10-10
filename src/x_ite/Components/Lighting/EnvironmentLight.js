@@ -87,20 +87,17 @@ Object .assign (EnvironmentLightContainer .prototype,
    {
       const
          { browser, lightNode } = this,
-         color                  = lightNode .getColor ();
+         color                  = lightNode .getColor (),
+         diffuseTexture         = lightNode .getDiffuseTexture (),
+         diffuseTextureUnit     = browser .getTextureCubeUnit (),
+         specularTexture        = lightNode .getSpecularTexture (),
+         specularTextureUnit    = browser .getTextureCubeUnit (),
+         GGXLUTTexture          = browser .getGGXLUTTexture (),
+         GGXLUTTextureUnit      = browser .getTexture2DUnit ();
 
       gl .uniform3f        (shaderObject .x3d_EnvironmentLightColor,            color .r, color .g, color .b);
       gl .uniform1f        (shaderObject .x3d_EnvironmentLightIntensity,        lightNode .getIntensity ());
       gl .uniformMatrix3fv (shaderObject .x3d_EnvironmentLightRotation, false,  lightNode .getRotation ());
-      gl .uniform1i        (shaderObject .x3d_EnvironmentLightSpecularMipCount, lightNode .getSpecularMipCount ());
-
-      const
-         diffuseTexture      = lightNode .getDiffuseTexture (),
-         diffuseTextureUnit  = browser .getTextureCubeUnit (),
-         specularTexture     = lightNode .getSpecularTexture (),
-         specularTextureUnit = browser .getTextureCubeUnit (),
-         GGXLUTTexture       = browser .getGGXLUTTexture (),
-         GGXLUTTextureUnit   = browser .getTexture2DUnit ();
 
       gl .activeTexture (gl .TEXTURE0 + diffuseTextureUnit);
       gl .bindTexture (gl .TEXTURE_CUBE_MAP, diffuseTexture ?.getTexture () ?? browser .getDefaultTextureCubeBlack ());
@@ -109,6 +106,7 @@ Object .assign (EnvironmentLightContainer .prototype,
       gl .activeTexture (gl .TEXTURE0 + specularTextureUnit);
       gl .bindTexture (gl .TEXTURE_CUBE_MAP, specularTexture ?.getTexture () ?? browser .getDefaultTextureCubeBlack ());
       gl .uniform1i (shaderObject .x3d_EnvironmentLightSpecularTexture, specularTextureUnit);
+      gl .uniform1i (shaderObject .x3d_EnvironmentLightSpecularTextureLevels, specularTexture ?.getLevels () ?? 1);
 
       gl .activeTexture (gl .TEXTURE0 + GGXLUTTextureUnit);
       gl .bindTexture (gl .TEXTURE_2D, GGXLUTTexture .getTexture ());
@@ -160,13 +158,6 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
    getSpecularTexture ()
    {
       return this .specularTexture;
-   },
-   getSpecularMipCount ()
-   {
-      if (this .specularTexture ?.hasMipMaps ())
-         return 1 + Math .floor (Math .log2 (this .specularTexture .getSize ()));
-      else
-         return 1;
    },
    getLights ()
    {

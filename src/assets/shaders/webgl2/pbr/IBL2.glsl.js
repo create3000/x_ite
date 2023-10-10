@@ -28,7 +28,7 @@ vec3
 getIBLRadianceGGX (const in vec3 n, const in vec3 v, const in float roughness, const in vec3 F0, const in float specularWeight)
 {
    float NdotV      = clamp (dot (n, v), 0.0, 1.0);
-   float lod        = roughness * float (x3d_EnvironmentLightSource .specularMipCount - 1);
+   float lod        = roughness * float (x3d_EnvironmentLightSource .specularTextureLevels - 1);
    vec3  reflection = normalize (reflect (-v, n));
 
    vec2 brdfSamplePoint = clamp (vec2 (NdotV, 1.0 - roughness), vec2 (0.0), vec2 (1.0));

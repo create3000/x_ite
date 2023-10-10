@@ -55,7 +55,7 @@ function X3DSingleTextureNode (executionContext)
 
    this .addType (X3DConstants .X3DSingleTextureNode);
 
-   this .mipMaps = false;
+   this .levels = 1;
 }
 
 Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, X3DTextureNode .prototype),
@@ -88,13 +88,13 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, X3DText
 
       this .texture = texture;
    },
-   hasMipMaps ()
+   getLevels ()
    {
-      return this .mipMaps;
+      return this .levels;
    },
-   setHasMipMaps (value)
+   setLevels (value)
    {
-      this .mipMaps = value;
+      this .levels = value;
    },
    set_textureProperties__ (update)
    {
@@ -129,7 +129,7 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, X3DText
 
          if (Math .max (width, height) < this .getBrowser () .getMinTextureSize () && !haveTextureProperties)
          {
-            this .mipMaps = false;
+            this .levels = 1;
 
             // Don't generate MipMaps.
             gl .texParameteri (target, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
@@ -137,7 +137,7 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, X3DText
          }
          else
          {
-            this .mipMaps = textureProperties ._generateMipMaps .getValue ();
+            this .levels = 1 + Math .log2 (Math .max (width, height));
 
             if (textureProperties ._generateMipMaps .getValue ())
                gl .generateMipmap (target);

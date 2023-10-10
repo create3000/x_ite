@@ -148,7 +148,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
          {
             this .setTexture (texture);
             this .setTransparent (false);
-            this .setHasMipMaps (texture .levels > 1);
+            this .setLevels (texture .levels);
             this .setWidth (texture .baseWidth);
             this .setHeight (texture .baseHeight);
 
