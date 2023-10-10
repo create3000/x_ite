@@ -93,9 +93,17 @@ Object .assign (Object .setPrototypeOf (X3DTexture2DNode .prototype, X3DSingleTe
    {
       return this .width;
    },
+   setWidth (value)
+   {
+      this .width = value;
+   },
    getHeight ()
    {
       return this .height;
+   },
+   setHeight (value)
+   {
+      this .height = value;
    },
    clearTexture ()
    {

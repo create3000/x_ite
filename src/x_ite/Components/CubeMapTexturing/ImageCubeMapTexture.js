@@ -103,7 +103,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
       this .urlStack .setValue (this ._url);
       this .loadNext ();
    },
-   async loadNext ()
+   loadNext ()
    {
       if (this .urlStack .length === 0)
       {
@@ -145,17 +145,16 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
    {
       if (DEVELOPMENT)
       {
-          if (this .URL .protocol !== "data:")
+         if (this .URL .protocol !== "data:")
             console .info (`Done loading image cube map texture '${decodeURI (this .URL .href)}'`);
       }
 
       try
       {
-         const gl = this .getBrowser () .getContext ();
-
-         if (texture .target === gl .TEXTURE_CUBE_MAP)
+         if (texture .target === this .getTarget ())
          {
             this .setTexture (texture);
+            this .setTransparent (false);
             this .setHasMipMaps (texture .levels > 1);
             this .setSize (texture .baseWidth);
 
@@ -176,7 +175,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
    {
       if (DEVELOPMENT)
       {
-          if (this .URL .protocol !== "data:")
+         if (this .URL .protocol !== "data:")
             console .info (`Done loading image cube map texture '${decodeURI (this .URL .href)}'`);
       }
 

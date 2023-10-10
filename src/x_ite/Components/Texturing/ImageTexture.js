@@ -113,7 +113,17 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
             this .URL .searchParams .set ("_", Date .now ());
       }
 
-      this .image .attr ("src", this .URL .href);
+      if (this .URL .pathname .match (/\.ktx2?$/))
+      {
+         this .getBrowser () .getKTXDecoder ()
+            .then (decoder => decoder .loadKtxFromUri (this .URL))
+            .then (texture => this .setKTXTexture (texture))
+            .catch (error => this .setError ({ type: error .message }));
+      }
+      else
+      {
+         this .image .attr ("src", this .URL .href);
+      }
    },
    setError (event)
    {
@@ -122,12 +132,43 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
 
       this .loadNext ();
    },
+   setKTXTexture (texture)
+   {
+      if (DEVELOPMENT)
+      {
+         if (this .URL .protocol !== "data:")
+            console .info (`Done loading image texture '${decodeURI (this .URL .href)}'`);
+      }
+
+      try
+      {
+         if (texture .target === this .getTarget ())
+         {
+            this .setTexture (texture);
+            this .setTransparent (false);
+            this .setHasMipMaps (texture .levels > 1);
+            this .setWidth (texture .baseWidth);
+            this .setHeight (texture .baseHeight);
+
+            this .setLoadState (X3DConstants .COMPLETE_STATE);
+         }
+         else
+         {
+            this .setError ({ type: "Invalid KTX texture target, must be 'TEXTURE_2D'." });
+         }
+      }
+      catch (error)
+      {
+         // Catch security error from cross origin requests.
+         this .setError ({ type: error .message });
+      }
+   },
    setImage: async function ()
    {
       if (DEVELOPMENT)
       {
          if (this .URL .protocol !== "data:")
-            console .info (`Done loading image '${decodeURI (this .URL .href)}'`);
+            console .info (`Done loading image texture '${decodeURI (this .URL .href)}'`);
       }
 
       try
