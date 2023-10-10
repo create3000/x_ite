@@ -170,7 +170,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
 
             // Upload image to GPU.
 
-            this .setTexture (width, height, transparent, data, false);
+            this .setTextureFromData (width, height, transparent, data, false);
             this .setLoadState (X3DConstants .COMPLETE_STATE);
          }
          else
@@ -187,7 +187,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
 
             // Upload image to GPU.
 
-            this .setTexture (width, height, transparent, data, false);
+            this .setTextureFromData (width, height, transparent, data, false);
             this .setLoadState (X3DConstants .COMPLETE_STATE);
          }
       }

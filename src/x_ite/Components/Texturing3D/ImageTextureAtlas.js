@@ -180,7 +180,7 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, X3DTexture
             }
          }
 
-         this .setTexture (w, h, numberOfSlices, transparent, gl .RGBA, data);
+         this .setTextureFromData (w, h, numberOfSlices, transparent, gl .RGBA, data);
          this .setLoadState (X3DConstants .COMPLETE_STATE);
       }
       catch (error)

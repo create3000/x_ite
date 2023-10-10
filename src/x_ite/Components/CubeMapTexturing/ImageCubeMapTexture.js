@@ -155,7 +155,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
 
          if (texture .target === gl .TEXTURE_CUBE_MAP)
          {
-            this .replaceTexture (texture);
+            this .setTexture (texture);
             this .setHasMipMaps (texture .levels > 1);
             this .setSize (texture .baseWidth);
 

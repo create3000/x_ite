@@ -175,7 +175,7 @@ Object .assign (Object .setPrototypeOf (PixelTexture3D .prototype, X3DTexture3DN
             }
          }
 
-         this .setTexture (width, height, depth, transparent, format, data);
+         this .setTextureFromData (width, height, depth, transparent, format, data);
          this ._loadState = X3DConstants .COMPLETE_STATE;
       };
    })(),

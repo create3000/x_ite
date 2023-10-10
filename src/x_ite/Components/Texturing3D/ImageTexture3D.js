@@ -112,7 +112,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, X3DTexture3DN
             {
                const internalType = this .getInternalType (nrrd .components);
 
-               this .setTexture (nrrd .width, nrrd .height, nrrd .depth, false, internalType, nrrd .data);
+               this .setTextureFromData (nrrd .width, nrrd .height, nrrd .depth, false, internalType, nrrd .data);
                this .setLoadState (X3DConstants .COMPLETE_STATE);
                return;
             }
@@ -123,7 +123,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, X3DTexture3DN
             {
                const internalType = this .getInternalType (dicom .components);
 
-               this .setTexture (dicom .width, dicom .height, dicom .depth, false, internalType, dicom .data);
+               this .setTextureFromData (dicom .width, dicom .height, dicom .depth, false, internalType, dicom .data);
                this .setLoadState (X3DConstants .COMPLETE_STATE);
                return;
             }

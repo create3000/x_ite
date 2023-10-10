@@ -80,7 +80,7 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, X3DText
    {
       return this .texture;
    },
-   replaceTexture (texture)
+   setTexture (texture)
    {
       const gl = this .getBrowser () .getContext ();
 

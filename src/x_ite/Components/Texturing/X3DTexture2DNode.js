@@ -99,9 +99,9 @@ Object .assign (Object .setPrototypeOf (X3DTexture2DNode .prototype, X3DSingleTe
    },
    clearTexture ()
    {
-      this .setTexture (1, 1, false, defaultData, false);
+      this .setTextureFromData (1, 1, false, defaultData, false);
    },
-   setTexture (width, height, transparent, data, flipY)
+   setTextureFromData (width, height, transparent, data, flipY)
    {
       this .width  = width;
       this .height = height;
