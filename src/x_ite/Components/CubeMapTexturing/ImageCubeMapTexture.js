@@ -163,7 +163,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
          }
          else
          {
-            this .setError ({ type: "Invalid KTX texture target." });
+            this .setError ({ type: "Invalid KTX texture target, must be 'TEXTURE_CUBE_MAP'." });
          }
       }
       catch (error)
