@@ -304,7 +304,7 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
          // If the canvas is to large imageData is null.
 
          if (imageData)
-            this .textureNode .setTextureFromData (canvas .width, canvas .height, true, new Uint8Array (imageData .data .buffer), false);
+            this .textureNode .setTextureFromData (canvas .width, canvas .height, true, new Uint8Array (imageData .data .buffer));
          else
             this .textureNode .clear ();
       };

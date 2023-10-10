@@ -68,10 +68,6 @@ Object .assign (Object .setPrototypeOf (TextureTransformMatrix3D .prototype, X3D
 
       this .eventsProcessed ();
    },
-   getMatrix ()
-   {
-      return this ._matrix .getValue ();
-   },
    eventsProcessed ()
    {
       this .setMatrix (this ._matrix .getValue ());

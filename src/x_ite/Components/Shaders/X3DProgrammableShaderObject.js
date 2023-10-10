@@ -87,7 +87,7 @@ function X3DProgrammableShaderObject (executionContext)
    this .x3d_ProjectiveTextureMatrix             = [ ];
    this .x3d_ProjectiveTextureLocation           = [ ];
    this .x3d_TexCoord                            = [ ];
-   this .x3d_TextureMatrix                       = [ ];
+   this .x3d_TextureTransformMatrix              = [ ];
 
    this .fogNode                     = null;
    this .numClipPlanes               = 0;
@@ -224,6 +224,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       for (const materialTexture of materialTextures)
       {
          this [materialTexture] = {
+            textureMatrix:            gl .getUniformLocation (program, materialTexture + ".textureMatrix"),
             textureTransformMapping:  gl .getUniformLocation (program, materialTexture + ".textureTransformMapping"),
             textureCoordinateMapping: gl .getUniformLocation (program, materialTexture + ".textureCoordinateMapping"),
             texture2D:                gl .getUniformLocation (program, materialTexture + ".texture2D"),
@@ -242,6 +243,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
          this .x3d_TextureCoordinateGeneratorParameter [i] = gl .getUniformLocation (program, "x3d_TextureCoordinateGenerator[" + i + "].parameter");
 
          this .x3d_Texture [i] = {
+            textureMatrix: gl .getUniformLocation (program, "x3d_TextureMatrix[" + i + "]"),
             texture2D: gl .getUniformLocation (program, "x3d_Texture2D[" + i + "]"),
             texture3D: gl .getUniformLocation (program, "x3d_Texture3D[" + i + "]"),
             textureCube: this .getUniformLocation (gl, program, "x3d_TextureCube[" + i + "]", "x3d_CubeMapTexture[" + i + "]"),
@@ -259,10 +261,10 @@ Object .assign (X3DProgrammableShaderObject .prototype,
 
       for (let i = 0; i < maxTextureTransforms; ++ i)
       {
-         const uniform = gl .getUniformLocation (program, "x3d_TextureMatrix[" + i + "]");
+         const uniform = gl .getUniformLocation (program, "x3d_TextureTransformMatrix[" + i + "]");
 
          if (uniform !== null)
-            this .x3d_TextureMatrix [i] = uniform;
+            this .x3d_TextureTransformMatrix [i] = uniform;
       }
 
       for (let i = 0; i < maxTexCoords; ++ i)

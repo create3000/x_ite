@@ -131,6 +131,7 @@ Object .assign (Object .setPrototypeOf (X3DEnvironmentTextureNode .prototype, X3
       gl .activeTexture (gl .TEXTURE0 + textureUnit);
       gl .bindTexture (gl .TEXTURE_CUBE_MAP, this .getTexture ());
       gl .uniform1i (channel .textureCube, textureUnit);
+      gl .uniformMatrix4fv (channel .textureMatrix, false, this .getMatrix ());
    },
 });
 

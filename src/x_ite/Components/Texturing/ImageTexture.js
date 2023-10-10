@@ -63,6 +63,8 @@ function ImageTexture (executionContext)
 
    this .image    = $("<img></img>");
    this .urlStack = new Fields .MFString ();
+
+   this .getMatrix () .set ([1, 0, 0, 0, 0, -1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1]); // flipY
 }
 
 Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNode .prototype),
@@ -146,22 +148,6 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
 
          if (texture ?.target === this .getTarget ())
          {
-            // for (let level = 0; level < texture .levels; ++ level)
-            // {
-            //    const
-            //       width  = Math .max (texture .baseWidth  / (2 ** level), 1),
-            //       height = Math .max (texture .baseHeight / (2 ** level), 1),
-            //       data   = await this .getTextureData (texture, width, height, level);
-
-            //    console .log (level, width, height, data .length)
-            //    console .log (data)
-
-            //    // this .flipImageData (data, width, height);
-
-            //    // gl .bindTexture (this .getTarget (), texture);
-            //    // gl .texImage2D  (gl .TEXTURE_2D, level, gl .RGBA, width, height, 0, gl .RGBA, gl .UNSIGNED_BYTE, data);
-            // }
-
             this .setTexture (texture);
             this .setTransparent (false);
             this .setHasMipMaps (texture .levels > 1);
@@ -206,20 +192,13 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
                width  = Algorithm .nextPowerOfTwo (image .width),
                height = Algorithm .nextPowerOfTwo (image .height);
 
-            // Flip Y and scale image to next power of two if needed.
+            // Scale image to next power of two if needed.
 
             canvas .width  = width;
             canvas .height = height;
 
             cx .clearRect (0, 0, width, height);
-            cx .save ();
-
-            // Flip vertically.
-            cx .translate (0, height);
-            cx .scale (1, -1);
-
             cx .drawImage (image, 0, 0, image .width, image .height, 0, 0, width, height);
-            cx .restore ();
 
             // Determine image alpha.
 
@@ -229,7 +208,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
 
             // Upload image to GPU.
 
-            this .setTextureFromData (width, height, transparent, data, false);
+            this .setTextureFromData (width, height, transparent, data);
             this .setLoadState (X3DConstants .COMPLETE_STATE);
          }
          else
@@ -240,13 +219,9 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
                width       = image .width,
                height      = image .height;
 
-            // Flip vertically.
-
-            this .flipImageData (data, width, height);
-
             // Upload image to GPU.
 
-            this .setTextureFromData (width, height, transparent, data, false);
+            this .setTextureFromData (width, height, transparent, data);
             this .setLoadState (X3DConstants .COMPLETE_STATE);
          }
       }
@@ -284,26 +259,6 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
       gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .TEXTURE_2D, texture, 0);
       await gl .readPixelsAsync (0, 0, width, height, gl .RGBA, gl .UNSIGNED_BYTE, data);
       gl .deleteFramebuffer (framebuffer);
-
-      return data;
-   },
-   flipImageData (data, width, height, components = 4)
-   {
-      const
-         height1_2   = height >>> 1,
-         bytesPerRow = width * components,
-         tmp         = new Uint8Array (bytesPerRow);
-
-      for (let y = 0; y < height1_2; ++ y)
-      {
-         const
-            top    = y * bytesPerRow,
-            bottom = (height - y - 1) * bytesPerRow;
-
-         tmp .set (data .subarray (top, top + bytesPerRow));
-         data .copyWithin (top, bottom, bottom + bytesPerRow);
-         data .set (tmp, bottom);
-      }
 
       return data;
    },

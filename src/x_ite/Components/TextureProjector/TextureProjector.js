@@ -71,6 +71,7 @@ function TextureProjectorContainer ()
    this .rotation                        = new Rotation4 ();
    this .projectiveTextureMatrix         = new Matrix4 ();
    this .projectiveTextureMatrixArray    = new Float32Array (16);
+   this .textureMatrix                   = new Matrix4 ();
 }
 
 Object .assign (TextureProjectorContainer .prototype,
@@ -114,6 +115,8 @@ Object .assign (TextureProjectorContainer .prototype,
       this .invTextureSpaceProjectionMatrix .assign (invTextureSpaceMatrix) .multRight (this .projectionMatrix) .multRight (lightNode .getBiasMatrix ());
 
       this .projectiveTextureMatrix .assign (cameraSpaceMatrix) .multRight (this .invTextureSpaceProjectionMatrix);
+      if (lightNode .getTexture ())
+         this .projectiveTextureMatrix .multRight (this .textureMatrix .set (... lightNode .getTexture () .getMatrix ()))
       this .projectiveTextureMatrixArray .set (this .projectiveTextureMatrix);
 
       this .modelViewMatrix .multVecMatrix (this .location .assign (lightNode ._location .getValue ()));

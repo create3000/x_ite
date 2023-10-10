@@ -135,6 +135,7 @@ struct x3d_PhysicalMaterialParameters
 #if defined (X3D_AMBIENT_TEXTURE)
 struct x3d_AmbientTextureParameters
 {
+   mediump mat4        textureMatrix;
    mediump int         textureTransformMapping;
    mediump int         textureCoordinateMapping;
    #if defined (X3D_AMBIENT_TEXTURE_2D)
@@ -154,6 +155,7 @@ struct x3d_AmbientTextureParameters
 #if defined (X3D_DIFFUSE_TEXTURE)
 struct x3d_DiffuseTextureParameters
 {
+   mediump mat4        textureMatrix;
    mediump int         textureTransformMapping;
    mediump int         textureCoordinateMapping;
    #if defined (X3D_DIFFUSE_TEXTURE_2D)
@@ -173,6 +175,7 @@ struct x3d_DiffuseTextureParameters
 #if defined (X3D_SPECULAR_TEXTURE)
 struct x3d_SpecularTextureParameters
 {
+   mediump mat4        textureMatrix;
    mediump int         textureTransformMapping;
    mediump int         textureCoordinateMapping;
    #if defined (X3D_SPECULAR_TEXTURE_2D)
@@ -192,6 +195,7 @@ struct x3d_SpecularTextureParameters
 #if defined (X3D_EMISSIVE_TEXTURE)
 struct x3d_EmissiveTextureParameters
 {
+   mediump mat4        textureMatrix;
    mediump int         textureTransformMapping;
    mediump int         textureCoordinateMapping;
    #if defined (X3D_EMISSIVE_TEXTURE_2D)
@@ -211,6 +215,7 @@ struct x3d_EmissiveTextureParameters
 #if defined (X3D_SHININESS_TEXTURE)
 struct x3d_ShininessTextureParameters
 {
+   mediump mat4        textureMatrix;
    mediump int         textureTransformMapping;
    mediump int         textureCoordinateMapping;
    #if defined (X3D_SHININESS_TEXTURE_2D)
@@ -230,6 +235,7 @@ struct x3d_ShininessTextureParameters
 #if defined (X3D_BASE_TEXTURE)
 struct x3d_BaseTextureParameters
 {
+   mediump mat4        textureMatrix;
    mediump int         textureTransformMapping;
    mediump int         textureCoordinateMapping;
    #if defined (X3D_BASE_TEXTURE_2D)
@@ -249,6 +255,7 @@ struct x3d_BaseTextureParameters
 #if defined (X3D_METALLIC_ROUGHNESS_TEXTURE)
 struct x3d_MetallicRoughnessTextureParameters
 {
+   mediump mat4        textureMatrix;
    mediump int         textureTransformMapping;
    mediump int         textureCoordinateMapping;
    #if defined (X3D_METALLIC_ROUGHNESS_TEXTURE_2D)
@@ -268,6 +275,7 @@ struct x3d_MetallicRoughnessTextureParameters
 #if defined (X3D_OCCLUSION_TEXTURE)
 struct x3d_OcclusionTextureParameters
 {
+   mediump mat4        textureMatrix;
    mediump int         textureTransformMapping;
    mediump int         textureCoordinateMapping;
    #if defined (X3D_OCCLUSION_TEXTURE_2D)
@@ -287,6 +295,7 @@ struct x3d_OcclusionTextureParameters
 #if defined (X3D_NORMAL_TEXTURE)
 struct x3d_NormalTextureParameters
 {
+   mediump mat4        textureMatrix;
    mediump int         textureTransformMapping;
    mediump int         textureCoordinateMapping;
    #if defined (X3D_NORMAL_TEXTURE_2D)

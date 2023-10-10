@@ -107,9 +107,9 @@ Object .assign (Object .setPrototypeOf (X3DTexture2DNode .prototype, X3DSingleTe
    },
    clearTexture ()
    {
-      this .setTextureFromData (1, 1, false, defaultData, false);
+      this .setTextureFromData (1, 1, false, defaultData);
    },
-   setTextureFromData (width, height, transparent, data, flipY)
+   setTextureFromData (width, height, transparent, data)
    {
       this .width  = width;
       this .height = height;
@@ -117,9 +117,7 @@ Object .assign (Object .setPrototypeOf (X3DTexture2DNode .prototype, X3DSingleTe
       const gl = this .getBrowser () .getContext ();
 
       gl .bindTexture (gl .TEXTURE_2D, this .getTexture ());
-      gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, flipY);
       gl .texImage2D  (gl .TEXTURE_2D, 0, gl .RGBA, width, height, 0, gl .RGBA, gl .UNSIGNED_BYTE, data);
-      gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, false);
 
       this .setTransparent (transparent);
       this .updateTextureParameters ();
@@ -158,6 +156,7 @@ Object .assign (Object .setPrototypeOf (X3DTexture2DNode .prototype, X3DSingleTe
       gl .activeTexture (gl .TEXTURE0 + textureUnit);
       gl .bindTexture (gl .TEXTURE_2D, this .getTexture ());
       gl .uniform1i (channel .texture2D, textureUnit);
+      gl .uniformMatrix4fv (channel .textureMatrix, false, this .getMatrix ());
    },
 });
 

@@ -3,7 +3,7 @@ export default /* glsl */ `
 
 #pragma X3D include "Perlin.glsl"
 
-uniform mat4 x3d_TextureMatrix [X3D_NUM_TEXTURE_TRANSFORMS];
+uniform mat4 x3d_TextureTransformMatrix [X3D_NUM_TEXTURE_TRANSFORMS];
 
 mat4
 getTextureMatrix (const in int i)
@@ -13,27 +13,27 @@ getTextureMatrix (const in int i)
 
       #if X3D_NUM_TEXTURE_TRANSFORMS > 0
       if (i == 0)
-         textureMatrix = x3d_TextureMatrix [0];
+         textureMatrix = x3d_TextureTransformMatrix [0];
       #endif
 
       #if X3D_NUM_TEXTURE_TRANSFORMS > 1
       else if (i == 1)
-         textureMatrix = x3d_TextureMatrix [1];
+         textureMatrix = x3d_TextureTransformMatrix [1];
       #endif
 
       #if X3D_NUM_TEXTURE_TRANSFORMS > 2
       else if (i == 2)
-         textureMatrix = x3d_TextureMatrix [2];
+         textureMatrix = x3d_TextureTransformMatrix [2];
       #endif
 
       #if X3D_NUM_TEXTURE_TRANSFORMS > 3
       else if (i == 3)
-         textureMatrix = x3d_TextureMatrix [3];
+         textureMatrix = x3d_TextureTransformMatrix [3];
       #endif
 
       return textureMatrix;
    #else
-      return x3d_TextureMatrix [0];
+      return x3d_TextureTransformMatrix [0];
    #endif
 }
 
@@ -150,7 +150,7 @@ getTexCoord (const in x3d_TextureCoordinateGeneratorParameters textureCoordinate
 uniform x3d_TextureCoordinateGeneratorParameters x3d_TextureCoordinateGenerator [X3D_NUM_TEXTURE_COORDINATES];
 
 vec3
-getTexCoord (const in int textureTransformMapping, const in int textureCoordinateMapping)
+getTexCoord (const in int textureTransformMapping, const in int textureCoordinateMapping, const in mat4 textureMatrix)
 {
    vec4 texCoord;
 
@@ -174,6 +174,7 @@ getTexCoord (const in int textureTransformMapping, const in int textureCoordinat
       texCoord = getTexCoord (x3d_TextureCoordinateGenerator [3], textureTransformMapping, textureCoordinateMapping);
    #endif
 
+   texCoord       = textureMatrix * texCoord;
    texCoord .stp /= texCoord .q;
 
    #if defined (X3D_GEOMETRY_2D)
@@ -188,6 +189,7 @@ getTexCoord (const in int textureTransformMapping, const in int textureCoordinat
 
 #if defined (X3D_TEXTURE)
 
+uniform mat4        x3d_TextureMatrix [X3D_NUM_TEXTURES];
 uniform sampler2D   x3d_Texture2D [X3D_NUM_TEXTURES];
 uniform samplerCube x3d_TextureCube [X3D_NUM_TEXTURES];
 
@@ -249,7 +251,7 @@ getTextureColor (const in vec4 diffuseColor, const in vec4 specularColor)
       {
          // Get texture color.
 
-         vec3 texCoord     = getTexCoord (minI (i, X3D_NUM_TEXTURE_TRANSFORMS - 1), minI (i, X3D_NUM_TEXTURE_COORDINATES - 1));
+         vec3 texCoord     = getTexCoord (minI (i, X3D_NUM_TEXTURE_TRANSFORMS - 1), minI (i, X3D_NUM_TEXTURE_COORDINATES - 1), x3d_TextureMatrix [i]);
          vec4 textureColor = getTexture (i, texCoord);
 
          #if defined (X3D_PHYSICAL_MATERIAL)
@@ -465,7 +467,7 @@ getTextureColor (const in vec4 diffuseColor, const in vec4 specularColor)
    #else
       // Get texture color.
 
-      vec3 texCoord = getTexCoord (0, 0);
+      vec3 texCoord = getTexCoord (0, 0, x3d_TextureMatrix [0]);
 
       #if defined (X3D_TEXTURE0_2D)
          vec4 textureColor = texture2D (x3d_Texture2D [0], texCoord .st);

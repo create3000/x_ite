@@ -76,7 +76,7 @@ Once the X3D is defined we can now write the vertex and the fragment shader sour
 
 precision mediump float;
 
-uniform mat4 x3d_TextureMatrix [x3d_MaxTextures];
+uniform mat4 x3d_TextureTransformMatrix [x3d_MaxTextures];
 uniform mat4 x3d_ModelViewMatrix;
 uniform mat4 x3d_ProjectionMatrix;
 
@@ -88,7 +88,7 @@ out vec4 texCoord;
 void
 main ()
 {
-  texCoord = x3d_TextureMatrix [0] * x3d_TexCoord0;
+  texCoord = x3d_TextureTransformMatrix [0] * x3d_TexCoord0;
 
   gl_Position = x3d_ProjectionMatrix * x3d_ModelViewMatrix * x3d_Vertex;
 }
@@ -473,8 +473,8 @@ A ComposedShader defines a number of special variables for the various shader st
       </tr>
       <tr>
          <td>uniform mat4</td>
-         <td>x3d_TextureMatrix [x3d_MaxTextures]</td>
-         <td>object's texture matrix defined by nodes derived from X3DTextureTransformNode</td>
+         <td>x3d_TextureTransformMatrix [x3d_MaxTextures]</td>
+         <td>object's texture transform matrix defined by nodes derived from X3DTextureTransformNode</td>
       </tr>
       <tr>
          <td>uniform mat4</td>

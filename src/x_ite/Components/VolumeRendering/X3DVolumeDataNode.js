@@ -52,6 +52,7 @@ import X3DConstants     from "../../Base/X3DConstants.js";
 import TextureQuality   from "../../Browser/Core/TextureQuality.js";
 import VolumeMaterial   from "../../Browser/VolumeRendering/VolumeMaterial.js";
 import Vector3          from "../../../standard/Math/Numbers/Vector3.js";
+import Matrix4          from "../../../standard/Math/Numbers/Matrix4.js";
 
 function X3DVolumeDataNode (executionContext)
 {
@@ -205,7 +206,7 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, X3DChildNo
    },
    set_textureTransform__ ()
    {
-      this .textureNormalMatrixArray .set (this .textureTransformNode .getMatrix () .submatrix .inverse ());
+      this .textureNormalMatrixArray .set (new Matrix4 (... this .textureTransformNode .getMatrix ()) .submatrix .inverse ());
    },
    traverse (type, renderObject)
    {

@@ -75,10 +75,6 @@ Object .assign (Object .setPrototypeOf (TextureTransform .prototype, X3DSingleTe
 
       this .eventsProcessed ();
    },
-   getMatrix ()
-   {
-      return this .matrix;
-   },
    eventsProcessed: (() =>
    {
       const

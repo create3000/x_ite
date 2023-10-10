@@ -32,7 +32,7 @@ stipple ()
       int   linetype = x3d_LineProperties .linetype;
       int   height   = textureSize (x3d_LineProperties .texture, 0) .y;
       float t        = 1.0 - float (linetype * 2 + 1) / float (height * 2);
-      float alpha    = texture (x3d_LineProperties .texture, vec2 (s, t)) .a;
+      float alpha    = texture (x3d_LineProperties .texture, vec2 (s, 1.0 - t)) .a;
 
       if (alpha != 1.0)
          discard;
