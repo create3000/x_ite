@@ -124,14 +124,15 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
 
       if (this .URL .pathname .match (/\.ktx2?$/))
       {
-         const
-            decoder = await this .getBrowser () .getKTXDecoder (),
-            texture = await decoder .loadKtxFromUri (this .URL);
-
-         console .log (texture);
+         this .getBrowser () .getKTXDecoder ()
+            .then (decoder => decoder .loadKtxFromUri (this .URL))
+            .then (texture => this .setKTXTexture (texture))
+            .catch (error => this .setError ({ type: error .message }));
       }
-
-      this .image .attr ("src", this .URL .href);
+      else
+      {
+         this .image .attr ("src", this .URL .href);
+      }
    },
    setError (event)
    {
@@ -139,6 +140,24 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
          console .warn (`Error loading image '${decodeURI (this .URL .href)}'`, event .type);
 
       this .loadNext ();
+   },
+   setKTXTexture (texture)
+   {
+      if (DEVELOPMENT)
+      {
+          if (this .URL .protocol !== "data:")
+            console .info (`Done loading image cube map texture '${decodeURI (this .URL .href)}'`);
+      }
+
+      try
+      {
+         console .log (texture);
+      }
+      catch (error)
+      {
+         // Catch security error from cross origin requests.
+         this .setError ({ type: error .message });
+      }
    },
    setImage ()
    {
