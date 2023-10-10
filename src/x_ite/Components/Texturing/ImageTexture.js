@@ -132,7 +132,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
 
       this .loadNext ();
    },
-   setKTXTexture (texture)
+   async setKTXTexture (texture)
    {
       if (DEVELOPMENT)
       {
@@ -142,8 +142,26 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
 
       try
       {
+         const gl = this .getBrowser () .getContext ();
+
          if (texture ?.target === this .getTarget ())
          {
+            // for (let level = 0; level < texture .levels; ++ level)
+            // {
+            //    const
+            //       width  = Math .max (texture .baseWidth  / (2 ** level), 1),
+            //       height = Math .max (texture .baseHeight / (2 ** level), 1),
+            //       data   = await this .getTextureData (texture, width, height, level);
+
+            //    console .log (level, width, height, data .length)
+            //    console .log (data)
+
+            //    // this .flipImageData (data, width, height);
+
+            //    // gl .bindTexture (this .getTarget (), texture);
+            //    // gl .texImage2D  (gl .TEXTURE_2D, level, gl .RGBA, width, height, 0, gl .RGBA, gl .UNSIGNED_BYTE, data);
+            // }
+
             this .setTexture (texture);
             this .setTransparent (false);
             this .setHasMipMaps (texture .levels > 1);
@@ -163,7 +181,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
          this .setError ({ type: error .message });
       }
    },
-   setImage: async function ()
+   async setImage ()
    {
       if (DEVELOPMENT)
       {
@@ -224,7 +242,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
 
             // Flip vertically.
 
-            this .flipImage (data, width, height, 4);
+            this .flipImageData (data, width, height);
 
             // Upload image to GPU.
 
@@ -238,27 +256,38 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
          this .setError ({ type: error .message });
       }
    },
-   getImageData: async function (image, colorSpaceConversion = true)
+   async getImageData (image, colorSpaceConversion = true)
    {
       const
-         gl          = this .getBrowser () .getContext (),
-         framebuffer = gl .createFramebuffer (),
-         texture     = gl .createTexture (),
-         data        = new Uint8Array (image .width * image .height * 4);
+         gl      = this .getBrowser () .getContext (),
+         texture = gl .createTexture ();
 
-      gl .bindFramebuffer (gl .FRAMEBUFFER, framebuffer);
       gl .bindTexture (gl .TEXTURE_2D, texture);
       gl .pixelStorei (gl .UNPACK_COLORSPACE_CONVERSION_WEBGL, colorSpaceConversion ? gl .BROWSER_DEFAULT_WEBGL : gl .NONE);
       gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA, gl .RGBA, gl .UNSIGNED_BYTE, image);
       gl .pixelStorei (gl .UNPACK_COLORSPACE_CONVERSION_WEBGL, gl .BROWSER_DEFAULT_WEBGL);
-      gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .TEXTURE_2D, texture, 0);
-      await gl .readPixelsAsync (0, 0, image .width, image .height, gl .RGBA, gl .UNSIGNED_BYTE, data);
-      gl .deleteFramebuffer (framebuffer);
+
+      const data = await this .getTextureData (texture, image .width, image .height);
+
       gl .deleteTexture (texture);
 
       return data;
    },
-   flipImage (data, width, height, components)
+   async getTextureData (texture, width, height)
+   {
+      const
+         gl          = this .getBrowser () .getContext (),
+         framebuffer = gl .createFramebuffer (),
+         data        = new Uint8Array (width * height * 4);
+
+      gl .bindFramebuffer (gl .FRAMEBUFFER, framebuffer);
+      gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .TEXTURE_2D, texture, 0);
+      await gl .readPixelsAsync (0, 0, width, height, gl .RGBA, gl .UNSIGNED_BYTE, data);
+      gl .deleteFramebuffer (framebuffer);
+
+      return data;
+   },
+   flipImageData (data, width, height, components = 4)
    {
       const
          height1_2   = height >>> 1,
