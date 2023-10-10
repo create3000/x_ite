@@ -114,6 +114,8 @@ Object .assign (EnvironmentLightContainer .prototype,
    },
    dispose ()
    {
+      this .modelViewMatrix .clear ();
+      
       // Return container
 
       EnvironmentLights .push (this);

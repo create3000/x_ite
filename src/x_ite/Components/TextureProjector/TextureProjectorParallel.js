@@ -54,6 +54,7 @@ import Camera                  from "../../../standard/Math/Geometry/Camera.js";
 import Vector3                 from "../../../standard/Math/Numbers/Vector3.js";
 import Rotation4               from "../../../standard/Math/Numbers/Rotation4.js";
 import Matrix4                 from "../../../standard/Math/Numbers/Matrix4.js";
+import MatrixStack             from "../../../standard/Math/Utility/MatrixStack.js";
 import ObjectCache             from "../../../standard/Utility/ObjectCache.js";
 
 const TextureProjectorParallelCache = ObjectCache (TextureProjectorParallelContainer);
@@ -61,7 +62,7 @@ const TextureProjectorParallelCache = ObjectCache (TextureProjectorParallelConta
 function TextureProjectorParallelContainer ()
 {
    this .projectionMatrix                = new Matrix4 ();
-   this .modelViewMatrix                 = new Matrix4 ();
+   this .modelViewMatrix                 = new MatrixStack (Matrix4);
    this .modelMatrix                     = new Matrix4 ();
    this .invTextureSpaceMatrix           = new Matrix4 ();
    this .location                        = new Vector3 (0, 0, 0);
@@ -81,7 +82,7 @@ Object .assign (TextureProjectorParallelContainer .prototype,
       this .browser   = lightNode .getBrowser ();
       this .lightNode = lightNode;
 
-      this .modelViewMatrix .assign (modelViewMatrix);
+      this .modelViewMatrix .pushMatrix (modelViewMatrix);
 
       if (lightNode .getTexture ())
          this .textureMatrix .set (... lightNode .getTexture () .getMatrix ());
@@ -95,7 +96,7 @@ Object .assign (TextureProjectorParallelContainer .prototype,
       const
          lightNode             = this .lightNode,
          cameraSpaceMatrix     = renderObject .getCameraSpaceMatrix () .get (),
-         modelMatrix           = this .modelMatrix .assign (this .modelViewMatrix) .multRight (cameraSpaceMatrix),
+         modelMatrix           = this .modelMatrix .assign (this .modelViewMatrix .get ()) .multRight (cameraSpaceMatrix),
          invTextureSpaceMatrix = this .invTextureSpaceMatrix .assign (lightNode .getGlobal () ? modelMatrix : Matrix4 .Identity);
 
       this .rotation .setFromToVec (Vector3 .zAxis, this .direction .assign (lightNode .getDirection ()) .negate ());
@@ -143,7 +144,7 @@ Object .assign (TextureProjectorParallelContainer .prototype,
       this .projectiveTextureMatrix .assign (cameraSpaceMatrix) .multRight (this .invTextureSpaceProjectionMatrix) .multRight (this .textureMatrix);
       this .projectiveTextureMatrixArray .set (this .projectiveTextureMatrix);
 
-      this .modelViewMatrix .multVecMatrix (this .location .assign (lightNode ._location .getValue ()));
+      this .modelViewMatrix .get () .multVecMatrix (this .location .assign (lightNode ._location .getValue ()));
       this .locationArray .set (this .location);
    },
    setShaderUniforms (gl, shaderObject, renderObject)
@@ -166,6 +167,8 @@ Object .assign (TextureProjectorParallelContainer .prototype,
    },
    dispose ()
    {
+      this .modelViewMatrix .clear ();
+
       TextureProjectorParallelCache .push (this);
    },
 });
