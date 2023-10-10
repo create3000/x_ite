@@ -73,16 +73,10 @@ Object .assign (EnvironmentLightContainer .prototype,
    {
       return 1;
    },
-   getModelViewMatrix ()
-   {
-      return this .modelViewMatrix;
-   },
    renderShadowMap (renderObject)
-   {
-   },
+   { },
    setGlobalVariables (renderObject)
-   {
-   },
+   { },
    setShaderUniforms (gl, shaderObject)
    {
       const
@@ -115,7 +109,7 @@ Object .assign (EnvironmentLightContainer .prototype,
    dispose ()
    {
       this .modelViewMatrix .clear ();
-      
+
       // Return container
 
       EnvironmentLights .push (this);
