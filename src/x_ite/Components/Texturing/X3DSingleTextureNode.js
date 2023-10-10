@@ -72,9 +72,29 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, X3DText
 
       this .set_textureProperties__ (false);
    },
+   getCount ()
+   {
+      return 1;
+   },
+   getTexture ()
+   {
+      return this .texture;
+   },
+   replaceTexture (texture)
+   {
+      const gl = this .getBrowser () .getContext ();
+
+      gl .deleteTexture (this .texture);
+
+      this .texture = texture;
+   },
    hasMipMaps ()
    {
       return this .mipMaps;
+   },
+   setHasMipMaps (value)
+   {
+      this .mipMaps = value;
    },
    set_textureProperties__ (update)
    {
@@ -90,14 +110,6 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, X3DText
 
       if (update)
          this .updateTextureParameters ();
-   },
-   getCount ()
-   {
-      return 1;
-   },
-   getTexture ()
-   {
-      return this .texture;
    },
    updateTextureParameters: (() =>
    {

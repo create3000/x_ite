@@ -151,11 +151,20 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
 
       try
       {
-         console .log (texture);
+         const gl = this .getBrowser () .getContext ();
 
-         // Update load state.
+         if (texture .target === gl .TEXTURE_CUBE_MAP)
+         {
+            this .replaceTexture (texture);
+            this .setHasMipMaps (texture .levels > 1);
+            this .setSize (texture .baseWidth);
 
-         this .setLoadState (X3DConstants .COMPLETE_STATE);
+            this .setLoadState (X3DConstants .COMPLETE_STATE);
+         }
+         else
+         {
+            this .setError ({ type: "Invalid KTX texture target." });
+         }
       }
       catch (error)
       {
