@@ -114,8 +114,9 @@ getTexCoord (const in int textureTransformMapping, const in int textureCoordinat
 {
    vec4 texCoord = getTexCoord (x3d_TextureCoordinateGenerator [textureCoordinateMapping], textureTransformMapping, textureCoordinateMapping);
 
-   texCoord       = textureMatrix * texCoord;
    texCoord .stp /= texCoord .q;
+   texCoord .q    = 1.0;
+   texCoord       = textureMatrix * texCoord;
 
    #if defined (X3D_GEOMETRY_2D)
       if (gl_FrontFacing == false)
