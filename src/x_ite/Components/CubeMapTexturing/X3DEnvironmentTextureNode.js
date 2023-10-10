@@ -66,6 +66,8 @@ function X3DEnvironmentTextureNode (executionContext)
       gl .TEXTURE_CUBE_MAP_POSITIVE_Y, // Top
       gl .TEXTURE_CUBE_MAP_NEGATIVE_Y, // Bottom
    ];
+
+   this .size = 1;
 }
 
 Object .assign (Object .setPrototypeOf (X3DEnvironmentTextureNode .prototype, X3DSingleTextureNode .prototype),
@@ -85,6 +87,14 @@ Object .assign (Object .setPrototypeOf (X3DEnvironmentTextureNode .prototype, X3
    getTargets ()
    {
       return this .targets;
+   },
+   getSize ()
+   {
+      return this .size;
+   },
+   setSize (value)
+   {
+      this .size = value;
    },
    clearTexture: (() =>
    {

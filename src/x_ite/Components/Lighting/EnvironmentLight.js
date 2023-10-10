@@ -92,7 +92,9 @@ Object .assign (EnvironmentLightContainer .prototype,
       gl .uniform3f        (shaderObject .x3d_EnvironmentLightColor,            color .r, color .g, color .b);
       gl .uniform1f        (shaderObject .x3d_EnvironmentLightIntensity,        lightNode .getIntensity ());
       gl .uniformMatrix3fv (shaderObject .x3d_EnvironmentLightRotation, false,  lightNode .getRotation ());
-      gl .uniform1i        (shaderObject .x3d_EnvironmentLightSpecularMipCount, 1);
+      gl .uniform1i        (shaderObject .x3d_EnvironmentLightSpecularMipCount, lightNode .getSpecularMipCount ());
+
+      console .log (lightNode .getSpecularMipCount ())
 
       const
          diffuseTexture      = lightNode .getDiffuseTexture (),
@@ -160,6 +162,13 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
    getSpecularTexture ()
    {
       return this .specularTexture;
+   },
+   getSpecularMipCount ()
+   {
+      if (this .specularTexture ?.hasMipMaps ())
+         return 1 + Math .floor (Math .log2 (this .specularTexture .getSize ()));
+      else
+         return 1;
    },
    getLights ()
    {
