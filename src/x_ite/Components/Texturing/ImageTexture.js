@@ -142,7 +142,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
 
       try
       {
-         if (texture .target === this .getTarget ())
+         if (texture ?.target === this .getTarget ())
          {
             this .setTexture (texture);
             this .setTransparent (false);

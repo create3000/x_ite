@@ -151,7 +151,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
 
       try
       {
-         if (texture .target === this .getTarget ())
+         if (texture ?.target === this .getTarget ())
          {
             this .setTexture (texture);
             this .setTransparent (false);
