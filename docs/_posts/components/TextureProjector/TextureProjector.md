@@ -45,6 +45,10 @@ Author-provided prose that describes intended purpose of the url asset.
 
 Global texture projection illuminates all objects within their volume of influence. Scoped texture projection (*global* false) only illuminates objects within the same transformation hierarchy.
 
+### SFBool [in, out] **on** TRUE
+
+Enables/disables this texture projection source.
+
 ### SFColor [in, out] **color** 1 1 1 <small>[0,1]</small>
 
 *color* of light, applied to colors of objects.
@@ -53,17 +57,13 @@ Global texture projection illuminates all objects within their volume of influen
 
 - [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color){:target="_blank"}
 
-### SFBool [in, out] **on** TRUE
-
-Enables/disables this texture projection source.
-
 ### SFFloat [in, out] **intensity** 1 <small>[0,∞)</small>
 
 Brightness of direct emission from the light.
 
 ### SFFloat [in, out] **ambientIntensity** 0 <small>[0,1]</small>
 
-Brightness of ambient (nondirectional background) emission from the light.
+Brightness of ambient (nondirectional background) emission from the light. Interchange profile hint: this field may be ignored, applying the default value regardless.
 
 ### SFVec3f [in, out] **location** 0 0 0 <small>(-∞,∞)</small>
 
