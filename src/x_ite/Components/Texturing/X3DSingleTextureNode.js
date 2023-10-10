@@ -83,7 +83,7 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, X3DText
 
       this .texturePropertiesNode = X3DCast (X3DConstants .TextureProperties, this ._textureProperties);
 
-      if (! this .texturePropertiesNode)
+      if (!this .texturePropertiesNode)
          this .texturePropertiesNode = this .getBrowser () .getDefaultTextureProperties ();
 
       this .texturePropertiesNode .addInterest ("updateTextureParameters", this);
@@ -115,7 +115,7 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, X3DText
 
          gl .bindTexture (target, this .getTexture ());
 
-         if (Math .max (width, height) < this .getBrowser () .getMinTextureSize () && ! haveTextureProperties)
+         if (Math .max (width, height) < this .getBrowser () .getMinTextureSize () && !haveTextureProperties)
          {
             this .mipMaps = false;
 
@@ -125,12 +125,10 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, X3DText
          }
          else
          {
-            if (textureProperties ._generateMipMaps .getValue ())
-            {
-               this .mipMaps = true;
+            this .mipMaps = textureProperties ._generateMipMaps .getValue ();
 
+            if (textureProperties ._generateMipMaps .getValue ())
                gl .generateMipmap (target);
-            }
 
             gl .texParameteri (target, gl .TEXTURE_MIN_FILTER, gl [textureProperties .getMinificationFilter ()]);
             gl .texParameteri (target, gl .TEXTURE_MAG_FILTER, gl [textureProperties .getMagnificationFilter ()]);
