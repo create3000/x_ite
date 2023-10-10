@@ -168,8 +168,8 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
          new Vector2 (3, 1), // Back
          new Vector2 (0, 1), // Left
          new Vector2 (2, 1), // Right
-         new Vector2 (1, 0), // Bottom, must be exchanged with top
-         new Vector2 (1, 2), // Top, must be exchanged with bottom
+         new Vector2 (1, 0), // Top
+         new Vector2 (1, 2), // Bottom
       ];
 
       //     -----
