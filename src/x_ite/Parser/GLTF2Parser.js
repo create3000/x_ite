@@ -855,6 +855,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    {
       const images = [this .images [texture .source]];
 
+      if (this .extensions .has ("KHR_texture_basisu"))
+         images .unshift (this .images [texture .extensions ?.KHR_texture_basisu ?.source]);
+
       if (this .extensions .has ("EXT_texture_webp"))
          images .unshift (this .images [texture .extensions ?.EXT_texture_webp ?.source]);
 
