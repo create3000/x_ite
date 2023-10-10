@@ -152,6 +152,10 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
       try
       {
          console .log (texture);
+
+         // Update load state.
+
+         this .setLoadState (X3DConstants .COMPLETE_STATE);
       }
       catch (error)
       {
