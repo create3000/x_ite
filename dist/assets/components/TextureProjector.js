@@ -50,9 +50,9 @@ var X3DFieldDefinition_default = /*#__PURE__*/__webpack_require__.n(X3DFieldDefi
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/FieldDefinitionArray\")"
 const FieldDefinitionArray_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.12.5")] .require ("x_ite/Base/FieldDefinitionArray");
 var FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(FieldDefinitionArray_namespaceObject);
-;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Core/X3DChildNode\")"
-const X3DChildNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.12.5")] .require ("x_ite/Components/Core/X3DChildNode");
-var X3DChildNode_default = /*#__PURE__*/__webpack_require__.n(X3DChildNode_namespaceObject);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Lighting/X3DLightNode\")"
+const X3DLightNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.12.5")] .require ("x_ite/Components/Lighting/X3DLightNode");
+var X3DLightNode_default = /*#__PURE__*/__webpack_require__.n(X3DLightNode_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DConstants\")"
 const X3DConstants_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.12.5")] .require ("x_ite/Base/X3DConstants");
 var X3DConstants_default = /*#__PURE__*/__webpack_require__.n(X3DConstants_namespaceObject);
@@ -128,7 +128,7 @@ var Namespace_default = /*#__PURE__*/__webpack_require__.n(Namespace_namespaceOb
 
 function X3DTextureProjectorNode (executionContext)
 {
-   X3DChildNode_default().call (this, executionContext);
+   X3DLightNode_default().call (this, executionContext);
 
    this .addType ((X3DConstants_default()).X3DTextureProjectorNode);
 
@@ -137,16 +137,19 @@ function X3DTextureProjectorNode (executionContext)
    this ._location    .setUnit ("length");
 }
 
-Object .assign (Object .setPrototypeOf (X3DTextureProjectorNode .prototype, (X3DChildNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (X3DTextureProjectorNode .prototype, (X3DLightNode_default()).prototype),
 {
    initialize ()
    {
-      X3DChildNode_default().prototype .initialize .call (this);
+      X3DLightNode_default().prototype .initialize .call (this);
 
-      this ._on      .addInterest ("set_on__",      this);
       this ._texture .addInterest ("set_texture__", this);
 
       this .set_texture__ ();
+   },
+   getLightKey ()
+   {
+      return 3;
    },
    getGlobal ()
    {
@@ -217,67 +220,22 @@ Object .assign (Object .setPrototypeOf (X3DTextureProjectorNode .prototype, (X3D
          return orientation .multRight (rotation);
       };
    })(),
-   set_on__ ()
-   {
-      if (this ._on .getValue () && this .textureNode)
-      {
-         delete this .push;
-         delete this .pop;
-      }
-      else
-      {
-         this .push = Function .prototype;
-         this .pop  = Function .prototype;
-      }
-   },
    set_texture__ ()
    {
-      if (this .textureNode)
-         this .textureNode .removeInterest ("set_aspectRatio__", this);
+      this .textureNode ?.removeInterest ("set_aspectRatio__", this);
 
       this .textureNode = X3DCast_default() ((X3DConstants_default()).X3DTexture2DNode, this ._texture);
 
-      if (this .textureNode)
-         this .textureNode .addInterest ("set_aspectRatio__", this);
+      this .textureNode ?.addInterest ("set_aspectRatio__", this);
 
       this .set_aspectRatio__ ();
-      this .set_on__ ();
    },
    set_aspectRatio__ ()
    {
       if (this .textureNode)
          this ._aspectRatio = this .textureNode .getWidth () / this .textureNode .getHeight ();
       else
-         this ._aspectRatio = 0;
-   },
-   push (renderObject)
-   {
-      const textureProjectorContainer = this .getTextureProjectors () .pop ();
-
-      textureProjectorContainer .set (this,
-                                      renderObject .getModelViewMatrix () .get ());
-
-      if (this ._global .getValue ())
-      {
-         renderObject .getGlobalObjects ()     .push (textureProjectorContainer);
-         renderObject .getTextureProjectors () .push (textureProjectorContainer);
-      }
-      else
-      {
-         renderObject .getLocalObjects ()      .push (textureProjectorContainer);
-         renderObject .getTextureProjectors () .push (textureProjectorContainer);
-
-         ++ renderObject .getLocalObjectsCount () [2];
-      }
-   },
-   pop (renderObject)
-   {
-      if (this ._global .getValue ())
-         return;
-
-      renderObject .getLocalObjects () .pop ();
-
-      -- renderObject .getLocalObjectsCount () [2];
+         this ._aspectRatio = 1;
    },
 });
 
@@ -380,50 +338,55 @@ function TextureProjectorContainer ()
    this .rotation                        = new (Rotation4_default()) ();
    this .projectiveTextureMatrix         = new (Matrix4_default()) ();
    this .projectiveTextureMatrixArray    = new Float32Array (16);
+   this .textureMatrix                   = new (Matrix4_default()) ();
 }
 
 Object .assign (TextureProjectorContainer .prototype,
 {
-   set (textureProjectorNode, modelViewMatrix)
+   set (lightNode, groupNode, modelViewMatrix)
    {
-      this .browser              = textureProjectorNode .getBrowser ();
-      this .textureProjectorNode = textureProjectorNode;
+      this .browser   = lightNode .getBrowser ();
+      this .lightNode = lightNode;
 
       this .modelViewMatrix .assign (modelViewMatrix);
    },
+   renderShadowMap (renderObject)
+   { },
    setGlobalVariables (renderObject)
    {
       const
-         textureProjectorNode  = this .textureProjectorNode,
+         lightNode             = this .lightNode,
          cameraSpaceMatrix     = renderObject .getCameraSpaceMatrix () .get (),
          modelMatrix           = this .modelMatrix .assign (this .modelViewMatrix) .multRight (cameraSpaceMatrix),
-         invTextureSpaceMatrix = this .invTextureSpaceMatrix .assign (textureProjectorNode .getGlobal () ? modelMatrix : (Matrix4_default()).Identity);
+         invTextureSpaceMatrix = this .invTextureSpaceMatrix .assign (lightNode .getGlobal () ? modelMatrix : (Matrix4_default()).Identity);
 
-      this .rotation .setFromToVec ((Vector3_default()).zAxis, this .direction .assign (textureProjectorNode .getDirection ()) .negate ());
-      textureProjectorNode .straightenHorizon (this .rotation);
+      this .rotation .setFromToVec ((Vector3_default()).zAxis, this .direction .assign (lightNode .getDirection ()) .negate ());
+      lightNode .straightenHorizon (this .rotation);
 
-      invTextureSpaceMatrix .translate (textureProjectorNode .getLocation ());
+      invTextureSpaceMatrix .translate (lightNode .getLocation ());
       invTextureSpaceMatrix .rotate (this .rotation);
       invTextureSpaceMatrix .inverse ();
 
       const
-         width        = textureProjectorNode .getTexture () .getWidth (),
-         height       = textureProjectorNode .getTexture () .getHeight (),
-         nearDistance = textureProjectorNode .getNearDistance (),
-         farDistance  = textureProjectorNode .getFarDistance (),
-         fieldOfView  = textureProjectorNode .getFieldOfView ();
+         width        = lightNode .getTexture () .getWidth (),
+         height       = lightNode .getTexture () .getHeight (),
+         nearDistance = lightNode .getNearDistance (),
+         farDistance  = lightNode .getFarDistance (),
+         fieldOfView  = lightNode .getFieldOfView ();
 
       Camera_default().perspective (fieldOfView, nearDistance, farDistance, width, height, this .projectionMatrix);
 
-      if (! textureProjectorNode .getGlobal ())
+      if (! lightNode .getGlobal ())
          invTextureSpaceMatrix .multLeft (modelMatrix .inverse ());
 
-      this .invTextureSpaceProjectionMatrix .assign (invTextureSpaceMatrix) .multRight (this .projectionMatrix) .multRight (textureProjectorNode .getBiasMatrix ());
+      this .invTextureSpaceProjectionMatrix .assign (invTextureSpaceMatrix) .multRight (this .projectionMatrix) .multRight (lightNode .getBiasMatrix ());
 
       this .projectiveTextureMatrix .assign (cameraSpaceMatrix) .multRight (this .invTextureSpaceProjectionMatrix);
+      if (lightNode .getTexture ())
+         this .projectiveTextureMatrix .multRight (this .textureMatrix .set (... lightNode .getTexture () .getMatrix ()))
       this .projectiveTextureMatrixArray .set (this .projectiveTextureMatrix);
 
-      this .modelViewMatrix .multVecMatrix (this .location .assign (textureProjectorNode ._location .getValue ()));
+      this .modelViewMatrix .multVecMatrix (this .location .assign (lightNode ._location .getValue ()));
       this .locationArray .set (this .location);
    },
    setShaderUniforms (gl, shaderObject, renderObject)
@@ -434,11 +397,11 @@ Object .assign (TextureProjectorContainer .prototype,
          return;
 
       const
-         texture     = this .textureProjectorNode .getTexture (),
+         texture     = this .lightNode .getTexture (),
          textureUnit = this .browser .getTexture2DUnit ();
 
       gl .activeTexture (gl .TEXTURE0 + textureUnit);
-      gl .bindTexture (gl .TEXTURE_2D, texture .getTexture ());
+      gl .bindTexture (gl .TEXTURE_2D, texture ?.getTexture () ?? this .browser .getDefaultTexture2DWhite ());
       gl .uniform1i (shaderObject .x3d_ProjectiveTexture [i], textureUnit);
 
       gl .uniformMatrix4fv (shaderObject .x3d_ProjectiveTextureMatrix [i], false, this .projectiveTextureMatrixArray);
@@ -471,7 +434,7 @@ Object .assign (Object .setPrototypeOf (TextureProjector .prototype, TextureProj
 
       return fov > 0 && fov < Math .PI ? fov : Math .PI / 4;
    },
-   getTextureProjectors ()
+   getLights ()
    {
       return TextureProjectorCache;
    },
@@ -502,18 +465,28 @@ Object .defineProperties (TextureProjector,
    fieldDefinitions:
    {
       value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",     new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "description",  new (Fields_default()).SFString ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "on",           new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "global",       new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "location",     new (Fields_default()).SFVec3f (0, 0, 0)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "direction",    new (Fields_default()).SFVec3f (0, 0, 1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "upVector",     new (Fields_default()).SFVec3f (0, 0, 1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "fieldOfView",  new (Fields_default()).SFFloat (0.785398)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "nearDistance", new (Fields_default()).SFFloat (-1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "farDistance",  new (Fields_default()).SFFloat (-1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "aspectRatio",  new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "texture",      new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",         new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "description",      new (Fields_default()).SFString ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "global",           new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "on",               new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "color",            new (Fields_default()).SFColor (1, 1, 1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "intensity",        new (Fields_default()).SFFloat (1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "ambientIntensity", new (Fields_default()).SFFloat ()),
+
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "location",         new (Fields_default()).SFVec3f (0, 0, 0)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "direction",        new (Fields_default()).SFVec3f (0, 0, 1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "upVector",         new (Fields_default()).SFVec3f (0, 0, 1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "fieldOfView",      new (Fields_default()).SFFloat (0.785398)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "nearDistance",     new (Fields_default()).SFFloat (-1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "farDistance",      new (Fields_default()).SFFloat (-1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "aspectRatio",      new (Fields_default()).SFFloat ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "texture",          new (Fields_default()).SFNode ()),
+
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "shadows",          new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "shadowColor",      new (Fields_default()).SFColor ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "shadowIntensity",  new (Fields_default()).SFFloat (1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "shadowBias",       new (Fields_default()).SFFloat (0.005)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "shadowMapSize",    new (Fields_default()).SFInt32 (1024)),
       ]),
       enumerable: true,
    },
@@ -598,44 +571,47 @@ function TextureProjectorParallelContainer ()
    this .rotation                        = new (Rotation4_default()) ();
    this .projectiveTextureMatrix         = new (Matrix4_default()) ();
    this .projectiveTextureMatrixArray    = new Float32Array (16);
+   this .textureMatrix                   = new (Matrix4_default()) ();
 }
 
 Object .assign (TextureProjectorParallelContainer .prototype,
 {
-   set (textureProjectorNode, modelViewMatrix)
+   set (lightNode, groupNode, modelViewMatrix)
    {
-      this .browser              = textureProjectorNode .getBrowser ();
-      this .textureProjectorNode = textureProjectorNode;
+      this .browser   = lightNode .getBrowser ();
+      this .lightNode = lightNode;
 
       this .modelViewMatrix .assign (modelViewMatrix);
    },
+   renderShadowMap (renderObject)
+   { },
    setGlobalVariables (renderObject)
    {
       const
-         textureProjectorNode  = this .textureProjectorNode,
+         lightNode             = this .lightNode,
          cameraSpaceMatrix     = renderObject .getCameraSpaceMatrix () .get (),
          modelMatrix           = this .modelMatrix .assign (this .modelViewMatrix) .multRight (cameraSpaceMatrix),
-         invTextureSpaceMatrix = this .invTextureSpaceMatrix .assign (textureProjectorNode .getGlobal () ? modelMatrix : (Matrix4_default()).Identity);
+         invTextureSpaceMatrix = this .invTextureSpaceMatrix .assign (lightNode .getGlobal () ? modelMatrix : (Matrix4_default()).Identity);
 
-      this .rotation .setFromToVec ((Vector3_default()).zAxis, this .direction .assign (textureProjectorNode .getDirection ()) .negate ());
-      textureProjectorNode .straightenHorizon (this .rotation);
+      this .rotation .setFromToVec ((Vector3_default()).zAxis, this .direction .assign (lightNode .getDirection ()) .negate ());
+      lightNode .straightenHorizon (this .rotation);
 
-      invTextureSpaceMatrix .translate (textureProjectorNode .getLocation ());
+      invTextureSpaceMatrix .translate (lightNode .getLocation ());
       invTextureSpaceMatrix .rotate (this .rotation);
       invTextureSpaceMatrix .inverse ();
 
       const
-         width        = textureProjectorNode .getTexture () .getWidth (),
-         height       = textureProjectorNode .getTexture () .getHeight (),
+         width        = lightNode .getTexture () .getWidth (),
+         height       = lightNode .getTexture () .getHeight (),
          aspect       = width / height,
-         minimumX     = textureProjectorNode .getMinimumX (),
-         maximumX     = textureProjectorNode .getMaximumX (),
-         minimumY     = textureProjectorNode .getMinimumY (),
-         maximumY     = textureProjectorNode .getMaximumY (),
-         sizeX        = textureProjectorNode .getSizeX (),
-         sizeY        = textureProjectorNode .getSizeY (),
-         nearDistance = textureProjectorNode .getNearDistance (),
-         farDistance  = textureProjectorNode .getFarDistance ();
+         minimumX     = lightNode .getMinimumX (),
+         maximumX     = lightNode .getMaximumX (),
+         minimumY     = lightNode .getMinimumY (),
+         maximumY     = lightNode .getMaximumY (),
+         sizeX        = lightNode .getSizeX (),
+         sizeY        = lightNode .getSizeY (),
+         nearDistance = lightNode .getNearDistance (),
+         farDistance  = lightNode .getFarDistance ();
 
       if (aspect > sizeX / sizeY)
       {
@@ -654,15 +630,17 @@ Object .assign (TextureProjectorParallelContainer .prototype,
          Camera_default().ortho (minimumX, maximumX, center - size1_2, center + size1_2, nearDistance, farDistance, this .projectionMatrix);
       }
 
-      if (! textureProjectorNode .getGlobal ())
+      if (! lightNode .getGlobal ())
          invTextureSpaceMatrix .multLeft (modelMatrix .inverse ());
 
-      this .invTextureSpaceProjectionMatrix .assign (invTextureSpaceMatrix) .multRight (this .projectionMatrix) .multRight (textureProjectorNode .getBiasMatrix ());
+      this .invTextureSpaceProjectionMatrix .assign (invTextureSpaceMatrix) .multRight (this .projectionMatrix) .multRight (lightNode .getBiasMatrix ());
 
       this .projectiveTextureMatrix .assign (cameraSpaceMatrix) .multRight (this .invTextureSpaceProjectionMatrix);
+      if (lightNode .getTexture ())
+         this .projectiveTextureMatrix .multRight (this .textureMatrix .set (... lightNode .getTexture () .getMatrix ()))
       this .projectiveTextureMatrixArray .set (this .projectiveTextureMatrix);
 
-      this .modelViewMatrix .multVecMatrix (this .location .assign (textureProjectorNode ._location .getValue ()));
+      this .modelViewMatrix .multVecMatrix (this .location .assign (lightNode ._location .getValue ()));
       this .locationArray .set (this .location);
    },
    setShaderUniforms (gl, shaderObject, renderObject)
@@ -673,11 +651,11 @@ Object .assign (TextureProjectorParallelContainer .prototype,
          return;
 
       const
-         texture     = this .textureProjectorNode .getTexture (),
+         texture     = this .lightNode .getTexture (),
          textureUnit = this .browser .getTexture2DUnit ();
 
       gl .activeTexture (gl .TEXTURE0 + textureUnit);
-      gl .bindTexture (gl .TEXTURE_2D, texture .getTexture ());
+      gl .bindTexture (gl .TEXTURE_2D, texture ?.getTexture () ?? this .browser .getDefaultTexture2DWhite ());
       gl .uniform1i (shaderObject .x3d_ProjectiveTexture [i], textureUnit);
 
       gl .uniformMatrix4fv (shaderObject .x3d_ProjectiveTextureMatrix [i], false, this .projectiveTextureMatrixArray);
@@ -744,7 +722,7 @@ Object .assign (Object .setPrototypeOf (TextureProjectorParallel .prototype, Tex
    {
       return this .sizeY;
    },
-   getTextureProjectors ()
+   getLights ()
    {
       return TextureProjectorParallelCache;
    },
@@ -775,18 +753,28 @@ Object .defineProperties (TextureProjectorParallel,
    fieldDefinitions:
    {
       value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",     new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "description",  new (Fields_default()).SFString ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "on",           new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "global",       new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "location",     new (Fields_default()).SFVec3f (0, 0, 0)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "direction",    new (Fields_default()).SFVec3f (0, 0, 1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "upVector",     new (Fields_default()).SFVec3f (0, 0, 1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "fieldOfView",  new (Fields_default()).MFFloat (-1, -1, 1, 1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "nearDistance", new (Fields_default()).SFFloat (-1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "farDistance",  new (Fields_default()).SFFloat (-1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "aspectRatio",  new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "texture",      new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",        new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "description",     new (Fields_default()).SFString ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "global",          new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "on",              new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "color",           new (Fields_default()).SFColor (1, 1, 1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "intensity",       new (Fields_default()).SFFloat (1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "ambientIntensity",new (Fields_default()).SFFloat ()),
+
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "location",        new (Fields_default()).SFVec3f (0, 0, 0)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "direction",       new (Fields_default()).SFVec3f (0, 0, 1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "upVector",        new (Fields_default()).SFVec3f (0, 0, 1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "fieldOfView",     new (Fields_default()).MFFloat (-1, -1, 1, 1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "nearDistance",    new (Fields_default()).SFFloat (-1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "farDistance",     new (Fields_default()).SFFloat (-1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "aspectRatio",     new (Fields_default()).SFFloat ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "texture",         new (Fields_default()).SFNode ()),
+
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "shadows",         new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "shadowColor",     new (Fields_default()).SFColor ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "shadowIntensity", new (Fields_default()).SFFloat (1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "shadowBias",      new (Fields_default()).SFFloat (0.005)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "shadowMapSize",   new (Fields_default()).SFInt32 (1024)),
       ]),
       enumerable: true,
    },

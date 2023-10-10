@@ -41,13 +41,13 @@ Author-provided prose that describes intended purpose of the url asset.
 
 - Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
 
-### SFBool [in, out] **on** TRUE
-
-Enables/disables this texture projection source.
-
 ### SFBool [in, out] **global** TRUE
 
 Global texture projection illuminates all objects within their volume of influence. Scoped texture projection (*global* false) only illuminates objects within the same transformation hierarchy.
+
+### SFBool [in, out] **on** TRUE
+
+Enables/disables this texture projection source.
 
 ### SFVec3f [in, out] **location** 0 0 0 <small>(-∞,∞)</small>
 

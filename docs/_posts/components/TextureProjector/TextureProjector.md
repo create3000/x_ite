@@ -41,13 +41,13 @@ Author-provided prose that describes intended purpose of the url asset.
 
 - Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
 
-### SFBool [in, out] **on** TRUE
-
-Enables/disables this texture projection source.
-
 ### SFBool [in, out] **global** TRUE
 
 Global texture projection illuminates all objects within their volume of influence. Scoped texture projection (*global* false) only illuminates objects within the same transformation hierarchy.
+
+### SFBool [in, out] **on** TRUE
+
+Enables/disables this texture projection source.
 
 ### SFVec3f [in, out] **location** 0 0 0 <small>(-∞,∞)</small>
 
@@ -84,6 +84,26 @@ Maximum distance necessary for texture display.
 ### SFNode [in, out] **texture** NULL <small>[X3DTexture2DNode]</small>
 
 Single contained *texture* node (ImageTexture, MovieTexture, PixelTexture, MultiTexture) that maps image(s) to surface geometry.
+
+### SFBool [in, out] **shadows** FALSE
+
+*shadows* field indicates whether or not this light casts a shadow behind illuminated X3DShapeNode geometry.
+
+### SFColor [in, out] **shadowColor** 0 0 0 <small>[0,1]</small> <small class="yellow">non standard</small>
+
+Color of shadow, applied to colors of objects.
+
+### SFFloat [in, out] **shadowIntensity** 1 <small>[0,1]</small>
+
+*shadowIntensity* field defines how much light is obscured by shapes that cast shadows, ranging from 0 (light not obscured, no visible shadows) to 1 (light completely obscured, full-intensity shadows).
+
+### SFFloat [in, out] **shadowBias** 0.005 <small>[0,1]</small> <small class="yellow">non standard</small>
+
+The shadowBias value controls the visibility of *shadow acne*.
+
+### SFInt32 [ ] **shadowMapSize** 1024 <small>[0,∞)</small> <small class="yellow">non standard</small>
+
+Size of the shadow map in pixels, must be power of two.
 
 #### Hints
 

@@ -1853,8 +1853,7 @@ const UnlitMaterial_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.12.5")] 
 var UnlitMaterial_default = /*#__PURE__*/__webpack_require__.n(UnlitMaterial_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/VolumeRendering/VolumeStyle.vs.js
 const VolumeStyle_vs_default_ = /* glsl */ `#version 300 es
-precision highp float;precision highp int;uniform mat4 x3d_ProjectionMatrix;uniform mat4 x3d_ModelViewMatrix;uniform mat4 x3d_TextureMatrix[1];in vec4 x3d_TexCoord0;in vec4 x3d_Vertex;out vec3 vertex;out vec4 texCoord;void main(){vec4 position=x3d_ModelViewMatrix*x3d_Vertex;vertex=position.xyz;texCoord=x3d_TextureMatrix[0]*x3d_TexCoord0;gl_Position=x3d_ProjectionMatrix*position;}
-`
+precision highp float;precision highp int;uniform mat4 x3d_ProjectionMatrix;uniform mat4 x3d_ModelViewMatrix;uniform mat4 x3d_TextureTransformMatrix[1];in vec4 x3d_TexCoord0;in vec4 x3d_Vertex;out vec3 vertex;out vec4 texCoord;void main(){vec4 position=x3d_ModelViewMatrix*x3d_Vertex;vertex=position.xyz;texCoord=x3d_TextureTransformMatrix[0]*x3d_TexCoord0;gl_Position=x3d_ProjectionMatrix*position;}`
 ;
 
 Namespace_default().add ("VolumeStyle.vs", "x_ite/Browser/VolumeRendering/VolumeStyle.vs", VolumeStyle_vs_default_);
@@ -1872,8 +1871,7 @@ vec4 finalColor=getTextureColor(texCoord.stp/texCoord.q);
 #if defined(X3D_FOG)
 finalColor.rgb=getFogColor(finalColor.rgb);
 #endif
-x3d_FragColor=finalColor;}
-`
+x3d_FragColor=finalColor;}`
 ;
 
 Namespace_default().add ("VolumeStyle.fs", "x_ite/Browser/VolumeRendering/VolumeStyle.fs", VolumeStyle_fs_default_);
@@ -1946,15 +1944,13 @@ Object .assign (Object .setPrototypeOf (VolumeMaterial .prototype, (UnlitMateria
    },
    getShader (geometryContext, renderContext)
    {
-      const { fogNode, objectsCount } = renderContext;
+      const { fogNode, objectsKeys } = renderContext;
 
       let key = "";
 
       key += fogNode ?.getFogType () ?? 0;
       key += ".";
-      key += objectsCount [0]; // Clip planes
-      key += ".";
-      key += objectsCount [1]; // Lights
+      key += objectsKeys .sort () .join (""); // ClipPlane, X3DLightNode
 
       return this .volumeShaderNodes .get (key) ?? this .createShader (key, geometryContext, renderContext);
    },
@@ -1964,7 +1960,7 @@ Object .assign (Object .setPrototypeOf (VolumeMaterial .prototype, (UnlitMateria
          browser = this .getBrowser (),
          options = [ ];
 
-      const { fogNode, objectsCount } = renderContext;
+      const { fogNode, objectsKeys } = renderContext;
 
       switch (fogNode ?.getFogType ())
       {
@@ -1976,16 +1972,22 @@ Object .assign (Object .setPrototypeOf (VolumeMaterial .prototype, (UnlitMateria
             break;
       }
 
-      if (objectsCount [0])
+      const
+         numClipPlanes        = objectsKeys .reduce ((a, c) => a + (c === 0), 0),
+         numLights            = objectsKeys .reduce ((a, c) => a + (c === 1), 0),
+         numEnvironmentLights = objectsKeys .reduce ((a, c) => a + (c === 2), 0),
+         numTextureProjectors = objectsKeys .reduce ((a, c) => a + (c === 3), 0);
+
+      if (numClipPlanes)
       {
          options .push ("X3D_CLIP_PLANES")
-         options .push (`X3D_NUM_CLIP_PLANES ${Math .min (objectsCount [0], browser .getMaxClipPlanes ())}`);
+         options .push (`X3D_NUM_CLIP_PLANES ${Math .min (numClipPlanes, browser .getMaxClipPlanes ())}`);
       }
 
-      if (objectsCount [1])
+      if (numLights)
       {
          options .push ("X3D_LIGHTING")
-         options .push (`X3D_NUM_LIGHTS ${Math .min (objectsCount [1], browser .getMaxLights ())}`);
+         options .push (`X3D_NUM_LIGHTS ${Math .min (numLights, browser .getMaxLights ())}`);
       }
 
       const shaderNode = this .volumeDataNode .createShader (options, VolumeStyle_vs, VolumeStyle_fs);
@@ -2031,6 +2033,9 @@ Namespace_default().add ("VolumeMaterial", "x_ite/Browser/VolumeRendering/Volume
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Vector3\")"
 const Vector3_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.12.5")] .require ("standard/Math/Numbers/Vector3");
 var Vector3_default = /*#__PURE__*/__webpack_require__.n(Vector3_namespaceObject);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Matrix4\")"
+const Matrix4_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.12.5")] .require ("standard/Math/Numbers/Matrix4");
+var Matrix4_default = /*#__PURE__*/__webpack_require__.n(Matrix4_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/VolumeRendering/X3DVolumeDataNode.js
 /*******************************************************************************
  *
@@ -2078,6 +2083,7 @@ var Vector3_default = /*#__PURE__*/__webpack_require__.n(Vector3_namespaceObject
  * For Silvio, Joy and Adi.
  *
  ******************************************************************************/
+
 
 
 
@@ -2239,7 +2245,7 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, (X3DChildN
    },
    set_textureTransform__ ()
    {
-      this .textureNormalMatrixArray .set (this .textureTransformNode .getMatrix () .submatrix .inverse ());
+      this .textureNormalMatrixArray .set (new (Matrix4_default()) (... this .textureTransformNode .getMatrix ()) .submatrix .inverse ());
    },
    traverse (type, renderObject)
    {

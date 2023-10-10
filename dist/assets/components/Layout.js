@@ -146,8 +146,7 @@ var Namespace_default = /*#__PURE__*/__webpack_require__.n(Namespace_namespaceOb
 const
    _screenTextureProperties = Symbol ();
 
-function X3DLayoutContext ()
-{ }
+function X3DLayoutContext () { }
 
 Object .assign (X3DLayoutContext .prototype,
 {
@@ -1636,7 +1635,7 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, (X3DTextGeometry_
          // If the canvas is to large imageData is null.
 
          if (imageData)
-            this .textureNode .setTexture (canvas .width, canvas .height, true, new Uint8Array (imageData .data .buffer), false);
+            this .textureNode .setTextureFromData (canvas .width, canvas .height, true, new Uint8Array (imageData .data .buffer));
          else
             this .textureNode .clear ();
       };

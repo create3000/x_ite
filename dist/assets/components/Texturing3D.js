@@ -1,7 +1,7 @@
 /* X_ITE v8.12.5 */(() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 795:
+/***/ 554:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -38,7 +38,7 @@ var Ib=[cx,_q,cr,Yr,as,fs,hs,Hu,Su,cx,cx,cx,cx,cx,cx,cx];var Jb=[dx,si,gi,Wh,Kh,
 
 /***/ }),
 
-/***/ 69:
+/***/ 207:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -72,7 +72,7 @@ var _a=[yj,od,ef,yj];var $a=[zj,Li,di,bi,Kb,Lb,Mb,Nb,Rc,Sc,Uc,jd,xd,Ye,lf,yd,zd,
 
 /***/ }),
 
-/***/ 515:
+/***/ 624:
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 /*! dicom-parser - 1.8.12 - 2023-02-20 | (c) 2017 Chris Hafey | https://github.com/cornerstonejs/dicomParser */
@@ -4028,7 +4028,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_zlib__;
 
 /***/ }),
 
-/***/ 263:
+/***/ 375:
 /***/ ((module) => {
 
 /* -*- tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- /
@@ -5183,7 +5183,7 @@ function decode(jpegData, userOpts = {}) {
 
 /***/ }),
 
-/***/ 3:
+/***/ 241:
 /***/ ((module) => {
 
 (function(f){if(true){module.exports=f()}else { var g; }})(function(){var define,module,exports;return (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c=undefined;if(!f&&c)return require(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u=undefined,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
@@ -7190,11 +7190,11 @@ Object .assign (Object .setPrototypeOf (X3DTexture3DNode .prototype, (X3DSingleT
    {
       const gl = this .getBrowser () .getContext ();
 
-      this .setTexture (1, 1, 1, false, gl .RGBA, defaultData);
+      this .setTextureFromData (1, 1, 1, false, gl .RGBA, defaultData);
 
       this .data = null;
    },
-   setTexture (width, height, depth, transparent, format, data)
+   setTextureFromData (width, height, depth, transparent, format, data)
    {
       this .width  = width;
       this .height = height;
@@ -7232,6 +7232,7 @@ Object .assign (Object .setPrototypeOf (X3DTexture3DNode .prototype, (X3DSingleT
       gl .activeTexture (gl .TEXTURE0 + textureUnit);
       gl .bindTexture (gl .TEXTURE_3D, this .getTexture ());
       gl .uniform1i (channel .texture3D, textureUnit);
+      gl .uniformMatrix4fv (channel .textureMatrix, false, this .getMatrix ());
    },
 });
 
@@ -7936,11 +7937,11 @@ const NRRDParser_default_ = NRRDParser;
 Namespace_default().add ("NRRDParser", "x_ite/Browser/Texturing3D/NRRDParser", NRRDParser_default_);
 /* harmony default export */ const Texturing3D_NRRDParser = (NRRDParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Texturing3D/DICOMParser.js
-/* provided dependency */ var dicomParser = __webpack_require__(515);
-/* provided dependency */ var JpegImage = __webpack_require__(263);
-/* provided dependency */ var jpeg = __webpack_require__(3);
-/* provided dependency */ var CharLS = __webpack_require__(795);
-/* provided dependency */ var OpenJPEG = __webpack_require__(69);
+/* provided dependency */ var dicomParser = __webpack_require__(624);
+/* provided dependency */ var JpegImage = __webpack_require__(375);
+/* provided dependency */ var jpeg = __webpack_require__(241);
+/* provided dependency */ var CharLS = __webpack_require__(554);
+/* provided dependency */ var OpenJPEG = __webpack_require__(207);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -9160,7 +9161,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, Texturing3D_X
             {
                const internalType = this .getInternalType (nrrd .components);
 
-               this .setTexture (nrrd .width, nrrd .height, nrrd .depth, false, internalType, nrrd .data);
+               this .setTextureFromData (nrrd .width, nrrd .height, nrrd .depth, false, internalType, nrrd .data);
                this .setLoadState ((X3DConstants_default()).COMPLETE_STATE);
                return;
             }
@@ -9171,7 +9172,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, Texturing3D_X
             {
                const internalType = this .getInternalType (dicom .components);
 
-               this .setTexture (dicom .width, dicom .height, dicom .depth, false, internalType, dicom .data);
+               this .setTextureFromData (dicom .width, dicom .height, dicom .depth, false, internalType, dicom .data);
                this .setLoadState ((X3DConstants_default()).COMPLETE_STATE);
                return;
             }
@@ -9420,7 +9421,7 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, Texturing3
             }
          }
 
-         this .setTexture (w, h, numberOfSlices, transparent, gl .RGBA, data);
+         this .setTextureFromData (w, h, numberOfSlices, transparent, gl .RGBA, data);
          this .setLoadState ((X3DConstants_default()).COMPLETE_STATE);
       }
       catch (error)
@@ -9665,7 +9666,7 @@ Object .assign (Object .setPrototypeOf (PixelTexture3D .prototype, Texturing3D_X
             }
          }
 
-         this .setTexture (width, height, depth, transparent, format, data);
+         this .setTextureFromData (width, height, depth, transparent, format, data);
          this ._loadState = (X3DConstants_default()).COMPLETE_STATE;
       };
    })(),
@@ -10108,10 +10109,6 @@ Object .assign (Object .setPrototypeOf (TextureTransform3D .prototype, (X3DSingl
 
       this .eventsProcessed ();
    },
-   getMatrix ()
-   {
-      return this .matrix;
-   },
    eventsProcessed: (() =>
    {
       const vector = new (Vector3_default()) (0, 0, 0);
@@ -10258,10 +10255,6 @@ Object .assign (Object .setPrototypeOf (TextureTransformMatrix3D .prototype, (X3
       this .addInterest ("eventsProcessed", this);
 
       this .eventsProcessed ();
-   },
-   getMatrix ()
-   {
-      return this ._matrix .getValue ();
    },
    eventsProcessed ()
    {
