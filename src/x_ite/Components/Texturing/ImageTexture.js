@@ -144,8 +144,6 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
 
       try
       {
-         const gl = this .getBrowser () .getContext ();
-
          if (texture ?.target === this .getTarget ())
          {
             this .setTexture (texture);
