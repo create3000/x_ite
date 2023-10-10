@@ -174,9 +174,7 @@ getTexCoord (const in int textureTransformMapping, const in int textureCoordinat
       texCoord = getTexCoord (x3d_TextureCoordinateGenerator [3], textureTransformMapping, textureCoordinateMapping);
    #endif
 
-   texCoord .stp /= texCoord .q;
-   texCoord .q    = 1.0;
-   texCoord       = textureMatrix * texCoord;
+   texCoord = textureMatrix * vec4 (texCoord .stp / texCoord .q, 1.0);
 
    #if defined (X3D_GEOMETRY_2D)
       if (gl_FrontFacing == false)
