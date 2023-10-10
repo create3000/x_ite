@@ -94,8 +94,6 @@ Object .assign (EnvironmentLightContainer .prototype,
       gl .uniformMatrix3fv (shaderObject .x3d_EnvironmentLightRotation, false,  lightNode .getRotation ());
       gl .uniform1i        (shaderObject .x3d_EnvironmentLightSpecularMipCount, lightNode .getSpecularMipCount ());
 
-      console .log (lightNode .getSpecularMipCount ())
-
       const
          diffuseTexture      = lightNode .getDiffuseTexture (),
          diffuseTextureUnit  = browser .getTextureCubeUnit (),
