@@ -203,6 +203,16 @@ Current elapsed time since AudioClip activated/running, cumulative in seconds, a
 - Duration value of -1 implies that media data has not yet loaded or is unavailable for some reason.
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
+## Supported File Formats
+
+Any audio file format supported by the web browser, but at least:
+
+| Encoding | File Extension | MIME Type  |
+|----------|----------------|------------|
+| MP3      | .mp3           | audio/mp3  |
+| WAV      | .wav           | audio/wav  |
+| OGG      | .ogg           | audio/ogg  |
+
 ## Advice
 
 ### Hints

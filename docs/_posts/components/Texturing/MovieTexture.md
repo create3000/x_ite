@@ -235,6 +235,16 @@ Whether to repeat texture along T axis vertically from top to bottom.
 
 Single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images.
 
+## Supported File Formats
+
+Any video file format supported by the web browser, but at least:
+
+| Encoding | File Extension | MIME Type  |
+|----------|----------------|------------|
+| MP4      | .mp4           | video/mp4  |
+| WebM     | .webm          | video/webm |
+| OGG      | .ogg           | video/ogg  |
+
 ## Advice
 
 ### Hints
