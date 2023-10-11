@@ -416,7 +416,7 @@ sub update_field {
 
 sub reorder_sections {
    $file     = shift;
-   @sections = ("Overview", "Hierarchy", "Fields", "Advice", "Example", "See Also");
+   @sections = ("Overview", "Hierarchy", "Fields", "Supported File Formats", "Advice", "Example", "See Also");
    $sections = { };
 
    foreach $s (@sections)
