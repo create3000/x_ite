@@ -110,7 +110,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, X3DTexture3DN
             if (URL .pathname .match (/\.ktx2?$/))
             {
                return this .getBrowser () .getKTXDecoder ()
-                  .then (decoder => decoder .loadKtxFromBuffer (data))
+                  .then (decoder => decoder .loadKTXFromBuffer (data))
                   .then (texture => this .setKTXTexture (texture, URL));
             }
 

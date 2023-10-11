@@ -118,7 +118,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
       if (this .URL .pathname .match (/\.ktx2?$/))
       {
          this .getBrowser () .getKTXDecoder ()
-            .then (decoder => decoder .loadKtxFromUri (this .URL))
+            .then (decoder => decoder .loadKTXFromURL (this .URL))
             .then (texture => this .setKTXTexture (texture))
             .catch (error => this .setError ({ type: error .message }));
       }
