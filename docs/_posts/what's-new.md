@@ -7,7 +7,7 @@ tags: [New, Releases]
 ---
 ## X_ITE v8.14.0 Released
 
-*Leipzig, 1th October 2023:* We right now released a new version.
+*Leipzig, 1th October 2023:* We right now released a new version. Unfortunately, in this release the shader variable "x3d_TextureMatrix" has changed to "x3d_TextureTransformMatrix", also images from ImagesTexture are now not flipped at the y-axis anymore. These are breaking changes.
 
 ### New Features
 
