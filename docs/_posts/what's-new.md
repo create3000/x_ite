@@ -16,6 +16,7 @@ tags: [New, Releases]
 * Implemented EnvironmentLight node.
 * ES Module Version of X_ITE as x_ite.mjs.
 * Typescript Types for Intellisense.
+* PLY 3d format parser.
 
 ## X_ITE v8.10.0 Released
 
