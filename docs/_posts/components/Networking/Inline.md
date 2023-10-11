@@ -157,7 +157,7 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 | PLY              | .ply           | model/ply       |
 | SVG Document     | .svg, .svgz    | image/svg+xml   |
 
->**Tip:** All files can be compressed using GZip compression (usually denoted by a 'z' at the end of the file suffix). This saves bandwidth and speeds up download time.
+>**Tip:** All files can be compressed using GZip compression (usually denoted by a 'z' at the end of the filename suffix). This saves bandwidth and speeds up download time.
 {: .prompt-tip }
 
 ## Advice
