@@ -118,6 +118,7 @@ All image file formats supported by the web-browser, but at least:
 | PNG              | .png           | image/png       |
 | JPEG             | .jpeg, .jpg    | image/jpeg      |
 | GIF              | .gif           | image/gif       |
+| KTX2             | .ktx2          | image/ktx2      |
 
 ## Advice
 
