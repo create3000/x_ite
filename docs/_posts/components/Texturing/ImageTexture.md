@@ -111,6 +111,14 @@ Single contained TextureProperties node that can specify additional visual attri
 
 ## Supported File Formats
 
+All image file formats supported by your web-browser, but at least:
+
+| Encoding         | File Extension | MIME Type       |
+|------------------|----------------|-----------------|
+| PNG              | .png           | image/png       |
+| JPEG             | .jpeg, .jpg    | image/jpeg      |
+| GIF              | .gif           | image/gif       |
+
 ## Advice
 
 ### Hints
