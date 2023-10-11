@@ -56,7 +56,7 @@ function X3DSingleTextureNode (executionContext)
    this .addType (X3DConstants .X3DSingleTextureNode);
 
    this .levels          = 1;
-   this .generateMipmaps = true;
+   this .generateMipMaps = true;
 }
 
 Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, X3DTextureNode .prototype),
@@ -97,13 +97,13 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, X3DText
    {
       this .levels = value;
    },
-   getGenerateMipmaps ()
+   getGenerateMipMaps ()
    {
-      return this .generateMipmaps;
+      return this .generateMipMaps;
    },
-   setGenerateMipmaps (value)
+   setGenerateMipMaps (value)
    {
-      this .generateMipmaps = value;
+      this .generateMipMaps = value;
    },
    set_textureProperties__ (update)
    {
@@ -146,7 +146,7 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, X3DText
          }
          else
          {
-            if (this .generateMipmaps)
+            if (this .generateMipMaps)
             {
                this .levels = textureProperties ._generateMipMaps .getValue ()
                   ? 1 + Math .log2 (Math .max (width, height))
