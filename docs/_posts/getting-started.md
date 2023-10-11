@@ -664,7 +664,7 @@ X_ITE can load several file formats, either directly as the source of the \<x3d-
 | PLY              | .ply           | model/ply       |
 | SVG Document     | .svg, .svgz    | image/svg+xml   |
 
->**Tip:** All files can be compressed using GZip compression. This saves bandwidth and speeds up download time.
+>**Tip:** All files can be compressed using GZip compression (usually denoted by a 'z' at the end of the file suffix). This saves bandwidth and speeds up download time.
 {: .prompt-tip }
 
 If you have an own web-server see [how to configure your web server](how-to-configure-your-web-server). If you are looking for an online X3D file format converter [see here](laboratory/x3d-file-converter).

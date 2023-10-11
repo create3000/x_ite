@@ -143,6 +143,23 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 - [X3D Architecture, 10.2.2 Bounding boxes](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/components/grouping.html#BoundingBoxes){:target="_blank"}
 - [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/components/grouping.html#X3DBoundedObject){:target="_blank"}
 
+### Supported File Formats
+
+| Encoding         | File Extension | MIME Type       |
+|------------------|----------------|-----------------|
+| X3D XML          | .x3d, .x3dz    | model/x3d+xml   |
+| X3D JSON         | .x3dj, .x3djz  | model/x3d+json  |
+| X3D Classic VRML | .x3dv, .x3dvz  | model/x3d+vrml  |
+| VRML             | .wrl, .wrz     | model/vrml      |
+| glTF             | .gltf, .glb    | model/gltf+json |
+| Wavefront OBJ    | .obj           | model/obj       |
+| STL              | .stl           | model/stl       |
+| PLY              | .ply           | model/ply       |
+| SVG Document     | .svg, .svgz    | image/svg+xml   |
+
+>**Tip:** All files can be compressed using GZip compression (usually denoted by a 'z' at the end of the file suffix). This saves bandwidth and speeds up download time.
+{: .prompt-tip }
+
 ## Advice
 
 ### Hints
