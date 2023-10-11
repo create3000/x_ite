@@ -76,10 +76,7 @@ Object .assign (Object .setPrototypeOf (VolumeData .prototype, X3DVolumeDataNode
 
       this ._renderStyle .addInterest ("set_renderStyle__", this);
       this ._voxels      .addInterest ("set_voxels__",      this);
-
-      this ._renderStyle .addInterest ("updateShader", this);
-
-      this .getAppearance () ._texture   = this ._voxels;
+      this ._renderStyle .addInterest ("updateShader",      this);
 
       this .set_renderStyle__ ();
       this .set_voxels__ ();

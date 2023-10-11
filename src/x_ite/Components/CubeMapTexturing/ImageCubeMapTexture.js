@@ -143,6 +143,9 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
    },
    setKTXTexture (texture)
    {
+      if (texture .target !== this .getTarget ())
+         return this .setError ({ type: "Invalid KTX texture target, must be 'TEXTURE_CUBE_MAP'." });
+
       if (DEVELOPMENT)
       {
          if (this .URL .protocol !== "data:")
@@ -151,21 +154,14 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
 
       try
       {
-         if (texture ?.target === this .getTarget ())
-         {
-            this .setTexture (texture);
-            this .setTransparent (false);
-            this .setLevels (texture .levels);
-            this .setSize (texture .baseWidth);
-            this .setGenerateMipMaps (false);
-            this .updateTextureParameters ();
+         this .setTexture (texture);
+         this .setTransparent (false);
+         this .setLevels (texture .levels);
+         this .setSize (texture .baseWidth);
+         this .setGenerateMipMaps (false);
+         this .updateTextureParameters ();
 
-            this .setLoadState (X3DConstants .COMPLETE_STATE);
-         }
-         else
-         {
-            this .setError ({ type: "Invalid KTX texture target, must be 'TEXTURE_CUBE_MAP'." });
-         }
+         this .setLoadState (X3DConstants .COMPLETE_STATE);
       }
       catch (error)
       {

@@ -77,49 +77,30 @@ export default class KTXDecoder {
       await this .initialized;
 
       const response = await fetch (uri);
-      const data     = new Uint8Array (await response .arrayBuffer ());
-      const texture  = new this .libktx .ktxTexture (data);
 
-      this .transcode (texture);
-
-      const uploadResult = texture .glUpload ();
-
-      if (uploadResult .texture == null)
-      {
-         console .error ("Could not load KTX data");
-         return undefined;
-      }
-
-      uploadResult .texture .levels     = 1 + Math .floor (Math .log2 (texture .baseWidth));
-      uploadResult .texture .baseWidth  = texture .baseWidth;
-      uploadResult .texture .baseHeight = texture .baseHeight;
-      uploadResult .texture .baseDepth  = texture .baseDepth;
-      uploadResult .texture .target     = uploadResult .target;
-
-      return uploadResult .texture;
+      return this .loadKtxFromBuffer (await response .arrayBuffer ());
    }
 
-   async loadKtxFromBuffer(data)
+   async loadKtxFromBuffer (arrayBuffer)
    {
       await this .initialized;
 
+      const data    = new Uint8Array (arrayBuffer);
       const texture = new this .libktx .ktxTexture (data);
 
       this .transcode (texture);
 
       const uploadResult = texture .glUpload ();
 
-      if (uploadResult .texture === null)
-      {
-         console .error ("Could not load KTX data");
-         return undefined;
-      }
+      if (uploadResult .texture == null)
+         throw new Error ("Could not load KTX data");
 
-      uploadResult .texture .levels     = 1 + Math .floor (Math .log2 (texture .baseWidth));
-      uploadResult .texture .baseWidth  = texture .baseWidth;
-      uploadResult .texture .baseHeight = texture .baseHeight;
-      uploadResult .texture .baseDepth  = texture .baseDepth;
-      uploadResult .texture .target     = uploadResult .target;
+      uploadResult .texture .levels        = 1 + Math .floor (Math .log2 (texture .baseWidth));
+      uploadResult .texture .baseWidth     = texture .baseWidth;
+      uploadResult .texture .baseHeight    = texture .baseHeight;
+      uploadResult .texture .baseDepth     = texture .baseDepth ?? 1;
+      uploadResult .texture .numComponents = texture .numComponents;
+      uploadResult .texture .target        = uploadResult .target;
 
       return uploadResult .texture;
    }

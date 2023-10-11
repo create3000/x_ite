@@ -74,15 +74,13 @@ Object .assign (Object .setPrototypeOf (IsoSurfaceVolumeData .prototype, X3DVolu
       if (gl .getVersion () < 2)
          return;
 
-      this ._gradients          .addInterest ("set_gradients__",   this);
-      this ._renderStyle        .addInterest ("set_renderStyle__", this);
+      this ._gradients        .addInterest ("set_gradients__",   this);
+      this ._renderStyle      .addInterest ("set_renderStyle__", this);
 
-      this ._contourStepSize    .addInterest ("updateShader", this);
-      this ._surfaceValues      .addInterest ("updateShader", this);
-      this ._surfaceTolerance   .addInterest ("updateShader", this);
-      this ._renderStyle        .addInterest ("updateShader", this);
-
-      this .getAppearance () ._texture = this ._voxels;
+      this ._contourStepSize  .addInterest ("updateShader", this);
+      this ._surfaceValues    .addInterest ("updateShader", this);
+      this ._surfaceTolerance .addInterest ("updateShader", this);
+      this ._renderStyle      .addInterest ("updateShader", this);
 
       this .set_gradients__ ();
       this .set_renderStyle__ ();

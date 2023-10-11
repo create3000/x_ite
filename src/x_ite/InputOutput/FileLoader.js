@@ -282,7 +282,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
             return this .foreign (this .URL .href, this .target);
       }
 
-      this .callback ($.ungzip (await response .arrayBuffer ()), this .URL);
+      await this .callback ($.ungzip (await response .arrayBuffer ()), this .URL);
    },
    checkResponse (response)
    {

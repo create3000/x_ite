@@ -82,8 +82,6 @@ Object .assign (Object .setPrototypeOf (SegmentedVolumeData .prototype, X3DVolum
       this ._segmentIdentifiers .addInterest ("updateShader", this);
       this ._renderStyle        .addInterest ("updateShader", this);
 
-      this .getAppearance () ._texture = this ._voxels;
-
       this .set_segmentIdentifiers__ ();
       this .set_renderStyle__ ();
       this .set_voxels__ ();

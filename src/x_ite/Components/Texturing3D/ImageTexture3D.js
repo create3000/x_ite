@@ -54,6 +54,7 @@ import X3DConstants         from "../../Base/X3DConstants.js";
 import NRRDParser           from "../../Browser/Texturing3D/NRRDParser.js";
 import DICOMParser          from "../../Browser/Texturing3D/DICOMParser.js";
 import FileLoader           from "../../InputOutput/FileLoader.js";
+import DEVELOPMENT          from "../../DEVELOPMENT.js";
 
 function ImageTexture3D (executionContext)
 {
@@ -96,7 +97,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, X3DTexture3DN
    loadData ()
    {
       new FileLoader (this) .loadDocument (this ._url,
-      function (data)
+      function (data, URL)
       {
          if (data === null)
          {
@@ -106,6 +107,13 @@ Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, X3DTexture3DN
          }
          else if (data instanceof ArrayBuffer)
          {
+            if (URL .pathname .match (/\.ktx2?$/))
+            {
+               return this .getBrowser () .getKTXDecoder ()
+                  .then (decoder => decoder .loadKtxFromBuffer (data))
+                  .then (texture => this .setKTXTexture (texture, URL));
+            }
+
             const nrrd = new NRRDParser () .parse (data);
 
             if (nrrd .nrrd)
@@ -132,6 +140,28 @@ Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, X3DTexture3DN
          }
       }
       .bind (this));
+   },
+   setKTXTexture (texture, URL)
+   {
+      if (texture .target !== this .getTarget ())
+         throw new Error ("Invalid KTX texture target, must be 'TEXTURE_3D'.");
+
+      if (DEVELOPMENT)
+      {
+         if (URL .protocol !== "data:")
+            console .info (`Done loading image texture '${decodeURI (URL .href)}'`);
+      }
+
+      this .setTexture (texture);
+      this .setTransparent (false);
+      this .setLevels (texture .levels);
+      this .setWidth (texture .baseWidth);
+      this .setHeight (texture .baseHeight);
+      this .setDepth (texture .baseDepth); // TODO: Always 1
+      this .setGenerateMipMaps (false);
+      this .updateTextureParameters ();
+
+      this .setLoadState (X3DConstants .COMPLETE_STATE);
    },
    dispose ()
    {

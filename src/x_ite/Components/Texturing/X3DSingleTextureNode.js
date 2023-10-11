@@ -88,6 +88,8 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, X3DText
       gl .deleteTexture (this .texture);
 
       this .texture = texture;
+
+      this .addNodeEvent ();
    },
    getLevels ()
    {
