@@ -232,7 +232,7 @@ Grouping nodes contain an ordered list of *children* nodes.
 
 - HAnimJoint can only contain HAnimJoint or HAnimSegment nodes (each having default `containerField='children').`
 
-## Advisories
+## Suggestions
 
 ### Hints
 

@@ -67,7 +67,7 @@ Sound *refraction* coefficient of a medium, which determines change in propagati
 
 Specifies the sound *absorption* coefficient of a surface, meaning the ratio of sound intensity not reflected by a surface.
 
-## Advisories
+## Suggestions
 
 ### Hints
 

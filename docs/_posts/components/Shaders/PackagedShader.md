@@ -120,7 +120,7 @@ The *language* field indicates to the X3D player which shading *language* is use
 
 - Automatically reloading content has security considerations and needs to be considered carefully.
 
-## Advisories
+## Suggestions
 
 ### Hints
 

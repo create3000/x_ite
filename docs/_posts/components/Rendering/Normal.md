@@ -44,7 +44,7 @@ Set of unit-length normal vectors, corresponding to indexed polygons or vertices
 
 - Unit length means a magnitude of 1.0, so normal values of (0,0,0) are invalid.
 
-## Advisories
+## Suggestions
 
 ### Hints
 

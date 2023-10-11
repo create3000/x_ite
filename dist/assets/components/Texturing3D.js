@@ -1,7 +1,7 @@
 /* X_ITE v8.12.5 */(() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 554:
+/***/ 600:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -38,7 +38,7 @@ var Ib=[cx,_q,cr,Yr,as,fs,hs,Hu,Su,cx,cx,cx,cx,cx,cx,cx];var Jb=[dx,si,gi,Wh,Kh,
 
 /***/ }),
 
-/***/ 207:
+/***/ 368:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -72,7 +72,7 @@ var _a=[yj,od,ef,yj];var $a=[zj,Li,di,bi,Kb,Lb,Mb,Nb,Rc,Sc,Uc,jd,xd,Ye,lf,yd,zd,
 
 /***/ }),
 
-/***/ 624:
+/***/ 720:
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 /*! dicom-parser - 1.8.12 - 2023-02-20 | (c) 2017 Chris Hafey | https://github.com/cornerstonejs/dicomParser */
@@ -4028,7 +4028,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_zlib__;
 
 /***/ }),
 
-/***/ 375:
+/***/ 802:
 /***/ ((module) => {
 
 /* -*- tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- /
@@ -5183,7 +5183,7 @@ function decode(jpegData, userOpts = {}) {
 
 /***/ }),
 
-/***/ 241:
+/***/ 71:
 /***/ ((module) => {
 
 (function(f){if(true){module.exports=f()}else { var g; }})(function(){var define,module,exports;return (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c=undefined;if(!f&&c)return require(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u=undefined,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
@@ -7178,13 +7178,25 @@ Object .assign (Object .setPrototypeOf (X3DTexture3DNode .prototype, (X3DSingleT
    {
       return this .width;
    },
+   setWidth (value)
+   {
+      this .width = value;
+   },
    getHeight ()
    {
       return this .height;
    },
+   setHeight (value)
+   {
+      this .height = value;
+   },
    getDepth ()
    {
       return this .depth;
+   },
+   setDepth (value)
+   {
+      this .depth = value;
    },
    clearTexture ()
    {
@@ -7937,11 +7949,11 @@ const NRRDParser_default_ = NRRDParser;
 Namespace_default().add ("NRRDParser", "x_ite/Browser/Texturing3D/NRRDParser", NRRDParser_default_);
 /* harmony default export */ const Texturing3D_NRRDParser = (NRRDParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Texturing3D/DICOMParser.js
-/* provided dependency */ var dicomParser = __webpack_require__(624);
-/* provided dependency */ var JpegImage = __webpack_require__(375);
-/* provided dependency */ var jpeg = __webpack_require__(241);
-/* provided dependency */ var CharLS = __webpack_require__(554);
-/* provided dependency */ var OpenJPEG = __webpack_require__(207);
+/* provided dependency */ var dicomParser = __webpack_require__(720);
+/* provided dependency */ var JpegImage = __webpack_require__(802);
+/* provided dependency */ var jpeg = __webpack_require__(71);
+/* provided dependency */ var CharLS = __webpack_require__(600);
+/* provided dependency */ var OpenJPEG = __webpack_require__(368);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -9046,6 +9058,9 @@ Namespace_default().add ("DICOMParser", "x_ite/Browser/Texturing3D/DICOMParser",
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/InputOutput/FileLoader\")"
 const FileLoader_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.12.5")] .require ("x_ite/InputOutput/FileLoader");
 var FileLoader_default = /*#__PURE__*/__webpack_require__.n(FileLoader_namespaceObject);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/DEVELOPMENT\")"
+const DEVELOPMENT_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.12.5")] .require ("x_ite/DEVELOPMENT");
+var DEVELOPMENT_default = /*#__PURE__*/__webpack_require__.n(DEVELOPMENT_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing3D/ImageTexture3D.js
 /*******************************************************************************
  *
@@ -9104,6 +9119,7 @@ var FileLoader_default = /*#__PURE__*/__webpack_require__.n(FileLoader_namespace
 
 
 
+
 function ImageTexture3D (executionContext)
 {
    Texturing3D_X3DTexture3DNode .call (this, executionContext);
@@ -9145,7 +9161,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, Texturing3D_X
    loadData ()
    {
       new (FileLoader_default()) (this) .loadDocument (this ._url,
-      function (data)
+      function (data, URL)
       {
          if (data === null)
          {
@@ -9155,6 +9171,13 @@ Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, Texturing3D_X
          }
          else if (data instanceof ArrayBuffer)
          {
+            if (URL .pathname .match (/\.ktx2?$/))
+            {
+               return this .getBrowser () .getKTXDecoder ()
+                  .then (decoder => decoder .loadKTXFromBuffer (data))
+                  .then (texture => this .setKTXTexture (texture, URL));
+            }
+
             const nrrd = new Texturing3D_NRRDParser () .parse (data);
 
             if (nrrd .nrrd)
@@ -9181,6 +9204,28 @@ Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, Texturing3D_X
          }
       }
       .bind (this));
+   },
+   setKTXTexture (texture, URL)
+   {
+      if (texture .target !== this .getTarget ())
+         throw new Error ("Invalid KTX texture target, must be 'TEXTURE_3D'.");
+
+      if ((DEVELOPMENT_default()))
+      {
+         if (URL .protocol !== "data:")
+            console .info (`Done loading image texture 3D '${decodeURI (URL .href)}'`);
+      }
+
+      this .setTexture (texture);
+      this .setTransparent (false);
+      this .setLevels (texture .levels);
+      this .setWidth (texture .baseWidth);
+      this .setHeight (texture .baseHeight);
+      this .setDepth (texture .baseDepth); // TODO: Always 1
+      this .setGenerateMipMaps (false);
+      this .updateTextureParameters ();
+
+      this .setLoadState ((X3DConstants_default()).COMPLETE_STATE);
    },
    dispose ()
    {
@@ -9234,9 +9279,6 @@ const ImageTexture3D_default_ = ImageTexture3D;
 
 Namespace_default().add ("ImageTexture3D", "x_ite/Components/Texturing3D/ImageTexture3D", ImageTexture3D_default_);
 /* harmony default export */ const Texturing3D_ImageTexture3D = (ImageTexture3D_default_);
-;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/DEVELOPMENT\")"
-const DEVELOPMENT_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.12.5")] .require ("x_ite/DEVELOPMENT");
-var DEVELOPMENT_default = /*#__PURE__*/__webpack_require__.n(DEVELOPMENT_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing3D/ImageTextureAtlas.js
 /* provided dependency */ var $ = __webpack_require__(355);
 /*******************************************************************************

@@ -52,7 +52,7 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
-## Advisories
+## Suggestions
 
 ### Hints
 

@@ -101,7 +101,7 @@ The *fontStyle* field can contain a FontStyle or ScreenFontStyle node defining s
 
 - [Wikipedia](https://en.wikipedia.org/wiki/Font){:target="_blank"}
 
-## Advisories
+## Suggestions
 
 ### Hints
 

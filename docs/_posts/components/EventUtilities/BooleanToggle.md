@@ -55,7 +55,7 @@ Persistent state value that gets toggled or reset.
 
 - Directly setting a new value for the *toggle* field generates a corresponding toggle_changed output event.
 
-## Advisories
+## Suggestions
 
 ### Hints
 

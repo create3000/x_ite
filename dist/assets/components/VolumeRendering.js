@@ -2365,15 +2365,13 @@ Object .assign (Object .setPrototypeOf (IsoSurfaceVolumeData .prototype, VolumeR
       if (gl .getVersion () < 2)
          return;
 
-      this ._gradients          .addInterest ("set_gradients__",   this);
-      this ._renderStyle        .addInterest ("set_renderStyle__", this);
+      this ._gradients        .addInterest ("set_gradients__",   this);
+      this ._renderStyle      .addInterest ("set_renderStyle__", this);
 
-      this ._contourStepSize    .addInterest ("updateShader", this);
-      this ._surfaceValues      .addInterest ("updateShader", this);
-      this ._surfaceTolerance   .addInterest ("updateShader", this);
-      this ._renderStyle        .addInterest ("updateShader", this);
-
-      this .getAppearance () ._texture = this ._voxels;
+      this ._contourStepSize  .addInterest ("updateShader", this);
+      this ._surfaceValues    .addInterest ("updateShader", this);
+      this ._surfaceTolerance .addInterest ("updateShader", this);
+      this ._renderStyle      .addInterest ("updateShader", this);
 
       this .set_gradients__ ();
       this .set_renderStyle__ ();
@@ -2979,8 +2977,6 @@ Object .assign (Object .setPrototypeOf (SegmentedVolumeData .prototype, VolumeRe
       this ._segmentEnabled     .addInterest ("updateShader", this);
       this ._segmentIdentifiers .addInterest ("updateShader", this);
       this ._renderStyle        .addInterest ("updateShader", this);
-
-      this .getAppearance () ._texture = this ._voxels;
 
       this .set_segmentIdentifiers__ ();
       this .set_renderStyle__ ();
@@ -3919,10 +3915,7 @@ Object .assign (Object .setPrototypeOf (VolumeData .prototype, VolumeRendering_X
 
       this ._renderStyle .addInterest ("set_renderStyle__", this);
       this ._voxels      .addInterest ("set_voxels__",      this);
-
-      this ._renderStyle .addInterest ("updateShader", this);
-
-      this .getAppearance () ._texture   = this ._voxels;
+      this ._renderStyle .addInterest ("updateShader",      this);
 
       this .set_renderStyle__ ();
       this .set_voxels__ ();

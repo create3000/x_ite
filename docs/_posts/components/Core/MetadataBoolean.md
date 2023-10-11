@@ -61,7 +61,7 @@ The *value* attribute is a strictly typed data array providing relevant metadata
 
 - Use lower-case values ("true false") for .x3d XML encoding, and upper-case values ("TRUE FALSE") for .x3dv ClassicVRML encoding.
 
-## Advisories
+## Suggestions
 
 ### Hints
 

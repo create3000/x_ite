@@ -49,7 +49,7 @@ The *mapping* label identifies which texture coordinates and transformations are
 
 *matrix* is a generalized, unfiltered 4x4 transformation *matrix* to modify texture (opposite effect appears on geometry).
 
-## Advisories
+## Suggestions
 
 ### Hints
 

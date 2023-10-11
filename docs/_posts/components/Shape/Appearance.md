@@ -111,7 +111,7 @@ Zero or more contained programmable shader nodes (ComposedShader, PackagedShader
 
 Single contained BlendMode node that defines blend mode properties.
 
-## Advisories
+## Suggestions
 
 ### Hints
 

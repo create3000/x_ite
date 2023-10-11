@@ -261,6 +261,9 @@ Namespace_default().add ("X3DTextureProjectorNode", "x_ite/Components/TexturePro
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Geometry/Camera\")"
 const Camera_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.12.5")] .require ("standard/Math/Geometry/Camera");
 var Camera_default = /*#__PURE__*/__webpack_require__.n(Camera_namespaceObject);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Utility/MatrixStack\")"
+const MatrixStack_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.12.5")] .require ("standard/Math/Utility/MatrixStack");
+var MatrixStack_default = /*#__PURE__*/__webpack_require__.n(MatrixStack_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Utility/ObjectCache\")"
 const ObjectCache_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.12.5")] .require ("standard/Utility/ObjectCache");
 var ObjectCache_default = /*#__PURE__*/__webpack_require__.n(ObjectCache_namespaceObject);
@@ -323,12 +326,13 @@ var ObjectCache_default = /*#__PURE__*/__webpack_require__.n(ObjectCache_namespa
 
 
 
+
 const TextureProjectorCache = ObjectCache_default() (TextureProjectorContainer);
 
 function TextureProjectorContainer ()
 {
    this .projectionMatrix                = new (Matrix4_default()) ();
-   this .modelViewMatrix                 = new (Matrix4_default()) ();
+   this .modelViewMatrix                 = new (MatrixStack_default()) ((Matrix4_default()));
    this .modelMatrix                     = new (Matrix4_default()) ();
    this .invTextureSpaceMatrix           = new (Matrix4_default()) ();
    this .invTextureSpaceProjectionMatrix = new (Matrix4_default()) ();
@@ -348,7 +352,12 @@ Object .assign (TextureProjectorContainer .prototype,
       this .browser   = lightNode .getBrowser ();
       this .lightNode = lightNode;
 
-      this .modelViewMatrix .assign (modelViewMatrix);
+      this .modelViewMatrix .pushMatrix (modelViewMatrix);
+
+      if (lightNode .getTexture ())
+         this .textureMatrix .set (... lightNode .getTexture () .getMatrix ());
+      else
+         this .textureMatrix .identity ();
    },
    renderShadowMap (renderObject)
    { },
@@ -357,7 +366,7 @@ Object .assign (TextureProjectorContainer .prototype,
       const
          lightNode             = this .lightNode,
          cameraSpaceMatrix     = renderObject .getCameraSpaceMatrix () .get (),
-         modelMatrix           = this .modelMatrix .assign (this .modelViewMatrix) .multRight (cameraSpaceMatrix),
+         modelMatrix           = this .modelMatrix .assign (this .modelViewMatrix .get ()) .multRight (cameraSpaceMatrix),
          invTextureSpaceMatrix = this .invTextureSpaceMatrix .assign (lightNode .getGlobal () ? modelMatrix : (Matrix4_default()).Identity);
 
       this .rotation .setFromToVec ((Vector3_default()).zAxis, this .direction .assign (lightNode .getDirection ()) .negate ());
@@ -376,17 +385,15 @@ Object .assign (TextureProjectorContainer .prototype,
 
       Camera_default().perspective (fieldOfView, nearDistance, farDistance, width, height, this .projectionMatrix);
 
-      if (! lightNode .getGlobal ())
+      if (!lightNode .getGlobal ())
          invTextureSpaceMatrix .multLeft (modelMatrix .inverse ());
 
       this .invTextureSpaceProjectionMatrix .assign (invTextureSpaceMatrix) .multRight (this .projectionMatrix) .multRight (lightNode .getBiasMatrix ());
 
-      this .projectiveTextureMatrix .assign (cameraSpaceMatrix) .multRight (this .invTextureSpaceProjectionMatrix);
-      if (lightNode .getTexture ())
-         this .projectiveTextureMatrix .multRight (this .textureMatrix .set (... lightNode .getTexture () .getMatrix ()))
+      this .projectiveTextureMatrix .assign (cameraSpaceMatrix) .multRight (this .invTextureSpaceProjectionMatrix) .multRight (this .textureMatrix);
       this .projectiveTextureMatrixArray .set (this .projectiveTextureMatrix);
 
-      this .modelViewMatrix .multVecMatrix (this .location .assign (lightNode ._location .getValue ()));
+      this .modelViewMatrix .get () .multVecMatrix (this .location .assign (lightNode ._location .getValue ()));
       this .locationArray .set (this .location);
    },
    setShaderUniforms (gl, shaderObject, renderObject)
@@ -409,6 +416,8 @@ Object .assign (TextureProjectorContainer .prototype,
    },
    dispose ()
    {
+      this .modelViewMatrix .clear ();
+
       TextureProjectorCache .push (this);
    },
 });
@@ -556,12 +565,13 @@ Namespace_default().add ("TextureProjector", "x_ite/Components/TextureProjector/
 
 
 
+
 const TextureProjectorParallelCache = ObjectCache_default() (TextureProjectorParallelContainer);
 
 function TextureProjectorParallelContainer ()
 {
    this .projectionMatrix                = new (Matrix4_default()) ();
-   this .modelViewMatrix                 = new (Matrix4_default()) ();
+   this .modelViewMatrix                 = new (MatrixStack_default()) ((Matrix4_default()));
    this .modelMatrix                     = new (Matrix4_default()) ();
    this .invTextureSpaceMatrix           = new (Matrix4_default()) ();
    this .location                        = new (Vector3_default()) (0, 0, 0);
@@ -581,7 +591,12 @@ Object .assign (TextureProjectorParallelContainer .prototype,
       this .browser   = lightNode .getBrowser ();
       this .lightNode = lightNode;
 
-      this .modelViewMatrix .assign (modelViewMatrix);
+      this .modelViewMatrix .pushMatrix (modelViewMatrix);
+
+      if (lightNode .getTexture ())
+         this .textureMatrix .set (... lightNode .getTexture () .getMatrix ());
+      else
+         this .textureMatrix .identity ();
    },
    renderShadowMap (renderObject)
    { },
@@ -590,7 +605,7 @@ Object .assign (TextureProjectorParallelContainer .prototype,
       const
          lightNode             = this .lightNode,
          cameraSpaceMatrix     = renderObject .getCameraSpaceMatrix () .get (),
-         modelMatrix           = this .modelMatrix .assign (this .modelViewMatrix) .multRight (cameraSpaceMatrix),
+         modelMatrix           = this .modelMatrix .assign (this .modelViewMatrix .get ()) .multRight (cameraSpaceMatrix),
          invTextureSpaceMatrix = this .invTextureSpaceMatrix .assign (lightNode .getGlobal () ? modelMatrix : (Matrix4_default()).Identity);
 
       this .rotation .setFromToVec ((Vector3_default()).zAxis, this .direction .assign (lightNode .getDirection ()) .negate ());
@@ -630,17 +645,15 @@ Object .assign (TextureProjectorParallelContainer .prototype,
          Camera_default().ortho (minimumX, maximumX, center - size1_2, center + size1_2, nearDistance, farDistance, this .projectionMatrix);
       }
 
-      if (! lightNode .getGlobal ())
+      if (!lightNode .getGlobal ())
          invTextureSpaceMatrix .multLeft (modelMatrix .inverse ());
 
       this .invTextureSpaceProjectionMatrix .assign (invTextureSpaceMatrix) .multRight (this .projectionMatrix) .multRight (lightNode .getBiasMatrix ());
 
-      this .projectiveTextureMatrix .assign (cameraSpaceMatrix) .multRight (this .invTextureSpaceProjectionMatrix);
-      if (lightNode .getTexture ())
-         this .projectiveTextureMatrix .multRight (this .textureMatrix .set (... lightNode .getTexture () .getMatrix ()))
+      this .projectiveTextureMatrix .assign (cameraSpaceMatrix) .multRight (this .invTextureSpaceProjectionMatrix) .multRight (this .textureMatrix);
       this .projectiveTextureMatrixArray .set (this .projectiveTextureMatrix);
 
-      this .modelViewMatrix .multVecMatrix (this .location .assign (lightNode ._location .getValue ()));
+      this .modelViewMatrix .get () .multVecMatrix (this .location .assign (lightNode ._location .getValue ()));
       this .locationArray .set (this .location);
    },
    setShaderUniforms (gl, shaderObject, renderObject)
@@ -663,6 +676,8 @@ Object .assign (TextureProjectorParallelContainer .prototype,
    },
    dispose ()
    {
+      this .modelViewMatrix .clear ();
+
       TextureProjectorParallelCache .push (this);
    },
 });

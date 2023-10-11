@@ -98,7 +98,7 @@ Single contained X3DComposableVolumeRenderStyleNode node that defines specific r
 
 Single contained X3DTexture3DNode (ComposedTexture3D, ImageTexture3D, PixelTexture3D) that provides second set of raw voxel information utilized by corresponding rendering styles. Any number of color components (1-4) may be defined.
 
-## Advisories
+## Suggestions
 
 ### Hint
 

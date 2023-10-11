@@ -164,11 +164,11 @@ sub update_node {
 
    $file =~ s/(## Overview\n).*?\n(?=##\s+)/$1$string/s;
 
-   # Advisories
+   # Suggestions
 
-   $customs = $1 if $file =~ /## Advisories\s*(.*?)\s*###?\s+/so;
+   $customs = $1 if $file =~ /## Suggestions\s*(.*?)\s*###?\s+/so;
 
-   $string = "## Advisories\n\n";
+   $string = "## Suggestions\n\n";
    $string .= $customs . "\n\n" if $customs;
 
    if (@hints)
@@ -191,7 +191,7 @@ sub update_node {
       $string .= "\n";
    }
 
-   $file =~ s/## Advisories\n.*?\n(?=##\s+|$)//so;
+   $file =~ s/## Suggestions\n.*?\n(?=##\s+|$)//so;
 
    if (@hints || @warnings)
    {
@@ -416,7 +416,7 @@ sub update_field {
 
 sub reorder_sections {
    $file     = shift;
-   @sections = ("Overview", "Hierarchy", "Fields", "Advisories", "Example", "See Also");
+   @sections = ("Overview", "Hierarchy", "Fields", "Suggestions", "Example", "See Also");
    $sections = { };
 
    foreach $s (@sections)

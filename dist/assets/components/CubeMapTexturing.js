@@ -299,8 +299,8 @@ Object .assign (Object .setPrototypeOf (X3DEnvironmentTextureNode .prototype, (X
                                                                       this .target,
                                                                       this ._textureProperties .getValue (),
                                                                       this .texturePropertiesNode,
-                                                                      128,
-                                                                      128,
+                                                                      this .size,
+                                                                      this .size,
                                                                       false,
                                                                       false,
                                                                       false);
@@ -1210,7 +1210,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapT
       if (this .URL .pathname .match (/\.ktx2?$/))
       {
          this .getBrowser () .getKTXDecoder ()
-            .then (decoder => decoder .loadKtxFromUri (this .URL))
+            .then (decoder => decoder .loadKTXFromURL (this .URL))
             .then (texture => this .setKTXTexture (texture))
             .catch (error => this .setError ({ type: error .message }));
       }
@@ -1228,6 +1228,9 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapT
    },
    setKTXTexture (texture)
    {
+      if (texture .target !== this .getTarget ())
+         return this .setError ({ type: "Invalid KTX texture target, must be 'TEXTURE_CUBE_MAP'." });
+
       if ((DEVELOPMENT_default()))
       {
          if (this .URL .protocol !== "data:")
@@ -1236,19 +1239,14 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapT
 
       try
       {
-         if (texture ?.target === this .getTarget ())
-         {
-            this .setTexture (texture);
-            this .setTransparent (false);
-            this .setLevels (texture .levels);
-            this .setSize (texture .baseWidth);
+         this .setTexture (texture);
+         this .setTransparent (false);
+         this .setLevels (texture .levels);
+         this .setSize (texture .baseWidth);
+         this .setGenerateMipMaps (false);
+         this .updateTextureParameters ();
 
-            this .setLoadState ((X3DConstants_default()).COMPLETE_STATE);
-         }
-         else
-         {
-            this .setError ({ type: "Invalid KTX texture target, must be 'TEXTURE_CUBE_MAP'." });
-         }
+         this .setLoadState ((X3DConstants_default()).COMPLETE_STATE);
       }
       catch (error)
       {
@@ -1274,6 +1272,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapT
          if (Math .abs (aspectRatio - 2/1) < 0.01)
             this .panoramaToCubeMap ();
 
+         this .setGenerateMipMaps (true);
          this .updateTextureParameters ();
 
          // Update load state.

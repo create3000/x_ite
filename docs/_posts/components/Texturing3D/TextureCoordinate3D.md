@@ -49,7 +49,7 @@ The *mapping* label identifies which texture coordinates and transformations are
 
 Triplets of 3D (s,t,r) texture coordinates, either in range [0,1] or higher if repeating.
 
-## Advisories
+## Suggestions
 
 ### Hints
 

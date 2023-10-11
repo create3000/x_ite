@@ -57,7 +57,7 @@ Reference to the metadata standard or definition defining this particular metada
 
 The *value* field provides a list of X3DMetadataObject nodes whose meaning is determined by the name field.
 
-## Advisories
+## Suggestions
 
 ### Hints
 

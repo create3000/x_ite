@@ -62,7 +62,7 @@ Author-provided prose that describes intended purpose of the url asset.
 
 Single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images.
 
-## Advisories
+## Suggestions
 
 ### Hints
 

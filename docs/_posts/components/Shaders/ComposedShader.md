@@ -74,7 +74,7 @@ The *language* field indicates to the X3D player which shading *language* is use
 
 ComposedShader can contain multiple ShaderPart nodes in the *parts* field.
 
-## Advisories
+## Suggestions
 
 ### Hints
 

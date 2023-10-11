@@ -66,7 +66,7 @@ Single contained TextureProperties node that can specify additional visual attri
 
 Collection of 2D *texture* sources.
 
-## Advisories
+## Suggestions
 
 ### Hints
 

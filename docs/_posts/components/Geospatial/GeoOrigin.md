@@ -64,7 +64,7 @@ Defines absolute geographic location (and implicit local coordinate frame).
 
 Whether to rotate coordinates of nodes using this GeoOrigin so that local-up direction aligns with VRML Y axis *rotateYUp* false means local up-direction is relative to planet surface *rotateYUp* true allows proper operation of NavigationInfo modes FLY, WALK.
 
-## Advisories
+## Suggestions
 
 ### Hints
 

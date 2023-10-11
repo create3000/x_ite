@@ -52,7 +52,7 @@ Enables/disables node operation.
 
 *opacityFactor* k_ge is the power function to control the slope of the opacity curve to highlight the set of data.
 
-## Advisories
+## Suggestions
 
 ### Warning
 

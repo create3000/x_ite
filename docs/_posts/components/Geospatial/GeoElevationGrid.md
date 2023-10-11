@@ -200,7 +200,7 @@ Contains xDimension rows * zDimension columns floating-point values for elevatio
 
 - *height* array values are not retained or available at run time since a browser is permitted to condense geometry.
 
-## Advisories
+## Suggestions
 
 ### Hints
 

@@ -107,7 +107,7 @@ The *scaleMode* field specifies how the scale of the parent is modified. Two quo
 
 - If only one value is provided, it applies equally to horizontal and vertical directions (width and height). More than two values are not allowed.
 
-## Advisories
+## Suggestions
 
 ### Hint
 

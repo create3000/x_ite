@@ -115,7 +115,7 @@ The *body1* and body2 fields indicate the two RigidBody nodes connected by this 
 
 The body1 and *body2* fields indicate the two RigidBody nodes connected by this joint.
 
-## Advisories
+## Suggestions
 
 ### Hints
 

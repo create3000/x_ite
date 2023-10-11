@@ -126,7 +126,7 @@ Select geometry by activating the pointing device (for example, clicking the mou
 
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
-## Advisories
+## Suggestions
 
 ### Hints
 

@@ -173,7 +173,7 @@ Parent TextureBackground element can contain up to six image nodes (ImageTexture
 
 - Each child image node must have a different containerField value.
 
-## Advisories
+## Suggestions
 
 ### Hints
 

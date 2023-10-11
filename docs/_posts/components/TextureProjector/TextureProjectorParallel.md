@@ -140,7 +140,7 @@ Size of the shadow map in pixels, must be power of two.
 - [X3D Architecture 18 Texturing component](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/components/texturing.html){:target="_blank"}
 - [X3D Architecture 33 Texturing3D component](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/components/texture3D.html){:target="_blank"}
 
-## Advisories
+## Suggestions
 
 ### Hint
 

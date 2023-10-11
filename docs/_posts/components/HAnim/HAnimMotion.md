@@ -173,7 +173,7 @@ Send *previous* output value in keyValue array, and reset internal fraction fiel
 
 *frameCount* is computed at run time and indicates the total number of frames present in the animation, equaling the number of sets of channel data rows present in the values array.
 
-## Advisories
+## Suggestions
 
 ### Hints
 

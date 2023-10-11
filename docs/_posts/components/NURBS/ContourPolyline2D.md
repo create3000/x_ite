@@ -39,7 +39,7 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 
 *controlPoint* specifies the end points of each segment of the piecewise linear curve.
 
-## Advisories
+## Suggestions
 
 ### Warning
 

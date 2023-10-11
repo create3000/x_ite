@@ -106,7 +106,7 @@ The *body1* and body2 fields specify two top-level nodes that should be evaluate
 
 The body1 and *body2* fields specify two top-level nodes that should be evaluated in the physics model as a single set of interactions with respect to each other.
 
-## Advisories
+## Suggestions
 
 ### Hint
 

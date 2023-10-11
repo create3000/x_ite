@@ -44,7 +44,7 @@ Enables/disables node operation.
 
 List of contributing rendering style nodes or node references that can be applied to the object. Each rendering style is applied strictly in the order declared, starting with the first rendering style in the *renderStyle* field.
 
-## Advisories
+## Suggestions
 
 ### Hint
 

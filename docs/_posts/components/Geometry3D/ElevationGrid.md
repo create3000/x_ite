@@ -183,7 +183,7 @@ Grid array of *height* vertices with upward direction along +Y axis, with xDimen
 
 - *height* array values are not retained or available at run time since a browser is permitted to condense geometry.
 
-## Advisories
+## Suggestions
 
 ### Hints
 

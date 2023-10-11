@@ -72,7 +72,7 @@ Whether to repeat texture along T axis vertically from top to bottom.
 
 Single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images.
 
-## Advisories
+## Suggestions
 
 ### Hints
 

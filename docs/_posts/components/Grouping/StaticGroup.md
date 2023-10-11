@@ -88,7 +88,7 @@ Grouping nodes contain an ordered list of *children* nodes.
 
 - StaticGroup does not support inputOnly MFNode fields addChildren or removeChildren.
 
-## Advisories
+## Suggestions
 
 ### Hint
 

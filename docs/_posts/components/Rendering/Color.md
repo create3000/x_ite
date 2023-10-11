@@ -40,7 +40,7 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 
 The *color* field defines an array of 3-tuple RGB colors.
 
-## Advisories
+## Suggestions
 
 ### Hints
 
