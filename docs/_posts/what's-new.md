@@ -14,6 +14,8 @@ tags: [New, Releases]
 * Implemented a KTX texture loader for ImageCubeMapTexture, ImageTexture, and ImageTexture3D.
 * ImageCubeMapTexture can now load panorama images.
 * Implemented EnvironmentLight node.
+* ES Module Version of X_ITE as x_ite.mjs.
+* Typescript Types for Intellisense.
 
 ## X_ITE v8.10.0 Released
 
