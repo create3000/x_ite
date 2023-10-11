@@ -28,14 +28,14 @@ export default class KTXDecoder {
       }
    }
 
-   async init(context, externalKtxlib, scriptDir)
+   async init (context, externalKtxlib, scriptDir)
    {
       this .libktx = await externalKtxlib({preinitializedWebGLContext: context}, scriptDir);
 
       this .libktx .GL .makeContextCurrent (this .libktx .GL .createContext (null, { majorVersion: 2.0 }));
    }
 
-   transcode(ktexture)
+   transcode (ktexture)
    {
       if (!ktexture .needsTranscoding)
          return;
