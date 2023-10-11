@@ -1,4 +1,3 @@
-// https://github.com/KhronosGroup/KTX-Software/releases/
 return function (LIBKTX, _scriptDir)
 {
 var process = undefined;
