@@ -102,6 +102,18 @@ Single contained TextureProperties node that can specify additional visual attri
 
 ## Supported File Formats
 
+Any image file format supported by the web browser, but at least:
+
+| Encoding | File Extension | MIME Type  | Comment          |
+|----------|----------------|------------|------------------|
+| PNG      | .png           | image/png  |                  |
+| JPEG     | .jpeg, .jpg    | image/jpeg |                  |
+| GIF      | .gif           | image/gif  |                  |
+| SVG      | .svg           | image/svg  |                  |
+| KTX2     | .ktx2          | image/ktx2 | TEXTURE_CUBE_MAP |
+
+PNG, JPEG and GIF can be in panorama (Mercator projection, [example](/x_ite/assets/img/components/helipad.jpg)) or skybox format ([example](/x_ite/assets/img/components/skybox.svg)). Panorama images must have an exact aspect ratio of 2:1 of width to height. Sky Box images must have an exact of 4:3 aspect ratio of width to height.
+
 ## Advice
 
 ### Hints

@@ -111,14 +111,15 @@ Single contained TextureProperties node that can specify additional visual attri
 
 ## Supported File Formats
 
-All image file formats supported by the web-browser, but at least:
+Any image file format supported by the web browser, but at least:
 
-| Encoding | File Extension | MIME Type  |
-|----------|----------------|------------|
-| PNG      | .png           | image/png  |
-| JPEG     | .jpeg, .jpg    | image/jpeg |
-| GIF      | .gif           | image/gif  |
-| KTX2     | .ktx2          | image/ktx2 |
+| Encoding | File Extension | MIME Type  | Comment    |
+|----------|----------------|------------|------------|
+| PNG      | .png           | image/png  |            |
+| JPEG     | .jpeg, .jpg    | image/jpeg |            |
+| GIF      | .gif           | image/gif  |            |
+| SVG      | .svg           | image/svg  |            |
+| KTX2     | .ktx2          | image/ktx2 | TEXTURE_2D |
 
 ## Advice
 

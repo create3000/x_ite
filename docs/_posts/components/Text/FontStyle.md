@@ -152,6 +152,15 @@ The *justify* field determines horizontal and vertical alignment of text layout,
 - Exactly two string values are provided for major and minor axis alignment.
 - Do not use illegal values such as LEFT RIGHT TOP BOTTOM or CENTER.
 
+## Supported File Formats
+
+It is possible to specify in the *family* field a URL of a custom font of the following types:
+
+| Encoding  | File Extension | MIME Type                   |
+|-----------|----------------|-----------------------------|
+| Open Type | .otf           | application/x-font-opentype |
+| True Type | .ttf           | application/x-font-truetype |
+
 ## Advice
 
 ### Hints
