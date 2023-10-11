@@ -5,6 +5,16 @@ nav: main
 categories: []
 tags: [New, Releases]
 ---
+## X_ITE v8.14.0 Released
+
+*Leipzig, 1th October 2023:* We right now released a new version.
+
+### New Features
+
+* Implemented a KTX texture loader for ImageCubeMapTexture, ImageTexture, and ImageTexture3D.
+* ImageCubeMapTexture can now load panorama images.
+* Implemented EnvironmentLight node.
+
 ## X_ITE v8.10.0 Released
 
 *Leipzig, 17th July 2023:* We right now released a new version.
