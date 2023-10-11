@@ -60,7 +60,7 @@ import DataStorage         from "../../../standard/Utility/DataStorage.js";
 import Vector3             from "../../../standard/Math/Numbers/Vector3.js";
 import _                   from "../../../locale/gettext.js";
 
-const WEBGL_LATEST_VERSION = 2;
+const WEBGL_VERSION = 2;
 
 const
    _instanceId               = Symbol (),
@@ -127,7 +127,7 @@ function X3DCoreContext (element)
    this [_element]      = element;
    this [_surface]      = surface;
    this [_canvas]       = $("<canvas></canvas>") .addClass ("x_ite-private-canvas") .prependTo (surface);
-   this [_context]      = Context .create (this [_canvas] [0], WEBGL_LATEST_VERSION, element .attr ("preserveDrawingBuffer") === "true", this [_mobile]);
+   this [_context]      = Context .create (this [_canvas] [0], WEBGL_VERSION, element .attr ("preserveDrawingBuffer") === "true", this [_mobile]);
    this [_splashScreen] = splashScreen;
 
    this [_renderingProperties] = new RenderingProperties (this .getPrivateScene ());
