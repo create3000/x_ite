@@ -160,6 +160,7 @@ It is possible to specify in the *family* field a URL of a custom font file of t
 |-----------|----------------|-----------------------------|
 | Open Type | .otf           | application/x-font-opentype |
 | True Type | .ttf           | application/x-font-truetype |
+| WOFF      | .woff          | application/x-font-woff     |
 
 ## Advice
 
