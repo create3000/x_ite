@@ -79,7 +79,7 @@ Default global parameters for collision outputs of rigid body physics system. Co
 
 CollisionCollection node holds a collection of objects in the *collidables* field that can be managed as a single entity for resolution of inter-object collisions with other groups of collidable objects. A group consists of both collidable objects as well as spaces that may be collided against each other.
 
-## Suggestions
+## Advice
 
 ### Hints
 

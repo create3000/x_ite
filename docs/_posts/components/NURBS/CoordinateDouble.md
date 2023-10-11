@@ -40,7 +40,7 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 
 *point* contains a set of 3D coordinate (triplet) *point* values.
 
-## Suggestions
+## Advice
 
 ### Warning
 

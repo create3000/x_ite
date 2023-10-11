@@ -44,7 +44,7 @@ Zero or more contained TextureCoordinate or TextureCoordinateGenerator nodes tha
 
 - MultiTextureCoordinate may not contain another MultiTextureCoordinate node.
 
-## Suggestions
+## Advice
 
 ### Hints
 

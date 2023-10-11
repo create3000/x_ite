@@ -152,7 +152,7 @@ The *justify* field determines horizontal and vertical alignment of text layout,
 - Exactly two string values are provided for major and minor axis alignment.
 - Do not use illegal values such as LEFT RIGHT TOP BOTTOM or CENTER.
 
-## Suggestions
+## Advice
 
 ### Hints
 

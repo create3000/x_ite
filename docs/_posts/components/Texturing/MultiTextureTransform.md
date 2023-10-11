@@ -49,7 +49,7 @@ Zero or more contained TextureTransform nodes, for each of the different texture
 
 - MultiTextureTransform may not contain another MultiTextureTransform node.
 
-## Suggestions
+## Advice
 
 ### Hints
 

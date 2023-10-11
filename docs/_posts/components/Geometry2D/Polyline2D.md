@@ -47,7 +47,7 @@ Coordinates of vertices connected into contiguous Polyline2D.
 
 - Simple-geometry dimensions are initializeOnly and cannot be changed after initial creation, avoiding the need for potentially expensive tessellation at run time.
 
-## Suggestions
+## Advice
 
 ### Hints
 

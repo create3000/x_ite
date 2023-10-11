@@ -100,7 +100,7 @@ Location and filename of image. Multiple locations are more reliable, and includ
 
 Single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images.
 
-## Suggestions
+## Advice
 
 ### Hints
 

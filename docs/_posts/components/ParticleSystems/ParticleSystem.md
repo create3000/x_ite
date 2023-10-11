@@ -231,7 +231,7 @@ Single contained *geometry* node provides *geometry* used for each particle when
 
 - Requires X3D `profile='Full'` or else include `<component name='Geospatial' level='1'/>`
 
-## Suggestions
+## Advice
 
 - Always set bboxSize and boxCenter correctly; bboxSize and bboxCenter cannot be determined automatically, so it's up to the author to provide the correct values.
 

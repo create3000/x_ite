@@ -86,7 +86,7 @@ Defines index values into the parent HAnimSegment or HAnimBody/HAnimHumanoid coo
 - Individual displacement values are scaled by the weight factor, if present.
 - Since default pose faces along +Z axis, -x values are right side and +x values are left side within HAnimHumanoid.
 
-## Suggestions
+## Advice
 
 ### Hints
 

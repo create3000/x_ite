@@ -92,7 +92,7 @@ The shadowBias value controls the visibility of *shadow acne*.
 
 Size of the shadow map in pixels, must be power of two.
 
-## Suggestions
+## Advice
 
 ### Hints
 

@@ -91,7 +91,7 @@ Coordinates for the line along which particles are randomly generated.
 
 - If no coordinates are available, PolylineEmitter acts like a point source located at local origin.
 
-## Suggestions
+## Advice
 
 ### Hint
 

@@ -67,7 +67,7 @@ Are set to default values if undefined. Together these parameters define *attenu
 
 - Nominal point size is multiplied by *attenuation* factor and then clipped to a minimum value of pointSizeMinValue × minimum renderable point size, then clipped to maximum size of pointSizeMaxValue × minimum renderable point size.
 
-## Suggestions
+## Advice
 
 ### Hints
 

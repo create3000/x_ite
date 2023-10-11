@@ -327,7 +327,7 @@ List of one or more indexed mesh definitions (such as IndexedFaceSet) that utili
 - (X3D version 4.0 ISO.proof draft) requires X3D `profile='Full'` or else include `<component name='HAnim' level='2'/>`
 - For X3D3 HAnim1, previous spelling of component name was 'H-Anim' (including hyphen)
 
-## Suggestions
+## Advice
 
 ### Hints
 

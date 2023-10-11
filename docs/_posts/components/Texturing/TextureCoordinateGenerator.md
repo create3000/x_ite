@@ -61,7 +61,7 @@ Parameter field defines the algorithm used to compute texture coordinates.
 
 *parameter* array contains scale and translation (x y z) values for Perlin NOISE mode, *parameter*[0] contains index of refraction for SPHERE-REFLECT mode, *parameter*[0] contains index of refraction and *parameter*[1 to 3] contains the eye point in local coordinates for SPHERE-REFLECT-LOCAL mode.
 
-## Suggestions
+## Advice
 
 ### Hints
 

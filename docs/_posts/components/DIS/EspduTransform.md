@@ -548,7 +548,7 @@ DIS *timestamp* received from latest PDU update, converted to X3D SFTime units.
 
 Whether RTP headers are prepended to DIS PDUs.
 
-## Suggestions
+## Advice
 
 ### Hints
 

@@ -101,7 +101,7 @@ The children form a closed loop with first point of first child repeated as last
 - *geometry* represented in children of this node shall not be directly rendered. It is an informational node only.
 - Surfaces not represented elsewhere in transformation hierarchy shall not be rendered.
 
-## Suggestions
+## Advice
 
 ### Hint
 

@@ -185,7 +185,7 @@ The *navigationInfo* field defines a dedicated NavigationInfo node for this X3DV
 
 - Allows simple integration of custom navigation associated with each Viewpoint according to user needs at that location.
 
-## Suggestions
+## Advice
 
 ### Hints
 

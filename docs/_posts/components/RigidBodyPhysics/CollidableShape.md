@@ -98,7 +98,7 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 
 The *shape* field provides a geometry proxy for specifying which geometry best represents the collidable object.
 
-## Suggestions
+## Advice
 
 ### Hint
 

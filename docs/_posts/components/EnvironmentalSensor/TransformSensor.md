@@ -93,7 +93,7 @@ Sends rotation event relative to center whenever the target object is contained 
 
 *targetObject* is the movable geometry represented by any valid X3DGroupingNode or X3DShapeNode which may enter or exit the box.
 
-## Suggestions
+## Advice
 
 ### Hints
 

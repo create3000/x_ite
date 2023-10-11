@@ -104,7 +104,7 @@ The *collidable* field holds a reference to a single nested item of a *collidabl
 
 - If there are multiple transformation paths to this reference, the results are undefined.
 
-## Suggestions
+## Advice
 
 ### Hint
 

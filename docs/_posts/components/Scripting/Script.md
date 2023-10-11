@@ -120,7 +120,7 @@ If *mustEvaluate* false, then the X3D player may delay sending input events to S
 
 - Set *mustEvaluate* true when sending/receiving values via the network.
 
-## Suggestions
+## Advice
 
 ### Hints
 

@@ -222,7 +222,7 @@ DIS *timestamp* in X3D units (value 0.0 matches 1 January 1970) in seconds.
 
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
-## Suggestions
+## Advice
 
 ### Hints
 

@@ -55,7 +55,7 @@ Whether or not associated geometry is *hatched*.
 
 Color of the hatch pattern.
 
-## Suggestions
+## Advice
 
 ### Hint
 

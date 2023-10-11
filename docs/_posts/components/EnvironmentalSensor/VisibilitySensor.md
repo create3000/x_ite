@@ -73,7 +73,7 @@ Time event generated when user's camera exits visibility region for sensor.
 
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
-## Suggestions
+## Advice
 
 ### Hints
 

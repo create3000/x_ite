@@ -47,7 +47,7 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 
 - Simple-geometry dimensions are initializeOnly and cannot be changed after initial creation, avoiding the need for potentially expensive tessellation at run time.
 
-## Suggestions
+## Advice
 
 ### Hint
 

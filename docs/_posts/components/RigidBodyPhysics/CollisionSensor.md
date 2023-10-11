@@ -60,7 +60,7 @@ Output field *contacts*.
 
 The *collider* field specifies a CollisionCollection node that holds a collidables field of nodes and spaces that are to be included in collision-detection computations.
 
-## Suggestions
+## Advice
 
 ### Hints
 

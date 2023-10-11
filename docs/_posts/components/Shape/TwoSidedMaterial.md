@@ -123,7 +123,7 @@ Lower shininess values provide soft specular glows, while higher values result i
 
 How "clear" an object is: 1.0 is completely transparent, 0.0 is completely opaque. Interchange profile hint: transparency \< .5 opaque, transparency \> .5 transparent.
 
-## Suggestions
+## Advice
 
 ### Hints
 

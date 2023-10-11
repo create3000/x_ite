@@ -82,7 +82,7 @@ The geometry node provides geometry used as the emitting *surface*.
 
 - Only valid geometry shall be used.
 
-## Suggestions
+## Advice
 
 ### Hint
 

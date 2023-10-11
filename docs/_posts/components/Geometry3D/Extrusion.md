@@ -202,7 +202,7 @@ The *spine* array defines a center-line sequence of 3D points that define a piec
 - Special care is needed if creating loops or spirals since self-intersecting, impossible or inverted geometry can result!
 - Ensure that *spine* segments have non-zero length and are not coincident with each other.
 
-## Suggestions
+## Advice
 
 ### Hints
 

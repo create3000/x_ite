@@ -213,7 +213,7 @@ When applying normalScale for this material node, the contained texture modulate
 
 How "clear" an object is: 1.0 is completely transparent, 0.0 is completely opaque. Interchange profile hint: *transparency* \< .5 opaque, *transparency* \> .5 transparent.
 
-## Suggestions
+## Advice
 
 ### Hints
 
