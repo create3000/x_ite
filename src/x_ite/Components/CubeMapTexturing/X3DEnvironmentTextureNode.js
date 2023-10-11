@@ -118,8 +118,8 @@ Object .assign (Object .setPrototypeOf (X3DEnvironmentTextureNode .prototype, X3
                                                                       this .target,
                                                                       this ._textureProperties .getValue (),
                                                                       this .texturePropertiesNode,
-                                                                      128,
-                                                                      128,
+                                                                      this .size,
+                                                                      this .size,
                                                                       false,
                                                                       false,
                                                                       false);
