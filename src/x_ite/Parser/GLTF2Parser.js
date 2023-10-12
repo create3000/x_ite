@@ -312,7 +312,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             case "KHR_lights_punctual":
                return this .khrLightsPunctualObject (value);
             case "EXT_lights_image_based":
-               return this .khrLightsImageBased (value);
+               return this .extLightsImageBasedObject (value);
          }
       }
    },
@@ -409,9 +409,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       return lightNode;
    },
-   khrLightsImageBased (EXT_lights_image_based)
+   extLightsImageBasedObject (EXT_lights_image_based)
    {
-      if (!(KHR_lights_punctual instanceof Object))
+      if (!(EXT_lights_image_based instanceof Object))
          return;
 
       this .envLightsArray (EXT_lights_image_based .lights);
@@ -447,14 +447,14 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       if (light .specularImages instanceof Array)
       {
          const
-            specularTexture = scene .createNode ("ComposedCubeMapTexture"),
+            specularTexture = scene .createNode ("ComposedCubeMapTexture", false),
             baseImages      = light .specularImages [0];
 
          if (baseImages instanceof Array)
          {
             const faces = ["right", "left", "top", "bottom", "front", "back"];
 
-            for (const [i, image] of baseImages)
+            for (const [i, image] of baseImages .entries ())
             {
                const texture = scene .createNode ("ImageTexture", false);
 

@@ -9,6 +9,7 @@
 
 * https://github.com/KhronosGroup/KTX-Software/releases/
 * https://github.khronos.org/KTX-Software/ktxjswrappers/index.html
+* https://github.com/KhronosGroup/KTX-Software/tree/main/tests/testimages
 
 ## Draco
 
