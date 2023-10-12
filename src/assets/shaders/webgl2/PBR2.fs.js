@@ -82,6 +82,10 @@ getMaterialColor ()
    f_sheen     = vec3 (0.0);
    f_clearcoat = vec3 (0.0);
 
+   #if defined (X3D_TEXTURE_PROJECTORS)
+      f_diffuse += getTextureProjectorColor (finalColor);
+   #endif
+
    #if defined (X3D_LIGHTING)
    for (int i = 0; i < X3D_NUM_LIGHTS; ++ i)
    {

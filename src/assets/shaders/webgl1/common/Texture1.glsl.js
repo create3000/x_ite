@@ -493,7 +493,7 @@ uniform mat4      x3d_TextureProjectorMatrix [X3D_NUM_TEXTURE_PROJECTORS];
 uniform vec3      x3d_TextureProjectorLocation [X3D_NUM_TEXTURE_PROJECTORS];
 
 vec4
-getProjectiveTexture (const in int i, const in vec2 texCoord)
+getTextureProjectorTexture (const in int i, const in vec2 texCoord)
 {
    vec4 color = vec4 (0.0);
 
@@ -511,7 +511,7 @@ getProjectiveTexture (const in int i, const in vec2 texCoord)
 }
 
 vec4
-getProjectiveTextureColor (in vec4 currentColor)
+getTextureProjectorColor (in vec4 currentColor)
 {
    vec3 N = gl_FrontFacing ? normal : -normal;
 
@@ -536,7 +536,7 @@ getProjectiveTextureColor (in vec4 currentColor)
       if (dot (N, p) < 0.0)
          continue;
 
-      currentColor *= getProjectiveTexture (i, texCoord .st);
+      currentColor *= getTextureProjectorTexture (i, texCoord .st);
    }
 
    return currentColor;

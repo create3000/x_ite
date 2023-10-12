@@ -26,7 +26,7 @@ getMaterialColor ()
    #endif
 
    #if defined (X3D_TEXTURE_PROJECTORS)
-      finalColor = getProjectiveTextureColor (finalColor);
+      finalColor = getTextureProjectorColor (finalColor);
    #endif
 
    return finalColor;
