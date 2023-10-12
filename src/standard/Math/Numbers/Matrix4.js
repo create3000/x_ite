@@ -389,10 +389,9 @@ Object .assign (Matrix4 .prototype,
    })(),
    determinant3 ()
    {
-      const
-         m00 = this [0], m01 = this [1], m02 = this [ 2],
-         m04 = this [4], m05 = this [5], m06 = this [ 6],
-         m08 = this [8], m09 = this [9], m10 = this [10];
+      const { 0: m00, 1: m01, 2: m02,
+              3: m04, 5: m05, 6: m06,
+              8: m08, 9: m09, 10: m10 } = this;
 
       return m00 * (m05 * m10 - m06 * m09) -
              m01 * (m04 * m10 - m06 * m08) +
