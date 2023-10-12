@@ -185,7 +185,7 @@ getMaterialColor ()
    float shininess         = getShininessFactor ();
    float normalScale       = x3d_Material .normalScale;
 
-   #if defined (X3D_PROJECTIVE_TEXTURE_MAPPING)
+   #if defined (X3D_TEXTURE_PROJECTORS)
       vec4 P = getProjectiveTextureColor (vec4 (1.0));
 
       diffuseColor *= P .rgb;

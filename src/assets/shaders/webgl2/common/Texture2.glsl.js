@@ -480,11 +480,11 @@ getTextureColor (const in vec4 diffuseColor, const in vec4 specularColor)
 
 #endif // X3D_TEXTURE
 
-#if defined (X3D_PROJECTIVE_TEXTURE_MAPPING)
+#if defined (X3D_TEXTURE_PROJECTORS)
 
-uniform sampler2D x3d_ProjectiveTexture [X3D_NUM_TEXTURE_PROJECTORS];
-uniform mat4      x3d_ProjectiveTextureMatrix [X3D_NUM_TEXTURE_PROJECTORS];
-uniform vec3      x3d_ProjectiveTextureLocation [X3D_NUM_TEXTURE_PROJECTORS];
+uniform sampler2D x3d_TextureProjectorTexture [X3D_NUM_TEXTURE_PROJECTORS];
+uniform mat4      x3d_TextureProjectorMatrix [X3D_NUM_TEXTURE_PROJECTORS];
+uniform vec3      x3d_TextureProjectorLocation [X3D_NUM_TEXTURE_PROJECTORS];
 
 vec4
 getProjectiveTexture (const in int i, const in vec2 texCoord)
@@ -493,11 +493,11 @@ getProjectiveTexture (const in int i, const in vec2 texCoord)
    {
       #if X3D_NUM_TEXTURE_PROJECTORS > 0
       case 0:
-         return texture (x3d_ProjectiveTexture [0], texCoord);
+         return texture (x3d_TextureProjectorTexture [0], texCoord);
       #endif
       #if X3D_NUM_TEXTURE_PROJECTORS > 1
       case 1:
-         return texture (x3d_ProjectiveTexture [1], texCoord);
+         return texture (x3d_TextureProjectorTexture [1], texCoord);
       #endif
    }
 
@@ -511,7 +511,7 @@ getProjectiveTextureColor (in vec4 currentColor)
 
    for (int i = 0; i < X3D_NUM_TEXTURE_PROJECTORS; ++ i)
    {
-      vec4 texCoord = x3d_ProjectiveTextureMatrix [i] * vec4 (vertex, 1.0);
+      vec4 texCoord = x3d_TextureProjectorMatrix [i] * vec4 (vertex, 1.0);
 
       texCoord .stp /= texCoord .q;
 
@@ -525,7 +525,7 @@ getProjectiveTextureColor (in vec4 currentColor)
          continue;
 
       // We do not need to normalize p, as we only need the sign of the dot product.
-      vec3 p = x3d_ProjectiveTextureLocation [i] - vertex;
+      vec3 p = x3d_TextureProjectorLocation [i] - vertex;
 
       if (dot (N, p) < 0.0)
          continue;
@@ -536,5 +536,5 @@ getProjectiveTextureColor (in vec4 currentColor)
    return currentColor;
 }
 
-#endif // X3D_PROJECTIVE_TEXTURE_MAPPING
+#endif // X3D_TEXTURE_PROJECTORS
 `;

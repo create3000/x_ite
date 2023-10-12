@@ -25,7 +25,7 @@ getMaterialColor ()
       finalColor = getTextureColor (finalColor, vec4 (1.0));
    #endif
 
-   #if defined (X3D_PROJECTIVE_TEXTURE_MAPPING)
+   #if defined (X3D_TEXTURE_PROJECTORS)
       finalColor = getProjectiveTextureColor (finalColor);
    #endif
 

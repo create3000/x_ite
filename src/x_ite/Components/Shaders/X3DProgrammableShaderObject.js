@@ -83,9 +83,9 @@ function X3DProgrammableShaderObject (executionContext)
    this .x3d_MultiTextureFunction                = [ ];
    this .x3d_TextureCoordinateGeneratorMode      = [ ];
    this .x3d_TextureCoordinateGeneratorParameter = [ ];
-   this .x3d_ProjectiveTexture                   = [ ];
-   this .x3d_ProjectiveTextureMatrix             = [ ];
-   this .x3d_ProjectiveTextureLocation           = [ ];
+   this .x3d_TextureProjectorTexture             = [ ];
+   this .x3d_TextureProjectorMatrix              = [ ];
+   this .x3d_TextureProjectorLocation            = [ ];
    this .x3d_TexCoord                            = [ ];
    this .x3d_TextureTransformMatrix              = [ ];
 
@@ -254,9 +254,9 @@ Object .assign (X3DProgrammableShaderObject .prototype,
          this .x3d_MultiTextureSource [i]    = gl .getUniformLocation (program, "x3d_MultiTexture[" + i + "].source");
          this .x3d_MultiTextureFunction [i]  = gl .getUniformLocation (program, "x3d_MultiTexture[" + i + "].function");
 
-         this .x3d_ProjectiveTexture [i]         = gl .getUniformLocation (program, "x3d_ProjectiveTexture[" + i + "]");
-         this .x3d_ProjectiveTextureMatrix [i]   = gl .getUniformLocation (program, "x3d_ProjectiveTextureMatrix[" + i + "]");
-         this .x3d_ProjectiveTextureLocation [i] = gl .getUniformLocation (program, "x3d_ProjectiveTextureLocation[" + i + "]");
+         this .x3d_TextureProjectorTexture [i]  = gl .getUniformLocation (program, "x3d_TextureProjectorTexture[" + i + "]");
+         this .x3d_TextureProjectorMatrix [i]   = gl .getUniformLocation (program, "x3d_TextureProjectorMatrix[" + i + "]");
+         this .x3d_TextureProjectorLocation [i] = gl .getUniformLocation (program, "x3d_TextureProjectorLocation[" + i + "]");
       }
 
       for (let i = 0; i < maxTextureTransforms; ++ i)
@@ -363,7 +363,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       gl .uniform1i (this .x3d_EnvironmentLightSpecularTexture, browser .getDefaultTextureCubeUnit ());
       gl .uniform1i (this .x3d_EnvironmentLightGGXLUTTexture,   browser .getDefaultTexture2DUnit ());
 
-      for (const uniform of this .x3d_ProjectiveTexture)
+      for (const uniform of this .x3d_TextureProjectorTexture)
          gl .uniform1i (uniform, browser .getDefaultTexture2DUnit ());
 
       gl .uniform1i (this .x3d_TexCoordRamp,         browser .getDefaultTexture2DUnit ());

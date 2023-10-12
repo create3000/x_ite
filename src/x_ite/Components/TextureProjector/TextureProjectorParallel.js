@@ -70,8 +70,8 @@ function TextureProjectorParallelContainer ()
    this .invTextureSpaceProjectionMatrix = new Matrix4 ();
    this .direction                       = new Vector3 (0, 0, 0);
    this .rotation                        = new Rotation4 ();
-   this .projectiveTextureMatrix         = new Matrix4 ();
-   this .projectiveTextureMatrixArray    = new Float32Array (16);
+   this .matrix                          = new Matrix4 ();
+   this .matrixArray                     = new Float32Array (16);
    this .textureMatrix                   = new Matrix4 ();
 }
 
@@ -81,6 +81,7 @@ Object .assign (TextureProjectorParallelContainer .prototype,
    {
       this .browser   = lightNode .getBrowser ();
       this .lightNode = lightNode;
+      this .global    = lightNode .getGlobal ();
 
       this .modelViewMatrix .pushMatrix (modelViewMatrix);
 
@@ -141,8 +142,8 @@ Object .assign (TextureProjectorParallelContainer .prototype,
 
       this .invTextureSpaceProjectionMatrix .assign (invTextureSpaceMatrix) .multRight (this .projectionMatrix) .multRight (lightNode .getBiasMatrix ());
 
-      this .projectiveTextureMatrix .assign (cameraSpaceMatrix) .multRight (this .invTextureSpaceProjectionMatrix) .multRight (this .textureMatrix);
-      this .projectiveTextureMatrixArray .set (this .projectiveTextureMatrix);
+      this .matrix .assign (cameraSpaceMatrix) .multRight (this .invTextureSpaceProjectionMatrix) .multRight (this .textureMatrix);
+      this .matrixArray .set (this .matrix);
 
       this .modelViewMatrix .get () .multVecMatrix (this .location .assign (lightNode ._location .getValue ()));
       this .locationArray .set (this .location);
@@ -151,23 +152,29 @@ Object .assign (TextureProjectorParallelContainer .prototype,
    {
       const i = shaderObject .numTextureProjectors ++;
 
-      if (shaderObject .hasTextureProjector (i, this))
-         return;
-
       const
          texture     = this .lightNode .getTexture (),
-         textureUnit = this .browser .getTexture2DUnit ();
+         textureUnit = this .global
+            ? (this .textureUnit = this .textureUnit ?? this .browser .popTexture2DUnit ())
+            : this .browser .getTexture2DUnit ();
 
       gl .activeTexture (gl .TEXTURE0 + textureUnit);
       gl .bindTexture (gl .TEXTURE_2D, texture ?.getTexture () ?? this .browser .getDefaultTexture2DWhite ());
-      gl .uniform1i (shaderObject .x3d_ProjectiveTexture [i], textureUnit);
+      gl .uniform1i (shaderObject .x3d_TextureProjectorTexture [i], textureUnit);
 
-      gl .uniformMatrix4fv (shaderObject .x3d_ProjectiveTextureMatrix [i], false, this .projectiveTextureMatrixArray);
-      gl .uniform3fv (shaderObject .x3d_ProjectiveTextureLocation [i], this .locationArray);
+      if (shaderObject .hasTextureProjector (i, this))
+         return;
+
+      gl .uniformMatrix4fv (shaderObject .x3d_TextureProjectorMatrix [i], false, this .matrixArray);
+      gl .uniform3fv (shaderObject .x3d_TextureProjectorLocation [i], this .locationArray);
    },
    dispose ()
    {
+      this .browser .pushTexture2DUnit (this .textureUnit);
+
       this .modelViewMatrix .clear ();
+
+      this .textureUnit = undefined;
 
       TextureProjectorParallelCache .push (this);
    },

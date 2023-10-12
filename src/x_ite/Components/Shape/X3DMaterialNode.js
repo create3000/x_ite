@@ -226,7 +226,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
 
          if (numTextureProjectors)
          {
-            options .push ("X3D_PROJECTIVE_TEXTURE_MAPPING")
+            options .push ("X3D_TEXTURE_PROJECTORS")
             options .push (`X3D_NUM_TEXTURE_PROJECTORS ${Math .min (numTextureProjectors, browser .getMaxTextures ())}`);
          }
 
@@ -333,7 +333,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
 
          if (numTextureProjectors)
          {
-            options .push ("X3D_PROJECTIVE_TEXTURE_MAPPING")
+            options .push ("X3D_TEXTURE_PROJECTORS")
             options .push (`X3D_NUM_TEXTURE_PROJECTORS ${Math .min (numTextureProjectors, browser .getMaxTextures ())}`);
          }
 

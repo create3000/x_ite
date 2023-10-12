@@ -226,6 +226,28 @@ Object .assign (X3DTexturingContext .prototype,
 
       return textureUnit;
    },
+   popTextureCubeUnit ()
+   {
+      if (this [_textureCubeUnitIndex] > 0)
+      {
+         -- this [_textureCubeUnitIndex];
+
+         return this [_textureCubeUnits] .pop ();
+      }
+      else
+      {
+         return this [_combinedTextureUnits] .pop ();
+      }
+   },
+   pushTextureCubeUnit (textureUnit)
+   {
+      if (textureUnit === undefined)
+         return;
+
+      ++ this [_textureCubeUnitIndex];
+
+      this [_textureCubeUnits] .push (textureUnit);
+   },
    getTextureCubeUnit ()
    {
       if (this [_textureCubeUnitIndex] > 0)

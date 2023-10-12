@@ -68,6 +68,7 @@ Object .assign (EnvironmentLightContainer .prototype,
    {
       this .browser   = lightNode .getBrowser ();
       this .lightNode = lightNode;
+      this .global    = lightNode .getGlobal ();
    },
    renderShadowMap (renderObject)
    { },
@@ -76,18 +77,28 @@ Object .assign (EnvironmentLightContainer .prototype,
    setShaderUniforms (gl, shaderObject)
    {
       const
-         { browser, lightNode } = this,
-         color                  = lightNode .getColor (),
-         diffuseTexture         = lightNode .getDiffuseTexture (),
-         diffuseTextureUnit     = browser .getTextureCubeUnit (),
-         specularTexture        = lightNode .getSpecularTexture (),
-         specularTextureUnit    = browser .getTextureCubeUnit (),
-         GGXLUTTexture          = browser .getGGXLUTTexture (),
-         GGXLUTTextureUnit      = browser .getTexture2DUnit ();
+         { browser, lightNode, global } = this,
+         color           = lightNode .getColor (),
+         diffuseTexture  = lightNode .getDiffuseTexture (),
+         specularTexture = lightNode .getSpecularTexture (),
+         GGXLUTTexture   = browser .getGGXLUTTexture ();
 
-      gl .uniform3f        (shaderObject .x3d_EnvironmentLightColor,            color .r, color .g, color .b);
-      gl .uniform1f        (shaderObject .x3d_EnvironmentLightIntensity,        lightNode .getIntensity ());
-      gl .uniformMatrix3fv (shaderObject .x3d_EnvironmentLightRotation, false,  lightNode .getRotation ());
+      const diffuseTextureUnit = global
+         ? this .diffuseTextureUnit = this .diffuseTextureUnit ?? browser .popTextureCubeUnit ()
+         : browser .getTextureCubeUnit ();
+
+      const specularTextureUnit = global
+         ? this .specularTextureUnit = this .specularTextureUnit ?? browser .popTextureCubeUnit ()
+         : browser .getTextureCubeUnit ();
+
+      const GGXLUTTextureUnit = global
+         ? this .GGXLUTTextureUnit = this .GGXLUTTextureUnit ?? browser .popTexture2DUnit ()
+         : browser .getTexture2DUnit ();
+
+      gl .uniform3f        (shaderObject .x3d_EnvironmentLightColor,                 color .r, color .g, color .b);
+      gl .uniform1f        (shaderObject .x3d_EnvironmentLightIntensity,             lightNode .getIntensity ());
+      gl .uniformMatrix3fv (shaderObject .x3d_EnvironmentLightRotation, false,       lightNode .getRotation ());
+      gl .uniform1i        (shaderObject .x3d_EnvironmentLightSpecularTextureLevels, specularTexture ?.getLevels () ?? 1);
 
       gl .activeTexture (gl .TEXTURE0 + diffuseTextureUnit);
       gl .bindTexture (gl .TEXTURE_CUBE_MAP, diffuseTexture ?.getTexture () ?? browser .getDefaultTextureCubeBlack ());
@@ -96,7 +107,6 @@ Object .assign (EnvironmentLightContainer .prototype,
       gl .activeTexture (gl .TEXTURE0 + specularTextureUnit);
       gl .bindTexture (gl .TEXTURE_CUBE_MAP, specularTexture ?.getTexture () ?? browser .getDefaultTextureCubeBlack ());
       gl .uniform1i (shaderObject .x3d_EnvironmentLightSpecularTexture, specularTextureUnit);
-      gl .uniform1i (shaderObject .x3d_EnvironmentLightSpecularTextureLevels, specularTexture ?.getLevels () ?? 1);
 
       gl .activeTexture (gl .TEXTURE0 + GGXLUTTextureUnit);
       gl .bindTexture (gl .TEXTURE_2D, GGXLUTTexture .getTexture ());
@@ -104,7 +114,17 @@ Object .assign (EnvironmentLightContainer .prototype,
    },
    dispose ()
    {
+      const browser = this .browser;
+
+      browser .pushTextureCubeUnit (this .diffuseTextureUnit);
+      browser .pushTextureCubeUnit (this .specularTextureUnit);
+      browser .pushTexture2DUnit   (this .GGXLUTTextureUnit);
+
       this .modelViewMatrix .clear ();
+
+      this .diffuseTextureUnit  = undefined;
+      this .specularTextureUnit = undefined;
+      this .GGXLUTTextureUnit   = undefined;
 
       // Return container
 
