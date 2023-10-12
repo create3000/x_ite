@@ -455,26 +455,32 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       if (light .specularImages instanceof Array)
       {
          const
-            specularTexture = scene .createNode ("ComposedCubeMapTexture", false),
-            baseImages      = light .specularImages [0];
+            specularTextureNode = scene .createNode ("ComposedCubeMapTexture", false),
+            baseImages          = light .specularImages [0];
 
          if (baseImages instanceof Array)
          {
             const faces = ["right", "left", "top", "bottom", "front", "back"];
 
-            for (const [i, image] of baseImages .entries ())
+            for (const [i, image] of baseImages .map (image => this .images [image]) .entries ())
             {
-               const texture = scene .createNode ("ImageTexture", false);
+               const
+                  textureNode = scene .createNode ("ImageTexture", false),
+                  name        = this .sanitizeName (image ?.name);
 
-               texture ._url = this .images [image] ? [this .images [image] .uri] : [ ];
-               texture .setup ();
+               if (name)
+                  scene .addNamedNode (scene .getUniqueName (name), textureNode);
 
-               specularTexture [`_${faces [i]}Texture`] = texture;
+               textureNode ._description = image ?.name ?? "";
+               textureNode ._url         = image ? [image .uri] : [ ];
+               textureNode .setup ();
+
+               specularTextureNode [`_${faces [i]}Texture`] = textureNode;
             }
 
-            specularTexture .setup ();
+            specularTextureNode .setup ();
 
-            lightNode ._specularTexture = specularTexture;
+            lightNode ._specularTexture = specularTextureNode;
          }
       }
 
@@ -741,10 +747,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
                   name                  = this .sanitizeName (sampler .name);
 
                if (name)
-               {
-                  scene .addNamedNode    (scene .getUniqueName       (name), texturePropertiesNode);
-                  scene .addExportedNode (scene .getUniqueExportName (name), texturePropertiesNode);
-               }
+                  scene .addNamedNode (scene .getUniqueName (name), texturePropertiesNode);
 
                // minFilter
 
@@ -842,10 +845,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          name        = this .sanitizeName (texture .name || images [0] .name);
 
       if (name)
-      {
-         scene .addNamedNode    (scene .getUniqueName       (name), textureNode);
-         scene .addExportedNode (scene .getUniqueExportName (name), textureNode);
-      }
+         scene .addNamedNode (scene .getUniqueName (name), textureNode);
 
       textureNode ._url                  = images .map (image => image .uri);
       textureNode ._colorSpaceConversion = false;
@@ -934,10 +934,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       }
 
       if (name)
-      {
-         scene .addNamedNode    (scene .getUniqueName       (name), appearanceNode);
-         scene .addExportedNode (scene .getUniqueExportName (name), appearanceNode);
-      }
+         scene .addNamedNode (scene .getUniqueName (name), appearanceNode);
 
       appearanceNode ._alphaMode        = this .stringValue (material .alphaMode, "OPAQUE");
       appearanceNode ._alphaCutoff      = this .numberValue (material .alphaCutoff, 0.5);
@@ -1254,10 +1251,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       if (name)
       {
          for (const shapeNode of shapeNodes)
-         {
-            scene .addNamedNode    (scene .getUniqueName       (name), shapeNode);
-            scene .addExportedNode (scene .getUniqueExportName (name), shapeNode);
-         }
+            scene .addNamedNode (scene .getUniqueName (name), shapeNode);
       }
 
       return mesh .shapeNodes = shapeNodes;
@@ -1637,8 +1631,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       if (name)
       {
-         scene .addNamedNode    (scene .getUniqueName       (name), transformNode);
-         scene .addExportedNode (scene .getUniqueExportName (name), transformNode);
+         scene .addNamedNode (scene .getUniqueName (name), transformNode);
 
          if (transformNode .getTypeName () === "HAnimJoint")
             transformNode ._name = node .name;
@@ -1715,10 +1708,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          const name = this .sanitizeName (skin .name) || transformNode .getName ();
 
          if (name)
-         {
-            scene .addNamedNode    (scene .getUniqueName       (name), humanoidNode);
-            scene .addExportedNode (scene .getUniqueExportName (name), humanoidNode);
-         }
+            scene .addNamedNode (scene .getUniqueName (name), humanoidNode);
 
          humanoidNode ._name                  = skin .name ?? node .name ?? "";
          humanoidNode ._version               = "2.0";
@@ -1998,10 +1988,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
                name      = this .sanitizeName (scene .name);
 
             if (name)
-            {
-               scene .addNamedNode    (scene .getUniqueName       (name), groupNode);
-               scene .addExportedNode (scene .getUniqueExportName (name), groupNode);
-            }
+               scene .addNamedNode (scene .getUniqueName (name), groupNode);
 
             groupNode ._children = nodes;
 
