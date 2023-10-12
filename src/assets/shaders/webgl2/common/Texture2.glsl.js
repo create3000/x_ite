@@ -532,7 +532,7 @@ getTextureProjectorColor (in vec3 currentColor)
 
       vec4 T = getTextureProjectorTexture (i, texCoord .st);
 
-      currentColor *= T .rgb * T .a;
+      currentColor *= mix (vec3 (1.0), T .rgb, T .a);
    }
 
    return currentColor;
