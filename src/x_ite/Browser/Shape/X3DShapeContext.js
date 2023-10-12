@@ -85,7 +85,7 @@ Object .assign (X3DShapeContext .prototype,
    },
    getLineStippleScale ()
    {
-      return 1 / (this .getPixelPerPoint () * 32); // 32px
+      return 1 / (this .getPixelsPerPoint () * 32); // 32px
    },
    getDefaultPointProperties ()
    {

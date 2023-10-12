@@ -63,25 +63,25 @@ import _                   from "../../../locale/gettext.js";
 const WEBGL_VERSION = 2;
 
 const
-   _instanceId               = Symbol (),
-   _element                  = Symbol (),
-   _shadow                   = Symbol (),
-   _surface                  = Symbol (),
-   _canvas                   = Symbol (),
-   _context                  = Symbol (),
-   _splashScreen             = Symbol (),
-   _localStorage             = Symbol (),
-   _mobile                   = Symbol (),
-   _browserTimings           = Symbol (),
-   _browserOptions           = Symbol (),
-   _browserProperties        = Symbol (),
-   _renderingProperties      = Symbol (),
-   _notification             = Symbol (),
-   _contextMenu              = Symbol (),
-   _privateScene             = Symbol (),
-   _keydown                  = Symbol (),
-   _keyup                    = Symbol (),
-   _pixelPerPoint            = Symbol ();
+   _instanceId          = Symbol (),
+   _element             = Symbol (),
+   _shadow              = Symbol (),
+   _surface             = Symbol (),
+   _canvas              = Symbol (),
+   _context             = Symbol (),
+   _splashScreen        = Symbol (),
+   _localStorage        = Symbol (),
+   _mobile              = Symbol (),
+   _browserTimings      = Symbol (),
+   _browserOptions      = Symbol (),
+   _browserProperties   = Symbol (),
+   _renderingProperties = Symbol (),
+   _notification        = Symbol (),
+   _contextMenu         = Symbol (),
+   _privateScene        = Symbol (),
+   _keydown             = Symbol (),
+   _keyup               = Symbol (),
+   _pixelsPerPoint      = Symbol ();
 
 let instanceId = 0;
 
@@ -138,7 +138,7 @@ function X3DCoreContext (element)
    this [_contextMenu]         = new ContextMenu         (this .getPrivateScene ());
 
    const inches = $("<div></div>") .hide () .css ("height", "10in") .appendTo ($("body"));
-   this [_pixelPerPoint] = inches .height () / 720 || 1;
+   this [_pixelsPerPoint] = inches .height () / 720 || 1;
    inches .remove ();
 
    this .addChildObjects (X3DConstants .outputOnly, "controlKey", new Fields .SFBool (),
@@ -282,9 +282,9 @@ Object .assign (X3DCoreContext .prototype,
 
       return this [_privateScene];
    },
-   getPixelPerPoint ()
+   getPixelsPerPoint ()
    {
-      return this [_pixelPerPoint] * this .getRenderingProperty ("ContentScale");
+      return this [_pixelsPerPoint] * this .getRenderingProperty ("ContentScale");
    },
    connectedCallback ()
    { },
