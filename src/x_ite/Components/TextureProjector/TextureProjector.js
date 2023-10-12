@@ -128,7 +128,7 @@ Object .assign (TextureProjectorContainer .prototype,
    },
    setShaderUniforms (gl, shaderObject, renderObject)
    {
-      const i = shaderObject .numProjectiveTextures ++;
+      const i = shaderObject .numTextureProjectors ++;
 
       if (shaderObject .hasTextureProjector (i, this))
          return;

@@ -89,15 +89,15 @@ function X3DProgrammableShaderObject (executionContext)
    this .x3d_TexCoord                            = [ ];
    this .x3d_TextureTransformMatrix              = [ ];
 
-   this .fogNode                     = null;
-   this .numClipPlanes               = 0;
-   this .numLights                   = 0;
-   this .numGlobalLights             = 0;
-   this .lightNodes                  = [ ];
-   this .numProjectiveTextures       = 0;
-   this .numGlobalProjectiveTextures = 0;
-   this .projectiveTextureNodes      = [ ];
-   this .textures                    = new Set ();
+   this .fogNode                    = null;
+   this .numClipPlanes              = 0;
+   this .numLights                  = 0;
+   this .numGlobalLights            = 0;
+   this .lightNodes                 = [ ];
+   this .numTextureProjectors       = 0;
+   this .numGlobalTextureProjectors = 0;
+   this .textureProjectorNodes      = [ ];
+   this .textures                   = new Set ();
 }
 
 Object .assign (X3DProgrammableShaderObject .prototype,
@@ -964,10 +964,10 @@ Object .assign (X3DProgrammableShaderObject .prototype,
    },
    hasTextureProjector (i, textureProjectorNode)
    {
-      if (this .projectiveTextureNodes [i] === textureProjectorNode)
+      if (this .textureProjectorNodes [i] === textureProjectorNode)
          return true;
 
-      this .projectiveTextureNodes [i] = textureProjectorNode;
+      this .textureProjectorNodes [i] = textureProjectorNode;
 
       return false;
    },
@@ -1012,16 +1012,16 @@ Object .assign (X3DProgrammableShaderObject .prototype,
 
             // Set global lights and global texture projectors.
 
-            this .numLights                      = 0;
-            this .numProjectiveTextures          = 0;
-            this .lightNodes .length             = 0;
-            this .projectiveTextureNodes .length = 0;
+            this .numLights                     = 0;
+            this .numTextureProjectors          = 0;
+            this .lightNodes .length            = 0;
+            this .textureProjectorNodes .length = 0;
 
             for (const globalLights of renderObject .getGlobalLights ())
                globalLights .setShaderUniforms (gl, this, renderObject);
 
             this .numGlobalLights             = this .numLights;
-            this .numGlobalProjectiveTextures = this .numProjectiveTextures;
+            this .numGlobalTextureProjectors = this .numTextureProjectors;
 
             // Logarithmic depth buffer support
 
@@ -1058,9 +1058,9 @@ Object .assign (X3DProgrammableShaderObject .prototype,
 
          // Clip planes and local lights
 
-         this .numClipPlanes         = 0;
-         this .numLights             = this .numGlobalLights;
-         this .numProjectiveTextures = this .numGlobalProjectiveTextures;
+         this .numClipPlanes        = 0;
+         this .numLights            = this .numGlobalLights;
+         this .numTextureProjectors = this .numGlobalTextureProjectors;
 
          for (const localObject of renderContext .localObjects)
             localObject .setShaderUniforms (gl, this, renderObject);
