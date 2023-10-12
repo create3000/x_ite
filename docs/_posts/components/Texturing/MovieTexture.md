@@ -244,6 +244,7 @@ Any video file format supported by the web browser, but at least:
 | MP4      | .mp4           | video/mp4  |
 | WebM     | .webm          | video/webm |
 | OGG      | .ogg           | video/ogg  |
+| GIF      | .gif           | image/gif  |
 
 ## Advice
 
