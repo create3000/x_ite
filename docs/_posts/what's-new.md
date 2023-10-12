@@ -17,6 +17,7 @@ tags: [New, Releases]
 * ES Module Version of X_ITE named »x_ite.mjs«.
 * Typescript Types for Intellisense.
 * PLY 3d format parser.
+* TextureProjector component is now working.
 
 ## X_ITE v8.10.0 Released
 
