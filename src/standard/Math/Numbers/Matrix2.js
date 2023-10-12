@@ -124,8 +124,9 @@ Object .assign (Matrix2 .prototype,
    },
    determinant ()
    {
-      return this [0] * this [3] -
-             this [1] * this [2];
+      const { 0: m0, 1: m1, 2: m2, 3: m3 } = this;
+
+      return m0 * m3 - m1 * m2;
    },
    transpose ()
    {

@@ -354,8 +354,9 @@ Object .assign (Matrix3 .prototype,
    })(),
    determinant2 ()
    {
-      return this [0] * this [4] -
-             this [1] * this [3];
+      const { 0: m0, 1: m1, 3: m3, 4: m4 } = this;
+
+      return m0 * m4 - m1 * m3;
    },
    determinant ()
    {
