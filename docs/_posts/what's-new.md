@@ -7,14 +7,14 @@ tags: [New, Releases]
 ---
 ## X_ITE v9.0.0 Released
 
-*Leipzig, 16th October 2023:* We right now released a new version. Unfortunately, in this release the shader variable "x3d_TextureMatrix" has changed to "x3d_TextureTransformMatrix", also images from ImageTexture are now not flipped at the y-axis anymore. These are breaking changes.
+*Leipzig, 16th October 2023:* We right now released a new version. Unfortunately, in this release the shader variable »x3d_TextureMatrix« has changed to »x3d_TextureTransformMatrix«, also images from ImageTexture are now not flipped at the y-axis anymore, this is now done in the shaders. Custom shaders must be adjusted to reflect these changes. These are breaking changes.
 
 ### New Features
 
 * Implemented a KTX texture loader for ImageCubeMapTexture, ImageTexture, and ImageTexture3D.
 * ImageCubeMapTexture can now load panorama images.
 * Implemented EnvironmentLight node.
-* ES Module Version of X_ITE as x_ite.mjs.
+* ES Module Version of X_ITE named »x_ite.mjs«.
 * Typescript Types for Intellisense.
 * PLY 3d format parser.
 
