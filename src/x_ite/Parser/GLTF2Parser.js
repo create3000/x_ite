@@ -279,6 +279,10 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
          switch (extension)
          {
+            // case "KHR_lights_environment": // in development
+            // {
+            //    break;
+            // },
             case "EXT_lights_image_based":
             {
                const component = browser .getComponent ("CubeMapTexturing", 3);
