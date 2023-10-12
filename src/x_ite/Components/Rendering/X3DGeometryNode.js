@@ -114,7 +114,7 @@ function X3DGeometryNode (executionContext)
 Object .defineProperty (X3DGeometryNode, "createArray",
 {
    // Function to select ether Array or MFFloat for color/normal/vertex arrays.
-   // Array version runs faster, see TreasureIsland.
+   // Array version runs faster, see BeyondGermany and TreasureIsland.
    value ()
    {
       // return new Fields .MFFloat ();
