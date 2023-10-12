@@ -2,7 +2,8 @@
 
 ## glTF Sample Viewer
 
-* https://github.com/KhronosGroup/glTF-Sample-Viewer/tree/1c6c7a105ac1f4ed14b904adc2c656af1d7715ac
+* https://github.com/KhronosGroup/glTF-Sample-Viewer
+* https://github.com/KhronosGroup/glTF-Sample-Viewer/blob/main/assets/images/lut_ggx.png
 
 ## KTX
 
