@@ -128,6 +128,18 @@ Whether to repeat texture along R axis from front to back.
 
 Single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images.
 
+## Supported File Formats
+
+Any image file format supported by the web browser, but at least:
+
+| Encoding | File Extension | MIME Type  |
+|----------|----------------|------------|
+| PNG      | .png           | image/png  |
+| JPEG     | .jpeg, .jpg    | image/jpeg |
+| GIF      | .gif           | image/gif  |
+| WebP     | .webp          | image/webp |
+| SVG      | .svg           | image/svg  |
+
 ## Example
 
 <x3d-canvas src="https://create3000.github.io/media/examples/Texturing3D/ImageTextureAtlas/ImageTextureAtlas.x3d" update="auto"></x3d-canvas>
