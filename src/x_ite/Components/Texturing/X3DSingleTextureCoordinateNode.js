@@ -45,8 +45,8 @@
  *
  ******************************************************************************/
 
-import Fields                   from "../../Fields.js";
 import X3DTextureCoordinateNode from "./X3DTextureCoordinateNode.js";
+import X3DGeometryNode          from "../Rendering/X3DGeometryNode.js";
 import X3DConstants             from "../../Base/X3DConstants.js";
 
 function X3DSingleTextureCoordinateNode (executionContext)
@@ -55,7 +55,7 @@ function X3DSingleTextureCoordinateNode (executionContext)
 
    this .addType (X3DConstants .X3DSingleTextureCoordinateNode);
 
-   this .texCoordArray = new Fields .MFFloat ();
+   this .texCoordArray = X3DGeometryNode .createArray ();
 }
 
 Object .assign (Object .setPrototypeOf (X3DSingleTextureCoordinateNode .prototype, X3DTextureCoordinateNode .prototype),

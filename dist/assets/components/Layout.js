@@ -1321,6 +1321,9 @@ var TextAlignment_default = /*#__PURE__*/__webpack_require__.n(TextAlignment_nam
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Texturing/PixelTexture\")"
 const PixelTexture_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.14.0")] .require ("x_ite/Components/Texturing/PixelTexture");
 var PixelTexture_default = /*#__PURE__*/__webpack_require__.n(PixelTexture_namespaceObject);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Rendering/X3DGeometryNode\")"
+const X3DGeometryNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.14.0")] .require ("x_ite/Components/Rendering/X3DGeometryNode");
+var X3DGeometryNode_default = /*#__PURE__*/__webpack_require__.n(X3DGeometryNode_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Geometry/Box3\")"
 const Box3_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.14.0")] .require ("standard/Math/Geometry/Box3");
 var Box3_default = /*#__PURE__*/__webpack_require__.n(Box3_namespaceObject);
@@ -1391,7 +1394,7 @@ function ScreenText (text, fontStyle)
 
    text .setTransparent (true);
 
-   this .texCoordArray = new (Fields_default()).MFFloat ();
+   this .texCoordArray = X3DGeometryNode_default().createArray ();
    this .textureNode   = new (PixelTexture_default()) (text .getExecutionContext ());
    this .canvas        = $("<canvas></canvas>");
    this .context       = this .canvas [0] .getContext ("2d", { willReadFrequently: true });

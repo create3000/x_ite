@@ -203,6 +203,9 @@ const ArcClose2DOptions_default_ = ArcClose2DOptions;
 
 Namespace_default().add ("ArcClose2DOptions", "x_ite/Browser/Geometry2D/ArcClose2DOptions", ArcClose2DOptions_default_);
 /* harmony default export */ const Geometry2D_ArcClose2DOptions = (ArcClose2DOptions_default_);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Rendering/X3DGeometryNode\")"
+const X3DGeometryNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.14.0")] .require ("x_ite/Components/Rendering/X3DGeometryNode");
+var X3DGeometryNode_default = /*#__PURE__*/__webpack_require__.n(X3DGeometryNode_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Complex\")"
 const Complex_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.14.0")] .require ("standard/Math/Numbers/Complex");
 var Complex_default = /*#__PURE__*/__webpack_require__.n(Complex_namespaceObject);
@@ -259,13 +262,14 @@ var Complex_default = /*#__PURE__*/__webpack_require__.n(Complex_namespaceObject
 
 
 
+
 function Circle2DOptions (executionContext)
 {
    X3DBaseNode_default().call (this, executionContext);
 
    this .addChildObjects ((X3DConstants_default()).inputOutput, "dimension", new (Fields_default()).SFInt32 (40))
 
-   this .vertices = new (Fields_default()).MFFloat ();
+   this .vertices = X3DGeometryNode_default().createArray ();
 }
 
 Object .assign (Object .setPrototypeOf (Circle2DOptions .prototype, (X3DBaseNode_default()).prototype),
@@ -370,16 +374,17 @@ Namespace_default().add ("Circle2DOptions", "x_ite/Browser/Geometry2D/Circle2DOp
 
 
 
+
 function Disk2DOptions (executionContext)
 {
    X3DBaseNode_default().call (this, executionContext);
 
    this .addChildObjects ((X3DConstants_default()).inputOutput, "dimension", new (Fields_default()).SFInt32 (40))
 
-   this .circleVertices = new (Fields_default()).MFFloat ();
-   this .diskTexCoords  = new (Fields_default()).MFFloat ();
-   this .diskNormals    = new (Fields_default()).MFFloat ();
-   this .diskVertices   = new (Fields_default()).MFFloat ();
+   this .circleVertices = X3DGeometryNode_default().createArray ();
+   this .diskTexCoords  = X3DGeometryNode_default().createArray ();
+   this .diskNormals    = X3DGeometryNode_default().createArray ();
+   this .diskVertices   = X3DGeometryNode_default().createArray ();
 }
 
 Object .assign (Object .setPrototypeOf (Disk2DOptions .prototype, (X3DBaseNode_default()).prototype),
@@ -928,9 +933,6 @@ const Arc2D_default_ = Arc2D;
 
 Namespace_default().add ("Arc2D", "x_ite/Components/Geometry2D/Arc2D", Arc2D_default_);
 /* harmony default export */ const Geometry2D_Arc2D = (Arc2D_default_);
-;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Rendering/X3DGeometryNode\")"
-const X3DGeometryNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.14.0")] .require ("x_ite/Components/Rendering/X3DGeometryNode");
-var X3DGeometryNode_default = /*#__PURE__*/__webpack_require__.n(X3DGeometryNode_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Geometry2D/ArcClose2D.js
 /*******************************************************************************
  *
