@@ -107,7 +107,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, X3DTexture3DN
          }
          else if (data instanceof ArrayBuffer)
          {
-            if (URL .pathname .match (/\.ktx2?$/))
+            if (URL .pathname .match (/\.ktx2?(?:\.gz)?$/))
             {
                return this .getBrowser () .getKTXDecoder ()
                   .then (decoder => decoder .loadKTXFromBuffer (data))
