@@ -442,7 +442,15 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          lightNode ._rotation = new Rotation4 (quaternion);
 
       if (light .irradianceCoefficients instanceof Array)
-         lightNode ._diffuseCoefficients = light .irradianceCoefficients;
+      {
+         for (const irradianceCoefficient of light .irradianceCoefficients)
+         {
+            if (!(irradianceCoefficient instanceof Array))
+               continue;
+
+            lightNode ._diffuseCoefficients .push (... irradianceCoefficient);
+         }
+      }
 
       if (light .specularImages instanceof Array)
       {
