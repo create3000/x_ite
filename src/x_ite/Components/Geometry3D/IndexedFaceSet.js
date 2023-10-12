@@ -199,7 +199,7 @@ Object .assign (Object .setPrototypeOf (IndexedFaceSet .prototype, X3DComposedGe
          return polygons;
 
       // Add -1 (polygon end marker) to coordIndex if not present.
-      if (coordLength && this ._coordIndex [coordLength - 1] > -1)
+      if (coordLength && this ._coordIndex .at (-1) > -1)
          this ._coordIndex .push (-1);
 
       if (coordLength)
@@ -312,11 +312,7 @@ Object .assign (Object .setPrototypeOf (IndexedFaceSet .prototype, X3DComposedGe
       for (const polygon of polygons)
       {
          for (const i of polygon .triangles)
-         {
-            const normal = normals [i];
-
-            normalArray .push (normal .x, normal .y, normal .z);
-         }
+            normalArray .push (... normals [i]);
       }
    },
    createNormals (polygons)
@@ -370,6 +366,8 @@ Object .assign (Object .setPrototypeOf (IndexedFaceSet .prototype, X3DComposedGe
                normalIndex .set (point, pointNormals = [ ]);
 
             pointNormals .push (index);
+
+            // Add this normal for each vertex.
 
             normals [index] = normal;
          }
