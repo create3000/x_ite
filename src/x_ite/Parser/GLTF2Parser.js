@@ -279,6 +279,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
          switch (extension)
          {
+            // https://github.com/KhronosGroup/glTF/pull/1956
             // case "KHR_lights_environment": // in development
             // {
             //    break;
