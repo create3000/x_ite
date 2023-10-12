@@ -229,6 +229,7 @@ SupportedComponents .add ("TextureProjector",
    external: true,
 });
 
+SupportedComponents .alias ("TextureProjection",        SupportedComponents .get ("TextureProjector"));
 SupportedComponents .alias ("ProjectiveTextureMapping", SupportedComponents .get ("TextureProjector"));
 
 SupportedComponents .add ("Rendering",
