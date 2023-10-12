@@ -154,7 +154,10 @@ Object .assign (Object .setPrototypeOf (X3DTextureProjectorNode .prototype, X3DL
 
       this .textureNode ?.addInterest ("set_aspectRatio__", this);
 
+      this .setEnabled (!!this .textureNode);
+
       this .set_aspectRatio__ ();
+      this .set_on__ ();
    },
    set_aspectRatio__ ()
    {

@@ -55,6 +55,8 @@ function X3DLightNode (executionContext)
    X3DChildNode .call (this, executionContext);
 
    this .addType (X3DConstants .X3DLightNode);
+
+   this .enabled = true;
 }
 
 Object .assign (Object .setPrototypeOf (X3DLightNode .prototype, X3DChildNode .prototype),
@@ -70,7 +72,7 @@ Object .assign (Object .setPrototypeOf (X3DLightNode .prototype, X3DChildNode .p
    },
    set_on__ ()
    {
-      if (this ._on .getValue () && this .getIntensity () > 0)
+      if (this ._on .getValue () && this .getIntensity () > 0 && this .enabled)
       {
          delete this .push;
          delete this .pop;
@@ -84,6 +86,14 @@ Object .assign (Object .setPrototypeOf (X3DLightNode .prototype, X3DChildNode .p
    getLightKey ()
    {
       return 1;
+   },
+   getEnabled ()
+   {
+      return this .enabled;
+   },
+   setEnabled (value)
+   {
+      this .enabled = value;
    },
    getGlobal ()
    {

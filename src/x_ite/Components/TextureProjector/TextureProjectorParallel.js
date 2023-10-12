@@ -84,11 +84,7 @@ Object .assign (TextureProjectorParallelContainer .prototype,
       this .global    = lightNode .getGlobal ();
 
       this .modelViewMatrix .pushMatrix (modelViewMatrix);
-
-      if (lightNode .getTexture ())
-         this .textureMatrix .set (... lightNode .getTexture () .getMatrix ());
-      else
-         this .textureMatrix .identity ();
+      this .textureMatrix .set (... lightNode .getTexture () .getMatrix ());
    },
    renderShadowMap (renderObject)
    { },
@@ -98,7 +94,7 @@ Object .assign (TextureProjectorParallelContainer .prototype,
          lightNode             = this .lightNode,
          cameraSpaceMatrix     = renderObject .getCameraSpaceMatrix () .get (),
          modelMatrix           = this .modelMatrix .assign (this .modelViewMatrix .get ()) .multRight (cameraSpaceMatrix),
-         invTextureSpaceMatrix = this .invTextureSpaceMatrix .assign (lightNode .getGlobal () ? modelMatrix : Matrix4 .Identity);
+         invTextureSpaceMatrix = this .invTextureSpaceMatrix .assign (this .global ? modelMatrix : Matrix4 .Identity);
 
       this .rotation .setFromToVec (Vector3 .zAxis, this .direction .assign (lightNode .getDirection ()) .negate ());
       lightNode .straightenHorizon (this .rotation);
@@ -137,7 +133,7 @@ Object .assign (TextureProjectorParallelContainer .prototype,
          Camera .ortho (minimumX, maximumX, center - size1_2, center + size1_2, nearDistance, farDistance, this .projectionMatrix);
       }
 
-      if (!lightNode .getGlobal ())
+      if (!this .global)
          invTextureSpaceMatrix .multLeft (modelMatrix .inverse ());
 
       this .invTextureSpaceProjectionMatrix .assign (invTextureSpaceMatrix) .multRight (this .projectionMatrix) .multRight (lightNode .getBiasMatrix ());
@@ -159,7 +155,7 @@ Object .assign (TextureProjectorParallelContainer .prototype,
             : this .browser .getTexture2DUnit ();
 
       gl .activeTexture (gl .TEXTURE0 + textureUnit);
-      gl .bindTexture (gl .TEXTURE_2D, texture ?.getTexture () ?? this .browser .getDefaultTexture2DWhite ());
+      gl .bindTexture (gl .TEXTURE_2D, texture .getTexture ());
       gl .uniform1i (shaderObject .x3d_TextureProjectorTexture [i], textureUnit);
 
       if (shaderObject .hasTextureProjector (i, this))
