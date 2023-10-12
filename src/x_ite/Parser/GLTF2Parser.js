@@ -320,7 +320,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
                return this .extLightsImageBasedObject (value);
             // https://github.com/KhronosGroup/glTF/pull/1956
             // case "KHR_lights_environment": // in development
-               return this .khrLightsEnvironment (value);
+            //    return this .khrLightsEnvironment (value);
          }
       }
    },
