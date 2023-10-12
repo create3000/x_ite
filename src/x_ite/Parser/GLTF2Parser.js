@@ -279,11 +279,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
          switch (extension)
          {
-            // https://github.com/KhronosGroup/glTF/pull/1956
-            // case "KHR_lights_environment": // in development
-            // {
-            //    break;
-            // },
             case "EXT_lights_image_based":
             {
                const component = browser .getComponent ("CubeMapTexturing", 3);
@@ -293,6 +288,11 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
                break;
             }
+            // https://github.com/KhronosGroup/glTF/pull/1956
+            // case "KHR_lights_environment": // in development
+            // {
+            //    break;
+            // },
             case "KHR_texture_transform":
             {
                const component = browser .getComponent ("Texturing3D", 2);
@@ -318,6 +318,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
                return this .khrLightsPunctualObject (value);
             case "EXT_lights_image_based":
                return this .extLightsImageBasedObject (value);
+            // https://github.com/KhronosGroup/glTF/pull/1956
+            // case "KHR_lights_environment": // in development
+               return this .khrLightsEnvironment (value);
          }
       }
    },
