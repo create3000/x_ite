@@ -196,10 +196,7 @@ getMaterialColor ()
    float normalScale       = x3d_Material .normalScale;
 
    #if defined (X3D_TEXTURE_PROJECTORS)
-      vec4 P = getTextureProjectorColor (vec4 (1.0));
-
-      diffuseColor *= P .rgb;
-      alpha        *= P .a;
+      diffuseColor *= getTextureProjectorColor (vec3 (1.0));
    #endif
 
    #if defined (X3D_LIGHTING)

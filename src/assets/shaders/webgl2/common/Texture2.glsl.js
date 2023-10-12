@@ -504,8 +504,8 @@ getTextureProjectorTexture (const in int i, const in vec2 texCoord)
    return vec4 (0.0);
 }
 
-vec4
-getTextureProjectorColor (in vec4 currentColor)
+vec3
+getTextureProjectorColor (in vec3 currentColor)
 {
    vec3 N = gl_FrontFacing ? normal : -normal;
 
@@ -530,7 +530,9 @@ getTextureProjectorColor (in vec4 currentColor)
       if (dot (N, p) < 0.0)
          continue;
 
-      currentColor *= getTextureProjectorTexture (i, texCoord .st);
+      vec4 T = getTextureProjectorTexture (i, texCoord .st);
+
+      currentColor *= T .rgb * T .a;
    }
 
    return currentColor;

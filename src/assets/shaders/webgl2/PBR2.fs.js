@@ -29,6 +29,10 @@ getMaterialColor ()
 {
    vec4 baseColor = getBaseColor ();
 
+   #if defined (X3D_TEXTURE_PROJECTORS)
+      baseColor .rgb *= getTextureProjectorColor (vec3 (1.0));
+   #endif
+
    vec3 n = getNormalVector (x3d_Material .normalScale);
    vec3 v = normalize (-vertex);
 
@@ -82,10 +86,6 @@ getMaterialColor ()
    f_sheen     = vec3 (0.0);
    f_clearcoat = vec3 (0.0);
 
-   #if defined (X3D_TEXTURE_PROJECTORS)
-      f_diffuse += getTextureProjectorColor (finalColor);
-   #endif
-
    #if defined (X3D_LIGHTING)
    for (int i = 0; i < X3D_NUM_LIGHTS; ++ i)
    {
@@ -137,7 +137,7 @@ getMaterialColor ()
 
    f_emissive = getEmissiveColor ();
 
-    // Layer blending
+   // Layer blending
 
    float clearcoatFactor  = 0.0;
    vec3  clearcoatFresnel = vec3 (0.0);
@@ -173,7 +173,7 @@ getMaterialColor ()
    #endif
 
    #if defined (X3D_LINEAR_OUTPUT)
-      return vec4 (color .rgb, baseColor .a);
+      return vec4 (color, baseColor .a);
    #else
       return vec4 (toneMap (color), baseColor .a);
    #endif
