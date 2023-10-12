@@ -505,8 +505,10 @@ getTextureProjectorTexture (const in int i, const in vec2 texCoord)
 }
 
 vec3
-getTextureProjectorColor (in vec3 currentColor)
+getTextureProjectorColor ()
 {
+   vec3 currentColor = vec3 (1.0);
+
    vec3 N = gl_FrontFacing ? normal : -normal;
 
    for (int i = 0; i < X3D_NUM_TEXTURE_PROJECTORS; ++ i)

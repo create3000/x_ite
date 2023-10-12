@@ -30,7 +30,7 @@ getMaterialColor ()
    vec4 baseColor = getBaseColor ();
 
    #if defined (X3D_TEXTURE_PROJECTORS)
-      baseColor .rgb *= getTextureProjectorColor (vec3 (1.0));
+      baseColor .rgb *= getTextureProjectorColor ();
    #endif
 
    vec3 n = getNormalVector (x3d_Material .normalScale);
