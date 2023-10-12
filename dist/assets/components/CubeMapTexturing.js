@@ -1207,7 +1207,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapT
             this .URL .searchParams .set ("_", Date .now ());
       }
 
-      if (this .URL .pathname .match (/\.ktx2?$/))
+      if (this .URL .pathname .match (/\.ktx2?(?:\.gz)?$/))
       {
          this .getBrowser () .getKTXDecoder ()
             .then (decoder => decoder .loadKTXFromURL (this .URL))

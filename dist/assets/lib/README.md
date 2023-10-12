@@ -1,5 +1,16 @@
 # References
 
-* https://github.com/KhronosGroup/glTF-Sample-Viewer/tree/1c6c7a105ac1f4ed14b904adc2c656af1d7715ac
+## glTF Sample Viewer
+
+* https://github.com/KhronosGroup/glTF-Sample-Viewer
+* https://github.com/KhronosGroup/glTF-Sample-Viewer/blob/main/assets/images/lut_ggx.png
+
+## KTX
+
 * https://github.com/KhronosGroup/KTX-Software/releases/
+* https://github.khronos.org/KTX-Software/ktxjswrappers/index.html
+* https://github.com/KhronosGroup/KTX-Software/tree/main/tests/testimages
+
+## Draco
+
 * https://www.gstatic.com/draco/v1/decoders/draco_decoder_gltf.js
