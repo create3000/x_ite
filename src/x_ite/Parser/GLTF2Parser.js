@@ -444,6 +444,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          lightNode  = scene .createNode ("EnvironmentLight", false),
          quaternion = new Quaternion (0, 0, 0, 1);
 
+      lightNode ._global    = false;
       lightNode ._intensity = this .numberValue (light .intensity, 1);
 
       if (this .vectorValue (lightNode .rotation, quaternion))
