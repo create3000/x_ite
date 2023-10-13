@@ -41,15 +41,15 @@ sub glTF {
 
    say "Getting $folder files ...";
 
-   @models = `find '$samples/glTF-Sample-Models/2.0'    -type f -name "*$suffix" -not -path '*/\.*'`;
-   @assets = `find '$samples/glTF-Sample-Assets/Models' -type f -name "*$suffix" -not -path '*/\.*'`;
+   @models = `find '$samples/glTF-Sample-Models/2.0'    -type f -name "*$suffix" -not -path '*/\.*' | grep "/$folder/" | sort`;
+   @assets = `find '$samples/glTF-Sample-Assets/Models' -type f -name "*$suffix" -not -path '*/\.*' | grep "/$folder/" | sort`;
    @files  = (@models, @assets);
 
    s|/glTF-Sample-Models/|/glTF-Sample-Models/master/| foreach @files;
    s|/glTF-Sample-Assets/|/glTF-Sample-Assets/master/| foreach @files;
    s|$samples/|| foreach @files;
 
-   @files = sort grep { m|/$folder/| } @files;
+   @files = grep { m|/$folder/| } @files;
 
    my $string = "const $var = [\n";
 
