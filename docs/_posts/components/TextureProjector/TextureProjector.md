@@ -21,6 +21,10 @@ The TextureProjector node belongs to the **TextureProjector** component and its 
 
 ```
 + X3DNode
+  + X3DChildNode
+    + X3DLightNode
+      + X3DTextureProjectorNode
+        + TextureProjector
 ```
 
 ## Fields

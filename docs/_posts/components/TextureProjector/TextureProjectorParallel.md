@@ -21,6 +21,10 @@ The TextureProjectorParallel node belongs to the **TextureProjector** component 
 
 ```
 + X3DNode
+  + X3DChildNode
+    + X3DLightNode
+      + X3DTextureProjectorNode
+        + TextureProjectorParallel
 ```
 
 ## Fields
