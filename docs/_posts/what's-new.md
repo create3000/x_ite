@@ -16,8 +16,8 @@ X_ITE follows the [NPM version syntax](https://docs.npmjs.com/about-semantic-ver
 * Implemented a KTX texture loader for [ImageCubeMapTexture](components/CubeMapTexturing/ImageCubeMapTexture.md), [ImageTexture](components/Texturing/ImageTexture.md), and [ImageTexture3D](components/Texturing3D/ImageTexture3D.md).
 * [ImageCubeMapTexture](components/CubeMapTexturing/ImageCubeMapTexture.md) can now load panorama images.
 * Implemented [EnvironmentLight](components/Lighting/EnvironmentLight.md) node.
-* ES Module Version of X_ITE named »x_ite.mjs«.
-* Typescript Types for Intellisense.
+* ES module version of X_ITE named »x_ite.mjs«.
+* Typescript types for IntelliSense.
 * PLY 3d format parser.
 * [TextureProjector component](components/#textureprojector) is now working.
 
