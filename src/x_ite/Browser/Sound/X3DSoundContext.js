@@ -52,19 +52,19 @@ const
    _audioContext        = Symbol (),
    _defaultPeriodicWave = Symbol ();
 
-function X3DSoundContext ()
-{
-   this [_audioContext] = new AudioContext ();
-}
+function X3DSoundContext () { }
 
 Object .assign (X3DSoundContext .prototype,
 {
-   initialize ()
-   {
-      this .startAudioElement (this [_audioContext], "resume");
-   },
    getAudioContext ()
    {
+      if (this [_audioContext])
+         return this [_audioContext];
+
+      this [_audioContext] = new AudioContext ();
+
+      this .startAudioElement (this [_audioContext], "resume");
+
       return this [_audioContext];
    },
    getDefaultPeriodicWave ()
