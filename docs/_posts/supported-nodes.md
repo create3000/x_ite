@@ -196,7 +196,7 @@ X_ITE supports a limited set of nodes defined by the X3D specification. There ar
 ### Lighting
 
 * [DirectionalLight](components/lighting/directionallight)
-* [EnvironmentLight](components/Lighting/EnvironmentLight.md)
+* [EnvironmentLight](components/lighting/environmentlight)
 * [PointLight](components/lighting/pointlight)
 * [SpotLight](components/lighting/spotlight)
 

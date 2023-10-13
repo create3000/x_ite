@@ -9,13 +9,13 @@ X_ITE follows the [NPM version syntax](https://docs.npmjs.com/about-semantic-ver
 
 ## X_ITE v9.0.0 Released
 
-*Leipzig, 16th October 2023:* We right now released a new version. Unfortunately, in this release the shader variable »x3d_TextureMatrix« has changed to »x3d_TextureTransformMatrix«, also images from [ImageTexture](components/Texturing/ImageTexture.md) are now not flipped at the y-axis anymore, this is now done in the shaders. Custom shaders must be adjusted to reflect these changes. These are breaking changes.
+*Leipzig, 16th October 2023:* We right now released a new version. Unfortunately, in this release the shader variable »x3d_TextureMatrix« has changed to »x3d_TextureTransformMatrix«, also images from [ImageTexture](components/texturing/imagetexture) are now not flipped at the y-axis anymore, this is now done in the shaders. Custom shaders must be adjusted to reflect these changes. These are breaking changes.
 
 ### New Features
 
-* Implemented a KTX texture loader for [ImageCubeMapTexture](components/CubeMapTexturing/ImageCubeMapTexture.md), [ImageTexture](components/Texturing/ImageTexture.md), and [ImageTexture3D](components/Texturing3D/ImageTexture3D.md).
-* [ImageCubeMapTexture](components/CubeMapTexturing/ImageCubeMapTexture.md) can now load panorama images.
-* Basic implementation of [EnvironmentLight](components/Lighting/EnvironmentLight.md) node.
+* Implemented a KTX texture loader for [ImageCubeMapTexture](components/cubemaptexturing/imagecubemaptexture), [ImageTexture](components/texturing/imagetexture), and [ImageTexture3D](components/texturing3d/imagetexture3d).
+* [ImageCubeMapTexture](components/cubemaptexturing/imagecubemaptexture) can now load panorama images.
+* Basic implementation of [EnvironmentLight](components/lighting/environmentlight) node.
 * ES module version of X_ITE named »x_ite.mjs«.
 * Typescript types for IntelliSense.
 * PLY 3d format parser.
