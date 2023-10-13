@@ -5,7 +5,7 @@ nav: main
 categories: []
 tags: [New, Releases]
 ---
-X_ITE respects the [NPM version syntax](https://docs.npmjs.com/about-semantic-versioning). Keep this in mind when choosing a version number.
+X_ITE follows the [NPM version syntax](https://docs.npmjs.com/about-semantic-versioning). Keep this in mind when choosing a version number.
 
 ## X_ITE v9.0.0 Released
 
