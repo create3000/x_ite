@@ -58,12 +58,13 @@ Object .assign (X3DSoundContext .prototype,
 {
    getAudioContext ()
    {
-      if (this [_audioContext])
-         return this [_audioContext];
-
       this [_audioContext] = new AudioContext ();
 
       this .startAudioElement (this [_audioContext], "resume");
+
+      this .getAudioContext = function () { return this [_audioContext]; };
+
+      Object .defineProperty (this, "getAudioContext", { enumerable: false });
 
       return this [_audioContext];
    },
