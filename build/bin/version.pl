@@ -98,6 +98,9 @@ sub other {
 
 	return unless $result == 0;
 
+	chdir "$CWD/../media";
+	system "make", "publish";
+
 	chdir "$CWD/../x3d-tidy";
 	system "make", "publish";
 
