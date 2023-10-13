@@ -338,7 +338,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       this .lights = lights;
    },
-   lightObject (light)
+   lightObject (id, light = this .lights [id])
    {
       if (!(light instanceof Object))
          return null;
@@ -353,7 +353,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       const
          scene = this .getExecutionContext (),
-         name  = this .sanitizeName (light .name);
+         name  = this .sanitizeName (light .name) || `Light${id}`;
 
       const color = new Color3 (1, 1, 1);
 
@@ -365,11 +365,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       lightNode .setup ();
 
-      if (name)
-      {
-         scene .addNamedNode    (scene .getUniqueName       (name), lightNode);
-         scene .addExportedNode (scene .getUniqueExportName (name), lightNode);
-      }
+      scene .addNamedNode    (scene .getUniqueName       (name), lightNode);
+      scene .addExportedNode (scene .getUniqueExportName (name), lightNode);
 
       return light .node = lightNode;
    },
@@ -431,7 +428,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       this .envLights = lights;
    },
-   envLightObject (light)
+   envLightObject (id, light = this .envLights [id])
    {
       if (!(light instanceof Object))
          return null;
@@ -442,7 +439,11 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       const
          scene      = this .getExecutionContext (),
          lightNode  = scene .createNode ("EnvironmentLight", false),
+         name       = `EnvironmentLight${id}`,
          quaternion = new Quaternion (0, 0, 0, 1);
+
+      scene .addNamedNode    (scene .getUniqueName       (name), lightNode);
+      scene .addExportedNode (scene .getUniqueExportName (name), lightNode);
 
       lightNode ._global    = false;
       lightNode ._intensity = this .numberValue (light .intensity, 1);
@@ -1761,7 +1762,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       if (!(KHR_lights_punctual instanceof Object))
          return;
 
-      const lightNode = this .lightObject (this .lights [KHR_lights_punctual .light]);
+      const lightNode = this .lightObject (KHR_lights_punctual .light);
 
       if (!lightNode)
          return;
@@ -1973,7 +1974,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          return null;
 
       const
-         lightNode = this .envLightObject (this .envLights [scene .extensions ?.EXT_lights_image_based ?.light]),
+         lightNode = this .envLightObject (scene .extensions ?.EXT_lights_image_based ?.light),
          nodes     = this .sceneNodesArray (scene .nodes);
 
       if (lightNode)
