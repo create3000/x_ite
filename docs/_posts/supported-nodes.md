@@ -7,7 +7,7 @@ tags: [Supported, Nodes, Components, Profiles]
 ---
 ## Overview
 
-X_ITE supports a certain number of X3D nodes. Objects in an X3D scene are also called nodes. These nodes are grouped into components and the components are grouped in profiles.
+X_ITE supports a certain number of X3D nodes. Objects in an X3D scene are also called nodes. These nodes are grouped into components and the components are grouped in profiles. Since these components can be dynamically reloaded as required, it is important to specify a suitable specification version and component/profile statements.
 
 The following lists outlines the profiles and nodes that are supported in X_ITE.
 
@@ -40,7 +40,7 @@ X_ITE has achieved the [X3D Immersive Profile](https://www.web3d.org/documents/s
 
 This section documents all of supported nodes by X_ITE.
 
-X_ITE supports a limited set of nodes defined by the X3D specification. There are currently 223 of 236 nodes (94 %) implemented. The implementation of these nodes is complete in that that the nodes will support all the required fields and features for that implementation unless otherwise stated.
+X_ITE supports a limited set of nodes defined by the X3D specification. There are currently 234 of 263 nodes (89 %) implemented. The implementation of these nodes is complete in that that the nodes will support all the required fields and features for that implementation unless otherwise stated.
 
 ### CADGeometry
 
