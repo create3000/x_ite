@@ -35,87 +35,25 @@ sub media {
 }
 
 sub glTF {
-   say "Getting glTF files ...";
+   my $folder = shift;
+   my $suffix = shift;
+   my $var    = shift;
 
-   @models = `find '$samples/glTF-Sample-Models/2.0'    -type f -name "*.gltf" -not -path '*/\.*' | grep "/glTF/" | sort`;
-   @assets = `find '$samples/glTF-Sample-Assets/Models' -type f -name "*.gltf" -not -path '*/\.*' | grep "/glTF/" | sort`;
-   @files  = grep { !m/\/glTF-Draco\/|\/glTF-Embedded\/|\/glTF-Quantized\/|glTF-KTX/  } (@models, @assets);
+   say "Getting $folder files ...";
 
-   s|/glTF-Sample-Models/|/glTF-Sample-Models/master/| foreach @files;
-   s|/glTF-Sample-Assets/|/glTF-Sample-Assets/master/| foreach @files;
-
-   my $string = "const glTF = [\n";
-
-   foreach (map { s|$samples/||r } @files)
-   {
-      chomp;
-      $string .= "   \"$khronos/$_\",\n";
-   }
-
-   $string .= "];\n";
-
-   return $string;
-}
-
-sub glb {
-   say "Getting glTF-Binary files ...";
-
-   @models = `find '$samples/glTF-Sample-Models/2.0'    -type f -name "*.glb" -not -path '*/\.*' | grep "/glTF-Binary/" | sort`;
-   @assets = `find '$samples/glTF-Sample-Assets/Models' -type f -name "*.glb" -not -path '*/\.*' | grep "/glTF-Binary/" | sort`;
+   @models = `find '$samples/glTF-Sample-Models/2.0'    -type f -name "*$suffix" -not -path '*/\.*'`;
+   @assets = `find '$samples/glTF-Sample-Assets/Models' -type f -name "*$suffix" -not -path '*/\.*'`;
    @files  = (@models, @assets);
 
    s|/glTF-Sample-Models/|/glTF-Sample-Models/master/| foreach @files;
    s|/glTF-Sample-Assets/|/glTF-Sample-Assets/master/| foreach @files;
+   s|$samples/|| foreach @files;
 
-   my $string = "const glb = [\n";
+   @files = sort grep { m|/$folder/| } @files;
 
-   foreach (map { s|$samples/||r } @files)
-   {
-      chomp;
-      $string .= "   \"$khronos/$_\",\n";
-   }
+   my $string = "const $var = [\n";
 
-   $string .= "];\n";
-
-   return $string;
-}
-
-sub draco {
-   say "Getting glTF-Draco files ...";
-
-   @models = `find '$samples/glTF-Sample-Models/2.0'    -type f -name "*.gltf" -not -path '*/\.*' | grep "/glTF-Draco/" | sort`;
-   @assets = `find '$samples/glTF-Sample-Assets/Models' -type f -name "*.gltf" -not -path '*/\.*' | grep "/glTF-Draco/" | sort`;
-   @files  = (@models, @assets);
-
-   s|/glTF-Sample-Models/|/glTF-Sample-Models/master/| foreach @files;
-   s|/glTF-Sample-Assets/|/glTF-Sample-Assets/master/| foreach @files;
-
-   my $string = "const draco = [\n";
-
-   foreach (map { s|$samples/||r } @files)
-   {
-      chomp;
-      $string .= "   \"$khronos/$_\",\n";
-   }
-
-   $string .= "];\n";
-
-   return $string;
-}
-
-sub embedded {
-   say "Getting glTF-Embedded files ...";
-
-   @models = `find '$samples/glTF-Sample-Models/2.0'    -type f -name "*.gltf" -not -path '*/\.*' | grep "/glTF-Embedded/" | sort`;
-   @assets = `find '$samples/glTF-Sample-Assets/Models' -type f -name "*.gltf" -not -path '*/\.*' | grep "/glTF-Embedded/" | sort`;
-   @files  = (@models, @assets);
-
-   s|/glTF-Sample-Models/|/glTF-Sample-Models/master/| foreach @files;
-   s|/glTF-Sample-Assets/|/glTF-Sample-Assets/master/| foreach @files;
-
-   my $string = "const embedded = [\n";
-
-   foreach (map { s|$samples/||r } @files)
+   foreach (@files)
    {
       chomp;
       $string .= "   \"$khronos/$_\",\n";
@@ -135,13 +73,17 @@ $string = "";
 $string .= "// TESTS_BEGIN\n\n";
 $string .= media;
 $string .= "\n";
-$string .= glTF;
+$string .= glTF ("glTF", ".gltf", "glTF");
 $string .= "\n";
-$string .= glb;
+$string .= glTF ("glTF-Binary", ".glb", "glb");
 $string .= "\n";
-$string .= draco;
+$string .= glTF ("glTF-Draco", ".gltf", "draco");
 $string .= "\n";
-$string .= embedded;
+$string .= glTF ("glTF-Embedded", ".gltf", "embedded");
+$string .= "\n";
+$string .= glTF ("glTF-IBL", ".gltf", "ibl");
+$string .= "\n";
+$string .= glTF ("glTF-KTX-BasisU", ".gltf", "ktx");
 $string .= "\n// TESTS_END";
 
 $viewer =~ s|// TESTS_BEGIN.*?// TESTS_END|$string|s;
