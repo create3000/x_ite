@@ -86,6 +86,7 @@ function X3DProgrammableShaderObject (executionContext)
    this .x3d_TextureProjectorColor               = [ ];
    this .x3d_TextureProjectorIntensity           = [ ];
    this .x3d_TextureProjectorLocation            = [ ];
+   this .x3d_TextureProjectorLinear              = [ ];
    this .x3d_TextureProjectorTexture             = [ ];
    this .x3d_TextureProjectorMatrix              = [ ];
    this .x3d_TexCoord                            = [ ];
@@ -226,6 +227,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       for (const materialTexture of materialTextures)
       {
          this [materialTexture] = {
+            textureLinear:            gl .getUniformLocation (program, materialTexture + ".textureLinear"),
             textureMatrix:            gl .getUniformLocation (program, materialTexture + ".textureMatrix"),
             textureTransformMapping:  gl .getUniformLocation (program, materialTexture + ".textureTransformMapping"),
             textureCoordinateMapping: gl .getUniformLocation (program, materialTexture + ".textureCoordinateMapping"),
@@ -245,6 +247,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
          this .x3d_TextureCoordinateGeneratorParameter [i] = gl .getUniformLocation (program, "x3d_TextureCoordinateGenerator[" + i + "].parameter");
 
          this .x3d_Texture [i] = {
+            textureLinear: gl .getUniformLocation (program, "x3d_TextureLinear[" + i + "]"),
             textureMatrix: gl .getUniformLocation (program, "x3d_TextureMatrix[" + i + "]"),
             texture2D: gl .getUniformLocation (program, "x3d_Texture2D[" + i + "]"),
             texture3D: gl .getUniformLocation (program, "x3d_Texture3D[" + i + "]"),
@@ -259,6 +262,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
          this .x3d_TextureProjectorColor [i]     = gl .getUniformLocation (program, "x3d_TextureProjectorColor[" + i + "]");
          this .x3d_TextureProjectorIntensity [i] = gl .getUniformLocation (program, "x3d_TextureProjectorIntensity[" + i + "]");
          this .x3d_TextureProjectorLocation [i]  = gl .getUniformLocation (program, "x3d_TextureProjectorLocation[" + i + "]");
+         this .x3d_TextureProjectorLinear [i]    = gl .getUniformLocation (program, "x3d_TextureProjectorLinear[" + i + "]");
          this .x3d_TextureProjectorTexture [i]   = gl .getUniformLocation (program, "x3d_TextureProjectorTexture[" + i + "]");
          this .x3d_TextureProjectorMatrix [i]    = gl .getUniformLocation (program, "x3d_TextureProjectorMatrix[" + i + "]");
       }

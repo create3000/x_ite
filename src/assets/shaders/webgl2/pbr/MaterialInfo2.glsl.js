@@ -76,12 +76,14 @@ getBaseColor ()
    #if defined (X3D_MATERIAL_SPECULAR_GLOSSINESS)
       #if defined (X3D_DIFFUSE_TEXTURE)
          vec3 texCoord = getTexCoord (x3d_DiffuseTexture .textureTransformMapping, x3d_DiffuseTexture .textureCoordinateMapping, x3d_DiffuseTexture .textureMatrix);
+         bool linear   = x3d_DiffuseTexture .textureLinear;
+
          #if defined (X3D_DIFFUSE_TEXTURE_2D)
-            baseColor *= sRGBToLinear (texture (x3d_DiffuseTexture .texture2D, texCoord .st));
+            baseColor *= sRGBToLinear (texture (x3d_DiffuseTexture .texture2D, texCoord .st), linear);
          #elif defined (X3D_DIFFUSE_TEXTURE_3D)
-            baseColor *= sRGBToLinear (texture (x3d_DiffuseTexture .texture3D, texCoord));
+            baseColor *= sRGBToLinear (texture (x3d_DiffuseTexture .texture3D, texCoord), linear);
          #elif defined (X3D_DIFFUSE_TEXTURE_CUBE)
-            baseColor *= sRGBToLinear (texture (x3d_DiffuseTexture .textureCube, texCoord));
+            baseColor *= sRGBToLinear (texture (x3d_DiffuseTexture .textureCube, texCoord), linear);
          #endif
       #elif defined (X3D_TEXTURE)
          baseColor = getTextureColor (baseColor, vec4 (vec3 (1.0), alpha));
@@ -89,12 +91,14 @@ getBaseColor ()
    #elif defined (X3D_MATERIAL_METALLIC_ROUGHNESS)
       #if defined (X3D_BASE_TEXTURE)
          vec3 texCoord = getTexCoord (x3d_BaseTexture .textureTransformMapping, x3d_BaseTexture .textureCoordinateMapping, x3d_BaseTexture .textureMatrix);
+         bool linear   = x3d_BaseTexture .textureLinear;
+
          #if defined (X3D_BASE_TEXTURE_2D)
-            baseColor *= sRGBToLinear (texture (x3d_BaseTexture .texture2D, texCoord .st));
+            baseColor *= sRGBToLinear (texture (x3d_BaseTexture .texture2D, texCoord .st), linear);
          #elif defined (X3D_BASE_TEXTURE_3D)
-            baseColor *= sRGBToLinear (texture (x3d_BaseTexture .texture3D, texCoord));
+            baseColor *= sRGBToLinear (texture (x3d_BaseTexture .texture3D, texCoord), linear);
          #elif defined (X3D_BASE_TEXTURE_CUBE)
-            baseColor *= sRGBToLinear (texture (x3d_BaseTexture .textureCube, texCoord));
+            baseColor *= sRGBToLinear (texture (x3d_BaseTexture .textureCube, texCoord), linear);
          #endif
       #elif defined (X3D_TEXTURE)
          baseColor = getTextureColor (baseColor, vec4 (vec3 (1.0), alpha));
@@ -159,13 +163,14 @@ getEmissiveColor ()
 
    #if defined (X3D_EMISSIVE_TEXTURE)
       vec3 texCoord = getTexCoord (x3d_EmissiveTexture .textureTransformMapping, x3d_EmissiveTexture .textureCoordinateMapping, x3d_EmissiveTexture .textureMatrix);
+      bool linear   = x3d_EmissiveTexture .textureLinear;
 
       #if defined (X3D_EMISSIVE_TEXTURE_2D)
-         emissiveParameter *= sRGBToLinear (texture (x3d_EmissiveTexture .texture2D, texCoord .st)) .rgb;
+         emissiveParameter *= sRGBToLinear (texture (x3d_EmissiveTexture .texture2D, texCoord .st), linear) .rgb;
       #elif defined (X3D_EMISSIVE_TEXTURE_3D)
-         emissiveParameter *= sRGBToLinear (texture (x3d_EmissiveTexture .texture3D, texCoord)) .rgb;
+         emissiveParameter *= sRGBToLinear (texture (x3d_EmissiveTexture .texture3D, texCoord), linear) .rgb;
       #elif defined (X3D_EMISSIVE_TEXTURE_CUBE)
-         emissiveParameter *= sRGBToLinear (texture (x3d_EmissiveTexture .textureCube, texCoord)) .rgb;
+         emissiveParameter *= sRGBToLinear (texture (x3d_EmissiveTexture .textureCube, texCoord), linear) .rgb;
       #endif
    #endif
 

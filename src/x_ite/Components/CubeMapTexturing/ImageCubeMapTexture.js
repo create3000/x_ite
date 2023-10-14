@@ -159,6 +159,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
          this .setLevels (texture .levels);
          this .setSize (texture .baseWidth);
          this .setGenerateMipMaps (false);
+         this .setLinear (true);
          this .updateTextureParameters ();
 
          this .setLoadState (X3DConstants .COMPLETE_STATE);
@@ -188,6 +189,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
             this .panoramaToCubeMap ();
 
          this .setGenerateMipMaps (true);
+         this .setLinear (false);
          this .updateTextureParameters ();
 
          // Update load state.
