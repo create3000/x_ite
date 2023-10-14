@@ -1,4 +1,10 @@
 export default /* glsl */ `
+
+#if defined (X3D_PHYSICAL_MATERIAL)
+vec4
+sRGBToLinear (const in vec4 srgbIn);
+#endif
+
 #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
 
 #pragma X3D include "Perlin.glsl"
@@ -168,11 +174,6 @@ getTexture (const in int i, const in vec3 texCoord)
 #if defined (X3D_MULTI_TEXTURING)
    uniform vec4 x3d_MultiTextureColor;
    uniform x3d_MultiTextureParameters x3d_MultiTexture [X3D_NUM_TEXTURES];
-#endif
-
-#if defined (X3D_PHYSICAL_MATERIAL)
-vec4
-sRGBToLinear (const in vec4 srgbIn);
 #endif
 
 vec4
@@ -535,6 +536,10 @@ getTextureProjectorColor ()
          continue;
 
       vec4 T = getTextureProjectorTexture (i, texCoord .st);
+
+      #if defined (X3D_PHYSICAL_MATERIAL)
+         T = sRGBToLinear (T);
+      #endif
 
       currentColor *= mix (vec3 (1.0), T .rgb * x3d_TextureProjectorColor [i], T .a * x3d_TextureProjectorIntensity [i]);
    }
