@@ -48,7 +48,13 @@ getEmissiveColor ()
 vec4
 getMaterialColor ()
 {
-   return getEmissiveColor ();
+   vec4 finalColor = getEmissiveColor ();
+
+   #if defined (X3D_TEXTURE_PROJECTION)
+      finalColor .rgb *= getTextureProjectorColor ();
+   #endif
+
+   return finalColor;
 }
 
 void
