@@ -41,7 +41,9 @@ struct x3d_EnvironmentLightSourceParameters {
    mediump float       intensity;
    mediump float       ambientIntensity;
    mediump mat3        rotation;
+   bool                diffuseLinear;
    mediump samplerCube diffuseTexture;
+   bool                specularLinear;
    mediump samplerCube specularTexture;
    mediump int         specularTextureLevels;
    mediump sampler2D   GGXLUTTexture;

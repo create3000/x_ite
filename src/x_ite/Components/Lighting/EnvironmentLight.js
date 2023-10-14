@@ -98,6 +98,8 @@ Object .assign (EnvironmentLightContainer .prototype,
       gl .uniform3f        (shaderObject .x3d_EnvironmentLightColor,                 color .r, color .g, color .b);
       gl .uniform1f        (shaderObject .x3d_EnvironmentLightIntensity,             lightNode .getIntensity ());
       gl .uniformMatrix3fv (shaderObject .x3d_EnvironmentLightRotation, false,       lightNode .getRotation ());
+      gl .uniform1i        (shaderObject .x3d_EnvironmentLightDiffuseLinear,         diffuseTexture ?.getLinear ());
+      gl .uniform1i        (shaderObject .x3d_EnvironmentLightSpecularLinear,        specularTexture ?.getLinear ());
       gl .uniform1i        (shaderObject .x3d_EnvironmentLightSpecularTextureLevels, specularTexture ?.getLevels () ?? 1);
 
       gl .activeTexture (gl .TEXTURE0 + diffuseTextureUnit);
