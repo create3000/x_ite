@@ -222,15 +222,15 @@ SupportedComponents .add ("Shaders",
    level: 1,
 });
 
-SupportedComponents .add ("TextureProjector",
+SupportedComponents .add ("TextureProjection",
 {
-   title: "Texture Projector",
+   title: "Texture Projection",
    level: 2,
    external: true,
 });
 
-SupportedComponents .alias ("TextureProjection",        SupportedComponents .get ("TextureProjector"));
-SupportedComponents .alias ("ProjectiveTextureMapping", SupportedComponents .get ("TextureProjector"));
+SupportedComponents .alias ("TextureProjector",         SupportedComponents .get ("TextureProjection"));
+SupportedComponents .alias ("ProjectiveTextureMapping", SupportedComponents .get ("TextureProjection"));
 
 SupportedComponents .add ("Rendering",
 {

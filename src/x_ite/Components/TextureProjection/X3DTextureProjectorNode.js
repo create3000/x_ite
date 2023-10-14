@@ -177,7 +177,7 @@ Object .defineProperties (X3DTextureProjectorNode,
    },
    componentName:
    {
-      value: "TextureProjector",
+      value: "TextureProjection",
       enumerable: true,
    },
 });

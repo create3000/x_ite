@@ -246,7 +246,7 @@ Object .defineProperties (TextureProjectorParallel,
    },
    componentName:
    {
-      value: "TextureProjector",
+      value: "TextureProjection",
       enumerable: true,
    },
    containerField:

@@ -191,7 +191,7 @@ Object .defineProperties (TextureProjector,
    },
    componentName:
    {
-      value: "TextureProjector",
+      value: "TextureProjection",
       enumerable: true,
    },
    containerField:
