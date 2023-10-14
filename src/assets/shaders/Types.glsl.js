@@ -41,11 +41,9 @@ struct x3d_EnvironmentLightSourceParameters {
    mediump float       intensity;
    mediump float       ambientIntensity;
    mediump mat3        rotation;
-   bool                diffuseLinear;
    mediump samplerCube diffuseTexture;
-   bool                specularLinear;
-   mediump int         specularTextureLevels;
    mediump samplerCube specularTexture;
+   mediump int         specularTextureLevels;
    mediump sampler2D   GGXLUTTexture;
 };
 #endif
@@ -197,7 +195,6 @@ struct x3d_SpecularTextureParameters
 #if defined (X3D_EMISSIVE_TEXTURE)
 struct x3d_EmissiveTextureParameters
 {
-   bool                textureLinear;
    mediump mat4        textureMatrix;
    mediump int         textureTransformMapping;
    mediump int         textureCoordinateMapping;
@@ -238,7 +235,6 @@ struct x3d_ShininessTextureParameters
 #if defined (X3D_BASE_TEXTURE)
 struct x3d_BaseTextureParameters
 {
-   bool                textureLinear;
    mediump mat4        textureMatrix;
    mediump int         textureTransformMapping;
    mediump int         textureCoordinateMapping;

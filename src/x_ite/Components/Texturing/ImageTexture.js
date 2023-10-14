@@ -153,7 +153,6 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
          this .setWidth (texture .baseWidth);
          this .setHeight (texture .baseHeight);
          this .setGenerateMipMaps (false);
-         this .setLinear (true);
          this .updateTextureParameters ();
 
          this .setLoadState (X3DConstants .COMPLETE_STATE);
@@ -219,7 +218,6 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
             // Upload image to GPU.
 
             this .setGenerateMipMaps (true);
-            this .setLinear (false);
             this .setTextureFromData (width, height, transparent, data);
             this .setLoadState (X3DConstants .COMPLETE_STATE);
          }

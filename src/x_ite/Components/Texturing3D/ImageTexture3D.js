@@ -120,7 +120,6 @@ Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, X3DTexture3DN
             {
                const internalType = this .getInternalType (nrrd .components);
 
-               this .setLinear (false);
                this .setTextureFromData (nrrd .width, nrrd .height, nrrd .depth, false, internalType, nrrd .data);
                this .setLoadState (X3DConstants .COMPLETE_STATE);
                return;
@@ -132,7 +131,6 @@ Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, X3DTexture3DN
             {
                const internalType = this .getInternalType (dicom .components);
 
-               this .setLinear (false);
                this .setTextureFromData (dicom .width, dicom .height, dicom .depth, false, internalType, dicom .data);
                this .setLoadState (X3DConstants .COMPLETE_STATE);
                return;
@@ -161,7 +159,6 @@ Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, X3DTexture3DN
       this .setHeight (texture .baseHeight);
       this .setDepth (texture .baseDepth); // TODO: Always 1
       this .setGenerateMipMaps (false);
-      this .setLinear (true);
       this .updateTextureParameters ();
 
       this .setLoadState (X3DConstants .COMPLETE_STATE);

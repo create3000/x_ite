@@ -2,7 +2,7 @@ export default /* glsl */ `
 
 #if defined (X3D_PHYSICAL_MATERIAL)
 vec4
-sRGBToLinear (const in vec4 srgbIn, const in bool linear);
+sRGBToLinear (const in vec4 srgbIn);
 #endif
 
 #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
@@ -134,7 +134,6 @@ getTexCoord (const in int textureTransformMapping, const in int textureCoordinat
 
 #if defined (X3D_TEXTURE)
 
-uniform bool        x3d_TextureLinear [X3D_NUM_TEXTURES];
 uniform mat4        x3d_TextureMatrix [X3D_NUM_TEXTURES];
 uniform sampler2D   x3d_Texture2D [X3D_NUM_TEXTURES];
 uniform sampler3D   x3d_Texture3D [X3D_NUM_TEXTURES];
@@ -191,7 +190,7 @@ getTextureColor (const in vec4 diffuseColor, const in vec4 specularColor)
          vec4 textureColor = getTexture (i, texCoord);
 
          #if defined (X3D_PHYSICAL_MATERIAL)
-            textureColor = sRGBToLinear (textureColor, x3d_TextureLinear [i]);
+            textureColor = sRGBToLinear (textureColor);
          #endif
 
          // Multi texturing
@@ -473,7 +472,7 @@ getTextureColor (const in vec4 diffuseColor, const in vec4 specularColor)
       #endif
 
       #if defined (X3D_PHYSICAL_MATERIAL)
-         textureColor = sRGBToLinear (textureColor, x3d_TextureLinear [0]);
+         textureColor = sRGBToLinear (textureColor);
       #endif
 
       return diffuseColor * textureColor;
@@ -487,7 +486,6 @@ getTextureColor (const in vec4 diffuseColor, const in vec4 specularColor)
 uniform vec3      x3d_TextureProjectorColor [X3D_NUM_TEXTURE_PROJECTORS];
 uniform float     x3d_TextureProjectorIntensity [X3D_NUM_TEXTURE_PROJECTORS];
 uniform vec3      x3d_TextureProjectorLocation [X3D_NUM_TEXTURE_PROJECTORS];
-uniform bool      x3d_TextureProjectorLinear [X3D_NUM_TEXTURE_PROJECTORS];
 uniform sampler2D x3d_TextureProjectorTexture [X3D_NUM_TEXTURE_PROJECTORS];
 uniform mat4      x3d_TextureProjectorMatrix [X3D_NUM_TEXTURE_PROJECTORS];
 
@@ -540,7 +538,7 @@ getTextureProjectorColor ()
       vec4 T = getTextureProjectorTexture (i, texCoord .st);
 
       #if defined (X3D_PHYSICAL_MATERIAL)
-         T = sRGBToLinear (T, x3d_TextureProjectorLinear [i]);
+         T = sRGBToLinear (T);
       #endif
 
       currentColor *= mix (vec3 (1.0), T .rgb * x3d_TextureProjectorColor [i], T .a * x3d_TextureProjectorIntensity [i]);

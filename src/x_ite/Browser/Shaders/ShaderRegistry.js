@@ -47,7 +47,6 @@
 
 /* WebGL 1 */
 import ClipPlanes1            from "../../../assets/shaders/webgl1/common/ClipPlanes1.glsl.js";
-import Colors1                from "../../../assets/shaders/webgl1/common/Colors1.glsl.js";
 import Fog1                   from "../../../assets/shaders/webgl1/common/Fog1.glsl.js";
 import Fragment1              from "../../../assets/shaders/webgl1/common/Fragment1.glsl.js";
 import Hatch1                 from "../../../assets/shaders/webgl1/common/Hatch1.glsl.js";
@@ -128,7 +127,6 @@ const ShaderRegistry = {
    includes: {
       1: {
          ClipPlanes: ClipPlanes1,
-         Colors: Colors1,
          Fog: Fog1,
          Fragment: Fragment1,
          Hatch: Hatch1,

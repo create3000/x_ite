@@ -155,7 +155,6 @@ Object .assign (Object .setPrototypeOf (X3DTexture2DNode .prototype, X3DSingleTe
       gl .bindTexture (gl .TEXTURE_2D, this .getTexture ());
       gl .uniform1i (channel .texture2D, textureUnit);
       gl .uniformMatrix4fv (channel .textureMatrix, false, this .getMatrix ());
-      gl .uniform1i (channel .textureLinear, this .linear);
    },
 });
 

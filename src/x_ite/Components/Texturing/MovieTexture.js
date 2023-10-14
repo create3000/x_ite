@@ -233,7 +233,7 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
       if (this .checkLoadState () !== X3DConstants .COMPLETE_STATE)
          return;
 
-      this .updateTextureFromData (this .gif ?.currentFrame .data ?? this .video [0], true);
+      this .updateTextureFromData (this .gif ?.currentFrame .data ?? this .video [0]);
    },
    traverse: X3DTexture2DNode .prototype .traverse,
    dispose ()

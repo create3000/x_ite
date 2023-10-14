@@ -57,7 +57,6 @@ function X3DSingleTextureNode (executionContext)
 
    this .levels          = 1;
    this .generateMipMaps = true;
-   this .linear          = false;
 }
 
 Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, X3DTextureNode .prototype),
@@ -107,14 +106,6 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, X3DText
    setGenerateMipMaps (value)
    {
       this .generateMipMaps = value;
-   },
-   getLinear ()
-   {
-      return this .linear;
-   },
-   setLinear (value)
-   {
-      this .linear = value;
    },
    set_textureProperties__ (update)
    {

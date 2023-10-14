@@ -166,7 +166,6 @@ Object .assign (Object .setPrototypeOf (X3DTexture3DNode .prototype, X3DSingleTe
       gl .bindTexture (gl .TEXTURE_3D, this .getTexture ());
       gl .uniform1i (channel .texture3D, textureUnit);
       gl .uniformMatrix4fv (channel .textureMatrix, false, this .getMatrix ());
-      gl .uniform1i (channel .textureLinear, this .linear);
    },
 });
 
