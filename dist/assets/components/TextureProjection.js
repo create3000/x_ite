@@ -1,4 +1,4 @@
-/* X_ITE v8.14.0 */(() => { // webpackBootstrap
+/* X_ITE v9.0.0 */(() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
 /******/ 	var __webpack_require__ = {};
@@ -39,39 +39,39 @@ var __webpack_exports__ = {};
 // UNUSED EXPORTS: default
 
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components\")"
-const Components_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.14.0")] .require ("x_ite/Components");
+const Components_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.0.0")] .require ("x_ite/Components");
 var Components_default = /*#__PURE__*/__webpack_require__.n(Components_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Fields\")"
-const Fields_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.14.0")] .require ("x_ite/Fields");
+const Fields_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.0.0")] .require ("x_ite/Fields");
 var Fields_default = /*#__PURE__*/__webpack_require__.n(Fields_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DFieldDefinition\")"
-const X3DFieldDefinition_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.14.0")] .require ("x_ite/Base/X3DFieldDefinition");
+const X3DFieldDefinition_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.0.0")] .require ("x_ite/Base/X3DFieldDefinition");
 var X3DFieldDefinition_default = /*#__PURE__*/__webpack_require__.n(X3DFieldDefinition_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/FieldDefinitionArray\")"
-const FieldDefinitionArray_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.14.0")] .require ("x_ite/Base/FieldDefinitionArray");
+const FieldDefinitionArray_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.0.0")] .require ("x_ite/Base/FieldDefinitionArray");
 var FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(FieldDefinitionArray_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Lighting/X3DLightNode\")"
-const X3DLightNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.14.0")] .require ("x_ite/Components/Lighting/X3DLightNode");
+const X3DLightNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.0.0")] .require ("x_ite/Components/Lighting/X3DLightNode");
 var X3DLightNode_default = /*#__PURE__*/__webpack_require__.n(X3DLightNode_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DConstants\")"
-const X3DConstants_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.14.0")] .require ("x_ite/Base/X3DConstants");
+const X3DConstants_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.0.0")] .require ("x_ite/Base/X3DConstants");
 var X3DConstants_default = /*#__PURE__*/__webpack_require__.n(X3DConstants_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DCast\")"
-const X3DCast_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.14.0")] .require ("x_ite/Base/X3DCast");
+const X3DCast_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.0.0")] .require ("x_ite/Base/X3DCast");
 var X3DCast_default = /*#__PURE__*/__webpack_require__.n(X3DCast_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Vector3\")"
-const Vector3_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.14.0")] .require ("standard/Math/Numbers/Vector3");
+const Vector3_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.0.0")] .require ("standard/Math/Numbers/Vector3");
 var Vector3_default = /*#__PURE__*/__webpack_require__.n(Vector3_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Rotation4\")"
-const Rotation4_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.14.0")] .require ("standard/Math/Numbers/Rotation4");
+const Rotation4_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.0.0")] .require ("standard/Math/Numbers/Rotation4");
 var Rotation4_default = /*#__PURE__*/__webpack_require__.n(Rotation4_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Matrix4\")"
-const Matrix4_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.14.0")] .require ("standard/Math/Numbers/Matrix4");
+const Matrix4_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.0.0")] .require ("standard/Math/Numbers/Matrix4");
 var Matrix4_default = /*#__PURE__*/__webpack_require__.n(Matrix4_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Namespace\")"
-const Namespace_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.14.0")] .require ("x_ite/Namespace");
+const Namespace_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.0.0")] .require ("x_ite/Namespace");
 var Namespace_default = /*#__PURE__*/__webpack_require__.n(Namespace_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Components/TextureProjector/X3DTextureProjectorNode.js
+;// CONCATENATED MODULE: ./src/x_ite/Components/TextureProjection/X3DTextureProjectorNode.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -251,7 +251,7 @@ Object .defineProperties (X3DTextureProjectorNode,
    },
    componentName:
    {
-      value: "TextureProjector",
+      value: "TextureProjection",
       enumerable: true,
    },
 });
@@ -259,18 +259,18 @@ Object .defineProperties (X3DTextureProjectorNode,
 const __default__ = X3DTextureProjectorNode;
 ;
 
-Namespace_default().add ("X3DTextureProjectorNode", "x_ite/Components/TextureProjector/X3DTextureProjectorNode", __default__);
-/* harmony default export */ const TextureProjector_X3DTextureProjectorNode = (__default__);
+Namespace_default().add ("X3DTextureProjectorNode", "x_ite/Components/TextureProjection/X3DTextureProjectorNode", __default__);
+/* harmony default export */ const TextureProjection_X3DTextureProjectorNode = (__default__);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Geometry/Camera\")"
-const Camera_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.14.0")] .require ("standard/Math/Geometry/Camera");
+const Camera_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.0.0")] .require ("standard/Math/Geometry/Camera");
 var Camera_default = /*#__PURE__*/__webpack_require__.n(Camera_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Utility/MatrixStack\")"
-const MatrixStack_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.14.0")] .require ("standard/Math/Utility/MatrixStack");
+const MatrixStack_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.0.0")] .require ("standard/Math/Utility/MatrixStack");
 var MatrixStack_default = /*#__PURE__*/__webpack_require__.n(MatrixStack_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Utility/ObjectCache\")"
-const ObjectCache_namespaceObject = window [Symbol .for ("X_ITE.X3D-8.14.0")] .require ("standard/Utility/ObjectCache");
+const ObjectCache_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.0.0")] .require ("standard/Utility/ObjectCache");
 var ObjectCache_default = /*#__PURE__*/__webpack_require__.n(ObjectCache_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Components/TextureProjector/TextureProjector.js
+;// CONCATENATED MODULE: ./src/x_ite/Components/TextureProjection/TextureProjector.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -430,18 +430,18 @@ Object .assign (TextureProjectorContainer .prototype,
 
 function TextureProjector (executionContext)
 {
-   TextureProjector_X3DTextureProjectorNode .call (this, executionContext);
+   TextureProjection_X3DTextureProjectorNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).TextureProjector);
 
    this ._fieldOfView .setUnit ("angle");
 }
 
-Object .assign (Object .setPrototypeOf (TextureProjector .prototype, TextureProjector_X3DTextureProjectorNode .prototype),
+Object .assign (Object .setPrototypeOf (TextureProjector .prototype, TextureProjection_X3DTextureProjectorNode .prototype),
 {
    initialize ()
    {
-      TextureProjector_X3DTextureProjectorNode .prototype .initialize .call (this);
+      TextureProjection_X3DTextureProjectorNode .prototype .initialize .call (this);
    },
    getFieldOfView ()
    {
@@ -464,7 +464,7 @@ Object .defineProperties (TextureProjector,
    },
    componentName:
    {
-      value: "TextureProjector",
+      value: "TextureProjection",
       enumerable: true,
    },
    containerField:
@@ -510,9 +510,9 @@ Object .defineProperties (TextureProjector,
 const TextureProjector_default_ = TextureProjector;
 ;
 
-Namespace_default().add ("TextureProjector", "x_ite/Components/TextureProjector/TextureProjector", TextureProjector_default_);
-/* harmony default export */ const TextureProjector_TextureProjector = (TextureProjector_default_);
-;// CONCATENATED MODULE: ./src/x_ite/Components/TextureProjector/TextureProjectorParallel.js
+Namespace_default().add ("TextureProjector", "x_ite/Components/TextureProjection/TextureProjector", TextureProjector_default_);
+/* harmony default export */ const TextureProjection_TextureProjector = (TextureProjector_default_);
+;// CONCATENATED MODULE: ./src/x_ite/Components/TextureProjection/TextureProjectorParallel.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -693,18 +693,18 @@ Object .assign (TextureProjectorParallelContainer .prototype,
 
 function TextureProjectorParallel (executionContext)
 {
-   TextureProjector_X3DTextureProjectorNode .call (this, executionContext);
+   TextureProjection_X3DTextureProjectorNode .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).TextureProjectorParallel);
 
    this ._fieldOfView .setUnit ("length");
 }
 
-Object .assign (Object .setPrototypeOf (TextureProjectorParallel .prototype, TextureProjector_X3DTextureProjectorNode .prototype),
+Object .assign (Object .setPrototypeOf (TextureProjectorParallel .prototype, TextureProjection_X3DTextureProjectorNode .prototype),
 {
    initialize ()
    {
-      TextureProjector_X3DTextureProjectorNode .prototype .initialize .call (this);
+      TextureProjection_X3DTextureProjectorNode .prototype .initialize .call (this);
 
       this ._fieldOfView .addInterest ("set_fieldOfView___", this);
 
@@ -761,7 +761,7 @@ Object .defineProperties (TextureProjectorParallel,
    },
    componentName:
    {
-      value: "TextureProjector",
+      value: "TextureProjection",
       enumerable: true,
    },
    containerField:
@@ -807,9 +807,9 @@ Object .defineProperties (TextureProjectorParallel,
 const TextureProjectorParallel_default_ = TextureProjectorParallel;
 ;
 
-Namespace_default().add ("TextureProjectorParallel", "x_ite/Components/TextureProjector/TextureProjectorParallel", TextureProjectorParallel_default_);
-/* harmony default export */ const TextureProjector_TextureProjectorParallel = (TextureProjectorParallel_default_);
-;// CONCATENATED MODULE: ./src/assets/components/TextureProjector.js
+Namespace_default().add ("TextureProjectorParallel", "x_ite/Components/TextureProjection/TextureProjectorParallel", TextureProjectorParallel_default_);
+/* harmony default export */ const TextureProjection_TextureProjectorParallel = (TextureProjectorParallel_default_);
+;// CONCATENATED MODULE: ./src/assets/components/TextureProjection.js
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -863,22 +863,22 @@ Namespace_default().add ("TextureProjectorParallel", "x_ite/Components/TexturePr
 
 
 Components_default().add ({
-   name: "TextureProjector",
+   name: "TextureProjection",
    concreteNodes:
    [
-      TextureProjector_TextureProjector,
-      TextureProjector_TextureProjectorParallel,
+      TextureProjection_TextureProjector,
+      TextureProjection_TextureProjectorParallel,
    ],
    abstractNodes:
    [
-      TextureProjector_X3DTextureProjectorNode,
+      TextureProjection_X3DTextureProjectorNode,
    ],
 });
 
-const components_TextureProjector_default_ = undefined;
+const TextureProjection_default_ = undefined;
 ;
 
-Namespace_default().add ("TextureProjector", "assets/components/TextureProjector", components_TextureProjector_default_);
-/* harmony default export */ const components_TextureProjector = ((/* unused pure expression or super */ null && (components_TextureProjector_default_)));
+Namespace_default().add ("TextureProjection", "assets/components/TextureProjection", TextureProjection_default_);
+/* harmony default export */ const TextureProjection = ((/* unused pure expression or super */ null && (TextureProjection_default_)));
 /******/ })()
 ;
