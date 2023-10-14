@@ -482,9 +482,11 @@ getTextureColor (const in vec4 diffuseColor, const in vec4 specularColor)
 
 #if defined (X3D_TEXTURE_PROJECTION)
 
+uniform vec3      x3d_TextureProjectorColor [X3D_NUM_TEXTURE_PROJECTORS];
+uniform float     x3d_TextureProjectorIntensity [X3D_NUM_TEXTURE_PROJECTORS];
+uniform vec3      x3d_TextureProjectorLocation [X3D_NUM_TEXTURE_PROJECTORS];
 uniform sampler2D x3d_TextureProjectorTexture [X3D_NUM_TEXTURE_PROJECTORS];
 uniform mat4      x3d_TextureProjectorMatrix [X3D_NUM_TEXTURE_PROJECTORS];
-uniform vec3      x3d_TextureProjectorLocation [X3D_NUM_TEXTURE_PROJECTORS];
 
 vec4
 getTextureProjectorTexture (const in int i, const in vec2 texCoord)
@@ -534,7 +536,7 @@ getTextureProjectorColor ()
 
       vec4 T = getTextureProjectorTexture (i, texCoord .st);
 
-      currentColor *= mix (vec3 (1.0), T .rgb, T .a);
+      currentColor *= mix (vec3 (1.0), T .rgb * x3d_TextureProjectorColor [i], T .a * x3d_TextureProjectorIntensity [i]);
    }
 
    return currentColor;

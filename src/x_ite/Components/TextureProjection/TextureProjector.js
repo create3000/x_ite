@@ -128,7 +128,8 @@ Object .assign (TextureProjectorContainer .prototype,
       const i = shaderObject .numTextureProjectors ++;
 
       const
-         texture     = this .lightNode .getTexture (),
+         lightNode   = this .lightNode,
+         texture     = lightNode .getTexture (),
          textureUnit = this .global
             ? (this .textureUnit = this .textureUnit ?? this .browser .popTexture2DUnit ())
             : this .browser .getTexture2DUnit ();
@@ -140,8 +141,10 @@ Object .assign (TextureProjectorContainer .prototype,
       if (shaderObject .hasTextureProjector (i, this))
          return;
 
+      gl .uniform3f        (shaderObject .x3d_TextureProjectorColor [i],         ... lightNode .getColor ());
+      gl .uniform1f        (shaderObject .x3d_TextureProjectorIntensity [i],     lightNode .getIntensity ());
+      gl .uniform3fv       (shaderObject .x3d_TextureProjectorLocation [i],      this .locationArray);
       gl .uniformMatrix4fv (shaderObject .x3d_TextureProjectorMatrix [i], false, this .matrixArray);
-      gl .uniform3fv (shaderObject .x3d_TextureProjectorLocation [i], this .locationArray);
    },
    dispose ()
    {
