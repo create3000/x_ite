@@ -27,7 +27,7 @@ getMaterialColor ()
       finalColor = getTextureColor (finalColor, vec4 (1.0));
    #endif
 
-   #if defined (X3D_TEXTURE_PROJECTORS)
+   #if defined (X3D_TEXTURE_PROJECTION)
       finalColor .rgb *= getTextureProjectorColor ();
    #endif
 

@@ -29,7 +29,7 @@ getMaterialColor ()
 {
    vec4 baseColor = getBaseColor ();
 
-   #if defined (X3D_TEXTURE_PROJECTORS)
+   #if defined (X3D_TEXTURE_PROJECTION)
       baseColor .rgb *= getTextureProjectorColor ();
    #endif
 
