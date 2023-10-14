@@ -331,10 +331,10 @@ X_ITE supports a limited set of nodes defined by the X3D specification. There ar
 * [FontStyle](components/text/fontstyle)
 * [Text](components/text/text)
 
-### TextureProjector
+### TextureProjection
 
-* [TextureProjector](components/textureprojector/textureprojector)
-* [TextureProjectorParallel](components/textureprojector/textureprojectorparallel)
+* [TextureProjector](components/textureprojection/textureprojector)
+* [TextureProjectorParallel](components/textureprojection/textureprojectorparallel)
 
 ### Texturing
 
