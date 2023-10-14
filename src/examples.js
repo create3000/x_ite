@@ -111,7 +111,7 @@ const X_ITE_EXAMPLES = [
    { component: "Sound", test: "MicrophoneSource" },
    { component: "Text", test: "FontStyle" },
    { component: "Text", test: "Text" },
-   { component: "TextureProjector", test: "TextureProjector" },
+   { component: "TextureProjection", test: "TextureProjector" },
    { component: "Texturing", test: "ImageTexture" },
    { component: "Texturing", test: "MovieTexture" },
    { component: "Texturing", test: "MultiTexture" },

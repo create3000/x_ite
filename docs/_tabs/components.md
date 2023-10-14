@@ -331,10 +331,10 @@ This index lists the components and nodes in alphabetical order for quick access
 - [FontStyle](text/fontstyle)
 - [Text](text/text)
 
-## TextureProjector
+## TextureProjection
 
-- [TextureProjector](textureprojector/textureprojector)
-- [TextureProjectorParallel](textureprojector/textureprojectorparallel)
+- [TextureProjector](textureprojection/textureprojector)
+- [TextureProjectorParallel](textureprojection/textureprojectorparallel)
 
 ## Texturing
 

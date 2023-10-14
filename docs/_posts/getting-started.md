@@ -499,7 +499,7 @@ X_ITE needs your support, with a small contribution you can make a big differenc
       <a href="https://create3000.github.io/media/examples/Text/Text/Text.x3d" title="Text » Text" componentName="Text" typeName="Text"><img src="https://create3000.github.io/media/examples/Text/Text/screenshot-small.png" alt="Text"/></a>
     </td>
     <td>
-      <a href="https://create3000.github.io/media/examples/TextureProjector/TextureProjector/TextureProjector.x3d" title="TextureProjector » TextureProjector" componentName="TextureProjector" typeName="TextureProjector"><img src="https://create3000.github.io/media/examples/TextureProjector/TextureProjector/screenshot-small.png" alt="TextureProjector"/></a>
+      <a href="https://create3000.github.io/media/examples/TextureProjection/TextureProjector/TextureProjector.x3d" title="TextureProjection » TextureProjector" componentName="TextureProjection" typeName="TextureProjector"><img src="https://create3000.github.io/media/examples/TextureProjection/TextureProjector/screenshot-small.png" alt="TextureProjector"/></a>
     </td>
   </tr>
   <tr>
