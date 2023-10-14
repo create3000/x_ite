@@ -102,6 +102,8 @@ export default class KTXDecoder {
       uploadResult .texture .numComponents = texture .numComponents;
       uploadResult .texture .target        = uploadResult .target;
 
+      texture .delete ();
+
       return uploadResult .texture;
    }
 }
