@@ -71,6 +71,8 @@ function MovieTexture (executionContext)
    this .sourceNode = audioContext .createMediaElementSource (this .video [0]);
 
    this .sourceNode .connect (this .getAudioSource ());
+
+   this .getMatrix () .set ([1, 0, 0, 0, 0, -1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1]); // flipY
 }
 
 Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNode .prototype),
