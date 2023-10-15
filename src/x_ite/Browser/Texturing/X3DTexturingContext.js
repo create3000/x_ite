@@ -264,6 +264,7 @@ Object .assign (X3DTexturingContext .prototype,
    {
       switch (textureType)
       {
+         case 1:
          case 2: return this .getTexture2DUnit ();
          case 3: return this .getTexture3DUnit ();
          case 4: return this .getTextureCubeUnit ();

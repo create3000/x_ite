@@ -86,6 +86,7 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, X3DText
    {
       switch (this .getTextureType ())
       {
+         case 1:
          case 2: return "2D";
          case 3: return "3D";
          case 4: return "CUBE";
@@ -238,16 +239,20 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, X3DText
    updateTextureBits (textureBits, channel = 0)
    {
       const
-         textureType = this .getTextureType () - 1,
+         textureType = this .getTextureType (),
          linear      = this .isLinear ();
 
-      textureBits .set (channel * 3 + 0, textureType & 0b01);
-      textureBits .set (channel * 3 + 1, textureType & 0b10);
-      textureBits .set (channel * 3 + 2, linear);
+      textureBits .set (channel * 4 + 0, textureType & 0b001);
+      textureBits .set (channel * 4 + 1, textureType & 0b010);
+      textureBits .set (channel * 4 + 2, textureType & 0b100);
+      textureBits .set (channel * 4 + 3, linear);
    },
    getShaderOptions (options, channel = 0)
    {
       options .push (`X3D_TEXTURE${channel}_${this .getTextureTypeString ()}`);
+
+      if (this .getTextureType () === 1)
+         options .push (`X3D_TEXTURE${channel}_FLIP_Y`);
 
       if (this .isLinear ())
          options .push (`X3D_TEXTURE${channel}_LINEAR`);

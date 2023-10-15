@@ -30,9 +30,13 @@ getNormalVector (const in float normalScale)
    // Get normal vector.
 
    #if defined (X3D_NORMAL_TEXTURE) && ! defined (X3D_NORMAL_TEXTURE_3D)
-      vec3 texCoord = getTexCoord (x3d_NormalTexture .textureTransformMapping, x3d_NormalTexture .textureCoordinateMapping, x3d_NormalTexture .textureMatrix);
+      vec3 texCoord = getTexCoord (x3d_NormalTexture .textureTransformMapping, x3d_NormalTexture .textureCoordinateMapping);
       vec3 scale    = vec3 (vec2 (normalScale), 1.0);
       mat3 tbn      = getTBNMatrix (texCoord .st);
+
+      #if defined (X3D_NORMAL_TEXTURE_FLIP_Y)
+         texCoord .t = 1.0 - texCoord .t;
+      #endif
 
       #if defined (X3D_NORMAL_TEXTURE_2D)
          vec3 n = texture2D (x3d_NormalTexture .texture2D, texCoord .st) .rgb;

@@ -83,6 +83,10 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
 
       this .requestImmediateLoad () .catch (Function .prototype);
    },
+   getTextureType ()
+   {
+      return 1;
+   },
    getElement ()
    {
       return this .image [0];

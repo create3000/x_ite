@@ -31,7 +31,11 @@ getEmissiveColor ()
    // Get texture color.
 
    #if defined (X3D_EMISSIVE_TEXTURE)
-      vec3 texCoord = getTexCoord (x3d_EmissiveTexture .textureTransformMapping, x3d_EmissiveTexture .textureCoordinateMapping, x3d_EmissiveTexture .textureMatrix);
+      vec3 texCoord = getTexCoord (x3d_EmissiveTexture .textureTransformMapping, x3d_EmissiveTexture .textureCoordinateMapping);
+
+      #if defined (X3D_EMISSIVE_TEXTURE_FLIP_Y)
+         texCoord .t = 1.0 - texCoord .t;
+      #endif
 
       #if defined (X3D_EMISSIVE_TEXTURE_2D)
          emissiveParameter *= texture2D (x3d_EmissiveTexture .texture2D, texCoord .st);

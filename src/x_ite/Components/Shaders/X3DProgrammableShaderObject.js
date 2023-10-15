@@ -226,7 +226,6 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       for (const materialTexture of materialTextures)
       {
          this [materialTexture] = {
-            textureMatrix:            gl .getUniformLocation (program, materialTexture + ".textureMatrix"),
             textureTransformMapping:  gl .getUniformLocation (program, materialTexture + ".textureTransformMapping"),
             textureCoordinateMapping: gl .getUniformLocation (program, materialTexture + ".textureCoordinateMapping"),
             texture2D:                gl .getUniformLocation (program, materialTexture + ".texture2D"),
@@ -245,7 +244,6 @@ Object .assign (X3DProgrammableShaderObject .prototype,
          this .x3d_TextureCoordinateGeneratorParameter [i] = gl .getUniformLocation (program, "x3d_TextureCoordinateGenerator[" + i + "].parameter");
 
          this .x3d_Texture [i] = {
-            textureMatrix: gl .getUniformLocation (program, "x3d_TextureMatrix[" + i + "]"),
             texture2D: gl .getUniformLocation (program, "x3d_Texture2D[" + i + "]"),
             texture3D: gl .getUniformLocation (program, "x3d_Texture3D[" + i + "]"),
             textureCube: this .getUniformLocation (gl, program, "x3d_TextureCube[" + i + "]", "x3d_CubeMapTexture[" + i + "]"),

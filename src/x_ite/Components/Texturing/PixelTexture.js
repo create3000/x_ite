@@ -76,6 +76,10 @@ Object .assign (Object .setPrototypeOf (PixelTexture .prototype, X3DTexture2DNod
 
       this .set_image__ ();
    },
+   getTextureType ()
+   {
+      return 2;
+   },
    checkLoadState ()
    {
       return this ._loadState .getValue ();

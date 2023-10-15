@@ -81,10 +81,6 @@ Object .assign (Object .setPrototypeOf (X3DTexture2DNode .prototype, X3DSingleTe
    {
       return this .target;
    },
-   getTextureType ()
-   {
-      return 2;
-   },
    getWidth ()
    {
       return this .width;
@@ -150,7 +146,6 @@ Object .assign (Object .setPrototypeOf (X3DTexture2DNode .prototype, X3DSingleTe
       gl .activeTexture (gl .TEXTURE0 + textureUnit);
       gl .bindTexture (gl .TEXTURE_2D, this .getTexture ());
       gl .uniform1i (channel .texture2D, textureUnit);
-      gl .uniformMatrix4fv (channel .textureMatrix, false, this .getMatrix ());
    },
 });
 

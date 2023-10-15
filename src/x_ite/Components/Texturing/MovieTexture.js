@@ -100,6 +100,10 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
       X3DSoundSourceNode .prototype .set_live__ .call (this);
       X3DUrlObject       .prototype .set_live__ .call (this);
    },
+   getTextureType ()
+   {
+      return 1;
+   },
    unloadData ()
    {
       this .clearTexture ();

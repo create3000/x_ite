@@ -155,6 +155,9 @@ Object .assign (Object .setPrototypeOf (X3DOneSidedMaterialNode .prototype, X3DM
          if (this .getEmissiveTexture ())
             options .push ("X3D_EMISSIVE_TEXTURE", `X3D_EMISSIVE_TEXTURE_${this .getEmissiveTexture () .getTextureTypeString ()}`);
 
+         if (this .getEmissiveTexture () ?.getTextureType () === 1)
+            options .push ("X3D_EMISSIVE_TEXTURE_FLIP_Y");
+
          if (this .getEmissiveTexture () ?.isLinear ())
             options .push ("X3D_EMISSIVE_TEXTURE_LINEAR");
 

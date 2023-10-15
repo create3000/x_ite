@@ -77,12 +77,13 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
    setTexture (index, textureNode)
    {
       const
-         textureType = (textureNode ?.getTextureType () ?? 1) - 1,
+         textureType = textureNode ?.getTextureType () ?? 0,
          linear      = textureNode ?.isLinear () ?? 0;
 
-      this .textureBits .set (index * 3 + 0, textureType & 0b01);
-      this .textureBits .set (index * 3 + 1, textureType & 0b10);
-      this .textureBits .set (index * 3 + 2, linear);
+      this .textureBits .set (index * 4 + 0, textureType & 0b001);
+      this .textureBits .set (index * 4 + 1, textureType & 0b010);
+      this .textureBits .set (index * 4 + 2, textureType & 0b100);
+      this .textureBits .set (index * 4 + 3, linear);
    },
    getTextureBits ()
    {
@@ -92,7 +93,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
    {
       let key = "";
 
-      key += this .textureBits .toString (8);
+      key += this .textureBits .toString (16);
       key += ".";
       key += geometryContext .geometryKey;
 
@@ -114,7 +115,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
          key += ".";
          key += objectsKeys .sort () .join (""); // ClipPlane, X3DLightNode
          key += ".";
-         key += textureNode ? 1 : appearanceNode .getTextureBits () .toString (8);
+         key += textureNode ? 1 : appearanceNode .getTextureBits () .toString (16);
       }
       else
       {
@@ -151,7 +152,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
 
       if (renderContext)
       {
-         const { renderObject, fogNode, shapeNode, appearanceNode, humanoidNode, objectsKeys } = renderContext;
+         const { renderObject, fogNode, shapeNode, appearanceNode, humanoidNode, objectsKeys, textureNode } = renderContext;
 
          if (renderObject .getLogarithmicDepthBuffer ())
             options .push ("X3D_LOGARITHMIC_DEPTH_BUFFER");
@@ -240,15 +241,18 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
          if (+this .textureBits)
             options .push ("X3D_MATERIAL_TEXTURES");
 
-         if (renderContext .textureNode)
+         if (textureNode)
          {
-            // ScreenText
+            // ScreenText texture
 
             options .push ("X3D_TEXTURE",
                            "X3D_NUM_TEXTURES 1",
                            "X3D_NUM_TEXTURE_TRANSFORMS 1",
                            "X3D_NUM_TEXTURE_COORDINATES 1",
                            "X3D_TEXTURE0_2D");
+
+            if (textureNode .getTextureType () === 1)
+               options .push ("X3D_TEXTURE0_FLIP_Y");
          }
          else
          {
@@ -281,7 +285,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
       }
       else
       {
-         const { alphaMode, textureNode, objectsKeys } = geometryContext;
+         const { alphaMode, objectsKeys, textureNode } = geometryContext;
 
          switch (alphaMode)
          {
@@ -345,6 +349,9 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
                            "X3D_NUM_TEXTURE_TRANSFORMS 1",
                            "X3D_NUM_TEXTURE_COORDINATES 1",
                            "X3D_TEXTURE0_2D");
+
+            if (textureNode .getTextureType () === 1)
+               options .push ("X3D_TEXTURE0_FLIP_Y");
          }
       }
 

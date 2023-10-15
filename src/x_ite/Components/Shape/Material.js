@@ -161,7 +161,7 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
    set_specularTexture__ ()
    {
       const index = this .getTextureIndices () .SPECULAR_TEXTURE;
-      
+
       this .specularTextureNode ?._linear .removeInterest ("setTexture", this);
 
       this .specularTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._specularTexture);
@@ -236,17 +236,32 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
             if (this .ambientTextureNode)
                options .push ("X3D_AMBIENT_TEXTURE", `X3D_AMBIENT_TEXTURE_${this .ambientTextureNode .getTextureTypeString ()}`);
 
+            if (this .ambientTextureNode ?.getTextureType () === 1)
+               options .push ("X3D_AMBIENT_TEXTURE_FLIP_Y");
+
             if (this .diffuseTextureNode)
                options .push ("X3D_DIFFUSE_TEXTURE", `X3D_DIFFUSE_TEXTURE_${this .diffuseTextureNode .getTextureTypeString ()}`);
+
+            if (this .diffuseTextureNode ?.getTextureType () === 1)
+               options .push ("X3D_DIFFUSE_TEXTURE_FLIP_Y");
 
             if (this .specularTextureNode)
                options .push ("X3D_SPECULAR_TEXTURE", `X3D_SPECULAR_TEXTURE_${this .specularTextureNode .getTextureTypeString ()}`);
 
+            if (this .specularTextureNode ?.getTextureType () === 1)
+               options .push ("X3D_SPECULAR_TEXTURE_FLIP_Y");
+
             if (this .shininessTextureNode)
                options .push ("X3D_SHININESS_TEXTURE", `X3D_SHININESS_TEXTURE_${this .shininessTextureNode .getTextureTypeString ()}`);
 
+            if (this .shininessTextureNode ?.getTextureType () === 1)
+               options .push ("X3D_SHININESS_TEXTURE_FLIP_Y");
+
             if (this .occlusionTextureNode)
                options .push ("X3D_OCCLUSION_TEXTURE", `X3D_OCCLUSION_TEXTURE_${this .occlusionTextureNode .getTextureTypeString ()}`);
+
+            if (this .occlusionTextureNode ?.getTextureType () === 1)
+               options .push ("X3D_OCCLUSION_TEXTURE_FLIP_Y");
          }
 
          switch (this .getMaterialKey ())
