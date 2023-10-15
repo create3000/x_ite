@@ -149,6 +149,7 @@ getTexture (const in int i, const in vec3 texCoord)
    {
       #if X3D_NUM_TEXTURES > 0
       case 0:
+      {
          #if defined (X3D_TEXTURE0_2D)
             textureColor = texture (x3d_Texture2D [0], texCoord .st);
          #elif defined (X3D_TEXTURE0_3D)
@@ -160,9 +161,13 @@ getTexture (const in int i, const in vec3 texCoord)
          #if defined (X3D_PHYSICAL_MATERIAL) && !defined (X3D_TEXTURE0_LINEAR)
             textureColor = sRGBToLinear (textureColor);
          #endif
+
+         break;
+      }
       #endif
       #if X3D_NUM_TEXTURES > 1
       case 1:
+      {
          #if defined (X3D_TEXTURE1_2D)
             textureColor = texture (x3d_Texture2D [1], texCoord .st);
          #elif defined (X3D_TEXTURE1_3D)
@@ -174,6 +179,9 @@ getTexture (const in int i, const in vec3 texCoord)
          #if defined (X3D_PHYSICAL_MATERIAL) && !defined (X3D_TEXTURE1_LINEAR)
             textureColor = sRGBToLinear (textureColor);
          #endif
+
+         break;
+      }
       #endif
    }
 
