@@ -547,22 +547,30 @@ getTextureProjectorTexture (const in int i, const in vec2 texCoord)
 
    #if X3D_NUM_TEXTURE_PROJECTORS > 0
    if (i == 0)
+   {
       textureColor = texture2D (x3d_TextureProjectorTexture [0], texCoord);
+   }
    #endif
 
    #if X3D_NUM_TEXTURE_PROJECTORS > 1
    else if (i == 1)
+   {
       textureColor = texture2D (x3d_TextureProjectorTexture [1], texCoord);
+   }
    #endif
 
    #if X3D_NUM_TEXTURE_PROJECTORS > 2
    else if (i == 2)
+   {
       textureColor = texture2D (x3d_TextureProjectorTexture [2], texCoord);
+   }
    #endif
 
    #if X3D_NUM_TEXTURE_PROJECTORS > 3
    else if (i == 3)
+   {
       textureColor = texture2D (x3d_TextureProjectorTexture [3], texCoord);
+   }
    #endif
 
    return textureColor;

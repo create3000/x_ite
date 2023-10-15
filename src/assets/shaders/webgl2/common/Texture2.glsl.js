@@ -555,27 +555,33 @@ uniform mat4      x3d_TextureProjectorMatrix    [X3D_NUM_TEXTURE_PROJECTORS];
 vec4
 getTextureProjectorTexture (const in int i, const in vec2 texCoord)
 {
+   vec4 textureColor = vec4 (1.0);
+
    switch (i)
    {
       #if X3D_NUM_TEXTURE_PROJECTORS > 0
       case 0:
-         return texture (x3d_TextureProjectorTexture [0], texCoord);
+         textureColor = texture (x3d_TextureProjectorTexture [0], texCoord);
+         break;
       #endif
       #if X3D_NUM_TEXTURE_PROJECTORS > 1
       case 1:
-         return texture (x3d_TextureProjectorTexture [1], texCoord);
+         textureColor = texture (x3d_TextureProjectorTexture [1], texCoord);
+         break;
       #endif
       #if X3D_NUM_TEXTURE_PROJECTORS > 2
       case 2:
-         return texture (x3d_TextureProjectorTexture [2], texCoord);
+         textureColor = texture (x3d_TextureProjectorTexture [2], texCoord);
+         break;
       #endif
       #if X3D_NUM_TEXTURE_PROJECTORS > 3
       case 3:
-         return texture (x3d_TextureProjectorTexture [3], texCoord);
+         textureColor = texture (x3d_TextureProjectorTexture [3], texCoord);
+         break;
       #endif
    }
 
-   return vec4 (1.0);
+   return textureColor;
 }
 
 vec3
