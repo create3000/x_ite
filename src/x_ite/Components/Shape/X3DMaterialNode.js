@@ -124,7 +124,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
          const { alphaMode, textureNode, objectsKeys } = geometryContext;
 
          key += alphaMode;
-         key += this .getMaterialKey (false);
+         key += this .getMaterialKey ();
          key += "0000011.0.";
          key += objectsKeys .sort () .join (""); // ClipPlane, X3DLightNode
          key += ".";
