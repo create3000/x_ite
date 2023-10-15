@@ -75,24 +75,24 @@ export default class KTXDecoder {
    {
       await this .initialized;
 
-      const data    = new Uint8Array ($.ungzip (arrayBuffer));
-      const texture = new this .libktx .ktxTexture (data);
+      const data     = new Uint8Array ($.ungzip (arrayBuffer));
+      const ktexture = new this .libktx .ktxTexture (data);
 
-      this .transcode (texture);
+      this .transcode (ktexture);
 
-      const uploadResult = texture .glUpload ();
+      const uploadResult = ktexture .glUpload ();
 
       if (uploadResult .texture === null)
          throw new Error ("Could not load KTX data");
 
-      uploadResult .texture .levels        = 1 + Math .floor (Math .log2 (texture .baseWidth));
-      uploadResult .texture .baseWidth     = texture .baseWidth;
-      uploadResult .texture .baseHeight    = texture .baseHeight;
-      uploadResult .texture .baseDepth     = texture .baseDepth ?? 1;
-      uploadResult .texture .numComponents = texture .numComponents;
+      uploadResult .texture .levels        = 1 + Math .floor (Math .log2 (ktexture .baseWidth));
+      uploadResult .texture .baseWidth     = ktexture .baseWidth;
+      uploadResult .texture .baseHeight    = ktexture .baseHeight;
+      uploadResult .texture .baseDepth     = ktexture .baseDepth ?? 1;
+      uploadResult .texture .numComponents = ktexture .numComponents;
       uploadResult .texture .target        = uploadResult .target;
 
-      texture .delete ();
+      ktexture .delete ();
 
       return uploadResult .texture;
    }
