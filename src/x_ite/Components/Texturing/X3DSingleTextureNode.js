@@ -48,6 +48,7 @@
 import X3DTextureNode from "./X3DTextureNode.js";
 import X3DConstants   from "../../Base/X3DConstants.js";
 import X3DCast        from "../../Base/X3DCast.js";
+import Matrix4        from "../../../standard/Math/Numbers/Matrix4.js";
 
 function X3DSingleTextureNode (executionContext)
 {
@@ -57,6 +58,8 @@ function X3DSingleTextureNode (executionContext)
 
    this .levels          = 1;
    this .generateMipMaps = true;
+   this .linear          = false;
+   this .matrix          = new Float32Array (Matrix4 .Identity);
 }
 
 Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, X3DTextureNode .prototype),
@@ -77,6 +80,19 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, X3DText
    {
       return 1;
    },
+   getTextureTypeString: (() =>
+   {
+      const textureTypes = {
+         2: "2D",
+         3: "3D",
+         4: "CUBE"
+      };
+
+      return function ()
+      {
+         return textureTypes [this .getTextureType ()];
+      };
+   })(),
    getTexture ()
    {
       return this .texture;
@@ -106,6 +122,28 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, X3DText
    setGenerateMipMaps (value)
    {
       this .generateMipMaps = value;
+   },
+   getLinear ()
+   {
+      return this .linear;
+   },
+   setLinear (value)
+   {
+      this .linear = value;
+   },
+   getMatrix ()
+   {
+      return this .matrix;
+   },
+   isImageTransparent (data)
+   {
+      for (let i = 3, length = data .length; i < length; i += 4)
+      {
+         if (data [i] !== 255)
+            return true;
+      }
+
+      return false;
    },
    set_textureProperties__ (update)
    {
@@ -201,19 +239,10 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, X3DText
       textureBits .set (channel * 2 + 0, textureType & 0b01);
       textureBits .set (channel * 2 + 1, textureType & 0b10);
    },
-   getShaderOptions: (() =>
+   getShaderOptions (options, channel = 0)
    {
-      const textureTypes = {
-         2: "2D",
-         3: "3D",
-         4: "CUBE"
-      };
-
-      return function (options, channel = 0)
-      {
-         options .push (`X3D_TEXTURE${channel}_${textureTypes [this .getTextureType ()]}`);
-      };
-   })(),
+      options .push (`X3D_TEXTURE${channel}_${textureTypes [this .getTextureType ()]}`);
+   },
 });
 
 Object .defineProperties (X3DSingleTextureNode,

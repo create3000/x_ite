@@ -85,10 +85,6 @@ Object .assign (Object .setPrototypeOf (X3DTexture2DNode .prototype, X3DSingleTe
    {
       return 2;
    },
-   getTextureTypeString ()
-   {
-      return "2D";
-   },
    getWidth ()
    {
       return this .width;

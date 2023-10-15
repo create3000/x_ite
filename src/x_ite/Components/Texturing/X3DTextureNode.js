@@ -48,7 +48,6 @@
 import Fields                 from "../../Fields.js";
 import X3DAppearanceChildNode from "../Shape/X3DAppearanceChildNode.js";
 import X3DConstants           from "../../Base/X3DConstants.js";
-import Matrix4                from "../../../standard/Math/Numbers/Matrix4.js";
 
 function X3DTextureNode (executionContext)
 {
@@ -57,8 +56,6 @@ function X3DTextureNode (executionContext)
    this .addType (X3DConstants .X3DTextureNode);
 
    this .addChildObjects (X3DConstants .outputOnly, "transparent", new Fields .SFBool ());
-
-   this .matrix = new Float32Array (Matrix4 .Identity);
 }
 
 Object .assign (Object .setPrototypeOf (X3DTextureNode .prototype, X3DAppearanceChildNode .prototype),
@@ -71,20 +68,6 @@ Object .assign (Object .setPrototypeOf (X3DTextureNode .prototype, X3DAppearance
    isTransparent ()
    {
       return this ._transparent .getValue ();
-   },
-   isImageTransparent (data)
-   {
-      for (let i = 3, length = data .length; i < length; i += 4)
-      {
-         if (data [i] !== 255)
-            return true;
-      }
-
-      return false;
-   },
-   getMatrix ()
-   {
-      return this .matrix;
    },
 });
 

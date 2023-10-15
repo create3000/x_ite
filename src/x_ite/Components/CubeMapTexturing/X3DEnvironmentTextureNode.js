@@ -80,10 +80,6 @@ Object .assign (Object .setPrototypeOf (X3DEnvironmentTextureNode .prototype, X3
    {
       return 4;
    },
-   getTextureTypeString ()
-   {
-      return "CUBE";
-   },
    getTargets ()
    {
       return this .targets;
