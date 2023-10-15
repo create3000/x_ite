@@ -19,7 +19,6 @@ precision highp samplerCube;
 uniform x3d_PhysicalMaterialParameters x3d_Material;
 
 #pragma X3D include "pbr/BDRF.glsl"
-#pragma X3D include "pbr/ToneMapping.glsl"
 #pragma X3D include "pbr/MaterialInfo.glsl"
 #pragma X3D include "pbr/Punctual.glsl"
 #pragma X3D include "pbr/IBL.glsl"

@@ -12,6 +12,12 @@ linearTosRGB (const in vec3 color)
    return pow (color, vec3 (INV_GAMMA));
 }
 
+vec4
+linearTosRGB (const in vec4 color)
+{
+   return vec4 (linearTosRGB (color .rgb), color .a);
+}
+
 // sRGB to linear approximation
 // see http://chilliant.blogspot.com/2012/08/srgb-approximations-for-hlsl.html
 vec3

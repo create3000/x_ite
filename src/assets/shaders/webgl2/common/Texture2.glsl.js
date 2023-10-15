@@ -1,10 +1,4 @@
 export default /* glsl */ `
-
-#if defined (X3D_PHYSICAL_MATERIAL)
-vec4
-sRGBToLinear (const in vec4 srgbIn);
-#endif
-
 #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
 
 #pragma X3D include "Perlin.glsl"
@@ -184,6 +178,50 @@ getTexture (const in int i, in vec3 texCoord)
          #endif
 
          #if defined (X3D_PHYSICAL_MATERIAL) && !defined (X3D_TEXTURE1_LINEAR)
+            textureColor = sRGBToLinear (textureColor);
+         #endif
+
+         break;
+      }
+      #endif
+      #if X3D_NUM_TEXTURES > 2
+      case 2:
+      {
+         #if defined (X3D_TEXTURE2_FLIP_Y)
+            texCoord .t = 1.0 - texCoord .t;
+         #endif
+
+         #if defined (X3D_TEXTURE2_2D)
+            textureColor = texture (x3d_Texture2D [2], texCoord .st);
+         #elif defined (X3D_TEXTURE2_3D)
+            textureColor = texture (x3d_Texture3D [2], texCoord .stp);
+         #elif defined (X3D_TEXTURE2_CUBE)
+            textureColor = texture (x3d_TextureCube [2], texCoord .stp);
+         #endif
+
+         #if defined (X3D_PHYSICAL_MATERIAL) && !defined (X3D_TEXTURE2_LINEAR)
+            textureColor = sRGBToLinear (textureColor);
+         #endif
+
+         break;
+      }
+      #endif
+      #if X3D_NUM_TEXTURES > 3
+      case 3:
+      {
+         #if defined (X3D_TEXTURE3_FLIP_Y)
+            texCoord .t = 1.0 - texCoord .t;
+         #endif
+
+         #if defined (X3D_TEXTURE3_2D)
+            textureColor = texture (x3d_Texture2D [3], texCoord .st);
+         #elif defined (X3D_TEXTURE3_3D)
+            textureColor = texture (x3d_Texture3D [3], texCoord .stp);
+         #elif defined (X3D_TEXTURE3_CUBE)
+            textureColor = texture (x3d_TextureCube [3], texCoord .stp);
+         #endif
+
+         #if defined (X3D_PHYSICAL_MATERIAL) && !defined (X3D_TEXTURE3_LINEAR)
             textureColor = sRGBToLinear (textureColor);
          #endif
 
@@ -526,6 +564,14 @@ getTextureProjectorTexture (const in int i, const in vec2 texCoord)
       #if X3D_NUM_TEXTURE_PROJECTORS > 1
       case 1:
          return texture (x3d_TextureProjectorTexture [1], texCoord);
+      #endif
+      #if X3D_NUM_TEXTURE_PROJECTORS > 2
+      case 2:
+         return texture (x3d_TextureProjectorTexture [2], texCoord);
+      #endif
+      #if X3D_NUM_TEXTURE_PROJECTORS > 3
+      case 3:
+         return texture (x3d_TextureProjectorTexture [3], texCoord);
       #endif
    }
 

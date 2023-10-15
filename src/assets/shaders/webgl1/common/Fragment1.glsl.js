@@ -82,6 +82,7 @@ varying vec3 vertex;
    varying float depth;
 #endif
 
+#pragma X3D include "../pbr/ToneMapping.glsl"
 #pragma X3D include "Texture.glsl"
 #pragma X3D include "ClipPlanes.glsl"
 #pragma X3D include "Point.glsl"

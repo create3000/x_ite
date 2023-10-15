@@ -81,7 +81,7 @@ function X3DTexturingContext ()
    // console .log (gl .getParameter (gl .MAX_TEXTURE_IMAGE_UNITS))
    // console .log (gl .getParameter (gl .MAX_ARRAY_TEXTURE_LAYERS))
 
-   this [_maxTextures] = maxTextureImageUnits > 8 ? 2 : 1;
+   this [_maxTextures] = maxTextureImageUnits > 8 ? 4 : 2;
 }
 
 Object .assign (X3DTexturingContext .prototype,

@@ -240,9 +240,6 @@ Object .assign (X3DProgrammableShaderObject .prototype,
 
       for (let i = 0; i < maxTextures; ++ i)
       {
-         this .x3d_TextureCoordinateGeneratorMode [i]      = gl .getUniformLocation (program, "x3d_TextureCoordinateGenerator[" + i + "].mode");
-         this .x3d_TextureCoordinateGeneratorParameter [i] = gl .getUniformLocation (program, "x3d_TextureCoordinateGenerator[" + i + "].parameter");
-
          this .x3d_Texture [i] = {
             texture2D: gl .getUniformLocation (program, "x3d_Texture2D[" + i + "]"),
             texture3D: gl .getUniformLocation (program, "x3d_Texture3D[" + i + "]"),
@@ -271,6 +268,9 @@ Object .assign (X3DProgrammableShaderObject .prototype,
 
       for (let i = 0; i < maxTexCoords; ++ i)
       {
+         this .x3d_TextureCoordinateGeneratorMode [i]      = gl .getUniformLocation (program, "x3d_TextureCoordinateGenerator[" + i + "].mode");
+         this .x3d_TextureCoordinateGeneratorParameter [i] = gl .getUniformLocation (program, "x3d_TextureCoordinateGenerator[" + i + "].parameter");
+
          const x3d_TexCoord = this .getAttribLocation (gl, program, "x3d_TexCoord" + i, i ? "" : "x3d_TexCoord");
 
          if (x3d_TexCoord !== -1)
