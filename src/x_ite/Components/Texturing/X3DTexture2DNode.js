@@ -141,7 +141,7 @@ Object .assign (Object .setPrototypeOf (X3DTexture2DNode .prototype, X3DSingleTe
                                                                       this .height,
                                                                       this ._repeatS .getValue (),
                                                                       this ._repeatT .getValue (),
-                                                                      true);
+                                                                      false);
    },
    setShaderUniforms (gl, shaderObject, renderObject, channel = shaderObject .x3d_Texture [0])
    {
