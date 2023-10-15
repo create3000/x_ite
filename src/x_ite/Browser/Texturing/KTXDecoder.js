@@ -19,27 +19,29 @@ export default class KTXDecoder
       if (!ktxTexture .needsTranscoding)
          return;
 
+      const { gl, libktx } = this;
+
       const
-         astcSupported  = !!this .gl .getExtension ("WEBGL_compressed_texture_astc"),
-         etcSupported   = !!this .gl .getExtension ("WEBGL_compressed_texture_etc1"),
-         dxtSupported   = !!this .gl .getExtension ("WEBGL_compressed_texture_s3tc"),
-         bptcSupported  = !!this .gl .getExtension ("EXT_texture_compression_bptc"),
-         pvrtcSupported = !!this .gl .getExtension ("WEBGL_compressed_texture_pvrtc") || !!this .gl .getExtension ("WEBKIT_WEBGL_compressed_texture_pvrtc");
+         astcSupported  = !!gl .getExtension ("WEBGL_compressed_texture_astc"),
+         etcSupported   = !!gl .getExtension ("WEBGL_compressed_texture_etc1"),
+         dxtSupported   = !!gl .getExtension ("WEBGL_compressed_texture_s3tc"),
+         bptcSupported  = !!gl .getExtension ("EXT_texture_compression_bptc"),
+         pvrtcSupported = !!gl .getExtension ("WEBGL_compressed_texture_pvrtc") || !!gl .getExtension ("WEBKIT_WEBGL_compressed_texture_pvrtc");
 
       if (astcSupported)
-         var format = this .libktx .TranscodeTarget .ASTC_4x4_RGBA;
+         var format = libktx .TranscodeTarget .ASTC_4x4_RGBA;
       else if (bptcSupported)
-         var format = this .libktx .TranscodeTarget .BC7_RGBA;
+         var format = libktx .TranscodeTarget .BC7_RGBA;
       else if (dxtSupported)
-         var format = this .libktx .TranscodeTarget .BC1_OR_3;
+         var format = libktx .TranscodeTarget .BC1_OR_3;
       else if (pvrtcSupported)
-         var format = this .libktx .TranscodeTarget .PVRTC1_4_RGBA;
+         var format = libktx .TranscodeTarget .PVRTC1_4_RGBA;
       else if (etcSupported)
-         var format = this .libktx .TranscodeTarget .ETC;
+         var format = libktx .TranscodeTarget .ETC;
       else
-         var format = this .libktx .TranscodeTarget .RGBA8888;
+         var format = libktx .TranscodeTarget .RGBA8888;
 
-      if (ktxTexture .transcodeBasis (format, 0) !== this .libktx .ErrorCode .SUCCESS)
+      if (ktxTexture .transcodeBasis (format, 0) !== libktx .ErrorCode .SUCCESS)
          console .warn ("Texture transcode failed. See console for details.");
    }
 
