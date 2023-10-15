@@ -133,7 +133,9 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, X3DText
    },
    isImageTransparent (data)
    {
-      for (let i = 3, length = data .length; i < length; i += 4)
+      const length = data .length;
+
+      for (let i = 3; i < length; i += 4)
       {
          if (data [i] !== 255)
             return true;
