@@ -575,7 +575,7 @@ getTextureProjectorTexture (const in int i, const in vec2 texCoord)
       #endif
    }
 
-   return vec4 (0.0);
+   return vec4 (1.0);
 }
 
 vec3
