@@ -1,43 +1,22 @@
-export default class KTXDecoder {
-
-   constructor (context, externalKtxlib, scriptDir)
+export default class KTXDecoder
+{
+   constructor (gl, externalKtxlib, scriptDir)
    {
-      this .gl     = context;
-      this .libktx = null;
-
-      if (context !== undefined)
-      {
-         if (externalKtxlib === undefined && LIBKTX !== undefined)
-         {
-            externalKtxlib = LIBKTX;
-         }
-         if (externalKtxlib !== undefined)
-         {
-            this .initialized = this .init (context, externalKtxlib, scriptDir);
-         }
-         else
-         {
-            console .error ("Failed to initalize KTXDecoder: ktx library undefined");
-            return undefined;
-         }
-      }
-      else
-      {
-         console .error ("Failed to initalize KTXDecoder: WebGL context undefined");
-         return undefined;
-      }
+      this .gl          = gl;
+      this .libktx      = null;
+      this .initialized = this .init (gl, externalKtxlib, scriptDir);
    }
 
-   async init (context, externalKtxlib, scriptDir)
+   async init (gl, externalKtxlib, scriptDir)
    {
-      this .libktx = await externalKtxlib({preinitializedWebGLContext: context}, scriptDir);
+      this .libktx = await externalKtxlib ({ preinitializedWebGLContext: gl }, scriptDir);
 
       this .libktx .GL .makeContextCurrent (this .libktx .GL .createContext (null, { majorVersion: 2.0 }));
    }
 
-   transcode (ktexture)
+   transcode (ktxTexture)
    {
-      if (!ktexture .needsTranscoding)
+      if (!ktxTexture .needsTranscoding)
          return;
 
       const
@@ -60,7 +39,7 @@ export default class KTXDecoder {
       else
          var format = this .libktx .TranscodeTarget .RGBA8888;
 
-      if (ktexture .transcodeBasis (format, 0) !== this .libktx .ErrorCode .SUCCESS)
+      if (ktxTexture .transcodeBasis (format, 0) !== this .libktx .ErrorCode .SUCCESS)
          console .warn ("Texture transcode failed. See console for details.");
    }
 
@@ -75,25 +54,28 @@ export default class KTXDecoder {
    {
       await this .initialized;
 
-      const data     = new Uint8Array ($.ungzip (arrayBuffer));
-      const ktexture = new this .libktx .ktxTexture (data);
+      const
+         data       = new Uint8Array ($.ungzip (arrayBuffer)),
+         ktxTexture = new this .libktx .ktxTexture (data);
 
-      this .transcode (ktexture);
+      this .transcode (ktxTexture);
 
-      const uploadResult = ktexture .glUpload ();
+      const
+         uploadResult = ktxTexture .glUpload (),
+         texture      = uploadResult .texture;
 
-      if (uploadResult .texture === null)
+      if (!texture)
          throw new Error ("Could not load KTX data");
 
-      uploadResult .texture .levels        = 1 + Math .floor (Math .log2 (ktexture .baseWidth));
-      uploadResult .texture .baseWidth     = ktexture .baseWidth;
-      uploadResult .texture .baseHeight    = ktexture .baseHeight;
-      uploadResult .texture .baseDepth     = ktexture .baseDepth ?? 1;
-      uploadResult .texture .numComponents = ktexture .numComponents;
-      uploadResult .texture .target        = uploadResult .target;
+      texture .levels        = 1 + Math .floor (Math .log2 (Math .max (ktxTexture .baseWidth, ktxTexture .baseHeight)));
+      texture .baseWidth     = ktxTexture .baseWidth;
+      texture .baseHeight    = ktxTexture .baseHeight;
+      texture .baseDepth     = ktxTexture .baseDepth ?? 1;
+      texture .numComponents = ktxTexture .numComponents;
+      texture .target        = uploadResult .target;
 
-      ktexture .delete ();
+      ktxTexture .delete ();
 
-      return uploadResult .texture;
+      return texture;
    }
 }
