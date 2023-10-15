@@ -115,7 +115,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
          key += ".";
          key += objectsKeys .sort () .join (""); // ClipPlane, X3DLightNode
          key += ".";
-         key += textureNode ? "2" : appearanceNode .getTextureBits () .toString (16);
+         key += textureNode ? 2 : appearanceNode .getTextureBits () .toString (16);
       }
       else
       {
