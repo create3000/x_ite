@@ -11,7 +11,7 @@ export default class KTXDecoder
    {
       this .libktx = await externalKtxlib ({ preinitializedWebGLContext: gl }, scriptDir);
 
-      this .libktx .GL .makeContextCurrent (this .libktx .GL .createContext (null, { majorVersion: 2.0 }));
+      this .libktx .GL .makeContextCurrent (this .libktx .GL .createContext (null, { majorVersion: gl .getVersion () }));
    }
 
    transcode (ktxTexture)
