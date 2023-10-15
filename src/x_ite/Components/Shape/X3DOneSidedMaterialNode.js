@@ -72,10 +72,10 @@ Object .assign (Object .setPrototypeOf (X3DOneSidedMaterialNode .prototype, X3DM
       this ._transparency    .addInterest ("set_transparency__",    this);
       this ._transparency    .addInterest ("set_transparent__",     this);
 
-      this .set_transparency__ ();
       this .set_emissiveColor__ ();
       this .set_emissiveTexture__ ();
       this .set_normalTexture__ ();
+      this .set_transparency__ ();
    },
    set_emissiveColor__ ()
    {

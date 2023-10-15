@@ -57,7 +57,7 @@ function GeometryContext (options = { })
       hasFogCoords: false,
       colorMaterial: false,
       hasNormals: false,
-      textureNode: false,
+      textureNode: null,
       objectsKeys: [ ],
       textureCoordinateMapping: new Map (),
       textureCoordinateNode: null,

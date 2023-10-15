@@ -84,8 +84,7 @@ function X3DBackgroundNode (executionContext)
    this .textureBits           = new BitSet ();
    this .sphereContext         = new GeometryContext ({ colorMaterial: true });
    this .sphereAlphaContext    = new GeometryContext ({ colorMaterial: true, alphaMode: AlphaMode .BLEND });
-   this .texturesContext       = new GeometryContext ({ textureNode: true });
-   this .texturesAlphaContext  = new GeometryContext ({ textureNode: true, alphaMode: AlphaMode .BLEND });
+   this .texturesContext       = new GeometryContext ({ });
 }
 
 Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindableNode .prototype),
@@ -557,21 +556,7 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
          const
             browser         = this .getBrowser (),
             gl              = browser .getContext (),
-            shaderNode      = browser .getDefaultMaterial () .getShader (this .texturesContext),
-            alphaShaderNode = browser .getDefaultMaterial () .getShader (this .texturesAlphaContext);
-
-         shaderNode .enable (gl);
-         shaderNode .setClipPlanes (gl, this .clipPlanes);
-
-         // Set uniforms.
-
-         gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix,           false, this .projectionMatrixArray);
-         gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,            false, this .modelViewMatrixArray);
-         gl .uniformMatrix4fv (shaderNode .x3d_TextureTransformMatrix [0], false, textureMatrixArray);
-
-         gl .uniform3f (shaderNode .x3d_EmissiveColor,                      1, 1, 1);
-         gl .uniform1f (shaderNode .x3d_Transparency,                       0);
-         gl .uniform1i (shaderNode .x3d_TextureCoordinateGeneratorMode [0], 0);
+            texturesContext = this .texturesContext;
 
          // Draw all textures.
 
@@ -579,7 +564,25 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
          {
             const textureNode = this .textureNodes [i];
 
-            this .drawRectangle (gl, browser, textureNode ._transparent .getValue () ? alphaShaderNode : shaderNode, renderObject, textureNode, this .textureBuffers [i], this .textureArrayObjects [i]);
+            texturesContext .alphaMode   = textureNode ._transparent .getValue () ? AlphaMode .BLEND : AlphaMode .OPAQUE;
+            texturesContext .textureNode = textureNode;
+
+            const shaderNode = browser .getDefaultMaterial () .getShader (texturesContext);
+
+            shaderNode .enable (gl);
+            shaderNode .setClipPlanes (gl, this .clipPlanes);
+
+            // Set uniforms.
+
+            gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix,           false, this .projectionMatrixArray);
+            gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,            false, this .modelViewMatrixArray);
+            gl .uniformMatrix4fv (shaderNode .x3d_TextureTransformMatrix [0], false, textureMatrixArray);
+
+            gl .uniform3f (shaderNode .x3d_EmissiveColor,                      1, 1, 1);
+            gl .uniform1f (shaderNode .x3d_Transparency,                       0);
+            gl .uniform1i (shaderNode .x3d_TextureCoordinateGeneratorMode [0], 0);
+
+            this .drawRectangle (gl, browser, shaderNode, renderObject, textureNode, this .textureBuffers [i], this .textureArrayObjects [i]);
          }
       };
    })(),

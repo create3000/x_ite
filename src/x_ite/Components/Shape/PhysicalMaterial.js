@@ -70,6 +70,7 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
 
       this ._baseColor                .addInterest ("set_baseColor__",                this);
       this ._baseTexture              .addInterest ("set_baseTexture__",              this);
+      this ._baseTexture              .addInterest ("set_transparent__",              this);
       this ._metallic                 .addInterest ("set_metallic__",                 this);
       this ._roughness                .addInterest ("set_roughness__",                this);
       this ._metallicRoughnessTexture .addInterest ("set_metallicRoughnessTexture__", this);
@@ -83,6 +84,7 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
       this .set_metallicRoughnessTexture__ ();
       this .set_occlusionStrength__ ();
       this .set_occlusionTexture__ ();
+      this .set_transparent__ ();
    },
    set_baseColor__ ()
    {
@@ -115,7 +117,6 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
          this .baseTextureNode ._linear      .addInterest ("setTexture",        this, index, this .baseTextureNode);
       }
 
-      this .set_transparent__ ();
       this .setTexture (index, this .baseTextureNode);
    },
    set_metallic__ ()

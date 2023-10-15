@@ -77,6 +77,7 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
       this ._ambientTexture    .addInterest ("set_ambientTexture__",    this);
       this ._diffuseColor      .addInterest ("set_diffuseColor__",      this);
       this ._diffuseTexture    .addInterest ("set_diffuseTexture__",    this);
+      this ._diffuseTexture    .addInterest ("set_transparent__",       this);
       this ._specularColor     .addInterest ("set_specularColor__",     this);
       this ._specularTexture   .addInterest ("set_specularTexture__",   this);
       this ._shininess         .addInterest ("set_shininess__",         this);
@@ -94,6 +95,7 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
       this .set_shininessTexture__ ();
       this .set_occlusionStrength__ ();
       this .set_occlusionTexture__ ();
+      this .set_transparent__ ();
    },
    set_ambientIntensity__ ()
    {
@@ -142,7 +144,6 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
          this .diffuseTextureNode ._linear      .addInterest ("setTexture",        this, index, this .diffuseTextureNode);
       }
 
-      this .set_transparent__ ();
       this .setTexture (index, this .diffuseTextureNode);
    },
    set_specularColor__ ()
