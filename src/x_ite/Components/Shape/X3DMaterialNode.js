@@ -74,16 +74,15 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
    {
       return this ._transparent .getValue ();
    },
-   getBaseTexture ()
-   {
-      return null;
-   },
    setTexture (index, textureNode)
    {
-      const textureType = textureNode ? textureNode .getTextureType () - 1 : 0;
+      const
+         textureType = (textureNode ?.getTextureType () ?? 1) - 1,
+         linear      = textureNode ?.isLinear () ?? 0;
 
-      this .textureBits .set (index * 2 + 0, textureType & 0b01);
-      this .textureBits .set (index * 2 + 1, textureType & 0b10);
+      this .textureBits .set (index * 3 + 0, textureType & 0b01);
+      this .textureBits .set (index * 3 + 1, textureType & 0b10);
+      this .textureBits .set (index * 3 + 2, linear);
    },
    getTextureBits ()
    {
@@ -93,7 +92,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
    {
       let key = "";
 
-      key += this .textureBits .toString (4);
+      key += this .textureBits .toString (8);
       key += ".";
       key += geometryContext .geometryKey;
 
@@ -115,7 +114,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
          key += ".";
          key += objectsKeys .sort () .join (""); // ClipPlane, X3DLightNode
          key += ".";
-         key += textureNode ? 1 : appearanceNode .getTextureBits () .toString (4);
+         key += textureNode ? 1 : appearanceNode .getTextureBits () .toString (8);
       }
       else
       {

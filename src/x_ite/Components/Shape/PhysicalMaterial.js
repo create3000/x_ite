@@ -83,7 +83,6 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
       this .set_metallicRoughnessTexture__ ();
       this .set_occlusionStrength__ ();
       this .set_occlusionTexture__ ();
-      this .set_transparent__ ();
    },
    set_baseColor__ ()
    {
@@ -100,15 +99,24 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
    },
    set_baseTexture__ ()
    {
+      const index = this .getTextureIndices () .BASE_TEXTURE;
+
       if (this .baseTextureNode)
+      {
          this .baseTextureNode ._transparent .removeInterest ("set_transparent__", this);
+         this .baseTextureNode ._linear      .removeInterest ("setTexture",        this);
+      }
 
       this .baseTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._baseTexture);
 
-      this .setTexture (this .getTextureIndices () .BASE_TEXTURE, this .baseTextureNode);
-
       if (this .baseTextureNode)
+      {
          this .baseTextureNode ._transparent .addInterest ("set_transparent__", this);
+         this .baseTextureNode ._linear      .addInterest ("setTexture",        this, index, this .baseTextureNode);
+      }
+
+      this .set_transparent__ ();
+      this .setTexture (index, this .baseTextureNode);
    },
    set_metallic__ ()
    {
@@ -148,10 +156,10 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
 
       const textureIndices = {
          EMISSIVE_TEXTURE: i ++,
-         NORMAL_TEXTURE:  i ++,
+         NORMAL_TEXTURE: i ++,
          BASE_TEXTURE: i ++,
          METALLIC_ROUGHNESS_TEXTURE: i ++,
-         OCCLUSION_TEXTURE:  i ++,
+         OCCLUSION_TEXTURE: i ++,
       };
 
       return function ()
@@ -177,6 +185,9 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
          {
             if (this .baseTextureNode)
                options .push ("X3D_BASE_TEXTURE", `X3D_BASE_TEXTURE_${this .baseTextureNode .getTextureTypeString ()}`);
+
+            if (this .baseTextureNode ?.isLinear ())
+               options .push ("X3D_BASE_TEXTURE_LINEAR");
 
             if (this .metallicRoughnessTextureNode)
                options .push ("X3D_METALLIC_ROUGHNESS_TEXTURE", `X3D_METALLIC_ROUGHNESS_TEXTURE_${this .metallicRoughnessTextureNode .getTextureTypeString ()}`);

@@ -60,12 +60,6 @@ function UnlitMaterial (executionContext)
 
 Object .assign (Object .setPrototypeOf (UnlitMaterial .prototype, X3DOneSidedMaterialNode .prototype),
 {
-   initialize ()
-   {
-      X3DOneSidedMaterialNode .prototype .initialize .call (this);
-
-      this .set_transparent__ ();
-   },
    set_emissiveTexture__ ()
    {
       if (this .getEmissiveTexture ())
@@ -75,6 +69,8 @@ Object .assign (Object .setPrototypeOf (UnlitMaterial .prototype, X3DOneSidedMat
 
       if (this .getEmissiveTexture ())
          this .getEmissiveTexture () ._transparent .addInterest ("set_transparent__", this);
+
+      this .set_transparent__ ();
    },
    set_transparent__ ()
    {

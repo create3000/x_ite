@@ -355,9 +355,9 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
 
          key += appearanceNode .getStyleProperties (geometryContext .geometryType) ? 1 : 0;
          key += ".";
-         key += appearanceNode .getTextureBits () .toString (4); // Textures for point and line.
+         key += appearanceNode .getTextureBits () .toString (8); // Textures for point and line.
          key += ".";
-         key += appearanceNode .getMaterial () .getTextureBits () .toString (4); // Textures for point and line.
+         key += appearanceNode .getMaterial () .getTextureBits () .toString (8); // Textures for point and line.
       }
 
       return this [_pointingShaders] .get (key) || this .createPointingShader (key, numClipPlanes, shapeNode, humanoidNode);

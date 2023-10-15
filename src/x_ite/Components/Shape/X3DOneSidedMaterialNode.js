@@ -66,16 +66,16 @@ Object .assign (Object .setPrototypeOf (X3DOneSidedMaterialNode .prototype, X3DM
    {
       X3DMaterialNode .prototype .initialize .call (this);
 
-      this ._emissiveColor    .addInterest ("set_emissiveColor__",   this);
-      this ._emissiveTexture  .addInterest ("set_emissiveTexture__", this);
-      this ._normalTexture    .addInterest ("set_normalTexture__",   this);
-      this ._transparency     .addInterest ("set_transparency__",    this);
-      this ._transparency     .addInterest ("set_transparent__",     this);
+      this ._emissiveColor   .addInterest ("set_emissiveColor__",   this);
+      this ._emissiveTexture .addInterest ("set_emissiveTexture__", this);
+      this ._normalTexture   .addInterest ("set_normalTexture__",   this);
+      this ._transparency    .addInterest ("set_transparency__",    this);
+      this ._transparency    .addInterest ("set_transparent__",     this);
 
+      this .set_transparency__ ();
       this .set_emissiveColor__ ();
       this .set_emissiveTexture__ ();
       this .set_normalTexture__ ();
-      this .set_transparency__ ();
    },
    set_emissiveColor__ ()
    {
@@ -83,8 +83,8 @@ Object .assign (Object .setPrototypeOf (X3DOneSidedMaterialNode .prototype, X3DM
       //this .emissiveColor .set (this ._emissiveColor .getValue ());
 
       const
-         emissiveColor   = this .emissiveColor,
-         emissiveColor_  = this ._emissiveColor .getValue ();
+         emissiveColor  = this .emissiveColor,
+         emissiveColor_ = this ._emissiveColor .getValue ();
 
       emissiveColor [0] = emissiveColor_ .r;
       emissiveColor [1] = emissiveColor_ .g;
@@ -92,9 +92,15 @@ Object .assign (Object .setPrototypeOf (X3DOneSidedMaterialNode .prototype, X3DM
    },
    set_emissiveTexture__ ()
    {
+      const index = this .getTextureIndices () .EMISSIVE_TEXTURE;
+
+      this .emissiveTexture ?._linear .removeInterest ("setTexture", this);
+
       this .emissiveTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._emissiveTexture);
 
-      this .setTexture (this .getTextureIndices () .EMISSIVE_TEXTURE, this .emissiveTextureNode);
+      this .emissiveTexture ?._linear .addInterest ("setTexture", this, index, this .emissiveTextureNode);
+
+      this .setTexture (index, this .emissiveTextureNode);
    },
    set_normalTexture__ ()
    {
@@ -148,6 +154,9 @@ Object .assign (Object .setPrototypeOf (X3DOneSidedMaterialNode .prototype, X3DM
       {
          if (this .getEmissiveTexture ())
             options .push ("X3D_EMISSIVE_TEXTURE", `X3D_EMISSIVE_TEXTURE_${this .getEmissiveTexture () .getTextureTypeString ()}`);
+
+         if (this .getEmissiveTexture () ?.isLinear ())
+            options .push ("X3D_EMISSIVE_TEXTURE_LINEAR");
 
          if (this .getNormalTexture ())
             options .push ("X3D_NORMAL_TEXTURE", `X3D_NORMAL_TEXTURE_${this .getNormalTexture () .getTextureTypeString ()}`);

@@ -94,7 +94,6 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
       this .set_shininessTexture__ ();
       this .set_occlusionStrength__ ();
       this .set_occlusionTexture__ ();
-      this .set_transparent__ ();
    },
    set_ambientIntensity__ ()
    {
@@ -102,9 +101,15 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
    },
    set_ambientTexture__ ()
    {
+      const index = this .getTextureIndices () .AMBIENT_TEXTURE
+
+      this .ambientTextureNode ?._linear .removeInterest ("setTexture", this);
+
       this .ambientTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._ambientTexture);
 
-      this .setTexture (this .getTextureIndices () .AMBIENT_TEXTURE, this .ambientTextureNode);
+      this .ambientTextureNode ?._linear .addInterest ("setTexture", this, index, this .ambientTextureNode);
+
+      this .setTexture (index, this .ambientTextureNode);
    },
    set_diffuseColor__ ()
    {
@@ -121,15 +126,24 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
    },
    set_diffuseTexture__ ()
    {
+      const index = this .getTextureIndices () .DIFFUSE_TEXTURE;
+
       if (this .diffuseTextureNode)
+      {
          this .diffuseTextureNode ._transparent .removeInterest ("set_transparent__", this);
+         this .diffuseTextureNode ._linear      .removeInterest ("setTexture",        this);
+      }
 
       this .diffuseTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._diffuseTexture);
 
       if (this .diffuseTextureNode)
+      {
          this .diffuseTextureNode ._transparent .addInterest ("set_transparent__", this);
+         this .diffuseTextureNode ._linear      .addInterest ("setTexture",        this, index, this .diffuseTextureNode);
+      }
 
-      this .setTexture (this .getTextureIndices () .DIFFUSE_TEXTURE, this .diffuseTextureNode);
+      this .set_transparent__ ();
+      this .setTexture (index, this .diffuseTextureNode);
    },
    set_specularColor__ ()
    {
@@ -146,9 +160,15 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
    },
    set_specularTexture__ ()
    {
+      const index = this .getTextureIndices () .SPECULAR_TEXTURE;
+      
+      this .specularTextureNode ?._linear .removeInterest ("setTexture", this);
+
       this .specularTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._specularTexture);
 
-      this .setTexture (this .getTextureIndices () .SPECULAR_TEXTURE, this .specularTextureNode);
+      this .specularTextureNode ?._linear .addInterest ("setTexture", this, index, this .specularTextureNode);
+
+      this .setTexture (index, this .specularTextureNode);
    },
    set_shininess__ ()
    {

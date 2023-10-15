@@ -61,8 +61,6 @@ function MultiTexture (executionContext)
 
    this .addType (X3DConstants .MultiTexture);
 
-   this .addChildObjects (X3DConstants .outputOnly, "loadState", new Fields .SFInt32 (X3DConstants .NOT_STARTED_STATE));
-
    const browser = this .getBrowser ();
 
    this .maxTextures  = browser .getMaxTextures ()
@@ -93,8 +91,6 @@ Object .assign (Object .setPrototypeOf (MultiTexture .prototype, X3DTextureNode 
       this .set_source__ ();
       this .set_function__ ();
       this .set_texture__ ();
-
-      this ._loadState = X3DConstants .COMPLETE_STATE;
    },
    getCount ()
    {
@@ -248,6 +244,9 @@ Object .assign (Object .setPrototypeOf (MultiTexture .prototype, X3DTextureNode 
    })(),
    set_texture__ ()
    {
+      for (const textureNode of this .textureNodes)
+         textureNode ._linear .removeInterest ("addNodeEvent", this);
+
       this .textureNodes .length = 0;
 
       for (const node of this ._texture)
@@ -257,6 +256,9 @@ Object .assign (Object .setPrototypeOf (MultiTexture .prototype, X3DTextureNode 
          if (textureNode)
             this .textureNodes .push (textureNode);
       }
+
+      for (const textureNode of this .textureNodes)
+         textureNode ._linear .addInterest ("addNodeEvent", this);
    },
    updateTextureBits (textureBits)
    {

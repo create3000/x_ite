@@ -201,6 +201,7 @@ Object .assign (Object .setPrototypeOf (ComposedCubeMapTexture .prototype, X3DEn
          gl .bindFramebuffer (gl .FRAMEBUFFER, lastBuffer);
 
          this .setTransparent (textureNodes .some (textureNode => textureNode .isTransparent ()));
+         this .setLinear (textureNodes .some (textureNode => textureNode .isLinear ()));
          this .updateTextureParameters ();
       }
       else

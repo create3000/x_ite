@@ -45,6 +45,7 @@
  *
  ******************************************************************************/
 
+import Fields         from "../../Fields.js";
 import X3DTextureNode from "./X3DTextureNode.js";
 import X3DConstants   from "../../Base/X3DConstants.js";
 import X3DCast        from "../../Base/X3DCast.js";
@@ -56,9 +57,10 @@ function X3DSingleTextureNode (executionContext)
 
    this .addType (X3DConstants .X3DSingleTextureNode);
 
+   this .addChildObjects (X3DConstants .inputOutput, "linear", new Fields .SFBool ())
+
    this .levels          = 1;
    this .generateMipMaps = true;
-   this .linear          = false;
    this .matrix          = new Float32Array (Matrix4 .Identity);
 }
 
@@ -119,13 +121,16 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, X3DText
    {
       this .generateMipMaps = value;
    },
-   getLinear ()
+   isLinear ()
    {
-      return this .linear;
+      return this ._linear .getValue ();
    },
    setLinear (value)
    {
-      this .linear = value;
+      if (value === this ._linear .getValue ())
+         return;
+
+      this ._linear = value;
    },
    getMatrix ()
    {
@@ -232,14 +237,20 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, X3DText
    })(),
    updateTextureBits (textureBits, channel = 0)
    {
-      const textureType = this .getTextureType () - 1;
+      const
+         textureType = this .getTextureType () - 1,
+         linear      = this .isLinear ();
 
-      textureBits .set (channel * 2 + 0, textureType & 0b01);
-      textureBits .set (channel * 2 + 1, textureType & 0b10);
+      textureBits .set (channel * 3 + 0, textureType & 0b01);
+      textureBits .set (channel * 3 + 1, textureType & 0b10);
+      textureBits .set (channel * 3 + 2, linear);
    },
    getShaderOptions (options, channel = 0)
    {
-      options .push (`X3D_TEXTURE${channel}_${textureTypes [this .getTextureType ()]}`);
+      options .push (`X3D_TEXTURE${channel}_${this .getTextureTypeString ()}`);
+
+      if (this .isLinear ())
+         options .push (`X3D_TEXTURE${channel}_LINEAR`);
    },
 });
 

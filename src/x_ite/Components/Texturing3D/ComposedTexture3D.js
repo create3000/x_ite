@@ -154,6 +154,7 @@ Object .assign (Object .setPrototypeOf (ComposedTexture3D .prototype, X3DTexture
          gl .bindFramebuffer (gl .FRAMEBUFFER, lastBuffer);
 
          this .setTransparent (textureNodes .some (textureNode => textureNode .isTransparent ()));
+         this .setLinear (textureNodes .some (textureNode => textureNode .isLinear ()));
          this .updateTextureParameters ();
 
          this ._loadState = X3DConstants .COMPLETE_STATE;
