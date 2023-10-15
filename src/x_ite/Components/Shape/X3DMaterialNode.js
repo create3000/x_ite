@@ -115,7 +115,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
          key += ".";
          key += objectsKeys .sort () .join (""); // ClipPlane, X3DLightNode
          key += ".";
-         key += textureNode ? 1 : appearanceNode .getTextureBits () .toString (16);
+         key += textureNode ? "2" : appearanceNode .getTextureBits () .toString (16);
       }
       else
       {
@@ -128,7 +128,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
          key += "0000011.0.";
          key += objectsKeys .sort () .join (""); // ClipPlane, X3DLightNode
          key += ".";
-         key += textureNode ? 1 : 0;
+         key += textureNode ? ((textureNode .isLinear () << 3) | textureNode .getTextureType ()) .toString (16) : 0;
       }
 
       return this .shaderNodes .get (key) ?? this .createShader (key, geometryContext, renderContext);
@@ -243,16 +243,13 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
 
          if (textureNode)
          {
-            // ScreenText texture
+            // ScreenText PixelTexture.
 
             options .push ("X3D_TEXTURE",
                            "X3D_NUM_TEXTURES 1",
                            "X3D_NUM_TEXTURE_TRANSFORMS 1",
                            "X3D_NUM_TEXTURE_COORDINATES 1",
                            "X3D_TEXTURE0_2D");
-
-            if (textureNode .getTextureType () === 1)
-               options .push ("X3D_TEXTURE0_FLIP_Y");
          }
          else
          {
