@@ -163,6 +163,9 @@ Object .assign (Object .setPrototypeOf (X3DOneSidedMaterialNode .prototype, X3DM
 
          if (this .getNormalTexture ())
             options .push ("X3D_NORMAL_TEXTURE", `X3D_NORMAL_TEXTURE_${this .getNormalTexture () .getTextureTypeString ()}`);
+
+         if (this .getNormalTexture () ?.getTextureType () === 1)
+            options .push ("X3D_NORMAL_TEXTURE_FLIP_Y");
       }
 
       return options;
