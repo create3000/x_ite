@@ -80,19 +80,15 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, X3DText
    {
       return 1;
    },
-   getTextureTypeString: (() =>
+   getTextureTypeString ()
    {
-      const textureTypes = {
-         2: "2D",
-         3: "3D",
-         4: "CUBE"
-      };
-
-      return function ()
+      switch (this .getTextureType ())
       {
-         return textureTypes [this .getTextureType ()];
-      };
-   })(),
+         case 2: return "2D";
+         case 3: return "3D";
+         case 4: return "CUBE";
+      }
+   },
    getTexture ()
    {
       return this .texture;
