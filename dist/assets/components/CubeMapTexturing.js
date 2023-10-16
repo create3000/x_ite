@@ -261,10 +261,6 @@ Object .assign (Object .setPrototypeOf (X3DEnvironmentTextureNode .prototype, (X
    {
       return 4;
    },
-   getTextureTypeString ()
-   {
-      return "CUBE";
-   },
    getTargets ()
    {
       return this .targets;
@@ -312,7 +308,6 @@ Object .assign (Object .setPrototypeOf (X3DEnvironmentTextureNode .prototype, (X
       gl .activeTexture (gl .TEXTURE0 + textureUnit);
       gl .bindTexture (gl .TEXTURE_CUBE_MAP, this .getTexture ());
       gl .uniform1i (channel .textureCube, textureUnit);
-      gl .uniformMatrix4fv (channel .textureMatrix, false, this .getMatrix ());
    },
 });
 
@@ -545,6 +540,7 @@ Object .assign (Object .setPrototypeOf (ComposedCubeMapTexture .prototype, CubeM
          gl .bindFramebuffer (gl .FRAMEBUFFER, lastBuffer);
 
          this .setTransparent (textureNodes .some (textureNode => textureNode .isTransparent ()));
+         this .setLinear (textureNodes .some (textureNode => textureNode .isLinear ()));
          this .updateTextureParameters ();
       }
       else
@@ -1244,6 +1240,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapT
          this .setLevels (texture .levels);
          this .setSize (texture .baseWidth);
          this .setGenerateMipMaps (false);
+         this .setLinear (false);
          this .updateTextureParameters ();
 
          this .setLoadState ((X3DConstants_default()).COMPLETE_STATE);
@@ -1273,6 +1270,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapT
             this .panoramaToCubeMap ();
 
          this .setGenerateMipMaps (true);
+         this .setLinear (true);
          this .updateTextureParameters ();
 
          // Update load state.

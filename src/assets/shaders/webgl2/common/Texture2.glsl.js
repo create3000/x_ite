@@ -12,10 +12,12 @@ vec4 texCoords [X3D_NUM_TEXTURE_COORDINATES];
 void
 setTexCoords ()
 {
-   ${[... Array (maxTexCoords) .keys ()] .map (i => /* glsl */`
+   ${[... Array (maxTexCoords) .keys ()] .map (i => /* glsl */ `
+
    #if X3D_NUM_TEXTURE_COORDINATES > ${i}
-   texCoords [${i}] = texCoord${i};
+      texCoords [${i}] = texCoord${i};
    #endif
+
    `) .join ("\n")}
 }
 
@@ -137,7 +139,8 @@ getTexture (const in int i, in vec3 texCoord)
 
    switch (i)
    {
-      ${[... Array (maxTextures) .keys ()] .map (i => /* glsl */`
+      ${[... Array (maxTextures) .keys ()] .map (i => /* glsl */ `
+
       #if X3D_NUM_TEXTURES > ${i}
       case ${i}:
       {
@@ -160,6 +163,7 @@ getTexture (const in int i, in vec3 texCoord)
          break;
       }
       #endif
+
       `) .join ("\n")}
    }
 
@@ -492,12 +496,14 @@ getTextureProjectorTexture (const in int i, const in vec2 texCoord)
 
    switch (i)
    {
-      ${[... Array (maxTextures) .keys ()] .map (i => /* glsl */`
+      ${[... Array (maxTextures) .keys ()] .map (i => /* glsl */ `
+
       #if X3D_NUM_TEXTURE_PROJECTORS > ${i}
       case ${i}:
          textureColor = texture (x3d_TextureProjectorTexture [${i}], texCoord);
          break;
       #endif
+
       `) .join ("\n")}
    }
 

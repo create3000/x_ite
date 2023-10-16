@@ -2219,7 +2219,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (X3DShapeNode
       // Create GL stuff.
 
       this .geometryBuffer  = this .createBuffer ();
-      this .texCoordBuffers = new Array (browser .getMaxTextures ()) .fill (this .geometryBuffer);
+      this .texCoordBuffers = new Array (browser .getMaxTexCoords ()) .fill (this .geometryBuffer);
 
       // Init fields.
       // Call order is very important at startup.

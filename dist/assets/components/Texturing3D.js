@@ -1,7 +1,7 @@
 /* X_ITE v9.0.0 */(() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 610:
+/***/ 296:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -38,7 +38,7 @@ var Ib=[cx,_q,cr,Yr,as,fs,hs,Hu,Su,cx,cx,cx,cx,cx,cx,cx];var Jb=[dx,si,gi,Wh,Kh,
 
 /***/ }),
 
-/***/ 581:
+/***/ 845:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var __dirname = "/";
@@ -72,7 +72,7 @@ var _a=[yj,od,ef,yj];var $a=[zj,Li,di,bi,Kb,Lb,Mb,Nb,Rc,Sc,Uc,jd,xd,Ye,lf,yd,zd,
 
 /***/ }),
 
-/***/ 598:
+/***/ 453:
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
 /*! dicom-parser - 1.8.12 - 2023-02-20 | (c) 2017 Chris Hafey | https://github.com/cornerstonejs/dicomParser */
@@ -4028,7 +4028,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_zlib__;
 
 /***/ }),
 
-/***/ 132:
+/***/ 374:
 /***/ ((module) => {
 
 /* -*- tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- /
@@ -5183,7 +5183,7 @@ function decode(jpegData, userOpts = {}) {
 
 /***/ }),
 
-/***/ 394:
+/***/ 880:
 /***/ ((module) => {
 
 (function(f){if(true){module.exports=f()}else { var g; }})(function(){var define,module,exports;return (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c=undefined;if(!f&&c)return require(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u=undefined,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
@@ -7170,10 +7170,6 @@ Object .assign (Object .setPrototypeOf (X3DTexture3DNode .prototype, (X3DSingleT
    {
       return 3;
    },
-   getTextureTypeString ()
-   {
-      return "3D";
-   },
    getWidth ()
    {
       return this .width;
@@ -7244,7 +7240,6 @@ Object .assign (Object .setPrototypeOf (X3DTexture3DNode .prototype, (X3DSingleT
       gl .activeTexture (gl .TEXTURE0 + textureUnit);
       gl .bindTexture (gl .TEXTURE_3D, this .getTexture ());
       gl .uniform1i (channel .texture3D, textureUnit);
-      gl .uniformMatrix4fv (channel .textureMatrix, false, this .getMatrix ());
    },
 });
 
@@ -7427,6 +7422,7 @@ Object .assign (Object .setPrototypeOf (ComposedTexture3D .prototype, Texturing3
          gl .bindFramebuffer (gl .FRAMEBUFFER, lastBuffer);
 
          this .setTransparent (textureNodes .some (textureNode => textureNode .isTransparent ()));
+         this .setLinear (textureNodes .some (textureNode => textureNode .isLinear ()));
          this .updateTextureParameters ();
 
          this ._loadState = (X3DConstants_default()).COMPLETE_STATE;
@@ -7949,11 +7945,11 @@ const NRRDParser_default_ = NRRDParser;
 Namespace_default().add ("NRRDParser", "x_ite/Browser/Texturing3D/NRRDParser", NRRDParser_default_);
 /* harmony default export */ const Texturing3D_NRRDParser = (NRRDParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Texturing3D/DICOMParser.js
-/* provided dependency */ var dicomParser = __webpack_require__(598);
-/* provided dependency */ var JpegImage = __webpack_require__(132);
-/* provided dependency */ var jpeg = __webpack_require__(394);
-/* provided dependency */ var CharLS = __webpack_require__(610);
-/* provided dependency */ var OpenJPEG = __webpack_require__(581);
+/* provided dependency */ var dicomParser = __webpack_require__(453);
+/* provided dependency */ var JpegImage = __webpack_require__(374);
+/* provided dependency */ var jpeg = __webpack_require__(880);
+/* provided dependency */ var CharLS = __webpack_require__(296);
+/* provided dependency */ var OpenJPEG = __webpack_require__(845);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -9184,6 +9180,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, Texturing3D_X
             {
                const internalType = this .getInternalType (nrrd .components);
 
+               this .setLinear (false);
                this .setTextureFromData (nrrd .width, nrrd .height, nrrd .depth, false, internalType, nrrd .data);
                this .setLoadState ((X3DConstants_default()).COMPLETE_STATE);
                return;
@@ -9195,6 +9192,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, Texturing3D_X
             {
                const internalType = this .getInternalType (dicom .components);
 
+               this .setLinear (false);
                this .setTextureFromData (dicom .width, dicom .height, dicom .depth, false, internalType, dicom .data);
                this .setLoadState ((X3DConstants_default()).COMPLETE_STATE);
                return;
@@ -9223,6 +9221,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, Texturing3D_X
       this .setHeight (texture .baseHeight);
       this .setDepth (texture .baseDepth); // TODO: Always 1
       this .setGenerateMipMaps (false);
+      this .setLinear (true);
       this .updateTextureParameters ();
 
       this .setLoadState ((X3DConstants_default()).COMPLETE_STATE);
