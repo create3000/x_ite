@@ -1,3 +1,5 @@
+const maxTexCoords = 4;
+
 export default /* glsl */ `
 // Uniforms
 
@@ -16,21 +18,11 @@ uniform mat4 x3d_ModelViewMatrix;
 
 #if ! defined (X3D_GEOMETRY_0D) && ! defined (X3D_GEOMETRY_1D)
    #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
-      #if X3D_NUM_TEXTURE_COORDINATES > 0
-         attribute vec4 x3d_TexCoord0;
+      ${[... Array (maxTexCoords) .keys ()] .map (i => /* glsl */`
+      #if X3D_NUM_TEXTURE_COORDINATES > ${i}
+         attribute vec4 x3d_TexCoord${i};
       #endif
-
-      #if X3D_NUM_TEXTURE_COORDINATES > 1
-         attribute vec4 x3d_TexCoord1;
-      #endif
-
-      #if X3D_NUM_TEXTURE_COORDINATES > 2
-         attribute vec4 x3d_TexCoord2;
-      #endif
-
-      #if X3D_NUM_TEXTURE_COORDINATES > 3
-         attribute vec4 x3d_TexCoord3;
-      #endif
+      `) .join ("\n")}
    #endif
 #endif
 
@@ -48,21 +40,11 @@ attribute vec4 x3d_Vertex;
 
 #if ! defined (X3D_GEOMETRY_0D) && ! defined (X3D_GEOMETRY_1D)
    #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
-      #if X3D_NUM_TEXTURE_COORDINATES > 0
-         varying vec4 texCoord0;
+      ${[... Array (maxTexCoords) .keys ()] .map (i => /* glsl */`
+      #if X3D_NUM_TEXTURE_COORDINATES > ${i}
+         varying vec4 texCoord${i};
       #endif
-
-      #if X3D_NUM_TEXTURE_COORDINATES > 1
-         varying vec4 texCoord1;
-      #endif
-
-      #if X3D_NUM_TEXTURE_COORDINATES > 2
-         varying vec4 texCoord2;
-      #endif
-
-      #if X3D_NUM_TEXTURE_COORDINATES > 3
-         varying vec4 texCoord3;
-      #endif
+      `) .join ("\n")}
    #endif
 #endif
 
@@ -115,21 +97,11 @@ vertex_main ()
 
    #if ! defined (X3D_GEOMETRY_0D) && ! defined (X3D_GEOMETRY_1D)
       #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
-         #if X3D_NUM_TEXTURE_COORDINATES > 0
-            texCoord0 = x3d_TexCoord0;
+         ${[... Array (maxTexCoords) .keys ()] .map (i => /* glsl */`
+         #if X3D_NUM_TEXTURE_COORDINATES > ${i}
+            texCoord${i} = x3d_TexCoord${i};
          #endif
-
-         #if X3D_NUM_TEXTURE_COORDINATES > 1
-            texCoord1 = x3d_TexCoord1;
-         #endif
-
-         #if X3D_NUM_TEXTURE_COORDINATES > 2
-            texCoord2 = x3d_TexCoord2;
-         #endif
-
-         #if X3D_NUM_TEXTURE_COORDINATES > 3
-            texCoord3 = x3d_TexCoord3;
-         #endif
+         `) .join ("\n")}
       #endif
    #endif
 

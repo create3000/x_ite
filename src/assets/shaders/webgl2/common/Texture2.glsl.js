@@ -1,3 +1,7 @@
+const
+   maxTexCoords = 4,
+   maxTextures  = 4;
+
 export default /* glsl */ `
 #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
 
@@ -8,18 +12,11 @@ vec4 texCoords [X3D_NUM_TEXTURE_COORDINATES];
 void
 setTexCoords ()
 {
-   #if X3D_NUM_TEXTURE_COORDINATES > 0
-   texCoords [0] = texCoord0;
+   ${[... Array (maxTexCoords) .keys ()] .map (i => /* glsl */`
+   #if X3D_NUM_TEXTURE_COORDINATES > ${i}
+   texCoords [${i}] = texCoord${i};
    #endif
-   #if X3D_NUM_TEXTURE_COORDINATES > 1
-   texCoords [1] = texCoord1;
-   #endif
-   #if X3D_NUM_TEXTURE_COORDINATES > 2
-   texCoords [2] = texCoord2;
-   #endif
-   #if X3D_NUM_TEXTURE_COORDINATES > 3
-   texCoords [3] = texCoord3;
-   #endif
+   `) .join ("\n")}
 }
 
 uniform mat4 x3d_TextureTransformMatrix [X3D_NUM_TEXTURE_TRANSFORMS];
@@ -128,8 +125,8 @@ getTexCoord (const in int textureTransformMapping, const in int textureCoordinat
 
 #if defined (X3D_TEXTURE)
 
-uniform sampler2D   x3d_Texture2D [X3D_NUM_TEXTURES];
-uniform sampler3D   x3d_Texture3D [X3D_NUM_TEXTURES];
+uniform sampler2D   x3d_Texture2D   [X3D_NUM_TEXTURES];
+uniform sampler3D   x3d_Texture3D   [X3D_NUM_TEXTURES];
 uniform samplerCube x3d_TextureCube [X3D_NUM_TEXTURES];
 
 #if defined (X3D_MULTI_TEXTURING)
@@ -140,94 +137,30 @@ getTexture (const in int i, in vec3 texCoord)
 
    switch (i)
    {
-      #if X3D_NUM_TEXTURES > 0
-      case 0:
+      ${[... Array (maxTextures) .keys ()] .map (i => /* glsl */`
+      #if X3D_NUM_TEXTURES > ${i}
+      case ${i}:
       {
-         #if defined (X3D_TEXTURE0_FLIP_Y)
+         #if defined (X3D_TEXTURE${i}_FLIP_Y)
             texCoord .t = 1.0 - texCoord .t;
          #endif
 
-         #if defined (X3D_TEXTURE0_2D)
-            textureColor = texture (x3d_Texture2D [0], texCoord .st);
-         #elif defined (X3D_TEXTURE0_3D)
-            textureColor = texture (x3d_Texture3D [0], texCoord .stp);
-         #elif defined (X3D_TEXTURE0_CUBE)
-            textureColor = texture (x3d_TextureCube [0], texCoord .stp);
+         #if defined (X3D_TEXTURE${i}_2D)
+            textureColor = texture (x3d_Texture2D [${i}], texCoord .st);
+         #elif defined (X3D_TEXTURE${i}_3D)
+            textureColor = texture (x3d_Texture3D [${i}], texCoord .stp);
+         #elif defined (X3D_TEXTURE${i}_CUBE)
+            textureColor = texture (x3d_TextureCube [${i}], texCoord .stp);
          #endif
 
-         #if defined (X3D_PHYSICAL_MATERIAL) && !defined (X3D_TEXTURE0_LINEAR)
+         #if defined (X3D_PHYSICAL_MATERIAL) && !defined (X3D_TEXTURE${i}_LINEAR)
             textureColor = sRGBToLinear (textureColor);
          #endif
 
          break;
       }
       #endif
-      #if X3D_NUM_TEXTURES > 1
-      case 1:
-      {
-         #if defined (X3D_TEXTURE1_FLIP_Y)
-            texCoord .t = 1.0 - texCoord .t;
-         #endif
-
-         #if defined (X3D_TEXTURE1_2D)
-            textureColor = texture (x3d_Texture2D [1], texCoord .st);
-         #elif defined (X3D_TEXTURE1_3D)
-            textureColor = texture (x3d_Texture3D [1], texCoord .stp);
-         #elif defined (X3D_TEXTURE1_CUBE)
-            textureColor = texture (x3d_TextureCube [1], texCoord .stp);
-         #endif
-
-         #if defined (X3D_PHYSICAL_MATERIAL) && !defined (X3D_TEXTURE1_LINEAR)
-            textureColor = sRGBToLinear (textureColor);
-         #endif
-
-         break;
-      }
-      #endif
-      #if X3D_NUM_TEXTURES > 2
-      case 2:
-      {
-         #if defined (X3D_TEXTURE2_FLIP_Y)
-            texCoord .t = 1.0 - texCoord .t;
-         #endif
-
-         #if defined (X3D_TEXTURE2_2D)
-            textureColor = texture (x3d_Texture2D [2], texCoord .st);
-         #elif defined (X3D_TEXTURE2_3D)
-            textureColor = texture (x3d_Texture3D [2], texCoord .stp);
-         #elif defined (X3D_TEXTURE2_CUBE)
-            textureColor = texture (x3d_TextureCube [2], texCoord .stp);
-         #endif
-
-         #if defined (X3D_PHYSICAL_MATERIAL) && !defined (X3D_TEXTURE2_LINEAR)
-            textureColor = sRGBToLinear (textureColor);
-         #endif
-
-         break;
-      }
-      #endif
-      #if X3D_NUM_TEXTURES > 3
-      case 3:
-      {
-         #if defined (X3D_TEXTURE3_FLIP_Y)
-            texCoord .t = 1.0 - texCoord .t;
-         #endif
-
-         #if defined (X3D_TEXTURE3_2D)
-            textureColor = texture (x3d_Texture2D [3], texCoord .st);
-         #elif defined (X3D_TEXTURE3_3D)
-            textureColor = texture (x3d_Texture3D [3], texCoord .stp);
-         #elif defined (X3D_TEXTURE3_CUBE)
-            textureColor = texture (x3d_TextureCube [3], texCoord .stp);
-         #endif
-
-         #if defined (X3D_PHYSICAL_MATERIAL) && !defined (X3D_TEXTURE3_LINEAR)
-            textureColor = sRGBToLinear (textureColor);
-         #endif
-
-         break;
-      }
-      #endif
+      `) .join ("\n")}
    }
 
    return textureColor;
@@ -559,26 +492,13 @@ getTextureProjectorTexture (const in int i, const in vec2 texCoord)
 
    switch (i)
    {
-      #if X3D_NUM_TEXTURE_PROJECTORS > 0
-      case 0:
-         textureColor = texture (x3d_TextureProjectorTexture [0], texCoord);
+      ${[... Array (maxTextures) .keys ()] .map (i => /* glsl */`
+      #if X3D_NUM_TEXTURE_PROJECTORS > ${i}
+      case ${i}:
+         textureColor = texture (x3d_TextureProjectorTexture [${i}], texCoord);
          break;
       #endif
-      #if X3D_NUM_TEXTURE_PROJECTORS > 1
-      case 1:
-         textureColor = texture (x3d_TextureProjectorTexture [1], texCoord);
-         break;
-      #endif
-      #if X3D_NUM_TEXTURE_PROJECTORS > 2
-      case 2:
-         textureColor = texture (x3d_TextureProjectorTexture [2], texCoord);
-         break;
-      #endif
-      #if X3D_NUM_TEXTURE_PROJECTORS > 3
-      case 3:
-         textureColor = texture (x3d_TextureProjectorTexture [3], texCoord);
-         break;
-      #endif
+      `) .join ("\n")}
    }
 
    return textureColor;

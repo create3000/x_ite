@@ -1,3 +1,8 @@
+const
+   maxTextureTransforms = 4,
+   maxTexCoords         = 4,
+   maxTextures          = 4;
+
 export default /* glsl */ `
 #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
 
@@ -11,25 +16,12 @@ getTextureMatrix (const in int i)
    #if X3D_NUM_TEXTURE_TRANSFORMS > 1
       mat4 textureTransformMatrix = mat4 (0.0);
 
-      #if X3D_NUM_TEXTURE_TRANSFORMS > 0
-      if (i == 0)
-         textureTransformMatrix = x3d_TextureTransformMatrix [0];
+      ${[... Array (maxTextureTransforms) .keys ()] .map (i => /* glsl */`
+      #if X3D_NUM_TEXTURE_TRANSFORMS > ${i}
+      ${i === 0 ? "" : "else"} if (i == ${i})
+         textureTransformMatrix = x3d_TextureTransformMatrix [${i}];
       #endif
-
-      #if X3D_NUM_TEXTURE_TRANSFORMS > 1
-      else if (i == 1)
-         textureTransformMatrix = x3d_TextureTransformMatrix [1];
-      #endif
-
-      #if X3D_NUM_TEXTURE_TRANSFORMS > 2
-      else if (i == 2)
-         textureTransformMatrix = x3d_TextureTransformMatrix [2];
-      #endif
-
-      #if X3D_NUM_TEXTURE_TRANSFORMS > 3
-      else if (i == 3)
-         textureTransformMatrix = x3d_TextureTransformMatrix [3];
-      #endif
+      `) .join ("\n")}
 
       return textureTransformMatrix;
    #else
@@ -43,25 +35,12 @@ getTexCoord (const in int i)
    #if X3D_NUM_TEXTURE_COORDINATES > 1
       vec4 texCoord = vec4 (0.0);
 
-      #if X3D_NUM_TEXTURE_COORDINATES > 0
-      if (i == 0)
-         texCoord = texCoord0;
+      ${[... Array (maxTexCoords) .keys ()] .map (i => /* glsl */`
+      #if X3D_NUM_TEXTURE_COORDINATES > ${i}
+      ${i === 0 ? "" : "else"} if (i == ${i})
+         texCoord = texCoord${i};
       #endif
-
-      #if X3D_NUM_TEXTURE_COORDINATES > 1
-      else if (i == 1)
-         texCoord = texCoord1;
-      #endif
-
-      #if X3D_NUM_TEXTURE_COORDINATES > 2
-      else if (i == 2)
-         texCoord = texCoord2;
-      #endif
-
-      #if X3D_NUM_TEXTURE_COORDINATES > 3
-      else if (i == 3)
-         texCoord = texCoord3;
-      #endif
+      `) .join ("\n")}
 
       return texCoord;
    #else
@@ -154,25 +133,12 @@ getTexCoord (const in int textureTransformMapping, const in int textureCoordinat
 {
    vec4 texCoord;
 
-   #if X3D_NUM_TEXTURE_COORDINATES > 0
-   if (textureCoordinateMapping == 0)
-      texCoord = getTexCoord (x3d_TextureCoordinateGenerator [0], textureTransformMapping, textureCoordinateMapping);
+   ${[... Array (maxTexCoords) .keys ()] .map (i => /* glsl */`
+   #if X3D_NUM_TEXTURE_COORDINATES > ${i}
+   ${i === 0 ? "" : "else"} if (textureCoordinateMapping == ${i})
+      texCoord = getTexCoord (x3d_TextureCoordinateGenerator [${i}], textureTransformMapping, textureCoordinateMapping);
    #endif
-
-   #if X3D_NUM_TEXTURE_COORDINATES > 1
-   else if (textureCoordinateMapping == 1)
-      texCoord = getTexCoord (x3d_TextureCoordinateGenerator [1], textureTransformMapping, textureCoordinateMapping);
-   #endif
-
-   #if X3D_NUM_TEXTURE_COORDINATES > 2
-   else if (textureCoordinateMapping == 2)
-      texCoord = getTexCoord (x3d_TextureCoordinateGenerator [2], textureTransformMapping, textureCoordinateMapping);
-   #endif
-
-   #if X3D_NUM_TEXTURE_COORDINATES > 3
-   else if (textureCoordinateMapping == 3)
-      texCoord = getTexCoord (x3d_TextureCoordinateGenerator [3], textureTransformMapping, textureCoordinateMapping);
-   #endif
+   `) .join ("\n")}
 
    #if defined (X3D_GEOMETRY_2D)
       if (gl_FrontFacing == false)
@@ -186,7 +152,7 @@ getTexCoord (const in int textureTransformMapping, const in int textureCoordinat
 
 #if defined (X3D_TEXTURE)
 
-uniform sampler2D   x3d_Texture2D [X3D_NUM_TEXTURES];
+uniform sampler2D   x3d_Texture2D   [X3D_NUM_TEXTURES];
 uniform samplerCube x3d_TextureCube [X3D_NUM_TEXTURES];
 
 #if defined (X3D_MULTI_TEXTURING)
@@ -195,81 +161,26 @@ getTexture (const in int i, in vec3 texCoord)
 {
    vec4 textureColor = vec4 (1.0);
 
-   #if X3D_NUM_TEXTURES > 0
-   if (i == 0)
+   ${[... Array (maxTextures) .keys ()] .map (i => /* glsl */`
+   #if X3D_NUM_TEXTURES > ${i}
+   ${i === 0 ? "" : "else"} if (i == ${i})
    {
-      #if defined (X3D_TEXTURE0_FLIP_Y)
+      #if defined (X3D_TEXTURE${i}_FLIP_Y)
          texCoord .t = 1.0 - texCoord .t;
       #endif
 
-      #if defined (X3D_TEXTURE0_2D)
-         textureColor = texture2D (x3d_Texture2D [0], texCoord .st);
-      #elif defined (X3D_TEXTURE0_CUBE)
-         textureColor = textureCube (x3d_TextureCube [0], texCoord .stp);
+      #if defined (X3D_TEXTURE${i}_2D)
+         textureColor = texture2D (x3d_Texture2D [${i}], texCoord .st);
+      #elif defined (X3D_TEXTURE${i}_CUBE)
+         textureColor = textureCube (x3d_TextureCube [${i}], texCoord .stp);
       #endif
 
-      #if defined (X3D_PHYSICAL_MATERIAL) && !defined (X3D_TEXTURE0_LINEAR)
+      #if defined (X3D_PHYSICAL_MATERIAL) && !defined (X3D_TEXTURE${i}_LINEAR)
          textureColor = sRGBToLinear (textureColor);
       #endif
    }
    #endif
-
-   #if X3D_NUM_TEXTURES > 1
-   else if (i == 1)
-   {
-      #if defined (X3D_TEXTURE1_FLIP_Y)
-         texCoord .t = 1.0 - texCoord .t;
-      #endif
-
-      #if defined (X3D_TEXTURE1_2D)
-         textureColor = texture2D (x3d_Texture2D [1], texCoord .st);
-      #elif defined (X3D_TEXTURE1_CUBE)
-         textureColor = textureCube (x3d_TextureCube [1], texCoord .stp);
-      #endif
-
-      #if defined (X3D_PHYSICAL_MATERIAL) && !defined (X3D_TEXTURE1_LINEAR)
-         textureColor = sRGBToLinear (textureColor);
-      #endif
-   }
-   #endif
-
-   #if X3D_NUM_TEXTURES > 2
-   else if (i == 2)
-   {
-      #if defined (X3D_TEXTURE2_FLIP_Y)
-         texCoord .t = 1.0 - texCoord .t;
-      #endif
-
-      #if defined (X3D_TEXTURE2_2D)
-         textureColor = texture2D (x3d_Texture2D [2], texCoord .st);
-      #elif defined (X3D_TEXTURE2_CUBE)
-         textureColor = textureCube (x3d_TextureCube [2], texCoord .stp);
-      #endif
-
-      #if defined (X3D_PHYSICAL_MATERIAL) && !defined (X3D_TEXTURE2_LINEAR)
-         textureColor = sRGBToLinear (textureColor);
-      #endif
-   }
-   #endif
-
-   #if X3D_NUM_TEXTURES > 3
-   else if (i == 3)
-   {
-      #if defined (X3D_TEXTURE3_FLIP_Y)
-         texCoord .t = 1.0 - texCoord .t;
-      #endif
-
-      #if defined (X3D_TEXTURE3_2D)
-         textureColor = texture2D (x3d_Texture2D [3], texCoord .st);
-      #elif defined (X3D_TEXTURE3_CUBE)
-         textureColor = textureCube (x3d_TextureCube [3], texCoord .stp);
-      #endif
-
-      #if defined (X3D_PHYSICAL_MATERIAL) && !defined (X3D_TEXTURE3_LINEAR)
-         textureColor = sRGBToLinear (textureColor);
-      #endif
-   }
-   #endif
+   `) .join ("\n")}
 
    return textureColor;
 }
@@ -545,33 +456,14 @@ getTextureProjectorTexture (const in int i, const in vec2 texCoord)
 {
    vec4 textureColor = vec4 (1.0);
 
-   #if X3D_NUM_TEXTURE_PROJECTORS > 0
-   if (i == 0)
+   ${[... Array (maxTextures) .keys ()] .map (i => /* glsl */`
+   #if X3D_NUM_TEXTURE_PROJECTORS > ${i}
+   ${i === 0 ? "" : "else"} if (i == ${i})
    {
-      textureColor = texture2D (x3d_TextureProjectorTexture [0], texCoord);
+      textureColor = texture2D (x3d_TextureProjectorTexture [${i}], texCoord);
    }
    #endif
-
-   #if X3D_NUM_TEXTURE_PROJECTORS > 1
-   else if (i == 1)
-   {
-      textureColor = texture2D (x3d_TextureProjectorTexture [1], texCoord);
-   }
-   #endif
-
-   #if X3D_NUM_TEXTURE_PROJECTORS > 2
-   else if (i == 2)
-   {
-      textureColor = texture2D (x3d_TextureProjectorTexture [2], texCoord);
-   }
-   #endif
-
-   #if X3D_NUM_TEXTURE_PROJECTORS > 3
-   else if (i == 3)
-   {
-      textureColor = texture2D (x3d_TextureProjectorTexture [3], texCoord);
-   }
-   #endif
+   `) .join ("\n")}
 
    return textureColor;
 }

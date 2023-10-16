@@ -1,3 +1,5 @@
+const maxTexCoords = 4;
+
 export default /* glsl */ `
 #if defined (X3D_ALPHA_MODE_MASK)
    uniform float x3d_AlphaCutoff;
@@ -13,39 +15,19 @@ export default /* glsl */ `
 
 #if ! defined (X3D_GEOMETRY_0D) && ! defined (X3D_GEOMETRY_1D)
    #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
-      #if X3D_NUM_TEXTURE_COORDINATES > 0
-         in vec4 texCoord0;
+      ${[... Array (maxTexCoords) .keys ()] .map (i => /* glsl */`
+      #if X3D_NUM_TEXTURE_COORDINATES > ${i}
+         in vec4 texCoord${i};
       #endif
-
-      #if X3D_NUM_TEXTURE_COORDINATES > 1
-         in vec4 texCoord1;
-      #endif
-
-      #if X3D_NUM_TEXTURE_COORDINATES > 2
-         in vec4 texCoord2;
-      #endif
-
-      #if X3D_NUM_TEXTURE_COORDINATES > 3
-         in vec4 texCoord3;
-      #endif
+      `) .join ("\n")}
    #endif
 #else
    #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
-      #if X3D_NUM_TEXTURE_COORDINATES > 0
-         vec4 texCoord0 = vec4 (0.0, 0.0, 0.0, 1.0);
+      ${[... Array (maxTexCoords) .keys ()] .map (i => /* glsl */`
+      #if X3D_NUM_TEXTURE_COORDINATES > ${i}
+         vec4 texCoord${i} = vec4 (0.0, 0.0, 0.0, 1.0);
       #endif
-
-      #if X3D_NUM_TEXTURE_COORDINATES > 1
-         vec4 texCoord1 = vec4 (0.0, 0.0, 0.0, 1.0);
-      #endif
-
-      #if X3D_NUM_TEXTURE_COORDINATES > 2
-         vec4 texCoord2 = vec4 (0.0, 0.0, 0.0, 1.0);
-      #endif
-
-      #if X3D_NUM_TEXTURE_COORDINATES > 3
-         vec4 texCoord3 = vec4 (0.0, 0.0, 0.0, 1.0);
-      #endif
+      `) .join ("\n")}
    #endif
 #endif
 
