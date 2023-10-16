@@ -162,9 +162,14 @@ Object .assign (TextureProjectorParallelContainer .prototype,
       if (shaderObject .hasTextureProjector (i, this))
          return;
 
+      const
+         nearDistance = lightNode ._nearDistance .getValue (),
+         farDistance  = lightNode ._farDistance .getValue ();
+
       gl .uniform3f        (shaderObject .x3d_TextureProjectorColor [i],         ... lightNode .getColor ());
       gl .uniform1f        (shaderObject .x3d_TextureProjectorIntensity [i],     lightNode .getIntensity ());
       gl .uniform3fv       (shaderObject .x3d_TextureProjectorLocation [i],      this .locationArray);
+      gl .uniform2f        (shaderObject .x3d_TextureProjectorLimits [i],        nearDistance, farDistance);
       gl .uniformMatrix4fv (shaderObject .x3d_TextureProjectorMatrix [i], false, this .matrixArray);
    },
    dispose ()
