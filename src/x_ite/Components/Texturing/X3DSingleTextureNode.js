@@ -57,7 +57,7 @@ function X3DSingleTextureNode (executionContext)
 
    this .addType (X3DConstants .X3DSingleTextureNode);
 
-   this .addChildObjects (X3DConstants .inputOutput, "linear", new Fields .SFBool ())
+   this .addChildObjects (X3DConstants .outputOnly, "linear", new Fields .SFBool ())
 
    this .levels          = 1;
    this .generateMipMaps = true;
