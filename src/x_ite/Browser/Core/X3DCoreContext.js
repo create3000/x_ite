@@ -652,7 +652,7 @@ Object .assign (X3DCoreContext .prototype,
                if (!viewpoint)
                   break;
 
-               const vp = this .getPrivateScene () .createNode (viewpoint .getTypeName ());
+               const vp = this .getExecutionContext () .createNode (viewpoint .getTypeName ());
 
                switch (viewpoint .getTypeName ())
                {
@@ -697,14 +697,16 @@ Object .assign (X3DCoreContext .prototype,
                   }
                }
 
+               const options = { scene: this .getExecutionContext () };
+
                let text;
 
                switch (this .getExecutionContext () .getEncoding ())
                {
                   case "ASCII":
-                  case "VRML": text = vp .toVRMLString (); break;
-                  case "JSON": text = vp .toJSONString (); break;
-                  default:     text = vp .toXMLString ();  break;
+                  case "VRML": text = vp .toVRMLString (options); break;
+                  case "JSON": text = vp .toJSONString (options); break;
+                  default:     text = vp .toXMLString  (options); break;
                }
 
                text += "\n";
