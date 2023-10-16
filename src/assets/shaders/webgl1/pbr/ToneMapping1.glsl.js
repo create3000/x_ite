@@ -21,15 +21,15 @@ linearTosRGB (const in vec4 color)
 // sRGB to linear approximation
 // see http://chilliant.blogspot.com/2012/08/srgb-approximations-for-hlsl.html
 vec3
-sRGBToLinear (const in vec3 srgbIn)
+sRGBToLinear (const in vec3 color)
 {
-   return vec3 (pow (srgbIn .xyz, vec3 (GAMMA)));
+   return vec3 (pow (color, vec3 (GAMMA)));
 }
 
 vec4
-sRGBToLinear (const in vec4 srgbIn)
+sRGBToLinear (const in vec4 color)
 {
-   return vec4 (sRGBToLinear (srgbIn .xyz), srgbIn .w);
+   return vec4 (sRGBToLinear (color .rgb), color .a);
 }
 
 #if defined (X3D_TONEMAP_ACES_NARKOWICZ)
