@@ -438,7 +438,7 @@ getTextureColor (const in vec4 diffuseColor, const in vec4 specularColor)
 uniform vec3      x3d_TextureProjectorColor     [X3D_NUM_TEXTURE_PROJECTORS];
 uniform float     x3d_TextureProjectorIntensity [X3D_NUM_TEXTURE_PROJECTORS];
 uniform vec3      x3d_TextureProjectorLocation  [X3D_NUM_TEXTURE_PROJECTORS];
-uniform vec3      x3d_TextureProjectorLimits    [X3D_NUM_TEXTURE_PROJECTORS]; // near, far, linear
+uniform vec3      x3d_TextureProjectorParams    [X3D_NUM_TEXTURE_PROJECTORS]; // near, far, linear
 uniform mat4      x3d_TextureProjectorMatrix    [X3D_NUM_TEXTURE_PROJECTORS];
 uniform sampler2D x3d_TextureProjectorTexture   [X3D_NUM_TEXTURE_PROJECTORS];
 
@@ -480,8 +480,8 @@ getTextureProjectorColor ()
       if (texCoord .t < 0.0 || texCoord .t > 1.0)
          continue;
 
-      if ((texCoord .p < 0.0 && x3d_TextureProjectorLimits [i] .x >= 0.0) ||
-          (texCoord .p > 1.0 && x3d_TextureProjectorLimits [i] .y >= 0.0))
+      if ((texCoord .p < 0.0 && x3d_TextureProjectorParams [i] .x >= 0.0) ||
+          (texCoord .p > 1.0 && x3d_TextureProjectorParams [i] .y >= 0.0))
          continue;
 
       // We do not need to normalize p, as we only need the sign of the dot product.
@@ -493,10 +493,10 @@ getTextureProjectorColor ()
       vec4 T = getTextureProjectorTexture (i, texCoord .st);
 
       #if defined (X3D_PHYSICAL_MATERIAL)
-         if (!bool (x3d_TextureProjectorLimits [i] .z))
+         if (!bool (x3d_TextureProjectorParams [i] .z))
             T = sRGBToLinear (T);
       #else
-         if (bool (x3d_TextureProjectorLimits [i] .z))
+         if (bool (x3d_TextureProjectorParams [i] .z))
             T = linearTosRGB (T);
       #endif
 
