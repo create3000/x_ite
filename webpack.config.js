@@ -86,11 +86,16 @@ export default __default__;`;
                            .replace (/\s*([(){}\[\],;=<>!+\-*\/&|?:\.])\s*/sg, "$1")
                            .replace (/(#.*?)__PREPROCESSOR__\s*/sg, "$1\n")
                            .replace (/(.)#/sg, "$1\n#")
-                           .replace (/^\s+/s, "")
+                           .replace (/^\s+/mg, "")
                            .replace (/$/, "\n")
                            .replace (/(\})\s+$/s, "$1")
                            .replace (/\n+/sg, "\n")
-                           .replace (/__EXPRESSION(\d+)__/sg, (_, i) => `\n${e [i]}\n`) + "`"
+                           .replace (/__EXPRESSION(\d+)__/sg, (_, i) =>
+                           {
+                              return `\n${e [i]
+                                 .replace (/^\s+/mg, "")
+                                 .replace (/\n+/sg, "\n")}\n`
+                           }) + "`"
                      },
                   },
                ],
