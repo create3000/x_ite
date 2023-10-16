@@ -180,7 +180,7 @@ getEmissiveColor ()
 {
    // Get emissive parameter.
 
-   vec3 emissiveParameter = x3d_Material .emissiveColor;
+   vec3 emissiveColor = x3d_Material .emissiveColor;
 
    // Get texture color.
 
@@ -200,13 +200,13 @@ getEmissiveColor ()
       #endif
 
       #if defined (X3D_EMISSIVE_TEXTURE_LINEAR)
-         emissiveParameter *= textureColor;
+         emissiveColor *= textureColor;
       #else
-         emissiveParameter *= sRGBToLinear (textureColor);
+         emissiveColor *= sRGBToLinear (textureColor);
       #endif
    #endif
 
-   return emissiveParameter .rgb;
+   return emissiveColor .rgb;
 }
 
 #if defined (X3D_OCCLUSION_TEXTURE)

@@ -25,24 +25,24 @@ getMaterialColor (const in vec3 N,
    float alpha = 1.0 - x3d_Material .transparency;
 
    #if defined (X3D_COLOR_MATERIAL)
-      vec4 diffuseParameter = vec4 (color .rgb, color .a * alpha);
+      vec4 diffuseColor = vec4 (color .rgb, color .a * alpha);
    #else
-      vec4 diffuseParameter = vec4 (x3d_Material .diffuseColor, alpha);
+      vec4 diffuseColor = vec4 (x3d_Material .diffuseColor, alpha);
    #endif
 
    // Get material color.
 
-   vec3 ambientColor = diffuseParameter .rgb * material .ambientIntensity;
+   vec3 ambientColor = diffuseColor .rgb * material .ambientIntensity;
 
    #if defined (X3D_LIGHTING)
-      vec3 finalColor = getMaterialColor (vertex, N, ambientColor, diffuseParameter .rgb, material .specularColor, material .shininess);
+      vec3 finalColor = getMaterialColor (vertex, N, ambientColor, diffuseColor .rgb, material .specularColor, material .shininess);
    #else
       vec3 finalColor = vec3 (0.0);
    #endif
 
    finalColor += material .emissiveColor;
 
-   return vec4 (finalColor, diffuseParameter .a);
+   return vec4 (finalColor, diffuseColor .a);
 }
 
 void

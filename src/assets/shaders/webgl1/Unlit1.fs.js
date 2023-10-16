@@ -23,9 +23,9 @@ getEmissiveColor ()
    float alpha = 1.0 - x3d_Material .transparency;
 
    #if defined (X3D_COLOR_MATERIAL)
-      vec4 emissiveParameter = vec4 (color .rgb, color .a * alpha);
+      vec4 emissiveColor = vec4 (color .rgb, color .a * alpha);
    #else
-      vec4 emissiveParameter = vec4 (x3d_Material .emissiveColor, alpha);
+      vec4 emissiveColor = vec4 (x3d_Material .emissiveColor, alpha);
    #endif
 
    // Get texture color.
@@ -44,15 +44,15 @@ getEmissiveColor ()
       #endif
 
       #if defined (X3D_EMISSIVE_TEXTURE_LINEAR)
-         emissiveParameter *= linearTosRGB (textureColor);
+         emissiveColor *= linearTosRGB (textureColor);
       #else
-         emissiveParameter *= textureColor;
+         emissiveColor *= textureColor;
       #endif
    #elif defined (X3D_TEXTURE)
-      emissiveParameter = getTextureColor (emissiveParameter, vec4 (vec3 (1.0), alpha));
+      emissiveColor = getTextureColor (emissiveColor, vec4 (vec3 (1.0), alpha));
    #endif
 
-   return emissiveParameter;
+   return emissiveColor;
 }
 
 vec4

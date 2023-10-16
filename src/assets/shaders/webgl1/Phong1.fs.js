@@ -21,7 +21,7 @@ getAmbientColor (const in vec3 diffuseColor)
 {
    // Get ambient parameter.
 
-   vec3 ambientParameter = x3d_Material .ambientIntensity * diffuseColor;
+   vec3 ambientColor = x3d_Material .ambientIntensity * diffuseColor;
 
    // Get texture color.
 
@@ -39,12 +39,12 @@ getAmbientColor (const in vec3 diffuseColor)
       #endif
 
       #if defined (X3D_AMBIENT_TEXTURE_LINEAR)
-         ambientParameter *= linearTosRGB (textureColor);
+         ambientColor *= linearTosRGB (textureColor);
       #else
-         ambientParameter *= textureColor;
+         ambientColor *= textureColor;
       #endif
    #else
-      return ambientParameter;
+      return ambientColor;
    #endif
 }
 
@@ -60,9 +60,9 @@ getDiffuseColor ()
    float alpha = 1.0 - x3d_Material .transparency;
 
    #if defined (X3D_COLOR_MATERIAL)
-      vec4 diffuseParameter = vec4 (color .rgb, color .a * alpha);
+      vec4 diffuseColor = vec4 (color .rgb, color .a * alpha);
    #else
-      vec4 diffuseParameter = vec4 (x3d_Material .diffuseColor, alpha);
+      vec4 diffuseColor = vec4 (x3d_Material .diffuseColor, alpha);
    #endif
 
    // Get texture color.
@@ -81,15 +81,15 @@ getDiffuseColor ()
       #endif
 
       #if defined (X3D_DIFFUSE_TEXTURE_LINEAR)
-         diffuseParameter *= linearTosRGB (textureColor);
+         diffuseColor *= linearTosRGB (textureColor);
       #else
-         diffuseParameter *= textureColor;
+         diffuseColor *= textureColor;
       #endif
    #elif defined (X3D_TEXTURE)
-      diffuseParameter = getTextureColor (diffuseParameter, vec4 (x3d_Material .specularColor, alpha));
+      diffuseColor = getTextureColor (diffuseColor, vec4 (x3d_Material .specularColor, alpha));
    #endif
 
-   return diffuseParameter;
+   return diffuseColor;
 }
 
 #if defined (X3D_SPECULAR_TEXTURE)
@@ -101,7 +101,7 @@ getSpecularColor ()
 {
    // Get specular parameter.
 
-   vec3 specularParameter = x3d_Material .specularColor;
+   vec3 specularColor = x3d_Material .specularColor;
 
    // Get texture color.
 
@@ -119,13 +119,13 @@ getSpecularColor ()
       #endif
 
       #if defined (X3D_SPECULAR_TEXTURE_LINEAR)
-         specularParameter *= linearTosRGB (textureColor);
+         specularColor *= linearTosRGB (textureColor);
       #else
-         specularParameter *= textureColor;
+         specularColor *= textureColor;
       #endif
    #endif
 
-   return specularParameter;
+   return specularColor;
 }
 
 #if defined (X3D_EMISSIVE_TEXTURE)
@@ -137,7 +137,7 @@ getEmissiveColor ()
 {
    // Get emissive parameter.
 
-   vec3 emissiveParameter = x3d_Material .emissiveColor;
+   vec3 emissiveColor = x3d_Material .emissiveColor;
 
    // Get texture color.
 
@@ -155,13 +155,13 @@ getEmissiveColor ()
       #endif
 
       #if defined (X3D_EMISSIVE_TEXTURE_LINEAR)
-         emissiveParameter *= linearTosRGB (textureColor);
+         emissiveColor *= linearTosRGB (textureColor);
       #else
-         emissiveParameter *= textureColor;
+         emissiveColor *= textureColor;
       #endif
    #endif
 
-   return emissiveParameter;
+   return emissiveColor;
 }
 
 #if defined (X3D_SHININESS_TEXTURE)
