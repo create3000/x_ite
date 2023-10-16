@@ -6,9 +6,6 @@ configure:
 	cd docs && bundle install
 	cd tests && npm install
 
-compile:
-	npx webpack
-
 .SILENT:copy-files
 copy-files:
 	rsync -q -r -x -c -v -t --progress --delete src/assets/fonts    dist/assets/
@@ -17,6 +14,9 @@ copy-files:
 	rsync -q -r -x -c -v -t --progress --delete src/assets/lib      dist/assets/
 	rsync -q -r -x -c -v -t --progress --delete src/assets/linetype dist/assets/
 	cp src/example.html dist/
+
+compile:
+	npx webpack
 
 .SILENT:html
 html:
@@ -46,7 +46,7 @@ zip:
 
 .PHONY: dist
 .SILENT:dist
-dist: compile copy-files html min-size
+dist: copy-files compile html min-size
 	du -h dist/x_ite.min.js
 
 checkout-dist:

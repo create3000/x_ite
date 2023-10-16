@@ -1,13 +1,21 @@
 const
-   webpack = require ("webpack"),
-   madge   = require ("madge"),
-   path    = require ("path"),
-   fs      = require ("fs")
+   webpack  = require ("webpack"),
+   madge    = require ("madge"),
+   path     = require ("path"),
+   fs       = require ("fs"),
+   { exec } = require ("child_process");
+
+for (const filename of fs .readdirSync ("./src/assets/lib/") .filter (filename => filename .match (/\.js$/)))
+{
+   console .log (`Compressing ${filename} ...`);
+
+   exec (`terser -c -m -p bare_returns -o ./dist/assets/lib/${filename} ./src/assets/lib/${filename}`);
+}
 
 const
    TerserPlugin           = require ("terser-webpack-plugin"),
    WebpackShellPluginNext = require ("webpack-shell-plugin-next"),
-   StringReplacePlugin    = require ("string-replace-webpack-plugin")
+   StringReplacePlugin    = require ("string-replace-webpack-plugin");
 
 module .exports = async () =>
 {

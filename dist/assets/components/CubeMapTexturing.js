@@ -1205,6 +1205,8 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapT
 
       if (this .URL .pathname .match (/\.ktx2?(?:\.gz)?$/))
       {
+         this .setLinear (true);
+
          this .getBrowser () .getKTXDecoder ()
             .then (decoder => decoder .loadKTXFromURL (this .URL))
             .then (texture => this .setKTXTexture (texture))
@@ -1212,6 +1214,8 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapT
       }
       else
       {
+         this .setLinear (false);
+
          this .image .attr ("src", this .URL .href);
       }
    },
@@ -1240,7 +1244,6 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapT
          this .setLevels (texture .levels);
          this .setSize (texture .baseWidth);
          this .setGenerateMipMaps (false);
-         this .setLinear (false);
          this .updateTextureParameters ();
 
          this .setLoadState ((X3DConstants_default()).COMPLETE_STATE);
@@ -1270,7 +1273,6 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapT
             this .panoramaToCubeMap ();
 
          this .setGenerateMipMaps (true);
-         this .setLinear (true);
          this .updateTextureParameters ();
 
          // Update load state.
