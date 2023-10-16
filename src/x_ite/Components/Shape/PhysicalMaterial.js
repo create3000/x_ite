@@ -86,6 +86,31 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
       this .set_occlusionTexture__ ();
       this .set_transparent__ ();
    },
+   getMaterialKey ()
+   {
+      return "3";
+   },
+   getTextureIndices: (() =>
+   {
+      let i = 0;
+
+      const textureIndices = {
+         EMISSIVE_TEXTURE: i ++,
+         NORMAL_TEXTURE: i ++,
+         BASE_TEXTURE: i ++,
+         METALLIC_ROUGHNESS_TEXTURE: i ++,
+         OCCLUSION_TEXTURE: i ++,
+      };
+
+      return function ()
+      {
+         return textureIndices;
+      };
+   })(),
+   getBaseTexture ()
+   {
+      return this .baseTextureNode;
+   },
    set_baseColor__ ()
    {
       //We cannot use this in Windows Edge:
@@ -146,31 +171,6 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
    set_transparent__ ()
    {
       this .setTransparent (!!(this .getTransparency () || this .baseTextureNode ?.isTransparent ()));
-   },
-   getBaseTexture ()
-   {
-      return this .baseTextureNode;
-   },
-   getTextureIndices: (() =>
-   {
-      let i = 0;
-
-      const textureIndices = {
-         EMISSIVE_TEXTURE: i ++,
-         NORMAL_TEXTURE: i ++,
-         BASE_TEXTURE: i ++,
-         METALLIC_ROUGHNESS_TEXTURE: i ++,
-         OCCLUSION_TEXTURE: i ++,
-      };
-
-      return function ()
-      {
-         return textureIndices;
-      };
-   })(),
-   getMaterialKey ()
-   {
-      return "3";
    },
    createShader (key, geometryContext, renderContext)
    {

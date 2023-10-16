@@ -219,8 +219,8 @@ Object .assign (Object .setPrototypeOf (TwoSidedMaterial .prototype, X3DMaterial
    {
       this .setTransparent (!!(this ._transparency .getValue () || (this ._separateBackColor .getValue () && this ._backTransparency .getValue ())));
    },
-   getBaseTexture: Material .prototype .getBaseTexture,
    getMaterialKey: Material .prototype .getMaterialKey,
+   getBaseTexture: Material .prototype .getBaseTexture,
    createShader: Material .prototype .createShader,
    setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping, front)
    {

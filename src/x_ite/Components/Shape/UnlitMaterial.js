@@ -68,24 +68,36 @@ Object .assign (Object .setPrototypeOf (UnlitMaterial .prototype, X3DOneSidedMat
 
       this .set_transparent__ ();
    },
+   getMaterialKey ()
+   {
+      return "0";
+   },
+   getTextureIndices: (() =>
+   {
+      let i = 0;
+
+      const textureIndices = {
+         EMISSIVE_TEXTURE: i ++,
+         NORMAL_TEXTURE: i ++,
+      };
+
+      return function ()
+      {
+         return textureIndices;
+      };
+   })(),
    set_emissiveTexture__ ()
    {
-      if (this .getEmissiveTexture ())
-         this .getEmissiveTexture () ._transparent .removeInterest ("set_transparent__", this);
+      this .getEmissiveTexture () ?._transparent .removeInterest ("set_transparent__", this);
 
       X3DOneSidedMaterialNode .prototype .set_emissiveTexture__ .call (this);
 
-      if (this .getEmissiveTexture ())
-         this .getEmissiveTexture () ._transparent .addInterest ("set_transparent__", this);
+      this .getEmissiveTexture () ?._transparent .addInterest ("set_transparent__", this);
    },
    set_transparent__ ()
    {
       this .setTransparent (!!(this .getTransparency () ||
                                this .getEmissiveTexture () ?.isTransparent ()));
-   },
-   getMaterialKey ()
-   {
-      return "0";
    },
    createShader (key, geometryContext, renderContext)
    {

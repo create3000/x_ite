@@ -97,6 +97,33 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
       this .set_occlusionTexture__ ();
       this .set_transparent__ ();
    },
+   getMaterialKey ()
+   {
+      return "2";
+   },
+   getTextureIndices: (() =>
+   {
+      let i = 0;
+
+      const textureIndices = {
+         EMISSIVE_TEXTURE: i ++,
+         NORMAL_TEXTURE: i ++,
+         AMBIENT_TEXTURE: i ++,
+         DIFFUSE_TEXTURE: i ++,
+         SPECULAR_TEXTURE: i ++,
+         SHININESS_TEXTURE: i ++,
+         OCCLUSION_TEXTURE: i ++,
+      };
+
+      return function ()
+      {
+         return textureIndices;
+      };
+   })(),
+   getBaseTexture ()
+   {
+      return this .diffuseTexture;
+   },
    set_ambientIntensity__ ()
    {
       this .ambientIntensity = Algorithm .clamp (this ._ambientIntensity .getValue (), 0, 1);
@@ -194,33 +221,6 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
    set_transparent__ ()
    {
       this .setTransparent (!!(this .getTransparency () || this .diffuseTextureNode ?.isTransparent ()));
-   },
-   getBaseTexture ()
-   {
-      return this .diffuseTexture;
-   },
-   getTextureIndices: (() =>
-   {
-      let i = 0;
-
-      const textureIndices = {
-         EMISSIVE_TEXTURE: i ++,
-         NORMAL_TEXTURE: i ++,
-         AMBIENT_TEXTURE: i ++,
-         DIFFUSE_TEXTURE: i ++,
-         SPECULAR_TEXTURE: i ++,
-         SHININESS_TEXTURE: i ++,
-         OCCLUSION_TEXTURE: i ++,
-      };
-
-      return function ()
-      {
-         return textureIndices;
-      };
-   })(),
-   getMaterialKey ()
-   {
-      return "2";
    },
    createShader (key, geometryContext, renderContext)
    {
