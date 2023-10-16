@@ -52,7 +52,7 @@ import TextureQuality    from "../Core/TextureQuality.js";
 import KTXDecoder        from "./KTXDecoder.js";
 import URLs              from "../Networking/URLs.js";
 
-import { maxTextureTransforms, maxTexCoords, maxTextures } from "./TextureLimits.js";
+import { maxTextureTransforms, maxTexCoords, maxTextures } from "./TexturingConfiguration.js";
 
 const
    _maxTextures              = Symbol (),

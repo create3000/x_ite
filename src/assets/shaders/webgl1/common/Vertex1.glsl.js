@@ -1,4 +1,4 @@
-import { maxTexCoords } from "../../../../x_ite/Browser/Texturing/TextureLimits.js";
+import { maxTexCoords } from "../../../../x_ite/Browser/Texturing/TexturingConfiguration.js";
 
 export default /* glsl */ `
 // Uniforms
