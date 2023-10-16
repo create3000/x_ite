@@ -16,7 +16,7 @@ getTextureMatrix (const in int i)
    #if X3D_NUM_TEXTURE_TRANSFORMS > 1
       mat4 textureTransformMatrix = mat4 (0.0);
 
-      ${[... Array (maxTextureTransforms) .keys ()] .map (i => /* glsl */ `
+      ${Array .from ({ length: maxTextureTransforms }, (_, i) => /* glsl */ `
 
       #if X3D_NUM_TEXTURE_TRANSFORMS > ${i}
          ${i === 0 ? "" : "else"} if (i == ${i})
@@ -37,7 +37,7 @@ getTexCoord (const in int i)
    #if X3D_NUM_TEXTURE_COORDINATES > 1
       vec4 texCoord = vec4 (0.0);
 
-      ${[... Array (maxTexCoords) .keys ()] .map (i => /* glsl */ `
+      ${Array .from ({ length: maxTexCoords }, (_, i) => /* glsl */ `
 
       #if X3D_NUM_TEXTURE_COORDINATES > ${i}
       ${i === 0 ? "" : "else"} if (i == ${i})
@@ -137,7 +137,7 @@ getTexCoord (const in int textureTransformMapping, const in int textureCoordinat
 {
    vec4 texCoord;
 
-   ${[... Array (maxTexCoords) .keys ()] .map (i => /* glsl */ `
+   ${Array .from ({ length: maxTexCoords }, (_, i) => /* glsl */ `
 
    #if X3D_NUM_TEXTURE_COORDINATES > ${i}
    ${i === 0 ? "" : "else"} if (textureCoordinateMapping == ${i})
@@ -167,7 +167,7 @@ getTexture (const in int i, in vec3 texCoord)
 {
    vec4 textureColor = vec4 (1.0);
 
-   ${[... Array (maxTextures) .keys ()] .map (i => /* glsl */ `
+   ${Array .from ({ length: maxTextures }, (_, i) => /* glsl */ `
 
    #if X3D_NUM_TEXTURES > ${i}
    ${i === 0 ? "" : "else"} if (i == ${i})
@@ -464,7 +464,7 @@ getTextureProjectorTexture (const in int i, const in vec2 texCoord)
 {
    vec4 textureColor = vec4 (1.0);
 
-   ${[... Array (maxTextures) .keys ()] .map (i => /* glsl */ `
+   ${Array .from ({ length: maxTextures }, (_, i) => /* glsl */ `
 
    #if X3D_NUM_TEXTURE_PROJECTORS > ${i}
    ${i === 0 ? "" : "else"} if (i == ${i})

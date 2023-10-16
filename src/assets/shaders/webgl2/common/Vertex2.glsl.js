@@ -22,7 +22,7 @@ uniform mat4 x3d_ModelViewMatrix;
 
 #if ! defined (X3D_GEOMETRY_0D) && ! defined (X3D_GEOMETRY_1D)
    #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
-      ${[... Array (maxTexCoords) .keys ()] .map (i => /* glsl */ `
+      ${Array .from ({ length: maxTexCoords }, (_, i) => /* glsl */ `
 
       #if X3D_NUM_TEXTURE_COORDINATES > ${i}
          in vec4 x3d_TexCoord${i};
@@ -46,7 +46,7 @@ in vec4 x3d_Vertex;
 
 #if ! defined (X3D_GEOMETRY_0D) && ! defined (X3D_GEOMETRY_1D)
    #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
-      ${[... Array (maxTexCoords) .keys ()] .map (i => /* glsl */ `
+      ${Array .from ({ length: maxTexCoords }, (_, i) => /* glsl */ `
 
       #if X3D_NUM_TEXTURE_COORDINATES > ${i}
          out vec4 texCoord${i};
@@ -127,7 +127,7 @@ vertex_main ()
 
    #if ! defined (X3D_GEOMETRY_0D) && ! defined (X3D_GEOMETRY_1D)
       #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
-         ${[... Array (maxTexCoords) .keys ()] .map (i => /* glsl */ `
+         ${Array .from ({ length: maxTexCoords }, (_, i) => /* glsl */ `
 
          #if X3D_NUM_TEXTURE_COORDINATES > ${i}
             texCoord${i} = getParticleTexCoord (x3d_TexCoord${i});

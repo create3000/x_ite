@@ -23,7 +23,7 @@ export default /* glsl */ `
 
 #if ! defined (X3D_GEOMETRY_0D) && ! defined (X3D_GEOMETRY_1D)
    #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
-      ${[... Array (maxTexCoords) .keys ()] .map (i => /* glsl */ `
+      ${Array .from ({ length: maxTexCoords }, (_, i) => /* glsl */ `
 
       #if X3D_NUM_TEXTURE_COORDINATES > ${i}
          varying vec4 texCoord${i};
@@ -33,7 +33,7 @@ export default /* glsl */ `
    #endif
 #else
    #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
-      ${[... Array (maxTexCoords) .keys ()] .map (i => /* glsl */ `
+      ${Array .from ({ length: maxTexCoords }, (_, i) => /* glsl */ `
 
       #if X3D_NUM_TEXTURE_COORDINATES > ${i}
          vec4 texCoord${i} = vec4 (0.0, 0.0, 0.0, 1.0);
