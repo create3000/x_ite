@@ -121,6 +121,8 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
 
       if (this .URL .pathname .match (/\.ktx2?(?:\.gz)?$/))
       {
+         this .setLinear (true);
+
          this .getBrowser () .getKTXDecoder ()
             .then (decoder => decoder .loadKTXFromURL (this .URL))
             .then (texture => this .setKTXTexture (texture))
@@ -128,6 +130,8 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
       }
       else
       {
+         this .setLinear (false);
+
          this .image .attr ("src", this .URL .href);
       }
    },
@@ -157,7 +161,6 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
          this .setWidth (texture .baseWidth);
          this .setHeight (texture .baseHeight);
          this .setGenerateMipMaps (false);
-         this .setLinear (true);
          this .updateTextureParameters ();
 
          this .setLoadState (X3DConstants .COMPLETE_STATE);
@@ -210,7 +213,6 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
             // Upload image to GPU.
 
             this .setGenerateMipMaps (true);
-            this .setLinear (false);
             this .setTextureFromData (width, height, transparent, data);
             this .setLoadState (X3DConstants .COMPLETE_STATE);
          }
@@ -225,7 +227,6 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
             // Upload image to GPU.
 
             this .setGenerateMipMaps (true);
-            this .setLinear (false);
             this .setTextureFromData (width, height, transparent, data);
             this .setLoadState (X3DConstants .COMPLETE_STATE);
          }

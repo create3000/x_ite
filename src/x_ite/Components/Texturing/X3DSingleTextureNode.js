@@ -128,9 +128,6 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, X3DText
    },
    setLinear (value)
    {
-      if (value === this ._linear .getValue ())
-         return;
-
       this ._linear = value;
    },
    getMatrix ()
