@@ -156,6 +156,8 @@ getTexture (const in int i, in vec3 texCoord)
 
          #if defined (X3D_PHYSICAL_MATERIAL) && !defined (X3D_TEXTURE${i}_LINEAR)
             textureColor = sRGBToLinear (textureColor);
+         #elif !defined (X3D_PHYSICAL_MATERIAL) && defined (X3D_TEXTURE${i}_LINEAR)
+            textureColor = linearTosRGB (textureColor);
          #endif
 
          break;

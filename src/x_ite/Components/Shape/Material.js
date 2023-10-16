@@ -240,17 +240,26 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
             if (this .ambientTextureNode ?.getTextureType () === 1)
                options .push ("X3D_AMBIENT_TEXTURE_FLIP_Y");
 
+            if (this .ambientTextureNode ?.isLinear ())
+               options .push ("X3D_AMBIENT_TEXTURE_LINEAR");
+
             if (this .diffuseTextureNode)
                options .push ("X3D_DIFFUSE_TEXTURE", `X3D_DIFFUSE_TEXTURE_${this .diffuseTextureNode .getTextureTypeString ()}`);
 
             if (this .diffuseTextureNode ?.getTextureType () === 1)
                options .push ("X3D_DIFFUSE_TEXTURE_FLIP_Y");
 
+            if (this .diffuseTextureNode ?.isLinear ())
+               options .push ("X3D_DIFFUSE_TEXTURE_LINEAR");
+
             if (this .specularTextureNode)
                options .push ("X3D_SPECULAR_TEXTURE", `X3D_SPECULAR_TEXTURE_${this .specularTextureNode .getTextureTypeString ()}`);
 
             if (this .specularTextureNode ?.getTextureType () === 1)
                options .push ("X3D_SPECULAR_TEXTURE_FLIP_Y");
+
+            if (this .specularTextureNode ?.isLinear ())
+               options .push ("X3D_SPECULAR_TEXTURE_LINEAR");
 
             if (this .shininessTextureNode)
                options .push ("X3D_SHININESS_TEXTURE", `X3D_SHININESS_TEXTURE_${this .shininessTextureNode .getTextureTypeString ()}`);

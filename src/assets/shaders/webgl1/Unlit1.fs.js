@@ -38,9 +38,15 @@ getEmissiveColor ()
       #endif
 
       #if defined (X3D_EMISSIVE_TEXTURE_2D)
-         emissiveParameter *= texture2D (x3d_EmissiveTexture .texture2D, texCoord .st);
+         vec4 textureColor = texture2D (x3d_EmissiveTexture .texture2D, texCoord .st);
       #elif defined (X3D_EMISSIVE_TEXTURE_CUBE)
-         emissiveParameter *= textureCube (x3d_EmissiveTexture .textureCube, texCoord);
+         vec4 textureColor = textureCube (x3d_EmissiveTexture .textureCube, texCoord);
+      #endif
+
+      #if defined (X3D_EMISSIVE_TEXTURE_LINEAR)
+         emissiveParameter *= linearTosRGB (textureColor);
+      #else
+         emissiveParameter *= textureColor;
       #endif
    #elif defined (X3D_TEXTURE)
       emissiveParameter = getTextureColor (emissiveParameter, vec4 (vec3 (1.0), alpha));

@@ -31,11 +31,17 @@ getAmbientColor (const in vec3 diffuseColor)
       #endif
 
       #if defined (X3D_AMBIENT_TEXTURE_2D)
-         ambientParameter *= texture (x3d_AmbientTexture .texture2D, texCoord .st) .rgb;
+         vec3 textureColor = texture (x3d_AmbientTexture .texture2D, texCoord .st) .rgb;
       #elif defined (X3D_AMBIENT_TEXTURE_3D)
-         ambientParameter *= texture (x3d_AmbientTexture .texture3D, texCoord) .rgb;
+         vec3 textureColor = texture (x3d_AmbientTexture .texture3D, texCoord) .rgb;
       #elif defined (X3D_AMBIENT_TEXTURE_CUBE)
-         ambientParameter *= texture (x3d_AmbientTexture .textureCube, texCoord) .rgb;
+         vec3 textureColor = texture (x3d_AmbientTexture .textureCube, texCoord) .rgb;
+      #endif
+
+      #if defined (X3D_AMBIENT_TEXTURE_LINEAR)
+         ambientParameter *= linearTosRGB (textureColor);
+      #else
+         ambientParameter *= textureColor;
       #endif
    #endif
 
@@ -69,11 +75,17 @@ getDiffuseColor ()
       #endif
 
       #if defined (X3D_DIFFUSE_TEXTURE_2D)
-         diffuseParameter *= texture (x3d_DiffuseTexture .texture2D, texCoord .st);
+         vec4 textureColor = texture (x3d_DiffuseTexture .texture2D, texCoord .st);
       #elif defined (X3D_DIFFUSE_TEXTURE_3D)
-         diffuseParameter *= texture (x3d_DiffuseTexture .texture3D, texCoord);
+         vec4 textureColor = texture (x3d_DiffuseTexture .texture3D, texCoord);
       #elif defined (X3D_DIFFUSE_TEXTURE_CUBE)
-         diffuseParameter *= texture (x3d_DiffuseTexture .textureCube, texCoord);
+         vec4 textureColor = texture (x3d_DiffuseTexture .textureCube, texCoord);
+      #endif
+
+      #if defined (X3D_DIFFUSE_TEXTURE_LINEAR)
+         diffuseParameter *= linearTosRGB (textureColor);
+      #else
+         diffuseParameter *= textureColor;
       #endif
    #elif defined (X3D_TEXTURE)
       diffuseParameter = getTextureColor (diffuseParameter, vec4 (x3d_Material .specularColor, alpha));
@@ -103,11 +115,17 @@ getSpecularColor ()
       #endif
 
       #if defined (X3D_SPECULAR_TEXTURE_2D)
-         specularParameter *= texture (x3d_SpecularTexture .texture2D, texCoord .st) .rgb;
+         vec3 textureColor = texture (x3d_SpecularTexture .texture2D, texCoord .st) .rgb;
       #elif defined (X3D_SPECULAR_TEXTURE_3D)
-         specularParameter *= texture (x3d_SpecularTexture .texture3D, texCoord) .rgb;
+         vec3 textureColor = texture (x3d_SpecularTexture .texture3D, texCoord) .rgb;
       #elif defined (X3D_SPECULAR_TEXTURE_CUBE)
-         specularParameter *= texture (x3d_SpecularTexture .textureCube, texCoord) .rgb;
+         vec3 textureColor = texture (x3d_SpecularTexture .textureCube, texCoord) .rgb;
+      #endif
+
+      #if defined (X3D_SPECULAR_TEXTURE_LINEAR)
+         specularParameter *= linearTosRGB (textureColor);
+      #else
+         specularParameter *= textureColor;
       #endif
    #endif
 
@@ -135,11 +153,17 @@ getEmissiveColor ()
       #endif
 
       #if defined (X3D_EMISSIVE_TEXTURE_2D)
-         emissiveParameter *= texture (x3d_EmissiveTexture .texture2D, texCoord .st) .rgb;
+         vec3 textureColor = texture (x3d_EmissiveTexture .texture2D, texCoord .st) .rgb;
       #elif defined (X3D_EMISSIVE_TEXTURE_3D)
-         emissiveParameter *= texture (x3d_EmissiveTexture .texture3D, texCoord) .rgb;
+         vec3 textureColor = texture (x3d_EmissiveTexture .texture3D, texCoord) .rgb;
       #elif defined (X3D_EMISSIVE_TEXTURE_CUBE)
-         emissiveParameter *= texture (x3d_EmissiveTexture .textureCube, texCoord) .rgb;
+         vec3 textureColor = texture (x3d_EmissiveTexture .textureCube, texCoord) .rgb;
+      #endif
+
+      #if defined (X3D_EMISSIVE_TEXTURE_LINEAR)
+         emissiveParameter *= linearTosRGB (textureColor);
+      #else
+         emissiveParameter *= textureColor;
       #endif
    #endif
 
