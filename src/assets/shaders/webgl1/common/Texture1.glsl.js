@@ -1,7 +1,4 @@
-const
-   maxTextureTransforms = 4,
-   maxTexCoords         = 4,
-   maxTextures          = 4;
+import { maxTextureTransforms, maxTexCoords, maxTextures } from "../../../../x_ite/Browser/Texturing/TextureLimits.js";
 
 export default /* glsl */ `
 #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)

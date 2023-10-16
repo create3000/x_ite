@@ -52,6 +52,8 @@ import TextureQuality    from "../Core/TextureQuality.js";
 import KTXDecoder        from "./KTXDecoder.js";
 import URLs              from "../Networking/URLs.js";
 
+import { maxTextureTransforms, maxTexCoords, maxTextures } from "./TextureLimits.js";
+
 const
    _maxTextures              = Symbol (),
    _combinedTextureUnits     = Symbol (),
@@ -81,7 +83,7 @@ function X3DTexturingContext ()
    // console .log (gl .getParameter (gl .MAX_TEXTURE_IMAGE_UNITS))
    // console .log (gl .getParameter (gl .MAX_ARRAY_TEXTURE_LAYERS))
 
-   this [_maxTextures] = maxTextureImageUnits > 8 ? 4 : 2;
+   this [_maxTextures] = maxTextureImageUnits > 8 ? maxTextures : maxTextures / 2;
 }
 
 Object .assign (X3DTexturingContext .prototype,
@@ -158,11 +160,11 @@ Object .assign (X3DTexturingContext .prototype,
    },
    getMaxTextureTransforms ()
    {
-      return 4;
+      return maxTextureTransforms;
    },
    getMaxTexCoords ()
    {
-      return 4;
+      return maxTexCoords;
    },
    getMinTextureSize ()
    {

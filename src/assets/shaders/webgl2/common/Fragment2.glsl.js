@@ -1,4 +1,4 @@
-const maxTexCoords = 4;
+import { maxTexCoords } from "../../../../x_ite/Browser/Texturing/TextureLimits.js";
 
 export default /* glsl */ `
 #if defined (X3D_ALPHA_MODE_MASK)
