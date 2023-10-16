@@ -435,13 +435,12 @@ getTextureColor (const in vec4 diffuseColor, const in vec4 specularColor)
 
 #if defined (X3D_TEXTURE_PROJECTION)
 
-uniform vec3      x3d_TextureProjectorColor         [X3D_NUM_TEXTURE_PROJECTORS];
-uniform float     x3d_TextureProjectorIntensity     [X3D_NUM_TEXTURE_PROJECTORS];
-uniform vec3      x3d_TextureProjectorLocation      [X3D_NUM_TEXTURE_PROJECTORS];
-uniform vec2      x3d_TextureProjectorLimits        [X3D_NUM_TEXTURE_PROJECTORS];
-uniform mat4      x3d_TextureProjectorMatrix        [X3D_NUM_TEXTURE_PROJECTORS];
-uniform bool      x3d_TextureProjectorTextureLinear [X3D_NUM_TEXTURE_PROJECTORS];
-uniform sampler2D x3d_TextureProjectorTexture       [X3D_NUM_TEXTURE_PROJECTORS];
+uniform vec3      x3d_TextureProjectorColor     [X3D_NUM_TEXTURE_PROJECTORS];
+uniform float     x3d_TextureProjectorIntensity [X3D_NUM_TEXTURE_PROJECTORS];
+uniform vec3      x3d_TextureProjectorLocation  [X3D_NUM_TEXTURE_PROJECTORS];
+uniform vec3      x3d_TextureProjectorLimits    [X3D_NUM_TEXTURE_PROJECTORS]; // near, far, linear
+uniform mat4      x3d_TextureProjectorMatrix    [X3D_NUM_TEXTURE_PROJECTORS];
+uniform sampler2D x3d_TextureProjectorTexture   [X3D_NUM_TEXTURE_PROJECTORS];
 
 vec4
 getTextureProjectorTexture (const in int i, const in vec2 texCoord)
@@ -494,10 +493,10 @@ getTextureProjectorColor ()
       vec4 T = getTextureProjectorTexture (i, texCoord .st);
 
       #if defined (X3D_PHYSICAL_MATERIAL)
-         if (!x3d_TextureProjectorTextureLinear [i])
+         if (!bool (x3d_TextureProjectorLimits [i] .z))
             T = sRGBToLinear (T);
       #else
-         if (x3d_TextureProjectorTextureLinear [i])
+         if (bool (x3d_TextureProjectorLimits [i] .z))
             T = linearTosRGB (T);
       #endif
 

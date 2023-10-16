@@ -148,9 +148,8 @@ Object .assign (TextureProjectorContainer .prototype,
       gl .uniform3f        (shaderObject .x3d_TextureProjectorColor [i],         ... lightNode .getColor ());
       gl .uniform1f        (shaderObject .x3d_TextureProjectorIntensity [i],     lightNode .getIntensity ());
       gl .uniform3fv       (shaderObject .x3d_TextureProjectorLocation [i],      this .locationArray);
-      gl .uniform2f        (shaderObject .x3d_TextureProjectorLimits [i],        nearDistance, farDistance);
+      gl .uniform3f        (shaderObject .x3d_TextureProjectorLimits [i],        nearDistance, farDistance, texture .isLinear ());
       gl .uniformMatrix4fv (shaderObject .x3d_TextureProjectorMatrix [i], false, this .matrixArray);
-      gl .uniform1i        (shaderObject .x3d_TextureProjectorTextureLinear [i], texture .isLinear ());
    },
    dispose ()
    {
