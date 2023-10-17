@@ -56,6 +56,8 @@ Brightness of ambient (nondirectional background) emission from the light.
 
 ### SFNode [in, out] **diffuseTexture** NULL <small>[X3DEnvironmentTextureNode]</small>
 
+### MFFloat [in, out] **diffuseCoefficients** [ ]
+
 ### SFNode [in, out] **specularTexture** NULL <small>[X3DEnvironmentTextureNode]</small>
 
 ### SFBool [in, out] **shadows** FALSE
@@ -79,8 +81,6 @@ The shadowBias value controls the visibility of *shadow acne*.
 Size of the shadow map in pixels, must be power of two.
 
 ### SFNode [in, out] **diffuse** NULL <small>[X3DSingleTextureNode]</small>
-
-### MFFloat [in, out] **diffuseCoefficients** [ ]
 
 ## See Also
 
