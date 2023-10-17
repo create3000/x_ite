@@ -11,7 +11,7 @@ precision highp samplerCube;
 
 out vec4 frontColor;
 
-#if ! defined (X3D_GEOMETRY_0D) && ! defined (X3D_GEOMETRY_1D)
+#if !defined (X3D_GEOMETRY_0D) && !defined (X3D_GEOMETRY_1D)
    out vec4 backColor;
 #endif
 
@@ -50,7 +50,12 @@ main ()
 {
    vertex_main ();
 
-   normal     = normalize (normal);
+   #if defined (X3D_LIGHTING)
+      normal = normalize (normal);
+   #else
+      vec3 normal = vec3 (0.0);
+   #endif
+
    frontColor = getMaterialColor (normal, vertex, x3d_Material);
 
    #if ! defined (X3D_GEOMETRY_0D) && ! defined (X3D_GEOMETRY_1D)
