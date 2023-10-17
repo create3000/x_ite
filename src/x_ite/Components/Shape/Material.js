@@ -228,76 +228,67 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
          browser = this .getBrowser (),
          options = this .getShaderOptions (geometryContext, renderContext);
 
-      if (geometryContext .hasNormals)
+      options .push ("X3D_MATERIAL");
+
+      if (+this .getTextureBits ())
       {
-         options .push ("X3D_MATERIAL");
+         if (this .ambientTextureNode)
+            options .push ("X3D_AMBIENT_TEXTURE", `X3D_AMBIENT_TEXTURE_${this .ambientTextureNode .getTextureTypeString ()}`);
 
-         if (+this .getTextureBits ())
-         {
-            if (this .ambientTextureNode)
-               options .push ("X3D_AMBIENT_TEXTURE", `X3D_AMBIENT_TEXTURE_${this .ambientTextureNode .getTextureTypeString ()}`);
+         if (this .ambientTextureNode ?.getTextureType () === 1)
+            options .push ("X3D_AMBIENT_TEXTURE_FLIP_Y");
 
-            if (this .ambientTextureNode ?.getTextureType () === 1)
-               options .push ("X3D_AMBIENT_TEXTURE_FLIP_Y");
+         if (this .ambientTextureNode ?.isLinear ())
+            options .push ("X3D_AMBIENT_TEXTURE_LINEAR");
 
-            if (this .ambientTextureNode ?.isLinear ())
-               options .push ("X3D_AMBIENT_TEXTURE_LINEAR");
+         if (this .diffuseTextureNode)
+            options .push ("X3D_DIFFUSE_TEXTURE", `X3D_DIFFUSE_TEXTURE_${this .diffuseTextureNode .getTextureTypeString ()}`);
 
-            if (this .diffuseTextureNode)
-               options .push ("X3D_DIFFUSE_TEXTURE", `X3D_DIFFUSE_TEXTURE_${this .diffuseTextureNode .getTextureTypeString ()}`);
+         if (this .diffuseTextureNode ?.getTextureType () === 1)
+            options .push ("X3D_DIFFUSE_TEXTURE_FLIP_Y");
 
-            if (this .diffuseTextureNode ?.getTextureType () === 1)
-               options .push ("X3D_DIFFUSE_TEXTURE_FLIP_Y");
+         if (this .diffuseTextureNode ?.isLinear ())
+            options .push ("X3D_DIFFUSE_TEXTURE_LINEAR");
 
-            if (this .diffuseTextureNode ?.isLinear ())
-               options .push ("X3D_DIFFUSE_TEXTURE_LINEAR");
+         if (this .specularTextureNode)
+            options .push ("X3D_SPECULAR_TEXTURE", `X3D_SPECULAR_TEXTURE_${this .specularTextureNode .getTextureTypeString ()}`);
 
-            if (this .specularTextureNode)
-               options .push ("X3D_SPECULAR_TEXTURE", `X3D_SPECULAR_TEXTURE_${this .specularTextureNode .getTextureTypeString ()}`);
+         if (this .specularTextureNode ?.getTextureType () === 1)
+            options .push ("X3D_SPECULAR_TEXTURE_FLIP_Y");
 
-            if (this .specularTextureNode ?.getTextureType () === 1)
-               options .push ("X3D_SPECULAR_TEXTURE_FLIP_Y");
+         if (this .specularTextureNode ?.isLinear ())
+            options .push ("X3D_SPECULAR_TEXTURE_LINEAR");
 
-            if (this .specularTextureNode ?.isLinear ())
-               options .push ("X3D_SPECULAR_TEXTURE_LINEAR");
+         if (this .shininessTextureNode)
+            options .push ("X3D_SHININESS_TEXTURE", `X3D_SHININESS_TEXTURE_${this .shininessTextureNode .getTextureTypeString ()}`);
 
-            if (this .shininessTextureNode)
-               options .push ("X3D_SHININESS_TEXTURE", `X3D_SHININESS_TEXTURE_${this .shininessTextureNode .getTextureTypeString ()}`);
+         if (this .shininessTextureNode ?.getTextureType () === 1)
+            options .push ("X3D_SHININESS_TEXTURE_FLIP_Y");
 
-            if (this .shininessTextureNode ?.getTextureType () === 1)
-               options .push ("X3D_SHININESS_TEXTURE_FLIP_Y");
+         if (this .occlusionTextureNode)
+            options .push ("X3D_OCCLUSION_TEXTURE", `X3D_OCCLUSION_TEXTURE_${this .occlusionTextureNode .getTextureTypeString ()}`);
 
-            if (this .occlusionTextureNode)
-               options .push ("X3D_OCCLUSION_TEXTURE", `X3D_OCCLUSION_TEXTURE_${this .occlusionTextureNode .getTextureTypeString ()}`);
-
-            if (this .occlusionTextureNode ?.getTextureType () === 1)
-               options .push ("X3D_OCCLUSION_TEXTURE_FLIP_Y");
-         }
-
-         switch (this .getMaterialKey ())
-         {
-            case "1":
-            {
-               if (!renderContext ?.shadows)
-               {
-                  var shaderNode = browser .createShader ("Gouraud", "Gouraud", "Gouraud", options);
-                  break;
-               }
-
-               // Proceed with next case:
-            }
-            case "2":
-               var shaderNode = browser .createShader ("Phong", "Default", "Phong", options);
-               break;
-         }
+         if (this .occlusionTextureNode ?.getTextureType () === 1)
+            options .push ("X3D_OCCLUSION_TEXTURE_FLIP_Y");
       }
-      else
+
+      switch (this .getMaterialKey ())
       {
-         options .push ("X3D_UNLIT_MATERIAL");
+         case "1":
+         {
+            if (!renderContext ?.shadows)
+            {
+               var shaderNode = browser .createShader ("Gouraud", "Gouraud", "Gouraud", options);
+               break;
+            }
 
-         var shaderNode = browser .createShader ("Unlit", "Default", "Unlit", options);
-
-         browser .getShaders () .set (key .replace (/^(\d{1,2})\d*/, "$1") .replace (/\d$/, "0"), shaderNode);
+            // Proceed with next case:
+         }
+         case "2":
+         {
+            var shaderNode = browser .createShader ("Phong", "Default", "Phong", options);
+            break;
+         }
       }
 
       browser .getShaders () .set (key, shaderNode);

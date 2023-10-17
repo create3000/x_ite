@@ -32,7 +32,10 @@ getMaterialColor ()
       baseColor .rgb *= getTextureProjectorColor ();
    #endif
 
-   vec3 n = getNormalVector (x3d_Material .normalScale);
+   #if defined (X3D_LIGHTING) || defined (X3D_USE_IBL)
+      vec3 n = getNormalVector (x3d_Material .normalScale);
+   #endif
+
    vec3 v = normalize (-vertex);
 
    MaterialInfo materialInfo;
