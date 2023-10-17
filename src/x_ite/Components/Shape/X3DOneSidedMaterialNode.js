@@ -154,8 +154,6 @@ Object .assign (Object .setPrototypeOf (X3DOneSidedMaterialNode .prototype, X3DM
             options .push ("X3D_NORMAL_TEXTURE_FLIP_Y");
       }
 
-      console .log (options)
-
       return options;
    },
    setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
