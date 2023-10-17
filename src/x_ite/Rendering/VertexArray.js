@@ -60,9 +60,9 @@ Object .assign (VertexArray .prototype,
 
       return this;
    },
-   enable (shaderNode)
+   enable (program)
    {
-      const vertexArray = this .vertexArrays .get (shaderNode);
+      const vertexArray = this .vertexArrays .get (program);
 
       if (vertexArray)
       {
@@ -74,7 +74,7 @@ Object .assign (VertexArray .prototype,
       {
          const vertexArray = this .gl .createVertexArray ();
 
-         this .vertexArrays .set (shaderNode, vertexArray)
+         this .vertexArrays .set (program, vertexArray)
 
          this .gl .bindVertexArray (vertexArray);
 

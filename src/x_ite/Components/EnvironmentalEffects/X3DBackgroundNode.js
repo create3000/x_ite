@@ -532,7 +532,7 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
 
       // Enable vertex attribute arrays.
 
-      if (this .sphereArrayObject .enable (shaderNode))
+      if (this .sphereArrayObject .enable (shaderNode .getProgram ()))
       {
          shaderNode .enableColorAttribute  (gl, this .colorBuffer,  0, 0);
          shaderNode .enableVertexAttribute (gl, this .sphereBuffer, 0, 0);
@@ -590,7 +590,7 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
    {
       textureNode .setShaderUniforms (gl, shaderNode, renderObject);
 
-      if (vertexArray .enable (gl, shaderNode))
+      if (vertexArray .enable (shaderNode .getProgram ()))
       {
          shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, 0);
          shaderNode .enableVertexAttribute (gl, buffer, 0, 0);

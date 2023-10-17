@@ -160,7 +160,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
          {
             // Setup vertex attributes.
 
-            if (this .thickVertexArrayObject .enable (shaderNode))
+            if (this .thickVertexArrayObject .enable (shaderNode .getProgram ()))
             {
                const
                   stride            = 16 * Float32Array .BYTES_PER_ELEMENT,
@@ -188,7 +188,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
          }
       }
 
-      if (this .vertexArrayObject .enable (shaderNode))
+      if (this .vertexArrayObject .enable (shaderNode .getProgram ()))
       {
          if (this .coordIndices .length)
             shaderNode .enableCoordIndexAttribute (gl, this .coordIndexBuffer, 0, 0);
@@ -250,7 +250,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
 
                // Setup vertex attributes.
 
-               if (this .thickVertexArrayObject .enable (transformShaderNode))
+               if (this .thickVertexArrayObject .enable (transformShaderNode .getProgram ()))
                {
                   const
                      coordIndexStride   = 2 * Float32Array .BYTES_PER_ELEMENT,
@@ -335,7 +335,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
 
                // Setup vertex attributes.
 
-               if (this .thickVertexArrayObject .enable (shaderNode))
+               if (this .thickVertexArrayObject .enable (shaderNode .getProgram ()))
                {
                   const
                      stride            = 16 * Float32Array .BYTES_PER_ELEMENT,
@@ -387,7 +387,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
 
          // Setup vertex attributes.
 
-         if (this .vertexArrayObject .enable (shaderNode))
+         if (this .vertexArrayObject .enable (shaderNode .getProgram ()))
          {
             if (this .coordIndices .length)
                shaderNode .enableCoordIndexAttribute (gl, this .coordIndexBuffer, 0, 0);
@@ -438,7 +438,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
 
       const outputParticles = particleSystem .outputParticles;
 
-      if (outputParticles .vertexArrayObject .update (this .updateParticles) .enable (shaderNode))
+      if (outputParticles .vertexArrayObject .update (this .updateParticles) .enable (shaderNode .getProgram ()))
       {
          const particleStride = particleSystem .particleStride;
 

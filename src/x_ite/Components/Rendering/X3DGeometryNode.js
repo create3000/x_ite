@@ -970,7 +970,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    { },
    displaySimple (gl, renderContext, shaderNode)
    {
-      if (this .vertexArrayObject .enable (shaderNode))
+      if (this .vertexArrayObject .enable (shaderNode .getProgram ()))
       {
          if (this .coordIndices .length)
             shaderNode .enableCoordIndexAttribute (gl, this .coordIndexBuffer, 0, 0);
@@ -1021,7 +1021,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
       // Setup vertex attributes.
 
-      if (this .vertexArrayObject .enable (shaderNode))
+      if (this .vertexArrayObject .enable (shaderNode .getProgram ()))
       {
          if (this .coordIndices .length)
             shaderNode .enableCoordIndexAttribute (gl, this .coordIndexBuffer, 0, 0);
@@ -1094,7 +1094,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    {
       const outputParticles = particleSystem .outputParticles;
 
-      if (outputParticles .vertexArrayObject .update (this .updateParticles) .enable (shaderNode))
+      if (outputParticles .vertexArrayObject .update (this .updateParticles) .enable (shaderNode .getProgram ()))
       {
          const { particleStride, particleOffset, matrixOffset } = particleSystem;
 
@@ -1148,7 +1148,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
       const outputParticles = particleSystem .outputParticles;
 
-      if (outputParticles .vertexArrayObject .update (this .updateParticles) .enable (shaderNode))
+      if (outputParticles .vertexArrayObject .update (this .updateParticles) .enable (shaderNode .getProgram ()))
       {
          const { particleStride, particleOffset, matrixOffset } = particleSystem;
 

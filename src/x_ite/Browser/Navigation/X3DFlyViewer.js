@@ -711,7 +711,7 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
          gl .uniform3f        (shaderNode .x3d_EmissiveColor, 1, 1, 1);
          gl .uniform1f        (shaderNode .x3d_Transparency,  0);
 
-         if (this .lineVertexArrayObject .enable (shaderNode))
+         if (this .lineVertexArrayObject .enable (shaderNode .getProgram ()))
          {
             gl .bindBuffer (gl .ELEMENT_ARRAY_BUFFER, this .lineIndexBuffer);
 

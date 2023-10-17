@@ -89,7 +89,7 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
 
       // Setup vertex attributes.
 
-      if (this .vertexArrayObject .enable (shaderNode))
+      if (this .vertexArrayObject .enable (shaderNode .getProgram ()))
       {
          if (this .coordIndices .length)
             shaderNode .enableCoordIndexAttribute (gl, this .coordIndexBuffer, 0, 0);
@@ -133,7 +133,7 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
 
       const outputParticles = particleSystem .outputParticles;
 
-      if (outputParticles .vertexArrayObject .update (this .updateParticles) .enable (shaderNode))
+      if (outputParticles .vertexArrayObject .update (this .updateParticles) .enable (shaderNode .getProgram ()))
       {
          const particleStride = particleSystem .particleStride;
 

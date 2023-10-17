@@ -881,7 +881,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
             {
                const outputParticles = this .outputParticles;
 
-               if (outputParticles .vertexArrayObject .enable (shaderNode))
+               if (outputParticles .vertexArrayObject .enable (shaderNode .getProgram ()))
                {
                   const particleStride = this .particleStride;
 
@@ -960,7 +960,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
 
             const outputParticles = this .outputParticles;
 
-            if (outputParticles .vertexArrayObject .enable (shaderNode))
+            if (outputParticles .vertexArrayObject .enable (shaderNode .getProgram ()))
             {
                const particleStride = this .particleStride;
 
