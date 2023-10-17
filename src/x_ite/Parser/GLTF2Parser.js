@@ -923,22 +923,27 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       materialNode .setup ();
 
-      for (const i of texCoordIndices)
+      if (this .textureTransformNodes .length)
       {
-         const mapping = `TEXCOORD_${i}`;
+         // If there are texture transform nodes, create a TextureTransform node for missing mappings.
 
-         if (this .textureTransformNodes .length)
+         for (const i of texCoordIndices)
          {
-            const textureTransformNode = scene .createNode ("TextureTransform", false);
+            const mapping = `TEXCOORD_${i}`;
 
-            textureTransformNode ._mapping = mapping;
+            if (this .textureTransformNodes .every (node => node ._mapping !== mapping))
+            {
+               const textureTransformNode = scene .createNode ("TextureTransform", false);
 
-            textureTransformNode .setup ();
+               textureTransformNode ._mapping = mapping;
 
-            this .textureTransformNodes .push (textureTransformNode);
+               textureTransformNode .setup ();
+
+               this .textureTransformNodes .push (textureTransformNode);
+            }
+
+            this .texCoordMappings .set (mapping, i);
          }
-
-         this .texCoordMappings .set (mapping, i);
       }
 
       if (name)
