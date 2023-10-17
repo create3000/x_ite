@@ -77,6 +77,10 @@ getBaseColor ()
       #if defined (X3D_DIFFUSE_TEXTURE)
          vec3 texCoord = getTexCoord (x3d_DiffuseTexture .textureTransformMapping, x3d_DiffuseTexture .textureCoordinateMapping);
 
+         #if defined (X3D_DIFFUSE_TEXTURE_FLIP_Y)
+            texCoord .t = 1.0 - texCoord .t;
+         #endif
+
          #if defined (X3D_DIFFUSE_TEXTURE_2D)
             vec4 textureColor = texture2D (x3d_DiffuseTexture .texture2D, texCoord .st);
          #elif defined (X3D_DIFFUSE_TEXTURE_CUBE)
@@ -94,6 +98,10 @@ getBaseColor ()
    #elif defined (X3D_MATERIAL_METALLIC_ROUGHNESS)
       #if defined (X3D_BASE_TEXTURE)
          vec3 texCoord = getTexCoord (x3d_BaseTexture .textureTransformMapping, x3d_BaseTexture .textureCoordinateMapping);
+
+         #if defined (X3D_BASE_TEXTURE_FLIP_Y)
+            texCoord .t = 1.0 - texCoord .t;
+         #endif
 
          #if defined (X3D_BASE_TEXTURE_2D)
             vec4 textureColor = texture2D (x3d_BaseTexture .texture2D, texCoord .st);
@@ -133,6 +141,10 @@ getMetallicRoughnessInfo (MaterialInfo info)
    #if defined (X3D_METALLIC_ROUGHNESS_TEXTURE)
       vec3 texCoord = getTexCoord (x3d_MetallicRoughnessTexture .textureTransformMapping, x3d_MetallicRoughnessTexture .textureCoordinateMapping);
 
+      #if defined (X3D_METALLIC_ROUGHNESS_TEXTURE_FLIP_Y)
+         texCoord .t = 1.0 - texCoord .t;
+      #endif
+
       // Roughness is stored in the 'g' channel, metallic is stored in the 'b' channel.
       // This layout intentionally reserves the 'r' channel for (optional) occlusion map data
       #if defined (X3D_METALLIC_ROUGHNESS_TEXTURE_2D)
@@ -169,6 +181,10 @@ getEmissiveColor ()
    #if defined (X3D_EMISSIVE_TEXTURE)
       vec3 texCoord = getTexCoord (x3d_EmissiveTexture .textureTransformMapping, x3d_EmissiveTexture .textureCoordinateMapping);
 
+      #if defined (X3D_EMISSIVE_TEXTURE_FLIP_Y)
+         texCoord .t = 1.0 - texCoord .t;
+      #endif
+
       #if defined (X3D_EMISSIVE_TEXTURE_2D)
          vec3 textureColor = texture2D (x3d_EmissiveTexture .texture2D, texCoord .st) .rgb;
       #elif defined (X3D_EMISSIVE_TEXTURE_CUBE)
@@ -196,6 +212,10 @@ getOcclusionFactor ()
 
    #if defined (X3D_OCCLUSION_TEXTURE)
       vec3 texCoord = getTexCoord (x3d_OcclusionTexture .textureTransformMapping, x3d_OcclusionTexture .textureCoordinateMapping);
+
+      #if defined (X3D_OCCLUSION_TEXTURE_FLIP_Y)
+         texCoord .t = 1.0 - texCoord .t;
+      #endif
 
       #if defined (X3D_OCCLUSION_TEXTURE_2D)
          return texture2D (x3d_OcclusionTexture .texture2D, texCoord .st) .r;
