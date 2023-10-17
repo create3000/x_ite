@@ -923,13 +923,13 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       materialNode .setup ();
 
-      if (this .textureTransformNodes .length)
+      for (const i of texCoordIndices)
       {
-         // If there are texture transform nodes, create a TextureTransform node for missing mappings.
+         const mapping = `TEXCOORD_${i}`;
 
-         for (const i of texCoordIndices)
+         if (this .textureTransformNodes .length)
          {
-            const mapping = `TEXCOORD_${i}`;
+            // If there are texture transform nodes, create a TextureTransform node for missing mappings.
 
             if (this .textureTransformNodes .every (node => node ._mapping !== mapping))
             {
@@ -941,9 +941,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
                this .textureTransformNodes .push (textureTransformNode);
             }
-
-            this .texCoordMappings .set (mapping, i);
          }
+
+         this .texCoordMappings .set (mapping, i);
       }
 
       if (name)
