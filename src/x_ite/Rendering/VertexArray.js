@@ -72,7 +72,7 @@ Object .assign (VertexArray .prototype,
       }
       else
       {
-         // Memory leak prevention when shaders are reloaded.
+         // Memory leak prevention when shaders are reloaded. There should normally be no more than maybe 10 VAOs, except when shaders are often reloaded.
          if (this .vertexArrays .size > 100)
             this .delete ();
 
