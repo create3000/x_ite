@@ -264,6 +264,8 @@ Object .assign (Object .setPrototypeOf (MFNode .prototype, X3DObjectArrayField .
                generator .string += generator .XMLEncode (containerField .getName ());
                generator .string += "'";
             }
+
+            generator .string += generator .closingTags ? "></NULL>" : "/>";
          }
 
          generator .LeaveScope ();
