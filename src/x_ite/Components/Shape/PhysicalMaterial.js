@@ -185,14 +185,23 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
          if (this .baseTextureNode)
             options .push ("X3D_BASE_TEXTURE", `X3D_BASE_TEXTURE_${this .baseTextureNode .getTextureTypeString ()}`);
 
+         if (this .baseTextureNode ?.getTextureType () === 1)
+            options .push ("X3D_BASE_TEXTURE_FLIP_Y");
+
          if (this .baseTextureNode ?.isLinear ())
             options .push ("X3D_BASE_TEXTURE_LINEAR");
 
          if (this .metallicRoughnessTextureNode)
             options .push ("X3D_METALLIC_ROUGHNESS_TEXTURE", `X3D_METALLIC_ROUGHNESS_TEXTURE_${this .metallicRoughnessTextureNode .getTextureTypeString ()}`);
 
+         if (this .metallicRoughnessTextureNode ?.getTextureType () === 1)
+            options .push ("X3D_METALLIC_ROUGHNESS_TEXTURE_FLIP_Y");
+
          if (this .occlusionTextureNode)
             options .push ("X3D_OCCLUSION_TEXTURE", `X3D_OCCLUSION_TEXTURE_${this .occlusionTextureNode .getTextureTypeString ()}`);
+
+         if (this .occlusionTextureNode ?.getTextureType () === 1)
+            options .push ("X3D_OCCLUSION_TEXTURE_FLIP_Y");
       }
 
       const shaderNode = browser .createShader ("PBR", "Default", "PBR", options);
