@@ -106,13 +106,13 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
       let i = 0;
 
       const textureIndices = {
-         EMISSIVE_TEXTURE: i ++,
-         NORMAL_TEXTURE: i ++,
          AMBIENT_TEXTURE: i ++,
          DIFFUSE_TEXTURE: i ++,
          SPECULAR_TEXTURE: i ++,
+         EMISSIVE_TEXTURE: i ++,
          SHININESS_TEXTURE: i ++,
          OCCLUSION_TEXTURE: i ++,
+         NORMAL_TEXTURE: i ++,
       };
 
       return function ()
@@ -299,7 +299,7 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
 
          var shaderNode = browser .createShader ("Unlit", "Default", "Unlit", options);
 
-         browser .getShaders () .set (key .replace (/^(\d{1,2})\d*/, "$1") .replace (/\d$/, "0"), shaderNode);
+         browser .getShaders () .set (key, shaderNode);
       }
 
       browser .getShaders () .set (key, shaderNode);
