@@ -931,9 +931,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          {
             const textureTransformNode = scene .createNode ("TextureTransform", false);
 
-            textureTransformNode ._mapping        = mapping;
-            textureTransformNode ._translation .y = -1;
-            textureTransformNode ._scale .y       = -1;
+            textureTransformNode ._mapping = mapping;
 
             textureTransformNode .setup ();
 
@@ -1203,9 +1201,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          translation = new Vector2 (0, 0),
          scale       = new Vector2 (1, 1),
          matrix      = new Matrix4 ();
-
-      matrix .scale (new Vector3 (1, -1, 1));
-      matrix .translate (new Vector3 (0, -1, 0));
 
       if (this .vectorValue (KHR_texture_transform .offset, translation))
          matrix .translate (new Vector3 (... translation, 0));
@@ -2189,19 +2184,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       {
          case 0:
          {
-            if (this .textureTransformNode)
-               return this .textureTransformNode;
-
-            const
-               scene                = this .getExecutionContext (),
-               textureTransformNode = scene .createNode ("TextureTransform", false);
-
-            textureTransformNode ._translation .y = -1;
-            textureTransformNode ._scale .y       = -1;
-
-            textureTransformNode .setup ();
-
-            return this .textureTransformNode = textureTransformNode;
+            return null;
          }
          case 1:
          {

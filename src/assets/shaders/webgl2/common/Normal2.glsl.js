@@ -31,12 +31,13 @@ getNormalVector (const in float normalScale)
 
    #if defined (X3D_NORMAL_TEXTURE)
       vec3 texCoord = getTexCoord (x3d_NormalTexture .textureTransformMapping, x3d_NormalTexture .textureCoordinateMapping);
-      vec3 scale    = vec3 (vec2 (normalScale), 1.0);
-      mat3 tbn      = getTBNMatrix (texCoord .st);
 
-      #if defined (X3D_NORMAL_TEXTURE_FLIP_Y)
+      #if !defined (X3D_PHYSICAL_MATERIAL) && defined (X3D_NORMAL_TEXTURE_FLIP_Y)
          texCoord .t = 1.0 - texCoord .t;
       #endif
+
+      vec3 scale = vec3 (vec2 (normalScale), 1.0);
+      mat3 tbn   = getTBNMatrix (texCoord .st);
 
       #if defined (X3D_NORMAL_TEXTURE_2D)
          vec3 n = texture (x3d_NormalTexture .texture2D, texCoord .st) .rgb;
