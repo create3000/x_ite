@@ -56,7 +56,7 @@ main ()
 
    frontColor = getMaterialColor (normal, vertex, x3d_Material);
 
-   #if ! defined (X3D_GEOMETRY_0D) && ! defined (X3D_GEOMETRY_1D)
+   #if !defined (X3D_GEOMETRY_0D) && !defined (X3D_GEOMETRY_1D)
       backColor = getMaterialColor (-normal, vertex, x3d_Material);
    #endif
 }
