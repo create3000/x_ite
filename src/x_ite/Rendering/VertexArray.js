@@ -72,6 +72,10 @@ Object .assign (VertexArray .prototype,
       }
       else
       {
+         // Memory leak prevention when shaders are reloaded.
+         if (this .vertexArrays .size > 100)
+            this .delete ();
+
          const vertexArray = this .gl .createVertexArray ();
 
          this .vertexArrays .set (program, vertexArray)
