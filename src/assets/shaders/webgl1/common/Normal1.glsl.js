@@ -32,7 +32,7 @@ getNormalVector (const in float normalScale)
    #if defined (X3D_NORMAL_TEXTURE) && ! defined (X3D_NORMAL_TEXTURE_3D)
       vec3 texCoord = getTexCoord (x3d_NormalTexture .textureTransformMapping, x3d_NormalTexture .textureCoordinateMapping);
 
-      #if !defined (X3D_PHYSICAL_MATERIAL) && defined (X3D_NORMAL_TEXTURE_FLIP_Y)
+      #if defined (X3D_NORMAL_TEXTURE_FLIP_Y)
          texCoord .t = 1.0 - texCoord .t;
       #endif
 
