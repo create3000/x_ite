@@ -69,8 +69,12 @@ Object .assign (Object .setPrototypeOf (X3DTextureProjectorNode .prototype, X3DL
    {
       X3DLightNode .prototype .initialize .call (this);
 
-      this ._texture .addInterest ("set_texture__", this);
+      this ._nearDistance .addInterest ("set_nearDistance__", this);
+      this ._farDistance  .addInterest ("set_farDistance__",  this);
+      this ._texture      .addInterest ("set_texture__",      this);
 
+      this .set_nearDistance__ ();
+      this .set_farDistance__ ();
       this .set_texture__ ();
    },
    getLightKey ()
@@ -91,15 +95,19 @@ Object .assign (Object .setPrototypeOf (X3DTextureProjectorNode .prototype, X3DL
    },
    getNearDistance ()
    {
-      const nearDistance = this ._nearDistance .getValue ();
-
-      return nearDistance < 0 ? 0.125 : nearDistance;
+      return this .nearDistance;
+   },
+   getNearParameter ()
+   {
+      return this .nearParameter;
    },
    getFarDistance ()
    {
-      const farDistance = this ._farDistance .getValue ();
-
-      return farDistance < 0 ? 100_000 : farDistance;
+      return this .farDistance;
+   },
+   getFarParameter ()
+   {
+      return this .farParameter;
    },
    getTexture ()
    {
@@ -146,6 +154,20 @@ Object .assign (Object .setPrototypeOf (X3DTextureProjectorNode .prototype, X3DL
          return orientation .multRight (rotation);
       };
    })(),
+   set_nearDistance__ ()
+   {
+      const nearDistance = this ._nearDistance .getValue ();
+
+      this .nearDistance  = nearDistance < 0 ? 0.125 : nearDistance;
+      this .nearParameter = nearDistance < 0 ? 0 : -1;
+   },
+   set_farDistance__ ()
+   {
+      const farDistance = this ._farDistance .getValue ();
+
+      this .farDistance  = farDistance < 0 ? 100_000 : farDistance;
+      this .farParameter = farDistance < 0 ? 1 : 2;
+   },
    set_texture__ ()
    {
       this .textureNode ?.removeInterest ("set_aspectRatio__", this);
