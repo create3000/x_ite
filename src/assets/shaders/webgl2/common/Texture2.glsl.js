@@ -508,9 +508,9 @@ getTextureProjectorColor ()
       texCoord .stp /= texCoord .q;
 
       if (any (lessThan (x3d_TextureProjectorParams [i] .xy, vec2 (0.0))))
-         texCoord .p = 0.0;
+         texCoord .p = 0.5;
 
-      if (any (lessThan (texCoord .stp, vec3 (0.0))) || any (greaterThan (texCoord .stp, vec3 (1.0))))
+      if (any (greaterThan (abs (texCoord .stp - 0.5), vec3 (0.5))))
          continue;
 
       // We do not need to normalize p, as we only need the sign of the dot product.
