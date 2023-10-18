@@ -344,11 +344,9 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
             options .push ("X3D_TEXTURE",
                            "X3D_NUM_TEXTURES 1",
                            "X3D_NUM_TEXTURE_TRANSFORMS 1",
-                           "X3D_NUM_TEXTURE_COORDINATES 1",
-                           "X3D_TEXTURE0_2D");
+                           "X3D_NUM_TEXTURE_COORDINATES 1");
 
-            if (textureNode .getTextureType () === 1)
-               options .push ("X3D_TEXTURE0_FLIP_Y");
+            textureNode .getShaderOptions (options, 0);
          }
       }
 
