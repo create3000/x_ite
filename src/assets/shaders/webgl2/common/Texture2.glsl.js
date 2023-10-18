@@ -507,8 +507,11 @@ getTextureProjectorColor ()
 
       texCoord .stp /= texCoord .q;
 
-      if (any (lessThan (x3d_TextureProjectorParams [i] .xy, vec2 (0.0))))
-         texCoord .p = 0.5;
+      if (x3d_TextureProjectorParams [i] .x < 0.0)
+         texCoord .p = max (texCoord .p, 0.0);
+
+      if (x3d_TextureProjectorParams [i] .y < 0.0)
+         texCoord .p = min (texCoord .p, 1.0);
 
       if (any (greaterThan (abs (texCoord .stp - 0.5), vec3 (0.5))))
          continue;
