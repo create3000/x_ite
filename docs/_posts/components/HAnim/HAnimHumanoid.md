@@ -119,6 +119,10 @@ Orientation of children relative to local coordinate system.
 
 Non-uniform x-y-z *scale* of child coordinate system, adjusted by center and scaleOrientation.
 
+#### Warning
+
+- HAnimHumanoid *scale* values must be positive.
+
 ### SFRotation [in, out] **scaleOrientation** 0 0 1 0 <small>(-∞,∞) or [-1,1]</small>
 
 Preliminary rotation of coordinate system before scaling (to allow scaling around arbitrary orientations).
