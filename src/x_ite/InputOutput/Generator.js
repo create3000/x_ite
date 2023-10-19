@@ -45,8 +45,9 @@
  *
  ******************************************************************************/
 
-import X3DConstants from "../Base/X3DConstants.js";
-import Algorithm    from "../../standard/Math/Algorithm.js";
+import X3DConstants      from "../Base/X3DConstants.js";
+import Algorithm         from "../../standard/Math/Algorithm.js";
+import { getUniqueName } from "../Execution/NamedNodesHandling.js";
 
 function Generator ({ style = "TIDY", indent = "", precision = 7, doublePrecision = 15, html = false, closingTags = false })
 {
@@ -266,7 +267,7 @@ Object .assign (Generator .prototype,
       this .executionContextStack .push (executionContext);
 
       if (!this .names .has (executionContext))
-         this .names .set (executionContext, Object .assign (new Set (), { index: 0 }));
+         this .names .set (executionContext, new Set ());
 
       if (!this .importedNodesIndex .has (executionContext))
          this .importedNodesIndex .set (executionContext, new Set ());
@@ -315,7 +316,7 @@ Object .assign (Generator .prototype,
             continue;
 
          names .add (node .getNodeName ());
-         namesByNode .set (node .getValue (), node .getNodeName ())
+         namesByNode .set (node .getValue (), node .getNodeName ());
       }
    },
    ExportedNodes (exportedNodes)
@@ -323,7 +324,7 @@ Object .assign (Generator .prototype,
       const index = this .exportedNodesIndex .get (this .ExecutionContext ());
 
       for (const exportedNode of exportedNodes)
-         index .add (exportedNode .getLocalNode ())
+         index .add (exportedNode .getLocalNode ());
    },
    ImportedNodes (importedNodes)
    {
@@ -381,10 +382,10 @@ Object .assign (Generator .prototype,
 
          // The node has no name.
 
-         if (!this .NeedsName (baseNode))
+         if (baseNode .getName () .match (/^(?:_\d+)?$/) && !this .NeedsName (baseNode))
             return "";
 
-         const newName = `_${++ names .index}`;
+         const newName = getUniqueName (names, baseNode .getName ());
 
          // Add to indices.
 
