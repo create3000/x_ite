@@ -378,14 +378,16 @@ Object .assign (Generator .prototype,
       }
       else
       {
-         const names = this .names .get (this .ExecutionContext ());
+         const
+            names = this .names .get (this .ExecutionContext ()),
+            name  = baseNode .getName ();
 
          // The node has no name.
 
-         if (baseNode .getName () .match (/^(?:_\d+)?$/) && !this .NeedsName (baseNode))
+         if (name .match (/^(?:_\d+)?$/) && !this .NeedsName (baseNode))
             return "";
 
-         const newName = getUniqueName (names, baseNode .getName ());
+         const newName = names .has (name) ? getUniqueName (names, name) : name;
 
          // Add to indices.
 
