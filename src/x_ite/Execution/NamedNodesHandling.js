@@ -47,17 +47,19 @@
 
 export const getUniqueName = function (map, name = "")
 {
-   if (!map .has (name))
+   name = String (name);
+
+   if (name && !map .has (name))
       return name;
 
-   name = String (name) .replace (/_\d+$/, "");
+   name = name .replace (/_\d+$/, "");
 
    let
       newName = name,
       lo      = 1,
       hi      = 1;
 
-   while (map .has (newName) || newName .length === 0)
+   while (map .has (newName) || !newName)
    {
       lo   = hi;
       hi <<= 1;
