@@ -45,16 +45,19 @@
  *
  ******************************************************************************/
 
-export const getUniqueName = function (array, name = "", number = false)
+export const getUniqueName = function (map, name = "")
 {
+   if (!map .has (name))
+      return name;
+
    name = String (name) .replace (/_\d+$/, "");
 
    let
-      newName = number ? `${name}_1` : name,
+      newName = name,
       lo      = 1,
       hi      = 1;
 
-   while (array .has (newName) || newName .length === 0)
+   while (map .has (newName) || newName .length === 0)
    {
       lo   = hi;
       hi <<= 1;
@@ -71,7 +74,7 @@ export const getUniqueName = function (array, name = "", number = false)
       {
          const m = (lo + hi) >>> 1;
 
-         if (array .has (`${name}_${m}`))
+         if (map .has (`${name}_${m}`))
             lo = m + 1;
          else
             hi = m;

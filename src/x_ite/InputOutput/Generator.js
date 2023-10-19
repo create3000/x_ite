@@ -387,7 +387,7 @@ Object .assign (Generator .prototype,
          if (name .match (/^(?:_\d+)?$/) && !this .NeedsName (baseNode))
             return "";
 
-         const newName = names .has (name) ? getUniqueName (names, name) : name;
+         const newName = getUniqueName (names, name);
 
          // Add to indices.
 
