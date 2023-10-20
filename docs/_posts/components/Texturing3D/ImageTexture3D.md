@@ -118,8 +118,8 @@ Single contained TextureProperties node that can specify additional visual attri
 | Encoding | File Extension  | MIME Type   | Comment             |
 |----------|-----------------|-------------|---------------------|
 | KTX2     | .ktx2, .ktx2.gz | image/ktx2  | TEXTURE_3D, WebGL 2 |
-| DICOM    | .dicom          | image/dicom |                     |
-| NRRD     | .nrrd           | image/nrrd  |                     |
+| DICOM    | .dcm            | image/dicom |                     |
+| NRRD     | .nrrd, .nrrd.gz | image/nrrd  |                     |
 
 ## Advice
 
