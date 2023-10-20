@@ -9,7 +9,7 @@ X_ITE follows the [NPM version syntax](https://docs.npmjs.com/about-semantic-ver
 
 ## X_ITE v9.0.0 Released
 
-*Leipzig, 16th October 2023:* We right now released a new version. Unfortunately, in this release the shader variable »x3d_TextureMatrix« has changed to »x3d_TextureTransformMatrix«, also images from [ImageTexture](components/texturing/imagetexture) are now not flipped at the y-axis anymore, this is now done in the shaders. Custom shaders must be adjusted to reflect these changes. These are breaking changes.
+*Leipzig, 16th October 2023:* We right now released a new version. Unfortunately, in this release images from [ImageTexture](components/texturing/imagetexture) and [MovieTexture](components/texturing/movietexture) are now not flipped at the y-axis anymore, this is now done in the shaders. Custom shaders must be adjusted to reflect these changes. This is a breaking change.
 
 ### New Features
 

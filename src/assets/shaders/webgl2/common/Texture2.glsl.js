@@ -19,7 +19,7 @@ setTexCoords ()
    `) .join ("\n")}
 }
 
-uniform mat4 x3d_TextureTransformMatrix [X3D_NUM_TEXTURE_TRANSFORMS];
+uniform mat4 x3d_TextureMatrix [X3D_NUM_TEXTURE_TRANSFORMS];
 
 vec4
 getTexCoord (const in x3d_TextureCoordinateGeneratorParameters textureCoordinateGenerator, const in int textureTransformMapping, const in int textureCoordinateMapping)
@@ -30,7 +30,7 @@ getTexCoord (const in x3d_TextureCoordinateGeneratorParameters textureCoordinate
    {
       case x3d_None:
       {
-         return x3d_TextureTransformMatrix [textureTransformMapping] * texCoords [textureCoordinateMapping];
+         return x3d_TextureMatrix [textureTransformMapping] * texCoords [textureCoordinateMapping];
       }
       case x3d_Sphere:
       {
@@ -99,7 +99,7 @@ getTexCoord (const in x3d_TextureCoordinateGeneratorParameters textureCoordinate
       }
       default:
       {
-         return x3d_TextureTransformMatrix [textureTransformMapping] * texCoords [textureCoordinateMapping];
+         return x3d_TextureMatrix [textureTransformMapping] * texCoords [textureCoordinateMapping];
       }
    }
 }

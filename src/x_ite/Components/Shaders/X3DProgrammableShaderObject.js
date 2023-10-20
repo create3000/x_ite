@@ -90,7 +90,7 @@ function X3DProgrammableShaderObject (executionContext)
    this .x3d_TextureProjectorTexture             = [ ];
    this .x3d_TextureProjectorMatrix              = [ ];
    this .x3d_TexCoord                            = [ ];
-   this .x3d_TextureTransformMatrix              = [ ];
+   this .x3d_TextureMatrix                       = [ ];
 
    this .fogNode                    = null;
    this .numClipPlanes              = 0;
@@ -262,10 +262,10 @@ Object .assign (X3DProgrammableShaderObject .prototype,
 
       for (let i = 0; i < maxTextureTransforms; ++ i)
       {
-         const uniform = gl .getUniformLocation (program, "x3d_TextureTransformMatrix[" + i + "]");
+         const uniform = gl .getUniformLocation (program, "x3d_TextureMatrix[" + i + "]");
 
          if (uniform !== null)
-            this .x3d_TextureTransformMatrix [i] = uniform;
+            this .x3d_TextureMatrix [i] = uniform;
       }
 
       for (let i = 0; i < maxTexCoords; ++ i)

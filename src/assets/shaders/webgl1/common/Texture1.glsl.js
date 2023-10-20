@@ -5,7 +5,7 @@ export default /* glsl */ `
 
 #pragma X3D include "Perlin.glsl"
 
-uniform mat4 x3d_TextureTransformMatrix [X3D_NUM_TEXTURE_TRANSFORMS];
+uniform mat4 x3d_TextureMatrix [X3D_NUM_TEXTURE_TRANSFORMS];
 
 mat4
 getTextureMatrix (const in int i)
@@ -17,14 +17,14 @@ getTextureMatrix (const in int i)
 
       #if X3D_NUM_TEXTURE_TRANSFORMS > ${i}
          ${i === 0 ? "" : "else"} if (i == ${i})
-            textureTransformMatrix = x3d_TextureTransformMatrix [${i}];
+            textureTransformMatrix = x3d_TextureMatrix [${i}];
       #endif
 
       `) .join ("\n")}
 
       return textureTransformMatrix;
    #else
-      return x3d_TextureTransformMatrix [0];
+      return x3d_TextureMatrix [0];
    #endif
 }
 

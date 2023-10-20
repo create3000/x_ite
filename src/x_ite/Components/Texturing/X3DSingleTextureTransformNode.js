@@ -78,7 +78,7 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureTransformNode .prototype
    },
    setShaderUniforms (gl, shaderObject, channel = 0)
    {
-      gl .uniformMatrix4fv (shaderObject .x3d_TextureTransformMatrix [channel], false, this .matrixArray);
+      gl .uniformMatrix4fv (shaderObject .x3d_TextureMatrix [channel], false, this .matrixArray);
    },
    transformPoint (texCoord)
    {

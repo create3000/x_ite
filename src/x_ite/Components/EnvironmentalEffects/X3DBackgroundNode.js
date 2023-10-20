@@ -574,9 +574,9 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
 
             // Set uniforms.
 
-            gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix,           false, this .projectionMatrixArray);
-            gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,            false, this .modelViewMatrixArray);
-            gl .uniformMatrix4fv (shaderNode .x3d_TextureTransformMatrix [0], false, textureMatrixArray);
+            gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix,  false, this .projectionMatrixArray);
+            gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,   false, this .modelViewMatrixArray);
+            gl .uniformMatrix4fv (shaderNode .x3d_TextureMatrix [0], false, textureMatrixArray);
 
             gl .uniform3f (shaderNode .x3d_EmissiveColor,                      1, 1, 1);
             gl .uniform1f (shaderNode .x3d_Transparency,                       0);
