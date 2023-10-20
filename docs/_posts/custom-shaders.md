@@ -35,7 +35,7 @@ DEF Timer TimeSensor {
 Transform {
   children Shape {
     appearance Appearance {
-      material ImageTexture {
+      texture ImageTexture {
         url "image.png"
       }
       shaders DEF Shader ComposedShader {
