@@ -7,7 +7,7 @@ tags: [Custom, Shaders]
 ---
 ## Overview
 
-When you display your 3D models with X\_ITE, by default it will use the Gouraud shader. This is a versatile shader that can cover a lot of your rendering needs. If this is not enough there is also a Phong shader available, adjustable with the browser shading option per scripting.
+When you display your 3D models with X_ITE, by default it will use the Gouraud shader. This is a versatile shader that can cover a lot of your rendering needs. If this is not enough there is also a Phong shader available, adjustable with the browser shading option per scripting.
 
 However, you will often want to perform special effects or special cases for your materials. To do this you will need to write a custom shader.
 
@@ -21,7 +21,7 @@ However, you will often want to perform special effects or special cases for you
 
 ## Shaders and Shader Definition
 
-WebGL uses the GLSL language to write shaders that can be run across all browsers. With X\_ITE you create your own shader using ComposedShader and ShaderPart nodes and than attach the ComposedShader to the *shader* field of an Appearance node and that is a child's play with Titania.
+WebGL uses the GLSL language to write shaders that can be run across all browsers. With X_ITE you create your own shader using ComposedShader and ShaderPart nodes and than attach the ComposedShader to the *shader* field of an Appearance node and that is a child's play with Titania.
 
 ### X3D
 
@@ -362,7 +362,7 @@ A ComposedShader node provides the capability to define custom fields like the S
 
 ## Built-in Variables
 
-A ComposedShader defines a number of special variables for the various shader stages. These built-in variables have special properties. They are usually for communicating with certain fixed-functionality. By convention, all predefined variables start with »x3d\_«; no user-defined variables may start with this.
+A ComposedShader defines a number of special variables for the various shader stages. These built-in variables have special properties. They are usually for communicating with certain fixed-functionality. By convention, all predefined variables start with »x3d_«; no user-defined variables may start with this.
 
 <table>
    <thead>
@@ -485,39 +485,49 @@ A ComposedShader defines a number of special variables for the various shader st
          <td colspan="3"><hr/></td>
       </tr>
       <tr>
-         <td>attribute float</td>
+         <td>in float</td>
          <td>x3d_FogDepth</td>
          <td>fog depth of the vertex overriding Fog.visibilityRange; available if FogCoordinate is attached</td>
       </tr>
       <tr>
-         <td>attribute vec4</td>
+         <td>in vec4</td>
          <td>x3d_Color</td>
          <td>color of the vertex; available if X3DColorNode is attached</td>
       </tr>
       <tr>
-         <td>attribute vec4</td>
+         <td>in vec4</td>
          <td>x3d_TexCoord0</td>
          <td>texture coordinate of the vertex from channel 0</td>
       </tr>
       <tr>
-         <td>attribute vec4</td>
+         <td>in vec4</td>
          <td>x3d_TexCoord1</td>
          <td>texture coordinate of the vertex from channel 1</td>
       </tr>
       <tr>
-         <td>attribute vec3</td>
+         <td>in vec4</td>
+         <td>x3d_TexCoord2</td>
+         <td>texture coordinate of the vertex from channel 2</td>
+      </tr>
+      <tr>
+         <td>in vec4</td>
+         <td>x3d_TexCoord3</td>
+         <td>texture coordinate of the vertex from channel 3</td>
+      </tr>
+      <tr>
+         <td>in vec3</td>
          <td>x3d_Normal</td>
          <td>normal of the vertex</td>
       </tr>
       <tr>
-         <td>attribute vec4</td>
+         <td>in vec4</td>
          <td>x3d_Vertex</td>
          <td>vertex coordinate, <b>required</b></td>
       </tr>
    </tbody>
 </table>
 
-### Uniform Struct x3d\_FogParameters
+### Uniform Struct x3d_FogParameters
 
 | Type  | Name            | Comment                                                 |
 |-------|-----------------|---------------------------------------------------------|
@@ -525,11 +535,11 @@ A ComposedShader defines a number of special variables for the various shader st
 | float | visibilityRange |                                                         |
 | mat3  | matrix          | inverse fog space matrix, rotation and scale components |
 
-### Uniform Struct x3d\_LightSourceParameters
+### Uniform Struct x3d_LightSourceParameters
 
 | Type  | Name             | Comment                                                   |
 |-------|------------------|-----------------------------------------------------------|
-| int   | type             | x3d\_DirectionalLight, x3d\_PointLight, x3d\_SpotLight    |
+| int   | type             | x3d_DirectionalLight, x3d_PointLight, x3d_SpotLight       |
 | vec3  | color            |                                                           |
 | float | ambientIntensity |                                                           |
 | float | intensity        |                                                           |
@@ -541,7 +551,7 @@ A ComposedShader defines a number of special variables for the various shader st
 | float | radius           |                                                           |
 | mat3  | matrix           | inverse light space matrix, rotation and scale components |
 
-### Uniform Struct x3d\_MaterialParameters
+### Uniform Struct x3d_MaterialParameters
 
 | Type  | Name             |
 |-------|------------------|
@@ -552,7 +562,7 @@ A ComposedShader defines a number of special variables for the various shader st
 | float | shininess        |
 | float | transparency     |
 
-### Uniform Struct x3d\_PointPropertiesParameters
+### Uniform Struct x3d_PointPropertiesParameters
 
 | Type  | Name                 |
 |-------|----------------------|
@@ -561,7 +571,7 @@ A ComposedShader defines a number of special variables for the various shader st
 | float | pointSizeMaxValue    |
 | vec3  | pointSizeAttenuation |
 
-### Uniform Struct x3d\_LinePropertiesParameters
+### Uniform Struct x3d_LinePropertiesParameters
 
 | Type      | Name                 |
 |-----------|----------------------|
@@ -570,7 +580,7 @@ A ComposedShader defines a number of special variables for the various shader st
 | float     | lineStippleScale     |
 | sampler2D | texture              |
 
-### Uniform Struct x3d\_FillPropertiesParameters
+### Uniform Struct x3d_FillPropertiesParameters
 
 | Type      | Name       |
 |-----------|------------|
@@ -579,7 +589,7 @@ A ComposedShader defines a number of special variables for the various shader st
 | vec3      | hatchColor |
 | sampler2D | texture    |
 
-### Uniform Struct x3d\_TextureCoordinateGeneratorParameters
+### Uniform Struct x3d_TextureCoordinateGeneratorParameters
 
 | Type  | Name            |
 |-------|-----------------|
@@ -592,10 +602,10 @@ If the shader node is part of a ParticleSystem node the following attributes and
 
 | Type              | Name                  | Comment                                                                |
 |------------------ |---------------------- |------------------------------------------------------------------------|
-| attribute vec4    | x3d\_Particle         | vec4 (int life, float lifetime, float elapsedTime, int texCoordIndex0) |
-| attribute mat4    | x3d\_ParticleMatrix   | particle matrix, should be multiplied with x3d\_Vertex                 |
-| uniform sampler2D | x3d\_TexCoordRamp     | texture coordinate ramp                                                |
-| build-in          | gl\_InstanceId        | available                                                              |
+| in vec4           | x3d_Particle         | vec4 (int life, float lifetime, float elapsedTime, int texCoordIndex0)  |
+| in mat4           | x3d_ParticleMatrix   | particle matrix, should be multiplied with x3d_Vertex                   |
+| uniform sampler2D | x3d_TexCoordRamp     | texture coordinate ramp                                                 |
+| build-in          | gl_InstanceId        | available                                                               |
 
 ## Built-in Constants
 
