@@ -110,7 +110,7 @@ out vec4 x3d_FragColor;
 void
 main ()
 {
-  x3d_FragColor = texture (x3d_Texture2D [0], texCoord .st);
+  x3d_FragColor = texture (x3d_Texture2D [0], vec2 (texCoord .s, 1.0 - texCoord .t));
 }
 ```
 
