@@ -76,7 +76,7 @@ Once the X3D is defined we can now write the vertex and the fragment shader sour
 
 precision mediump float;
 
-uniform mat4 x3d_TextureMatrix [x3d_MaxTextures];
+uniform mat4 x3d_TextureMatrix [1];
 uniform mat4 x3d_ModelViewMatrix;
 uniform mat4 x3d_ProjectionMatrix;
 
@@ -101,7 +101,7 @@ main ()
 
 precision mediump float;
 
-uniform sampler2D x3d_Texture2D [x3d_MaxTextures];
+uniform sampler2D x3d_Texture2D [1];
 
 in vec4 texCoord;
 
@@ -110,7 +110,7 @@ out vec4 x3d_FragColor;
 void
 main ()
 {
-  x3d_FragColor = texture (x3d_Texture2D [0], vec2 (texCoord));
+  x3d_FragColor = texture (x3d_Texture2D [0], texCoord .st);
 }
 ```
 
