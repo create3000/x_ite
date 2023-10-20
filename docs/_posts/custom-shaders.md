@@ -39,7 +39,7 @@ Transform {
         url "image.png"
       }
       shaders DEF Shader ComposedShader {
-        inputOnly  SFTime set_time
+        inputOnly SFTime set_time
         language "GLSL"
         parts [
           ShaderPart {
@@ -64,7 +64,7 @@ uniform float set_time
   }
 }
 
-ROUTE Timer.time TO Shader.set_time
+ROUTE Timer.elapsedTime TO Shader.set_time
 ```
 
 Once the X3D is defined we can now write the vertex and the fragment shader source. This is a simple example where a texture is applied to the geometry.
