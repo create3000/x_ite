@@ -87,10 +87,6 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
    {
       return 1;
    },
-   getElement ()
-   {
-      return this .image [0];
-   },
    unloadData ()
    {
       this .clearTexture ();
