@@ -197,33 +197,36 @@ Object .assign (Object .setPrototypeOf (SFImage .prototype, X3DField .prototype)
    },
    toStream (generator)
    {
-      const array = this .array;
+      const
+         width  = this .width,
+         height = this .height,
+         array  = new Uint32Array (this .array .getValue () .buffer);
 
-      generator .string += this .width;
+      generator .string += width;
       generator .string += generator .Space ();
-      generator .string += this .height;
+      generator .string += height;
       generator .string += generator .Space ();
       generator .string += this .comp;
       generator .string += generator .AttribBreak ();
 
       generator .IncIndent ();
 
-      for (let y = 0, h = this .height; y < h; ++ y)
+      for (let y = 0; y < height; ++ y)
       {
          generator .string += generator .ListIndent ();
 
-         const s = y * this .width;
+         const s = y * width;
 
-         for (let x = 0, w = this .width; x < w; ++ x)
+         for (let x = 0; x < width; ++ x)
          {
             generator .string += "0x";
             generator .string += array [x + s] .toString (16);
 
-            if (x !== w - 1)
+            if (x !== width - 1)
                generator .string += generator .Space ();
          }
 
-         if (y !== h - 1)
+         if (y !== height - 1)
             generator .string += generator .AttribBreak ();
       }
 
@@ -254,41 +257,43 @@ Object .assign (Object .setPrototypeOf (SFImage .prototype, X3DField .prototype)
    toJSONStreamValue (generator)
    {
       const
-         array  = this .array,
+         width  = this .width,
+         height = this .height,
+         array  = new Uint32Array (this .array .getValue () .buffer),
          length = array .length;
 
-      generator .string += this .width;
+      generator .string += width;
       generator .string += ',';
       generator .string += generator .TidySpace ();
-      generator .string += this .height;
+      generator .string += height;
       generator .string += ',';
       generator .string += generator .TidySpace ();
       generator .string += this .comp;
       generator .string += ',';
 
-      if (this .width && this .height)
+      if (width && height)
       {
          generator .string += generator .ListBreak ();
          generator .string += generator .IncIndent ();
 
-         for (let y = 0, h = this .height; y < h; ++ y)
+         for (let y = 0; y < height; ++ y)
          {
             generator .string += generator .ListIndent ();
 
-            const s = y * this .width;
+            const s = y * width;
 
-            for (let x = 0, w = this .width; x < w; ++ x)
+            for (let x = 0; x < width; ++ x)
             {
                generator .string += array [x + s];
 
                if (x + s !== length - 1)
                   generator .string += ',';
 
-               if (x !== w - 1)
+               if (x !== width - 1)
                   generator .string += generator .TidySpace ();
             }
 
-            if (y !== h - 1)
+            if (y !== height - 1)
                generator .string += generator .ListBreak ();
          }
 
