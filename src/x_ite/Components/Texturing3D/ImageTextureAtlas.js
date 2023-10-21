@@ -169,16 +169,7 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, X3DTexture
 
          // Determine image alpha.
 
-         let transparent = true;
-
-         for (let i = 3, length = data .length; i < length; i += 4)
-         {
-            if (data [i] !== 255)
-            {
-               transparent = true;
-               break;
-            }
-         }
+         const transparent = this .isImageTransparent (data);
 
          this .setTextureFromData (w, h, numberOfSlices, transparent, gl .RGBA, data);
          this .setLoadState (X3DConstants .COMPLETE_STATE);
