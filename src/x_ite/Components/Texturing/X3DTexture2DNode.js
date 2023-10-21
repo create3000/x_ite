@@ -101,7 +101,7 @@ Object .assign (Object .setPrototypeOf (X3DTexture2DNode .prototype, X3DSingleTe
    {
       this .setTextureFromData (1, 1, false, defaultData);
    },
-   setTextureFromData (width, height, transparent, data)
+   setTextureFromData (width, height, colorSpaceConversion, data)
    {
       this .width  = width;
       this .height = height;
@@ -109,9 +109,10 @@ Object .assign (Object .setPrototypeOf (X3DTexture2DNode .prototype, X3DSingleTe
       const gl = this .getBrowser () .getContext ();
 
       gl .bindTexture (gl .TEXTURE_2D, this .getTexture ());
+      gl .pixelStorei (gl .UNPACK_COLORSPACE_CONVERSION_WEBGL, colorSpaceConversion ? gl .BROWSER_DEFAULT_WEBGL : gl .NONE);
       gl .texImage2D  (gl .TEXTURE_2D, 0, gl .RGBA, width, height, 0, gl .RGBA, gl .UNSIGNED_BYTE, data);
+      gl .pixelStorei (gl .UNPACK_COLORSPACE_CONVERSION_WEBGL, gl .BROWSER_DEFAULT_WEBGL);
 
-      this .setTransparent (transparent);
       this .updateTextureParameters ();
       this .addNodeEvent ();
    },

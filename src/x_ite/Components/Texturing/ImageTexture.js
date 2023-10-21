@@ -213,21 +213,21 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
             // Upload image to GPU.
 
             this .setGenerateMipMaps (true);
-            this .setTextureFromData (width, height, transparent, data);
+            this .setTextureFromData (width, height, false, data);
+            this .setTransparent (transparent);
             this .setLoadState (X3DConstants .COMPLETE_STATE);
          }
          else
          {
             const
-               data        = await this .getImageData (image, this ._colorSpaceConversion .getValue ()),
-               transparent = this .isImageTransparent (data),
-               width       = image .width,
-               height      = image .height;
+               width  = image .width,
+               height = image .height;
 
             // Upload image to GPU.
 
             this .setGenerateMipMaps (true);
-            this .setTextureFromData (width, height, transparent, data);
+            this .setTextureFromData (width, height, this ._colorSpaceConversion .getValue (), image);
+            this .setTransparent (this .isImageTransparent (await this .getTextureData (this .getTexture (), width, height)));
             this .setLoadState (X3DConstants .COMPLETE_STATE);
          }
       }
@@ -236,23 +236,6 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
          // Catch security error from cross origin requests.
          this .setError ({ type: error .message });
       }
-   },
-   async getImageData (image, colorSpaceConversion = true)
-   {
-      const
-         gl      = this .getBrowser () .getContext (),
-         texture = gl .createTexture ();
-
-      gl .bindTexture (gl .TEXTURE_2D, texture);
-      gl .pixelStorei (gl .UNPACK_COLORSPACE_CONVERSION_WEBGL, colorSpaceConversion ? gl .BROWSER_DEFAULT_WEBGL : gl .NONE);
-      gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA, gl .RGBA, gl .UNSIGNED_BYTE, image);
-      gl .pixelStorei (gl .UNPACK_COLORSPACE_CONVERSION_WEBGL, gl .BROWSER_DEFAULT_WEBGL);
-
-      const data = await this .getTextureData (texture, image .width, image .height);
-
-      gl .deleteTexture (texture);
-
-      return data;
    },
    async getTextureData (texture, width, height)
    {
