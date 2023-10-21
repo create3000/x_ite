@@ -187,7 +187,7 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
             width  = video .videoWidth,
             height = video .videoHeight;
 
-         if (gl .getVersion () === 1 && (!Algorithm .isPowerOfTwo (width) || !Algorithm .isPowerOfTwo (height)))
+         if (gl .getVersion () === 1 && !(Algorithm .isPowerOfTwo (width) && Algorithm .isPowerOfTwo (height)))
             throw new Error ("The movie texture is a non power-of-two texture.");
 
          this .setMediaElement (this .video [0]);
