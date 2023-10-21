@@ -125,8 +125,15 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, X3DTexture
 
       try
       {
+         const gl = this .getBrowser () .getContext ();
+
+         if (gl .getVersion () === 1)
+         {
+            this .setLoadState (X3DConstants .COMPLETE_STATE);
+            return;
+         }
+
          const
-            gl          = this .getBrowser () .getContext (),
             image       = this .image [0],
             width       = image .width,
             height      = image .height,
