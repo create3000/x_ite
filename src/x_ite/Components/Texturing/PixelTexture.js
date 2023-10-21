@@ -235,10 +235,10 @@ Object .assign (Object .setPrototypeOf (PixelTexture .prototype, X3DTexture2DNod
             cx2 .clearRect (0, 0, width, height);
             cx2 .drawImage (canvas1, 0, 0, canvas1 .width, canvas1 .height, 0, 0, width, height);
 
-            data = cx2 .getImageData (0, 0, width, height) .data;
+            data = new Uint8Array (cx2 .getImageData (0, 0, width, height) .data .buffer);
          }
 
-         this .setTextureFromData (width, height, false, new Uint8Array (data .buffer));
+         this .setTextureFromData (width, height, false, data);
          this .setTransparent ();
          this ._loadState = X3DConstants .COMPLETE_STATE;
       }

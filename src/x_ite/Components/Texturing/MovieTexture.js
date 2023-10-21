@@ -190,7 +190,7 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
             throw new Error ("The movie texture is a non power-of-two texture.");
 
          this .setMediaElement (this .video [0]);
-         this .setTextureFromData (width, height, false, video);
+         this .setTextureFromData (width, height, true, video);
          this .setLoadState (X3DConstants .COMPLETE_STATE);
 
          this .set_speed__ ();
@@ -212,7 +212,7 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
          gif .pause ();
 
          this .setMediaElement (gif);
-         this .setTextureFromData (gif .get_canvas () .width, gif .get_canvas () .height, false, gif .get_frames () [0] .data);
+         this .setTextureFromData (gif .get_canvas () .width, gif .get_canvas () .height, true, gif .get_frames () [0] .data);
          this .setLoadState (X3DConstants .COMPLETE_STATE);
 
          this .set_speed__ ();
