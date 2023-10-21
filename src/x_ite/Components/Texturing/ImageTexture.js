@@ -221,9 +221,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
          }
          else
          {
-            const
-               width  = image .width,
-               height = image .height;
+            const { width, height } = image;
 
             // Upload image to GPU.
 
