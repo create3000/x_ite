@@ -132,11 +132,11 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
    {
       const index = this .getTextureIndices () .AMBIENT_TEXTURE
 
-      this .ambientTextureNode ?._linear .removeInterest ("setTexture", this);
+      this .ambientTextureNode ?._linear .removeInterest (`setTexture${index}`, this);
 
       this .ambientTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._ambientTexture);
 
-      this .ambientTextureNode ?._linear .addInterest ("setTexture", this, index, this .ambientTextureNode);
+      this .ambientTextureNode ?._linear .addInterest (`setTexture${index}`, this, index, this .ambientTextureNode);
 
       this .setTexture (index, this .ambientTextureNode);
    },
@@ -159,16 +159,16 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
 
       if (this .diffuseTextureNode)
       {
-         this .diffuseTextureNode ._transparent .removeInterest ("set_transparent__", this);
-         this .diffuseTextureNode ._linear      .removeInterest ("setTexture",        this);
+         this .diffuseTextureNode ._transparent .removeInterest ("set_transparent__",  this);
+         this .diffuseTextureNode ._linear      .removeInterest (`setTexture${index}`, this);
       }
 
       this .diffuseTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._diffuseTexture);
 
       if (this .diffuseTextureNode)
       {
-         this .diffuseTextureNode ._transparent .addInterest ("set_transparent__", this);
-         this .diffuseTextureNode ._linear      .addInterest ("setTexture",        this, index, this .diffuseTextureNode);
+         this .diffuseTextureNode ._transparent .addInterest ("set_transparent__",  this);
+         this .diffuseTextureNode ._linear      .addInterest (`setTexture${index}`, this, index, this .diffuseTextureNode);
       }
 
       this .setTexture (index, this .diffuseTextureNode);
@@ -190,11 +190,11 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
    {
       const index = this .getTextureIndices () .SPECULAR_TEXTURE;
 
-      this .specularTextureNode ?._linear .removeInterest ("setTexture", this);
+      this .specularTextureNode ?._linear .removeInterest (`setTexture${index}`, this);
 
       this .specularTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._specularTexture);
 
-      this .specularTextureNode ?._linear .addInterest ("setTexture", this, index, this .specularTextureNode);
+      this .specularTextureNode ?._linear .addInterest (`setTexture${index}`, this, index, this .specularTextureNode);
 
       this .setTexture (index, this .specularTextureNode);
    },
