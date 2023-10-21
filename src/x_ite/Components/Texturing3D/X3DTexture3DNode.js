@@ -62,7 +62,6 @@ function X3DTexture3DNode (executionContext)
    this .width  = 0;
    this .height = 0;
    this .depth  = 0;
-   this .data   = null;
 }
 
 Object .assign (Object .setPrototypeOf (X3DTexture3DNode .prototype, X3DSingleTextureNode .prototype),
@@ -126,7 +125,6 @@ Object .assign (Object .setPrototypeOf (X3DTexture3DNode .prototype, X3DSingleTe
       this .width  = width;
       this .height = height;
       this .depth  = depth;
-      this .data   = data;
 
       const gl = this .getBrowser () .getContext ();
 
