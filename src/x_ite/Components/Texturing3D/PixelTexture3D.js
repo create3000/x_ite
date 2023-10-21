@@ -121,8 +121,8 @@ Object .assign (Object .setPrototypeOf (PixelTexture3D .prototype, X3DTexture3DN
                {
                   const p = image [i];
 
-                  data [d ++ ] = (p >>> 8) & 0xff;
-                  data [d ++ ] = p & 0xff;
+                  data [d ++] = (p >>> 8) & 0xff;
+                  data [d ++] = p & 0xff;
                }
 
                break;
@@ -136,9 +136,9 @@ Object .assign (Object .setPrototypeOf (PixelTexture3D .prototype, X3DTexture3DN
                {
                   const p = image [i];
 
-                  data [d ++ ] = (p >>> 16) & 0xff;
-                  data [d ++ ] = (p >>> 8)  & 0xff;
-                  data [d ++ ] = p & 0xff;
+                  data [d ++] = (p >>> 16) & 0xff;
+                  data [d ++] = (p >>> 8)  & 0xff;
+                  data [d ++] = p & 0xff;
                }
 
                break;
@@ -152,10 +152,10 @@ Object .assign (Object .setPrototypeOf (PixelTexture3D .prototype, X3DTexture3DN
                {
                   const p = image [i];
 
-                  data [d ++ ] = (p >>> 24) & 0xff;
-                  data [d ++ ] = (p >>> 16) & 0xff;
-                  data [d ++ ] = (p >>> 8)  & 0xff;
-                  data [d ++ ] = p & 0xff;
+                  data [d ++] = (p >>> 24) & 0xff;
+                  data [d ++] = (p >>> 16) & 0xff;
+                  data [d ++] = (p >>> 8)  & 0xff;
+                  data [d ++] = p & 0xff;
                }
 
                break;
