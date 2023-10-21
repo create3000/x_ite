@@ -228,7 +228,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
             // Upload image to GPU.
 
             this .setGenerateMipMaps (true);
-            this .setTextureFromData (width, height, this ._colorSpaceConversion .getValue (), false, image);
+            this .setTextureFromData (width, height, this ._colorSpaceConversion .getValue (), this .isTransparent (), image);
             this .setTransparent (this .isImageTransparent (await this .getTextureData (this .getTexture (), width, height)));
             this .setLoadState (X3DConstants .COMPLETE_STATE);
          }
