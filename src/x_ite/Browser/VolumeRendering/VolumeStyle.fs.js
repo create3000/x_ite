@@ -24,13 +24,7 @@ out vec4 x3d_FragColor;
 vec4
 getTextureColor (in vec3 texCoord)
 {
-   if (texCoord .s < 0.0 || texCoord .s > 1.0)
-      discard;
-
-   if (texCoord .t < 0.0 || texCoord .t > 1.0)
-      discard;
-
-   if (texCoord .p < 0.0 || texCoord .p > 1.0)
+   if (any (greaterThan (abs (texCoord - 0.5), vec3 (0.5))))
       discard;
 
    vec4 textureColor = texture (x3d_Texture3D [0], texCoord);
