@@ -100,6 +100,7 @@ Object .assign (Object .setPrototypeOf (X3DTexture2DNode .prototype, X3DSingleTe
    clearTexture ()
    {
       this .setTextureFromData (1, 1, false, defaultData);
+      this .setTransparent (false);
    },
    setTextureFromData (width, height, colorSpaceConversion, data)
    {
