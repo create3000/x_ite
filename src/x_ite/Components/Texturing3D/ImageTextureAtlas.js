@@ -61,7 +61,6 @@ function ImageTextureAtlas (executionContext)
    this .addType (X3DConstants .ImageTextureAtlas);
 
    this .image    = $("<img></img>");
-   this .canvas   = $("<canvas></canvas>");
    this .urlStack = new Fields .MFString ();
 }
 
@@ -116,7 +115,7 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, X3DTexture
 
       this .loadNext ();
    },
-   setImage ()
+   async setImage ()
    {
       if (DEVELOPMENT)
       {
@@ -127,14 +126,16 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, X3DTexture
       try
       {
          const
-            gl     = this .getBrowser () .getContext (),
-            image  = this .image [0],
-            canvas = this .canvas [0],
-            cx     = canvas .getContext ("2d", { willReadFrequently: true });
+            gl          = this .getBrowser () .getContext (),
+            image       = this .image [0],
+            width       = image .width,
+            height      = image .height,
+            texture     = gl .createTexture (),
+            frameBuffer = gl .createFramebuffer (),
+            lastBuffer  = gl .getParameter (gl .FRAMEBUFFER_BINDING);
 
-         const
-            width  = image .width,
-            height = image .height;
+         gl .bindTexture (gl .TEXTURE_2D, texture);
+         gl .texImage2D  (gl .TEXTURE_2D, 0, gl .RGBA, width, height, 0, gl .RGBA, gl .UNSIGNED_BYTE, image);
 
          // Slice me nice.
 
@@ -145,33 +146,43 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, X3DTexture
             numberOfSlices = Math .min (this ._numberOfSlices .getValue (), maxSlices),
             w              = Math .floor (width / slicesOverX),
             h              = Math .floor (height / slicesOverY),
-            data           = new Uint8Array (w * h * numberOfSlices * 4);
+            data           = new Uint8Array (width * height * 4);
 
-         canvas .width  = w;
-         canvas .height = h;
+         gl .bindFramebuffer (gl .FRAMEBUFFER, frameBuffer);
+         gl .bindTexture (gl .TEXTURE_3D, this .getTexture ());
+         gl .texImage3D (gl .TEXTURE_3D, 0, gl .RGBA, w, h, numberOfSlices, 0, gl .RGBA, gl .UNSIGNED_BYTE, null);
+
+         gl .bindTexture (gl .TEXTURE_2D, texture);
+         gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .TEXTURE_2D, texture, 0);
+         await gl .readPixelsAsync (0, 0, width, height, gl .RGBA, gl .UNSIGNED_BYTE, data);
+
+         gl .bindTexture (gl .TEXTURE_3D, this .getTexture ());
 
          for (let y = 0, i = 0; y < slicesOverY && i < numberOfSlices; ++ y)
          {
             for (let x = 0; x < slicesOverX && i < numberOfSlices; ++ x, ++ i)
             {
                const
-                  sx = Math .floor (x * width / slicesOverX),
+                  sx = Math .floor (x * width  / slicesOverX),
                   sy = Math .floor (y * height / slicesOverY);
 
-               cx .clearRect (0, 0, w, h);
-               cx .drawImage (image, sx, sy, w, h, 0, 0, w, h);
-
-               const d = cx .getImageData (0, 0, w, h) .data;
-
-               data .set (d, w * h * i * 4);
+               gl .copyTexSubImage3D (gl .TEXTURE_3D, 0, 0, 0, i, sx, sy, w, h);
             }
          }
+
+         gl .bindFramebuffer (gl .FRAMEBUFFER, lastBuffer);
+         gl .deleteFramebuffer (frameBuffer);
+         gl .deleteTexture (texture);
 
          // Determine image alpha.
 
          const transparent = this .isImageTransparent (data);
 
-         this .setTextureFromData (w, h, numberOfSlices, transparent, gl .RGBA, data);
+         this .setWidth (w);
+         this .setHeight (h);
+         this .setDepth (numberOfSlices);
+         this .setTransparent (transparent);
+         this .updateTextureParameters ();
          this .setLoadState (X3DConstants .COMPLETE_STATE);
       }
       catch (error)
