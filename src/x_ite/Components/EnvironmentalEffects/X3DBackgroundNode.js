@@ -85,6 +85,9 @@ function X3DBackgroundNode (executionContext)
    this .sphereContext         = new GeometryContext ({ colorMaterial: true });
    this .sphereAlphaContext    = new GeometryContext ({ colorMaterial: true, alphaMode: AlphaMode .BLEND });
    this .texturesContext       = new GeometryContext ({ });
+
+   for (let index = 0; index < 6; ++ index)
+      this [`set_loadState${index}__`] = function (textureNode, index) { this .set_loadState__ (textureNode, index); };
 }
 
 Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindableNode .prototype),
@@ -144,11 +147,11 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
    },
    set_texture__ (textureNode, index)
    {
-      this .textureNodes [index] ?._loadState .removeInterest ("set_loadState__", this);
+      this .textureNodes [index] ?._loadState .removeInterest (`set_loadState${index}__`, this);
 
       this .textureNodes [index] = textureNode;
 
-      textureNode ?._loadState .addInterest ("set_loadState__", this, textureNode, index);
+      textureNode ?._loadState .addInterest (`set_loadState${index}__`, this, textureNode, index);
 
       this .set_loadState__ (textureNode, index);
    },
