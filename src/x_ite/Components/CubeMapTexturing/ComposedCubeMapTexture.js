@@ -175,7 +175,17 @@ Object .assign (Object .setPrototypeOf (ComposedCubeMapTexture .prototype, X3DEn
 
             gl .bindTexture (this .getTarget (), this .getTexture ());
             gl .texImage2D (this .getTargets () [i], 0, gl .RGBA, width, height, 0, gl .RGBA, gl .UNSIGNED_BYTE, null);
-            gl .copyTexSubImage2D (this .getTargets () [i], 0, 0, 0, 0, 0, width, height);
+
+            if (textureNode .getTextureType () === 1)
+            {
+               gl .copyTexSubImage2D (this .getTargets () [i], 0, 0, 0, 0, 0, width, height);
+            }
+            else
+            {
+               // Copy and flip Y.
+               for (let y = 0; y < height; ++ y)
+                  gl .copyTexSubImage2D (this .getTargets () [i], 0, 0, height - y - 1, 0, y, width, 1);
+            }
          }
 
          gl .bindFramebuffer (gl .FRAMEBUFFER, lastBuffer);

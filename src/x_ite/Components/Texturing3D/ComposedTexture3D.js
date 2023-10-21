@@ -146,7 +146,7 @@ Object .assign (Object .setPrototypeOf (ComposedTexture3D .prototype, X3DTexture
 
                if (textureNode .getTextureType () === 1)
                {
-                  // Copy and flipY.
+                  // Copy and flip Y.
                   for (let y = 0; y < height; ++ y)
                      gl .copyTexSubImage3D (gl .TEXTURE_3D, 0, 0, height - y - 1, i, 0, y, width, 1);
                }
