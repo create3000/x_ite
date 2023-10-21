@@ -456,4 +456,12 @@ Object .defineProperties (Material,
    },
 });
 
+for (const index of Object .values (Material .prototype .getTextureIndices ()))
+{
+   Material .prototype [`setTexture${index}`] = function (index, textureNode)
+   {
+      this .setTexture (index, textureNode);
+   };
+}
+
 export default Material;

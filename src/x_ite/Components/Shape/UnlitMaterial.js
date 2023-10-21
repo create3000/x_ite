@@ -153,4 +153,12 @@ Object .defineProperties (UnlitMaterial,
    },
 });
 
+for (const index of Object .values (UnlitMaterial .prototype .getTextureIndices ()))
+{
+   UnlitMaterial .prototype [`setTexture${index}`] = function (index, textureNode)
+   {
+      this .setTexture (index, textureNode);
+   };
+}
+
 export default UnlitMaterial;

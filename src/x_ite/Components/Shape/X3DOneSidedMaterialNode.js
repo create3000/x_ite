@@ -58,9 +58,6 @@ function X3DOneSidedMaterialNode (executionContext)
    this .addType (X3DConstants .X3DOneSidedMaterialNode);
 
    this .emissiveColor = new Float32Array (3);
-
-   for (const index of Object .values (this .getTextureIndices ()))
-      this [`setTexture${index}`] = function (index, textureNode) { this .setTexture (index, textureNode); };
 }
 
 Object .assign (Object .setPrototypeOf (X3DOneSidedMaterialNode .prototype, X3DMaterialNode .prototype),
