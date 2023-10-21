@@ -216,8 +216,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
             // Upload image to GPU.
 
             this .setGenerateMipMaps (true);
-            this .setTextureFromData (width, height, false, data);
-            this .setTransparent (transparent);
+            this .setTextureFromData (width, height, false, transparent, data);
             this .setLoadState (X3DConstants .COMPLETE_STATE);
          }
          else
@@ -229,7 +228,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
             // Upload image to GPU.
 
             this .setGenerateMipMaps (true);
-            this .setTextureFromData (width, height, this ._colorSpaceConversion .getValue (), image);
+            this .setTextureFromData (width, height, this ._colorSpaceConversion .getValue (), false, image);
             this .setTransparent (this .isImageTransparent (await this .getTextureData (this .getTexture (), width, height)));
             this .setLoadState (X3DConstants .COMPLETE_STATE);
          }
