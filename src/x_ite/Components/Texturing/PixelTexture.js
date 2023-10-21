@@ -51,8 +51,6 @@ import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DTexture2DNode     from "./X3DTexture2DNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import Algorithm            from "../../../standard/Math/Algorithm.js";
-import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
-import Matrix3              from "../../../standard/Math/Numbers/Matrix3.js";
 
 function PixelTexture (executionContext)
 {
