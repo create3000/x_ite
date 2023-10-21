@@ -178,10 +178,10 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, X3DTexture
 
          const transparent = this .isImageTransparent (data);
 
+         this .setTransparent (transparent);
          this .setWidth (w);
          this .setHeight (h);
          this .setDepth (numberOfSlices);
-         this .setTransparent (transparent);
          this .updateTextureParameters ();
          this .setLoadState (X3DConstants .COMPLETE_STATE);
       }
