@@ -93,7 +93,7 @@ Object .assign (Object .setPrototypeOf (PixelTexture3D .prototype, X3DTexture3DN
             width       = image [WIDTH],
             height      = image [HEIGHT],
             depth       = image [DEPTH],
-            transparent = ! (components & 1),
+            transparent = !(components & 1),
             size3D      = width * height * depth;
 
          let data, format;
