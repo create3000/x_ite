@@ -58,8 +58,7 @@ function ComposedTexture3D (executionContext)
 
    this .addType (X3DConstants .ComposedTexture3D);
 
-   this .addChildObjects (X3DConstants .outputOnly,  "loadState", new Fields .SFInt32 (X3DConstants .NOT_STARTED_STATE),
-                          X3DConstants .inputOutput, "update",    new Fields .SFTime ());
+   this .addChildObjects (X3DConstants .inputOutput, "update",    new Fields .SFTime ());
 
    this .textureNodes = [ ];
 }
@@ -78,10 +77,6 @@ Object .assign (Object .setPrototypeOf (ComposedTexture3D .prototype, X3DTexture
       this ._update  .addInterest ("update",        this);
 
       this .set_texture__ ();
-   },
-   checkLoadState ()
-   {
-      return this ._loadState .getValue ();
    },
    set_texture__ ()
    {
@@ -120,8 +115,6 @@ Object .assign (Object .setPrototypeOf (ComposedTexture3D .prototype, X3DTexture
       if (textureNodes .length === 0 || !this .isComplete ())
       {
          this .clearTexture ();
-
-         this ._loadState = X3DConstants .FAILED_STATE;
       }
       else
       {
@@ -166,8 +159,6 @@ Object .assign (Object .setPrototypeOf (ComposedTexture3D .prototype, X3DTexture
          this .setTransparent (textureNodes .some (textureNode => textureNode .isTransparent ()));
          this .setLinear (textureNodes .some (textureNode => textureNode .isLinear ()));
          this .updateTextureParameters ();
-
-         this ._loadState = X3DConstants .COMPLETE_STATE;
       }
    },
 });

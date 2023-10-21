@@ -56,8 +56,6 @@ function PixelTexture3D (executionContext)
    X3DTexture3DNode .call (this, executionContext);
 
    this .addType (X3DConstants .PixelTexture3D);
-
-   this .addChildObjects (X3DConstants .outputOnly, "loadState", new Fields .SFInt32 (X3DConstants .NOT_STARTED_STATE));
 }
 
 Object .assign (Object .setPrototypeOf (PixelTexture3D .prototype, X3DTexture3DNode .prototype),
@@ -69,10 +67,6 @@ Object .assign (Object .setPrototypeOf (PixelTexture3D .prototype, X3DTexture3DN
       this ._image .addInterest ("set_image__", this);
 
       this .set_image__ ();
-   },
-   checkLoadState ()
-   {
-      return this ._loadState .getValue ();
    },
    set_image__: (() =>
    {
@@ -90,7 +84,6 @@ Object .assign (Object .setPrototypeOf (PixelTexture3D .prototype, X3DTexture3DN
          if (image .length < OFFSET)
          {
             this .clearTexture ();
-            this ._loadState = X3DConstants .FAILED_STATE;
             return;
          }
 
@@ -170,13 +163,11 @@ Object .assign (Object .setPrototypeOf (PixelTexture3D .prototype, X3DTexture3DN
             default:
             {
                this .clearTexture ();
-               this ._loadState = X3DConstants .FAILED_STATE;
                return;
             }
          }
 
          this .setTextureFromData (width, height, depth, transparent, format, data);
-         this ._loadState = X3DConstants .COMPLETE_STATE;
       };
    })(),
 });

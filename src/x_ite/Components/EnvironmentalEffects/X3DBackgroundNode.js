@@ -144,11 +144,11 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
    },
    set_texture__ (textureNode, index)
    {
-      this .textureNodes [index] ?._loadState .removeInterest (`set_loadState${index}__`, this);
+      this .textureNodes [index] ?.removeInterest (`set_loadState${index}__`, this);
 
       this .textureNodes [index] = textureNode;
 
-      textureNode ?._loadState .addInterest (`set_loadState${index}__`, this, textureNode, index);
+      textureNode ?.addInterest (`set_loadState${index}__`, this, textureNode, index);
 
       this .set_loadState__ (textureNode, index);
    },

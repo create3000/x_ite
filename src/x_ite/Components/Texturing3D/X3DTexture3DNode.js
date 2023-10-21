@@ -120,8 +120,6 @@ Object .assign (Object .setPrototypeOf (X3DTexture3DNode .prototype, X3DSingleTe
       const gl = this .getBrowser () .getContext ();
 
       this .setTextureFromData (1, 1, 1, false, gl .RGBA, defaultData);
-
-      this .data = null;
    },
    setTextureFromData (width, height, depth, transparent, format, data)
    {
