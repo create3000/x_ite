@@ -167,7 +167,7 @@ Object .assign (Object .setPrototypeOf (PixelTexture3D .prototype, X3DTexture3DN
             }
          }
 
-         this .setTextureFromData (width, height, depth, transparent && this .isImageTransparent (data), format, data);
+         this .setTextureFromData (width, height, depth, transparent, format, data);
       };
    })(),
 });

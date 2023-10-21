@@ -124,7 +124,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, X3DTexture3DN
             {
                const
                   internalType = this .getInternalType (nrrd .components),
-                  transparent  = !(nrrd .components & 1) && this .isImageTransparent (nrrd .data);
+                  transparent  = !(nrrd .components & 1);
 
                this .setTextureFromData (nrrd .width, nrrd .height, nrrd .depth, transparent, internalType, nrrd .data);
                this .setLoadState (X3DConstants .COMPLETE_STATE);
@@ -137,7 +137,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, X3DTexture3DN
             {
                const
                   internalType = this .getInternalType (dicom .components),
-                  transparent  = !(dicom .components & 1) && this .isImageTransparent (dicom .data);
+                  transparent  = !(dicom .components & 1);
 
                this .setTextureFromData (dicom .width, dicom .height, dicom .depth, transparent, internalType, dicom .data);
                this .setLoadState (X3DConstants .COMPLETE_STATE);
