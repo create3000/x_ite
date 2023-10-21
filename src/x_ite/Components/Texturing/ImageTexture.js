@@ -188,15 +188,22 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
          // https://developer.mozilla.org/en-US/docs/Web/API/createImageBitmap
          // createImageBitmap
 
-         if (gl .getVersion () === 1 && !(Algorithm .isPowerOfTwo (image .width) && Algorithm .isPowerOfTwo (image .height)))
+         if (gl .getVersion () === 1)
          {
             const
                canvas = document .createElement ("canvas"),
-               cx     = canvas .getContext ("2d", { willReadFrequently: true }),
-               width  = Algorithm .nextPowerOfTwo (image .width),
-               height = Algorithm .nextPowerOfTwo (image .height);
+               cx     = canvas .getContext ("2d", { willReadFrequently: true });
 
-            // Scale image to next power of two if needed.
+            let
+               width  = image .width,
+               height = image .height;
+
+            if (!(Algorithm .isPowerOfTwo (width) && Algorithm .isPowerOfTwo (height)))
+            {
+               // Scale image to next power of two if needed.
+               width  = Algorithm .nextPowerOfTwo (width),
+               height = Algorithm .nextPowerOfTwo (height);
+            }
 
             canvas .width  = width;
             canvas .height = height;

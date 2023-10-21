@@ -170,34 +170,14 @@ Object .assign (Object .setPrototypeOf (ComposedCubeMapTexture .prototype, X3DEn
 
             // Copy color texture.
 
-            switch (textureNode .getType () .at (-1))
-            {
-               case X3DConstants .ImageTexture:
-               case X3DConstants .MovieTexture:
-               {
-                  gl .bindTexture (this .getTarget (), this .getTexture ());
+            gl .bindTexture (gl .TEXTURE_2D, textureNode .getTexture ());
+            gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .TEXTURE_2D, textureNode .getTexture (), 0);
 
-                  if (gl .getVersion () >= 2)
-                     gl .texImage2D (this .getTargets () [i], 0, gl .RGBA, width, height, 0, gl .RGBA, gl .UNSIGNED_BYTE, textureNode .getElement ());
-                  else
-                     gl .texImage2D (this .getTargets () [i], 0, gl .RGBA, gl .RGBA, gl .UNSIGNED_BYTE, textureNode .getElement ());
-
-                  break;
-               }
-               default:
-               {
-                  gl .bindTexture (gl .TEXTURE_2D, textureNode .getTexture ());
-                  gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .TEXTURE_2D, textureNode .getTexture (), 0);
-
-                  gl .bindTexture (this .getTarget (), this .getTexture ());
-                  gl .texImage2D (this .getTargets () [i], 0, gl .RGBA, width, height, 0, gl .RGBA, gl .UNSIGNED_BYTE, null);
-                  gl .copyTexSubImage2D (this .getTargets () [i], 0, 0, 0, 0, 0, width, height);
-                  break;
-               }
-            }
+            gl .bindTexture (this .getTarget (), this .getTexture ());
+            gl .texImage2D (this .getTargets () [i], 0, gl .RGBA, width, height, 0, gl .RGBA, gl .UNSIGNED_BYTE, null);
+            gl .copyTexSubImage2D (this .getTargets () [i], 0, 0, 0, 0, 0, width, height);
          }
 
-         gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, false);
          gl .bindFramebuffer (gl .FRAMEBUFFER, lastBuffer);
 
          this .setTransparent (textureNodes .some (textureNode => textureNode .isTransparent ()));
