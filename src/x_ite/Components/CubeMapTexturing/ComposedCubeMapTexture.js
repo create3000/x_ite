@@ -73,6 +73,9 @@ function ComposedCubeMapTexture (executionContext)
 
    this .textureNodes = [null, null, null, null, null, null];
    this .textureBits  = new BitSet ();
+
+   for (let i = 0; i < 6; ++ i)
+      this [`set_loadState${i}__`] = function (textureNode, index) { this .set_loadState__ (textureNode, index); };
 }
 
 Object .assign (Object .setPrototypeOf (ComposedCubeMapTexture .prototype, X3DEnvironmentTextureNode .prototype),
@@ -110,11 +113,11 @@ Object .assign (Object .setPrototypeOf (ComposedCubeMapTexture .prototype, X3DEn
    {
       let textureNode = this .textureNodes [index];
 
-      textureNode ?.removeInterest ("set_loadState__", this);
+      textureNode ?.removeInterest (`set_loadState${index}__`, this);
 
       textureNode = this .textureNodes [index] = X3DCast (X3DConstants .X3DTexture2DNode, node);
 
-      textureNode ?.addInterest ("set_loadState__", this, textureNode, index);
+      textureNode ?.addInterest (`set_loadState${index}__`, this, textureNode, index);
 
       this .set_loadState__ (textureNode, index);
    },
