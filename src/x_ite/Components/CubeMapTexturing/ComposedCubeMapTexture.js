@@ -110,23 +110,23 @@ Object .assign (Object .setPrototypeOf (ComposedCubeMapTexture .prototype, X3DEn
    {
       let textureNode = this .textureNodes [index];
 
-      textureNode ?.removeInterest (`set_loadState${index}__`, this);
+      textureNode ?._loadState .removeInterest (`set_loadState${index}__`, this);
 
       textureNode = this .textureNodes [index] = X3DCast (X3DConstants .X3DTexture2DNode, node);
 
-      textureNode ?.addInterest (`set_loadState${index}__`, this, textureNode, index);
+      textureNode ?._loadState .addInterest (`set_loadState${index}__`, this, textureNode, index);
 
       this .set_loadState__ (textureNode, index);
    },
    set_loadState__ (textureNode, index)
    {
-      this .setTextureBit (index, textureNode, textureNode ?.checkLoadState () ?? X3DConstants .NOT_STARTED);
+      this .setTextureBit (index, textureNode ?.checkLoadState ());
 
       this ._update .addEvent ();
    },
-   setTextureBit (bit, textureNode, loadState)
+   setTextureBit (bit, loadState)
    {
-      this .textureBits .set (bit, loadState === X3DConstants .COMPLETE_STATE || textureNode ?.getWidth ());
+      this .textureBits .set (bit, loadState === X3DConstants .COMPLETE_STATE);
    },
    isComplete ()
    {
@@ -167,6 +167,8 @@ Object .assign (Object .setPrototypeOf (ComposedCubeMapTexture .prototype, X3DEn
                height      = textureNode .getHeight ();
 
             this .setSize (width);
+
+            console .log (i, textureNode .checkLoadState (), width, height, textureNode .getId ())
 
             // Copy color texture.
 
