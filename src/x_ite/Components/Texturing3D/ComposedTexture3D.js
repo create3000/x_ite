@@ -133,6 +133,7 @@ Object .assign (Object .setPrototypeOf (ComposedTexture3D .prototype, X3DTexture
             lastBuffer = gl .getParameter (gl .FRAMEBUFFER_BINDING);
 
          gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffer);
+         gl .bindTexture (gl .TEXTURE_3D, this .getTexture ());
          gl .texImage3D (gl .TEXTURE_3D, 0, gl .RGBA, width, height, depth, 0, gl .RGBA, gl .UNSIGNED_BYTE, null);
 
          for (const [i, textureNode] of this .textureNodes .entries ())
@@ -141,13 +142,21 @@ Object .assign (Object .setPrototypeOf (ComposedTexture3D .prototype, X3DTexture
             {
                gl .bindTexture (gl .TEXTURE_2D, textureNode .getTexture ());
                gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .TEXTURE_2D, textureNode .getTexture (), 0);
-
                gl .bindTexture (gl .TEXTURE_3D, this .getTexture ());
-               gl .copyTexSubImage3D (gl .TEXTURE_3D, 0, 0, 0, i, 0, 0, width, height);
+
+               if (textureNode .getTextureType () === 1)
+               {
+                  for (let y = 0; y < height; ++ y)
+                     gl .copyTexSubImage3D (gl .TEXTURE_3D, 0, 0, height - y - 1, i, 0, y, width, 1);
+               }
+               else
+               {
+                  gl .copyTexSubImage3D (gl .TEXTURE_3D, 0, 0, 0, i, 0, 0, width, height);
+               }
             }
             else
             {
-               console .log ("ComposedTexture3D: all textures must have same size.");
+               console .warn ("ComposedTexture3D: all textures must have same size.");
             }
          }
 
