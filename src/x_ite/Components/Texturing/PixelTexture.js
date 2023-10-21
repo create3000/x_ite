@@ -179,9 +179,10 @@ Object .assign (Object .setPrototypeOf (PixelTexture .prototype, X3DTexture2DNod
    set_image__ ()
    {
       const
-         gl    = this .getBrowser () .getContext (),
-         comp  = this ._image .comp,
-         array = this ._image .array;
+         gl          = this .getBrowser () .getContext (),
+         comp        = this ._image .comp,
+         array       = this ._image .array,
+         transparent = !(comp % 2);
 
       let
          width  = this ._image .width,
@@ -238,7 +239,7 @@ Object .assign (Object .setPrototypeOf (PixelTexture .prototype, X3DTexture2DNod
          }
 
          this .setTextureFromData (width, height, false, data);
-         this .setTransparent (this .isImageTransparent (data));
+         this .setTransparent (transparent && this .isImageTransparent (data));
          this ._loadState = X3DConstants .COMPLETE_STATE;
       }
       else
