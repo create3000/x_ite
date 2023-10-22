@@ -865,11 +865,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
          {
             case GeometryTypes .GEOMETRY:
             {
-               const geometryNode = this .getGeometry ();
-
-               if (geometryNode)
-                  geometryNode .displaySimpleParticles (gl, shaderNode, this);
-
+               this .getGeometry () ?.displaySimpleParticles (gl, shaderNode, this);
                break;
             }
             case GeometryTypes .SPRITE:
@@ -891,7 +887,6 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
                }
 
                gl .drawArraysInstanced (this .primitiveMode, 0, this .vertexCount, this .numParticles);
-
                break;
             }
          }
@@ -908,11 +903,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
       {
          case GeometryTypes .GEOMETRY:
          {
-            const geometryNode = this .getGeometry ();
-
-            if (geometryNode)
-               geometryNode .displayParticles (gl, renderContext, this);
-
+            this .getGeometry () ?.displayParticles (gl, renderContext, this);
             break;
          }
          case GeometryTypes .SPRITE:
