@@ -58,8 +58,8 @@ function X3DSoundSourceNode (executionContext)
 
    const audioContext = this .getBrowser () .getAudioContext ();
 
-   this .gainNode = new GainNode (audioContext);
-   this .mediaElement    = null;
+   this .gainNode     = new GainNode (audioContext);
+   this .mediaElement = null;
 }
 
 Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, X3DChildNode .prototype),
