@@ -228,26 +228,27 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
    },
    addBrowserEvent ()
    {
-      if (this [_changedTime] === this .getCurrentTime ())
+      if (this [_changedTime])
          return;
 
-      this [_changedTime] = this .getCurrentTime ();
+      this [_changedTime] = true;
 
       requestAnimationFrame (this [_renderCallback]);
    },
    [_limitFrameRate] (now)
    {
-      if (now === this [_previousTime])
+      if (now > this [_previousTime])
+      {
+         this [_previousTime] = now;
+         this [_changedTime]  = false;
+
+         return false;
+      }
+      else
       {
          requestAnimationFrame (this [_renderCallback]);
 
          return true;
-      }
-      else
-      {
-         this [_previousTime] = now;
-
-         return false;
       }
    },
    [_traverse] (now)
