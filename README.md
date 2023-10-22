@@ -24,6 +24,10 @@ If you are a developer or you always wanna be up to date:
 
 ```html
 <script src="https://create3000.github.io/code/x_ite/latest/x_ite.min.js"></script>
+<!-- or as ES module for use in scripts -->
+<script type="module">
+import X3D from "https://create3000.github.io/code/x_ite/latest/x_ite.min.mjs";
+</script>
 ```
 
 >**Info:** It is no longer necessary to include the CSS file.
