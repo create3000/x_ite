@@ -127,7 +127,7 @@ Object .assign (Object .setPrototypeOf (ComposedTexture3D .prototype, X3DTexture
 
          gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffer);
          gl .bindTexture (gl .TEXTURE_3D, this .getTexture ());
-         gl .texImage3D (gl .TEXTURE_3D, 0, gl .RGBA, width, height, depth, 0, gl .RGBA, gl .UNSIGNED_BYTE, null);
+         gl .texImage3D (gl .TEXTURE_3D, 0, gl .RGBA, width, height, depth, 0, gl .RGBA, gl .UNSIGNED_BYTE, new Uint8Array (width * height * depth * 4));
 
          for (const [i, textureNode] of this .textureNodes .entries ())
          {
