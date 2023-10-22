@@ -76,6 +76,7 @@ Object .assign (Object .setPrototypeOf (ComposedShader .prototype, X3DShaderNode
 
       // https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/shaders_glsl.html#relinkingprograms
       this ._activate .addInterest ("set_activate__", this);
+      this ._language .addInterest ("set_loaded__",   this);
 
       this ._parts .addFieldInterest (this .loadSensor ._children);
 
