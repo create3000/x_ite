@@ -600,7 +600,7 @@ import X3D from "https://cdn.jsdelivr.net/npm/x_ite@latest/dist/x_ite.min.mjs";
 
 #### For Production
 
-If you are in production and everything is working well, then use a fixed version. You can get a list of all available versions here on [NPM](https://www.npmjs.com/package/x_ite?activeTab=versions){:target="_blank"}.
+If you are in production and everything is working well, then use a fixed version. You can get a list of all available versions [here on NPM](https://www.npmjs.com/package/x_ite?activeTab=versions){:target="_blank"}.
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/x_ite@{{ site.version }}/dist/x_ite.min.js"></script>
