@@ -162,7 +162,7 @@ Object .assign (Object .setPrototypeOf (ComposedCubeMapTexture .prototype, X3DEn
 
          if (size !== this .getSize ())
          {
-            const defaultData  = new Uint8Array (size * size * 4);
+            const defaultData = new Uint8Array (size * size * 4);
 
             gl .bindTexture (this .getTarget (), this .getTexture ());
 

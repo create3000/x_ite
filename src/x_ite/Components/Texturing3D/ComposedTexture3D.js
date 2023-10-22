@@ -130,7 +130,9 @@ Object .assign (Object .setPrototypeOf (ComposedTexture3D .prototype, X3DTexture
 
          if (width !== this .getWidth () || height !== this .getHeight () || depth !== this .getDepth ())
          {
-            gl .texImage3D (gl .TEXTURE_3D, 0, gl .RGBA, width, height, depth, 0, gl .RGBA, gl .UNSIGNED_BYTE, new Uint8Array (width * height * depth * 4));
+            const defaultData = new Uint8Array (width * height * depth * 4);
+
+            gl .texImage3D (gl .TEXTURE_3D, 0, gl .RGBA, width, height, depth, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
          }
 
          for (const [i, textureNode] of this .textureNodes .entries ())
