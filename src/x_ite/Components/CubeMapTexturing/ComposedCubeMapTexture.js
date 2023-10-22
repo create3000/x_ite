@@ -99,26 +99,26 @@ Object .assign (Object .setPrototypeOf (ComposedCubeMapTexture .prototype, X3DEn
       this ._bottomTexture .addInterest ("set_texture__", this, 4);
       this ._update        .addInterest ("update",        this);
 
-      this .set_texture__ (this ._frontTexture,  0);
-      this .set_texture__ (this ._backTexture,   1);
-      this .set_texture__ (this ._leftTexture,   2);
-      this .set_texture__ (this ._rightTexture,  3);
-      this .set_texture__ (this ._topTexture,    4);
-      this .set_texture__ (this ._bottomTexture, 5);
+      this .set_texture__ (0, this ._frontTexture);
+      this .set_texture__ (1, this ._backTexture);
+      this .set_texture__ (2, this ._leftTexture);
+      this .set_texture__ (3, this ._rightTexture);
+      this .set_texture__ (4, this ._topTexture);
+      this .set_texture__ (5, this ._bottomTexture);
    },
-   set_texture__ (node, index)
+   set_texture__ (index, node)
    {
       let textureNode = this .textureNodes [index];
 
-      textureNode ?._loadState .removeInterest (`set_loadState${index}__`, this);
+      textureNode ?.removeInterest (`set_loadState${index}__`, this);
 
       textureNode = this .textureNodes [index] = X3DCast (X3DConstants .X3DTexture2DNode, node);
 
-      textureNode ?._loadState .addInterest (`set_loadState${index}__`, this, textureNode, index);
+      textureNode ?.addInterest (`set_loadState${index}__`, this, index, textureNode);
 
-      this .set_loadState__ (textureNode, index);
+      this .set_loadState__ (index, textureNode);
    },
-   set_loadState__ (textureNode, index)
+   set_loadState__ (index, textureNode)
    {
       this .setTextureBit (index, textureNode ?.checkLoadState ());
 
@@ -157,6 +157,13 @@ Object .assign (Object .setPrototypeOf (ComposedCubeMapTexture .prototype, X3DEn
             textureNodes = this .textureNodes,
             lastBuffer   = gl .getParameter (gl .FRAMEBUFFER_BINDING);
 
+         // Prepare faces. This is necessary for Chrome and Firefox in maxOS.
+
+         this .setSize (textureNodes [0] .getWidth ());
+         this .updateTextureParameters ();
+
+         // Fill with texture data.
+
          gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffer);
 
          for (let i = 0; i < 6; ++ i)
@@ -165,10 +172,6 @@ Object .assign (Object .setPrototypeOf (ComposedCubeMapTexture .prototype, X3DEn
                textureNode = textureNodes [i],
                width       = textureNode .getWidth (),
                height      = textureNode .getHeight ();
-
-            this .setSize (width);
-
-            console .log (i, textureNode .checkLoadState (), width, height, textureNode .getId ())
 
             // Copy color texture.
 
@@ -244,9 +247,9 @@ Object .defineProperties (ComposedCubeMapTexture,
 
 for (let index = 0; index < 6; ++ index)
 {
-   ComposedCubeMapTexture .prototype [`set_loadState${index}__`] = function (textureNode, index)
+   ComposedCubeMapTexture .prototype [`set_loadState${index}__`] = function (index, textureNode)
    {
-      this .set_loadState__ (textureNode, index);
+      this .set_loadState__ (index, textureNode);
    };
 }
 

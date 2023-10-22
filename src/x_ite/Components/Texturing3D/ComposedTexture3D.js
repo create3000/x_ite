@@ -106,7 +106,7 @@ Object .assign (Object .setPrototypeOf (ComposedTexture3D .prototype, X3DTexture
    },
    isComplete ()
    {
-      return this .textureNodes .every (textureNode => textureNode .checkLoadState () === X3DConstants .COMPLETE_STATE || textureNode .getWidth ());
+      return this .textureNodes .every (textureNode => textureNode .checkLoadState () === X3DConstants .COMPLETE_STATE);
    },
    update ()
    {

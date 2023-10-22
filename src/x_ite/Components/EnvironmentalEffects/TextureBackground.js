@@ -81,7 +81,7 @@ Object .assign (Object .setPrototypeOf (TextureBackground .prototype, X3DBackgro
    },
    set_texture__ (index, textureNode)
    {
-      X3DBackgroundNode .prototype .set_texture__ .call (this, X3DCast (X3DConstants .X3DTextureNode, textureNode), index);
+      X3DBackgroundNode .prototype .set_texture__ .call (this, index, X3DCast (X3DConstants .X3DTextureNode, textureNode));
    },
 });
 

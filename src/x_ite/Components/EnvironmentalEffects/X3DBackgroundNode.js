@@ -142,23 +142,23 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
 
       return false;
    },
-   set_texture__ (textureNode, index)
+   set_texture__ (index, textureNode)
    {
       this .textureNodes [index] ?.removeInterest (`set_loadState${index}__`, this);
 
       this .textureNodes [index] = textureNode;
 
-      textureNode ?.addInterest (`set_loadState${index}__`, this, textureNode, index);
+      textureNode ?.addInterest (`set_loadState${index}__`, this, index, textureNode);
 
-      this .set_loadState__ (textureNode, index);
+      this .set_loadState__ (index, textureNode);
    },
-   set_loadState__ (textureNode, index)
+   set_loadState__ (index, textureNode)
    {
-      this .setTextureBit (index, textureNode, textureNode ?.checkLoadState () ?? X3DConstants .NOT_STARTED);
+      this .setTextureBit (index, textureNode ?.checkLoadState ());
    },
-   setTextureBit (bit, textureNode, loadState)
+   setTextureBit (bit, loadState)
    {
-      this .textureBits .set (bit, loadState === X3DConstants .COMPLETE_STATE || textureNode ?.getWidth ());
+      this .textureBits .set (bit, loadState === X3DConstants .COMPLETE_STATE);
    },
    getColor (theta, color, angle)
    {
@@ -625,9 +625,9 @@ Object .defineProperties (X3DBackgroundNode,
 
 for (let index = 0; index < 6; ++ index)
 {
-   X3DBackgroundNode .prototype [`set_loadState${index}__`] = function (textureNode, index)
+   X3DBackgroundNode .prototype [`set_loadState${index}__`] = function (index, textureNode)
    {
-      this .set_loadState__ (textureNode, index);
+      this .set_loadState__ (index, textureNode);
    };
 }
 

@@ -105,7 +105,9 @@ Object .assign (Object .setPrototypeOf (X3DEnvironmentTextureNode .prototype, X3
          for (const target of this .getTargets ())
             gl .texImage2D (target, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
 
+         this .setSize (1);
          this .setTransparent (false);
+         this .updateTextureParameters ();
       };
    })(),
    updateTextureParameters ()
