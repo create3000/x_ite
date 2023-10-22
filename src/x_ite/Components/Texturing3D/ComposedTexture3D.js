@@ -127,7 +127,11 @@ Object .assign (Object .setPrototypeOf (ComposedTexture3D .prototype, X3DTexture
 
          gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffer);
          gl .bindTexture (gl .TEXTURE_3D, this .getTexture ());
-         gl .texImage3D (gl .TEXTURE_3D, 0, gl .RGBA, width, height, depth, 0, gl .RGBA, gl .UNSIGNED_BYTE, new Uint8Array (width * height * depth * 4));
+
+         if (width !== this .getWidth () || height !== this .getHeight () || depth !== this .getDepth ())
+         {
+            gl .texImage3D (gl .TEXTURE_3D, 0, gl .RGBA, width, height, depth, 0, gl .RGBA, gl .UNSIGNED_BYTE, new Uint8Array (width * height * depth * 4));
+         }
 
          for (const [i, textureNode] of this .textureNodes .entries ())
          {
@@ -156,6 +160,9 @@ Object .assign (Object .setPrototypeOf (ComposedTexture3D .prototype, X3DTexture
 
          gl .bindFramebuffer (gl .FRAMEBUFFER, lastBuffer);
 
+         this .setWidth (width);
+         this .setHeight (height);
+         this .setDepth (depth);
          this .setTransparent (textureNodes .some (textureNode => textureNode .isTransparent ()));
          this .setLinear (textureNodes .some (textureNode => textureNode .isLinear ()));
          this .updateTextureParameters ();

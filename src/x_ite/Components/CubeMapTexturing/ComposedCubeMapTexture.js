@@ -156,18 +156,22 @@ Object .assign (Object .setPrototypeOf (ComposedCubeMapTexture .prototype, X3DEn
             gl           = this .getBrowser () .getContext (),
             textureNodes = this .textureNodes,
             size         = textureNodes [0] .getWidth (),
-            defaultData  = new Uint8Array (size * size * 4),
             lastBuffer   = gl .getParameter (gl .FRAMEBUFFER_BINDING);
 
          // Prepare faces. This is necessary for Chrome and Firefox.
 
-         gl .bindTexture (this .getTarget (), this .getTexture ());
+         if (size !== this .getSize ())
+         {
+            const defaultData  = new Uint8Array (size * size * 4);
 
-         for (let i = 0; i < 6; ++ i)
-            gl .texImage2D (this .getTargets () [i], 0, gl .RGBA, size, size, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
+            gl .bindTexture (this .getTarget (), this .getTexture ());
 
-         this .setSize (size);
-         this .updateTextureParameters ();
+            for (let i = 0; i < 6; ++ i)
+               gl .texImage2D (this .getTargets () [i], 0, gl .RGBA, size, size, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
+
+            this .setSize (size);
+            this .updateTextureParameters ();
+         }
 
          // Fill with texture data.
 
