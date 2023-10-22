@@ -1013,9 +1013,9 @@ Object .assign (X3DRenderObject .prototype,
 
          for (const generatedCubeMapTexture of generatedCubeMapTextures)
             generatedCubeMapTexture .renderTexture (this);
-      }
 
-      browser .getFrameBuffer () .bind ();
+         browser .getFrameBuffer () .bind ();
+      }
 
       // Set up shadow matrix for all lights, and matrix for all projective textures.
 
@@ -1100,12 +1100,12 @@ Object .assign (X3DRenderObject .prototype,
       if (oit)
          browser .getFrameBuffer () .compose ();
 
-      browser .getFrameBuffer () .unbind ();
-
       // POST DRAW
 
       if (this .isIndependent ())
       {
+         browser .getFrameBuffer () .unbind ();
+
          // Recycle clip planes, local fogs, local lights, and local projective textures.
 
          const localObjects = browser .getLocalObjects ();

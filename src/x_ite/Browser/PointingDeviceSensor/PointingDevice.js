@@ -55,9 +55,8 @@ function PointingDevice (executionContext)
 {
    X3DBaseNode .call (this, executionContext);
 
-   this .cursor     = "DEFAULT";
-   this .isOver     = false;
-   this .motionTime = 0;
+   this .cursor = "DEFAULT";
+   this .isOver = false;
 }
 
 Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .prototype),
@@ -146,11 +145,6 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
       event .preventDefault ();
 
       const browser = this .getBrowser ();
-
-      if (this .motionTime === browser .getCurrentTime ())
-         return;
-
-      this .motionTime = browser .getCurrentTime ();
 
       const { x, y } = browser .getPointerFromEvent (event);
 

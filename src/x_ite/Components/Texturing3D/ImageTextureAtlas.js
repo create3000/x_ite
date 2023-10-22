@@ -154,6 +154,11 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, X3DTexture
          gl .bindTexture (gl .TEXTURE_3D, this .getTexture ());
          gl .texImage3D (gl .TEXTURE_3D, 0, gl .RGBA, w, h, numberOfSlices, 0, gl .RGBA, gl .UNSIGNED_BYTE, data);
 
+         this .setWidth (w);
+         this .setHeight (h);
+         this .setDepth (numberOfSlices);
+         this .updateTextureParameters ();
+
          gl .bindFramebuffer (gl .FRAMEBUFFER, frameBuffer);
          gl .bindTexture (gl .TEXTURE_2D, texture);
          gl .texImage2D  (gl .TEXTURE_2D, 0, gl .RGBA, width, height, 0, gl .RGBA, gl .UNSIGNED_BYTE, image);
@@ -184,9 +189,6 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, X3DTexture
          const transparent = this .isImageTransparent (data);
 
          this .setTransparent (transparent);
-         this .setWidth (w);
-         this .setHeight (h);
-         this .setDepth (numberOfSlices);
          this .updateTextureParameters ();
          this .setLoadState (X3DConstants .COMPLETE_STATE);
       }

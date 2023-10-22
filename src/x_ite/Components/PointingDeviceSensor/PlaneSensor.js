@@ -237,20 +237,20 @@ Object .assign (Object .setPrototypeOf (PlaneSensor .prototype, X3DDragSensorNod
 
       // X component
 
-      if (! (this ._minPosition .x > this ._maxPosition .x))
+      if (!(this ._minPosition .x > this ._maxPosition .x))
          translation .x = Algorithm .clamp (translation .x, this ._minPosition .x, this ._maxPosition .x);
 
       // Y component
 
-      if (! (this ._minPosition .y > this ._maxPosition .y))
+      if (!(this ._minPosition .y > this ._maxPosition .y))
          translation .y = Algorithm .clamp (translation .y, this ._minPosition .y, this ._maxPosition .y);
 
       axisRotation .multVecRot (translation);
 
-      if (! this ._trackPoint_changed .getValue () .equals (trackPoint))
+      if (!this ._trackPoint_changed .getValue () .equals (trackPoint))
          this ._trackPoint_changed = trackPoint;
 
-      if (! this ._translation_changed .getValue () .equals (translation))
+      if (!this ._translation_changed .getValue () .equals (translation))
          this ._translation_changed = translation;
    },
 });
