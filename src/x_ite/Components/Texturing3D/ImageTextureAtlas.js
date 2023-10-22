@@ -149,24 +149,18 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, X3DTexture
             numberOfSlices = Math .min (this ._numberOfSlices .getValue (), maxSlices),
             w              = Math .floor (width / slicesOverX),
             h              = Math .floor (height / slicesOverY),
-            data           = new Uint8Array (width * height * 4);
+            defaultData    = new Uint8Array (width * height * 4),
+            data           = defaultData .subarray (0, w * h * numberOfSlices * 4);
 
          gl .bindTexture (gl .TEXTURE_3D, this .getTexture ());
-         gl .texImage3D (gl .TEXTURE_3D, 0, gl .RGBA, w, h, numberOfSlices, 0, gl .RGBA, gl .UNSIGNED_BYTE, data);
-
-         this .setWidth (w);
-         this .setHeight (h);
-         this .setDepth (numberOfSlices);
-         this .updateTextureParameters ();
+         gl .texImage3D (gl .TEXTURE_3D, 0, gl .RGBA, w, h, numberOfSlices, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
 
          gl .bindFramebuffer (gl .FRAMEBUFFER, frameBuffer);
          gl .bindTexture (gl .TEXTURE_2D, texture);
          gl .texImage2D  (gl .TEXTURE_2D, 0, gl .RGBA, width, height, 0, gl .RGBA, gl .UNSIGNED_BYTE, image);
          gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .TEXTURE_2D, texture, 0);
-         await gl .readPixelsAsync (0, 0, width, height, gl .RGBA, gl .UNSIGNED_BYTE, data);
 
-         gl .bindFramebuffer (gl .FRAMEBUFFER, frameBuffer);
-         gl .bindTexture (gl .TEXTURE_3D, this .getTexture ());
+         let transparent = false;
 
          for (let y = 0, i = 0; y < slicesOverY && i < numberOfSlices; ++ y)
          {
@@ -176,7 +170,17 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, X3DTexture
                   sx = Math .floor (x * width  / slicesOverX),
                   sy = Math .floor (y * height / slicesOverY);
 
-               gl .copyTexSubImage3D (gl .TEXTURE_3D, 0, 0, 0, i, sx, sy, w, h);
+               // gl .bindFramebuffer (gl .FRAMEBUFFER, frameBuffer);
+               // gl .bindTexture (gl .TEXTURE_3D, this .getTexture ());
+               // gl .copyTexSubImage3D (gl .TEXTURE_3D, 0, 0, 0, i, sx, sy, w, h);
+
+               gl .bindFramebuffer (gl .FRAMEBUFFER, frameBuffer);
+               gl .readPixels (sx, sy, w, h, gl .RGBA, gl .UNSIGNED_BYTE, data);
+
+               gl .bindTexture (gl .TEXTURE_3D, this .getTexture ());
+               gl .texSubImage3D (gl .TEXTURE_3D, 0, 0, 0, i, w, h, 1, gl .RGBA, gl. UNSIGNED_BYTE, data);
+
+               transparent = transparent || this .isImageTransparent (data);
             }
          }
 
@@ -186,9 +190,10 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, X3DTexture
 
          // Determine image alpha.
 
-         const transparent = this .isImageTransparent (data);
-
          this .setTransparent (transparent);
+         this .setWidth (w);
+         this .setHeight (h);
+         this .setDepth (numberOfSlices);
          this .updateTextureParameters ();
          this .setLoadState (X3DConstants .COMPLETE_STATE);
       }
