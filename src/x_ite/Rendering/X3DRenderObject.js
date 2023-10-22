@@ -1015,6 +1015,8 @@ Object .assign (X3DRenderObject .prototype,
             generatedCubeMapTexture .renderTexture (this);
       }
 
+      browser .getFrameBuffer () .bind ();
+
       // Set up shadow matrix for all lights, and matrix for all projective textures.
 
       if (headlight)
@@ -1096,10 +1098,9 @@ Object .assign (X3DRenderObject .prototype,
       gl .disable (gl .BLEND);
 
       if (oit)
-      {
          browser .getFrameBuffer () .compose ();
-         browser .getFrameBuffer () .unbind ();
-      }
+
+      browser .getFrameBuffer () .unbind ();
 
       // POST DRAW
 
