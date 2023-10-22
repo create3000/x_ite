@@ -160,6 +160,9 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, X3DTexture
          gl .texImage2D  (gl .TEXTURE_2D, 0, gl .RGBA, width, height, 0, gl .RGBA, gl .UNSIGNED_BYTE, image);
          gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .TEXTURE_2D, texture, 0);
 
+         gl .bindFramebuffer (gl .FRAMEBUFFER, frameBuffer);
+         gl .bindTexture (gl .TEXTURE_3D, this .getTexture ());
+
          let transparent = false;
 
          for (let y = 0, i = 0; y < slicesOverY && i < numberOfSlices; ++ y)
@@ -174,10 +177,7 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, X3DTexture
                // gl .bindTexture (gl .TEXTURE_3D, this .getTexture ());
                // gl .copyTexSubImage3D (gl .TEXTURE_3D, 0, 0, 0, i, sx, sy, w, h);
 
-               gl .bindFramebuffer (gl .FRAMEBUFFER, frameBuffer);
                gl .readPixels (sx, sy, w, h, gl .RGBA, gl .UNSIGNED_BYTE, data);
-
-               gl .bindTexture (gl .TEXTURE_3D, this .getTexture ());
                gl .texSubImage3D (gl .TEXTURE_3D, 0, 0, 0, i, w, h, 1, gl .RGBA, gl. UNSIGNED_BYTE, data);
 
                transparent = transparent || this .isImageTransparent (data);
