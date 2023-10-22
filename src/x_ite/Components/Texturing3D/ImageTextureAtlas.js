@@ -115,7 +115,7 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, X3DTexture
 
       this .loadNext ();
    },
-   async setImage ()
+   setImage ()
    {
       if (DEVELOPMENT)
       {
