@@ -157,7 +157,7 @@ Object .assign (Object .setPrototypeOf (ComposedCubeMapTexture .prototype, X3DEn
             textureNodes = this .textureNodes,
             lastBuffer   = gl .getParameter (gl .FRAMEBUFFER_BINDING);
 
-         // Prepare faces. This is necessary for Chrome and Firefox in maxOS.
+         // Prepare faces. This is necessary for Chrome and Firefox on macOS.
 
          this .setSize (textureNodes [0] .getWidth ());
          this .updateTextureParameters ();
