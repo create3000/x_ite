@@ -54,7 +54,6 @@ function PointingBuffer (browser)
 
    // Create frame buffer.
 
-   this .lastBuffer  = gl .getParameter (gl .FRAMEBUFFER_BINDING);
    this .frameBuffer = gl .createFramebuffer ();
 
    // Create color buffers.
@@ -112,7 +111,7 @@ function PointingBuffer (browser)
 
    const status = gl .checkFramebufferStatus (gl .FRAMEBUFFER) === gl .FRAMEBUFFER_COMPLETE;
 
-   gl .bindFramebuffer (gl .FRAMEBUFFER, this .lastBuffer);
+   gl .bindFramebuffer (gl .FRAMEBUFFER, null);
 
    // Always check that our frame buffer is ok.
 
@@ -126,8 +125,6 @@ Object .assign (PointingBuffer .prototype,
    {
       const gl = this .context;
 
-      this .lastBuffer = gl .getParameter (gl .FRAMEBUFFER_BINDING);
-
       gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffer);
       gl .clearColor (0, 0, 0, 0);
       gl .clear (gl .COLOR_BUFFER_BIT);
@@ -136,7 +133,7 @@ Object .assign (PointingBuffer .prototype,
    {
       const gl = this .context;
 
-      gl .bindFramebuffer (gl .FRAMEBUFFER, this .lastBuffer);
+      gl .bindFramebuffer (gl .FRAMEBUFFER, null);
    },
    getHit (hit)
    {

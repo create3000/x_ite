@@ -158,8 +158,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
          inputParticles  = particleSystem .inputParticles,
          particleStride  = particleSystem .particleStride,
          particleOffsets = particleSystem .particleOffsets,
-         program         = this .program,
-         lastBuffer      = gl .getParameter (gl .FRAMEBUFFER_BINDING);
+         program         = this .program;
 
       // Start
 
@@ -253,7 +252,6 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
       gl .endTransformFeedback ();
       gl .disable (gl .RASTERIZER_DISCARD);
       gl .bindTransformFeedback (gl .TRANSFORM_FEEDBACK, null);
-      gl .bindFramebuffer (gl .FRAMEBUFFER, lastBuffer);
 
       // DEBUG
 

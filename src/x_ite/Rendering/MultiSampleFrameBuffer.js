@@ -52,17 +52,14 @@ function MultiSampleFrameBuffer (browser, width, height, samples, oit)
    if (gl .getVersion () === 1 || width === 0 || height === 0)
       return Fallback;
 
-   this .browser    = browser;
-   this .context    = gl;
-   this .width      = width;
-   this .height     = height;
-   this .samples    = samples;
-   this .oit        = oit;
-   this .lastBuffer = [ ];
+   this .browser = browser;
+   this .context = gl;
+   this .width   = width;
+   this .height  = height;
+   this .samples = samples;
+   this .oit     = oit;
 
    // Create frame buffer.
-
-   this .lastBuffer .push (gl .getParameter (gl .FRAMEBUFFER_BINDING));
 
    this .frameBuffer = gl .createFramebuffer ();
 
@@ -96,7 +93,7 @@ function MultiSampleFrameBuffer (browser, width, height, samples, oit)
 
    const status1 = gl .checkFramebufferStatus (gl .FRAMEBUFFER) === gl .FRAMEBUFFER_COMPLETE;
 
-   gl .bindFramebuffer (gl .FRAMEBUFFER, this .lastBuffer .pop ());
+   gl .bindFramebuffer (gl .FRAMEBUFFER, null);
 
    // Always check that our frame buffer is ok.
 
@@ -107,8 +104,6 @@ function MultiSampleFrameBuffer (browser, width, height, samples, oit)
       return;
 
    // Create oit frame buffer.
-
-   this .lastBuffer .push (gl .getParameter (gl .FRAMEBUFFER_BINDING));
 
    this .oitFrameBuffer = gl .createFramebuffer ();
 
@@ -217,7 +212,7 @@ function MultiSampleFrameBuffer (browser, width, height, samples, oit)
    const status2 = gl .checkFramebufferStatus (gl .FRAMEBUFFER) === gl .FRAMEBUFFER_COMPLETE;
 
    gl .bindTexture (gl .TEXTURE_2D, null);
-   gl .bindFramebuffer (gl .FRAMEBUFFER, this .lastBuffer .pop ());
+   gl .bindFramebuffer (gl .FRAMEBUFFER, null);
 
    // Always check that our frame buffer is ok.
 
@@ -259,20 +254,20 @@ Object .assign (MultiSampleFrameBuffer .prototype,
    },
    bind ()
    {
-      const { context: gl, lastBuffer, frameBuffer } = this;
-
-      lastBuffer .push (gl .getParameter (gl .FRAMEBUFFER_BINDING));
+      const { context: gl, frameBuffer } = this;
 
       gl .bindFramebuffer (gl .FRAMEBUFFER, frameBuffer);
+   },
+   clear ()
+   {
+      const { context: gl } = this;
 
       gl .clearColor (0, 0, 0, 0);
       gl .clear (gl .COLOR_BUFFER_BIT);
    },
    bindForOrderIndependentTransparency ()
    {
-      const { context: gl, lastBuffer, oitFrameBuffer } = this;
-
-      lastBuffer .push (gl .getParameter (gl .FRAMEBUFFER_BINDING));
+      const { context: gl, oitFrameBuffer } = this;
 
       gl .bindFramebuffer (gl .FRAMEBUFFER, oitFrameBuffer);
 
@@ -344,9 +339,9 @@ Object .assign (MultiSampleFrameBuffer .prototype,
    },
    unbind ()
    {
-      const { context: gl, lastBuffer } = this;
+      const { context: gl } = this;
 
-      gl .bindFramebuffer (gl .FRAMEBUFFER, lastBuffer .pop ());
+      gl .bindFramebuffer (gl .FRAMEBUFFER, null);
    },
    dispose ()
    {

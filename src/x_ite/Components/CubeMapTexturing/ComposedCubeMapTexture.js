@@ -155,8 +155,7 @@ Object .assign (Object .setPrototypeOf (ComposedCubeMapTexture .prototype, X3DEn
          const
             gl           = this .getBrowser () .getContext (),
             textureNodes = this .textureNodes,
-            size         = textureNodes [0] .getWidth (),
-            lastBuffer   = gl .getParameter (gl .FRAMEBUFFER_BINDING);
+            size         = textureNodes [0] .getWidth ();
 
          // Prepare faces. This is necessary for Chrome and Firefox.
 
@@ -199,7 +198,7 @@ Object .assign (Object .setPrototypeOf (ComposedCubeMapTexture .prototype, X3DEn
             }
          }
 
-         gl .bindFramebuffer (gl .FRAMEBUFFER, lastBuffer);
+         gl .bindFramebuffer (gl .FRAMEBUFFER, null);
 
          this .setTransparent (textureNodes .some (textureNode => textureNode .isTransparent ()));
          this .setLinear (textureNodes .some (textureNode => textureNode .isLinear ()));

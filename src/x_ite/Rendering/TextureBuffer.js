@@ -72,7 +72,6 @@ function TextureBuffer (browser, width, height, float = false)
 
    // Create frame buffer.
 
-   this .lastBuffer  = gl .getParameter (gl .FRAMEBUFFER_BINDING);
    this .frameBuffer = gl .createFramebuffer ();
 
    gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffer);
@@ -124,7 +123,7 @@ function TextureBuffer (browser, width, height, float = false)
    const status = gl .checkFramebufferStatus (gl .FRAMEBUFFER) === gl .FRAMEBUFFER_COMPLETE;
 
    gl .bindTexture (gl .TEXTURE_2D, null);
-   gl .bindFramebuffer (gl .FRAMEBUFFER, this .lastBuffer);
+   gl .bindFramebuffer (gl .FRAMEBUFFER, null);
 
    // Always check that our framebuffer is ok.
 
@@ -201,15 +200,13 @@ Object .assign (TextureBuffer .prototype,
    {
       const gl = this .context;
 
-      this .lastBuffer = gl .getParameter (gl .FRAMEBUFFER_BINDING);
-
       gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffer);
    },
    unbind ()
    {
       const gl = this .context;
 
-      gl .bindFramebuffer (gl .FRAMEBUFFER, this .lastBuffer);
+      gl .bindFramebuffer (gl .FRAMEBUFFER, null);
    },
    delete ()
    {

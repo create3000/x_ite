@@ -138,8 +138,7 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, X3DTexture
             width       = image .width,
             height      = image .height,
             texture     = gl .createTexture (),
-            frameBuffer = gl .createFramebuffer (),
-            lastBuffer  = gl .getParameter (gl .FRAMEBUFFER_BINDING);
+            frameBuffer = gl .createFramebuffer ();
 
          // Slice me nice.
 
@@ -152,15 +151,16 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, X3DTexture
             h              = Math .floor (height / slicesOverY),
             data           = new Uint8Array (width * height * 4);
 
-         gl .bindFramebuffer (gl .FRAMEBUFFER, frameBuffer);
          gl .bindTexture (gl .TEXTURE_3D, this .getTexture ());
          gl .texImage3D (gl .TEXTURE_3D, 0, gl .RGBA, w, h, numberOfSlices, 0, gl .RGBA, gl .UNSIGNED_BYTE, data);
 
+         gl .bindFramebuffer (gl .FRAMEBUFFER, frameBuffer);
          gl .bindTexture (gl .TEXTURE_2D, texture);
          gl .texImage2D  (gl .TEXTURE_2D, 0, gl .RGBA, width, height, 0, gl .RGBA, gl .UNSIGNED_BYTE, image);
          gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .TEXTURE_2D, texture, 0);
          await gl .readPixelsAsync (0, 0, width, height, gl .RGBA, gl .UNSIGNED_BYTE, data);
 
+         gl .bindFramebuffer (gl .FRAMEBUFFER, frameBuffer);
          gl .bindTexture (gl .TEXTURE_3D, this .getTexture ());
 
          for (let y = 0, i = 0; y < slicesOverY && i < numberOfSlices; ++ y)
@@ -175,7 +175,7 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, X3DTexture
             }
          }
 
-         gl .bindFramebuffer (gl .FRAMEBUFFER, lastBuffer);
+         gl .bindFramebuffer (gl .FRAMEBUFFER, null);
          gl .deleteFramebuffer (frameBuffer);
          gl .deleteTexture (texture);
 

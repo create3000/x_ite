@@ -119,11 +119,10 @@ Object .assign (Object .setPrototypeOf (ComposedTexture3D .prototype, X3DTexture
       else
       {
          const
-            gl         = this .getBrowser () .getContext (),
-            width      = textureNodes [0] .getWidth (),
-            height     = textureNodes [0] .getHeight (),
-            depth      = textureNodes .length,
-            lastBuffer = gl .getParameter (gl .FRAMEBUFFER_BINDING);
+            gl     = this .getBrowser () .getContext (),
+            width  = textureNodes [0] .getWidth (),
+            height = textureNodes [0] .getHeight (),
+            depth  = textureNodes .length;
 
          gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffer);
          gl .bindTexture (gl .TEXTURE_3D, this .getTexture ());
@@ -160,7 +159,7 @@ Object .assign (Object .setPrototypeOf (ComposedTexture3D .prototype, X3DTexture
             }
          }
 
-         gl .bindFramebuffer (gl .FRAMEBUFFER, lastBuffer);
+         gl .bindFramebuffer (gl .FRAMEBUFFER, null);
 
          this .setWidth (width);
          this .setHeight (height);
