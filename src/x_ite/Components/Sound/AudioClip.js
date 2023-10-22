@@ -98,14 +98,14 @@ Object .assign (Object .setPrototypeOf (AudioClip .prototype, X3DSoundSourceNode
    {
       this .setMediaElement (null);
       this .urlStack .setValue (this ._url);
-      this .audio .on ("canplaythrough", this .setAudio .bind (this));
+      this .audio .on ("loadeddata", this .setAudio .bind (this));
       this .loadNext ();
    },
    loadNext ()
    {
       if (this .urlStack .length === 0)
       {
-         this .audio .off ("canplaythrough");
+         this .audio .off ("loadeddata");
          this ._duration_changed = -1;
          this .setLoadState (X3DConstants .FAILED_STATE);
          return;
@@ -150,7 +150,7 @@ Object .assign (Object .setPrototypeOf (AudioClip .prototype, X3DSoundSourceNode
                console .info (`Done loading audio '${decodeURI (this .URL .href)}'`);
          }
 
-         this .audio .unbind ("canplaythrough");
+         this .audio .unbind ("loadeddata");
          this .setMediaElement (this .audio [0]);
          this .setLoadState (X3DConstants .COMPLETE_STATE);
       }

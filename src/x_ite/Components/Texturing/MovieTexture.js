@@ -114,14 +114,14 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
       delete this .gif;
       this .setMediaElement (null);
       this .urlStack .setValue (this ._url);
-      this .video .on ("canplaythrough", this .setVideo .bind (this));
+      this .video .on ("loadeddata", this .setVideo .bind (this));
       this .loadNext ();
    },
    loadNext ()
    {
       if (this .urlStack .length === 0)
       {
-         this .video .off ("canplaythrough");
+         this .video .off ("loadeddata");
          this ._duration_changed = -1;
          this .clearTexture ();
          this .setLoadState (X3DConstants .FAILED_STATE);
@@ -180,7 +180,7 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
                console .info (`Done loading movie '${decodeURI (this .URL .href)}'`);
          }
 
-         this .video .unbind ("canplaythrough");
+         this .video .unbind ("loadeddata");
 
          const
             gl     = this .getBrowser () .getContext (),
