@@ -150,7 +150,7 @@ Object .assign (Object .setPrototypeOf (AudioClip .prototype, X3DSoundSourceNode
                console .info (`Done loading audio '${decodeURI (this .URL .href)}'`);
          }
 
-         this .audio .unbind ("loadeddata");
+         this .audio .off ("loadeddata");
          this .setMediaElement (this .audio [0]);
          this .setLoadState (X3DConstants .COMPLETE_STATE);
       }

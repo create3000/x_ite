@@ -180,7 +180,7 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
                console .info (`Done loading movie '${decodeURI (this .URL .href)}'`);
          }
 
-         this .video .unbind ("loadeddata");
+         this .video .off ("loadeddata");
 
          const
             gl     = this .getBrowser () .getContext (),
