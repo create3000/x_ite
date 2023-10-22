@@ -259,7 +259,7 @@ Object .assign (Object .setPrototypeOf (X3DTimeDependentNode .prototype, X3DChil
    },
    real_pause ()
    {
-      this .pause = Date .now ();
+      this .pause = Date .now () / 1000;
 
       this .set_pause ();
 
@@ -280,7 +280,7 @@ Object .assign (Object .setPrototypeOf (X3DTimeDependentNode .prototype, X3DChil
    },
    real_resume ()
    {
-      const interval = (Date .now () - this .pause) / 1000;
+      const interval = Date .now () / 1000 - this .pause;
 
       this .pauseInterval += interval;
 
