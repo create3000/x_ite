@@ -92,7 +92,7 @@ Object .assign (Object .setPrototypeOf (AudioDestination .prototype, X3DSoundDes
          this .mediaStreamDestination  = audioContext .createMediaStreamDestination ();
          this .audioElement .srcObject = this .mediaStreamDestination .stream;
 
-         this .audioElement .play () .catch (() => this .getBrowser () .startAudioElement (this .audioElement));
+         this .getBrowser () .startAudioElement (this .audioElement);
       }
       else
       {

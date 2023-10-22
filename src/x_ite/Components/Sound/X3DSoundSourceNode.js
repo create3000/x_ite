@@ -132,7 +132,7 @@ Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, X3DChildN
       if (this .mediaElement)
       {
          this .mediaElement .currentTime = 0;
-         this .mediaElement .play () .catch (() => this .getBrowser () .startAudioElement (this .mediaElement));
+         this .getBrowser () .startAudioElement (this .mediaElement);
       }
    },
    set_pause ()
