@@ -66,11 +66,12 @@ function MovieTexture (executionContext)
 
    const audioContext = this .getBrowser () .getAudioContext ();
 
-   this .urlStack   = new Fields .MFString ();
-   this .video      = $("<video></video>");
-   this .sourceNode = audioContext .createMediaElementSource (this .video [0]);
+   this .urlStack               = new Fields .MFString ();
+   this .video                  = $("<video></video>");
+   this .sourceNode             = audioContext .createMediaElementSource (this .video [0]);
+   this .mediaStreamDestination = audioContext .createMediaStreamDestination ();
 
-   this .sourceNode .connect (this .getAudioSource ());
+   this .sourceNode .connect (this .getAudioSource ()) .connect (this .mediaStreamDestination);
 
    this .getMatrix () .set ([1, 0, 0, 0, 0, -1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1]); // flipY
 }

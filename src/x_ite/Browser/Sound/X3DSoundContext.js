@@ -99,11 +99,14 @@ Object .assign (X3DSoundContext .prototype,
       ]
       .map (event => `${event}.${id}`);
 
-      this .getElement () .on (events .join (" "), event =>
+      audioElement [functionName] () .catch (() =>
       {
-         audioElement [functionName] ()
-            .then (() => this .getElement () .off (`.${id}`))
-            .catch (Function .prototype);
+         this .getElement () .on (events .join (" "), event =>
+         {
+            audioElement [functionName] ()
+               .then (() => this .getElement () .off (`.${id}`))
+               .catch (Function .prototype);
+         });
       });
    },
 });
