@@ -155,11 +155,18 @@ Object .assign (Object .setPrototypeOf (ComposedCubeMapTexture .prototype, X3DEn
          const
             gl           = this .getBrowser () .getContext (),
             textureNodes = this .textureNodes,
+            size         = textureNodes [0] .getWidth (),
+            defaultData  = new Uint8Array (size * size * 4),
             lastBuffer   = gl .getParameter (gl .FRAMEBUFFER_BINDING);
 
-         // Prepare faces. This is necessary for Chrome and Firefox on macOS.
+         // Prepare faces. This is necessary for Chrome and Firefox.
 
-         this .setSize (textureNodes [0] .getWidth ());
+         gl .bindTexture (this .getTarget (), this .getTexture ());
+
+         for (let i = 0; i < 6; ++ i)
+            gl .texImage2D (this .getTargets () [i], 0, gl .RGBA, size, size, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
+
+         this .setSize (size);
          this .updateTextureParameters ();
 
          // Fill with texture data.
@@ -168,10 +175,7 @@ Object .assign (Object .setPrototypeOf (ComposedCubeMapTexture .prototype, X3DEn
 
          for (let i = 0; i < 6; ++ i)
          {
-            const
-               textureNode = textureNodes [i],
-               width       = textureNode .getWidth (),
-               height      = textureNode .getHeight ();
+            const textureNode = textureNodes [i];
 
             // Copy color texture.
 
@@ -181,16 +185,13 @@ Object .assign (Object .setPrototypeOf (ComposedCubeMapTexture .prototype, X3DEn
 
             if (textureNode .getTextureType () === 1)
             {
-               gl .texImage2D (this .getTargets () [i], 0, gl .RGBA, width, height, 0, gl .RGBA, gl .UNSIGNED_BYTE, null);
-               gl .copyTexSubImage2D (this .getTargets () [i], 0, 0, 0, 0, 0, width, height);
+               gl .copyTexSubImage2D (this .getTargets () [i], 0, 0, 0, 0, 0, size, size);
             }
             else
             {
-               gl .texImage2D (this .getTargets () [i], 0, gl .RGBA, width, height, 0, gl .RGBA, gl .UNSIGNED_BYTE, new Uint8Array (width * height * 4));
-
                // Copy and flip Y.
-               for (let y = 0; y < height; ++ y)
-                  gl .copyTexSubImage2D (this .getTargets () [i], 0, 0, height - y - 1, 0, y, width, 1);
+               for (let y = 0; y < size; ++ y)
+                  gl .copyTexSubImage2D (this .getTargets () [i], 0, 0, size - y - 1, 0, y, size, 1);
             }
          }
 
