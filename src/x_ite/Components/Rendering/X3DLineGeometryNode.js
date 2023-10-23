@@ -308,7 +308,6 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
 
                // Transform lines.
 
-               gl .bindFramebuffer (gl .FRAMEBUFFER, null);
                gl .bindTransformFeedback (gl .TRANSFORM_FEEDBACK, browser .getLineTransformFeedback ());
                gl .bindBufferBase (gl .TRANSFORM_FEEDBACK_BUFFER, 0, this .trianglesBuffer);
                gl .enable (gl .RASTERIZER_DISCARD);
