@@ -994,6 +994,7 @@ Object .assign (X3DRenderObject .prototype,
          oit                      = frameBuffer .getOrderIndependentTransparency ();
 
 
+      renderCount >>>= 0;
       this .renderCount = ++ renderCount;
 
       this .logarithmicDepthBuffer = browser .getBrowserOption ("LogarithmicDepthBuffer")
