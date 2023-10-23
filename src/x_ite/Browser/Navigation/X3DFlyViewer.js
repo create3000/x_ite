@@ -648,6 +648,11 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
             height       = viewport [3],
             contentScale = browser .getRenderingProperty ("ContentScale");
 
+         browser .getFrameBuffer () .bind ();
+
+         gl .viewport (... viewport);
+         gl .scissor (... viewport);
+
          projectionMatrixArray .set (Camera .ortho (0, width, 0, height, -1, 1, projectionMatrix));
 
          // Display Rubberband.
@@ -726,6 +731,8 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
          gl .frontFace (gl .CCW);
          gl .drawElements (gl .TRIANGLES, 12, gl .UNSIGNED_BYTE, 0);
          gl .enable (gl .DEPTH_TEST);
+
+         browser .getFrameBuffer () .unbind ();
       };
    })(),
    disconnect ()
