@@ -280,7 +280,7 @@ Object .assign (MultiSampleFrameBuffer .prototype,
    },
    compose ()
    {
-      const { browser, context: gl, width, height, samples, program } = this;
+      const { context: gl, browser, width, height, samples, program } = this;
 
       // TODO: Combining lights and lights with shadows, can cause feedback loop of texture.
       // TODO: VolumeRendering shader is not made for OIT.
