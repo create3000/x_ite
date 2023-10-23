@@ -243,7 +243,7 @@ Object .assign (MultiSampleFrameBuffer .prototype,
    {
       return this .samples;
    },
-   getOrderIndependentTransparency ()
+   getOIT ()
    {
       return this .oit;
    },
@@ -262,7 +262,7 @@ Object .assign (MultiSampleFrameBuffer .prototype,
       gl .clearColor (0, 0, 0, 0);
       gl .clear (gl .COLOR_BUFFER_BIT);
    },
-   bindForOrderIndependentTransparency ()
+   bindTransparency ()
    {
       const { context: gl, oitFrameBuffer } = this;
 
@@ -356,7 +356,7 @@ const Fallback = {
    getWidth: Function .prototype,
    getHeight: Function .prototype,
    getSamples: Function .prototype,
-   getOrderIndependentTransparency: Function .prototype,
+   getOIT: Function .prototype,
    bind: Function .prototype,
    clear: Function .prototype,
    blit: Function .prototype,

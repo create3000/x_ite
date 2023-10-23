@@ -61,8 +61,6 @@ import StopWatch     from "../../standard/Time/StopWatch.js";
 
 const DEPTH_BUFFER_SIZE = 16;
 
-let renderCount = 0;
-
 function X3DRenderObject (executionContext)
 {
    const browser = executionContext .getBrowser ();
@@ -976,158 +974,158 @@ Object .assign (X3DRenderObject .prototype,
          }
       };
    })(),
-   draw ()
+   draw: (function ()
    {
-      const
-         browser                  = this .getBrowser (),
-         gl                       = browser .getContext (),
-         frameBuffer              = browser .getFrameBuffer (),
-         viewport                 = this .getViewVolume () .getViewport (),
-         lights                   = this .lights,
-         globalLightsKeys         = this .globalLightsKeys,
-         globalLights             = this .globalLights,
-         generatedCubeMapTextures = this .generatedCubeMapTextures,
-         globalShadows            = this .globalShadows,
-         shadows                  = globalShadows .at (-1),
-         headlight                = this .getNavigationInfo () ._headlight .getValue (),
-         oit                      = frameBuffer .getOrderIndependentTransparency ();
+      let renderCount = 0;
 
-
-      renderCount >>>= 0;
-      this .renderCount = ++ renderCount;
-
-      this .logarithmicDepthBuffer = browser .getBrowserOption ("LogarithmicDepthBuffer")
-         || this .getViewpoint () .getLogarithmicDepthBuffer ();
-
-
-      // PREPARATIONS
-
-
-      if (this .isIndependent ())
+      return function ()
       {
-         // Render shadow maps.
+         const
+            browser                  = this .getBrowser (),
+            gl                       = browser .getContext (),
+            frameBuffer              = browser .getFrameBuffer (),
+            viewport                 = this .getViewVolume () .getViewport (),
+            lights                   = this .lights,
+            globalLightsKeys         = this .globalLightsKeys,
+            globalLights             = this .globalLights,
+            generatedCubeMapTextures = this .generatedCubeMapTextures,
+            globalShadows            = this .globalShadows,
+            shadows                  = globalShadows .at (-1),
+            headlight                = this .getNavigationInfo () ._headlight .getValue (),
+            oit                      = frameBuffer .getOIT ();
+
+         renderCount >>>= 0; // uintesize
+         this .renderCount = ++ renderCount;
+
+         this .logarithmicDepthBuffer = browser .getBrowserOption ("LogarithmicDepthBuffer")
+            || this .getViewpoint () .getLogarithmicDepthBuffer ();
+
+         // PREPARATIONS
+
+         if (this .isIndependent ())
+         {
+            // Render shadow maps.
+
+            for (const light of lights)
+               light .renderShadowMap (this);
+
+            // Render GeneratedCubeMapTextures.
+
+            for (const generatedCubeMapTexture of generatedCubeMapTextures)
+               generatedCubeMapTexture .renderTexture (this);
+
+            frameBuffer .bind ();
+         }
+
+         // Set up shadow matrix for all lights, and matrix for all projective textures.
+
+         if (headlight)
+            browser .getHeadlight () .setGlobalVariables (this);
 
          for (const light of lights)
-            light .renderShadowMap (this);
+            light .setGlobalVariables (this);
 
-         // Render GeneratedCubeMapTextures.
+         for (const light of globalLights)
+            globalLightsKeys .push (light .lightNode .getLightKey ());
 
-         for (const generatedCubeMapTexture of generatedCubeMapTextures)
-            generatedCubeMapTexture .renderTexture (this);
+         // Set global uniforms.
 
-         frameBuffer .bind ();
-      }
+         this .viewportArray          .set (viewport);
+         this .cameraSpaceMatrixArray .set (this .getCameraSpaceMatrix () .get ());
+         this .projectionMatrixArray  .set (this .getProjectionMatrix () .get ());
 
-      // Set up shadow matrix for all lights, and matrix for all projective textures.
+         // DRAW
 
-      if (headlight)
-         browser .getHeadlight () .setGlobalVariables (this);
+         // Configure viewport and background
 
-      for (const light of lights)
-         light .setGlobalVariables (this);
+         gl .viewport (... viewport);
+         gl .scissor (... viewport);
 
-      for (const light of globalLights)
-         globalLightsKeys .push (light .lightNode .getLightKey ());
+         // Draw background.
 
-      // Set global uniforms.
+         gl .clear (gl .DEPTH_BUFFER_BIT);
+         gl .blendFuncSeparate (gl .SRC_ALPHA, gl .ONE_MINUS_SRC_ALPHA, gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
 
-      this .viewportArray          .set (viewport);
-      this .cameraSpaceMatrixArray .set (this .getCameraSpaceMatrix () .get ());
-      this .projectionMatrixArray  .set (this .getProjectionMatrix () .get ());
+         this .getBackground () .display (gl, this, viewport);
 
+         // Sorted blend or order independent transparency
 
-      // DRAW
+         // Render opaque objects first
 
+         const opaqueShapes = this .opaqueShapes;
 
-      // Configure viewport and background
+         for (let i = 0, length = this .numOpaqueShapes; i < length; ++ i)
+         {
+            const renderContext = opaqueShapes [i];
 
-      gl .viewport (... viewport);
-      gl .scissor (... viewport);
+            gl .scissor (... renderContext .scissor);
 
-      // Draw background.
+            renderContext .shadows = renderContext .shadows || shadows;
+            renderContext .objectsKeys .push (... globalLightsKeys);
 
-      gl .clear (gl .DEPTH_BUFFER_BIT);
-      gl .blendFuncSeparate (gl .SRC_ALPHA, gl .ONE_MINUS_SRC_ALPHA, gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
+            renderContext .shapeNode .display (gl, renderContext);
+            browser .resetTextureUnits ();
+         }
 
-      this .getBackground () .display (gl, this, viewport);
+         // Render transparent objects
 
-      // Sorted blend or order independent transparency
+         const transparentShapes = this .transparentShapes;
 
-      // Render opaque objects first
+         if (oit)
+            frameBuffer .bindTransparency ();
+         else
+            this .transparencySorter .sort (0, this .numTransparentShapes);
 
-      const opaqueShapes = this .opaqueShapes;
+         gl .depthMask (false);
+         gl .enable (gl .BLEND);
 
-      for (let i = 0, length = this .numOpaqueShapes; i < length; ++ i)
-      {
-         const renderContext = opaqueShapes [i];
+         for (let i = 0, length = this .numTransparentShapes; i < length; ++ i)
+         {
+            const renderContext = transparentShapes [i];
 
-         gl .scissor (... renderContext .scissor);
+            gl .scissor (... renderContext .scissor);
 
-         renderContext .shadows = renderContext .shadows || shadows;
-         renderContext .objectsKeys .push (... globalLightsKeys);
+            renderContext .shadows = renderContext .shadows || shadows;
+            renderContext .objectsKeys .push (... globalLightsKeys);
 
-         renderContext .shapeNode .display (gl, renderContext);
-         browser .resetTextureUnits ();
-      }
+            renderContext .shapeNode .display (gl, renderContext);
+            browser .resetTextureUnits ();
+         }
 
-      // Render transparent objects
+         gl .depthMask (true);
+         gl .disable (gl .BLEND);
 
-      const transparentShapes = this .transparentShapes;
+         if (oit)
+            frameBuffer .compose ();
 
-      if (oit)
-         frameBuffer .bindForOrderIndependentTransparency ();
-      else
-         this .transparencySorter .sort (0, this .numTransparentShapes);
+         // POST DRAW
 
-      gl .depthMask (false);
-      gl .enable (gl .BLEND);
+         if (this .isIndependent ())
+         {
+            // Recycle clip planes, local fogs, local lights, and local projective textures.
 
-      for (let i = 0, length = this .numTransparentShapes; i < length; ++ i)
-      {
-         const renderContext = transparentShapes [i];
+            const localObjects = browser .getLocalObjects ();
 
-         gl .scissor (... renderContext .scissor);
+            for (const localObject of localObjects)
+               localObject .dispose ();
 
-         renderContext .shadows = renderContext .shadows || shadows;
-         renderContext .objectsKeys .push (... globalLightsKeys);
+            localObjects .length = 0;
 
-         renderContext .shapeNode .display (gl, renderContext);
-         browser .resetTextureUnits ();
-      }
+            // Recycle global lights and global projective textures.
 
-      gl .depthMask (true);
-      gl .disable (gl .BLEND);
+            for (const globalObject of globalLights)
+               globalObject .dispose ();
+         }
 
-      if (oit)
-         frameBuffer .compose ();
+         // Reset containers.
 
-      // POST DRAW
-
-      if (this .isIndependent ())
-      {
-         // Recycle clip planes, local fogs, local lights, and local projective textures.
-
-         const localObjects = browser .getLocalObjects ();
-
-         for (const localObject of localObjects)
-            localObject .dispose ();
-
-         localObjects .length = 0;
-
-         // Recycle global lights and global projective textures.
-
-         for (const globalObject of globalLights)
-            globalObject .dispose ();
-      }
-
-      // Reset containers.
-
-      globalLightsKeys         .length = 0;
-      globalLights             .length = 0;
-      lights                   .length = 0;
-      globalShadows            .length = 1;
-      generatedCubeMapTextures .length = 0;
-   },
+         globalLightsKeys         .length = 0;
+         globalLights             .length = 0;
+         lights                   .length = 0;
+         globalShadows            .length = 1;
+         generatedCubeMapTextures .length = 0;
+      };
+   })(),
 });
 
 function assign (lhs, rhs)

@@ -275,7 +275,7 @@ Object .assign (X3DRenderingContext .prototype,
       if (width   !== this [_frameBuffer] .getWidth ()   ||
           height  !== this [_frameBuffer] .getHeight ()  ||
           samples !== this [_frameBuffer] .getSamples () ||
-          oit     !== this [_frameBuffer] .getOrderIndependentTransparency ())
+          oit     !== this [_frameBuffer] .getOIT ())
       {
          this [_frameBuffer] .dispose ();
          this [_frameBuffer] = new MultiSampleFrameBuffer (this, width, height, samples, oit);
