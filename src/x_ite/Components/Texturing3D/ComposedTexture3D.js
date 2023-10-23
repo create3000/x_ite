@@ -69,10 +69,6 @@ Object .assign (Object .setPrototypeOf (ComposedTexture3D .prototype, X3DTexture
    {
       X3DTexture3DNode .prototype .initialize .call (this);
 
-      const gl = this .getBrowser () .getContext ();
-
-      this .frameBuffer = gl .createFramebuffer ();
-
       this ._texture .addInterest ("set_texture__", this);
       this ._update  .addInterest ("update",        this);
 
@@ -119,12 +115,13 @@ Object .assign (Object .setPrototypeOf (ComposedTexture3D .prototype, X3DTexture
       else
       {
          const
-            gl     = this .getBrowser () .getContext (),
-            width  = textureNodes [0] .getWidth (),
-            height = textureNodes [0] .getHeight (),
-            depth  = textureNodes .length;
+            gl          = this .getBrowser () .getContext (),
+            width       = textureNodes [0] .getWidth (),
+            height      = textureNodes [0] .getHeight (),
+            depth       = textureNodes .length,
+            frameBuffer = gl .createFramebuffer ();
 
-         gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffer);
+         gl .bindFramebuffer (gl .FRAMEBUFFER, frameBuffer);
          gl .bindTexture (gl .TEXTURE_3D, this .getTexture ());
 
          if (width !== this .getWidth () || height !== this .getHeight () || depth !== this .getDepth ())
@@ -157,6 +154,8 @@ Object .assign (Object .setPrototypeOf (ComposedTexture3D .prototype, X3DTexture
                console .warn ("ComposedTexture3D: all textures must have same size.");
             }
          }
+
+         gl .deleteFramebuffer (frameBuffer);
 
          this .setWidth (width);
          this .setHeight (height);
