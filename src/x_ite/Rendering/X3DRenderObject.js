@@ -982,6 +982,7 @@ Object .assign (X3DRenderObject .prototype,
       const
          browser                  = this .getBrowser (),
          gl                       = browser .getContext (),
+         frameBuffer              = browser .getFrameBuffer (),
          viewport                 = this .getViewVolume () .getViewport (),
          lights                   = this .lights,
          globalLightsKeys         = this .globalLightsKeys,
@@ -990,7 +991,7 @@ Object .assign (X3DRenderObject .prototype,
          globalShadows            = this .globalShadows,
          shadows                  = globalShadows .at (-1),
          headlight                = this .getNavigationInfo () ._headlight .getValue (),
-         oit                      = browser .getFrameBuffer () .getOrderIndependentTransparency ();
+         oit                      = frameBuffer .getOrderIndependentTransparency ();
 
 
       this .renderCount = ++ renderCount;
@@ -1014,7 +1015,7 @@ Object .assign (X3DRenderObject .prototype,
          for (const generatedCubeMapTexture of generatedCubeMapTextures)
             generatedCubeMapTexture .renderTexture (this);
 
-         browser .getFrameBuffer () .bind ();
+         frameBuffer .bind ();
       }
 
       // Set up shadow matrix for all lights, and matrix for all projective textures.
@@ -1074,7 +1075,7 @@ Object .assign (X3DRenderObject .prototype,
       const transparentShapes = this .transparentShapes;
 
       if (oit)
-         browser .getFrameBuffer () .bindForOrderIndependentTransparency ();
+         frameBuffer .bindForOrderIndependentTransparency ();
       else
          this .transparencySorter .sort (0, this .numTransparentShapes);
 
@@ -1098,13 +1099,13 @@ Object .assign (X3DRenderObject .prototype,
       gl .disable (gl .BLEND);
 
       if (oit)
-         browser .getFrameBuffer () .compose ();
+         frameBuffer .compose ();
 
       // POST DRAW
 
       if (this .isIndependent ())
       {
-         browser .getFrameBuffer () .unbind ();
+         frameBuffer .unbind ();
 
          // Recycle clip planes, local fogs, local lights, and local projective textures.
 
