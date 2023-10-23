@@ -170,8 +170,6 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, X3DTexture
                   sx = Math .floor (x * w  / slicesOverX),
                   sy = Math .floor (y * h / slicesOverY);
 
-               // gl .bindFramebuffer (gl .FRAMEBUFFER, frameBuffer);
-               // gl .bindTexture (gl .TEXTURE_3D, this .getTexture ());
                // gl .copyTexSubImage3D (gl .TEXTURE_3D, 0, 0, 0, i, sx, sy, width, height);
 
                gl .readPixels (sx, sy, width, height, gl .RGBA, gl .UNSIGNED_BYTE, data);

@@ -140,7 +140,6 @@ Object .assign (Object .setPrototypeOf (ComposedTexture3D .prototype, X3DTexture
             {
                gl .bindTexture (gl .TEXTURE_2D, textureNode .getTexture ());
                gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .TEXTURE_2D, textureNode .getTexture (), 0);
-               gl .bindTexture (gl .TEXTURE_3D, this .getTexture ());
 
                if (textureNode .getTextureType () === 1)
                {
