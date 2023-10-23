@@ -260,7 +260,7 @@ Object .assign (Object .setPrototypeOf (SFImage .prototype, X3DField .prototype)
          width  = this .width,
          height = this .height,
          array  = new Uint32Array (this .array .getValue () .buffer),
-         length = array .length;
+         length = this .array .length;
 
       generator .string += width;
       generator .string += ',';
