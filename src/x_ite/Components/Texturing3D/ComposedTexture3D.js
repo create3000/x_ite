@@ -159,8 +159,6 @@ Object .assign (Object .setPrototypeOf (ComposedTexture3D .prototype, X3DTexture
             }
          }
 
-         gl .bindFramebuffer (gl .FRAMEBUFFER, null);
-
          this .setWidth (width);
          this .setHeight (height);
          this .setDepth (depth);

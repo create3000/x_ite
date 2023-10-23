@@ -138,8 +138,6 @@ Object .assign (DirectionalLightContainer .prototype,
       renderObject .getProjectionMatrix () .pop ();
       renderObject .getViewVolumes      () .pop ();
 
-      this .shadowBuffer .unbind ();
-
       if (!this .global)
          invLightSpaceMatrix .multLeft (modelMatrix .inverse ());
 

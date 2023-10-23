@@ -262,7 +262,6 @@ const Context =
             this .bufferData (this .PIXEL_PACK_BUFFER, dest .byteLength, this .STREAM_READ);
             this .readPixels (x, y, w, h, format, type, 0);
             this .bindBuffer (this .PIXEL_PACK_BUFFER, null);
-            this .bindFramebuffer (this .FRAMEBUFFER, null);
 
             await this .getBufferSubDataAsync (this .PIXEL_PACK_BUFFER, buffer, 0, dest, dstOffset);
 

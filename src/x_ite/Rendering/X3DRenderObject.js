@@ -427,7 +427,6 @@ Object .assign (X3DRenderObject .prototype,
          const depth = this .depthBuffer .readDepth (projectionMatrix, depthBufferViewport);
 
          this .viewVolumes .pop ();
-         this .depthBuffer .unbind ();
 
          return depth;
       };
@@ -1106,8 +1105,6 @@ Object .assign (X3DRenderObject .prototype,
 
       if (this .isIndependent ())
       {
-         frameBuffer .unbind ();
-
          // Recycle clip planes, local fogs, local lights, and local projective textures.
 
          const localObjects = browser .getLocalObjects ();

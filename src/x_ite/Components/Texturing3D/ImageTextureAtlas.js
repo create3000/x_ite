@@ -181,7 +181,6 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, X3DTexture
             }
          }
 
-         gl .bindFramebuffer (gl .FRAMEBUFFER, null);
          gl .deleteFramebuffer (frameBuffer);
          gl .deleteTexture (texture);
 

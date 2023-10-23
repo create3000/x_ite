@@ -731,8 +731,6 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
          gl .frontFace (gl .CCW);
          gl .drawElements (gl .TRIANGLES, 12, gl .UNSIGNED_BYTE, 0);
          gl .enable (gl .DEPTH_TEST);
-
-         browser .getFrameBuffer () .unbind ();
       };
    })(),
    disconnect ()

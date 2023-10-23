@@ -250,7 +250,6 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
       this .getWorld () .traverse (TraverseType .POINTER);
 
       this [_pointingBuffer] .getHit (hit);
-      this [_pointingBuffer] .unbind ();
 
       if (Number .isInteger (hit .id) && hit .id > 0 && hit .id <= this [_id])
       {

@@ -93,8 +93,6 @@ function MultiSampleFrameBuffer (browser, width, height, samples, oit)
 
    const status1 = gl .checkFramebufferStatus (gl .FRAMEBUFFER) === gl .FRAMEBUFFER_COMPLETE;
 
-   gl .bindFramebuffer (gl .FRAMEBUFFER, null);
-
    // Always check that our frame buffer is ok.
 
    if (!status1)
@@ -211,9 +209,6 @@ function MultiSampleFrameBuffer (browser, width, height, samples, oit)
 
    const status2 = gl .checkFramebufferStatus (gl .FRAMEBUFFER) === gl .FRAMEBUFFER_COMPLETE;
 
-   gl .bindTexture (gl .TEXTURE_2D, null);
-   gl .bindFramebuffer (gl .FRAMEBUFFER, null);
-
    // Always check that our frame buffer is ok.
 
    if (!status2)
@@ -266,7 +261,6 @@ Object .assign (MultiSampleFrameBuffer .prototype,
 
       gl .clearColor (0, 0, 0, 0);
       gl .clear (gl .COLOR_BUFFER_BIT);
-      gl .bindFramebuffer (gl .FRAMEBUFFER, null);
    },
    bindForOrderIndependentTransparency ()
    {
@@ -339,14 +333,6 @@ Object .assign (MultiSampleFrameBuffer .prototype,
       gl .blitFramebuffer (0, 0, width, height,
                            0, 0, width, height,
                            gl .COLOR_BUFFER_BIT, samples ? gl .LINEAR : gl .NEAREST);
-
-      gl .bindFramebuffer (gl .FRAMEBUFFER, null);
-   },
-   unbind ()
-   {
-      const { context: gl } = this;
-
-      gl .bindFramebuffer (gl .FRAMEBUFFER, null);
    },
    dispose ()
    {
@@ -375,7 +361,6 @@ const Fallback = {
    clear: Function .prototype,
    blit: Function .prototype,
    compose: Function .prototype,
-   unbind: Function .prototype,
    dispose: Function .prototype,
 };
 

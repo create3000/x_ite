@@ -111,8 +111,6 @@ function PointingBuffer (browser)
 
    const status = gl .checkFramebufferStatus (gl .FRAMEBUFFER) === gl .FRAMEBUFFER_COMPLETE;
 
-   gl .bindFramebuffer (gl .FRAMEBUFFER, null);
-
    // Always check that our frame buffer is ok.
 
    if (!status)
@@ -128,12 +126,6 @@ Object .assign (PointingBuffer .prototype,
       gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffer);
       gl .clearColor (0, 0, 0, 0);
       gl .clear (gl .COLOR_BUFFER_BIT);
-   },
-   unbind ()
-   {
-      const gl = this .context;
-
-      gl .bindFramebuffer (gl .FRAMEBUFFER, null);
    },
    getHit (hit)
    {

@@ -241,8 +241,6 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DE
          dependentRenderer .getProjectionMatrix () .pop ();
          dependentRenderer .getViewVolumes      () .pop ();
 
-         this .frameBuffer .unbind ();
-
          if (this ._update .getValue () === "NEXT_FRAME_ONLY")
             this ._update = "NONE";
       };

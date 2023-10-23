@@ -170,8 +170,6 @@ Object .assign (PointLightContainer .prototype,
          renderObject .getViewVolumes () .pop ();
       }
 
-      this .shadowBuffer .unbind ();
-
       if (!this .global)
          invLightSpaceMatrix .multLeft (modelMatrix .inverse ());
 
