@@ -143,8 +143,12 @@ Object .assign (Object .setPrototypeOf (X3DTextureProjectorNode .prototype, (X3D
    {
       X3DLightNode_default().prototype .initialize .call (this);
 
-      this ._texture .addInterest ("set_texture__", this);
+      this ._nearDistance .addInterest ("set_nearDistance__", this);
+      this ._farDistance  .addInterest ("set_farDistance__",  this);
+      this ._texture      .addInterest ("set_texture__",      this);
 
+      this .set_nearDistance__ ();
+      this .set_farDistance__ ();
       this .set_texture__ ();
    },
    getLightKey ()
@@ -165,15 +169,19 @@ Object .assign (Object .setPrototypeOf (X3DTextureProjectorNode .prototype, (X3D
    },
    getNearDistance ()
    {
-      const nearDistance = this ._nearDistance .getValue ();
-
-      return nearDistance === -1 ? 0.125 : nearDistance;
+      return this .nearDistance;
+   },
+   getNearParameter ()
+   {
+      return this .nearParameter;
    },
    getFarDistance ()
    {
-      const farDistance = this ._farDistance .getValue ();
-
-      return farDistance === -1 ? 100_000 : farDistance;
+      return this .farDistance;
+   },
+   getFarParameter ()
+   {
+      return this .farParameter;
    },
    getTexture ()
    {
@@ -220,6 +228,20 @@ Object .assign (Object .setPrototypeOf (X3DTextureProjectorNode .prototype, (X3D
          return orientation .multRight (rotation);
       };
    })(),
+   set_nearDistance__ ()
+   {
+      const nearDistance = this ._nearDistance .getValue ();
+
+      this .nearDistance  = nearDistance < 0 ? 0.125 : nearDistance;
+      this .nearParameter = nearDistance < 0 ? 0 : -1;
+   },
+   set_farDistance__ ()
+   {
+      const farDistance = this ._farDistance .getValue ();
+
+      this .farDistance  = farDistance < 0 ? 100_000 : farDistance;
+      this .farParameter = farDistance < 0 ? 1 : 2;
+   },
    set_texture__ ()
    {
       this .textureNode ?.removeInterest ("set_aspectRatio__", this);
@@ -415,13 +437,13 @@ Object .assign (TextureProjectorContainer .prototype,
          return;
 
       const
-         nearDistance = lightNode ._nearDistance .getValue (),
-         farDistance  = lightNode ._farDistance .getValue ();
+         nearParameter = lightNode .getNearParameter (),
+         farParameter  = lightNode .getFarParameter ();
 
       gl .uniform3f        (shaderObject .x3d_TextureProjectorColor [i],         ... lightNode .getColor ());
       gl .uniform1f        (shaderObject .x3d_TextureProjectorIntensity [i],     lightNode .getIntensity ());
       gl .uniform3fv       (shaderObject .x3d_TextureProjectorLocation [i],      this .locationArray);
-      gl .uniform3f        (shaderObject .x3d_TextureProjectorParams [i],        nearDistance, farDistance, texture .isLinear ());
+      gl .uniform3f        (shaderObject .x3d_TextureProjectorParams [i],        nearParameter, farParameter, texture .isLinear ());
       gl .uniformMatrix4fv (shaderObject .x3d_TextureProjectorMatrix [i], false, this .matrixArray);
    },
    dispose ()
@@ -686,13 +708,13 @@ Object .assign (TextureProjectorParallelContainer .prototype,
          return;
 
       const
-         nearDistance = lightNode ._nearDistance .getValue (),
-         farDistance  = lightNode ._farDistance .getValue ();
+         nearParameter = lightNode .getNearParameter (),
+         farParameter  = lightNode .getFarParameter ();
 
       gl .uniform3f        (shaderObject .x3d_TextureProjectorColor [i],         ... lightNode .getColor ());
       gl .uniform1f        (shaderObject .x3d_TextureProjectorIntensity [i],     lightNode .getIntensity ());
       gl .uniform3fv       (shaderObject .x3d_TextureProjectorLocation [i],      this .locationArray);
-      gl .uniform3f        (shaderObject .x3d_TextureProjectorParams [i],        nearDistance, farDistance, texture .isLinear ());
+      gl .uniform3f        (shaderObject .x3d_TextureProjectorParams [i],        nearParameter, farParameter, texture .isLinear ());
       gl .uniformMatrix4fv (shaderObject .x3d_TextureProjectorMatrix [i], false, this .matrixArray);
    },
    dispose ()

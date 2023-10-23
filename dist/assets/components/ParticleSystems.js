@@ -430,6 +430,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, (X3DN
 
       // Transform particles.
 
+      gl .bindFramebuffer (gl .FRAMEBUFFER, null); // Prevent texture feedback loop error, see NYC in Firefox.
       gl .bindTransformFeedback (gl .TRANSFORM_FEEDBACK, this .transformFeedback);
       gl .bindBufferBase (gl .TRANSFORM_FEEDBACK_BUFFER, 0, particleSystem .outputParticles);
       gl .enable (gl .RASTERIZER_DISCARD);
@@ -2898,11 +2899,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (X3DShapeNode
          {
             case ParticleSystems_GeometryTypes .GEOMETRY:
             {
-               const geometryNode = this .getGeometry ();
-
-               if (geometryNode)
-                  geometryNode .displaySimpleParticles (gl, shaderNode, this);
-
+               this .getGeometry () ?.displaySimpleParticles (gl, shaderNode, this);
                break;
             }
             case ParticleSystems_GeometryTypes .SPRITE:
@@ -2914,7 +2911,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (X3DShapeNode
             {
                const outputParticles = this .outputParticles;
 
-               if (outputParticles .vertexArrayObject .enable (shaderNode))
+               if (outputParticles .vertexArrayObject .enable (shaderNode .getProgram ()))
                {
                   const particleStride = this .particleStride;
 
@@ -2924,7 +2921,6 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (X3DShapeNode
                }
 
                gl .drawArraysInstanced (this .primitiveMode, 0, this .vertexCount, this .numParticles);
-
                break;
             }
          }
@@ -2941,11 +2937,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (X3DShapeNode
       {
          case ParticleSystems_GeometryTypes .GEOMETRY:
          {
-            const geometryNode = this .getGeometry ();
-
-            if (geometryNode)
-               geometryNode .displayParticles (gl, renderContext, this);
-
+            this .getGeometry () ?.displayParticles (gl, renderContext, this);
             break;
          }
          case ParticleSystems_GeometryTypes .SPRITE:
@@ -2993,7 +2985,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (X3DShapeNode
 
             const outputParticles = this .outputParticles;
 
-            if (outputParticles .vertexArrayObject .enable (shaderNode))
+            if (outputParticles .vertexArrayObject .enable (shaderNode .getProgram ()))
             {
                const particleStride = this .particleStride;
 
