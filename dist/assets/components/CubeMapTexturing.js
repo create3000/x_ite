@@ -538,9 +538,7 @@ Object .assign (Object .setPrototypeOf (ComposedCubeMapTexture .prototype, CubeM
                   gl .copyTexSubImage2D (this .getTargets () [i], 0, 0, size - y - 1, 0, y, size, 1);
             }
          }
-
-         gl .bindFramebuffer (gl .FRAMEBUFFER, null);
-
+         
          this .setTransparent (textureNodes .some (textureNode => textureNode .isTransparent ()));
          this .setLinear (textureNodes .some (textureNode => textureNode .isLinear ()));
          this .updateTextureParameters ();
@@ -1017,8 +1015,6 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, Cube
 
          dependentRenderer .getProjectionMatrix () .pop ();
          dependentRenderer .getViewVolumes      () .pop ();
-
-         this .frameBuffer .unbind ();
 
          if (this ._update .getValue () === "NEXT_FRAME_ONLY")
             this ._update = "NONE";

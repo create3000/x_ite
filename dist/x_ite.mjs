@@ -1,9 +1,9 @@
 /* X_ITE v9.0.0 */var __webpack_modules__ = ({
 
-/***/ 936:
+/***/ 1:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var jQuery = __webpack_require__(986);
+/* provided dependency */ var jQuery = __webpack_require__(978);
 /**
  * @preserve jquery.fullscreen 1.1.5
  * https://github.com/code-lts/jquery-fullscreen-plugin
@@ -199,7 +199,7 @@ installFullScreenHandlers();
 
 /***/ }),
 
-/***/ 668:
+/***/ 436:
 /***/ ((module, exports, __webpack_require__) => {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -213,7 +213,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 (function (factory) {
     if ( true ) {
         // AMD. Register as an anonymous module.
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(986)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(978)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 		(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -424,7 +424,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 986:
+/***/ 978:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -11148,7 +11148,7 @@ return jQuery;
 
 /***/ }),
 
-/***/ 627:
+/***/ 728:
 /***/ ((module) => {
 
 /**
@@ -15927,7 +15927,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 102:
+/***/ 899:
 /***/ (function(__unused_webpack_module, exports) {
 
 
@@ -19172,7 +19172,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 962:
+/***/ 11:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -34121,7 +34121,7 @@ const X3DBaseNode_default_ = X3DBaseNode;
 x_ite_Namespace .add ("X3DBaseNode", "x_ite/Base/X3DBaseNode", X3DBaseNode_default_);
 /* harmony default export */ const Base_X3DBaseNode = (X3DBaseNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Legacy.js
-/* provided dependency */ var $ = __webpack_require__(986);
+/* provided dependency */ var $ = __webpack_require__(978);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -38060,7 +38060,7 @@ const X3DProtoDeclarationNode_default_ = X3DProtoDeclarationNode;
 x_ite_Namespace .add ("X3DProtoDeclarationNode", "x_ite/Prototype/X3DProtoDeclarationNode", X3DProtoDeclarationNode_default_);
 /* harmony default export */ const Prototype_X3DProtoDeclarationNode = (X3DProtoDeclarationNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/X3DParser.js
-/* provided dependency */ var X3DParser_$ = __webpack_require__(986);
+/* provided dependency */ var X3DParser_$ = __webpack_require__(978);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -38885,7 +38885,7 @@ const X3DProtoDeclaration_default_ = X3DProtoDeclaration;
 x_ite_Namespace .add ("X3DProtoDeclaration", "x_ite/Prototype/X3DProtoDeclaration", X3DProtoDeclaration_default_);
 /* harmony default export */ const Prototype_X3DProtoDeclaration = (X3DProtoDeclaration_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/VRMLParser.js
-/* provided dependency */ var VRMLParser_$ = __webpack_require__(986);
+/* provided dependency */ var VRMLParser_$ = __webpack_require__(978);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -41430,7 +41430,7 @@ const VRMLParser_default_ = VRMLParser;
 x_ite_Namespace .add ("VRMLParser", "x_ite/Parser/VRMLParser", VRMLParser_default_);
 /* harmony default export */ const Parser_VRMLParser = (VRMLParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/XMLParser.js
-/* provided dependency */ var XMLParser_$ = __webpack_require__(986);
+/* provided dependency */ var XMLParser_$ = __webpack_require__(978);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -43522,7 +43522,7 @@ const URLs_default_ = URLs;
 x_ite_Namespace .add ("URLs", "x_ite/Browser/Networking/URLs", URLs_default_);
 /* harmony default export */ const Networking_URLs = (URLs_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GLTF2Parser.js
-/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(986);
+/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(978);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -46823,7 +46823,7 @@ const GLTF2Parser_default_ = GLTF2Parser;
 x_ite_Namespace .add ("GLTF2Parser", "x_ite/Parser/GLTF2Parser", GLTF2Parser_default_);
 /* harmony default export */ const Parser_GLTF2Parser = (GLTF2Parser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GLB2Parser.js
-/* provided dependency */ var GLB2Parser_$ = __webpack_require__(986);
+/* provided dependency */ var GLB2Parser_$ = __webpack_require__(978);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -46975,7 +46975,7 @@ const GLB2Parser_default_ = GLB2Parser;
 x_ite_Namespace .add ("GLB2Parser", "x_ite/Parser/GLB2Parser", GLB2Parser_default_);
 /* harmony default export */ const Parser_GLB2Parser = (GLB2Parser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/OBJParser.js
-/* provided dependency */ var OBJParser_$ = __webpack_require__(986);
+/* provided dependency */ var OBJParser_$ = __webpack_require__(978);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -50330,8 +50330,8 @@ const MatrixStack_default_ = MatrixStack;
 x_ite_Namespace .add ("MatrixStack", "standard/Math/Utility/MatrixStack", MatrixStack_default_);
 /* harmony default export */ const Utility_MatrixStack = (MatrixStack_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_$ = __webpack_require__(986);
-/* provided dependency */ var libtess = __webpack_require__(627);
+/* provided dependency */ var SVGParser_$ = __webpack_require__(978);
+/* provided dependency */ var libtess = __webpack_require__(728);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -53099,7 +53099,7 @@ const SVGParser_default_ = SVGParser;
 x_ite_Namespace .add ("SVGParser", "x_ite/Parser/SVGParser", SVGParser_default_);
 /* harmony default export */ const Parser_SVGParser = (SVGParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GoldenGate.js
-/* provided dependency */ var GoldenGate_$ = __webpack_require__(986);
+/* provided dependency */ var GoldenGate_$ = __webpack_require__(978);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -53436,7 +53436,7 @@ const Plane3_default_ = Plane3;
 x_ite_Namespace .add ("Plane3", "standard/Math/Geometry/Plane3", Plane3_default_);
 /* harmony default export */ const Geometry_Plane3 = (Plane3_default_);
 ;// CONCATENATED MODULE: ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var Triangle3_libtess = __webpack_require__(627);
+/* provided dependency */ var Triangle3_libtess = __webpack_require__(728);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -54247,9 +54247,6 @@ function TextureBuffer (browser, width, height, float = false)
 
    const status = gl .checkFramebufferStatus (gl .FRAMEBUFFER) === gl .FRAMEBUFFER_COMPLETE;
 
-   gl .bindTexture (gl .TEXTURE_2D, null);
-   gl .bindFramebuffer (gl .FRAMEBUFFER, null);
-
    // Always check that our framebuffer is ok.
 
    if (!status)
@@ -54326,12 +54323,6 @@ Object .assign (TextureBuffer .prototype,
       const gl = this .context;
 
       gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffer);
-   },
-   unbind ()
-   {
-      const gl = this .context;
-
-      gl .bindFramebuffer (gl .FRAMEBUFFER, null);
    },
    delete ()
    {
@@ -55724,8 +55715,6 @@ x_ite_Namespace .add ("StopWatch", "standard/Time/StopWatch", StopWatch_default_
 
 const DEPTH_BUFFER_SIZE = 16;
 
-let renderCount = 0;
-
 function X3DRenderObject (executionContext)
 {
    const browser = executionContext .getBrowser ();
@@ -56090,7 +56079,6 @@ Object .assign (X3DRenderObject .prototype,
          const depth = this .depthBuffer .readDepth (projectionMatrix, depthBufferViewport);
 
          this .viewVolumes .pop ();
-         this .depthBuffer .unbind ();
 
          return depth;
       };
@@ -56640,158 +56628,158 @@ Object .assign (X3DRenderObject .prototype,
          }
       };
    })(),
-   draw ()
+   draw: (function ()
    {
-      const
-         browser                  = this .getBrowser (),
-         gl                       = browser .getContext (),
-         viewport                 = this .getViewVolume () .getViewport (),
-         lights                   = this .lights,
-         globalLightsKeys         = this .globalLightsKeys,
-         globalLights             = this .globalLights,
-         generatedCubeMapTextures = this .generatedCubeMapTextures,
-         globalShadows            = this .globalShadows,
-         shadows                  = globalShadows .at (-1),
-         headlight                = this .getNavigationInfo () ._headlight .getValue (),
-         oit                      = browser .getFrameBuffer () .getOrderIndependentTransparency ();
+      let renderCount = 0;
 
-
-      this .renderCount = ++ renderCount;
-
-      this .logarithmicDepthBuffer = browser .getBrowserOption ("LogarithmicDepthBuffer")
-         || this .getViewpoint () .getLogarithmicDepthBuffer ();
-
-
-      // PREPARATIONS
-
-
-      if (this .isIndependent ())
+      return function ()
       {
-         // Render shadow maps.
+         const
+            browser                  = this .getBrowser (),
+            gl                       = browser .getContext (),
+            frameBuffer              = browser .getFrameBuffer (),
+            viewport                 = this .getViewVolume () .getViewport (),
+            lights                   = this .lights,
+            globalLightsKeys         = this .globalLightsKeys,
+            globalLights             = this .globalLights,
+            generatedCubeMapTextures = this .generatedCubeMapTextures,
+            globalShadows            = this .globalShadows,
+            shadows                  = globalShadows .at (-1),
+            headlight                = this .getNavigationInfo () ._headlight .getValue (),
+            oit                      = frameBuffer .getOIT ();
+
+         renderCount >>>= 0; // uintesize
+         this .renderCount = ++ renderCount;
+
+         this .logarithmicDepthBuffer = browser .getBrowserOption ("LogarithmicDepthBuffer")
+            || this .getViewpoint () .getLogarithmicDepthBuffer ();
+
+         // PREPARATIONS
+
+         if (this .isIndependent ())
+         {
+            // Render shadow maps.
+
+            for (const light of lights)
+               light .renderShadowMap (this);
+
+            // Render GeneratedCubeMapTextures.
+
+            for (const generatedCubeMapTexture of generatedCubeMapTextures)
+               generatedCubeMapTexture .renderTexture (this);
+
+            frameBuffer .bind ();
+         }
+
+         // Set up shadow matrix for all lights, and matrix for all projective textures.
+
+         if (headlight)
+            browser .getHeadlight () .setGlobalVariables (this);
 
          for (const light of lights)
-            light .renderShadowMap (this);
+            light .setGlobalVariables (this);
 
-         // Render GeneratedCubeMapTextures.
+         for (const light of globalLights)
+            globalLightsKeys .push (light .lightNode .getLightKey ());
 
-         for (const generatedCubeMapTexture of generatedCubeMapTextures)
-            generatedCubeMapTexture .renderTexture (this);
+         // Set global uniforms.
 
-         browser .getFrameBuffer () .bind ();
-      }
+         this .viewportArray          .set (viewport);
+         this .cameraSpaceMatrixArray .set (this .getCameraSpaceMatrix () .get ());
+         this .projectionMatrixArray  .set (this .getProjectionMatrix () .get ());
 
-      // Set up shadow matrix for all lights, and matrix for all projective textures.
+         // DRAW
 
-      if (headlight)
-         browser .getHeadlight () .setGlobalVariables (this);
+         // Configure viewport and background
 
-      for (const light of lights)
-         light .setGlobalVariables (this);
+         gl .viewport (... viewport);
+         gl .scissor (... viewport);
 
-      for (const light of globalLights)
-         globalLightsKeys .push (light .lightNode .getLightKey ());
+         // Draw background.
 
-      // Set global uniforms.
+         gl .clear (gl .DEPTH_BUFFER_BIT);
+         gl .blendFuncSeparate (gl .SRC_ALPHA, gl .ONE_MINUS_SRC_ALPHA, gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
 
-      this .viewportArray          .set (viewport);
-      this .cameraSpaceMatrixArray .set (this .getCameraSpaceMatrix () .get ());
-      this .projectionMatrixArray  .set (this .getProjectionMatrix () .get ());
+         this .getBackground () .display (gl, this, viewport);
 
+         // Sorted blend or order independent transparency
 
-      // DRAW
+         // Render opaque objects first
 
+         const opaqueShapes = this .opaqueShapes;
 
-      // Configure viewport and background
+         for (let i = 0, length = this .numOpaqueShapes; i < length; ++ i)
+         {
+            const renderContext = opaqueShapes [i];
 
-      gl .viewport (... viewport);
-      gl .scissor (... viewport);
+            gl .scissor (... renderContext .scissor);
 
-      // Draw background.
+            renderContext .shadows = renderContext .shadows || shadows;
+            renderContext .objectsKeys .push (... globalLightsKeys);
 
-      gl .clear (gl .DEPTH_BUFFER_BIT);
-      gl .blendFuncSeparate (gl .SRC_ALPHA, gl .ONE_MINUS_SRC_ALPHA, gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
+            renderContext .shapeNode .display (gl, renderContext);
+            browser .resetTextureUnits ();
+         }
 
-      this .getBackground () .display (gl, this, viewport);
+         // Render transparent objects
 
-      // Sorted blend or order independent transparency
+         const transparentShapes = this .transparentShapes;
 
-      // Render opaque objects first
+         if (oit)
+            frameBuffer .bindTransparency ();
+         else
+            this .transparencySorter .sort (0, this .numTransparentShapes);
 
-      const opaqueShapes = this .opaqueShapes;
+         gl .depthMask (false);
+         gl .enable (gl .BLEND);
 
-      for (let i = 0, length = this .numOpaqueShapes; i < length; ++ i)
-      {
-         const renderContext = opaqueShapes [i];
+         for (let i = 0, length = this .numTransparentShapes; i < length; ++ i)
+         {
+            const renderContext = transparentShapes [i];
 
-         gl .scissor (... renderContext .scissor);
+            gl .scissor (... renderContext .scissor);
 
-         renderContext .shadows = renderContext .shadows || shadows;
-         renderContext .objectsKeys .push (... globalLightsKeys);
+            renderContext .shadows = renderContext .shadows || shadows;
+            renderContext .objectsKeys .push (... globalLightsKeys);
 
-         renderContext .shapeNode .display (gl, renderContext);
-         browser .resetTextureUnits ();
-      }
+            renderContext .shapeNode .display (gl, renderContext);
+            browser .resetTextureUnits ();
+         }
 
-      // Render transparent objects
+         gl .depthMask (true);
+         gl .disable (gl .BLEND);
 
-      const transparentShapes = this .transparentShapes;
+         if (oit)
+            frameBuffer .compose ();
 
-      if (oit)
-         browser .getFrameBuffer () .bindForOrderIndependentTransparency ();
-      else
-         this .transparencySorter .sort (0, this .numTransparentShapes);
+         // POST DRAW
 
-      gl .depthMask (false);
-      gl .enable (gl .BLEND);
+         if (this .isIndependent ())
+         {
+            // Recycle clip planes, local fogs, local lights, and local projective textures.
 
-      for (let i = 0, length = this .numTransparentShapes; i < length; ++ i)
-      {
-         const renderContext = transparentShapes [i];
+            const localObjects = browser .getLocalObjects ();
 
-         gl .scissor (... renderContext .scissor);
+            for (const localObject of localObjects)
+               localObject .dispose ();
 
-         renderContext .shadows = renderContext .shadows || shadows;
-         renderContext .objectsKeys .push (... globalLightsKeys);
+            localObjects .length = 0;
 
-         renderContext .shapeNode .display (gl, renderContext);
-         browser .resetTextureUnits ();
-      }
+            // Recycle global lights and global projective textures.
 
-      gl .depthMask (true);
-      gl .disable (gl .BLEND);
+            for (const globalObject of globalLights)
+               globalObject .dispose ();
+         }
 
-      if (oit)
-         browser .getFrameBuffer () .compose ();
+         // Reset containers.
 
-      // POST DRAW
-
-      if (this .isIndependent ())
-      {
-         browser .getFrameBuffer () .unbind ();
-
-         // Recycle clip planes, local fogs, local lights, and local projective textures.
-
-         const localObjects = browser .getLocalObjects ();
-
-         for (const localObject of localObjects)
-            localObject .dispose ();
-
-         localObjects .length = 0;
-
-         // Recycle global lights and global projective textures.
-
-         for (const globalObject of globalLights)
-            globalObject .dispose ();
-      }
-
-      // Reset containers.
-
-      globalLightsKeys         .length = 0;
-      globalLights             .length = 0;
-      lights                   .length = 0;
-      globalShadows            .length = 1;
-      generatedCubeMapTextures .length = 0;
-   },
+         globalLightsKeys         .length = 0;
+         globalLights             .length = 0;
+         lights                   .length = 0;
+         globalShadows            .length = 1;
+         generatedCubeMapTextures .length = 0;
+      };
+   })(),
 });
 
 function X3DRenderObject_assign (lhs, rhs)
@@ -60952,7 +60940,7 @@ const X3DTexture2DNode_default_ = X3DTexture2DNode;
 x_ite_Namespace .add ("X3DTexture2DNode", "x_ite/Components/Texturing/X3DTexture2DNode", X3DTexture2DNode_default_);
 /* harmony default export */ const Texturing_X3DTexture2DNode = (X3DTexture2DNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/ImageTexture.js
-/* provided dependency */ var ImageTexture_$ = __webpack_require__(986);
+/* provided dependency */ var ImageTexture_$ = __webpack_require__(978);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -65543,7 +65531,7 @@ const X3DWorld_default_ = X3DWorld;
 x_ite_Namespace .add ("X3DWorld", "x_ite/Execution/X3DWorld", X3DWorld_default_);
 /* harmony default export */ const Execution_X3DWorld = (X3DWorld_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/InputOutput/FileLoader.js
-/* provided dependency */ var FileLoader_$ = __webpack_require__(986);
+/* provided dependency */ var FileLoader_$ = __webpack_require__(978);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -79960,8 +79948,6 @@ Object .assign (DirectionalLightContainer .prototype,
       renderObject .getProjectionMatrix () .pop ();
       renderObject .getViewVolumes      () .pop ();
 
-      this .shadowBuffer .unbind ();
-
       if (!this .global)
          invLightSpaceMatrix .multLeft (modelMatrix .inverse ());
 
@@ -80532,8 +80518,6 @@ Object .assign (PointLightContainer .prototype,
          renderObject .getViewVolumes () .pop ();
       }
 
-      this .shadowBuffer .unbind ();
-
       if (!this .global)
          invLightSpaceMatrix .multLeft (modelMatrix .inverse ());
 
@@ -80859,8 +80843,6 @@ Object .assign (SpotLightContainer .prototype,
       renderObject .getModelViewMatrix  () .pop ();
       renderObject .getProjectionMatrix () .pop ();
       renderObject .getViewVolumes      () .pop ();
-
-      this .shadowBuffer .unbind ();
 
       if (!this .global)
          invLightSpaceMatrix .multLeft (modelMatrix .inverse ());
@@ -89144,7 +89126,7 @@ const X3DShaderNode_default_ = X3DShaderNode;
 x_ite_Namespace .add ("X3DShaderNode", "x_ite/Components/Shaders/X3DShaderNode", X3DShaderNode_default_);
 /* harmony default export */ const Shaders_X3DShaderNode = (X3DShaderNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js
-/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(986);
+/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(978);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -94777,7 +94759,7 @@ const ShaderCompiler_default_ = ShaderCompiler;
 x_ite_Namespace .add ("ShaderCompiler", "x_ite/Browser/Shaders/ShaderCompiler", ShaderCompiler_default_);
 /* harmony default export */ const Shaders_ShaderCompiler = (ShaderCompiler_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shaders/ShaderPart.js
-/* provided dependency */ var ShaderPart_$ = __webpack_require__(986);
+/* provided dependency */ var ShaderPart_$ = __webpack_require__(978);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -95434,7 +95416,7 @@ const X3DAppearanceNode_default_ = X3DAppearanceNode;
 x_ite_Namespace .add ("X3DAppearanceNode", "x_ite/Components/Shape/X3DAppearanceNode", X3DAppearanceNode_default_);
 /* harmony default export */ const Shape_X3DAppearanceNode = (X3DAppearanceNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shape/Appearance.js
-/* provided dependency */ var Appearance_$ = __webpack_require__(986);
+/* provided dependency */ var Appearance_$ = __webpack_require__(978);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -98835,7 +98817,7 @@ const Components_Shape_default_ = {
 x_ite_Namespace .add ("Shape", "x_ite/Components/Shape", Components_Shape_default_);
 /* harmony default export */ const Components_Shape = (Components_Shape_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/X3DSoundProcessingNode.js
-/* provided dependency */ var X3DSoundProcessingNode_$ = __webpack_require__(986);
+/* provided dependency */ var X3DSoundProcessingNode_$ = __webpack_require__(978);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -99475,7 +99457,7 @@ const X3DSoundSourceNode_default_ = X3DSoundSourceNode;
 x_ite_Namespace .add ("X3DSoundSourceNode", "x_ite/Components/Sound/X3DSoundSourceNode", X3DSoundSourceNode_default_);
 /* harmony default export */ const Sound_X3DSoundSourceNode = (X3DSoundSourceNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/AudioClip.js
-/* provided dependency */ var AudioClip_$ = __webpack_require__(986);
+/* provided dependency */ var AudioClip_$ = __webpack_require__(978);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -99777,7 +99759,7 @@ const X3DSoundNode_default_ = X3DSoundNode;
 x_ite_Namespace .add ("X3DSoundNode", "x_ite/Components/Sound/X3DSoundNode", X3DSoundNode_default_);
 /* harmony default export */ const Sound_X3DSoundNode = (X3DSoundNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/X3DSoundDestinationNode.js
-/* provided dependency */ var X3DSoundDestinationNode_$ = __webpack_require__(986);
+/* provided dependency */ var X3DSoundDestinationNode_$ = __webpack_require__(978);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -101427,7 +101409,7 @@ const ListenerPointSource_default_ = ListenerPointSource;
 x_ite_Namespace .add ("ListenerPointSource", "x_ite/Components/Sound/ListenerPointSource", ListenerPointSource_default_);
 /* harmony default export */ const Sound_ListenerPointSource = (ListenerPointSource_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/MicrophoneSource.js
-/* provided dependency */ var MicrophoneSource_$ = __webpack_require__(986);
+/* provided dependency */ var MicrophoneSource_$ = __webpack_require__(978);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -103096,8 +103078,8 @@ const GifMedia_default_ = GifMedia;
 x_ite_Namespace .add ("GifMedia", "x_ite/Browser/Texturing/GifMedia", GifMedia_default_);
 /* harmony default export */ const Texturing_GifMedia = (GifMedia_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var MovieTexture_$ = __webpack_require__(986);
-/* provided dependency */ var SuperGif = __webpack_require__(962);
+/* provided dependency */ var MovieTexture_$ = __webpack_require__(978);
+/* provided dependency */ var SuperGif = __webpack_require__(11);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -104275,7 +104257,7 @@ const MultiTextureTransform_default_ = MultiTextureTransform;
 x_ite_Namespace .add ("MultiTextureTransform", "x_ite/Components/Texturing/MultiTextureTransform", MultiTextureTransform_default_);
 /* harmony default export */ const Texturing_MultiTextureTransform = (MultiTextureTransform_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/PixelTexture.js
-/* provided dependency */ var PixelTexture_$ = __webpack_require__(986);
+/* provided dependency */ var PixelTexture_$ = __webpack_require__(978);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -105916,7 +105898,6 @@ const Context =
             this .bufferData (this .PIXEL_PACK_BUFFER, dest .byteLength, this .STREAM_READ);
             this .readPixels (x, y, w, h, format, type, 0);
             this .bindBuffer (this .PIXEL_PACK_BUFFER, null);
-            this .bindFramebuffer (this .FRAMEBUFFER, null);
 
             await this .getBufferSubDataAsync (this .PIXEL_PACK_BUFFER, buffer, 0, dest, dstOffset);
 
@@ -106432,7 +106413,7 @@ const gettext_default_ = gettext;
 x_ite_Namespace .add ("gettext", "locale/gettext", gettext_default_);
 /* harmony default export */ const locale_gettext = (gettext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserTimings.js
-/* provided dependency */ var BrowserTimings_$ = __webpack_require__(986);
+/* provided dependency */ var BrowserTimings_$ = __webpack_require__(978);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -106862,7 +106843,7 @@ const TextureQuality_default_ = TextureQuality;
 x_ite_Namespace .add ("TextureQuality", "x_ite/Browser/Core/TextureQuality", TextureQuality_default_);
 /* harmony default export */ const Core_TextureQuality = (TextureQuality_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserOptions.js
-/* provided dependency */ var BrowserOptions_$ = __webpack_require__(986);
+/* provided dependency */ var BrowserOptions_$ = __webpack_require__(978);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -107455,7 +107436,7 @@ const RenderingProperties_default_ = RenderingProperties;
 x_ite_Namespace .add ("RenderingProperties", "x_ite/Browser/Core/RenderingProperties", RenderingProperties_default_);
 /* harmony default export */ const Core_RenderingProperties = (RenderingProperties_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/Notification.js
-/* provided dependency */ var Notification_$ = __webpack_require__(986);
+/* provided dependency */ var Notification_$ = __webpack_require__(978);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -107578,8 +107559,8 @@ const Notification_default_ = Notification;
 x_ite_Namespace .add ("Notification", "x_ite/Browser/Core/Notification", Notification_default_);
 /* harmony default export */ const Core_Notification = (Notification_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/ContextMenu.js
-/* provided dependency */ var jquery_fullscreen = __webpack_require__(936);
-/* provided dependency */ var ContextMenu_$ = __webpack_require__(986);
+/* provided dependency */ var jquery_fullscreen = __webpack_require__(1);
+/* provided dependency */ var ContextMenu_$ = __webpack_require__(978);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -110331,7 +110312,7 @@ const DataStorage_default_ = DataStorage;
 x_ite_Namespace .add ("DataStorage", "standard/Utility/DataStorage", DataStorage_default_);
 /* harmony default export */ const Utility_DataStorage = (DataStorage_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/X3DCoreContext.js
-/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(986);
+/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(978);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -112394,8 +112375,8 @@ const X3DViewer_default_ = X3DViewer;
 x_ite_Namespace .add ("X3DViewer", "x_ite/Browser/Navigation/X3DViewer", X3DViewer_default_);
 /* harmony default export */ const Navigation_X3DViewer = (X3DViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/ExamineViewer.js
-/* provided dependency */ var jquery_mousewheel = __webpack_require__(668);
-/* provided dependency */ var ExamineViewer_$ = __webpack_require__(986);
+/* provided dependency */ var jquery_mousewheel = __webpack_require__(436);
+/* provided dependency */ var ExamineViewer_$ = __webpack_require__(978);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -113267,8 +113248,8 @@ const ExamineViewer_default_ = ExamineViewer;
 x_ite_Namespace .add ("ExamineViewer", "x_ite/Browser/Navigation/ExamineViewer", ExamineViewer_default_);
 /* harmony default export */ const Navigation_ExamineViewer = (ExamineViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/X3DFlyViewer.js
-/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(668);
-/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(986);
+/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(436);
+/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(978);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -113919,6 +113900,11 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, Navigation_X3DV
             height       = viewport [3],
             contentScale = browser .getRenderingProperty ("ContentScale");
 
+         browser .getFrameBuffer () .bind ();
+
+         gl .viewport (... viewport);
+         gl .scissor (... viewport);
+
          projectionMatrixArray .set (Geometry_Camera .ortho (0, width, 0, height, -1, 1, projectionMatrix));
 
          // Display Rubberband.
@@ -114272,8 +114258,8 @@ const FlyViewer_default_ = FlyViewer;
 x_ite_Namespace .add ("FlyViewer", "x_ite/Browser/Navigation/FlyViewer", FlyViewer_default_);
 /* harmony default export */ const Navigation_FlyViewer = (FlyViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/PlaneViewer.js
-/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(668);
-/* provided dependency */ var PlaneViewer_$ = __webpack_require__(986);
+/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(436);
+/* provided dependency */ var PlaneViewer_$ = __webpack_require__(978);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -114604,8 +114590,8 @@ const NoneViewer_default_ = NoneViewer;
 x_ite_Namespace .add ("NoneViewer", "x_ite/Browser/Navigation/NoneViewer", NoneViewer_default_);
 /* harmony default export */ const Navigation_NoneViewer = (NoneViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/LookAtViewer.js
-/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(668);
-/* provided dependency */ var LookAtViewer_$ = __webpack_require__(986);
+/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(436);
+/* provided dependency */ var LookAtViewer_$ = __webpack_require__(978);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -115744,8 +115730,8 @@ const X3DPickingContext_default_ = X3DPickingContext;
 x_ite_Namespace .add ("X3DPickingContext", "x_ite/Browser/Picking/X3DPickingContext", X3DPickingContext_default_);
 /* harmony default export */ const Picking_X3DPickingContext = (X3DPickingContext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/PointingDeviceSensor/PointingDevice.js
-/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(668);
-/* provided dependency */ var PointingDevice_$ = __webpack_require__(986);
+/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(436);
+/* provided dependency */ var PointingDevice_$ = __webpack_require__(978);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -116137,8 +116123,6 @@ function PointingBuffer (browser)
 
    const status = gl .checkFramebufferStatus (gl .FRAMEBUFFER) === gl .FRAMEBUFFER_COMPLETE;
 
-   gl .bindFramebuffer (gl .FRAMEBUFFER, null);
-
    // Always check that our frame buffer is ok.
 
    if (!status)
@@ -116154,12 +116138,6 @@ Object .assign (PointingBuffer .prototype,
       gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffer);
       gl .clearColor (0, 0, 0, 0);
       gl .clear (gl .COLOR_BUFFER_BIT);
-   },
-   unbind ()
-   {
-      const gl = this .context;
-
-      gl .bindFramebuffer (gl .FRAMEBUFFER, null);
    },
    getHit (hit)
    {
@@ -116467,7 +116445,6 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
       this .getWorld () .traverse (Rendering_TraverseType .POINTER);
 
       this [_pointingBuffer] .getHit (hit);
-      this [_pointingBuffer] .unbind ();
 
       if (Number .isInteger (hit .id) && hit .id > 0 && hit .id <= this [_id])
       {
@@ -116716,8 +116693,6 @@ function MultiSampleFrameBuffer (browser, width, height, samples, oit)
 
    const status1 = gl .checkFramebufferStatus (gl .FRAMEBUFFER) === gl .FRAMEBUFFER_COMPLETE;
 
-   gl .bindFramebuffer (gl .FRAMEBUFFER, null);
-
    // Always check that our frame buffer is ok.
 
    if (!status1)
@@ -116834,9 +116809,6 @@ function MultiSampleFrameBuffer (browser, width, height, samples, oit)
 
    const status2 = gl .checkFramebufferStatus (gl .FRAMEBUFFER) === gl .FRAMEBUFFER_COMPLETE;
 
-   gl .bindTexture (gl .TEXTURE_2D, null);
-   gl .bindFramebuffer (gl .FRAMEBUFFER, null);
-
    // Always check that our frame buffer is ok.
 
    if (!status2)
@@ -116871,7 +116843,7 @@ Object .assign (MultiSampleFrameBuffer .prototype,
    {
       return this .samples;
    },
-   getOrderIndependentTransparency ()
+   getOIT ()
    {
       return this .oit;
    },
@@ -116889,9 +116861,8 @@ Object .assign (MultiSampleFrameBuffer .prototype,
 
       gl .clearColor (0, 0, 0, 0);
       gl .clear (gl .COLOR_BUFFER_BIT);
-      gl .bindFramebuffer (gl .FRAMEBUFFER, null);
    },
-   bindForOrderIndependentTransparency ()
+   bindTransparency ()
    {
       const { context: gl, oitFrameBuffer } = this;
 
@@ -116903,7 +116874,7 @@ Object .assign (MultiSampleFrameBuffer .prototype,
    },
    compose ()
    {
-      const { browser, context: gl, width, height, samples, program } = this;
+      const { context: gl, browser, width, height, samples, program } = this;
 
       // TODO: Combining lights and lights with shadows, can cause feedback loop of texture.
       // TODO: VolumeRendering shader is not made for OIT.
@@ -116962,14 +116933,6 @@ Object .assign (MultiSampleFrameBuffer .prototype,
       gl .blitFramebuffer (0, 0, width, height,
                            0, 0, width, height,
                            gl .COLOR_BUFFER_BIT, samples ? gl .LINEAR : gl .NEAREST);
-
-      gl .bindFramebuffer (gl .FRAMEBUFFER, null);
-   },
-   unbind ()
-   {
-      const { context: gl } = this;
-
-      gl .bindFramebuffer (gl .FRAMEBUFFER, null);
    },
    dispose ()
    {
@@ -116993,12 +116956,11 @@ const Fallback = {
    getWidth: Function .prototype,
    getHeight: Function .prototype,
    getSamples: Function .prototype,
-   getOrderIndependentTransparency: Function .prototype,
+   getOIT: Function .prototype,
    bind: Function .prototype,
    clear: Function .prototype,
    blit: Function .prototype,
    compose: Function .prototype,
-   unbind: Function .prototype,
    dispose: Function .prototype,
 };
 
@@ -117008,7 +116970,7 @@ const MultiSampleFrameBuffer_default_ = MultiSampleFrameBuffer;
 x_ite_Namespace .add ("MultiSampleFrameBuffer", "x_ite/Rendering/MultiSampleFrameBuffer", MultiSampleFrameBuffer_default_);
 /* harmony default export */ const Rendering_MultiSampleFrameBuffer = (MultiSampleFrameBuffer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Rendering/X3DRenderingContext.js
-/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(986);
+/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(978);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -117286,7 +117248,7 @@ Object .assign (X3DRenderingContext .prototype,
       if (width   !== this [_frameBuffer] .getWidth ()   ||
           height  !== this [_frameBuffer] .getHeight ()  ||
           samples !== this [_frameBuffer] .getSamples () ||
-          oit     !== this [_frameBuffer] .getOrderIndependentTransparency ())
+          oit     !== this [_frameBuffer] .getOIT ())
       {
          this [_frameBuffer] .dispose ();
          this [_frameBuffer] = new Rendering_MultiSampleFrameBuffer (this, width, height, samples, oit);
@@ -117911,7 +117873,7 @@ const X3DSoundContext_default_ = X3DSoundContext;
 x_ite_Namespace .add ("X3DSoundContext", "x_ite/Browser/Sound/X3DSoundContext", X3DSoundContext_default_);
 /* harmony default export */ const Sound_X3DSoundContext = (X3DSoundContext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Texturing/KTXDecoder.js
-/* provided dependency */ var KTXDecoder_$ = __webpack_require__(986);
+/* provided dependency */ var KTXDecoder_$ = __webpack_require__(978);
 const KTXDecoder_default_ = class KTXDecoder
 {
    constructor (gl, externalKtxlib, scriptDir)
@@ -119021,7 +118983,7 @@ x_ite_Namespace .add ("ConcreteNodes", "x_ite/Configuration/ConcreteNodes", Conc
 
 const
    _world           = Symbol (),
-   _changedTime     = Symbol (),
+   X3DBrowserContext_tainted         = Symbol (),
    _limitFrameRate  = Symbol (),
    _traverse        = Symbol (),
    _renderCallback  = Symbol (),
@@ -119072,7 +119034,7 @@ function X3DBrowserContext (element)
                           Base_X3DConstants .outputOnly, "displayEvents",  new Fields_SFTime (),
                           Base_X3DConstants .outputOnly, "finishedEvents", new Fields_SFTime ());
 
-   this [_changedTime]    = 0;
+   this [X3DBrowserContext_tainted]        = false;
    this [_previousTime]   = 0;
    this [_renderCallback] = this [_traverse] .bind (this);
    this [_systemTime]     = new Time_StopWatch ();
@@ -119174,10 +119136,10 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, Base_X3DBa
    },
    addBrowserEvent ()
    {
-      if (this [_changedTime])
+      if (this [X3DBrowserContext_tainted])
          return;
 
-      this [_changedTime] = true;
+      this [X3DBrowserContext_tainted] = true;
 
       requestAnimationFrame (this [_renderCallback]);
    },
@@ -119186,7 +119148,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, Base_X3DBa
       if (now > this [_previousTime])
       {
          this [_previousTime] = now;
-         this [_changedTime]  = false;
+         this [X3DBrowserContext_tainted]      = false;
 
          return false;
       }
@@ -119487,7 +119449,7 @@ const Components_default_ = Components;
 x_ite_Namespace .add ("Components", "x_ite/Components", Components_default_);
 /* harmony default export */ const x_ite_Components = ((/* unused pure expression or super */ null && (Components_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/DOMIntegration.js
-/* provided dependency */ var DOMIntegration_$ = __webpack_require__(986);
+/* provided dependency */ var DOMIntegration_$ = __webpack_require__(978);
 /*******************************************************************************
  * MIT License
  *
@@ -120626,7 +120588,7 @@ const SupportedProfiles_default_ = SupportedProfiles;
 x_ite_Namespace .add ("SupportedProfiles", "x_ite/Configuration/SupportedProfiles", SupportedProfiles_default_);
 /* harmony default export */ const Configuration_SupportedProfiles = (SupportedProfiles_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/X3DBrowser.js
-/* provided dependency */ var X3DBrowser_$ = __webpack_require__(986);
+/* provided dependency */ var X3DBrowser_$ = __webpack_require__(978);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -121707,7 +121669,7 @@ const X3DBrowser_default_ = X3DBrowser;
 x_ite_Namespace .add ("X3DBrowser", "x_ite/Browser/X3DBrowser", X3DBrowser_default_);
 /* harmony default export */ const Browser_X3DBrowser = (X3DBrowser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/X3DCanvasElement.js
-/* provided dependency */ var X3DCanvasElement_$ = __webpack_require__(986);
+/* provided dependency */ var X3DCanvasElement_$ = __webpack_require__(978);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -121839,8 +121801,8 @@ const X3DCanvasElement_default_ = X3DCanvasElement;
 x_ite_Namespace .add ("X3DCanvasElement", "x_ite/X3DCanvasElement", X3DCanvasElement_default_);
 /* harmony default export */ const x_ite_X3DCanvasElement = (X3DCanvasElement_default_);
 ;// CONCATENATED MODULE: ./src/lib/jquery.js
-/* provided dependency */ var jquery_$ = __webpack_require__(986);
-/* provided dependency */ var pako = __webpack_require__(102);
+/* provided dependency */ var jquery_$ = __webpack_require__(978);
+/* provided dependency */ var pako = __webpack_require__(899);
 Object .assign (jquery_$,
 {
    decodeText (input)
@@ -121917,14 +121879,14 @@ const jquery_default_ = jquery_$;
 x_ite_Namespace .add ("jquery", "lib/jquery", jquery_default_);
 /* harmony default export */ const jquery = ((/* unused pure expression or super */ null && (jquery_default_)));
 ;// CONCATENATED MODULE: ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(627);
+/* provided dependency */ var libtess_libtess = __webpack_require__(728);
 const libtess_default_ = libtess_libtess;
 ;
 
 x_ite_Namespace .add ("libtess", "lib/libtess", libtess_default_);
 /* harmony default export */ const lib_libtess = ((/* unused pure expression or super */ null && (libtess_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/X3D.js
-/* provided dependency */ var X3D_$ = __webpack_require__(986);
+/* provided dependency */ var X3D_$ = __webpack_require__(978);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
