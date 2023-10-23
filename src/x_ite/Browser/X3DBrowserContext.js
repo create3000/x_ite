@@ -75,7 +75,7 @@ import DEVELOPMENT                    from "../DEVELOPMENT.js";
 
 const
    _world           = Symbol (),
-   _changedTime     = Symbol (),
+   _tainted         = Symbol (),
    _limitFrameRate  = Symbol (),
    _traverse        = Symbol (),
    _renderCallback  = Symbol (),
@@ -126,7 +126,7 @@ function X3DBrowserContext (element)
                           X3DConstants .outputOnly, "displayEvents",  new SFTime (),
                           X3DConstants .outputOnly, "finishedEvents", new SFTime ());
 
-   this [_changedTime]    = 0;
+   this [_tainted]        = false;
    this [_previousTime]   = 0;
    this [_renderCallback] = this [_traverse] .bind (this);
    this [_systemTime]     = new StopWatch ();
@@ -228,10 +228,10 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
    },
    addBrowserEvent ()
    {
-      if (this [_changedTime])
+      if (this [_tainted])
          return;
 
-      this [_changedTime] = true;
+      this [_tainted] = true;
 
       requestAnimationFrame (this [_renderCallback]);
    },
@@ -240,7 +240,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
       if (now > this [_previousTime])
       {
          this [_previousTime] = now;
-         this [_changedTime]  = false;
+         this [_tainted]      = false;
 
          return false;
       }
