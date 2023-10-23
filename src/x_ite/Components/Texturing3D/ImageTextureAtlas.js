@@ -135,8 +135,8 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, X3DTexture
 
          const
             image       = this .image [0],
-            width       = image .width,
-            height      = image .height,
+            w           = image .width,
+            h           = image .height,
             texture     = gl .createTexture (),
             frameBuffer = gl .createFramebuffer ();
 
@@ -146,36 +146,36 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, X3DTexture
             slicesOverX    = this ._slicesOverX .getValue (),
             slicesOverY    = this ._slicesOverY .getValue (),
             maxSlices      = slicesOverX * slicesOverY,
-            numberOfSlices = Math .min (this ._numberOfSlices .getValue (), maxSlices),
-            w              = Math .floor (width / slicesOverX),
-            h              = Math .floor (height / slicesOverY),
-            defaultData    = new Uint8Array (width * height * 4),
-            data           = defaultData .subarray (0, w * h * numberOfSlices * 4);
+            width          = Math .floor (w / slicesOverX),
+            height         = Math .floor (h / slicesOverY),
+            depth          = Math .min (this ._numberOfSlices .getValue (), maxSlices),
+            defaultData    = new Uint8Array (w * h * 4),
+            data           = defaultData .subarray (0, width * height * depth * 4);
 
          gl .bindTexture (gl .TEXTURE_3D, this .getTexture ());
-         gl .texImage3D (gl .TEXTURE_3D, 0, gl .RGBA, w, h, numberOfSlices, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
+         gl .texImage3D (gl .TEXTURE_3D, 0, gl .RGBA, width, height, depth, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
 
          gl .bindFramebuffer (gl .FRAMEBUFFER, frameBuffer);
          gl .bindTexture (gl .TEXTURE_2D, texture);
-         gl .texImage2D  (gl .TEXTURE_2D, 0, gl .RGBA, width, height, 0, gl .RGBA, gl .UNSIGNED_BYTE, image);
+         gl .texImage2D  (gl .TEXTURE_2D, 0, gl .RGBA, w, h, 0, gl .RGBA, gl .UNSIGNED_BYTE, image);
          gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .TEXTURE_2D, texture, 0);
 
          let transparent = false;
 
-         for (let y = 0, i = 0; y < slicesOverY && i < numberOfSlices; ++ y)
+         for (let y = 0, i = 0; y < slicesOverY && i < depth; ++ y)
          {
-            for (let x = 0; x < slicesOverX && i < numberOfSlices; ++ x, ++ i)
+            for (let x = 0; x < slicesOverX && i < depth; ++ x, ++ i)
             {
                const
-                  sx = Math .floor (x * width  / slicesOverX),
-                  sy = Math .floor (y * height / slicesOverY);
+                  sx = Math .floor (x * w  / slicesOverX),
+                  sy = Math .floor (y * h / slicesOverY);
 
                // gl .bindFramebuffer (gl .FRAMEBUFFER, frameBuffer);
                // gl .bindTexture (gl .TEXTURE_3D, this .getTexture ());
-               // gl .copyTexSubImage3D (gl .TEXTURE_3D, 0, 0, 0, i, sx, sy, w, h);
+               // gl .copyTexSubImage3D (gl .TEXTURE_3D, 0, 0, 0, i, sx, sy, width, height);
 
-               gl .readPixels (sx, sy, w, h, gl .RGBA, gl .UNSIGNED_BYTE, data);
-               gl .texSubImage3D (gl .TEXTURE_3D, 0, 0, 0, i, w, h, 1, gl .RGBA, gl. UNSIGNED_BYTE, data);
+               gl .readPixels (sx, sy, width, height, gl .RGBA, gl .UNSIGNED_BYTE, data);
+               gl .texSubImage3D (gl .TEXTURE_3D, 0, 0, 0, i, width, height, 1, gl .RGBA, gl. UNSIGNED_BYTE, data);
 
                transparent = transparent || this .isImageTransparent (data);
             }
@@ -187,9 +187,9 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, X3DTexture
          // Determine image alpha.
 
          this .setTransparent (transparent);
-         this .setWidth (w);
-         this .setHeight (h);
-         this .setDepth (numberOfSlices);
+         this .setWidth (width);
+         this .setHeight (height);
+         this .setDepth (depth);
          this .updateTextureParameters ();
          this .setLoadState (X3DConstants .COMPLETE_STATE);
       }
