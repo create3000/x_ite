@@ -260,10 +260,13 @@ Object .assign (MultiSampleFrameBuffer .prototype,
    },
    clear ()
    {
-      const { context: gl } = this;
+      const { context: gl, frameBuffer } = this;
+
+      gl .bindFramebuffer (gl .FRAMEBUFFER, frameBuffer);
 
       gl .clearColor (0, 0, 0, 0);
       gl .clear (gl .COLOR_BUFFER_BIT);
+      gl .bindFramebuffer (gl .FRAMEBUFFER, null);
    },
    bindForOrderIndependentTransparency ()
    {
@@ -336,6 +339,8 @@ Object .assign (MultiSampleFrameBuffer .prototype,
       gl .blitFramebuffer (0, 0, width, height,
                            0, 0, width, height,
                            gl .COLOR_BUFFER_BIT, samples ? gl .LINEAR : gl .NEAREST);
+
+      gl .bindFramebuffer (gl .FRAMEBUFFER, null);
    },
    unbind ()
    {
