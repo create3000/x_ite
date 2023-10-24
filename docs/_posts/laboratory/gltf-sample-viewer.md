@@ -124,6 +124,7 @@ tags: [glTF, Sample, Viewer]
 // EnvironmentLight
 
 const ibl_files = [
+   "Anisotropy",
    "BoomBox",
    "ClearCoat",
    "Clearcoat",
