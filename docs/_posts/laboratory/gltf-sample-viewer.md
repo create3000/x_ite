@@ -133,6 +133,7 @@ const ibl_files = [
    "Iridescent",
    "MetalRoughSpheres",
    "MosquitoInAmber",
+   "NegativeScaleTest",
    "NormalTangentMirrorTest",
    "NormalTangentTest",
    "SpecGlossVsMetalRough",
