@@ -227,7 +227,9 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
    },
    set_transparent__ ()
    {
-      if (this .getAppearance () .getAlphaMode () === AlphaMode .AUTO)
+      const alphaMode = this .appearanceNode .getAlphaMode ();
+
+      if (alphaMode === AlphaMode .AUTO)
       {
          switch (this .geometryType)
          {
@@ -245,18 +247,14 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
                break;
             }
          }
+
+         this .setAlphaMode (this .isTransparent () ? AlphaMode .BLEND : AlphaMode .OPAQUE);
       }
       else
       {
-         this .setTransparent (this .getAppearance () .isTransparent ());
-      }
-
-      const alphaMode = this .appearanceNode .getAlphaMode ();
-
-      if (alphaMode === AlphaMode .AUTO)
-         this .setAlphaMode (this .isTransparent () ? AlphaMode .BLEND : AlphaMode .OPAQUE);
-      else
+         this .setTransparent (alphaMode === AlphaMode .BLEND);
          this .setAlphaMode (alphaMode);
+      }
    },
    set_live__ ()
    {
