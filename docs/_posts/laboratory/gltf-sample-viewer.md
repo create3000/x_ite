@@ -125,6 +125,8 @@ tags: [glTF, Sample, Viewer]
 
 const ibl_files = [
    "BoomBox",
+   "ClearCoat",
+   "Clearcoat",
    "DamagedHelmet",
    "GlassBrokenWindow",
    "GlassHurricaneCandleHolder",
