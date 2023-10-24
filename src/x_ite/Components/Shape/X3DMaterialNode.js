@@ -103,7 +103,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
 
          key += shapeNode .getAlphaMode ();
          key += this .getMaterialKey ();
-         key += renderObject .getRenderBits () .toString (16); // 4 Bits
+         key += renderObject .getRenderBits () .toString (32); // 5 Bits
          key += shadows ? 1 : 0;
          key += fogNode ?.getFogType () ?? 0;
          key += shapeNode .getShapeKey ();
