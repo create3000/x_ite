@@ -103,14 +103,13 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
 
          key += shapeNode .getAlphaMode ();
          key += this .getMaterialKey ();
+         key += renderObject .getRenderBits () .toString (16); // 4 Bits
          key += shadows ? 1 : 0;
          key += fogNode ?.getFogType () ?? 0;
          key += shapeNode .getShapeKey ();
          key += appearanceNode .getStyleProperties (geometryContext .geometryType) ?.getStyleKey () ?? 0;
          key += appearanceNode .getTextureTransformMapping () .size || 1;
          key += geometryContext .textureCoordinateMapping .size || 1;
-         key += ".";
-         key += renderObject .getRenderBits () .toString (2);
          key += ".";
          key += humanoidNode ?.getHumanoidKey () ?? "";
          key += ".";
@@ -126,7 +125,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
 
          key += alphaMode;
          key += this .getMaterialKey ();
-         key += "000011.0.0.";
+         key += "0000011.0.";
          key += objectsKeys .sort () .join (""); // ClipPlane, X3DLightNode
          key += ".";
          key += textureNode ? ((textureNode .isLinear () << 3) | textureNode .getTextureType ()) .toString (16) : 0;
