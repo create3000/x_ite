@@ -57,6 +57,7 @@ import Vector4       from "../../standard/Math/Numbers/Vector4.js";
 import Rotation4     from "../../standard/Math/Numbers/Rotation4.js";
 import Matrix4       from "../../standard/Math/Numbers/Matrix4.js";
 import MatrixStack   from "../../standard/Math/Utility/MatrixStack.js";
+import BitSet        from "../../standard/Utility/BitSet.js";
 import StopWatch     from "../../standard/Time/StopWatch.js";
 
 const DEPTH_BUFFER_SIZE = 16;
@@ -65,6 +66,7 @@ function X3DRenderObject (executionContext)
 {
    const browser = executionContext .getBrowser ();
 
+   this .renderBits               = new BitSet ();
    this .renderCount              = 0;
    this .viewVolumes              = [ ];
    this .cameraSpaceMatrix        = new MatrixStack (Matrix4);
@@ -113,6 +115,10 @@ Object .assign (X3DRenderObject .prototype,
    isIndependent ()
    {
       return true;
+   },
+   getRenderBits ()
+   {
+      return this .renderBits;
    },
    getRenderCount ()
    {
@@ -163,10 +169,6 @@ Object .assign (X3DRenderObject .prototype,
    getCameraSpaceMatrixArray ()
    {
       return this .cameraSpaceMatrixArray;
-   },
-   getLogarithmicDepthBuffer ()
-   {
-      return this .logarithmicDepthBuffer;
    },
    getHitRay ()
    {
@@ -1002,8 +1004,8 @@ Object .assign (X3DRenderObject .prototype,
 
       this .renderCount = this .getNextRenderCount ();
 
-      this .logarithmicDepthBuffer = browser .getRenderingProperty ("LogarithmicDepthBuffer")
-         || this .getViewpoint () .getLogarithmicDepthBuffer ();
+      this .renderBits .set (0, browser .getRenderingProperty ("LogarithmicDepthBuffer") || this .getViewpoint () .getLogarithmicDepthBuffer ());
+      this .renderBits .set (1, browser .getBrowserOption ("OrderIndependentTransparency"));
 
       // PREPARATIONS
 

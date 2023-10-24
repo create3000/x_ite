@@ -250,6 +250,13 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
       {
          this .setTransparent (this .getAppearance () .isTransparent ());
       }
+
+      const alphaMode = this .appearanceNode .getAlphaMode ();
+
+      if (alphaMode === AlphaMode .AUTO)
+         this .setAlphaMode (this .isTransparent () ? AlphaMode .BLEND : AlphaMode .OPAQUE);
+      else
+         this .setAlphaMode (alphaMode);
    },
    set_live__ ()
    {

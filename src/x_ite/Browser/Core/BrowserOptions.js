@@ -337,10 +337,7 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
    },
    set_orderIndependentTransparency__ ()
    {
-      const browser = this .getBrowser ();
-
-      browser .getShaders () .clear ();
-      browser .reshape ();
+      this .getBrowser () .reshape ();
    },
    set_timings__ (timings)
    {

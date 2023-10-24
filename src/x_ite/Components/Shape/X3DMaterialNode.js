@@ -103,13 +103,14 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
 
          key += shapeNode .getAlphaMode ();
          key += this .getMaterialKey ();
-         key += renderObject .getLogarithmicDepthBuffer () ? 1 : 0;
          key += shadows ? 1 : 0;
          key += fogNode ?.getFogType () ?? 0;
          key += shapeNode .getShapeKey ();
          key += appearanceNode .getStyleProperties (geometryContext .geometryType) ?.getStyleKey () ?? 0;
          key += appearanceNode .getTextureTransformMapping () .size || 1;
          key += geometryContext .textureCoordinateMapping .size || 1;
+         key += ".";
+         key += renderObject .getRenderBits () .toString (2);
          key += ".";
          key += humanoidNode ?.getHumanoidKey () ?? "";
          key += ".";
@@ -119,13 +120,13 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
       }
       else
       {
-         // Rubberband, X3DBackgroundNode, ParticleSystem
+         // Rubberband, X3DBackgroundNode
 
          const { alphaMode, textureNode, objectsKeys } = geometryContext;
 
          key += alphaMode;
          key += this .getMaterialKey ();
-         key += "0000011.0.";
+         key += "000011.0.0.";
          key += objectsKeys .sort () .join (""); // ClipPlane, X3DLightNode
          key += ".";
          key += textureNode ? ((textureNode .isLinear () << 3) | textureNode .getTextureType ()) .toString (16) : 0;
@@ -154,7 +155,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
       {
          const { renderObject, fogNode, shapeNode, appearanceNode, humanoidNode, objectsKeys, textureNode } = renderContext;
 
-         if (renderObject .getLogarithmicDepthBuffer ())
+         if (renderObject .getRenderBits () .get (0))
             options .push ("X3D_LOGARITHMIC_DEPTH_BUFFER");
 
          switch (shapeNode .getAlphaMode ())
@@ -173,7 +174,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
             {
                options .push ("X3D_ALPHA_MODE_BLEND");
 
-               if (browser .getBrowserOption ("OrderIndependentTransparency"))
+               if (renderObject .getRenderBits () .get (1))
                   options .push ("X3D_ORDER_INDEPENDENT_TRANSPARENCY");
 
                break;

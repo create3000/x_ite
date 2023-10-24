@@ -118,6 +118,10 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
    {
       return this .alphaMode;
    },
+   setAlphaMode (value)
+   {
+      this .alphaMode = value;
+   },
    getAppearance ()
    {
       return this .appearanceNode;
