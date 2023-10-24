@@ -121,6 +121,28 @@ tags: [glTF, Sample, Viewer]
 
 <pre style="display: none;">
 <script>
+// EnvironmentLight
+
+const ibl_files = [
+   "BoomBox",
+   "DamagedHelmet",
+   "GlassBrokenWindow",
+   "GlassHurricaneCandleHolder",
+   "GlassVaseFlowers",
+   "Iridescence",
+   "Iridescent",
+   "MetalRoughSpheres",
+   "MosquitoInAmber",
+   "NormalTangentMirrorTest",
+   "NormalTangentTest",
+   "SpecGlossVsMetalRough",
+   "SpecularTest",
+   "Suzanne",
+   "ToyCar",
+   "Transmission",
+   "WaterBottle",
+];
+
 // TESTS_BEGIN
 
 const models = [
@@ -640,6 +662,12 @@ async function loadURL (filename, event)
 
    await Browser .loadURL (new X3D .MFString (filename));
 
+   if (!Browser .getActiveViewpoint () ._description .getValue ())
+      Browser .viewAll (0);
+
+   if (ibl_files .some (name => filename .includes (name)))
+      Browser .currentScene .rootNodes .push (await getEnvironmentLight (Browser, Browser .currentScene));
+
    try
    {
       const animations = Browser .currentScene .getExportedNode ("Animations");
@@ -688,9 +716,31 @@ async function loadURL (filename, event)
    }
    catch
    { }
+}
 
-   if (!Browser .getActiveViewpoint () ._description .getValue ())
-      Browser .viewAll (0);
+async function getEnvironmentLight (Browser, scene)
+{
+   if (getEnvironmentLight .environmentLight)
+      return getEnvironmentLight .environmentLight;
+
+   const cubeMapTexturing = Browser .getComponent ("CubeMapTexturing");
+
+   await Browser .loadComponents (cubeMapTexturing);
+   scene .addComponent (cubeMapTexturing);
+
+   const
+      environmentLight = scene .createNode ("EnvironmentLight"),
+      diffuseTexture   = scene .createNode ("ImageCubeMapTexture"),
+      specularTexture  = scene .createNode ("ImageCubeMapTexture");
+
+   diffuseTexture  .url = new X3D .MFString (new URL ("/x_ite/assets/img/glTF/helipad-diffuse.jpg",  location));
+   specularTexture .url = new X3D .MFString (new URL ("/x_ite/assets/img/glTF/helipad-specular.jpg", location));
+
+   environmentLight .color           = new X3D .SFColor (0.9764706, 0.7960784, 0.6117647);
+   environmentLight .diffuseTexture  = diffuseTexture;
+   environmentLight .specularTexture = specularTexture;
+
+   return getEnvironmentLight .environmentLight = environmentLight;
 }
 
 createList ("glTF Random Models",          models);
