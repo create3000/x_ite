@@ -1002,7 +1002,7 @@ Object .assign (X3DRenderObject .prototype,
 
       this .renderCount = this .getNextRenderCount ();
 
-      this .logarithmicDepthBuffer = browser .getBrowserOption ("LogarithmicDepthBuffer")
+      this .logarithmicDepthBuffer = browser .getRenderingProperty ("LogarithmicDepthBuffer")
          || this .getViewpoint () .getLogarithmicDepthBuffer ();
 
       // PREPARATIONS
