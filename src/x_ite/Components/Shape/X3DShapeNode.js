@@ -173,6 +173,8 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
    },
    set_transparent__ ()
    {
+      // This function is overloaded in ParticleSystem!
+      
       const alphaMode = this .appearanceNode .getAlphaMode ();
 
       if (alphaMode === AlphaMode .AUTO)
