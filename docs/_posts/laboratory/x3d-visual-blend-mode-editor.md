@@ -1,7 +1,7 @@
 ---
 title: X3D Visual Blend Mode Editor
+date: 2023-02-21
 layout: wide
-collection: tabs
 categories: [Laboratory]
 tags: [X3D, Visual, Blend Mode, Editor]
 ---

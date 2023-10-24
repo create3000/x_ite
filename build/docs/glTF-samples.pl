@@ -9,7 +9,7 @@ say "Updating glTF examples ...";
 
 $cwd = getcwd ();
 
-$page    = $cwd . "/docs/laboratory/gltf-sample-viewer.html";
+$page    = $cwd . "/docs/_posts/laboratory/gltf-sample-viewer.md";
 $viewer  = `cat $page`;
 $random  = $cwd . "/../media/docs/glTF/";
 $samples = "/Volumes/Home/X3D/glTF/";

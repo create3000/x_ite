@@ -1,7 +1,7 @@
 ---
 title: Online DICOM and NRRD file Viewer
+date: 2023-02-21
 layout: wide
-collection: tabs
 categories: [Laboratory]
 tags: [Online, DICOM, NRRD, File, Viewer]
 ---

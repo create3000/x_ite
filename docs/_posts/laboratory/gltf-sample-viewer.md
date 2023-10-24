@@ -1,7 +1,7 @@
 ---
 title: glTF Sample Viewer
+date: 2023-02-21
 layout: wide
-collection: tabs
 categories: [Laboratory]
 tags: [glTF, Sample, Viewer]
 ---
