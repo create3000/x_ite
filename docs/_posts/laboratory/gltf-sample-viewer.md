@@ -125,7 +125,9 @@ tags: [glTF, Sample, Viewer]
 
 const ibl_files = [
    "Anisotropy",
+   "AttenuationTest",
    "BoomBox",
+   "Box With Spaces",
    "ClearCoat",
    "Clearcoat",
    "Cube",
