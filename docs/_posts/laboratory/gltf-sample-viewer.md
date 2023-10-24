@@ -349,8 +349,8 @@ const glTF = [
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/TwoSidedPlane/glTF/TwoSidedPlane.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/Unicode❤♻Test/glTF/Unicode❤♻Test.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/UnlitTest/glTF/UnlitTest.gltf",
-   "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/VC/glTF/VC.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/VertexColorTest/glTF/VertexColorTest.gltf",
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/VirtualCity/glTF/VC.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/WaterBottle/glTF/WaterBottle.gltf",
 ];
 
@@ -492,8 +492,8 @@ const glb = [
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/TransmissionTest/glTF-Binary/TransmissionTest.glb",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/Unicode❤♻Test/glTF-Binary/Unicode❤♻Test.glb",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/UnlitTest/glTF-Binary/UnlitTest.glb",
-   "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/VC/glTF-Binary/VC.glb",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/VertexColorTest/glTF-Binary/VertexColorTest.glb",
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/VirtualCity/glTF-Binary/VC.glb",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/WaterBottle/glTF-Binary/WaterBottle.glb",
 ];
 
@@ -530,7 +530,7 @@ const draco = [
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/MorphPrimitivesTest/glTF-Draco/MorphPrimitivesTest.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/RiggedFigure/glTF-Draco/RiggedFigure.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/RiggedSimple/glTF-Draco/RiggedSimple.gltf",
-   "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/VC/glTF-Draco/VC.gltf",
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/VirtualCity/glTF-Draco/VC.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/WaterBottle/glTF-Draco/WaterBottle.gltf",
 ];
 
@@ -603,8 +603,8 @@ const embedded = [
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/TextureSettingsTest/glTF-Embedded/TextureSettingsTest.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/Triangle/glTF-Embedded/Triangle.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/TriangleWithoutIndices/glTF-Embedded/TriangleWithoutIndices.gltf",
-   "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/VC/glTF-Embedded/VC.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/VertexColorTest/glTF-Embedded/VertexColorTest.gltf",
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/VirtualCity/glTF-Embedded/VC.gltf",
 ];
 
 const ibl = [
