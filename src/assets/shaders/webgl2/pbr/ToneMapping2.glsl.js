@@ -23,7 +23,7 @@ linearTosRGB (const in vec4 color)
 vec3
 sRGBToLinear (const in vec3 color)
 {
-   return vec3 (pow (color, vec3 (GAMMA)));
+   return pow (color, vec3 (GAMMA));
 }
 
 vec4
