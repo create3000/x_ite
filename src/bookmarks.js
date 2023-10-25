@@ -168,6 +168,15 @@ const Bookmarks = (() =>
                .on ("click", () => this .browser .viewAll (0))
                .appendTo ($("#toolbar"));
 
+            $("<span></span>")
+               .text ("💡")
+               .attr ("title", "Add EnvironmentLight")
+               .on ("click", async () =>
+               {
+                  this .browser .currentScene .rootNodes .push (await this .getEnvironmentLight (this .browser, this .browser .currentScene));
+               })
+               .appendTo ($("#toolbar"));
+
             $("<span></span>") .addClass ("separator") .appendTo ($("#toolbar"));
 
             const animations = this .browser .currentScene .getExportedNode ("Animations");
@@ -291,6 +300,30 @@ const Bookmarks = (() =>
          // this .browser .setBrowserOption ("Antialiased", false)
          // this .browser .setBrowserOption ("OrderIndependentTransparency", true)
          // this .browser .setBrowserOption ("ContentScale", -1)
+      },
+      async getEnvironmentLight (Browser, scene)
+      {
+         if (this .environmentLight)
+            return this .environmentLight;
+
+         const cubeMapTexturing = Browser .getComponent ("CubeMapTexturing");
+
+         await Browser .loadComponents (cubeMapTexturing);
+         scene .addComponent (cubeMapTexturing);
+
+         const
+            environmentLight = scene .createNode ("EnvironmentLight"),
+            diffuseTexture   = scene .createNode ("ImageCubeMapTexture"),
+            specularTexture  = scene .createNode ("ImageCubeMapTexture");
+
+         diffuseTexture  .url = new X3D .MFString ("https://rawgit.com/create3000/Library/main/Tests/Components/images/helipad-diffuse.jpg");
+         specularTexture .url = new X3D .MFString ("https://rawgit.com/create3000/Library/main/Tests/Components/images/helipad-specular.jpg");
+
+         environmentLight .color           = new X3D .SFColor (0.9764706, 0.7960784, 0.6117647);
+         environmentLight .diffuseTexture  = diffuseTexture;
+         environmentLight .specularTexture = specularTexture;
+
+         return this .environmentLight = environmentLight;
       }
    });
 
