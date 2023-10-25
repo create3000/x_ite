@@ -206,7 +206,7 @@ getEmissiveColor ()
       #endif
    #endif
 
-   return emissiveColor .rgb;
+   return vec3 (0.0);
 }
 
 #if defined (X3D_OCCLUSION_TEXTURE)
