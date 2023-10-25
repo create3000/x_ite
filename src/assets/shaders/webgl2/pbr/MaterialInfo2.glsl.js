@@ -132,7 +132,7 @@ getBaseColor ()
 #endif
 
 MaterialInfo
-getMetallicRoughnessInfo (MaterialInfo info)
+getMetallicRoughnessInfo (in MaterialInfo info)
 {
    // Metallic and Roughness material properties are packed together
    // In glTF, these factors can be specified by fixed scalar values
