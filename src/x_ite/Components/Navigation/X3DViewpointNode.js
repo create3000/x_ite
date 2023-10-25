@@ -445,9 +445,7 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
    {
       bbox = bbox .copy () .multRight (this .getModelMatrix () .copy () .inverse ());
 
-      const minDistance = Math .max (layerNode .getNavigationInfo () .getNearValue () * 2, this .getLookAtDistance (bbox));
-
-      this .lookAt (layerNode, bbox .center, minDistance, transitionTime, factor, straighten);
+      this .lookAt (layerNode, bbox .center, this .getLookAtDistance (bbox), transitionTime, factor, straighten);
    },
    lookAt (layerNode, point, distance, transitionTime = 1, factor = 1, straighten = false)
    {
@@ -484,7 +482,7 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
 
       this ._fieldOfViewScale       = 1;
       this ._centerOfRotationOffset = point .copy () .subtract (this .getCenterOfRotation ());
-      this .nearDistance            = Math .min (distance / 2, 0.125);
+      this .nearDistance            = distance * (0.125 / 10);
       this .farDistance             = this .nearDistance * this .getMaxFarValue () / 0.125;
 
       this .setInterpolators (this, relative);
@@ -554,7 +552,7 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
       this ._orientationOffset      = this .getOrientation () .copy () .inverse () .multRight (userOrientation);
       this ._centerOfRotationOffset = bbox .center .copy () .subtract (this .getCenterOfRotation ());
       this ._fieldOfViewScale       = 1;
-      this .nearDistance            = Math .min ((distance - bbox .size .magnitude ()) / 2, 0.125);
+      this .nearDistance            = distance * (0.125 / 10);
       this .farDistance             = this .nearDistance * this .getMaxFarValue () / 0.125;
    },
    traverse (type, renderObject)
