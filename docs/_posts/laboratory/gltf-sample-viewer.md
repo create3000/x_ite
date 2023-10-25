@@ -673,11 +673,11 @@ async function loadURL (filename, event)
 
    await Browser .loadURL (new X3D .MFString (filename));
 
-   if (!Browser .getActiveViewpoint () ._description .getValue ())
-      Browser .viewAll (0);
-
    if (ibl_files .some (name => filename .includes (name)))
       Browser .currentScene .rootNodes .push (await getEnvironmentLight (Browser, Browser .currentScene));
+
+   if (!Browser .getActiveViewpoint () ._description .getValue ())
+      Browser .viewAll (0);
 
    try
    {
