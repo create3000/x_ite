@@ -540,7 +540,7 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
    })(),
    viewAll (bbox)
    {
-      bbox .multRight (this .modelMatrix .copy () .inverse ());
+      bbox .copy () .multRight (this .modelMatrix .copy () .inverse ());
 
       const
          direction       = this .getUserPosition () .copy () .subtract (bbox .center) .normalize (),
