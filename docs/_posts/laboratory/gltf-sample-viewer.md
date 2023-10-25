@@ -124,6 +124,7 @@ tags: [glTF, Sample, Viewer]
 // EnvironmentLight
 
 const ibl_files = [
+   "AnimatedCube",
    "Anisotropy",
    "AttenuationTest",
    "BoomBox",
@@ -146,6 +147,8 @@ const ibl_files = [
    "SpecGlossVsMetalRough",
    "SpecularTest",
    "Suzanne",
+   "TextureEncodingTest",
+   "TextureTransformMultiTest",
    "ToyCar",
    "Transmission",
    "WaterBottle",
