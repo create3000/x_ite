@@ -31,7 +31,7 @@ getIBLRadianceGGX (const in vec3 n, const in vec3 v, const in float roughness, c
    float lod        = roughness * float (x3d_EnvironmentLightSource .specularTextureLevels - 1);
    vec3  reflection = normalize (reflect (-v, n));
 
-   vec2 brdfSamplePoint = clamp (vec2 (NdotV, 1.0 - roughness), vec2 (0.0), vec2 (1.0));
+   vec2 brdfSamplePoint = clamp (vec2 (NdotV, roughness), vec2 (0.0), vec2 (1.0));
    vec2 f_ab            = texture2D (x3d_EnvironmentLightSource .GGXLUTTexture, brdfSamplePoint) .rg;
    vec3 specularLight   = getSpecularLight (reflection, lod);
 
@@ -49,7 +49,7 @@ vec3
 getIBLRadianceLambertian (const in vec3 n, const in vec3 v, const in float roughness, const in vec3 diffuseColor, const in vec3 F0, const in float specularWeight)
 {
    float NdotV           = clamp (dot (n, v), 0.0, 1.0);
-   vec2  brdfSamplePoint = clamp (vec2 (NdotV, 1.0 - roughness), vec2 (0.0), vec2 (1.0));
+   vec2  brdfSamplePoint = clamp (vec2 (NdotV, roughness), vec2 (0.0), vec2 (1.0));
    vec2  f_ab            = texture2D (x3d_EnvironmentLightSource .GGXLUTTexture, brdfSamplePoint) .rg;
 
    vec3 irradiance = getDiffuseLight (n);
