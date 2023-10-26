@@ -297,7 +297,8 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
          framebuffer     = gl .createFramebuffer (),
          panoramaTexture = gl .createTexture (),
          textureUnit     = browser .getTextureCubeUnit (),
-         cubeMapSize     = this .image .prop ("height") / 2;
+         cubeMapSize     = this .image .prop ("height") / 2,
+         data            = new Uint8Array (cubeMapSize * cubeMapSize * 4);
 
       // Create panorama texture.
 
@@ -332,12 +333,21 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
       gl .clearColor (0, 0, 0, 0);
       gl .bindVertexArray (browser .getFullscreenVertexArrayObject ());
 
+      let transparent = false;
+
       for (let i = 0; i < 6; ++ i)
       {
          gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, this .getTargets () [i], this .getTexture (), 0);
          gl .clear (gl .COLOR_BUFFER_BIT);
          gl .uniform1i (shaderNode .x3d_CurrentFace, i);
          gl .drawArrays (gl .TRIANGLES, 0, 6);
+
+         if (!transparent)
+         {
+            gl .readPixels (0, 0, cubeMapSize, cubeMapSize, gl .RGBA, gl .UNSIGNED_BYTE, data);
+
+            transparent = this .isImageTransparent (data);
+         }
       }
 
       gl .enable (gl .DEPTH_TEST);
@@ -346,23 +356,9 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
 
       browser .resetTextureUnits ();
 
-      // Determine image alpha.
-
-      const
-         image  = this .image [0],
-         canvas = this .canvas [0],
-         cx     = canvas .getContext ("2d", { willReadFrequently: true });
-
-      canvas .width  = image .width;
-      canvas .height = image .height;
-
-      cx .drawImage (image, 0, 0);
-
-      const data = cx .getImageData (0, 0, image .width, image .height) .data;
-
       // Update size and transparent field.
 
-      this .setTransparent (this .isImageTransparent (data));
+      this .setTransparent (transparent);
       this .setSize (cubeMapSize);
    },
    dispose ()
