@@ -152,10 +152,8 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, X3DText
       if (this .texturePropertiesNode)
          this .texturePropertiesNode .removeInterest ("updateTextureParameters", this);
 
-      this .texturePropertiesNode = X3DCast (X3DConstants .TextureProperties, this ._textureProperties);
-
-      if (!this .texturePropertiesNode)
-         this .texturePropertiesNode = this .getBrowser () .getDefaultTextureProperties ();
+      this .texturePropertiesNode = X3DCast (X3DConstants .TextureProperties, this ._textureProperties)
+         ?? this .getBrowser () .getDefaultTextureProperties ();
 
       this .texturePropertiesNode .addInterest ("updateTextureParameters", this);
 
