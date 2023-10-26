@@ -77,7 +77,9 @@ Object .assign (X3DLightingContext .prototype,
    getGGXLUTTexture ()
    {
       this [_GGXLUTTexture] = new ImageTexture (this .getPrivateScene ());
-      this [_GGXLUTTexture] ._url  = [URLs .getLibraryURL ("lut_ggx.png")];
+      this [_GGXLUTTexture] ._url     = [URLs .getLibraryURL ("lut_ggx.png")];
+      this [_GGXLUTTexture] ._repeatS = false;
+      this [_GGXLUTTexture] ._repeatT = false;
       this [_GGXLUTTexture] .setup ();
 
       this .getGGXLUTTexture = function () { return this [_GGXLUTTexture]; };
