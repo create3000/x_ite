@@ -336,12 +336,11 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
       {
          gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, this .getTargets () [i], this .getTexture (), 0);
          gl .clear (gl .COLOR_BUFFER_BIT);
-
          gl .uniform1i (shaderNode .x3d_CurrentFace, i);
-
          gl .drawArrays (gl .TRIANGLES, 0, 6);
       }
 
+      gl .enable (gl .DEPTH_TEST);
       gl .deleteFramebuffer (framebuffer);
       gl .deleteTexture (panoramaTexture);
 
