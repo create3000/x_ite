@@ -314,10 +314,17 @@ const Bookmarks = (() =>
          const
             environmentLight = scene .createNode ("EnvironmentLight"),
             diffuseTexture   = scene .createNode ("ImageCubeMapTexture"),
-            specularTexture  = scene .createNode ("ImageCubeMapTexture");
+            specularTexture  = scene .createNode ("ImageCubeMapTexture"),
+            textureProperties = scene .createNode ("TextureProperties");
 
-         diffuseTexture  .url = new X3D .MFString ("https://rawgit.com/create3000/Library/main/Tests/Components/images/helipad-diffuse.jpg");
-         specularTexture .url = new X3D .MFString ("https://rawgit.com/create3000/Library/main/Tests/Components/images/helipad-specular.jpg");
+         textureProperties .generateMipMaps     = true;
+         textureProperties .minificationFilter  = "NICEST";
+         textureProperties .magnificationFilter = "NICEST";
+
+         diffuseTexture  .url               = new X3D .MFString ("https://rawgit.com/create3000/Library/main/Tests/Components/images/helipad-diffuse.jpg");
+         diffuseTexture  .textureProperties = textureProperties;
+         specularTexture .url               = new X3D .MFString ("https://rawgit.com/create3000/Library/main/Tests/Components/images/helipad-specular.jpg");
+         specularTexture .textureProperties = textureProperties;
 
          environmentLight .color           = new X3D .SFColor (0.9764706, 0.7960784, 0.6117647);
          environmentLight .diffuseTexture  = diffuseTexture;

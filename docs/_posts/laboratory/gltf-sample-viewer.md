@@ -740,12 +740,19 @@ async function getEnvironmentLight (Browser, scene)
    scene .addComponent (cubeMapTexturing);
 
    const
-      environmentLight = scene .createNode ("EnvironmentLight"),
-      diffuseTexture   = scene .createNode ("ImageCubeMapTexture"),
-      specularTexture  = scene .createNode ("ImageCubeMapTexture");
+      environmentLight  = scene .createNode ("EnvironmentLight"),
+      diffuseTexture    = scene .createNode ("ImageCubeMapTexture"),
+      specularTexture   = scene .createNode ("ImageCubeMapTexture"),
+      textureProperties = scene .createNode ("TextureProperties");
 
-   diffuseTexture  .url = new X3D .MFString (new URL ("/x_ite/assets/img/glTF/helipad-diffuse.jpg",  location));
-   specularTexture .url = new X3D .MFString (new URL ("/x_ite/assets/img/glTF/helipad-specular.jpg", location));
+   textureProperties .generateMipMaps     = true;
+   textureProperties .minificationFilter  = "NICEST";
+   textureProperties .magnificationFilter = "NICEST";
+
+   diffuseTexture  .url               = new X3D .MFString (new URL ("/x_ite/assets/img/glTF/helipad-diffuse.jpg",  location));
+   diffuseTexture  .textureProperties = textureProperties;
+   specularTexture .url               = new X3D .MFString (new URL ("/x_ite/assets/img/glTF/helipad-specular.jpg", location));
+   specularTexture .textureProperties = textureProperties;
 
    environmentLight .color           = new X3D .SFColor (0.9764706, 0.7960784, 0.6117647);
    environmentLight .diffuseTexture  = diffuseTexture;
