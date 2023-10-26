@@ -1,4 +1,6 @@
 export default /* glsl */ `
+#if defined (X3D_LIGHTING)
+
 const float M_PI = 3.1415926535897932384626433832795;
 
 // The following equation models the Fresnel reflectance term of the spec equation (aka F())
@@ -62,4 +64,6 @@ BRDF_specularGGX (vec3 f0, vec3 f90, float alphaRoughness, float specularWeight,
 
    return specularWeight * F * Vis * D;
 }
+
+#endif
 `;
