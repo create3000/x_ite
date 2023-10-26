@@ -755,6 +755,7 @@ async function getEnvironmentLight (Browser, scene)
    specularTexture .textureProperties = textureProperties;
 
    environmentLight .color           = new X3D .SFColor (0.9764706, 0.7960784, 0.6117647);
+   environmentLight .rotation        = new X3D .SFRotation (0, 1, 0, Math .PI / 2);
    environmentLight .diffuseTexture  = diffuseTexture;
    environmentLight .specularTexture = specularTexture;
 
