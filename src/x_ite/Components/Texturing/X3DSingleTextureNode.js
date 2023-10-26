@@ -191,7 +191,7 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, X3DText
             if (this .generateMipMaps)
             {
                this .levels = textureProperties ._generateMipMaps .getValue ()
-                  ? 1 + Math .log2 (Math .max (width, height))
+                  ? 1 + Math .floor (Math .log2 (Math .max (width, height)))
                   : 1;
 
                if (textureProperties ._generateMipMaps .getValue ())
