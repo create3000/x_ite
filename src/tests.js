@@ -138,6 +138,7 @@ const X_ITE_TESTS = [
    { path: "Layout/ScreenGroup.x3d" },
    { component: "Lighting" },
    { path: "Lighting/DamagedHelmet.x3d" },
+   { path: "Lighting/DamagedHelmetKTX2.x3d" },
    { path: "Lighting/EnvironmentLight.x3d" },
    { path: "Lighting/LightScale.x3d" },
    { path: "Lighting/LocalLight.x3d" },
