@@ -15,13 +15,23 @@ uniform x3d_EnvironmentLightSourceParameters x3d_EnvironmentLightSource;
 vec3
 getDiffuseLight (const in vec3 n)
 {
-   return texture (x3d_EnvironmentLightSource .diffuseTexture, x3d_EnvironmentLightSource .rotation * n) .rgb * x3d_EnvironmentLightSource .color * x3d_EnvironmentLightSource .intensity;
+   vec3 textureColor = texture (x3d_EnvironmentLightSource .diffuseTexture, x3d_EnvironmentLightSource .rotation * n) .rgb;
+
+   if (!x3d_EnvironmentLightSource .diffuseTextureLinear)
+      textureColor = sRGBToLinear (textureColor);
+
+   return textureColor * x3d_EnvironmentLightSource .color * x3d_EnvironmentLightSource .intensity;
 }
 
 vec3
 getSpecularLight (const in vec3 reflection, const in float lod)
 {
-   return textureLod (x3d_EnvironmentLightSource .specularTexture, x3d_EnvironmentLightSource .rotation * reflection, lod) .rgb * x3d_EnvironmentLightSource .color * x3d_EnvironmentLightSource .intensity;
+   vec3 textureColor = textureLod (x3d_EnvironmentLightSource .specularTexture, x3d_EnvironmentLightSource .rotation * reflection, lod) .rgb;
+
+   if (!x3d_EnvironmentLightSource .specularTextureLinear)
+      textureColor = sRGBToLinear (textureColor);
+
+   return textureColor * x3d_EnvironmentLightSource .color * x3d_EnvironmentLightSource .intensity;
 }
 
 vec3
