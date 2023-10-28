@@ -312,9 +312,9 @@ const Bookmarks = (() =>
          scene .addComponent (cubeMapTexturing);
 
          const
-            environmentLight = scene .createNode ("EnvironmentLight"),
-            diffuseTexture   = scene .createNode ("ImageCubeMapTexture"),
-            specularTexture  = scene .createNode ("ImageCubeMapTexture"),
+            environmentLight  = scene .createNode ("EnvironmentLight"),
+            diffuseTexture    = scene .createNode ("ImageCubeMapTexture"),
+            specularTexture   = scene .createNode ("ImageCubeMapTexture"),
             textureProperties = scene .createNode ("TextureProperties");
 
          textureProperties .generateMipMaps     = true;
