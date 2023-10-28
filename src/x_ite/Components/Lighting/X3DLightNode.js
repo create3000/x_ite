@@ -85,7 +85,7 @@ Object .assign (Object .setPrototypeOf (X3DLightNode .prototype, X3DChildNode .p
    },
    getLightKey ()
    {
-      return 1; // [ClipPlane, X3DLightNode, EnvironmentLight, X3DTextureProjectorNode]
+      return 1; // [ClipPlane 0, X3DLightNode 1, EnvironmentLight 2, X3DTextureProjectorNode 3]
    },
    getEnabled ()
    {
