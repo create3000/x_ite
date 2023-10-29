@@ -99,9 +99,9 @@ Object .defineProperties (WorldInfo,
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata", new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "title",    new Fields .SFString ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "info",     new Fields .MFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "title",    new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "info",     new Fields .MFString ()),
       ]),
       enumerable: true,
    },
