@@ -50,7 +50,7 @@ function MultiSampleFrameBuffer (browser, width, height, samples, oit)
    const gl = browser .getContext ();
 
    if (gl .getVersion () === 1 || width === 0 || height === 0)
-      return Fallback;
+      return new Fallback (browser, width, height, samples);
 
    this .browser = browser;
    this .context = gl;
@@ -352,16 +352,40 @@ Object .assign (MultiSampleFrameBuffer .prototype,
    },
 });
 
-const Fallback = {
-   getWidth: Function .prototype,
-   getHeight: Function .prototype,
-   getSamples: Function .prototype,
-   getOIT: Function .prototype,
-   bind: Function .prototype,
-   clear: Function .prototype,
+function Fallback (browser, width, height, samples)
+{
+   const gl = browser .getContext ();
+
+   this .browser = browser;
+   this .context = gl;
+   this .width   = width;
+   this .height  = height;
+   this .samples = samples;
+}
+
+Object .assign (Fallback .prototype,
+{
+   getWidth () { return this .width; },
+   getHeight () { return this .height; },
+   getSamples () { return this .samples; },
+   getOIT () { return false; },
+   bind ()
+   {
+      const { context: gl } = this;
+
+      gl .bindFramebuffer (gl .FRAMEBUFFER, null);
+   },
+   clear ()
+   {
+      const { context: gl } = this;
+
+      gl .clearColor (0, 0, 0, 1);
+      gl .clear (gl .COLOR_BUFFER_BIT);
+      gl .blendFuncSeparate (gl .ONE, gl .ONE, gl .ZERO, gl .ONE_MINUS_SRC_ALPHA);
+   },
    blit: Function .prototype,
    compose: Function .prototype,
    dispose: Function .prototype,
-};
+});
 
 export default MultiSampleFrameBuffer;
