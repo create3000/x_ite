@@ -60,7 +60,7 @@ import DataStorage         from "../../../standard/Utility/DataStorage.js";
 import Vector3             from "../../../standard/Math/Numbers/Vector3.js";
 import _                   from "../../../locale/gettext.js";
 
-const WEBGL_VERSION = 2;
+const WEBGL_VERSION = 1;
 
 const
    _instanceId          = Symbol (),
