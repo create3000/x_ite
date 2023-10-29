@@ -176,21 +176,13 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, X3DText
 
          gl .bindTexture (target, this .getTexture ());
 
-         if (!haveTextureProperties && Math .max (width, height) < this .getBrowser () .getMinTextureSize ())
+         if (Math .max (width, height) < this .getBrowser () .getMinTextureSize () && !haveTextureProperties)
          {
             this .levels = 1;
 
             // Don't generate MipMaps.
             gl .texParameteri (target, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
             gl .texParameteri (target, gl .TEXTURE_MAG_FILTER, gl .NEAREST);
-         }
-         else if (gl .getVersion () === 1)
-         {
-            this .levels = 1;
-
-            // Don't generate MipMaps because sRGB extension does not allow this.
-            gl .texParameteri (target, gl .TEXTURE_MIN_FILTER, gl .LINEAR);
-            gl .texParameteri (target, gl .TEXTURE_MAG_FILTER, gl .LINEAR);
          }
          else
          {

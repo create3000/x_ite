@@ -106,18 +106,15 @@ Object .assign (Object .setPrototypeOf (X3DTexture2DNode .prototype, X3DSingleTe
       this .width  = width;
       this .height = height;
 
-      const
-         gl             = this .getBrowser () .getContext (),
-         internalFormat = gl .SRGB8_ALPHA8,
-         format         = gl .getVersion () === 1 ? gl .SRGB8_ALPHA8 : gl .RGBA;
+      const gl = this .getBrowser () .getContext ();
 
       gl .bindTexture (gl .TEXTURE_2D, this .getTexture ());
       gl .pixelStorei (gl .UNPACK_COLORSPACE_CONVERSION_WEBGL, colorSpaceConversion ? gl .BROWSER_DEFAULT_WEBGL : gl .NONE);
 
       if (gl .getVersion () === 1 && this .getType () .includes (X3DConstants .MovieTexture))
-         gl .texImage2D (gl .TEXTURE_2D, 0, internalFormat, format, gl .UNSIGNED_BYTE, data);
+         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA, gl .RGBA, gl .UNSIGNED_BYTE, data);
       else
-         gl .texImage2D  (gl .TEXTURE_2D, 0, internalFormat, width, height, 0, format, gl .UNSIGNED_BYTE, data);
+         gl .texImage2D  (gl .TEXTURE_2D, 0, gl .RGBA, width, height, 0, gl .RGBA, gl .UNSIGNED_BYTE, data);
 
       gl .pixelStorei (gl .UNPACK_COLORSPACE_CONVERSION_WEBGL, gl .BROWSER_DEFAULT_WEBGL);
 
@@ -130,18 +127,10 @@ Object .assign (Object .setPrototypeOf (X3DTexture2DNode .prototype, X3DSingleTe
       const gl = this .getBrowser () .getContext ();
 
       gl .bindTexture (gl .TEXTURE_2D, this .getTexture ());
+      gl .texSubImage2D (gl .TEXTURE_2D, 0, 0, 0, gl .RGBA, gl .UNSIGNED_BYTE, data);
 
-      if (gl .getVersion () === 1)
-      {
-         gl .texSubImage2D (gl .TEXTURE_2D, 0, 0, 0, gl .SRGB8_ALPHA8, gl .UNSIGNED_BYTE, data);
-      }
-      else
-      {
-         gl .texImage2D (gl .TEXTURE_2D, 0, gl .SRGB8_ALPHA8, this .width, this .height, 0, gl .RGBA, gl .UNSIGNED_BYTE, data);
-
-         if (this .texturePropertiesNode ._generateMipMaps .getValue ())
-            gl .generateMipmap (gl .TEXTURE_2D);
-      }
+      if (this .texturePropertiesNode ._generateMipMaps .getValue ())
+         gl .generateMipmap (gl .TEXTURE_2D);
 
       this .addNodeEvent ();
    },
