@@ -282,14 +282,6 @@ The *joints* field contains a list of USE references for all HAnimJoint node ins
 - The number of contained `<HAnimJoint USE='*' containerField='joints'/>` nodes at top level of HAnimHumanoid needs to match the number of corresponding HAnimJoint node instances found within the preceding skeleton hierarchy.
 - Top-level HAnimJoint USE nodes must include `containerField='joints'` for proper validation and operation.
 
-### SFNode [in, out] **skinBindingNormal** NULL <small>[X3DNormalNode]</small>
-
-Input/Output field *skinBindingNormal*.
-
-### SFNode [in, out] **skinBindingCoord** NULL <small>[X3DCoordinateNode]</small>
-
-Input/Output field *skinBindingCoord*.
-
 ### SFNode [in, out] **skinNormal** NULL <small>[X3DNormalNode]</small>
 
 Single Normal node utilized by indexed mesh definitions for skin. The *skinNormal* field contains a single sequence of normal values, used by internal HAnimHumanoid mechanisms to create appropriate surface deformations as well as by the indexed face set definitions within the skin field that perform the actual rendering of surface geometry.
@@ -330,6 +322,14 @@ List of one or more indexed mesh definitions (such as IndexedFaceSet) that utili
 - Top-level node must include `containerField='skin'` for proper validation and operation.
 - (X3D version 4.0 ISO.proof draft) requires X3D `profile='Full'` or else include `<component name='HAnim' level='2'/>`
 - For X3D3 HAnim1, previous spelling of component name was 'H-Anim' (including hyphen)
+
+### SFNode [in, out] **skinBindingNormals** NULL <small>[X3DNormalNode]</small>
+
+Input/Output field *skinBindingNormals*.
+
+### SFNode [in, out] **skinBindingCoords** NULL <small>[X3DCoordinateNode]</small>
+
+Input/Output field *skinBindingCoords*.
 
 ## Advice
 
