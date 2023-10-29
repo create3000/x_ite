@@ -282,6 +282,34 @@ The *joints* field contains a list of USE references for all HAnimJoint node ins
 - The number of contained `<HAnimJoint USE='*' containerField='joints'/>` nodes at top level of HAnimHumanoid needs to match the number of corresponding HAnimJoint node instances found within the preceding skeleton hierarchy.
 - Top-level HAnimJoint USE nodes must include `containerField='joints'` for proper validation and operation.
 
+### SFNode [in, out] **skinBindingNormals** NULL <small>[X3DNormalNode]</small>
+
+Array of Normal nodes to handle non-default source pose so that both skin and skeleton can be in same binding pose.
+
+#### Warnings
+
+- Index values for HAnimHumanoid skin IndexedFaceSet, skinCoord and skinNormal nodes must all be consistently defined together with HAnimJoint HAnimSegment and HAnimDisplacer nodes for proper skin animation.
+- Top-level Normal nodes must include `containerField='skinBindingNormals'` for proper validation and operation.
+- (X3D version 4.0 ISO.proof draft) requires X3D `profile='Full'` or else include `<component name='HAnim' level='2'/>`
+- For X3D3 HAnim1, spelling of component name is 'H-Anim' (including hyphen).
+- Not used when skeletalConfiguration='BASIC'.
+
+### SFNode [in, out] **skinBindingCoords** NULL <small>[X3DCoordinateNode]</small>
+
+Array of Coordinate nodes to handle non-default source pose so that both skin and skeleton can be in same binding pose.
+
+#### Hint
+
+- A single node is used so that coordIndex references are consistent for all references to these coordinates.
+
+#### Warnings
+
+- Index values for HAnimHumanoid skin IndexedFaceSet, skinCoord and skinNormal nodes must all be consistently defined together with HAnimJoint HAnimSegment and HAnimDisplacer nodes for proper skin animation.
+- Top-level Coordinate or CoordinateDouble nodes must include `containerField='skinBindingCoords'` for proper validation and operation.
+- (X3D version 4.0 ISO.proof draft) requires X3D `profile='Full'` or else include `<component name='HAnim' level='2'/>`
+- For X3D3 HAnim1, spelling of component name is 'H-Anim' (including hyphen).
+- Not used when skeletalConfiguration='BASIC'.
+
 ### SFNode [in, out] **skinNormal** NULL <small>[X3DNormalNode]</small>
 
 Single Normal node utilized by indexed mesh definitions for skin. The *skinNormal* field contains a single sequence of normal values, used by internal HAnimHumanoid mechanisms to create appropriate surface deformations as well as by the indexed face set definitions within the skin field that perform the actual rendering of surface geometry.
@@ -322,14 +350,6 @@ List of one or more indexed mesh definitions (such as IndexedFaceSet) that utili
 - Top-level node must include `containerField='skin'` for proper validation and operation.
 - (X3D version 4.0 ISO.proof draft) requires X3D `profile='Full'` or else include `<component name='HAnim' level='2'/>`
 - For X3D3 HAnim1, previous spelling of component name was 'H-Anim' (including hyphen)
-
-### SFNode [in, out] **skinBindingNormals** NULL <small>[X3DNormalNode]</small>
-
-Input/Output field *skinBindingNormals*.
-
-### SFNode [in, out] **skinBindingCoords** NULL <small>[X3DCoordinateNode]</small>
-
-Input/Output field *skinBindingCoords*.
 
 ## Advice
 
