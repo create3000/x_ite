@@ -137,7 +137,7 @@ Object .assign (Object .setPrototypeOf (X3DTexture2DNode .prototype, X3DSingleTe
       }
       else
       {
-         gl .texImage2D  (gl .TEXTURE_2D, 0, gl .SRGB8_ALPHA8, this .width, this .height, 0, gl .RGBA, gl .UNSIGNED_BYTE, data);
+         gl .texImage2D (gl .TEXTURE_2D, 0, gl .SRGB8_ALPHA8, this .width, this .height, 0, gl .RGBA, gl .UNSIGNED_BYTE, data);
 
          if (this .texturePropertiesNode ._generateMipMaps .getValue ())
             gl .generateMipmap (gl .TEXTURE_2D);
