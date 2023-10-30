@@ -84,10 +84,10 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, X3DText
    {
       switch (this .getTextureType ())
       {
-         case 1:
-         case 2: return "2D";
-         case 3: return "3D";
-         case 4: return "CUBE";
+         case 1:                // ImageTexture, MovieTexture (flipY)
+         case 2: return "2D";   // PixelTexture
+         case 3: return "3D";   // X3DTexture3DNode
+         case 4: return "CUBE"; // X3DEnvironmentTextureNode
       }
    },
    getTexture ()
@@ -115,6 +115,7 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, X3DText
    },
    getMatrix ()
    {
+      // Normally the identity matrix or a flipY matrix.
       return this .matrix;
    },
    isImageTransparent (data)
