@@ -376,6 +376,7 @@ const X_ITE_TESTS = [
    { path: "Texturing/MovieTexture.x3d" },
    { path: "Texturing/MultiTexture.x3d" },
    { path: "Texturing/MultiTextureParticle.x3d" },
+   { path: "Texturing/PixelTexture.x3d" },
    { path: "Texturing/TextureCoordinateGenerator.x3d" },
    { path: "Texturing/ubuntu.x3d" },
    { component: "Texturing3D" },
