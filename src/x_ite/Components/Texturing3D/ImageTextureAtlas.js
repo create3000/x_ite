@@ -167,7 +167,7 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, X3DTexture
             for (let x = 0; x < slicesOverX && i < depth; ++ x, ++ i)
             {
                const
-                  sx = Math .floor (x * w  / slicesOverX),
+                  sx = Math .floor (x * w / slicesOverX),
                   sy = Math .floor (y * h / slicesOverY);
 
                // gl .copyTexSubImage3D (gl .TEXTURE_3D, 0, 0, 0, i, sx, sy, width, height);

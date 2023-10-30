@@ -109,24 +109,24 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
 
       this .URL = new URL (this .urlStack .shift (), this .getExecutionContext () .getBaseURL ());
 
-      if (this .URL .protocol !== "data:")
-      {
-         if (!this .getCache ())
-            this .URL .searchParams .set ("_", Date .now ());
-      }
-
-      if (this .URL .pathname .match (/\.ktx2?(?:\.gz)?$/))
+      if (this .URL .pathname .match (/\.ktx2?(?:\.gz)?$/) || this .URL .href .match (/^data:image\/ktx2[;,]/))
       {
          this .setLinear (true);
 
          this .getBrowser () .getKTXDecoder ()
-            .then (decoder => decoder .loadKTXFromURL (this .URL))
+            .then (decoder => decoder .loadKTXFromURL (this .URL, this .getCache ()))
             .then (texture => this .setKTXTexture (texture))
             .catch (error => this .setError ({ type: error .message }));
       }
       else
       {
          this .setLinear (false);
+
+         if (this .URL .protocol !== "data:")
+         {
+            if (!this .getCache ())
+               this .URL .searchParams .set ("_", Date .now ());
+         }
 
          this .image .attr ("src", this .URL .href);
       }
@@ -156,7 +156,6 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
          this .setLevels (texture .levels);
          this .setWidth (texture .baseWidth);
          this .setHeight (texture .baseHeight);
-         this .setGenerateMipMaps (false);
          this .updateTextureParameters ();
 
          this .setLoadState (X3DConstants .COMPLETE_STATE);
@@ -215,7 +214,6 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
 
             // Upload image to GPU.
 
-            this .setGenerateMipMaps (true);
             this .setTextureFromData (width, height, false, transparent, data);
             this .setLoadState (X3DConstants .COMPLETE_STATE);
          }
@@ -225,7 +223,6 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
 
             // Upload image to GPU.
 
-            this .setGenerateMipMaps (true);
             this .setTextureFromData (width, height, this ._colorSpaceConversion .getValue (), this .isTransparent (), image);
             this .setTransparent (this .isImageTransparent (await this .getTextureData (this .getTexture (), width, height)));
             this .setLoadState (X3DConstants .COMPLETE_STATE);

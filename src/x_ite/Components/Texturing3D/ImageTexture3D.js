@@ -107,7 +107,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, X3DTexture3DN
          }
          else if (data instanceof ArrayBuffer)
          {
-            if (URL .pathname .match (/\.ktx2?(?:\.gz)?$/))
+            if (this .URL .pathname .match (/\.ktx2?(?:\.gz)?$/) || this .URL .href .match (/^data:image\/ktx2[;,]/))
             {
                this .setLinear (true);
 
@@ -166,7 +166,6 @@ Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, X3DTexture3DN
       this .setWidth (texture .baseWidth);
       this .setHeight (texture .baseHeight);
       this .setDepth (texture .baseDepth); // TODO: Always 1
-      this .setGenerateMipMaps (false);
       this .updateTextureParameters ();
 
       this .setLoadState (X3DConstants .COMPLETE_STATE);

@@ -59,9 +59,8 @@ function X3DSingleTextureNode (executionContext)
 
    this .addChildObjects (X3DConstants .outputOnly, "linear", new Fields .SFBool ())
 
-   this .levels          = 1;
-   this .generateMipMaps = true;
-   this .matrix          = new Float32Array (Matrix4 .Identity);
+   this .levels = 1;
+   this .matrix = new Float32Array (Matrix4 .Identity);
 }
 
 Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, X3DTextureNode .prototype),
@@ -113,14 +112,6 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, X3DText
    setLevels (value)
    {
       this .levels = value;
-   },
-   getGenerateMipMaps ()
-   {
-      return this .generateMipMaps;
-   },
-   setGenerateMipMaps (value)
-   {
-      this .generateMipMaps = value;
    },
    isLinear ()
    {
@@ -176,7 +167,7 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, X3DText
 
          gl .bindTexture (target, this .getTexture ());
 
-         if (Math .max (width, height) < this .getBrowser () .getMinTextureSize () && !haveTextureProperties)
+         if (!haveTextureProperties && Math .max (width, height) < this .getBrowser () .getMinTextureSize ())
          {
             this .levels = 1;
 
@@ -184,9 +175,11 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, X3DText
             gl .texParameteri (target, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
             gl .texParameteri (target, gl .TEXTURE_MAG_FILTER, gl .NEAREST);
          }
-         else
+         else if (!this .isLinear () || haveTextureProperties)
          {
-            if (this .generateMipMaps)
+            // All linear textures (KTX2, HDR) do NOT support mip-maps.
+
+            if (!this .isLinear ())
             {
                // https://stackoverflow.com/a/25640078/1818915
                this .levels = textureProperties ._generateMipMaps .getValue ()
@@ -199,6 +192,11 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, X3DText
 
             gl .texParameteri (target, gl .TEXTURE_MIN_FILTER, gl [textureProperties .getMinificationFilter ()]);
             gl .texParameteri (target, gl .TEXTURE_MAG_FILTER, gl [textureProperties .getMagnificationFilter ()]);
+         }
+         else
+         {
+            gl .texParameteri (target, gl .TEXTURE_MIN_FILTER, gl .LINEAR);
+            gl .texParameteri (target, gl .TEXTURE_MAG_FILTER, gl .LINEAR);
          }
 
          if (haveTextureProperties)

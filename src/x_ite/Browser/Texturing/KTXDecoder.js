@@ -45,9 +45,12 @@ export default class KTXDecoder
          console .warn ("Texture transcode failed. See console for details.");
    }
 
-   async loadKTXFromURL (uri)
+   async loadKTXFromURL (url, cache = true)
    {
-      const response = await fetch (uri);
+      const response = await fetch (url, { cache: cache ? "default" : "reload" });
+
+      if (!response .ok)
+         throw new Error ("Couldn't fetch KTX image.");
 
       return this .loadKTXFromBuffer (await response .arrayBuffer ());
    }
