@@ -177,7 +177,7 @@ Object .assign (Object .setPrototypeOf (IndexedFaceSet .prototype, X3DComposedGe
          }
       }
 
-      // Autogenerate normal if not specified.
+      // Autogenerate normals if not specified.
 
       if (!this .getNormal ())
          this .buildNormals (polygons);
@@ -306,9 +306,9 @@ Object .assign (Object .setPrototypeOf (IndexedFaceSet .prototype, X3DComposedGe
          normals     = this .createNormals (polygons),
          normalArray = this .getNormals ();
 
-      for (const polygon of polygons)
+      for (const { triangles } of polygons)
       {
-         for (const i of polygon .triangles)
+         for (const i of triangles)
             normalArray .push (... normals [i]);
       }
    },
@@ -321,11 +321,9 @@ Object .assign (Object .setPrototypeOf (IndexedFaceSet .prototype, X3DComposedGe
          normalIndex = new Map (),
          normals     = [ ];
 
-      for (const polygon of polygons)
+      for (const { vertices } of polygons)
       {
-         const
-            vertices = polygon .vertices,
-            length   = vertices .length;
+         const length = vertices .length;
 
          switch (length)
          {
