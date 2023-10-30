@@ -142,10 +142,8 @@ Object .assign (Object .setPrototypeOf (IndexedFaceSet .prototype, X3DComposedGe
 
       texCoordNode ?.init (multiTexCoordArray);
 
-      for (const polygon of polygons)
+      for (const { triangles, face } of polygons)
       {
-         const { triangles, face } = polygon;
-
          for (const i of triangles)
          {
             const index = coordIndex [i];
@@ -171,7 +169,6 @@ Object .assign (Object .setPrototypeOf (IndexedFaceSet .prototype, X3DComposedGe
             {
                if (normalPerVertex)
                   normalNode .addVector (this .getNormalPerVertexIndex (i), normalArray);
-
                else
                   normalNode .addVector (this .getNormalIndex (face), normalArray);
             }
