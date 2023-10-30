@@ -59,6 +59,9 @@ function PixelTexture (executionContext)
    this .addType (X3DConstants .PixelTexture);
 
    this .addChildObjects (X3DConstants .outputOnly, "loadState", new Fields .SFInt32 (X3DConstants .NOT_STARTED_STATE));
+
+   this .canvas1 = $("<canvas></canvas>");
+   this .canvas2 = $("<canvas></canvas>");
 }
 
 Object .assign (Object .setPrototypeOf (PixelTexture .prototype, X3DTexture2DNode .prototype),
@@ -68,9 +71,6 @@ Object .assign (Object .setPrototypeOf (PixelTexture .prototype, X3DTexture2DNod
       X3DTexture2DNode .prototype .initialize .call (this);
 
       this ._image .addInterest ("set_image__", this);
-
-      this .canvas1 = $("<canvas></canvas>");
-      this .canvas2 = $("<canvas></canvas>");
 
       this .set_image__ ();
    },
@@ -221,7 +221,7 @@ Object .assign (Object .setPrototypeOf (PixelTexture .prototype, X3DTexture2DNod
             canvas1 .width  = width;
             canvas1 .height = height;
 
-            this .convert (imageData .data, comp, array, array .length);
+            this .convert (imageData .data, comp, array .getValue (), array .length);
             cx1 .putImageData (imageData, 0, 0);
 
             width  = Algorithm .nextPowerOfTwo (width);
