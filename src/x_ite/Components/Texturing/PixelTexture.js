@@ -143,7 +143,7 @@ Object .assign (Object .setPrototypeOf (PixelTexture .prototype, X3DTexture2DNod
    },
    resize (input, inputWidth, inputHeight, outputWidth, outputHeight)
    {
-      // Nearest neighbor scaling algorithm for very small images.
+      // Nearest neighbor scaling algorithm for very small images for WebGL 1.
 
       const
          output = new Uint8Array (outputWidth * outputHeight * 4),
@@ -159,7 +159,7 @@ Object .assign (Object .setPrototypeOf (PixelTexture .prototype, X3DTexture2DNod
          for (let x = 0; x < outputWidth; ++ x)
          {
             const
-               index       = (inputW + Math.floor (x / scaleX)) * 4,
+               index       = (inputW + Math .floor (x / scaleX)) * 4,
                indexScaled = (outputW + x) * 4;
 
             output [indexScaled]     = input [index];
