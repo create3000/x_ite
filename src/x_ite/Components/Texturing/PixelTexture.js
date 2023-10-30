@@ -59,9 +59,6 @@ function PixelTexture (executionContext)
    this .addType (X3DConstants .PixelTexture);
 
    this .addChildObjects (X3DConstants .outputOnly, "loadState", new Fields .SFInt32 (X3DConstants .NOT_STARTED_STATE));
-
-   this .canvas1 = $("<canvas></canvas>");
-   this .canvas2 = $("<canvas></canvas>");
 }
 
 Object .assign (Object .setPrototypeOf (PixelTexture .prototype, X3DTexture2DNode .prototype),
@@ -195,7 +192,7 @@ Object .assign (Object .setPrototypeOf (PixelTexture .prototype, X3DTexture2DNod
 
             this .convert (data, comp, array .getValue (), array .length);
          }
-         else if (Math .max (width, height) < this .getBrowser () .getMinTextureSize () && ! this ._textureProperties .getValue ())
+         else if (Math .max (width, height) < this .getBrowser () .getMinTextureSize () && !this ._textureProperties .getValue ())
          {
             data = new Uint8Array (width * height * 4);
 
@@ -211,9 +208,12 @@ Object .assign (Object .setPrototypeOf (PixelTexture .prototype, X3DTexture2DNod
          }
          else
          {
+            if (!this .canvas)
+               this .canvas = [document .createElement ("canvas"), document .createElement ("canvas")];
+
             const
-               canvas1   = this .canvas1 [0],
-               canvas2   = this .canvas2 [0],
+               canvas1   = this .canvas [0],
+               canvas2   = this .canvas [1],
                cx1       = canvas1 .getContext ("2d", { willReadFrequently: true }),
                cx2       = canvas2 .getContext ("2d", { willReadFrequently: true }),
                imageData = cx1 .createImageData (width, height);
