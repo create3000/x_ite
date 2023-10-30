@@ -72,11 +72,9 @@ export default class KTXDecoder
       if (!texture)
          throw new Error ("Could not load KTX data");
 
-      // https://stackoverflow.com/a/25640078/1818915
-      texture .levels        = 1 + Math .floor (Math .log2 (Math .max (ktxTexture .baseWidth, ktxTexture .baseHeight)));
       texture .baseWidth     = ktxTexture .baseWidth;
       texture .baseHeight    = ktxTexture .baseHeight;
-      texture .baseDepth     = ktxTexture .baseDepth ?? 1;
+      texture .baseDepth     = ktxTexture .baseDepth ?? 1; // TODO: No support.
       texture .numComponents = ktxTexture .numComponents;
       texture .target        = uploadResult .target;
 

@@ -162,7 +162,6 @@ Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, X3DTexture3DN
 
       this .setTexture (texture);
       this .setTransparent (false);
-      this .setLevels (texture .levels);
       this .setWidth (texture .baseWidth);
       this .setHeight (texture .baseHeight);
       this .setDepth (texture .baseDepth); // TODO: Always 1

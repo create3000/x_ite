@@ -59,7 +59,6 @@ function X3DSingleTextureNode (executionContext)
 
    this .addChildObjects (X3DConstants .outputOnly, "linear", new Fields .SFBool ())
 
-   this .levels = 1;
    this .matrix = new Float32Array (Matrix4 .Identity);
 }
 
@@ -104,14 +103,6 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, X3DText
       this .texture = texture;
 
       this .addNodeEvent ();
-   },
-   getLevels ()
-   {
-      return this .levels;
-   },
-   setLevels (value)
-   {
-      this .levels = value;
    },
    isLinear ()
    {
@@ -169,8 +160,6 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, X3DText
 
          if (!haveTextureProperties && Math .max (width, height) < this .getBrowser () .getMinTextureSize ())
          {
-            this .levels = 1;
-
             // Don't generate MipMaps.
             gl .texParameteri (target, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
             gl .texParameteri (target, gl .TEXTURE_MAG_FILTER, gl .NEAREST);
@@ -181,11 +170,6 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, X3DText
 
             if (!this .isLinear ())
             {
-               // https://stackoverflow.com/a/25640078/1818915
-               this .levels = textureProperties ._generateMipMaps .getValue ()
-                  ? 1 + Math .floor (Math .log2 (Math .max (width, height)))
-                  : 1;
-
                if (textureProperties ._generateMipMaps .getValue ())
                   gl .generateMipmap (target);
             }

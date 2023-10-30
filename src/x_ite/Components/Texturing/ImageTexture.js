@@ -153,7 +153,6 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
       {
          this .setTexture (texture);
          this .setTransparent (false);
-         this .setLevels (texture .levels);
          this .setWidth (texture .baseWidth);
          this .setHeight (texture .baseHeight);
          this .updateTextureParameters ();

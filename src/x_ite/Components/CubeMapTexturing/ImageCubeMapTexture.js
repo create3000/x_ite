@@ -158,7 +158,6 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
       {
          this .setTexture (texture);
          this .setTransparent (false);
-         this .setLevels (texture .levels);
          this .setSize (texture .baseWidth);
          this .updateTextureParameters ();
 
