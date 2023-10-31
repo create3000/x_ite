@@ -1141,7 +1141,6 @@ var DEVELOPMENT_default = /*#__PURE__*/__webpack_require__.n(DEVELOPMENT_namespa
 
 
 
-
 const defaultData = new Uint8Array ([ 255, 255, 255, 255 ]);
 
 function ImageCubeMapTexture (executionContext)
@@ -1152,7 +1151,6 @@ function ImageCubeMapTexture (executionContext)
    this .addType ((X3DConstants_default()).ImageCubeMapTexture);
 
    this .image    = $("<img></img>");
-   this .canvas   = $("<canvas></canvas>");
    this .urlStack = new (Fields_default()).MFString ();
 }
 
@@ -1203,24 +1201,24 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapT
 
       this .URL = new URL (this .urlStack .shift (), this .getExecutionContext () .getBaseURL ());
 
-      if (this .URL .protocol !== "data:")
-      {
-         if (!this .getCache ())
-            this .URL .searchParams .set ("_", Date .now ());
-      }
-
-      if (this .URL .pathname .match (/\.ktx2?(?:\.gz)?$/))
+      if (this .URL .pathname .match (/\.ktx2?(?:\.gz)?$/) || this .URL .href .match (/^data:image\/ktx2[;,]/))
       {
          this .setLinear (true);
 
          this .getBrowser () .getKTXDecoder ()
-            .then (decoder => decoder .loadKTXFromURL (this .URL))
+            .then (decoder => decoder .loadKTXFromURL (this .URL, this .getCache ()))
             .then (texture => this .setKTXTexture (texture))
             .catch (error => this .setError ({ type: error .message }));
       }
       else
       {
          this .setLinear (false);
+
+         if (this .URL .protocol !== "data:")
+         {
+            if (!this .getCache ())
+               this .URL .searchParams .set ("_", Date .now ());
+         }
 
          this .image .attr ("src", this .URL .href);
       }
@@ -1247,9 +1245,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapT
       {
          this .setTexture (texture);
          this .setTransparent (false);
-         this .setLevels (texture .levels);
          this .setSize (texture .baseWidth);
-         this .setGenerateMipMaps (false);
          this .updateTextureParameters ();
 
          this .setLoadState ((X3DConstants_default()).COMPLETE_STATE);
@@ -1270,16 +1266,16 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapT
 
       try
       {
-         const aspectRatio = this .image .prop ("width") / this .image .prop ("height");
+         // Create texture.
 
-         if (Math .abs (aspectRatio - 4/3) < 0.01)
-            this .skyBoxToCubeMap ();
+         const
+            gl      = this .getBrowser () .getContext (),
+            texture = gl .createTexture ();
 
-         if (Math .abs (aspectRatio - 2/1) < 0.01)
-            this .panoramaToCubeMap ();
+         gl .bindTexture (gl .TEXTURE_2D, texture);
+         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA, gl .RGBA, gl .UNSIGNED_BYTE, this .image [0]);
 
-         this .setGenerateMipMaps (true);
-         this .updateTextureParameters ();
+         this .imageToCubeMap (texture, this .image .prop ("width"), this .image .prop ("height"), false);
 
          // Update load state.
 
@@ -1290,6 +1286,18 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapT
          // Catch security error from cross origin requests.
          this .setError ({ type: error .message });
       }
+   },
+   imageToCubeMap (texture, width, height)
+   {
+      const aspectRatio = width / height;
+
+      if (Math .abs (aspectRatio - 4/3) < 0.01)
+         this .skyBoxToCubeMap (texture, width, height);
+
+      if (Math .abs (aspectRatio - 2/1) < 0.01)
+         this .panoramaToCubeMap (texture, width, height);
+
+      this .updateTextureParameters ();
    },
    skyBoxToCubeMap: (function ()
    {
@@ -1310,44 +1318,26 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapT
       //     | b |
       //     -----
 
-      return function ()
+      return function (skyBoxTexture, width, height)
       {
          const
-            image  = this .image [0],
-            canvas = this .canvas [0],
-            cx     = canvas .getContext ("2d", { willReadFrequently: true });
+            gl          = this .getBrowser () .getContext (),
+            framebuffer = gl .createFramebuffer (),
+            width1_4    = width / 4,
+            height1_3   = height / 3,
+            data        = new Uint8Array (width1_4 * height1_3 * 4);
 
-         let
-            width     = image .width,
-            height    = image .height,
-            width1_4  = Math .floor (width / 4),
-            height1_3 = Math .floor (height / 3);
+         // Init cube map texture.
 
-         // Scale image.
+         gl .bindTexture (this .getTarget (), this .getTexture ());
 
-         if (!Algorithm_default().isPowerOfTwo (width1_4) || !Algorithm_default().isPowerOfTwo (height1_3) || width1_4 * 4 !== width || height1_3 * 3 !== height)
-         {
-            width1_4  = Algorithm_default().nextPowerOfTwo (width1_4);
-            height1_3 = Algorithm_default().nextPowerOfTwo (height1_3);
-            width     = width1_4  * 4;
-            height    = height1_3 * 3;
-
-            canvas .width  = width;
-            canvas .height = height;
-
-            cx .drawImage (image, 0, 0, image .width, image .height, 0, 0, width, height);
-         }
-         else
-         {
-            canvas .width  = width;
-            canvas .height = height;
-
-            cx .drawImage (image, 0, 0);
-         }
+         for (let i = 0; i < 6; ++ i)
+            gl .texImage2D  (this .getTargets () [i], 0, gl .RGBA, width1_4, height1_3, 0, gl .RGBA, gl .UNSIGNED_BYTE, null);
 
          // Extract images.
 
-         const gl = this .getBrowser () .getContext ();
+         gl .bindFramebuffer (gl .FRAMEBUFFER, framebuffer);
+         gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .TEXTURE_2D, skyBoxTexture, 0);
 
          let transparent = false;
 
@@ -1355,17 +1345,20 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapT
 
          for (let i = 0; i < 6; ++ i)
          {
-            const data = cx .getImageData (offsets [i] .x * width1_4, offsets [i] .y * height1_3, width1_4, height1_3) .data;
+            gl .copyTexSubImage2D (this .getTargets () [i], 0, 0, 0, offsets [i] .x * width1_4, offsets [i] .y * height1_3, width1_4, height1_3);
 
             // Determine image alpha.
 
             if (!transparent)
+            {
+               gl .readPixels (offsets [i] .x * width1_4, offsets [i] .y * height1_3, width1_4, height1_3, gl .RGBA, gl .UNSIGNED_BYTE, data);
+
                transparent = this .isImageTransparent (data);
-
-            // Transfer image.
-
-            gl .texImage2D (this .getTargets () [i], 0, gl .RGBA, width1_4, height1_3, false, gl .RGBA, gl .UNSIGNED_BYTE, new Uint8Array (data .buffer));
+            }
          }
+
+         gl .deleteFramebuffer (framebuffer);
+         gl .deleteTexture (skyBoxTexture);
 
          // Update size and transparent field.
 
@@ -1373,25 +1366,22 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapT
          this .setSize (width1_4);
       };
    })(),
-   panoramaToCubeMap ()
+   panoramaToCubeMap (panoramaTexture, width, height)
    {
       // Mercator Projection
 
       const
-         browser         = this .getBrowser (),
-         gl              = browser .getContext (),
-         shaderNode      = browser .getPanoramaShader (),
-         framebuffer     = gl .createFramebuffer (),
-         panoramaTexture = gl .createTexture (),
-         textureUnit     = browser .getTextureCubeUnit (),
-         size            = this .image .prop ("height") / 2,
-         data            = new Uint8Array (size * size * 4);
+         browser     = this .getBrowser (),
+         gl          = browser .getContext (),
+         shaderNode  = browser .getPanoramaShader (),
+         framebuffer = gl .createFramebuffer (),
+         textureUnit = browser .getTextureCubeUnit (),
+         size        = height / 2,
+         data        = new Uint8Array (size * size * 4);
 
-      // Create panorama texture.
+      // Adjust panorama texture.
 
       gl .bindTexture (gl .TEXTURE_2D, panoramaTexture);
-      gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA, gl .RGBA, gl .UNSIGNED_BYTE, this .image [0]);
-
       gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_S, gl .MIRRORED_REPEAT);
       gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_T, gl .MIRRORED_REPEAT);
       gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .LINEAR);
