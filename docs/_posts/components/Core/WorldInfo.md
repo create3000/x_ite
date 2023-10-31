@@ -36,7 +36,7 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/components/core.html#Metadata){:target="_blank"}
 
-### SFString [ ] **title** ""
+### SFString [in, out] **title** ""
 
 *title* of this world, placed in window *title*.
 
@@ -44,7 +44,7 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 
 - Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
 
-### MFString [ ] **info** [ ]
+### MFString [in, out] **info** [ ]
 
 Additional information about this model.
 
