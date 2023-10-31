@@ -133,6 +133,7 @@ const ibl_files = [
    "Clearcoat",
    "Cube",
    "DamagedHelmet",
+   "DragonAttenuation",
    "EnvironmentTest",
    "GlassBrokenWindow",
    "GlassHurricaneCandleHolder",
