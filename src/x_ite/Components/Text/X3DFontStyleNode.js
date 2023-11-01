@@ -86,7 +86,8 @@ function X3DFontStyleNode (executionContext)
 
    this .addType (X3DConstants .X3DFontStyleNode);
 
-   this .addChildObjects (X3DConstants .inputOutput, "url",                  this ._family,
+   this .addChildObjects (X3DConstants .inputOutput, "description",          new Fields .SFString (),
+                          X3DConstants .inputOutput, "url",                  this ._family,
                           X3DConstants .inputOutput, "load",                 new Fields .SFBool (true),
                           X3DConstants .inputOutput, "autoRefresh",          new Fields .SFTime (),
                           X3DConstants .inputOutput, "autoRefreshTimeLimit", new Fields .SFTime (3600));

@@ -103,6 +103,7 @@ Object .defineProperties (GeoMetadata,
    {
       value: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",             new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "description",          new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "load",                 new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "url",                  new Fields .MFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "autoRefresh",          new Fields .SFTime ()),
