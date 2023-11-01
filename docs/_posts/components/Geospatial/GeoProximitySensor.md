@@ -37,6 +37,8 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/components/core.html#Metadata){:target="_blank"}
 
+### SFString [in, out] **description** ""
+
 ### SFNode [ ] **geoOrigin** NULL <small>[GeoOrigin] (deprecated)</small>
 
 Single contained GeoOrigin node that can specify a local coordinate frame for extended precision.
@@ -75,9 +77,11 @@ Enables/disables node operation.
 
 - *size* 0 0 0 is same as enabled false.
 
-### SFVec3f [in, out] **center** 0 0 0 <small>(-∞,∞) (starting with vs. 3.3)</small>
+### SFVec3d [in, out] **center** 0 0 0 <small>(-∞,∞) (starting with vs. 3.3)</small>
 
 Position offset from origin of local coordinate system.
+
+### SFVec3d [in, out] **geoCenter** 0 0 0 <small>(-∞,∞)</small>
 
 ### SFBool [out] **isActive**
 

@@ -99,7 +99,7 @@ Output values for linear interpolation, each corresponding to an input-fraction 
 
 - Number of keys must match number of keyValues!
 
-### SFVec3d [out] **value_changed**
+### SFVec3f [out] **value_changed**
 
 Linearly interpolated output value determined by current key time and corresponding keyValue pair.
 

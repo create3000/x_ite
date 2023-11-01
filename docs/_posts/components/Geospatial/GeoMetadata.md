@@ -38,6 +38,8 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/components/core.html#Metadata){:target="_blank"}
 
+### SFString [in, out] **description** ""
+
 ### SFBool [in, out] **load** TRUE
 
 *load*=true means *load* immediately, *load*=false means defer loading or else unload a previously loaded scene.

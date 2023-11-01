@@ -98,7 +98,7 @@ Translation offset from origin of local coordinate system.
 
 - Usually HAnimJoint position is controlled by the *center* field, not the translation field.
 
-### MFFloat [in, out] **llimit** [ ] <small>(-∞,∞)</small>
+### MFFloat [in, out] **llimit** [ 0, 0, 0 ] <small>(-∞,∞)</small>
 
 Lower limit for minimum joint rotation in radians.
 
@@ -111,7 +111,7 @@ Lower limit for minimum joint rotation in radians.
 
 - Field shall contain three values or else be an empty array. Behavior is undefined when array length is 1, 2, or greater than 3.
 
-### MFFloat [in, out] **ulimit** [ ] <small>(-∞,∞)</small>
+### MFFloat [in, out] **ulimit** [ 0, 0, 0 ] <small>(-∞,∞)</small>
 
 Upper limit for maximum joint rotation in radians.
 

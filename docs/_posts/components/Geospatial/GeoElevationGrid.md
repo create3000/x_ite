@@ -65,6 +65,8 @@ Identifies spatial reference frame: Geodetic (GD), Geocentric (GC), Universal Tr
 
 Geographic coordinate for southwest (lower-left) corner of height dataset.
 
+### MFDouble [in] **set_height** <small>(-∞,∞)</small>
+
 ### SFInt32 [ ] **xDimension** 0 <small>(0,∞)</small>
 
 Number of elements in the height array along east-west X direction.
@@ -187,7 +189,7 @@ Single contained Normal node that can specify perpendicular vectors for correspo
 
 - *normal* vectors increase file size, typically doubling geometry definitions.
 
-### MFDouble [in, out] **height** [ 0, 0 ] <small>(-∞,∞)</small>
+### MFDouble [ ] **height** [ 0, 0 ] <small>(-∞,∞)</small>
 
 Contains xDimension rows * zDimension columns floating-point values for elevation above ellipsoid.
 
