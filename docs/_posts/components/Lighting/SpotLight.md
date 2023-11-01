@@ -84,7 +84,7 @@ Orientation vector of light relative to local coordinate system.
 
 Maximum effective distance of light relative to local light position, affected by ancestor scaling.
 
-### SFFloat [in, out] **beamWidth** π/4 <small>(0,π/2]</small>
+### SFFloat [in, out] **beamWidth** π*3/16 <small>(0,π/2]</small>
 
 Inner conical solid angle (in radians) where light source has uniform full intensity.
 
