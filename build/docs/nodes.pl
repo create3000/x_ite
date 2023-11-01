@@ -8,7 +8,7 @@ use List::MoreUtils qw(first_index);
 use HTML::Entities;
 
 say "Downloading X3dTooltips.html ..." if ! -f "/tmp/tooltips.html" || -M "/tmp/tooltips.html" > 1;
-system "wget -q --output-document - https://www.web3d.org/x3d/content/X3dTooltips.html > /tmp/tooltips.html"
+system "wget -q -O - https://www.web3d.org/x3d/content/X3dTooltips.html > /tmp/tooltips.html"
    if ! -f "/tmp/tooltips.html" || -M "/tmp/tooltips.html" > 1;
 $tooltips = `cat /tmp/tooltips.html`;
 
