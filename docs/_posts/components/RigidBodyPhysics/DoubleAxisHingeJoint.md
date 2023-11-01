@@ -43,7 +43,7 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 
 *anchorPoint* is joint center, specified in world coordinates.
 
-### SFVec3f [in, out] **axis1** 0 0 0 <small>(-∞,∞)</small>
+### SFVec3f [in, out] **axis1** 1 0 0 <small>(-∞,∞)</small>
 
 *axis1* defines axis vector of joint connection to body1.
 
@@ -51,7 +51,7 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 
 - 0 0 0 means motor disabled about this axis.
 
-### SFVec3f [in, out] **axis2** 0 0 0 <small>(-∞,∞)</small>
+### SFVec3f [in, out] **axis2** 0 1 0 <small>(-∞,∞)</small>
 
 *axis2* defines axis vector of joint connection to body2.
 
@@ -82,6 +82,31 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 ### SFFloat [in, out] **maxTorque2** 0 <small>(-∞,∞)</small> <small class="red">not supported</small>
 
 *maxTorque2* is maximum rotational torque applied by corresponding motor axis to achieve desiredAngularVelocity2.
+
+### SFFloat [in, out] **stop1Bounce** 0 <small>[0,1]<span class="red"> not supported</span></small>
+
+*stop1Bounce* is velocity factor for bounce back once stop point is reached.
+
+#### Hint
+
+- 0 means no bounce, 1 means return velocity matches.
+
+### SFFloat [in, out] **stop1ConstantForceMix** 0.001 <small>[0,∞)<span class="red"> not supported</span></small>
+
+*stop1ConstantForceMix* value applies a constant force value to make colliding surfaces appear to be somewhat soft.
+
+#### Hints
+
+- Use with suspensionForce to improve softness and numerical stability.
+- 0 means no stop adjustment, 1 means springier stop response.
+
+### SFFloat [in, out] **stop1ErrorCorrection** 0.8 <small>[0,1]<span class="red"> not supported</span></small>
+
+*stop1ErrorCorrection* is fraction of error correction performed during time step once stop point is reached.
+
+#### Hint
+
+- 0 means no error correction, 1 means all error corrected in single step.
 
 ### SFFloat [in, out] **suspensionForce** 0 <small>[0,∞)<span class="red"> not supported</span></small>
 
@@ -140,18 +165,6 @@ The *body1* and body2 fields indicate the two RigidBody nodes connected by this 
 ### SFNode [in, out] **body2** NULL <small>[RigidBody]</small>
 
 The body1 and *body2* fields indicate the two RigidBody nodes connected by this joint.
-
-### SFFloat [in, out] **stop1Bounce** 0 <small>[0,1]<span class="red"> not supported</span></small>
-
-Input/Output field *stop1Bounce*.
-
-### SFFloat [in, out] **stop1ConstantForceMix** 0.001 <small>[0,∞)<span class="red"> not supported</span></small>
-
-Input/Output field *stop1ConstantForceMix*.
-
-### SFFloat [in, out] **stop1ErrorCorrection** 0.8 <small>[0,1]<span class="red"> not supported</span></small>
-
-Input/Output field *stop1ErrorCorrection*.
 
 ## Advice
 

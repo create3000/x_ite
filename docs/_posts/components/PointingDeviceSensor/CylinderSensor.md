@@ -51,11 +51,11 @@ Author-provided prose that describes intended purpose of this node.
 
 Enables/disables node operation.
 
-### SFRotation [in, out] **axisRotation** 0 0 1 0 <small>[-1,1] or (-∞,∞)</small>
+### SFRotation [in, out] **axisRotation** 0 1 0 0 <small>[-1,1] or (-∞,∞)</small>
 
 *axisRotation* determines local sensor coordinate system by rotating the local coordinate system.
 
-### SFFloat [in, out] **diskAngle** 0.261792 <small>[0,π/2]</small>
+### SFFloat [in, out] **diskAngle** 0.26179167 <small>[0,π/2]</small>
 
 Help decide rotation behavior from initial relative bearing of pointer drag: acute angle whether cylinder sides or end-cap disks of virtual-geometry sensor are used for manipulation.
 

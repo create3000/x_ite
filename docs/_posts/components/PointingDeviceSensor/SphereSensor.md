@@ -55,7 +55,7 @@ Enables/disables node operation.
 
 Determines whether previous offset values are remembered/accumulated.
 
-### SFRotation [in, out] **offset** 0 0 1 0 <small>[-1,1],(-∞,∞)</small>
+### SFRotation [in, out] **offset** 0 1 0 0 <small>[-1,1],(-∞,∞)</small>
 
 Sends event and remembers last value sensed.
 

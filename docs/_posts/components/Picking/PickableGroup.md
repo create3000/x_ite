@@ -38,6 +38,15 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/components/core.html#Metadata){:target="_blank"}
 
+### SFString [in, out] **description** ""
+
+Author-provided prose that describes intended purpose of this node.
+
+#### Hints
+
+- Include space characters since a *description* is not a DEF identifier. Write short phrases that make descriptions clear and readable.
+- Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
+
 ### SFBool [in, out] **pickable** TRUE
 
 The *pickable* field determines whether pick traversal is performed on this node or its children.
