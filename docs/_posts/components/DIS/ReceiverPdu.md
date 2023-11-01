@@ -93,7 +93,7 @@ Confirm whether there has been a recent network update.
 
 Multicast network *address*, or else 'localhost'; Example: 224.2.181.145.
 
-### SFInt32 [in, out] **applicationID** 1 <small>[0,65535]</small>
+### SFInt32 [in, out] **applicationID** 0 <small>[0,65535]</small>
 
 Each simulation application that can respond to simulation management PDUs needs to have a unique *applicationID*.
 
@@ -126,7 +126,7 @@ Multicast network *port*, for example: 3000.
 
 Identifies a particular radio within a given entity.
 
-### SFFloat [in, out] **readInterval** 0.1 <small>(0,∞)</small>
+### SFTime [in, out] **readInterval** 0.1 <small>(0,∞)</small>
 
 Seconds between read updates, 0 means no reading.
 
@@ -150,7 +150,7 @@ Whether RTP headers are prepended to DIS PDUs.
 
 Simulation/exercise *siteID* of the participating LAN or organization.
 
-### SFInt32 [in, out] **transmitterApplicationID** 1 <small>[0,65535]</small>
+### SFInt32 [in, out] **transmitterApplicationID** 0 <small>[0,65535]</small>
 
 Simulation/exercise *transmitterApplicationID* is unique for transmitter application at that site. Each simulation application that can respond to simulation management PDUs needs to have a unique applicationID.
 
@@ -170,7 +170,7 @@ Simulation/exercise *transmitterSiteID* of the participating LAN or organization
 
 Select geometry to render: -1 for no geometry, 0 for text trace, 1 for default geometry, (optional) higher values to render different states.
 
-### SFFloat [in, out] **writeInterval** 1 <small>(0,∞)</small>
+### SFTime [in, out] **writeInterval** 1 <small>(0,∞)</small>
 
 Seconds between write updates, 0 means no writing (sending).
 

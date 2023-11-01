@@ -175,7 +175,7 @@ Set element of user-defined payload array.
 
 Multicast network *address*, or else 'localhost'; Example: 224.2.181.145.
 
-### SFInt32 [in, out] **applicationID** 1 <small>[0,65535]</small>
+### SFInt32 [in, out] **applicationID** 0 <small>[0,65535]</small>
 
 Simulation/exercise *applicationID* is unique for application at that site. Each simulation application that can respond to simulation management PDUs needs to have a unique *applicationID*.
 
@@ -259,7 +259,7 @@ Integer enumerations value for whether entity is a PLATFORM, MUNITION, LIFE_FORM
 
 Specific information about an entity based on the Subcategory field. See DIS Enumerations values.
 
-### SFInt32 [in, out] **eventApplicationID** 1 <small>[0,65535]</small>
+### SFInt32 [in, out] **eventApplicationID** 0 <small>[0,65535]</small>
 
 Simulation/exercise *eventApplicationID* is unique for events generated from application at that site. Each simulation application that can respond to simulation management PDUs needs to have a unique applicationID.
 
@@ -327,7 +327,7 @@ Fallback server address if multicast not available locally. Example: track.nps.e
 
 Fallback server port if multicast not available locally. Example: 8010.
 
-### SFInt32 [in, out] **munitionApplicationID** 1 <small>[0,65535]</small>
+### SFInt32 [in, out] **munitionApplicationID** 0 <small>[0,65535]</small>
 
 *munitionApplicationID*, unique for application at that site. Each simulation application that can respond to simulation management PDUs needs to have a unique applicationID.
 
@@ -540,13 +540,19 @@ DIS *timestamp* received from latest PDU update, converted to X3D SFTime units.
 
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
-### SFBool [ ] **rtpHeaderExpected** FALSE
+### SFBool [in, out] **rtpHeaderExpected** FALSE
 
 Whether RTP headers are prepended to DIS PDUs.
 
-### SFInt32 [in, out] **entitySubCategory** 0 <small>[0,255]</small>
+### SFInt32 [in, out] **entitySubcategory** 0 <small>[0,255]</small>
 
 Input/Output field *entitySubCategory*.
+
+### SFString [in, out] **description** ""
+
+### MFString [ ] **geoSystem** [ "GD", "WE" ]
+
+### SFVec3d [in, out] **geoCoords** 0 0 0 <small>(-∞,∞)</small>
 
 ## Advice
 

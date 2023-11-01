@@ -39,7 +39,7 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 
 Multicast network *address*, or else 'localhost'. Example: 224.2.181.145.
 
-### SFInt32 [in, out] **applicationID** 1 <small>[0,65535]</small>
+### SFInt32 [in, out] **applicationID** 0 <small>[0,65535]</small>
 
 Each simulation application that can respond to simulation management PDUs needs to have a unique *applicationID*.
 

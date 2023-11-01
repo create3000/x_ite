@@ -105,7 +105,7 @@ Input/Output field *antennaPatternLength*.
 
 Antenna shape pattern: 0 for omnidirectional, 1 for beam, 2 for spherical harmonic (deprecated), or optional higher value
 
-### SFInt32 [in, out] **applicationID** 1 <small>[0,65535]</small>
+### SFInt32 [in, out] **applicationID** 0 <small>[0,65535]</small>
 
 Each simulation application that can respond to simulation management PDUs needs to have a unique *applicationID*.
 
@@ -202,7 +202,7 @@ Named equipment version number.
 
 Identifies a particular radio within a given entity.
 
-### SFFloat [in, out] **readInterval** 0.1 <small>(0,∞)</small>
+### SFTime [in, out] **readInterval** 0.1 <small>(0,∞)</small>
 
 Seconds between read updates, 0 means no reading.
 
@@ -234,7 +234,7 @@ Specify radio transmission state where enumerations value 0 is for off, value 1 
 
 Select geometry to render: -1 for no geometry, 0 for text trace, 1 for default geometry, (optional) higher values to render different states.
 
-### SFFloat [in, out] **writeInterval** 1 <small>[0,∞)</small>
+### SFTime [in, out] **writeInterval** 1 <small>[0,∞)</small>
 
 Seconds between write updates, 0 means no writing (sending).
 
@@ -281,6 +281,12 @@ DIS *timestamp* in X3D units (value 0.0 matches 1 January 1970) in seconds.
 #### Warning
 
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
+
+### SFString [in, out] **description** ""
+
+### MFString [ ] **geoSystem** [ "GD", "WE" ]
+
+### SFVec3d [in, out] **geoCoords** 0 0 0 <small>(-∞,∞)</small>
 
 ## Advice
 

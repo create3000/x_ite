@@ -53,11 +53,11 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 
 - It is an error to define this transient inputOnly field in an X3D file, instead only use it a *destination* for ROUTE events.
 
-### SFRotation [ ] **initialValue** 0 0 1 0 <small>[-1,1] or (-∞,∞)</small>
+### SFRotation [ ] **initialValue** 0 1 0 0 <small>[-1,1] or (-∞,∞)</small>
 
 Initial starting value for this node.
 
-### SFRotation [ ] **initialDestination** 0 0 1 0 <small>[-1,1] or (-∞,∞)</small>
+### SFRotation [ ] **initialDestination** 0 1 0 0 <small>[-1,1] or (-∞,∞)</small>
 
 Initial destination value for this node.
 
