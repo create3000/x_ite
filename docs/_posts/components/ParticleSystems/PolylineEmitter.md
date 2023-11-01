@@ -35,6 +35,8 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/components/core.html#Metadata){:target="_blank"}
 
+### MFInt32 [in] **set_coordIndex** -1 <small>[0,∞) or -1</small>
+
 ### SFBool [in, out] **on** TRUE
 
 Enables/disables production of particles from this emitter node. If operating when turned off, existing particles complete their rendering process.
@@ -55,7 +57,7 @@ Multiplier for the randomness used to control the range of possible output value
 
 - *variation* of zero does not allow any randomness.
 
-### SFFloat [ ] **mass** 0 <small>[0,∞)</small>
+### SFFloat [in, out] **mass** 0 <small>[0,∞)</small>
 
 Basic *mass* of each particle, defined in *mass* base units (default is kilograms).
 
@@ -65,7 +67,7 @@ Basic *mass* of each particle, defined in *mass* base units (default is kilogram
 - [Kilogram](https://en.wikipedia.org/wiki/Kilogram){:target="_blank"}
 - [X3D Architecture 4.3.6 Standard units and coordinate system](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/concepts.html#Standardunitscoordinates){:target="_blank"}
 
-### SFFloat [ ] **surfaceArea** 0 <small>[0,∞)</small>
+### SFFloat [in, out] **surfaceArea** 0 <small>[0,∞)</small>
 
 Particle surface area in area base units (default is meters squared). Surface area is used for calculations such as wind effects per particle.
 
@@ -74,7 +76,7 @@ Particle surface area in area base units (default is meters squared). Surface ar
 - *surfaceArea* value represents average frontal area presented to the wind.
 - Assumes spherical model for each particle (i.e., surface area is the same regardless of direction).
 
-### MFInt32 [in, out] **coordIndex** -1 <small>[0,∞) or -1</small>
+### MFInt32 [ ] **coordIndex** -1 <small>[0,∞) or -1</small>
 
 *coordIndex* indices are applied to contained Coordinate values in order to define randomly generated initial geometry of the particles.
 

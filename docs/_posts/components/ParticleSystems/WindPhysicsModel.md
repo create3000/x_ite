@@ -39,7 +39,7 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 
 Enables/disables node operation.
 
-### SFVec3f [in, out] **direction** 0 0 0 <small>(-∞,∞)</small>
+### SFVec3f [in, out] **direction** 1 0 0 <small>(-∞,∞)</small>
 
 *direction* in which wind is travelling in the form of a normalized, unit vector.
 
