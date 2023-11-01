@@ -49,6 +49,7 @@ import Fields                from "../../Fields.js";
 import X3DFieldDefinition    from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray  from "../../Base/FieldDefinitionArray.js";
 import X3DChildNode          from "../Core/X3DChildNode.js";
+import X3DBoundedObject      from "../Grouping/X3DBoundedObject.js";
 import X3DConstants          from "../../Base/X3DConstants.js";
 import X3DCast               from "../../Base/X3DCast.js";
 import AppliedParametersType from "../../Browser/RigidBodyPhysics/AppliedParametersType.js";
@@ -56,7 +57,8 @@ import Ammo                  from "../../../lib/ammojs/AmmoClass.js";
 
 function RigidBodyCollection (executionContext)
 {
-   X3DChildNode .call (this, executionContext);
+   X3DChildNode     .call (this, executionContext);
+   X3DBoundedObject .call (this, executionContext);
 
    this .addType (X3DConstants .RigidBodyCollection);
 
@@ -89,7 +91,8 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
 {
    initialize ()
    {
-      X3DChildNode .prototype .initialize .call (this);
+      X3DChildNode     .prototype .initialize .call (this);
+      X3DBoundedObject .prototype .initialize .call (this);
 
       this .getLive () .addInterest ("set_enabled__", this);
 
@@ -337,6 +340,11 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
          console .error (error);
       }
    },
+   dispose ()
+   {
+      X3DBoundedObject .prototype .dispose .call (this);
+      X3DChildNode     .prototype .dispose .call (this);
+   },
 });
 
 Object .defineProperties (RigidBodyCollection,
@@ -375,12 +383,16 @@ Object .defineProperties (RigidBodyCollection,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "maxCorrectionSpeed",      new Fields .SFFloat (-1)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "contactSurfaceThickness", new Fields .SFFloat ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "autoDisable",             new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "disableTime",             new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "disableTime",             new Fields .SFTime ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "disableLinearSpeed",      new Fields .SFFloat ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "disableAngularSpeed",     new Fields .SFFloat ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "collider",                new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "bodies",                  new Fields .MFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "joints",                  new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",                 new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",             new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",                new Fields .SFVec3f (-1, -1, -1)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",              new Fields .SFVec3f ()),
       ]),
       enumerable: true,
    },

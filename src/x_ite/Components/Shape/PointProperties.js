@@ -116,11 +116,9 @@ Object .assign (Object .setPrototypeOf (PointProperties .prototype, X3DAppearanc
    },
    set_attenuation__ ()
    {
-      const length = this ._attenuation .length;
-
-      this .attenuation [0] = length > 0 ? Math .max (0, this ._attenuation [0]) : 1;
-      this .attenuation [1] = length > 1 ? Math .max (0, this ._attenuation [1]) : 0;
-      this .attenuation [2] = length > 2 ? Math .max (0, this ._attenuation [2]) : 0;
+      this .attenuation [0] = Math .max (0, this ._attenuation [0]);
+      this .attenuation [1] = Math .max (0, this ._attenuation [1]);
+      this .attenuation [2] = Math .max (0, this ._attenuation [2]);
    },
    setShaderUniforms (gl, shaderObject)
    {
@@ -160,7 +158,7 @@ Object .defineProperties (PointProperties,
          new X3DFieldDefinition (X3DConstants .inputOutput, "pointSizeScaleFactor", new Fields .SFFloat (1)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "pointSizeMinValue",    new Fields .SFFloat (1)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "pointSizeMaxValue",    new Fields .SFFloat (1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "attenuation",          new Fields .MFFloat (1, 0, 0)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "attenuation",          new Fields .SFVec3f (1, 0, 0)),
       ]),
       enumerable: true,
    },

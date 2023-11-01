@@ -61,6 +61,10 @@ function DoubleAxisHingeJoint (executionContext)
 
    this .addType (X3DConstants .DoubleAxisHingeJoint);
 
+   this .addAlias ("stopBounce1",           this ._stop1Bounce);
+   this .addAlias ("stopConstantForceMix1", this ._stop1ConstantForceMix);
+   this .addAlias ("stopErrorCorrection1",  this ._stop1ErrorCorrection);
+
    this ._anchorPoint             .setUnit ("length");
    this ._minAngle1               .setUnit ("angle");
    this ._maxAngle1               .setUnit ("angle");
@@ -68,6 +72,12 @@ function DoubleAxisHingeJoint (executionContext)
    this ._desiredAngularVelocity2 .setUnit ("angularRate");
    this ._stopConstantForceMix1   .setUnit ("force");
    this ._suspensionForce         .setUnit ("force");
+
+   if (executionContext .getSpecificationVersion () <= 3.3)
+   {
+      this ._axis1 = new Vector3 (0, 0, 0);
+      this ._axis2 = new Vector3 (0, 0, 0);
+   }
 
    this .joint             = null;
    this .outputs           = new Set ();
@@ -261,17 +271,17 @@ Object .defineProperties (DoubleAxisHingeJoint,
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",                  new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "forceOutput",               new Fields .MFString ("NONE")),
          new X3DFieldDefinition (X3DConstants .inputOutput, "anchorPoint",               new Fields .SFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "axis1",                     new Fields .SFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "axis2",                     new Fields .SFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "minAngle1",                 new Fields .SFFloat (-3.14159)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "maxAngle1",                 new Fields .SFFloat (3.14159)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "axis1",                     new Fields .SFVec3f (1, 0, 0)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "axis2",                     new Fields .SFVec3f (0, 1, 0)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "minAngle1",                 new Fields .SFFloat (-3.141592653)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "maxAngle1",                 new Fields .SFFloat (3.141592653)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "desiredAngularVelocity1",   new Fields .SFFloat ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "desiredAngularVelocity2",   new Fields .SFFloat ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "maxTorque1",                new Fields .SFFloat ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "maxTorque2",                new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "stopBounce1",               new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "stopConstantForceMix1",     new Fields .SFFloat (0.001)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "stopErrorCorrection1",      new Fields .SFFloat (0.8)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "stop1Bounce",               new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "stop1ConstantForceMix",     new Fields .SFFloat (0.001)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "stop1ErrorCorrection",      new Fields .SFFloat (0.8)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "suspensionForce",           new Fields .SFFloat ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "suspensionErrorCorrection", new Fields .SFFloat (0.8)),
          new X3DFieldDefinition (X3DConstants .outputOnly,  "body1AnchorPoint",          new Fields .SFVec3f ()),

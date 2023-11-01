@@ -79,9 +79,10 @@ Object .assign (Object .setPrototypeOf (GeoElevationGrid .prototype, X3DGeometry
       X3DGeometryNode     .prototype .initialize .call (this);
       X3DGeospatialObject .prototype .initialize .call (this);
 
-      this ._color    .addInterest ("set_color__", this);
-      this ._texCoord .addInterest ("set_texCoord__", this);
-      this ._normal   .addInterest ("set_normal__", this);
+      this ._set_height .addFieldInterest (this ._height);
+      this ._color      .addInterest ("set_color__", this);
+      this ._texCoord   .addInterest ("set_texCoord__", this);
+      this ._normal     .addInterest ("set_normal__", this);
 
       this .set_color__ ();
       this .set_texCoord__ ();
@@ -410,6 +411,7 @@ Object .defineProperties (GeoElevationGrid,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",        new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "geoOrigin",       new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "geoSystem",       new Fields .MFString ("GD", "WE")),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "set_height",      new Fields .MFDouble ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "geoGridOrigin",   new Fields .SFVec3d ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "xDimension",      new Fields .SFInt32 ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "zDimension",      new Fields .SFInt32 ()),
@@ -424,7 +426,7 @@ Object .defineProperties (GeoElevationGrid,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "color",           new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "texCoord",        new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "normal",          new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "height",          new Fields .MFDouble (0, 0)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "height",          new Fields .MFDouble (0, 0)),
       ]),
       enumerable: true,
    },

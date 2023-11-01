@@ -60,6 +60,9 @@ function WindPhysicsModel (executionContext)
    this .addType (X3DConstants .WindPhysicsModel);
 
    this ._speed .setUnit ("speed");
+
+   if (executionContext .getSpecificationVersion () <= 3.3)
+      this ._direction = new Vector3 (0, 0, 0);
 }
 
 Object .assign (Object .setPrototypeOf (WindPhysicsModel .prototype, X3DParticlePhysicsModelNode .prototype),
@@ -130,7 +133,7 @@ Object .defineProperties (WindPhysicsModel,
       value: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",   new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",    new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "direction",  new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "direction",  new Fields .SFVec3f (1, 0, 0)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "speed",      new Fields .SFFloat (0.1)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "gustiness",  new Fields .SFFloat (0.1)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "turbulence", new Fields .SFFloat ()),

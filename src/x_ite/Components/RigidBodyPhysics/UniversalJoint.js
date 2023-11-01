@@ -50,6 +50,7 @@ import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DRigidJointNode    from "./X3DRigidJointNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
+import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
 
 function UniversalJoint (executionContext)
 {
@@ -62,6 +63,12 @@ function UniversalJoint (executionContext)
    this ._anchorPoint      .setUnit ("length");
    this ._body1AnchorPoint .setUnit ("length");
    this ._body2AnchorPoint .setUnit ("length");
+
+   if (executionContext .getSpecificationVersion () <= 3.3)
+   {
+      this ._axis1 = new Vector3 (0, 0, 0);
+      this ._axis2 = new Vector3 (0, 0, 0);
+   }
 }
 
 Object .setPrototypeOf (UniversalJoint .prototype, X3DRigidJointNode .prototype);
@@ -94,8 +101,8 @@ Object .defineProperties (UniversalJoint,
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",             new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "forceOutput",          new Fields .MFString ("NONE")),
          new X3DFieldDefinition (X3DConstants .inputOutput, "anchorPoint",          new Fields .SFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "axis1",                new Fields .SFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "axis2",                new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "axis1",                new Fields .SFVec3f (1, 0, 0)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "axis2",                new Fields .SFVec3f (0, 1, 0)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "stop1Bounce",          new Fields .SFFloat ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "stop2Bounce",          new Fields .SFFloat ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "stop1ErrorCorrection", new Fields .SFFloat (0.8)),

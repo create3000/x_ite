@@ -84,6 +84,8 @@ Object .assign (Object .setPrototypeOf (GeoProximitySensor .prototype, X3DEnviro
       this ._size    .addFieldInterest (this .proximitySensor ._size);
       this ._center  .addFieldInterest (this .proximitySensor ._center);
 
+      this ._geoCenter .addFieldInterest (this ._center);
+
       this .proximitySensor ._isCameraObject   .addFieldInterest (this ._isCameraObject);
       this .proximitySensor ._isPickableObject .addFieldInterest (this ._isPickableObject);
 
@@ -148,7 +150,8 @@ Object .defineProperties (GeoProximitySensor,
          new X3DFieldDefinition (X3DConstants .initializeOnly, "geoSystem",                new Fields .MFString ("GD", "WE")),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",                  new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "size",                     new Fields .SFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "center",                   new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "center",                   new Fields .SFVec3d ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "geoCenter",                new Fields .SFVec3d ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",                 new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,     "enterTime",                new Fields .SFTime ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,     "exitTime",                 new Fields .SFTime ()),

@@ -50,6 +50,7 @@ import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DRigidJointNode    from "./X3DRigidJointNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
+import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
 
 function MotorJoint (executionContext)
 {
@@ -68,6 +69,13 @@ function MotorJoint (executionContext)
    this ._motor1AngleRate .setUnit ("angularRate");
    this ._motor2AngleRate .setUnit ("angularRate");
    this ._motor3AngleRate .setUnit ("angularRate");
+
+   if (executionContext .getSpecificationVersion () <= 3.3)
+   {
+      this ._motor1Axis = new Vector3 (0, 0, 0);
+      this ._motor2Axis = new Vector3 (0, 0, 0);
+      this ._motor3Axis = new Vector3 (0, 0, 0);
+   }
 }
 
 Object .setPrototypeOf (MotorJoint .prototype, X3DRigidJointNode .prototype);
@@ -107,9 +115,9 @@ Object .defineProperties (MotorJoint,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "axis2Torque",          new Fields .SFFloat ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "axis3Torque",          new Fields .SFFloat ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "enabledAxes",          new Fields .SFInt32 (1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "motor1Axis",           new Fields .SFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "motor2Axis",           new Fields .SFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "motor3Axis",           new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "motor1Axis",           new Fields .SFVec3f (1, 0, 0)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "motor2Axis",           new Fields .SFVec3f (0, 1, 0)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "motor3Axis",           new Fields .SFVec3f (0, 0, 1)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "stop1Bounce",          new Fields .SFFloat ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "stop2Bounce",          new Fields .SFFloat ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "stop3Bounce",          new Fields .SFFloat ()),
