@@ -61,6 +61,7 @@ function ElevationGrid (executionContext)
 
    this .addType (X3DConstants .ElevationGrid);
 
+   this ._set_height  .setUnit ("length");
    this ._xSpacing    .setUnit ("length");
    this ._zSpacing    .setUnit ("length");
    this ._creaseAngle .setUnit ("angle");

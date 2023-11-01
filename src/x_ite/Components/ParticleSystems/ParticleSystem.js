@@ -104,13 +104,19 @@ function ParticleSystem (executionContext)
 
    this .addType (X3DConstants .ParticleSystem);
 
+   // Units
+
    this ._particleSize .setUnit ("length");
+
+   // Legacy
 
    if (executionContext .getSpecificationVersion () <= 3.3)
    {
       this .addAlias ("colorRamp",    this ._color);
       this .addAlias ("texCoordRamp", this ._texCoord);
    }
+
+   // Private properties
 
    const browser = this .getBrowser ();
 

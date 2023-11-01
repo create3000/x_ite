@@ -61,6 +61,8 @@ function SingleAxisHingeJoint (executionContext)
 
    this .addType (X3DConstants .SingleAxisHingeJoint);
 
+   // Units
+
    this ._anchorPoint      .setUnit ("length");
    this ._minAngle         .setUnit ("angle");
    this ._maxAngle         .setUnit ("angle");
@@ -69,8 +71,12 @@ function SingleAxisHingeJoint (executionContext)
    this ._angle            .setUnit ("angle");
    this ._angleRate        .setUnit ("angularRate");
 
+   // Legacy
+
    if (executionContext .getSpecificationVersion () <= 3.3)
       this ._axis = new Vector3 (0, 0, 0);
+
+   // Private properties
 
    this .joint             = null;
    this .outputs           = new Set ();

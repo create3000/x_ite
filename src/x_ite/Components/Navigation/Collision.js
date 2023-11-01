@@ -61,6 +61,8 @@ function Collision (executionContext)
 
    this .addType (X3DConstants .Collision);
 
+   // Legacy
+
    if (executionContext .getSpecificationVersion () == 2.0)
       this .addAlias ("collide", this ._enabled); // VRML2
 }

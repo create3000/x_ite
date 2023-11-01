@@ -64,8 +64,12 @@ function Inline (executionContext)
 
    this .addType (X3DConstants .Inline);
 
-   if (executionContext .getSpecificationVersion () < 4.0)
+   // Legacy
+
+   if (executionContext .getSpecificationVersion () <= 3.3)
       this ._global = true;
+
+   // Private properties
 
    this .scene        = this .getBrowser () .getDefaultScene ();
    this .groupNode    = new Group (executionContext);

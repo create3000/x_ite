@@ -1617,6 +1617,7 @@ function GeoElevationGrid (executionContext)
 
    this .addType ((X3DConstants_default()).GeoElevationGrid);
 
+   this ._set_height  .setUnit ("length");
    this ._creaseAngle .setUnit ("angle");
    this ._height      .setUnit ("length");
 
@@ -1633,9 +1634,10 @@ Object .assign (Object .setPrototypeOf (GeoElevationGrid .prototype, (X3DGeometr
       X3DGeometryNode_default().prototype .initialize .call (this);
       Geospatial_X3DGeospatialObject .prototype .initialize .call (this);
 
-      this ._color    .addInterest ("set_color__", this);
-      this ._texCoord .addInterest ("set_texCoord__", this);
-      this ._normal   .addInterest ("set_normal__", this);
+      this ._set_height .addFieldInterest (this ._height);
+      this ._color      .addInterest ("set_color__", this);
+      this ._texCoord   .addInterest ("set_texCoord__", this);
+      this ._normal     .addInterest ("set_normal__", this);
 
       this .set_color__ ();
       this .set_texCoord__ ();
@@ -1964,6 +1966,7 @@ Object .defineProperties (GeoElevationGrid,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",        new (Fields_default()).SFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geoOrigin",       new (Fields_default()).SFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geoSystem",       new (Fields_default()).MFString ("GD", "WE")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "set_height",      new (Fields_default()).MFDouble ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geoGridOrigin",   new (Fields_default()).SFVec3d ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "xDimension",      new (Fields_default()).SFInt32 ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "zDimension",      new (Fields_default()).SFInt32 ()),
@@ -1978,7 +1981,7 @@ Object .defineProperties (GeoElevationGrid,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "color",           new (Fields_default()).SFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "texCoord",        new (Fields_default()).SFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "normal",          new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "height",          new (Fields_default()).MFDouble (0, 0)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "height",          new (Fields_default()).MFDouble (0, 0)),
       ]),
       enumerable: true,
    },
@@ -2728,6 +2731,7 @@ Object .defineProperties (GeoMetadata,
    {
       value: new (FieldDefinitionArray_default()) ([
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",             new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "description",          new (Fields_default()).SFString ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "load",                 new (Fields_default()).SFBool (true)),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "url",                  new (Fields_default()).MFString ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "autoRefresh",          new (Fields_default()).SFTime ()),
@@ -3022,7 +3026,7 @@ Object .defineProperties (GeoPositionInterpolator,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOnly,      "set_fraction",     new (Fields_default()).SFFloat ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "key",              new (Fields_default()).MFFloat ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "keyValue",         new (Fields_default()).MFVec3d ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "value_changed",    new (Fields_default()).SFVec3d ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "value_changed",    new (Fields_default()).SFVec3f ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "geovalue_changed", new (Fields_default()).SFVec3d ()),
       ]),
       enumerable: true,
@@ -3127,6 +3131,8 @@ Object .assign (Object .setPrototypeOf (GeoProximitySensor .prototype, (X3DEnvir
       this ._size    .addFieldInterest (this .proximitySensor ._size);
       this ._center  .addFieldInterest (this .proximitySensor ._center);
 
+      this ._geoCenter .addFieldInterest (this ._center);
+
       this .proximitySensor ._isCameraObject   .addFieldInterest (this ._isCameraObject);
       this .proximitySensor ._isPickableObject .addFieldInterest (this ._isPickableObject);
 
@@ -3186,11 +3192,13 @@ Object .defineProperties (GeoProximitySensor,
    {
       value: new (FieldDefinitionArray_default()) ([
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",                 new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "description",              new (Fields_default()).SFString ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geoOrigin",                new (Fields_default()).SFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "geoSystem",                new (Fields_default()).MFString ("GD", "WE")),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "enabled",                  new (Fields_default()).SFBool (true)),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "size",                     new (Fields_default()).SFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "center",                   new (Fields_default()).SFVec3f ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "center",                   new (Fields_default()).SFVec3d ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "geoCenter",                new (Fields_default()).SFVec3d ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "isActive",                 new (Fields_default()).SFBool ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "enterTime",                new (Fields_default()).SFTime ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,     "exitTime",                 new (Fields_default()).SFTime ()),
@@ -3583,6 +3591,13 @@ function GeoViewpoint (executionContext)
    this .addChildObjects ((X3DConstants_default()).inputOutput, "navType",   new (Fields_default()).MFString ("EXAMINE", "ANY"),
                           (X3DConstants_default()).inputOutput, "headlight", new (Fields_default()).SFBool (true));
 
+   // Units
+
+   this ._centerOfRotation .setUnit ("length");
+   this ._fieldOfView      .setUnit ("angle");
+
+   // Legacy
+
    if (executionContext .getSpecificationVersion () <= 3.2)
    {
       this .addAlias ("navType",   this ._navType);
@@ -3590,9 +3605,6 @@ function GeoViewpoint (executionContext)
 
       this .traverse = traverse;
    }
-
-   this ._centerOfRotation .setUnit ("length");
-   this ._fieldOfView      .setUnit ("angle");
 
    this .geoNavigationInfoNode = new (NavigationInfo_default()) (executionContext);
    this .projectionMatrix      = new (Matrix4_default()) ();

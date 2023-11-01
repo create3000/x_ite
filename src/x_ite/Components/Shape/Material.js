@@ -60,8 +60,12 @@ function Material (executionContext)
 
    this .addType (X3DConstants .Material);
 
+   // Legacy
+
    if (executionContext .getSpecificationVersion () <= 3.3)
       this .getMaterialKey = getMaterialKey;
+
+   // Private properties
 
    this .diffuseColor  = new Float32Array (3);
    this .specularColor = new Float32Array (3);

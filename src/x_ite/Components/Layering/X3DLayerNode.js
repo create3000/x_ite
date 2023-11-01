@@ -70,8 +70,12 @@ function X3DLayerNode (executionContext, defaultViewpoint, groupNode)
    this .addChildObjects (X3DConstants .inputOutput, "hidden",  new Fields .SFBool (),
                           X3DConstants .outputOnly,  "display", new Fields .SFBool (true));
 
+   // Legacy
+
    if (executionContext .getSpecificationVersion () <= 3.3)
       this .addAlias ("isPickable", this ._pickable);
+
+   // Private properties
 
    this .groupNode    = groupNode;
    this .viewportNode = null;

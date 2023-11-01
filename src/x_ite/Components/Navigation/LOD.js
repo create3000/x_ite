@@ -61,11 +61,17 @@ function LOD (executionContext)
 
    this .addType (X3DConstants .LOD);
 
-   if (executionContext .getSpecificationVersion () == 2.0)
-      this .addAlias ("level", this ._children); // VRML2
+   // Units
 
    this ._center .setUnit ("length");
    this ._range  .setUnit ("length");
+
+   // Legacy
+
+   if (executionContext .getSpecificationVersion () == 2.0)
+      this .addAlias ("level", this ._children); // VRML2
+
+   // Private properties
 
    this .frameRate        = 60;
    this .keepCurrentLevel = false;

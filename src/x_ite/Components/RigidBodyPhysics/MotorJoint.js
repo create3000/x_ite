@@ -70,6 +70,8 @@ function MotorJoint (executionContext)
    this ._motor2AngleRate .setUnit ("angularRate");
    this ._motor3AngleRate .setUnit ("angularRate");
 
+   // Legacy
+
    if (executionContext .getSpecificationVersion () <= 3.3)
    {
       this ._motor1Axis = new Vector3 (0, 0, 0);

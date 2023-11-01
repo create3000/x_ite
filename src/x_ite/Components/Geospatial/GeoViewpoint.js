@@ -67,6 +67,13 @@ function GeoViewpoint (executionContext)
    this .addChildObjects (X3DConstants .inputOutput, "navType",   new Fields .MFString ("EXAMINE", "ANY"),
                           X3DConstants .inputOutput, "headlight", new Fields .SFBool (true));
 
+   // Units
+
+   this ._centerOfRotation .setUnit ("length");
+   this ._fieldOfView      .setUnit ("angle");
+
+   // Legacy
+
    if (executionContext .getSpecificationVersion () <= 3.2)
    {
       this .addAlias ("navType",   this ._navType);
@@ -75,8 +82,7 @@ function GeoViewpoint (executionContext)
       this .traverse = traverse;
    }
 
-   this ._centerOfRotation .setUnit ("length");
-   this ._fieldOfView      .setUnit ("angle");
+   // Private properties
 
    this .geoNavigationInfoNode = new NavigationInfo (executionContext);
    this .projectionMatrix      = new Matrix4 ();

@@ -60,6 +60,7 @@ import Rotation4                 from "../../standard/Math/Numbers/Rotation4.js"
 import Vector2                   from "../../standard/Math/Numbers/Vector2.js";
 import Vector3                   from "../../standard/Math/Numbers/Vector3.js";
 import Vector4                   from "../../standard/Math/Numbers/Vector4.js";
+import DEVELOPMENT               from "../DEVELOPMENT.js";
 
 /*
  *  Grammar
@@ -216,7 +217,6 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
       }
       catch (error)
       {
-         //console .error (error);
          throw new Error (this .getError (error));
       }
    },
@@ -229,7 +229,8 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
    },
    getError (error)
    {
-      //console .error (error);
+      if (DEVELOPMENT)
+         console .error (error);
 
       const
          string     = error .message,

@@ -59,8 +59,12 @@ function Switch (executionContext)
 
    this .addType (X3DConstants .Switch);
 
+   // Legacy
+
    if (executionContext .getSpecificationVersion () == 2.0)
       this .addAlias ("choice", this ._children);
+
+   // Private properties
 
    this .childNode     = null;
    this .visibleNode   = null;

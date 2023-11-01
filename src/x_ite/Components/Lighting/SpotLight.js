@@ -256,6 +256,15 @@ function SpotLight (executionContext)
 
    this .addType (X3DConstants .SpotLight);
 
+   // Units
+
+   this ._location    .setUnit ("length");
+   this ._radius      .setUnit ("length");
+   this ._beamWidth   .setUnit ("angle");
+   this ._cutOffAngle .setUnit ("angle");
+
+   // Legacy
+
    if (executionContext .getSpecificationVersion () == 3.3)
    {
       this ._beamWidth   = 0.785398;
@@ -266,11 +275,6 @@ function SpotLight (executionContext)
       this ._beamWidth   = 1.5708;
       this ._cutOffAngle = 0.785398;
    }
-
-   this ._location    .setUnit ("length");
-   this ._radius      .setUnit ("length");
-   this ._beamWidth   .setUnit ("angle");
-   this ._cutOffAngle .setUnit ("angle");
 }
 
 Object .assign (Object .setPrototypeOf (SpotLight .prototype, X3DLightNode .prototype),

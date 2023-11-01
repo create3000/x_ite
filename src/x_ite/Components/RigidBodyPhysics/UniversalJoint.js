@@ -64,6 +64,8 @@ function UniversalJoint (executionContext)
    this ._body1AnchorPoint .setUnit ("length");
    this ._body2AnchorPoint .setUnit ("length");
 
+   // Legacy
+
    if (executionContext .getSpecificationVersion () <= 3.3)
    {
       this ._axis1 = new Vector3 (0, 0, 0);

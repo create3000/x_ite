@@ -1719,9 +1719,11 @@ Namespace_default().add ("AppliedParametersType", "x_ite/Browser/RigidBodyPhysic
 
 
 
+
 function CollisionCollection (executionContext)
 {
    X3DChildNode_default().call (this, executionContext);
+   X3DBoundedObject_default().call (this, executionContext);
 
    this .addType ((X3DConstants_default()).CollisionCollection);
 
@@ -1735,10 +1737,12 @@ function CollisionCollection (executionContext)
 }
 
 Object .assign (Object .setPrototypeOf (CollisionCollection .prototype, (X3DChildNode_default()).prototype),
+   (X3DBoundedObject_default()).prototype,
 {
    initialize ()
    {
       X3DChildNode_default().prototype .initialize .call (this);
+      X3DBoundedObject_default().prototype .initialize .call (this);
 
       this ._appliedParameters .addInterest ("set_appliedParameters__", this);
       this ._collidables       .addInterest ("set_collidables__",       this);
@@ -1834,6 +1838,11 @@ Object .assign (Object .setPrototypeOf (CollisionCollection .prototype, (X3DChil
 
       this .addNodeEvent ();
    },
+   dispose ()
+   {
+      X3DBoundedObject_default().prototype .dispose .call (this);
+      X3DChildNode_default().prototype .dispose .call (this);
+   },
 });
 
 Object .defineProperties (CollisionCollection,
@@ -1861,17 +1870,22 @@ Object .defineProperties (CollisionCollection,
    fieldDefinitions:
    {
       value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",                 new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "enabled",                  new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "appliedParameters",        new (Fields_default()).MFString ("BOUNCE")),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "bounce",                   new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "minBounceSpeed",           new (Fields_default()).SFFloat (0.1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "frictionCoefficients",     new (Fields_default()).SFVec2f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "surfaceSpeed",             new (Fields_default()).SFVec2f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "slipFactors",              new (Fields_default()).SFVec2f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "softnessConstantForceMix", new (Fields_default()).SFFloat (0.0001)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "softnessErrorCorrection",  new (Fields_default()).SFFloat (0.8)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "collidables",              new (Fields_default()).MFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",                 new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "description",              new (Fields_default()).SFString ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "enabled",                  new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "appliedParameters",        new (Fields_default()).MFString ("BOUNCE")),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bounce",                   new (Fields_default()).SFFloat ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "minBounceSpeed",           new (Fields_default()).SFFloat (0.1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "frictionCoefficients",     new (Fields_default()).SFVec2f ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "surfaceSpeed",             new (Fields_default()).SFVec2f ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "slipFactors",              new (Fields_default()).SFVec2f ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "softnessConstantForceMix", new (Fields_default()).SFFloat (0.0001)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "softnessErrorCorrection",  new (Fields_default()).SFFloat (0.8)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "collidables",              new (Fields_default()).MFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "visible",                  new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bboxDisplay",              new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxSize",                 new (Fields_default()).SFVec3f (-1, -1, -1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxCenter",               new (Fields_default()).SFVec3f ()),
       ]),
       enumerable: true,
    },
@@ -2156,6 +2170,7 @@ Object .defineProperties (CollisionSensor,
    {
       value: new (FieldDefinitionArray_default()) ([
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",      new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "description",   new (Fields_default()).SFString ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "enabled",       new (Fields_default()).SFBool (true)),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "isActive",      new (Fields_default()).SFBool ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "intersections", new (Fields_default()).MFNode ()),
@@ -2640,13 +2655,27 @@ function DoubleAxisHingeJoint (executionContext)
 
    this .addType ((X3DConstants_default()).DoubleAxisHingeJoint);
 
+   // Units
+
    this ._anchorPoint             .setUnit ("length");
    this ._minAngle1               .setUnit ("angle");
    this ._maxAngle1               .setUnit ("angle");
    this ._desiredAngularVelocity1 .setUnit ("angularRate");
    this ._desiredAngularVelocity2 .setUnit ("angularRate");
-   this ._stopConstantForceMix1   .setUnit ("force");
+   this ._stop1ConstantForceMix   .setUnit ("force");
    this ._suspensionForce         .setUnit ("force");
+
+   // Legacy
+
+   if (executionContext .getSpecificationVersion () <= 3.3)
+   {
+      this .addAlias ("stopBounce1",           this ._stop1Bounce);
+      this .addAlias ("stopConstantForceMix1", this ._stop1ConstantForceMix);
+      this .addAlias ("stopErrorCorrection1",  this ._stop1ErrorCorrection);
+
+      this ._axis1 = new (Vector3_default()) (0, 0, 0);
+      this ._axis2 = new (Vector3_default()) (0, 0, 0);
+   }
 
    this .joint             = null;
    this .outputs           = new Set ();
@@ -2840,17 +2869,17 @@ Object .defineProperties (DoubleAxisHingeJoint,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",                  new (Fields_default()).SFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "forceOutput",               new (Fields_default()).MFString ("NONE")),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "anchorPoint",               new (Fields_default()).SFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "axis1",                     new (Fields_default()).SFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "axis2",                     new (Fields_default()).SFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "minAngle1",                 new (Fields_default()).SFFloat (-3.14159)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "maxAngle1",                 new (Fields_default()).SFFloat (3.14159)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "axis1",                     new (Fields_default()).SFVec3f (1, 0, 0)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "axis2",                     new (Fields_default()).SFVec3f (0, 1, 0)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "minAngle1",                 new (Fields_default()).SFFloat (-3.141592653)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "maxAngle1",                 new (Fields_default()).SFFloat (3.141592653)),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "desiredAngularVelocity1",   new (Fields_default()).SFFloat ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "desiredAngularVelocity2",   new (Fields_default()).SFFloat ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "maxTorque1",                new (Fields_default()).SFFloat ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "maxTorque2",                new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "stopBounce1",               new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "stopConstantForceMix1",     new (Fields_default()).SFFloat (0.001)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "stopErrorCorrection1",      new (Fields_default()).SFFloat (0.8)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "stop1Bounce",               new (Fields_default()).SFFloat ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "stop1ConstantForceMix",     new (Fields_default()).SFFloat (0.001)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "stop1ErrorCorrection",      new (Fields_default()).SFFloat (0.8)),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "suspensionForce",           new (Fields_default()).SFFloat ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "suspensionErrorCorrection", new (Fields_default()).SFFloat (0.8)),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "body1AnchorPoint",          new (Fields_default()).SFVec3f ()),
@@ -2927,6 +2956,7 @@ Namespace_default().add ("DoubleAxisHingeJoint", "x_ite/Components/RigidBodyPhys
 
 
 
+
 function MotorJoint (executionContext)
 {
    RigidBodyPhysics_X3DRigidJointNode .call (this, executionContext);
@@ -2944,6 +2974,15 @@ function MotorJoint (executionContext)
    this ._motor1AngleRate .setUnit ("angularRate");
    this ._motor2AngleRate .setUnit ("angularRate");
    this ._motor3AngleRate .setUnit ("angularRate");
+
+   // Legacy
+
+   if (executionContext .getSpecificationVersion () <= 3.3)
+   {
+      this ._motor1Axis = new (Vector3_default()) (0, 0, 0);
+      this ._motor2Axis = new (Vector3_default()) (0, 0, 0);
+      this ._motor3Axis = new (Vector3_default()) (0, 0, 0);
+   }
 }
 
 Object .setPrototypeOf (MotorJoint .prototype, RigidBodyPhysics_X3DRigidJointNode .prototype);
@@ -2983,9 +3022,9 @@ Object .defineProperties (MotorJoint,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "axis2Torque",          new (Fields_default()).SFFloat ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "axis3Torque",          new (Fields_default()).SFFloat ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "enabledAxes",          new (Fields_default()).SFInt32 (1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "motor1Axis",           new (Fields_default()).SFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "motor2Axis",           new (Fields_default()).SFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "motor3Axis",           new (Fields_default()).SFVec3f ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "motor1Axis",           new (Fields_default()).SFVec3f (1, 0, 0)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "motor2Axis",           new (Fields_default()).SFVec3f (0, 1, 0)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "motor3Axis",           new (Fields_default()).SFVec3f (0, 0, 1)),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "stop1Bounce",          new (Fields_default()).SFFloat ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "stop2Bounce",          new (Fields_default()).SFFloat ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "stop3Bounce",          new (Fields_default()).SFFloat ()),
@@ -3073,9 +3112,11 @@ var Quaternion_default = /*#__PURE__*/__webpack_require__.n(Quaternion_namespace
 
 
 
+
 function RigidBody (executionContext)
 {
    X3DNode_default().call (this, executionContext);
+   X3DBoundedObject_default().call (this, executionContext);
 
    this .addType ((X3DConstants_default()).RigidBody);
 
@@ -3104,10 +3145,12 @@ function RigidBody (executionContext)
 }
 
 Object .assign (Object .setPrototypeOf (RigidBody .prototype, (X3DNode_default()).prototype),
+   (X3DBoundedObject_default()).prototype,
 {
    initialize ()
    {
       X3DNode_default().prototype .initialize .call (this);
+      X3DBoundedObject_default().prototype .initialize .call (this);
 
       this ._linearVelocity       .addInterest ("set_linearVelocity__",     this);
       this ._angularVelocity      .addInterest ("set_angularVelocity__",    this);
@@ -3473,6 +3516,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, (X3DNode_default()
       AmmoClass .destroy (this .motionState);
       AmmoClass .destroy (this .compoundShape);
 
+      X3DBoundedObject_default().prototype .dispose .call (this);
       X3DNode_default().prototype .dispose .call (this);
    },
 });
@@ -3502,30 +3546,34 @@ Object .defineProperties (RigidBody,
    fieldDefinitions:
    {
       value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",             new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "enabled",              new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "fixed",                new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "position",             new (Fields_default()).SFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "orientation",          new (Fields_default()).SFRotation ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "linearVelocity",       new (Fields_default()).SFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "angularVelocity",      new (Fields_default()).SFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "useFiniteRotation",    new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "finiteRotationAxis",   new (Fields_default()).SFVec3f (0, 1, 0)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "autoDamp",             new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "linearDampingFactor",  new (Fields_default()).SFFloat (0.001)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "angularDampingFactor", new (Fields_default()).SFFloat (0.001)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "mass",                 new (Fields_default()).SFFloat (1)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "centerOfMass",         new (Fields_default()).SFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "massDensityModel",     new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "useGlobalGravity",     new (Fields_default()).SFBool (true)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "forces",               new (Fields_default()).MFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "torques",              new (Fields_default()).MFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "inertia",              new (Fields_default()).SFMatrix3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "autoDisable",          new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "disableTime",          new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "disableLinearSpeed",   new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "disableAngularSpeed",  new (Fields_default()).SFFloat ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "geometry",             new (Fields_default()).MFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",             new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "enabled",              new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "fixed",                new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "position",             new (Fields_default()).SFVec3f ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "orientation",          new (Fields_default()).SFRotation ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "linearVelocity",       new (Fields_default()).SFVec3f ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "angularVelocity",      new (Fields_default()).SFVec3f ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "useFiniteRotation",    new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "finiteRotationAxis",   new (Fields_default()).SFVec3f (0, 1, 0)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "autoDamp",             new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "linearDampingFactor",  new (Fields_default()).SFFloat (0.001)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "angularDampingFactor", new (Fields_default()).SFFloat (0.001)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "mass",                 new (Fields_default()).SFFloat (1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "centerOfMass",         new (Fields_default()).SFVec3f ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "massDensityModel",     new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "useGlobalGravity",     new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "forces",               new (Fields_default()).MFVec3f ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "torques",              new (Fields_default()).MFVec3f ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "inertia",              new (Fields_default()).SFMatrix3f ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "autoDisable",          new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "disableTime",          new (Fields_default()).SFTime ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "disableLinearSpeed",   new (Fields_default()).SFFloat ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "disableAngularSpeed",  new (Fields_default()).SFFloat ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "geometry",             new (Fields_default()).MFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "visible",              new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bboxDisplay",          new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxSize",             new (Fields_default()).SFVec3f (-1, -1, -1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxCenter",           new (Fields_default()).SFVec3f ()),
       ]),
       enumerable: true,
    },
@@ -3593,9 +3641,11 @@ Namespace_default().add ("RigidBody", "x_ite/Components/RigidBodyPhysics/RigidBo
 
 
 
+
 function RigidBodyCollection (executionContext)
 {
    X3DChildNode_default().call (this, executionContext);
+   X3DBoundedObject_default().call (this, executionContext);
 
    this .addType ((X3DConstants_default()).RigidBodyCollection);
 
@@ -3625,10 +3675,12 @@ function RigidBodyCollection (executionContext)
 }
 
 Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, (X3DChildNode_default()).prototype),
+   (X3DBoundedObject_default()).prototype,
 {
    initialize ()
    {
       X3DChildNode_default().prototype .initialize .call (this);
+      X3DBoundedObject_default().prototype .initialize .call (this);
 
       this .getLive () .addInterest ("set_enabled__", this);
 
@@ -3876,6 +3928,11 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, (X3DChil
          console .error (error);
       }
    },
+   dispose ()
+   {
+      X3DBoundedObject_default().prototype .dispose .call (this);
+      X3DChildNode_default().prototype .dispose .call (this);
+   },
 });
 
 Object .defineProperties (RigidBodyCollection,
@@ -3914,12 +3971,16 @@ Object .defineProperties (RigidBodyCollection,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "maxCorrectionSpeed",      new (Fields_default()).SFFloat (-1)),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "contactSurfaceThickness", new (Fields_default()).SFFloat ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "autoDisable",             new (Fields_default()).SFBool ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "disableTime",             new (Fields_default()).SFFloat ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "disableTime",             new (Fields_default()).SFTime ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "disableLinearSpeed",      new (Fields_default()).SFFloat ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "disableAngularSpeed",     new (Fields_default()).SFFloat ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "collider",                new (Fields_default()).SFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bodies",                  new (Fields_default()).MFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "joints",                  new (Fields_default()).MFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "visible",                 new (Fields_default()).SFBool (true)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "bboxDisplay",             new (Fields_default()).SFBool ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxSize",                new (Fields_default()).SFVec3f (-1, -1, -1)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).initializeOnly, "bboxCenter",              new (Fields_default()).SFVec3f ()),
       ]),
       enumerable: true,
    },
@@ -3994,6 +4055,8 @@ function SingleAxisHingeJoint (executionContext)
 
    this .addType ((X3DConstants_default()).SingleAxisHingeJoint);
 
+   // Units
+
    this ._anchorPoint      .setUnit ("length");
    this ._minAngle         .setUnit ("angle");
    this ._maxAngle         .setUnit ("angle");
@@ -4001,6 +4064,11 @@ function SingleAxisHingeJoint (executionContext)
    this ._body2AnchorPoint .setUnit ("length");
    this ._angle            .setUnit ("angle");
    this ._angleRate        .setUnit ("angularRate");
+
+   // Legacy
+
+   if (executionContext .getSpecificationVersion () <= 3.3)
+      this ._axis = new (Vector3_default()) (0, 0, 0);
 
    this .joint             = null;
    this .outputs           = new Set ();
@@ -4165,9 +4233,9 @@ Object .defineProperties (SingleAxisHingeJoint,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",            new (Fields_default()).SFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "forceOutput",         new (Fields_default()).MFString ("NONE")),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "anchorPoint",         new (Fields_default()).SFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "axis",                new (Fields_default()).SFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "minAngle",            new (Fields_default()).SFFloat (-3.14159)),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "maxAngle",            new (Fields_default()).SFFloat (3.14159)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "axis",                new (Fields_default()).SFVec3f (0, 1, 0)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "minAngle",            new (Fields_default()).SFFloat (-3.141592653)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "maxAngle",            new (Fields_default()).SFFloat (3.141592653)),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "stopBounce",          new (Fields_default()).SFFloat ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "stopErrorCorrection", new (Fields_default()).SFFloat (0.8)),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).outputOnly,  "body1AnchorPoint",    new (Fields_default()).SFVec3f ()),
@@ -4475,6 +4543,7 @@ Namespace_default().add ("SliderJoint", "x_ite/Components/RigidBodyPhysics/Slide
 
 
 
+
 function UniversalJoint (executionContext)
 {
    RigidBodyPhysics_X3DRigidJointNode .call (this, executionContext);
@@ -4486,6 +4555,14 @@ function UniversalJoint (executionContext)
    this ._anchorPoint      .setUnit ("length");
    this ._body1AnchorPoint .setUnit ("length");
    this ._body2AnchorPoint .setUnit ("length");
+
+   // Legacy
+
+   if (executionContext .getSpecificationVersion () <= 3.3)
+   {
+      this ._axis1 = new (Vector3_default()) (0, 0, 0);
+      this ._axis2 = new (Vector3_default()) (0, 0, 0);
+   }
 }
 
 Object .setPrototypeOf (UniversalJoint .prototype, RigidBodyPhysics_X3DRigidJointNode .prototype);
@@ -4518,8 +4595,8 @@ Object .defineProperties (UniversalJoint,
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata",             new (Fields_default()).SFNode ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "forceOutput",          new (Fields_default()).MFString ("NONE")),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "anchorPoint",          new (Fields_default()).SFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "axis1",                new (Fields_default()).SFVec3f ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "axis2",                new (Fields_default()).SFVec3f ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "axis1",                new (Fields_default()).SFVec3f (1, 0, 0)),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "axis2",                new (Fields_default()).SFVec3f (0, 1, 0)),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "stop1Bounce",          new (Fields_default()).SFFloat ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "stop2Bounce",          new (Fields_default()).SFFloat ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "stop1ErrorCorrection", new (Fields_default()).SFFloat (0.8)),

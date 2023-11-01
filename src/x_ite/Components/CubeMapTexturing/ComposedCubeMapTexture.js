@@ -59,7 +59,11 @@ function ComposedCubeMapTexture (executionContext)
 
    this .addType (X3DConstants .ComposedCubeMapTexture);
 
-   if (executionContext .getSpecificationVersion () < 4.0)
+   this .addChildObjects (X3DConstants .inputOutput, "update", new Fields .SFTime ());
+
+   // Legacy
+
+   if (executionContext .getSpecificationVersion () <= 3.3)
    {
       this .addAlias ("front",  this ._frontTexture);
       this .addAlias ("back",   this ._backTexture);
@@ -69,7 +73,7 @@ function ComposedCubeMapTexture (executionContext)
       this .addAlias ("bottom", this ._bottomTexture);
    }
 
-   this .addChildObjects (X3DConstants .inputOutput, "update", new Fields .SFTime ());
+   // Private properties
 
    this .textureNodes = [null, null, null, null, null, null];
    this .textureBits  = new BitSet ();
@@ -197,7 +201,7 @@ Object .assign (Object .setPrototypeOf (ComposedCubeMapTexture .prototype, X3DEn
                   gl .copyTexSubImage2D (this .getTargets () [i], 0, 0, size - y - 1, 0, y, size, 1);
             }
          }
-         
+
          this .setTransparent (textureNodes .some (textureNode => textureNode .isTransparent ()));
          this .setLinear (textureNodes .some (textureNode => textureNode .isLinear ()));
          this .updateTextureParameters ();

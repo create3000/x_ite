@@ -59,7 +59,11 @@ function WindPhysicsModel (executionContext)
 
    this .addType (X3DConstants .WindPhysicsModel);
 
+   // Units
+
    this ._speed .setUnit ("speed");
+
+   // Legacy
 
    if (executionContext .getSpecificationVersion () <= 3.3)
       this ._direction = new Vector3 (0, 0, 0);

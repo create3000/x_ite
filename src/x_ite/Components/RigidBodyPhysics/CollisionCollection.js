@@ -71,6 +71,7 @@ function CollisionCollection (executionContext)
 }
 
 Object .assign (Object .setPrototypeOf (CollisionCollection .prototype, X3DChildNode .prototype),
+   X3DBoundedObject .prototype,
 {
    initialize ()
    {

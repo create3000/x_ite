@@ -58,6 +58,8 @@ function TextureProperties (executionContext)
 
    this .addType (X3DConstants .TextureProperties);
 
+   // Legacy
+
    if (executionContext .getSpecificationVersion () <= 3.3)
    {
       this ._minificationFilter  = "DEFAULT";

@@ -58,8 +58,12 @@ function LoadSensor (executionContext)
 
    this .addType (X3DConstants .LoadSensor);
 
+   // Legacy
+
    if (executionContext .getSpecificationVersion () <= 3.3)
       this .addAlias ("watchList", this ._children);
+
+   // Private properties
 
    this .urlObjects = [ ];
    this .aborted    = false;

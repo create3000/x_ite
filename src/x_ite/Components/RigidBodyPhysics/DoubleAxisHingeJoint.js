@@ -61,23 +61,29 @@ function DoubleAxisHingeJoint (executionContext)
 
    this .addType (X3DConstants .DoubleAxisHingeJoint);
 
-   this .addAlias ("stopBounce1",           this ._stop1Bounce);
-   this .addAlias ("stopConstantForceMix1", this ._stop1ConstantForceMix);
-   this .addAlias ("stopErrorCorrection1",  this ._stop1ErrorCorrection);
+   // Units
 
    this ._anchorPoint             .setUnit ("length");
    this ._minAngle1               .setUnit ("angle");
    this ._maxAngle1               .setUnit ("angle");
    this ._desiredAngularVelocity1 .setUnit ("angularRate");
    this ._desiredAngularVelocity2 .setUnit ("angularRate");
-   this ._stopConstantForceMix1   .setUnit ("force");
+   this ._stop1ConstantForceMix   .setUnit ("force");
    this ._suspensionForce         .setUnit ("force");
+
+   // Legacy
 
    if (executionContext .getSpecificationVersion () <= 3.3)
    {
+      this .addAlias ("stopBounce1",           this ._stop1Bounce);
+      this .addAlias ("stopConstantForceMix1", this ._stop1ConstantForceMix);
+      this .addAlias ("stopErrorCorrection1",  this ._stop1ErrorCorrection);
+
       this ._axis1 = new Vector3 (0, 0, 0);
       this ._axis2 = new Vector3 (0, 0, 0);
    }
+
+   // Private properties
 
    this .joint             = null;
    this .outputs           = new Set ();

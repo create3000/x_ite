@@ -63,6 +63,7 @@ function GeoElevationGrid (executionContext)
 
    this .addType (X3DConstants .GeoElevationGrid);
 
+   this ._set_height  .setUnit ("length");
    this ._creaseAngle .setUnit ("angle");
    this ._height      .setUnit ("length");
 

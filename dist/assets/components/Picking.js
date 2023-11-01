@@ -1142,6 +1142,7 @@ Object .defineProperties (LinePickSensor,
    {
       value: new (FieldDefinitionArray_default()) ([
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",                new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "description",             new (Fields_default()).SFString ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "enabled",                 new (Fields_default()).SFBool (true)),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "objectType",              new (Fields_default()).MFString ("ALL")),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "matchCriterion",          new (Fields_default()).SFString ("MATCH_ANY")),
@@ -1476,6 +1477,7 @@ Object .defineProperties (PickableGroup,
    {
       value: new (FieldDefinitionArray_default()) ([
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",       new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "description",    new (Fields_default()).SFString ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "pickable",       new (Fields_default()).SFBool (true)),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "objectType",     new (Fields_default()).MFString ("ALL")),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "visible",        new (Fields_default()).SFBool (true)),
@@ -2021,6 +2023,7 @@ Object .defineProperties (PointPickSensor,
    {
       value: new (FieldDefinitionArray_default()) ([
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",         new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "description",      new (Fields_default()).SFString ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "enabled",          new (Fields_default()).SFBool (true)),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "objectType",       new (Fields_default()).MFString ("ALL")),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "matchCriterion",   new (Fields_default()).SFString ("MATCH_ANY")),
@@ -2297,6 +2300,7 @@ Object .defineProperties (PrimitivePickSensor,
    {
       value: new (FieldDefinitionArray_default()) ([
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",         new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "description",      new (Fields_default()).SFString ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "enabled",          new (Fields_default()).SFBool (true)),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "objectType",       new (Fields_default()).MFString ("ALL")),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "matchCriterion",   new (Fields_default()).SFString ("MATCH_ANY")),
@@ -2547,6 +2551,7 @@ Object .defineProperties (VolumePickSensor,
    {
       value: new (FieldDefinitionArray_default()) ([
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",         new (Fields_default()).SFNode ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "description",      new (Fields_default()).SFString ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "enabled",          new (Fields_default()).SFBool (true)),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "objectType",       new (Fields_default()).MFString ("ALL")),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "matchCriterion",   new (Fields_default()).SFString ("MATCH_ANY")),
