@@ -90,7 +90,7 @@ Object .defineProperties (DISEntityManager,
       value: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",        new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "address",         new Fields .SFString ("localhost")),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "applicationID",   new Fields .SFInt32 (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "applicationID",   new Fields .SFInt32 ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "children",        new Fields .MFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "port",            new Fields .SFInt32 ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "siteID",          new Fields .SFInt32 ()),
