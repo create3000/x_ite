@@ -38,6 +38,14 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/components/core.html#Metadata){:target="_blank"}
 
+### SFString [in, out] **description** ""
+
+Author-provided prose that describes intended purpose of the node.
+
+#### Hint
+
+- Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
+
 ### SFBool [in, out] **enabled** TRUE
 
 Enables/disables the sensor node.
@@ -258,6 +266,10 @@ Integer enumerations value for whether entity is a PLATFORM, MUNITION, LIFE_FORM
 ### SFInt32 [in, out] **entitySpecific** 0 <small>[0,255]</small>
 
 Specific information about an entity based on the Subcategory field. See DIS Enumerations values.
+
+### SFInt32 [in, out] **entitySubcategory** 0 <small>[0,255]</small>
+
+Integer enumerations value for particular subcategory to which an entity belongs based on the category field. See DIS Enumerations values.
 
 ### SFInt32 [in, out] **eventApplicationID** 0 <small>[0,65535]</small>
 
@@ -544,15 +556,31 @@ DIS *timestamp* received from latest PDU update, converted to X3D SFTime units.
 
 Whether RTP headers are prepended to DIS PDUs.
 
-### SFInt32 [in, out] **entitySubcategory** 0 <small>[0,255]</small>
+### SFVec3d [in, out] **geoCoords** 0 0 0 <small>(-∞,∞)</small>
 
-Input/Output field *entitySubCategory*.
+Geographic location (specified in current geoSystem coordinates) for children geometry (specified in relative coordinate system, in meters).
 
-### SFString [in, out] **description** ""
+#### Hint
+
+- [X3D for Advanced Modeling (X3D4AM) slideset](https://x3dgraphics.com/slidesets/X3dForAdvancedModeling/GeospatialComponentX3dEarth.pdf){:target="_blank"}
+
+#### Warning
+
+- Requires X3D `profile='Full'` or else include `<component name='Geospatial' level='1'/>`
 
 ### MFString [ ] **geoSystem** [ "GD", "WE" ]
 
-### SFVec3d [in, out] **geoCoords** 0 0 0 <small>(-∞,∞)</small>
+Identifies spatial reference frame: Geodetic (GD), Geocentric (GC), Universal Transverse Mercator (UTM). Supported values: "GD" "UTM" or "GC" followed by additional quoted string parameters as appropriate for the type.
+
+#### Hints
+
+- [X3D Architecture 25.2.2 Spatial reference frames](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/components/geospatial.html#Spatialreferenceframes){:target="_blank"}
+- [X3D Architecture 25.2.4 Specifying geospatial coordinates](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/components/geospatial.html#Specifyinggeospatialcoords){:target="_blank"}
+- [UTM is Universal Transverse Mercator coordinate system](https://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system){:target="_blank"}
+
+#### Warning
+
+- Deprecated values are GDC (replaced by GD) and GCC (replaced by GC).
 
 ## Advice
 

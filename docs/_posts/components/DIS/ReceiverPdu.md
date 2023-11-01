@@ -31,6 +31,8 @@ The ReceiverPdu node belongs to the **DIS** component and its default container 
 
 ## Fields
 
+### SFString [in, out] **description** ""
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
 Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
@@ -217,6 +219,32 @@ DIS *timestamp* in X3D units (value 0.0 matches 1 January 1970) in seconds.
 #### Warning
 
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
+
+### SFVec3d [in, out] **geoCoords** 0 0 0 <small>(-∞,∞)</small>
+
+Geographic location (specified in current geoSystem coordinates) for children geometry (specified in relative coordinate system, in meters).
+
+#### Hint
+
+- [X3D for Advanced Modeling (X3D4AM) slideset](https://x3dgraphics.com/slidesets/X3dForAdvancedModeling/GeospatialComponentX3dEarth.pdf){:target="_blank"}
+
+#### Warning
+
+- Requires X3D `profile='Full'` or else include `<component name='Geospatial' level='1'/>`
+
+### MFString [ ] **geoSystem** [ "GD", "WE" ]
+
+Identifies spatial reference frame: Geodetic (GD), Geocentric (GC), Universal Transverse Mercator (UTM). Supported values: "GD" "UTM" or "GC" followed by additional quoted string parameters as appropriate for the type.
+
+#### Hints
+
+- [X3D Architecture 25.2.2 Spatial reference frames](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/components/geospatial.html#Spatialreferenceframes){:target="_blank"}
+- [X3D Architecture 25.2.4 Specifying geospatial coordinates](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/components/geospatial.html#Specifyinggeospatialcoords){:target="_blank"}
+- [UTM is Universal Transverse Mercator coordinate system](https://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system){:target="_blank"}
+
+#### Warning
+
+- Deprecated values are GDC (replaced by GD) and GCC (replaced by GC).
 
 ## Advice
 
