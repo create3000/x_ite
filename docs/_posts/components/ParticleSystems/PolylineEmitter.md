@@ -35,7 +35,9 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/components/core.html#Metadata){:target="_blank"}
 
-### MFInt32 [in] **set_coordIndex** -1 <small>[0,∞) or -1</small>
+### MFInt32 [in] **set_coordIndex** <small>[0,∞) or -1</small>
+
+Input field *set_coordIndex*.
 
 ### SFBool [in, out] **on** TRUE
 
