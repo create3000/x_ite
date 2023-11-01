@@ -147,7 +147,7 @@ The *massDensityModel* field is used to describe the geometry type and dimension
 
 *autoDisable* toggles operation of disableAngularSpeed, disableLinearSpeed, disableTime.
 
-### SFFloat [in, out] **disableTime** 0 <small>[0,∞)</small> <small class="red">not supported</small>
+### SFTime [in, out] **disableTime** 0 <small>[0,∞)</small> <small class="red">not supported</small>
 
 *disableTime* defines interval when body becomes at rest and not part of rigid body calculations, reducing numeric instabilities.
 
@@ -175,6 +175,44 @@ The *massDensityModel* field is used to describe the geometry type and dimension
 ### MFNode [in, out] **geometry** [ ] <small>[X3DNBodyCollidableNode]</small>
 
 The *geometry* field is used to connect the body modelled by the physics engine implementation to the real *geometry* of the scene through the use of collidable nodes. This allows the *geometry* to be connected directly to the physics model as well as collision detection. Collidable nodes have their location set to the same location as the body instance in which they are located.
+
+### SFBool [in, out] **visible** TRUE
+
+Whether or not renderable content within this node is visually displayed.
+
+#### Hints
+
+- The *visible* field has no effect on animation behaviors, event passing or other non-visual characteristics.
+- Content must be *visible* to be collidable and to be pickable.
+
+### SFBool [in, out] **bboxDisplay** FALSE
+
+Whether to display bounding box for associated geometry, aligned with world coordinates.
+
+#### Hint
+
+- The bounding box is displayed regardless of whether contained content is visible.
+
+### SFVec3f [ ] **bboxSize** -1 -1 -1 <small>[0,∞) or −1 −1 −1</small>
+
+Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost. Bounding box size can also be defined as an optional authoring hint that suggests an optimization or constraint.
+
+#### Hints
+
+- Can be useful for collision computations or inverse-kinematics (IK) engines.
+- Precomputation and inclusion of bounding box information can speed up the initialization of large detailed models, with a corresponding cost of increased file size.
+- [X3D Architecture, 10.2.2 Bounding boxes](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/components/grouping.html#BoundingBoxes){:target="_blank"}
+- [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/components/grouping.html#X3DBoundedObject){:target="_blank"}
+
+### SFVec3f [ ] **bboxCenter** 0 0 0 <small>(-∞,∞)</small>
+
+Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
+
+#### Hints
+
+- Precomputation and inclusion of bounding box information can speed up the initialization of large detailed models, with a corresponding cost of increased file size.
+- [X3D Architecture, 10.2.2 Bounding boxes](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/components/grouping.html#BoundingBoxes){:target="_blank"}
+- [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/components/grouping.html#X3DBoundedObject){:target="_blank"}
 
 ## Example
 

@@ -43,7 +43,7 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 
 *anchorPoint* is joint center, specified in world coordinates.
 
-### SFVec3f [in, out] **axis1** 0 0 0 <small>(-∞,∞)</small>
+### SFVec3f [in, out] **axis1** 1 0 0 <small>(-∞,∞)</small>
 
 *axis1* defines axis vector of joint connection to body1.
 
@@ -51,7 +51,7 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 
 - 0 0 0 means motor disabled about this axis.
 
-### SFVec3f [in, out] **axis2** 0 0 0 <small>(-∞,∞)</small>
+### SFVec3f [in, out] **axis2** 0 1 0 <small>(-∞,∞)</small>
 
 *axis2* defines axis vector of joint connection to body2.
 

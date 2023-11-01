@@ -59,7 +59,7 @@ Nominal rendered point size is a browser-dependent minimum renderable point size
 
 - Maintain pointSizeMinValue \<= *pointSizeMaxValue*.
 
-### MFFloat [in, out] **attenuation** [ 1, 0, 0 ] <small>(0,∞)</small>
+### SFVec3f [in, out] **attenuation** 1 0 0 <small>(0,∞)</small>
 
 Are set to default values if undefined. Together these parameters define *attenuation* factor 1/(a + b×r + c×r^2) where r is the distance from observer position (current viewpoint) to each point.
 

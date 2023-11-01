@@ -259,10 +259,6 @@ Integer enumerations value for whether entity is a PLATFORM, MUNITION, LIFE_FORM
 
 Specific information about an entity based on the Subcategory field. See DIS Enumerations values.
 
-### SFInt32 [in, out] **entitySubCategory** 0 <small>[0,255]</small>
-
-Input/Output field *entitySubCategory*.
-
 ### SFInt32 [in, out] **eventApplicationID** 1 <small>[0,65535]</small>
 
 Simulation/exercise *eventApplicationID* is unique for events generated from application at that site. Each simulation application that can respond to simulation management PDUs needs to have a unique applicationID.
@@ -547,6 +543,10 @@ DIS *timestamp* received from latest PDU update, converted to X3D SFTime units.
 ### SFBool [ ] **rtpHeaderExpected** FALSE
 
 Whether RTP headers are prepended to DIS PDUs.
+
+### SFInt32 [in, out] **entitySubCategory** 0 <small>[0,255]</small>
+
+Input/Output field *entitySubCategory*.
 
 ## Advice
 

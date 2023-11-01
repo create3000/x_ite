@@ -43,7 +43,7 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 
 *anchorPoint* is joint center, specified in world coordinates.
 
-### SFVec3f [in, out] **axis** 0 0 0 <small>(-∞,∞)</small>
+### SFVec3f [in, out] **axis** 0 1 0 <small>(-∞,∞)</small>
 
 *axis* defines vector of joint connection between body1 and body2.
 

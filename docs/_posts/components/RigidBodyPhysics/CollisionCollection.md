@@ -79,6 +79,44 @@ Default global parameters for collision outputs of rigid body physics system. Co
 
 CollisionCollection node holds a collection of objects in the *collidables* field that can be managed as a single entity for resolution of inter-object collisions with other groups of collidable objects. A group consists of both collidable objects as well as spaces that may be collided against each other.
 
+### SFBool [in, out] **visible** TRUE
+
+Whether or not renderable content within this node is visually displayed.
+
+#### Hints
+
+- The *visible* field has no effect on animation behaviors, event passing or other non-visual characteristics.
+- Content must be *visible* to be collidable and to be pickable.
+
+### SFBool [in, out] **bboxDisplay** FALSE
+
+Whether to display bounding box for associated geometry, aligned with world coordinates.
+
+#### Hint
+
+- The bounding box is displayed regardless of whether contained content is visible.
+
+### SFVec3f [ ] **bboxSize** -1 -1 -1 <small>[0,∞) or −1 −1 −1</small>
+
+Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost. Bounding box size can also be defined as an optional authoring hint that suggests an optimization or constraint.
+
+#### Hints
+
+- Can be useful for collision computations or inverse-kinematics (IK) engines.
+- Precomputation and inclusion of bounding box information can speed up the initialization of large detailed models, with a corresponding cost of increased file size.
+- [X3D Architecture, 10.2.2 Bounding boxes](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/components/grouping.html#BoundingBoxes){:target="_blank"}
+- [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/components/grouping.html#X3DBoundedObject){:target="_blank"}
+
+### SFVec3f [ ] **bboxCenter** 0 0 0 <small>(-∞,∞)</small>
+
+Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
+
+#### Hints
+
+- Precomputation and inclusion of bounding box information can speed up the initialization of large detailed models, with a corresponding cost of increased file size.
+- [X3D Architecture, 10.2.2 Bounding boxes](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/components/grouping.html#BoundingBoxes){:target="_blank"}
+- [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/components/grouping.html#X3DBoundedObject){:target="_blank"}
+
 ## Advice
 
 ### Hints

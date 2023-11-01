@@ -83,7 +83,7 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 
 *enabledAxes* indicates which motor axes are active. (0) none, (1) axis 1, (2) axes 1 and 2, (3) all three axes.
 
-### SFVec3f [in, out] **motor1Axis** 0 0 0 <small>(-∞,∞)</small>
+### SFVec3f [in, out] **motor1Axis** 1 0 0 <small>(-∞,∞)</small>
 
 *motor1Axis* defines axis vector of corresponding motor axis.
 
@@ -91,7 +91,7 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 
 - 0 0 0 means motor disabled about this axis.
 
-### SFVec3f [in, out] **motor2Axis** 0 0 0 <small>(-∞,∞)</small>
+### SFVec3f [in, out] **motor2Axis** 0 1 0 <small>(-∞,∞)</small>
 
 *motor2Axis* defines axis vector of corresponding motor axis.
 
@@ -99,7 +99,7 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 
 - 0 0 0 means motor disabled about this axis.
 
-### SFVec3f [in, out] **motor3Axis** 0 0 0 <small>(-∞,∞)</small>
+### SFVec3f [in, out] **motor3Axis** 0 0 1 <small>(-∞,∞)</small>
 
 *motor3Axis* defines axis vector of corresponding motor axis.
 

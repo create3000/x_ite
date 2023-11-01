@@ -83,18 +83,6 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 
 *maxTorque2* is maximum rotational torque applied by corresponding motor axis to achieve desiredAngularVelocity2.
 
-### SFFloat [in, out] **stopBounce1** 0 <small>[0,1]<span class="red"> not supported</span></small>
-
-Input/Output field *stopBounce1*.
-
-### SFFloat [in, out] **stopConstantForceMix1** 0.001 <small>[0,∞)<span class="red"> not supported</span></small>
-
-Input/Output field *stopConstantForceMix1*.
-
-### SFFloat [in, out] **stopErrorCorrection1** 0.8 <small>[0,1]<span class="red"> not supported</span></small>
-
-Input/Output field *stopErrorCorrection1*.
-
 ### SFFloat [in, out] **suspensionForce** 0 <small>[0,∞)<span class="red"> not supported</span></small>
 
 *suspensionForce* describes how quickly the system resolves intersection errors due to floating-point inaccuracies.
@@ -152,6 +140,18 @@ The *body1* and body2 fields indicate the two RigidBody nodes connected by this 
 ### SFNode [in, out] **body2** NULL <small>[RigidBody]</small>
 
 The body1 and *body2* fields indicate the two RigidBody nodes connected by this joint.
+
+### SFFloat [in, out] **stop1Bounce** 0 <small>[0,1]<span class="red"> not supported</span></small>
+
+Input/Output field *stop1Bounce*.
+
+### SFFloat [in, out] **stop1ConstantForceMix** 0.001 <small>[0,∞)<span class="red"> not supported</span></small>
+
+Input/Output field *stop1ConstantForceMix*.
+
+### SFFloat [in, out] **stop1ErrorCorrection** 0.8 <small>[0,1]<span class="red"> not supported</span></small>
+
+Input/Output field *stop1ErrorCorrection*.
 
 ## Advice
 
