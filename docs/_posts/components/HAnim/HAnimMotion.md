@@ -45,6 +45,8 @@ Author-provided prose that describes intended purpose of this node.
 
 ### SFString [in, out] **name** ""
 
+Unique *name* attribute must be defined so that HAnimMotion node can be identified at run time for animation purposes.
+
 ### SFBool [in, out] **enabled** TRUE
 
 Enables/disables node operation.
