@@ -40,6 +40,12 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 
 ### SFString [in, out] **description** ""
 
+Author-provided prose that describes intended purpose of the url asset.
+
+#### Hint
+
+- Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
+
 ### SFBool [in, out] **load** TRUE
 
 *load*=true means *load* immediately, *load*=false means defer loading or else unload a previously loaded scene.

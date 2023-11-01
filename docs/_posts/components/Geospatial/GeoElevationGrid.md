@@ -61,11 +61,22 @@ Identifies spatial reference frame: Geodetic (GD), Geocentric (GC), Universal Tr
 
 - Deprecated values are GDC (replaced by GD) and GCC (replaced by GC).
 
+### MFDouble [in] **set_height** <small>(-∞,∞)</small>
+
+Contains xDimension rows * zDimension columns floating-point values for elevation above ellipsoid.
+
+#### Hints
+
+- *height* array values are in row-major order from west to east, south to north.
+- GeoGridOrigin is in southwest (lower-left) corner of *height* dataset.
+
+#### Warning
+
+- It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
+
 ### SFVec3d [ ] **geoGridOrigin** 0 0 0 <small>(-∞,∞)</small>
 
 Geographic coordinate for southwest (lower-left) corner of height dataset.
-
-### MFDouble [in] **set_height** <small>(-∞,∞)</small>
 
 ### SFInt32 [ ] **xDimension** 0 <small>(0,∞)</small>
 

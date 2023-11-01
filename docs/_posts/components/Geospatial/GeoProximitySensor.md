@@ -39,6 +39,12 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 
 ### SFString [in, out] **description** ""
 
+Author-provided prose that describes intended purpose of the node.
+
+#### Hint
+
+- Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
+
 ### SFNode [ ] **geoOrigin** NULL <small>[GeoOrigin] (deprecated)</small>
 
 Single contained GeoOrigin node that can specify a local coordinate frame for extended precision.
@@ -82,6 +88,16 @@ Enables/disables node operation.
 Position offset from origin of local coordinate system.
 
 ### SFVec3d [in, out] **geoCenter** 0 0 0 <small>(-∞,∞)</small>
+
+Position offset from origin of local coordinate system.
+
+#### Hint
+
+- [X3D for Advanced Modeling (X3D4AM) slideset](https://x3dgraphics.com/slidesets/X3dForAdvancedModeling/GeospatialComponentX3dEarth.pdf){:target="_blank"}
+
+#### Warning
+
+- Requires X3D `profile='Full'` or else include `<component name='Geospatial' level='1'/>`
 
 ### SFBool [out] **isActive**
 
