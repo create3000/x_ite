@@ -690,7 +690,7 @@ Object .defineProperties (Extrusion,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "Geometry3D", level: 1 }),
+      value: Object .freeze ({ name: "Geometry3D", level: 4 }),
       enumerable: true,
    },
    containerField:

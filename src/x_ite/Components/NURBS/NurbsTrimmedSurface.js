@@ -135,7 +135,7 @@ Object .defineProperties (NurbsTrimmedSurface,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "NURBS", level: 1 }),
+      value: Object .freeze ({ name: "NURBS", level: 4 }),
       enumerable: true,
    },
    containerField:

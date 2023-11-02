@@ -214,7 +214,7 @@ Object .defineProperties (StaticGroup,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "Grouping", level: 1 }),
+      value: Object .freeze ({ name: "Grouping", level: 3 }),
       enumerable: true,
    },
    containerField:

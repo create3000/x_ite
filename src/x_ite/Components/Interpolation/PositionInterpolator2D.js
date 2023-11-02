@@ -96,7 +96,7 @@ Object .defineProperties (PositionInterpolator2D,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "Interpolation", level: 1 }),
+      value: Object .freeze ({ name: "Interpolation", level: 3 }),
       enumerable: true,
    },
    containerField:

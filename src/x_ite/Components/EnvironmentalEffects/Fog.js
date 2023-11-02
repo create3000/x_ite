@@ -101,7 +101,7 @@ Object .defineProperties (Fog,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "EnvironmentalEffects", level: 1 }),
+      value: Object .freeze ({ name: "EnvironmentalEffects", level: 2 }),
       enumerable: true,
    },
    containerField:

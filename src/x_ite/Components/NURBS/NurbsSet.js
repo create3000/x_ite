@@ -153,7 +153,7 @@ Object .defineProperties (NurbsSet,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "NURBS", level: 1 }),
+      value: Object .freeze ({ name: "NURBS", level: 2 }),
       enumerable: true,
    },
    containerField:

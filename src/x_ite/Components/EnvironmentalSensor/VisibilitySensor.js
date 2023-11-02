@@ -146,7 +146,7 @@ Object .defineProperties (VisibilitySensor,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "EnvironmentalSensor", level: 1 }),
+      value: Object .freeze ({ name: "EnvironmentalSensor", level: 2 }),
       enumerable: true,
    },
    containerField:

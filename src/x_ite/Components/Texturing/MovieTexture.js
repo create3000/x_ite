@@ -259,7 +259,7 @@ Object .defineProperties (MovieTexture,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "Texturing", level: 1 }),
+      value: Object .freeze ({ name: "Texturing", level: 3 }),
       enumerable: true,
    },
    containerField:

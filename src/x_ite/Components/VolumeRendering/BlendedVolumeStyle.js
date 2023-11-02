@@ -321,7 +321,7 @@ Object .defineProperties (BlendedVolumeStyle,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "VolumeRendering", level: 1 }),
+      value: Object .freeze ({ name: "VolumeRendering", level: 3 }),
       enumerable: true,
    },
    containerField:

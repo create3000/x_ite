@@ -103,7 +103,7 @@ Object .defineProperties (ColorInterpolator,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "Interpolation", level: 1 }),
+      value: Object .freeze ({ name: "Interpolation", level: 2 }),
       enumerable: true,
    },
    containerField:

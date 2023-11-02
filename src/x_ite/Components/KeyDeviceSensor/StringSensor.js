@@ -134,7 +134,7 @@ Object .defineProperties (StringSensor,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "KeyDeviceSensor", level: 1 }),
+      value: Object .freeze ({ name: "KeyDeviceSensor", level: 2 }),
       enumerable: true,
    },
    containerField:

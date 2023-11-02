@@ -104,7 +104,7 @@ Object .defineProperties (Circle2D,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "Geometry2D", level: 1 }),
+      value: Object .freeze ({ name: "Geometry2D", level: 2 }),
       enumerable: true,
    },
    containerField:

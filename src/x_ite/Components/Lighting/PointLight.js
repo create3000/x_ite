@@ -300,7 +300,7 @@ Object .defineProperties (PointLight,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "Lighting", level: 1 }),
+      value: Object .freeze ({ name: "Lighting", level: 2 }),
       enumerable: true,
    },
    containerField:

@@ -211,7 +211,7 @@ Object .defineProperties (VolumePickSensor,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "Picking", level: 1 }),
+      value: Object .freeze ({ name: "Picking", level: 3 }),
       enumerable: true,
    },
    containerField:

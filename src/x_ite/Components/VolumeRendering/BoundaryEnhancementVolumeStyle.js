@@ -125,7 +125,7 @@ Object .defineProperties (BoundaryEnhancementVolumeStyle,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "VolumeRendering", level: 1 }),
+      value: Object .freeze ({ name: "VolumeRendering", level: 2 }),
       enumerable: true,
    },
    containerField:

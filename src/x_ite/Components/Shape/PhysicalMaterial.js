@@ -289,7 +289,7 @@ Object .defineProperties (PhysicalMaterial,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "Shape", level: 1 }),
+      value: Object .freeze ({ name: "Shape", level: 2 }),
       enumerable: true,
    },
    containerField:

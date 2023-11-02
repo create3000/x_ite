@@ -418,7 +418,7 @@ Object .defineProperties (IndexedFaceSet,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "Geometry3D", level: 1 }),
+      value: Object .freeze ({ name: "Geometry3D", level: 2 }),
       enumerable: true,
    },
    containerField:

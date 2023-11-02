@@ -120,7 +120,7 @@ Object .defineProperties (EaseInEaseOut,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "Interpolation", level: 1 }),
+      value: Object .freeze ({ name: "Interpolation", level: 4 }),
       enumerable: true,
    },
    containerField:

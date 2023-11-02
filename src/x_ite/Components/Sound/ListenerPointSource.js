@@ -73,7 +73,7 @@ Object .defineProperties (ListenerPointSource,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "Sound", level: 1 }),
+      value: Object .freeze ({ name: "Sound", level: 2 }),
       enumerable: true,
    },
    containerField:

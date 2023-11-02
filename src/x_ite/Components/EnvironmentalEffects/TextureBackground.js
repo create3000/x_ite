@@ -95,7 +95,7 @@ Object .defineProperties (TextureBackground,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "EnvironmentalEffects", level: 1 }),
+      value: Object .freeze ({ name: "EnvironmentalEffects", level: 3 }),
       enumerable: true,
    },
    containerField:

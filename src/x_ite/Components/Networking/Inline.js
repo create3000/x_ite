@@ -280,7 +280,7 @@ Object .defineProperties (Inline,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "Networking", level: 1 }),
+      value: Object .freeze ({ name: "Networking", level: 2 }),
       enumerable: true,
    },
    containerField:

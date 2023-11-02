@@ -399,7 +399,7 @@ Object .defineProperties (ElevationGrid,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "Geometry3D", level: 1 }),
+      value: Object .freeze ({ name: "Geometry3D", level: 3 }),
       enumerable: true,
    },
    containerField:

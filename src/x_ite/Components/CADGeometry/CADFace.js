@@ -220,7 +220,7 @@ Object .defineProperties (CADFace,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "CADGeometry", level: 1 }),
+      value: Object .freeze ({ name: "CADGeometry", level: 2 }),
       enumerable: true,
    },
    containerField:

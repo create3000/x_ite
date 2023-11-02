@@ -150,7 +150,7 @@ Object .defineProperties (Collision,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "Navigation", level: 1 }),
+      value: Object .freeze ({ name: "Navigation", level: 2 }),
       enumerable: true,
    },
    containerField:

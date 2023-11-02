@@ -115,7 +115,7 @@ Object .defineProperties (TriangleStripSet,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "Rendering", level: 1 }),
+      value: Object .freeze ({ name: "Rendering", level: 3 }),
       enumerable: true,
    },
    containerField:

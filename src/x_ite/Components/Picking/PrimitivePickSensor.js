@@ -236,7 +236,7 @@ Object .defineProperties (PrimitivePickSensor,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "Picking", level: 1 }),
+      value: Object .freeze ({ name: "Picking", level: 2 }),
       enumerable: true,
    },
    containerField:

@@ -254,7 +254,7 @@ Object .defineProperties (TextureProjectorParallel,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "TextureProjection", level: 1 }),
+      value: Object .freeze ({ name: "TextureProjection", level: 2 }),
       enumerable: true,
    },
    containerField:

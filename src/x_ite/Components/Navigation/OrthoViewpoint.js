@@ -317,7 +317,7 @@ Object .defineProperties (OrthoViewpoint,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "Navigation", level: 1 }),
+      value: Object .freeze ({ name: "Navigation", level: 3 }),
       enumerable: true,
    },
    containerField:

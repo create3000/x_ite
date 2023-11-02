@@ -106,7 +106,7 @@ Object .defineProperties (GeoTransform,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "Geospatial", level: 1 }),
+      value: Object .freeze ({ name: "Geospatial", level: 2 }),
       enumerable: true,
    },
    containerField:

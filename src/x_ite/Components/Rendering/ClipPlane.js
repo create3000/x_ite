@@ -155,7 +155,7 @@ Object .defineProperties (ClipPlane,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "Rendering", level: 1 }),
+      value: Object .freeze ({ name: "Rendering", level: 5 }),
       enumerable: true,
    },
    containerField:

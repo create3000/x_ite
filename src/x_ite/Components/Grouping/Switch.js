@@ -228,7 +228,7 @@ Object .defineProperties (Switch,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "Grouping", level: 1 }),
+      value: Object .freeze ({ name: "Grouping", level: 2 }),
       enumerable: true,
    },
    containerField:

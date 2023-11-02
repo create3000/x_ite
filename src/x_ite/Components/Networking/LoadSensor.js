@@ -237,7 +237,7 @@ Object .defineProperties (LoadSensor,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "Networking", level: 1 }),
+      value: Object .freeze ({ name: "Networking", level: 3 }),
       enumerable: true,
    },
    containerField:

@@ -84,7 +84,7 @@ Object .defineProperties (DISEntityTypeMapping,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "DIS", level: 1 }),
+      value: Object .freeze ({ name: "DIS", level: 2 }),
       enumerable: true,
    },
    containerField:

@@ -69,7 +69,7 @@ Object .defineProperties (AcousticProperties,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "Shape", level: 1 }),
+      value: Object .freeze ({ name: "Shape", level: 5 }),
       enumerable: true,
    },
    containerField:
