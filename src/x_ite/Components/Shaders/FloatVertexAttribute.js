@@ -121,9 +121,9 @@ Object .defineProperties (FloatVertexAttribute,
       value: "FloatVertexAttribute",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Shaders",
+      value: Object .freeze ({ name: "Time", level: 1 }),
       enumerable: true,
    },
    containerField:

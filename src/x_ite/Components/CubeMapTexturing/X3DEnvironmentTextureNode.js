@@ -139,9 +139,9 @@ Object .defineProperties (X3DEnvironmentTextureNode,
       value: "X3DEnvironmentTextureNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "CubeMapTexturing",
+      value: Object .freeze ({ name: "Time", level: 1 }),
       enumerable: true,
    },
 });

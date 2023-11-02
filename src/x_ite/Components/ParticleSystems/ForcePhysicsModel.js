@@ -91,9 +91,9 @@ Object .defineProperties (ForcePhysicsModel,
       value: "ForcePhysicsModel",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "ParticleSystems",
+      value: Object .freeze ({ name: "Time", level: 1 }),
       enumerable: true,
    },
    containerField:

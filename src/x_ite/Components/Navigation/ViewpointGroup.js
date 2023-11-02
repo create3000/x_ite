@@ -173,9 +173,9 @@ Object .defineProperties (ViewpointGroup,
       value: "ViewpointGroup",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Navigation",
+      value: Object .freeze ({ name: "Time", level: 1 }),
       enumerable: true,
    },
    containerField:

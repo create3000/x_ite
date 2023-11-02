@@ -143,9 +143,9 @@ Object .defineProperties (X3DSequencerNode,
       value: "X3DSequencerNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "EventUtilities",
+      value: Object .freeze ({ name: "Time", level: 1 }),
       enumerable: true,
    },
 });

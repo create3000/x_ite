@@ -83,9 +83,9 @@ Object .defineProperties (IntegerSequencer,
       value: "IntegerSequencer",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "EventUtilities",
+      value: Object .freeze ({ name: "Time", level: 1 }),
       enumerable: true,
    },
    containerField:

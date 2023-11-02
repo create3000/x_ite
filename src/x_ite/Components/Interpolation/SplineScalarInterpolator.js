@@ -113,9 +113,9 @@ Object .defineProperties (SplineScalarInterpolator,
       value: "SplineScalarInterpolator",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Interpolation",
+      value: Object .freeze ({ name: "Time", level: 1 }),
       enumerable: true,
    },
    containerField:

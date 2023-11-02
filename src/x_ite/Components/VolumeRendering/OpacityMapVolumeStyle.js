@@ -150,9 +150,9 @@ Object .defineProperties (OpacityMapVolumeStyle,
       value: "OpacityMapVolumeStyle",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "VolumeRendering",
+      value: Object .freeze ({ name: "Time", level: 1 }),
       enumerable: true,
    },
    containerField:

@@ -174,9 +174,9 @@ Object .defineProperties (ComposedTexture3D,
       value: "ComposedTexture3D",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Texturing3D",
+      value: Object .freeze ({ name: "Time", level: 1 }),
       enumerable: true,
    },
    containerField:

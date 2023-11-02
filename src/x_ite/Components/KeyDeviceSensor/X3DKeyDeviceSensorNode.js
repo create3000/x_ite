@@ -110,9 +110,9 @@ Object .defineProperties (X3DKeyDeviceSensorNode,
       value: "X3DKeyDeviceSensorNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "KeyDeviceSensor",
+      value: Object .freeze ({ name: "Time", level: 1 }),
       enumerable: true,
    },
 });

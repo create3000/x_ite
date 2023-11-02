@@ -64,9 +64,9 @@ Object .defineProperties (X3DLayoutNode,
       value: "X3DLayoutNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Layout",
+      value: Object .freeze ({ name: "Time", level: 1 }),
       enumerable: true,
    },
 });

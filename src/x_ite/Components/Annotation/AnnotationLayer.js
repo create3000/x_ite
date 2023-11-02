@@ -78,9 +78,9 @@ Object .defineProperties (AnnotationLayer,
       value: "AnnotationLayer",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Annotation",
+      value: Object .freeze ({ name: "Time", level: 1 }),
       enumerable: true,
    },
    containerField:

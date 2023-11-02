@@ -303,9 +303,9 @@ Object .defineProperties (LOD,
       value: "LOD",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Navigation",
+      value: Object .freeze ({ name: "Time", level: 1 }),
       enumerable: true,
    },
    containerField:

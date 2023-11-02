@@ -685,9 +685,9 @@ Object .defineProperties (X3DGroupingNode,
       value: "X3DGroupingNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Grouping",
+      value: Object .freeze ({ name: "Time", level: 1 }),
       enumerable: true,
    },
 });

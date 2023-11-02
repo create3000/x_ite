@@ -234,9 +234,9 @@ Object .defineProperties (PrimitivePickSensor,
       value: "PrimitivePickSensor",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Picking",
+      value: Object .freeze ({ name: "Time", level: 1 }),
       enumerable: true,
    },
    containerField:

@@ -136,9 +136,9 @@ Object .defineProperties (PointProperties,
       value: "PointProperties",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Shape",
+      value: Object .freeze ({ name: "Time", level: 1 }),
       enumerable: true,
    },
    containerField:

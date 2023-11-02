@@ -145,9 +145,9 @@ Object .defineProperties (Viewport,
       value: "Viewport",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Layering",
+      value: Object .freeze ({ name: "Time", level: 1 }),
       enumerable: true,
    },
    containerField:

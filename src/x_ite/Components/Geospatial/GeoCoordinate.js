@@ -209,9 +209,9 @@ Object .defineProperties (GeoCoordinate,
       value: "GeoCoordinate",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Geospatial",
+      value: Object .freeze ({ name: "Time", level: 1 }),
       enumerable: true,
    },
    containerField:

@@ -78,9 +78,9 @@ Object .defineProperties (X3DColorNode,
       value: "X3DColorNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Rendering",
+      value: Object .freeze ({ name: "Time", level: 1 }),
       enumerable: true,
    },
 });

@@ -133,9 +133,9 @@ Object .defineProperties (X3DEnvironmentalSensorNode,
       value: "X3DEnvironmentalSensorNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "EnvironmentalSensor",
+      value: Object .freeze ({ name: "Time", level: 1 }),
       enumerable: true,
    },
 });

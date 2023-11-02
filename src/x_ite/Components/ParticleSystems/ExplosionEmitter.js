@@ -104,9 +104,9 @@ Object .defineProperties (ExplosionEmitter,
       value: "ExplosionEmitter",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "ParticleSystems",
+      value: Object .freeze ({ name: "Time", level: 1 }),
       enumerable: true,
    },
    containerField:

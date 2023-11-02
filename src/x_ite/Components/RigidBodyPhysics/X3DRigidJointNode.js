@@ -211,9 +211,9 @@ Object .defineProperties (X3DRigidJointNode,
       value: "X3DRigidJointNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "RigidBodyPhysics",
+      value: Object .freeze ({ name: "Time", level: 1 }),
       enumerable: true,
    },
 });

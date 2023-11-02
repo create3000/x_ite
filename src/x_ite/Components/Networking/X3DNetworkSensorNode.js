@@ -64,9 +64,9 @@ Object .defineProperties (X3DNetworkSensorNode,
       value: "X3DNetworkSensorNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Networking",
+      value: Object .freeze ({ name: "Time", level: 1 }),
       enumerable: true,
    },
 });

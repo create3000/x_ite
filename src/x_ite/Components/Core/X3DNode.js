@@ -62,9 +62,9 @@ function X3DNode (executionContext)
 
 Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototype),
 {
-   getComponentName ()
+   getComponentInfo ()
    {
-      return this .constructor .componentName;
+      return this .constructor .componentInfo;
    },
    getContainerField ()
    {
@@ -1383,9 +1383,9 @@ Object .defineProperties (X3DNode,
       value: "X3DNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Core",
+      value: Object .freeze ({ name: "Time", level: 1 }),
       enumerable: true,
    },
 });

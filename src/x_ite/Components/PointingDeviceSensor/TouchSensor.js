@@ -69,9 +69,9 @@ Object .defineProperties (TouchSensor,
       value: "TouchSensor",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "PointingDeviceSensor",
+      value: Object .freeze ({ name: "Time", level: 1 }),
       enumerable: true,
    },
    containerField:

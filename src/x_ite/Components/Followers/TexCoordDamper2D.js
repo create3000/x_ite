@@ -79,9 +79,9 @@ Object .defineProperties (TexCoordDamper2D,
       value: "TexCoordDamper2D",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Followers",
+      value: Object .freeze ({ name: "Time", level: 1 }),
       enumerable: true,
    },
    containerField:

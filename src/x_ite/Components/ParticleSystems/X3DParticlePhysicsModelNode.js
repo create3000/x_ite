@@ -68,9 +68,9 @@ Object .defineProperties (X3DParticlePhysicsModelNode,
       value: "X3DParticlePhysicsModelNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "ParticleSystems",
+      value: Object .freeze ({ name: "Time", level: 1 }),
       enumerable: true,
    },
 });

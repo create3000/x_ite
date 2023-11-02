@@ -249,9 +249,9 @@ Object .defineProperties (CollisionSensor,
       value: "CollisionSensor",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "RigidBodyPhysics",
+      value: Object .freeze ({ name: "Time", level: 1 }),
       enumerable: true,
    },
    containerField:

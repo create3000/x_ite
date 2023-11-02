@@ -81,9 +81,9 @@ Object .defineProperties (WorldInfo,
       value: "WorldInfo",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Core",
+      value: Object .freeze ({ name: "Time", level: 1 }),
       enumerable: true,
    },
    containerField:

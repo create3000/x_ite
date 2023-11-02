@@ -120,9 +120,9 @@ Object .defineProperties (Color,
       value: "Color",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Rendering",
+      value: Object .freeze ({ name: "Time", level: 1 }),
       enumerable: true,
    },
    containerField:

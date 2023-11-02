@@ -144,9 +144,9 @@ Object .defineProperties (VisibilitySensor,
       value: "VisibilitySensor",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "EnvironmentalSensor",
+      value: Object .freeze ({ name: "Time", level: 1 }),
       enumerable: true,
    },
    containerField:

@@ -391,9 +391,9 @@ Object .defineProperties (GeoElevationGrid,
       value: "GeoElevationGrid",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Geospatial",
+      value: Object .freeze ({ name: "Time", level: 1 }),
       enumerable: true,
    },
    containerField:

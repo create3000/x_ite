@@ -150,9 +150,9 @@ Object .defineProperties (Text,
       value: "Text",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Text",
+      value: Object .freeze ({ name: "Time", level: 1 }),
       enumerable: true,
    },
    containerField:

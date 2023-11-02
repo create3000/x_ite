@@ -247,9 +247,9 @@ Object .defineProperties (ShadedVolumeStyle,
       value: "ShadedVolumeStyle",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "VolumeRendering",
+      value: Object .freeze ({ name: "Time", level: 1 }),
       enumerable: true,
    },
    containerField:

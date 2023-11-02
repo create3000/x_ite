@@ -182,9 +182,9 @@ Object .defineProperties (TimeSensor,
       value: "TimeSensor",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Time",
+      value: Object .freeze ({ name: "Time", level: 1 }),
       enumerable: true,
    },
    containerField:

@@ -220,9 +220,9 @@ Object .defineProperties (ComposedCubeMapTexture,
       value: "ComposedCubeMapTexture",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "CubeMapTexturing",
+      value: Object .freeze ({ name: "Time", level: 1 }),
       enumerable: true,
    },
    containerField:

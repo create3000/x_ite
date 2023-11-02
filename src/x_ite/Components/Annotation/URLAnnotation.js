@@ -73,9 +73,9 @@ Object .defineProperties (URLAnnotation,
       value: "URLAnnotation",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Annotation",
+      value: Object .freeze ({ name: "Time", level: 1 }),
       enumerable: true,
    },
    containerField:

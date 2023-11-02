@@ -176,7 +176,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
          if (this .getSpecificationVersion () > specificationRange [1])
             return null;
 
-         if (!this .hasComponent (ConcreteNode .componentName))
+         if (!this .hasComponent (ConcreteNode .componentInfo .name))
             console .warn (`Node type '${typeName}' does not match component/profile statements in '${this .getWorldURL ()}'.`);
 
          return new ConcreteNode (this);
@@ -196,7 +196,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
          if (this .getSpecificationVersion () > specificationRange [1])
             throw new Error (`Node type '${typeName}' does not match specification version in '${this .getWorldURL ()}.`);
 
-         if (!this .hasComponent (ConcreteNode .componentName))
+         if (!this .hasComponent (ConcreteNode .componentInfo .name))
             console .warn (`Node type '${typeName}' does not match component/profile statements in '${this .getWorldURL ()}'.`);
 
          const baseNode = new ConcreteNode (this);

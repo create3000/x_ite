@@ -172,9 +172,9 @@ Object .defineProperties (X3DPointGeometryNode,
       value: "X3DPointGeometryNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Rendering",
+      value: Object .freeze ({ name: "Time", level: 1 }),
       enumerable: true,
    },
 });

@@ -67,9 +67,9 @@ Object .defineProperties (ChannelSelector,
       value: "ChannelSelector",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Sound",
+      value: Object .freeze ({ name: "Time", level: 1 }),
       enumerable: true,
    },
    containerField:

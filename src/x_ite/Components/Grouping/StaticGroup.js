@@ -212,9 +212,9 @@ Object .defineProperties (StaticGroup,
       value: "StaticGroup",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Grouping",
+      value: Object .freeze ({ name: "Time", level: 1 }),
       enumerable: true,
    },
    containerField:

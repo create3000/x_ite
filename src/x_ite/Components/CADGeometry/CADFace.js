@@ -218,9 +218,9 @@ Object .defineProperties (CADFace,
       value: "CADFace",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "CADGeometry",
+      value: Object .freeze ({ name: "Time", level: 1 }),
       enumerable: true,
    },
    containerField:

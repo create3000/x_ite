@@ -64,9 +64,9 @@ Object .defineProperties (X3DSensorNode,
       value: "X3DSensorNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Core",
+      value: Object .freeze ({ name: "Time", level: 1 }),
       enumerable: true,
    },
 });

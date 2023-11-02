@@ -83,9 +83,9 @@ Object .defineProperties (Polyline2D,
       value: "Polyline2D",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Geometry2D",
+      value: Object .freeze ({ name: "Time", level: 1 }),
       enumerable: true,
    },
    containerField:

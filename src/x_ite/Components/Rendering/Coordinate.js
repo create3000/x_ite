@@ -69,9 +69,9 @@ Object .defineProperties (Coordinate,
       value: "Coordinate",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Rendering",
+      value: Object .freeze ({ name: "Time", level: 1 }),
       enumerable: true,
    },
    containerField:

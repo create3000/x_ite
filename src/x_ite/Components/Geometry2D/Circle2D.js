@@ -102,9 +102,9 @@ Object .defineProperties (Circle2D,
       value: "Circle2D",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Geometry2D",
+      value: Object .freeze ({ name: "Time", level: 1 }),
       enumerable: true,
    },
    containerField:

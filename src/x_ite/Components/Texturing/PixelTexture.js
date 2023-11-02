@@ -254,9 +254,9 @@ Object .defineProperties (PixelTexture,
       value: "PixelTexture",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Texturing",
+      value: Object .freeze ({ name: "Time", level: 1 }),
       enumerable: true,
    },
    containerField:

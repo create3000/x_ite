@@ -609,9 +609,9 @@ Object .defineProperties (Layout,
       value: "Layout",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Layout",
+      value: Object .freeze ({ name: "Time", level: 1 }),
       enumerable: true,
    },
    containerField:

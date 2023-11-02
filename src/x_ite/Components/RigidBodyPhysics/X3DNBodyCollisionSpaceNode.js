@@ -79,9 +79,9 @@ Object .defineProperties (X3DNBodyCollisionSpaceNode,
       value: "X3DNBodyCollisionSpaceNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "RigidBodyPhysics",
+      value: Object .freeze ({ name: "Time", level: 1 }),
       enumerable: true,
    },
 });

@@ -353,9 +353,9 @@ Object .defineProperties (X3DComposedGeometryNode,
       value: "X3DComposedGeometryNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Rendering",
+      value: Object .freeze ({ name: "Time", level: 1 }),
       enumerable: true,
    },
 });
