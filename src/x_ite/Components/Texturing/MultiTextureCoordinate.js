@@ -165,9 +165,9 @@ Object .defineProperties (MultiTextureCoordinate,
       value: "MultiTextureCoordinate",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Texturing",
+      value: Object .freeze ({ name: "Texturing", level: 1 }),
       enumerable: true,
    },
    containerField:

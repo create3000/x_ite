@@ -266,9 +266,9 @@ Object .defineProperties (GeneratedCubeMapTexture,
       value: "GeneratedCubeMapTexture",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "CubeMapTexturing",
+      value: Object .freeze ({ name: "CubeMapTexturing", level: 1 }),
       enumerable: true,
    },
    containerField:

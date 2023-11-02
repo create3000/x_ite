@@ -185,9 +185,9 @@ Object .defineProperties (SphereSensor,
       value: "SphereSensor",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "PointingDeviceSensor",
+      value: Object .freeze ({ name: "PointingDeviceSensor", level: 1 }),
       enumerable: true,
    },
    containerField:

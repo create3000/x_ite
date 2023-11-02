@@ -79,9 +79,9 @@ Object .defineProperties (X3DVertexAttributeNode,
       value: "X3DVertexAttributeNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Shaders",
+      value: Object .freeze ({ name: "Shaders", level: 1 }),
       enumerable: true,
    },
 });

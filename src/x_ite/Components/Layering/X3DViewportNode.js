@@ -64,9 +64,9 @@ Object .defineProperties (X3DViewportNode,
       value: "X3DViewportNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Layering",
+      value: Object .freeze ({ name: "Layering", level: 1 }),
       enumerable: true,
    },
 });

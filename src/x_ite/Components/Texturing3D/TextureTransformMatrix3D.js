@@ -81,9 +81,9 @@ Object .defineProperties (TextureTransformMatrix3D,
       value: "TextureTransformMatrix3D",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Texturing3D",
+      value: Object .freeze ({ name: "Texturing3D", level: 1 }),
       enumerable: true,
    },
    containerField:

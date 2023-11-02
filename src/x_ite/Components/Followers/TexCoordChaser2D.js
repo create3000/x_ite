@@ -79,9 +79,9 @@ Object .defineProperties (TexCoordChaser2D,
       value: "TexCoordChaser2D",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Followers",
+      value: Object .freeze ({ name: "Followers", level: 1 }),
       enumerable: true,
    },
    containerField:

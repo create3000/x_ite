@@ -1356,9 +1356,9 @@ Object .defineProperties (X3DProgrammableShaderObject,
       value: "X3DProgrammableShaderObject",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Shaders",
+      value: Object .freeze ({ name: "Shaders", level: 1 }),
       enumerable: true,
    },
 });

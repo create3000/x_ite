@@ -64,9 +64,9 @@ Object .defineProperties (X3DGeometricPropertyNode,
       value: "X3DGeometricPropertyNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Rendering",
+      value: Object .freeze ({ name: "Rendering", level: 1 }),
       enumerable: true,
    },
 });

@@ -79,9 +79,9 @@ Object .defineProperties (IntegerTrigger,
       value: "IntegerTrigger",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "EventUtilities",
+      value: Object .freeze ({ name: "EventUtilities", level: 1 }),
       enumerable: true,
    },
    containerField:

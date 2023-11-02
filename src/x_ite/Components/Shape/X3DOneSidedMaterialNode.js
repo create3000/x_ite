@@ -203,9 +203,9 @@ Object .defineProperties (X3DOneSidedMaterialNode,
       value: "X3DOneSidedMaterialNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Shape",
+      value: Object .freeze ({ name: "Shape", level: 1 }),
       enumerable: true,
    },
 });

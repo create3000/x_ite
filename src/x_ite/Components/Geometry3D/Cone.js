@@ -216,9 +216,9 @@ Object .defineProperties (Cone,
       value: "Cone",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Geometry3D",
+      value: Object .freeze ({ name: "Geometry3D", level: 1 }),
       enumerable: true,
    },
    containerField:

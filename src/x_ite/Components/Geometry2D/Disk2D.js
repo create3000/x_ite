@@ -227,9 +227,9 @@ Object .defineProperties (Disk2D,
       value: "Disk2D",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Geometry2D",
+      value: Object .freeze ({ name: "Geometry2D", level: 1 }),
       enumerable: true,
    },
    containerField:

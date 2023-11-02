@@ -995,9 +995,9 @@ Object .defineProperties (X3DParticleEmitterNode,
       value: "X3DParticleEmitterNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "ParticleSystems",
+      value: Object .freeze ({ name: "ParticleSystems", level: 1 }),
       enumerable: true,
    },
 });

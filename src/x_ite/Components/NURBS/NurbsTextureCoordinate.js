@@ -121,9 +121,9 @@ Object .defineProperties (NurbsTextureCoordinate,
       value: "NurbsTextureCoordinate",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "NURBS",
+      value: Object .freeze ({ name: "NURBS", level: 1 }),
       enumerable: true,
    },
    containerField:

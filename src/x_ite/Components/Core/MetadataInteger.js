@@ -89,9 +89,9 @@ Object .defineProperties (MetadataInteger,
       value: "MetadataInteger",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Core",
+      value: Object .freeze ({ name: "Core", level: 1 }),
       enumerable: true,
    },
    containerField:

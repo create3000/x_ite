@@ -125,9 +125,9 @@ Object .defineProperties (X3DTransformMatrix3DNode,
       value: "X3DTransformMatrix3DNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Grouping",
+      value: Object .freeze ({ name: "Grouping", level: 1 }),
       enumerable: true,
    },
 });

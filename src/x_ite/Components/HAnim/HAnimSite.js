@@ -67,9 +67,9 @@ Object .defineProperties (HAnimSite,
       value: "HAnimSite",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "HAnim",
+      value: Object .freeze ({ name: "HAnim", level: 1 }),
       enumerable: true,
    },
    containerField:

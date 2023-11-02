@@ -83,9 +83,9 @@ Object .defineProperties (IndexedTriangleSet,
       value: "IndexedTriangleSet",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Rendering",
+      value: Object .freeze ({ name: "Rendering", level: 1 }),
       enumerable: true,
    },
    containerField:

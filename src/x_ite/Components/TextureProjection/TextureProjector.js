@@ -197,9 +197,9 @@ Object .defineProperties (TextureProjector,
       value: "TextureProjector",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "TextureProjection",
+      value: Object .freeze ({ name: "TextureProjection", level: 1 }),
       enumerable: true,
    },
    containerField:

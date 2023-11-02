@@ -117,9 +117,9 @@ Object .defineProperties (TextureCoordinate4D,
       value: "TextureCoordinate4D",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Texturing3D",
+      value: Object .freeze ({ name: "Texturing3D", level: 1 }),
       enumerable: true,
    },
    containerField:

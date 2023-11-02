@@ -166,9 +166,9 @@ Object .defineProperties (X3DDamperNode,
       value: "X3DDamperNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Followers",
+      value: Object .freeze ({ name: "Followers", level: 1 }),
       enumerable: true,
    },
 });

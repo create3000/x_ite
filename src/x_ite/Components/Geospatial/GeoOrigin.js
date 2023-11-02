@@ -88,9 +88,9 @@ Object .defineProperties (GeoOrigin,
       value: "GeoOrigin",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Geospatial",
+      value: Object .freeze ({ name: "Geospatial", level: 1 }),
       enumerable: true,
    },
    containerField:

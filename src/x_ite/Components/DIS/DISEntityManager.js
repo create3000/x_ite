@@ -72,9 +72,9 @@ Object .defineProperties (DISEntityManager,
       value: "DISEntityManager",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "DIS",
+      value: Object .freeze ({ name: "DIS", level: 1 }),
       enumerable: true,
    },
    containerField:

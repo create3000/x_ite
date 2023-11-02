@@ -462,9 +462,9 @@ Object .defineProperties (CollidableShape,
       value: "CollidableShape",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "RigidBodyPhysics",
+      value: Object .freeze ({ name: "RigidBodyPhysics", level: 1 }),
       enumerable: true,
    },
    containerField:

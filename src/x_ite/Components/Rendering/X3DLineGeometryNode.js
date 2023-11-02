@@ -479,9 +479,9 @@ Object .defineProperties (X3DLineGeometryNode,
       value: "X3DLineGeometryNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Rendering",
+      value: Object .freeze ({ name: "Rendering", level: 1 }),
       enumerable: true,
    },
 });

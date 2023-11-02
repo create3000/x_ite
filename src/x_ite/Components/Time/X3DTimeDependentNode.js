@@ -355,9 +355,9 @@ Object .defineProperties (X3DTimeDependentNode,
       value: "X3DTimeDependentNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Time",
+      value: Object .freeze ({ name: "Time", level: 1 }),
       enumerable: true,
    },
 });

@@ -82,9 +82,9 @@ Object .defineProperties (TransmitterPdu,
       value: "TransmitterPdu",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "DIS",
+      value: Object .freeze ({ name: "DIS", level: 1 }),
       enumerable: true,
    },
    containerField:

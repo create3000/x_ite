@@ -82,9 +82,9 @@ Object .defineProperties (GroupAnnotation,
       value: "GroupAnnotation",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Annotation",
+      value: Object .freeze ({ name: "Annotation", level: 1 }),
       enumerable: true,
    },
    containerField:

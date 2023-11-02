@@ -226,9 +226,9 @@ Object .defineProperties (CollidableOffset,
       value: "CollidableOffset",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "RigidBodyPhysics",
+      value: Object .freeze ({ name: "RigidBodyPhysics", level: 1 }),
       enumerable: true,
    },
    containerField:

@@ -179,9 +179,9 @@ Object .defineProperties (NurbsCurve2D,
       value: "NurbsCurve2D",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "NURBS",
+      value: Object .freeze ({ name: "NURBS", level: 1 }),
       enumerable: true,
    },
    containerField:

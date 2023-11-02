@@ -64,9 +64,9 @@ Object .defineProperties (X3DNormalNode,
       value: "X3DNormalNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Rendering",
+      value: Object .freeze ({ name: "Rendering", level: 1 }),
       enumerable: true,
    },
 });

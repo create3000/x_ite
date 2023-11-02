@@ -1383,9 +1383,9 @@ Object .defineProperties (X3DNode,
       value: "X3DNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Core",
+      value: Object .freeze ({ name: "Core", level: 1 }),
       enumerable: true,
    },
 });

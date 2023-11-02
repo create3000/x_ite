@@ -157,9 +157,9 @@ Object .defineProperties (X3DNBodyCollidableNode,
       value: "X3DNBodyCollidableNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "RigidBodyPhysics",
+      value: Object .freeze ({ name: "RigidBodyPhysics", level: 1 }),
       enumerable: true,
    },
 });

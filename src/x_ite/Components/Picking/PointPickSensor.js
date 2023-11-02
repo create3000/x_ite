@@ -313,9 +313,9 @@ Object .defineProperties (PointPickSensor,
       value: "PointPickSensor",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Picking",
+      value: Object .freeze ({ name: "Picking", level: 1 }),
       enumerable: true,
    },
    containerField:

@@ -86,9 +86,9 @@ Object .defineProperties (Layer,
       value: "Layer",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Layering",
+      value: Object .freeze ({ name: "Layering", level: 1 }),
       enumerable: true,
    },
    containerField:

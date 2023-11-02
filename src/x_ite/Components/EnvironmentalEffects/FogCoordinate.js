@@ -122,9 +122,9 @@ Object .defineProperties (FogCoordinate,
       value: "FogCoordinate",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "EnvironmentalEffects",
+      value: Object .freeze ({ name: "EnvironmentalEffects", level: 1 }),
       enumerable: true,
    },
    containerField:

@@ -79,9 +79,9 @@ Object .defineProperties (CoordinateChaser,
       value: "CoordinateChaser",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Followers",
+      value: Object .freeze ({ name: "Followers", level: 1 }),
       enumerable: true,
    },
    containerField:

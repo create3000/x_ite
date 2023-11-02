@@ -66,9 +66,9 @@ Object .defineProperties (X3DDragSensorNode,
       value: "X3DDragSensorNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "PointingDeviceSensor",
+      value: Object .freeze ({ name: "PointingDeviceSensor", level: 1 }),
       enumerable: true,
    },
 });

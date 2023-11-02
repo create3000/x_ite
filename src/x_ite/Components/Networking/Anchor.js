@@ -180,9 +180,9 @@ Object .defineProperties (Anchor,
       value: "Anchor",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Networking",
+      value: Object .freeze ({ name: "Networking", level: 1 }),
       enumerable: true,
    },
    containerField:

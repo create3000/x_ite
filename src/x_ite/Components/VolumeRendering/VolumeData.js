@@ -177,9 +177,9 @@ Object .defineProperties (VolumeData,
       value: "VolumeData",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "VolumeRendering",
+      value: Object .freeze ({ name: "VolumeRendering", level: 1 }),
       enumerable: true,
    },
    containerField:

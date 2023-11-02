@@ -67,9 +67,9 @@ Object .defineProperties (CoordinateDouble,
       value: "CoordinateDouble",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "NURBS",
+      value: Object .freeze ({ name: "NURBS", level: 1 }),
       enumerable: true,
    },
    containerField:

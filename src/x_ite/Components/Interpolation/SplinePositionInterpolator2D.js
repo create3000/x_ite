@@ -113,9 +113,9 @@ Object .defineProperties (SplinePositionInterpolator2D,
       value: "SplinePositionInterpolator2D",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Interpolation",
+      value: Object .freeze ({ name: "Interpolation", level: 1 }),
       enumerable: true,
    },
    containerField:

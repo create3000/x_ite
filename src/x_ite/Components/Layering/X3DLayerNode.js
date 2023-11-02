@@ -424,9 +424,9 @@ Object .defineProperties (X3DLayerNode,
       value: "X3DLayerNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Layering",
+      value: Object .freeze ({ name: "Layering", level: 1 }),
       enumerable: true,
    },
 });

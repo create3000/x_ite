@@ -90,9 +90,9 @@ Object .defineProperties (X3DBindableNode,
       value: "X3DBindableNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Core",
+      value: Object .freeze ({ name: "Core", level: 1 }),
       enumerable: true,
    },
    getModificationCount:

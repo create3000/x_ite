@@ -67,9 +67,9 @@ Object .defineProperties (Delay,
       value: "Delay",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Sound",
+      value: Object .freeze ({ name: "Sound", level: 1 }),
       enumerable: true,
    },
    containerField:

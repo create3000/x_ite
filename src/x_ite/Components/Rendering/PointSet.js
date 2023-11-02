@@ -190,9 +190,9 @@ Object .defineProperties (PointSet,
       value: "PointSet",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Rendering",
+      value: Object .freeze ({ name: "Rendering", level: 1 }),
       enumerable: true,
    },
    containerField:

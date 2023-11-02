@@ -223,9 +223,9 @@ Object .defineProperties (X3DLightNode,
       value: "X3DLightNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Lighting",
+      value: Object .freeze ({ name: "Lighting", level: 1 }),
       enumerable: true,
    },
 });

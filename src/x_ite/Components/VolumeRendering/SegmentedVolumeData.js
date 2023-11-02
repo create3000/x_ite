@@ -242,9 +242,9 @@ Object .defineProperties (SegmentedVolumeData,
       value: "SegmentedVolumeData",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "VolumeRendering",
+      value: Object .freeze ({ name: "VolumeRendering", level: 1 }),
       enumerable: true,
    },
    containerField:

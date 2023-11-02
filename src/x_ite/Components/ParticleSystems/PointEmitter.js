@@ -119,9 +119,9 @@ Object .defineProperties (PointEmitter,
       value: "PointEmitter",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "ParticleSystems",
+      value: Object .freeze ({ name: "ParticleSystems", level: 1 }),
       enumerable: true,
    },
    containerField:

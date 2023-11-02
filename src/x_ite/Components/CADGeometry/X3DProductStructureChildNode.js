@@ -64,9 +64,9 @@ Object .defineProperties (X3DProductStructureChildNode,
       value: "X3DProductStructureChildNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "CADGeometry",
+      value: Object .freeze ({ name: "CADGeometry", level: 1 }),
       enumerable: true,
    },
 });

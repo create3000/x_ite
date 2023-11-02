@@ -122,9 +122,9 @@ Object .defineProperties (X3DPointingDeviceSensorNode,
       value: "X3DPointingDeviceSensorNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "PointingDeviceSensor",
+      value: Object .freeze ({ name: "PointingDeviceSensor", level: 1 }),
       enumerable: true,
    },
 });

@@ -172,9 +172,9 @@ Object .defineProperties (BlendMode,
       value: "BlendMode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "X_ITE",
+      value: Object .freeze ({ name: "X_ITE", level: 1 }),
       enumerable: true,
    },
    containerField:
