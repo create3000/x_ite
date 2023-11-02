@@ -145,8 +145,7 @@ Object .assign (Object .setPrototypeOf (SingleAxisHingeJoint .prototype, X3DRigi
    {
       if (this .joint)
       {
-         if (this .getCollection ())
-            this .getCollection () .getDynamicsWorld () .removeConstraint (this .joint);
+         this .getCollection () ?.getDynamicsWorld () .removeConstraint (this .joint);
 
          Ammo .destroy (this .joint);
          this .joint = null;

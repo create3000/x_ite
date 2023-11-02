@@ -49,15 +49,11 @@ import Fields       from "../../Fields.js";
 import X3DBaseNode  from "../../Base/X3DBaseNode.js";
 import X3DConstants from "../../Base/X3DConstants.js";
 
-const _private = Symbol ()
-
 function X3DNode (executionContext)
 {
    X3DBaseNode .call (this, executionContext);
 
    this .addType (X3DConstants .X3DNode);
-
-   this [_private] = false;
 }
 
 Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototype),
@@ -221,14 +217,6 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
       }
 
       return false;
-   },
-   isPrivate ()
-   {
-      return this [_private];
-   },
-   setPrivate (value)
-   {
-      this [_private] = value;
    },
    getCloneCount ()
    {

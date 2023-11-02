@@ -106,8 +106,7 @@ Object .assign (Object .setPrototypeOf (BallJoint .prototype, X3DRigidJointNode 
       if (!this .joint)
          return;
 
-      if (this .getCollection ())
-         this .getCollection () .getDynamicsWorld () .removeConstraint (this .joint);
+      this .getCollection () ?.getDynamicsWorld () .removeConstraint (this .joint);
 
       Ammo .destroy (this .joint);
       this .joint = null;

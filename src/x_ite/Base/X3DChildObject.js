@@ -52,6 +52,7 @@ const
    _modificationTime = Symbol (),
    _tainted          = Symbol (),
    _parents          = Symbol (),
+   _private          = Symbol (),
    _registry         = Symbol ();
 
 function X3DChildObject ()
@@ -66,6 +67,7 @@ if (DEVELOPMENT)
       [_modificationTime]: 0,
       [_tainted]: false,
       [_parents]: new Map (),
+      [_private]: false,
       [_registry]: new FinalizationRegistry (Function .prototype),
       isInitializable ()
       {
@@ -114,12 +116,30 @@ if (DEVELOPMENT)
          this .setTainted (false);
          this .processInterests ();
       },
+      isPrivate ()
+      {
+         return this [_private];
+      },
+      setPrivate (value)
+      {
+         this [_private] = value;
+      },
       collectCloneCount ()
       {
          let cloneCount = 0;
 
          for (const weakRef of this [_parents] .values ())
-            cloneCount += weakRef .deref () ?.collectCloneCount ();
+         {
+            const parent = weakRef .deref ();
+
+            if (!parent)
+               continue;
+
+            if (parent [_private])
+               continue;
+
+            cloneCount += parent .collectCloneCount ();
+         }
 
          return cloneCount;
       },
@@ -174,6 +194,7 @@ else
       [_modificationTime]: 0,
       [_tainted]: false,
       [_parents]: new Set (),
+      [_private]: false,
       isInitializable ()
       {
          return true;
@@ -221,12 +242,25 @@ else
          this .setTainted (false);
          this .processInterests ();
       },
+      isPrivate ()
+      {
+         return this [_private];
+      },
+      setPrivate (value)
+      {
+         this [_private] = value;
+      },
       collectCloneCount ()
       {
          let cloneCount = 0;
 
          for (const parent of this [_parents])
+         {
+            if (parent [_private])
+               continue;
+
             cloneCount += parent .collectCloneCount ();
+         }
 
          return cloneCount;
       },
