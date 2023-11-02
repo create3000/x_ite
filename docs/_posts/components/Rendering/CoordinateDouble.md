@@ -15,7 +15,7 @@ tags: [CoordinateDouble, NURBS]
 
 CoordinateDouble builds geometry by defining a set of 3D coordinate (triplet) point values. CoordinateDouble is used by IndexedFaceSet, IndexedLineSet, LineSet, PointSet, Triangle* and IndexedTriangle* nodes. CoordinateDouble is also used by NurbsPositionInterpolator and NurbsOrientationInterpolator.
 
-The CoordinateDouble node belongs to the **Rendering** component level **1** and its default container field is *coord.* It is available from X3D version 3.0 or higher.
+The CoordinateDouble node belongs to the **Rendering** component and requires level **1**, its default container field is *coord.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 
