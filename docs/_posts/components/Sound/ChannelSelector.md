@@ -65,7 +65,7 @@ The *gain* field is a factor that represents the amount of linear amplification 
 
 *channelSelection* is single channel of interest from those provided by input nodes.
 
-### SFInt32 [out] **channelCount**
+### SFInt32 [in, out] **channelCount**
 
 *channelCount* reports number of channels provided by input nodes.
 

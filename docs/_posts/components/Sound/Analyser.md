@@ -89,11 +89,11 @@ The *gain* field is a factor that represents the amount of linear amplification 
 
 - *tailTime* always has a value of zero for Analyser.
 
-### SFInt32 [in, out] **frequencyBinCount** 1024 <small>[0,∞)</small>
+### SFInt32 [out] **frequencyBinCount** 1024 <small>[0,∞)</small>
 
 *frequencyBinCount* is half of fftSize and generally equates to number of data values available for the visualization.
 
-### SFInt32 [out] **channelCount**
+### SFInt32 [in, out] **channelCount**
 
 *channelCount* reports number of channels provided by input nodes.
 

@@ -176,7 +176,7 @@ The *detune* field forms a compound field together with playbackRate that togeth
 
 - *loopEnd* represents a nonnegative SFTime duration interval, not an absolute clock time.
 
-### SFInt32 [out] **channelCount**
+### SFInt32 [in, out] **channelCount**
 
 *channelCount* reports number of channels provided by input nodes.
 

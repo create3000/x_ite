@@ -61,11 +61,11 @@ The *gain* field is a factor that represents the amount of linear amplification 
 
 - Decibel values shall not be used.
 
-### SFString [out] **mediaDeviceID**
+### SFString [in, out] **mediaDeviceID**
 
 *mediaDeviceID* field provides ID parameter functionality. (TODO experimental)
 
-### SFInt32 [out] **channelCount**
+### SFInt32 [in, out] **channelCount**
 
 *channelCount* reports number of channels provided by input nodes.
 
@@ -97,7 +97,7 @@ The *gain* field is a factor that represents the amount of linear amplification 
 
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
-### SFInt32 [in, out] **maxChannelCount** 2 <small>[0,∞)</small>
+### SFInt32 [out] **maxChannelCount** 2 <small>[0,∞)</small>
 
 [*maxChannelCount*.
 

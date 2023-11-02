@@ -61,7 +61,7 @@ The *gain* field is a factor that represents the amount of linear amplification 
 
 - Decibel values shall not be used.
 
-### SFInt32 [out] **channelCount**
+### SFInt32 [in, out] **channelCount**
 
 *channelCount* reports number of channels provided by input nodes.
 

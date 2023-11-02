@@ -89,7 +89,7 @@ The *attack* field is the duration of time (in seconds) to reduce the gain by 10
 
 *tailTime* is duration of time that a node continues to provide output signal after the input signal becomes silent.
 
-### SFInt32 [out] **channelCount**
+### SFInt32 [in, out] **channelCount**
 
 *channelCount* reports number of channels provided by input nodes.
 

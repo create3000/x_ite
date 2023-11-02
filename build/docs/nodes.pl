@@ -28,6 +28,13 @@ $fieldDescription = {
    "in, out" => "Input/Output ",
 };
 
+$inOut = {
+   "initializeOnly" => " ",
+   "inputOnly" => "in",
+   "outputOnly" => "out",
+   "inputOutput" => "in, out",
+};
+
 sub node {
    $filename = shift;
    chomp $filename;
@@ -51,11 +58,13 @@ sub node {
 
    if (grep /^$typeName$/, @tooltips)
    {
+      $source = `cat $cwd/src/x_ite/Components/$componentName/$typeName.js`;
+
       @node = @tooltips [(first_index { /^$typeName$/ } @tooltips) .. $#tooltips];
       @node = @node [0 .. (first_index { /^$/ } @node)];
 
-      $file = update_node ($typeName, $componentName, \@node, $file);
-      $file = update_field ($_, \@node, $file) foreach @fields;
+      $file = update_node ($typeName, $componentName, \@node, $file, $source);
+      $file = update_field ($_, \@node, $file, $source) foreach @fields;
    }
 
    $file = reorder_sections ($file);
@@ -70,9 +79,9 @@ sub update_node {
    $componentName = shift;
    $node          = shift;
    $file          = shift;
+   $source        = shift;
    $node          = $node -> [1];
 
-   $source = `cat $cwd/src/x_ite/Components/$componentName/$typeName.js`;
    $source =~ /Object\s*\.freeze\s*\(\["(.*?)", "(.*?)"\]\)/;
    $from   = $1;
    $to     = $2;
@@ -290,12 +299,24 @@ sub update_example {
 }
 
 sub update_field {
-   $name = shift;
-   $node = shift;
-   $file = shift;
+   $name   = shift;
+   $node   = shift;
+   $file   = shift;
+   $source = shift;
 
    # return $file unless $name eq "tolerance";
    # say $name;
+
+   # Update type and access type.
+
+   $source =~ /X3DFieldDefinition \(X3DConstants \.(\w+),\s+"$name",\s+new Fields \.(\w+) \((.*?)\)\),/;
+   $accessType = $1;
+   $type       = $2;
+   $value      = $3;
+
+   $file =~ s/(###.*?)[SM]F\w+(.*?\[).*?(\].*?\*\*$name\*\*)/$1$type$2$inOut->{$accessType}$3/;
+
+   # Description
 
    $file =~ /(###.*?\*\*$name\*\*.*?\n)/;
    $line = $1;
