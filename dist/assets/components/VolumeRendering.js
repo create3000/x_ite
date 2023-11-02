@@ -196,9 +196,9 @@ Object .defineProperties (X3DVolumeRenderStyleNode,
       value: "X3DVolumeRenderStyleNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "VolumeRendering",
+      value: Object .freeze ({ name: "VolumeRendering", level: 1 }),
       enumerable: true,
    },
 });
@@ -275,9 +275,9 @@ Object .defineProperties (X3DComposableVolumeRenderStyleNode,
       value: "X3DComposableVolumeRenderStyleNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "VolumeRendering",
+      value: Object .freeze ({ name: "VolumeRendering", level: 1 }),
       enumerable: true,
    },
 });
@@ -443,9 +443,9 @@ Object .defineProperties (OpacityMapVolumeStyle,
       value: "OpacityMapVolumeStyle",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "VolumeRendering",
+      value: Object .freeze ({ name: "VolumeRendering", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -932,9 +932,9 @@ Object .defineProperties (BlendedVolumeStyle,
       value: "BlendedVolumeStyle",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "VolumeRendering",
+      value: Object .freeze ({ name: "VolumeRendering", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -1096,9 +1096,9 @@ Object .defineProperties (BoundaryEnhancementVolumeStyle,
       value: "BoundaryEnhancementVolumeStyle",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "VolumeRendering",
+      value: Object .freeze ({ name: "VolumeRendering", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -1411,9 +1411,9 @@ Object .defineProperties (CartoonVolumeStyle,
       value: "CartoonVolumeStyle",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "VolumeRendering",
+      value: Object .freeze ({ name: "VolumeRendering", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -1623,9 +1623,9 @@ Object .defineProperties (ComposedVolumeStyle,
       value: "ComposedVolumeStyle",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "VolumeRendering",
+      value: Object .freeze ({ name: "VolumeRendering", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -1806,9 +1806,9 @@ Object .defineProperties (EdgeEnhancementVolumeStyle,
       value: "EdgeEnhancementVolumeStyle",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "VolumeRendering",
+      value: Object .freeze ({ name: "VolumeRendering", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -2009,9 +2009,9 @@ Object .defineProperties (VolumeMaterial,
       value: "VolumeMaterial",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Shape",
+      value: Object .freeze ({ name: "Shape", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -2270,9 +2270,9 @@ Object .defineProperties (X3DVolumeDataNode,
       value: "X3DVolumeDataNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "VolumeRendering",
+      value: Object .freeze ({ name: "VolumeRendering", level: 1 }),
       enumerable: true,
    },
 });
@@ -2618,9 +2618,9 @@ Object .defineProperties (IsoSurfaceVolumeData,
       value: "IsoSurfaceVolumeData",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "VolumeRendering",
+      value: Object .freeze ({ name: "VolumeRendering", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -2861,9 +2861,9 @@ Object .defineProperties (ProjectionVolumeStyle,
       value: "ProjectionVolumeStyle",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "VolumeRendering",
+      value: Object .freeze ({ name: "VolumeRendering", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -3138,9 +3138,9 @@ Object .defineProperties (SegmentedVolumeData,
       value: "SegmentedVolumeData",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "VolumeRendering",
+      value: Object .freeze ({ name: "VolumeRendering", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -3426,9 +3426,9 @@ Object .defineProperties (ShadedVolumeStyle,
       value: "ShadedVolumeStyle",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "VolumeRendering",
+      value: Object .freeze ({ name: "VolumeRendering", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -3611,9 +3611,9 @@ Object .defineProperties (SilhouetteEnhancementVolumeStyle,
       value: "SilhouetteEnhancementVolumeStyle",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "VolumeRendering",
+      value: Object .freeze ({ name: "VolumeRendering", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -3803,9 +3803,9 @@ Object .defineProperties (ToneMappedVolumeStyle,
       value: "ToneMappedVolumeStyle",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "VolumeRendering",
+      value: Object .freeze ({ name: "VolumeRendering", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -4016,9 +4016,9 @@ Object .defineProperties (VolumeData,
       value: "VolumeData",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "VolumeRendering",
+      value: Object .freeze ({ name: "VolumeRendering", level: 1 }),
       enumerable: true,
    },
    containerField:

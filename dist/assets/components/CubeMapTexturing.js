@@ -320,9 +320,9 @@ Object .defineProperties (X3DEnvironmentTextureNode,
       value: "X3DEnvironmentTextureNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "CubeMapTexturing",
+      value: Object .freeze ({ name: "CubeMapTexturing", level: 1 }),
       enumerable: true,
    },
 });
@@ -413,6 +413,8 @@ function ComposedCubeMapTexture (executionContext)
       this .addAlias ("top",    this ._topTexture);
       this .addAlias ("bottom", this ._bottomTexture);
    }
+
+   // Private properties
 
    this .textureNodes = [null, null, null, null, null, null];
    this .textureBits  = new (BitSet_default()) ();
@@ -559,9 +561,9 @@ Object .defineProperties (ComposedCubeMapTexture,
       value: "ComposedCubeMapTexture",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "CubeMapTexturing",
+      value: Object .freeze ({ name: "CubeMapTexturing", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -1043,9 +1045,9 @@ Object .defineProperties (GeneratedCubeMapTexture,
       value: "GeneratedCubeMapTexture",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "CubeMapTexturing",
+      value: Object .freeze ({ name: "CubeMapTexturing", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -1454,9 +1456,9 @@ Object .defineProperties (ImageCubeMapTexture,
       value: "ImageCubeMapTexture",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "CubeMapTexturing",
+      value: Object .freeze ({ name: "CubeMapTexturing", level: 1 }),
       enumerable: true,
    },
    containerField:

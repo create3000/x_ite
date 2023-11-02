@@ -274,9 +274,9 @@ Object .defineProperties (X3DKeyDeviceSensorNode,
       value: "X3DKeyDeviceSensorNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "KeyDeviceSensor",
+      value: Object .freeze ({ name: "KeyDeviceSensor", level: 1 }),
       enumerable: true,
    },
 });
@@ -632,9 +632,9 @@ Object .defineProperties (KeySensor,
       value: "KeySensor",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "KeyDeviceSensor",
+      value: Object .freeze ({ name: "KeyDeviceSensor", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -806,9 +806,9 @@ Object .defineProperties (StringSensor,
       value: "StringSensor",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "KeyDeviceSensor",
+      value: Object .freeze ({ name: "KeyDeviceSensor", level: 1 }),
       enumerable: true,
    },
    containerField:

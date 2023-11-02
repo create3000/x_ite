@@ -146,9 +146,9 @@ Object .defineProperties (AnnotationLayer,
       value: "AnnotationLayer",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Annotation",
+      value: Object .freeze ({ name: "Annotation", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -258,9 +258,9 @@ Object .defineProperties (AnnotationTarget,
       value: "AnnotationTarget",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Annotation",
+      value: Object .freeze ({ name: "Annotation", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -367,9 +367,9 @@ Object .defineProperties (X3DAnnotationNode,
       value: "X3DAnnotationNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Annotation",
+      value: Object .freeze ({ name: "Annotation", level: 1 }),
       enumerable: true,
    },
 });
@@ -464,9 +464,9 @@ Object .defineProperties (GroupAnnotation,
       value: "GroupAnnotation",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Annotation",
+      value: Object .freeze ({ name: "Annotation", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -593,9 +593,9 @@ Object .defineProperties (IconAnnotation,
       value: "IconAnnotation",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Annotation",
+      value: Object .freeze ({ name: "Annotation", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -704,9 +704,9 @@ Object .defineProperties (TextAnnotation,
       value: "TextAnnotation",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Annotation",
+      value: Object .freeze ({ name: "Annotation", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -814,9 +814,9 @@ Object .defineProperties (URLAnnotation,
       value: "URLAnnotation",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Annotation",
+      value: Object .freeze ({ name: "Annotation", level: 1 }),
       enumerable: true,
    },
    containerField:

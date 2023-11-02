@@ -329,9 +329,9 @@ Object .defineProperties (X3DScriptNode,
       value: "X3DScriptNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Scripting",
+      value: Object .freeze ({ name: "Scripting", level: 1 }),
       enumerable: true,
    },
 });
@@ -831,9 +831,9 @@ Object .defineProperties (Script,
       value: "Script",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Scripting",
+      value: Object .freeze ({ name: "Scripting", level: 1 }),
       enumerable: true,
    },
    containerField:

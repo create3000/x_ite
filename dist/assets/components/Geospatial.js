@@ -1286,9 +1286,9 @@ Object .defineProperties (X3DGeospatialObject,
       value: "X3DGeospatialObject",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Geospatial",
+      value: Object .freeze ({ name: "Geospatial", level: 1 }),
       enumerable: true,
    },
 });
@@ -1513,9 +1513,9 @@ Object .defineProperties (GeoCoordinate,
       value: "GeoCoordinate",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Geospatial",
+      value: Object .freeze ({ name: "Geospatial", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -1945,9 +1945,9 @@ Object .defineProperties (GeoElevationGrid,
       value: "GeoElevationGrid",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Geospatial",
+      value: Object .freeze ({ name: "Geospatial", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -2436,9 +2436,9 @@ Object .defineProperties (GeoLOD,
       value: "GeoLOD",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Geospatial",
+      value: Object .freeze ({ name: "Geospatial", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -2580,9 +2580,9 @@ Object .defineProperties (GeoLocation,
       value: "GeoLocation",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Geospatial",
+      value: Object .freeze ({ name: "Geospatial", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -2712,9 +2712,9 @@ Object .defineProperties (GeoMetadata,
       value: "GeoMetadata",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Geospatial",
+      value: Object .freeze ({ name: "Geospatial", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -2842,9 +2842,9 @@ Object .defineProperties (GeoOrigin,
       value: "GeoOrigin",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Geospatial",
+      value: Object .freeze ({ name: "Geospatial", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -3002,9 +3002,9 @@ Object .defineProperties (GeoPositionInterpolator,
       value: "GeoPositionInterpolator",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Geospatial",
+      value: Object .freeze ({ name: "Geospatial", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -3173,9 +3173,9 @@ Object .defineProperties (GeoProximitySensor,
       value: "GeoProximitySensor",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Geospatial",
+      value: Object .freeze ({ name: "Geospatial", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -3319,9 +3319,9 @@ Object .defineProperties (GeoTouchSensor,
       value: "GeoTouchSensor",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Geospatial",
+      value: Object .freeze ({ name: "Geospatial", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -3466,9 +3466,9 @@ Object .defineProperties (GeoTransform,
       value: "GeoTransform",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Geospatial",
+      value: Object .freeze ({ name: "Geospatial", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -3605,6 +3605,8 @@ function GeoViewpoint (executionContext)
 
       this .traverse = traverse;
    }
+
+   // Private properties
 
    this .geoNavigationInfoNode = new (NavigationInfo_default()) (executionContext);
    this .projectionMatrix      = new (Matrix4_default()) ();
@@ -3774,9 +3776,9 @@ Object .defineProperties (GeoViewpoint,
       value: "GeoViewpoint",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Geospatial",
+      value: Object .freeze ({ name: "Geospatial", level: 1 }),
       enumerable: true,
    },
    containerField:

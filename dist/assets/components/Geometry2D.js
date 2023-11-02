@@ -901,9 +901,9 @@ Object .defineProperties (Arc2D,
       value: "Arc2D",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Geometry2D",
+      value: Object .freeze ({ name: "Geometry2D", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -1131,9 +1131,9 @@ Object .defineProperties (ArcClose2D,
       value: "ArcClose2D",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Geometry2D",
+      value: Object .freeze ({ name: "Geometry2D", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -1270,9 +1270,9 @@ Object .defineProperties (Circle2D,
       value: "Circle2D",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Geometry2D",
+      value: Object .freeze ({ name: "Geometry2D", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -1533,9 +1533,9 @@ Object .defineProperties (Disk2D,
       value: "Disk2D",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Geometry2D",
+      value: Object .freeze ({ name: "Geometry2D", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -1651,9 +1651,9 @@ Object .defineProperties (Polyline2D,
       value: "Polyline2D",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Geometry2D",
+      value: Object .freeze ({ name: "Geometry2D", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -1766,9 +1766,9 @@ Object .defineProperties (Polypoint2D,
       value: "Polypoint2D",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Geometry2D",
+      value: Object .freeze ({ name: "Geometry2D", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -1923,9 +1923,9 @@ Object .defineProperties (Rectangle2D,
       value: "Rectangle2D",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Geometry2D",
+      value: Object .freeze ({ name: "Geometry2D", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -2070,9 +2070,9 @@ Object .defineProperties (TriangleSet2D,
       value: "TriangleSet2D",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Geometry2D",
+      value: Object .freeze ({ name: "Geometry2D", level: 1 }),
       enumerable: true,
    },
    containerField:

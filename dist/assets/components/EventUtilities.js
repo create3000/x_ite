@@ -149,9 +149,9 @@ Object .defineProperties (BooleanFilter,
       value: "BooleanFilter",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "EventUtilities",
+      value: Object .freeze ({ name: "EventUtilities", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -331,9 +331,9 @@ Object .defineProperties (X3DSequencerNode,
       value: "X3DSequencerNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "EventUtilities",
+      value: Object .freeze ({ name: "EventUtilities", level: 1 }),
       enumerable: true,
    },
 });
@@ -429,9 +429,9 @@ Object .defineProperties (BooleanSequencer,
       value: "BooleanSequencer",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "EventUtilities",
+      value: Object .freeze ({ name: "EventUtilities", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -547,9 +547,9 @@ Object .defineProperties (BooleanToggle,
       value: "BooleanToggle",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "EventUtilities",
+      value: Object .freeze ({ name: "EventUtilities", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -645,9 +645,9 @@ Object .defineProperties (X3DTriggerNode,
       value: "X3DTriggerNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "EventUtilities",
+      value: Object .freeze ({ name: "EventUtilities", level: 1 }),
       enumerable: true,
    },
 });
@@ -739,9 +739,9 @@ Object .defineProperties (BooleanTrigger,
       value: "BooleanTrigger",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "EventUtilities",
+      value: Object .freeze ({ name: "EventUtilities", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -856,9 +856,9 @@ Object .defineProperties (IntegerSequencer,
       value: "IntegerSequencer",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "EventUtilities",
+      value: Object .freeze ({ name: "EventUtilities", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -973,9 +973,9 @@ Object .defineProperties (IntegerTrigger,
       value: "IntegerTrigger",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "EventUtilities",
+      value: Object .freeze ({ name: "EventUtilities", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -1087,9 +1087,9 @@ Object .defineProperties (TimeTrigger,
       value: "TimeTrigger",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "EventUtilities",
+      value: Object .freeze ({ name: "EventUtilities", level: 1 }),
       enumerable: true,
    },
    containerField:

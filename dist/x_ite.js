@@ -11,10 +11,10 @@
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 994:
+/***/ 471:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-/* provided dependency */ var jQuery = __webpack_require__(552);
+/* provided dependency */ var jQuery = __webpack_require__(301);
 /**
  * @preserve jquery.fullscreen 1.1.5
  * https://github.com/code-lts/jquery-fullscreen-plugin
@@ -210,7 +210,7 @@ installFullScreenHandlers();
 
 /***/ }),
 
-/***/ 834:
+/***/ 139:
 /***/ ((module, exports, __webpack_require__) => {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -224,7 +224,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 (function (factory) {
     if ( true ) {
         // AMD. Register as an anonymous module.
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(552)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(301)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 		(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -435,7 +435,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 552:
+/***/ 301:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -11159,7 +11159,7 @@ return jQuery;
 
 /***/ }),
 
-/***/ 474:
+/***/ 849:
 /***/ ((module) => {
 
 /**
@@ -15938,7 +15938,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 514:
+/***/ 34:
 /***/ (function(__unused_webpack_module, exports) {
 
 
@@ -19183,7 +19183,7 @@ if (true) {
 
 /***/ }),
 
-/***/ 147:
+/***/ 1:
 /***/ (function(module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -34133,7 +34133,7 @@ const X3DBaseNode_default_ = X3DBaseNode;
 x_ite_Namespace .add ("X3DBaseNode", "x_ite/Base/X3DBaseNode", X3DBaseNode_default_);
 /* harmony default export */ const Base_X3DBaseNode = (X3DBaseNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Legacy.js
-/* provided dependency */ var $ = __webpack_require__(552);
+/* provided dependency */ var $ = __webpack_require__(301);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -34340,9 +34340,9 @@ function X3DNode (executionContext)
 
 Object .assign (Object .setPrototypeOf (X3DNode .prototype, Base_X3DBaseNode .prototype),
 {
-   getComponentName ()
+   getComponentInfo ()
    {
-      return this .constructor .componentName;
+      return this .constructor .componentInfo;
    },
    getContainerField ()
    {
@@ -35661,9 +35661,9 @@ Object .defineProperties (X3DNode,
       value: "X3DNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Core",
+      value: Object .freeze ({ name: "Core", level: 1 }),
       enumerable: true,
    },
 });
@@ -35741,9 +35741,9 @@ Object .defineProperties (X3DMetadataObject,
       value: "X3DMetadataObject",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Core",
+      value: Object .freeze ({ name: "Core", level: 1 }),
       enumerable: true,
    },
 });
@@ -35845,9 +35845,9 @@ Object .defineProperties (MetadataBoolean,
       value: "MetadataBoolean",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Core",
+      value: Object .freeze ({ name: "Core", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -35969,9 +35969,9 @@ Object .defineProperties (MetadataDouble,
       value: "MetadataDouble",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Core",
+      value: Object .freeze ({ name: "Core", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -36093,9 +36093,9 @@ Object .defineProperties (MetadataFloat,
       value: "MetadataFloat",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Core",
+      value: Object .freeze ({ name: "Core", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -36217,9 +36217,9 @@ Object .defineProperties (MetadataInteger,
       value: "MetadataInteger",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Core",
+      value: Object .freeze ({ name: "Core", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -36341,9 +36341,9 @@ Object .defineProperties (MetadataSet,
       value: "MetadataSet",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Core",
+      value: Object .freeze ({ name: "Core", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -36465,9 +36465,9 @@ Object .defineProperties (MetadataString,
       value: "MetadataString",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Core",
+      value: Object .freeze ({ name: "Core", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -36595,9 +36595,9 @@ Object .defineProperties (X3DChildNode,
       value: "X3DChildNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Core",
+      value: Object .freeze ({ name: "Core", level: 1 }),
       enumerable: true,
    },
 });
@@ -36674,9 +36674,9 @@ Object .defineProperties (X3DInfoNode,
       value: "X3DInfoNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Core",
+      value: Object .freeze ({ name: "Core", level: 1 }),
       enumerable: true,
    },
 });
@@ -36770,9 +36770,9 @@ Object .defineProperties (WorldInfo,
       value: "WorldInfo",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Core",
+      value: Object .freeze ({ name: "Core", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -36894,9 +36894,9 @@ Object .defineProperties (X3DBindableNode,
       value: "X3DBindableNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Core",
+      value: Object .freeze ({ name: "Core", level: 1 }),
       enumerable: true,
    },
    getModificationCount:
@@ -37942,9 +37942,9 @@ Object .defineProperties (X3DUrlObject,
       value: "X3DUrlObject",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Networking",
+      value: Object .freeze ({ name: "Networking", level: 1 }),
       enumerable: true,
    },
 });
@@ -38072,7 +38072,7 @@ const X3DProtoDeclarationNode_default_ = X3DProtoDeclarationNode;
 x_ite_Namespace .add ("X3DProtoDeclarationNode", "x_ite/Prototype/X3DProtoDeclarationNode", X3DProtoDeclarationNode_default_);
 /* harmony default export */ const Prototype_X3DProtoDeclarationNode = (X3DProtoDeclarationNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/X3DParser.js
-/* provided dependency */ var X3DParser_$ = __webpack_require__(552);
+/* provided dependency */ var X3DParser_$ = __webpack_require__(301);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -38897,7 +38897,7 @@ const X3DProtoDeclaration_default_ = X3DProtoDeclaration;
 x_ite_Namespace .add ("X3DProtoDeclaration", "x_ite/Prototype/X3DProtoDeclaration", X3DProtoDeclaration_default_);
 /* harmony default export */ const Prototype_X3DProtoDeclaration = (X3DProtoDeclaration_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/VRMLParser.js
-/* provided dependency */ var VRMLParser_$ = __webpack_require__(552);
+/* provided dependency */ var VRMLParser_$ = __webpack_require__(301);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -41443,7 +41443,7 @@ const VRMLParser_default_ = VRMLParser;
 x_ite_Namespace .add ("VRMLParser", "x_ite/Parser/VRMLParser", VRMLParser_default_);
 /* harmony default export */ const Parser_VRMLParser = (VRMLParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/XMLParser.js
-/* provided dependency */ var XMLParser_$ = __webpack_require__(552);
+/* provided dependency */ var XMLParser_$ = __webpack_require__(301);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -43535,7 +43535,7 @@ const URLs_default_ = URLs;
 x_ite_Namespace .add ("URLs", "x_ite/Browser/Networking/URLs", URLs_default_);
 /* harmony default export */ const Networking_URLs = (URLs_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GLTF2Parser.js
-/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(552);
+/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(301);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -46836,7 +46836,7 @@ const GLTF2Parser_default_ = GLTF2Parser;
 x_ite_Namespace .add ("GLTF2Parser", "x_ite/Parser/GLTF2Parser", GLTF2Parser_default_);
 /* harmony default export */ const Parser_GLTF2Parser = (GLTF2Parser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GLB2Parser.js
-/* provided dependency */ var GLB2Parser_$ = __webpack_require__(552);
+/* provided dependency */ var GLB2Parser_$ = __webpack_require__(301);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -46988,7 +46988,7 @@ const GLB2Parser_default_ = GLB2Parser;
 x_ite_Namespace .add ("GLB2Parser", "x_ite/Parser/GLB2Parser", GLB2Parser_default_);
 /* harmony default export */ const Parser_GLB2Parser = (GLB2Parser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/OBJParser.js
-/* provided dependency */ var OBJParser_$ = __webpack_require__(552);
+/* provided dependency */ var OBJParser_$ = __webpack_require__(301);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -50343,8 +50343,8 @@ const MatrixStack_default_ = MatrixStack;
 x_ite_Namespace .add ("MatrixStack", "standard/Math/Utility/MatrixStack", MatrixStack_default_);
 /* harmony default export */ const Utility_MatrixStack = (MatrixStack_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_$ = __webpack_require__(552);
-/* provided dependency */ var libtess = __webpack_require__(474);
+/* provided dependency */ var SVGParser_$ = __webpack_require__(301);
+/* provided dependency */ var libtess = __webpack_require__(849);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -53112,7 +53112,7 @@ const SVGParser_default_ = SVGParser;
 x_ite_Namespace .add ("SVGParser", "x_ite/Parser/SVGParser", SVGParser_default_);
 /* harmony default export */ const Parser_SVGParser = (SVGParser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Parser/GoldenGate.js
-/* provided dependency */ var GoldenGate_$ = __webpack_require__(552);
+/* provided dependency */ var GoldenGate_$ = __webpack_require__(301);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -53449,7 +53449,7 @@ const Plane3_default_ = Plane3;
 x_ite_Namespace .add ("Plane3", "standard/Math/Geometry/Plane3", Plane3_default_);
 /* harmony default export */ const Geometry_Plane3 = (Plane3_default_);
 ;// CONCATENATED MODULE: ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var Triangle3_libtess = __webpack_require__(474);
+/* provided dependency */ var Triangle3_libtess = __webpack_require__(849);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -57621,9 +57621,9 @@ Object .defineProperties (NavigationInfo,
       value: "NavigationInfo",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Navigation",
+      value: Object .freeze ({ name: "Navigation", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -57909,9 +57909,9 @@ Object .defineProperties (X3DFogObject,
       value: "X3DFogObject",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "EnvironmentalEffects",
+      value: Object .freeze ({ name: "EnvironmentalEffects", level: 1 }),
       enumerable: true,
    },
 });
@@ -58023,9 +58023,9 @@ Object .defineProperties (Fog,
       value: "Fog",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "EnvironmentalEffects",
+      value: Object .freeze ({ name: "EnvironmentalEffects", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -59447,9 +59447,9 @@ Object .defineProperties (X3DGeometryNode,
       value: "X3DGeometryNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Rendering",
+      value: Object .freeze ({ name: "Rendering", level: 1 }),
       enumerable: true,
    },
 });
@@ -60229,9 +60229,9 @@ Object .defineProperties (X3DBackgroundNode,
       value: "X3DBackgroundNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "EnvironmentalEffects",
+      value: Object .freeze ({ name: "EnvironmentalEffects", level: 1 }),
       enumerable: true,
    },
 });
@@ -60316,9 +60316,9 @@ Object .defineProperties (X3DAppearanceChildNode,
       value: "X3DAppearanceChildNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Shape",
+      value: Object .freeze ({ name: "Shape", level: 1 }),
       enumerable: true,
    },
 });
@@ -60409,9 +60409,9 @@ Object .defineProperties (X3DTextureNode,
       value: "X3DTextureNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Texturing",
+      value: Object .freeze ({ name: "Texturing", level: 1 }),
       enumerable: true,
    },
 });
@@ -60750,9 +60750,9 @@ Object .defineProperties (X3DSingleTextureNode,
       value: "X3DSingleTextureNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Texturing",
+      value: Object .freeze ({ name: "Texturing", level: 1 }),
       enumerable: true,
    },
 });
@@ -60928,9 +60928,9 @@ Object .defineProperties (X3DTexture2DNode,
       value: "X3DTexture2DNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Texturing",
+      value: Object .freeze ({ name: "Texturing", level: 1 }),
       enumerable: true,
    },
 });
@@ -60941,7 +60941,7 @@ const X3DTexture2DNode_default_ = X3DTexture2DNode;
 x_ite_Namespace .add ("X3DTexture2DNode", "x_ite/Components/Texturing/X3DTexture2DNode", X3DTexture2DNode_default_);
 /* harmony default export */ const Texturing_X3DTexture2DNode = (X3DTexture2DNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/ImageTexture.js
-/* provided dependency */ var ImageTexture_$ = __webpack_require__(552);
+/* provided dependency */ var ImageTexture_$ = __webpack_require__(301);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -61206,9 +61206,9 @@ Object .defineProperties (ImageTexture,
       value: "ImageTexture",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Texturing",
+      value: Object .freeze ({ name: "Texturing", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -61299,6 +61299,7 @@ x_ite_Namespace .add ("ImageTexture", "x_ite/Components/Texturing/ImageTexture",
 
 
 
+
 function Background (executionContext)
 {
    EnvironmentalEffects_X3DBackgroundNode .call (this, executionContext);
@@ -61365,9 +61366,9 @@ Object .defineProperties (Background,
       value: "Background",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "EnvironmentalEffects",
+      value: Object .freeze ({ name: "EnvironmentalEffects", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -61392,7 +61393,7 @@ Object .defineProperties (Background,
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "topUrl",       new x_ite_Fields .MFString ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "bottomUrl",    new x_ite_Fields .MFString ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "skyAngle",     new x_ite_Fields .MFFloat ()),
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "skyColor",     new x_ite_Fields .MFColor (new x_ite_Fields .SFColor ())),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "skyColor",     new x_ite_Fields .MFColor (new Numbers_Color3 (0, 0, 0))),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "groundAngle",  new x_ite_Fields .MFFloat ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "groundColor",  new x_ite_Fields .MFColor ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "transparency", new x_ite_Fields .SFFloat ()),
@@ -61485,6 +61486,8 @@ function X3DLayerNode (executionContext, defaultViewpoint, groupNode)
 
    if (executionContext .getSpecificationVersion () <= 3.3)
       this .addAlias ("isPickable", this ._pickable);
+
+   // Private properties
 
    this .groupNode    = groupNode;
    this .viewportNode = null;
@@ -61833,9 +61836,9 @@ Object .defineProperties (X3DLayerNode,
       value: "X3DLayerNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Layering",
+      value: Object .freeze ({ name: "Layering", level: 1 }),
       enumerable: true,
    },
 });
@@ -61912,9 +61915,9 @@ Object .defineProperties (X3DSensorNode,
       value: "X3DSensorNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Core",
+      value: Object .freeze ({ name: "Core", level: 1 }),
       enumerable: true,
    },
 });
@@ -62282,9 +62285,9 @@ Object .defineProperties (X3DTimeDependentNode,
       value: "X3DTimeDependentNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Time",
+      value: Object .freeze ({ name: "Time", level: 1 }),
       enumerable: true,
    },
 });
@@ -62479,9 +62482,9 @@ Object .defineProperties (TimeSensor,
       value: "TimeSensor",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Time",
+      value: Object .freeze ({ name: "Time", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -62652,9 +62655,9 @@ Object .defineProperties (X3DInterpolatorNode,
       value: "X3DInterpolatorNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Interpolation",
+      value: Object .freeze ({ name: "Interpolation", level: 1 }),
       enumerable: true,
    },
 });
@@ -62785,9 +62788,9 @@ Object .defineProperties (EaseInEaseOut,
       value: "EaseInEaseOut",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Interpolation",
+      value: Object .freeze ({ name: "Interpolation", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -62915,9 +62918,9 @@ Object .defineProperties (PositionInterpolator,
       value: "PositionInterpolator",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Interpolation",
+      value: Object .freeze ({ name: "Interpolation", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -63054,9 +63057,9 @@ Object .defineProperties (OrientationInterpolator,
       value: "OrientationInterpolator",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Interpolation",
+      value: Object .freeze ({ name: "Interpolation", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -63179,9 +63182,9 @@ Object .defineProperties (ScalarInterpolator,
       value: "ScalarInterpolator",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Interpolation",
+      value: Object .freeze ({ name: "Interpolation", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -63818,9 +63821,9 @@ Object .defineProperties (X3DViewpointNode,
       value: "X3DViewpointNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Navigation",
+      value: Object .freeze ({ name: "Navigation", level: 1 }),
       enumerable: true,
    },
 });
@@ -63992,9 +63995,9 @@ Object .defineProperties (Viewpoint,
       value: "Viewpoint",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Navigation",
+      value: Object .freeze ({ name: "Navigation", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -64206,9 +64209,9 @@ Object .defineProperties (X3DBoundedObject,
       value: "X3DBoundedObject",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Grouping",
+      value: Object .freeze ({ name: "Grouping", level: 1 }),
       enumerable: true,
    },
 });
@@ -64906,9 +64909,9 @@ Object .defineProperties (X3DGroupingNode,
       value: "X3DGroupingNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Grouping",
+      value: Object .freeze ({ name: "Grouping", level: 1 }),
       enumerable: true,
    },
 });
@@ -64988,9 +64991,9 @@ Object .defineProperties (Group,
       value: "Group",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Grouping",
+      value: Object .freeze ({ name: "Grouping", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -65113,9 +65116,9 @@ Object .defineProperties (Layer,
       value: "Layer",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Layering",
+      value: Object .freeze ({ name: "Layering", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -65330,9 +65333,9 @@ Object .defineProperties (LayerSet,
       value: "LayerSet",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Layering",
+      value: Object .freeze ({ name: "Layering", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -65528,7 +65531,7 @@ const X3DWorld_default_ = X3DWorld;
 x_ite_Namespace .add ("X3DWorld", "x_ite/Execution/X3DWorld", X3DWorld_default_);
 /* harmony default export */ const Execution_X3DWorld = (X3DWorld_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/InputOutput/FileLoader.js
-/* provided dependency */ var FileLoader_$ = __webpack_require__(552);
+/* provided dependency */ var FileLoader_$ = __webpack_require__(301);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -67033,7 +67036,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, Base_X3D
          if (this .getSpecificationVersion () > specificationRange [1])
             return null;
 
-         if (!this .hasComponent (ConcreteNode .componentName))
+         if (!this .hasComponent (ConcreteNode .componentInfo .name))
             console .warn (`Node type '${typeName}' does not match component/profile statements in '${this .getWorldURL ()}'.`);
 
          return new ConcreteNode (this);
@@ -67053,7 +67056,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, Base_X3D
          if (this .getSpecificationVersion () > specificationRange [1])
             throw new Error (`Node type '${typeName}' does not match specification version in '${this .getWorldURL ()}.`);
 
-         if (!this .hasComponent (ConcreteNode .componentName))
+         if (!this .hasComponent (ConcreteNode .componentInfo .name))
             console .warn (`Node type '${typeName}' does not match component/profile statements in '${this .getWorldURL ()}'.`);
 
          const baseNode = new ConcreteNode (this);
@@ -68888,9 +68891,9 @@ Object .defineProperties (X3DPrototypeInstance,
       value: "X3DPrototypeInstance",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Core",
+      value: Object .freeze ({ name: "Core", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -69067,9 +69070,9 @@ Object .defineProperties (X3DGeometricPropertyNode,
       value: "X3DGeometricPropertyNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Rendering",
+      value: Object .freeze ({ name: "Rendering", level: 1 }),
       enumerable: true,
    },
 });
@@ -69204,9 +69207,9 @@ Object .defineProperties (FogCoordinate,
       value: "FogCoordinate",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "EnvironmentalEffects",
+      value: Object .freeze ({ name: "EnvironmentalEffects", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -69335,9 +69338,9 @@ Object .defineProperties (LocalFog,
       value: "LocalFog",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "EnvironmentalEffects",
+      value: Object .freeze ({ name: "EnvironmentalEffects", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -69423,6 +69426,7 @@ x_ite_Namespace .add ("LocalFog", "x_ite/Components/EnvironmentalEffects/LocalFo
 
 
 
+
 function TextureBackground (executionContext)
 {
    EnvironmentalEffects_X3DBackgroundNode .call (this, executionContext);
@@ -69463,9 +69467,9 @@ Object .defineProperties (TextureBackground,
       value: "TextureBackground",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "EnvironmentalEffects",
+      value: Object .freeze ({ name: "EnvironmentalEffects", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -69484,7 +69488,7 @@ Object .defineProperties (TextureBackground,
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "metadata",      new x_ite_Fields .SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOnly,   "set_bind",      new x_ite_Fields .SFBool ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "skyAngle",      new x_ite_Fields .MFFloat ()),
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "skyColor",      new x_ite_Fields .MFColor (new x_ite_Fields .SFColor ())),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "skyColor",      new x_ite_Fields .MFColor (new Numbers_Color3 (0, 0, 0))),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "groundAngle",   new x_ite_Fields .MFFloat ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "groundColor",   new x_ite_Fields .MFColor ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "transparency",  new x_ite_Fields .SFFloat ()),
@@ -69718,9 +69722,9 @@ Object .defineProperties (X3DEnvironmentalSensorNode,
       value: "X3DEnvironmentalSensorNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "EnvironmentalSensor",
+      value: Object .freeze ({ name: "EnvironmentalSensor", level: 1 }),
       enumerable: true,
    },
 });
@@ -69972,9 +69976,9 @@ Object .defineProperties (ProximitySensor,
       value: "ProximitySensor",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "EnvironmentalSensor",
+      value: Object .freeze ({ name: "EnvironmentalSensor", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -70297,9 +70301,9 @@ Object .defineProperties (TransformSensor,
       value: "TransformSensor",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "EnvironmentalSensor",
+      value: Object .freeze ({ name: "EnvironmentalSensor", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -70483,9 +70487,9 @@ Object .defineProperties (VisibilitySensor,
       value: "VisibilitySensor",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "EnvironmentalSensor",
+      value: Object .freeze ({ name: "EnvironmentalSensor", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -70733,9 +70737,9 @@ Object .defineProperties (X3DFollowerNode,
       value: "X3DFollowerNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Followers",
+      value: Object .freeze ({ name: "Followers", level: 1 }),
       enumerable: true,
    },
 });
@@ -70979,9 +70983,9 @@ Object .defineProperties (X3DChaserNode,
       value: "X3DChaserNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Followers",
+      value: Object .freeze ({ name: "Followers", level: 1 }),
       enumerable: true,
    },
 });
@@ -71107,9 +71111,9 @@ Object .defineProperties (ColorChaser,
       value: "ColorChaser",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Followers",
+      value: Object .freeze ({ name: "Followers", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -71312,9 +71316,9 @@ Object .defineProperties (X3DDamperNode,
       value: "X3DDamperNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Followers",
+      value: Object .freeze ({ name: "Followers", level: 1 }),
       enumerable: true,
    },
 });
@@ -71436,9 +71440,9 @@ Object .defineProperties (ColorDamper,
       value: "ColorDamper",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Followers",
+      value: Object .freeze ({ name: "Followers", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -71820,9 +71824,9 @@ Object .defineProperties (CoordinateChaser,
       value: "CoordinateChaser",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Followers",
+      value: Object .freeze ({ name: "Followers", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -71938,9 +71942,9 @@ Object .defineProperties (CoordinateDamper,
       value: "CoordinateDamper",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Followers",
+      value: Object .freeze ({ name: "Followers", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -72079,9 +72083,9 @@ Object .defineProperties (OrientationChaser,
       value: "OrientationChaser",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Followers",
+      value: Object .freeze ({ name: "Followers", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -72212,9 +72216,9 @@ Object .defineProperties (OrientationDamper,
       value: "OrientationDamper",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Followers",
+      value: Object .freeze ({ name: "Followers", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -72327,9 +72331,9 @@ Object .defineProperties (PositionChaser,
       value: "PositionChaser",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Followers",
+      value: Object .freeze ({ name: "Followers", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -72440,9 +72444,9 @@ Object .defineProperties (PositionChaser2D,
       value: "PositionChaser2D",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Followers",
+      value: Object .freeze ({ name: "Followers", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -72553,9 +72557,9 @@ Object .defineProperties (PositionDamper,
       value: "PositionDamper",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Followers",
+      value: Object .freeze ({ name: "Followers", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -72668,9 +72672,9 @@ Object .defineProperties (PositionDamper2D,
       value: "PositionDamper2D",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Followers",
+      value: Object .freeze ({ name: "Followers", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -72811,9 +72815,9 @@ Object .defineProperties (ScalarChaser,
       value: "ScalarChaser",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Followers",
+      value: Object .freeze ({ name: "Followers", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -72940,9 +72944,9 @@ Object .defineProperties (ScalarDamper,
       value: "ScalarDamper",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Followers",
+      value: Object .freeze ({ name: "Followers", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -73060,9 +73064,9 @@ Object .defineProperties (TexCoordChaser2D,
       value: "TexCoordChaser2D",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Followers",
+      value: Object .freeze ({ name: "Followers", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -73178,9 +73182,9 @@ Object .defineProperties (TexCoordDamper2D,
       value: "TexCoordDamper2D",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Followers",
+      value: Object .freeze ({ name: "Followers", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -73432,9 +73436,9 @@ Object .defineProperties (Box,
       value: "Box",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Geometry3D",
+      value: Object .freeze ({ name: "Geometry3D", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -73682,9 +73686,9 @@ Object .defineProperties (Cone,
       value: "Cone",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Geometry3D",
+      value: Object .freeze ({ name: "Geometry3D", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -73995,9 +73999,9 @@ Object .defineProperties (Cylinder,
       value: "Cylinder",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Geometry3D",
+      value: Object .freeze ({ name: "Geometry3D", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -74430,9 +74434,9 @@ Object .defineProperties (ElevationGrid,
       value: "ElevationGrid",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Geometry3D",
+      value: Object .freeze ({ name: "Geometry3D", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -75166,9 +75170,9 @@ Object .defineProperties (Extrusion,
       value: "Extrusion",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Geometry3D",
+      value: Object .freeze ({ name: "Geometry3D", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -75565,9 +75569,9 @@ Object .defineProperties (X3DComposedGeometryNode,
       value: "X3DComposedGeometryNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Rendering",
+      value: Object .freeze ({ name: "Rendering", level: 1 }),
       enumerable: true,
    },
 });
@@ -75996,9 +76000,9 @@ Object .defineProperties (IndexedFaceSet,
       value: "IndexedFaceSet",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Geometry3D",
+      value: Object .freeze ({ name: "Geometry3D", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -76165,9 +76169,9 @@ Object .defineProperties (Sphere,
       value: "Sphere",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Geometry3D",
+      value: Object .freeze ({ name: "Geometry3D", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -76487,9 +76491,9 @@ Object .defineProperties (StaticGroup,
       value: "StaticGroup",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Grouping",
+      value: Object .freeze ({ name: "Grouping", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -76587,6 +76591,8 @@ function Switch (executionContext)
 
    if (executionContext .getSpecificationVersion () == 2.0)
       this .addAlias ("choice", this ._children);
+
+   // Private properties
 
    this .childNode     = null;
    this .visibleNode   = null;
@@ -76748,9 +76754,9 @@ Object .defineProperties (Switch,
       value: "Switch",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Grouping",
+      value: Object .freeze ({ name: "Grouping", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -76913,9 +76919,9 @@ Object .defineProperties (X3DTransformMatrix3DNode,
       value: "X3DTransformMatrix3DNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Grouping",
+      value: Object .freeze ({ name: "Grouping", level: 1 }),
       enumerable: true,
    },
 });
@@ -77013,9 +77019,9 @@ Object .defineProperties (X3DTransformNode,
       value: "X3DTransformNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Grouping",
+      value: Object .freeze ({ name: "Grouping", level: 1 }),
       enumerable: true,
    },
 });
@@ -77095,9 +77101,9 @@ Object .defineProperties (Transform,
       value: "Transform",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Grouping",
+      value: Object .freeze ({ name: "Grouping", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -77318,9 +77324,9 @@ Object .defineProperties (ColorInterpolator,
       value: "ColorInterpolator",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Interpolation",
+      value: Object .freeze ({ name: "Interpolation", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -77455,9 +77461,9 @@ Object .defineProperties (CoordinateInterpolator,
       value: "CoordinateInterpolator",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Interpolation",
+      value: Object .freeze ({ name: "Interpolation", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -77589,9 +77595,9 @@ Object .defineProperties (CoordinateInterpolator2D,
       value: "CoordinateInterpolator2D",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Interpolation",
+      value: Object .freeze ({ name: "Interpolation", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -77752,9 +77758,9 @@ Object .defineProperties (NormalInterpolator,
       value: "NormalInterpolator",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Interpolation",
+      value: Object .freeze ({ name: "Interpolation", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -77882,9 +77888,9 @@ Object .defineProperties (PositionInterpolator2D,
       value: "PositionInterpolator2D",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Interpolation",
+      value: Object .freeze ({ name: "Interpolation", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -78392,9 +78398,9 @@ Object .defineProperties (SplinePositionInterpolator,
       value: "SplinePositionInterpolator",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Interpolation",
+      value: Object .freeze ({ name: "Interpolation", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -78602,9 +78608,9 @@ Object .defineProperties (SplinePositionInterpolator2D,
       value: "SplinePositionInterpolator2D",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Interpolation",
+      value: Object .freeze ({ name: "Interpolation", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -78846,9 +78852,9 @@ Object .defineProperties (SplineScalarInterpolator,
       value: "SplineScalarInterpolator",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Interpolation",
+      value: Object .freeze ({ name: "Interpolation", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -79107,9 +79113,9 @@ Object .defineProperties (SquadOrientationInterpolator,
       value: "SquadOrientationInterpolator",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Interpolation",
+      value: Object .freeze ({ name: "Interpolation", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -79298,9 +79304,9 @@ Object .defineProperties (X3DViewportNode,
       value: "X3DViewportNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Layering",
+      value: Object .freeze ({ name: "Layering", level: 1 }),
       enumerable: true,
    },
 });
@@ -79458,9 +79464,9 @@ Object .defineProperties (Viewport,
       value: "Viewport",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Layering",
+      value: Object .freeze ({ name: "Layering", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -79793,9 +79799,9 @@ Object .defineProperties (X3DLightNode,
       value: "X3DLightNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Lighting",
+      value: Object .freeze ({ name: "Lighting", level: 1 }),
       enumerable: true,
    },
 });
@@ -80060,9 +80066,9 @@ Object .defineProperties (DirectionalLight,
       value: "DirectionalLight",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Lighting",
+      value: Object .freeze ({ name: "Lighting", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -80307,9 +80313,9 @@ Object .defineProperties (EnvironmentLight,
       value: "EnvironmentLight",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Lighting",
+      value: Object .freeze ({ name: "Lighting", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -80653,9 +80659,9 @@ Object .defineProperties (PointLight,
       value: "PointLight",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Lighting",
+      value: Object .freeze ({ name: "Lighting", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -81021,9 +81027,9 @@ Object .defineProperties (SpotLight,
       value: "SpotLight",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Lighting",
+      value: Object .freeze ({ name: "Lighting", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -81295,9 +81301,9 @@ Object .defineProperties (Billboard,
       value: "Billboard",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Navigation",
+      value: Object .freeze ({ name: "Navigation", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -81483,9 +81489,9 @@ Object .defineProperties (Collision,
       value: "Collision",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Navigation",
+      value: Object .freeze ({ name: "Navigation", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -81597,6 +81603,8 @@ function LOD (executionContext)
 
    if (executionContext .getSpecificationVersion () == 2.0)
       this .addAlias ("level", this ._children); // VRML2
+
+   // Private properties
 
    this .frameRate        = 60;
    this .keepCurrentLevel = false;
@@ -81828,9 +81836,9 @@ Object .defineProperties (LOD,
       value: "LOD",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Navigation",
+      value: Object .freeze ({ name: "Navigation", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -82186,9 +82194,9 @@ Object .defineProperties (OrthoViewpoint,
       value: "OrthoViewpoint",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Navigation",
+      value: Object .freeze ({ name: "Navigation", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -82405,9 +82413,9 @@ Object .defineProperties (ViewpointGroup,
       value: "ViewpointGroup",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Navigation",
+      value: Object .freeze ({ name: "Navigation", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -82733,9 +82741,9 @@ Object .defineProperties (X3DPointingDeviceSensorNode,
       value: "X3DPointingDeviceSensorNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "PointingDeviceSensor",
+      value: Object .freeze ({ name: "PointingDeviceSensor", level: 1 }),
       enumerable: true,
    },
 });
@@ -82844,9 +82852,9 @@ Object .defineProperties (X3DTouchSensorNode,
       value: "X3DTouchSensorNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "PointingDeviceSensor",
+      value: Object .freeze ({ name: "PointingDeviceSensor", level: 1 }),
       enumerable: true,
    },
 });
@@ -82928,9 +82936,9 @@ Object .defineProperties (TouchSensor,
       value: "TouchSensor",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "PointingDeviceSensor",
+      value: Object .freeze ({ name: "PointingDeviceSensor", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -83148,9 +83156,9 @@ Object .defineProperties (Anchor,
       value: "Anchor",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Networking",
+      value: Object .freeze ({ name: "Networking", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -83261,6 +83269,8 @@ function Inline (executionContext)
 
    if (executionContext .getSpecificationVersion () <= 3.3)
       this ._global = true;
+
+   // Private properties
 
    this .scene        = this .getBrowser () .getDefaultScene ();
    this .groupNode    = new Grouping_Group (executionContext);
@@ -83469,9 +83479,9 @@ Object .defineProperties (Inline,
       value: "Inline",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Networking",
+      value: Object .freeze ({ name: "Networking", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -83575,9 +83585,9 @@ Object .defineProperties (X3DNetworkSensorNode,
       value: "X3DNetworkSensorNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Networking",
+      value: Object .freeze ({ name: "Networking", level: 1 }),
       enumerable: true,
    },
 });
@@ -83652,6 +83662,8 @@ function LoadSensor (executionContext)
 
    if (executionContext .getSpecificationVersion () <= 3.3)
       this .addAlias ("watchList", this ._children);
+
+   // Private properties
 
    this .urlObjects = [ ];
    this .aborted    = false;
@@ -83823,9 +83835,9 @@ Object .defineProperties (LoadSensor,
       value: "LoadSensor",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Networking",
+      value: Object .freeze ({ name: "Networking", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -84001,9 +84013,9 @@ Object .defineProperties (X3DDragSensorNode,
       value: "X3DDragSensorNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "PointingDeviceSensor",
+      value: Object .freeze ({ name: "PointingDeviceSensor", level: 1 }),
       enumerable: true,
    },
 });
@@ -84444,9 +84456,9 @@ Object .defineProperties (CylinderSensor,
       value: "CylinderSensor",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "PointingDeviceSensor",
+      value: Object .freeze ({ name: "PointingDeviceSensor", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -84910,9 +84922,9 @@ Object .defineProperties (PlaneSensor,
       value: "PlaneSensor",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "PointingDeviceSensor",
+      value: Object .freeze ({ name: "PointingDeviceSensor", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -85334,9 +85346,9 @@ Object .defineProperties (SphereSensor,
       value: "SphereSensor",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "PointingDeviceSensor",
+      value: Object .freeze ({ name: "PointingDeviceSensor", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -85603,9 +85615,9 @@ Object .defineProperties (ClipPlane,
       value: "ClipPlane",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Rendering",
+      value: Object .freeze ({ name: "Rendering", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -85715,9 +85727,9 @@ Object .defineProperties (X3DColorNode,
       value: "X3DColorNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Rendering",
+      value: Object .freeze ({ name: "Rendering", level: 1 }),
       enumerable: true,
    },
 });
@@ -85850,9 +85862,9 @@ Object .defineProperties (Color,
       value: "Color",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Rendering",
+      value: Object .freeze ({ name: "Rendering", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -86005,9 +86017,9 @@ Object .defineProperties (ColorRGBA,
       value: "ColorRGBA",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Rendering",
+      value: Object .freeze ({ name: "Rendering", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -86222,9 +86234,9 @@ Object .defineProperties (X3DCoordinateNode,
       value: "X3DCoordinateNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Rendering",
+      value: Object .freeze ({ name: "Rendering", level: 1 }),
       enumerable: true,
    },
 });
@@ -86306,9 +86318,9 @@ Object .defineProperties (Coordinate,
       value: "Coordinate",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Rendering",
+      value: Object .freeze ({ name: "Rendering", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -86818,9 +86830,9 @@ Object .defineProperties (X3DLineGeometryNode,
       value: "X3DLineGeometryNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Rendering",
+      value: Object .freeze ({ name: "Rendering", level: 1 }),
       enumerable: true,
    },
 });
@@ -87103,9 +87115,9 @@ Object .defineProperties (IndexedLineSet,
       value: "IndexedLineSet",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Rendering",
+      value: Object .freeze ({ name: "Rendering", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -87271,9 +87283,9 @@ Object .defineProperties (IndexedTriangleFanSet,
       value: "IndexedTriangleFanSet",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Rendering",
+      value: Object .freeze ({ name: "Rendering", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -87398,9 +87410,9 @@ Object .defineProperties (IndexedTriangleSet,
       value: "IndexedTriangleSet",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Rendering",
+      value: Object .freeze ({ name: "Rendering", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -87576,9 +87588,9 @@ Object .defineProperties (IndexedTriangleStripSet,
       value: "IndexedTriangleStripSet",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Rendering",
+      value: Object .freeze ({ name: "Rendering", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -87827,9 +87839,9 @@ Object .defineProperties (LineSet,
       value: "LineSet",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Rendering",
+      value: Object .freeze ({ name: "Rendering", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -87929,9 +87941,9 @@ Object .defineProperties (X3DNormalNode,
       value: "X3DNormalNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Rendering",
+      value: Object .freeze ({ name: "Rendering", level: 1 }),
       enumerable: true,
    },
 });
@@ -88065,9 +88077,9 @@ Object .defineProperties (Normal,
       value: "Normal",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Rendering",
+      value: Object .freeze ({ name: "Rendering", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -88270,9 +88282,9 @@ Object .defineProperties (X3DPointGeometryNode,
       value: "X3DPointGeometryNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Rendering",
+      value: Object .freeze ({ name: "Rendering", level: 1 }),
       enumerable: true,
    },
 });
@@ -88475,9 +88487,9 @@ Object .defineProperties (PointSet,
       value: "PointSet",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Rendering",
+      value: Object .freeze ({ name: "Rendering", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -88621,9 +88633,9 @@ Object .defineProperties (TriangleFanSet,
       value: "TriangleFanSet",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Rendering",
+      value: Object .freeze ({ name: "Rendering", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -88744,9 +88756,9 @@ Object .defineProperties (TriangleSet,
       value: "TriangleSet",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Rendering",
+      value: Object .freeze ({ name: "Rendering", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -88899,9 +88911,9 @@ Object .defineProperties (TriangleStripSet,
       value: "TriangleStripSet",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Rendering",
+      value: Object .freeze ({ name: "Rendering", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -89141,9 +89153,9 @@ Object .defineProperties (X3DShaderNode,
       value: "X3DShaderNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Shaders",
+      value: Object .freeze ({ name: "Shaders", level: 1 }),
       enumerable: true,
    },
 });
@@ -89154,7 +89166,7 @@ const X3DShaderNode_default_ = X3DShaderNode;
 x_ite_Namespace .add ("X3DShaderNode", "x_ite/Components/Shaders/X3DShaderNode", X3DShaderNode_default_);
 /* harmony default export */ const Shaders_X3DShaderNode = (X3DShaderNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js
-/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(552);
+/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(301);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -90513,9 +90525,9 @@ Object .defineProperties (X3DProgrammableShaderObject,
       value: "X3DProgrammableShaderObject",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Shaders",
+      value: Object .freeze ({ name: "Shaders", level: 1 }),
       enumerable: true,
    },
 });
@@ -90725,9 +90737,9 @@ Object .defineProperties (ComposedShader,
       value: "ComposedShader",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Shaders",
+      value: Object .freeze ({ name: "Shaders", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -90841,9 +90853,9 @@ Object .defineProperties (X3DVertexAttributeNode,
       value: "X3DVertexAttributeNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Shaders",
+      value: Object .freeze ({ name: "Shaders", level: 1 }),
       enumerable: true,
    },
 });
@@ -90977,9 +90989,9 @@ Object .defineProperties (FloatVertexAttribute,
       value: "FloatVertexAttribute",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Shaders",
+      value: Object .freeze ({ name: "Shaders", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -91125,9 +91137,9 @@ Object .defineProperties (Matrix3VertexAttribute,
       value: "Matrix3VertexAttribute",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Shaders",
+      value: Object .freeze ({ name: "Shaders", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -91271,9 +91283,9 @@ Object .defineProperties (Matrix4VertexAttribute,
       value: "Matrix4VertexAttribute",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Shaders",
+      value: Object .freeze ({ name: "Shaders", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -91398,9 +91410,9 @@ Object .defineProperties (PackagedShader,
       value: "PackagedShader",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Shaders",
+      value: Object .freeze ({ name: "Shaders", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -91506,9 +91518,9 @@ Object .defineProperties (ProgramShader,
       value: "ProgramShader",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Shaders",
+      value: Object .freeze ({ name: "Shaders", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -94795,7 +94807,7 @@ const ShaderCompiler_default_ = ShaderCompiler;
 x_ite_Namespace .add ("ShaderCompiler", "x_ite/Browser/Shaders/ShaderCompiler", ShaderCompiler_default_);
 /* harmony default export */ const Shaders_ShaderCompiler = (ShaderCompiler_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shaders/ShaderPart.js
-/* provided dependency */ var ShaderPart_$ = __webpack_require__(552);
+/* provided dependency */ var ShaderPart_$ = __webpack_require__(301);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -95003,9 +95015,9 @@ Object .defineProperties (ShaderPart,
       value: "ShaderPart",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Shaders",
+      value: Object .freeze ({ name: "Shaders", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -95134,9 +95146,9 @@ Object .defineProperties (ShaderProgram,
       value: "ShaderProgram",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Shaders",
+      value: Object .freeze ({ name: "Shaders", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -95323,9 +95335,9 @@ Object .defineProperties (AcousticProperties,
       value: "AcousticProperties",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Shape",
+      value: Object .freeze ({ name: "Shape", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -95439,9 +95451,9 @@ Object .defineProperties (X3DAppearanceNode,
       value: "X3DAppearanceNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Shape",
+      value: Object .freeze ({ name: "Shape", level: 1 }),
       enumerable: true,
    },
 });
@@ -95452,7 +95464,7 @@ const X3DAppearanceNode_default_ = X3DAppearanceNode;
 x_ite_Namespace .add ("X3DAppearanceNode", "x_ite/Components/Shape/X3DAppearanceNode", X3DAppearanceNode_default_);
 /* harmony default export */ const Shape_X3DAppearanceNode = (X3DAppearanceNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Shape/Appearance.js
-/* provided dependency */ var Appearance_$ = __webpack_require__(552);
+/* provided dependency */ var Appearance_$ = __webpack_require__(301);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -95854,9 +95866,9 @@ Object .defineProperties (Appearance,
       value: "Appearance",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Shape",
+      value: Object .freeze ({ name: "Shape", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -96048,9 +96060,9 @@ Object .defineProperties (FillProperties,
       value: "FillProperties",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Shape",
+      value: Object .freeze ({ name: "Shape", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -96238,9 +96250,9 @@ Object .defineProperties (LineProperties,
       value: "LineProperties",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Shape",
+      value: Object .freeze ({ name: "Shape", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -96635,9 +96647,9 @@ Object .defineProperties (X3DMaterialNode,
       value: "X3DMaterialNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Shape",
+      value: Object .freeze ({ name: "Shape", level: 1 }),
       enumerable: true,
    },
 });
@@ -96853,9 +96865,9 @@ Object .defineProperties (X3DOneSidedMaterialNode,
       value: "X3DOneSidedMaterialNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Shape",
+      value: Object .freeze ({ name: "Shape", level: 1 }),
       enumerable: true,
    },
 });
@@ -96932,6 +96944,8 @@ function Material (executionContext)
 
    if (executionContext .getSpecificationVersion () <= 3.3)
       this .getMaterialKey = getMaterialKey;
+
+   // Private properties
 
    this .diffuseColor  = new Float32Array (3);
    this .specularColor = new Float32Array (3);
@@ -97280,9 +97294,9 @@ Object .defineProperties (Material,
       value: "Material",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Shape",
+      value: Object .freeze ({ name: "Shape", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -97629,9 +97643,9 @@ Object .defineProperties (PhysicalMaterial,
       value: "PhysicalMaterial",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Shape",
+      value: Object .freeze ({ name: "Shape", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -97822,9 +97836,9 @@ Object .defineProperties (PointProperties,
       value: "PointProperties",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Shape",
+      value: Object .freeze ({ name: "Shape", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -98032,7 +98046,7 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, Core_X3DChildNo
    set_transparent__ ()
    {
       // This function is overloaded in ParticleSystem!
-      
+
       const alphaMode = this .appearanceNode .getAlphaMode ();
 
       if (alphaMode === Shape_AlphaMode .AUTO)
@@ -98078,9 +98092,9 @@ Object .defineProperties (X3DShapeNode,
       value: "X3DShapeNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Shape",
+      value: Object .freeze ({ name: "Shape", level: 1 }),
       enumerable: true,
    },
 });
@@ -98264,9 +98278,9 @@ Object .defineProperties (Shape,
       value: "Shape",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Shape",
+      value: Object .freeze ({ name: "Shape", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -98555,9 +98569,9 @@ Object .defineProperties (TwoSidedMaterial,
       value: "TwoSidedMaterial",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Shape",
+      value: Object .freeze ({ name: "Shape", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -98722,9 +98736,9 @@ Object .defineProperties (UnlitMaterial,
       value: "UnlitMaterial",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Shape",
+      value: Object .freeze ({ name: "Shape", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -98859,7 +98873,7 @@ const Components_Shape_default_ = {
 x_ite_Namespace .add ("Shape", "x_ite/Components/Shape", Components_Shape_default_);
 /* harmony default export */ const Components_Shape = (Components_Shape_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/X3DSoundProcessingNode.js
-/* provided dependency */ var X3DSoundProcessingNode_$ = __webpack_require__(552);
+/* provided dependency */ var X3DSoundProcessingNode_$ = __webpack_require__(301);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -99084,9 +99098,9 @@ Object .defineProperties (X3DSoundProcessingNode,
       value: "X3DSoundProcessingNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Sound",
+      value: Object .freeze ({ name: "Sound", level: 1 }),
       enumerable: true,
    },
 });
@@ -99246,9 +99260,9 @@ Object .defineProperties (Analyser,
       value: "Analyser",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Sound",
+      value: Object .freeze ({ name: "Sound", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -99486,9 +99500,9 @@ Object .defineProperties (X3DSoundSourceNode,
       value: "X3DSoundSourceNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Sound",
+      value: Object .freeze ({ name: "Sound", level: 1 }),
       enumerable: true,
    },
 });
@@ -99499,7 +99513,7 @@ const X3DSoundSourceNode_default_ = X3DSoundSourceNode;
 x_ite_Namespace .add ("X3DSoundSourceNode", "x_ite/Components/Sound/X3DSoundSourceNode", X3DSoundSourceNode_default_);
 /* harmony default export */ const Sound_X3DSoundSourceNode = (X3DSoundSourceNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/AudioClip.js
-/* provided dependency */ var AudioClip_$ = __webpack_require__(552);
+/* provided dependency */ var AudioClip_$ = __webpack_require__(301);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -99675,9 +99689,9 @@ Object .defineProperties (AudioClip,
       value: "AudioClip",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Sound",
+      value: Object .freeze ({ name: "Sound", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -99788,9 +99802,9 @@ Object .defineProperties (X3DSoundNode,
       value: "X3DSoundNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Sound",
+      value: Object .freeze ({ name: "Sound", level: 1 }),
       enumerable: true,
    },
 });
@@ -99801,7 +99815,7 @@ const X3DSoundNode_default_ = X3DSoundNode;
 x_ite_Namespace .add ("X3DSoundNode", "x_ite/Components/Sound/X3DSoundNode", X3DSoundNode_default_);
 /* harmony default export */ const Sound_X3DSoundNode = (X3DSoundNode_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/X3DSoundDestinationNode.js
-/* provided dependency */ var X3DSoundDestinationNode_$ = __webpack_require__(552);
+/* provided dependency */ var X3DSoundDestinationNode_$ = __webpack_require__(301);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -99985,9 +99999,9 @@ Object .defineProperties (X3DSoundDestinationNode,
       value: "X3DSoundDestinationNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Sound",
+      value: Object .freeze ({ name: "Sound", level: 1 }),
       enumerable: true,
    },
 });
@@ -100131,9 +100145,9 @@ Object .defineProperties (AudioDestination,
       value: "AudioDestination",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Sound",
+      value: Object .freeze ({ name: "Sound", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -100243,9 +100257,9 @@ Object .defineProperties (BiquadFilter,
       value: "BiquadFilter",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Sound",
+      value: Object .freeze ({ name: "Sound", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -100380,9 +100394,9 @@ Object .defineProperties (BufferAudioSource,
       value: "BufferAudioSource",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Sound",
+      value: Object .freeze ({ name: "Sound", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -100507,9 +100521,9 @@ Object .defineProperties (X3DSoundChannelNode,
       value: "X3DSoundChannelNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Sound",
+      value: Object .freeze ({ name: "Sound", level: 1 }),
       enumerable: true,
    },
 });
@@ -100589,9 +100603,9 @@ Object .defineProperties (ChannelMerger,
       value: "ChannelMerger",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Sound",
+      value: Object .freeze ({ name: "Sound", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -100698,9 +100712,9 @@ Object .defineProperties (ChannelSelector,
       value: "ChannelSelector",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Sound",
+      value: Object .freeze ({ name: "Sound", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -100808,9 +100822,9 @@ Object .defineProperties (ChannelSplitter,
       value: "ChannelSplitter",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Sound",
+      value: Object .freeze ({ name: "Sound", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -100918,9 +100932,9 @@ Object .defineProperties (Convolver,
       value: "Convolver",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Sound",
+      value: Object .freeze ({ name: "Sound", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -101038,9 +101052,9 @@ Object .defineProperties (Delay,
       value: "Delay",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Sound",
+      value: Object .freeze ({ name: "Sound", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -101158,9 +101172,9 @@ Object .defineProperties (DynamicsCompressor,
       value: "DynamicsCompressor",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Sound",
+      value: Object .freeze ({ name: "Sound", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -101282,9 +101296,9 @@ Object .defineProperties (Gain,
       value: "Gain",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Sound",
+      value: Object .freeze ({ name: "Sound", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -101404,9 +101418,9 @@ Object .defineProperties (ListenerPointSource,
       value: "ListenerPointSource",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Sound",
+      value: Object .freeze ({ name: "Sound", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -101451,7 +101465,7 @@ const ListenerPointSource_default_ = ListenerPointSource;
 x_ite_Namespace .add ("ListenerPointSource", "x_ite/Components/Sound/ListenerPointSource", ListenerPointSource_default_);
 /* harmony default export */ const Sound_ListenerPointSource = (ListenerPointSource_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Sound/MicrophoneSource.js
-/* provided dependency */ var MicrophoneSource_$ = __webpack_require__(552);
+/* provided dependency */ var MicrophoneSource_$ = __webpack_require__(301);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -101626,9 +101640,9 @@ Object .defineProperties (MicrophoneSource,
       value: "MicrophoneSource",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Sound",
+      value: Object .freeze ({ name: "Sound", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -101839,9 +101853,9 @@ Object .defineProperties (OscillatorSource,
       value: "OscillatorSource",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Sound",
+      value: Object .freeze ({ name: "Sound", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -101977,9 +101991,9 @@ Object .defineProperties (PeriodicWave,
       value: "PeriodicWave",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Sound",
+      value: Object .freeze ({ name: "Sound", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -102350,9 +102364,9 @@ Object .defineProperties (Sound,
       value: "Sound",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Sound",
+      value: Object .freeze ({ name: "Sound", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -102464,9 +102478,9 @@ Object .defineProperties (SpatialSound,
       value: "SpatialSound",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Sound",
+      value: Object .freeze ({ name: "Sound", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -102599,9 +102613,9 @@ Object .defineProperties (StreamAudioDestination,
       value: "StreamAudioDestination",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Sound",
+      value: Object .freeze ({ name: "Sound", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -102713,9 +102727,9 @@ Object .defineProperties (StreamAudioSource,
       value: "StreamAudioSource",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Sound",
+      value: Object .freeze ({ name: "Sound", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -102825,9 +102839,9 @@ Object .defineProperties (WaveShaper,
       value: "WaveShaper",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Sound",
+      value: Object .freeze ({ name: "Sound", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -103120,8 +103134,8 @@ const GifMedia_default_ = GifMedia;
 x_ite_Namespace .add ("GifMedia", "x_ite/Browser/Texturing/GifMedia", GifMedia_default_);
 /* harmony default export */ const Texturing_GifMedia = (GifMedia_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var MovieTexture_$ = __webpack_require__(552);
-/* provided dependency */ var SuperGif = __webpack_require__(147);
+/* provided dependency */ var MovieTexture_$ = __webpack_require__(301);
+/* provided dependency */ var SuperGif = __webpack_require__(1);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -103381,9 +103395,9 @@ Object .defineProperties (MovieTexture,
       value: "MovieTexture",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Texturing",
+      value: Object .freeze ({ name: "Texturing", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -103747,9 +103761,9 @@ Object .defineProperties (MultiTexture,
       value: "MultiTexture",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Texturing",
+      value: Object .freeze ({ name: "Texturing", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -103850,9 +103864,9 @@ Object .defineProperties (X3DTextureCoordinateNode,
       value: "X3DTextureCoordinateNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Texturing",
+      value: Object .freeze ({ name: "Texturing", level: 1 }),
       enumerable: true,
    },
 });
@@ -104030,9 +104044,9 @@ Object .defineProperties (MultiTextureCoordinate,
       value: "MultiTextureCoordinate",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Texturing",
+      value: Object .freeze ({ name: "Texturing", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -104127,9 +104141,9 @@ Object .defineProperties (X3DTextureTransformNode,
       value: "X3DTextureTransformNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Texturing",
+      value: Object .freeze ({ name: "Texturing", level: 1 }),
       enumerable: true,
    },
 });
@@ -104268,9 +104282,9 @@ Object .defineProperties (MultiTextureTransform,
       value: "MultiTextureTransform",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Texturing",
+      value: Object .freeze ({ name: "Texturing", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -104555,9 +104569,9 @@ Object .defineProperties (PixelTexture,
       value: "PixelTexture",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Texturing",
+      value: Object .freeze ({ name: "Texturing", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -104683,9 +104697,9 @@ Object .defineProperties (X3DSingleTextureCoordinateNode,
       value: "X3DSingleTextureCoordinateNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Texturing",
+      value: Object .freeze ({ name: "Texturing", level: 1 }),
       enumerable: true,
    },
 });
@@ -104815,9 +104829,9 @@ Object .defineProperties (TextureCoordinate,
       value: "TextureCoordinate",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Texturing",
+      value: Object .freeze ({ name: "Texturing", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -104978,9 +104992,9 @@ Object .defineProperties (TextureCoordinateGenerator,
       value: "TextureCoordinateGenerator",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Texturing",
+      value: Object .freeze ({ name: "Texturing", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -105203,9 +105217,9 @@ Object .defineProperties (TextureProperties,
       value: "TextureProperties",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Texturing",
+      value: Object .freeze ({ name: "Texturing", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -105339,9 +105353,9 @@ Object .defineProperties (X3DSingleTextureTransformNode,
       value: "X3DSingleTextureTransformNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Texturing",
+      value: Object .freeze ({ name: "Texturing", level: 1 }),
       enumerable: true,
    },
 });
@@ -105480,9 +105494,9 @@ Object .defineProperties (TextureTransform,
       value: "TextureTransform",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Texturing",
+      value: Object .freeze ({ name: "Texturing", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -106399,7 +106413,7 @@ const gettext_default_ = gettext;
 x_ite_Namespace .add ("gettext", "locale/gettext", gettext_default_);
 /* harmony default export */ const locale_gettext = (gettext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserTimings.js
-/* provided dependency */ var BrowserTimings_$ = __webpack_require__(552);
+/* provided dependency */ var BrowserTimings_$ = __webpack_require__(301);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -106829,7 +106843,7 @@ const TextureQuality_default_ = TextureQuality;
 x_ite_Namespace .add ("TextureQuality", "x_ite/Browser/Core/TextureQuality", TextureQuality_default_);
 /* harmony default export */ const Core_TextureQuality = (TextureQuality_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/BrowserOptions.js
-/* provided dependency */ var BrowserOptions_$ = __webpack_require__(552);
+/* provided dependency */ var BrowserOptions_$ = __webpack_require__(301);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -107419,7 +107433,7 @@ const RenderingProperties_default_ = RenderingProperties;
 x_ite_Namespace .add ("RenderingProperties", "x_ite/Browser/Core/RenderingProperties", RenderingProperties_default_);
 /* harmony default export */ const Core_RenderingProperties = (RenderingProperties_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/Notification.js
-/* provided dependency */ var Notification_$ = __webpack_require__(552);
+/* provided dependency */ var Notification_$ = __webpack_require__(301);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -107542,8 +107556,8 @@ const Notification_default_ = Notification;
 x_ite_Namespace .add ("Notification", "x_ite/Browser/Core/Notification", Notification_default_);
 /* harmony default export */ const Core_Notification = (Notification_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/ContextMenu.js
-/* provided dependency */ var jquery_fullscreen = __webpack_require__(994);
-/* provided dependency */ var ContextMenu_$ = __webpack_require__(552);
+/* provided dependency */ var jquery_fullscreen = __webpack_require__(471);
+/* provided dependency */ var ContextMenu_$ = __webpack_require__(301);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -110295,7 +110309,7 @@ const DataStorage_default_ = DataStorage;
 x_ite_Namespace .add ("DataStorage", "standard/Utility/DataStorage", DataStorage_default_);
 /* harmony default export */ const Utility_DataStorage = (DataStorage_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Core/X3DCoreContext.js
-/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(552);
+/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(301);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -112360,8 +112374,8 @@ const X3DViewer_default_ = X3DViewer;
 x_ite_Namespace .add ("X3DViewer", "x_ite/Browser/Navigation/X3DViewer", X3DViewer_default_);
 /* harmony default export */ const Navigation_X3DViewer = (X3DViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/ExamineViewer.js
-/* provided dependency */ var jquery_mousewheel = __webpack_require__(834);
-/* provided dependency */ var ExamineViewer_$ = __webpack_require__(552);
+/* provided dependency */ var jquery_mousewheel = __webpack_require__(139);
+/* provided dependency */ var ExamineViewer_$ = __webpack_require__(301);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -113233,8 +113247,8 @@ const ExamineViewer_default_ = ExamineViewer;
 x_ite_Namespace .add ("ExamineViewer", "x_ite/Browser/Navigation/ExamineViewer", ExamineViewer_default_);
 /* harmony default export */ const Navigation_ExamineViewer = (ExamineViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/X3DFlyViewer.js
-/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(834);
-/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(552);
+/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(139);
+/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(301);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -114243,8 +114257,8 @@ const FlyViewer_default_ = FlyViewer;
 x_ite_Namespace .add ("FlyViewer", "x_ite/Browser/Navigation/FlyViewer", FlyViewer_default_);
 /* harmony default export */ const Navigation_FlyViewer = (FlyViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/PlaneViewer.js
-/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(834);
-/* provided dependency */ var PlaneViewer_$ = __webpack_require__(552);
+/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(139);
+/* provided dependency */ var PlaneViewer_$ = __webpack_require__(301);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -114575,8 +114589,8 @@ const NoneViewer_default_ = NoneViewer;
 x_ite_Namespace .add ("NoneViewer", "x_ite/Browser/Navigation/NoneViewer", NoneViewer_default_);
 /* harmony default export */ const Navigation_NoneViewer = (NoneViewer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Navigation/LookAtViewer.js
-/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(834);
-/* provided dependency */ var LookAtViewer_$ = __webpack_require__(552);
+/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(139);
+/* provided dependency */ var LookAtViewer_$ = __webpack_require__(301);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -115715,8 +115729,8 @@ const X3DPickingContext_default_ = X3DPickingContext;
 x_ite_Namespace .add ("X3DPickingContext", "x_ite/Browser/Picking/X3DPickingContext", X3DPickingContext_default_);
 /* harmony default export */ const Picking_X3DPickingContext = (X3DPickingContext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/PointingDeviceSensor/PointingDevice.js
-/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(834);
-/* provided dependency */ var PointingDevice_$ = __webpack_require__(552);
+/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(139);
+/* provided dependency */ var PointingDevice_$ = __webpack_require__(301);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -116979,7 +116993,7 @@ const MultiSampleFrameBuffer_default_ = MultiSampleFrameBuffer;
 x_ite_Namespace .add ("MultiSampleFrameBuffer", "x_ite/Rendering/MultiSampleFrameBuffer", MultiSampleFrameBuffer_default_);
 /* harmony default export */ const Rendering_MultiSampleFrameBuffer = (MultiSampleFrameBuffer_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Rendering/X3DRenderingContext.js
-/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(552);
+/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(301);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -117882,7 +117896,7 @@ const X3DSoundContext_default_ = X3DSoundContext;
 x_ite_Namespace .add ("X3DSoundContext", "x_ite/Browser/Sound/X3DSoundContext", X3DSoundContext_default_);
 /* harmony default export */ const Sound_X3DSoundContext = (X3DSoundContext_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Texturing/KTXDecoder.js
-/* provided dependency */ var KTXDecoder_$ = __webpack_require__(552);
+/* provided dependency */ var KTXDecoder_$ = __webpack_require__(301);
 const KTXDecoder_default_ = class KTXDecoder
 {
    constructor (gl, externalKtxlib, scriptDir)
@@ -119435,7 +119449,7 @@ const Components_default_ = Components;
 x_ite_Namespace .add ("Components", "x_ite/Components", Components_default_);
 /* harmony default export */ const x_ite_Components = ((/* unused pure expression or super */ null && (Components_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/DOMIntegration.js
-/* provided dependency */ var DOMIntegration_$ = __webpack_require__(552);
+/* provided dependency */ var DOMIntegration_$ = __webpack_require__(301);
 /*******************************************************************************
  * MIT License
  *
@@ -120574,7 +120588,7 @@ const SupportedProfiles_default_ = SupportedProfiles;
 x_ite_Namespace .add ("SupportedProfiles", "x_ite/Configuration/SupportedProfiles", SupportedProfiles_default_);
 /* harmony default export */ const Configuration_SupportedProfiles = (SupportedProfiles_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/X3DBrowser.js
-/* provided dependency */ var X3DBrowser_$ = __webpack_require__(552);
+/* provided dependency */ var X3DBrowser_$ = __webpack_require__(301);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -121655,7 +121669,7 @@ const X3DBrowser_default_ = X3DBrowser;
 x_ite_Namespace .add ("X3DBrowser", "x_ite/Browser/X3DBrowser", X3DBrowser_default_);
 /* harmony default export */ const Browser_X3DBrowser = (X3DBrowser_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/X3DCanvasElement.js
-/* provided dependency */ var X3DCanvasElement_$ = __webpack_require__(552);
+/* provided dependency */ var X3DCanvasElement_$ = __webpack_require__(301);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -121787,8 +121801,8 @@ const X3DCanvasElement_default_ = X3DCanvasElement;
 x_ite_Namespace .add ("X3DCanvasElement", "x_ite/X3DCanvasElement", X3DCanvasElement_default_);
 /* harmony default export */ const x_ite_X3DCanvasElement = (X3DCanvasElement_default_);
 ;// CONCATENATED MODULE: ./src/lib/jquery.js
-/* provided dependency */ var jquery_$ = __webpack_require__(552);
-/* provided dependency */ var pako = __webpack_require__(514);
+/* provided dependency */ var jquery_$ = __webpack_require__(301);
+/* provided dependency */ var pako = __webpack_require__(34);
 Object .assign (jquery_$,
 {
    decodeText (input)
@@ -121865,14 +121879,14 @@ const jquery_default_ = jquery_$;
 x_ite_Namespace .add ("jquery", "lib/jquery", jquery_default_);
 /* harmony default export */ const jquery = ((/* unused pure expression or super */ null && (jquery_default_)));
 ;// CONCATENATED MODULE: ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(474);
+/* provided dependency */ var libtess_libtess = __webpack_require__(849);
 const libtess_default_ = libtess_libtess;
 ;
 
 x_ite_Namespace .add ("libtess", "lib/libtess", libtess_default_);
 /* harmony default export */ const lib_libtess = ((/* unused pure expression or super */ null && (libtess_default_)));
 ;// CONCATENATED MODULE: ./src/x_ite/X3D.js
-/* provided dependency */ var X3D_$ = __webpack_require__(552);
+/* provided dependency */ var X3D_$ = __webpack_require__(301);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.

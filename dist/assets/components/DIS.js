@@ -134,9 +134,9 @@ Object .defineProperties (DISEntityManager,
       value: "DISEntityManager",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "DIS",
+      value: Object .freeze ({ name: "DIS", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -261,9 +261,9 @@ Object .defineProperties (DISEntityTypeMapping,
       value: "DISEntityTypeMapping",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "DIS",
+      value: Object .freeze ({ name: "DIS", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -388,9 +388,9 @@ Object .defineProperties (EspduTransform,
       value: "EspduTransform",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "DIS",
+      value: Object .freeze ({ name: "DIS", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -598,9 +598,9 @@ Object .defineProperties (ReceiverPdu,
       value: "ReceiverPdu",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "DIS",
+      value: Object .freeze ({ name: "DIS", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -745,9 +745,9 @@ Object .defineProperties (SignalPdu,
       value: "SignalPdu",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "DIS",
+      value: Object .freeze ({ name: "DIS", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -892,9 +892,9 @@ Object .defineProperties (TransmitterPdu,
       value: "TransmitterPdu",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "DIS",
+      value: Object .freeze ({ name: "DIS", level: 1 }),
       enumerable: true,
    },
    containerField:

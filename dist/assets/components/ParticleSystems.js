@@ -605,9 +605,9 @@ Object .defineProperties (X3DParticleEmitterNode,
       value: "X3DParticleEmitterNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "ParticleSystems",
+      value: Object .freeze ({ name: "ParticleSystems", level: 1 }),
       enumerable: true,
    },
 });
@@ -742,9 +742,9 @@ Object .defineProperties (PointEmitter,
       value: "PointEmitter",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "ParticleSystems",
+      value: Object .freeze ({ name: "ParticleSystems", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -926,9 +926,9 @@ Object .defineProperties (X3DParticlePhysicsModelNode,
       value: "X3DParticlePhysicsModelNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "ParticleSystems",
+      value: Object .freeze ({ name: "ParticleSystems", level: 1 }),
       enumerable: true,
    },
 });
@@ -1047,9 +1047,9 @@ Object .defineProperties (BoundedPhysicsModel,
       value: "BoundedPhysicsModel",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "ParticleSystems",
+      value: Object .freeze ({ name: "ParticleSystems", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -1208,9 +1208,9 @@ Object .defineProperties (ConeEmitter,
       value: "ConeEmitter",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "ParticleSystems",
+      value: Object .freeze ({ name: "ParticleSystems", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -1352,9 +1352,9 @@ Object .defineProperties (ExplosionEmitter,
       value: "ExplosionEmitter",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "ParticleSystems",
+      value: Object .freeze ({ name: "ParticleSystems", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -1481,9 +1481,9 @@ Object .defineProperties (ForcePhysicsModel,
       value: "ForcePhysicsModel",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "ParticleSystems",
+      value: Object .freeze ({ name: "ParticleSystems", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -2149,6 +2149,8 @@ function ParticleSystem (executionContext)
       this .addAlias ("colorRamp",    this ._color);
       this .addAlias ("texCoordRamp", this ._texCoord);
    }
+
+   // Private properties
 
    const browser = this .getBrowser ();
 
@@ -3067,9 +3069,9 @@ Object .defineProperties (ParticleSystem,
       value: "ParticleSystem",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "ParticleSystems",
+      value: Object .freeze ({ name: "ParticleSystems", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -3333,9 +3335,9 @@ Object .defineProperties (PolylineEmitter,
       value: "PolylineEmitter",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "ParticleSystems",
+      value: Object .freeze ({ name: "ParticleSystems", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -3596,9 +3598,9 @@ Object .defineProperties (SurfaceEmitter,
       value: "SurfaceEmitter",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "ParticleSystems",
+      value: Object .freeze ({ name: "ParticleSystems", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -3889,9 +3891,9 @@ Object .defineProperties (VolumeEmitter,
       value: "VolumeEmitter",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "ParticleSystems",
+      value: Object .freeze ({ name: "ParticleSystems", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -4051,9 +4053,9 @@ Object .defineProperties (WindPhysicsModel,
       value: "WindPhysicsModel",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "ParticleSystems",
+      value: Object .freeze ({ name: "ParticleSystems", level: 1 }),
       enumerable: true,
    },
    containerField:

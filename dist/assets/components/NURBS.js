@@ -205,9 +205,9 @@ Object .defineProperties (Contour2D,
       value: "Contour2D",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "NURBS",
+      value: Object .freeze ({ name: "NURBS", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -304,9 +304,9 @@ Object .defineProperties (X3DNurbsControlCurveNode,
       value: "X3DNurbsControlCurveNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "NURBS",
+      value: Object .freeze ({ name: "NURBS", level: 1 }),
       enumerable: true,
    },
 });
@@ -459,9 +459,9 @@ Object .defineProperties (ContourPolyline2D,
       value: "ContourPolyline2D",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "NURBS",
+      value: Object .freeze ({ name: "NURBS", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -562,9 +562,9 @@ Object .defineProperties (CoordinateDouble,
       value: "CoordinateDouble",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "NURBS",
+      value: Object .freeze ({ name: "NURBS", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -1151,9 +1151,9 @@ Object .defineProperties (X3DParametricGeometryNode,
       value: "X3DParametricGeometryNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "NURBS",
+      value: Object .freeze ({ name: "NURBS", level: 1 }),
       enumerable: true,
    },
 });
@@ -2990,9 +2990,9 @@ Object .defineProperties (NurbsCurve,
       value: "NurbsCurve",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "NURBS",
+      value: Object .freeze ({ name: "NURBS", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -3207,9 +3207,9 @@ Object .defineProperties (NurbsCurve2D,
       value: "NurbsCurve2D",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "NURBS",
+      value: Object .freeze ({ name: "NURBS", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -3450,9 +3450,9 @@ Object .defineProperties (NurbsOrientationInterpolator,
       value: "NurbsOrientationInterpolator",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "NURBS",
+      value: Object .freeze ({ name: "NURBS", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -3874,9 +3874,9 @@ Object .defineProperties (X3DNurbsSurfaceGeometryNode,
       value: "X3DNurbsSurfaceGeometryNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "NURBS",
+      value: Object .freeze ({ name: "NURBS", level: 1 }),
       enumerable: true,
    },
 });
@@ -3956,9 +3956,9 @@ Object .defineProperties (NurbsPatchSurface,
       value: "NurbsPatchSurface",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "NURBS",
+      value: Object .freeze ({ name: "NURBS", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -4189,9 +4189,9 @@ Object .defineProperties (NurbsPositionInterpolator,
       value: "NurbsPositionInterpolator",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "NURBS",
+      value: Object .freeze ({ name: "NURBS", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -4381,9 +4381,9 @@ Object .defineProperties (NurbsSet,
       value: "NurbsSet",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "NURBS",
+      value: Object .freeze ({ name: "NURBS", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -4658,9 +4658,9 @@ Object .defineProperties (NurbsSurfaceInterpolator,
       value: "NurbsSurfaceInterpolator",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "NURBS",
+      value: Object .freeze ({ name: "NURBS", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -4854,9 +4854,9 @@ Object .defineProperties (NurbsSweptSurface,
       value: "NurbsSweptSurface",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "NURBS",
+      value: Object .freeze ({ name: "NURBS", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -5040,9 +5040,9 @@ Object .defineProperties (NurbsSwungSurface,
       value: "NurbsSwungSurface",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "NURBS",
+      value: Object .freeze ({ name: "NURBS", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -5197,9 +5197,9 @@ Object .defineProperties (NurbsTextureCoordinate,
       value: "NurbsTextureCoordinate",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "NURBS",
+      value: Object .freeze ({ name: "NURBS", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -5370,9 +5370,9 @@ Object .defineProperties (NurbsTrimmedSurface,
       value: "NurbsTrimmedSurface",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "NURBS",
+      value: Object .freeze ({ name: "NURBS", level: 1 }),
       enumerable: true,
    },
    containerField:

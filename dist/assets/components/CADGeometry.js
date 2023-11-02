@@ -129,9 +129,9 @@ Object .defineProperties (X3DProductStructureChildNode,
       value: "X3DProductStructureChildNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "CADGeometry",
+      value: Object .freeze ({ name: "CADGeometry", level: 1 }),
       enumerable: true,
    },
 });
@@ -216,9 +216,9 @@ Object .defineProperties (CADAssembly,
       value: "CADAssembly",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "CADGeometry",
+      value: Object .freeze ({ name: "CADGeometry", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -483,9 +483,9 @@ Object .defineProperties (CADFace,
       value: "CADFace",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "CADGeometry",
+      value: Object .freeze ({ name: "CADGeometry", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -588,9 +588,9 @@ Object .defineProperties (CADLayer,
       value: "CADLayer",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "CADGeometry",
+      value: Object .freeze ({ name: "CADGeometry", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -703,9 +703,9 @@ Object .defineProperties (CADPart,
       value: "CADPart",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "CADGeometry",
+      value: Object .freeze ({ name: "CADGeometry", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -844,9 +844,9 @@ Object .defineProperties (IndexedQuadSet,
       value: "IndexedQuadSet",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "CADGeometry",
+      value: Object .freeze ({ name: "CADGeometry", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -978,9 +978,9 @@ Object .defineProperties (QuadSet,
       value: "QuadSet",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "CADGeometry",
+      value: Object .freeze ({ name: "CADGeometry", level: 1 }),
       enumerable: true,
    },
    containerField:

@@ -320,9 +320,9 @@ Object .defineProperties (X3DRigidJointNode,
       value: "X3DRigidJointNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "RigidBodyPhysics",
+      value: Object .freeze ({ name: "RigidBodyPhysics", level: 1 }),
       enumerable: true,
    },
 });
@@ -611,9 +611,9 @@ Object .defineProperties (BallJoint,
       value: "BallJoint",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "RigidBodyPhysics",
+      value: Object .freeze ({ name: "RigidBodyPhysics", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -812,9 +812,9 @@ Object .defineProperties (X3DNBodyCollidableNode,
       value: "X3DNBodyCollidableNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "RigidBodyPhysics",
+      value: Object .freeze ({ name: "RigidBodyPhysics", level: 1 }),
       enumerable: true,
    },
 });
@@ -1056,9 +1056,9 @@ Object .defineProperties (CollidableOffset,
       value: "CollidableOffset",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "RigidBodyPhysics",
+      value: Object .freeze ({ name: "RigidBodyPhysics", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -1558,9 +1558,9 @@ Object .defineProperties (CollidableShape,
       value: "CollidableShape",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "RigidBodyPhysics",
+      value: Object .freeze ({ name: "RigidBodyPhysics", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -1852,9 +1852,9 @@ Object .defineProperties (CollisionCollection,
       value: "CollisionCollection",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "RigidBodyPhysics",
+      value: Object .freeze ({ name: "RigidBodyPhysics", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -2151,9 +2151,9 @@ Object .defineProperties (CollisionSensor,
       value: "CollisionSensor",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "RigidBodyPhysics",
+      value: Object .freeze ({ name: "RigidBodyPhysics", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -2268,9 +2268,9 @@ Object .defineProperties (X3DNBodyCollisionSpaceNode,
       value: "X3DNBodyCollisionSpaceNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "RigidBodyPhysics",
+      value: Object .freeze ({ name: "RigidBodyPhysics", level: 1 }),
       enumerable: true,
    },
 });
@@ -2429,9 +2429,9 @@ Object .defineProperties (CollisionSpace,
       value: "CollisionSpace",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "RigidBodyPhysics",
+      value: Object .freeze ({ name: "RigidBodyPhysics", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -2543,9 +2543,9 @@ Object .defineProperties (Contact,
       value: "Contact",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "RigidBodyPhysics",
+      value: Object .freeze ({ name: "RigidBodyPhysics", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -2676,6 +2676,8 @@ function DoubleAxisHingeJoint (executionContext)
       this ._axis1 = new (Vector3_default()) (0, 0, 0);
       this ._axis2 = new (Vector3_default()) (0, 0, 0);
    }
+
+   // Private properties
 
    this .joint             = null;
    this .outputs           = new Set ();
@@ -2848,9 +2850,9 @@ Object .defineProperties (DoubleAxisHingeJoint,
       value: "DoubleAxisHingeJoint",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "RigidBodyPhysics",
+      value: Object .freeze ({ name: "RigidBodyPhysics", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -2994,9 +2996,9 @@ Object .defineProperties (MotorJoint,
       value: "MotorJoint",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "RigidBodyPhysics",
+      value: Object .freeze ({ name: "RigidBodyPhysics", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -3528,9 +3530,9 @@ Object .defineProperties (RigidBody,
       value: "RigidBody",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "RigidBodyPhysics",
+      value: Object .freeze ({ name: "RigidBodyPhysics", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -3942,9 +3944,9 @@ Object .defineProperties (RigidBodyCollection,
       value: "RigidBodyCollection",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "RigidBodyPhysics",
+      value: Object .freeze ({ name: "RigidBodyPhysics", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -4069,6 +4071,8 @@ function SingleAxisHingeJoint (executionContext)
 
    if (executionContext .getSpecificationVersion () <= 3.3)
       this ._axis = new (Vector3_default()) (0, 0, 0);
+
+   // Private properties
 
    this .joint             = null;
    this .outputs           = new Set ();
@@ -4212,9 +4216,9 @@ Object .defineProperties (SingleAxisHingeJoint,
       value: "SingleAxisHingeJoint",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "RigidBodyPhysics",
+      value: Object .freeze ({ name: "RigidBodyPhysics", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -4449,9 +4453,9 @@ Object .defineProperties (SliderJoint,
       value: "SliderJoint",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "RigidBodyPhysics",
+      value: Object .freeze ({ name: "RigidBodyPhysics", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -4574,9 +4578,9 @@ Object .defineProperties (UniversalJoint,
       value: "UniversalJoint",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "RigidBodyPhysics",
+      value: Object .freeze ({ name: "RigidBodyPhysics", level: 1 }),
       enumerable: true,
    },
    containerField:

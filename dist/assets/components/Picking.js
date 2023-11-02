@@ -799,9 +799,9 @@ Object .defineProperties (X3DPickSensorNode,
       value: "X3DPickSensorNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Picking",
+      value: Object .freeze ({ name: "Picking", level: 1 }),
       enumerable: true,
    },
 });
@@ -1123,9 +1123,9 @@ Object .defineProperties (LinePickSensor,
       value: "LinePickSensor",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Picking",
+      value: Object .freeze ({ name: "Picking", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -1256,9 +1256,9 @@ Object .defineProperties (X3DPickableObject,
       value: "X3DPickableObject",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Picking",
+      value: Object .freeze ({ name: "Picking", level: 1 }),
       enumerable: true,
    },
 });
@@ -1458,9 +1458,9 @@ Object .defineProperties (PickableGroup,
       value: "PickableGroup",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Picking",
+      value: Object .freeze ({ name: "Picking", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -2004,9 +2004,9 @@ Object .defineProperties (PointPickSensor,
       value: "PointPickSensor",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Picking",
+      value: Object .freeze ({ name: "Picking", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -2281,9 +2281,9 @@ Object .defineProperties (PrimitivePickSensor,
       value: "PrimitivePickSensor",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Picking",
+      value: Object .freeze ({ name: "Picking", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -2532,9 +2532,9 @@ Object .defineProperties (VolumePickSensor,
       value: "VolumePickSensor",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Picking",
+      value: Object .freeze ({ name: "Picking", level: 1 }),
       enumerable: true,
    },
    containerField:

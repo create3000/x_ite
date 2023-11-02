@@ -307,9 +307,9 @@ Object .defineProperties (X3DLayoutNode,
       value: "X3DLayoutNode",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Layout",
+      value: Object .freeze ({ name: "Layout", level: 1 }),
       enumerable: true,
    },
 });
@@ -940,9 +940,9 @@ Object .defineProperties (Layout,
       value: "Layout",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Layout",
+      value: Object .freeze ({ name: "Layout", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -1136,9 +1136,9 @@ Object .defineProperties (LayoutGroup,
       value: "LayoutGroup",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Layout",
+      value: Object .freeze ({ name: "Layout", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -1272,9 +1272,9 @@ Object .defineProperties (LayoutLayer,
       value: "LayoutLayer",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Layout",
+      value: Object .freeze ({ name: "Layout", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -1835,9 +1835,9 @@ Object .defineProperties (ScreenFontStyle,
       value: "ScreenFontStyle",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Layout",
+      value: Object .freeze ({ name: "Layout", level: 1 }),
       enumerable: true,
    },
    containerField:
@@ -1984,9 +1984,9 @@ Object .defineProperties (ScreenGroup,
       value: "ScreenGroup",
       enumerable: true,
    },
-   componentName:
+   componentInfo:
    {
-      value: "Layout",
+      value: Object .freeze ({ name: "Layout", level: 1 }),
       enumerable: true,
    },
    containerField:
