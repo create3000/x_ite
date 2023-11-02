@@ -170,10 +170,10 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
 
          const specificationRange = ConcreteNode .specificationRange;
 
-         if (this .getSpecificationVersion () < specificationRange [0])
+         if (this .getSpecificationVersion () < specificationRange .from)
             return null;
 
-         if (this .getSpecificationVersion () > specificationRange [1])
+         if (this .getSpecificationVersion () > specificationRange .to)
             return null;
 
          if (!this .hasComponent (ConcreteNode .componentInfo .name))
@@ -190,10 +190,10 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
 
          const specificationRange = ConcreteNode .specificationRange;
 
-         if (this .getSpecificationVersion () < specificationRange [0])
+         if (this .getSpecificationVersion () < specificationRange .from)
             throw new Error (`Node type '${typeName}' does not match specification version in '${this .getWorldURL ()}.`);
 
-         if (this .getSpecificationVersion () > specificationRange [1])
+         if (this .getSpecificationVersion () > specificationRange .to)
             throw new Error (`Node type '${typeName}' does not match specification version in '${this .getWorldURL ()}.`);
 
          if (!this .hasComponent (ConcreteNode .componentInfo .name))

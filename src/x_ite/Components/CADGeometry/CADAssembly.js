@@ -84,7 +84,7 @@ Object .defineProperties (CADAssembly,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.1", "Infinity"]),
+      value: Object .freeze ({ from: "3.1", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:

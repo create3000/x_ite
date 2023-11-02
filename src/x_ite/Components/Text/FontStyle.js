@@ -92,7 +92,7 @@ Object .defineProperties (FontStyle,
    },
    specificationRange:
    {
-      value: Object .freeze (["2.0", "Infinity"]),
+      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:

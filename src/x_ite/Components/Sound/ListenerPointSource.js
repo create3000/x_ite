@@ -83,7 +83,7 @@ Object .defineProperties (ListenerPointSource,
    },
    specificationRange:
    {
-      value: Object .freeze (["4.0", "Infinity"]),
+      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:

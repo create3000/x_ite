@@ -212,7 +212,7 @@ Object .defineProperties (ProjectionVolumeStyle,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.3", "Infinity"]),
+      value: Object .freeze ({ from: "3.3", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
