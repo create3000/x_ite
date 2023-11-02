@@ -49,6 +49,7 @@ import ClipPlane                from "./Rendering/ClipPlane.js";
 import Color                    from "./Rendering/Color.js";
 import ColorRGBA                from "./Rendering/ColorRGBA.js";
 import Coordinate               from "./Rendering/Coordinate.js";
+import CoordinateDouble         from "./Rendering/CoordinateDouble.js";
 import IndexedLineSet           from "./Rendering/IndexedLineSet.js";
 import IndexedTriangleFanSet    from "./Rendering/IndexedTriangleFanSet.js";
 import IndexedTriangleSet       from "./Rendering/IndexedTriangleSet.js";
@@ -75,6 +76,7 @@ export default {
       Color,
       ColorRGBA,
       Coordinate,
+      CoordinateDouble,
       IndexedLineSet,
       IndexedTriangleFanSet,
       IndexedTriangleSet,

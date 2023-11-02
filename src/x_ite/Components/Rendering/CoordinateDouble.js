@@ -48,7 +48,7 @@
 import Fields               from "../../Fields.js";
 import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
-import X3DCoordinateNode    from "../Rendering/X3DCoordinateNode.js";
+import X3DCoordinateNode    from "./X3DCoordinateNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 
 function CoordinateDouble (executionContext)
@@ -69,7 +69,7 @@ Object .defineProperties (CoordinateDouble,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "NURBS", level: 1 }),
+      value: Object .freeze ({ name: "Rendering", level: 1 }),
       enumerable: true,
    },
    containerField:

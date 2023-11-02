@@ -48,7 +48,6 @@
 import Components                   from "../../x_ite/Components.js";
 import Contour2D                    from "../../x_ite/Components/NURBS/Contour2D.js";
 import ContourPolyline2D            from "../../x_ite/Components/NURBS/ContourPolyline2D.js";
-import CoordinateDouble             from "../../x_ite/Components/NURBS/CoordinateDouble.js";
 import NurbsCurve                   from "../../x_ite/Components/NURBS/NurbsCurve.js";
 import NurbsCurve2D                 from "../../x_ite/Components/NURBS/NurbsCurve2D.js";
 import NurbsOrientationInterpolator from "../../x_ite/Components/NURBS/NurbsOrientationInterpolator.js";
@@ -70,7 +69,6 @@ Components .add ({
    [
       Contour2D,
       ContourPolyline2D,
-      CoordinateDouble,
       NurbsCurve,
       NurbsCurve2D,
       NurbsOrientationInterpolator,
