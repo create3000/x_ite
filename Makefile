@@ -74,6 +74,9 @@ docs-nodes:
 glTF-samples:
 	perl build/docs/glTF-samples.pl
 
+docs-all: docs-components docs-nodes glTF-samples
+	echo
+
 .PHONY: tests
 tests:
 	perl build/bin/tests.pl
