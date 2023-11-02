@@ -128,7 +128,7 @@ exit 1 unless $result == 0;
 say "Publishing X_ITE X3D v$VERSION now.";
 
 system "make", "docs-nodes";
-system "make", "docs-glTF-samples";
+system "make", "glTF-samples";
 system "git", "add", "-A";
 system "git", "commit", "-am", "Build version $VERSION";
 system "git", "push", "origin";
