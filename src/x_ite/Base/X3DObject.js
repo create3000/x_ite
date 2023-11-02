@@ -221,7 +221,7 @@ Object .assign (X3DObject,
          cache    = [ ],
          registry = new FinalizationRegistry (id => cache .push (id));
 
-      let counter = BigInt (0);
+      let counter = 0;
 
       return function (object)
       {
