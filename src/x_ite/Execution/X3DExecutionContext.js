@@ -79,6 +79,7 @@ function X3DExecutionContext (executionContext, outerNode = null, browser = exec
                           X3DConstants .outputOnly,     "worldInfos",         new Fields .MFNode (),
                           X3DConstants .outputOnly,     "sceneGraph_changed", new Fields .SFTime ())
 
+   this ._rootNodes .setPrivate (false);
    this ._rootNodes .collectCloneCount = () => 1;
 
    this [_outerNode]     = outerNode;

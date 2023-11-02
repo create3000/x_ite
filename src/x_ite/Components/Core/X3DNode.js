@@ -224,7 +224,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
    },
    collectCloneCount ()
    {
-      return this .isPrivate () ? 0 : 1;
+      return 1;
    },
    getSourceText ()
    {
