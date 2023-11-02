@@ -1135,7 +1135,7 @@ Object .defineProperties (LinePickSensor,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.2", "Infinity"]),
+      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -1470,7 +1470,7 @@ Object .defineProperties (PickableGroup,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.2", "Infinity"]),
+      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -2016,7 +2016,7 @@ Object .defineProperties (PointPickSensor,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.2", "Infinity"]),
+      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -2283,7 +2283,7 @@ Object .defineProperties (PrimitivePickSensor,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "Picking", level: 1 }),
+      value: Object .freeze ({ name: "Picking", level: 2 }),
       enumerable: true,
    },
    containerField:
@@ -2293,7 +2293,7 @@ Object .defineProperties (PrimitivePickSensor,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.2", "Infinity"]),
+      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -2534,7 +2534,7 @@ Object .defineProperties (VolumePickSensor,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "Picking", level: 1 }),
+      value: Object .freeze ({ name: "Picking", level: 3 }),
       enumerable: true,
    },
    containerField:
@@ -2544,7 +2544,7 @@ Object .defineProperties (VolumePickSensor,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.2", "Infinity"]),
+      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:

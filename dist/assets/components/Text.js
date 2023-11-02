@@ -1,7 +1,7 @@
 /* X_ITE v9.0.2 */(() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 729:
+/***/ 578:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 /**
@@ -16027,7 +16027,7 @@ Object .defineProperties (FontStyle,
    },
    specificationRange:
    {
-      value: Object .freeze (["2.0", "Infinity"]),
+      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -16055,7 +16055,7 @@ Namespace_default().add ("FontStyle", "x_ite/Components/Text/FontStyle", FontSty
 /* harmony default export */ const Text_FontStyle = (FontStyle_default_);
 ;// CONCATENATED MODULE: ./src/x_ite/Browser/Text/X3DTextContext.js
 /* provided dependency */ var $ = __webpack_require__(355);
-/* provided dependency */ var opentype = __webpack_require__(729);
+/* provided dependency */ var opentype = __webpack_require__(578);
 /*******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
@@ -16362,7 +16362,7 @@ Object .defineProperties (Text,
    },
    specificationRange:
    {
-      value: Object .freeze (["2.0", "Infinity"]),
+      value: Object .freeze ({ from: "2.0", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:

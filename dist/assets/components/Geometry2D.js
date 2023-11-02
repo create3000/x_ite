@@ -903,7 +903,7 @@ Object .defineProperties (Arc2D,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "Geometry2D", level: 1 }),
+      value: Object .freeze ({ name: "Geometry2D", level: 2 }),
       enumerable: true,
    },
    containerField:
@@ -913,7 +913,7 @@ Object .defineProperties (Arc2D,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.0", "Infinity"]),
+      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -1133,7 +1133,7 @@ Object .defineProperties (ArcClose2D,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "Geometry2D", level: 1 }),
+      value: Object .freeze ({ name: "Geometry2D", level: 2 }),
       enumerable: true,
    },
    containerField:
@@ -1143,7 +1143,7 @@ Object .defineProperties (ArcClose2D,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.0", "Infinity"]),
+      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -1272,7 +1272,7 @@ Object .defineProperties (Circle2D,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "Geometry2D", level: 1 }),
+      value: Object .freeze ({ name: "Geometry2D", level: 2 }),
       enumerable: true,
    },
    containerField:
@@ -1282,7 +1282,7 @@ Object .defineProperties (Circle2D,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.0", "Infinity"]),
+      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -1535,7 +1535,7 @@ Object .defineProperties (Disk2D,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "Geometry2D", level: 1 }),
+      value: Object .freeze ({ name: "Geometry2D", level: 2 }),
       enumerable: true,
    },
    containerField:
@@ -1545,7 +1545,7 @@ Object .defineProperties (Disk2D,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.0", "Infinity"]),
+      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -1663,7 +1663,7 @@ Object .defineProperties (Polyline2D,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.0", "Infinity"]),
+      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -1778,7 +1778,7 @@ Object .defineProperties (Polypoint2D,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.0", "Infinity"]),
+      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -1935,7 +1935,7 @@ Object .defineProperties (Rectangle2D,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.0", "Infinity"]),
+      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -2082,7 +2082,7 @@ Object .defineProperties (TriangleSet2D,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.0", "Infinity"]),
+      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:

@@ -207,7 +207,7 @@ Object .defineProperties (Contour2D,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "NURBS", level: 1 }),
+      value: Object .freeze ({ name: "NURBS", level: 4 }),
       enumerable: true,
    },
    containerField:
@@ -217,7 +217,7 @@ Object .defineProperties (Contour2D,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.0", "Infinity"]),
+      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -461,7 +461,7 @@ Object .defineProperties (ContourPolyline2D,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "NURBS", level: 1 }),
+      value: Object .freeze ({ name: "NURBS", level: 3 }),
       enumerable: true,
    },
    containerField:
@@ -471,7 +471,7 @@ Object .defineProperties (ContourPolyline2D,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.0", "Infinity"]),
+      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -489,109 +489,6 @@ const ContourPolyline2D_default_ = ContourPolyline2D;
 
 Namespace_default().add ("ContourPolyline2D", "x_ite/Components/NURBS/ContourPolyline2D", ContourPolyline2D_default_);
 /* harmony default export */ const NURBS_ContourPolyline2D = (ContourPolyline2D_default_);
-;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Rendering/X3DCoordinateNode\")"
-const X3DCoordinateNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.0.2")] .require ("x_ite/Components/Rendering/X3DCoordinateNode");
-var X3DCoordinateNode_default = /*#__PURE__*/__webpack_require__.n(X3DCoordinateNode_namespaceObject);
-;// CONCATENATED MODULE: ./src/x_ite/Components/NURBS/CoordinateDouble.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-
-
-
-
-
-function CoordinateDouble (executionContext)
-{
-   X3DCoordinateNode_default().call (this, executionContext);
-
-   this .addType ((X3DConstants_default()).CoordinateDouble);
-}
-
-Object .setPrototypeOf (CoordinateDouble .prototype, (X3DCoordinateNode_default()).prototype);
-
-Object .defineProperties (CoordinateDouble,
-{
-   typeName:
-   {
-      value: "CoordinateDouble",
-      enumerable: true,
-   },
-   componentInfo:
-   {
-      value: Object .freeze ({ name: "NURBS", level: 1 }),
-      enumerable: true,
-   },
-   containerField:
-   {
-      value: "coord",
-      enumerable: true,
-   },
-   specificationRange:
-   {
-      value: Object .freeze (["3.0", "Infinity"]),
-      enumerable: true,
-   },
-   fieldDefinitions:
-   {
-      value: new (FieldDefinitionArray_default()) ([
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "metadata", new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput, "point",    new (Fields_default()).MFVec3d ()),
-      ]),
-      enumerable: true,
-   },
-});
-
-const CoordinateDouble_default_ = CoordinateDouble;
-;
-
-Namespace_default().add ("CoordinateDouble", "x_ite/Components/NURBS/CoordinateDouble", CoordinateDouble_default_);
-/* harmony default export */ const NURBS_CoordinateDouble = (CoordinateDouble_default_);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Rendering/X3DGeometryNode\")"
 const X3DGeometryNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.0.2")] .require ("x_ite/Components/Rendering/X3DGeometryNode");
 var X3DGeometryNode_default = /*#__PURE__*/__webpack_require__.n(X3DGeometryNode_namespaceObject);
@@ -3002,7 +2899,7 @@ Object .defineProperties (NurbsCurve,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.0", "Infinity"]),
+      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -3209,7 +3106,7 @@ Object .defineProperties (NurbsCurve2D,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "NURBS", level: 1 }),
+      value: Object .freeze ({ name: "NURBS", level: 3 }),
       enumerable: true,
    },
    containerField:
@@ -3219,7 +3116,7 @@ Object .defineProperties (NurbsCurve2D,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.0", "Infinity"]),
+      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -3462,7 +3359,7 @@ Object .defineProperties (NurbsOrientationInterpolator,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.0", "Infinity"]),
+      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -3968,7 +3865,7 @@ Object .defineProperties (NurbsPatchSurface,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.0", "Infinity"]),
+      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -4201,7 +4098,7 @@ Object .defineProperties (NurbsPositionInterpolator,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.0", "Infinity"]),
+      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -4383,7 +4280,7 @@ Object .defineProperties (NurbsSet,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "NURBS", level: 1 }),
+      value: Object .freeze ({ name: "NURBS", level: 2 }),
       enumerable: true,
    },
    containerField:
@@ -4393,7 +4290,7 @@ Object .defineProperties (NurbsSet,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.0", "Infinity"]),
+      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -4670,7 +4567,7 @@ Object .defineProperties (NurbsSurfaceInterpolator,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.0", "Infinity"]),
+      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -4856,7 +4753,7 @@ Object .defineProperties (NurbsSweptSurface,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "NURBS", level: 1 }),
+      value: Object .freeze ({ name: "NURBS", level: 3 }),
       enumerable: true,
    },
    containerField:
@@ -4866,7 +4763,7 @@ Object .defineProperties (NurbsSweptSurface,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.0", "Infinity"]),
+      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -5042,7 +4939,7 @@ Object .defineProperties (NurbsSwungSurface,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "NURBS", level: 1 }),
+      value: Object .freeze ({ name: "NURBS", level: 3 }),
       enumerable: true,
    },
    containerField:
@@ -5052,7 +4949,7 @@ Object .defineProperties (NurbsSwungSurface,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.0", "Infinity"]),
+      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -5209,7 +5106,7 @@ Object .defineProperties (NurbsTextureCoordinate,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.0", "Infinity"]),
+      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -5372,7 +5269,7 @@ Object .defineProperties (NurbsTrimmedSurface,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "NURBS", level: 1 }),
+      value: Object .freeze ({ name: "NURBS", level: 4 }),
       enumerable: true,
    },
    containerField:
@@ -5382,7 +5279,7 @@ Object .defineProperties (NurbsTrimmedSurface,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.0", "Infinity"]),
+      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -5482,14 +5379,12 @@ Namespace_default().add ("NurbsTrimmedSurface", "x_ite/Components/NURBS/NurbsTri
 
 
 
-
 Components_default().add ({
    name: "NURBS",
    concreteNodes:
    [
       NURBS_Contour2D,
       NURBS_ContourPolyline2D,
-      NURBS_CoordinateDouble,
       NURBS_NurbsCurve,
       NURBS_NurbsCurve2D,
       NURBS_NurbsOrientationInterpolator,

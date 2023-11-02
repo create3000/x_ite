@@ -1525,7 +1525,7 @@ Object .defineProperties (GeoCoordinate,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.0", "Infinity"]),
+      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -1957,7 +1957,7 @@ Object .defineProperties (GeoElevationGrid,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.0", "Infinity"]),
+      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -2448,7 +2448,7 @@ Object .defineProperties (GeoLOD,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.0", "Infinity"]),
+      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -2592,7 +2592,7 @@ Object .defineProperties (GeoLocation,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.0", "Infinity"]),
+      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -2724,7 +2724,7 @@ Object .defineProperties (GeoMetadata,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.0", "Infinity"]),
+      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -2854,7 +2854,7 @@ Object .defineProperties (GeoOrigin,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.0", "Infinity"]),
+      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -3014,7 +3014,7 @@ Object .defineProperties (GeoPositionInterpolator,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.0", "Infinity"]),
+      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -3175,7 +3175,7 @@ Object .defineProperties (GeoProximitySensor,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "Geospatial", level: 1 }),
+      value: Object .freeze ({ name: "Geospatial", level: 2 }),
       enumerable: true,
    },
    containerField:
@@ -3185,7 +3185,7 @@ Object .defineProperties (GeoProximitySensor,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.2", "Infinity"]),
+      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -3331,7 +3331,7 @@ Object .defineProperties (GeoTouchSensor,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.0", "Infinity"]),
+      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -3468,7 +3468,7 @@ Object .defineProperties (GeoTransform,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "Geospatial", level: 1 }),
+      value: Object .freeze ({ name: "Geospatial", level: 2 }),
       enumerable: true,
    },
    containerField:
@@ -3478,7 +3478,7 @@ Object .defineProperties (GeoTransform,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.0", "Infinity"]),
+      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -3788,7 +3788,7 @@ Object .defineProperties (GeoViewpoint,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.0", "Infinity"]),
+      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:

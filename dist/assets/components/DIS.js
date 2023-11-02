@@ -136,7 +136,7 @@ Object .defineProperties (DISEntityManager,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "DIS", level: 1 }),
+      value: Object .freeze ({ name: "DIS", level: 2 }),
       enumerable: true,
    },
    containerField:
@@ -146,7 +146,7 @@ Object .defineProperties (DISEntityManager,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.0", "Infinity"]),
+      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -263,7 +263,7 @@ Object .defineProperties (DISEntityTypeMapping,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "DIS", level: 1 }),
+      value: Object .freeze ({ name: "DIS", level: 2 }),
       enumerable: true,
    },
    containerField:
@@ -273,7 +273,7 @@ Object .defineProperties (DISEntityTypeMapping,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.0", "Infinity"]),
+      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -400,7 +400,7 @@ Object .defineProperties (EspduTransform,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.0", "Infinity"]),
+      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -610,7 +610,7 @@ Object .defineProperties (ReceiverPdu,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.0", "Infinity"]),
+      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -757,7 +757,7 @@ Object .defineProperties (SignalPdu,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.0", "Infinity"]),
+      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -904,7 +904,7 @@ Object .defineProperties (TransmitterPdu,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.0", "Infinity"]),
+      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:

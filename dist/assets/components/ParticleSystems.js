@@ -754,7 +754,7 @@ Object .defineProperties (PointEmitter,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.2", "Infinity"]),
+      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -1049,7 +1049,7 @@ Object .defineProperties (BoundedPhysicsModel,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "ParticleSystems", level: 1 }),
+      value: Object .freeze ({ name: "ParticleSystems", level: 2 }),
       enumerable: true,
    },
    containerField:
@@ -1059,7 +1059,7 @@ Object .defineProperties (BoundedPhysicsModel,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.2", "Infinity"]),
+      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -1220,7 +1220,7 @@ Object .defineProperties (ConeEmitter,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.2", "Infinity"]),
+      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -1364,7 +1364,7 @@ Object .defineProperties (ExplosionEmitter,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.2", "Infinity"]),
+      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -1493,7 +1493,7 @@ Object .defineProperties (ForcePhysicsModel,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.2", "Infinity"]),
+      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -3071,7 +3071,7 @@ Object .defineProperties (ParticleSystem,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "ParticleSystems", level: 1 }),
+      value: Object .freeze ({ name: "ParticleSystems", level: 2 }),
       enumerable: true,
    },
    containerField:
@@ -3081,7 +3081,7 @@ Object .defineProperties (ParticleSystem,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.2", "Infinity"]),
+      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -3347,7 +3347,7 @@ Object .defineProperties (PolylineEmitter,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.2", "Infinity"]),
+      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -3600,7 +3600,7 @@ Object .defineProperties (SurfaceEmitter,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "ParticleSystems", level: 1 }),
+      value: Object .freeze ({ name: "ParticleSystems", level: 2 }),
       enumerable: true,
    },
    containerField:
@@ -3610,7 +3610,7 @@ Object .defineProperties (SurfaceEmitter,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.2", "Infinity"]),
+      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -3893,7 +3893,7 @@ Object .defineProperties (VolumeEmitter,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "ParticleSystems", level: 1 }),
+      value: Object .freeze ({ name: "ParticleSystems", level: 2 }),
       enumerable: true,
    },
    containerField:
@@ -3903,7 +3903,7 @@ Object .defineProperties (VolumeEmitter,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.2", "Infinity"]),
+      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -4065,7 +4065,7 @@ Object .defineProperties (WindPhysicsModel,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.2", "Infinity"]),
+      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:

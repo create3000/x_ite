@@ -131,7 +131,7 @@ Object .defineProperties (X3DProductStructureChildNode,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "CADGeometry", level: 1 }),
+      value: Object .freeze ({ name: "CADGeometry", level: 2 }),
       enumerable: true,
    },
 });
@@ -218,7 +218,7 @@ Object .defineProperties (CADAssembly,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "CADGeometry", level: 1 }),
+      value: Object .freeze ({ name: "CADGeometry", level: 2 }),
       enumerable: true,
    },
    containerField:
@@ -228,7 +228,7 @@ Object .defineProperties (CADAssembly,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.1", "Infinity"]),
+      value: Object .freeze ({ from: "3.1", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -485,7 +485,7 @@ Object .defineProperties (CADFace,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "CADGeometry", level: 1 }),
+      value: Object .freeze ({ name: "CADGeometry", level: 2 }),
       enumerable: true,
    },
    containerField:
@@ -495,7 +495,7 @@ Object .defineProperties (CADFace,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.1", "Infinity"]),
+      value: Object .freeze ({ from: "3.1", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -590,7 +590,7 @@ Object .defineProperties (CADLayer,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "CADGeometry", level: 1 }),
+      value: Object .freeze ({ name: "CADGeometry", level: 2 }),
       enumerable: true,
    },
    containerField:
@@ -600,7 +600,7 @@ Object .defineProperties (CADLayer,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.1", "Infinity"]),
+      value: Object .freeze ({ from: "3.1", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -705,7 +705,7 @@ Object .defineProperties (CADPart,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "CADGeometry", level: 1 }),
+      value: Object .freeze ({ name: "CADGeometry", level: 2 }),
       enumerable: true,
    },
    containerField:
@@ -715,7 +715,7 @@ Object .defineProperties (CADPart,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.1", "Infinity"]),
+      value: Object .freeze ({ from: "3.1", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -856,7 +856,7 @@ Object .defineProperties (IndexedQuadSet,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.1", "Infinity"]),
+      value: Object .freeze ({ from: "3.1", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -990,7 +990,7 @@ Object .defineProperties (QuadSet,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.1", "Infinity"]),
+      value: Object .freeze ({ from: "3.1", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:

@@ -322,7 +322,7 @@ Object .defineProperties (X3DRigidJointNode,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "RigidBodyPhysics", level: 1 }),
+      value: Object .freeze ({ name: "RigidBodyPhysics", level: 2 }),
       enumerable: true,
    },
 });
@@ -613,7 +613,7 @@ Object .defineProperties (BallJoint,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "RigidBodyPhysics", level: 1 }),
+      value: Object .freeze ({ name: "RigidBodyPhysics", level: 2 }),
       enumerable: true,
    },
    containerField:
@@ -623,7 +623,7 @@ Object .defineProperties (BallJoint,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.2", "Infinity"]),
+      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -1068,7 +1068,7 @@ Object .defineProperties (CollidableOffset,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.2", "Infinity"]),
+      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -1570,7 +1570,7 @@ Object .defineProperties (CollidableShape,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.2", "Infinity"]),
+      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -1750,6 +1750,10 @@ Object .assign (Object .setPrototypeOf (CollisionCollection .prototype, (X3DChil
       this .set_appliedParameters__ ();
       this .set_collidables__ ();
    },
+   getBBox (bbox, shadows)
+   {
+      return bbox;
+   },
    getAppliedParameters ()
    {
       return this .appliedParameters;
@@ -1864,7 +1868,7 @@ Object .defineProperties (CollisionCollection,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.2", "Infinity"]),
+      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -2163,7 +2167,7 @@ Object .defineProperties (CollisionSensor,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.2", "Infinity"]),
+      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -2441,7 +2445,7 @@ Object .defineProperties (CollisionSpace,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.2", "Infinity"]),
+      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -2545,7 +2549,7 @@ Object .defineProperties (Contact,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "RigidBodyPhysics", level: 1 }),
+      value: Object .freeze ({ name: "RigidBodyPhysics", level: 2 }),
       enumerable: true,
    },
    containerField:
@@ -2555,7 +2559,7 @@ Object .defineProperties (Contact,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.2", "Infinity"]),
+      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -2852,7 +2856,7 @@ Object .defineProperties (DoubleAxisHingeJoint,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "RigidBodyPhysics", level: 1 }),
+      value: Object .freeze ({ name: "RigidBodyPhysics", level: 2 }),
       enumerable: true,
    },
    containerField:
@@ -2862,7 +2866,7 @@ Object .defineProperties (DoubleAxisHingeJoint,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.2", "Infinity"]),
+      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -2998,7 +3002,7 @@ Object .defineProperties (MotorJoint,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "RigidBodyPhysics", level: 1 }),
+      value: Object .freeze ({ name: "RigidBodyPhysics", level: 2 }),
       enumerable: true,
    },
    containerField:
@@ -3008,7 +3012,7 @@ Object .defineProperties (MotorJoint,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.2", "Infinity"]),
+      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -3179,6 +3183,10 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, (X3DNode_default()
       this .set_forces__ ();
       this .set_torques__ ();
       this .set_geometry__ ();
+   },
+   getBBox (bbox, shadows)
+   {
+      return bbox;
    },
    setCollection (value)
    {
@@ -3532,7 +3540,7 @@ Object .defineProperties (RigidBody,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "RigidBodyPhysics", level: 1 }),
+      value: Object .freeze ({ name: "RigidBodyPhysics", level: 2 }),
       enumerable: true,
    },
    containerField:
@@ -3542,7 +3550,7 @@ Object .defineProperties (RigidBody,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.2", "Infinity"]),
+      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -3698,6 +3706,10 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, (X3DChil
       this .set_gravity__ ();
       this .set_collider__ ();
       this .set_bodies__ ();
+   },
+   getBBox (bbox, shadows)
+   {
+      return bbox;
    },
    getDynamicsWorld ()
    {
@@ -3946,7 +3958,7 @@ Object .defineProperties (RigidBodyCollection,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "RigidBodyPhysics", level: 1 }),
+      value: Object .freeze ({ name: "RigidBodyPhysics", level: 2 }),
       enumerable: true,
    },
    containerField:
@@ -3956,7 +3968,7 @@ Object .defineProperties (RigidBodyCollection,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.2", "Infinity"]),
+      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -4218,7 +4230,7 @@ Object .defineProperties (SingleAxisHingeJoint,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "RigidBodyPhysics", level: 1 }),
+      value: Object .freeze ({ name: "RigidBodyPhysics", level: 2 }),
       enumerable: true,
    },
    containerField:
@@ -4228,7 +4240,7 @@ Object .defineProperties (SingleAxisHingeJoint,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.2", "Infinity"]),
+      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -4455,7 +4467,7 @@ Object .defineProperties (SliderJoint,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "RigidBodyPhysics", level: 1 }),
+      value: Object .freeze ({ name: "RigidBodyPhysics", level: 2 }),
       enumerable: true,
    },
    containerField:
@@ -4465,7 +4477,7 @@ Object .defineProperties (SliderJoint,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.2", "Infinity"]),
+      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -4580,7 +4592,7 @@ Object .defineProperties (UniversalJoint,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "RigidBodyPhysics", level: 1 }),
+      value: Object .freeze ({ name: "RigidBodyPhysics", level: 2 }),
       enumerable: true,
    },
    containerField:
@@ -4590,7 +4602,7 @@ Object .defineProperties (UniversalJoint,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.2", "Infinity"]),
+      value: Object .freeze ({ from: "3.2", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:

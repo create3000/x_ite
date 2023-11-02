@@ -573,7 +573,7 @@ Object .defineProperties (ComposedCubeMapTexture,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.1", "Infinity"]),
+      value: Object .freeze ({ from: "3.1", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -1047,7 +1047,7 @@ Object .defineProperties (GeneratedCubeMapTexture,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "CubeMapTexturing", level: 1 }),
+      value: Object .freeze ({ name: "CubeMapTexturing", level: 3 }),
       enumerable: true,
    },
    containerField:
@@ -1057,7 +1057,7 @@ Object .defineProperties (GeneratedCubeMapTexture,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.0", "Infinity"]),
+      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -1458,7 +1458,7 @@ Object .defineProperties (ImageCubeMapTexture,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "CubeMapTexturing", level: 1 }),
+      value: Object .freeze ({ name: "CubeMapTexturing", level: 2 }),
       enumerable: true,
    },
    containerField:
@@ -1468,7 +1468,7 @@ Object .defineProperties (ImageCubeMapTexture,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.0", "Infinity"]),
+      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:

@@ -644,7 +644,7 @@ Object .defineProperties (KeySensor,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.0", "Infinity"]),
+      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -808,7 +808,7 @@ Object .defineProperties (StringSensor,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "KeyDeviceSensor", level: 1 }),
+      value: Object .freeze ({ name: "KeyDeviceSensor", level: 2 }),
       enumerable: true,
    },
    containerField:
@@ -818,7 +818,7 @@ Object .defineProperties (StringSensor,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.0", "Infinity"]),
+      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:

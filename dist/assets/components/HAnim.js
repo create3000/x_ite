@@ -143,7 +143,7 @@ Object .defineProperties (HAnimDisplacer,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.0", "Infinity"]),
+      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -775,7 +775,7 @@ Object .defineProperties (HAnimHumanoid,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.0", "Infinity"]),
+      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -1012,7 +1012,7 @@ Object .defineProperties (HAnimJoint,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.0", "Infinity"]),
+      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -1456,7 +1456,7 @@ Object .defineProperties (HAnimMotion,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "HAnim", level: 1 }),
+      value: Object .freeze ({ name: "HAnim", level: 2 }),
       enumerable: true,
    },
    containerField:
@@ -1466,7 +1466,7 @@ Object .defineProperties (HAnimMotion,
    },
    specificationRange:
    {
-      value: Object .freeze (["4.0", "Infinity"]),
+      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -1589,7 +1589,7 @@ Object .defineProperties (HAnimSegment,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.0", "Infinity"]),
+      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -1702,7 +1702,7 @@ Object .defineProperties (HAnimSite,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.0", "Infinity"]),
+      value: Object .freeze ({ from: "3.0", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:

@@ -455,7 +455,7 @@ Object .defineProperties (OpacityMapVolumeStyle,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.3", "Infinity"]),
+      value: Object .freeze ({ from: "3.3", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -934,7 +934,7 @@ Object .defineProperties (BlendedVolumeStyle,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "VolumeRendering", level: 1 }),
+      value: Object .freeze ({ name: "VolumeRendering", level: 3 }),
       enumerable: true,
    },
    containerField:
@@ -944,7 +944,7 @@ Object .defineProperties (BlendedVolumeStyle,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.3", "Infinity"]),
+      value: Object .freeze ({ from: "3.3", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -1098,7 +1098,7 @@ Object .defineProperties (BoundaryEnhancementVolumeStyle,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "VolumeRendering", level: 1 }),
+      value: Object .freeze ({ name: "VolumeRendering", level: 2 }),
       enumerable: true,
    },
    containerField:
@@ -1108,7 +1108,7 @@ Object .defineProperties (BoundaryEnhancementVolumeStyle,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.3", "Infinity"]),
+      value: Object .freeze ({ from: "3.3", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -1413,7 +1413,7 @@ Object .defineProperties (CartoonVolumeStyle,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "VolumeRendering", level: 1 }),
+      value: Object .freeze ({ name: "VolumeRendering", level: 3 }),
       enumerable: true,
    },
    containerField:
@@ -1423,7 +1423,7 @@ Object .defineProperties (CartoonVolumeStyle,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.3", "Infinity"]),
+      value: Object .freeze ({ from: "3.3", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -1625,7 +1625,7 @@ Object .defineProperties (ComposedVolumeStyle,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "VolumeRendering", level: 1 }),
+      value: Object .freeze ({ name: "VolumeRendering", level: 3 }),
       enumerable: true,
    },
    containerField:
@@ -1635,7 +1635,7 @@ Object .defineProperties (ComposedVolumeStyle,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.3", "Infinity"]),
+      value: Object .freeze ({ from: "3.3", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -1808,7 +1808,7 @@ Object .defineProperties (EdgeEnhancementVolumeStyle,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "VolumeRendering", level: 1 }),
+      value: Object .freeze ({ name: "VolumeRendering", level: 2 }),
       enumerable: true,
    },
    containerField:
@@ -1818,7 +1818,7 @@ Object .defineProperties (EdgeEnhancementVolumeStyle,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.3", "Infinity"]),
+      value: Object .freeze ({ from: "3.3", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -2620,7 +2620,7 @@ Object .defineProperties (IsoSurfaceVolumeData,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "VolumeRendering", level: 1 }),
+      value: Object .freeze ({ name: "VolumeRendering", level: 2 }),
       enumerable: true,
    },
    containerField:
@@ -2630,7 +2630,7 @@ Object .defineProperties (IsoSurfaceVolumeData,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.3", "Infinity"]),
+      value: Object .freeze ({ from: "3.3", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -2863,7 +2863,7 @@ Object .defineProperties (ProjectionVolumeStyle,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "VolumeRendering", level: 1 }),
+      value: Object .freeze ({ name: "VolumeRendering", level: 2 }),
       enumerable: true,
    },
    containerField:
@@ -2873,7 +2873,7 @@ Object .defineProperties (ProjectionVolumeStyle,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.3", "Infinity"]),
+      value: Object .freeze ({ from: "3.3", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -3140,7 +3140,7 @@ Object .defineProperties (SegmentedVolumeData,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "VolumeRendering", level: 1 }),
+      value: Object .freeze ({ name: "VolumeRendering", level: 2 }),
       enumerable: true,
    },
    containerField:
@@ -3150,7 +3150,7 @@ Object .defineProperties (SegmentedVolumeData,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.3", "Infinity"]),
+      value: Object .freeze ({ from: "3.3", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -3428,7 +3428,7 @@ Object .defineProperties (ShadedVolumeStyle,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "VolumeRendering", level: 1 }),
+      value: Object .freeze ({ name: "VolumeRendering", level: 3 }),
       enumerable: true,
    },
    containerField:
@@ -3438,7 +3438,7 @@ Object .defineProperties (ShadedVolumeStyle,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.3", "Infinity"]),
+      value: Object .freeze ({ from: "3.3", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -3613,7 +3613,7 @@ Object .defineProperties (SilhouetteEnhancementVolumeStyle,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "VolumeRendering", level: 1 }),
+      value: Object .freeze ({ name: "VolumeRendering", level: 2 }),
       enumerable: true,
    },
    containerField:
@@ -3623,7 +3623,7 @@ Object .defineProperties (SilhouetteEnhancementVolumeStyle,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.3", "Infinity"]),
+      value: Object .freeze ({ from: "3.3", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -3805,7 +3805,7 @@ Object .defineProperties (ToneMappedVolumeStyle,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "VolumeRendering", level: 1 }),
+      value: Object .freeze ({ name: "VolumeRendering", level: 2 }),
       enumerable: true,
    },
    containerField:
@@ -3815,7 +3815,7 @@ Object .defineProperties (ToneMappedVolumeStyle,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.3", "Infinity"]),
+      value: Object .freeze ({ from: "3.3", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -4028,7 +4028,7 @@ Object .defineProperties (VolumeData,
    },
    specificationRange:
    {
-      value: Object .freeze (["3.3", "Infinity"]),
+      value: Object .freeze ({ from: "3.3", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:

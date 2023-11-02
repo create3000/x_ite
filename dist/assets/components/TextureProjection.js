@@ -273,7 +273,7 @@ Object .defineProperties (X3DTextureProjectorNode,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "TextureProjection", level: 1 }),
+      value: Object .freeze ({ name: "TextureProjection", level: 4 }),
       enumerable: true,
    },
 });
@@ -494,7 +494,7 @@ Object .defineProperties (TextureProjector,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "TextureProjection", level: 1 }),
+      value: Object .freeze ({ name: "TextureProjection", level: 2 }),
       enumerable: true,
    },
    containerField:
@@ -504,7 +504,7 @@ Object .defineProperties (TextureProjector,
    },
    specificationRange:
    {
-      value: Object .freeze (["4.0", "Infinity"]),
+      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
@@ -799,7 +799,7 @@ Object .defineProperties (TextureProjectorParallel,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "TextureProjection", level: 1 }),
+      value: Object .freeze ({ name: "TextureProjection", level: 2 }),
       enumerable: true,
    },
    containerField:
@@ -809,7 +809,7 @@ Object .defineProperties (TextureProjectorParallel,
    },
    specificationRange:
    {
-      value: Object .freeze (["4.0", "Infinity"]),
+      value: Object .freeze ({ from: "4.0", to: "Infinity" }),
       enumerable: true,
    },
    fieldDefinitions:
