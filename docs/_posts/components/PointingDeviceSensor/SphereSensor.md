@@ -15,7 +15,7 @@ tags: [SphereSensor, PointingDeviceSensor]
 
 SphereSensor converts pointing device motion into a spherical rotation about the origin of the local coordinate system.
 
-The SphereSensor node belongs to the **PointingDeviceSensor** component and its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The SphereSensor node belongs to the **PointingDeviceSensor** component level **1** and its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 

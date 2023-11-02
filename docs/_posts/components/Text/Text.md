@@ -15,7 +15,7 @@ tags: [Text, Text]
 
 Text is a 2D (flat) geometry node that can contain multiple lines of string values. Layout and styling is controlled by a contained FontStyle node.
 
-The Text node belongs to the **Text** component and its default container field is *geometry.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The Text node belongs to the **Text** component level **1** and its default container field is *geometry.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 

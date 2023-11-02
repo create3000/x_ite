@@ -15,7 +15,7 @@ tags: [ColorDamper, Followers]
 
 ColorDamper generates a series of RGB color values that progressively change from initial value to destination value.
 
-The ColorDamper node belongs to the **Followers** component and its default container field is *children.* It is available from X3D version 3.2 or higher.
+The ColorDamper node belongs to the **Followers** component level **1** and its default container field is *children.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 

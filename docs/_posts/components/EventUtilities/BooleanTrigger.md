@@ -15,7 +15,7 @@ tags: [BooleanTrigger, EventUtilities]
 
 BooleanTrigger converts time events to boolean true events.
 
-The BooleanTrigger node belongs to the **EventUtilities** component and its default container field is *children.* It is available from X3D version 3.0 or higher.
+The BooleanTrigger node belongs to the **EventUtilities** component level **1** and its default container field is *children.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 

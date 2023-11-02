@@ -15,7 +15,7 @@ tags: [SingleAxisHingeJoint, RigidBodyPhysics]
 
 SingleAxisHingeJoint has single axis about which to rotate, similar to a traditional door hinge. Contains two RigidBody nodes (containerField values body1, body2).
 
-The SingleAxisHingeJoint node belongs to the **RigidBodyPhysics** component and its default container field is *joints.* It is available from X3D version 3.2 or higher.
+The SingleAxisHingeJoint node belongs to the **RigidBodyPhysics** component level **2** and its default container field is *joints.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 

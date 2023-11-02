@@ -15,7 +15,7 @@ tags: [PositionInterpolator2D, Interpolation]
 
 PositionInterpolator2D generates a series of SFVec2f values. Authors can ROUTE value_changed output events to a SFVec2f attribute.
 
-The PositionInterpolator2D node belongs to the **Interpolation** component and its default container field is *children.* It is available from X3D version 3.0 or higher.
+The PositionInterpolator2D node belongs to the **Interpolation** component level **3** and its default container field is *children.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 

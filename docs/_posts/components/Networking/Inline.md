@@ -15,7 +15,7 @@ tags: [Inline, Networking]
 
 Inline can load another X3D or VRML model into the current scene via url. Inline is an X3DBoundedObject node that has bounding-box dimensions.
 
-The Inline node belongs to the **Networking** component and its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The Inline node belongs to the **Networking** component level **2** and its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 

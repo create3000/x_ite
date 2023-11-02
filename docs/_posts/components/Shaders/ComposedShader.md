@@ -15,7 +15,7 @@ tags: [ComposedShader, Shaders]
 
 ComposedShader defines a shader where the individual source files are assembled from contained ShaderPart program sections. All access to shading capabilities is defined through a single interface that applies to all parts.
 
-The ComposedShader node belongs to the **Shaders** component and its default container field is *shaders.* It is available from X3D version 3.0 or higher.
+The ComposedShader node belongs to the **Shaders** component level **1** and its default container field is *shaders.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 

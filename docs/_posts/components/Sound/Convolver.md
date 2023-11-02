@@ -15,7 +15,7 @@ tags: [Convolver, Sound]
 
 Convolver performs a linear convolution on a given AudioBuffer, often used to achieve a reverberation effect.
 
-The Convolver node belongs to the **Sound** component and its default container field is *children.* It is available from X3D version 4.0 or higher.
+The Convolver node belongs to the **Sound** component level **2** and its default container field is *children.* It is available from X3D version 4.0 or higher.
 
 ## Hierarchy
 

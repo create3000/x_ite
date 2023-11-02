@@ -15,7 +15,7 @@ tags: [Sphere, Geometry3D]
 
 Sphere is a geometry node, representing a perfectly round geometrical object that is the surface of a completely round ball.
 
-The Sphere node belongs to the **Geometry3D** component and its default container field is *geometry.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The Sphere node belongs to the **Geometry3D** component level **1** and its default container field is *geometry.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 

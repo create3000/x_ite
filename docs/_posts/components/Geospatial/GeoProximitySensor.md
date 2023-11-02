@@ -15,7 +15,7 @@ tags: [GeoProximitySensor, Geospatial]
 
 GeoProximitySensor generates events when the viewer enters, exits and moves within a region of space (defined by a box).
 
-The GeoProximitySensor node belongs to the **Geospatial** component and its default container field is *children.* It is available from X3D version 3.2 or higher.
+The GeoProximitySensor node belongs to the **Geospatial** component level **2** and its default container field is *children.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 

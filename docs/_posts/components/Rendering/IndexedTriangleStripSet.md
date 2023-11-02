@@ -15,7 +15,7 @@ tags: [IndexedTriangleStripSet, Rendering]
 
 IndexedTriangleStripSet is a geometry node containing a Coordinate or CoordinateDouble node, and can also contain Color or ColorRGBA, Normal and TextureCoordinate nodes.
 
-The IndexedTriangleStripSet node belongs to the **Rendering** component and its default container field is *geometry.* It is available from X3D version 3.0 or higher.
+The IndexedTriangleStripSet node belongs to the **Rendering** component level **3** and its default container field is *geometry.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 

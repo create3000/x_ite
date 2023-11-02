@@ -15,7 +15,7 @@ tags: [NurbsPositionInterpolator, NURBS]
 
 NurbsPositionInterpolator describes a 3D NURBS curve and outputs interpolated position values.
 
-The NurbsPositionInterpolator node belongs to the **NURBS** component and its default container field is *children.* It is available from X3D version 3.0 or higher.
+The NurbsPositionInterpolator node belongs to the **NURBS** component level **1** and its default container field is *children.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 

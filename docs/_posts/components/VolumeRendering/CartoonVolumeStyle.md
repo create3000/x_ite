@@ -15,7 +15,7 @@ tags: [CartoonVolumeStyle, VolumeRendering]
 
 CartoonVolumeStyle generates cartoon-style non-photorealistic rendering of associated volumetric data.
 
-The CartoonVolumeStyle node belongs to the **VolumeRendering** component and its default container field is *renderStyle.* It is available from X3D version 3.3 or higher.
+The CartoonVolumeStyle node belongs to the **VolumeRendering** component level **3** and its default container field is *renderStyle.* It is available from X3D version 3.3 or higher.
 
 ## Hierarchy
 

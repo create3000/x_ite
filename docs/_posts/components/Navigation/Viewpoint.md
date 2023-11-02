@@ -15,7 +15,7 @@ tags: [Viewpoint, Navigation]
 
 Viewpoint provides a specific location and direction where the user may view the scene. Viewpoints are the primary way for a user to navigate within a scene, and for an author to show critical aspects of a model.
 
-The Viewpoint node belongs to the **Navigation** component and its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The Viewpoint node belongs to the **Navigation** component level **1** and its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 
