@@ -84,6 +84,10 @@ Object .assign (Object .setPrototypeOf (CollisionCollection .prototype, X3DChild
       this .set_appliedParameters__ ();
       this .set_collidables__ ();
    },
+   getBBox (bbox, shadows)
+   {
+      return bbox;
+   },
    getAppliedParameters ()
    {
       return this .appliedParameters;

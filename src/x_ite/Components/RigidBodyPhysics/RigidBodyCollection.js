@@ -110,6 +110,10 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
       this .set_collider__ ();
       this .set_bodies__ ();
    },
+   getBBox (bbox, shadows)
+   {
+      return bbox;
+   },
    getDynamicsWorld ()
    {
       return this .dynamicsWorld;

@@ -123,6 +123,10 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
       this .set_torques__ ();
       this .set_geometry__ ();
    },
+   getBBox (bbox, shadows)
+   {
+      return bbox;
+   },
    setCollection (value)
    {
       this ._collection = value;
