@@ -125,7 +125,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
    },
    getBBox (bbox, shadows)
    {
-      return bbox;
+      return bbox .set ();
    },
    setCollection (value)
    {

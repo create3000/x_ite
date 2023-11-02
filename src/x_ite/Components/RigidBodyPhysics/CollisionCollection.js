@@ -86,7 +86,7 @@ Object .assign (Object .setPrototypeOf (CollisionCollection .prototype, X3DChild
    },
    getBBox (bbox, shadows)
    {
-      return bbox;
+      return bbox .set ();
    },
    getAppliedParameters ()
    {

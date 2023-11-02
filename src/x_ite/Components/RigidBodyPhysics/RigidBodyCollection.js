@@ -112,7 +112,7 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
    },
    getBBox (bbox, shadows)
    {
-      return bbox;
+      return bbox .set ();
    },
    getDynamicsWorld ()
    {
