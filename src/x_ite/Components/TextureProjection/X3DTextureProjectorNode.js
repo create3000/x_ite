@@ -199,7 +199,7 @@ Object .defineProperties (X3DTextureProjectorNode,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "TextureProjection", level: 1 }),
+      value: Object .freeze ({ name: "TextureProjection", level: 4 }),
       enumerable: true,
    },
 });

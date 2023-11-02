@@ -205,7 +205,7 @@ Object .defineProperties (X3DOneSidedMaterialNode,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "Shape", level: 1 }),
+      value: Object .freeze ({ name: "Shape", level: 4 }),
       enumerable: true,
    },
 });

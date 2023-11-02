@@ -994,7 +994,7 @@ Object .defineProperties (X3DPrototypeInstance,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "Core", level: 1 }),
+      value: Object .freeze ({ name: "Core", level: 2 }),
       enumerable: true,
    },
    containerField:
