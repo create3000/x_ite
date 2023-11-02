@@ -82,7 +82,7 @@ sub update_node {
    $source        = shift;
    $node          = $node -> [1];
 
-   $source =~ /Object\s*\.freeze\s*\(\["(.*?)", "(.*?)"\]\)/;
+   $source =~ /Object\s*\.freeze\s*\(\{ from: "(.*?)", to: "(.*?)" \}\)/;
    $from   = $1;
    $to     = $2;
 
