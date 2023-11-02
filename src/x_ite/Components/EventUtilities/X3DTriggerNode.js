@@ -64,9 +64,9 @@ Object .defineProperties (X3DTriggerNode,
       value: "X3DTriggerNode",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "EventUtilities",
       enumerable: true,
    },
 });

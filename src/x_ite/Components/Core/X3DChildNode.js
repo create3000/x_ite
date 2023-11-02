@@ -95,9 +95,9 @@ Object .defineProperties (X3DChildNode,
       value: "X3DChildNode",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "Core",
       enumerable: true,
    },
 });

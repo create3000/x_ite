@@ -93,9 +93,9 @@ Object .defineProperties (IndexedQuadSet,
       value: "IndexedQuadSet",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "CADGeometry",
       enumerable: true,
    },
    containerField:

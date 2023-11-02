@@ -67,9 +67,9 @@ Object .defineProperties (ChannelSplitter,
       value: "ChannelSplitter",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "Sound",
       enumerable: true,
    },
    containerField:

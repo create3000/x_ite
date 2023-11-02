@@ -122,9 +122,9 @@ Object .defineProperties (UnlitMaterial,
       value: "UnlitMaterial",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "Shape",
       enumerable: true,
    },
    containerField:

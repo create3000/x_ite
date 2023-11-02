@@ -219,9 +219,9 @@ Object .defineProperties (SurfaceEmitter,
       value: "SurfaceEmitter",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "ParticleSystems",
       enumerable: true,
    },
    containerField:

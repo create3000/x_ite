@@ -222,9 +222,9 @@ Object .defineProperties (X3DSoundProcessingNode,
       value: "X3DSoundProcessingNode",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "Sound",
       enumerable: true,
    },
 });

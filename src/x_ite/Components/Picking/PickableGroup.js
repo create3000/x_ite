@@ -187,9 +187,9 @@ Object .defineProperties (PickableGroup,
       value: "PickableGroup",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "Picking",
       enumerable: true,
    },
    containerField:

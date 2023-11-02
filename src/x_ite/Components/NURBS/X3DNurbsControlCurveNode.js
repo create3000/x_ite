@@ -64,9 +64,9 @@ Object .defineProperties (X3DNurbsControlCurveNode,
       value: "X3DNurbsControlCurveNode",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "NURBS",
       enumerable: true,
    },
 });

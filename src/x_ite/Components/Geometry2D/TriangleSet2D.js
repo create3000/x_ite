@@ -113,9 +113,9 @@ Object .defineProperties (TriangleSet2D,
       value: "TriangleSet2D",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "Geometry2D",
       enumerable: true,
    },
    containerField:

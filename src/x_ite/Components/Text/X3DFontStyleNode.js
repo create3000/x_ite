@@ -251,9 +251,9 @@ Object .defineProperties (X3DFontStyleNode,
       value: "X3DFontStyleNode",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "Text",
       enumerable: true,
    },
 });

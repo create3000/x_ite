@@ -431,9 +431,9 @@ Object .defineProperties (X3DPickSensorNode,
       value: "X3DPickSensorNode",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "Picking",
       enumerable: true,
    },
 });

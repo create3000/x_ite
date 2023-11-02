@@ -74,9 +74,9 @@ Object .defineProperties (PositionChaser,
       value: "PositionChaser",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "Followers",
       enumerable: true,
    },
    containerField:

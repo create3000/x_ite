@@ -119,9 +119,9 @@ Object .defineProperties (Background,
       value: "Background",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "EnvironmentalEffects",
       enumerable: true,
    },
    containerField:

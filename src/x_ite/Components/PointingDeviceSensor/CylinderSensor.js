@@ -264,9 +264,9 @@ Object .defineProperties (CylinderSensor,
       value: "CylinderSensor",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "PointingDeviceSensor",
       enumerable: true,
    },
    containerField:

@@ -270,9 +270,9 @@ Object .defineProperties (IndexedLineSet,
       value: "IndexedLineSet",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "Rendering",
       enumerable: true,
    },
    containerField:

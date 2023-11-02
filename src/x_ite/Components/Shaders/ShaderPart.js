@@ -205,9 +205,9 @@ Object .defineProperties (ShaderPart,
       value: "ShaderPart",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "Shaders",
       enumerable: true,
    },
    containerField:

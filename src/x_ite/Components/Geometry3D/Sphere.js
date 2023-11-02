@@ -117,9 +117,9 @@ Object .defineProperties (Sphere,
       value: "Sphere",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "Geometry3D",
       enumerable: true,
    },
    containerField:

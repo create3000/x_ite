@@ -79,9 +79,9 @@ Object .defineProperties (BooleanTrigger,
       value: "BooleanTrigger",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "EventUtilities",
       enumerable: true,
    },
    containerField:

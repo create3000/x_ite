@@ -141,9 +141,9 @@ Object .defineProperties (X3DFollowerNode,
       value: "X3DFollowerNode",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "Followers",
       enumerable: true,
    },
 });

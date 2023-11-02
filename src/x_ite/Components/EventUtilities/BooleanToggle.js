@@ -80,9 +80,9 @@ Object .defineProperties (BooleanToggle,
       value: "BooleanToggle",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "EventUtilities",
       enumerable: true,
    },
    containerField:

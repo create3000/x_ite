@@ -109,9 +109,9 @@ Object .defineProperties (ColorDamper,
       value: "ColorDamper",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "Followers",
       enumerable: true,
    },
    containerField:

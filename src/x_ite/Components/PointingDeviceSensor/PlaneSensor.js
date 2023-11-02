@@ -262,9 +262,9 @@ Object .defineProperties (PlaneSensor,
       value: "PlaneSensor",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "PointingDeviceSensor",
       enumerable: true,
    },
    containerField:

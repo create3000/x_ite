@@ -399,9 +399,9 @@ Object .defineProperties (Appearance,
       value: "Appearance",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "Shape",
       enumerable: true,
    },
    containerField:

@@ -231,9 +231,9 @@ Object .defineProperties (X3DChaserNode,
       value: "X3DChaserNode",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "Followers",
       enumerable: true,
    },
 });

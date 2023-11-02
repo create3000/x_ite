@@ -616,9 +616,9 @@ Object .defineProperties (X3DBackgroundNode,
       value: "X3DBackgroundNode",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "EnvironmentalEffects",
       enumerable: true,
    },
 });

@@ -93,9 +93,9 @@ Object .defineProperties (X3DSingleTextureTransformNode,
       value: "X3DSingleTextureTransformNode",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "Texturing",
       enumerable: true,
    },
 });

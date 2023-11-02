@@ -121,9 +121,9 @@ Object .defineProperties (Normal,
       value: "Normal",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "Rendering",
       enumerable: true,
    },
    containerField:

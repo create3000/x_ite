@@ -480,9 +480,9 @@ Object .defineProperties (Script,
       value: "Script",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "Scripting",
       enumerable: true,
    },
    containerField:

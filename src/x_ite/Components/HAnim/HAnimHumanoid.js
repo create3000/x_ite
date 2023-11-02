@@ -571,9 +571,9 @@ Object .defineProperties (HAnimHumanoid,
       value: "HAnimHumanoid",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "HAnim",
       enumerable: true,
    },
    containerField:

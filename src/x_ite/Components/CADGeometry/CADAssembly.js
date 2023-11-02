@@ -72,9 +72,9 @@ Object .defineProperties (CADAssembly,
       value: "CADAssembly",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "CADGeometry",
       enumerable: true,
    },
    containerField:

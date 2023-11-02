@@ -168,9 +168,9 @@ Object .defineProperties (X3DBoundedObject,
       value: "X3DBoundedObject",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "Grouping",
       enumerable: true,
    },
 });

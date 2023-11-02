@@ -231,9 +231,9 @@ Object .defineProperties (X3DVolumeDataNode,
       value: "X3DVolumeDataNode",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "VolumeRendering",
       enumerable: true,
    },
 });

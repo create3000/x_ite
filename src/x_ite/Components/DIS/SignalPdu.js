@@ -82,9 +82,9 @@ Object .defineProperties (SignalPdu,
       value: "SignalPdu",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "DIS",
       enumerable: true,
    },
    containerField:

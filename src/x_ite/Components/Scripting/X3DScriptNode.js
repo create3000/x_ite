@@ -79,9 +79,9 @@ Object .defineProperties (X3DScriptNode,
       value: "X3DScriptNode",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "Scripting",
       enumerable: true,
    },
 });

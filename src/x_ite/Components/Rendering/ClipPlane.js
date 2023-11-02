@@ -153,9 +153,9 @@ Object .defineProperties (ClipPlane,
       value: "ClipPlane",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "Rendering",
       enumerable: true,
    },
    containerField:

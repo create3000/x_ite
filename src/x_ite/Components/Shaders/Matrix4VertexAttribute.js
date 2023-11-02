@@ -112,9 +112,9 @@ Object .defineProperties (Matrix4VertexAttribute,
       value: "Matrix4VertexAttribute",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "Shaders",
       enumerable: true,
    },
    containerField:

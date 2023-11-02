@@ -84,9 +84,9 @@ Object .defineProperties (ScreenFontStyle,
       value: "ScreenFontStyle",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "Layout",
       enumerable: true,
    },
    containerField:

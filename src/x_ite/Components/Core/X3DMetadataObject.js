@@ -65,9 +65,9 @@ Object .defineProperties (X3DMetadataObject,
       value: "X3DMetadataObject",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "Core",
       enumerable: true,
    },
 });

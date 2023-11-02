@@ -214,9 +214,9 @@ Object .defineProperties (ImageTextureAtlas,
       value: "ImageTextureAtlas",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "Texturing3D",
       enumerable: true,
    },
    containerField:

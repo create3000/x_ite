@@ -126,9 +126,9 @@ Object .defineProperties (TextureTransform,
       value: "TextureTransform",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "Texturing",
       enumerable: true,
    },
    containerField:

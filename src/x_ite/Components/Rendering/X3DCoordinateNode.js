@@ -184,9 +184,9 @@ Object .defineProperties (X3DCoordinateNode,
       value: "X3DCoordinateNode",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "Rendering",
       enumerable: true,
    },
 });

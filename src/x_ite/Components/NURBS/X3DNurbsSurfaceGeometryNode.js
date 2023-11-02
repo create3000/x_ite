@@ -383,9 +383,9 @@ Object .defineProperties (X3DNurbsSurfaceGeometryNode,
       value: "X3DNurbsSurfaceGeometryNode",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "NURBS",
       enumerable: true,
    },
 });

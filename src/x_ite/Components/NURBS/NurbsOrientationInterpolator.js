@@ -196,9 +196,9 @@ Object .defineProperties (NurbsOrientationInterpolator,
       value: "NurbsOrientationInterpolator",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "NURBS",
       enumerable: true,
    },
    containerField:

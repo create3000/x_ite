@@ -131,9 +131,9 @@ Object .defineProperties (AudioDestination,
       value: "AudioDestination",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "Sound",
       enumerable: true,
    },
    containerField:

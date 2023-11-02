@@ -122,9 +122,9 @@ Object .defineProperties (GeoPositionInterpolator,
       value: "GeoPositionInterpolator",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "Geospatial",
       enumerable: true,
    },
    containerField:

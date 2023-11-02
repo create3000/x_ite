@@ -95,9 +95,9 @@ Object .defineProperties (X3DShaderNode,
       value: "X3DShaderNode",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "Shaders",
       enumerable: true,
    },
 });

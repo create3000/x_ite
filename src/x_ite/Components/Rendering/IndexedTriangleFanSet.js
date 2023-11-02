@@ -126,9 +126,9 @@ Object .defineProperties (IndexedTriangleFanSet,
       value: "IndexedTriangleFanSet",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "Rendering",
       enumerable: true,
    },
    containerField:

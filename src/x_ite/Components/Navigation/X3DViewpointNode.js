@@ -603,9 +603,9 @@ Object .defineProperties (X3DViewpointNode,
       value: "X3DViewpointNode",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "Navigation",
       enumerable: true,
    },
 });

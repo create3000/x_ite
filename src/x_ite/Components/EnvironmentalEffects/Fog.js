@@ -99,9 +99,9 @@ Object .defineProperties (Fog,
       value: "Fog",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "EnvironmentalEffects",
       enumerable: true,
    },
    containerField:

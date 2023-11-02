@@ -85,9 +85,9 @@ Object .defineProperties (X3DTransformNode,
       value: "X3DTransformNode",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "Grouping",
       enumerable: true,
    },
 });

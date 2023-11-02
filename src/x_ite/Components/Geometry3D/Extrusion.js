@@ -688,9 +688,9 @@ Object .defineProperties (Extrusion,
       value: "Extrusion",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "Geometry3D",
       enumerable: true,
    },
    containerField:

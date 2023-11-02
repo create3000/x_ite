@@ -103,9 +103,9 @@ Object .defineProperties (OrientationInterpolator,
       value: "OrientationInterpolator",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "Interpolation",
       enumerable: true,
    },
    containerField:

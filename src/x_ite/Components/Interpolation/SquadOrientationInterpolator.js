@@ -105,9 +105,9 @@ Object .defineProperties (SquadOrientationInterpolator,
       value: "SquadOrientationInterpolator",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "Interpolation",
       enumerable: true,
    },
    containerField:

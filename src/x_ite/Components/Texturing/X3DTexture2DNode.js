@@ -163,9 +163,9 @@ Object .defineProperties (X3DTexture2DNode,
       value: "X3DTexture2DNode",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "Texturing",
       enumerable: true,
    },
 });

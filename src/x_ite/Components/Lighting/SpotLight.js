@@ -322,9 +322,9 @@ Object .defineProperties (SpotLight,
       value: "SpotLight",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "Lighting",
       enumerable: true,
    },
    containerField:

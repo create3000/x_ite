@@ -127,9 +127,9 @@ Object .defineProperties (NormalInterpolator,
       value: "NormalInterpolator",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "Interpolation",
       enumerable: true,
    },
    containerField:

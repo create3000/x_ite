@@ -82,9 +82,9 @@ Object .defineProperties (UniversalJoint,
       value: "UniversalJoint",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "RigidBodyPhysics",
       enumerable: true,
    },
    containerField:

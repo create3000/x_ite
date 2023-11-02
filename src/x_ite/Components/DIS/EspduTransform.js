@@ -77,9 +77,9 @@ Object .defineProperties (EspduTransform,
       value: "EspduTransform",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "DIS",
       enumerable: true,
    },
    containerField:

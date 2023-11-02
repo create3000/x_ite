@@ -256,9 +256,9 @@ Object .defineProperties (DoubleAxisHingeJoint,
       value: "DoubleAxisHingeJoint",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "RigidBodyPhysics",
       enumerable: true,
    },
    containerField:

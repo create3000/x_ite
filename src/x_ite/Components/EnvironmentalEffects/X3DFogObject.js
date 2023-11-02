@@ -168,9 +168,9 @@ Object .defineProperties (X3DFogObject,
       value: "X3DFogObject",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "EnvironmentalEffects",
       enumerable: true,
    },
 });

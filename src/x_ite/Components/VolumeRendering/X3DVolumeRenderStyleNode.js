@@ -128,9 +128,9 @@ Object .defineProperties (X3DVolumeRenderStyleNode,
       value: "X3DVolumeRenderStyleNode",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "VolumeRendering",
       enumerable: true,
    },
 });

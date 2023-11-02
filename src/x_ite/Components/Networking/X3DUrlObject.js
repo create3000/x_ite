@@ -294,9 +294,9 @@ Object .defineProperties (X3DUrlObject,
       value: "X3DUrlObject",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "Networking",
       enumerable: true,
    },
 });

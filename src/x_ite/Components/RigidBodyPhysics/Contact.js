@@ -75,9 +75,9 @@ Object .defineProperties (Contact,
       value: "Contact",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "RigidBodyPhysics",
       enumerable: true,
    },
    containerField:

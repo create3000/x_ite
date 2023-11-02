@@ -71,9 +71,9 @@ Object .defineProperties (X3DParametricGeometryNode,
       value: "X3DParametricGeometryNode",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "NURBS",
       enumerable: true,
    },
 });

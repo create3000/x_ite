@@ -365,9 +365,9 @@ Object .defineProperties (ImageCubeMapTexture,
       value: "ImageCubeMapTexture",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "CubeMapTexturing",
       enumerable: true,
    },
    containerField:

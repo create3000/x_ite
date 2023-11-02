@@ -133,9 +133,9 @@ Object .defineProperties (NurbsTrimmedSurface,
       value: "NurbsTrimmedSurface",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "NURBS",
       enumerable: true,
    },
    containerField:

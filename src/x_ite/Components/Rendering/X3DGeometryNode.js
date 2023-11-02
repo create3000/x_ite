@@ -1218,9 +1218,9 @@ Object .defineProperties (X3DGeometryNode,
       value: "X3DGeometryNode",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "Rendering",
       enumerable: true,
    },
 });

@@ -992,9 +992,9 @@ Object .defineProperties (X3DPrototypeInstance,
       value: "X3DPrototypeInstance",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "Core",
       enumerable: true,
    },
    containerField:

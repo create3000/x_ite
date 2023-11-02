@@ -283,9 +283,9 @@ Object .defineProperties (TransformSensor,
       value: "TransformSensor",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "EnvironmentalSensor",
       enumerable: true,
    },
    containerField:

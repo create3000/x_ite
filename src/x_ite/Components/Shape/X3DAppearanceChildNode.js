@@ -64,9 +64,9 @@ Object .defineProperties (X3DAppearanceChildNode,
       value: "X3DAppearanceChildNode",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "Shape",
       enumerable: true,
    },
 });

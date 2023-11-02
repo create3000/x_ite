@@ -155,9 +155,9 @@ Object .defineProperties (ToneMappedVolumeStyle,
       value: "ToneMappedVolumeStyle",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "VolumeRendering",
       enumerable: true,
    },
    containerField:

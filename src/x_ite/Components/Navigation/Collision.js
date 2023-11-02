@@ -148,9 +148,9 @@ Object .defineProperties (Collision,
       value: "Collision",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "Navigation",
       enumerable: true,
    },
    containerField:

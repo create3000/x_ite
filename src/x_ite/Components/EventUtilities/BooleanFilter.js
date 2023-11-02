@@ -87,9 +87,9 @@ Object .defineProperties (BooleanFilter,
       value: "BooleanFilter",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "EventUtilities",
       enumerable: true,
    },
    containerField:

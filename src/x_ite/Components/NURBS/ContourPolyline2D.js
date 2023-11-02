@@ -137,9 +137,9 @@ Object .defineProperties (ContourPolyline2D,
       value: "ContourPolyline2D",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "NURBS",
       enumerable: true,
    },
    containerField:

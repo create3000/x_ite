@@ -67,9 +67,9 @@ Object .defineProperties (Transform,
       value: "Transform",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "Grouping",
       enumerable: true,
    },
    containerField:

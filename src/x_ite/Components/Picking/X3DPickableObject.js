@@ -85,9 +85,9 @@ Object .defineProperties (X3DPickableObject,
       value: "X3DPickableObject",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "Picking",
       enumerable: true,
    },
 });

@@ -262,9 +262,9 @@ Object .defineProperties (X3DGeospatialObject,
       value: "X3DGeospatialObject",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "Geospatial",
       enumerable: true,
    },
 });

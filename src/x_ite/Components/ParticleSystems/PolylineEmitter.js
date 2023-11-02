@@ -210,9 +210,9 @@ Object .defineProperties (PolylineEmitter,
       value: "PolylineEmitter",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "ParticleSystems",
       enumerable: true,
    },
    containerField:

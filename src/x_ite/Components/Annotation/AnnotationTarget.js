@@ -73,9 +73,9 @@ Object .defineProperties (AnnotationTarget,
       value: "AnnotationTarget",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "Annotation",
       enumerable: true,
    },
    containerField:

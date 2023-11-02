@@ -149,9 +149,9 @@ Object .defineProperties (EdgeEnhancementVolumeStyle,
       value: "EdgeEnhancementVolumeStyle",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "VolumeRendering",
       enumerable: true,
    },
    containerField:

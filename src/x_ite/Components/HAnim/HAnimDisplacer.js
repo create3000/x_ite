@@ -69,9 +69,9 @@ Object .defineProperties (HAnimDisplacer,
       value: "HAnimDisplacer",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "HAnim",
       enumerable: true,
    },
    containerField:

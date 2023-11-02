@@ -127,9 +127,9 @@ Object .defineProperties (X3DInterpolatorNode,
       value: "X3DInterpolatorNode",
       enumerable: true,
    },
-   componentInfo:
+   componentName:
    {
-      value: Object .freeze ({ name: "Time", level: 1 }),
+      value: "Interpolation",
       enumerable: true,
    },
 });
