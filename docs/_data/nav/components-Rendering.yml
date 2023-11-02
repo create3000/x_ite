@@ -8,6 +8,8 @@
       url: /components/rendering/colorrgba
     - title: "Coordinate"
       url: /components/rendering/coordinate
+    - title: "CoordinateDouble"
+      url: /components/rendering/coordinatedouble
     - title: "IndexedLineSet"
       url: /components/rendering/indexedlineset
     - title: "IndexedTriangleFanSet"

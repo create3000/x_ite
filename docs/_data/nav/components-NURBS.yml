@@ -4,8 +4,6 @@
       url: /components/nurbs/contour2d
     - title: "ContourPolyline2D"
       url: /components/nurbs/contourpolyline2d
-    - title: "CoordinateDouble"
-      url: /components/nurbs/coordinatedouble
     - title: "NurbsCurve"
       url: /components/nurbs/nurbscurve
     - title: "NurbsCurve2D"

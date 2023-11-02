@@ -183,7 +183,6 @@ This index lists the components and nodes in alphabetical order for quick access
 
 - [Contour2D](nurbs/contour2d)
 - [ContourPolyline2D](nurbs/contourpolyline2d)
-- [CoordinateDouble](nurbs/coordinatedouble)
 - [NurbsCurve](nurbs/nurbscurve)
 - [NurbsCurve2D](nurbs/nurbscurve2d)
 - [NurbsOrientationInterpolator](nurbs/nurbsorientationinterpolator)
@@ -246,6 +245,7 @@ This index lists the components and nodes in alphabetical order for quick access
 - [Color](rendering/color)
 - [ColorRGBA](rendering/colorrgba)
 - [Coordinate](rendering/coordinate)
+- [CoordinateDouble](rendering/coordinatedouble)
 - [IndexedLineSet](rendering/indexedlineset)
 - [IndexedTriangleFanSet](rendering/indexedtrianglefanset)
 - [IndexedTriangleSet](rendering/indexedtriangleset)
