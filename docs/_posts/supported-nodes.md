@@ -219,7 +219,6 @@ X_ITE supports a limited set of nodes defined by the X3D specification. There ar
 ### NURBS
 
 * [ContourPolyline2D](components/nurbs/contourpolyline2d)
-* [CoordinateDouble](components/nurbs/coordinatedouble)
 * [NurbsCurve](components/nurbs/nurbscurve)
 * [NurbsCurve2D](components/nurbs/nurbscurve2d)
 * [NurbsOrientationInterpolator](components/nurbs/nurbsorientationinterpolator)
@@ -265,6 +264,7 @@ X_ITE supports a limited set of nodes defined by the X3D specification. There ar
 * [Color](components/rendering/color)
 * [ColorRGBA](components/rendering/colorrgba)
 * [Coordinate](components/rendering/coordinate)
+* [CoordinateDouble](components/rendering/coordinatedouble)
 * [IndexedLineSet](components/rendering/indexedlineset)
 * [IndexedTriangleFanSet](components/rendering/indexedtrianglefanset)
 * [IndexedTriangleSet](components/rendering/indexedtriangleset)
