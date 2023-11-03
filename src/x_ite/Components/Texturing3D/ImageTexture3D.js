@@ -96,8 +96,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, X3DTexture3DN
    },
    loadData ()
    {
-      new FileLoader (this) .loadDocument (this ._url,
-      function (data, URL)
+      new FileLoader (this) .loadDocument (this ._url, (data, URL) =>
       {
          if (data === null)
          {
@@ -107,7 +106,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, X3DTexture3DN
          }
          else if (data instanceof ArrayBuffer)
          {
-            if (this .URL .pathname .match (/\.ktx2?(?:\.gz)?$/) || this .URL .href .match (/^data:image\/ktx2[;,]/))
+            if (URL .pathname .match (/\.ktx2?(?:\.gz)?$/) || URL .href .match (/^data:image\/ktx2[;,]/))
             {
                this .setLinear (true);
 
@@ -146,8 +145,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, X3DTexture3DN
 
             throw new Error ("ImageTexture3D: no suitable file type handler found.");
          }
-      }
-      .bind (this));
+      });
    },
    setKTXTexture (texture, URL)
    {
