@@ -196,15 +196,8 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
    },
    getUserViewpoints ()
    {
-      const userViewpoints = [ ];
-
-      for (const viewpointNode of this .viewpoints .get ())
-      {
-         if (viewpointNode ._description .length)
-            userViewpoints .push (viewpointNode);
-      }
-
-      return userViewpoints;
+      return this .viewpoints .get ()
+         .filter (viewpointNode => viewpointNode ._description .length);
    },
    getBackgroundStack ()
    {
