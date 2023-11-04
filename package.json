@@ -16,7 +16,7 @@
 	"scripts": {
 		"test": "cd ../x_ite-tests && npm test",
 		"lint": "eslint src",
-		"build": "make foo",
+		"build": "make",
 		"-prebuild:js": "npm run lint"
 	},
 	"repository": {
