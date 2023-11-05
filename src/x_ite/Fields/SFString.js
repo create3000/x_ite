@@ -47,9 +47,9 @@
 
 import X3DField from "../Base/X3DField.js";
 
-function SFString (value)
+function SFString (value = "")
 {
-   X3DField .call (this, arguments .length ? String (value) : "");
+   X3DField .call (this, String (value));
 }
 
 Object .assign (Object .setPrototypeOf (SFString .prototype, X3DField .prototype),

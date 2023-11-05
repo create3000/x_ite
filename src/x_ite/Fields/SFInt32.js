@@ -47,7 +47,7 @@
 
 import X3DField from "../Base/X3DField.js";
 
-function SFInt32 (value)
+function SFInt32 (value = 0)
 {
    X3DField .call (this, value|0);
 }

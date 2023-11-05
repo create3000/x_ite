@@ -47,9 +47,9 @@
 
 import X3DField from "../Base/X3DField.js";
 
-function SFFloat (value)
+function SFFloat (value = 0)
 {
-   X3DField .call (this, arguments .length ? +value : 0);
+   X3DField .call (this, +value);
 }
 
 Object .assign (Object .setPrototypeOf (SFFloat .prototype, X3DField .prototype),
