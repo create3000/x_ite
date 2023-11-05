@@ -58,6 +58,14 @@ function EspduTransform (executionContext)
    X3DSensorNode   .call (this, executionContext);
 
    this .addType (X3DConstants .EspduTransform);
+
+   // Legacy
+
+   if (executionContext .getSpecificationVersion () <= 3.3)
+   {
+      this ._applicationID         = 1;
+      this ._munitionApplicationID = 1;
+   }
 }
 
 Object .assign (Object .setPrototypeOf (EspduTransform .prototype, X3DGroupingNode .prototype),

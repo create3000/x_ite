@@ -58,6 +58,14 @@ function ReceiverPdu (executionContext)
    X3DBoundedObject .call (this, executionContext);
 
    this .addType (X3DConstants .ReceiverPdu);
+
+   // Legacy
+
+   if (executionContext .getSpecificationVersion () <= 3.3)
+   {
+      this ._applicationID            = 1;
+      this ._transmitterApplicationID = 1;
+   }
 }
 
 Object .assign (Object .setPrototypeOf (ReceiverPdu .prototype, X3DSensorNode .prototype),

@@ -58,6 +58,13 @@ function TransmitterPdu (executionContext)
    X3DBoundedObject .call (this, executionContext);
 
    this .addType (X3DConstants .TransmitterPdu);
+
+   // Legacy
+
+   if (executionContext .getSpecificationVersion () <= 3.3)
+   {
+      this ._applicationID = 1;
+   }
 }
 
 Object .assign (Object .setPrototypeOf (TransmitterPdu .prototype, X3DSensorNode .prototype),
