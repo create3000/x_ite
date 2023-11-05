@@ -1128,7 +1128,7 @@ const HTMLParser =
 {
    addProtoName (name)
    {
-      //DOMIntegration: add uppercase versions of proto name.
+      // DOMIntegration: add uppercase versions of proto name.
 
       this .protoNames .set (name,                 name);
       this .protoNames .set (name .toUpperCase (), name);
