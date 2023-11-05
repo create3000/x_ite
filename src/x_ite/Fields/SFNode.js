@@ -154,7 +154,7 @@ const handler =
    },
 };
 
-function SFNode (value = null)
+function SFNode (value)
 {
    // Node need to test for X3DBaseNode, because there is a special version of SFNode in Script.
 

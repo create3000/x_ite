@@ -47,9 +47,9 @@
 
 import X3DField from "../Base/X3DField.js";
 
-function SFTime (value = 0)
+function SFTime (value)
 {
-   X3DField .call (this, +value);
+   X3DField .call (this, arguments .length ? +value : 0);
 }
 
 Object .assign (Object .setPrototypeOf (SFTime .prototype, X3DField .prototype),

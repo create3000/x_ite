@@ -47,7 +47,7 @@
 
 import X3DField from "../Base/X3DField.js";
 
-function SFBool (value = false)
+function SFBool (value)
 {
    X3DField .call (this, !! value);
 }
