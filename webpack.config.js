@@ -165,7 +165,7 @@ export default __default__;`;
                   `npm rebuild node-sass`,
                   `perl -p0e 's|\\/\\*.*?\\*\\/||sg' src/x_ite.css | npx node-sass --output-style compressed > dist/x_ite.css`,
                   `perl -p0i -e 's|^|/* X_ITE v'$npm_package_version' */|sg' dist/x_ite.css`,
-                  `perl -p0i -e 's|".*?"|'\`npm pkg get version\`'|sg' src/x_ite/X_ITE_VERSION.js`,
+                  `perl -p0i -e 's|".*?"|'\`npm pkg get version\`'|sg' src/x_ite/BROWSER_VERSION.js`,
                   `perl -p0i -e 's/export default (?:true|false);/export default false;/sg' src/x_ite/DEVELOPMENT.js`,
                ],
                blocking: true,
@@ -301,7 +301,7 @@ export default __default__;`;
             onBuildStart: {
                scripts: [
                   `echo 'Bundling x_ite module ...'`,
-                  `perl -p0i -e 's|".*?"|'\`npm pkg get version\`'|sg' src/x_ite/X_ITE_VERSION.js`,
+                  `perl -p0i -e 's|".*?"|'\`npm pkg get version\`'|sg' src/x_ite/BROWSER_VERSION.js`,
                   `perl -p0i -e 's/export default (?:true|false);/export default false;/sg' src/x_ite/DEVELOPMENT.js`,
                ],
                blocking: true,

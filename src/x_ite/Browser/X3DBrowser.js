@@ -45,7 +45,7 @@
  *
  ******************************************************************************/
 
-import VERSION             from "../X_ITE_VERSION.js";
+import VERSION             from "../BROWSER_VERSION.js";
 import Fields              from "../Fields.js";
 import Components          from "../Components.js";
 import X3DBrowserContext   from "./X3DBrowserContext.js";
