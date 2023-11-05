@@ -51,7 +51,7 @@ import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DNode              from "./X3DNode.js";
 import X3DMetadataObject    from "./X3DMetadataObject.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
-import X3D_LATEST_VERSION   from "../../X3D_LATEST_VERSION.js";
+import LATEST_VERSION       from "../../LATEST_VERSION.js";
 
 function MetadataFloat (executionContext)
 {
@@ -69,7 +69,7 @@ Object .assign (Object .setPrototypeOf (MetadataFloat .prototype, X3DNode .proto
       X3DNode           .prototype .initialize .call (this);
       X3DMetadataObject .prototype .initialize .call (this);
    },
-   getContainerField (specificationVersion = X3D_LATEST_VERSION)
+   getContainerField (specificationVersion = LATEST_VERSION)
    {
       if (specificationVersion <= 3.3)
          return "metadata";
