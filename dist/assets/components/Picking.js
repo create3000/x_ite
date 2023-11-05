@@ -1331,6 +1331,8 @@ function PickableGroup (executionContext)
    Picking_X3DPickableObject .call (this, executionContext);
 
    this .addType ((X3DConstants_default()).PickableGroup);
+
+   this .pickSensorNodes = new Set ();
 }
 
 Object .assign (Object .setPrototypeOf (PickableGroup .prototype, (X3DGroupingNode_default()).prototype),
@@ -1353,97 +1355,94 @@ Object .assign (Object .setPrototypeOf (PickableGroup .prototype, (X3DGroupingNo
    {
       this .setPickableObject (!!(this ._pickable .getValue () || this .getTransformSensors () .size));
    },
-   traverse: (() =>
+   traverse (type, renderObject)
    {
-      const pickSensorNodes = new Set ();
-
-      return function (type, renderObject)
+      if (type === (TraverseType_default()).PICKING)
       {
-         if (type === (TraverseType_default()).PICKING)
+         if (this ._pickable .getValue ())
          {
-            if (this ._pickable .getValue ())
+            if (this .getObjectType () .has ("NONE"))
+               return;
+
+            const
+               browser       = this .getBrowser (),
+               pickableStack = browser .getPickable ();
+
+            if (this .getObjectType () .has ("ALL"))
             {
-               if (this .getObjectType () .has ("NONE"))
-                  return;
+               pickableStack .push (true);
+               X3DGroupingNode_default().prototype .traverse .call (this, type, renderObject);
+               pickableStack .pop ();
+            }
+            else
+            {
+               // Filter pick sensors.
 
                const
-                  browser       = this .getBrowser (),
-                  pickableStack = browser .getPickable ();
+                  pickSensorNodes = this .pickSensorNodes,
+                  pickSensorStack = browser .getPickSensors ();
 
-               if (this .getObjectType () .has ("ALL"))
+               for (const pickSensorNode of pickSensorStack .at (-1))
                {
-                  pickableStack .push (true);
-                  X3DGroupingNode_default().prototype .traverse .call (this, type, renderObject);
-                  pickableStack .pop ();
-               }
-               else
-               {
-                  // Filter pick sensors.
-
-                  const pickSensorStack = browser .getPickSensors ();
-
-                  for (const pickSensorNode of pickSensorStack .at (-1))
+                  if (!pickSensorNode .getObjectType () .has ("ALL"))
                   {
-                     if (! pickSensorNode .getObjectType () .has ("ALL"))
+                     let intersection = 0;
+
+                     for (const objectType of this .getObjectType ())
                      {
-                        let intersection = 0;
-
-                        for (const objectType of this .getObjectType ())
+                        if (pickSensorNode .getObjectType () .has (objectType))
                         {
-                           if (pickSensorNode .getObjectType () .has (objectType))
-                           {
-                              ++ intersection;
-                              break;
-                           }
-                        }
-
-                        switch (pickSensorNode .getMatchCriterion ())
-                        {
-                           case Picking_MatchCriterion .MATCH_ANY:
-                           {
-                              if (intersection === 0)
-                                 continue;
-
-                              break;
-                           }
-                           case Picking_MatchCriterion .MATCH_EVERY:
-                           {
-                              if (intersection !== pickSensor .getObjectType () .size)
-                                 continue;
-
-                              break;
-                           }
-                           case Picking_MatchCriterion .MATCH_ONLY_ONE:
-                           {
-                              if (intersection !== 1)
-                                 continue;
-
-                              break;
-                           }
+                           ++ intersection;
+                           break;
                         }
                      }
 
-                     pickSensorNodes .add (pickSensorNode);
+                     switch (pickSensorNode .getMatchCriterion ())
+                     {
+                        case Picking_MatchCriterion .MATCH_ANY:
+                        {
+                           if (intersection === 0)
+                              continue;
+
+                           break;
+                        }
+                        case Picking_MatchCriterion .MATCH_EVERY:
+                        {
+                           if (intersection !== pickSensor .getObjectType () .size)
+                              continue;
+
+                           break;
+                        }
+                        case Picking_MatchCriterion .MATCH_ONLY_ONE:
+                        {
+                           if (intersection !== 1)
+                              continue;
+
+                           break;
+                        }
+                     }
                   }
 
-                  pickableStack   .push (true);
-                  pickSensorStack .push (pickSensorNodes);
-
-                  X3DGroupingNode_default().prototype .traverse .call (this, type, renderObject);
-
-                  pickSensorStack .pop ();
-                  pickableStack   .pop ();
-
-                  pickSensorNodes .clear ();
+                  pickSensorNodes .add (pickSensorNode);
                }
+
+               pickableStack   .push (true);
+               pickSensorStack .push (pickSensorNodes);
+
+               X3DGroupingNode_default().prototype .traverse .call (this, type, renderObject);
+
+               pickSensorStack .pop ();
+               pickableStack   .pop ();
+
+               pickSensorNodes .clear ();
             }
          }
-         else
-         {
-            X3DGroupingNode_default().prototype .traverse .call (this, type, renderObject);
-         }
-      };
-   })(),
+      }
+      else
+      {
+         X3DGroupingNode_default().prototype .traverse .call (this, type, renderObject);
+      }
+   },
    dispose ()
    {
       Picking_X3DPickableObject .prototype .dispose .call (this);
