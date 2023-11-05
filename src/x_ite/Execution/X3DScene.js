@@ -57,6 +57,7 @@ import ExportedNodesArray  from "./ExportedNodesArray.js";
 import X3DCast             from "../Base/X3DCast.js";
 import X3DConstants        from "../Base/X3DConstants.js";
 import SFNodeCache         from "../Fields/SFNodeCache.js";
+import X3D_LATEST_VERSION  from "../X3D_LATEST_VERSION.js";
 
 const
    _specificationVersion = Symbol (),
@@ -68,8 +69,6 @@ const
    _metadata             = Symbol (),
    _exportedNodes        = Symbol (),
    _loadingObjects       = Symbol ();
-
-const X3D_LATEST_VERSION = "4.0";
 
 function X3DScene (browser)
 {

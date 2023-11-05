@@ -1022,7 +1022,8 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
 
       try
       {
-         const containerField = xmlElement .getAttribute ("containerField") || node ?.getContainerField (true);
+         const containerField = xmlElement .getAttribute ("containerField")
+            || node ?.getContainerField (this .getExecutionContext () .getSpecificationVersion ());
 
          if (!containerField)
          {

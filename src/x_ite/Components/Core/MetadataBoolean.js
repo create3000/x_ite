@@ -51,6 +51,7 @@ import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DNode              from "./X3DNode.js";
 import X3DMetadataObject    from "./X3DMetadataObject.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
+import X3D_LATEST_VERSION   from "../../X3D_LATEST_VERSION.js";
 
 function MetadataBoolean (executionContext)
 {
@@ -68,9 +69,9 @@ Object .assign (Object .setPrototypeOf (MetadataBoolean .prototype, X3DNode .pro
       X3DNode           .prototype .initialize .call (this);
       X3DMetadataObject .prototype .initialize .call (this);
    },
-   getContainerField (parser = false)
+   getContainerField (specificationVersion = X3D_LATEST_VERSION)
    {
-      if (parser && this .getExecutionContext () .getSpecificationVersion () <= 3.3)
+      if (specificationVersion <= 3.3)
          return "metadata";
 
       return X3DNode .prototype .getContainerField .call (this);
