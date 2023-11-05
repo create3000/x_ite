@@ -369,6 +369,14 @@ function EspduTransform (executionContext)
    X3DSensorNode_default().call (this, executionContext);
 
    this .addType ((X3DConstants_default()).EspduTransform);
+
+   // Legacy
+
+   if (executionContext .getSpecificationVersion () <= 3.3)
+   {
+      this ._applicationID         = 1;
+      this ._munitionApplicationID = 1;
+   }
 }
 
 Object .assign (Object .setPrototypeOf (EspduTransform .prototype, (X3DGroupingNode_default()).prototype),
@@ -574,6 +582,14 @@ function ReceiverPdu (executionContext)
    X3DBoundedObject_default().call (this, executionContext);
 
    this .addType ((X3DConstants_default()).ReceiverPdu);
+
+   // Legacy
+
+   if (executionContext .getSpecificationVersion () <= 3.3)
+   {
+      this ._applicationID            = 1;
+      this ._transmitterApplicationID = 1;
+   }
 }
 
 Object .assign (Object .setPrototypeOf (ReceiverPdu .prototype, (X3DSensorNode_default()).prototype),
@@ -721,6 +737,13 @@ function SignalPdu (executionContext)
    X3DBoundedObject_default().call (this, executionContext);
 
    this .addType ((X3DConstants_default()).SignalPdu);
+
+   // Legacy
+
+   if (executionContext .getSpecificationVersion () <= 3.3)
+   {
+      this ._applicationID = 1;
+   }
 }
 
 Object .assign (Object .setPrototypeOf (SignalPdu .prototype, (X3DSensorNode_default()).prototype),
@@ -868,6 +891,13 @@ function TransmitterPdu (executionContext)
    X3DBoundedObject_default().call (this, executionContext);
 
    this .addType ((X3DConstants_default()).TransmitterPdu);
+
+   // Legacy
+
+   if (executionContext .getSpecificationVersion () <= 3.3)
+   {
+      this ._applicationID = 1;
+   }
 }
 
 Object .assign (Object .setPrototypeOf (TransmitterPdu .prototype, (X3DSensorNode_default()).prototype),
