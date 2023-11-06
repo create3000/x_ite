@@ -69,10 +69,19 @@ function HAnimHumanoid (executionContext)
                           X3DConstants .inputOutput, "displacementsTexture",       new Fields .SFTime (),
                           X3DConstants .inputOutput, "displacementWeightsTexture", new Fields .SFTime ());
 
+   // Units
+
    this ._translation .setUnit ("length");
    this ._center      .setUnit ("length");
    this ._bboxSize    .setUnit ("length");
    this ._bboxCenter  .setUnit ("length");
+
+   // Legacy
+
+   if (executionContext .getSpecificationVersion () <= 3.3)
+      this ._version = "";
+
+   // Private properties
 
    this .skeletonNode         = new Group (executionContext);
    this .viewpointsNode       = new Group (executionContext);
