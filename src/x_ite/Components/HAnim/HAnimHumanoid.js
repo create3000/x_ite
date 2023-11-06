@@ -590,7 +590,7 @@ Object .defineProperties (HAnimHumanoid,
    {
       value: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",              new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "version",               new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "version",               new Fields .SFString ("2.0")),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "description",           new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "name",                  new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "info",                  new Fields .MFString ()),

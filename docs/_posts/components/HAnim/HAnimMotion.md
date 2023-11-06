@@ -91,7 +91,7 @@ Repeat indefinitely when *loop*=true, repeat only once when *loop*=false.
 
 ### SFBool [in] **next**
 
-Send *next* output value in keyValue array, and reset internal fraction field to match corresponding value in key array.
+Send *next* output value in values array, using/updating various frame values as appropriate.
 
 #### Hint
 
@@ -103,7 +103,7 @@ Send *next* output value in keyValue array, and reset internal fraction field to
 
 ### SFBool [in] **previous**
 
-Send *previous* output value in keyValue array, and reset internal fraction field to match corresponding value in key array.
+Send *previous* output value in values array, using/updating various frame values as appropriate.
 
 #### Hint
 

@@ -95,9 +95,10 @@ Minimum and maximum extents of view in units of local coordinate system. Small f
 - Validation type SFVec3f is stricter than specification legacy value in order to detect illegal values.
 - Rectangular display width/height = (maxX-minX) / (maxY-minY)
 
-#### Warning
+#### Warnings
 
 - Minimum corner values must remain less than maximum corner values.
+- OrthoViewpoint *fieldOfView* has type MFFloat even though SFVec3f is more correct to prevent modeling errors, deficiency recorded as Mantis 1398
 
 ### SFFloat [in, out] **nearDistance** -1 <small>-1 or (0,∞)</small>
 

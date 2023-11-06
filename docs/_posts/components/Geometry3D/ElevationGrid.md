@@ -39,9 +39,10 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 
 Grid array of *height* vertices with upward direction along +Y axis, with xDimension rows and zDimension columns.
 
-#### Hint
+#### Hints
 
 - *height* array values are given in row-major order from left to right along X axis, then back to front along Z axis.
+- This field is not accessType inputOutput since X3D browsers might use different underlying geometric representations for high-performance rendering, and so output events are not appropriate.
 
 #### Warning
 
@@ -175,9 +176,10 @@ Single contained Normal node that can specify perpendicular vectors for correspo
 
 Grid array of *height* vertices with upward direction along +Y axis, with xDimension rows and zDimension columns.
 
-#### Hint
+#### Hints
 
 - *height* array values are given in row-major order from left to right along X axis, then back to front along Z axis.
+- This field is not accessType inputOutput since X3D browsers might use different underlying geometric representations for high-performance rendering, and so output events are not appropriate.
 
 #### Warning
 

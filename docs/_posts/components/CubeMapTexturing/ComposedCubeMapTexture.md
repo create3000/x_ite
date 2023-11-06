@@ -103,6 +103,10 @@ Parent ComposedCubeMapTexture element can contain up to six image nodes (ImageTe
 
 Single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images.
 
+#### Warning
+
+- TextureProperties must follow other textures in order to meet XML validation requirements.
+
 ## Advice
 
 ### Hint

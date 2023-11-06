@@ -44,6 +44,7 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 - If *colorIndex* array is not provided, then Color or ColorRGBA values are indexed according to the coordIndex field.
 - If colorPerVertex='false' then one index is provided for each polygon defined by the coordIndex array. No sentinel -1 values are included.
 - If colorPerVertex='true' then a matching set of indices is provided, each separated by sentinel -1, that exactly corresponds to individual values in the coordIndex array polygon definitions.
+- This field is not accessType inputOutput since X3D browsers might use different underlying geometric representations for high-performance rendering, and so output events are not appropriate.
 
 #### Warning
 
@@ -53,9 +54,10 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 
 *coordIndex* indices provide the order in which coordinates are applied to construct each polyline. Order starts at index 0, commas are optional between sets.
 
-#### Hint
+#### Hints
 
 - Sentinel value -1 is used to separate indices for each successive polyline.
+- This field is not accessType inputOutput since X3D browsers might use different underlying geometric representations for high-performance rendering, and so output events are not appropriate.
 
 #### Warning
 

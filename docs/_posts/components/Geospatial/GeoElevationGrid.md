@@ -69,6 +69,7 @@ Contains xDimension rows * zDimension columns floating-point values for elevatio
 
 - *height* array values are in row-major order from west to east, south to north.
 - GeoGridOrigin is in southwest (lower-left) corner of *height* dataset.
+- This field is not accessType inputOutput since X3D browsers might use different underlying geometric representations for high-performance rendering, and so output events are not appropriate.
 
 #### Warning
 
@@ -208,6 +209,8 @@ Contains xDimension rows * zDimension columns floating-point values for elevatio
 
 - *height* array values are in row-major order from west to east, south to north.
 - GeoGridOrigin is in southwest (lower-left) corner of *height* dataset.
+- Default values do not make sense, this is a specification erratum (Mantis 1447), be sure to change them.
+- This field is not accessType inputOutput since X3D browsers might use different underlying geometric representations for high-performance rendering, and so output events are not appropriate.
 
 #### Warning
 

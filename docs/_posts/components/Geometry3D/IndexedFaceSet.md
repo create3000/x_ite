@@ -45,6 +45,7 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 - If *colorIndex* array is not provided, then Color or ColorRGBA values are indexed according to the coordIndex field.
 - If colorPerVertex='false' then one index is provided for each polygon defined by the coordIndex array. No sentinel -1 values are included.
 - If colorPerVertex='true' then a matching set of indices is provided, each separated by sentinel -1, that exactly corresponds to individual values in the coordIndex array polygon definitions.
+- This field is not accessType inputOutput since X3D browsers might use different underlying geometric representations for high-performance rendering, and so output events are not appropriate.
 
 #### Warning
 
@@ -54,9 +55,10 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 
 List of texture-coordinate indices mapping attached texture to corresponding coordinates.
 
-#### Hint
+#### Hints
 
 - Use a tool!
+- This field is not accessType inputOutput since X3D browsers might use different underlying geometric representations for high-performance rendering, and so output events are not appropriate.
 
 #### Warning
 
@@ -66,6 +68,10 @@ List of texture-coordinate indices mapping attached texture to corresponding coo
 
 *normalIndex* values define the order in which normal vectors are applied to polygons (or vertices). Interchange profile hint: this field may be ignored, applying the default value regardless.
 
+#### Hint
+
+- This field is not accessType inputOutput since X3D browsers might use different underlying geometric representations for high-performance rendering, and so output events are not appropriate.
+
 #### Warning
 
 - It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
@@ -74,9 +80,10 @@ List of texture-coordinate indices mapping attached texture to corresponding coo
 
 *coordIndex* indices provide the order in which coordinates are applied to construct each polygon face. Order starts at index 0, commas are optional between sets.
 
-#### Hint
+#### Hints
 
 - Sentinel value -1 is used to separate indices for each successive polygon.
+- This field is not accessType inputOutput since X3D browsers might use different underlying geometric representations for high-performance rendering, and so output events are not appropriate.
 
 #### Warning
 

@@ -38,7 +38,11 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 
 ### MFInt32 [in] **set_index** <small>[0,∞) or −1</small>
 
-Input field *set_index*.
+*index* list specifies triangles by connecting Coordinate vertices for each individual strip, separated by -1 sentinel values.
+
+#### Hint
+
+- This field is not accessType inputOutput since X3D browsers might use different underlying geometric representations for high-performance rendering, and so output events are not appropriate.
 
 ### SFBool [ ] **solid** TRUE
 

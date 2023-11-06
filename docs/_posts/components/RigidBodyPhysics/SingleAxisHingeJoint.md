@@ -81,11 +81,27 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 
 ### SFVec3f [out] **body1AnchorPoint**
 
-Output field *body1AnchorPoint*.
+*body1AnchorPoint* describes anchorPoint position relative to local coordinate reference frame.
+
+#### Hint
+
+- Can detect separation if *body1AnchorPoint*!=body2AnchorPoint.
+
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFVec3f [out] **body2AnchorPoint**
 
-Output field *body2AnchorPoint*.
+*body2AnchorPoint* describes anchorPoint position relative to local coordinate reference frame.
+
+#### Hint
+
+- Can detect separation if body1AnchorPoint!=*body2AnchorPoint*.
+
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFFloat [out] **angle**
 

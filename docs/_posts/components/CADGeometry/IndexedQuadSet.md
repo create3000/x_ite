@@ -38,7 +38,15 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 
 ### MFInt32 [in] **set_index** <small>[0,∞)</small>
 
-Input field *set_index*.
+*index* values provide order in which coordinates are applied. Order starts at *index* 0, commas are optional between sets. Four unique indices are defined for each quadrilateral.
+
+#### Hint
+
+- This field is not accessType inputOutput since X3D browsers might use different underlying geometric representations for high-performance rendering, and so output events are not appropriate.
+
+#### Warning
+
+- -1 sentinel values are not allowed.
 
 ### SFBool [ ] **solid** TRUE
 

@@ -39,6 +39,10 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 
 The *crossSection* array defines a silhouette outline of the outer Extrusion surface. *crossSection* is an ordered set of 2D points that draw a piecewise-linear curve which is extruded to form a series of connected vertices.
 
+#### Hint
+
+- This field is not accessType inputOutput since X3D browsers might use different underlying geometric representations for high-performance rendering, and so output events are not appropriate.
+
 #### Warnings
 
 - If the order of *crossSection* point definition does not match clockwise/counterclockwise setting of ccw field, then self-intersecting, impossible or inverted geometry can result!
@@ -52,6 +56,7 @@ The *orientation* array is a list of axis-angle 4-tuple values applied at each s
 
 - If the *orientation* array contains a single 4-tuple value, it is applied at all spine-aligned crossSection planes.
 - Number of values must all match for 3-tuple spine points, 2-tuple scale values, and 4-tuple *orientation* values.
+- This field is not accessType inputOutput since X3D browsers might use different underlying geometric representations for high-performance rendering, and so output events are not appropriate.
 
 #### Warning
 
@@ -61,9 +66,10 @@ The *orientation* array is a list of axis-angle 4-tuple values applied at each s
 
 *scale* is a list of 2D-*scale* parameters applied at each spine-aligned cross-section plane.
 
-#### Hint
+#### Hints
 
 - Number of values must all match for 3-tuple spine points, 2-tuple *scale* values, and 4-tuple orientation values.
+- This field is not accessType inputOutput since X3D browsers might use different underlying geometric representations for high-performance rendering, and so output events are not appropriate.
 
 #### Warnings
 
@@ -78,6 +84,7 @@ The *spine* array defines a center-line sequence of 3D points that define a piec
 
 - The *spine* array can be open or closed (closed means that endpoints are coincident).
 - Number of values must all match for 3-tuple *spine* points, 2-tuple scale values, and 4-tuple orientation values.
+- This field is not accessType inputOutput since X3D browsers might use different underlying geometric representations for high-performance rendering, and so output events are not appropriate.
 
 #### Warnings
 

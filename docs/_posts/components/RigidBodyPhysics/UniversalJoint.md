@@ -93,19 +93,43 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 
 ### SFVec3f [out] **body1Axis**
 
-Output field *body1Axis*.
+*body1Axis* describes report the current location of the anchor point relative to the corresponding body. This can be used to determine if the joint has broken.
+
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFVec3f [out] **body2Axis**
 
-Output field *body2Axis*.
+Body1Axis describes report the current location of the anchor point relative to the corresponding body. This can be used to determine if the joint has broken.
+
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFVec3f [out] **body1AnchorPoint**
 
-Output field *body1AnchorPoint*.
+*body1AnchorPoint* describes anchorPoint position relative to local coordinate reference frame.
+
+#### Hint
+
+- Can detect separation if *body1AnchorPoint*!=body2AnchorPoint.
+
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFVec3f [out] **body2AnchorPoint**
 
-Output field *body2AnchorPoint*.
+*body2AnchorPoint* describes anchorPoint position relative to local coordinate reference frame.
+
+#### Hint
+
+- Can detect separation if body1AnchorPoint!=*body2AnchorPoint*.
+
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFNode [in, out] **body1** NULL <small>[RigidBody]</small>
 
