@@ -51,7 +51,7 @@ Author-provided prose that describes intended purpose of this node.
 
 Enables/disables node operation.
 
-### SFRotation [in, out] **axisRotation** 0 1 0 0 <small>[-1,1] or (-∞,∞)</small>
+### SFRotation [in, out] **axisRotation** 0 0 1 0 <small>[-1,1] or (-∞,∞)</small>
 
 *axisRotation* determines local sensor coordinate system by rotating the local coordinate system.
 
