@@ -76,14 +76,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
    },
    setTexture (index, textureNode)
    {
-      const
-         textureType = textureNode ?.getTextureType () ?? 0,
-         linear      = textureNode ?.isLinear () ?? 0;
-
-      this .textureBits .set (index * 4 + 0, textureType & 0b001);
-      this .textureBits .set (index * 4 + 1, textureType & 0b010);
-      this .textureBits .set (index * 4 + 2, textureType & 0b100);
-      this .textureBits .set (index * 4 + 3, linear);
+      this .textureBits .add (index * 4, textureNode ?.getTextureBits () ?? 0);
    },
    getTextureBits ()
    {
@@ -128,7 +121,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
          key += "0000011.0.";
          key += objectsKeys .sort () .join (""); // ClipPlane, X3DLightNode
          key += ".";
-         key += textureNode ? ((textureNode .isLinear () << 3) | textureNode .getTextureType ()) .toString (16) : 0;
+         key += textureNode ?.getTextureBits () .toString (16) ?? 0;
       }
 
       return this .shaderNodes .get (key) ?? this .createShader (key, geometryContext, renderContext);

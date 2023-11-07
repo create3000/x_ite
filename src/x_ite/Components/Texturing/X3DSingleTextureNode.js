@@ -216,16 +216,13 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, X3DText
          }
       };
    })(),
+   getTextureBits ()
+   {
+      return (this .isLinear () << 3) | this .getTextureType ();
+   },
    updateTextureBits (textureBits, channel = 0)
    {
-      const
-         textureType = this .getTextureType (),
-         linear      = this .isLinear ();
-
-      textureBits .set (channel * 4 + 0, textureType & 0b001);
-      textureBits .set (channel * 4 + 1, textureType & 0b010);
-      textureBits .set (channel * 4 + 2, textureType & 0b100);
-      textureBits .set (channel * 4 + 3, linear);
+      textureBits .add (channel * 4, this .getTextureBits ());
    },
    getShaderOptions (options, channel = 0)
    {
