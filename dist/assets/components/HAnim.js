@@ -261,10 +261,19 @@ function HAnimHumanoid (executionContext)
                           (X3DConstants_default()).inputOutput, "displacementsTexture",       new (Fields_default()).SFTime (),
                           (X3DConstants_default()).inputOutput, "displacementWeightsTexture", new (Fields_default()).SFTime ());
 
+   // Units
+
    this ._translation .setUnit ("length");
    this ._center      .setUnit ("length");
    this ._bboxSize    .setUnit ("length");
    this ._bboxCenter  .setUnit ("length");
+
+   // Legacy
+
+   if (executionContext .getSpecificationVersion () <= 3.3)
+      this ._version = "";
+
+   // Private properties
 
    this .skeletonNode         = new (Group_default()) (executionContext);
    this .viewpointsNode       = new (Group_default()) (executionContext);
@@ -782,7 +791,7 @@ Object .defineProperties (HAnimHumanoid,
    {
       value: new (FieldDefinitionArray_default()) ([
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "metadata",              new (Fields_default()).SFNode ()),
-         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "version",               new (Fields_default()).SFString ()),
+         new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "version",               new (Fields_default()).SFString ("2.0")),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "description",           new (Fields_default()).SFString ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "name",                  new (Fields_default()).SFString ()),
          new (X3DFieldDefinition_default()) ((X3DConstants_default()).inputOutput,    "info",                  new (Fields_default()).MFString ()),

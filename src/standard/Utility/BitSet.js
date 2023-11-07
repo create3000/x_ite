@@ -101,7 +101,7 @@ Object .assign (BitSet .prototype,
    },
    valueOf ()
    {
-      return this .value;
+      return this .value >>> 0;
    },
    toString (radix)
    {
