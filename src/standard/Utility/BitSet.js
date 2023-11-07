@@ -66,7 +66,7 @@ Object .assign (BitSet .prototype,
             yield index;
 
          value >>>= 1;
-         index   += 1;
+         ++ index;
       }
    },
    get (index)
