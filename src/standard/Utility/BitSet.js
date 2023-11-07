@@ -82,17 +82,13 @@ Object .assign (BitSet .prototype,
       else
          this .remove (index);
    },
-   add (index, bits = 1)
+   add (index, mask = 1)
    {
-      const mask = bits << index;
-
-      this .value |= mask;
+      this .value |= mask << index;
    },
-   remove (index, bits = 1)
+   remove (index, mask = 1)
    {
-      const mask = bits << index;
-
-      this .value &= ~mask;
+      this .value &= ~(mask << index);
    },
    clear ()
    {
