@@ -76,8 +76,10 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
    },
    setTexture (index, textureNode)
    {
-      this .textureBits .remove (index * 4, 0xf);
-      this .textureBits .add (index * 4, textureNode ?.getTextureBits () ?? 0);
+      index += 4;
+
+      this .textureBits .remove (index, 0xf);
+      this .textureBits .add (index, textureNode ?.getTextureBits () ?? 0);
    },
    getTextureBits ()
    {
