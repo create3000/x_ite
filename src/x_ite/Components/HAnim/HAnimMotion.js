@@ -103,13 +103,8 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
    {
       const
          channelsEnabled = this ._channelsEnabled,
-         joints          = this .getJoints ();
-
-      // Create joints index.
-
-      const jointsIndex = new Map (jointNodes .map (jointNode => [jointNode ._name .getValue () .trim (), jointNode]));
-
-      jointsIndex .delete ("IGNORED");
+         joints          = this .getJoints (),
+         jointsIndex     = this .getJointsIndex (jointNodes);
 
       // Connect interpolators.
 
@@ -124,8 +119,7 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
          if (j >= joints .length)
             continue;
 
-         const jointNode = jointsIndex .get (joints [j])
-            ?? jointsIndex .get (joints [j] .replace ("HumanoidRoot", "humanoid_root"));
+         const jointNode = jointsIndex .get (joints [j]);
 
          if (!jointNode)
             continue;
@@ -137,13 +131,9 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
    },
    disconnectJoints (jointNodes)
    {
-      const joints = this .getJoints ();
-
-      // Create joints index.
-
-      const jointsIndex = new Map (jointNodes .map (jointNode => [jointNode ._name .getValue () .trim (), jointNode]));
-
-      jointsIndex .delete ("IGNORED");
+      const
+         joints      = this .getJoints (),
+         jointsIndex = this .getJointsIndex (jointNodes);
 
       // Disconnect joint nodes.
 
@@ -152,8 +142,7 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
          if (j >= joints .length)
             continue;
 
-         const jointNode = jointsIndex .get (joints [j])
-            ?? jointsIndex .get (joints [j] .replace ("HumanoidRoot", "humanoid_root"));
+         const jointNode = jointsIndex .get (joints [j]);
 
          if (!jointNode)
             continue;
@@ -166,6 +155,15 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
    getJoints ()
    {
       return this ._joints .getValue () .replace (/^[\s,]+|[\s,]+$/sg, "") .split (/[\s,]+/s);
+   },
+   getJointsIndex (jointNodes)
+   {
+      const jointsIndex = new Map (jointNodes .map (jointNode => [jointNode ._name .getValue () .trim (), jointNode]));
+
+      jointsIndex .delete ("IGNORED");
+      jointsIndex .set ("HumanoidRoot", jointsIndex .get ("humanoid_root"));
+
+      return jointsIndex;
    },
    set_enabled__ ()
    {
