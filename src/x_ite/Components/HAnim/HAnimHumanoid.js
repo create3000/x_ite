@@ -271,6 +271,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
    },
    set_connectJoints__ (motionNode)
    {
+      motionNode .disconnectJoints (this .jointNodes);
       motionNode .connectJoints (this .jointNodes);
    },
    set_joints__ ()
