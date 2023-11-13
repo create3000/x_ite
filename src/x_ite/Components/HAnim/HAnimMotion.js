@@ -169,23 +169,14 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
 
       for (const { positionInterpolator, orientationInterpolator, scaleInterpolator } of this .interpolators)
       {
-         if (positionInterpolator)
-         {
-            for (const field of positionInterpolator ._value_changed .getFieldInterests ())
-               positionInterpolator ._value_changed .removeFieldInterest (field);
-         }
+         positionInterpolator ?._value_changed .getFieldInterests ()
+            .forEach (field => positionInterpolator ._value_changed .removeFieldInterest (field));
 
-         if (orientationInterpolator)
-         {
-            for (const field of orientationInterpolator ._value_changed .getFieldInterests ())
-               orientationInterpolator ._value_changed .removeFieldInterest (field);
-         }
+         orientationInterpolator ?._value_changed .getFieldInterests ()
+            .forEach (field => orientationInterpolator ._value_changed .removeFieldInterest (field));
 
-         if (scaleInterpolator)
-         {
-            for (const field of scaleInterpolator ._value_changed .getFieldInterests ())
-               scaleInterpolator ._value_changed .removeFieldInterest (field);
-         }
+         scaleInterpolator ?._value_changed .getFieldInterests ()
+            .forEach (field => scaleInterpolator ._value_changed .removeFieldInterest (field));
       }
    },
    set_interpolators__ ()
@@ -194,8 +185,8 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
 
       const timeSensor = this .timeSensor;
 
-      for (const field of timeSensor ._fraction_changed .getFieldInterests ())
-         timeSensor ._fraction_changed .removeFieldInterest (field);
+      timeSensor ._fraction_changed .getFieldInterests ()
+         .forEach (field => timeSensor ._fraction_changed .removeFieldInterest (field));
 
       // Create interpolators.
 
