@@ -237,7 +237,10 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
          motionNodes    = this .motionNodes;
 
       for (const motionNode of motionNodes)
-         motionNode .setJoints ([ ]);
+      {
+         motionNode .removeInterest ("set_connectJoints__", this);
+         motionNode .disconnectJoints (this .jointNodes);
+      }
 
       motionNodes .length = 0;
 
@@ -253,7 +256,14 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
       }
 
       for (const motionNode of motionNodes)
-         motionNode .setJoints (this .jointNodes);
+      {
+         motionNode .addInterest ("set_connectJoints__", this, motionNode);
+         motionNode .connectJoints (this .jointNodes);
+      }
+   },
+   set_connectJoints__ (motionNode)
+   {
+      motionNode .connectJoints (this .jointNodes);
    },
    set_joints__ ()
    {
@@ -263,6 +273,9 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
          jointBindingPositions = this ._jointBindingPositions,
          jointBindingRotations = this ._jointBindingRotations,
          jointBindingScales    = this ._jointBindingScales;
+
+      for (const motionNode of this .motionNodes)
+         motionNode .disconnectJoints (jointNodes);
 
       for (const jointNode of jointNodes)
       {
@@ -307,6 +320,9 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
          jointNode ._displacementWeights .addInterest ("addEvent", this ._displacementWeightsTexture);
       }
 
+      for (const motionNode of this .motionNodes)
+         motionNode .connectJoints (jointNodes);
+
       const size = Math .ceil (Math .sqrt (jointNodes .length * 8));
 
       this .jointMatricesArray = new Float32Array (size * size * 4),
@@ -314,9 +330,6 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
       this ._jointTextures              .addEvent ();
       this ._displacementsTexture       .addEvent ();
       this ._displacementWeightsTexture .addEvent ();
-
-      for (const motionNode of this .motionNodes)
-         motionNode .setJoints (jointNodes);
    },
    set_jointTextures__ ()
    {
