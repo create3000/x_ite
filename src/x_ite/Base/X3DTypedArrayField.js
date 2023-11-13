@@ -282,8 +282,7 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
          array       = target .getValue (),
          otherLength = l !== undefined ? l * components : otherArray .length;
 
-      const
-         rest = otherLength % components;
+      const rest = otherLength % components;
 
       if (rest)
       {
