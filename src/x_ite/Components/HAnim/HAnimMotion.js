@@ -110,9 +110,6 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
 
       // Connect interpolators.
 
-      if (!jointsIndex .size)
-         return;
-
       for (const [j, { positionInterpolator, orientationInterpolator, scaleInterpolator }] of this .interpolators .entries ())
       {
          if (j < channelsEnabled .length && !channelsEnabled [j])
