@@ -238,9 +238,10 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
 
       for (const motionNode of motionNodes)
       {
-         motionNode ._joints   .removeInterest ("set_connectJoints__", this);
-         motionNode ._channels .removeInterest ("set_connectJoints__", this);
-         motionNode ._values   .removeInterest ("set_connectJoints__", this);
+         motionNode ._joints          .removeInterest ("set_connectJoints__", this);
+         motionNode ._channelsEnabled .removeInterest ("set_connectJoints__", this);
+         motionNode ._channels        .removeInterest ("set_connectJoints__", this);
+         motionNode ._values          .removeInterest ("set_connectJoints__", this);
 
          motionNode .disconnectJoints (this .jointNodes);
       }
@@ -260,9 +261,10 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
 
       for (const motionNode of motionNodes)
       {
-         motionNode ._joints   .addInterest ("set_connectJoints__", this, motionNode);
-         motionNode ._channels .addInterest ("set_connectJoints__", this, motionNode);
-         motionNode ._values   .addInterest ("set_connectJoints__", this, motionNode);
+         motionNode ._joints          .addInterest ("set_connectJoints__", this, motionNode);
+         motionNode ._channelsEnabled .addInterest ("set_connectJoints__", this, motionNode);
+         motionNode ._channels        .addInterest ("set_connectJoints__", this, motionNode);
+         motionNode ._values          .addInterest ("set_connectJoints__", this, motionNode);
 
          motionNode .connectJoints (this .jointNodes);
       }
