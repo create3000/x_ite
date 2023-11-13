@@ -85,6 +85,7 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
       this .timeSensor .setup ();
 
       this ._enabled         .addInterest ("set_enabled__",           this);
+      this ._joints          .addInterest ("set_joints__",            this);
       this ._channels        .addInterest ("set_interpolators__",     this);
       this ._values          .addInterest ("set_interpolators__",     this);
       this ._next            .addInterest ("set_next_or_previous__",  this,  1);
@@ -96,6 +97,7 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
       this ._endFrame        .addInterest ("set_start_or_endFrame__", this);
 
       this .set_enabled__ ();
+      this .set_joints__ ();
       this .set_frameIncrement__ ();
       this .set_interpolators__ ();
    },
@@ -103,10 +105,8 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
    {
       const
          channelsEnabled = this ._channelsEnabled,
-         joints          = this .getJoints (),
+         joints          = this .joints,
          jointsIndex     = this .getJointsIndex (jointNodes);
-
-      this .joints = joints;
 
       // Connect interpolators.
 
@@ -131,7 +131,7 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
    disconnectJoints (jointNodes)
    {
       const
-         joints      = this .joints ?? this .getJoints (),
+         joints      = this .joints,
          jointsIndex = this .getJointsIndex (jointNodes);
 
       // Disconnect joint nodes.
@@ -148,10 +148,6 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
          scaleInterpolator       ?._value_changed .removeFieldInterest (jointNode ._scale);
       }
    },
-   getJoints ()
-   {
-      return this ._joints .getValue () .replace (/^[\s,]+|[\s,]+$/sg, "") .split (/[\s,]+/s);
-   },
    getJointsIndex (jointNodes)
    {
       const jointsIndex = new Map (jointNodes .map (jointNode => [jointNode ._name .getValue () .trim (), jointNode]));
@@ -167,6 +163,33 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
          this .timeSensor ._startTime = Date .now () / 1000;
       else
          this .timeSensor ._stopTime = Date .now () / 1000;
+   },
+   set_joints__ ()
+   {
+      this .joints = this ._joints .getValue () .replace (/^[\s,]+|[\s,]+$/sg, "") .split (/[\s,]+/s);
+
+      // Disconnect all joint nodes.
+
+      for (const { positionInterpolator, orientationInterpolator, scaleInterpolator } of this .interpolators)
+      {
+         if (positionInterpolator)
+         {
+            for (const field of positionInterpolator ._value_changed .getFieldInterests ())
+               positionInterpolator ._value_changed .removeFieldInterest (field);
+         }
+
+         if (orientationInterpolator)
+         {
+            for (const field of orientationInterpolator ._value_changed .getFieldInterests ())
+               orientationInterpolator ._value_changed .removeFieldInterest (field);
+         }
+
+         if (scaleInterpolator)
+         {
+            for (const field of scaleInterpolator ._value_changed .getFieldInterests ())
+               scaleInterpolator ._value_changed .removeFieldInterest (field);
+         }
+      }
    },
    set_interpolators__ ()
    {
