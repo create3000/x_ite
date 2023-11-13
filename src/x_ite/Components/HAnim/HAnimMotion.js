@@ -106,6 +106,8 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
          joints          = this .getJoints (),
          jointsIndex     = this .getJointsIndex (jointNodes);
 
+      this .joints = joints;
+
       // Connect interpolators.
 
       if (!jointsIndex .size)
@@ -129,7 +131,7 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
    disconnectJoints (jointNodes)
    {
       const
-         joints      = this .getJoints (),
+         joints      = this .joints ?? this .getJoints (),
          jointsIndex = this .getJointsIndex (jointNodes);
 
       // Disconnect joint nodes.

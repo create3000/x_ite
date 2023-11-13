@@ -520,7 +520,7 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
       if (field .isTainted ())
          return;
 
-      // if (this .getTypeName () === "IndexedQuadSet")
+      // if (this .getTypeName () === "HAnimMotion")
       // {
       //    console .log (field .getName ());
       //    console .trace ();
@@ -553,6 +553,11 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
    {
       if (this .isTainted ())
          return;
+
+      // if (this .getTypeName () === "HAnimMotion")
+      // {
+      //    console .trace ();
+      // }
 
       const browser = this [_browser];
 
