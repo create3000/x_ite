@@ -116,9 +116,6 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
          if (j < channelsEnabled .length && !channelsEnabled [j])
             continue;
 
-         if (j >= joints .length)
-            continue;
-
          const jointNode = jointsIndex .get (joints [j]);
 
          if (!jointNode)
@@ -139,9 +136,6 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
 
       for (const [j, { positionInterpolator, orientationInterpolator, scaleInterpolator }] of this .interpolators .entries ())
       {
-         if (j >= joints .length)
-            continue;
-
          const jointNode = jointsIndex .get (joints [j]);
 
          if (!jointNode)
