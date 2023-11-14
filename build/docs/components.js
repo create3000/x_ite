@@ -1,7 +1,7 @@
 const
    fs            = require ("fs"),
    path          = require ("path"),
-   child_process = require ("child_process")
+   child_process = require ("child_process");
 
 const
    components = path .resolve ("./", "src/x_ite/Components"),
@@ -12,29 +12,29 @@ const
 function createIndex ()
 {
    const filenames = child_process .execSync (`find ${components} -mindepth 2 -maxdepth 2 -type f`)
-      .toString () .trim () .split (/\s+/) .sort ()
+      .toString () .trim () .split (/\s+/) .sort ();
 
    const index = new Map ();
 
    for (const filename of filenames)
    {
-      const m = filename .match (/([^\/]+)\/([^\/]+)\.js$/)
+      const m = filename .match (/([^\/]+)\/([^\/]+)\.js$/);
 
       if (m [1] === "Annotation")
-         continue
+         continue;
 
       if (m [2] .match (/^X3D/))
-         continue
+         continue;
 
-      let nodes = index .get (m [1])
+      let nodes = index .get (m [1]);
 
       if (!nodes)
-         index .set (m [1], nodes = [ ])
+         index .set (m [1], nodes = [ ]);
 
-      nodes .push (m [2])
+      nodes .push (m [2]);
    }
 
-   return index
+   return index;
 }
 
 function getSpecificationRange (component, node)
@@ -43,93 +43,93 @@ function getSpecificationRange (component, node)
       filename = `${components}/${component}/${node}.js`,
       file     = fs .readFileSync (filename) .toString (),
       match    = file .match (/getSpecificationRange.*?(\[.*?\])/s),
-      range    = eval (match [1])
+      range    = eval (match [1]);
 
    if (range [1] == Infinity)
-      return range [0]
+      return range [0];
 
-   return `${range [0]} - ${range [1]}`
+   return `${range [0]} - ${range [1]}`;
 }
 
 function updateNav ()
 {
    for (const [component, nodes] of createIndex ())
    {
-      let text = ""
+      let text = "";
 
-      text += `- title: "${component}"\n`
-      text += `  children:\n`
+      text += `- title: "${component}"\n`;
+      text += `  children:\n`;
 
       for (const node of nodes .sort ())
       {
-         const slug = `${component}/${node}` .toLowerCase () .replace (/_/g, "-")
+         const slug = `${component}/${node}` .toLowerCase () .replace (/_/g, "-");
 
-         text += `    - title: "${node}"\n`
-         text += `      url: /components/${slug}\n`
+         text += `    - title: "${node}"\n`;
+         text += `      url: /components/${slug}\n`;
       }
 
-      const yml = path .resolve (nav, `components-${component}.yml`)
+      const yml = path .resolve (nav, `components-${component}.yml`);
 
-      fs .writeFileSync (yml, text)
+      fs .writeFileSync (yml, text);
    }
 }
 
 function updateComponents ()
 {
-   let list = "\n\n"
+   let list = "\n\n";
 
    for (const [component, nodes] of createIndex ())
    {
-      list += `## ${component}\n\n`
+      list += `## ${component}\n\n`;
 
       for (const node of nodes .sort ())
       {
-         const slug = `${component}/${node}` .toLowerCase () .replace (/_/g, "-")
+         const slug = `${component}/${node}` .toLowerCase () .replace (/_/g, "-");
 
-         list += `- [${node}](${slug})\n`
+         list += `- [${node}](${slug})\n`;
       }
 
-      list += `\n`
+      list += `\n`;
    }
 
-   const md = path .resolve (tabs, `components.md`)
+   const md = path .resolve (tabs, `components.md`);
 
-   let text = fs .readFileSync (md) .toString ()
+   let text = fs .readFileSync (md) .toString ();
 
-   text = text .replace (/<!-- COMPONENTS BEGIN -->.*?<!-- COMPONENTS END -->/s, `<!-- COMPONENTS BEGIN -->${list}<!-- COMPONENTS END -->`)
+   text = text .replace (/<!-- COMPONENTS BEGIN -->.*?<!-- COMPONENTS END -->/s, `<!-- COMPONENTS BEGIN -->${list}<!-- COMPONENTS END -->`);
 
-   fs .writeFileSync (md, text)
+   fs .writeFileSync (md, text);
 }
 
 // function updateComponents ()
 // {
-//    let list = "\n\n"
+//    let list = "\n\n";
 
 //    for (const [component, nodes] of createIndex ())
 //    {
-//       list += `## ${component}\n\n`
-//       list += `| Node | Version | Status |\n`
-//       list += `|------|---------|--------|\n`
+//       list += `## ${component}\n\n`;
+//       list += `| Node | Version | Status |\n`;
+//       list += `|------|---------|--------|\n`;
 
 //       for (const node of nodes .sort ())
 //       {
 //          const
 //             slug    = `${component}/${node}` .toLowerCase () .replace (/_/g, "-"),
-//             version = getSpecificationRange (component, node)
+//             version = getSpecificationRange (component, node);
 
-//          list += `| [${node}](${slug}) | ${version} | <span class="green">implemented</span> |\n`
+//          list += `| [${node}](${slug}) | ${version} | <span class="green">implemented</span> |\n`;
 //       }
 
-//       list += `\n`
+//       list += `\n`;
 //    }
 
-//    const md = path .resolve (tabs, `components.md`)
+//    const md = path .resolve (tabs, `components.md`);
 
-//    let text = fs .readFileSync (md) .toString ()
+//    let text = fs .readFileSync (md) .toString ();
 
-//    text = text .replace (/<!-- COMPONENTS BEGIN -->.*?<!-- COMPONENTS END -->/s, `<!-- COMPONENTS BEGIN -->${list}<!-- COMPONENTS END -->`)
+//    text = text .replace (/<!-- COMPONENTS BEGIN -->.*?<!-- COMPONENTS END -->/s, `<!-- COMPONENTS BEGIN -->${list}<!-- COMPONENTS END -->`);
 
-//    fs .writeFileSync (md, text)
+//    fs .writeFileSync (md, text);
 // }
 
 async function addNodeStubs ()
@@ -139,7 +139,7 @@ async function addNodeStubs ()
       ["inputOutput", "in"],
       ["outputOnly", "out"],
       ["inputOutput", "in, out"],
-   ])
+   ]);
 
    for (const [component, nodes] of createIndex ())
    {
@@ -147,26 +147,26 @@ async function addNodeStubs ()
       {
          const
             js = path .resolve (components, `${component}/${node}.js`),
-            md = path .resolve (comp, `${component}/${node}.md`)
+            md = path .resolve (comp, `${component}/${node}.md`);
 
          if (fs .existsSync (md))
-            continue
+            continue;
 
-         const file = fs .readFileSync (js) .toString ()
+         const file = fs .readFileSync (js) .toString ();
 
-         let m = file .match (/getContainerField.*?"(.*?)"/s)
+         let m = file .match (/getContainerField.*?"(.*?)"/s);
 
-         const containerField = m [1]
+         const containerField = m [1];
 
-         m = file .match (/X3DFieldDefinition\s*\(X3DConstants\s*\.(\w+),\s*"(\w+)",\s*new\s*Fields\s*\.(\w+)/sg)
+         m = file .match (/X3DFieldDefinition\s*\(X3DConstants\s*\.(\w+),\s*"(\w+)",\s*new\s*Fields\s*\.(\w+)/sg);
 
-         let fields = ""
+         let fields = "";
 
          for (const s of m)
          {
-            let sm = s .match (/X3DFieldDefinition\s*\(X3DConstants\s*\.(\w+),\s*"(\w+)",\s*new\s*Fields\s*\.(\w+)/s)
+            let sm = s .match (/X3DFieldDefinition\s*\(X3DConstants\s*\.(\w+),\s*"(\w+)",\s*new\s*Fields\s*\.(\w+)/s);
 
-            fields += `### ${sm [3]} [${access .get (sm [1])}] **${sm [2]}** <small></small>\n\n`
+            fields += `### ${sm [3]} [${access .get (sm [1])}] **${sm [2]}** <small></small>\n\n`;
          }
 
          let text = `
@@ -204,15 +204,15 @@ ${fields}
 - [X3D Specification of ${node}](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/${component .toLowerCase ()}.html#${node}){:target="_blank"}
 `;
 
-         text = text .trim () .replace (/\n{3,}/g, "\n\n")
+         text = text .trim () .replace (/\n{3,}/g, "\n\n");
 
-         child_process .execSync (`mkdir -p ${path .dirname (md)}`)
+         child_process .execSync (`mkdir -p ${path .dirname (md)}`);
 
-         fs .writeFileSync (md, text)
+         fs .writeFileSync (md, text);
       }
    }
 }
 
-updateNav ()
-updateComponents ()
-addNodeStubs ()
+updateNav ();
+updateComponents ();
+addNodeStubs ();
