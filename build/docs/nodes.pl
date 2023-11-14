@@ -38,7 +38,7 @@ $inOut = {
 };
 
 %links = map { m|([^/]+)$|; ($1, lc $_) }
-   sort map { s|\.md$||r }
+   map { s|\.md$||r }
    map { s|$cwd/docs/_posts/components//||r }
    split "\n", `find $cwd/docs/_posts/components/ -type f -mindepth 2`;
 
