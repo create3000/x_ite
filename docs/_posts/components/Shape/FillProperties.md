@@ -63,7 +63,7 @@ Whether or not associated geometry is *hatched*.
 
 ### Warning
 
-- Requires X3D `profile='Full'` or else include `<component name='[Shape](../shape/shape)' level='3'/>`
+- Requires X3D `profile='Full'` or else include `<component name='Shape' level='3'/>`
 
 ## Example
 
