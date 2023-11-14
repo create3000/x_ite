@@ -33,11 +33,19 @@ The EnvironmentLight node belongs to the **Lighting** component and its default 
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Metadata are not part of the X3D world and not interpreted by the X3D browser, but they can be accessed via the ECMAScript interface.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
+
+#### Hint
+
+- [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/components/core.html#Metadata){:target="_blank"}
 
 ### SFBool [in, out] **global** FALSE
 
-*global* lights illuminate all objects within their volume of lighting influence. Scoped lights only illuminate objects within the same transformation hierarchy.
+Global lights illuminate all objects within their volume of lighting influence. Scoped lights only illuminate objects within the same transformation hierarchy.
+
+#### Warning
+
+- DirectionalLight default *global*=false to limit scope and avoid inadvertently illuminating every object in a large scene. [PointLight](../lighting/pointlight) and [SpotLight](../lighting/spotlight) default *global*=true since their effects are each limited by maximum radius value.
 
 ### SFBool [in, out] **on** TRUE
 
@@ -47,13 +55,17 @@ Enables/disables this light source.
 
 *color* of light, applied to colors of objects.
 
+#### Hint
+
+- [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color){:target="_blank"}
+
 ### SFFloat [in, out] **intensity** 1 <small>[0,∞)</small>
 
 Brightness of direct emission from the light.
 
 ### SFFloat [in, out] **ambientIntensity** 0 <small>[0,1]</small>
 
-Brightness of ambient (nondirectional background) emission from the light.
+Brightness of ambient (nondirectional background) emission from the light. Interchange profile hint: this field may be ignored, applying the default value regardless.
 
 ### SFRotation [in, out] **rotation** 0 0 1 0 <small>[-1,1] or (-∞,∞)</small>
 
