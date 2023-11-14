@@ -1,4 +1,4 @@
-/* X_ITE v9.0.2 */(() => { // webpackBootstrap
+/* X_ITE v9.0.3 */(() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
 /******/ 	var __webpack_require__ = {};
@@ -39,25 +39,25 @@ var __webpack_exports__ = {};
 // UNUSED EXPORTS: default
 
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components\")"
-const Components_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.0.2")] .require ("x_ite/Components");
+const Components_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.0.3")] .require ("x_ite/Components");
 var Components_default = /*#__PURE__*/__webpack_require__.n(Components_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Fields\")"
-const Fields_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.0.2")] .require ("x_ite/Fields");
+const Fields_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.0.3")] .require ("x_ite/Fields");
 var Fields_default = /*#__PURE__*/__webpack_require__.n(Fields_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DFieldDefinition\")"
-const X3DFieldDefinition_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.0.2")] .require ("x_ite/Base/X3DFieldDefinition");
+const X3DFieldDefinition_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.0.3")] .require ("x_ite/Base/X3DFieldDefinition");
 var X3DFieldDefinition_default = /*#__PURE__*/__webpack_require__.n(X3DFieldDefinition_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/FieldDefinitionArray\")"
-const FieldDefinitionArray_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.0.2")] .require ("x_ite/Base/FieldDefinitionArray");
+const FieldDefinitionArray_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.0.3")] .require ("x_ite/Base/FieldDefinitionArray");
 var FieldDefinitionArray_default = /*#__PURE__*/__webpack_require__.n(FieldDefinitionArray_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Rendering/X3DGeometricPropertyNode\")"
-const X3DGeometricPropertyNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.0.2")] .require ("x_ite/Components/Rendering/X3DGeometricPropertyNode");
+const X3DGeometricPropertyNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.0.3")] .require ("x_ite/Components/Rendering/X3DGeometricPropertyNode");
 var X3DGeometricPropertyNode_default = /*#__PURE__*/__webpack_require__.n(X3DGeometricPropertyNode_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DConstants\")"
-const X3DConstants_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.0.2")] .require ("x_ite/Base/X3DConstants");
+const X3DConstants_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.0.3")] .require ("x_ite/Base/X3DConstants");
 var X3DConstants_default = /*#__PURE__*/__webpack_require__.n(X3DConstants_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Namespace\")"
-const Namespace_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.0.2")] .require ("x_ite/Namespace");
+const Namespace_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.0.3")] .require ("x_ite/Namespace");
 var Namespace_default = /*#__PURE__*/__webpack_require__.n(Namespace_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/HAnim/HAnimDisplacer.js
 /*******************************************************************************
@@ -166,28 +166,28 @@ const __default__ = HAnimDisplacer;
 Namespace_default().add ("HAnimDisplacer", "x_ite/Components/HAnim/HAnimDisplacer", __default__);
 /* harmony default export */ const HAnim_HAnimDisplacer = (__default__);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Core/X3DChildNode\")"
-const X3DChildNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.0.2")] .require ("x_ite/Components/Core/X3DChildNode");
+const X3DChildNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.0.3")] .require ("x_ite/Components/Core/X3DChildNode");
 var X3DChildNode_default = /*#__PURE__*/__webpack_require__.n(X3DChildNode_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Grouping/Group\")"
-const Group_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.0.2")] .require ("x_ite/Components/Grouping/Group");
+const Group_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.0.3")] .require ("x_ite/Components/Grouping/Group");
 var Group_default = /*#__PURE__*/__webpack_require__.n(Group_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Grouping/Transform\")"
-const Transform_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.0.2")] .require ("x_ite/Components/Grouping/Transform");
+const Transform_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.0.3")] .require ("x_ite/Components/Grouping/Transform");
 var Transform_default = /*#__PURE__*/__webpack_require__.n(Transform_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Grouping/X3DBoundedObject\")"
-const X3DBoundedObject_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.0.2")] .require ("x_ite/Components/Grouping/X3DBoundedObject");
+const X3DBoundedObject_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.0.3")] .require ("x_ite/Components/Grouping/X3DBoundedObject");
 var X3DBoundedObject_default = /*#__PURE__*/__webpack_require__.n(X3DBoundedObject_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Rendering/TraverseType\")"
-const TraverseType_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.0.2")] .require ("x_ite/Rendering/TraverseType");
+const TraverseType_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.0.3")] .require ("x_ite/Rendering/TraverseType");
 var TraverseType_default = /*#__PURE__*/__webpack_require__.n(TraverseType_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Base/X3DCast\")"
-const X3DCast_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.0.2")] .require ("x_ite/Base/X3DCast");
+const X3DCast_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.0.3")] .require ("x_ite/Base/X3DCast");
 var X3DCast_default = /*#__PURE__*/__webpack_require__.n(X3DCast_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Matrix4\")"
-const Matrix4_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.0.2")] .require ("standard/Math/Numbers/Matrix4");
+const Matrix4_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.0.3")] .require ("standard/Math/Numbers/Matrix4");
 var Matrix4_default = /*#__PURE__*/__webpack_require__.n(Matrix4_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Algorithm\")"
-const Algorithm_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.0.2")] .require ("standard/Math/Algorithm");
+const Algorithm_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.0.3")] .require ("standard/Math/Algorithm");
 var Algorithm_default = /*#__PURE__*/__webpack_require__.n(Algorithm_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/HAnim/HAnimHumanoid.js
 /*******************************************************************************
@@ -429,7 +429,14 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (X3DChildNode_
          motionNodes    = this .motionNodes;
 
       for (const motionNode of motionNodes)
-         motionNode .setJoints ([ ]);
+      {
+         motionNode ._joints          .removeInterest ("set_connectJoints__", this);
+         motionNode ._channelsEnabled .removeInterest ("set_connectJoints__", this);
+         motionNode ._channels        .removeInterest ("set_connectJoints__", this);
+         motionNode ._values          .removeInterest ("set_connectJoints__", this);
+
+         motionNode .disconnectJoints (this .jointNodes);
+      }
 
       motionNodes .length = 0;
 
@@ -445,7 +452,19 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (X3DChildNode_
       }
 
       for (const motionNode of motionNodes)
-         motionNode .setJoints (this .jointNodes);
+      {
+         motionNode ._joints          .addInterest ("set_connectJoints__", this, motionNode);
+         motionNode ._channelsEnabled .addInterest ("set_connectJoints__", this, motionNode);
+         motionNode ._channels        .addInterest ("set_connectJoints__", this, motionNode);
+         motionNode ._values          .addInterest ("set_connectJoints__", this, motionNode);
+
+         motionNode .connectJoints (this .jointNodes);
+      }
+   },
+   set_connectJoints__ (motionNode)
+   {
+      motionNode .disconnectJoints (this .jointNodes);
+      motionNode .connectJoints (this .jointNodes);
    },
    set_joints__ ()
    {
@@ -456,9 +475,13 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (X3DChildNode_
          jointBindingRotations = this ._jointBindingRotations,
          jointBindingScales    = this ._jointBindingScales;
 
+      for (const motionNode of this .motionNodes)
+         motionNode .disconnectJoints (jointNodes);
+
       for (const jointNode of jointNodes)
       {
          jointNode .removeInterest ("enable", this .change);
+
          jointNode ._skinCoordIndex      .removeInterest ("addEvent", this ._jointTextures);
          jointNode ._skinCoordWeight     .removeInterest ("addEvent", this ._jointTextures);
          jointNode ._displacements       .removeInterest ("addEvent", this ._displacementsTexture);
@@ -493,11 +516,15 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (X3DChildNode_
       for (const jointNode of jointNodes)
       {
          jointNode .addInterest ("enable", this .change);
+
          jointNode ._skinCoordIndex      .addInterest ("addEvent", this ._jointTextures);
          jointNode ._skinCoordWeight     .addInterest ("addEvent", this ._jointTextures);
          jointNode ._displacements       .addInterest ("addEvent", this ._displacementsTexture);
          jointNode ._displacementWeights .addInterest ("addEvent", this ._displacementWeightsTexture);
       }
+
+      for (const motionNode of this .motionNodes)
+         motionNode .connectJoints (jointNodes);
 
       const size = Math .ceil (Math .sqrt (jointNodes .length * 8));
 
@@ -506,9 +533,6 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (X3DChildNode_
       this ._jointTextures              .addEvent ();
       this ._displacementsTexture       .addEvent ();
       this ._displacementWeightsTexture .addEvent ();
-
-      for (const motionNode of this .motionNodes)
-         motionNode .setJoints (jointNodes);
    },
    set_jointTextures__ ()
    {
@@ -851,10 +875,10 @@ const HAnimHumanoid_default_ = HAnimHumanoid;
 Namespace_default().add ("HAnimHumanoid", "x_ite/Components/HAnim/HAnimHumanoid", HAnimHumanoid_default_);
 /* harmony default export */ const HAnim_HAnimHumanoid = (HAnimHumanoid_default_);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Grouping/X3DTransformNode\")"
-const X3DTransformNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.0.2")] .require ("x_ite/Components/Grouping/X3DTransformNode");
+const X3DTransformNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.0.3")] .require ("x_ite/Components/Grouping/X3DTransformNode");
 var X3DTransformNode_default = /*#__PURE__*/__webpack_require__.n(X3DTransformNode_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Vector3\")"
-const Vector3_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.0.2")] .require ("standard/Math/Numbers/Vector3");
+const Vector3_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.0.3")] .require ("standard/Math/Numbers/Vector3");
 var Vector3_default = /*#__PURE__*/__webpack_require__.n(Vector3_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/HAnim/HAnimJoint.js
 /*******************************************************************************
@@ -1060,16 +1084,16 @@ const HAnimJoint_default_ = HAnimJoint;
 Namespace_default().add ("HAnimJoint", "x_ite/Components/HAnim/HAnimJoint", HAnimJoint_default_);
 /* harmony default export */ const HAnim_HAnimJoint = (HAnimJoint_default_);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Time/TimeSensor\")"
-const TimeSensor_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.0.2")] .require ("x_ite/Components/Time/TimeSensor");
+const TimeSensor_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.0.3")] .require ("x_ite/Components/Time/TimeSensor");
 var TimeSensor_default = /*#__PURE__*/__webpack_require__.n(TimeSensor_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Interpolation/PositionInterpolator\")"
-const PositionInterpolator_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.0.2")] .require ("x_ite/Components/Interpolation/PositionInterpolator");
+const PositionInterpolator_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.0.3")] .require ("x_ite/Components/Interpolation/PositionInterpolator");
 var PositionInterpolator_default = /*#__PURE__*/__webpack_require__.n(PositionInterpolator_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Interpolation/OrientationInterpolator\")"
-const OrientationInterpolator_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.0.2")] .require ("x_ite/Components/Interpolation/OrientationInterpolator");
+const OrientationInterpolator_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.0.3")] .require ("x_ite/Components/Interpolation/OrientationInterpolator");
 var OrientationInterpolator_default = /*#__PURE__*/__webpack_require__.n(OrientationInterpolator_namespaceObject);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"standard/Math/Numbers/Rotation4\")"
-const Rotation4_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.0.2")] .require ("standard/Math/Numbers/Rotation4");
+const Rotation4_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.0.3")] .require ("standard/Math/Numbers/Rotation4");
 var Rotation4_default = /*#__PURE__*/__webpack_require__.n(Rotation4_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/HAnim/HAnimMotion.js
 /*******************************************************************************
@@ -1139,7 +1163,6 @@ function HAnimMotion (executionContext)
 
    this .timeSensor    = new (TimeSensor_default()) (this .getExecutionContext ());
    this .interpolators = [ ];
-   this .jointsIndex   = new Map ();
 }
 
 Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, (X3DChildNode_default()).prototype),
@@ -1159,44 +1182,75 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, (X3DChildNode_de
 
       this .timeSensor .setup ();
 
-      this ._enabled         .addInterest ("set_enabled__",              this);
-      this ._joints          .addInterest ("set_connectInterpolators__", this);
-      this ._channelsEnabled .addInterest ("set_connectInterpolators__", this);
-      this ._channels        .addInterest ("set_interpolators__",        this);
-      this ._values          .addInterest ("set_interpolators__",        this);
-      this ._next            .addInterest ("set_next_or_previous__",     this,  1);
-      this ._previous        .addInterest ("set_next_or_previous__",     this, -1);
-      this ._frameIndex      .addInterest ("set_frameIndex__",           this);
-      this ._frameDuration   .addInterest ("set_frameDuration__",        this);
-      this ._frameIncrement  .addInterest ("set_timeSensor_enabled__",   this);
-      this ._startFrame      .addInterest ("set_start_or_endFrame__",    this);
-      this ._endFrame        .addInterest ("set_start_or_endFrame__",    this);
+      this ._enabled         .addInterest ("set_enabled__",           this);
+      this ._joints          .addInterest ("set_joints__",            this);
+      this ._channels        .addInterest ("set_interpolators__",     this);
+      this ._values          .addInterest ("set_interpolators__",     this);
+      this ._next            .addInterest ("set_next_or_previous__",  this,  1);
+      this ._previous        .addInterest ("set_next_or_previous__",  this, -1);
+      this ._frameIndex      .addInterest ("set_frameIndex__",        this);
+      this ._frameDuration   .addInterest ("set_frameDuration__",     this);
+      this ._frameIncrement  .addInterest ("set_frameIncrement__",    this);
+      this ._startFrame      .addInterest ("set_start_or_endFrame__", this);
+      this ._endFrame        .addInterest ("set_start_or_endFrame__", this);
 
       this .set_enabled__ ();
+      this .set_joints__ ();
+      this .set_frameIncrement__ ();
       this .set_interpolators__ ();
    },
-   setJoints (jointNodes)
+   connectJoints (jointNodes)
    {
-      // Create joints index.
+      const
+         channelsEnabled = this ._channelsEnabled,
+         joints          = this .joints,
+         jointsIndex     = this .getJointsIndex (jointNodes);
 
-      const jointsIndex = this .jointsIndex;
+      // Connect interpolators.
 
-      jointsIndex .clear ();
+      for (const [j, { positionInterpolator, orientationInterpolator, scaleInterpolator }] of this .interpolators .entries ())
+      {
+         if (j < channelsEnabled .length && !channelsEnabled [j])
+            continue;
 
-      for (const jointNode of jointNodes)
-         jointsIndex .set (jointNode ._name .getValue () .trim (), jointNode);
+         const jointNode = jointsIndex .get (joints [j]);
+
+         if (!jointNode)
+            continue;
+
+         positionInterpolator    ?._value_changed .addFieldInterest (jointNode ._translation);
+         orientationInterpolator ?._value_changed .addFieldInterest (jointNode ._rotation);
+         scaleInterpolator       ?._value_changed .addFieldInterest (jointNode ._scale);
+      }
+   },
+   disconnectJoints (jointNodes)
+   {
+      const
+         joints      = this .joints,
+         jointsIndex = this .getJointsIndex (jointNodes);
+
+      // Disconnect joint nodes.
+
+      for (const [j, { positionInterpolator, orientationInterpolator, scaleInterpolator }] of this .interpolators .entries ())
+      {
+         const jointNode = jointsIndex .get (joints [j]);
+
+         if (!jointNode)
+            continue;
+
+         positionInterpolator    ?._value_changed .removeFieldInterest (jointNode ._translation);
+         orientationInterpolator ?._value_changed .removeFieldInterest (jointNode ._rotation);
+         scaleInterpolator       ?._value_changed .removeFieldInterest (jointNode ._scale);
+      }
+   },
+   getJointsIndex (jointNodes)
+   {
+      const jointsIndex = new Map (jointNodes .map (jointNode => [jointNode ._name .getValue () .trim (), jointNode]));
 
       jointsIndex .delete ("IGNORED");
+      jointsIndex .set ("HumanoidRoot", jointsIndex .get ("humanoid_root"));
 
-      // Connect joint nodes.
-
-      this .set_timeSensor_enabled__ ();
-      this .set_enabled__ ();
-      this .set_connectInterpolators__ ();
-   },
-   set_timeSensor_enabled__ ()
-   {
-      this .timeSensor ._enabled = this .jointsIndex .size && this ._frameIncrement .getValue ();
+      return jointsIndex;
    },
    set_enabled__ ()
    {
@@ -1205,14 +1259,32 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, (X3DChildNode_de
       else
          this .timeSensor ._stopTime = Date .now () / 1000;
    },
+   set_joints__ ()
+   {
+      this .joints = this ._joints .getValue () .replace (/^[\s,]+|[\s,]+$/sg, "") .split (/[\s,]+/s);
+
+      // Disconnect all joint nodes.
+
+      for (const { positionInterpolator, orientationInterpolator, scaleInterpolator } of this .interpolators)
+      {
+         positionInterpolator ?._value_changed .getFieldInterests ()
+            .forEach (field => positionInterpolator ._value_changed .removeFieldInterest (field));
+
+         orientationInterpolator ?._value_changed .getFieldInterests ()
+            .forEach (field => orientationInterpolator ._value_changed .removeFieldInterest (field));
+
+         scaleInterpolator ?._value_changed .getFieldInterests ()
+            .forEach (field => scaleInterpolator ._value_changed .removeFieldInterest (field));
+      }
+   },
    set_interpolators__ ()
    {
       // Disconnect old interpolators.
 
       const timeSensor = this .timeSensor;
 
-      for (const field of timeSensor ._fraction_changed .getFieldInterests ())
-         timeSensor ._fraction_changed .removeFieldInterest (field);
+      timeSensor ._fraction_changed .getFieldInterests ()
+         .forEach (field => timeSensor ._fraction_changed .removeFieldInterest (field));
 
       // Create interpolators.
 
@@ -1252,6 +1324,8 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, (X3DChildNode_de
 
                interpolator ._key      .push (key);
                interpolator ._keyValue .push (keyValue);
+
+               timeSensor ._fraction_changed .addFieldInterest (interpolator ._set_fraction);
             }
 
             if (types .has ("Xrotation") || types .has ("Yrotation") || types .has ("Zrotation"))
@@ -1267,6 +1341,8 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, (X3DChildNode_de
 
                interpolator ._key      .push (key);
                interpolator ._keyValue .push (keyValue);
+
+               timeSensor ._fraction_changed .addFieldInterest (interpolator ._set_fraction);
             }
 
             if (types .has ("Xscale") || types .has ("Yscale") || types .has ("Zscale"))
@@ -1282,6 +1358,8 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, (X3DChildNode_de
 
                interpolator ._key      .push (key);
                interpolator ._keyValue .push (keyValue);
+
+               timeSensor ._fraction_changed .addFieldInterest (interpolator ._set_fraction);
             }
          }
       }
@@ -1298,77 +1376,7 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, (X3DChildNode_de
       this ._endFrame   = frameCount - 1;
       this ._frameCount = frameCount;
 
-      this .set_connectInterpolators__ ();
       this .set_frameDuration__ ();
-   },
-   set_connectInterpolators__ ()
-   {
-      const
-         timeSensor      = this .timeSensor,
-         channelsEnabled = this ._channelsEnabled,
-         joints          = this ._joints .getValue () .replace (/^[\s,]+|[\s,]+$/sg, "") .split (/[\s,]+/s),
-         jointsIndex     = this .jointsIndex;
-
-      // Disconnect old joint nodes.
-
-      for (const { positionInterpolator, orientationInterpolator, scaleInterpolator } of this .interpolators)
-      {
-         if (positionInterpolator)
-         {
-            for (const field of positionInterpolator ._value_changed .getFieldInterests ())
-               positionInterpolator ._value_changed .removeFieldInterest (field);
-         }
-
-         if (orientationInterpolator)
-         {
-            for (const field of orientationInterpolator ._value_changed .getFieldInterests ())
-               orientationInterpolator ._value_changed .removeFieldInterest (field);
-         }
-
-         if (scaleInterpolator)
-         {
-            for (const field of scaleInterpolator ._value_changed .getFieldInterests ())
-               scaleInterpolator ._value_changed .removeFieldInterest (field);
-         }
-      }
-
-      // Connect interpolators.
-
-      if (!jointsIndex .size)
-         return;
-
-      for (const [j, { positionInterpolator, orientationInterpolator, scaleInterpolator }] of this .interpolators .entries ())
-      {
-         if (j < channelsEnabled .length && !channelsEnabled [j])
-            continue;
-
-         if (j >= joints .length)
-            continue;
-
-         const jointNode = jointsIndex .get (joints [j])
-            ?? (positionInterpolator && jointsIndex .get ("humanoid_root"));
-
-         if (!jointNode)
-            continue;
-
-         if (positionInterpolator)
-         {
-            timeSensor ._fraction_changed .addFieldInterest (positionInterpolator ._set_fraction);
-            positionInterpolator ._value_changed .addFieldInterest (jointNode ._translation);
-         }
-
-         if (orientationInterpolator)
-         {
-            timeSensor ._fraction_changed .addFieldInterest (orientationInterpolator ._set_fraction);
-            orientationInterpolator ._value_changed .addFieldInterest (jointNode ._rotation);
-         }
-
-         if (scaleInterpolator)
-         {
-            timeSensor ._fraction_changed .addFieldInterest (scaleInterpolator ._set_fraction);
-            scaleInterpolator ._value_changed .addFieldInterest (jointNode ._scale);
-         }
-      }
    },
    set_next_or_previous__ (direction, field)
    {
@@ -1422,6 +1430,10 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, (X3DChildNode_de
          frameDuration = Math .max (this ._frameDuration .getValue (), 0);
 
       this .timeSensor ._cycleInterval = frameCount > 1 ? (frameCount - 1) * frameDuration : 0;
+   },
+   set_frameIncrement__ ()
+   {
+      this .timeSensor ._enabled = this ._frameIncrement .getValue ();
    },
    set_start_or_endFrame__ ()
    {
@@ -1512,7 +1524,7 @@ const HAnimMotion_default_ = HAnimMotion;
 Namespace_default().add ("HAnimMotion", "x_ite/Components/HAnim/HAnimMotion", HAnimMotion_default_);
 /* harmony default export */ const HAnim_HAnimMotion = (HAnimMotion_default_);
 ;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Components/Grouping/X3DGroupingNode\")"
-const X3DGroupingNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.0.2")] .require ("x_ite/Components/Grouping/X3DGroupingNode");
+const X3DGroupingNode_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.0.3")] .require ("x_ite/Components/Grouping/X3DGroupingNode");
 var X3DGroupingNode_default = /*#__PURE__*/__webpack_require__.n(X3DGroupingNode_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/HAnim/HAnimSegment.js
 /*******************************************************************************
