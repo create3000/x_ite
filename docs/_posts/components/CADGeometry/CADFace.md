@@ -32,7 +32,7 @@ The CADFace node belongs to the **CADGeometry** component and requires at least 
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
 
 #### Hint
 
@@ -91,11 +91,11 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 
 ### SFNode [in, out] **shape** NULL <small>[X3DShapeNode, LOD, Transform]</small>
 
-Contained Shape for this CADPart.
+Contained [Shape](../shape/shape) for this [CADPart](../cadgeometry/cadpart).
 
 #### Warning
 
-- If LOD or Transform are used, only zero or one Shape child is allowed to be active at one time.
+- If [LOD](../navigation/lod) or [Transform](../grouping/transform) are used, only zero or one [Shape](../shape/shape) child is allowed to be active at one time.
 
 ## Advice
 
@@ -105,7 +105,7 @@ Contained Shape for this CADPart.
 
 ### Warnings
 
-- Only zero or one Shape child is allowed to be active at one time.
+- Only zero or one [Shape](../shape/shape) child is allowed to be active at one time.
 - Requires X3D `profile='Full'` or else include `<component name='CADGeometry' level='2'/>`
 
 ## See Also

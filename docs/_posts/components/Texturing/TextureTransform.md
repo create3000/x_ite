@@ -31,7 +31,7 @@ The TextureTransform node belongs to the **Texturing** component and requires at
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
 
 #### Hint
 
@@ -70,7 +70,7 @@ Non-uniform planar scaling of texture about center (opposite effect appears on g
 ### Hints
 
 - Order of operations is translation, rotation about center, non-uniform scale about center.
-- Insert Shape and Appearance nodes before adding TextureTransform.
+- Insert [Shape](../shape/shape) and [Appearance](../shape/appearance) nodes before adding TextureTransform.
 - [Texture mapping](https://en.wikipedia.org/wiki/Texture_mapping){:target="_blank"}
 
 ### Warning

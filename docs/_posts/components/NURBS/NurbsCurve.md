@@ -30,7 +30,7 @@ The NurbsCurve node belongs to the **NURBS** component and requires at least lev
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
 
 #### Hint
 
@@ -58,13 +58,13 @@ Vector assigning relative *weight* value to each control point.
 
 ### SFNode [in, out] **controlPoint** NULL <small>[X3DCoordinateNode]</small>
 
-Single contained Coordinate or CoordinateDouble node that can specify control points for NURBS geometry definitions.
+Single contained [Coordinate](../rendering/coordinate) or [CoordinateDouble](../rendering/coordinatedouble) node that can specify control points for NURBS geometry definitions.
 
 ## Advice
 
 ### Hint
 
-- The contained controlPoint field can hold a Coordinate or CoordinateDouble node.
+- The contained controlPoint field can hold a [Coordinate](../rendering/coordinate) or [CoordinateDouble](../rendering/coordinatedouble) node.
 
 ## Example
 

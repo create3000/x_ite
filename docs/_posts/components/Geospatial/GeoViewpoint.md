@@ -31,7 +31,7 @@ The GeoViewpoint node belongs to the **Geospatial** component and requires at le
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
 
 #### Hint
 
@@ -39,7 +39,7 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 
 ### SFNode [ ] **geoOrigin** NULL <small>[GeoOrigin] (deprecated)</small>
 
-Single contained GeoOrigin node that can specify a local coordinate frame for extended precision.
+Single contained [GeoOrigin](../geospatial/geoorigin) node that can specify a local coordinate frame for extended precision.
 
 #### Hint
 
@@ -86,7 +86,7 @@ Author-provided prose that describes intended purpose of this node.
 
 ### SFRotation [in, out] **orientation** 0 0 1 0 <small>(-∞,∞) or -1 1</small>
 
-Rotation of Viewpoint, relative to default -Z axis direction in local coordinate system.
+Rotation of [Viewpoint](../navigation/viewpoint), relative to default -Z axis direction in local coordinate system.
 
 #### Hint
 
@@ -110,7 +110,7 @@ Preferred minimum viewing angle from this viewpoint in radians, providing minimu
 
 #### Hints
 
-- Overrides bound NavigationInfo avatarSize value, if any.
+- Overrides bound [NavigationInfo](../navigation/navigationinfo) avatarSize value, if any.
 - Default value -1 means no effect on currently defined view frustum boundaries.
 - [Aliasing](https://en.wikipedia.org/wiki/Aliasing){:target="_blank"} and [Clipping](https://en.wikipedia.org/wiki/Clipping_(computer_graphics)){:target="_blank"}
 
@@ -124,7 +124,7 @@ Preferred minimum viewing angle from this viewpoint in radians, providing minimu
 
 #### Hints
 
-- Overrides bound NavigationInfo visibilityLimit value, if any.
+- Overrides bound [NavigationInfo](../navigation/navigationinfo) visibilityLimit value, if any.
 - Default value -1 means no effect on currently defined view frustum boundaries.
 - [Aliasing](https://en.wikipedia.org/wiki/Aliasing){:target="_blank"} and [Clipping](https://en.wikipedia.org/wiki/Clipping_(computer_graphics)){:target="_blank"}
 
@@ -134,7 +134,7 @@ Preferred minimum viewing angle from this viewpoint in radians, providing minimu
 
 ### SFBool [in, out] **viewAll** FALSE
 
-Viewpoint is automatically adjusted to view all visible geometry. Typically centerOfRotation is shifted to center of current bounding box and view is zoomed in or out until all visible objects are viewed.
+[Viewpoint](../navigation/viewpoint) is automatically adjusted to view all visible geometry. Typically centerOfRotation is shifted to center of current bounding box and view is zoomed in or out until all visible objects are viewed.
 
 #### Hints
 
@@ -147,7 +147,7 @@ Viewpoint is automatically adjusted to view all visible geometry. Typically cent
 
 ### SFBool [in, out] **jump** TRUE
 
-Whether to transition instantly by jumping, or else smoothly animate to this Viewpoint.
+Whether to transition instantly by jumping, or else smoothly animate to this [Viewpoint](../navigation/viewpoint).
 
 ### SFBool [in, out] **retainUserOffsets** FALSE
 
@@ -159,7 +159,7 @@ Retain (true) or reset to zero (false) any prior user navigation offsets from de
 
 #### Hint
 
-- *speedFactor* is a relative value and not an absolute speed as defined by NavigationInfo.
+- *speedFactor* is a relative value and not an absolute speed as defined by [NavigationInfo](../navigation/navigationinfo).
 
 ### SFBool [out] **isBound**
 
@@ -179,31 +179,31 @@ Event sent reporting timestamp when node becomes active/inactive.
 
 ### SFNode [in, out] **navigationInfo** NULL <small>[NavigationInfo]</small>
 
-The *navigationInfo* field defines a dedicated NavigationInfo node for this X3DViewpointNode. The specified NavigationInfo node receives a set_bind TRUE event at the time when the parent node is bound and receives a set_bind FALSE at the time when the parent node is unbound.
+The *navigationInfo* field defines a dedicated [NavigationInfo](../navigation/navigationinfo) node for this X3DViewpointNode. The specified [NavigationInfo](../navigation/navigationinfo) node receives a set_bind TRUE event at the time when the parent node is bound and receives a set_bind FALSE at the time when the parent node is unbound.
 
 #### Hint
 
-- Allows simple integration of custom navigation associated with each Viewpoint according to user needs at that location.
+- Allows simple integration of custom navigation associated with each [Viewpoint](../navigation/viewpoint) according to user needs at that location.
 
 ## Advice
 
 ### Hints
 
-- Alternatively can use GeoLocation or GeoTransform as parent of a Viewpoint node to orient geospatial views.
+- Alternatively can use [GeoLocation](../geospatial/geolocation) or [GeoTransform](../geospatial/geotransform) as parent of a [Viewpoint](../navigation/viewpoint) node to orient geospatial views.
 - Include `<component name='Geospatial' level='1'/>`
-- When a GeoViewpoint node is bound, it also overrides the currently bound NavigationInfo node in the scene and controls user navigation for smoother geospatial interaction.
-- Background, Fog, GeoViewpoint, NavigationInfo, OrthoViewpoint, TextureBackground and Viewpoint are bindable nodes, meaning that no more than one of each node type can be active at a given time.
-- GeoViewpoint OrthoViewpoint and Viewpoint share the same binding stack, so no more than one of these nodes can be bound and active at a given time.
+- When a GeoViewpoint node is bound, it also overrides the currently bound [NavigationInfo](../navigation/navigationinfo) node in the scene and controls user navigation for smoother geospatial interaction.
+- [Background](../environmentaleffects/background), [Fog](../environmentaleffects/fog), GeoViewpoint, [NavigationInfo](../navigation/navigationinfo), [OrthoViewpoint](../navigation/orthoviewpoint), [TextureBackground](../environmentaleffects/texturebackground) and [Viewpoint](../navigation/viewpoint) are bindable nodes, meaning that no more than one of each node type can be active at a given time.
+- GeoViewpoint [OrthoViewpoint](../navigation/orthoviewpoint) and [Viewpoint](../navigation/viewpoint) share the same binding stack, so no more than one of these nodes can be bound and active at a given time.
 - Regardless of viewpoint jump value at bind time, the relative viewing transformation between user's view and defined position/orientation is stored for later use when un-jumping (returning to the viewpoint when subsequent viewpoint is unbound).
-- Customizable design pattern for dedicated Viewpoint/NavigationInfo pair: \<Viewpoint DEF='SpecialView'/\> \<NavigationInfo DEF='SpecialNav'/\> \<ROUTE fromNode='SpecialView' fromField='isBound' toNode='SpecialNav' toField='set_bind'/\>
+- Customizable design pattern for dedicated [Viewpoint](../navigation/viewpoint)/[NavigationInfo](../navigation/navigationinfo) pair: \<[Viewpoint](../navigation/viewpoint) DEF='SpecialView'/\> \<[NavigationInfo](../navigation/navigationinfo) DEF='SpecialNav'/\> \<ROUTE fromNode='SpecialView' fromField='isBound' toNode='SpecialNav' toField='set_bind'/\>
 - [X3D Scene Authoring Hints, Viewpoints](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Viewpoints){:target="_blank"}
 
 ### Warnings
 
-- Results are undefined if a bindable node (Background, Fog, NavigationInfo, OrthoViewpoint, TextureBackground, Viewpoint) is a contained descendant node of either LOD or Switch. Avoid this authoring pattern.
-- Do not include GeoViewpoint OrthoViewpoint or Viewpoint as a child of LOD or Switch, instead use ViewpointGroup as parent to constrain location proximity where the viewpoint is available to user.
-- GeoViewpoint navType and headlight fields were removed as part of X3D version 3.3, authors can instead use a NavigationInfo node for those fields in prior X3D versions 3.0, 3.1 or 3.2. Upgrading such legacy scenes to version 3.3 or greater is preferred and recommended.
-- Avoid having GeoLocation or GeoTransform as a parent or ancestor node of GeoViewpoint, since multiple geospatial transformations then occur with unpredictable results.
+- Results are undefined if a bindable node ([Background](../environmentaleffects/background), [Fog](../environmentaleffects/fog), [NavigationInfo](../navigation/navigationinfo), [OrthoViewpoint](../navigation/orthoviewpoint), [TextureBackground](../environmentaleffects/texturebackground), [Viewpoint](../navigation/viewpoint)) is a contained descendant node of either [LOD](../navigation/lod) or [Switch](../grouping/switch). Avoid this authoring pattern.
+- Do not include GeoViewpoint [OrthoViewpoint](../navigation/orthoviewpoint) or [Viewpoint](../navigation/viewpoint) as a child of [LOD](../navigation/lod) or [Switch](../grouping/switch), instead use [ViewpointGroup](../navigation/viewpointgroup) as parent to constrain location proximity where the viewpoint is available to user.
+- GeoViewpoint navType and headlight fields were removed as part of X3D version 3.3, authors can instead use a [NavigationInfo](../navigation/navigationinfo) node for those fields in prior X3D versions 3.0, 3.1 or 3.2. Upgrading such legacy scenes to version 3.3 or greater is preferred and recommended.
+- Avoid having [GeoLocation](../geospatial/geolocation) or [GeoTransform](../geospatial/geotransform) as a parent or ancestor node of GeoViewpoint, since multiple geospatial transformations then occur with unpredictable results.
 
 ## Example
 

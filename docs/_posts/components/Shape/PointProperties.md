@@ -29,7 +29,7 @@ The PointProperties node belongs to the **Shape** component and requires at leas
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
 
 #### Hint
 
@@ -72,11 +72,11 @@ Are set to default values if undefined. Together these parameters define *attenu
 ### Hints
 
 - DEF/USE copies of a single node can provide a similar "look + feel" style for related shapes in a scene.
-- When an X3DTextureNode is defined in the same Appearance instance as PointProperties node, the points of a PointSet shall be displayed as point sprites using the given texture(s).
+- When an X3DTextureNode is defined in the same [Appearance](../shape/appearance) instance as PointProperties node, the points of a [PointSet](../rendering/pointset) shall be displayed as point sprites using the given texture(s).
 
 ### Warning
 
-- Requires X3D `profile='Full'` or else include `<component name='Shape' level='5'/>`
+- Requires X3D `profile='Full'` or else include `<component name='[Shape](../shape/shape)' level='5'/>`
 
 ## See Also
 

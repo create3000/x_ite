@@ -31,7 +31,7 @@ The TextureBackground node belongs to the **EnvironmentalEffects** component and
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
 
 #### Hint
 
@@ -64,7 +64,7 @@ The angle array values increase from 0.0 zenith (straight up) to π/2=1.570796 (
 
 ### MFColor [in, out] **skyColor** 0 0 0 <small>[0,1]</small>
 
-Color of the sky at various angles on the sky sphere. First value is color of sky at 0.0 radians representing the zenith (straight up).
+[Color](../rendering/color) of the sky at various angles on the sky sphere. First value is color of sky at 0.0 radians representing the zenith (straight up).
 
 #### Hints
 
@@ -90,7 +90,7 @@ The angle array values increase from 0.0 nadir (straight down) to π/2=1.570796 
 
 ### MFColor [in, out] **groundColor** [ ] <small>[0,1]</small>
 
-Color of the ground at the various angles on the ground partial sphere. First value is color of ground at 0.0 radians representing the nadir (straight down).
+[Color](../rendering/color) of the ground at the various angles on the ground partial sphere. First value is color of ground at 0.0 radians representing the nadir (straight down).
 
 #### Hints
 
@@ -127,7 +127,7 @@ Event sent when node becomes active/inactive.
 
 ### SFNode [in, out] **frontTexture** NULL <small>[X3DTexture2DNode,MultiTexture]</small>
 
-Parent TextureBackground element can contain up to six image nodes (ImageTexture PixelTexture MovieTexture MultiTexture).
+Parent TextureBackground element can contain up to six image nodes ([ImageTexture](../texturing/imagetexture) [PixelTexture](../texturing/pixeltexture) [MovieTexture](../texturing/movietexture) [MultiTexture](../texturing/multitexture)).
 
 #### Warning
 
@@ -135,7 +135,7 @@ Parent TextureBackground element can contain up to six image nodes (ImageTexture
 
 ### SFNode [in, out] **backTexture** NULL <small>[X3DTexture2DNode,MultiTexture]</small>
 
-Parent TextureBackground element can contain up to six image nodes (ImageTexture PixelTexture MovieTexture MultiTexture).
+Parent TextureBackground element can contain up to six image nodes ([ImageTexture](../texturing/imagetexture) [PixelTexture](../texturing/pixeltexture) [MovieTexture](../texturing/movietexture) [MultiTexture](../texturing/multitexture)).
 
 #### Warning
 
@@ -143,7 +143,7 @@ Parent TextureBackground element can contain up to six image nodes (ImageTexture
 
 ### SFNode [in, out] **leftTexture** NULL <small>[X3DTexture2DNode,MultiTexture]</small>
 
-Parent TextureBackground element can contain up to six image nodes (ImageTexture PixelTexture MovieTexture MultiTexture).
+Parent TextureBackground element can contain up to six image nodes ([ImageTexture](../texturing/imagetexture) [PixelTexture](../texturing/pixeltexture) [MovieTexture](../texturing/movietexture) [MultiTexture](../texturing/multitexture)).
 
 #### Warning
 
@@ -151,7 +151,7 @@ Parent TextureBackground element can contain up to six image nodes (ImageTexture
 
 ### SFNode [in, out] **rightTexture** NULL <small>[X3DTexture2DNode,MultiTexture]</small>
 
-Parent TextureBackground element can contain up to six image nodes (ImageTexture PixelTexture MovieTexture MultiTexture).
+Parent TextureBackground element can contain up to six image nodes ([ImageTexture](../texturing/imagetexture) [PixelTexture](../texturing/pixeltexture) [MovieTexture](../texturing/movietexture) [MultiTexture](../texturing/multitexture)).
 
 #### Warning
 
@@ -159,7 +159,7 @@ Parent TextureBackground element can contain up to six image nodes (ImageTexture
 
 ### SFNode [in, out] **topTexture** NULL <small>[X3DTexture2DNode,MultiTexture]</small>
 
-Parent TextureBackground element can contain up to six image nodes (ImageTexture PixelTexture MovieTexture MultiTexture).
+Parent TextureBackground element can contain up to six image nodes ([ImageTexture](../texturing/imagetexture) [PixelTexture](../texturing/pixeltexture) [MovieTexture](../texturing/movietexture) [MultiTexture](../texturing/multitexture)).
 
 #### Warning
 
@@ -167,7 +167,7 @@ Parent TextureBackground element can contain up to six image nodes (ImageTexture
 
 ### SFNode [in, out] **bottomTexture** NULL <small>[X3DTexture2DNode,MultiTexture]</small>
 
-Parent TextureBackground element can contain up to six image nodes (ImageTexture PixelTexture MovieTexture MultiTexture).
+Parent TextureBackground element can contain up to six image nodes ([ImageTexture](../texturing/imagetexture) [PixelTexture](../texturing/pixeltexture) [MovieTexture](../texturing/movietexture) [MultiTexture](../texturing/multitexture)).
 
 #### Warning
 
@@ -177,13 +177,13 @@ Parent TextureBackground element can contain up to six image nodes (ImageTexture
 
 ### Hints
 
-- Background, Fog, GeoViewpoint, NavigationInfo, OrthoViewpoint, TextureBackground and Viewpoint are bindable nodes, meaning that no more than one of each node type can be active at a given time.
-- Authors can have LoadSensor nodes receive notifications and send reporting events when background texture node(s) are loaded.
+- [Background](../environmentaleffects/background), [Fog](../environmentaleffects/fog), [GeoViewpoint](../geospatial/geoviewpoint), [NavigationInfo](../navigation/navigationinfo), [OrthoViewpoint](../navigation/orthoviewpoint), TextureBackground and [Viewpoint](../navigation/viewpoint) are bindable nodes, meaning that no more than one of each node type can be active at a given time.
+- Authors can have [LoadSensor](../networking/loadsensor) nodes receive notifications and send reporting events when background texture node(s) are loaded.
 
 ### Warnings
 
-- Results are undefined if a bindable node (Background, Fog, NavigationInfo, OrthoViewpoint, TextureBackground, Viewpoint) is a contained descendant node of either LOD or Switch. Avoid this authoring pattern.
-- Each of the child ImageTexture or PixelTexture nodes must have unique containerField values for backTexture, bottomTexture, frontTexture, leftTexture, rightTexture, or topTexture.
+- Results are undefined if a bindable node ([Background](../environmentaleffects/background), [Fog](../environmentaleffects/fog), [NavigationInfo](../navigation/navigationinfo), [OrthoViewpoint](../navigation/orthoviewpoint), TextureBackground, [Viewpoint](../navigation/viewpoint)) is a contained descendant node of either [LOD](../navigation/lod) or [Switch](../grouping/switch). Avoid this authoring pattern.
+- Each of the child [ImageTexture](../texturing/imagetexture) or [PixelTexture](../texturing/pixeltexture) nodes must have unique containerField values for backTexture, bottomTexture, frontTexture, leftTexture, rightTexture, or topTexture.
 
 ## Example
 

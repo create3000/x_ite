@@ -30,7 +30,7 @@ The IndexedFaceSet node belongs to the **Geometry3D** component and requires at 
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
 
 #### Hint
 
@@ -38,11 +38,11 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 
 ### MFInt32 [in] **set_colorIndex** <small>[0,∞) or -1</small>
 
-*colorIndex* values define the order in which Color or ColorRGBA values are applied to polygons (or vertices).
+*colorIndex* values define the order in which [Color](../rendering/color) or [ColorRGBA](../rendering/colorrgba) values are applied to polygons (or vertices).
 
 #### Hints
 
-- If *colorIndex* array is not provided, then Color or ColorRGBA values are indexed according to the coordIndex field.
+- If *colorIndex* array is not provided, then [Color](../rendering/color) or [ColorRGBA](../rendering/colorrgba) values are indexed according to the coordIndex field.
 - If colorPerVertex='false' then one index is provided for each polygon defined by the coordIndex array. No sentinel -1 values are included.
 - If colorPerVertex='true' then a matching set of indices is provided, each separated by sentinel -1, that exactly corresponds to individual values in the coordIndex array polygon definitions.
 - This field is not accessType inputOutput since X3D browsers might use different underlying geometric representations for high-performance rendering, and so output events are not appropriate.
@@ -142,7 +142,7 @@ The *convex* field is a hint to renderers whether all polygons in a shape are *c
 
 ### SFBool [ ] **colorPerVertex** TRUE
 
-Whether Color or ColorRGBA values are applied to each point vertex (true) or to each polygon face (false).
+Whether [Color](../rendering/color) or [ColorRGBA](../rendering/colorrgba) values are applied to each point vertex (true) or to each polygon face (false).
 
 #### Hint
 
@@ -150,29 +150,29 @@ Whether Color or ColorRGBA values are applied to each point vertex (true) or to 
 
 #### Warning
 
-- If child Color or ColorRGBA node is not provided, then geometry is rendered using corresponding Appearance and material/texture values.
+- If child [Color](../rendering/color) or [ColorRGBA](../rendering/colorrgba) node is not provided, then geometry is rendered using corresponding [Appearance](../shape/appearance) and material/texture values.
 
 ### SFBool [ ] **normalPerVertex** TRUE
 
-Whether Normal node vector values are applied to each point vertex (true) or to each polygon face (false).
+Whether [Normal](../rendering/normal) node vector values are applied to each point vertex (true) or to each polygon face (false).
 
 #### Hint
 
-- If no child Normal node is provided, the X3D browser shall automatically generate normals, using creaseAngle to determine smoothed shading across shared vertices.
+- If no child [Normal](../rendering/normal) node is provided, the X3D browser shall automatically generate normals, using creaseAngle to determine smoothed shading across shared vertices.
 
 ### MFInt32 [ ] **colorIndex** [ ] <small>[0,∞) or -1</small>
 
-*colorIndex* values define the order in which Color or ColorRGBA values are applied to polygons (or vertices).
+*colorIndex* values define the order in which [Color](../rendering/color) or [ColorRGBA](../rendering/colorrgba) values are applied to polygons (or vertices).
 
 #### Hints
 
-- If *colorIndex* array is not provided, then Color or ColorRGBA values are indexed according to the coordIndex field.
+- If *colorIndex* array is not provided, then [Color](../rendering/color) or [ColorRGBA](../rendering/colorrgba) values are indexed according to the coordIndex field.
 - If colorPerVertex='false' then one index is provided for each polygon defined by the coordIndex array. No sentinel -1 values are included.
 - If colorPerVertex='true' then a matching set of indices is provided, each separated by sentinel -1, that exactly corresponds to individual values in the coordIndex array polygon definitions.
 
 #### Warning
 
-- If child Color or ColorRGBA node is not provided, then geometry is rendered using corresponding Appearance and material/texture values.
+- If child [Color](../rendering/color) or [ColorRGBA](../rendering/colorrgba) node is not provided, then geometry is rendered using corresponding [Appearance](../shape/appearance) and material/texture values.
 
 ### MFInt32 [ ] **texCoordIndex** [ ] <small>[-1,∞)</small>
 
@@ -180,7 +180,7 @@ List of texture-coordinate indices mapping attached texture to corresponding coo
 
 #### Hints
 
-- If *texCoordIndex* array is not provided, then TextureCoordinate values are indexed according to the coordIndex field.
+- If *texCoordIndex* array is not provided, then [TextureCoordinate](../texturing/texturecoordinate) values are indexed according to the coordIndex field.
 - Use a tool!
 
 ### MFInt32 [ ] **normalIndex** [ ] <small>[0,∞) or -1</small>
@@ -191,11 +191,11 @@ List of texture-coordinate indices mapping attached texture to corresponding coo
 
 - If normalPerVertex='false' then one index is provided for each polygon defined by the coordIndex array. No sentinel -1 values are included.
 - If normalPerVertex='true' then a matching set of indices is provided, each separated by sentinel -1, that exactly corresponds to individual values in the coordIndex array polygon definitions.
-- If no child Normal node is provided, the X3D browser shall automatically generate normals, using creaseAngle to determine smoothed shading across shared vertices. Interchange profile hint: this field may be ignored, applying the default value regardless.
+- If no child [Normal](../rendering/normal) node is provided, the X3D browser shall automatically generate normals, using creaseAngle to determine smoothed shading across shared vertices. Interchange profile hint: this field may be ignored, applying the default value regardless.
 
 #### Warning
 
-- If *normalIndex* array is not provided, then Normal values are indexed according to the coordIndex field.
+- If *normalIndex* array is not provided, then [Normal](../rendering/normal) values are indexed according to the coordIndex field.
 
 ### MFInt32 [ ] **coordIndex** [ ] <small>[0,∞) or -1</small>
 
@@ -211,7 +211,7 @@ List of texture-coordinate indices mapping attached texture to corresponding coo
 
 ### MFNode [in, out] **attrib** [ ] <small>[X3DVertexAttributeNode]</small>
 
-Single contained FloatVertexAttribute node that can specify list of per-vertex attribute information for programmable shaders.
+Single contained [FloatVertexAttribute](../shaders/floatvertexattribute) node that can specify list of per-vertex attribute information for programmable shaders.
 
 #### Hint
 
@@ -219,23 +219,23 @@ Single contained FloatVertexAttribute node that can specify list of per-vertex a
 
 ### SFNode [in, out] **fogCoord** NULL <small>[FogCoordinate]</small>
 
-Single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry.
+Single contained [FogCoordinate](../environmentaleffects/fogcoordinate) node that can specify depth parameters for fog in corresponding geometry.
 
 ### SFNode [in, out] **color** NULL <small>[X3DColorNode]</small>
 
-Single contained Color or ColorRGBA node that can specify *color* values applied to corresponding vertices according to colorIndex and colorPerVertex fields.
+Single contained [Color](../rendering/color) or [ColorRGBA](../rendering/colorrgba) node that can specify *color* values applied to corresponding vertices according to colorIndex and colorPerVertex fields.
 
 ### SFNode [in, out] **texCoord** NULL <small>[X3DTextureCoordinateNode]</small>
 
-Single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
+Single contained [TextureCoordinate](../texturing/texturecoordinate), [TextureCoordinateGenerator](../texturing/texturecoordinategenerator) or [MultiTextureCoordinate](../texturing/multitexturecoordinate) node that can specify coordinates for texture mapping onto corresponding geometry.
 
 ### SFNode [in, out] **normal** NULL <small>[X3DNormalNode]</small>
 
-Single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
+Single contained [Normal](../rendering/normal) node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
 
 #### Hint
 
-- Useful for special effects. Normal vector computation by 3D graphics hardware is quite fast so adding normals to a scene is typically unnecessary.
+- Useful for special effects. [Normal](../rendering/normal) vector computation by 3D graphics hardware is quite fast so adding normals to a scene is typically unnecessary.
 
 #### Warning
 
@@ -243,14 +243,14 @@ Single contained Normal node that can specify perpendicular vectors for correspo
 
 ### SFNode [in, out] **coord** NULL <small>[X3DCoordinateNode]</small>
 
-Single contained Coordinate or CoordinateDouble node that can specify a list of vertex values.
+Single contained [Coordinate](../rendering/coordinate) or [CoordinateDouble](../rendering/coordinatedouble) node that can specify a list of vertex values.
 
 ## Advice
 
 ### Hints
 
 - [Polygon](https://en.wikipedia.org/wiki/Polygon){:target="_blank"}
-- Insert a Shape node before adding geometry or Appearance.
+- Insert a [Shape](../shape/shape) node before adding geometry or [Appearance](../shape/appearance).
 - For advanced extensibility, authors can substitute a type-matched ProtoInstance node (with correct containerField value) for contained node content.
 
 ### Warnings

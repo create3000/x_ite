@@ -31,7 +31,7 @@ The TextureCoordinateGenerator node belongs to the **Texturing** component and r
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
 
 #### Hint
 
@@ -65,7 +65,7 @@ Parameter field defines the algorithm used to compute texture coordinates.
 
 ### Hints
 
-- Add Shape and then polygonal/planar geometry before adding TextureCoordinateGenerator.
+- Add [Shape](../shape/shape) and then polygonal/planar geometry before adding TextureCoordinateGenerator.
 - [Texture mapping](https://en.wikipedia.org/wiki/Texture_mapping){:target="_blank"}
 - [X3D Texturing component Figure 18.1, Texture map coordinate system](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/components/texturing.html#f-TextureMapCoordSystem){:target="_blank"}
 

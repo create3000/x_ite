@@ -29,7 +29,7 @@ The LineProperties node belongs to the **Shape** component and requires at least
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
 
 #### Hint
 
@@ -60,7 +60,7 @@ Whether or not LineProperties are *applied* to associated geometry.
 
 ### Warning
 
-- Requires X3D `profile='Full'` or else include `<component name='Shape' level='2'/>`
+- Requires X3D `profile='Full'` or else include `<component name='[Shape](../shape/shape)' level='2'/>`
 
 ## Example
 

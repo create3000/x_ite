@@ -30,7 +30,7 @@ The VolumeData node belongs to the **VolumeRendering** component and requires at
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
 
 #### Hint
 
@@ -80,11 +80,11 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 
 ### SFNode [in, out] **renderStyle** NULL <small>[X3DVolumeRenderStyleNode]</small>
 
-Single contained X3DVolumeRenderStyleNode node that defines specific rendering technique for this volumetric object. If field is not defined, default is OpacityMapVolumeStyle node.
+Single contained X3DVolumeRenderStyleNode node that defines specific rendering technique for this volumetric object. If field is not defined, default is [OpacityMapVolumeStyle](../volumerendering/opacitymapvolumestyle) node.
 
 ### SFNode [in, out] **voxels** NULL <small>[X3DTexture3DNode]</small>
 
-Single contained X3DTexture3DNode (ComposedTexture3D, ImageTexture3D, PixelTexture3D) that provides raw voxel information utilized by corresponding rendering styles. Any number of color components (1-4) may be defined.
+Single contained X3DTexture3DNode ([ComposedTexture3D](../texturing3d/composedtexture3d), [ImageTexture3D](../texturing3d/imagetexture3d), [PixelTexture3D](../texturing3d/pixeltexture3d)) that provides raw voxel information utilized by corresponding rendering styles. Any number of color components (1-4) may be defined.
 
 ## Advice
 

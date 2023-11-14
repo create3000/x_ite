@@ -29,7 +29,7 @@ The GeoElevationGrid node belongs to the **Geospatial** component and requires a
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
 
 #### Hint
 
@@ -37,7 +37,7 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 
 ### SFNode [ ] **geoOrigin** NULL <small>[GeoOrigin] (deprecated)</small>
 
-Single contained GeoOrigin node that can specify a local coordinate frame for extended precision.
+Single contained [GeoOrigin](../geospatial/geoorigin) node that can specify a local coordinate frame for extended precision.
 
 #### Hint
 
@@ -163,11 +163,11 @@ Setting *solid* true means draw only one side of polygons (backface culling on),
 
 #### Warning
 
-- Note type double, unlike ElevationGrid *creaseAngle*.
+- Note type double, unlike [ElevationGrid](../geometry3d/elevationgrid) *creaseAngle*.
 
 ### SFBool [ ] **colorPerVertex** TRUE
 
-Whether Color node color values are applied to each point vertex (true) or per quadrilateral (false).
+Whether [Color](../rendering/color) node color values are applied to each point vertex (true) or per quadrilateral (false).
 
 #### Hint
 
@@ -175,27 +175,27 @@ Whether Color node color values are applied to each point vertex (true) or per q
 
 ### SFBool [ ] **normalPerVertex** TRUE
 
-Whether Normal node vector values are applied to each point vertex (true) or per quadrilateral (false).
+Whether [Normal](../rendering/normal) node vector values are applied to each point vertex (true) or per quadrilateral (false).
 
 #### Hint
 
-- If no child Normal node is provided, the X3D browser shall automatically generate normals, using creaseAngle to determine smoothed shading across shared vertices.
+- If no child [Normal](../rendering/normal) node is provided, the X3D browser shall automatically generate normals, using creaseAngle to determine smoothed shading across shared vertices.
 
 ### SFNode [in, out] **color** NULL <small>[X3DColorNode]</small>
 
-Single contained Color or ColorRGBA node that can specify *color* values applied to corresponding vertices according to colorPerVertex field.
+Single contained [Color](../rendering/color) or [ColorRGBA](../rendering/colorrgba) node that can specify *color* values applied to corresponding vertices according to colorPerVertex field.
 
 ### SFNode [in, out] **texCoord** NULL <small>[X3DTextureCoordinateNode]</small>
 
-Single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
+Single contained [TextureCoordinate](../texturing/texturecoordinate), [TextureCoordinateGenerator](../texturing/texturecoordinategenerator) or [MultiTextureCoordinate](../texturing/multitexturecoordinate) node that can specify coordinates for texture mapping onto corresponding geometry.
 
 ### SFNode [in, out] **normal** NULL <small>[X3DNormalNode]</small>
 
-Single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
+Single contained [Normal](../rendering/normal) node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
 
 #### Hint
 
-- Useful for special effects. Normal vector computation by 3D graphics hardware is quite fast so adding normals to a scene is typically unnecessary.
+- Useful for special effects. [Normal](../rendering/normal) vector computation by 3D graphics hardware is quite fast so adding normals to a scene is typically unnecessary.
 
 #### Warning
 
@@ -222,15 +222,15 @@ Contains xDimension rows * zDimension columns floating-point values for elevatio
 
 - The height array defines (xDimension-1)*(zDimension-1) quadrilaterals.
 - Positive direction for normal of each triangle is on same side of the quadrilateral. Triangles are defined either counterclockwise or clockwise depending on value of ccw field.
-- GeoElevationGrid can contain GeoOrigin, Color or ColorRGBA, Normal and TextureCoordinate nodes.
-- Insert a Shape node before adding geometry or Appearance.
+- GeoElevationGrid can contain [GeoOrigin](../geospatial/geoorigin), [Color](../rendering/color) or [ColorRGBA](../rendering/colorrgba), [Normal](../rendering/normal) and [TextureCoordinate](../texturing/texturecoordinate) nodes.
+- Insert a [Shape](../shape/shape) node before adding geometry or [Appearance](../shape/appearance).
 - [X3D for Advanced Modeling (X3D4AM) slideset](https://x3dgraphics.com/slidesets/X3dForAdvancedModeling/GeospatialComponentX3dEarth.pdf){:target="_blank"}
 
 ### Warnings
 
 - Generated quadrilaterals can be nonplanar. Tessellation splits quadrilaterals into triangles along seam starting at initial vertex of the quadrilateral and proceeding to opposite vertex.
 - Requires X3D `profile='Full'` or else include `<component name='Geospatial' level='1'/>`
-- Avoid having GeoLocation or GeoTransform as a parent or ancestor node of GeoElevationGrid, since multiple geospatial transformations then occur with unpredictable results.
+- Avoid having [GeoLocation](../geospatial/geolocation) or [GeoTransform](../geospatial/geotransform) as a parent or ancestor node of GeoElevationGrid, since multiple geospatial transformations then occur with unpredictable results.
 
 ## Example
 

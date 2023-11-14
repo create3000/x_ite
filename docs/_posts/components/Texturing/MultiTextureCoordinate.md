@@ -30,7 +30,7 @@ The MultiTextureCoordinate node belongs to the **Texturing** component and requi
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
 
 #### Hint
 
@@ -38,7 +38,7 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 
 ### MFNode [in, out] **texCoord** [ ] <small>[X3DTextureCoordinateNode]</small>
 
-Zero or more contained TextureCoordinate or TextureCoordinateGenerator nodes that specify texture coordinates for the different texture channels, used for texture mapping onto corresponding geometry.
+Zero or more contained [TextureCoordinate](../texturing/texturecoordinate) or [TextureCoordinateGenerator](../texturing/texturecoordinategenerator) nodes that specify texture coordinates for the different texture channels, used for texture mapping onto corresponding geometry.
 
 #### Warning
 
@@ -48,9 +48,9 @@ Zero or more contained TextureCoordinate or TextureCoordinateGenerator nodes tha
 
 ### Hints
 
-- Add Shape and then polygonal/planar geometry before adding MultiTextureCoordinate.
+- Add [Shape](../shape/shape) and then polygonal/planar geometry before adding MultiTextureCoordinate.
 - [Texture mapping](https://en.wikipedia.org/wiki/Texture_mapping){:target="_blank"}
-- Multitexturing is accomplished using MultiTexture, MultiTextureCoordinate and MultiTextureTransform nodes.
+- Multitexturing is accomplished using [MultiTexture](../texturing/multitexture), MultiTextureCoordinate and [MultiTextureTransform](../texturing/multitexturetransform) nodes.
 - [X3D Texturing component Figure 18.2 Lightmap example](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/components/texturing.html#f-Lightmapexample){:target="_blank"}
 - [X3D Texturing component Table 18.2: Comparison of single texture and multitexture attributes](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/components/texturing.html#t-SingleAndMultitextureAttrs){:target="_blank"}
 

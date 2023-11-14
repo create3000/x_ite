@@ -29,7 +29,7 @@ The Extrusion node belongs to the **Geometry3D** component and requires at least
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
 
 #### Hint
 
@@ -93,7 +93,7 @@ The *spine* array defines a center-line sequence of 3D points that define a piec
 
 ### SFBool [ ] **beginCap** TRUE
 
-Whether beginning cap is drawn (similar to Cylinder top cap).
+Whether beginning cap is drawn (similar to [Cylinder](../geometry3d/cylinder) top cap).
 
 #### Warning
 
@@ -101,7 +101,7 @@ Whether beginning cap is drawn (similar to Cylinder top cap).
 
 ### SFBool [ ] **endCap** TRUE
 
-Whether end cap is drawn (similar to Cylinder bottom cap).
+Whether end cap is drawn (similar to [Cylinder](../geometry3d/cylinder) bottom cap).
 
 #### Warning
 
@@ -214,7 +214,7 @@ The *spine* array defines a center-line sequence of 3D points that define a piec
 ### Hints
 
 - [Extrusion](https://en.wikipedia.org/wiki/Extrusion){:target="_blank"}
-- Insert a Shape node before adding geometry or Appearance.
+- Insert a [Shape](../shape/shape) node before adding geometry or [Appearance](../shape/appearance).
 
 ### Warning
 

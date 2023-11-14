@@ -34,7 +34,7 @@ Enables/disables node operation.
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
 
 #### Hint
 
@@ -48,7 +48,7 @@ The *transferFunction* field holds a single texture representation in either two
 
 ### Hint
 
-- Contains a single ImageTexture2D or ImageTexture3D node with `containerField='transferFunction'.` Voxel values are used as lookup coordinates into the transfer function texture, where the texel value represents the output color.
+- Contains a single ImageTexture2D or [ImageTexture3D](../texturing3d/imagetexture3d) node with `containerField='transferFunction'.` Voxel values are used as lookup coordinates into the transfer function texture, where the texel value represents the output color.
 
 ### Warning
 

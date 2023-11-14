@@ -31,7 +31,7 @@ The MicrophoneSource node belongs to the **Sound** component and requires at lea
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
 
 #### Hint
 
@@ -71,23 +71,23 @@ Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
 #### Hint
 
-- ROUTE a time value matching system clock to this field, such as output event from TouchSensor touchTime or TimeTrigger triggerTime.
+- ROUTE a time value matching system clock to this field, such as output event from [TouchSensor](../pointingdevicesensor/touchsensor) touchTime or [TimeTrigger](../eventutilities/timetrigger) triggerTime.
 
 ### SFTime [in, out] **resumeTime** 0 <small>(-∞,∞)</small>
 
-When *resumeTime* becomes \<= time now, isPaused becomes false and AudioClip becomes active. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
+When *resumeTime* becomes \<= time now, isPaused becomes false and [AudioClip](../sound/audioclip) becomes active. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
 #### Hint
 
-- ROUTE a time value matching system clock to this field, such as output event from TouchSensor touchTime or TimeTrigger triggerTime.
+- ROUTE a time value matching system clock to this field, such as output event from [TouchSensor](../pointingdevicesensor/touchsensor) touchTime or [TimeTrigger](../eventutilities/timetrigger) triggerTime.
 
 ### SFTime [in, out] **pauseTime** 0 <small>(-∞,∞)</small>
 
-When time now \>= *pauseTime*, isPaused becomes true and AudioClip becomes paused. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
+When time now \>= *pauseTime*, isPaused becomes true and [AudioClip](../sound/audioclip) becomes paused. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
 #### Hint
 
-- ROUTE a time value matching system clock to this field, such as output event from TouchSensor touchTime or TimeTrigger triggerTime.
+- ROUTE a time value matching system clock to this field, such as output event from [TouchSensor](../pointingdevicesensor/touchsensor) touchTime or [TimeTrigger](../eventutilities/timetrigger) triggerTime.
 
 ### SFTime [in, out] **stopTime** 0 <small>(-∞,∞)</small>
 
@@ -95,16 +95,16 @@ Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
 #### Hint
 
-- ROUTE a time value matching system clock to this field, such as output event from TouchSensor touchTime or TimeTrigger triggerTime.
+- ROUTE a time value matching system clock to this field, such as output event from [TouchSensor](../pointingdevicesensor/touchsensor) touchTime or [TimeTrigger](../eventutilities/timetrigger) triggerTime.
 
 #### Warnings
 
-- An active TimeSensor node ignores set_cycleInterval and set_startTime events.
-- An active TimeSensor node ignores set_stopTime event values less than or equal to startTime.
+- An active [TimeSensor](../time/timesensor) node ignores set_cycleInterval and set_startTime events.
+- An active [TimeSensor](../time/timesensor) node ignores set_stopTime event values less than or equal to startTime.
 
 ### SFBool [out] **isPaused**
 
-*isPaused* true/false events are sent when AudioClip is paused/resumed.
+*isPaused* true/false events are sent when [AudioClip](../sound/audioclip) is paused/resumed.
 
 #### Warning
 
@@ -120,7 +120,7 @@ Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
 ### SFTime [out] **elapsedTime**
 
-Current elapsed time since AudioClip activated/running, cumulative in seconds, and not counting any paused time.
+Current elapsed time since [AudioClip](../sound/audioclip) activated/running, cumulative in seconds, and not counting any paused time.
 
 #### Hint
 

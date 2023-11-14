@@ -28,7 +28,7 @@ The GeoOrigin node belongs to the **Geospatial** component and requires at least
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
 
 #### Hint
 
@@ -62,7 +62,7 @@ Defines absolute geographic location (and implicit local coordinate frame).
 
 ### SFBool [ ] **rotateYUp** FALSE
 
-Whether to rotate coordinates of nodes using this GeoOrigin so that local-up direction aligns with VRML Y axis *rotateYUp* false means local up-direction is relative to planet surface *rotateYUp* true allows proper operation of NavigationInfo modes FLY, WALK.
+Whether to rotate coordinates of nodes using this GeoOrigin so that local-up direction aligns with VRML Y axis *rotateYUp* false means local up-direction is relative to planet surface *rotateYUp* true allows proper operation of [NavigationInfo](../navigation/navigationinfo) modes FLY, WALK.
 
 ## Advice
 

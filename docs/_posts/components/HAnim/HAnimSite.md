@@ -30,7 +30,7 @@ The HAnimSite node belongs to the **HAnim** component and requires at least leve
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
 
 #### Hint
 
@@ -53,7 +53,7 @@ Unique *name* attribute must be defined so that HAnimSite node can be identified
 - HAnimSite names are typically based on feature point names, though other author-defined names are also allowed.
 - Https://www.web3d.org/documents/specifications/19774/V2.0/Architecture/FeaturePoints.html
 - HAnimSite nodes used as end effectors have '_tip' suffix appended to the *name*.
-- HAnimSite nodes containing a Viewpoint location have '_view' suffix appended to the *name*.
+- HAnimSite nodes containing a [Viewpoint](../navigation/viewpoint) location have '_view' suffix appended to the *name*.
 - HAnimSite nodes serving other purposes have '_pt' suffix appended to the *name*.
 - Additional example *name* bases (such as cervicale l_infraorbitale supramenton etc.) are listed in HAnim Specification.
 - [HAnim Specification part 1, LOA-3 default Site object translations](https://www.web3d.org/documents/specifications/19774/V2.0/Architecture/BodyDimensionsAndLOAs.html#LOA3DefaultSiteTranslations){:target="_blank"}
@@ -64,7 +64,7 @@ Unique *name* attribute must be defined so that HAnimSite node can be identified
 
 #### Warnings
 
-- *name* prefix must match ancestor HAnimHumanoid *name* followed by underscore character, if more than one humanoid appears within a scene file. For example, 'Nancy_' prepended before location *name*.
+- *name* prefix must match ancestor [HAnimHumanoid](../hanim/hanimhumanoid) *name* followed by underscore character, if more than one humanoid appears within a scene file. For example, 'Nancy_' prepended before location *name*.
 - *name* field is not included if this instance is a USE node, in order to avoid potential mismatches.
 - HAnimSite *name* must end in '_tip' or '_view' or '_pt' suffix.
 
@@ -74,7 +74,7 @@ Position of children relative to local coordinate system.
 
 #### Hints
 
-- Since default pose faces along +Z axis, -x values are right side and +x values are left side within HAnimHumanoid.
+- Since default pose faces along +Z axis, -x values are right side and +x values are left side within [HAnimHumanoid](../hanim/hanimhumanoid).
 - Center field indicates default origin relative to overall humanoid body and is rarely modified. For HAnimSite animation, ROUTE position-change events to *translation* field instead.
 
 ### SFRotation [in, out] **rotation** 0 0 1 0 <small>(-∞,∞) or [-1,1]</small>
@@ -158,7 +158,7 @@ Grouping nodes contain an ordered list of *children* nodes.
 
 ### Hints
 
-- HAnimSite nodes are stored as children of an HAnimSegment node.
+- HAnimSite nodes are stored as children of an [HAnimSegment](../hanim/hanimsegment) node.
 - [HAnim Specification](https://www.web3d.org/documents/specifications/19774/V2.0){:target="_blank"}
 - [HAnim Specification part 1, Site](https://www.web3d.org/documents/specifications/19774/V2.0/Architecture/ObjectInterfaces.html#Site){:target="_blank"}
 - [HAnim Specification part 1, Annex B, Feature points for the human body](https://www.web3d.org/documents/specifications/19774/V2.0/Architecture/FeaturePoints.html){:target="_blank"}
@@ -170,7 +170,7 @@ Grouping nodes contain an ordered list of *children* nodes.
 - Ensure that visible HAnimSite locations are not inadvertently obscured by skin animation.
 - Requires X3D `profile='Full'` or else include `<component name='HAnim' level='1'/>`
 - For X3D3 HAnim1, previous spelling of component name was 'H-Anim' (including hyphen).
-- The number of contained \<HAnimSite USE='*' `containerField='sites,` skeleton or viewpoints'/\> nodes at top level of HAnimHumanoid needs to match the number of corresponding HAnimSite node instances found within the preceding skeleton hierarchy.
+- The number of contained \<HAnimSite USE='*' `containerField='sites,` skeleton or viewpoints'/\> nodes at top level of [HAnimHumanoid](../hanim/hanimhumanoid) needs to match the number of corresponding HAnimSite node instances found within the preceding skeleton hierarchy.
 
 ## See Also
 

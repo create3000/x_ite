@@ -30,7 +30,7 @@ The ColorRGBA node belongs to the **Rendering** component and requires at least 
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
 
 #### Hint
 
@@ -48,7 +48,7 @@ The *color* field defines an array of 4-tuple RGBA colors.
 
 ### Hints
 
-- Colors are often controlled by Material instead.
+- Colors are often controlled by [Material](../shape/material) instead.
 - Alpha channel may be ignored under Interchange profile.
 - [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color){:target="_blank"}
 

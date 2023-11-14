@@ -30,7 +30,7 @@ The Layout node belongs to the **Layout** component and requires at least level 
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
 
 #### Hint
 
@@ -97,7 +97,7 @@ The *scaleMode* field specifies how the scale of the parent is modified. Two quo
 
 #### Hints
 
-- A *scaleMode* field value of NONE specifies that the corresponding scale value is not modified. Instead, the scale is inherited from its parent. Since a LayoutLayer node does not have a parent, the value of NONE reverts to FRACTION.
+- A *scaleMode* field value of NONE specifies that the corresponding scale value is not modified. Instead, the scale is inherited from its parent. Since a [LayoutLayer](../layout/layoutlayer) node does not have a parent, the value of NONE reverts to FRACTION.
 - A *scaleMode* value of FRACTION specifies a scale in the corresponding direction so that one unit is equal to the dimension (width or height) of this rectangle.
 - A *scaleMode* value of STRETCH specifies a scale in the corresponding direction such that the resulting scale in the horizontal direction is equal to the scale in the vertical direction, thus producing a uniform scale.
 - A value of PIXEL specifies a scale in the corresponding direction such that one unit is equal to one pixel.

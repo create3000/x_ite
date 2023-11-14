@@ -28,7 +28,7 @@ The LayerSet node belongs to the **Layering** component and requires at least le
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
 
 #### Hint
 
@@ -57,7 +57,7 @@ The *order* list defines the *order* in which layers are rendered. Each value co
 
 ### MFNode [in, out] **layers** [ ] <small>[X3DLayerNode]</small>
 
-The *layers* list defines a list of Layer nodes that contain the constituent parts of the scene. Each layer is assigned an ordinal number depending on its position in this contained list of nodes.
+The *layers* list defines a list of [Layer](../layering/layer) nodes that contain the constituent parts of the scene. Each layer is assigned an ordinal number depending on its position in this contained list of nodes.
 
 #### Hints
 

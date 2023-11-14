@@ -7,6 +7,8 @@ use Cwd;
 use List::MoreUtils qw(first_index);
 use HTML::Entities;
 
+$cwd = getcwd ();
+
 say "Downloading X3dTooltips.html ..." if ! -f "/tmp/tooltips.html" || -M "/tmp/tooltips.html" > 1;
 system "wget -q -O - https://www.web3d.org/x3d/content/X3dTooltips.html > /tmp/tooltips.html"
    if ! -f "/tmp/tooltips.html" || -M "/tmp/tooltips.html" > 1;
@@ -34,6 +36,11 @@ $inOut = {
    "outputOnly" => "out",
    "inputOutput" => "in, out",
 };
+
+%links = map { m|([^/]+)$|; ($1, lc $_) }
+   sort map { s|\.md$||r }
+   map { s|$cwd/docs/_posts/components//||r }
+   split "\n", `find $cwd/docs/_posts/components/ -type f -mindepth 2`;
 
 sub node {
    $filename = shift;
@@ -64,7 +71,7 @@ sub node {
       @node = @node [0 .. (first_index { /^$/ } @node)];
 
       $file = update_node ($typeName, $componentName, \@node, $file, $source);
-      $file = update_field ($_, \@node, $file, $source) foreach @fields;
+      $file = update_field ($typeName, $_, \@node, $file, $source) foreach @fields;
    }
 
    $file = reorder_sections ($file);
@@ -72,6 +79,25 @@ sub node {
    open FILE, ">", $md;
    print FILE $file;
    close FILE;
+}
+
+sub link_nodes {
+   $typeName = shift;
+   @lines    = @_;
+
+   foreach $line (@lines)
+   {
+      next if $line =~ /^\[/;
+
+      while (($key, $value) = each (%links))
+      {
+         next if $key eq $typeName;
+
+         $line =~ s|\b$key\b|[$key](../$value)|g;
+      }
+   }
+
+   return @lines;
 }
 
 sub update_node {
@@ -145,6 +171,9 @@ sub update_node {
    s/(.*?)[\s,]+(https?:.*?)(\s+(?:or|and)\s+|\s+|$)/[$1]($2){:target="_blank"}$3/sgo foreach @warnings;
    s/(:|\s*at)\]/]/sgo foreach @hints;
    s/(:|\s*at)\]/]/sgo foreach @warnings;
+
+   @hints    = link_nodes $typeName, @hints;
+   @warnings = link_nodes $typeName, @warnings;
 
    # Overview
 
@@ -302,10 +331,11 @@ sub update_example {
 }
 
 sub update_field {
-   $name   = shift;
-   $node   = shift;
-   $file   = shift;
-   $source = shift;
+   $typeName = shift;
+   $name     = shift;
+   $node     = shift;
+   $file     = shift;
+   $source   = shift;
 
    # return $file unless $name eq "tolerance";
    # say $name;
@@ -387,6 +417,10 @@ sub update_field {
       s/(.*?)[\s,]+(https?:.*?)(\s+(?:or|and)\s+|\s+|$)/[$1]($2){:target="_blank"}$3/sgo foreach @warnings;
       s/(:|\s*at)\]/]/sgo foreach @hints;
       s/(:|\s*at)\]/]/sgo foreach @warnings;
+
+      @description = link_nodes $typeName, @description;
+      @hints       = link_nodes $typeName, @hints;
+      @warnings    = link_nodes $typeName, @warnings;
    }
    else
    {
@@ -457,8 +491,6 @@ sub reorder_sections {
 
    return $file;
 }
-
-$cwd = getcwd ();
 
 system "git checkout -- docs/_posts/components/";
 

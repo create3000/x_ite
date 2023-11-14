@@ -31,7 +31,7 @@ The TextureProjector node belongs to the **TextureProjection** component and req
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
 
 #### Hint
 
@@ -87,7 +87,7 @@ Preferred minimum viewing angle for this projection in radians, providing minimu
 
 #### Warning
 
-- This field differs for TextureProjectorParallel and TextureProjector.
+- This field differs for [TextureProjectorParallel](../textureprojector/textureprojectorparallel) and TextureProjector.
 
 ### SFFloat [in, out] **nearDistance** -1 <small>-1 or (0,∞)</small>
 
@@ -103,11 +103,11 @@ Maximum distance necessary for texture display.
 
 ### SFNode [in, out] **texture** NULL <small>[X3DTexture2DNode]</small>
 
-Single contained *texture* node (ImageTexture, MovieTexture, PixelTexture, MultiTexture) that maps image(s) to surface geometry.
+Single contained *texture* node ([ImageTexture](../texturing/imagetexture), [MovieTexture](../texturing/movietexture), [PixelTexture](../texturing/pixeltexture), [MultiTexture](../texturing/multitexture)) that maps image(s) to surface geometry.
 
 #### Hints
 
-- If *texture* node is NULL or unspecified, corresponding Shape geometry for this Appearance is not textured.
+- If *texture* node is NULL or unspecified, corresponding [Shape](../shape/shape) geometry for this [Appearance](../shape/appearance) is not textured.
 - [X3D Scene Authoring Hints, Images](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Images){:target="_blank"}
 - [X3D Architecture 18 Texturing component](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/components/texturing.html){:target="_blank"}
 - [X3D Architecture 33 Texturing3D component](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/components/texture3D.html){:target="_blank"}

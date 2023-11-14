@@ -30,7 +30,7 @@ The GeoPositionInterpolator node belongs to the **Geospatial** component and req
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
 
 #### Hint
 
@@ -38,7 +38,7 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 
 ### SFNode [ ] **geoOrigin** NULL <small>[GeoOrigin] (deprecated)</small>
 
-Single contained GeoOrigin node that can specify a local coordinate frame for extended precision.
+Single contained [GeoOrigin](../geospatial/geoorigin) node that can specify a local coordinate frame for extended precision.
 
 #### Hint
 

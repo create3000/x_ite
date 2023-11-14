@@ -29,7 +29,7 @@ The ConeEmitter node belongs to the **ParticleSystems** component and requires a
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
 
 #### Hint
 
@@ -49,7 +49,7 @@ Initial *direction* from which particles emanate.
 
 ### SFFloat [in, out] **angle** π/4 <small>[0,π]</small>
 
-Cone boundary for random distribution of particles about initial direction.
+[Cone](../geometry3d/cone) boundary for random distribution of particles about initial direction.
 
 #### Hint
 

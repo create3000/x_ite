@@ -29,7 +29,7 @@ The Sphere node belongs to the **Geometry3D** component and requires at least le
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
 
 #### Hint
 
@@ -41,7 +41,7 @@ Size in meters.
 
 #### Hint
 
-- For size animation, modify the scale of a parent/ancestor Transform node instead.
+- For size animation, modify the scale of a parent/ancestor [Transform](../grouping/transform) node instead.
 
 #### Warning
 
@@ -67,7 +67,7 @@ Setting *solid* true means draw only one side of polygons (backface culling on),
 ### Hints
 
 - [Sphere](https://en.wikipedia.org/wiki/Sphere){:target="_blank"}
-- Insert a Shape node before adding geometry or Appearance.
+- Insert a [Shape](../shape/shape) node before adding geometry or [Appearance](../shape/appearance).
 
 ## Example
 

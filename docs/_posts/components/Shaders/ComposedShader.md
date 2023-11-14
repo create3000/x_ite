@@ -32,7 +32,7 @@ The ComposedShader node belongs to the **Shaders** component and requires at lea
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
 
 #### Hint
 
@@ -72,18 +72,18 @@ The *language* field indicates to the X3D player which shading *language* is use
 
 ### MFNode [in, out] **parts** [ ] <small>[ShaderPart]</small>
 
-ComposedShader can contain multiple ShaderPart nodes in the *parts* field.
+ComposedShader can contain multiple [ShaderPart](../shaders/shaderpart) nodes in the *parts* field.
 
 ## Advice
 
 ### Hints
 
-- ComposedShader contains field declarations and then corresponding IS/connect statements (if any), followed by \<ShaderPart `containerField='parts'/>` nodes.
-- Apply default `containerField='shaders'` when parent node is Appearance.
+- ComposedShader contains field declarations and then corresponding IS/connect statements (if any), followed by \<[ShaderPart](../shaders/shaderpart) `containerField='parts'/>` nodes.
+- Apply default `containerField='shaders'` when parent node is [Appearance](../shape/appearance).
 
 ### Warning
 
-- ComposedShader does not contain CDATA section of plain-text source code. All source programs are contained in child ShaderPart nodes.
+- ComposedShader does not contain CDATA section of plain-text source code. All source programs are contained in child [ShaderPart](../shaders/shaderpart) nodes.
 
 ## Example
 

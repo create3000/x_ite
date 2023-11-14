@@ -31,7 +31,7 @@ The ComposedCubeMapTexture node belongs to the **CubeMapTexturing** component an
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
 
 #### Hint
 
@@ -47,7 +47,7 @@ Author-provided prose that describes intended purpose of the url asset.
 
 ### SFNode [in, out] **frontTexture** NULL <small>[X3DTexture2DNode]</small>
 
-Parent ComposedCubeMapTexture element can contain up to six image nodes (ImageTexture PixelTexture MovieTexture, other texture nodes).
+Parent ComposedCubeMapTexture element can contain up to six image nodes ([ImageTexture](../texturing/imagetexture) [PixelTexture](../texturing/pixeltexture) [MovieTexture](../texturing/movietexture), other texture nodes).
 
 #### Warnings
 
@@ -56,7 +56,7 @@ Parent ComposedCubeMapTexture element can contain up to six image nodes (ImageTe
 
 ### SFNode [in, out] **backTexture** NULL <small>[X3DTexture2DNode]</small>
 
-Parent ComposedCubeMapTexture element can contain up to six image nodes (ImageTexture PixelTexture MovieTexture, other texture nodes).
+Parent ComposedCubeMapTexture element can contain up to six image nodes ([ImageTexture](../texturing/imagetexture) [PixelTexture](../texturing/pixeltexture) [MovieTexture](../texturing/movietexture), other texture nodes).
 
 #### Warnings
 
@@ -65,7 +65,7 @@ Parent ComposedCubeMapTexture element can contain up to six image nodes (ImageTe
 
 ### SFNode [in, out] **leftTexture** NULL <small>[X3DTexture2DNode]</small>
 
-Parent ComposedCubeMapTexture element can contain up to six image nodes (ImageTexture PixelTexture MovieTexture, other texture nodese).
+Parent ComposedCubeMapTexture element can contain up to six image nodes ([ImageTexture](../texturing/imagetexture) [PixelTexture](../texturing/pixeltexture) [MovieTexture](../texturing/movietexture), other texture nodese).
 
 #### Warnings
 
@@ -74,7 +74,7 @@ Parent ComposedCubeMapTexture element can contain up to six image nodes (ImageTe
 
 ### SFNode [in, out] **rightTexture** NULL <small>[X3DTexture2DNode]</small>
 
-Parent ComposedCubeMapTexture element can contain up to six image nodes (ImageTexture PixelTexture MovieTexture, other texture nodes).
+Parent ComposedCubeMapTexture element can contain up to six image nodes ([ImageTexture](../texturing/imagetexture) [PixelTexture](../texturing/pixeltexture) [MovieTexture](../texturing/movietexture), other texture nodes).
 
 #### Warnings
 
@@ -83,7 +83,7 @@ Parent ComposedCubeMapTexture element can contain up to six image nodes (ImageTe
 
 ### SFNode [in, out] **topTexture** NULL <small>[X3DTexture2DNode]</small>
 
-Parent ComposedCubeMapTexture element can contain up to six image nodes (ImageTexture PixelTexture MovieTexture, other texture nodes).
+Parent ComposedCubeMapTexture element can contain up to six image nodes ([ImageTexture](../texturing/imagetexture) [PixelTexture](../texturing/pixeltexture) [MovieTexture](../texturing/movietexture), other texture nodes).
 
 #### Warnings
 
@@ -92,7 +92,7 @@ Parent ComposedCubeMapTexture element can contain up to six image nodes (ImageTe
 
 ### SFNode [in, out] **bottomTexture** NULL <small>[X3DTexture2DNode]</small>
 
-Parent ComposedCubeMapTexture element can contain up to six image nodes (ImageTexture PixelTexture, other texture nodes).
+Parent ComposedCubeMapTexture element can contain up to six image nodes ([ImageTexture](../texturing/imagetexture) [PixelTexture](../texturing/pixeltexture), other texture nodes).
 
 #### Warnings
 
@@ -101,21 +101,21 @@ Parent ComposedCubeMapTexture element can contain up to six image nodes (ImageTe
 
 ### SFNode [ ] **textureProperties** NULL <small>[TextureProperties]</small>
 
-Single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images.
+Single contained [TextureProperties](../texturing/textureproperties) node that can specify additional visual attributes applied to corresponding texture images.
 
 #### Warning
 
-- TextureProperties must follow other textures in order to meet XML validation requirements.
+- [TextureProperties](../texturing/textureproperties) must follow other textures in order to meet XML validation requirements.
 
 ## Advice
 
 ### Hint
 
-- 0..6 child image nodes are allowed (ImageTexture MovieTexture PixelTexture) with corresponding containerField values: front back left right top bottom.
+- 0..6 child image nodes are allowed ([ImageTexture](../texturing/imagetexture) [MovieTexture](../texturing/movietexture) [PixelTexture](../texturing/pixeltexture)) with corresponding containerField values: front back left right top bottom.
 
 ### Warnings
 
-- Each of the child ImageTexture or PixelTexture nodes must have unique containerField values for backTexture, bottomTexture, frontTexture, leftTexture, rightTexture, or topTexture.
+- Each of the child [ImageTexture](../texturing/imagetexture) or [PixelTexture](../texturing/pixeltexture) nodes must have unique containerField values for backTexture, bottomTexture, frontTexture, leftTexture, rightTexture, or topTexture.
 - Fields originally named back, bottom, front, left, right, or top in X3Dv3.
 
 ## Example

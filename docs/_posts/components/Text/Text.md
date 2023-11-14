@@ -29,7 +29,7 @@ The Text node belongs to the **Text** component and requires at least level **1,
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
 
 #### Hint
 
@@ -95,7 +95,7 @@ Array of 2D bounding box values for each line of text in the local coordinate sy
 
 ### SFNode [in, out] **fontStyle** NULL <small>[X3DFontStyleNode]</small>
 
-The *fontStyle* field can contain a FontStyle or ScreenFontStyle node defining size, family, and style for presented text.
+The *fontStyle* field can contain a [FontStyle](../text/fontstyle) or [ScreenFontStyle](../layout/screenfontstyle) node defining size, family, and style for presented text.
 
 #### Hint
 
@@ -108,7 +108,7 @@ The *fontStyle* field can contain a FontStyle or ScreenFontStyle node defining s
 - [String (computer science)](https://en.wikipedia.org/wiki/String_(computer_science)){:target="_blank"}
 - Full internationalization (i18n) and localization (l10n) features are available for any written language.
 - [Relates to Internationalization (i18n)](http://www.w3.org/standards/webdesign/i18n){:target="_blank"}
-- Insert a Shape node before adding geometry or Appearance.
+- Insert a [Shape](../shape/shape) node before adding geometry or [Appearance](../shape/appearance).
 - For advanced extensibility, authors can substitute a type-matched ProtoInstance node (with correct containerField value) for contained node content.
 
 ### Warning

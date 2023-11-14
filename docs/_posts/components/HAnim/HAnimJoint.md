@@ -30,7 +30,7 @@ The HAnimJoint node belongs to the **HAnim** component and requires at least lev
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
 
 #### Hint
 
@@ -58,7 +58,7 @@ Unique *name* attribute must be defined so that HAnimJoint node can be identifie
 
 #### Warnings
 
-- *name* prefix must match ancestor HAnimHumanoid *name* followed by underscore character, if more than one humanoid appears within a scene file. For example, 'Nancy_' prepended before location *name*.
+- *name* prefix must match ancestor [HAnimHumanoid](../hanim/hanimhumanoid) *name* followed by underscore character, if more than one humanoid appears within a scene file. For example, 'Nancy_' prepended before location *name*.
 - *name* field is not included if this instance is a USE node, in order to avoid potential mismatches. Examples: humanoid_root sacroiliac l_hip l_knee l_ankle etc. as listed in HAnim Specification.
 - [Note precise spelling of special HAnimJoint *name*='humanoid_root' according to](https://www.web3d.org/documents/specifications/19774/V2.0/Architecture/concepts.html#TheBody){:target="_blank"}
 
@@ -68,7 +68,7 @@ Position of children relative to local coordinate system.
 
 #### Hint
 
-- Since default pose faces along +Z axis, -x values are right side and +x values are left side within HAnimHumanoid.
+- Since default pose faces along +Z axis, -x values are right side and +x values are left side within [HAnimHumanoid](../hanim/hanimhumanoid).
 
 #### Warning
 
@@ -143,16 +143,16 @@ A scale factor of (1 - *stiffness*) is applied around the corresponding axis (X,
 
 ### MFInt32 [in, out] **skinCoordIndex** [ ] <small>[0,∞)</small>
 
-Coordinate index values referencing which vertices are influenced by the HAnimJoint.
+[Coordinate](../rendering/coordinate) index values referencing which vertices are influenced by the HAnimJoint.
 
 #### Hint
 
-- Corresponding skinCoord Coordinate and skinNormal Normal nodes are directly contained within the ancestor HAnimHumanoid node for this HAnimJoint.
+- Corresponding skinCoord [Coordinate](../rendering/coordinate) and skinNormal [Normal](../rendering/normal) nodes are directly contained within the ancestor [HAnimHumanoid](../hanim/hanimhumanoid) node for this HAnimJoint.
 
 #### Warnings
 
 - -1 sentinel values are not allowed.
-- Index values for HAnimHumanoid skin IndexedFaceSet, skinCoord and skinNormal nodes must all be consistently defined together with HAnimJoint HAnimSegment and HAnimDisplacer nodes for proper skin animation.
+- Index values for [HAnimHumanoid](../hanim/hanimhumanoid) skin [IndexedFaceSet](../geometry3d/indexedfaceset), skinCoord and skinNormal nodes must all be consistently defined together with HAnimJoint [HAnimSegment](../hanim/hanimsegment) and [HAnimDisplacer](../hanim/hanimdisplacer) nodes for proper skin animation.
 
 ### MFFloat [in, out] **skinCoordWeight** [ ]
 
@@ -160,15 +160,15 @@ Weight deformation values for the corresponding values in the skinCoordIndex fie
 
 #### Warning
 
-- Index values for HAnimHumanoid skin IndexedFaceSet, skinCoord and skinNormal nodes must all be consistently defined together with HAnimJoint HAnimSegment and HAnimDisplacer nodes for proper skin animation.
+- Index values for [HAnimHumanoid](../hanim/hanimhumanoid) skin [IndexedFaceSet](../geometry3d/indexedfaceset), skinCoord and skinNormal nodes must all be consistently defined together with HAnimJoint [HAnimSegment](../hanim/hanimsegment) and [HAnimDisplacer](../hanim/hanimdisplacer) nodes for proper skin animation.
 
 ### MFNode [in, out] **displacers** [ ] <small>[HAnimDisplacer]</small>
 
-The *displacers* field stores HAnimDisplacer objects for a particular HAnimJoint object.
+The *displacers* field stores [HAnimDisplacer](../hanim/hanimdisplacer) objects for a particular HAnimJoint object.
 
 #### Warning
 
-- Index values for HAnimHumanoid skin IndexedFaceSet, skinCoord and skinNormal nodes must all be consistently defined together with HAnimJoint HAnimSegment and HAnimDisplacer nodes for proper skin animation.
+- Index values for [HAnimHumanoid](../hanim/hanimhumanoid) skin [IndexedFaceSet](../geometry3d/indexedfaceset), skinCoord and skinNormal nodes must all be consistently defined together with HAnimJoint [HAnimSegment](../hanim/hanimsegment) and [HAnimDisplacer](../hanim/hanimdisplacer) nodes for proper skin animation.
 
 ### SFBool [in, out] **visible** TRUE
 
@@ -223,21 +223,21 @@ Grouping nodes contain an ordered list of *children* nodes.
 #### Hints
 
 - Each grouping node defines a coordinate space for its *children*, relative to the coordinate space of its parent node. Thus transformations accumulate down the scene graph hierarchy.
-- Place any geometry for this HAnimJoint in the child HAnimSegment, wrapped within a Transform having the same translation value as the current HAnimJoint center value.
+- Place any geometry for this HAnimJoint in the child [HAnimSegment](../hanim/hanimsegment), wrapped within a [Transform](../grouping/transform) having the same translation value as the current HAnimJoint center value.
 - InputOnly MFNode addChildren field can append new X3DChildNode nodes via a ROUTE connection, duplicate input nodes (i.e. matching DEF, USE values) are ignored.
 - InputOnly MFNode removeChildren field can remove nodes from the *children* list, unrecognized input nodes (i.e. nonmatching DEF, USE values) are ignored.
 - [X3D Architecture 10.2.1 Grouping and *children* node types](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/components/grouping.html#GroupingAndChildrenNodes){:target="_blank"}
 
 #### Warning
 
-- HAnimJoint can only contain HAnimJoint or HAnimSegment nodes (each having default `containerField='children').`
+- HAnimJoint can only contain HAnimJoint or [HAnimSegment](../hanim/hanimsegment) nodes (each having default `containerField='children').`
 
 ## Advice
 
 ### Hints
 
-- HAnimJoint may only get inserted as one (or more) root nodes of HAnimHumanoid skeleton field, as a child of another HAnimJoint node, or as a USE node in the HAnimHumanoid joints field.
-- Visualization shapes for HAnimJoint nodes can be placed in child HAnimSegment or HAnimSite nodes.
+- HAnimJoint may only get inserted as one (or more) root nodes of [HAnimHumanoid](../hanim/hanimhumanoid) skeleton field, as a child of another HAnimJoint node, or as a USE node in the [HAnimHumanoid](../hanim/hanimhumanoid) joints field.
+- Visualization shapes for HAnimJoint nodes can be placed in child [HAnimSegment](../hanim/hanimsegment) or [HAnimSite](../hanim/hanimsite) nodes.
 - [HAnim Specification](https://www.web3d.org/documents/specifications/19774/V2.0){:target="_blank"}
 - [HAnim Specification part 1, Joint](https://www.web3d.org/documents/specifications/19774/V2.0/Architecture/ObjectInterfaces.html#Joint){:target="_blank"}
 - [X3D for Advanced Modeling (X3D4AM) slideset](https://x3dgraphics.com/slidesets/X3dForAdvancedModeling/HumanoidAnimation.pdf){:target="_blank"}
@@ -245,12 +245,12 @@ Grouping nodes contain an ordered list of *children* nodes.
 
 ### Warnings
 
-- HAnimJoint can only contain certain nodes: HAnimJoint, HAnimSegment, HAnimSite (with `containerField='children')` and also HAnimDisplacer nodes (with `containerField='displacers').`
-- An HAnimJoint may not be a child of an HAnimSegment.
+- HAnimJoint can only contain certain nodes: HAnimJoint, [HAnimSegment](../hanim/hanimsegment), [HAnimSite](../hanim/hanimsite) (with `containerField='children')` and also [HAnimDisplacer](../hanim/hanimdisplacer) nodes (with `containerField='displacers').`
+- An HAnimJoint may not be a child of an [HAnimSegment](../hanim/hanimsegment).
 - Requires X3D `profile='Full'` or else include `<component name='HAnim' level='1'/>`
 - For X3D3 HAnim1, spelling of component name is 'H-Anim' (including hyphen).
 - For X3D3 HAnim1, spelling of component name is 'H-Anim' (including hyphen).
-- The number of contained \<HAnimJoint USE='*' `containerField='joints'/>` nodes at top level of HAnimHumanoid needs to match the number of corresponding HAnimJoint node instances found within the preceding skeleton hierarchy.
+- The number of contained \<HAnimJoint USE='*' `containerField='joints'/>` nodes at top level of [HAnimHumanoid](../hanim/hanimhumanoid) needs to match the number of corresponding HAnimJoint node instances found within the preceding skeleton hierarchy.
 
 ## See Also
 

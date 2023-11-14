@@ -29,7 +29,7 @@ The Arc2D node belongs to the **Geometry2D** component and requires at least lev
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
 
 #### Hint
 
@@ -41,7 +41,7 @@ Arc extends from *startAngle* counterclockwise to endAngle, in radians.
 
 #### Hints
 
-- For size animation, modify the scale of a parent/ancestor Transform node instead.
+- For size animation, modify the scale of a parent/ancestor [Transform](../grouping/transform) node instead.
 - [Radian units for angular measure](https://en.wikipedia.org/wiki/Radian){:target="_blank"}
 
 #### Warning
@@ -54,7 +54,7 @@ Arc extends from startAngle counterclockwise to *endAngle*, in radians.
 
 #### Hints
 
-- For size animation, modify the scale of a parent/ancestor Transform node instead.
+- For size animation, modify the scale of a parent/ancestor [Transform](../grouping/transform) node instead.
 - [Radian units for angular measure](https://en.wikipedia.org/wiki/Radian){:target="_blank"}
 
 #### Warning
@@ -67,7 +67,7 @@ Circle *radius*, of which the arc is a portion.
 
 #### Hint
 
-- For size animation, modify the scale of a parent/ancestor Transform node instead.
+- For size animation, modify the scale of a parent/ancestor [Transform](../grouping/transform) node instead.
 
 #### Warning
 
@@ -77,14 +77,14 @@ Circle *radius*, of which the arc is a portion.
 
 ### Hints
 
-- Material emissiveColor in corresponding Appearance is used for rendering lines.
-- Adding LineProperties to the corresponding Appearance node can modify the rendering style of these lines.
-- Insert a Shape node before adding geometry or Appearance.
+- [Material](../shape/material) emissiveColor in corresponding [Appearance](../shape/appearance) is used for rendering lines.
+- Adding [LineProperties](../shape/lineproperties) to the corresponding [Appearance](../shape/appearance) node can modify the rendering style of these lines.
+- Insert a [Shape](../shape/shape) node before adding geometry or [Appearance](../shape/appearance).
 
 ### Warnings
 
 - Lines are not lit, are not texture-mapped, and do not participate in collision detection.
-- Use a different Material emissiveColor than the Background color, otherwise geometry is invisible.
+- Use a different [Material](../shape/material) emissiveColor than the [Background](../environmentaleffects/background) color, otherwise geometry is invisible.
 - [Requires X3D `profile='Full'` or else include `<component name='Geometry2D' level='2'/>` Examples: X3D Example Archives, X3D for Web Authors, Chapter 10 Geometry 2D](https://www.web3d.org/x3d/content/examples/X3dForWebAuthors/Chapter10Geometry2D){:target="_blank"}
 
 ## Example

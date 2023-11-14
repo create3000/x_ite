@@ -30,7 +30,7 @@ The Switch node belongs to the **Grouping** component and requires at least leve
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
 
 #### Hint
 
@@ -105,16 +105,16 @@ Grouping nodes contain an ordered list of *children* nodes.
 
 ### Hints
 
-- Insert a Shape node before adding geometry or Appearance.
+- Insert a [Shape](../shape/shape) node before adding geometry or [Appearance](../shape/appearance).
 - Authors can temporarily hide test geometry under an unselected child of a Switch. This is a good alternative to "commenting out" nodes.
-- GeoViewpoint OrthoViewpoint and Viewpoint share the same binding stack, so no more than one of these nodes can be bound and active at a given time.
-- Contained nodes must have type X3DChildNode, such as Group or Transform or Shape.
+- [GeoViewpoint](../geospatial/geoviewpoint) [OrthoViewpoint](../navigation/orthoviewpoint) and [Viewpoint](../navigation/viewpoint) share the same binding stack, so no more than one of these nodes can be bound and active at a given time.
+- Contained nodes must have type X3DChildNode, such as [Group](../grouping/group) or [Transform](../grouping/transform) or [Shape](../shape/shape).
 
 ### Warnings
 
-- Do not include GeoViewpoint OrthoViewpoint or Viewpoint as a child of LOD or Switch, instead use ViewpointGroup as parent to constrain location proximity where the viewpoint is available to user.
-- Results are undefined if a bindable node (Background, Fog, NavigationInfo, OrthoViewpoint, TextureBackground, Viewpoint) is a contained descendant node of either LOD or Switch. Avoid this authoring pattern.
-- Switch is not allowed as parent of Appearance, Material, Color, Coordinate, Normal or Texture nodes.
+- Do not include [GeoViewpoint](../geospatial/geoviewpoint) [OrthoViewpoint](../navigation/orthoviewpoint) or [Viewpoint](../navigation/viewpoint) as a child of [LOD](../navigation/lod) or Switch, instead use [ViewpointGroup](../navigation/viewpointgroup) as parent to constrain location proximity where the viewpoint is available to user.
+- Results are undefined if a bindable node ([Background](../environmentaleffects/background), [Fog](../environmentaleffects/fog), [NavigationInfo](../navigation/navigationinfo), [OrthoViewpoint](../navigation/orthoviewpoint), [TextureBackground](../environmentaleffects/texturebackground), [Viewpoint](../navigation/viewpoint)) is a contained descendant node of either [LOD](../navigation/lod) or Switch. Avoid this authoring pattern.
+- Switch is not allowed as parent of [Appearance](../shape/appearance), [Material](../shape/material), [Color](../rendering/color), [Coordinate](../rendering/coordinate), [Normal](../rendering/normal) or Texture nodes.
 
 ## Example
 

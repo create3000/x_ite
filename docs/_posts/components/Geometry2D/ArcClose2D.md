@@ -29,7 +29,7 @@ The ArcClose2D node belongs to the **Geometry2D** component and requires at leas
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
 
 #### Hint
 
@@ -49,7 +49,7 @@ Arc extends from *startAngle* counterclockwise to endAngle, in radians.
 
 #### Hints
 
-- For size animation, modify the scale of a parent/ancestor Transform node instead.
+- For size animation, modify the scale of a parent/ancestor [Transform](../grouping/transform) node instead.
 - [Radian units for angular measure](https://en.wikipedia.org/wiki/Radian){:target="_blank"}
 
 #### Warning
@@ -62,7 +62,7 @@ Arc extends from startAngle counterclockwise to *endAngle*, in radians.
 
 #### Hints
 
-- For size animation, modify the scale of a parent/ancestor Transform node instead.
+- For size animation, modify the scale of a parent/ancestor [Transform](../grouping/transform) node instead.
 - [Radian units for angular measure](https://en.wikipedia.org/wiki/Radian){:target="_blank"}
 
 #### Warning
@@ -75,7 +75,7 @@ Circle *radius*, of which the arc is a portion.
 
 #### Hint
 
-- For size animation, modify the scale of a parent/ancestor Transform node instead.
+- For size animation, modify the scale of a parent/ancestor [Transform](../grouping/transform) node instead.
 
 #### Warning
 
@@ -100,7 +100,7 @@ Setting *solid* true means draw only one side of polygons (backface culling on),
 
 ### Hint
 
-- Insert a Shape node before adding geometry or Appearance.
+- Insert a [Shape](../shape/shape) node before adding geometry or [Appearance](../shape/appearance).
 
 ### Warning
 

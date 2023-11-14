@@ -28,7 +28,7 @@ The NurbsTextureCoordinate node belongs to the **NURBS** component and requires 
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
 
 #### Hint
 
@@ -74,7 +74,7 @@ Output values for linear interpolation, each corresponding to knots.
 
 ### Hint
 
-- The SFNode controlPoint field can contain a single Coordinate or CoordinateDouble node.
+- The SFNode controlPoint field can contain a single [Coordinate](../rendering/coordinate) or [CoordinateDouble](../rendering/coordinatedouble) node.
 
 ## See Also
 

@@ -32,7 +32,7 @@ The Fog node belongs to the **EnvironmentalEffects** component and requires at l
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
 
 #### Hint
 
@@ -68,7 +68,7 @@ Fog *color*.
 
 #### Hints
 
-- Match Background *color* to make objects fade away.
+- Match [Background](../environmentaleffects/background) *color* to make objects fade away.
 - [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color){:target="_blank"}
 
 ### SFFloat [in, out] **visibilityRange** 0 <small>[0,∞)</small>
@@ -103,11 +103,11 @@ Event sent reporting timestamp when node becomes active/inactive.
 
 ### Hint
 
-- Background, Fog, GeoViewpoint, NavigationInfo, OrthoViewpoint, TextureBackground and Viewpoint are bindable nodes, meaning that no more than one of each node type can be active at a given time.
+- [Background](../environmentaleffects/background), Fog, [GeoViewpoint](../geospatial/geoviewpoint), [NavigationInfo](../navigation/navigationinfo), [OrthoViewpoint](../navigation/orthoviewpoint), [TextureBackground](../environmentaleffects/texturebackground) and [Viewpoint](../navigation/viewpoint) are bindable nodes, meaning that no more than one of each node type can be active at a given time.
 
 ### Warning
 
-- Results are undefined if a bindable node (Background, Fog, NavigationInfo, OrthoViewpoint, TextureBackground, Viewpoint) is a contained descendant node of either LOD or Switch. Avoid this authoring pattern.
+- Results are undefined if a bindable node ([Background](../environmentaleffects/background), Fog, [NavigationInfo](../navigation/navigationinfo), [OrthoViewpoint](../navigation/orthoviewpoint), [TextureBackground](../environmentaleffects/texturebackground), [Viewpoint](../navigation/viewpoint)) is a contained descendant node of either [LOD](../navigation/lod) or [Switch](../grouping/switch). Avoid this authoring pattern.
 
 ## Example
 

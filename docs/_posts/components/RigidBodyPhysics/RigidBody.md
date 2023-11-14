@@ -28,7 +28,7 @@ The RigidBody node belongs to the **RigidBodyPhysics** component and requires at
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
 
 #### Hint
 
@@ -121,7 +121,7 @@ The *massDensityModel* field is used to describe the geometry type and dimension
 
 ### SFBool [in, out] **useGlobalGravity** TRUE
 
-*useGlobalGravity* indicates whether this particular body is influenced by parent RigidBodyCollection's gravity setting.
+*useGlobalGravity* indicates whether this particular body is influenced by parent [RigidBodyCollection](../rigidbodyphysics/rigidbodycollection)'s gravity setting.
 
 #### Hint
 

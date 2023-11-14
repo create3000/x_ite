@@ -32,7 +32,7 @@ The Script node belongs to the **Scripting** component and requires at least lev
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
 
 #### Hint
 
@@ -52,8 +52,8 @@ Author-provided prose that describes intended purpose of the url asset.
 
 #### Hints
 
-- Allows author to design when Inline loading occurs via user interaction, event chains or scripting.
-- Use a separate LoadSensor node to detect when loading is complete.
+- Allows author to design when [Inline](../networking/inline) loading occurs via user interaction, event chains or scripting.
+- Use a separate [LoadSensor](../networking/loadsensor) node to detect when loading is complete.
 
 ### MFString [in, out] **url** [ ] <small>[URI]</small>
 

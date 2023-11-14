@@ -30,7 +30,7 @@ The EdgeEnhancementVolumeStyle node belongs to the **VolumeRendering** component
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
 
 #### Hint
 
@@ -42,7 +42,7 @@ Enables/disables node operation.
 
 ### SFColorRGBA [in, out] **edgeColor** 0 0 0 1 <small>[0,1]</small>
 
-Color used to highlight edges.
+[Color](../rendering/color) used to highlight edges.
 
 #### Hint
 
@@ -60,7 +60,7 @@ The *surfaceNormals* field contains a 3D texture with at least three component v
 
 ### Hint
 
-- SurfaceNormals can be provided in a single ComposedTexture3D, ImageTexture3D or PixelTexture3D node.
+- SurfaceNormals can be provided in a single [ComposedTexture3D](../texturing3d/composedtexture3d), [ImageTexture3D](../texturing3d/imagetexture3d) or [PixelTexture3D](../texturing3d/pixeltexture3d) node.
 
 ### Warning
 

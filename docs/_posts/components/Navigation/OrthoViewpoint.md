@@ -31,7 +31,7 @@ The OrthoViewpoint node belongs to the **Navigation** component and requires at 
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
 
 #### Hint
 
@@ -39,7 +39,7 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 
 ### SFBool [in] **set_bind**
 
-Sending event *set_bind*=true makes this node active. Sending event *set_bind*=false makes this node inactive. Thus setting *set_bind* to true/false will pop/push (enable/disable) this Viewpoint.
+Sending event *set_bind*=true makes this node active. Sending event *set_bind*=false makes this node inactive. Thus setting *set_bind* to true/false will pop/push (enable/disable) this [Viewpoint](../navigation/viewpoint).
 
 #### Hint
 
@@ -51,19 +51,19 @@ Sending event *set_bind*=true makes this node active. Sending event *set_bind*=f
 
 ### SFString [in, out] **description** ""
 
-Text *description* or navigation hint to describe the significance of this model Viewpoint.
+[Text](../text/text) *description* or navigation hint to describe the significance of this model [Viewpoint](../navigation/viewpoint).
 
 #### Hints
 
 - A sequence of good Viewpoints with understandable descriptions can provide a guided tour of a model.
-- The currently bound NavigationInfo node has a major effect on how a user might change viewing position and orientation after reaching this Viewpoint.
-- Consider paired Viewpoint/NavigationInfo node combinations by defining ROUTE connections between corresponding isBound/set_bind fields.
+- The currently bound [NavigationInfo](../navigation/navigationinfo) node has a major effect on how a user might change viewing position and orientation after reaching this [Viewpoint](../navigation/viewpoint).
+- Consider paired [Viewpoint](../navigation/viewpoint)/[NavigationInfo](../navigation/navigationinfo) node combinations by defining ROUTE connections between corresponding isBound/set_bind fields.
 - Include space characters since a *description* is not a DEF identifier. Write short phrases that make descriptions clear and readable.
 - Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
 
 #### Warning
 
-- Without *description*, this OrthoViewpoint is unlikely to appear on browser Viewpoint menus.
+- Without *description*, this OrthoViewpoint is unlikely to appear on browser [Viewpoint](../navigation/viewpoint) menus.
 
 ### SFVec3f [in, out] **position** 0 0 10 <small>(-∞,∞)</small>
 
@@ -71,7 +71,7 @@ Text *description* or navigation hint to describe the significance of this model
 
 ### SFRotation [in, out] **orientation** 0 0 1 0 <small>[-1,1],(-∞,∞)</small>
 
-Rotation (axis, angle in radians) of Viewpoint, relative to default -Z axis direction in local coordinate system.
+Rotation (axis, angle in radians) of [Viewpoint](../navigation/viewpoint), relative to default -Z axis direction in local coordinate system.
 
 #### Hints
 
@@ -106,7 +106,7 @@ Minimum and maximum extents of view in units of local coordinate system. Small f
 
 #### Hints
 
-- Overrides bound NavigationInfo avatarSize value, if any.
+- Overrides bound [NavigationInfo](../navigation/navigationinfo) avatarSize value, if any.
 - Default value -1 means no effect on currently defined view frustum boundaries.
 - [Aliasing](https://en.wikipedia.org/wiki/Aliasing){:target="_blank"} and [Clipping](https://en.wikipedia.org/wiki/Clipping_(computer_graphics)){:target="_blank"}
 
@@ -120,7 +120,7 @@ Minimum and maximum extents of view in units of local coordinate system. Small f
 
 #### Hints
 
-- Overrides bound NavigationInfo visibilityLimit value, if any.
+- Overrides bound [NavigationInfo](../navigation/navigationinfo) visibilityLimit value, if any.
 - Default value -1 means no effect on currently defined view frustum boundaries.
 - [Aliasing](https://en.wikipedia.org/wiki/Aliasing){:target="_blank"} and [Clipping](https://en.wikipedia.org/wiki/Clipping_(computer_graphics)){:target="_blank"}
 
@@ -130,7 +130,7 @@ Minimum and maximum extents of view in units of local coordinate system. Small f
 
 ### SFBool [in, out] **viewAll** FALSE
 
-Viewpoint is automatically adjusted to view all visible geometry. Typically centerOfRotation is shifted to center of current bounding box and view is zoomed in or out until all visible objects are viewed.
+[Viewpoint](../navigation/viewpoint) is automatically adjusted to view all visible geometry. Typically centerOfRotation is shifted to center of current bounding box and view is zoomed in or out until all visible objects are viewed.
 
 #### Hints
 
@@ -143,11 +143,11 @@ Viewpoint is automatically adjusted to view all visible geometry. Typically cent
 
 ### SFBool [in, out] **jump** TRUE
 
-Transition instantly by jumping, otherwise smoothly adjust offsets in place when changing to this Viewpoint.
+Transition instantly by jumping, otherwise smoothly adjust offsets in place when changing to this [Viewpoint](../navigation/viewpoint).
 
 #### Hints
 
-- See NavigationInfo.transitionType for the manner in which animated Viewpoint transistions occur.
+- See [NavigationInfo](../navigation/navigationinfo).transitionType for the manner in which animated [Viewpoint](../navigation/viewpoint) transistions occur.
 - Set *jump*=true for instantaneous camera motion when going to this viewpoint.
 
 #### Warning
@@ -180,26 +180,26 @@ Event sent reporting timestamp when node becomes active/inactive.
 
 ### SFNode [in, out] **navigationInfo** NULL <small>[NavigationInfo]</small>
 
-The *navigationInfo* field defines a dedicated NavigationInfo node for this X3DViewpointNode. The specified NavigationInfo node receives a set_bind TRUE event at the time when the parent node is bound and receives a set_bind FALSE at the time when the parent node is unbound.
+The *navigationInfo* field defines a dedicated [NavigationInfo](../navigation/navigationinfo) node for this X3DViewpointNode. The specified [NavigationInfo](../navigation/navigationinfo) node receives a set_bind TRUE event at the time when the parent node is bound and receives a set_bind FALSE at the time when the parent node is unbound.
 
 #### Hint
 
-- Allows simple integration of custom navigation associated with each Viewpoint according to user needs at that location.
+- Allows simple integration of custom navigation associated with each [Viewpoint](../navigation/viewpoint) according to user needs at that location.
 
 ## Advice
 
 ### Hints
 
-- Background, Fog, GeoViewpoint, NavigationInfo, OrthoViewpoint, TextureBackground and Viewpoint are bindable nodes, meaning that no more than one of each node type can be active at a given time.
-- GeoViewpoint OrthoViewpoint and Viewpoint share the same binding stack, so no more than one of these nodes can be bound and active at a given time.
+- [Background](../environmentaleffects/background), [Fog](../environmentaleffects/fog), [GeoViewpoint](../geospatial/geoviewpoint), [NavigationInfo](../navigation/navigationinfo), OrthoViewpoint, [TextureBackground](../environmentaleffects/texturebackground) and [Viewpoint](../navigation/viewpoint) are bindable nodes, meaning that no more than one of each node type can be active at a given time.
+- [GeoViewpoint](../geospatial/geoviewpoint) OrthoViewpoint and [Viewpoint](../navigation/viewpoint) share the same binding stack, so no more than one of these nodes can be bound and active at a given time.
 - Regardless of viewpoint jump value at bind time, the relative viewing transformation between user's view and defined position/orientation is stored for later use when un-jumping (returning to the viewpoint when subsequent viewpoint is unbound).
-- Customizable design pattern for dedicated Viewpoint/NavigationInfo pair: \<Viewpoint DEF='SpecialView'/\> \<NavigationInfo DEF='SpecialNav'/\> \<ROUTE fromNode='SpecialView' fromField='isBound' toNode='SpecialNav' toField='set_bind'/\>
+- Customizable design pattern for dedicated [Viewpoint](../navigation/viewpoint)/[NavigationInfo](../navigation/navigationinfo) pair: \<[Viewpoint](../navigation/viewpoint) DEF='SpecialView'/\> \<[NavigationInfo](../navigation/navigationinfo) DEF='SpecialNav'/\> \<ROUTE fromNode='SpecialView' fromField='isBound' toNode='SpecialNav' toField='set_bind'/\>
 - [X3D Scene Authoring Hints, Viewpoints](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Viewpoints){:target="_blank"}
 
 ### Warnings
 
-- Results are undefined if a bindable node (Background, Fog, NavigationInfo, OrthoViewpoint, TextureBackground, Viewpoint) is a contained descendant node of either LOD or Switch. Avoid this authoring pattern.
-- Do not include GeoViewpoint OrthoViewpoint or Viewpoint as a child of LOD or Switch, instead use ViewpointGroup as parent to constrain location proximity where the viewpoint is available to user.
+- Results are undefined if a bindable node ([Background](../environmentaleffects/background), [Fog](../environmentaleffects/fog), [NavigationInfo](../navigation/navigationinfo), OrthoViewpoint, [TextureBackground](../environmentaleffects/texturebackground), [Viewpoint](../navigation/viewpoint)) is a contained descendant node of either [LOD](../navigation/lod) or [Switch](../grouping/switch). Avoid this authoring pattern.
+- Do not include [GeoViewpoint](../geospatial/geoviewpoint) OrthoViewpoint or [Viewpoint](../navigation/viewpoint) as a child of [LOD](../navigation/lod) or [Switch](../grouping/switch), instead use [ViewpointGroup](../navigation/viewpointgroup) as parent to constrain location proximity where the viewpoint is available to user.
 
 ## Example
 

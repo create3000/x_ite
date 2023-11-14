@@ -31,7 +31,7 @@ The ColorDamper node belongs to the **Followers** component and requires at leas
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
 
 #### Hint
 
@@ -93,7 +93,7 @@ Computed output value that approaches within tolerance of destination value, as 
 
 ### Hints
 
-- ROUTE value_changed output events to one of a \<Material\> node's color fields, for example.
+- ROUTE value_changed output events to one of a \<[Material](../shape/material)\> node's color fields, for example.
 - [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color){:target="_blank"}
 
 ## Example

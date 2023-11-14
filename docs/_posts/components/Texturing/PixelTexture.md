@@ -32,7 +32,7 @@ The PixelTexture node belongs to the **Texturing** component and requires at lea
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
 
 #### Hint
 
@@ -58,7 +58,7 @@ Defines *image*: width, height, number_of_components per each pixel value, and l
 
 #### Warning
 
-- The order of initial values in PixelTexture and PixelTexture3D *image* arrays are different. Example: intensity [1 2 1 0xFF 0x00] Example: intensity-alpha [2 2 1 0 255 255 0] Example: red-green-blue [2 4 3 0xFF0000 0xFF00 0 0 0 0 0xFFFFFF 0xFFFF00] Example: red-green-blue-alpha [2 2 4 0xFFFFFFAA 0xFFFF00AA 0x11111111AA 0x787800AA]
+- The order of initial values in PixelTexture and [PixelTexture3D](../texturing3d/pixeltexture3d) *image* arrays are different. Example: intensity [1 2 1 0xFF 0x00] Example: intensity-alpha [2 2 1 0 255 255 0] Example: red-green-blue [2 4 3 0xFF0000 0xFF00 0 0 0 0 0xFFFFFF 0xFFFF00] Example: red-green-blue-alpha [2 2 4 0xFFFFFFAA 0xFFFF00AA 0x11111111AA 0x787800AA]
 
 ### SFBool [ ] **repeatS** TRUE
 
@@ -70,7 +70,7 @@ Whether to repeat texture along T axis vertically from top to bottom.
 
 ### SFNode [ ] **textureProperties** NULL <small>[TextureProperties]</small>
 
-Single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images.
+Single contained [TextureProperties](../texturing/textureproperties) node that can specify additional visual attributes applied to corresponding texture images.
 
 ## Advice
 
@@ -78,8 +78,8 @@ Single contained TextureProperties node that can specify additional visual attri
 
 - This is a good way to bundle image(s) into a single scene file, avoiding multiple downloads.
 - [X3D-Edit includes PixelTexture image-conversion import capabilities.](https://savage.nps.edu/X3D-Edit/images/PixelTextureImportImage.png){:target="_blank"}
-- Can contain a single TextureProperties node.
-- Insert Shape and Appearance nodes before adding texture.
+- Can contain a single [TextureProperties](../texturing/textureproperties) node.
+- Insert [Shape](../shape/shape) and [Appearance](../shape/appearance) nodes before adding texture.
 - [X3D Scene Authoring Hints, Images and Videos](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Images){:target="_blank"}
 - If a texture is opaque, omitting values in the alpha channel can help avoid rendering artifacts related to transparency.
 - Texture coordinates are reapplied (or else recomputed if textureTransform field initially NULL) whenever the corresponding vertex-based geometry changes.
@@ -89,7 +89,7 @@ Single contained TextureProperties node that can specify additional visual attri
 ### Warnings
 
 - Aggregate file size can grow dramatically.
-- See ComposedCubeMapTexture and TextureBackground for special containerField values.
+- See [ComposedCubeMapTexture](../cubemaptexturing/composedcubemaptexture) and [TextureBackground](../environmentaleffects/texturebackground) for special containerField values.
 
 ## Example
 

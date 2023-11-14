@@ -31,7 +31,7 @@ The ChannelSelector node belongs to the **Sound** component and requires at leas
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
 
 #### Hint
 
@@ -99,13 +99,13 @@ The *children* field specifies audio-graph sound sources providing input signals
 
 #### Warning
 
-- Contained AudioClip or MovieTexture nodes must have `containerField='children'` to override otherwise-incorrect defaults.
+- Contained [AudioClip](../sound/audioclip) or [MovieTexture](../texturing/movietexture) nodes must have `containerField='children'` to override otherwise-incorrect defaults.
 
 ## Advice
 
 ### Hint
 
-- ChannelSelector is a utility node to complement ChannelSplitter.
+- ChannelSelector is a utility node to complement [ChannelSplitter](../sound/channelsplitter).
 
 ## See Also
 

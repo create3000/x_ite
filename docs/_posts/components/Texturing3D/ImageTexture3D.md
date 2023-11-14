@@ -34,7 +34,7 @@ The ImageTexture3D node belongs to the **Texturing3D** component and requires at
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
 
 #### Hint
 
@@ -54,8 +54,8 @@ Author-provided prose that describes intended purpose of the url asset.
 
 #### Hints
 
-- Allows author to design when Inline loading occurs via user interaction, event chains or scripting.
-- Use a separate LoadSensor node to detect when loading is complete.
+- Allows author to design when [Inline](../networking/inline) loading occurs via user interaction, event chains or scripting.
+- Use a separate [LoadSensor](../networking/loadsensor) node to detect when loading is complete.
 
 ### MFString [in, out] **url** [ ] <small>[URI]</small>
 
@@ -111,7 +111,7 @@ Whether to repeat texture along R axis from front to back.
 
 ### SFNode [ ] **textureProperties** NULL <small>[TextureProperties]</small>
 
-Single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images.
+Single contained [TextureProperties](../texturing/textureproperties) node that can specify additional visual attributes applied to corresponding texture images.
 
 ## Supported File Formats
 
@@ -130,8 +130,8 @@ Single contained TextureProperties node that can specify additional visual attri
 - [Nearly Raw Raster Data (NRRD)](http://teem.sourceforge.net/nrrd){:target="_blank"}
 - [Volume data format (VOL)](http://paulbourke.net/dataformats/volumetric){:target="_blank"}
 - [X3D Scene Authoring Hints, Volume Tools and Volumes Visualization](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Volumes){:target="_blank"}
-- Can contain a single TextureProperties node.
-- Insert Shape and Appearance nodes before adding texture.
+- Can contain a single [TextureProperties](../texturing/textureproperties) node.
+- Insert [Shape](../shape/shape) and [Appearance](../shape/appearance) nodes before adding texture.
 - [X3D Architecture 33.2.2 3D texturing concepts](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/components/texture3D.html#3DTextureconcepts){:target="_blank"}
 - [When parent node is LoadSensor, apply `containerField='children'` (X3Dv4) or `containerField='watchList'` (X3Dv3).](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges){:target="_blank"}
 

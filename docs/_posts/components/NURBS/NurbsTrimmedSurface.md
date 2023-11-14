@@ -31,7 +31,7 @@ The NurbsTrimmedSurface node belongs to the **NURBS** component and requires at 
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
 
 #### Hint
 
@@ -97,11 +97,11 @@ Vector assigning relative *weight* value to each control point.
 
 ### SFNode [in, out] **texCoord** NULL <small>[X3DTextureCoordinateNode|NurbsTextureCoordinate]</small>
 
-Single contained NurbsTextureCoordinate, TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
+Single contained [NurbsTextureCoordinate](../nurbs/nurbstexturecoordinate), [TextureCoordinate](../texturing/texturecoordinate), [TextureCoordinateGenerator](../texturing/texturecoordinategenerator) or [MultiTextureCoordinate](../texturing/multitexturecoordinate) node that can specify coordinates for texture mapping onto corresponding geometry.
 
 ### SFNode [in, out] **controlPoint** NULL <small>[X3DCoordinateNode]</small>
 
-Single contained Coordinate or CoordinateDouble node that can specify control points for NURBS geometry definitions.
+Single contained [Coordinate](../rendering/coordinate) or [CoordinateDouble](../rendering/coordinatedouble) node that can specify control points for NURBS geometry definitions.
 
 ### MFNode [in] **addTrimmingContour**
 
@@ -113,11 +113,11 @@ Input field *removeTrimmingContour*.
 
 ### MFNode [in, out] **trimmingContour** [ ] <small>[Contour2D]</small>
 
-A set of Contour2D nodes are used as trimming loops.
+A set of [Contour2D](../nurbs/contour2d) nodes are used as trimming loops.
 
 #### Hint
 
-- If no trimming contours are defined, NurbsTrimmedSurface has same semantics as NurbsPatchSurface node.
+- If no trimming contours are defined, NurbsTrimmedSurface has same semantics as [NurbsPatchSurface](../nurbs/nurbspatchsurface) node.
 
 ## See Also
 

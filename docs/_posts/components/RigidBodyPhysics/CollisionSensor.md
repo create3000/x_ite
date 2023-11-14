@@ -30,7 +30,7 @@ The CollisionSensor node belongs to the **RigidBodyPhysics** component and requi
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
 
 #### Hint
 
@@ -66,14 +66,14 @@ Output field *contacts*.
 
 ### SFNode [in, out] **collider** NULL <small>[CollisionCollection]</small>
 
-The *collider* field specifies a CollisionCollection node that holds a collidables field of nodes and spaces that are to be included in collision-detection computations.
+The *collider* field specifies a [CollisionCollection](../rigidbodyphysics/collisioncollection) node that holds a collidables field of nodes and spaces that are to be included in collision-detection computations.
 
 ## Advice
 
 ### Hints
 
-- Contains CollisionCollection node (`containerField='collider').`
-- CollisionSensor also has output events: CollidableOffset and CollidableShape nodes (`containerField='intersections'),` Contact nodes (`containerField='contacts').`
+- Contains [CollisionCollection](../rigidbodyphysics/collisioncollection) node (`containerField='collider').`
+- CollisionSensor also has output events: [CollidableOffset](../rigidbodyphysics/collidableoffset) and [CollidableShape](../rigidbodyphysics/collidableshape) nodes (`containerField='intersections'),` [Contact](../rigidbodyphysics/contact) nodes (`containerField='contacts').`
 - [Event timing details are explained in X3D Specification 4.4.8.3 Execution model](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-IS.proof//Part01/concepts.html#ExecutionModel){:target="_blank"}
 - Content must be visible to be collidable and to be pickable.
 

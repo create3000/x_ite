@@ -29,7 +29,7 @@ The PointSet node belongs to the **Rendering** component and requires at least l
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 
-Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+Information about this node can be contained in a [MetadataBoolean](../core/metadataboolean), [MetadataDouble](../core/metadatadouble), [MetadataFloat](../core/metadatafloat), [MetadataInteger](../core/metadatainteger), [MetadataString](../core/metadatastring) or [MetadataSet](../core/metadataset) node.
 
 #### Hint
 
@@ -37,7 +37,7 @@ Information about this node can be contained in a MetadataBoolean, MetadataDoubl
 
 ### MFNode [in, out] **attrib** [ ] <small>[X3DVertexAttributeNode]</small>
 
-Single contained FloatVertexAttribute node that can specify list of per-vertex attribute information for programmable shaders.
+Single contained [FloatVertexAttribute](../shaders/floatvertexattribute) node that can specify list of per-vertex attribute information for programmable shaders.
 
 #### Hint
 
@@ -45,19 +45,19 @@ Single contained FloatVertexAttribute node that can specify list of per-vertex a
 
 ### SFNode [in, out] **fogCoord** NULL <small>[FogCoordinate]</small>
 
-Single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry.
+Single contained [FogCoordinate](../environmentaleffects/fogcoordinate) node that can specify depth parameters for fog in corresponding geometry.
 
 ### SFNode [in, out] **color** NULL <small>[X3DColorNode]</small>
 
-Single contained Color or ColorRGBA node that can specify *color* values applied to corresponding vertices according to colorIndex and colorPerVertex fields.
+Single contained [Color](../rendering/color) or [ColorRGBA](../rendering/colorrgba) node that can specify *color* values applied to corresponding vertices according to colorIndex and colorPerVertex fields.
 
 ### SFNode [in, out] **normal** NULL <small>[X3DNormalNode]</small>
 
-Single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations.
+Single contained [Normal](../rendering/normal) node that can specify perpendicular vectors for corresponding vertices to support rendering computations.
 
 #### Hint
 
-- Useful for special effects. Normal vector computation by 3D graphics hardware is quite fast so adding normals to a scene is typically unnecessary.
+- Useful for special effects. [Normal](../rendering/normal) vector computation by 3D graphics hardware is quite fast so adding normals to a scene is typically unnecessary.
 
 #### Warning
 
@@ -65,20 +65,20 @@ Single contained Normal node that can specify perpendicular vectors for correspo
 
 ### SFNode [in, out] **coord** NULL <small>[X3DCoordinateNode]</small>
 
-Single contained Coordinate or CoordinateDouble node that can specify a list of vertex values.
+Single contained [Coordinate](../rendering/coordinate) or [CoordinateDouble](../rendering/coordinatedouble) node that can specify a list of vertex values.
 
 ## Advice
 
 ### Hints
 
 - [Point (geometry)](https://en.wikipedia.org/wiki/Point_(geometry)){:target="_blank"}
-- Either values in a contained Color node, or else Material emissiveColor in corresponding Appearance node, are used for rendering lines and points.
-- Insert a Shape node before adding geometry or Appearance.
+- Either values in a contained [Color](../rendering/color) node, or else [Material](../shape/material) emissiveColor in corresponding [Appearance](../shape/appearance) node, are used for rendering lines and points.
+- Insert a [Shape](../shape/shape) node before adding geometry or [Appearance](../shape/appearance).
 - Each point is displayed independently, no other PointSet attributes for rendering are provided.
 
 ### Warning
 
-- Use a different color (or Material emissiveColor) than the Background color, otherwise geometry is invisible.
+- Use a different color (or [Material](../shape/material) emissiveColor) than the [Background](../environmentaleffects/background) color, otherwise geometry is invisible.
 
 ## Example
 
