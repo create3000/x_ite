@@ -45,7 +45,7 @@ Global lights illuminate all objects within their volume of lighting influence. 
 
 #### Warning
 
-- DirectionalLight default *global*=false to limit scope and avoid inadvertently illuminating every object in a large scene. [PointLight](../lighting/pointlight) and [SpotLight](../lighting/spotlight) default *global*=true since their effects are each limited by maximum radius value.
+- [DirectionalLight](../lighting/directionallight) default *global*=false to limit scope and avoid inadvertently illuminating every object in a large scene. [PointLight](../lighting/pointlight) and [SpotLight](../lighting/spotlight) default *global*=true since their effects are each limited by maximum radius value.
 
 ### SFBool [in, out] **on** TRUE
 
