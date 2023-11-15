@@ -74,10 +74,16 @@ async function convert (encoding, files)
 
          await Browser .loadURL (new X3D .MFString (url));
 
-         Browser .currentScene .setMetaData ("generator", `${Browser .name} V${Browser .version}, ${Browser .providerURL}`);
-         Browser .currentScene .setMetaData ("modified", new Date () .toUTCString ());
+         const
+            scene     = Browser .currentScene,
+            generator = scene .getMetaData ("generator") ?.filter (value => !value .startsWith (Browser .name)) ?? [ ];
 
-         link (mimeType, file .name .replace (/\.[^.]+$/, "") + extension, output (Browser .currentScene, encoding, file .name));
+         generator .push (`${Browser .name} V${Browser .version}, ${Browser .providerURL}`);
+
+         scene .setMetaData ("generator", generator);
+         scene .setMetaData ("modified", new Date () .toUTCString ());
+
+         link (mimeType, file .name .replace (/\.[^.]+$/, "") + extension, output (scene, encoding, file .name));
       }
       catch (error)
       {
