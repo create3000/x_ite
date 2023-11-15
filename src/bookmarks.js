@@ -54,7 +54,7 @@ const Bookmarks = (() =>
       this .browser = browser;
       this .element = element;
 
-      browser .addBrowserCallback ("bookmarks", X3D .X3DConstants .INITIALIZED_EVENT, event => this .browserEvent (event));
+      browser .addBrowserCallback ("bookmarks", X3D .X3DConstants .INITIALIZED_EVENT, event => this .onload (event));
    }
 
    Object .assign (Bookmarks .prototype,
@@ -131,7 +131,7 @@ const Bookmarks = (() =>
 
          console .timeEnd ("Scene loaded in");
       },
-      browserEvent (event)
+      onload ()
       {
          const
             base  = this .browser .getWorldURL () .replace (/(?:\.O)?\.[^\.]+$/, ""),
