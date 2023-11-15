@@ -45,7 +45,6 @@
  *
  ******************************************************************************/
 
-
 const Bookmarks = (() =>
 {
 "use strict";
@@ -124,11 +123,21 @@ const Bookmarks = (() =>
       },
       async loadURL (url)
       {
+         console .time ("Scene loaded in");
+
+         this .browser .getBrowserOptions () .reset ();
+
+         await this .browser .loadURL (new X3D .MFString (url)) .catch (Function .prototype);
+
+         console .timeEnd ("Scene loaded in");
+      },
+      browserEvent (event)
+      {
          const
-            base  = url .replace (/(?:\.O)?\.[^\.]+$/, ""),
+            base  = this .browser .getWorldURL () .replace (/(?:\.O)?\.[^\.]+$/, ""),
             local = base .replace (/https:\/\/create3000.github.io\/(.*?)\//, "http://192.168.0.18/$1/docs/");
 
-         $("#file") .text (url)
+         $("#file") .text (this .browser .getWorldURL ())
             .append ($("<a/>")
             .attr ('href', base + ".x3d")
             .on ("click", () => this .loadURL (base + ".x3d") && false)
@@ -146,39 +155,27 @@ const Bookmarks = (() =>
             .on ("click", () => this .loadURL (local + ".O.x3d") && false)
             .text ("local"));
 
-         const t0 = performance .now ();
+         $("#toolbar") .empty ();
 
-         this .browser .getBrowserOptions () .reset ();
+         $("<span></span>")
+            .text ("▣")
+            .attr ("title", "View All")
+            .on ("click", () => this .browser .viewAll (0))
+            .appendTo ($("#toolbar"));
 
-         await this .browser .loadURL (new X3D .MFString (url)) .catch (Function .prototype);
+         $("<span></span>")
+            .text ("💡")
+            .attr ("title", "Add EnvironmentLight")
+            .on ("click", async () =>
+            {
+               this .browser .currentScene .rootNodes .push (await this .getEnvironmentLight (this .browser, this .browser .currentScene));
+            })
+            .appendTo ($("#toolbar"));
 
-         const loadTime = (performance .now () - t0) / 1000;
+         $("<span></span>") .addClass ("separator") .appendTo ($("#toolbar"));
 
-         console .log (`Scene loaded in ${loadTime .toPrecision (3)}s.`)
-      },
-      browserEvent (event)
-      {
          try
          {
-            $("#toolbar") .empty ();
-
-            $("<span></span>")
-               .text ("▣")
-               .attr ("title", "View All")
-               .on ("click", () => this .browser .viewAll (0))
-               .appendTo ($("#toolbar"));
-
-            $("<span></span>")
-               .text ("💡")
-               .attr ("title", "Add EnvironmentLight")
-               .on ("click", async () =>
-               {
-                  this .browser .currentScene .rootNodes .push (await this .getEnvironmentLight (this .browser, this .browser .currentScene));
-               })
-               .appendTo ($("#toolbar"));
-
-            $("<span></span>") .addClass ("separator") .appendTo ($("#toolbar"));
-
             const animations = this .browser .currentScene .getExportedNode ("Animations");
 
             const stop = function ()
