@@ -282,12 +282,12 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
          throw new Error ("Couldn't add metadata: name is empty.");
 
       if (!Array .isArray (values))
-         values = [String (values)];
+         values = [values];
 
       if (!values .length)
          throw new Error ("Couldn't add metadata: values length is 0.");
 
-      this [_metadata] .set (name, values .map (value => String (value)));
+      this [_metadata] .set (name, values .map (String));
 
       this ._metadata_changed = this .getBrowser () .getCurrentTime ();
    },
