@@ -410,17 +410,19 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .pro
       for (const reference of this [_references])
          reference .removeFieldInterest (this);
 
-      this [_references]          .clear ();
-      this [_referencesCallbacks] .clear ();
-      this [_fieldInterests]      .clear ();
-      this [_fieldCallbacks]      .clear ();
-      this [_routeCallbacks]      .clear ();
-
       for (const route of new Set (this [_inputRoutes]))
          route .dispose ();
 
       for (const route of new Set (this [_outputRoutes]))
          route .dispose ();
+
+      this [_references]          .clear ();
+      this [_referencesCallbacks] .clear ();
+      this [_fieldInterests]      .clear ();
+      this [_fieldCallbacks]      .clear ();
+      this [_inputRoutes]         .clear ();
+      this [_outputRoutes]        .clear ();
+      this [_routeCallbacks]      .clear ();
 
       X3DChildObject .prototype .dispose .call (this);
    }
