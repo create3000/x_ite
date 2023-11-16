@@ -407,6 +407,9 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .pro
    },
    dispose ()
    {
+      for (const reference of this [_references])
+         reference .removeFieldInterest (this);
+
       this [_references]          .clear ();
       this [_referencesCallbacks] .clear ();
       this [_fieldInterests]      .clear ();
