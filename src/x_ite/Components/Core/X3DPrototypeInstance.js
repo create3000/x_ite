@@ -243,6 +243,8 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
          newField .dispose ();
       }
 
+      // Dispose unused old fields.
+
       for (const oldField of oldFields .values ())
          oldField .dispose ();
 
