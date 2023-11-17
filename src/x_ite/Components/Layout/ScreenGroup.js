@@ -59,7 +59,7 @@ function ScreenGroup (executionContext)
 
    this .addType (X3DConstants .ScreenGroup);
 
-   this .matrix = new Matrix4 (0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,1);
+   this .matrix = new Matrix4 ();
 }
 
 Object .assign (Object .setPrototypeOf (ScreenGroup .prototype, X3DGroupingNode .prototype),
