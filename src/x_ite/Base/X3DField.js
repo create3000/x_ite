@@ -376,16 +376,16 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .pro
 
          let first = true;
 
-         for (const fieldInterest of this [_fieldInterests])
+         for (const field of this [_fieldInterests])
          {
             if (first)
             {
                first = false;
-               fieldInterest .addEventObject (this, event);
+               field .addEventObject (this, event);
             }
             else
             {
-               fieldInterest .addEventObject (this, Events .copy (event));
+               field .addEventObject (this, Events .copy (event));
             }
          }
 
@@ -396,8 +396,8 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .pro
 
          if (this [_fieldCallbacks] .size)
          {
-            for (const fieldCallback of MapUtilities .values (fieldCallbacksTemp, this [_fieldCallbacks]))
-               fieldCallback (this .valueOf ());
+            for (const callback of MapUtilities .values (fieldCallbacksTemp, this [_fieldCallbacks]))
+               callback (this .valueOf ());
          }
       };
    })(),

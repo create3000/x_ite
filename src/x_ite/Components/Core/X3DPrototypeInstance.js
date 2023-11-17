@@ -86,14 +86,13 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
    },
    construct ()
    {
-      this [_body] ?.dispose (); // TODO, dispose all nodes.
-
       const
          protoNode = this [_protoNode],
          proto     = protoNode .getProtoDeclaration ();
 
-      // Assign field definitions.
+      // Dispose body and assign field definitions.
 
+      this [_body] ?.dispose ();
       this [_fieldDefinitions] .assign (protoNode .getFieldDefinitions ());
 
       // If there is a proto, the externproto is completely loaded.
@@ -208,10 +207,26 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
          if (!oldField)
             continue;
 
+         if (oldField .getType () !== newField .getType ())
+            continue;
+
          oldField .addParent (this);
          oldField .setAccessType (newField .getAccessType ());
          oldField .setName (newField .getName ());
 
+         // Remove references and routes.
+         for (const field of oldField .getFieldInterests ())
+            oldField .removeFieldInterest (field);
+
+         // Reconnect routes.
+         for (const route of oldField .getInputRoutes ())
+            route .getSourceField () .addFieldInterest (route .getDestinationField ());
+
+         // Reconnect routes.
+         for (const route of oldField .getOutputRoutes ())
+            route .getSourceField () .addFieldInterest (route .getDestinationField ());
+
+         // Replace field.
          this .getPredefinedFields () .update (newField .getName (), newField .getName (), oldField);
 
          oldFields .delete (oldFieldName);
