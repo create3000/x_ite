@@ -175,7 +175,7 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .pro
       {
          case X3DConstants .initializeOnly:
             reference .addFieldInterest (this);
-            this .assign (reference);
+            this .processEvent (Events .from (reference));
             break;
          case X3DConstants .inputOnly:
             reference .addFieldInterest (this);
@@ -186,7 +186,7 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .pro
          case X3DConstants .inputOutput:
             reference .addFieldInterest (this);
             this .addFieldInterest (reference);
-            this .assign (reference);
+            this .processEvent (Events .from (reference));
             break;
       }
 

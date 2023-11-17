@@ -65,6 +65,14 @@ const Events = Object .assign ([ ],
 
       return copy;
    },
+   from (field)
+   {
+      const event = this .create (field);
+
+      event .add (field);
+
+      return event;
+   },
 });
 
 for (const key of Object .keys (Events))
