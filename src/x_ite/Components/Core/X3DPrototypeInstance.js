@@ -238,6 +238,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
          // Replace field.
          this .getPredefinedFields () .update (newField .getName (), newField .getName (), oldField);
 
+         // Remove from old fields and dispose new field.
          oldFields .delete (oldFieldName);
          newField .dispose ();
       }
