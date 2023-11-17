@@ -235,7 +235,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
          for (const route of oldField .getOutputRoutes ())
             route .getSourceField () .addFieldInterest (route .getDestinationField ());
 
-         // Replace field.
+         // Replace field, ie. reuse old field.
          this .getPredefinedFields () .update (newField .getName (), newField .getName (), oldField);
 
          // Remove from old fields and dispose new field.
