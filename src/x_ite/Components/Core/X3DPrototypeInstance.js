@@ -214,9 +214,18 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
          oldField .setAccessType (newField .getAccessType ());
          oldField .setName (newField .getName ());
 
+         const references = new Set (oldField .getReferences ());
+
          // Remove references and routes.
          for (const field of oldField .getFieldInterests ())
             oldField .removeFieldInterest (field);
+
+         // Readd references.
+         for (const field of references)
+         {
+            oldField .removeReference (field);
+            oldField .addReference (field);
+         }
 
          // Reconnect routes.
          for (const route of oldField .getInputRoutes ())
