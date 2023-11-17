@@ -86,7 +86,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
    },
    construct ()
    {
-      this [_body] ?.dispose ();
+      this [_body] ?.dispose (); // TODO, dispose all nodes.
 
       const
          protoNode = this [_protoNode],
@@ -139,10 +139,11 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
                if (field .hasReferences ())
                   continue;
 
+               // Default value of protoField is different from field.
                if (field .equals (protoField))
                   continue;
 
-               // If default value of protoField is different from field, thus update default value for field.
+               // Update default value of field.
                field .assign (protoField);
             }
             catch
