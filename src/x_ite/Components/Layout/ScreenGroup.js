@@ -52,6 +52,7 @@ import X3DGroupingNode      from "../Grouping/X3DGroupingNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import TraverseType         from "../../Rendering/TraverseType.js";
 import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
+import X3DProtoDeclaration  from "../../Prototype/X3DProtoDeclaration.js";
 
 function ScreenGroup (executionContext)
 {
@@ -59,7 +60,10 @@ function ScreenGroup (executionContext)
 
    this .addType (X3DConstants .ScreenGroup);
 
-   this .matrix = new Matrix4 ();
+   if (executionContext .getOuterNode () instanceof X3DProtoDeclaration)
+      this .matrix = new Matrix4 ();
+   else
+      this .matrix = new Matrix4 (0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0);
 }
 
 Object .assign (Object .setPrototypeOf (ScreenGroup .prototype, X3DGroupingNode .prototype),
