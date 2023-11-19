@@ -249,12 +249,19 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
          linePos  = 40;
       }
 
-      // Format error
+      // Get world URL.
+
+      let worldURL = this .getExecutionContext () .getWorldURL ();
+
+      if (worldURL .startsWith ("data:"))
+         worldURL = worldURL .substring (0, worldURL .indexOf (","));
+
+      // Format error.
 
       const message = "\n"
          + `********************************************************************************\n`
          + `Parser error at line ${this .lineNumber}:${linePos}\n`
-         + `in '${this .getExecutionContext () .getWorldURL ()}'\n`
+         + `in '${worldURL}'\n`
          + `\n`
          + `${lastLine}\n`
          + `${line}\n`
