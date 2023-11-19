@@ -93,6 +93,22 @@ function X3DPointingDeviceSensorContext ()
       texCoord: new Vector4 (0, 0, 0, 0),
       layerNode: null,
       shapeNode: null,
+      copy ()
+      {
+         return {
+            id: this .id,
+            pointer: this .pointer .copy (),
+            hitRay: this .hitRay .copy (),
+            sensors: this .sensors .slice (),
+            modelViewMatrix: this .modelViewMatrix .copy (),
+            point: this .point .copy (),
+            normal: this .normal .copy (),
+            texCoord: this .texCoord .copy (),
+            layerNode: this .layerNode,
+            shapeNode: this .shapeNode,
+            copy: this .copy,
+         };
+      },
    };
 }
 
