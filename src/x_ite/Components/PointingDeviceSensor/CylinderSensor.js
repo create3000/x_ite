@@ -76,6 +76,9 @@ Object .assign (Object .setPrototypeOf (CylinderSensor .prototype, X3DDragSensor
    {
       X3DDragSensorNode .prototype .initialize .call (this);
 
+      this ._axisRotation .addInterest ("set_fields__", this);
+      this ._diskAngle    .addInterest ("set_fields__", this);
+
       this .modelViewMatrix    = new Matrix4 ();
       this .invModelViewMatrix = new Matrix4 ();
 
@@ -125,9 +128,16 @@ Object .assign (Object .setPrototypeOf (CylinderSensor .prototype, X3DDragSensor
    {
       if (rotation .getAxis (new Vector3 (0, 0, 0)) .dot (this .cylinder .axis .direction) > 0)
          return rotation .angle;
-
       else
          return -rotation .angle;
+   },
+   set_fields__ ()
+   {
+      if (!this ._isActive .getValue ())
+         return;
+
+      this .activate (this .activateHit);
+      this .set_motion__ (this .motionHit ?? this .activateHit);
    },
    set_active__ (active, hit, modelViewMatrix, projectionMatrix, viewport)
    {
@@ -135,52 +145,13 @@ Object .assign (Object .setPrototypeOf (CylinderSensor .prototype, X3DDragSensor
 
       if (this ._isActive .getValue ())
       {
+         this .activateHit = hit .copy ();
+         this .motionHit   = null;
+
          this .modelViewMatrix    .assign (modelViewMatrix);
          this .invModelViewMatrix .assign (modelViewMatrix) .inverse ();
 
-         const
-            hitRay   = hit .hitRay .copy () .multLineMatrix (this .invModelViewMatrix),
-            hitPoint = this .invModelViewMatrix .multVecMatrix (hit .point .copy ());
-
-         const
-            yAxis      = this ._axisRotation .getValue () .multVecRot (new Vector3 (0, 1, 0)),
-            cameraBack = this .invModelViewMatrix .multDirMatrix (new Vector3 (0, 0, 1)) .normalize ();
-
-         const
-            axis   = new Line3 (new Vector3 (0, 0, 0), yAxis),
-            radius = axis .getPerpendicularVectorToPoint (hitPoint, new Vector3 (0, 0, 0)) .magnitude ();
-
-         this .cylinder = new Cylinder3 (axis, radius);
-         this .disk     = Math .abs (cameraBack .dot (yAxis)) > Math .cos (this ._diskAngle .getValue ());
-         this .behind   = this .isBehind (hitRay, hitPoint);
-         this .yPlane   = new Plane3 (hitPoint, yAxis);             // Sensor aligned y-plane
-         this .zPlane   = new Plane3 (hitPoint, cameraBack);        // Screen aligned z-plane
-
-         // Compute normal like in Billboard with yAxis as axis of rotation.
-         const
-            billboardToViewer = this .invModelViewMatrix .origin,
-            sxNormal          = yAxis .copy () .cross (billboardToViewer) .normalize ();
-
-         this .sxPlane  = new Plane3 (new Vector3 (0, 0, 0), sxNormal);   // Billboarded special x-plane made parallel to sensors axis.
-         this .szNormal = sxNormal .copy () .cross (yAxis) .normalize (); // Billboarded special z-normal made parallel to sensors axis.
-
-         const trackPoint = new Vector3 (0, 0, 0);
-
-         if (this .disk)
-            this .yPlane .intersectsLine (hitRay, trackPoint);
-         else
-            this .getTrackPoint (hitRay, trackPoint);
-
-         this .fromVector  = this .cylinder .axis .getPerpendicularVectorToPoint (trackPoint, new Vector3 (0, 0, 0)) .negate ();
-         this .startOffset = new Rotation4 (yAxis, this ._offset .getValue ());
-
-         this ._trackPoint_changed = trackPoint;
-         this ._rotation_changed   = this .startOffset;
-
-         // For min/max angle.
-
-         this .angle       = this ._offset .getValue ();
-         this .startVector = this ._rotation_changed .getValue () .multVecRot (this ._axisRotation .getValue () .multVecRot (new Vector3 (0, 0, 1)));
+         this .activate (hit);
       }
       else
       {
@@ -188,8 +159,56 @@ Object .assign (Object .setPrototypeOf (CylinderSensor .prototype, X3DDragSensor
             this ._offset = this .getAngle (this ._rotation_changed .getValue ());
       }
    },
+   activate (hit)
+   {
+      const
+         hitRay   = hit .hitRay .copy () .multLineMatrix (this .invModelViewMatrix),
+         hitPoint = this .invModelViewMatrix .multVecMatrix (hit .point .copy ());
+
+      const
+         yAxis      = this ._axisRotation .getValue () .multVecRot (new Vector3 (0, 1, 0)),
+         cameraBack = this .invModelViewMatrix .multDirMatrix (new Vector3 (0, 0, 1)) .normalize ();
+
+      const
+         axis   = new Line3 (new Vector3 (0, 0, 0), yAxis),
+         radius = axis .getPerpendicularVectorToPoint (hitPoint, new Vector3 (0, 0, 0)) .magnitude ();
+
+      this .cylinder = new Cylinder3 (axis, radius);
+      this .disk     = Math .abs (cameraBack .dot (yAxis)) > Math .cos (this ._diskAngle .getValue ());
+      this .behind   = this .isBehind (hitRay, hitPoint);
+      this .yPlane   = new Plane3 (hitPoint, yAxis);             // Sensor aligned y-plane
+      this .zPlane   = new Plane3 (hitPoint, cameraBack);        // Screen aligned z-plane
+
+      // Compute normal like in Billboard with yAxis as axis of rotation.
+      const
+         billboardToViewer = this .invModelViewMatrix .origin,
+         sxNormal          = yAxis .copy () .cross (billboardToViewer) .normalize ();
+
+      this .sxPlane  = new Plane3 (new Vector3 (0, 0, 0), sxNormal);   // Billboarded special x-plane made parallel to sensors axis.
+      this .szNormal = sxNormal .copy () .cross (yAxis) .normalize (); // Billboarded special z-normal made parallel to sensors axis.
+
+      const trackPoint = new Vector3 (0, 0, 0);
+
+      if (this .disk)
+         this .yPlane .intersectsLine (hitRay, trackPoint);
+      else
+         this .getTrackPoint (hitRay, trackPoint);
+
+      this .fromVector  = this .cylinder .axis .getPerpendicularVectorToPoint (trackPoint, new Vector3 (0, 0, 0)) .negate ();
+      this .startOffset = new Rotation4 (yAxis, this ._offset .getValue ());
+
+      this ._trackPoint_changed = trackPoint;
+      this ._rotation_changed   = this .startOffset;
+
+      // For min/max angle.
+
+      this .angle       = this ._offset .getValue ();
+      this .startVector = this ._rotation_changed .getValue () .multVecRot (this ._axisRotation .getValue () .multVecRot (new Vector3 (0, 0, 1)));
+   },
    set_motion__ (hit)
    {
+      this .motionHit = hit .copy ();
+
       const
          hitRay     = hit .hitRay .copy () .multLineMatrix (this .invModelViewMatrix),
          trackPoint = new Vector3 (0, 0, 0);
