@@ -96,13 +96,11 @@ function SFMatrix3Template (TypeName, SFVec2, double)
    {
       setTransform (translation, rotation, scale, scaleOrientation, center)
       {
-         translation      = translation      ? translation      .getValue () : null;
-         rotation         = rotation         ? rotation                      : 0;
-         scale            = scale            ? scale            .getValue () : null;
-         scaleOrientation = scaleOrientation ? scaleOrientation              : 0;
-         center           = center           ? center           .getValue () : null;
-
-         this .getValue () .set (translation, rotation, scale, scaleOrientation, center);
+         this .getValue () .set (translation      ?.getValue () ?? null,
+                                 rotation                       ?? 0,
+                                 scale            ?.getValue () ?? null,
+                                 scaleOrientation               ?? 0,
+                                 center           ?.getValue () ?? null);
       },
    });
 

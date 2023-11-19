@@ -84,23 +84,24 @@ function SFMatrixPrototypeTemplate (Constructor, TypeName, Matrix, SFVec, double
       },
       setTransform (translation, rotation, scale, scaleOrientation, center)
       {
-         translation      = translation      ? translation      .getValue () : null;
-         rotation         = rotation         ? rotation         .getValue () : null;
-         scale            = scale            ? scale            .getValue () : null;
-         scaleOrientation = scaleOrientation ? scaleOrientation .getValue () : null;
-         center           = center           ? center           .getValue () : null;
-
-         this .getValue () .set (translation, rotation, scale, scaleOrientation, center);
+         this .getValue () .set (translation      ?.getValue () ?? null,
+                                 rotation         ?.getValue () ?? null,
+                                 scale            ?.getValue () ?? null,
+                                 scaleOrientation ?.getValue () ?? null,
+                                 center           ?.getValue () ?? null);
       },
       getTransform (translation, rotation, scale, scaleOrientation, center)
       {
-         translation      = translation      ? translation      .getValue () : null;
-         rotation         = rotation         ? rotation         .getValue () : null;
-         scale            = scale            ? scale            .getValue () : null;
-         scaleOrientation = scaleOrientation ? scaleOrientation .getValue () : null;
-         center           = center           ? center           .getValue () : null;
+         this .getValue () .get (translation      ?.getValue () ?? null,
+                                 rotation         ?.getValue () ?? null,
+                                 scale            ?.getValue () ?? null,
+                                 scaleOrientation ?.getValue () ?? null,
+                                 center           ?.getValue () ?? null);
 
-         this .getValue () .get (translation, rotation, scale, scaleOrientation, center);
+         translation      ?.addEvent ();
+         rotation         ?.addEvent ();
+         scale            ?.addEvent ();
+         scaleOrientation ?.addEvent ();
       },
       determinant ()
       {
