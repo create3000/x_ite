@@ -101,14 +101,14 @@ function SFMatrix3Template (TypeName, SFVec2, double)
          return function (translation, rotation, scale, scaleOrientation, center)
          {
             args .push (translation      ?.getValue () ?? null,
-                        rotation                       ?? 0,
+                        rotation                       ?? null,
                         scale            ?.getValue () ?? null,
-                        scaleOrientation               ?? 0,
+                        scaleOrientation               ?? null,
                         center           ?.getValue () ?? null);
 
             for (let i = args .length - 1; i > -1; -- i)
             {
-               if (args [i] !== null && args [i] !== 0)
+               if (args [i] !== null)
                   break;
 
                args .pop ();
