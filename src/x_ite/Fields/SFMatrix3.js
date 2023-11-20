@@ -100,11 +100,11 @@ function SFMatrix3Template (TypeName, SFVec2, double)
 
          return function (translation, rotation, scale, scaleOrientation, center)
          {
-            args .push (translation      ?.getValue () ?? null,
-                        rotation                       ?? null,
-                        scale            ?.getValue () ?? null,
-                        scaleOrientation               ?? null,
-                        center           ?.getValue () ?? null);
+            args .push (translation ?.getValue () ?? null,
+                        rotation                  ?? null,
+                        scale       ?.getValue () ?? null,
+                        scaleOrientation          ?? null,
+                        center      ?.getValue () ?? null);
 
             for (let i = args .length - 1; i > -1; -- i)
             {
