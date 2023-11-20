@@ -94,14 +94,31 @@ function SFMatrix3Template (TypeName, SFVec2, double)
 
    Object .assign (SFMatrixPrototypeTemplate (SFMatrix3, TypeName, Matrix3, SFVec2, double),
    {
-      setTransform (translation, rotation, scale, scaleOrientation, center)
+      setTransform: (function ()
       {
-         this .getValue () .set (translation      ?.getValue () ?? null,
-                                 rotation                       ?? 0,
-                                 scale            ?.getValue () ?? null,
-                                 scaleOrientation               ?? 0,
-                                 center           ?.getValue () ?? null);
-      },
+         const args = [ ];
+
+         return function (translation, rotation, scale, scaleOrientation, center)
+         {
+            args .push (translation      ?.getValue () ?? null,
+                        rotation                       ?? 0,
+                        scale            ?.getValue () ?? null,
+                        scaleOrientation               ?? 0,
+                        center           ?.getValue () ?? null);
+
+            for (let i = args .length - 1; i > -1; -- i)
+            {
+               if (!(args [i] === null || args [i] === 0))
+                  break;
+
+               args .pop ();
+            }
+
+            this .getValue () .set (... args);
+
+            args .length = 0;
+         };
+      })(),
    });
 
    for (const key of Object .keys (SFMatrix3 .prototype))

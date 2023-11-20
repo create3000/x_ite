@@ -1873,6 +1873,9 @@ const ScreenFontStyle_default_ = ScreenFontStyle;
 
 Namespace_default().add ("ScreenFontStyle", "x_ite/Components/Layout/ScreenFontStyle", ScreenFontStyle_default_);
 /* harmony default export */ const Layout_ScreenFontStyle = (ScreenFontStyle_default_);
+;// CONCATENATED MODULE: external "window [Symbol .for (\"X_ITE.X3D\")] .require (\"x_ite/Prototype/X3DProtoDeclaration\")"
+const X3DProtoDeclaration_namespaceObject = window [Symbol .for ("X_ITE.X3D-9.0.3")] .require ("x_ite/Prototype/X3DProtoDeclaration");
+var X3DProtoDeclaration_default = /*#__PURE__*/__webpack_require__.n(X3DProtoDeclaration_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/Layout/ScreenGroup.js
 /*******************************************************************************
  *
@@ -1929,13 +1932,17 @@ Namespace_default().add ("ScreenFontStyle", "x_ite/Components/Layout/ScreenFontS
 
 
 
+
 function ScreenGroup (executionContext)
 {
    X3DGroupingNode_default().call (this, executionContext);
 
    this .addType ((X3DConstants_default()).ScreenGroup);
 
-   this .matrix = new (Matrix4_default()) (0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,1);
+   if (executionContext .getOuterNode () instanceof (X3DProtoDeclaration_default()))
+      this .matrix = new (Matrix4_default()) ();
+   else
+      this .matrix = new (Matrix4_default()) (0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0);
 }
 
 Object .assign (Object .setPrototypeOf (ScreenGroup .prototype, (X3DGroupingNode_default()).prototype),

@@ -82,27 +82,61 @@ function SFMatrixPrototypeTemplate (Constructor, TypeName, Matrix, SFVec, double
       {
          this .getValue () .assign (value);
       },
-      setTransform (translation, rotation, scale, scaleOrientation, center)
+      setTransform: (function ()
       {
-         this .getValue () .set (translation      ?.getValue () ?? null,
-                                 rotation         ?.getValue () ?? null,
-                                 scale            ?.getValue () ?? null,
-                                 scaleOrientation ?.getValue () ?? null,
-                                 center           ?.getValue () ?? null);
-      },
-      getTransform (translation, rotation, scale, scaleOrientation, center)
-      {
-         this .getValue () .get (translation      ?.getValue () ?? null,
-                                 rotation         ?.getValue () ?? null,
-                                 scale            ?.getValue () ?? null,
-                                 scaleOrientation ?.getValue () ?? null,
-                                 center           ?.getValue () ?? null);
+         const args = [ ];
 
-         translation      ?.addEvent ();
-         rotation         ?.addEvent ();
-         scale            ?.addEvent ();
-         scaleOrientation ?.addEvent ();
-      },
+         return function (translation, rotation, scale, scaleOrientation, center)
+         {
+            args .push (translation      ?.getValue () ?? null,
+                        rotation         ?.getValue () ?? null,
+                        scale            ?.getValue () ?? null,
+                        scaleOrientation ?.getValue () ?? null,
+                        center           ?.getValue () ?? null);
+
+            for (let i = args .length - 1; i > -1; -- i)
+            {
+               if (args [i] !== null)
+                  break;
+
+               args .pop ();
+            }
+
+            this .getValue () .set (... args);
+
+            args .length = 0;
+         };
+      })(),
+      getTransform: (function ()
+      {
+         const args = [ ];
+
+         return function (translation, rotation, scale, scaleOrientation, center)
+         {
+            args .push (translation      ?.getValue () ?? null,
+                        rotation         ?.getValue () ?? null,
+                        scale            ?.getValue () ?? null,
+                        scaleOrientation ?.getValue () ?? null,
+                        center           ?.getValue () ?? null);
+
+            for (let i = args .length - 1; i > -1; -- i)
+            {
+               if (args [i] !== null)
+                  break;
+
+               args .pop ();
+            }
+
+            this .getValue () .get (... args);
+
+            translation      ?.addEvent ();
+            rotation         ?.addEvent ();
+            scale            ?.addEvent ();
+            scaleOrientation ?.addEvent ();
+
+            args .length = 0;
+         };
+      })(),
       determinant ()
       {
          return this .getValue () .determinant ();
