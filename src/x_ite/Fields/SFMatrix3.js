@@ -108,7 +108,7 @@ function SFMatrix3Template (TypeName, SFVec2, double)
 
             for (let i = args .length - 1; i > -1; -- i)
             {
-               if (!(args [i] === null || args [i] === 0))
+               if (args [i] !== null && args [i] !== 0)
                   break;
 
                args .pop ();
