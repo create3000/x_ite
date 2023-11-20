@@ -44,15 +44,11 @@ table.examples td {
   </tr>
 </table>
 
-## Sunrize
+## Online X3D File Format Converter
 
-If you are looking for a simple editor for X3D, then [Sunrize](/sunrize/) might be the right one for you.
+Convert various 3D file formats using our [Online X3D File Format Converter](x3d-file-converter) powered by X_ITE.
 
-## X3D-Tidy
-
-[x3d-tidy](https://www.npmjs.com/package/x3d-tidy){:target="_blank"} is a command line X3D file format converter, compressor and beautifier and available on NPM.
-
-Also have a look at the [Online X3D File Format Converter](x3d-file-converter) powered by X_ITE.
+Looking for a command line tool to convert 3D file formats? Use [x3d-tidy](https://www.npmjs.com/package/x3d-tidy){:target="_blank"}, a command line X3D file format converter, compressor and beautifier and available on NPM.
 
 ## D3-X3D
 
