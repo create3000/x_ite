@@ -45,9 +45,9 @@ Specifies the scale factors and units to calculate depth values.
 
 The offset is added before the depth test is performed and before the value is written into the depth buffer.
 
-The first value is *factor*, a GLfloat which sets the scale factor for the variable depth offset for each polygon.
+The first value is *factor*, a GLfloat which sets the scale factor for the variable depth offset for each polygon. The default value is 0.
 
-The second value is *units*, a GLfloat which sets the multiplier by which an implementation-specific value is multiplied with to create a constant depth offset.
+The second value is *units*, a GLfloat which sets the multiplier by which an implementation-specific value is multiplied with to create a constant depth offset. The default value is 0.
 
 ### SFBool [in, out] **depthTest** TRUE
 
@@ -68,9 +68,13 @@ Must be one of the following symbolic constants:
 * GREATER_EQUAL
 * ALWAYS
 
-### SFVec2f [in, out] **depthRange** NULL <small>[0,1]</small>
+### SFVec2f [in, out] **depthRange** 0 1 <small>[0,1]</small>
 
 Specifies the depth range mapping from normalized device coordinates to window or viewport coordinates.
+
+The first value is *zNear*, a GLclampf specifying the mapping of the near clipping plane to window or viewport coordinates. Clamped to the range 0 to 1 and must be less than or equal to zFar. The default value is 0.
+
+The second value is *zFar*, a GLclampf specifying the mapping of the far clipping plane to window or viewport coordinates. Clamped to the range 0 to 1. The default value is 1.
 
 ### SFBool [in, out] **depthMask** TRUE
 
