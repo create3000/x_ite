@@ -99,7 +99,7 @@ Object .assign (Object .setPrototypeOf (DepthMode .prototype, X3DAppearanceChild
       gl .enable (gl .DEPTH_TEST);
       gl .depthFunc (gl .LEQUAL);
       gl .depthRange (0, 1);
-      gl .depthMask (false);
+      gl .depthMask (this .depthWriteMask);
    },
 });
 
