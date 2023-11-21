@@ -84,7 +84,7 @@ Object .assign (X3DLayoutContext .prototype,
          screenPoint  = new Vector3 (0, 0, 0),
          screenMatrix = new Matrix4 ();
 
-      return function (renderObject, matrix, contentScale)
+      return function (renderObject, matrix, contentScale, snap)
       {
          // throws domain error
 
@@ -110,15 +110,18 @@ Object .assign (X3DLayoutContext .prototype,
 
          // Snap to whole pixel.
 
-         ViewVolume .projectPoint (Vector3 .Zero, screenMatrix, projectionMatrix, viewport, screenPoint);
+         if (snap)
+         {
+            ViewVolume .projectPoint (Vector3 .Zero, screenMatrix, projectionMatrix, viewport, screenPoint);
 
-         screenPoint .x = Math .round (screenPoint .x);
-         screenPoint .y = Math .round (screenPoint .y);
+            screenPoint .x = Math .round (screenPoint .x);
+            screenPoint .y = Math .round (screenPoint .y);
 
-         ViewVolume .unProjectPoint (screenPoint .x, screenPoint .y, screenPoint .z, screenMatrix, projectionMatrix, viewport, screenPoint);
+            ViewVolume .unProjectPoint (screenPoint .x, screenPoint .y, screenPoint .z, screenMatrix, projectionMatrix, viewport, screenPoint);
 
-         screenPoint .z = 0;
-         screenMatrix .translate (screenPoint);
+            screenPoint .z = 0;
+            screenMatrix .translate (screenPoint);
+         }
 
          // Assign relative matrix.
 

@@ -377,7 +377,7 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
 
       return function (type, renderObject)
       {
-         this .getBrowser () .getScreenScaleMatrix (renderObject, this .matrix, 1);
+         this .getBrowser () .getScreenScaleMatrix (renderObject, this .matrix, 1, true);
 
          // Update Text bbox.
 
