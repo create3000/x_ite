@@ -47,12 +47,14 @@
 
 import Components from "../../x_ite/Components.js";
 import BlendMode  from "../../x_ite/Components/X_ITE/BlendMode.js";
+import DepthMode  from "../../x_ite/Components/X_ITE/DepthMode.js";
 
 Components .add ({
    name: "X_ITE",
    concreteNodes:
    [
       BlendMode,
+      DepthMode,
    ],
    abstractNodes:
    [

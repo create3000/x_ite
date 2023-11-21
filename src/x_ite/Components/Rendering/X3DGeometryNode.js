@@ -1008,13 +1008,14 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    displayGeometry (gl, renderContext, appearanceNode, shaderNode, back, front)
    {
       const
-         browser       = this .getBrowser (),
-         blendModeNode = appearanceNode .getBlendMode (),
-         attribNodes   = this .attribNodes,
-         attribBuffers = this .attribBuffers,
-         primitiveMode = browser .getPrimitiveMode (this .primitiveMode);
+         browser         = this .getBrowser (),
+         renderModeNodes = appearanceNode .getRenderModes (),
+         attribNodes     = this .attribNodes,
+         attribBuffers   = this .attribBuffers,
+         primitiveMode   = browser .getPrimitiveMode (this .primitiveMode);
 
-      blendModeNode ?.enable (gl);
+      for (const node of renderModeNodes)
+         node .enable (gl);
 
       shaderNode .enable (gl);
       shaderNode .setUniforms (gl, this, renderContext, front);
@@ -1088,7 +1089,8 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          }
       }
 
-      blendModeNode ?.disable (gl);
+      for (const node of renderModeNodes)
+         node .disable (gl);
    },
    displaySimpleParticles (gl, shaderNode, particleSystem)
    {
@@ -1131,13 +1133,14 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    displayParticlesGeometry (gl, renderContext, appearanceNode, shaderNode, back, front, particleSystem)
    {
       const
-         browser       = this .getBrowser (),
-         blendModeNode = appearanceNode .getBlendMode (),
-         attribNodes   = this .attribNodes,
-         attribBuffers = this .attribBuffers,
-         primitiveMode = browser .getPrimitiveMode (this .primitiveMode);
+         browser         = this .getBrowser (),
+         renderModeNodes = appearanceNode .getRenderModes (),
+         attribNodes     = this .attribNodes,
+         attribBuffers   = this .attribBuffers,
+         primitiveMode   = browser .getPrimitiveMode (this .primitiveMode);
 
-      blendModeNode ?.enable (gl);
+      for (const node of renderModeNodes)
+         node .enable (gl);
 
       // Setup shader.
 
@@ -1207,7 +1210,8 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
       }
 
-      blendModeNode ?.disable (gl);
+      for (const node of renderModeNodes)
+         node .disable (gl);
    },
 });
 

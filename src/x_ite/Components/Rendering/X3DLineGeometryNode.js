@@ -218,7 +218,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
             appearanceNode     = renderContext .appearanceNode,
             linePropertiesNode = appearanceNode .getLineProperties (),
             shaderNode         = appearanceNode .getShader (this, renderContext),
-            blendModeNode      = appearanceNode .getBlendMode (),
+            renderModeNodes    = appearanceNode .getRenderModes (),
             attribNodes        = this .getAttrib (),
             attribBuffers      = this .getAttribBuffers ();
 
@@ -326,7 +326,8 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
 
                // Render triangles.
 
-               blendModeNode ?.enable (gl);
+               for (const node of renderModeNodes)
+                  node .enable (gl);
 
                // Setup shader.
 
@@ -370,7 +371,8 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
                gl .enable (gl .CULL_FACE);
                gl .drawArrays (primitiveMode, 0, this .vertexCount * 3);
 
-               blendModeNode ?.disable (gl);
+               for (const node of renderModeNodes)
+                  node .disable (gl);
 
                return;
             }
@@ -378,7 +380,8 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
 
          const primitiveMode = browser .getPrimitiveMode (this .getPrimitiveMode ());
 
-         blendModeNode ?.enable (gl);
+         for (const node of renderModeNodes)
+            node .enable (gl);
 
          // Setup shader.
 
@@ -411,7 +414,8 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
 
          gl .drawArrays (primitiveMode, 0, this .vertexCount);
 
-         blendModeNode ?.disable (gl);
+         for (const node of renderModeNodes)
+            node .disable (gl);
 
          gl .lineWidth (1);
       };
@@ -419,15 +423,16 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
    displayParticles (gl, renderContext, particleSystem)
    {
       const
-         browser        = this .getBrowser (),
-         appearanceNode = renderContext .appearanceNode,
-         shaderNode     = appearanceNode .getShader (this, renderContext),
-         blendModeNode  = appearanceNode .getBlendMode (),
-         attribNodes    = this .getAttrib (),
-         attribBuffers  = this .getAttribBuffers (),
-         primitiveMode  = browser .getPrimitiveMode (this .getPrimitiveMode ());
+         browser         = this .getBrowser (),
+         appearanceNode  = renderContext .appearanceNode,
+         shaderNode      = appearanceNode .getShader (this, renderContext),
+         renderModeNodes = appearanceNode .getRenderModes (),
+         attribNodes     = this .getAttrib (),
+         attribBuffers   = this .getAttribBuffers (),
+         primitiveMode   = browser .getPrimitiveMode (this .getPrimitiveMode ());
 
-      blendModeNode ?.enable (gl);
+      for (const node of renderModeNodes)
+         node .enable (gl);
 
       // Setup shader.
 
@@ -466,7 +471,8 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
 
       gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
 
-      blendModeNode ?.disable (gl);
+      for (const node of renderModeNodes)
+         node .disable (gl);
 
       gl .lineWidth (1);
    },

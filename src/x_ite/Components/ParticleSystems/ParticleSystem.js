@@ -935,16 +935,16 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
          default:
          {
             const
-               browser        = this .getBrowser (),
-               appearanceNode = this .getAppearance (),
-               shaderNode     = appearanceNode .getShader (this .geometryContext, renderContext),
-               primitiveMode  = browser .getPrimitiveMode (this .primitiveMode);
+               browser         = this .getBrowser (),
+               appearanceNode  = this .getAppearance (),
+               renderModeNodes = appearanceNode .getRenderModes (),
+               shaderNode      = appearanceNode .getShader (this .geometryContext, renderContext),
+               primitiveMode   = browser .getPrimitiveMode (this .primitiveMode);
+
+            for (const node of renderModeNodes)
+               node .enable (gl);
 
             // Setup shader.
-
-            const blendModeNode = appearanceNode .getBlendMode ();
-
-            blendModeNode ?.enable (gl);
 
             shaderNode .enable (gl);
             shaderNode .setUniforms (gl, this .geometryContext, renderContext);
@@ -989,7 +989,9 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
 
             gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, this .numParticles);
 
-            blendModeNode ?.disable (gl);
+            for (const node of renderModeNodes)
+               node .disable (gl);
+
             break;
          }
       }
