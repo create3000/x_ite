@@ -83,6 +83,8 @@ Object .assign (Object .setPrototypeOf (DepthMode .prototype, X3DAppearanceChild
    })(),
    enable (gl)
    {
+      this .depthWriteMask = gl .getParameter (gl .DEPTH_WRITEMASK);
+
       if (this ._depthTest .geValue ())
          gl .enable (gl .DEPTH_TEST);
       else
@@ -90,12 +92,14 @@ Object .assign (Object .setPrototypeOf (DepthMode .prototype, X3DAppearanceChild
 
       gl .depthFunc (this .depthFunc);
       gl .depthRange (this ._zNear .getValue (), this ._zFar .getValue ());
+      gl .depthMask (this ._depthMask .getValue ());
    },
    disable (gl)
    {
       gl .enable (gl .DEPTH_TEST);
       gl .depthFunc (gl .LEQUAL);
       gl .depthRange (0, 1);
+      gl .depthMask (false);
    },
 });
 
@@ -129,6 +133,7 @@ Object .defineProperties (DepthMode,
          new X3DFieldDefinition (X3DConstants .inputOutput, "depthFunc", new Fields .SFString ("LEQUAL")),
          new X3DFieldDefinition (X3DConstants .inputOutput, "zNear",     new Fields .SFFloat (0)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "zFar",      new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "depthMask", new Fields .SFBool (true)),
       ]),
       enumerable: true,
    },
