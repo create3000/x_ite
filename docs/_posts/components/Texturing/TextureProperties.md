@@ -94,7 +94,7 @@ Determines whether MIPMAPs are generated for texture images.
 
 - Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
 
-### SFString [in, out] **boundaryModeS** "REPEAT"
+### SFString [in, out] **boundaryModeS** "REPEAT" <small>["CLAMP", "CLAMP_TO_EDGE", "CLAMP_TO_BOUNDARY", "MIRRORED_REPEAT", "REPEAT"]</small>
 
 *boundaryModeS* describes handling of texture-coordinate boundaries.
 
@@ -106,7 +106,7 @@ Determines whether MIPMAPs are generated for texture images.
 
 - Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
 
-### SFString [in, out] **boundaryModeT** "REPEAT"
+### SFString [in, out] **boundaryModeT** "REPEAT" <small>["CLAMP", "CLAMP_TO_EDGE", "CLAMP_TO_BOUNDARY", "MIRRORED_REPEAT", "REPEAT"]</small>
 
 *boundaryModeT* describes handling of texture-coordinate boundaries.
 
@@ -118,7 +118,7 @@ Determines whether MIPMAPs are generated for texture images.
 
 - Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
 
-### SFString [in, out] **boundaryModeR** "REPEAT"
+### SFString [in, out] **boundaryModeR** "REPEAT" <small>["CLAMP", "CLAMP_TO_EDGE", "CLAMP_TO_BOUNDARY", "MIRRORED_REPEAT", "REPEAT"]</small>
 
 *boundaryModeR* describes handling of texture-coordinate boundaries.
 
@@ -130,7 +130,7 @@ Determines whether MIPMAPs are generated for texture images.
 
 - Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
 
-### SFString [in, out] **textureCompression** "FASTEST"
+### SFString [in, out] **textureCompression** "FASTEST" <small>["DEFAULT", "FASTEST", "HIGH", "LOW", "MEDIUM", "NICEST"]</small>
 
 *textureCompression* indicates compression algorithm selection mode.
 
