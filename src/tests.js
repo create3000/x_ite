@@ -333,6 +333,7 @@ const X_ITE_TESTS = [
    { path: "Shape/Coin.x3d" },
    { path: "Shape/Connectors.x3d" },
    { path: "Shape/CopperGold.x3d" },
+   { path: "Shape/DepthMode.x3d" },
    { path: "Shape/FillProperties.x3d" },
    { path: "Shape/flower-extreme/sphereflowers.x3d" },
    { path: "Shape/LineProperties.x3dv" },
