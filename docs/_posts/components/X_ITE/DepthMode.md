@@ -13,9 +13,9 @@ tags: [DepthMode, X_ITE]
 
 ## Overview
 
-DepthMode controls how pixels of an objects are drawn. Pixels can be drawn using a function that blends the incoming (source) RGBA values with the RGBA values that are already in the frame buffer (the destination values). DepthMode is an X3DAppearanceChildNode node that handles blend operations.
+DepthMode contains parameters that are specific for depth control, like the value used for depth buffer comparisons.
 
-The DepthMode node belongs to the **X_ITE** component and its default container field is *blendMode.* It is available in Titania and X_ITE.
+The DepthMode node belongs to the **X_ITE** component and its default container field is *depthMode.* It is available in X_ITE.
 
 >**Info:** Please note that the functionality of this node is still experimental.
 {: .prompt-info }
