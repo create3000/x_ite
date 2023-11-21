@@ -173,6 +173,10 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
    {
       return this .renderModeNodes;
    },
+   getDepthMode ()
+   {
+      return this .depthModeNode;
+   },
    set_contentScale__ ()
    {
       this .set_pointProperties__ ();
@@ -380,14 +384,11 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
    {
       this .renderModeNodes .length = 0;
 
-      const
-         blendModeNode = X3DCast (X3DConstants .BlendMode, this ._blendMode),
-         depthModeNode = X3DCast (X3DConstants .DepthMode, this ._depthMode);
+      this .blendModeNode = X3DCast (X3DConstants .BlendMode, this ._blendMode),
+      this .depthModeNode = X3DCast (X3DConstants .DepthMode, this ._depthMode);
 
-      this .blendModeNode = blendModeNode;
-
-      if (blendModeNode) this .renderModeNodes .push (blendModeNode);
-      if (depthModeNode) this .renderModeNodes .push (depthModeNode);
+      if (this .blendModeNode) this .renderModeNodes .push (this .blendModeNode);
+      if (this .depthModeNode) this .renderModeNodes .push (this .depthModeNode);
    },
    set_transparent__ ()
    {

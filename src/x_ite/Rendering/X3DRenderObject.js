@@ -729,6 +729,7 @@ Object .assign (X3DRenderObject .prototype,
                { scissor, clipPlanes, modelViewMatrix, shapeNode, humanoidNode } = renderContext,
                appearanceNode      = shapeNode .getAppearance (),
                geometryContext     = shapeNode .getGeometryContext (),
+               depthModeNode       = appearanceNode .getDepthMode (),
                stylePropertiesNode = appearanceNode .getStyleProperties (geometryContext .geometryType),
                shaderNode          = browser .getPointingShader (clipPlanes .length, shapeNode, humanoidNode),
                id                  = browser .addPointingShape (renderContext);
@@ -747,10 +748,13 @@ Object .assign (X3DRenderObject .prototype,
             gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrix);
             gl .uniform1f (shaderNode .x3d_Id, id);
 
+            depthModeNode       ?.enable (gl);
             stylePropertiesNode ?.setShaderUniforms (gl, shaderNode);
             humanoidNode        ?.setShaderUniforms (gl, shaderNode);
 
             shapeNode .displaySimple (gl, renderContext, shaderNode);
+
+            depthModeNode ?.disable (gl);
             browser .resetTextureUnits ();
          }
       };
