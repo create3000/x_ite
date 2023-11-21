@@ -88,7 +88,7 @@ Object .assign (Object .setPrototypeOf (DepthMode .prototype, X3DAppearanceChild
       gl .enable (gl .POLYGON_OFFSET_FILL);
       gl .polygonOffset (... this ._polygonOffset);
 
-      if (this ._depthTest .geValue ())
+      if (this ._depthTest .getValue ())
          gl .enable (gl .DEPTH_TEST);
       else
          gl .disable (gl .DEPTH_TEST);
