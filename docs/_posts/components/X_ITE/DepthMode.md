@@ -57,6 +57,17 @@ Activates depth comparisons and updates to the depth buffer.
 
 Specifies a function that compares incoming pixel depth to the current depth buffer value.
 
+Must be one of the following symbolic constants:
+
+* NEVER
+* LESS
+* EQUAL
+* LESS_EQUAL
+* GREATER
+* NOT_EQUAL
+* GREATER_EQUAL
+* ALWAYS
+
 ### SFVec2f [in, out] **depthRange** NULL <small>[0,1]</small>
 
 Specifies the depth range mapping from normalized device coordinates to window or viewport coordinates.
