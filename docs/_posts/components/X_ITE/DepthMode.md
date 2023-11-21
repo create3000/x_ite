@@ -82,4 +82,4 @@ Sets whether writing into the depth buffer is enabled or disabled.
 
 ## See Also
 
-* [Z-buffering](https://en.wikipedia.org/wiki/Z-buffering)
+* [Z-buffering](https://en.wikipedia.org/wiki/Z-buffering){:target="_blank"}
