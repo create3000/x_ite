@@ -74,13 +74,14 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
    display (gl, renderContext)
    {
       const
-         appearanceNode = renderContext .appearanceNode,
-         shaderNode     = appearanceNode .getShader (this, renderContext),
-         blendModeNode  = appearanceNode .getBlendMode (),
-         attribNodes    = this .getAttrib (),
-         attribBuffers  = this .getAttribBuffers ();
+         appearanceNode  = renderContext .appearanceNode,
+         shaderNode      = appearanceNode .getShader (this, renderContext),
+         renderModeNodes = appearanceNode .getRenderModes (),
+         attribNodes     = this .getAttrib (),
+         attribBuffers   = this .getAttribBuffers ();
 
-      blendModeNode ?.enable (gl);
+      for (const node of renderModeNodes)
+         node .enable (gl);
 
       // Setup shader.
 
@@ -111,18 +112,20 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
 
       gl .drawArrays (this .primitiveMode, 0, this .vertexCount);
 
-      blendModeNode ?.disable (gl);
+      for (const node of renderModeNodes)
+         node .disable (gl);
    },
    displayParticles (gl, renderContext, particleSystem)
    {
       const
-         appearanceNode = renderContext .appearanceNode,
-         shaderNode     = appearanceNode .getShader (this, renderContext),
-         blendModeNode  = appearanceNode .getBlendMode (),
-         attribNodes    = this .getAttrib (),
-         attribBuffers  = this .getAttribBuffers ();
+         appearanceNode  = renderContext .appearanceNode,
+         shaderNode      = appearanceNode .getShader (this, renderContext),
+         renderModeNodes = appearanceNode .getRenderModes (),
+         attribNodes     = this .getAttrib (),
+         attribBuffers   = this .getAttribBuffers ();
 
-      blendModeNode ?.enable (gl);
+      for (const node of renderModeNodes)
+         node .enable (gl);
 
       // Setup shader.
 
@@ -161,7 +164,8 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
 
       gl .drawArraysInstanced (this .primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
 
-      blendModeNode ?.disable (gl);
+      for (const node of renderModeNodes)
+         node .disable (gl);
    },
 });
 
