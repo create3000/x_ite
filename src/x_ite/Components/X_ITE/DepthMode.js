@@ -70,15 +70,22 @@ Object .assign (Object .setPrototypeOf (DepthMode .prototype, X3DAppearanceChild
    },
    set_depthFunc__: (function ()
    {
-      const depthFuncs = new Set (["NONE", "NEVER", "LESS", "EQUAL", "LEQUAL", "GREATER", "NOTEQUAL", "GEQUAL", "ALWAYS"]);
+      const depthFuncs = new Map ([
+         ["NEVER",         "NEVER"],
+         ["LESS",          "LESS"],
+         ["EQUAL",         "EQUAL"],
+         ["LESS_EQUAL",    "LEQUAL"],
+         ["GREATER",       "GREATER"],
+         ["NOT_EQUAL",     "NOTEQUAL"],
+         ["GREATER_EQUAL", "GEQUAL"],
+         ["ALWAYS",        "ALWAYS"],
+      ]);
 
       return function ()
       {
          const gl = this .getBrowser () .getContext ();
 
-         this .depthFunc = depthFuncs .has (this ._depthFunc .getValue ())
-            ? gl [this ._depthFunc .getValue ()]
-            : gl .LEQUAL;
+         this .depthFunc = gl [depthFuncs .get (this ._depthFunc .getValue ()) ?? "LEQUAL"];
       };
    })(),
    enable (gl)
@@ -94,7 +101,7 @@ Object .assign (Object .setPrototypeOf (DepthMode .prototype, X3DAppearanceChild
          gl .disable (gl .DEPTH_TEST);
 
       gl .depthFunc (this .depthFunc);
-      gl .depthRange (this ._zNear .getValue (), this ._zFar .getValue ());
+      gl .depthRange (... this ._depthRange .getValue ());
       gl .depthMask (this ._depthMask .getValue ());
    },
    disable (gl)
@@ -135,9 +142,8 @@ Object .defineProperties (DepthMode,
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "polygonOffset", new Fields .SFVec2f ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "depthTest",     new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "depthFunc",     new Fields .SFString ("LEQUAL")),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "zNear",         new Fields .SFFloat (0)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "zFar",          new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "depthFunc",     new Fields .SFString ("LESS_EQUAL")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "depthRange",    new Fields .SFVec2f (0, 1)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "depthMask",     new Fields .SFBool (true)),
       ]),
       enumerable: true,
