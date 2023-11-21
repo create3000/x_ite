@@ -383,5 +383,6 @@ This index lists the components and nodes in alphabetical order for quick access
 ## X_ITE
 
 - [BlendMode](x-ite/blendmode)
+- [DepthMode](x-ite/depthmode)
 
 <!-- COMPONENTS END -->

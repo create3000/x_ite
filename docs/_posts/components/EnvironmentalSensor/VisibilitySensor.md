@@ -51,7 +51,7 @@ Enables/disables node operation.
 
 ### SFVec3f [in, out] **size** 0 0 0 <small>[0,∞)</small>
 
-*size* of visibility box, measured from center in meters.
+*size* of visibility box around center location, oriented within local transformation frame.
 
 ### SFVec3f [in, out] **center** 0 0 0 <small>(-∞,∞)</small>
 

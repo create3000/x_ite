@@ -2,3 +2,5 @@
   children:
     - title: "BlendMode"
       url: /components/x-ite/blendmode
+    - title: "DepthMode"
+      url: /components/x-ite/depthmode

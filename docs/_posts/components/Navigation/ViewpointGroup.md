@@ -58,7 +58,7 @@ Retain (true) or reset to zero (false) any prior user navigation offsets from de
 
 ### SFVec3f [in, out] **size** 0 0 0 <small>(-∞,∞)</small>
 
-Size of proximity box around center location within which ViewpointGroup is usable and displayed on viewpoint list.
+*size* of Proximity box around center location, oriented within local transformation frame, within which ViewpointGroup is usable and displayed on viewpoint list.
 
 #### Hint
 
