@@ -85,6 +85,9 @@ Object .assign (Object .setPrototypeOf (DepthMode .prototype, X3DAppearanceChild
    {
       this .depthWriteMask = gl .getParameter (gl .DEPTH_WRITEMASK);
 
+      gl .enable (gl .POLYGON_OFFSET_FILL);
+      gl .polygonOffset (... this ._polygonOffset);
+
       if (this ._depthTest .geValue ())
          gl .enable (gl .DEPTH_TEST);
       else
@@ -96,6 +99,7 @@ Object .assign (Object .setPrototypeOf (DepthMode .prototype, X3DAppearanceChild
    },
    disable (gl)
    {
+      gl .disable (gl .POLYGON_OFFSET_FILL);
       gl .enable (gl .DEPTH_TEST);
       gl .depthFunc (gl .LEQUAL);
       gl .depthRange (0, 1);
@@ -128,12 +132,13 @@ Object .defineProperties (DepthMode,
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",  new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "depthTest", new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "depthFunc", new Fields .SFString ("LEQUAL")),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "zNear",     new Fields .SFFloat (0)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "zFar",      new Fields .SFFloat (1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "depthMask", new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "polygonOffset", new Fields .SFVec2f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "depthTest",     new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "depthFunc",     new Fields .SFString ("LEQUAL")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "zNear",         new Fields .SFFloat (0)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "zFar",          new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "depthMask",     new Fields .SFBool (true)),
       ]),
       enumerable: true,
    },
