@@ -51,7 +51,7 @@ Required *name* for this particular VertexAttribute instance.
 
 ### SFInt32 [ ] **numComponents** 4 <small>[1..4]</small>
 
-*numComponents* pecifies how many consecutive floating-point values should be grouped together per vertex.
+*numComponents* specifies how many consecutive floating-point values should be grouped together per vertex.
 
 #### Hint
 
