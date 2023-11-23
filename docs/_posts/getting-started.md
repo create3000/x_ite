@@ -548,6 +548,11 @@ X_ITE needs your support, with a small contribution you can make a big differenc
       <a href="https://create3000.github.io/media/examples/X_ITE/BlendMode/BlendMode.x3d" title="X_ITE » BlendMode" componentName="X_ITE" typeName="BlendMode"><img src="https://create3000.github.io/media/examples/X_ITE/BlendMode/screenshot-small.png" alt="BlendMode"/></a>
     </td>
   </tr>
+  <tr>
+    <td>
+      <a href="https://create3000.github.io/media/examples/X_ITE/DepthMode/DepthMode.x3d" title="X_ITE » DepthMode" componentName="X_ITE" typeName="DepthMode"><img src="https://create3000.github.io/media/examples/X_ITE/DepthMode/screenshot-small.png" alt="DepthMode"/></a>
+    </td>
+  </tr>
 </table>
 
 >**Note:** The VolumeRendering examples are only working if your browser supports WebGL 2, otherwise the examples left black.
