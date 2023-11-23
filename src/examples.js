@@ -153,6 +153,7 @@ const X_ITE_EXAMPLES = [
    { component: "X3D", test: "Vattenfall" },
    { component: "X3D", test: "WaterQuality" },
    { component: "X_ITE", test: "BlendMode" },
+   { component: "X_ITE", test: "DepthMode" },
 ];
 X_ITE_EXAMPLES .server = "https://create3000.github.io/media/examples";
 
