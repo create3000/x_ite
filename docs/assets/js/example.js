@@ -61,7 +61,7 @@ $("table.examples a") .on ("click", function ()
    {
       title
          .css ("cursor", "pointer")
-         .on ("click", () => window .location = `/x_ite/components/${$(this) .attr ("componentName") .toLowerCase ()}/${$(this) .attr ("typeName") .toLowerCase ()}`);
+         .on ("click", () => window .location = `/x_ite/components/${$(this) .attr ("componentName") .replace (/[_]/g, "-") .toLowerCase ()}/${$(this) .attr ("typeName") .toLowerCase ()}`);
    }
 
    console .log (`Loading ${$(this) .attr ("title")} ...`);
