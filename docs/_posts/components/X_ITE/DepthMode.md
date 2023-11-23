@@ -80,6 +80,12 @@ Must be one of the following symbolic constants:
 
 Sets whether writing into the depth buffer is enabled or disabled.
 
+## Example
+
+<x3d-canvas src="https://create3000.github.io/media/examples/X_ITE/DepthMode/DepthMode.x3d" update="auto"></x3d-canvas>
+
+[View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/X_ITE/DepthMode/DepthMode.x3d)
+
 ## See Also
 
 * [Z-buffering](https://en.wikipedia.org/wiki/Z-buffering){:target="_blank"}
