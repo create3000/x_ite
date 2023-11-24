@@ -279,40 +279,31 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
    },
    createContext (sourceText)
    {
-      try
-      {
-         const callbacks = ["initialize", "prepareEvents", "eventsProcessed", "shutdown"];
+      const callbacks = ["initialize", "prepareEvents", "eventsProcessed", "shutdown"];
 
-         for (const field of this .getUserDefinedFields ())
+      for (const field of this .getUserDefinedFields ())
+      {
+         switch (field .getAccessType ())
          {
-            switch (field .getAccessType ())
-            {
-               case X3DConstants .inputOnly:
-                  callbacks .push (field .getName ());
-                  break;
-               case X3DConstants .inputOutput:
-                  callbacks .push ("set_" + field .getName ());
-                  break;
-            }
+            case X3DConstants .inputOnly:
+               callbacks .push (field .getName ());
+               break;
+            case X3DConstants .inputOutput:
+               callbacks .push ("set_" + field .getName ());
+               break;
          }
-
-         sourceText += ";\n[" + callbacks .map (c => `typeof ${c} !== "undefined" ? ${c} : undefined`) .join (",") + "];";
-
-         const
-            result  = this .evaluate (sourceText),
-            context = new Map ();
-
-         for (let i = 0; i < callbacks .length; ++ i)
-            context .set (callbacks [i], result [i]);
-
-         return context;
       }
-      catch (error)
-      {
-         this .setError ("while evaluating script source", error);
 
-         return new Map ();
-      }
+      sourceText += ";\n[" + callbacks .map (c => `typeof ${c} !== "undefined" ? ${c} : undefined`) .join (",") + "];";
+
+      const
+         result  = this .evaluate (sourceText),
+         context = new Map ();
+
+      for (let i = 0; i < callbacks .length; ++ i)
+         context .set (callbacks [i], result [i]);
+
+      return context;
    },
    evaluate (sourceText)
    {
@@ -428,7 +419,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
       }
       catch (error)
       {
-         this .setError ("in function '" + field .getName () + "'", error);
+         this .setError (`in function '${field .getName()}'`, error);
       }
 
       browser .getScriptStack () .pop ();
@@ -436,7 +427,11 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
    },
    setError (reason, error)
    {
-      console .error ("JavaScript Error in Script '" + this .getName () + "', " + reason + "\nworld url is '" + this .getExecutionContext () .getWorldURL () + "':");
+      const worldURL = this .getExecutionContext () .getWorldURL () .startsWith ("data:")
+         ? "data:"
+         : this .getExecutionContext () .getWorldURL ();
+
+      console .error (`JavaScript Error in Script '${this .getName ()}', ${reason}\nworld url is '${worldURL}':`);
       console .error (error);
    },
    disconnect ()
