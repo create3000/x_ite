@@ -52,10 +52,6 @@ const cache = new WeakMap ();
 
 const SFNodeCache = DEVELOPMENT ?
 {
-   add (baseNode, node)
-   {
-      cache .set (baseNode, new WeakRef (node));
-   },
    get (baseNode)
    {
       const node = cache .get (baseNode) ?.deref ();
@@ -75,16 +71,16 @@ const SFNodeCache = DEVELOPMENT ?
          return node;
       }
    },
+   add (baseNode, node)
+   {
+      cache .set (baseNode, new WeakRef (node));
+   },
    delete (baseNode)
    {
       cache .delete (baseNode);
    },
 } :
 {
-   add (baseNode, node)
-   {
-      cache .set (baseNode, node);
-   },
    get (baseNode)
    {
       const node = cache .get (baseNode);
@@ -103,6 +99,10 @@ const SFNodeCache = DEVELOPMENT ?
 
          return node;
       }
+   },
+   add (baseNode, node)
+   {
+      cache .set (baseNode, node);
    },
    delete (baseNode)
    {
