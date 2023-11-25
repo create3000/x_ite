@@ -18,8 +18,13 @@
 		"lint": "eslint src",
 		"build": "make",
 		"-prebuild:js": "npm run lint",
-		"docs": "cd docs && bundle exec jekyll serve --incremental"
-	},
+		"docs": "cd docs && bundle exec jekyll serve --incremental --host=192.168.0.18",
+		"docs-update": "cd docs && bundle update",
+		"docs-components": "node build/docs/components.js",
+		"docs-nodes": "perl build/docs/nodes.pl",
+		"glTF-samples": "perl build/docs/glTF-samples.pl",
+		"make-test": "perl build/bin/tests.pl"
+	  },
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/create3000/x_ite.git"
