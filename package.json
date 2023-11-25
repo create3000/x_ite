@@ -17,7 +17,8 @@
 		"test": "cd ../x_ite-tests && npm test",
 		"lint": "eslint src",
 		"build": "make",
-		"-prebuild:js": "npm run lint"
+		"-prebuild:js": "npm run lint",
+		"docs": "cd docs && bundle exec jekyll serve --incremental"
 	},
 	"repository": {
 		"type": "git",

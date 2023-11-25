@@ -47,8 +47,8 @@ sub commit
 
 	my $version = shift;
 
-	system "git", "commit", "-am", "Published version $VERSION";
-	system "git", "push", "origin";
+	system "git commit -am 'Published version $VERSION'";
+	system "git push origin";
 }
 
 sub publish
@@ -57,11 +57,11 @@ sub publish
 
 	my $version = shift;
 
-	system "git", "tag", "--delete", $version;
-	system "git", "push", "--delete", "origin", $version;
+	system "git tag --delete $version";
+	system "git push --delete origin $version";
 
-	system "git", "tag", $version;
-	system "git", "push", "origin", "--tags";
+	system "git tag $version";
+	system "git push origin --tags";
 }
 
 sub update
@@ -72,9 +72,9 @@ sub update
 
 	say "Uploading $release";
 
-	system "rm", "-r", $code;
-	system "cp", "-r", $dist, $code;
-	system "cp", "-r", $dist, "$code/dist" if $release eq "latest";
+	system "rm -r '$code'";
+	system "cp -r '$dist' '$code'";
+	system "cp -r '$dist' '$code/dist'" if $release eq "latest";
 }
 
 sub upload
@@ -85,16 +85,16 @@ sub upload
 
 	chdir $code;
 
-	system "git", "add", "-A";
-	system "git", "commit", "-am", "Published version $VERSION";
-	system "git", "push", "origin";
+	system "git add -A";
+	system "git commit -am 'Published version $VERSION'";
+	system "git push origin";
 
 	chdir $CWD;
-	system "npm", "publish";
+	system "npm publish";
 }
 
 sub other {
-	my $result = system "zenity", "--question", "--text=Do want to publish new versions for x3d-tidy and Sunrize?", "--ok-label=Yes", "--cancel-label=No";
+	my $result = system "zenity --question '--text=Do want to publish new versions for x3d-tidy and Sunrize?' --ok-label=Yes --cancel-label=No";
 
 	return unless $result == 0;
 
@@ -121,18 +121,20 @@ if (`git branch --show-current` ne "development\n")
 
 say "Waiting for confirmation ...";
 
-my $result = system "zenity", "--question", "--text=Do you really want to publish X_ITE X3D v$VERSION now?", "--ok-label=Yes", "--cancel-label=No";
+my $result = system "zenity --question '--text=Do you really want to publish X_ITE X3D v$VERSION now?' --ok-label=Yes --cancel-label=No";
 
 exit 1 unless $result == 0;
 
 say "Publishing X_ITE X3D v$VERSION now.";
 
-system "make", "docs-all";
-system "git", "add", "-A";
-system "git", "commit", "-am", "Build version $VERSION";
-system "git", "push", "origin";
-system "git", "checkout", "main";
-system "git", "merge", "development";
+system "npm run docs-components";
+system "npm run docs-nodes";
+system "npm run glTF-examples";
+system "git add -A";
+system "git commit -am 'Build version $VERSION'";
+system "git push origin";
+system "git checkout main";
+system "git merge development";
 
 # docs
 
@@ -155,9 +157,9 @@ upload;
 
 # switch to development branch
 
-system "git", "checkout", "development";
-system "git", "merge", "main";
-system "git", "push", "origin";
+system "git checkout development";
+system "git merge main";
+system "git push origin";
 
 # publish x3d-tidy and sunrize
 

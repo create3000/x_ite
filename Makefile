@@ -58,29 +58,6 @@ bump-version:
 version: bump-version dist zip
 	perl build/bin/version.pl
 
-.PHONY: docs
-docs:
-	cd docs && bundle exec jekyll serve --incremental --host=192.168.0.18
-
-docs-update:
-	cd docs && bundle update
-
-docs-components:
-	node build/docs/components.js
-
-docs-nodes:
-	perl build/docs/nodes.pl
-
-glTF-samples:
-	perl build/docs/glTF-samples.pl
-
-docs-all: docs-components docs-nodes glTF-samples
-	echo
-
-.PHONY: tests
-tests:
-	perl build/bin/tests.pl
-
 min-size:
 	gzip -5 dist/x_ite.min.js --stdout | wc -c
 
