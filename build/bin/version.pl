@@ -129,7 +129,7 @@ say "Publishing X_ITE X3D v$VERSION now.";
 
 system "npm run docs-components";
 system "npm run docs-nodes";
-system "npm run glTF-examples";
+system "npm run glTF-samples";
 system "git add -A";
 system "git commit -am 'Build version $VERSION'";
 system "git push origin";
