@@ -23,7 +23,7 @@
 		"docs-components": "node build/docs/components.js",
 		"docs-nodes": "perl build/docs/nodes.pl",
 		"glTF-samples": "perl build/docs/glTF-samples.pl",
-		"make-test": "perl build/bin/tests.pl"
+		"make-tests": "perl build/bin/tests.pl"
 	  },
 	"repository": {
 		"type": "git",
