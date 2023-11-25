@@ -102,13 +102,13 @@ sub other {
 	system "make publish";
 
 	chdir "$CWD/../x3d-tidy";
-	system "npm run publish";
+	system "npm run release";
 
 	chdir "$CWD/../x3d-image";
-	system "npm run publish";
+	system "npm run release";
 
 	chdir "$CWD/../sunrize";
-	system "npm run publish";
+	system "npm run release";
 
 	chdir $CWD;
 }
