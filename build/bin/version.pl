@@ -99,16 +99,16 @@ sub other {
 	return unless $result == 0;
 
 	chdir "$CWD/../media";
-	system "make", "publish";
+	system "make publish";
 
 	chdir "$CWD/../x3d-tidy";
-	system "make", "publish";
+	system "npm run publish";
 
 	chdir "$CWD/../x3d-image";
-	system "make", "publish";
+	system "npm run publish";
 
 	chdir "$CWD/../sunrize";
-	system "make", "publish";
+	system "npm run publish";
 
 	chdir $CWD;
 }
