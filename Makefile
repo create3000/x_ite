@@ -49,9 +49,6 @@ zip:
 dist: copy-files compile html min-size
 	du -h dist/x_ite.min.js
 
-checkout-dist:
-	git checkout -- dist
-
 bump-version:
 	perl build/bin/bump.pl
 

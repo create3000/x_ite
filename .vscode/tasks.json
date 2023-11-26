@@ -18,7 +18,7 @@
         {
             "label": "Checkout Dist",
             "type": "shell",
-            "command": "make checkout-dist",
+            "command": "git checkout -- dist",
             "problemMatcher": [],
         },
         {
