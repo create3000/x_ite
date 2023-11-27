@@ -170,7 +170,7 @@ async function release ()
 	if (!version .endsWith ("a"))
 		await update ("latest");
 
-	upload (version);
+	await upload (version);
 
 	// switch back to development branch
 
