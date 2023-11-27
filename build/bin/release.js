@@ -74,7 +74,7 @@ async function update (release)
 	await system (`cp -r '${dist}' '${code}'`);
 
 	if (release !== "latest")
-		await system (`cp -r '${dist}' '${code}/dist'`);
+		await system (`cp -r '${dist}' '${code}/dist'`); // legacy
 }
 
 async function upload (version)
@@ -154,7 +154,6 @@ async function release ()
 	// tags
 
 	await commit ();
-
 	await publish ("alpha");
 
 	if (!version .endsWith ("a"))
