@@ -1,7 +1,9 @@
 #!/usr/bin/env node
 "use strict";
 
-const { sh, system } = require ("shell-tools");
+const
+	fs             = require ("fs"),
+	{ sh, system } = require ("shell-tools");
 
 async function bump ()
 {
@@ -20,8 +22,6 @@ async function bump ()
 
 	if (version === online)
 		await system (`npm version patch --no-git-tag-version --force`);
-
-	return sh`npm pkg get version | sed 's/"//g'` .trim ();
 }
 
 async function zip ()
@@ -34,6 +34,20 @@ async function zip ()
 	await system (`rm -r x_ite-${version}`);
 }
 
+async function docs (version)
+{
+	const contentLength = Math .floor (parseInt (sh`gzip -5 dist/x_ite.min.js --stdout | wc -c` .trim ()) / 1000);
+
+	console .log (contentLength)
+
+	let config = sh`cat 'docs/_config.yml'` .trim ();
+
+	config = config .replace (/\bversion:\s*[\d\.]+/sg, `version: ${version}`);
+	config = config .replace (/\bsize:\s*[\d\.]+/sg, `size: ${contentLength}`);
+
+	fs .writeFileSync ("docs/_config.yml", config);
+}
+
 async function release ()
 {
 	if (sh`git branch --show-current` !== "development\n")
@@ -42,26 +56,30 @@ async function release ()
 		process .exit (1);
 	}
 
-	// say "Waiting for confirmation ...";
+	console .log ("Waiting for confirmation ...");
 
-	// my $result = system "zenity --question '--text=Do you really want to publish X_ITE X3D v$VERSION now?' --ok-label=Yes --cancel-label=No";
+	const
+		version = sh`npm pkg get version | sed 's/"//g'` .trim (),
+		result  = await system (`zenity --question '--text=Do you really want to publish X_ITE X3D v${version} now?' --ok-label=Yes --cancel-label=No`);
 
-	// exit 1 unless $result == 0;
+	if (result !== 0)
+		process .exit (1);
 
-	// say "Publishing X_ITE X3D v$VERSION now.";
+	console .log (`Publishing X_ITE X3D v${version} now.`);
 
-	// system "npm run docs-components";
-	// system "npm run docs-nodes";
-	// system "npm run glTF-samples";
-	// system "git add -A";
-	// system "git commit -am 'Build version $VERSION'";
-	// system "git push origin";
-	// system "git checkout main";
-	// system "git merge development";
+	// await system (`npm run docs-components`);
+	// await system (`npm run docs-nodes`);
+	// await system (`npm run glTF-samples`);
+	// await system (`git add -A`);
+	// await system (`git commit -am 'Build version ${version}'`);
+	// await system (`git push origin`);
+	// await system (`git checkout main`);
+	// await system (`git merge development`);
 
-	// // docs
+	// docs
 
-	// docs ($VERSION) unless $ALPHA;
+	if (!version .endsWith ("a"))
+		docs (version);
 
 	// // tags
 
