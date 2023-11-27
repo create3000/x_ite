@@ -18,8 +18,5 @@ zip:
 dist:
 	npm run dist
 
-bump-version:
-	perl build/bin/bump.pl
-
 version: bump-version dist zip
 	perl build/bin/version.pl

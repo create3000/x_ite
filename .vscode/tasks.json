@@ -12,7 +12,7 @@
         {
             "label": "Publish X_ITE",
             "type": "shell",
-            "command": "make version",
+            "command": "npm run release",
             "problemMatcher": []
         },
         {

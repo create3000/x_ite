@@ -1,10 +1,7 @@
 #!/usr/bin/env node
 "use strict";
 
-const
-   fs             = require ("fs"),
-   path           = require ("path"),
-   { sh, system } = require ("shell-tools");
+const { sh, system } = require ("shell-tools");
 
 async function copy_files ()
 {
