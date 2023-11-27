@@ -58,12 +58,12 @@ async function release ()
 
 	console .log ("Waiting for confirmation ...");
 
-	const
-		version = sh`npm pkg get version | sed 's/"//g'` .trim (),
-		result  = await system (`zenity --question '--text=Do you really want to publish X_ITE X3D v${version} now?' --ok-label=Yes --cancel-label=No`);
+	// const
+	// 	version = sh`npm pkg get version | sed 's/"//g'` .trim (),
+	// 	result  = await system (`zenity --question '--text=Do you really want to publish X_ITE X3D v${version} now?' --ok-label=Yes --cancel-label=No`);
 
-	if (result !== 0)
-		process .exit (1);
+	// if (result !== 0)
+	// 	process .exit (1);
 
 	console .log (`Publishing X_ITE X3D v${version} now.`);
 
