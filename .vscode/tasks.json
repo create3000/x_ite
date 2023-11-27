@@ -6,7 +6,7 @@
         {
             "label": "Make Dist",
             "type": "shell",
-            "command": "make",
+            "command": "npm run dist",
             "problemMatcher": [],
         },
         {
