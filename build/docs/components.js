@@ -1,7 +1,7 @@
 const
-   fs            = require ("fs"),
-   path          = require ("path"),
-   child_process = require ("child_process");
+   fs     = require ("fs"),
+   path   = require ("path"),
+   { sh } = require ("shell-tools");
 
 const
    components = path .resolve ("./", "src/x_ite/Components"),
@@ -11,8 +11,8 @@ const
 
 function createIndex ()
 {
-   const filenames = child_process .execSync (`find ${components} -mindepth 2 -maxdepth 2 -type f`)
-      .toString () .trim () .split (/\s+/) .sort ();
+   const filenames = sh`find ${components} -mindepth 2 -maxdepth 2 -type f`
+      .trim () .split (/\s+/) .sort ();
 
    const index = new Map ();
 
@@ -206,7 +206,7 @@ ${fields}
 
          text = text .trim () .replace (/\n{3,}/g, "\n\n");
 
-         child_process .execSync (`mkdir -p ${path .dirname (md)}`);
+         sh`mkdir -p ${path .dirname (md)}`;
 
          fs .writeFileSync (md, text);
       }
