@@ -46,6 +46,78 @@ async function docs (version)
 	fs .writeFileSync ("docs/_config.yml", config);
 }
 
+async function commit (version)
+{
+	await system (`git commit -am 'Published version ${version}'`);
+	await system (`git push origin`);
+}
+
+async function publish (version)
+{
+	await system (`git tag --delete ${version}`);
+	await system (`git push --delete origin ${version}`);
+
+	await system (`git tag ${version}`);
+	await system (`git push origin --tags`);
+}
+
+async function update (release)
+{
+	const
+		cwd  = process .cwd (),
+		dist = `${cwd}/dist`,
+		code = `${cwd}/../code/docs/x_ite/${release}`;
+
+	console .log (`Uploading ${release}`);
+
+	await system (`rm -r '${code}'`);
+	await system (`cp -r '${dist}' '${code}'`);
+
+	if (release !== "latest")
+		await system (`cp -r '${dist}' '${code}/dist'`);
+}
+
+async function upload (version)
+{
+	const
+		cwd  = process .cwd (),
+		code = `${cwd}/../code`;
+
+	process .chdir (code);
+
+	await system (`git add -A`);
+	await system (`git commit -am 'Published version ${version}'`);
+	await system (`git push origin`);
+
+	process .chdir (cwd);
+
+	await system (`npm publish`);
+}
+
+async function other ()
+{
+	const result = await system (`zenity --question '--text=Do want to publish new versions for x3d-tidy and Sunrize?' --ok-label=Yes --cancel-label=No`);
+
+	if (result !== 0)
+		return;
+
+	const cwd = process .cwd ();
+
+	process .chdir (`${cwd}/../media`);
+	await system (`npm run release`);
+
+	process .chdir (`${cwd}/../x3d-tidy`);
+	await system (`npm run release`);
+
+	process .chdir (`${cwd}/../x3d-image`);
+	await system (`npm run release`);
+
+	process .chdir (`${cwd}/../sunrize`);
+	await system (`npm run release`);
+
+	process .chdir (cwd);
+}
+
 async function release ()
 {
 	if (sh`git branch --show-current` !== "development\n")
@@ -56,62 +128,67 @@ async function release ()
 
 	console .log ("Waiting for confirmation ...");
 
-	const version = sh`npm pkg get version | sed 's/"//g'` .trim (); // DEBUG
+	const
+		version = sh`npm pkg get version | sed 's/"//g'` .trim (),
+		result  = await system (`zenity --question '--text=Do you really want to publish X_ITE X3D v${version} now?' --ok-label=Yes --cancel-label=No`);
 
-	// const
-	// 	version = sh`npm pkg get version | sed 's/"//g'` .trim (),
-	// 	result  = await system (`zenity --question '--text=Do you really want to publish X_ITE X3D v${version} now?' --ok-label=Yes --cancel-label=No`);
-
-	// if (result !== 0)
-	// 	process .exit (1);
+	if (result !== 0)
+		process .exit (1);
 
 	console .log (`Publishing X_ITE X3D v${version} now.`);
 
-	// await system (`npm run docs-components`);
-	// await system (`npm run docs-nodes`);
-	// await system (`npm run glTF-samples`);
-	// await system (`git add -A`);
-	// await system (`git commit -am 'Build version ${version}'`);
-	// await system (`git push origin`);
-	// await system (`git checkout main`);
-	// await system (`git merge development`);
+	await system (`npm run docs-components`);
+	await system (`npm run docs-nodes`);
+	await system (`npm run glTF-samples`);
+	await system (`git add -A`);
+	await system (`git commit -am 'Build version ${version}'`);
+	await system (`git push origin`);
+	await system (`git checkout main`);
+	await system (`git merge development`);
 
 	// docs
 
 	if (!version .endsWith ("a"))
-		docs (version);
+		await docs (version);
 
-	// // tags
+	// tags
 
-	// commit;
+	await commit ();
 
-	// publish ("alpha");
-	// publish ($VERSION) unless $ALPHA;
-	// publish ("latest") unless $ALPHA;
+	await publish ("alpha");
 
-	// // code
+	if (!version .endsWith ("a"))
+	{
+		await publish (version);
+		await publish ("latest");
+	}
 
-	// update ("alpha");
-	// update ("latest") unless $ALPHA;
+	// code
 
-	// upload;
+	await update ("alpha");
 
-	// // switch to development branch
+	if (!version .endsWith ("a"))
+		await update ("latest");
 
-	// system "git checkout development";
-	// system "git merge main";
-	// system "git push origin";
+	upload (version);
 
-	// // publish x3d-tidy and sunrize
+	// switch back to development branch
 
-	// other unless $ALPHA;
+	await system (`git checkout development`);
+	await system (`git merge main`);
+	await system (`git push origin`);
+
+	// publish x3d-tidy and sunrize
+
+	if (!version .endsWith ("a"))
+		await other ();
 }
 
 async function main ()
 {
-	// await bump ();
-	// await system ("npm run dist");
-	// await zip ();
+	await bump ();
+	await system ("npm run dist");
+	await zip ();
 
 	// https://github.com/desktop/desktop/issues/14331#issuecomment-1286747195
 	// Set post buffer to 250 MiB.
@@ -121,95 +198,3 @@ async function main ()
 }
 
 main ();
-
-// my $NO_GIT = 0;
-
-// sub docs
-// {
-// 	my $VERSION = shift;
-
-// 	my $config        = `cat '$CWD/docs/_config.yml'`;
-// 	my $contentLength = `gzip -5 dist/x_ite.min.js --stdout | wc -c`;
-
-// 	$contentLength =~ s/^\s+|\s+$//sg;
-// 	$contentLength = int ($contentLength / 1000);
-
-// 	$config =~ s|\bversion:\s*[\d\.]+|version: $VERSION|sgo;
-// 	$config =~ s|\bsize:\s*[\d\.]+|size: $contentLength|sgo;
-
-// 	open CONFIG, ">", "$CWD/docs/_config.yml";
-// 	print CONFIG $config;
-// 	close CONFIG;
-// }
-
-// sub commit
-// {
-// 	return if $NO_GIT;
-
-// 	my $version = shift;
-
-// 	system "git commit -am 'Published version $VERSION'";
-// 	system "git push origin";
-// }
-
-// sub publish
-// {
-// 	return if $NO_GIT;
-
-// 	my $version = shift;
-
-// 	system "git tag --delete $version";
-// 	system "git push --delete origin $version";
-
-// 	system "git tag $version";
-// 	system "git push origin --tags";
-// }
-
-// sub update
-// {
-// 	my $release = shift;
-// 	my $dist    = "$CWD/dist";
-// 	my $code    = "$CWD/../code/docs/x_ite/$release";
-
-// 	say "Uploading $release";
-
-// 	system "rm -r '$code'";
-// 	system "cp -r '$dist' '$code'";
-// 	system "cp -r '$dist' '$code/dist'" if $release eq "latest";
-// }
-
-// sub upload
-// {
-// 	return if $NO_GIT;
-
-// 	my $code = "$CWD/../code";
-
-// 	chdir $code;
-
-// 	system "git add -A";
-// 	system "git commit -am 'Published version $VERSION'";
-// 	system "git push origin";
-
-// 	chdir $CWD;
-// 	system "npm publish";
-// }
-
-// sub other {
-// 	my $result = system "zenity --question '--text=Do want to publish new versions for x3d-tidy and Sunrize?' --ok-label=Yes --cancel-label=No";
-
-// 	return unless $result == 0;
-
-// 	chdir "$CWD/../media";
-// 	system "npm run release";
-
-// 	chdir "$CWD/../x3d-tidy";
-// 	system "npm run release";
-
-// 	chdir "$CWD/../x3d-image";
-// 	system "npm run release";
-
-// 	chdir "$CWD/../sunrize";
-// 	system "npm run release";
-
-// 	chdir $CWD;
-// }
