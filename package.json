@@ -16,8 +16,7 @@
 	"scripts": {
 		"test": "cd ../x_ite-tests && npm test",
 		"lint": "eslint src",
-		"build": "make",
-		"-prebuild:js": "npm run lint",
+		"dist": "node build/bin/dist.js",
 		"docs": "cd docs && bundle exec jekyll serve --incremental --host=192.168.0.18",
 		"docs-update": "cd docs && bundle update",
 		"docs-components": "node build/docs/components.js",

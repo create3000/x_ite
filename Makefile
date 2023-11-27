@@ -5,15 +5,6 @@ configure:
 	npm install
 	cd docs && bundle install
 
-.SILENT:copy-files
-copy-files:
-	rsync -q -r -x -c -v -t --progress --delete src/assets/fonts    dist/assets/
-	rsync -q -r -x -c -v -t --progress --delete src/assets/hatching dist/assets/
-	rsync -q -r -x -c -v -t --progress --delete src/assets/images   dist/assets/
-	rsync -q -r -x -c -v -t --progress --delete src/assets/lib      dist/assets/
-	rsync -q -r -x -c -v -t --progress --delete src/assets/linetype dist/assets/
-	cp src/example.html dist/
-
 compile:
 	npx webpack
 
