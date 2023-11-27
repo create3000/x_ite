@@ -2,10 +2,11 @@
 "use strict";
 
 const
-	fs             = require ("fs"),
-	{ sh, system } = require ("shell-tools");
+	fs          = require ("fs"),
+	{ execSync} = require ("child_process"),
+	{ sh }      = require ("shell-tools");
 
-async function bump ()
+function bump ()
 {
 	const
 		name    = require ("../../package.json") .name,
@@ -21,20 +22,20 @@ async function bump ()
 	console .log (`NPM version ${online}`);
 
 	if (version === online)
-		await system (`npm version patch --no-git-tag-version --force`);
+		execSync (`npm version patch --no-git-tag-version --force`);
 }
 
-async function zip ()
+function zip ()
 {
 	const version = sh`npm pkg get version | sed 's/"//g'` .trim ();
 
-	await system (`cp -r dist x_ite-${version}`);
-	await system (`zip -q -x "*.zip" -r x_ite-${version}.zip x_ite-${version}`);
-	await system (`mv x_ite-${version}.zip dist/x_ite.zip`);
-	await system (`rm -r x_ite-${version}`);
+	execSync (`cp -r dist x_ite-${version}`);
+	execSync (`zip -q -x "*.zip" -r x_ite-${version}.zip x_ite-${version}`);
+	execSync (`mv x_ite-${version}.zip dist/x_ite.zip`);
+	execSync (`rm -r x_ite-${version}`);
 }
 
-async function docs (version)
+function docs (version)
 {
 	const contentLength = Math .floor (parseInt (sh`gzip -5 dist/x_ite.min.js --stdout | wc -c` .trim ()) / 1000);
 
@@ -46,22 +47,22 @@ async function docs (version)
 	fs .writeFileSync ("docs/_config.yml", config);
 }
 
-async function commit (version)
+function commit (version)
 {
-	await system (`git commit -am 'Published version ${version}'`);
-	await system (`git push origin`);
+	execSync (`git commit -am 'Published version ${version}'`);
+	execSync (`git push origin`);
 }
 
-async function publish (version)
+function publish (version)
 {
-	await system (`git tag --delete ${version}`);
-	await system (`git push --delete origin ${version}`);
+	execSync (`git tag --delete ${version}`);
+	execSync (`git push --delete origin ${version}`);
 
-	await system (`git tag ${version}`);
-	await system (`git push origin --tags`);
+	execSync (`git tag ${version}`);
+	execSync (`git push origin --tags`);
 }
 
-async function update (release)
+function update (release)
 {
 	const
 		cwd  = process .cwd (),
@@ -70,14 +71,14 @@ async function update (release)
 
 	console .log (`Uploading ${release}`);
 
-	await system (`rm -r '${code}'`);
-	await system (`cp -r '${dist}' '${code}'`);
+	execSync (`rm -r '${code}'`);
+	execSync (`cp -r '${dist}' '${code}'`);
 
 	if (release !== "latest")
-		await system (`cp -r '${dist}' '${code}/dist'`); // legacy
+		execSync (`cp -r '${dist}' '${code}/dist'`); // legacy
 }
 
-async function upload (version)
+function upload (version)
 {
 	const
 		cwd  = process .cwd (),
@@ -85,18 +86,18 @@ async function upload (version)
 
 	process .chdir (code);
 
-	await system (`git add -A`);
-	await system (`git commit -am 'Published version ${version}'`);
-	await system (`git push origin`);
+	execSync (`git add -A`);
+	execSync (`git commit -am 'Published version ${version}'`);
+	execSync (`git push origin`);
 
 	process .chdir (cwd);
 
-	await system (`npm publish`);
+	execSync (`npm publish`);
 }
 
-async function other ()
+function other ()
 {
-	const result = await system (`zenity --question '--text=Do want to publish new versions for x3d-tidy and Sunrize?' --ok-label=Yes --cancel-label=No`);
+	const result = execSync (`zenity --question '--text=Do want to publish new versions for x3d-tidy and Sunrize?' --ok-label=Yes --cancel-label=No`);
 
 	if (result !== 0)
 		return;
@@ -104,21 +105,21 @@ async function other ()
 	const cwd = process .cwd ();
 
 	process .chdir (`${cwd}/../media`);
-	await system (`npm run release`);
+	execSync (`npm run release`);
 
 	process .chdir (`${cwd}/../x3d-tidy`);
-	await system (`npm run release`);
+	execSync (`npm run release`);
 
 	process .chdir (`${cwd}/../x3d-image`);
-	await system (`npm run release`);
+	execSync (`npm run release`);
 
 	process .chdir (`${cwd}/../sunrize`);
-	await system (`npm run release`);
+	execSync (`npm run release`);
 
 	process .chdir (cwd);
 }
 
-async function release ()
+function release ()
 {
 	if (sh`git branch --show-current` !== "development\n")
 	{
@@ -130,70 +131,70 @@ async function release ()
 
 	const
 		version = sh`npm pkg get version | sed 's/"//g'` .trim (),
-		result  = await system (`zenity --question '--text=Do you really want to publish X_ITE X3D v${version} now?' --ok-label=Yes --cancel-label=No`);
+		result  = execSync (`zenity --question '--text=Do you really want to publish X_ITE X3D v${version} now?' --ok-label=Yes --cancel-label=No`);
 
 	if (result !== 0)
 		process .exit (1);
 
 	console .log (`Publishing X_ITE X3D v${version} now.`);
 
-	await system (`npm run docs-components`);
-	await system (`npm run docs-nodes`);
-	await system (`npm run glTF-samples`);
-	await system (`git add -A`);
-	await system (`git commit -am 'Build version ${version}'`);
-	await system (`git push origin`);
-	await system (`git checkout main`);
-	await system (`git merge development`);
+	execSync (`npm run docs-components`);
+	execSync (`npm run docs-nodes`);
+	execSync (`npm run glTF-samples`);
+	execSync (`git add -A`);
+	execSync (`git commit -am 'Build version ${version}'`);
+	execSync (`git push origin`);
+	execSync (`git checkout main`);
+	execSync (`git merge development`);
 
 	// docs
 
 	if (!version .endsWith ("a"))
-		await docs (version);
+		docs (version);
 
 	// tags
 
-	await commit ();
-	await publish ("alpha");
+	commit ();
+	publish ("alpha");
 
 	if (!version .endsWith ("a"))
 	{
-		await publish (version);
-		await publish ("latest");
+		publish (version);
+		publish ("latest");
 	}
 
 	// code
 
-	await update ("alpha");
+	update ("alpha");
 
 	if (!version .endsWith ("a"))
-		await update ("latest");
+		update ("latest");
 
-	await upload (version);
+	upload (version);
 
 	// switch back to development branch
 
-	await system (`git checkout development`);
-	await system (`git merge main`);
-	await system (`git push origin`);
+	execSync (`git checkout development`);
+	execSync (`git merge main`);
+	execSync (`git push origin`);
 
 	// publish x3d-tidy and sunrize
 
 	if (!version .endsWith ("a"))
-		await other ();
+		other ();
 }
 
-async function main ()
+function main ()
 {
-	await bump ();
-	await system ("npm run dist");
-	await zip ();
+	bump ();
+	execSync ("npm run dist");
+	zip ();
 
 	// https://github.com/desktop/desktop/issues/14331#issuecomment-1286747195
 	// Set post buffer to 250 MiB.
-	await system (`git config --global http.postBuffer 262144000`);
+	execSync (`git config --global http.postBuffer 262144000`);
 
-	await release ();
+	release ();
 }
 
 main ();
