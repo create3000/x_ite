@@ -34,39 +34,77 @@ async function zip ()
 	await system (`rm -r x_ite-${version}`);
 }
 
+async function release ()
+{
+	if (sh`git branch --show-current` !== "development\n")
+	{
+		console .error ("Wrong branch, must be development, cannot release version!");
+		process .exit (1);
+	}
+
+	// say "Waiting for confirmation ...";
+
+	// my $result = system "zenity --question '--text=Do you really want to publish X_ITE X3D v$VERSION now?' --ok-label=Yes --cancel-label=No";
+
+	// exit 1 unless $result == 0;
+
+	// say "Publishing X_ITE X3D v$VERSION now.";
+
+	// system "npm run docs-components";
+	// system "npm run docs-nodes";
+	// system "npm run glTF-samples";
+	// system "git add -A";
+	// system "git commit -am 'Build version $VERSION'";
+	// system "git push origin";
+	// system "git checkout main";
+	// system "git merge development";
+
+	// // docs
+
+	// docs ($VERSION) unless $ALPHA;
+
+	// // tags
+
+	// commit;
+
+	// publish ("alpha");
+	// publish ($VERSION) unless $ALPHA;
+	// publish ("latest") unless $ALPHA;
+
+	// // code
+
+	// update ("alpha");
+	// update ("latest") unless $ALPHA;
+
+	// upload;
+
+	// // switch to development branch
+
+	// system "git checkout development";
+	// system "git merge main";
+	// system "git push origin";
+
+	// // publish x3d-tidy and sunrize
+
+	// other unless $ALPHA;
+}
+
 async function main ()
 {
 	// await bump ();
 	// await system ("npm run dist");
-	await zip ();
+	// await zip ();
+
+	// https://github.com/desktop/desktop/issues/14331#issuecomment-1286747195
+	// Set post buffer to 250 MiB.
+	await system (`git config --global http.postBuffer 262144000`);
+
+	await release ();
 }
 
 main ();
 
-// #!/usr/bin/perl
-// use strict;
-// use warnings;
-// use v5.10.0;
-// use utf8;
-// use open qw/:std :utf8/;
-
-// use Cwd;
-
 // my $NO_GIT = 0;
-
-// # https://github.com/desktop/desktop/issues/14331#issuecomment-1286747195
-// # Set post buffer to 250 MiB.
-// system "git config --global http.postBuffer 262144000";
-
-// my $CWD = cwd;
-// say $CWD;
-
-// my $VERSION = `npm pkg get version | sed 's/"//g'`;
-// chomp $VERSION;
-
-// exit 1 unless $VERSION;
-
-// my $ALPHA = $VERSION =~ /a$/;
 
 // sub docs
 // {
@@ -157,55 +195,3 @@ main ();
 
 // 	chdir $CWD;
 // }
-
-// if (`git branch --show-current` ne "development\n")
-// {
-// 	say "Wrong branch, must be development, cannot release version!";
-// 	exit 1;
-// }
-
-// say "Waiting for confirmation ...";
-
-// my $result = system "zenity --question '--text=Do you really want to publish X_ITE X3D v$VERSION now?' --ok-label=Yes --cancel-label=No";
-
-// exit 1 unless $result == 0;
-
-// say "Publishing X_ITE X3D v$VERSION now.";
-
-// system "npm run docs-components";
-// system "npm run docs-nodes";
-// system "npm run glTF-samples";
-// system "git add -A";
-// system "git commit -am 'Build version $VERSION'";
-// system "git push origin";
-// system "git checkout main";
-// system "git merge development";
-
-// # docs
-
-// docs ($VERSION) unless $ALPHA;
-
-// # tags
-
-// commit;
-
-// publish ("alpha");
-// publish ($VERSION) unless $ALPHA;
-// publish ("latest") unless $ALPHA;
-
-// # code
-
-// update ("alpha");
-// update ("latest") unless $ALPHA;
-
-// upload;
-
-// # switch to development branch
-
-// system "git checkout development";
-// system "git merge main";
-// system "git push origin";
-
-// # publish x3d-tidy and sunrize
-
-// other unless $ALPHA;
