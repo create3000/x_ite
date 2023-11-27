@@ -38,9 +38,7 @@ async function docs (version)
 {
 	const contentLength = Math .floor (parseInt (sh`gzip -5 dist/x_ite.min.js --stdout | wc -c` .trim ()) / 1000);
 
-	console .log (contentLength)
-
-	let config = sh`cat 'docs/_config.yml'` .trim ();
+	let config = sh`cat 'docs/_config.yml'`;
 
 	config = config .replace (/\bversion:\s*[\d\.]+/sg, `version: ${version}`);
 	config = config .replace (/\bsize:\s*[\d\.]+/sg, `size: ${contentLength}`);
@@ -58,6 +56,8 @@ async function release ()
 
 	console .log ("Waiting for confirmation ...");
 
+	const version = sh`npm pkg get version | sed 's/"//g'` .trim (); // DEBUG
+
 	// const
 	// 	version = sh`npm pkg get version | sed 's/"//g'` .trim (),
 	// 	result  = await system (`zenity --question '--text=Do you really want to publish X_ITE X3D v${version} now?' --ok-label=Yes --cancel-label=No`);
@@ -65,7 +65,7 @@ async function release ()
 	// if (result !== 0)
 	// 	process .exit (1);
 
-	// console .log (`Publishing X_ITE X3D v${version} now.`);
+	console .log (`Publishing X_ITE X3D v${version} now.`);
 
 	// await system (`npm run docs-components`);
 	// await system (`npm run docs-nodes`);
