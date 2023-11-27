@@ -14,7 +14,7 @@ async function bump ()
 	console .log (`Current version ${version}`);
 
 	if (version .endsWith ("a"))
-		return version;
+		return;
 
 	const online = sh`npm view ${name} version` .trim ();
 
