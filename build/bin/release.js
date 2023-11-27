@@ -65,7 +65,7 @@ async function release ()
 	// if (result !== 0)
 	// 	process .exit (1);
 
-	console .log (`Publishing X_ITE X3D v${version} now.`);
+	// console .log (`Publishing X_ITE X3D v${version} now.`);
 
 	// await system (`npm run docs-components`);
 	// await system (`npm run docs-nodes`);
