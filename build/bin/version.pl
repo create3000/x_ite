@@ -99,7 +99,7 @@ sub other {
 	return unless $result == 0;
 
 	chdir "$CWD/../media";
-	system "make publish";
+	system "npm run release";
 
 	chdir "$CWD/../x3d-tidy";
 	system "npm run release";
