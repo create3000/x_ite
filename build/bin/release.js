@@ -24,9 +24,21 @@ async function bump ()
 	return sh`npm pkg get version | sed 's/"//g'` .trim ();
 }
 
+async function zip ()
+{
+	const version = sh`npm pkg get version | sed 's/"//g'` .trim ();
+
+	await system (`cp -r dist x_ite-${version}`);
+	await system (`zip -q -x "*.zip" -r x_ite-${version}.zip x_ite-${version}`);
+	await system (`mv x_ite-${version}.zip dist/x_ite.zip`);
+	await system (`rm -r x_ite-${version}`);
+}
+
 async function main ()
 {
-	await bump ();
+	// await bump ();
+	// await system ("npm run dist");
+	await zip ();
 }
 
 main ();
