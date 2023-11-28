@@ -9,14 +9,14 @@ function bump ()
 {
 	const
 		name    = require ("../../package.json") .name,
-		version = sh`npm pkg get version | sed 's/"//g'` .trim ();
+		version = sh (`npm pkg get version | sed 's/"//g'`) .trim ();
 
 	console .log (`Current version ${version}`);
 
 	if (version .endsWith ("a"))
 		return;
 
-	const online = sh`npm view ${name} version` .trim ();
+	const online = sh (`npm view ${name} version`) .trim ();
 
 	console .log (`NPM version ${online}`);
 
@@ -26,7 +26,7 @@ function bump ()
 
 function zip ()
 {
-	const version = sh`npm pkg get version | sed 's/"//g'` .trim ();
+	const version = sh (`npm pkg get version | sed 's/"//g'`) .trim ();
 
 	systemSync (`cp -r dist x_ite-${version}`);
 	systemSync (`zip -q -x "*.zip" -r x_ite-${version}.zip x_ite-${version}`);
@@ -36,9 +36,9 @@ function zip ()
 
 function docs (version)
 {
-	const contentLength = Math .floor (parseInt (sh`gzip -5 dist/x_ite.min.js --stdout | wc -c` .trim ()) / 1000);
+	const contentLength = Math .floor (parseInt (sh (`gzip -5 dist/x_ite.min.js --stdout | wc -c`) .trim ()) / 1000);
 
-	let config = sh`cat 'docs/_config.yml'`;
+	let config = sh (`cat 'docs/_config.yml'`);
 
 	config = config .replace (/\bversion:\s*[\d\.]+/sg, `version: ${version}`);
 	config = config .replace (/\bsize:\s*[\d\.]+/sg, `size: ${contentLength}`);
@@ -120,7 +120,7 @@ function other ()
 
 function release ()
 {
-	if (sh`git branch --show-current` !== "development\n")
+	if (sh (`git branch --show-current`) !== "development\n")
 	{
 		console .error ("Wrong branch, must be development, cannot release version!");
 		process .exit (1);
@@ -129,7 +129,7 @@ function release ()
 	console .log ("Waiting for confirmation ...");
 
 	const
-		version = sh`npm pkg get version | sed 's/"//g'` .trim (),
+		version = sh (`npm pkg get version | sed 's/"//g'`) .trim (),
 		result  = systemSync (`zenity --question '--text=Do you really want to publish X_ITE X3D v${version} now?' --ok-label=Yes --cancel-label=No`);
 
 	if (result !== 0)

@@ -14,7 +14,7 @@ const
 
 function createIndex ()
 {
-   const filenames = sh`find ${components} -mindepth 2 -maxdepth 2 -type f`
+   const filenames = sh (`find ${components} -mindepth 2 -maxdepth 2 -type f`)
       .trim () .split (/\s+/) .sort ();
 
    const index = new Map ();
