@@ -90,6 +90,7 @@ Object .assign (Object .setPrototypeOf (DepthMode .prototype, X3DAppearanceChild
    })(),
    enable (gl)
    {
+      this .depthTest      = gl .isEnabled (gl .DEPTH_TEST);
       this .depthWriteMask = gl .getParameter (gl .DEPTH_WRITEMASK);
 
       gl .enable (gl .POLYGON_OFFSET_FILL);
@@ -107,7 +108,12 @@ Object .assign (Object .setPrototypeOf (DepthMode .prototype, X3DAppearanceChild
    disable (gl)
    {
       gl .disable (gl .POLYGON_OFFSET_FILL);
-      gl .enable (gl .DEPTH_TEST);
+
+      if (this .depthTest)
+         gl .enable (gl .DEPTH_TEST);
+      else
+         gl .disable (gl .DEPTH_TEST);
+
       gl .depthFunc (gl .LEQUAL);
       gl .depthRange (0, 1);
       gl .depthMask (this .depthWriteMask);
