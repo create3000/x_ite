@@ -2,9 +2,9 @@
 "use strict";
 
 const
-   fs     = require ("fs"),
-   path   = require ("path"),
-   { sh } = require ("shell-tools");
+   fs                 = require ("fs"),
+   path               = require ("path"),
+   { sh, systemSync } = require ("shell-tools");
 
 const
    components = path .resolve ("./", "src/x_ite/Components"),
@@ -209,7 +209,7 @@ ${fields}
 
          text = text .trim () .replace (/\n{3,}/g, "\n\n");
 
-         sh`mkdir -p ${path .dirname (md)}`;
+         systemSync (`mkdir -p ${path .dirname (md)}`);
 
          fs .writeFileSync (md, text);
       }
