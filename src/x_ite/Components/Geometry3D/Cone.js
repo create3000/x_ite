@@ -50,9 +50,8 @@ import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DGeometryNode      from "../Rendering/X3DGeometryNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
-import Complex              from "../../../standard/Math/Numbers/Complex.js";
-import Vector2              from "../../../standard/Math/Numbers/Vector2.js";
 import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
+import Rotation4            from "../../../standard/Math/Numbers/Rotation4.js";
 
 function Cone (executionContext)
 {
@@ -79,105 +78,63 @@ Object .assign (Object .setPrototypeOf (Cone .prototype, X3DGeometryNode .protot
    {
       const
          options       = this .getBrowser () .getConeOptions (),
-         xDimension    = options ._xDimension .getValue (),
-         height        = this ._height .getValue (),
-         bottomRadius  = this ._bottomRadius .getValue (),
+         height        = Math .abs (this ._height .getValue ()),
+         height1_2     = height / 2,
+         bottomRadius  = Math .abs (this ._bottomRadius .getValue ()),
          texCoordArray = this .getTexCoords (),
          normalArray   = this .getNormals (),
          vertexArray   = this .getVertices ();
 
       this .getMultiTexCoords () .push (texCoordArray);
 
-      const
-         y1 = height / 2,
-         y2 = -y1,
-         nz = Complex .Polar (1, -Math .PI / 2 + Math .atan (bottomRadius / height));
-
       if (this ._side .getValue ())
       {
-         for (let i = 0; i < xDimension; ++ i)
+         const
+            geometry        = options .getSideGeometry (),
+            defaultNormals  = geometry .getNormals (),
+            defaultVertices = geometry .getVertices (),
+            v1              = new Vector3 (0, 0, 0),
+            rz              = new Rotation4 (1, 0, 0, -Math .atan (bottomRadius / height)),
+            rx              = new Rotation4 ();
+
+         for (const t of geometry .getMultiTexCoords () [0])
+            texCoordArray .push (t);
+
+         for (let i = 0, length = defaultNormals .length; i < length; i += 3)
          {
-            const
-               u1     = (i + 0.5) / xDimension,
-               theta1 = 2 * Math .PI * u1,
-               n1     = Complex .Polar (nz .imag, theta1);
+            v1 .set (defaultNormals [i], 0, defaultNormals [i + 2]),
+            rx .setFromToVec (Vector3 .zAxis, v1) .multLeft (rz) .multVecRot (v1 .set (0, 0, 1));
 
-            const
-               u2     = i / xDimension,
-               theta2 = 2 * Math .PI * u2,
-               p2     = Complex .Polar (-bottomRadius, theta2),
-               n2     = Complex .Polar (nz .imag, theta2);
+            normalArray .push (... v1);
+         }
 
-            const
-               u3     = (i + 1) / xDimension,
-               theta3 = 2 * Math .PI * u3,
-               p3     = Complex .Polar (-bottomRadius, theta3),
-               n3     = Complex .Polar (nz .imag, theta3);
-
-            /*    p1
-             *   /  \
-             *  /    \
-             * p2 -- p3
-             */
-
-            // p1
-            texCoordArray .push (u1, 1, 0, 1);
-            normalArray   .push (n1 .imag, nz .real, n1 .real);
-            vertexArray   .push (0, y1, 0, 1);
-
-            // p2
-            texCoordArray .push (u2, 0, 0, 1);
-            normalArray   .push (n2 .imag, nz .real, n2 .real);
-            vertexArray   .push (p2 .imag, y2, p2 .real, 1);
-
-            // p3
-            texCoordArray .push (u3, 0, 0, 1);
-            normalArray   .push (n3 .imag , nz .real, n3 .real);
-            vertexArray   .push (p3 .imag, y2, p3 .real, 1);
+         for (let i = 0, length = defaultVertices .length; i < length; i += 4)
+         {
+            vertexArray .push (bottomRadius * defaultVertices [i],
+                               height1_2    * defaultVertices [i + 1],
+                               bottomRadius * defaultVertices [i + 2],
+                               1);
          }
       }
 
       if (this ._bottom .getValue ())
       {
          const
-            texCoord = [ ],
-            points   = [ ];
+            geometry        = options .getBottomGeometry (),
+            defaultVertices = geometry .getVertices ();
 
-         for (let i = xDimension - 1; i > -1; -- i)
+         for (const t of geometry .getMultiTexCoords () [0])
+            texCoordArray .push (t);
+
+         for (const n of geometry .getNormals ())
+            normalArray .push (n);
+
+         for (let i = 0, length = defaultVertices .length; i < length; i += 4)
          {
-            const
-               u     = i / xDimension,
-               theta = 2 * Math .PI * u,
-               t     = Complex .Polar (-1, theta),
-               p     = t .copy () .multiply (bottomRadius);
-
-            texCoord .push (new Vector2 ((t .imag + 1) / 2, (t .real + 1) / 2));
-            points   .push (new Vector3 (p .imag, y2, p .real));
-         }
-
-         const
-            t0 = texCoord [0],
-            p0 = points [0];
-
-         for (let i = 1, length = points .length - 1; i < length; ++ i)
-         {
-            const
-               t1 = texCoord [i],
-               t2 = texCoord [i + 1],
-               p1 = points [i],
-               p2 = points [i + 1];
-
-            texCoordArray .push (t0 .x, t0 .y, 0, 1);
-            normalArray   .push (0, -1, 0);
-            vertexArray   .push (p0 .x, p0 .y, p0 .z, 1);
-
-            texCoordArray .push (t1 .x, t1 .y, 0, 1);
-            normalArray   .push (0, -1, 0);
-            vertexArray   .push (p1 .x, p1 .y, p1 .z, 1);
-
-            texCoordArray .push (t2 .x, t2 .y, 0, 1);
-            normalArray   .push (0, -1, 0);
-            vertexArray   .push (p2 .x, p2 .y, p2 .z, 1);
+            vertexArray .push (bottomRadius * defaultVertices [i],
+                               height1_2    * defaultVertices [i + 1],
+                               bottomRadius * defaultVertices [i + 2],
+                               1);
          }
       }
 

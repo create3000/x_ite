@@ -54,8 +54,6 @@ function X3DSingleTextureCoordinateNode (executionContext)
    X3DTextureCoordinateNode .call (this, executionContext);
 
    this .addType (X3DConstants .X3DSingleTextureCoordinateNode);
-
-   this .texCoordArray = X3DGeometryNode .createArray ();
 }
 
 Object .assign (Object .setPrototypeOf (X3DSingleTextureCoordinateNode .prototype, X3DTextureCoordinateNode .prototype),
@@ -66,9 +64,7 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureCoordinateNode .prototyp
    },
    init (multiArray)
    {
-      this .texCoordArray .length = 0;
-
-      multiArray .push (this .texCoordArray);
+      multiArray .push (X3DGeometryNode .createArray ());
    },
    addPoint (index, multiArray)
    {
