@@ -60,8 +60,7 @@ function CylinderOptions (executionContext)
 {
    X3DBaseNode .call (this, executionContext);
 
-   this .addChildObjects (X3DConstants .inputOutput, "xDimension", new Fields .SFInt32 (20),
-                          X3DConstants .inputOutput, "yDimension", new Fields .SFInt32 (1))
+   this .addChildObjects (X3DConstants .inputOutput, "dimension", new Fields .SFInt32 (20))
 }
 
 Object .assign (Object .setPrototypeOf (CylinderOptions .prototype, X3DBaseNode .prototype),
@@ -96,60 +95,60 @@ Object .assign (Object .setPrototypeOf (CylinderOptions .prototype, X3DBaseNode 
    createTexCoordIndex ()
    {
       const
-         xDimension          = this ._xDimension .getValue (),
+         dimension           = this ._dimension .getValue (),
          sideTexCoordIndex   = this .sideGeometry ._texCoordIndex,
          bottomTexCoordIndex = this .bottomGeometry ._texCoordIndex,
          topTexCoordIndex    = this .topGeometry ._texCoordIndex;
 
       // Side
 
-      for (let i = 0; i < xDimension; ++ i)
-         sideTexCoordIndex .push (i, i + 1, i + 2 + xDimension, i + 1 + xDimension, -1);
+      for (let i = 0; i < dimension; ++ i)
+         sideTexCoordIndex .push (i, i + 1, i + 2 + dimension, i + 1 + dimension, -1);
 
       // Bottom
 
-      for (let i = xDimension - 1; i > -1; -- i)
-         bottomTexCoordIndex .push (2 * (xDimension + 1) + i);
+      for (let i = dimension - 1; i > -1; -- i)
+         bottomTexCoordIndex .push (2 * (dimension + 1) + i);
 
       bottomTexCoordIndex .push (-1);
 
       // Top
 
-      for (let i = 0; i < xDimension; ++ i)
-         topTexCoordIndex .push (2 * (xDimension + 1) + xDimension + i);
+      for (let i = 0; i < dimension; ++ i)
+         topTexCoordIndex .push (2 * (dimension + 1) + dimension + i);
 
       topTexCoordIndex .push (-1);
    },
    createTexCoord ()
    {
       const
-         xDimension = this ._xDimension .getValue (),
-         point      = this .sideGeometry ._texCoord .getValue () ._point;
+         dimension = this ._dimension .getValue (),
+         point     = this .sideGeometry ._texCoord .getValue () ._point;
 
       // Side Bottom
 
-      for (let i = 0; i < xDimension + 1; ++ i)
+      for (let i = 0; i < dimension + 1; ++ i)
       {
-         const u = i / xDimension;
+         const u = i / dimension;
 
          point .push (new Vector2 (u, 0));
       }
 
       // Side Top
 
-      for (let i = 0; i < xDimension + 1; ++ i)
+      for (let i = 0; i < dimension + 1; ++ i)
       {
-         const u = i/ xDimension;
+         const u = i/ dimension;
 
          point .push (new Vector2 (u, 1));
       }
 
       // Bottom
 
-      for (let i = 0; i < xDimension; ++ i)
+      for (let i = 0; i < dimension; ++ i)
       {
          const
-            u     = i / xDimension,
+            u     = i / dimension,
             theta = 2 * Math .PI * u,
             t     = Complex .Polar (-1, theta);
 
@@ -158,10 +157,10 @@ Object .assign (Object .setPrototypeOf (CylinderOptions .prototype, X3DBaseNode 
 
       // Top
 
-      for (let i = 0; i < xDimension; ++ i)
+      for (let i = 0; i < dimension; ++ i)
       {
          const
-            u     = i / xDimension,
+            u     = i / dimension,
             theta = 2 * Math .PI * u,
             t     = Complex .Polar (1, theta);
 
@@ -171,42 +170,42 @@ Object .assign (Object .setPrototypeOf (CylinderOptions .prototype, X3DBaseNode 
    createNormalIndex ()
    {
       const
-         xDimension        = this ._xDimension .getValue (),
+         dimension         = this ._dimension .getValue (),
          sideNormalIndex   = this .sideGeometry ._normalIndex,
          bottomNormalIndex = this .bottomGeometry ._normalIndex,
          topNormalIndex    = this .topGeometry ._normalIndex;
 
       // Side
 
-      for (let i = 0; i < xDimension; ++ i)
-         sideNormalIndex .push (i, (i + 1) % xDimension, (i + 1) % xDimension, i, -1);
+      for (let i = 0; i < dimension; ++ i)
+         sideNormalIndex .push (i, (i + 1) % dimension, (i + 1) % dimension, i, -1);
 
       // Bottom
 
-      for (let i = 0; i < xDimension; ++ i)
-         bottomNormalIndex .push (xDimension);
+      for (let i = 0; i < dimension; ++ i)
+         bottomNormalIndex .push (dimension);
 
       bottomNormalIndex .push (-1);
 
       // Top
 
-      for (let i = 0; i < xDimension; ++ i)
-         topNormalIndex .push (xDimension + 1);
+      for (let i = 0; i < dimension; ++ i)
+         topNormalIndex .push (dimension + 1);
 
       topNormalIndex .push (-1);
    },
    createNormal ()
    {
       const
-         xDimension = this ._xDimension .getValue (),
-         vector     = this .sideGeometry ._normal .getValue () ._vector;
+         dimension = this ._dimension .getValue (),
+         vector    = this .sideGeometry ._normal .getValue () ._vector;
 
       // Side
 
-      for (let i = 0; i < xDimension; ++ i)
+      for (let i = 0; i < dimension; ++ i)
       {
          const
-            u     = i / xDimension,
+            u     = i / dimension,
             theta = 2 * Math .PI * u,
             n     = Complex .Polar (-1, theta);
 
@@ -224,42 +223,42 @@ Object .assign (Object .setPrototypeOf (CylinderOptions .prototype, X3DBaseNode 
    createCoordIndex ()
    {
       const
-         xDimension       = this ._xDimension .getValue (),
+         dimension        = this ._dimension .getValue (),
          sideCoordIndex   = this .sideGeometry ._coordIndex,
          bottomCoordIndex = this .bottomGeometry ._coordIndex,
          topCoordIndex    = this .topGeometry ._coordIndex;
 
       // Side
 
-      for (let i = 0; i < xDimension; ++ i)
-         sideCoordIndex .push (i, (i + 1) % xDimension, (i + 1) % xDimension + xDimension, i + xDimension, -1);
+      for (let i = 0; i < dimension; ++ i)
+         sideCoordIndex .push (i, (i + 1) % dimension, (i + 1) % dimension + dimension, i + dimension, -1);
 
       // Bottom
 
-      for (let i = xDimension - 1; i > -1; -- i)
+      for (let i = dimension - 1; i > -1; -- i)
          bottomCoordIndex .push (i);
 
       bottomCoordIndex .push (-1);
 
       // Top
 
-      for (let i = 0; i < xDimension; ++ i)
-         topCoordIndex .push (i + xDimension);
+      for (let i = 0; i < dimension; ++ i)
+         topCoordIndex .push (i + dimension);
 
       topCoordIndex .push (-1);
    },
    createPoints ()
    {
       const
-         xDimension = this ._xDimension .getValue (),
-         point      = this .sideGeometry ._coord .getValue () ._point;
+         dimension = this ._dimension .getValue (),
+         point     = this .sideGeometry ._coord .getValue () ._point;
 
       // Bottom
 
-      for (let i = 0; i < xDimension; ++ i)
+      for (let i = 0; i < dimension; ++ i)
       {
          const
-            u     = i / xDimension,
+            u     = i / dimension,
             theta = 2 * Math .PI * u,
             p     = Complex .Polar (-1, theta);
 
@@ -268,10 +267,10 @@ Object .assign (Object .setPrototypeOf (CylinderOptions .prototype, X3DBaseNode 
 
       // Top
 
-      for (let i = 0; i < xDimension; ++ i)
+      for (let i = 0; i < dimension; ++ i)
       {
          const
-            u     = i / xDimension,
+            u     = i / dimension,
             theta = 2 * Math .PI * u,
             p     = Complex .Polar (-1, theta);
 

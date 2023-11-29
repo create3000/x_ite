@@ -60,8 +60,7 @@ function ConeOptions (executionContext)
 {
    X3DBaseNode .call (this, executionContext);
 
-   this .addChildObjects (X3DConstants .inputOutput, "xDimension", new Fields .SFInt32 (20),
-                          X3DConstants .inputOutput, "yDimension", new Fields .SFInt32 (1))
+   this .addChildObjects (X3DConstants .inputOutput, "dimension", new Fields .SFInt32 (20))
 }
 
 Object .assign (Object .setPrototypeOf (ConeOptions .prototype, X3DBaseNode .prototype),
@@ -89,52 +88,52 @@ Object .assign (Object .setPrototypeOf (ConeOptions .prototype, X3DBaseNode .pro
    createTexCoordIndex ()
    {
       const
-         xDimension          = this ._xDimension .getValue (),
+         dimension           = this ._dimension .getValue (),
          sideTexCoordIndex   = this .sideGeometry ._texCoordIndex,
          bottomTexCoordIndex = this .bottomGeometry ._texCoordIndex;
 
       // Side
 
-      for (let i = 0; i < xDimension; ++ i)
-         sideTexCoordIndex .push (i, i + 1, i + xDimension + 1, -1);
+      for (let i = 0; i < dimension; ++ i)
+         sideTexCoordIndex .push (i, i + 1, i + dimension + 1, -1);
 
       // Bottom
 
-      for (let i = xDimension - 1; i > -1; -- i)
-         bottomTexCoordIndex .push (2 * (xDimension + 1) + i);
+      for (let i = dimension - 1; i > -1; -- i)
+         bottomTexCoordIndex .push (2 * (dimension + 1) + i);
 
       bottomTexCoordIndex .push (-1);
    },
    createTexCoord ()
    {
       const
-         xDimension = this ._xDimension .getValue (),
-         point      = this .sideGeometry ._texCoord .getValue () ._point;
+         dimension = this ._dimension .getValue (),
+         point     = this .sideGeometry ._texCoord .getValue () ._point;
 
       // Side Bottom
 
-      for (let i = 0; i < xDimension + 1; ++ i)
+      for (let i = 0; i < dimension + 1; ++ i)
       {
-         const u = i / xDimension;
+         const u = i / dimension;
 
          point .push (new Vector2 (u, 0));
       }
 
       // Side Top
 
-      for (let i = 0; i < xDimension + 1; ++ i)
+      for (let i = 0; i < dimension + 1; ++ i)
       {
-         const u = (i + 0.5) / xDimension;
+         const u = (i + 0.5) / dimension;
 
          point .push (new Vector2 (u, 1));
       }
 
       // Bottom
 
-      for (let i = 0; i < xDimension; ++ i)
+      for (let i = 0; i < dimension; ++ i)
       {
          const
-            u     = i / xDimension,
+            u     = i / dimension,
             theta = 2 * Math .PI * u,
             t     = Complex .Polar (-1, theta);
 
@@ -144,35 +143,35 @@ Object .assign (Object .setPrototypeOf (ConeOptions .prototype, X3DBaseNode .pro
    createNormalIndex ()
    {
       const
-         xDimension        = this ._xDimension .getValue (),
+         dimension         = this ._dimension .getValue (),
          sideNormalIndex   = this .sideGeometry ._normalIndex,
          bottomNormalIndex = this .bottomGeometry ._normalIndex;
 
       // Side
 
-      for (let i = 0; i < xDimension; ++ i)
-         sideNormalIndex .push (i, (i + 1) % xDimension, i + xDimension, -1);
+      for (let i = 0; i < dimension; ++ i)
+         sideNormalIndex .push (i, (i + 1) % dimension, i + dimension, -1);
 
       // Bottom
 
-      for (let i = 0; i < xDimension; ++ i)
-         bottomNormalIndex .push (2 * xDimension);
+      for (let i = 0; i < dimension; ++ i)
+         bottomNormalIndex .push (2 * dimension);
 
       bottomNormalIndex .push (-1);
    },
    createNormal ()
    {
       const
-         xDimension = this ._xDimension .getValue (),
-         vector     = this .sideGeometry ._normal .getValue () ._vector,
-         nz         = Complex .Polar (1, -Math .PI / 4);
+         dimension = this ._dimension .getValue (),
+         vector    = this .sideGeometry ._normal .getValue () ._vector,
+         nz        = Complex .Polar (1, -Math .PI / 4);
 
       // Side Bottom
 
-      for (let i = 0; i < xDimension; ++ i)
+      for (let i = 0; i < dimension; ++ i)
       {
          const
-            u     = i / xDimension,
+            u     = i / dimension,
             theta = 2 * Math .PI * u,
             n     = Complex .Polar (nz .imag, theta);
 
@@ -181,10 +180,10 @@ Object .assign (Object .setPrototypeOf (ConeOptions .prototype, X3DBaseNode .pro
 
       // Side Top
 
-      for (let i = 0; i < xDimension; ++ i)
+      for (let i = 0; i < dimension; ++ i)
       {
          const
-            u     = (i + 0.5) / xDimension,
+            u     = (i + 0.5) / dimension,
             theta = 2 * Math .PI * u,
             n    = Complex .Polar (nz .imag, theta);
 
@@ -198,18 +197,18 @@ Object .assign (Object .setPrototypeOf (ConeOptions .prototype, X3DBaseNode .pro
    createCoordIndex ()
    {
       const
-         xDimension       = this ._xDimension .getValue (),
+         dimension        = this ._dimension .getValue (),
          sideCoordIndex   = this .sideGeometry ._coordIndex,
          bottomCoordIndex = this .bottomGeometry ._coordIndex;
 
       // Side
 
-      for (let i = 0; i < xDimension; ++ i)
-         sideCoordIndex .push (i, (i + 1) % xDimension, xDimension, -1);
+      for (let i = 0; i < dimension; ++ i)
+         sideCoordIndex .push (i, (i + 1) % dimension, dimension, -1);
 
       // Bottom
 
-      for (let i = xDimension - 1; i > -1; -- i)
+      for (let i = dimension - 1; i > -1; -- i)
          bottomCoordIndex .push (i);
 
       bottomCoordIndex .push (-1);
@@ -217,13 +216,13 @@ Object .assign (Object .setPrototypeOf (ConeOptions .prototype, X3DBaseNode .pro
    createPoints ()
    {
       const
-         xDimension = this ._xDimension .getValue (),
-         point      = this .sideGeometry ._coord .getValue () ._point;
+         dimension = this ._dimension .getValue (),
+         point     = this .sideGeometry ._coord .getValue () ._point;
 
-      for (let i = 0; i < xDimension; ++ i)
+      for (let i = 0; i < dimension; ++ i)
       {
          const
-            u     = i / xDimension,
+            u     = i / dimension,
             theta = 2 * Math .PI * u,
             p     = Complex .Polar (-1, theta);
 

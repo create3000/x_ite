@@ -86,24 +86,24 @@ Object .assign (X3DGeometry3DContext .prototype,
       {
          case PrimitiveQuality .LOW:
          {
-            cone     ._xDimension = 16;
-            cylinder ._xDimension = 16;
+            cone     ._dimension  = 16;
+            cylinder ._dimension  = 16;
             sphere   ._xDimension = 20;
             sphere   ._yDimension = 9;
             break;
          }
          case PrimitiveQuality .MEDIUM:
          {
-            cone     ._xDimension = 20;
-            cylinder ._xDimension = 20;
+            cone     ._dimension  = 20;
+            cylinder ._dimension  = 20;
             sphere   ._xDimension = 32;
             sphere   ._yDimension = 15;
             break;
          }
          case PrimitiveQuality .HIGH:
          {
-            cone     ._xDimension = 32;
-            cylinder ._xDimension = 32;
+            cone     ._dimension  = 32;
+            cylinder ._dimension  = 32;
             sphere   ._xDimension = 64;
             sphere   ._yDimension = 31;
             break;
