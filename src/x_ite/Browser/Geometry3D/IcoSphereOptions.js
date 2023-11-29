@@ -71,7 +71,7 @@ Object .assign (Object .setPrototypeOf (IcoSphereOptions .prototype, X3DBaseNode
    },
    getGeometry ()
    {
-      if (! this .geometry)
+      if (!this .geometry)
          this .eventsProcessed ();
 
       return this .geometry;
@@ -83,17 +83,15 @@ Object .assign (Object .setPrototypeOf (IcoSphereOptions .prototype, X3DBaseNode
       this .geometry ._coord    = new Coordinate (this .getExecutionContext ());
 
       const
-         geometry = this .geometry,
-         texCoord = this .geometry ._texCoord .getValue (),
-         coord    = this .geometry ._coord .getValue ();
-
-         const icoSphere = new IcoSphere (this ._type .getValue (), this ._order .getValue (), 1);
-
-      geometry ._creaseAngle = Math .PI;
+         icoSphere = new IcoSphere (this ._type .getValue (), this ._order .getValue (), 1),
+         geometry  = this .geometry,
+         texCoord  = this .geometry ._texCoord .getValue (),
+         coord     = this .geometry ._coord .getValue ();
 
       texCoord ._point = icoSphere .getTexPoint ();
-      coord ._point    = icoSphere .getPoint ();
+      coord    ._point = icoSphere .getPoint ();
 
+      geometry ._creaseAngle   = Math .PI;
       geometry ._texCoordIndex = icoSphere .getTexCoordIndex ();
       geometry ._coordIndex    = icoSphere .getCoordIndex ();
 
