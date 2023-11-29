@@ -73,7 +73,7 @@ Object .assign (Object .setPrototypeOf (QuadSphereOptions .prototype, X3DBaseNod
    },
    getGeometry ()
    {
-      if (! this .geometry)
+      if (!this .geometry)
          this .eventsProcessed ();
 
       return this .geometry;

@@ -45,7 +45,6 @@
  *
  ******************************************************************************/
 
-import Fields            from "../../Fields.js";
 import X3DBaseNode       from "../../Base/X3DBaseNode.js";
 import IndexedFaceSet    from "../../Components/Geometry3D/IndexedFaceSet.js";
 import Coordinate        from "../../Components/Rendering/Coordinate.js";
@@ -76,32 +75,30 @@ Object .assign (Object .setPrototypeOf (BoxOptions .prototype, X3DBaseNode .prot
          texCoord = this .geometry ._texCoord .getValue (),
          coord    = this .geometry ._coord .getValue ();
 
-      geometry ._texCoordIndex = new Fields .MFInt32 (
+      geometry ._texCoordIndex = [
          0, 1, 2, 3, -1, // front
          0, 1, 2, 3, -1, // back
          0, 1, 2, 3, -1, // left
          0, 1, 2, 3, -1, // right
          0, 1, 2, 3, -1, // top
          0, 1, 2, 3, -1  // bottom
-      );
+      ];
 
-      geometry ._coordIndex = new Fields .MFInt32 (
+      geometry ._coordIndex = [
          0, 1, 2, 3, -1, // front
          5, 4, 7, 6, -1, // back
          1, 5, 6, 2, -1, // left
          4, 0, 3, 7, -1, // right
          4, 5, 1, 0, -1, // top
          3, 2, 6, 7, -1  // bottom
-      );
+      ];
 
-      texCoord ._point = new Fields .MFVec2f (
-         new Fields .SFVec2f (1, 1), new Fields .SFVec2f (0, 1), new Fields .SFVec2f (0, 0), new Fields .SFVec2f (1, 0)
-      );
+      texCoord ._point = [1, 1, 0, 1, 0, 0, 1, 0];
 
-      coord ._point = new Fields .MFVec3f (
-         new Fields .SFVec3f ( 1,  1,  1), new Fields .SFVec3f (-1,  1,  1), new Fields .SFVec3f (-1, -1,  1), new Fields .SFVec3f ( 1, -1,  1),
-         new Fields .SFVec3f ( 1,  1, -1), new Fields .SFVec3f (-1,  1, -1), new Fields .SFVec3f (-1, -1, -1), new Fields .SFVec3f ( 1, -1, -1)
-      );
+      coord ._point = [
+         1,  1,  1,  -1, 1,  1,  -1, -1,  1,  1, -1,  1,
+         1,  1, -1,  -1, 1, -1,  -1, -1, -1,  1, -1, -1,
+      ];
 
       texCoord .setup ();
       coord    .setup ();
