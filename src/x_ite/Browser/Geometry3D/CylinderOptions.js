@@ -45,9 +45,16 @@
  *
  ******************************************************************************/
 
-import Fields       from "../../Fields.js";
-import X3DConstants from "../../Base/X3DConstants.js";
-import X3DBaseNode  from "../../Base/X3DBaseNode.js";
+import Fields            from "../../Fields.js";
+import X3DConstants      from "../../Base/X3DConstants.js";
+import X3DBaseNode       from "../../Base/X3DBaseNode.js";
+import IndexedFaceSet    from "../../Components/Geometry3D/IndexedFaceSet.js";
+import Coordinate        from "../../Components/Rendering/Coordinate.js";
+import Normal            from "../../Components/Rendering/Normal.js";
+import TextureCoordinate from "../../Components/Texturing/TextureCoordinate.js";
+import Complex           from "../../../standard/Math/Numbers/Complex.js";
+import Vector2           from "../../../standard/Math/Numbers/Vector2.js";
+import Vector3           from "../../../standard/Math/Numbers/Vector3.js";
 
 function CylinderOptions (executionContext)
 {
@@ -57,7 +64,260 @@ function CylinderOptions (executionContext)
                           X3DConstants .inputOutput, "yDimension", new Fields .SFInt32 (1))
 }
 
-Object .setPrototypeOf (CylinderOptions .prototype, X3DBaseNode .prototype);
+Object .assign (Object .setPrototypeOf (CylinderOptions .prototype, X3DBaseNode .prototype),
+{
+   initialize ()
+   {
+      X3DBaseNode .prototype .initialize .call (this);
+
+      this .addInterest ("eventsProcessed", this);
+   },
+   getSideGeometry ()
+   {
+      if (!this .sideGeometry)
+         this .eventsProcessed ();
+
+      return this .sideGeometry;
+   },
+   getTopGeometry ()
+   {
+      if (!this .topGeometry)
+         this .eventsProcessed ();
+
+      return this .topGeometry;
+   },
+   getBottomGeometry ()
+   {
+      if (!this .bottomGeometry)
+         this .eventsProcessed ();
+
+      return this .bottomGeometry;
+   },
+   createTexCoordIndex ()
+   {
+      const
+         xDimension          = this ._xDimension .getValue (),
+         sideTexCoordIndex   = this .sideGeometry ._texCoordIndex,
+         bottomTexCoordIndex = this .bottomGeometry ._texCoordIndex,
+         topTexCoordIndex    = this .topGeometry ._texCoordIndex;
+
+      // Side
+
+      for (let i = 0; i < xDimension; ++ i)
+         sideTexCoordIndex .push (i, i + 1, i + 2 + xDimension, i + 1 + xDimension, -1);
+
+      // Bottom
+
+      for (let i = xDimension - 1; i > -1; -- i)
+         bottomTexCoordIndex .push (2 * (xDimension + 1) + i);
+
+      bottomTexCoordIndex .push (-1);
+
+      // Top
+
+      for (let i = 0; i < xDimension; ++ i)
+         topTexCoordIndex .push (2 * (xDimension + 1) + xDimension + i);
+
+      topTexCoordIndex .push (-1);
+   },
+   createTexCoord ()
+   {
+      const
+         xDimension = this ._xDimension .getValue (),
+         point      = this .sideGeometry ._texCoord .getValue () ._point;
+
+      // Side Bottom
+
+      for (let i = 0; i < xDimension + 1; ++ i)
+      {
+         const u = i / xDimension;
+
+         point .push (new Vector2 (u, 0));
+      }
+
+      // Side Top
+
+      for (let i = 0; i < xDimension + 1; ++ i)
+      {
+         const u = i/ xDimension;
+
+         point .push (new Vector2 (u, 1));
+      }
+
+      // Bottom
+
+      for (let i = 0; i < xDimension; ++ i)
+      {
+         const
+            u     = i / xDimension,
+            theta = 2 * Math .PI * u,
+            t     = Complex .Polar (-1, theta);
+
+         point .push (new Vector2 ((t .imag + 1) / 2, (t .real + 1) / 2));
+      }
+
+      // Top
+
+      for (let i = 0; i < xDimension; ++ i)
+      {
+         const
+            u     = i / xDimension,
+            theta = 2 * Math .PI * u,
+            t     = Complex .Polar (1, theta);
+
+         point .push (new Vector2 (1 - (t .imag + 1) / 2, (t .real + 1) / 2));
+      }
+   },
+   createNormalIndex ()
+   {
+      const
+         xDimension        = this ._xDimension .getValue (),
+         sideNormalIndex   = this .sideGeometry ._normalIndex,
+         bottomNormalIndex = this .bottomGeometry ._normalIndex,
+         topNormalIndex    = this .topGeometry ._normalIndex;
+
+      // Side
+
+      for (let i = 0; i < xDimension; ++ i)
+         sideNormalIndex .push (i, (i + 1) % xDimension, (i + 1) % xDimension, i, -1);
+
+      // Bottom
+
+      for (let i = 0; i < xDimension; ++ i)
+         bottomNormalIndex .push (xDimension);
+
+      bottomNormalIndex .push (-1);
+
+      // Top
+
+      for (let i = 0; i < xDimension; ++ i)
+         topNormalIndex .push (xDimension + 1);
+
+      topNormalIndex .push (-1);
+   },
+   createNormal ()
+   {
+      const
+         xDimension = this ._xDimension .getValue (),
+         vector     = this .sideGeometry ._normal .getValue () ._vector;
+
+      // Side
+
+      for (let i = 0; i < xDimension; ++ i)
+      {
+         const
+            u     = i / xDimension,
+            theta = 2 * Math .PI * u,
+            n     = Complex .Polar (-1, theta);
+
+         vector .push (new Vector3 (n .imag, 0, n .real));
+      }
+
+      // Bottom
+
+      vector .push (new Vector3 (0, -1, 0));
+
+      // Top
+
+      vector .push (new Vector3 (0, 1, 0));
+   },
+   createCoordIndex ()
+   {
+      const
+         xDimension       = this ._xDimension .getValue (),
+         sideCoordIndex   = this .sideGeometry ._coordIndex,
+         bottomCoordIndex = this .bottomGeometry ._coordIndex,
+         topCoordIndex    = this .topGeometry ._coordIndex;
+
+      // Side
+
+      for (let i = 0; i < xDimension; ++ i)
+         sideCoordIndex .push (i, (i + 1) % xDimension, (i + 1) % xDimension + xDimension, i + xDimension, -1);
+
+      // Bottom
+
+      for (let i = xDimension - 1; i > -1; -- i)
+         bottomCoordIndex .push (i);
+
+      bottomCoordIndex .push (-1);
+
+      // Top
+
+      for (let i = 0; i < xDimension; ++ i)
+         topCoordIndex .push (i + xDimension);
+
+      topCoordIndex .push (-1);
+   },
+   createPoints ()
+   {
+      const
+         xDimension = this ._xDimension .getValue (),
+         point      = this .sideGeometry ._coord .getValue () ._point;
+
+      // Bottom
+
+      for (let i = 0; i < xDimension; ++ i)
+      {
+         const
+            u     = i / xDimension,
+            theta = 2 * Math .PI * u,
+            p     = Complex .Polar (-1, theta);
+
+         point  .push (new Vector3 (p .imag, -1, p .real));
+      }
+
+      // Top
+
+      for (let i = 0; i < xDimension; ++ i)
+      {
+         const
+            u     = i / xDimension,
+            theta = 2 * Math .PI * u,
+            p     = Complex .Polar (-1, theta);
+
+         point  .push (new Vector3 (p .imag, 1, p .real));
+      }
+   },
+   eventsProcessed ()
+   {
+      this .sideGeometry            = new IndexedFaceSet (this .getExecutionContext ());
+      this .sideGeometry ._texCoord = new TextureCoordinate (this .getExecutionContext ());
+      this .sideGeometry ._normal   = new Normal (this .getExecutionContext ());
+      this .sideGeometry ._coord    = new Coordinate (this .getExecutionContext ());
+
+      this .bottomGeometry            = new IndexedFaceSet (this .getExecutionContext ());
+      this .bottomGeometry ._texCoord = this .sideGeometry ._texCoord;
+      this .bottomGeometry ._normal   = this .sideGeometry ._normal;
+      this .bottomGeometry ._coord    = this .sideGeometry ._coord;
+
+      this .topGeometry            = new IndexedFaceSet (this .getExecutionContext ());
+      this .topGeometry ._texCoord = this .sideGeometry ._texCoord;
+      this .topGeometry ._normal   = this .sideGeometry ._normal;
+      this .topGeometry ._coord    = this .sideGeometry ._coord;
+
+      this .createTexCoordIndex ();
+      this .createTexCoord ();
+      this .createNormalIndex ();
+      this .createNormal ();
+      this .createCoordIndex ();
+      this .createPoints ();
+
+      const
+         sideGeometry   = this .sideGeometry,
+         bottomGeometry = this .bottomGeometry,
+         topGeometry    = this .topGeometry,
+         texCoord       = this .sideGeometry ._texCoord .getValue (),
+         normal         = this .sideGeometry ._normal .getValue (),
+         coord          = this .sideGeometry ._coord .getValue ();
+
+      texCoord       .setup ();
+      normal         .setup ();
+      coord          .setup ();
+      sideGeometry   .setup ();
+      bottomGeometry .setup ();
+      topGeometry    .setup ();
+   },
+});
 
 Object .defineProperties (CylinderOptions,
 {

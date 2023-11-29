@@ -153,7 +153,7 @@ Object .assign (Object .setPrototypeOf (Cone .prototype, X3DGeometryNode .protot
          this .getMin () .set (0, 0, 0);
          this .getMax () .set (0, 0, 0);
       }
-      else if (! this ._side .getValue ())
+      else if (!this ._side .getValue ())
       {
          this .getMin () .set (-bottomRadius, y2, -bottomRadius);
          this .getMax () .set ( bottomRadius, y2,  bottomRadius);
