@@ -76,21 +76,10 @@ Object .assign (Object .setPrototypeOf (Rectangle2DOptions .prototype, X3DBaseNo
          texCoord = this .geometry ._texCoord .getValue (),
          coord    = this .geometry ._coord .getValue ();
 
-      geometry ._texCoordIndex = new Fields .MFInt32 (
-         0, 1, 2, 3, -1
-      );
+      texCoord ._point = [1, 1, 0, 1, 0, 0, 1, 0];
+      coord    ._point = [1, 1, 0, -1, 1, 0, -1, -1, 0, 1, -1, 0];
 
-      geometry ._coordIndex = new Fields .MFInt32 (
-         0, 1, 2, 3, -1
-      );
-
-      texCoord ._point = new Fields .MFVec2f (
-         new Fields .SFVec2f (1, 1), new Fields .SFVec2f (0, 1), new Fields .SFVec2f (0, 0), new Fields .SFVec2f (1, 0)
-      );
-
-      coord ._point = new Fields .MFVec3f (
-         new Fields .SFVec3f (1, 1, 0), new Fields .SFVec3f (-1, 1, 0), new Fields .SFVec3f (-1, -1, 0), new Fields .SFVec3f (1, -1, 0)
-      );
+      geometry ._coordIndex = [0, 1, 2, 3, -1];
 
       texCoord .setup ();
       coord    .setup ();
