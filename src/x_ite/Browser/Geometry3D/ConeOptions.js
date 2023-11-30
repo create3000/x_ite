@@ -226,7 +226,7 @@ Object .assign (Object .setPrototypeOf (ConeOptions .prototype, X3DBaseNode .pro
             theta = 2 * Math .PI * u,
             p     = Complex .Polar (-1, theta);
 
-         point  .push (new Vector3 (p .imag, -1, p .real));
+         point .push (new Vector3 (p .imag, -1, p .real));
       }
 
       point .push (new Vector3 (0, 1, 0));
