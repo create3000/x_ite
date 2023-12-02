@@ -377,7 +377,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
       const exportedNode = this [_exportedNodes] .get (exportedName);
 
       if (exportedNode)
-         return exportedNode .getLocalNode ();
+         return exportedNode .localNode;
 
       throw new Error (`Exported node '${exportedName}' not found.`);
    },

@@ -65,7 +65,7 @@ function X3DImportedNode (executionContext, inlineNode, exportedName, importedNa
    this [_importedName] = importedName;
    this [_routes]       = new Set ();
 
-   this [_inlineNode] ._loadState .addInterest ("set_loadState__", this);
+   this .getInlineNode () ._loadState .addInterest ("set_loadState__", this);
 }
 
 // Must be of type X3DNode, to get routes work.
