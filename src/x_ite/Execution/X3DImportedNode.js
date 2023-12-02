@@ -60,7 +60,7 @@ function X3DImportedNode (executionContext, inlineNode, exportedName, importedNa
 {
    X3DNode .call (this, executionContext);
 
-   this [_inlineNode]   = inlineNode;
+   this [_inlineNode]   = SFNodeCache .get (inlineNode);
    this [_exportedName] = exportedName;
    this [_importedName] = importedName;
    this [_routes]       = new Set ();
@@ -73,7 +73,7 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DNode .pro
 {
    getInlineNode ()
    {
-      return this [_inlineNode];
+      return this [_inlineNode] .getValue ();
    },
    getExportedName ()
    {
@@ -81,7 +81,7 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DNode .pro
    },
    getExportedNode ()
    {
-      return this [_inlineNode] .getInternalScene () .getExportedNode (this [_exportedName]) .getValue ();
+      return this .getInlineNode () .getInternalScene () .getExportedNode (this [_exportedName]) .getValue ();
    },
    getImportedName ()
    {
@@ -115,7 +115,7 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DNode .pro
 
       // Try to resolve source or destination node routes.
 
-      if (this [_inlineNode] .checkLoadState () === X3DConstants .COMPLETE_STATE)
+      if (this .getInlineNode () .checkLoadState () === X3DConstants .COMPLETE_STATE)
          this .resolveRoute (route);
    },
    resolveRoute (route)
@@ -169,7 +169,7 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DNode .pro
    },
    set_loadState__ ()
    {
-      switch (this [_inlineNode] .checkLoadState ())
+      switch (this .getInlineNode () .checkLoadState ())
       {
          case X3DConstants .NOT_STARTED_STATE:
          case X3DConstants .FAILED_STATE:
@@ -517,7 +517,7 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DNode .pro
    },
    dispose ()
    {
-      this [_inlineNode] ._loadState .removeInterest ("set_loadState__", this);
+      this .getInlineNode () ._loadState .removeInterest ("set_loadState__", this);
 
       this .deleteRoutes ();
 
@@ -534,7 +534,7 @@ Object .defineProperties (X3DImportedNode .prototype,
    {
       get ()
       {
-         return SFNodeCache .get (this [_inlineNode]);
+         return this [_inlineNode];
       },
       enumerable: true,
    },
@@ -550,7 +550,7 @@ Object .defineProperties (X3DImportedNode .prototype,
    {
       get ()
       {
-         return this [_inlineNode] .getInternalScene () .getExportedNode (this [_exportedName]);
+         return this .getInlineNode () .getInternalScene () .getExportedNode (this [_exportedName]);
       },
       enumerable: true,
    },

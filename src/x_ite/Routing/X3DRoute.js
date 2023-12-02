@@ -61,9 +61,9 @@ function X3DRoute (executionContext, sourceNode, sourceField, destinationNode, d
    X3DObject .call (this, executionContext);
 
    this [_executionContext] = executionContext;
-   this [_sourceNode]       = sourceNode;
+   this [_sourceNode]       = SFNodeCache .get (sourceNode);
    this [_sourceField]      = sourceField;
-   this [_destinationNode]  = destinationNode;
+   this [_destinationNode]  = SFNodeCache .get (destinationNode);
    this [_destinationField] = destinationField;
 
    // Must connect in every context, to make X3DBaseNode.hasRoutes work.
@@ -87,7 +87,7 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
    getSourceNode ()
    {
       ///  SAI
-      return this [_sourceNode];
+      return this [_sourceNode] .getValue ();
    },
    getSourceField ()
    {
@@ -97,7 +97,7 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
    getDestinationNode ()
    {
       ///  SAI
-      return this [_destinationNode];
+      return this [_destinationNode] .getValue ();
    },
    getDestinationField ()
    {
@@ -114,8 +114,8 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
    toVRMLStream (generator)
    {
       const
-         sourceNodeName      = generator .LocalName (this [_sourceNode]),
-         destinationNodeName = generator .LocalName (this [_destinationNode]);
+         sourceNodeName      = generator .LocalName (this .getSourceNode ()),
+         destinationNodeName = generator .LocalName (this .getDestinationNode ());
 
       generator .string += generator .Indent ();
       generator .string += "ROUTE";
@@ -141,8 +141,8 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
    toXMLStream (generator)
    {
       const
-         sourceNodeName      = generator .LocalName (this [_sourceNode]),
-         destinationNodeName = generator .LocalName (this [_destinationNode]);
+         sourceNodeName      = generator .LocalName (this .getSourceNode ()),
+         destinationNodeName = generator .LocalName (this .getDestinationNode ());
 
       generator .string += generator .Indent ();
       generator .string += "<ROUTE";
@@ -175,8 +175,8 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
    toJSONStream (generator)
    {
       const
-         sourceNodeName      = generator .LocalName (this [_sourceNode]),
-         destinationNodeName = generator .LocalName (this [_destinationNode]);
+         sourceNodeName      = generator .LocalName (this .getSourceNode ()),
+         destinationNodeName = generator .LocalName (this .getDestinationNode ());
 
       generator .string += generator .Indent ();
       generator .string += '{';
@@ -266,7 +266,7 @@ Object .defineProperties (X3DRoute .prototype,
    {
       get ()
       {
-         return SFNodeCache .get (this [_sourceNode]);
+         return this [_sourceNode];
       },
       enumerable: true,
    },
@@ -282,7 +282,7 @@ Object .defineProperties (X3DRoute .prototype,
    {
       get ()
       {
-         return SFNodeCache .get (this [_destinationNode]);
+         return this [_destinationNode];
       },
       enumerable: true,
    },

@@ -57,7 +57,7 @@ function X3DExportedNode (exportedName, localNode)
    X3DObject .call (this);
 
    this [_exportedName] = exportedName;
-   this [_localNode]    = localNode;
+   this [_localNode]    = SFNodeCache .get (localNode);
 }
 
 Object .assign (Object .setPrototypeOf (X3DExportedNode .prototype, X3DObject .prototype),
@@ -68,11 +68,11 @@ Object .assign (Object .setPrototypeOf (X3DExportedNode .prototype, X3DObject .p
    },
    getLocalNode ()
    {
-      return this [_localNode];
+      return this [_localNode] .getValue ();
    },
    toVRMLStream (generator)
    {
-      const localName = generator .LocalName (this [_localNode]);
+      const localName = generator .LocalName (this .getLocalNode ());
 
       generator .string += generator .Indent ();
       generator .string += "EXPORT";
@@ -89,7 +89,7 @@ Object .assign (Object .setPrototypeOf (X3DExportedNode .prototype, X3DObject .p
    },
    toXMLStream (generator)
    {
-      const localName = generator .LocalName (this [_localNode]);
+      const localName = generator .LocalName (this .getLocalNode ());
 
       generator .string += generator .Indent ();
       generator .string += "<EXPORT";
@@ -110,7 +110,7 @@ Object .assign (Object .setPrototypeOf (X3DExportedNode .prototype, X3DObject .p
    },
    toJSONStream (generator)
    {
-      const localName = generator .LocalName (this [_localNode]);
+      const localName = generator .LocalName (this .getLocalNode ());
 
       generator .string += generator .Indent ();
       generator .string += '{';
@@ -183,7 +183,7 @@ Object .defineProperties (X3DExportedNode .prototype,
    {
       get ()
       {
-         return SFNodeCache .get (this [_localNode]);
+         return this [_localNode];
       },
       enumerable: true,
    },

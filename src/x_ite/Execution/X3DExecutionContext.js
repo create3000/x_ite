@@ -377,7 +377,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       const importedNode = this [_importedNodes] .get (importedName);
 
       if (importedNode)
-         return SFNodeCache .get (importedNode .getExportedNode ());
+         return importedNode .exportedNode;
 
       throw new Error (`Imported node '${importedName}' not found.`);
    },

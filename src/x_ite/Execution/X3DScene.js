@@ -377,7 +377,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
       const exportedNode = this [_exportedNodes] .get (exportedName);
 
       if (exportedNode)
-         return SFNodeCache .get (exportedNode .getLocalNode ());
+         return exportedNode .getLocalNode ();
 
       throw new Error (`Exported node '${exportedName}' not found.`);
    },
@@ -395,11 +395,8 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
 
       const rootNodes = this .getRootNodes ();
 
-      for (const rootNode of rootNodes)
-      {
-         if (rootNode .equals (node))
-            return;
-      }
+      if (rootNodes .includes (node))
+         return;
 
       rootNodes .push (node);
    },
