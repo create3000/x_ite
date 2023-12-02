@@ -574,21 +574,10 @@ Object .assign (Object .setPrototypeOf (Rectangle2DOptions .prototype, (X3DBaseN
          texCoord = this .geometry ._texCoord .getValue (),
          coord    = this .geometry ._coord .getValue ();
 
-      geometry ._texCoordIndex = new (Fields_default()).MFInt32 (
-         0, 1, 2, 3, -1
-      );
+      texCoord ._point = [1, 1, 0, 1, 0, 0, 1, 0];
+      coord    ._point = [1, 1, 0, -1, 1, 0, -1, -1, 0, 1, -1, 0];
 
-      geometry ._coordIndex = new (Fields_default()).MFInt32 (
-         0, 1, 2, 3, -1
-      );
-
-      texCoord ._point = new (Fields_default()).MFVec2f (
-         new (Fields_default()).SFVec2f (1, 1), new (Fields_default()).SFVec2f (0, 1), new (Fields_default()).SFVec2f (0, 0), new (Fields_default()).SFVec2f (1, 0)
-      );
-
-      coord ._point = new (Fields_default()).MFVec3f (
-         new (Fields_default()).SFVec3f (1, 1, 0), new (Fields_default()).SFVec3f (-1, 1, 0), new (Fields_default()).SFVec3f (-1, -1, 0), new (Fields_default()).SFVec3f (1, -1, 0)
-      );
+      geometry ._coordIndex = [0, 1, 2, 3, -1];
 
       texCoord .setup ();
       coord    .setup ();
