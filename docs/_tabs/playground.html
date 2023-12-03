@@ -380,15 +380,19 @@ function updateToolbar (toolbar, canvas)
          $(function ()
          {
             const
-               text    = args .join ("") + "\n",
-               element = $("<span></span>") .addClass (classes) .text (text);
+               text     = args .join ("") + "\n",
+               element  = $("<span></span>") .addClass (classes) .text (text),
+               console  = $(".console"),
+               children = console .children ();
 
             if (text .match (/No suitable|of an UNKNOWN touch/))
                return;
 
             log .apply (this, args);
 
-            $(".console") .append (element);
+            children .slice (0, Math .max (children .length - 100, 0)) .remove ();
+            console .append (element)
+
             element [0] .scrollIntoView (false);
          });
       }
