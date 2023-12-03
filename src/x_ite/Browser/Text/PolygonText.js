@@ -47,7 +47,6 @@
 
 import PrimitiveQuality from "../Core/PrimitiveQuality.js";
 import X3DTextGeometry  from "./X3DTextGeometry.js";
-import X3DGeometryNode  from "../../Components/Rendering/X3DGeometryNode.js";
 import Vector3          from "../../../standard/Math/Numbers/Vector3.js";
 import Matrix4          from "../../../standard/Math/Numbers/Matrix4.js";
 import Bezier           from "../../../standard/Math/Algorithms/Bezier.js";
