@@ -146,6 +146,26 @@ Object .defineProperty (X3DGeometryNode, "createArray",
             this .typedArray = new Float32Array (this);
       };
 
+      // array .shrinkToFit = function ()
+      // {
+      //    if (this .length <= this .typedArray .byteLength / Float32Array .BYTES_PER_ELEMENT)
+      //    {
+      //       if (this .length < this .typedArray .byteLength / Float32Array .BYTES_PER_ELEMENT)
+      //          this .typedArray = new Float32Array (this .typedArray .buffer, 0, this .length);
+
+      //       this .typedArray .set (this);
+      //    }
+      //    else
+      //    {
+      //       if (this .length > 10900512)
+      //          console .trace ();
+
+      //       console .log (this .length, this .typedArray .length)
+
+      //       this .typedArray = new Float32Array (this);
+      //    }
+      // };
+
       return array;
    },
 })
@@ -857,6 +877,9 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
       // Buffer
 
       this .flatShading = undefined;
+
+      for (const multiTexCoord of this .multiTexCoords)
+         multiTexCoord .length = 0;
 
       this .coordIndices   .length = 0;
       this .fogDepths      .length = 0;
