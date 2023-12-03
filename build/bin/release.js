@@ -153,7 +153,7 @@ function release ()
 
 	// tags
 
-	commit ();
+	commit (version);
 	publish ("alpha");
 
 	if (!version .endsWith ("a"))
