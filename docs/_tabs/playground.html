@@ -375,26 +375,25 @@ function updateToolbar (toolbar, canvas)
 {
    function output (log, classes)
    {
+      let c;
+
       return function (... args)
       {
-         $(function ()
-         {
-            const
-               text     = args .join ("") + "\n",
-               element  = $("<span></span>") .addClass (classes) .text (text),
-               console  = $(".console"),
-               children = console .children ();
+         const
+            text     = args .join ("") + "\n",
+            element  = $("<span></span>") .addClass (classes) .text (text),
+            console  = c ??= $(".console"),
+            children = console .children ();
 
-            if (text .match (/No suitable|of an UNKNOWN touch/))
-               return;
+         if (text .match (/No suitable|of an UNKNOWN touch/))
+            return;
 
-            log .apply (this, args);
+         log .apply (this, args);
 
-            children .slice (0, Math .max (children .length - 100, 0)) .remove ();
-            console .append (element)
+         children .slice (0, Math .max (children .length - 200, 0)) .remove ();
 
-            element [0] .scrollIntoView (false);
-         });
+         console .append (element);
+         console .scrollTop (console .prop ("scrollHeight"));
       }
    }
 
