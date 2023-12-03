@@ -73,7 +73,7 @@ function update (release)
 	systemSync (`rm -r '${code}'`);
 	systemSync (`cp -r '${dist}' '${code}'`);
 
-	if (release !== "latest")
+	if (release === "latest")
 		systemSync (`cp -r '${dist}' '${code}/dist'`); // legacy
 }
 
