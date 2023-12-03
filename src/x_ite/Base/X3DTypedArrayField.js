@@ -638,7 +638,7 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
          array  = target .getValue (),
          length = target [_length] * target .getComponents ();
 
-      if (array .length == length)
+      if (array .length === length)
          return array;
 
       const newArray = array .subarray (0, length);

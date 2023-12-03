@@ -878,9 +878,6 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
       this .flatShading = undefined;
 
-      for (const multiTexCoord of this .multiTexCoords)
-         multiTexCoord .length = 0;
-
       this .coordIndices   .length = 0;
       this .fogDepths      .length = 0;
       this .colors         .length = 0;

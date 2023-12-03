@@ -60,7 +60,6 @@ function ScreenText (text, fontStyle)
 
    text .setTransparent (true);
 
-   this .texCoordArray = X3DGeometryNode .createArray ();
    this .textureNode   = new PixelTexture (text .getExecutionContext ());
    this .canvas        = $("<canvas></canvas>");
    this .context       = this .canvas [0] .getContext ("2d", { willReadFrequently: true });
@@ -156,7 +155,7 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
             fontStyle = this .getFontStyle (),
             font      = fontStyle .getFont ();
 
-         if (! font)
+         if (!font)
             return;
 
          const
@@ -167,15 +166,13 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
             charSpacings   = this .getCharSpacings (),
             size           = fontStyle .getScale (), // in pixel
             sizeUnitsPerEm = size / font .unitsPerEm,
-            texCoordArray  = this .texCoordArray,
+            texCoordArray  = text .getTexCoords (),
             normalArray    = text .getNormals (),
             vertexArray    = text .getVertices (),
             canvas         = this .canvas [0],
             cx             = this .context;
 
          // Set texCoord.
-
-         texCoordArray .length = 0;
 
          text .getMultiTexCoords () .push (texCoordArray);
 

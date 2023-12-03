@@ -58,8 +58,6 @@ function PolygonText (text, fontStyle)
    X3DTextGeometry .call (this, text, fontStyle);
 
    text ._transparent = false;
-
-   this .texCoordArray = X3DGeometryNode .createArray ();
 }
 
 Object .assign (Object .setPrototypeOf (PolygonText .prototype, X3DTextGeometry .prototype),
@@ -98,7 +96,7 @@ Object .assign (Object .setPrototypeOf (PolygonText .prototype, X3DTextGeometry 
             origin           = text ._origin .getValue (),
             sizeUnitsPerEm   = size / font .unitsPerEm,
             primitiveQuality = this .getBrowser () .getBrowserOptions () .getPrimitiveQuality (),
-            texCoordArray    = this .texCoordArray,
+            texCoordArray    = text .getTexCoords (),
             normalArray      = text .getNormals (),
             vertexArray      = text .getVertices ();
 
