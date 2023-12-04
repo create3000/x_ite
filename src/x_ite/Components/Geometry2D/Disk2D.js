@@ -211,6 +211,7 @@ Object .assign (Object .setPrototypeOf (Disk2D .prototype, X3DGeometryNode .prot
    {
       this .intersectsLine         = base .prototype .intersectsLine;
       this .intersectsBox          = base .prototype .intersectsBox;
+      this .buildTexCoords         = base .prototype .buildTexCoords;
       this .displaySimple          = base .prototype .displaySimple;
       this .display                = base .prototype .display;
       this .displaySimpleParticles = base .prototype .displaySimpleParticles;
