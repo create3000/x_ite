@@ -14,9 +14,11 @@ interface X3D
 
    noConflict (): X3D;
    createBrowser (): X3DCanvasElement;
-   getBrowser (via?: string | X3DCanvasElement): X3DBrowser;
+   getBrowser (selector?: string | X3DCanvasElement): X3DBrowser;
 
    X3DConstants: X3DConstants;
+
+   // SF* fields
 
    SFBool: typeof SFBool;
    SFColor: typeof SFColor;
@@ -40,7 +42,8 @@ interface X3D
    SFVec4d: typeof SFVec4;
    SFVec4f: typeof SFVec4;
 
-   // X3DArrayField:
+   // MF* fields
+
    MFBool: typeof X3DArrayField <boolean>;
    MFColor: typeof X3DArrayField <SFColor>;
    MFColorRGBA: typeof X3DArrayField <SFColorRGBA>;
@@ -94,9 +97,9 @@ interface X3DBrowser
    setBrowserOption <T extends keyof BrowserOption> (name: T, value: BrowserOption [T]): void;
    getRenderingProperty <T extends keyof RenderingProperty> (name: T): RenderingProperty [T];
    getContextMenu (): ContextMenu;
-   addBrowserCallback (key: unknown, cb?: BrowserCallback): void;
-   addBrowserCallback (key: unknown, event: number, cb?: BrowserCallback): void;
-   removeBrowserCallback (key: unknown, event?: number): void;
+   addBrowserCallback (key: any, callback?: BrowserCallback): void;
+   addBrowserCallback (key: any, event: number, callback?: BrowserCallback): void;
+   removeBrowserCallback (key: any, event?: number): void;
    viewAll (layer?: SFNode, transitionTime?: number): void;
    nextViewpoint (layer?: SFNode): void;
    previousViewpoint (layer?: SFNode): void;
@@ -104,8 +107,8 @@ interface X3DBrowser
    lastViewpoint (layer?: SFNode): void;
    changeViewpoint (name: string): void;
    changeViewpoint (layer: SFNode, name: string): void;
-   print (thing: unknown): void;
-   printLn (thing: unknown): void;
+   print (... args: any []): void;
+   printLn (... args: any []): void;
 
    // VRML methods
    getName (): string;
@@ -154,7 +157,7 @@ type BrowserOption = {
    MotionBlur:                   boolean,
    PrimitiveQuality:             QualityLevels,
    QualityWhenMoving:            QualityLevels | "SAME",
-   Shading:	                     "POINT" | "WIREFRAME" | "FLAT" | "GOURAUD" | "PHONG",
+   Shading:	                     ShadingTypes,
    SplashScreen:                 boolean,
    TextureQuality:               QualityLevels,
    AutoUpdate:                   boolean,
@@ -172,9 +175,10 @@ type BrowserOption = {
 }
 
 type QualityLevels = "LOW" | "MEDIUM" | "HIGH";
+type ShadingTypes = "POINT" | "WIREFRAME" | "FLAT" | "GOURAUD" | "PHONG";
 
 type RenderingProperty = {
-   Shading:	               BrowserOption ["Shading"],
+   Shading:	               ShadingTypes,
    MaxTextureSize:         number,
    TextureUnits:           number,
    MaxLights:              number,
@@ -193,7 +197,7 @@ interface ContextMenu
    setUserMenu (cb: UserMenuCallback): void;
 }
 
-type JQueryCtxMenuOpts = {
+type ContextMenuOptions = {
    selector: string,
    items: UserMenuItems,
    appendTo?: string | HTMLElement,
@@ -203,23 +207,23 @@ type JQueryCtxMenuOpts = {
    reposition?: boolean,
    delay?: number,
    autoHide?: boolean,
-   zindex?: number | (($trigger: string, opt: JQueryCtxMenuOpts) => number)
+   zindex?: number | (($trigger: string, options: ContextMenuOptions) => number)
    className?: string,
    classNames?: Record <string, string>,
    animation?: {duration: number, show: string, hide: string},
-   events?: Record <string, (opt: JQueryCtxMenuOpts) => boolean>,
-   position?: (opt: unknown, x?: number|string, y?: number|string) => void,
+   events?: Record <string, (options: ContextMenuOptions) => boolean>,
+   position?: (options: unknown, x?: number|string, y?: number|string) => void,
    determinePosition?: (menu: unknown) => void,
    callback?: MenuCallback,
-   build?: ($triggerElement: unknown, e: Event) => JQueryCtxMenuOpts,
+   build?: ($triggerElement: unknown, e: Event) => ContextMenuOptions,
    itemClickEvent?: string
 }
 
 type UserMenuCallback = () => UserMenuItems
 type UserMenuItems = Record <string, UserMenuItem>
-type MenuCallback = (itemKey: string, opt: JQueryCtxMenuOpts, event: Event) => (boolean | void)
-type MenuIconCallback = (opt: JQueryCtxMenuOpts, $itemElement: HTMLElement,itemKey: string, item: unknown) => string
-type MenuBoolCallback = (itemKey: string, opt: JQueryCtxMenuOpts) => boolean
+type MenuCallback = (itemKey: string, options: ContextMenuOptions, event: Event) => (boolean | void)
+type MenuIconCallback = (options: ContextMenuOptions, $itemElement: HTMLElement,itemKey: string, item: unknown) => string
+type MenuBoolCallback = (itemKey: string, options: ContextMenuOptions) => boolean
 type UserMenuItem = {
    name: string,
    isHtmlName?: boolean,
@@ -259,7 +263,7 @@ interface X3DExecutionContext
 {
    readonly specificationVersion: string;
    readonly encoding: "ASCII" | "VRML" | "XML" | "BINARY" | "SCRIPTED" | "BIFS" | "NONE";
-   readonly profile: ProfileInfo;
+   readonly profile: ProfileInfo | null;
    readonly components: ComponentInfoArray;
    readonly worldURL: string;
    readonly baseURL: string;
@@ -286,6 +290,7 @@ interface X3DExecutionContext
 }
 
 type ProfileInfoArray = X3DInfoArray <ProfileInfo>;
+
 interface ProfileInfo
 {
    readonly name: string;
@@ -295,6 +300,7 @@ interface ProfileInfo
 }
 
 type ComponentInfoArray = X3DInfoArray <ComponentInfo>;
+
 interface ComponentInfo
 {
    readonly name: string;
@@ -304,6 +310,7 @@ interface ComponentInfo
 }
 
 type UnitInfoArray = X3DInfoArray <UnitInfo>;
+
 interface UnitInfo
 {
    readonly category: string;
@@ -312,11 +319,13 @@ interface UnitInfo
 }
 
 type ProtoDeclarationArray = X3DInfoArray <X3DProtoDeclaration>;
+
 interface X3DProtoDeclaration
 {
    readonly name: string;
    readonly fields: FieldDefinitionArray;
    readonly isExternProto: false;
+
    newInstance (): SFNode;
    toVRMLString (options?: VRMLOptions): string;
    toXMLString (options?: VRMLOptions): string;
@@ -324,13 +333,15 @@ interface X3DProtoDeclaration
 }
 
 type ExternProtoDeclarationArray = X3DInfoArray <X3DExternProtoDeclaration>;
+
 interface X3DExternProtoDeclaration
 {
    readonly name: string;
    readonly fields: FieldDefinitionArray;
    readonly urls: X3DArrayField <string>;
    readonly isExternProto: false;
-   readonly loadState: number; // A Load State Constant from X3DConstants
+   readonly loadState: number;
+
    newInstance (): SFNode;
    loadNow (): Promise <void>;
    toVRMLString (options?: VRMLOptions): string;
@@ -339,6 +350,7 @@ interface X3DExternProtoDeclaration
 }
 
 type RouteArray = X3DInfoArray <X3DRoute>;
+
 interface X3DRoute
 {
    readonly sourceNode: SFNode;
@@ -349,10 +361,10 @@ interface X3DRoute
 
 type X3DInfoArray <T> = {[index: number]: T, length: number}
 
-// would be better to make these enums...
 interface X3DConstants
 {
    // Browser Event Constants
+
    readonly CONNECTION_ERROR: number;
    readonly BROWSER_EVENT: number;
    readonly INITIALIZED_EVENT: number;
@@ -360,18 +372,21 @@ interface X3DConstants
    readonly INITIALIZED_ERROR: number;
 
    // Load State Constants
+
    readonly NOT_STARTED_STATE: number;
    readonly IN_PROGRESS_STATE: number;
    readonly COMPLETE_STATE: number;
    readonly FAILED_STATE: number;
 
    // Access Type Constants
+
    readonly initializeOnly: 0b001;
    readonly inputOnly: 0b010;
    readonly outputOnly: 0b100;
    readonly inputOutput: 0b111;
 
    // Field Type Constants
+
    readonly SFBool: number;
    readonly SFColor: number;
    readonly SFColorRGBA: number;
@@ -416,6 +431,7 @@ interface X3DConstants
    readonly MFVec4f: number;
 
    // Concrete Node Types
+
    readonly AcousticProperties: number;
    readonly Analyser: number;
    readonly Anchor: number;
@@ -560,6 +576,7 @@ interface X3DConstants
    readonly WorldInfo: number;
 
    // Abstract Node Types
+
    readonly X3DAppearanceChildNode: number;
    readonly X3DAppearanceNode: number;
    readonly X3DBackgroundNode: number;
@@ -635,8 +652,6 @@ type X3DFieldDefinition = {
    readonly value: X3DField
 }
 
-type FieldCallback = (value: unknown) => void
-
 declare class X3DField
 {
    equals (other: X3DField): boolean;
@@ -654,31 +669,33 @@ declare class X3DField
    getUnit (): string;
    hasReferences (): boolean;
    isReference (accessType: number): boolean;
-   addReferencesCallback (key: unknown, callback: FieldCallback): void;
-   removeReferencesCallback (key: unknown): void;
-   getReferencesCallbacks (): Map <unknown, FieldCallback>;
+   addReferencesCallback (key: any, callback: FieldCallback): void;
+   removeReferencesCallback (key: any): void;
+   getReferencesCallbacks (): Map <any, FieldCallback>;
    addFieldInterest (other: X3DField): void;
    removeFieldInterest (other: X3DField): void;
    getFieldInterest (): Set <X3DField>
-   addFieldCallback (key: unknown, callback: FieldCallback): void;
-   removeFieldCallback (key: unknown): void;
-   getFieldCallbacks (): Map <unknown, FieldCallback>;
+   addFieldCallback (key: any, callback: FieldCallback): void;
+   removeFieldCallback (key: any): void;
+   getFieldCallbacks (): Map <any, FieldCallback>;
    addInputRoute (route: X3DRoute): void;
    removeInputRoute (route: X3DRoute): void;
    getInputRoutes (): Set <X3DRoute>;
    addOutputRoute (route: X3DRoute): void;
    removeOutputRoute (route: X3DRoute): void;
    getOutputRoutes (): Set <X3DRoute>;
-   addRouteCallback (key: unknown, callback: FieldCallback): void;
-   removeRouteCallback (key: unknown): void;
-   getRouteCallbacks (): Map <unknown, FieldCallback>;
+   addRouteCallback (key: any, callback: FieldCallback): void;
+   removeRouteCallback (key: any): void;
+   getRouteCallbacks (): Map <any, FieldCallback>;
    dispose (): void;
 }
+
+type FieldCallback = (value: X3DField) => void;
 
 class SFBool extends X3DField
 {
    static readonly typeName: "SFBool";
-   constructor (arg?: unknown);
+   constructor (arg?: any);
    copy (): SFBool;
    valueOf (): boolean;
 }
@@ -713,7 +730,7 @@ class SFColorRGBA extends X3DField
 class SFDouble extends X3DField
 {
    static readonly typeName: "SFDouble";
-   constructor (arg?: unknown);
+   constructor (arg?: any);
    copy (): SFDouble;
    valueOf (): number;
 }
@@ -721,7 +738,7 @@ class SFDouble extends X3DField
 class SFFloat extends X3DField
 {
    static readonly typeName: "SFFloat";
-   constructor (arg?: unknown);
+   constructor (arg?: any);
    copy (): SFFloat;
    valueOf (): number;
 }
@@ -804,19 +821,19 @@ interface SFNode extends X3DField
    metadata: SFNode;
 
    copy (): SFNode;
-   addFieldCallback (key: unknown, callback: FieldCallback): void;
-   addFieldCallback (name: string, key: unknown, callback: (value: unknown) => void): void;
+   addFieldCallback (key: any, callback: FieldCallback): void;
+   addFieldCallback (name: string, key: any, callback: FieldCallback): void;
    getFieldDefinitions (): FieldDefinitionArray;
    getField (name: string): X3DField;
    getNodeName (): string;
    getNodeDisplayName (): string;
    getNodeType (): number [];
    getNodeTypeName (): string;
-   getNodeUserData (key: unknown): unknown;
-   removeFieldCallback (key: unknown): void;
-   removeFieldCallback (name: string, key: unknown): void;
-   removeNodeUserData (key: unknown): void;
-   setNodeUserData (key: unknown, data: unknown): unknown;
+   getNodeUserData (key: any): any;
+   removeFieldCallback (key: any): void;
+   removeFieldCallback (name: string, key: any): void;
+   removeNodeUserData (key: any): void;
+   setNodeUserData (key: any, value: any): void;
    toVRMLString (options?: VRMLOptions): string;
    toXMLString (options?: VRMLOptions): string;
    toJSONString (options?: VRMLOptions): string;
@@ -858,7 +875,7 @@ class SFRotation extends X3DField
 
 class SFString extends X3DField
 {
-   constructor (arg?: unknown);
+   constructor (arg?: any);
    copy (): SFString;
    valueOf (): string;
    length: number;
@@ -866,7 +883,7 @@ class SFString extends X3DField
 
 class SFTime extends X3DField
 {
-   constructor (arg?: unknown);
+   constructor (arg?: any);
    copy (): SFTime;
    valueOf (): number;
 }
@@ -961,7 +978,7 @@ type ArrayAction <T> = (elt: T, ix: boolean, arr: X3DArrayField <T>) => void
 type ArrayReducer <T,U> = (acc: U, elt: T, ix: number, arr: X3DArrayField <T>) => U
 class X3DArrayField <T> extends X3DField
 {
-   constructor (...elts: T []);
+   constructor (... elements: T []);
    [index: number]: T;
    length: number;
    at (index: number): T;
@@ -981,7 +998,7 @@ class X3DArrayField <T> extends X3DField
    lastIndexOf (needle: T): number;
    map <U> (f: (elt: T, ix: number, arr: X3DArrayField <T>) => U): U [];
    pop (): T;
-   push (...elts: T []): number;
+   push (... elements: T []): number;
    reduce <U> (f: ArrayReducer <T,U>, initial?: U): U;
    reduceRight <U> (f: ArrayReducer <T,U>, initial?: U): U;
    reverse (): X3DArrayField <T>;
@@ -989,13 +1006,11 @@ class X3DArrayField <T> extends X3DField
    slice (start?: number, end?: number): X3DArrayField <T>;
    some (predicate: ArrayTest <T>): boolean;
    sort (comparator?: (a: T, b: T) => number): X3DArrayField <T>;
-   splice (start: number, deleteCount: number,
-          ...rest: T []) : X3DArrayField <T>;
+   splice (start: number, deleteCount: number, ... rest: T []) : X3DArrayField <T>;
    toReversed (): X3DArrayField <T>;
    toSorted (comparator?: (a: T, b: T) => number): X3DArrayField <T>;
-   toSpliced (start: number, deleteCount: number,
-             ...rest: T []) : X3DArrayField <T>;
-   unshift (...elts: T []): number;
+   toSpliced (start: number, deleteCount: number, ... rest: T []) : X3DArrayField <T>;
+   unshift (... elements: T []): number;
    values (): IterableIterator <T>;
    with (index: number, value: T): X3DArrayField <T>;
 }
