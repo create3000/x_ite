@@ -284,9 +284,9 @@ interface X3DExecutionContext
    addRoute (sourceNode: SFNode, sourceField: string,destinationNode: SFNode, destinationField: string): X3DRoute;
    deleteRoute (route: X3DRoute): void;
 
-   toVRMLString (options?: VRMLOptions): string;
-   toXMLString (options?: VRMLOptions): string;
-   toJSONString (options?: VRMLOptions): string;
+   toVRMLString (options?: ToStringOptions): string;
+   toXMLString (options?: ToStringOptions): string;
+   toJSONString (options?: ToStringOptions): string;
 }
 
 type ProfileInfoArray = X3DInfoArray <ProfileInfo>;
@@ -327,9 +327,9 @@ interface X3DProtoDeclaration
    readonly isExternProto: false;
 
    newInstance (): SFNode;
-   toVRMLString (options?: VRMLOptions): string;
-   toXMLString (options?: VRMLOptions): string;
-   toJSONString (options?: VRMLOptions): string;
+   toVRMLString (options?: ToStringOptions): string;
+   toXMLString (options?: ToStringOptions): string;
+   toJSONString (options?: ToStringOptions): string;
 }
 
 type ExternProtoDeclarationArray = X3DInfoArray <X3DExternProtoDeclaration>;
@@ -344,9 +344,9 @@ interface X3DExternProtoDeclaration
 
    newInstance (): SFNode;
    loadNow (): Promise <void>;
-   toVRMLString (options?: VRMLOptions): string;
-   toXMLString (options?: VRMLOptions): string;
-   toJSONString (options?: VRMLOptions): string;
+   toVRMLString (options?: ToStringOptions): string;
+   toXMLString (options?: ToStringOptions): string;
+   toJSONString (options?: ToStringOptions): string;
 }
 
 type RouteArray = X3DInfoArray <X3DRoute>;
@@ -876,12 +876,12 @@ class SFNode <T extends X3DNode = X3DNode> extends X3DField
    removeFieldCallback (name: string, key: any): void;
    removeNodeUserData (key: any): void;
    setNodeUserData (key: any, value: any): void;
-   toVRMLString (options?: VRMLOptions): string;
-   toXMLString (options?: VRMLOptions): string;
-   toJSONString (options?: VRMLOptions): string;
+   toVRMLString (options?: ToStringOptions): string;
+   toXMLString (options?: ToStringOptions): string;
+   toJSONString (options?: ToStringOptions): string;
 }
 
-type VRMLOptions = {
+type ToStringOptions = {
    style?: "TIDY" | "COMPACT" | "SMALL" | "CLEAN",
    indent?: string,
    precision?: number,
