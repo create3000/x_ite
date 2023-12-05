@@ -805,12 +805,12 @@ class SFMatrix3 extends X3DField
    transpose (): this;
    multLeft (matrix: this): this;
    multRight (matrix: this): this;
-   multVecMatrix <T extends SFVec2 = SFVec2d | SFVec2f> (row: T): T;
-   multVecMatrix <T extends SFVec3 = SFVec3d | SFVec3f> (row: T): T;
-   multMatrixVec <T extends SFVec2 = SFVec2d | SFVec2f> (col: T): T;
-   multMatrixVec <T extends SFVec3 = SFVec3d | SFVec3f> (col: T): T;
-   multDirMatrix <T extends SFVec2 = SFVec2d | SFVec2f> (row: T): T;
-   multMatrixDir <T extends SFVec2 = SFVec2d | SFVec2f> (col: T): T;
+   multVecMatrix <T extends SFVec2d | SFVec2f> (row: T): T;
+   multVecMatrix <T extends SFVec3d | SFVec3f> (row: T): T;
+   multMatrixVec <T extends SFVec2d | SFVec2f> (col: T): T;
+   multMatrixVec <T extends SFVec3d | SFVec3f> (col: T): T;
+   multDirMatrix <T extends SFVec2d | SFVec2f> (row: T): T;
+   multMatrixDir <T extends SFVec2d | SFVec2f> (col: T): T;
 }
 
 class SFMatrix3d extends SFMatrix3
@@ -841,12 +841,12 @@ class SFMatrix4 extends X3DField
    transpose (): this;
    multLeft (matrix: this): this;
    multRight (matrix: this): this;
-   multVecMatrix <T extends SFVec4 = SFVec4d | SFVec4f> (row: T): T;
-   multVecMatrix <T extends SFVec3 = SFVec3d | SFVec3f> (row: T): T;
-   multMatrixVec <T extends SFVec4 = SFVec4d | SFVec4f> (col: T): T;
-   multMatrixVec <T extends SFVec3 = SFVec3d | SFVec3f> (col: T): T;
-   multDirMatrix <T extends SFVec3 = SFVec3d | SFVec3f> (row: T): T;
-   multMatrixDir <T extends SFVec3 = SFVec3d | SFVec3f> (col: T): T;
+   multVecMatrix <T extends SFVec4d | SFVec4f> (row: T): T;
+   multVecMatrix <T extends SFVec3d | SFVec3f> (row: T): T;
+   multMatrixVec <T extends SFVec4d | SFVec4f> (col: T): T;
+   multMatrixVec <T extends SFVec3d | SFVec3f> (col: T): T;
+   multDirMatrix <T extends SFVec3d | SFVec3f> (row: T): T;
+   multMatrixDir <T extends SFVec3d | SFVec3f> (col: T): T;
 }
 
 class SFMatrix4d extends SFMatrix4
@@ -916,7 +916,7 @@ class SFRotation extends X3DField
    getMatrix (): SFMatrix3f;
    inverse (): SFRotation;
    multiply (rotation: SFRotation): SFRotation;
-   multVec <T extends SFVec3 = SFVec3d | SFVec3f> (vector: T): T;
+   multVec <T extends SFVec3d | SFVec3f> (vector: T): T;
    setAxis (axis: SFVec3): void;
    setMatrix (matrix: SFMatrix3): void;
    slerp (destination: SFRotation, t: number): SFRotation;
