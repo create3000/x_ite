@@ -1,3 +1,5 @@
+// Handle both importing via UMD and modules:
+export = X3D;
 declare const X3D: X3D;
 export default X3D;
 export interface X3D {
