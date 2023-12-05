@@ -147,7 +147,7 @@ type BrowserProperty = "ABSTRACT_NODES"
    | "DOM_IMPORT"
    | "XML_ENCODING"
    | "CLASSIC_VRML_ENCODING"
-   | "BINARY_ENCOIDING";
+   | "BINARY_ENCODING";
 
 type BrowserOption = {
    Antialiased:                  boolean,
