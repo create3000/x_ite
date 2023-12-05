@@ -695,7 +695,9 @@ type FieldCallback = (value: X3DField) => void;
 class SFBool extends X3DField
 {
    static readonly typeName: "SFBool";
+   
    constructor (arg?: any);
+
    copy (): SFBool;
    valueOf (): boolean;
 }
@@ -703,10 +705,15 @@ class SFBool extends X3DField
 class SFColor extends X3DField
 {
    static readonly typeName: "SFColor";
+
    constructor (r?: number, g?: number, b?: number);
+
    r: number;
    g: number;
    b: number;
+
+   [index: number]: number;
+
    copy (): SFColor;
    getHSV (result: number []): number [];
    setHSV (h: number, s: number, v: number): void;
@@ -716,11 +723,16 @@ class SFColor extends X3DField
 class SFColorRGBA extends X3DField
 {
    static readonly typeName: "SFColorRGBA";
+
    constructor (r?: number, g?: number, b?: number, a?: number);
+
    r: number;
    g: number;
    b: number;
    a: number;
+
+   [index: number]: number;
+
    copy (): SFColorRGBA;
    getHSVA (result: number []): number [];
    setHSVA (h: number, s: number, v: number): void;
@@ -730,7 +742,9 @@ class SFColorRGBA extends X3DField
 class SFDouble extends X3DField
 {
    static readonly typeName: "SFDouble";
+
    constructor (arg?: any);
+
    copy (): SFDouble;
    valueOf (): number;
 }
@@ -738,7 +752,9 @@ class SFDouble extends X3DField
 class SFFloat extends X3DField
 {
    static readonly typeName: "SFFloat";
+
    constructor (arg?: any);
+
    copy (): SFFloat;
    valueOf (): number;
 }
@@ -746,20 +762,25 @@ class SFFloat extends X3DField
 class SFImage extends X3DField
 {
    static readonly typeName: "SFImage";
+
    constructor (width?: number, height?: number, components?: number, array?: MFInt32);
+
    x: number;
    y: number;
    width: number;
    height: number;
    comp: number;
-   array: number [];
+   array: MFInt32;
+
    copy (): SFImage;
 }
 
 class SFInt32 extends X3DField
 {
    static readonly typeName: "SFInt32";
+
    constructor (val?: number);
+
    copy (): SFInt32;
 }
 
@@ -770,6 +791,9 @@ class SFMatrix3 extends X3DField
    constructor (a: number, b: number, c: number,
                 d: number, e: number, f: number,
                 g: number, h: number, i: number);
+
+   [index: number]: number;
+
    copy (): SFMatrix3;
    setTransform (translation: SFVec2, rotation: number, scaleFactor: SFVec2, scaleOrientation: number, center: SFVec2): void;
    getTransform (translation: SFVec2, rotation: SFDouble, scaleFactor: SFVec2, scaleOrientation: SFDouble, center: SFVec2): void;
@@ -802,6 +826,9 @@ class SFMatrix4 extends X3DField
                 e: number, f: number, g: number, h: number,
                 i: number, j: number, k: number, l: number,
                 m: number, n: number, o: number, p: number);
+
+   [index: number]: number;
+
    copy (): SFMatrix4;
    setTransform (translation: SFVec3, rotation: SFRotation, scaleFactor: SFVec3, scaleOrientation: SFRotation, center: SFVec3): void;
    getTransform (translation: SFVec3, rotation: SFRotation, scaleFactor: SFVec3, scaleOrientation: SFRotation, center: SFVec3): void;
@@ -875,6 +902,8 @@ class SFRotation extends X3DField
    z: number;
    angle: number;
 
+   [index: number]: number;
+
    copy (): SFRotation;
 
    getAxis (): SFVec3;
@@ -915,6 +944,8 @@ class SFVec2 extends X3DField
    x: number;
    y: number;
 
+   [index: number]: number;
+
    copy (): SFVec2;
 
    abs (): SFVec2;
@@ -950,6 +981,8 @@ class SFVec3 extends X3DField
    x: number;
    y: number;
    z: number;
+
+   [index: number]: number;
 
    copy (): SFVec3;
 
@@ -989,6 +1022,8 @@ class SFVec4 extends X3DField
    z: number;
    w: number;
 
+   [index: number]: number;
+
    copy (): SFVec4;
 
    abs (): SFVec4;
@@ -1023,8 +1058,10 @@ type ArrayReducer <T,U> = (acc: U, elt: T, ix: number, arr: X3DArrayField <T>) =
 class X3DArrayField <T> extends X3DField
 {
    constructor (... elements: T []);
+
    [index: number]: T;
    length: number;
+
    at (index: number): T;
    entries (): IterableIterator <[number, T]>;
    every (predicate: ArrayTest <T>): boolean;
