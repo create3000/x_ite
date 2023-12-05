@@ -879,12 +879,12 @@ interface SFNode extends X3DField
 }
 
 type VRMLOptions = {
-   style?: string,
+   style?: "TIDY" | "COMPACT" | "SMALL" | "CLEAN",
    indent?: string,
    precision?: number,
    doublePrecision?: number,
    html?: boolean,
-   closingTags?: boolean
+   closingTags?: boolean,
 }
 
 class SFRotation extends X3DField
