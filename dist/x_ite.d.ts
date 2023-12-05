@@ -135,16 +135,16 @@ type BrowserCallback = (event: number) => void; // event is a Browser Event Cons
 
 interface X3DBrowser
 {
-   name: string;
-   version: string;
-   providerURL: string;
-   currentSpeed: number;
-   currentFrameRate: number;
+   readonly name: string;
+   readonly version: string;
+   readonly providerURL: string;
+   readonly currentSpeed: number;
+   readonly currentFrameRate: number;
    description: string;
    readonly supportedComponents: ComponentInfoArray;
    readonly supportedProfiles: ProfileInfoArray;
    baseURL: string;
-   currentScene: X3DScene;
+   readonly currentScene: X3DScene;
 
    replaceWorld (scene: X3DScene): Promise <void>;
    createX3DFromString (x3dSyntax: string): Promise <X3DScene>;
@@ -282,11 +282,9 @@ interface X3DScene
    updateNamedNode (name: string, node: SFNode): void;
    removeNamedNode (name: string): void;
    getImportedNode (importedName: string): SFNode;
-   updateImportedNode (
-      inlineNode: SFNode, exportedName: string, importedName: string): void;
+   updateImportedNode (inlineNode: SFNode, exportedName: string, importedName: string): void;
    removeImportedNode (importedName: string): void;
-   addRoute (sourceNode: SFNode, sourceField: string,
-            destinationNode: SFNode, destinationField: string): X3DRoute;
+   addRoute (sourceNode: SFNode, sourceField: string,destinationNode: SFNode, destinationField: string): X3DRoute;
    deleteRoute (route: X3DRoute): void;
 
    // X3DScene methods:
@@ -326,7 +324,7 @@ interface X3DProtoDeclaration
 {
    readonly name: string;
    readonly fields: FieldDefinitionArray;
-   isExternProto: false;
+   readonly isExternProto: false;
    newInstance (): SFNode;
    toVRMLString (options?: VRMLOptions): string;
    toXMLString (options?: VRMLOptions): string;
@@ -339,7 +337,7 @@ interface X3DExternProtoDeclaration
    readonly name: string;
    readonly fields: FieldDefinitionArray;
    readonly urls: X3DArrayField <string>;
-   isExternProto: false;
+   readonly isExternProto: false;
    readonly loadState: number; // A Load State Constant from X3DConstants
    newInstance (): SFNode;
    loadNow (): Promise <void>;
@@ -351,296 +349,296 @@ interface X3DExternProtoDeclaration
 type RouteArray = X3DInfoArray <X3DRoute>;
 interface X3DRoute
 {
-   sourceNode: SFNode;
-   sourceField: string;
-   destinationNode: SFNode;
-   destinationField: string;
+   readonly sourceNode: SFNode;
+   readonly sourceField: string;
+   readonly destinationNode: SFNode;
+   readonly destinationField: string;
 }
 
 // would be better to make these enums...
 interface X3DConstants
 {
    // Browser Event Constants
-   CONNECTION_ERROR: number;
-   BROWSER_EVENT: number;
-   INITIALIZED_EVENT: number;
-   SHUTDOWN_EVENT: number;
-   INITIALIZED_ERROR: number;
+   readonly CONNECTION_ERROR: number;
+   readonly BROWSER_EVENT: number;
+   readonly INITIALIZED_EVENT: number;
+   readonly SHUTDOWN_EVENT: number;
+   readonly INITIALIZED_ERROR: number;
 
    // Load State Constants
-   NOT_STARTED_STATE: number;
-   IN_PROGRESS_STATE: number;
-   COMPLETE_STATE: number;
-   FAILED_STATE: number;
+   readonly NOT_STARTED_STATE: number;
+   readonly IN_PROGRESS_STATE: number;
+   readonly COMPLETE_STATE: number;
+   readonly FAILED_STATE: number;
 
    // Access Type Constants
-   initializeOnly: 0b001;
-   inputOnly: 0b010;
-   outputOnly: 0b100;
-   inputOutput: 0b111;
+   readonly initializeOnly: 0b001;
+   readonly inputOnly: 0b010;
+   readonly outputOnly: 0b100;
+   readonly inputOutput: 0b111;
 
    // Field Type Constants
-   SFBool: number;
-   SFColor: number;
-   SFColorRGBA: number;
-   SFDouble: number;
-   SFFloat: number;
-   SFImage: number;
-   SFInt32: number;
-   SFMatrix3d: number;
-   SFMatrix3f: number;
-   SFMatrix4d: number;
-   SFMatrix4f: number;
-   SFNode: number;
-   SFRotation: number;
-   SFString: number;
-   SFTime: number;
-   SFVec2d: number;
-   SFVec2f: number;
-   SFVec3d: number;
-   SFVec3f: number;
-   SFVec4d: number;
-   SFVec4f: number;
-   MFBool: number;
-   MFColor: number;
-   MFColorRGBA: number;
-   MFDouble: number;
-   MFFloat: number;
-   MFImage: number;
-   MFInt32: number;
-   MFMatrix3d: number;
-   MFMatrix3f: number;
-   MFMatrix4d: number;
-   MFMatrix4f: number;
-   MFNode: number;
-   MFRotation: number;
-   MFString: number;
-   MFTime: number;
-   MFVec2d: number;
-   MFVec2f: number;
-   MFVec3d: number;
-   MFVec3f: number;
-   MFVec4d: number;
-   MFVec4f: number;
+   readonly SFBool: number;
+   readonly SFColor: number;
+   readonly SFColorRGBA: number;
+   readonly SFDouble: number;
+   readonly SFFloat: number;
+   readonly SFImage: number;
+   readonly SFInt32: number;
+   readonly SFMatrix3d: number;
+   readonly SFMatrix3f: number;
+   readonly SFMatrix4d: number;
+   readonly SFMatrix4f: number;
+   readonly SFNode: number;
+   readonly SFRotation: number;
+   readonly SFString: number;
+   readonly SFTime: number;
+   readonly SFVec2d: number;
+   readonly SFVec2f: number;
+   readonly SFVec3d: number;
+   readonly SFVec3f: number;
+   readonly SFVec4d: number;
+   readonly SFVec4f: number;
+   readonly MFBool: number;
+   readonly MFColor: number;
+   readonly MFColorRGBA: number;
+   readonly MFDouble: number;
+   readonly MFFloat: number;
+   readonly MFImage: number;
+   readonly MFInt32: number;
+   readonly MFMatrix3d: number;
+   readonly MFMatrix3f: number;
+   readonly MFMatrix4d: number;
+   readonly MFMatrix4f: number;
+   readonly MFNode: number;
+   readonly MFRotation: number;
+   readonly MFString: number;
+   readonly MFTime: number;
+   readonly MFVec2d: number;
+   readonly MFVec2f: number;
+   readonly MFVec3d: number;
+   readonly MFVec3f: number;
+   readonly MFVec4d: number;
+   readonly MFVec4f: number;
 
    // Concrete Node Types
-   AcousticProperties: number;
-   Analyser: number;
-   Anchor: number;
-   Appearance: number;
-   AudioClip: number;
-   AudioDestination: number;
-   Background: number;
-   Billboard: number;
-   BiquadFilter: number;
-   Box: number;
-   BufferAudioSource: number;
-   ChannelMerger: number;
-   ChannelSelector: number;
-   ChannelSplitter: number;
-   ClipPlane: number;
-   Collision: number;
-   Color: number;
-   ColorChaser: number;
-   ColorDamper: number;
-   ColorInterpolator: number;
-   ColorRGBA: number;
-   ComposedShader: number;
-   Cone: number;
-   Convolver: number;
-   Coordinate: number;
-   CoordinateChaser: number;
-   CoordinateDamper: number;
-   CoordinateInterpolator: number;
-   CoordinateInterpolator2D: number;
-   Cylinder: number;
-   CylinderSensor: number;
-   Delay: number;
-   DirectionalLight: number;
-   DynamicsCompressor: number;
-   EaseInEaseOut: number;
-   ElevationGrid: number;
-   EnvironmentLight: number;
-   Extrusion: number;
-   FillProperties: number;
-   FloatVertexAttribute: number;
-   Fog: number;
-   FogCoordinate: number;
-   FontStyle: number;
-   Gain: number;
-   Group: number;
-   ImageTexture: number;
-   IndexedFaceSet: number;
-   IndexedLineSet: number;
-   IndexedTriangleFanSet: number;
-   IndexedTriangleSet: number;
-   IndexedTriangleStripSet: number;
-   Inline: number;
-   LOD: number;
-   Layer: number;
-   LayerSet: number;
-   LineProperties: number;
-   LineSet: number;
-   ListenerPointSource: number;
-   LoadSensor: number;
-   LocalFog: number;
-   Material: number;
-   Matrix3VertexAttribute: number;
-   Matrix4VertexAttribute: number;
-   MetadataBoolean: number;
-   MetadataDouble: number;
-   MetadataFloat: number;
-   MetadataInteger: number;
-   MetadataSet: number;
-   MetadataString: number;
-   MicrophoneSource: number;
-   MovieTexture: number;
-   MultiTexture: number;
-   MultiTextureCoordinate: number;
-   MultiTextureTransform: number;
-   NavigationInfo: number;
-   Normal: number;
-   NormalInterpolator: number;
-   OrientationChaser: number;
-   OrientationDamper: number;
-   OrientationInterpolator: number;
-   OrthoViewpoint: number;
-   OscillatorSource: number;
-   PackagedShader: number;
-   PeriodicWave: number;
-   PhysicalMaterial: number;
-   PixelTexture: number;
-   PlaneSensor: number;
-   PointLight: number;
-   PointProperties: number;
-   PointSet: number;
-   PositionChaser: number;
-   PositionChaser2D: number;
-   PositionDamper: number;
-   PositionDamper2D: number;
-   PositionInterpolator: number;
-   PositionInterpolator2D: number;
-   ProgramShader: number;
-   ProximitySensor: number;
-   ScalarChaser: number;
-   ScalarDamper: number;
-   ScalarInterpolator: number;
-   Script: number;
-   ShaderPart: number;
-   ShaderProgram: number;
-   Shape: number;
-   Sound: number;
-   SpatialSound: number;
-   Sphere: number;
-   SphereSensor: number;
-   SplinePositionInterpolator: number;
-   SplinePositionInterpolator2D: number;
-   SplineScalarInterpolator: number;
-   SpotLight: number;
-   SquadOrientationInterpolator: number;
-   StaticGroup: number;
-   StreamAudioDestination: number;
-   StreamAudioSource: number;
-   Switch: number;
-   TexCoordChaser2D: number;
-   TexCoordDamper2D: number;
-   Text: number;
-   TextureBackground: number;
-   TextureCoordinate: number;
-   TextureCoordinateGenerator: number;
-   TextureProperties: number;
-   TextureTransform: number;
-   TimeSensor: number;
-   TouchSensor: number;
-   Transform: number;
-   TransformSensor: number;
-   TriangleFanSet: number;
-   TriangleSet: number;
-   TriangleStripSet: number;
-   TwoSidedMaterial: number;
-   UnlitMaterial: number;
-   Viewpoint: number;
-   ViewpointGroup: number;
-   Viewport: number;
-   VisibilitySensor: number;
-   VrmlMatrix: number;
-   WaveShaper: number;
-   WorldInfo: number;
+   readonly AcousticProperties: number;
+   readonly Analyser: number;
+   readonly Anchor: number;
+   readonly Appearance: number;
+   readonly AudioClip: number;
+   readonly AudioDestination: number;
+   readonly Background: number;
+   readonly Billboard: number;
+   readonly BiquadFilter: number;
+   readonly Box: number;
+   readonly BufferAudioSource: number;
+   readonly ChannelMerger: number;
+   readonly ChannelSelector: number;
+   readonly ChannelSplitter: number;
+   readonly ClipPlane: number;
+   readonly Collision: number;
+   readonly Color: number;
+   readonly ColorChaser: number;
+   readonly ColorDamper: number;
+   readonly ColorInterpolator: number;
+   readonly ColorRGBA: number;
+   readonly ComposedShader: number;
+   readonly Cone: number;
+   readonly Convolver: number;
+   readonly Coordinate: number;
+   readonly CoordinateChaser: number;
+   readonly CoordinateDamper: number;
+   readonly CoordinateInterpolator: number;
+   readonly CoordinateInterpolator2D: number;
+   readonly Cylinder: number;
+   readonly CylinderSensor: number;
+   readonly Delay: number;
+   readonly DirectionalLight: number;
+   readonly DynamicsCompressor: number;
+   readonly EaseInEaseOut: number;
+   readonly ElevationGrid: number;
+   readonly EnvironmentLight: number;
+   readonly Extrusion: number;
+   readonly FillProperties: number;
+   readonly FloatVertexAttribute: number;
+   readonly Fog: number;
+   readonly FogCoordinate: number;
+   readonly FontStyle: number;
+   readonly Gain: number;
+   readonly Group: number;
+   readonly ImageTexture: number;
+   readonly IndexedFaceSet: number;
+   readonly IndexedLineSet: number;
+   readonly IndexedTriangleFanSet: number;
+   readonly IndexedTriangleSet: number;
+   readonly IndexedTriangleStripSet: number;
+   readonly Inline: number;
+   readonly LOD: number;
+   readonly Layer: number;
+   readonly LayerSet: number;
+   readonly LineProperties: number;
+   readonly LineSet: number;
+   readonly ListenerPointSource: number;
+   readonly LoadSensor: number;
+   readonly LocalFog: number;
+   readonly Material: number;
+   readonly Matrix3VertexAttribute: number;
+   readonly Matrix4VertexAttribute: number;
+   readonly MetadataBoolean: number;
+   readonly MetadataDouble: number;
+   readonly MetadataFloat: number;
+   readonly MetadataInteger: number;
+   readonly MetadataSet: number;
+   readonly MetadataString: number;
+   readonly MicrophoneSource: number;
+   readonly MovieTexture: number;
+   readonly MultiTexture: number;
+   readonly MultiTextureCoordinate: number;
+   readonly MultiTextureTransform: number;
+   readonly NavigationInfo: number;
+   readonly Normal: number;
+   readonly NormalInterpolator: number;
+   readonly OrientationChaser: number;
+   readonly OrientationDamper: number;
+   readonly OrientationInterpolator: number;
+   readonly OrthoViewpoint: number;
+   readonly OscillatorSource: number;
+   readonly PackagedShader: number;
+   readonly PeriodicWave: number;
+   readonly PhysicalMaterial: number;
+   readonly PixelTexture: number;
+   readonly PlaneSensor: number;
+   readonly PointLight: number;
+   readonly PointProperties: number;
+   readonly PointSet: number;
+   readonly PositionChaser: number;
+   readonly PositionChaser2D: number;
+   readonly PositionDamper: number;
+   readonly PositionDamper2D: number;
+   readonly PositionInterpolator: number;
+   readonly PositionInterpolator2D: number;
+   readonly ProgramShader: number;
+   readonly ProximitySensor: number;
+   readonly ScalarChaser: number;
+   readonly ScalarDamper: number;
+   readonly ScalarInterpolator: number;
+   readonly Script: number;
+   readonly ShaderPart: number;
+   readonly ShaderProgram: number;
+   readonly Shape: number;
+   readonly Sound: number;
+   readonly SpatialSound: number;
+   readonly Sphere: number;
+   readonly SphereSensor: number;
+   readonly SplinePositionInterpolator: number;
+   readonly SplinePositionInterpolator2D: number;
+   readonly SplineScalarInterpolator: number;
+   readonly SpotLight: number;
+   readonly SquadOrientationInterpolator: number;
+   readonly StaticGroup: number;
+   readonly StreamAudioDestination: number;
+   readonly StreamAudioSource: number;
+   readonly Switch: number;
+   readonly TexCoordChaser2D: number;
+   readonly TexCoordDamper2D: number;
+   readonly Text: number;
+   readonly TextureBackground: number;
+   readonly TextureCoordinate: number;
+   readonly TextureCoordinateGenerator: number;
+   readonly TextureProperties: number;
+   readonly TextureTransform: number;
+   readonly TimeSensor: number;
+   readonly TouchSensor: number;
+   readonly Transform: number;
+   readonly TransformSensor: number;
+   readonly TriangleFanSet: number;
+   readonly TriangleSet: number;
+   readonly TriangleStripSet: number;
+   readonly TwoSidedMaterial: number;
+   readonly UnlitMaterial: number;
+   readonly Viewpoint: number;
+   readonly ViewpointGroup: number;
+   readonly Viewport: number;
+   readonly VisibilitySensor: number;
+   readonly VrmlMatrix: number;
+   readonly WaveShaper: number;
+   readonly WorldInfo: number;
 
    // Abstract Node Types
-   X3DAppearanceChildNode: number;
-   X3DAppearanceNode: number;
-   X3DBackgroundNode: number;
-   X3DBaseNode: number;
-   X3DBindableNode: number;
-   X3DBoundedObject: number;
-   X3DBrowser: number;
-   X3DChaserNode: number;
-   X3DChildNode: number;
-   X3DColorNode: number;
-   X3DComposedGeometryNode: number;
-   X3DCoordinateNode: number;
-   X3DDamperNode: number;
-   X3DDragSensorNode: number;
-   X3DEnvironmentalSensorNode: number;
-   X3DExecutionContext: number;
-   X3DExternProtoDeclaration: number;
-   X3DFogObject: number;
-   X3DFollowerNode: number;
-   X3DFontStyleNode: number;
-   X3DGeometricPropertyNode: number;
-   X3DGeometryNode: number;
-   X3DGroupingNode: number;
-   X3DInfoNode: number;
-   X3DInterpolatorNode: number;
-   X3DLayerNode: number;
-   X3DLightNode: number;
-   X3DLineGeometryNode: number;
-   X3DMaterialNode: number;
-   X3DMetadataObject: number;
-   X3DNetworkSensorNode: number;
-   X3DNode: number;
-   X3DNormalNode: number;
-   X3DOneSidedMaterialNode: number;
-   X3DPointingDeviceSensorNode: number;
-   X3DProgrammableShaderObject: number;
-   X3DProtoDeclaration: number;
-   X3DProtoDeclarationNode: number;
-   X3DPrototypeInstance: number;
-   X3DScene: number;
-   X3DScriptNode: number;
-   X3DSensorNode: number;
-   X3DShaderNode: number;
-   X3DShapeNode: number;
-   X3DSingleTextureCoordinateNode: number;
-   X3DSingleTextureNode: number;
-   X3DSingleTextureTransformNode: number;
-   X3DSoundChannelNode: number;
-   X3DSoundDestinationNode: number;
-   X3DSoundNode: number;
-   X3DSoundProcessingNode: number;
-   X3DSoundSourceNode: number;
-   X3DTexture2DNode: number;
-   X3DTextureCoordinateNode: number;
-   X3DTextureNode: number;
-   X3DTextureTransformNode: number;
-   X3DTimeDependentNode: number;
-   X3DTouchSensorNode: number;
-   X3DTransformMatrix3DNode: number;
-   X3DTransformNode: number;
-   X3DUrlObject: number;
-   X3DVertexAttributeNode: number;
-   X3DViewpointNode: number;
-   X3DViewportNode: number;
-   X3DWorld: number;
+   readonly X3DAppearanceChildNode: number;
+   readonly X3DAppearanceNode: number;
+   readonly X3DBackgroundNode: number;
+   readonly X3DBaseNode: number;
+   readonly X3DBindableNode: number;
+   readonly X3DBoundedObject: number;
+   readonly X3DBrowser: number;
+   readonly X3DChaserNode: number;
+   readonly X3DChildNode: number;
+   readonly X3DColorNode: number;
+   readonly X3DComposedGeometryNode: number;
+   readonly X3DCoordinateNode: number;
+   readonly X3DDamperNode: number;
+   readonly X3DDragSensorNode: number;
+   readonly X3DEnvironmentalSensorNode: number;
+   readonly X3DExecutionContext: number;
+   readonly X3DExternProtoDeclaration: number;
+   readonly X3DFogObject: number;
+   readonly X3DFollowerNode: number;
+   readonly X3DFontStyleNode: number;
+   readonly X3DGeometricPropertyNode: number;
+   readonly X3DGeometryNode: number;
+   readonly X3DGroupingNode: number;
+   readonly X3DInfoNode: number;
+   readonly X3DInterpolatorNode: number;
+   readonly X3DLayerNode: number;
+   readonly X3DLightNode: number;
+   readonly X3DLineGeometryNode: number;
+   readonly X3DMaterialNode: number;
+   readonly X3DMetadataObject: number;
+   readonly X3DNetworkSensorNode: number;
+   readonly X3DNode: number;
+   readonly X3DNormalNode: number;
+   readonly X3DOneSidedMaterialNode: number;
+   readonly X3DPointingDeviceSensorNode: number;
+   readonly X3DProgrammableShaderObject: number;
+   readonly X3DProtoDeclaration: number;
+   readonly X3DProtoDeclarationNode: number;
+   readonly X3DPrototypeInstance: number;
+   readonly X3DScene: number;
+   readonly X3DScriptNode: number;
+   readonly X3DSensorNode: number;
+   readonly X3DShaderNode: number;
+   readonly X3DShapeNode: number;
+   readonly X3DSingleTextureCoordinateNode: number;
+   readonly X3DSingleTextureNode: number;
+   readonly X3DSingleTextureTransformNode: number;
+   readonly X3DSoundChannelNode: number;
+   readonly X3DSoundDestinationNode: number;
+   readonly X3DSoundNode: number;
+   readonly X3DSoundProcessingNode: number;
+   readonly X3DSoundSourceNode: number;
+   readonly X3DTexture2DNode: number;
+   readonly X3DTextureCoordinateNode: number;
+   readonly X3DTextureNode: number;
+   readonly X3DTextureTransformNode: number;
+   readonly X3DTimeDependentNode: number;
+   readonly X3DTouchSensorNode: number;
+   readonly X3DTransformMatrix3DNode: number;
+   readonly X3DTransformNode: number;
+   readonly X3DUrlObject: number;
+   readonly X3DVertexAttributeNode: number;
+   readonly X3DViewpointNode: number;
+   readonly X3DViewportNode: number;
+   readonly X3DWorld: number;
 }
 
 type FieldDefinitionArray = X3DInfoArray <X3DFieldDefinition>;
 type X3DFieldDefinition = {
-   accessType: number,
-   dataType: string,
-   name: string,
-   value: X3DField
+   readonly accessType: number,
+   readonly dataType: string,
+   readonly name: string,
+   readonly value: X3DField
 }
 
 type FieldCallback = (value: unknown) => void
@@ -685,7 +683,7 @@ declare class X3DField
 
 class SFBool extends X3DField
 {
-   static typeName: "SFBool";
+   static readonly typeName: "SFBool";
    constructor (arg?: unknown);
    copy (): SFBool;
    valueOf (): boolean;
@@ -693,7 +691,7 @@ class SFBool extends X3DField
 
 class SFColor extends X3DField
 {
-   static typeName: "SFColor";
+   static readonly typeName: "SFColor";
    constructor (r?: number, g?: number, b?: number);
    r: number;
    g: number;
@@ -706,7 +704,7 @@ class SFColor extends X3DField
 
 class SFColorRGBA extends X3DField
 {
-   static typeName: "SFColorRGBA";
+   static readonly typeName: "SFColorRGBA";
    constructor (r?: number, g?: number, b?: number, a?: number);
    r: number;
    g: number;
@@ -720,7 +718,7 @@ class SFColorRGBA extends X3DField
 
 class SFDouble extends X3DField
 {
-   static typeName: "SFDouble";
+   static readonly typeName: "SFDouble";
    constructor (arg?: unknown);
    copy (): SFDouble;
    valueOf (): number;
@@ -728,7 +726,7 @@ class SFDouble extends X3DField
 
 class SFFloat extends X3DField
 {
-   static typeName: "SFFloat";
+   static readonly typeName: "SFFloat";
    constructor (arg?: unknown);
    copy (): SFFloat;
    valueOf (): number;
@@ -736,7 +734,7 @@ class SFFloat extends X3DField
 
 class SFImage extends X3DField
 {
-   static typeName: "SFImage";
+   static readonly typeName: "SFImage";
    constructor (width?: number, height?: number, components?: number, array?: X3DArrayField <number>);
    x: number;
    y: number;
@@ -749,7 +747,7 @@ class SFImage extends X3DField
 
 class SFInt32 extends X3DField
 {
-   static typeName: "SFInt32";
+   static readonly typeName: "SFInt32";
    constructor (val?: number);
    copy (): SFInt32;
 }
@@ -957,8 +955,7 @@ class SFVec4 extends X3DField
 
 type ArrayTest <T> = (elt: T, ix: boolean, arr: X3DArrayField <T>) => boolean
 type ArrayAction <T> = (elt: T, ix: boolean, arr: X3DArrayField <T>) => void
-type ArrayReducer <T,U> =
-   (acc: U, elt: T, ix: number, arr: X3DArrayField <T>) => U
+type ArrayReducer <T,U> = (acc: U, elt: T, ix: number, arr: X3DArrayField <T>) => U
 class X3DArrayField <T> extends X3DField
 {
    constructor (...elts: T []);
