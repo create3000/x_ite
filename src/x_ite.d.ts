@@ -273,7 +273,7 @@ interface X3DExecutionContext
    readonly externprotos: ExternProtoDeclarationArray;
    readonly routes: RouteArray;
 
-   createNode <T extends keyof SpecializeNodeType> (spec: T): SpecializeNodeType [T];
+   createNode <T extends keyof ConcreteNodesType> (spec: T): ConcreteNodesType [T];
    createProto (protoName: string): SFNode;
    getNamedNode (name: string): SFNode;
    updateNamedNode (name: string, node: SFNode): void;
@@ -654,8 +654,9 @@ type X3DFieldDefinition = {
 
 declare class X3DField
 {
-   equals (other: X3DField): boolean;
-   assign (other: X3DField): void;
+   copy (): this;
+   equals (other: this): boolean;
+   assign (other: this): void;
    isDefaultValue (): boolean;
    setValue (value: unknown): void;
    getValue (): unknown;
@@ -669,36 +670,33 @@ declare class X3DField
    getUnit (): string;
    hasReferences (): boolean;
    isReference (accessType: number): boolean;
-   addReferencesCallback (key: any, callback: FieldCallback): void;
+   addReferencesCallback (key: any, callback: (value: this) => void): void;
    removeReferencesCallback (key: any): void;
-   getReferencesCallbacks (): Map <any, FieldCallback>;
-   addFieldInterest (other: X3DField): void;
-   removeFieldInterest (other: X3DField): void;
-   getFieldInterest (): Set <X3DField>
-   addFieldCallback (key: any, callback: FieldCallback): void;
+   getReferencesCallbacks (): Map <any, (value: this) => void>;
+   addFieldInterest (other: this): void;
+   removeFieldInterest (other: this): void;
+   getFieldInterests (): Set <this>
+   addFieldCallback (key: any, callback: (value: this) => void): void;
    removeFieldCallback (key: any): void;
-   getFieldCallbacks (): Map <any, FieldCallback>;
+   getFieldCallbacks (): Map <any, (value: this) => void>;
    addInputRoute (route: X3DRoute): void;
    removeInputRoute (route: X3DRoute): void;
    getInputRoutes (): Set <X3DRoute>;
    addOutputRoute (route: X3DRoute): void;
    removeOutputRoute (route: X3DRoute): void;
    getOutputRoutes (): Set <X3DRoute>;
-   addRouteCallback (key: any, callback: FieldCallback): void;
+   addRouteCallback (key: any, callback: (value: this) => void): void;
    removeRouteCallback (key: any): void;
-   getRouteCallbacks (): Map <any, FieldCallback>;
+   getRouteCallbacks (): Map <any, (value: this) => void>;
    dispose (): void;
 }
-
-type FieldCallback = (value: X3DField) => void;
 
 class SFBool extends X3DField
 {
    static readonly typeName: "SFBool";
 
-   constructor (arg?: any);
+   constructor (value?: any);
 
-   copy (): SFBool;
    valueOf (): boolean;
 }
 
@@ -714,7 +712,6 @@ class SFColor extends X3DField
 
    [index: number]: number;
 
-   copy (): SFColor;
    getHSV (): number [];
    setHSV (h: number, s: number, v: number): void;
    lerp (destination: SFColor, t: number): SFColor;
@@ -733,7 +730,6 @@ class SFColorRGBA extends X3DField
 
    [index: number]: number;
 
-   copy (): SFColorRGBA;
    getHSVA (): number [];
    setHSVA (h: number, s: number, v: number): void;
    lerp (destination: SFColor, t: number): SFColorRGBA;
@@ -743,9 +739,8 @@ class SFDouble extends X3DField
 {
    static readonly typeName: "SFDouble";
 
-   constructor (arg?: any);
+   constructor (value?: any);
 
-   copy (): SFDouble;
    valueOf (): number;
 }
 
@@ -753,9 +748,8 @@ class SFFloat extends X3DField
 {
    static readonly typeName: "SFFloat";
 
-   constructor (arg?: any);
+   constructor (value?: any);
 
-   copy (): SFFloat;
    valueOf (): number;
 }
 
@@ -771,17 +765,13 @@ class SFImage extends X3DField
    height: number;
    comp: number;
    array: MFInt32;
-
-   copy (): SFImage;
 }
 
 class SFInt32 extends X3DField
 {
    static readonly typeName: "SFInt32";
 
-   constructor (val?: number);
-
-   copy (): SFInt32;
+   constructor (value?: number);
 }
 
 class SFMatrix3 extends X3DField
@@ -794,20 +784,19 @@ class SFMatrix3 extends X3DField
 
    [index: number]: number;
 
-   copy (): SFMatrix3;
    setTransform (translation: SFVec2, rotation: number, scaleFactor: SFVec2, scaleOrientation: number, center: SFVec2): void;
-   getTransform (translation: SFVec2, rotation: SFDouble, scaleFactor: SFVec2, scaleOrientation: SFDouble, center: SFVec2): void;
+   getTransform (translation: SFVec2, rotation: SFVec3, scaleFactor: SFVec2, scaleOrientation: SFVec3, center: SFVec2): void;
    determinant (): number;
-   inverse (): SFMatrix3;
-   transpose (): SFMatrix3;
-   multLeft (A: SFMatrix3): SFMatrix3;
-   multRight (B: SFMatrix3): SFMatrix3;
-   multVecMatrix (row: SFVec2): SFVec2;
-   multVecMatrix (row: SFVec3): SFVec3;
-   multMatrixVec (col: SFVec2): SFVec2;
-   multMatrixVec (col: SFVec3): SFVec3;
-   multDirMatrix (row: SFVec2): SFVec2;
-   multMatrixDir (col: SFVec2): SFVec2;
+   inverse (): this;
+   transpose (): this;
+   multLeft (matrix: this): this;
+   multRight (matrix: this): this;
+   multVecMatrix <T = SFVec2d | SFVec2f> (row: T): T;
+   multVecMatrix <T = SFVec3d | SFVec3f> (row: T): T;
+   multMatrixVec <T = SFVec2d | SFVec2f> (col: T): T;
+   multMatrixVec <T = SFVec3d | SFVec3f> (col: T): T;
+   multDirMatrix <T = SFVec2d | SFVec2f> (row: T): T;
+   multMatrixDir <T = SFVec2d | SFVec2f> (col: T): T;
 }
 
 class SFMatrix3d extends SFMatrix3 {
@@ -829,20 +818,19 @@ class SFMatrix4 extends X3DField
 
    [index: number]: number;
 
-   copy (): SFMatrix4;
    setTransform (translation: SFVec3, rotation: SFRotation, scaleFactor: SFVec3, scaleOrientation: SFRotation, center: SFVec3): void;
    getTransform (translation: SFVec3, rotation: SFRotation, scaleFactor: SFVec3, scaleOrientation: SFRotation, center: SFVec3): void;
    determinant (): number;
-   inverse (): SFMatrix4;
-   transpose (): SFMatrix4;
-   multLeft (A: SFMatrix4): SFMatrix4;
-   multRight (B: SFMatrix4): SFMatrix4;
-   multVecMatrix (row: SFVec4): SFVec4;
-   multVecMatrix (row: SFVec3): SFVec3;
-   multMatrixVec (col: SFVec4): SFVec4;
-   multMatrixVec (col: SFVec3): SFVec3;
-   multDirMatrix (row: SFVec3): SFVec3;
-   multMatrixDir (col: SFVec3): SFVec3;
+   inverse (): this;
+   transpose (): this;
+   multLeft (matrix: this): this;
+   multRight (matrix: this): this;
+   multVecMatrix <T = SFVec4d | SFVec4f> (row: T): T;
+   multVecMatrix <T = SFVec3d | SFVec3f> (row: T): T;
+   multMatrixVec <T = SFVec4d | SFVec4f> (col: T): T;
+   multMatrixVec <T = SFVec3d | SFVec3f> (col: T): T;
+   multDirMatrix <T = SFVec3d | SFVec3f> (row: T): T;
+   multMatrixDir <T = SFVec3d | SFVec3f> (col: T): T;
 }
 
 class SFMatrix4d extends SFMatrix4 {
@@ -859,10 +847,8 @@ interface SFNode extends X3DField
 
    metadata: SFNode;
 
-   copy (): SFNode;
-
-   addFieldCallback (key: any, callback: FieldCallback): void;
-   addFieldCallback (name: string, key: any, callback: FieldCallback): void;
+   addFieldCallback (key: any, callback: (value: this) => void): void;
+   addFieldCallback (name: string, key: any, callback: (value: X3DField) => void): void;
    getFieldDefinitions (): FieldDefinitionArray;
    getField (name: string): X3DField;
    getNodeName (): string;
@@ -905,8 +891,6 @@ class SFRotation extends X3DField
 
    [index: number]: number;
 
-   copy (): SFRotation;
-
    getAxis (): SFVec3f;
    getMatrix (): SFMatrix3f;
    inverse (): SFRotation;
@@ -921,9 +905,8 @@ class SFString extends X3DField
 {
    static readonly typeName: "SFString";
 
-   constructor (arg?: any);
+   constructor (value?: any);
 
-   copy (): SFString;
    valueOf (): string;
    length: number;
 }
@@ -932,9 +915,8 @@ class SFTime extends X3DField
 {
    static readonly typeName: "SFTime";
 
-   constructor (arg?: any);
+   constructor (value?: any);
 
-   copy (): SFTime;
    valueOf (): number;
 }
 
@@ -947,24 +929,22 @@ class SFVec2 extends X3DField
 
    [index: number]: number;
 
-   copy (): SFVec2;
-
-   abs (): SFVec2;
-   add (other: SFVec2): SFVec2;
-   distance (other: SFVec2): number;
-   divide (denominator: number): SFVec2;
-   divVec (other: SFVec2): SFVec2;
-   dot (other: SFVec2): number;
-   inverse (): SFVec2;
+   abs (): this;
+   add (other: this): this;
+   distance (other: this): number;
+   divide (denominator: number): this;
+   divVec (other: this): this;
+   dot (other: this): number;
+   inverse (): this;
    length (): number;
-   lerp (destination: SFVec2, t: number): SFVec2;
-   min (other: SFVec2): SFVec2;
-   max (other: SFVec2): SFVec2;
-   multiply (factor: number): SFVec2;
-   multVec (other: SFVec2): SFVec2;
-   negate (): SFVec2;
-   normalize (): SFVec2;
-   subtract (other: SFVec2): SFVec2;
+   lerp (destination: this, t: number): this;
+   min (other: this): this;
+   max (other: this): this;
+   multiply (factor: number): this;
+   multVec (other: this): this;
+   negate (): this;
+   normalize (): this;
+   subtract (other: this): this;
 }
 
 class SFVec2d extends SFVec2 {
@@ -985,25 +965,23 @@ class SFVec3 extends X3DField
 
    [index: number]: number;
 
-   copy (): SFVec3;
-
-   abs (): SFVec3;
-   add (other: SFVec3): SFVec3;
-   cross (other: SFVec3): SFVec3;
-   distance (other: SFVec3): number;
-   divide (denominator: number): SFVec3;
-   divVec (other: SFVec3): SFVec3;
-   dot (other: SFVec3): number;
-   inverse (): SFVec3;
+   abs (): this;
+   add (other: this): this;
+   cross (other: this): this;
+   distance (other: this): number;
+   divide (denominator: number): this;
+   divVec (other: this): this;
+   dot (other: this): number;
+   inverse (): this;
    length (): number;
-   lerp (destination: SFVec3, t: number): SFVec3;
-   min (other: SFVec3): SFVec3;
-   max (other: SFVec3): SFVec3;
-   multiply (factor: number): SFVec3;
-   multVec (other: SFVec3): SFVec3;
-   negate (): SFVec3;
-   normalize (): SFVec3;
-   subtract (other: SFVec3): SFVec3;
+   lerp (destination: this, t: number): this;
+   min (other: this): this;
+   max (other: this): this;
+   multiply (factor: number): this;
+   multVec (other: this): this;
+   negate (): this;
+   normalize (): this;
+   subtract (other: this): this;
 }
 
 class SFVec3d extends SFVec2 {
@@ -1025,24 +1003,22 @@ class SFVec4 extends X3DField
 
    [index: number]: number;
 
-   copy (): SFVec4;
-
-   abs (): SFVec4;
-   add (other: SFVec4): SFVec4;
-   distance (other: SFVec4): number;
-   divide (denominator: number): SFVec4;
-   divVec (other: SFVec4): SFVec4;
-   dot (other: SFVec4): number;
-   inverse (): SFVec4;
+   abs (): this;
+   add (other: this): this;
+   distance (other: this): number;
+   divide (denominator: number): this;
+   divVec (other: this): this;
+   dot (other: this): number;
+   inverse (): this;
    length (): number;
-   lerp (destination: SFVec4, t: number): SFVec4;
-   min (other: SFVec4): SFVec4;
-   max (other: SFVec4): SFVec4;
-   multiply (factor: number): SFVec4;
-   multVec (other: SFVec4): SFVec4;
-   negate (): SFVec4;
-   normalize (): SFVec4;
-   subtract (other: SFVec4): SFVec4;
+   lerp (destination: this, t: number): this;
+   min (other: this): this;
+   max (other: this): this;
+   multiply (factor: number): this;
+   multVec (other: this): this;
+   negate (): this;
+   normalize (): this;
+   subtract (other: this): this;
 }
 
 class SFVec4d extends SFVec4 {
@@ -1053,10 +1029,7 @@ class SFVec4f extends SFVec4 {
    static readonly typeName: "SFVec4f";
 }
 
-type ArrayTest <T> = (elt: T, ix: number, arr: X3DArrayField <T>) => boolean
-type ArrayAction <T> = (elt: T, ix: number, arr: X3DArrayField <T>) => void
-type ArrayReducer <T,U> = (acc: U, elt: T, ix: number, arr: X3DArrayField <T>) => U
-class X3DArrayField <T> extends X3DField
+declare class X3DArrayField <T> extends X3DField
 {
    constructor (... elements: T []);
 
@@ -1066,8 +1039,8 @@ class X3DArrayField <T> extends X3DField
    at (index: number): T;
    entries (): IterableIterator <[number, T]>;
    every (predicate: ArrayTest <T>): boolean;
-   fill (val: T, start?: number, end?: number): X3DArrayField <T>;
-   filter (predicate: ArrayTest <T>): X3DArrayField <T>;
+   fill (val: T, start?: number, end?: number): this;
+   filter (predicate: ArrayTest <T>): this;
    find (test: ArrayTest <T>): T | undefined;
    findIndex (test: ArrayTest <T>): number;
    findLast (test: ArrayTest <T>): T | undefined;
@@ -1078,24 +1051,28 @@ class X3DArrayField <T> extends X3DField
    join (separator?: string): string;
    keys (): number [];
    lastIndexOf (needle: T): number;
-   map <U> (f: (elt: T, ix: number, arr: X3DArrayField <T>) => U): U [];
+   map <U> (f: (element: T, i: number, array: this) => U): this;
    pop (): T;
    push (... elements: T []): number;
-   reduce <U> (f: ArrayReducer <T,U>, initial?: U): U;
-   reduceRight <U> (f: ArrayReducer <T,U>, initial?: U): U;
-   reverse (): X3DArrayField <T>;
+   reduce <U> (f: ArrayReducer <T, U>, initial?: U): U;
+   reduceRight <U> (f: ArrayReducer <T, U>, initial?: U): U;
+   reverse (): this;
    shift (): T;
-   slice (start?: number, end?: number): X3DArrayField <T>;
+   slice (start?: number, end?: number): this;
    some (predicate: ArrayTest <T>): boolean;
-   sort (comparator?: (a: T, b: T) => number): X3DArrayField <T>;
-   splice (start: number, deleteCount: number, ... rest: T []) : X3DArrayField <T>;
-   toReversed (): X3DArrayField <T>;
-   toSorted (comparator?: (a: T, b: T) => number): X3DArrayField <T>;
-   toSpliced (start: number, deleteCount: number, ... rest: T []) : X3DArrayField <T>;
+   sort (comparator?: (a: T, b: T) => number): this;
+   splice (start: number, deleteCount: number, ... items: T []) : this;
+   toReversed (): this;
+   toSorted (comparator?: (a: T, b: T) => number): this;
+   toSpliced (start: number, deleteCount: number, ... items: T []) : this;
    unshift (... elements: T []): number;
    values (): IterableIterator <T>;
-   with (index: number, value: T): X3DArrayField <T>;
+   with (index: number, value: T): this;
 }
+
+type ArrayTest <T> = (element: T, i: number, array: X3DArrayField <T>) => boolean
+type ArrayAction <T> = (element: T, i: number, array: X3DArrayField <T>) => void
+type ArrayReducer <T, U> = (accum: U, current: T, i: number, array: X3DArrayField <T>) => U
 
 class MFBool extends X3DArrayField <boolean>
 {
@@ -1132,27 +1109,27 @@ class MFInt32 extends X3DArrayField <number>
    static readonly typeName: "MFInt32";
 }
 
-class MFMatrix3d extends X3DArrayField <SFMatrix3>
+class MFMatrix3d extends X3DArrayField <SFMatrix3d>
 {
    static readonly typeName: "MFMatrix3d";
 }
 
-class MFMatrix3f extends X3DArrayField <SFMatrix3>
+class MFMatrix3f extends X3DArrayField <SFMatrix3f>
 {
    static readonly typeName: "MFMatrix3f";
 }
 
-class MFMatrix4d extends X3DArrayField <SFMatrix4>
+class MFMatrix4d extends X3DArrayField <SFMatrix4d>
 {
    static readonly typeName: "MFMatrix4d";
 }
 
-class MFMatrix4f extends X3DArrayField <SFMatrix4>
+class MFMatrix4f extends X3DArrayField <SFMatrix4f>
 {
    static readonly typeName: "MFMatrix4f";
 }
 
-class MFNode extends X3DArrayField <SFNode>
+class MFNode <T> extends X3DArrayField <SFNode <T>>
 {
    static readonly typeName: "MFNode";
 }
@@ -1172,35 +1149,37 @@ class MFTime extends X3DArrayField <number>
    static readonly typeName: "MFTime";
 }
 
-class MFVec2d extends X3DArrayField <SFVec2>
+class MFVec2d extends X3DArrayField <SFVec2d>
 {
    static readonly typeName: "MFVec2d";
 }
 
-class MFVec2f extends X3DArrayField <SFVec2>
+class MFVec2f extends X3DArrayField <SFVec2f>
 {
    static readonly typeName: "MFVec2f";
 }
 
-class MFVec3d extends X3DArrayField <SFVec3>
+class MFVec3d extends X3DArrayField <SFVec3d>
 {
    static readonly typeName: "MFVec3d";
 }
 
-class MFVec3f extends X3DArrayField <SFVec3>
+class MFVec3f extends X3DArrayField <SFVec3f>
 {
    static readonly typeName: "MFVec3f";
 }
 
-class MFVec4d extends X3DArrayField <SFVec4>
+class MFVec4d extends X3DArrayField <SFVec4d>
 {
    static readonly typeName: "MFVec4d";
 }
 
-class MFVec4f extends X3DArrayField <SFVec4>
+class MFVec4f extends X3DArrayField <SFVec4f>
 {
    static readonly typeName: "MFVec4f";
 }
+
+// CONCRETE_NODES START
 
 interface SFNodeAcousticProperties extends SFNode
 {
@@ -1462,7 +1441,7 @@ interface X3DDamperNode <T> extends SFNode
    value_changed: T;
 }
 
-interface X3DInterpolatorNode <T,V> extends SFNode
+interface X3DInterpolatorNode <T, V> extends SFNode
 {
    set_fraction: number;
    key: MFFloat;
@@ -1904,14 +1883,12 @@ interface SFNodeMultiTextureTransform extends SFNode
 
 interface SFNodeNavigationInfo extends X3DBindableNode
 {
-   type: X3DArrayField <
-      "EXAMINE" | "WALK" | "FLY" | "PLANE" | "PLANE_create3000.github.io"
-      | "PLANE_create3000.de" | "LOOKAT" | "EXPLORE" | "ANY" | "NONE">;
+   type: MFString <"EXAMINE" | "WALK" | "FLY" | "PLANE" | "PLANE_create3000.github.io" | "PLANE_create3000.de" | "LOOKAT" | "EXPLORE" | "ANY" | "NONE">;
    avatarSize: MFFloat;
    speed: number;
    headlight: boolean;
    visibilityLimit: number;
-   transitionType: X3DArrayField <"TELEPORT" | "LINEAR" | "ANIMATE">;
+   transitionType: MFString <"TELEPORT" | "LINEAR" | "ANIMATE">;
    transitionTime: SFTime;
    transitionComplete: boolean;
 }
@@ -2005,7 +1982,7 @@ interface SFNodePointSet extends SFNode, GeometrySubnodes
 
 interface SFNodeProgramShader extends X3DShaderNode
 {
-   programs: X3DArrayField <SFNodeShaderProgram>
+   programs: MFNode <SFNodeShaderProgram>
 }
 
 interface X3DEnvironmentalSensorNode extends SFNode
@@ -2091,7 +2068,7 @@ interface SFNodeSphereSensor extends X3DPointingDeviceSensorNode
    rotation_changed: SFRotation;
 }
 
-interface SplineInterpolator <U> extends X3DInterpolatorNode <U,U> {
+interface SplineInterpolator <U> extends X3DInterpolatorNode <U, U> {
    closed: boolean;
    keyVelocity: X3DArrayField <U>;
    normalizeVelocity: boolean;
@@ -2284,7 +2261,7 @@ interface SFNodeWorldInfo extends SFNode
    info: MFString;
 }
 
-type SpecializeNodeType = {
+type ConcreteNodesType = {
    AcousticProperties: SFNodeAcousticProperties,
    Analyser: SFNodeAnalyser,
    Anchor: SFNodeAnchor,
@@ -2429,3 +2406,5 @@ type SpecializeNodeType = {
    WorldInfo: SFNodeWorldInfo,
    [name: string]: SFNode // catchall
 }
+
+// CONCRETE_NODES END
