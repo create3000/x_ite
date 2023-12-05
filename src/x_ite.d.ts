@@ -860,6 +860,7 @@ interface SFNode extends X3DField
    metadata: SFNode;
 
    copy (): SFNode;
+
    addFieldCallback (key: any, callback: FieldCallback): void;
    addFieldCallback (name: string, key: any, callback: FieldCallback): void;
    getFieldDefinitions (): FieldDefinitionArray;
