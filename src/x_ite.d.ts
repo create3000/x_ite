@@ -27,44 +27,44 @@ interface X3D
    SFFloat: typeof SFFloat;
    SFImage: typeof SFImage;
    SFInt32: typeof SFInt32;
-   SFMatrix3d: typeof SFMatrix3;
-   SFMatrix3f: typeof SFMatrix3;
-   SFMatrix4d: typeof SFMatrix4;
-   SFMatrix4f: typeof SFMatrix4;
+   SFMatrix3d: typeof SFMatrix3d;
+   SFMatrix3f: typeof SFMatrix3f;
+   SFMatrix4d: typeof SFMatrix4d;
+   SFMatrix4f: typeof SFMatrix4f;
    // SFNode: typeof SFNode;
    SFRotation: typeof SFRotation;
    SFString: typeof SFString;
    SFTime: typeof SFTime;
-   SFVec2d: typeof SFVec2;
-   SFVec2f: typeof SFVec2;
-   SFVec3d: typeof SFVec3;
-   SFVec3f: typeof SFVec3;
-   SFVec4d: typeof SFVec4;
-   SFVec4f: typeof SFVec4;
+   SFVec2d: typeof SFVec2d;
+   SFVec2f: typeof SFVec2f;
+   SFVec3d: typeof SFVec3d;
+   SFVec3f: typeof SFVec3f;
+   SFVec4d: typeof SFVec4d;
+   SFVec4f: typeof SFVec4f;
 
    // MF* fields
 
-   MFBool: typeof X3DArrayField <boolean>;
-   MFColor: typeof X3DArrayField <SFColor>;
-   MFColorRGBA: typeof X3DArrayField <SFColorRGBA>;
-   MFDouble: typeof X3DArrayField <number>;
-   MFFloat: typeof X3DArrayField <number>;
-   MFImage: typeof X3DArrayField <SFImage>;
-   MFInt32: typeof X3DArrayField <number>;
-   MFMatrix3d: typeof X3DArrayField <SFMatrix3>;
-   MFMatrix3f: typeof X3DArrayField <SFMatrix3>;
-   MFMatrix4d: typeof X3DArrayField <SFMatrix4>;
-   MFMatrix4f: typeof X3DArrayField <SFMatrix4>;
-   MFNode: typeof X3DArrayField <SFNode>;
-   MFRotation: typeof X3DArrayField <SFRotation>;
-   MFString: typeof X3DArrayField <string>;
-   MFTime: typeof X3DArrayField <SFTime>;
-   MFVec2d: typeof X3DArrayField <SFVec2>;
-   MFVec2f: typeof X3DArrayField <SFVec2>;
-   MFVec3d: typeof X3DArrayField <SFVec3>;
-   MFVec3f: typeof X3DArrayField <SFVec3>;
-   MFVec4d: typeof X3DArrayField <SFVec4>;
-   MFVec4f: typeof X3DArrayField <SFVec4>;
+   MFBool: typeof MFBool;
+   MFColor: typeof MFColor;
+   MFColorRGBA: typeof MFColorRGBA;
+   MFDouble: typeof MFDouble;
+   MFFloat: typeof MFFloat;
+   MFImage: typeof MFImage;
+   MFInt32: typeof MFInt32;
+   MFMatrix3d: typeof MFMatrix3d;
+   MFMatrix3f: typeof MFMatrix3f;
+   MFMatrix4d: typeof MFMatrix4d;
+   MFMatrix4f: typeof MFMatrix4f;
+   MFNode: typeof MFNode;
+   MFRotation: typeof MFRotation;
+   MFString: typeof MFString;
+   MFTime: typeof MFTime;
+   MFVec2d: typeof MFVec2d;
+   MFVec2f: typeof MFVec2f;
+   MFVec3d: typeof MFVec3d;
+   MFVec3f: typeof MFVec3f;
+   MFVec4d: typeof MFVec4d;
+   MFVec4f: typeof MFVec4f;
 }
 
 interface X3DCanvasElement extends HTMLElement
@@ -87,9 +87,9 @@ interface X3DBrowser
 
    replaceWorld (scene: X3DScene): Promise <void>;
    createX3DFromString (x3dSyntax: string): Promise <X3DScene>;
-   createX3DFromURL (url: X3DArrayField <string>): Promise <X3DScene>;
-   createX3DFromURL (url: X3DArrayField <string>, node: SFNode, fieldName: string): void;
-   loadURL (url: X3DArrayField <string>, parameter?: X3DArrayField <string>): Promise <void>;
+   createX3DFromURL (url: MFString): Promise <X3DScene>;
+   createX3DFromURL (url: MFString, node: SFNode, fieldName: string): void;
+   loadURL (url: MFString, parameter?: MFString): Promise <void>;
    importDocument (dom: HTMLElement | string): Promise <X3DScene>;
    importJS (json: string | JSONObject): Promise <X3DScene>;
    getBrowserProperty (prop: BrowserProperty): boolean;
@@ -116,12 +116,12 @@ interface X3DBrowser
    getCurrentSpeed (): number;
    getCurrentFrameRate (): number;
    getWorldURL (): string;
-   replaceWorld (nodes: X3DArrayField <SFNode>): string;
-   createVrmlFromString (vrmlSyntax: string): X3DArrayField <SFNode>;
-   createVrmlFromURL (url: X3DArrayField <string>, node: SFNode, fieldName: string): void;
+   replaceWorld (nodes: MFNode): string;
+   createVrmlFromString (vrmlSyntax: string): MFNode;
+   createVrmlFromURL (url: MFString, node: SFNode, fieldName: string): void;
    addRoute (sourceNode: SFNode, sourceField: string, destinationNode: SFNode, destinationField: string): void;
    deleteRoute (sourceNode: SFNode, sourceField: string, destinationNode: SFNode, destinationField: string): void;
-   loadURL (url: X3DArrayField <string>, parameter?: X3DArrayField <string>): void;
+   loadURL (url: MFString, parameter?: MFString): void;
    setDescription (description: string): void;
 }
 
@@ -246,7 +246,7 @@ type UserMenuItem = {
 
 interface X3DScene extends X3DExecutionContext
 {
-   rootNodes: X3DArrayField <SFNode>;
+   rootNodes: MFNode;
 
    getMetaData (name: string): string [];
    setMetaData (name: string, value: string | string []): void;
@@ -268,7 +268,7 @@ interface X3DExecutionContext
    readonly worldURL: string;
    readonly baseURL: string;
    readonly units: UnitInfoArray;
-   readonly rootNodes: X3DArrayField <SFNode>;
+   readonly rootNodes: MFNode;
    readonly protos: ProtoDeclarationArray;
    readonly externprotos: ExternProtoDeclarationArray;
    readonly routes: RouteArray;
@@ -338,7 +338,7 @@ interface X3DExternProtoDeclaration
 {
    readonly name: string;
    readonly fields: FieldDefinitionArray;
-   readonly urls: X3DArrayField <string>;
+   readonly urls: MFString;
    readonly isExternProto: false;
    readonly loadState: number;
 
@@ -746,7 +746,7 @@ class SFFloat extends X3DField
 class SFImage extends X3DField
 {
    static readonly typeName: "SFImage";
-   constructor (width?: number, height?: number, components?: number, array?: X3DArrayField <number>);
+   constructor (width?: number, height?: number, components?: number, array?: MFInt32);
    x: number;
    y: number;
    width: number;
@@ -786,6 +786,14 @@ class SFMatrix3 extends X3DField
    multMatrixDir (col: SFVec2): SFVec2;
 }
 
+class SFMatrix3d extends SFMatrix3 {
+   static readonly typeName: "SFMatrix3d";
+}
+
+class SFMatrix3f extends SFMatrix3 {
+   static readonly typeName: "SFMatrix3f";
+}
+
 class SFMatrix4 extends X3DField
 {
    constructor ();
@@ -810,14 +818,18 @@ class SFMatrix4 extends X3DField
    multMatrixDir (col: SFVec3): SFVec3;
 }
 
+class SFMatrix4d extends SFMatrix4 {
+   static readonly typeName: "SFMatrix4d";
+}
+
+class SFMatrix4f extends SFMatrix4 {
+   static readonly typeName: "SFMatrix4f";
+}
+
 interface SFNode extends X3DField
 {
-   // constructor (vrmlSyntax: string); // throws error, anyway
+   static readonly typeName: "SFNode";
 
-   // Each subclass of SFNode for the different node types
-   // has various properties, that will be defined for
-   // each one below. But as far as I can see, they all have metadata
-   // properties:
    metadata: SFNode;
 
    copy (): SFNode;
@@ -850,6 +862,8 @@ type VRMLOptions = {
 
 class SFRotation extends X3DField
 {
+   static readonly typeName: "SFRotation";
+
    constructor ();
    constructor (x: number, y: number, z: number, angle: number);
    constructor (axis: SFVec3, angle: number);
@@ -875,7 +889,10 @@ class SFRotation extends X3DField
 
 class SFString extends X3DField
 {
+   static readonly typeName: "SFString";
+
    constructor (arg?: any);
+
    copy (): SFString;
    valueOf (): string;
    length: number;
@@ -883,7 +900,10 @@ class SFString extends X3DField
 
 class SFTime extends X3DField
 {
+   static readonly typeName: "SFTime";
+
    constructor (arg?: any);
+
    copy (): SFTime;
    valueOf (): number;
 }
@@ -915,6 +935,14 @@ class SFVec2 extends X3DField
    subtract (other: SFVec2): SFVec2;
 }
 
+class SFVec2d extends SFVec2 {
+   static readonly typeName: "SFVec2d";
+}
+
+class SFVec2f extends SFVec2 {
+   static readonly typeName: "SFVec2f";
+}
+
 class SFVec3 extends X3DField
 {
    constructor (x?: number, y?: number, z?: number);
@@ -942,6 +970,14 @@ class SFVec3 extends X3DField
    negate (): SFVec3;
    normalize (): SFVec3;
    subtract (other: SFVec3): SFVec3;
+}
+
+class SFVec3d extends SFVec2 {
+   static readonly typeName: "SFVec3d";
+}
+
+class SFVec3f extends SFVec2 {
+   static readonly typeName: "SFVec3f";
 }
 
 class SFVec4 extends X3DField
@@ -973,8 +1009,16 @@ class SFVec4 extends X3DField
    subtract (other: SFVec4): SFVec4;
 }
 
-type ArrayTest <T> = (elt: T, ix: boolean, arr: X3DArrayField <T>) => boolean
-type ArrayAction <T> = (elt: T, ix: boolean, arr: X3DArrayField <T>) => void
+class SFVec4d extends SFVec4 {
+   static readonly typeName: "SFVec4d";
+}
+
+class SFVec4f extends SFVec4 {
+   static readonly typeName: "SFVec4f";
+}
+
+type ArrayTest <T> = (elt: T, ix: number, arr: X3DArrayField <T>) => boolean
+type ArrayAction <T> = (elt: T, ix: number, arr: X3DArrayField <T>) => void
 type ArrayReducer <T,U> = (acc: U, elt: T, ix: number, arr: X3DArrayField <T>) => U
 class X3DArrayField <T> extends X3DField
 {
@@ -1015,6 +1059,111 @@ class X3DArrayField <T> extends X3DField
    with (index: number, value: T): X3DArrayField <T>;
 }
 
+class MFBool extends X3DArrayField <boolean>
+{
+   static readonly typeName: "MFBool";
+}
+
+class MFColor extends X3DArrayField <SFColor>
+{
+   static readonly typeName: "MFColor";
+}
+
+class MFColorRGBA extends X3DArrayField <SFColorRGBA>
+{
+   static readonly typeName: "MFColorRGBA";
+}
+
+class MFDouble extends X3DArrayField <number>
+{
+   static readonly typeName: "MFDouble";
+}
+
+class MFFloat extends X3DArrayField <number>
+{
+   static readonly typeName: "MFFloat";
+}
+
+class MFImage extends X3DArrayField <SFImage>
+{
+   static readonly typeName: "MFImage";
+}
+
+class MFInt32 extends X3DArrayField <number>
+{
+   static readonly typeName: "MFInt32";
+}
+
+class MFMatrix3d extends X3DArrayField <SFMatrix3>
+{
+   static readonly typeName: "MFMatrix3d";
+}
+
+class MFMatrix3f extends X3DArrayField <SFMatrix3>
+{
+   static readonly typeName: "MFMatrix3f";
+}
+
+class MFMatrix4d extends X3DArrayField <SFMatrix4>
+{
+   static readonly typeName: "MFMatrix4d";
+}
+
+class MFMatrix4f extends X3DArrayField <SFMatrix4>
+{
+   static readonly typeName: "MFMatrix4f";
+}
+
+class MFNode extends X3DArrayField <SFNode>
+{
+   static readonly typeName: "MFNode";
+}
+
+class MFRotation extends X3DArrayField <SFRotation>
+{
+   static readonly typeName: "MFRotation";
+}
+
+class MFString extends X3DArrayField <string>
+{
+   static readonly typeName: "MFString";
+}
+
+class MFTime extends X3DArrayField <number>
+{
+   static readonly typeName: "MFTime";
+}
+
+class MFVec2d extends X3DArrayField <SFVec2>
+{
+   static readonly typeName: "MFVec2d";
+}
+
+class MFVec2f extends X3DArrayField <SFVec2>
+{
+   static readonly typeName: "MFVec2f";
+}
+
+class MFVec3d extends X3DArrayField <SFVec3>
+{
+   static readonly typeName: "MFVec3d";
+}
+
+class MFVec3f extends X3DArrayField <SFVec3>
+{
+   static readonly typeName: "MFVec3f";
+}
+
+class MFVec4d extends X3DArrayField <SFVec4>
+{
+   static readonly typeName: "MFVec4d";
+}
+
+class MFVec4f extends X3DArrayField <SFVec4>
+{
+   static readonly typeName: "MFVec4f";
+}
+
 interface SFNodeAcousticProperties extends SFNode
 {
    description: string;
@@ -1047,9 +1196,9 @@ interface Positioner extends SFNode
 
 interface GroupingFields
 {
-   addChildren: X3DArrayField <SFNode>;
-   removeChildren: X3DArrayField <SFNode>;
-   children: X3DArrayField <SFNode>;
+   addChildren: MFNode;
+   removeChildren: MFNode;
+   children: MFNode;
 }
 
 interface X3DGroupingNode extends Positioner, GroupingFields
@@ -1059,14 +1208,14 @@ interface URLFields
 {
    description: string;
    load: boolean;
-   url: X3DArrayField <string>;
+   url: MFString;
    autoRefresh: SFTime;
    autoRefreshTimeLimit: SFTime;
 }
 
 interface SFNodeAnchor extends X3DGroupingNode
 {
-   parameter: X3DArrayField <string>;
+   parameter: MFString;
 }
 
 interface SFNodeAppearance extends SFNode
@@ -1081,7 +1230,7 @@ interface SFNodeAppearance extends SFNode
    backMaterial: SFNodeMaterial;
    texture: SFNode;
    textureTransform: SFNodeTextureTransform;
-   shaders: X3DArrayField <SFNode>;
+   shaders: MFNode;
    blendMode: SFNodeBlendMode;
 }
 
@@ -1119,7 +1268,7 @@ interface X3DSoundDestinationNode extends ChannelFields
 {
    mediaDeviceId: string;
    isActive: boolean;
-   children: X3DArrayField <SFNode>;
+   children: MFNode;
 }
 
 interface SFNodeAudioDestination extends X3DSoundDestinationNode
@@ -1136,21 +1285,21 @@ interface X3DBindableNode extends SFNode
 
 interface X3DBackgroundNode extends X3DBindableNode
 {
-   skyAngle: X3DArrayField <number>;
-   skyColor: X3DArrayField <SFColor>;
-   groundAngle: X3DArrayField <number>;
-   groundColor: X3DArrayField <SFColor>;
+   skyAngle: MFFloat;
+   skyColor: MFColor;
+   groundAngle: MFFloat;
+   groundColor: MFColor;
    transparency: number;
 }
 
 interface SFNodeBackground extends X3DBackgroundNode
 {
-   frontUrl: X3DArrayField <string>;
-   backUrl: X3DArrayField <string>;
-   leftUrl: X3DArrayField <string>;
-   rightUrl: X3DArrayField <string>;
-   topUrl: X3DArrayField <string>;
-   bottomUrl: X3DArrayField <string>;
+   frontUrl: MFString;
+   backUrl: MFString;
+   leftUrl: MFString;
+   rightUrl: MFString;
+   topUrl: MFString;
+   bottomUrl: MFString;
 }
 
 interface SFNodeBillboard extends X3DGroupingNode
@@ -1166,7 +1315,7 @@ interface SFNodeBiquadFilter extends X3DTimeDependentNode, ChannelFields
       | "LOWSHELF" | "HIGHSHELF" | "PEAKING" | "NOTCH" |  "ALLPASS";
    qualityFactor: number;
    tailTime: SFTime;
-   children: X3DArrayField <SFNode>;
+   children: MFNode;
 }
 
 type BlendFactor = "ZERO" | "ONE"
@@ -1200,7 +1349,7 @@ interface SFNodeBufferAudioSource
    extends X3DTimeDependentNode, ChannelFields, URLFields
 {
       detune: number;
-      buffer: X3DArrayField <number>;
+      buffer: MFFloat;
       bufferDuration: SFTime;
       bufferLength: number;
       numberOfChannels: number;
@@ -1213,19 +1362,19 @@ interface SFNodeBufferAudioSource
 
 interface SFNodeChannelMerger extends ChannelFields
 {
-   children: X3DArrayField <SFNode>;
+   children: MFNode;
 }
 
 interface SFNodeChannelSelector extends ChannelFields
 {
    channelSelection: number;
-   children: X3DArrayField <SFNode>;
+   children: MFNode;
 }
 
 interface SFNodeChannelSplitter extends ChannelFields
 {
-   children: X3DArrayField <SFNode>;
-   outputs:  X3DArrayField <SFNode>;
+   children: MFNode;
+   outputs:  MFNode;
 }
 
 interface SFNodeClipPlane extends SFNode
@@ -1244,12 +1393,12 @@ interface SFNodeCollision extends X3DGroupingNode
 
 interface SFNodeColor extends SFNode
 {
-   color: X3DArrayField <SFColor>;
+   color: MFColor;
 }
 
 interface SFNodeColorRGBA extends SFNode
 {
-   color: X3DArrayField <SFColorRGBA>;
+   color: MFColorRGBA;
 }
 
 interface X3DChaserNode <T> extends SFNode
@@ -1279,7 +1428,7 @@ interface X3DDamperNode <T> extends SFNode
 interface X3DInterpolatorNode <T,V> extends SFNode
 {
    set_fraction: number;
-   key: X3DArrayField <number>;
+   key: MFFloat;
    keyValue: X3DArrayField <T>;
    value_changed: V;
 }
@@ -1308,15 +1457,15 @@ interface SFNodeCone extends SFNode
 
 interface SFNodeConvolver extends  X3DTimeDependentNode, ChannelFields
 {
-   buffer: X3DArrayField <number>;
+   buffer: MFFloat;
    normalize: boolean;
    tailTime: SFTime;
-   children: X3DArrayField <SFNode>;
+   children: MFNode;
 }
 
 interface SFNodeCoordinate extends SFNode
 {
-   point: X3DArrayField <SFVec3>;
+   point: MFVec3f;
 }
 
 interface SFNodeCylinder extends SFNode
@@ -1358,7 +1507,7 @@ interface SFNodeDelay extends X3DTimeDependentNode, ChannelFields
    delayTime: SFTime;
    maxDelayTime: SFTime;
    tailTime: SFTime;
-   children: X3DArrayField <SFNode>;
+   children: MFNode;
 }
 
 interface X3DLightNode extends SFNode
@@ -1390,14 +1539,14 @@ interface SFNodeDynamicsCompressor
       release: SFTime;
       threshold: number;
       tailTime: SFTime;
-      children: X3DArrayField <SFNode>;
+      children: MFNode;
    }
 
 interface SFNodeEaseInEaseOut extends SFNode
 {
    set_fraction: number;
-   key: X3DArrayField <number>;
-   easeInEaseOut: X3DArrayField <SFVec2>;
+   key: MFFloat;
+   easeInEaseOut: MFVec2f;
    modifiedFraction_changed: number;
 }
 
@@ -1411,7 +1560,7 @@ interface GeometrySubnodes
 
 interface SFNodeElevationGrid extends SFNode, GeometrySubnodes
 {
-   set_height: X3DArrayField <number>;
+   set_height: MFFloat;
    xDimension: number;
    zDimension: number;
    xSpacing: number;
@@ -1422,13 +1571,13 @@ interface SFNodeElevationGrid extends SFNode, GeometrySubnodes
    colorPerVertex: boolean;
    normalPerVertex: boolean;
    texCoord: SFNode;
-   height: X3DArrayField <number>;
+   height: MFFloat;
 }
 
 interface SFNodeEnvironmentLight extends X3DLightNode
 {
    rotation: SFRotation;
-   diffuseCoefficients: X3DArrayField <number>;
+   diffuseCoefficients: MFFloat;
    diffuse: SFNode;
    diffuseTexture: SFNode;
    specularTexture: SFNode;
@@ -1436,20 +1585,20 @@ interface SFNodeEnvironmentLight extends X3DLightNode
 
 interface SFNodeExtrusion extends SFNode
 {
-   set_crossSection: X3DArrayField <SFVec2>;
-   set_orientation: X3DArrayField <SFRotation>;
-   set_scale: X3DArrayField <SFVec2>;
-   set_spine: X3DArrayField <SFVec3>;
+   set_crossSection: MFVec2f;
+   set_orientation: MFRotation;
+   set_scale: MFVec2f;
+   set_spine: MFVec3f;
    beginCap: boolean;
    endCap: boolean;
    solid: boolean;
    ccw: boolean;
    convex: boolean;
    creaseAngle: number;
-   crossSection: X3DArrayField <SFVec2>;
-   orientation: X3DArrayField <SFRotation>;
-   scale: X3DArrayField <SFVec2>;
-   spine: X3DArrayField <SFVec3>;
+   crossSection: MFVec2f;
+   orientation: MFRotation;
+   scale: MFVec2f;
+   spine: MFVec3f;
 }
 
 interface SFNodeFillProperties extends SFNode
@@ -1464,7 +1613,7 @@ interface SFNodeFloatVertexAttribute extends SFNode
 {
    name: string;
    numComponents: number;
-   value: X3DArrayField <number>;
+   value: MFFloat;
 }
 
 interface FogCommon extends SFNode
@@ -1479,13 +1628,13 @@ interface SFNodeFog extends X3DBindableNode, FogCommon
 
 interface SFNodeFogCoordinate extends SFNode
 {
-   depth: X3DArrayField <number>;
+   depth: MFFloat;
 }
 
 interface SFNodeFontStyle extends SFNode
 {
    language: string;
-   family: X3DArrayField <string>;
+   family: MFString;
    style:  "PLAIN" | "BOLD" | "ITALIC" | "BOLDITALIC" | "";
    size: number;
    spacing: number;
@@ -1498,7 +1647,7 @@ interface SFNodeFontStyle extends SFNode
 interface SFNodeGain extends X3DTimeDependentNode, ChannelFields
 {
    tailTime: SFTime;
-   children: X3DArrayField <SFNode>;
+   children: MFNode;
 }
 
 interface Texture2DFields
@@ -1513,25 +1662,25 @@ interface SFNodeImageTexture extends SFNode, URLFields, Texture2DFields
 
 interface IndexedColorCoord
 {
-   set_colorIndex: X3DArrayField <number>;
-   set_coordIndex: X3DArrayField <number>;
-   colorIndex: X3DArrayField <number>;
-   coordIndex: X3DArrayField <number>;
+   set_colorIndex: MFInt32;
+   set_coordIndex: MFInt32;
+   colorIndex: MFInt32;
+   coordIndex: MFInt32;
    color: SFNodeColor | SFNodeColorRGBA;
    coord: SFNodeCoordinate;
 }
 
 interface SFNodeIndexedFaceSet extends SFNodeIndexedLineSet
 {
-   set_texCoordIndex: X3DArrayField <number>;
-   set_normalIndex: X3DArrayField <number>;
+   set_texCoordIndex: MFInt32;
+   set_normalIndex: MFInt32;
    solid: boolean;
    ccw: boolean;
    convex: boolean;
    creaseAngle: number;
    normalPerVertex: boolean;
-   texCoordIndex: X3DArrayField <number>;
-   normalIndex: X3DArrayField <number>;
+   texCoordIndex: MFInt32;
+   normalIndex: MFInt32;
    texCoord: SFNode;
 }
 
@@ -1553,8 +1702,8 @@ interface SFNodeTriangleSet extends SFNode, GeometrySubnodes
 
 interface IndexedTriangles extends SFNodeTriangleSet
 {
-   set_index: X3DArrayField <number>;
-   index: X3DArrayField <number>;
+   set_index: MFInt32;
+   index: MFInt32;
 }
 
 interface SFNodeInline extends Positioner, URLFields
@@ -1566,14 +1715,14 @@ interface SFNodeLOD extends X3DGroupingNode
 {
    forceTransitions: boolean;
    center: SFVec3;
-   range: X3DArrayField <number>;
+   range: MFFloat;
    level_changed: number;
 }
 
 interface SFNodeLayer extends SFNode, GroupingFields
 {
    pickable: boolean;
-   objectType: X3DArrayField <string>;
+   objectType: MFString;
    visible: boolean;
    viewport: SFNodeViewport;
 }
@@ -1581,7 +1730,7 @@ interface SFNodeLayer extends SFNode, GroupingFields
 interface SFNodeLayerSet extends SFNode
 {
    activeLayer: number;
-   order: X3DArrayField <number>;
+   order: MFInt32;
    layers: X3DArrayField <SFNodeLayer>;
 }
 
@@ -1594,7 +1743,7 @@ interface SFNodeLineProperties extends SFNode
 
 interface SFNodeLineSet extends SFNode, GeometrySubnodes
 {
-   vertexCount: X3DArrayField <number>;
+   vertexCount: MFInt32;
    coord: SFNodeCoordinate;
 }
 
@@ -1617,7 +1766,7 @@ interface SFNodeLoadSensor extends SFNode
    isLoaded: boolean;
    progress: number;
    loadTime: SFTime;
-   children: X3DArrayField <SFNode>;
+   children: MFNode;
 }
 
 interface SFNodeLocalFog extends FogCommon
@@ -1662,13 +1811,13 @@ interface SFNodeMaterial extends MaterialCommon
 interface SFNodeMatrix3VertexAttribute extends SFNode
 {
    name: string;
-   value: X3DArrayField <SFMatrix3>;
+   value: MFMatrix3f;
 }
 
 interface SFNodeMatrix4VertexAttribute extends SFNode
 {
    name: string;
-   value: X3DArrayField <SFMatrix4>;
+   value: MFMatrix4f;
 }
 
 interface X3DMetadataNode extends SFNode
@@ -1700,10 +1849,10 @@ interface SFNodeMultiTexture extends SFNode
    description: string;
    color: SFColor;
    alpha: number;
-   mode: X3DArrayField <string>;
-   source: X3DArrayField <string>;
-   function: X3DArrayField <string>;
-   texture: X3DArrayField <SFNode>;
+   mode: MFString;
+   source: MFString;
+   function: MFString;
+   texture: MFNode;
 }
 
 interface SFNodeMultiTextureCoordinate extends SFNode
@@ -1721,7 +1870,7 @@ interface SFNodeNavigationInfo extends X3DBindableNode
    type: X3DArrayField <
       "EXAMINE" | "WALK" | "FLY" | "PLANE" | "PLANE_create3000.github.io"
       | "PLANE_create3000.de" | "LOOKAT" | "EXPLORE" | "ANY" | "NONE">;
-   avatarSize: X3DArrayField <number>;
+   avatarSize: MFFloat;
    speed: number;
    headlight: boolean;
    visibilityLimit: number;
@@ -1732,7 +1881,7 @@ interface SFNodeNavigationInfo extends X3DBindableNode
 
 interface SFNodeNormal extends SFNode
 {
-   vector: X3DArrayField <SFVec3>;
+   vector: MFVec3f;
 }
 
 interface X3DViewpointNode extends X3DBindableNode
@@ -1768,8 +1917,8 @@ interface SFNodePeriodicWave extends SFNode
    description: string;
    enabled: boolean;
    type: "SINE" | "SQUARE" | "SAWTOOTH" | "TRIANGLE" | "CUSTOM"
-   optionsReal: X3DArrayField <number>;
-   optionsImag: X3DArrayField <number>;
+   optionsReal: MFFloat;
+   optionsImag: MFFloat;
 }
 
 interface SFNodePhysicalMaterial extends MaterialCommon
@@ -1868,7 +2017,7 @@ interface SoundCommon extends SFNode
    direction: SFVec3;
    intensity: number;
    priority: number;
-   children: X3DArrayField <SFNode>;
+   children: MFNode;
 }
 
 interface SFNodeSound extends SFNode
@@ -1925,12 +2074,12 @@ interface SFNodeSquadOrientationInterpolator
 
 interface SFNodeStaticGroup extends Positioner
 {
-   children: X3DArrayField <SFNode>;
+   children: MFNode;
 }
 
 interface SFNodeStreamAudioDestination extends X3DSoundDestinationNode
 {
-   streamIdentifier: X3DArrayField <string>;
+   streamIdentifier: MFString;
 }
 
 interface SFNodeStreamAudioSource extends X3DTimeDependentNode
@@ -1938,7 +2087,7 @@ interface SFNodeStreamAudioSource extends X3DTimeDependentNode
    description: string;
    enabled: boolean;
    gain: number;
-   streamIdentifier: X3DArrayField <string>;
+   streamIdentifier: MFString;
 }
 
 interface SFNodeSwitch extends X3DGroupingNode
@@ -1948,13 +2097,13 @@ interface SFNodeSwitch extends X3DGroupingNode
 
 interface SFNodeText extends SFNode
 {
-   string: X3DArrayField <string>;
-   length: X3DArrayField <number>;
+   string: MFString;
+   length: MFFloat;
    maxExtent: number;
    solid: boolean;
    origin: SFVec3;
    textBounds: SFVec2;
-   lineBounds: X3DArrayField <SFVec2>;
+   lineBounds: MFVec2f;
    fontStyle: SFNodeFontStyle;
 }
 
@@ -1971,7 +2120,7 @@ interface SFNodeTextureBackground extends X3DBackgroundNode
 interface SFNodeTextureCoordinate extends SFNode
 {
    mapping: string;
-   point: X3DArrayField <SFVec2>;
+   point: MFVec2f;
 }
 
 interface SFNodeTextureCoordinateGenerator extends SFNode
@@ -1980,7 +2129,7 @@ interface SFNodeTextureCoordinateGenerator extends SFNode
    mode: "SPHERE" | "SPHERE-LOCAL" | "SPHERE-REFLECT" | "SPHERE-REFLECT-LOCAL"
       | "COORD" | "COORD-EYE" | "NOISE" | "NOISE-EYE" | "CAMERASPACENORMAL"
       | "CAMERASPACEPOSITION" | "CAMERASPACEREFLECTIONVECTOR" ;
-   parameter: X3DArrayField <number>;
+   parameter: MFFloat;
 }
 
 interface SFNodeTextureProperties extends SFNode
@@ -2044,12 +2193,12 @@ interface SFNodeTransformSensor extends X3DEnvironmentalSensorNode
 
 interface SFNodeTriangleFanSet extends SFNodeTriangleSet
 {
-   fanCount: X3DArrayField <number>;
+   fanCount: MFInt32;
 }
 
 interface SFNodeTriangleStripSet extends SFNodeTriangleSet
 {
-   stripCount: X3DArrayField <number>;
+   stripCount: MFInt32;
 }
 
 interface SFNodeTwoSidedMaterial extends SFNode
@@ -2076,26 +2225,26 @@ interface SFNodeViewpointGroup extends SFNode
    retainUserOffsets: boolean;
    size: SFVec3;
    center: SFVec3;
-   children: X3DArrayField <SFNode>;
+   children: MFNode;
 }
 
 interface SFNodeViewport extends X3DGroupingNode
 {
-   clipBoundary: X3DArrayField <number>;
+   clipBoundary: MFFloat;
 }
 
 interface SFNodeWaveShaper extends X3DTimeDependentNode, ChannelFields
 {
-   curve: X3DArrayField <number>;
+   curve: MFFloat;
    oversample: "NONE" | "2x" | "4x";
    tailTime: SFTime;
-   children: X3DArrayField <SFNode>;
+   children: MFNode;
 }
 
 interface SFNodeWorldInfo extends SFNode
 {
    title: string;
-   info: X3DArrayField <string>;
+   info: MFString;
 }
 
 type SpecializeNodeType = {
@@ -2125,11 +2274,10 @@ type SpecializeNodeType = {
    Cone: SFNodeCone,
    Convolver: SFNodeConvolver,
    Coordinate: SFNodeCoordinate,
-   CoordinateChaser: X3DChaserNode <X3DArrayField <SFVec3>>,
-   CoordinateDamper: X3DDamperNode <X3DArrayField <SFVec3>>,
-   CoordinateInterpolator: X3DInterpolatorNode <SFVec3, X3DArrayField <SFVec3>>,
-   CoordinateInterpolator2D:
-      X3DInterpolatorNode <SFVec2, X3DArrayField <SFVec2>>,
+   CoordinateChaser: X3DChaserNode <MFVec3f>,
+   CoordinateDamper: X3DDamperNode <MFVec3f>,
+   CoordinateInterpolator: X3DInterpolatorNode <SFVec3f, MFVec3f>,
+   CoordinateInterpolator: X3DInterpolatorNode <SFVec2f, MFVec2f>,
    Cylinder: SFNodeCylinder,
    CylinderSensor: SFNodeCylinderSensor,
    Delay: SFNodeDelay,
@@ -2177,7 +2325,7 @@ type SpecializeNodeType = {
    MultiTextureTransform: SFNodeMultiTextureTransform,
    NavigationInfo: SFNodeNavigationInfo,
    Normal: SFNodeNormal,
-   NormalInterpolator: X3DInterpolatorNode <SFVec3, X3DArrayField <SFVec3>>,
+   NormalInterpolator: X3DInterpolatorNode <SFVec3f, MFVec3f>,
    OrientationChaser: X3DChaserNode <SFRotation>,
    OrientationDamper: X3DDamperNode <SFRotation>,
    OrientationInterpolator: X3DInterpolatorNode <SFRotation, SFRotation>,
@@ -2191,12 +2339,12 @@ type SpecializeNodeType = {
    PointLight: SFNodePointLight,
    PointProperties: SFNodePointProperties,
    PointSet: SFNodePointSet,
-   PositionChaser: X3DChaserNode <SFVec3>,
-   PositionChaser2D: X3DChaserNode <SFVec2>,
-   PositionDamper: X3DDamperNode <SFVec3>,
-   PositionDamper2D: X3DDamperNode <SFVec2>,
-   PositionInterpolator: X3DInterpolatorNode <SFVec3, SFVec3>,
-   PositionInterpolator2D: X3DInterpolatorNode <SFVec2, SFVec2>,
+   PositionChaser: X3DChaserNode <SFVec3f>,
+   PositionChaser2D: X3DChaserNode <SFVec2f>,
+   PositionDamper: X3DDamperNode <SFVec3f>,
+   PositionDamper2D: X3DDamperNode <SFVec2f>,
+   PositionInterpolator: X3DInterpolatorNode <SFVec3f, SFVec3f>,
+   PositionInterpolator2D: X3DInterpolatorNode <SFVec2f, SFVec2f>,
    ProgramShader: SFNodeProgramShader,
    ProximitySensor: SFNodeProximitySensor,
    ScalarChaser: X3DChaserNode <number>,
@@ -2210,8 +2358,8 @@ type SpecializeNodeType = {
    SpatialSound: SFNodeSpatialSound,
    Sphere: SFNodeSphere,
    SphereSensor: SFNodeSphereSensor,
-   SplinePositionInterpolator: SplineInterpolator <SFVec3>,
-   SplinePositionInterpolator2D: SplineInterpolator <SFVec2>,
+   SplinePositionInterpolator: SplineInterpolator <SFVec3f>,
+   SplinePositionInterpolator2D: SplineInterpolator <SFVec2f>,
    SplineScalarInterpolator: SplineInterpolator <number>,
    SpotLight: SFNodePointLight,
    SquadOrientationInterpolator: SFNodeSquadOrientationInterpolator,
@@ -2219,8 +2367,8 @@ type SpecializeNodeType = {
    StreamAudioDestination: SFNodeStreamAudioDestination,
    StreamAudioSource: SFNodeStreamAudioSource,
    Switch: SFNodeSwitch,
-   TexCoordChaser2D: X3DChaserNode <X3DArrayField <SFVec2>>,
-   TexCoordDamper2D: X3DDamperNode <X3DArrayField <SFVec2>>,
+   TexCoordChaser2D: X3DChaserNode <MFVec2f>,
+   TexCoordDamper2D: X3DDamperNode <MFVec2f>,
    Text: SFNodeText,
    TextureBackground: SFNodeTextureBackground,
    TextureCoordinate: SFNodeTextureCoordinate,
