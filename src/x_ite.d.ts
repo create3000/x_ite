@@ -133,7 +133,7 @@ type JSONValue =
    | boolean
    | null
    | JSONValue []
-   | {[key: string]: JSONValue}
+   | { [key: string]: JSONValue }
 
 interface JSONObject
 {
@@ -906,11 +906,11 @@ class SFRotation extends X3DField
 
    copy (): SFRotation;
 
-   getAxis (): SFVec3;
-   getMatrix (): SFMatrix3;
+   getAxis (): SFVec3f;
+   getMatrix (): SFMatrix3f;
    inverse (): SFRotation;
    multiply (rotation: SFRotation): SFRotation;
-   multVec (vector: SFVec3): SFVec3;
+   multVec <T = SFVec3d | SFVec3f> (vector: T): T;
    setAxis (axis: SFVec3): void;
    setMatrix (matrix: SFMatrix3): void;
    slerp (destination: SFRotation, t: number): SFRotation;
