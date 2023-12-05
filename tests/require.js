@@ -1,2 +1,3 @@
-const X3D = require ("../dist/x_ite.js")
-const browser = X3D .get
+const X3D = require ("../")
+const browser = X3D .getBrowser ()
+browser .addRoute ()
