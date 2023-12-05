@@ -909,8 +909,8 @@ class SFRotation extends X3DField
    getAxis (): SFVec3;
    getMatrix (): SFMatrix3;
    inverse (): SFRotation;
-   multiply (other: SFRotation): SFRotation;
-   multVec (subject: SFVec3): SFVec3;
+   multiply (rotation: SFRotation): SFRotation;
+   multVec (vector: SFVec3): SFVec3;
    setAxis (axis: SFVec3): void;
    setMatrix (matrix: SFMatrix3): void;
    slerp (destination: SFRotation, t: number): SFRotation;
