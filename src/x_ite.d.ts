@@ -408,6 +408,7 @@ interface X3DConstants
    readonly SFVec3f: number;
    readonly SFVec4d: number;
    readonly SFVec4f: number;
+
    readonly MFBool: number;
    readonly MFColor: number;
    readonly MFColorRGBA: number;
@@ -657,7 +658,7 @@ type X3DFieldDefinition = {
    readonly value: X3DField,
 }
 
-declare class X3DField
+class X3DField
 {
    copy (): this;
    equals (other: this): boolean;
@@ -1062,7 +1063,7 @@ class SFVec4f extends SFVec4
    static readonly typeName: "SFVec4f";
 }
 
-declare class X3DArrayField <T> extends X3DField
+class X3DArrayField <T> extends X3DField
 {
    constructor (... elements: T []);
 
