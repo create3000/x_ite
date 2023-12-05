@@ -11,6 +11,7 @@ declare const X3D: X3D;
 interface X3D
 {
    (callback?: () => void, fallback?: (error: Error) => void): Promise <void>;
+
    noConflict (): X3D;
    createBrowser (): X3DCanvasElement;
    getBrowser (via?: string | X3DCanvasElement): X3DBrowser;
@@ -156,7 +157,7 @@ interface X3DBrowser
    getBrowserOption <T extends keyof BrowserOption> (name: T): BrowserOption [T];
    setBrowserOption <T extends keyof BrowserOption> (name: T, value: BrowserOption [T]): void;
    getRenderingProperty <T extends keyof RenderingProperty> (name: T): RenderingProperty [T];
-   getContextMenu (): XiteContextMenu;
+   getContextMenu (): ContextMenu;
    addBrowserCallback (key: unknown, cb?: BrowserCallback): void;
    addBrowserCallback (key: unknown, event: number, cb?: BrowserCallback): void;
    removeBrowserCallback (key: unknown, event?: number): void;
@@ -252,7 +253,7 @@ type UserMenuItem = {
    dataAttr?: Record <string, string>
 }
 
-interface XiteContextMenu
+interface ContextMenu
 {
    getUserMenu (): UserMenuCallback;
    setUserMenu (cb: UserMenuCallback): void;
