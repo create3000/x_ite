@@ -430,7 +430,7 @@ interface X3DConstants
    readonly MFVec4d: number;
    readonly MFVec4f: number;
 
-   // Concrete Node Types
+   // CONCRETE NODE TYPES CONSTANTS START
 
    readonly AcousticProperties: number;
    readonly Analyser: number;
@@ -575,7 +575,9 @@ interface X3DConstants
    readonly WaveShaper: number;
    readonly WorldInfo: number;
 
-   // Abstract Node Types
+   // CONCRETE NODE TYPES CONSTANTS END
+
+   // ABSTRACT NODE TYPES CONSTANTS START
 
    readonly X3DAppearanceChildNode: number;
    readonly X3DAppearanceNode: number;
@@ -642,6 +644,8 @@ interface X3DConstants
    readonly X3DViewpointNode: number;
    readonly X3DViewportNode: number;
    readonly X3DWorld: number;
+
+   // ABSTRACT NODE TYPES CONSTANTS END
 }
 
 type FieldDefinitionArray = X3DInfoArray <X3DFieldDefinition>;
