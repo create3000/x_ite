@@ -649,11 +649,12 @@ interface X3DConstants
 }
 
 type FieldDefinitionArray = X3DInfoArray <X3DFieldDefinition>;
+
 type X3DFieldDefinition = {
    readonly accessType: number,
    readonly dataType: string,
    readonly name: string,
-   readonly value: X3DField
+   readonly value: X3DField,
 }
 
 declare class X3DField
