@@ -779,6 +779,8 @@ class SFInt32 extends X3DField
 
    constructor ();
    constructor (value: number);
+
+   valueOf (): number;
 }
 
 class SFMatrix3 extends X3DField
@@ -922,8 +924,9 @@ class SFString extends X3DField
    constructor ();
    constructor (value: string);
 
-   valueOf (): string;
    length: number;
+
+   valueOf (): string;
 }
 
 class SFTime extends X3DField
