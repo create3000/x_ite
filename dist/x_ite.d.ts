@@ -69,70 +69,6 @@ interface X3DCanvasElement extends HTMLElement
    readonly browser: X3DBrowser;
 }
 
-type JSONValue =
-   | string
-   | number
-   | boolean
-   | null
-   | JSONValue []
-   | {[key: string]: JSONValue}
-
-interface JSONObject
-{
-   [k: string]: JSONValue
-}
-
-type BrowserProperty = "ABSTRACT_NODES"
-   | "CONCRETE_NODES"
-   | "EXTERNAL_INTERACTIONS"
-   | "PROTOTYPE_CREATE"
-   | "DOM_IMPORT"
-   | "XML_ENCODING"
-   | "CLASSIC_VRML_ENCODING"
-   | "BINARY_ENCOIDING";
-
-type QualityLevels = "LOW" | "MEDIUM" | "HIGH";
-type BrowserOption = {
-   Antialiased:                  boolean,
-   Dashboard:                    boolean,
-   Rubberband:                   boolean,
-   EnableInlineViewpoints:       boolean,
-   MotionBlur:                   boolean,
-   PrimitiveQuality:             QualityLevels,
-   QualityWhenMoving:            QualityLevels | "SAME",
-   Shading:	                     "POINT" | "WIREFRAME" | "FLAT" | "GOURAUD" | "PHONG",
-   SplashScreen:                 boolean,
-   TextureQuality:               QualityLevels,
-   AutoUpdate:                   boolean,
-   Cache:                        boolean,
-   ContentScale:                 number,
-   ContextMenu:                  boolean,
-   Debug:                        boolean,
-   Gravity:                      number,
-   LogarithmicDepthBuffer:       boolean,
-   Multisampling:                number,
-   Notifications:                boolean,
-   OrderIndependentTransparency: boolean,
-   StraightenHorizon:            boolean,
-   Timings:                      boolean
-}
-
-type RenderingProperty = {
-   Shading:	               BrowserOption ["Shading"],
-   MaxTextureSize:         number,
-   TextureUnits:           number,
-   MaxLights:              number,
-   Antialiased:            boolean,
-   ColorDepth:             number,
-   TextureMemory:          number,
-   ContentScale:           number,
-   MaxSamples:             number,
-   Multisampling:          number,
-   LogarithmicDepthBuffer: boolean
-}
-
-type BrowserCallback = (event: number) => void; // event is a Browser Event Constant
-
 interface X3DBrowser
 {
    readonly name: string;
@@ -186,24 +122,75 @@ interface X3DBrowser
    setDescription (description: string): void;
 }
 
-type X3DInfoArray <T> = {[index: number]: T, length: number}
+type BrowserCallback = (event: number) => void; // event is a Browser Event Constant
 
-type ComponentInfoArray = X3DInfoArray <ComponentInfo>;
-interface ComponentInfo
+type JSONValue =
+   | string
+   | number
+   | boolean
+   | null
+   | JSONValue []
+   | {[key: string]: JSONValue}
+
+interface JSONObject
 {
-   readonly name: string;
-   readonly level: number;
-   readonly title: string;
-   readonly providerURL: string;
+   [k: string]: JSONValue
 }
 
-type ProfileInfoArray = X3DInfoArray <ProfileInfo>;
-interface ProfileInfo
+type BrowserProperty = "ABSTRACT_NODES"
+   | "CONCRETE_NODES"
+   | "EXTERNAL_INTERACTIONS"
+   | "PROTOTYPE_CREATE"
+   | "DOM_IMPORT"
+   | "XML_ENCODING"
+   | "CLASSIC_VRML_ENCODING"
+   | "BINARY_ENCOIDING";
+
+type BrowserOption = {
+   Antialiased:                  boolean,
+   Dashboard:                    boolean,
+   Rubberband:                   boolean,
+   EnableInlineViewpoints:       boolean,
+   MotionBlur:                   boolean,
+   PrimitiveQuality:             QualityLevels,
+   QualityWhenMoving:            QualityLevels | "SAME",
+   Shading:	                     "POINT" | "WIREFRAME" | "FLAT" | "GOURAUD" | "PHONG",
+   SplashScreen:                 boolean,
+   TextureQuality:               QualityLevels,
+   AutoUpdate:                   boolean,
+   Cache:                        boolean,
+   ContentScale:                 number,
+   ContextMenu:                  boolean,
+   Debug:                        boolean,
+   Gravity:                      number,
+   LogarithmicDepthBuffer:       boolean,
+   Multisampling:                number,
+   Notifications:                boolean,
+   OrderIndependentTransparency: boolean,
+   StraightenHorizon:            boolean,
+   Timings:                      boolean
+}
+
+type QualityLevels = "LOW" | "MEDIUM" | "HIGH";
+
+type RenderingProperty = {
+   Shading:	               BrowserOption ["Shading"],
+   MaxTextureSize:         number,
+   TextureUnits:           number,
+   MaxLights:              number,
+   Antialiased:            boolean,
+   ColorDepth:             number,
+   TextureMemory:          number,
+   ContentScale:           number,
+   MaxSamples:             number,
+   Multisampling:          number,
+   LogarithmicDepthBuffer: boolean
+}
+
+interface ContextMenu
 {
-   readonly name: string;
-   readonly title: string;
-   readonly providerURL: string;
-   readonly components: ComponentInfoArray
+   getUserMenu (): UserMenuCallback;
+   setUserMenu (cb: UserMenuCallback): void;
 }
 
 type JQueryCtxMenuOpts = {
@@ -253,29 +240,35 @@ type UserMenuItem = {
    dataAttr?: Record <string, string>
 }
 
-interface ContextMenu
+interface X3DScene extends X3DExecutionContext
 {
-   getUserMenu (): UserMenuCallback;
-   setUserMenu (cb: UserMenuCallback): void;
+   rootNodes: X3DArrayField <SFNode>;
+
+   getMetaData (name: string): string [];
+   setMetaData (name: string, value: string | string []): void;
+   addMetaData (name: string, value: string): void;
+   removeMetaData (name: string): void;
+   addRootNode (node: SFNode): void;
+   removeRootNode (node: SFNode): void;
+   getExportedNode (exportedName: string): SFNode;
+   updateExportedNode (exportedName: string, node: SFNode): void;
+   removeExportedNode (exportedName: string): void;
 }
 
-interface X3DScene
+interface X3DExecutionContext
 {
    readonly specificationVersion: string;
    readonly encoding: "ASCII" | "VRML" | "XML" | "BINARY" | "SCRIPTED" | "BIFS" | "NONE";
    readonly profile: ProfileInfo;
    readonly components: ComponentInfoArray;
-   readonly units: UnitInfoArray;
    readonly worldURL: string;
    readonly baseURL: string;
-   rootNodes: X3DArrayField <SFNode>;
+   readonly units: UnitInfoArray;
+   readonly rootNodes: X3DArrayField <SFNode>;
    readonly protos: ProtoDeclarationArray;
    readonly externprotos: ExternProtoDeclarationArray;
    readonly routes: RouteArray;
 
-   // ExecutionContext methods. I didn"t split these out because I
-   // didn"t see a place in the interface where it mattered, but
-   // perhaps there should be a base class with just these...
    createNode <T extends keyof SpecializeNodeType> (spec: T): SpecializeNodeType [T];
    createProto (protoName: string): SFNode;
    getNamedNode (name: string): SFNode;
@@ -287,28 +280,27 @@ interface X3DScene
    addRoute (sourceNode: SFNode, sourceField: string,destinationNode: SFNode, destinationField: string): X3DRoute;
    deleteRoute (route: X3DRoute): void;
 
-   // X3DScene methods:
-   getMetaData (name: string): string [];
-   setMetaData (name: string, value: string | string []): void;
-   addMetaData (name: string, value: string): void;
-   removeMetaData (name: string): void;
-   addRootNode (node: SFNode): void;
-   removeRootNode (node: SFNode): void;
-   getExportedNode (exportedName: string): SFNode;
-   updateExportedNode (exportedName: string, node: SFNode): void;
-   removeExportedNode (exportedName: string): void;
    toVRMLString (options?: VRMLOptions): string;
    toXMLString (options?: VRMLOptions): string;
    toJSONString (options?: VRMLOptions): string;
 }
 
-type VRMLOptions = {
-   style?: string,
-   indent?: string,
-   precision?: number,
-   doublePrecision?: number,
-   html?: boolean,
-   closingTags?: boolean
+type ProfileInfoArray = X3DInfoArray <ProfileInfo>;
+interface ProfileInfo
+{
+   readonly name: string;
+   readonly title: string;
+   readonly providerURL: string;
+   readonly components: ComponentInfoArray
+}
+
+type ComponentInfoArray = X3DInfoArray <ComponentInfo>;
+interface ComponentInfo
+{
+   readonly name: string;
+   readonly level: number;
+   readonly title: string;
+   readonly providerURL: string;
 }
 
 type UnitInfoArray = X3DInfoArray <UnitInfo>;
@@ -354,6 +346,8 @@ interface X3DRoute
    readonly destinationNode: SFNode;
    readonly destinationField: string;
 }
+
+type X3DInfoArray <T> = {[index: number]: T, length: number}
 
 // would be better to make these enums...
 interface X3DConstants
@@ -826,6 +820,15 @@ interface SFNode extends X3DField
    toVRMLString (options?: VRMLOptions): string;
    toXMLString (options?: VRMLOptions): string;
    toJSONString (options?: VRMLOptions): string;
+}
+
+type VRMLOptions = {
+   style?: string,
+   indent?: string,
+   precision?: number,
+   doublePrecision?: number,
+   html?: boolean,
+   closingTags?: boolean
 }
 
 class SFRotation extends X3DField
