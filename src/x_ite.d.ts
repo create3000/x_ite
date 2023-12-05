@@ -31,7 +31,7 @@ interface X3D
    SFMatrix3f: typeof SFMatrix3f;
    SFMatrix4d: typeof SFMatrix4d;
    SFMatrix4f: typeof SFMatrix4f;
-   // SFNode: typeof SFNode;
+   SFNode: SFNode;
    SFRotation: typeof SFRotation;
    SFString: typeof SFString;
    SFTime: typeof SFTime;
