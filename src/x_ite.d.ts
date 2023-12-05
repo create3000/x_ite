@@ -1382,20 +1382,19 @@ interface SFNodeBox extends SFNode
    solid: boolean;
 }
 
-interface SFNodeBufferAudioSource
-   extends X3DTimeDependentNode, ChannelFields, URLFields
+interface SFNodeBufferAudioSource extends X3DTimeDependentNode, ChannelFields, URLFields
 {
-      detune: number;
-      buffer: MFFloat;
-      bufferDuration: SFTime;
-      bufferLength: number;
-      numberOfChannels: number;
-      sampleRate: number;
-      playbackRate: number;
-      loopStart: SFTime;
-      loopEnd: SFTime;
-      loop: boolean;
-   }
+   detune: number;
+   buffer: MFFloat;
+   bufferDuration: SFTime;
+   bufferLength: number;
+   numberOfChannels: number;
+   sampleRate: number;
+   playbackRate: number;
+   loopStart: SFTime;
+   loopEnd: SFTime;
+   loop: boolean;
+}
 
 interface SFNodeChannelMerger extends ChannelFields
 {
