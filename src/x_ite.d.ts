@@ -31,7 +31,7 @@ interface X3D
    SFMatrix3f: typeof SFMatrix3f;
    SFMatrix4d: typeof SFMatrix4d;
    SFMatrix4f: typeof SFMatrix4f;
-   SFNode: SFNode;
+   SFNode: typeof SFNode;
    SFRotation: typeof SFRotation;
    SFString: typeof SFString;
    SFTime: typeof SFTime;
@@ -841,7 +841,7 @@ class SFMatrix4f extends SFMatrix4 {
    static readonly typeName: "SFMatrix4f";
 }
 
-interface SFNode extends X3DField
+class SFNode <T = X3DNode> extends X3DField
 {
    static readonly typeName: "SFNode";
 
@@ -1132,7 +1132,7 @@ class MFMatrix4f extends X3DArrayField <SFMatrix4f>
    static readonly typeName: "MFMatrix4f";
 }
 
-class MFNode <T> extends X3DArrayField <SFNode <T>>
+class MFNode <T = X3DNode> extends X3DArrayField <SFNode <T>>
 {
    static readonly typeName: "MFNode";
 }
@@ -1183,6 +1183,8 @@ class MFVec4f extends X3DArrayField <SFVec4f>
 }
 
 // CONCRETE_NODES START
+
+interface X3DNode { }
 
 interface SFNodeAcousticProperties extends SFNode
 {
