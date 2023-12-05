@@ -799,11 +799,13 @@ class SFMatrix3 extends X3DField
    multMatrixDir <T = SFVec2d | SFVec2f> (col: T): T;
 }
 
-class SFMatrix3d extends SFMatrix3 {
+class SFMatrix3d extends SFMatrix3
+{
    static readonly typeName: "SFMatrix3d";
 }
 
-class SFMatrix3f extends SFMatrix3 {
+class SFMatrix3f extends SFMatrix3
+{
    static readonly typeName: "SFMatrix3f";
 }
 
@@ -833,15 +835,17 @@ class SFMatrix4 extends X3DField
    multMatrixDir <T = SFVec3d | SFVec3f> (col: T): T;
 }
 
-class SFMatrix4d extends SFMatrix4 {
+class SFMatrix4d extends SFMatrix4
+{
    static readonly typeName: "SFMatrix4d";
 }
 
-class SFMatrix4f extends SFMatrix4 {
+class SFMatrix4f extends SFMatrix4
+{
    static readonly typeName: "SFMatrix4f";
 }
 
-class SFNode <T = X3DNode> extends X3DField
+class SFNode <T extends X3DNode = X3DNode> extends X3DField
 {
    static readonly typeName: "SFNode";
 
@@ -950,11 +954,13 @@ class SFVec2 extends X3DField
    subtract (other: this): this;
 }
 
-class SFVec2d extends SFVec2 {
+class SFVec2d extends SFVec2
+{
    static readonly typeName: "SFVec2d";
 }
 
-class SFVec2f extends SFVec2 {
+class SFVec2f extends SFVec2
+{
    static readonly typeName: "SFVec2f";
 }
 
@@ -987,11 +993,13 @@ class SFVec3 extends X3DField
    subtract (other: this): this;
 }
 
-class SFVec3d extends SFVec2 {
+class SFVec3d extends SFVec3
+{
    static readonly typeName: "SFVec3d";
 }
 
-class SFVec3f extends SFVec2 {
+class SFVec3f extends SFVec3
+{
    static readonly typeName: "SFVec3f";
 }
 
@@ -1024,11 +1032,13 @@ class SFVec4 extends X3DField
    subtract (other: this): this;
 }
 
-class SFVec4d extends SFVec4 {
+class SFVec4d extends SFVec4
+{
    static readonly typeName: "SFVec4d";
 }
 
-class SFVec4f extends SFVec4 {
+class SFVec4f extends SFVec4
+{
    static readonly typeName: "SFVec4f";
 }
 
@@ -1132,7 +1142,7 @@ class MFMatrix4f extends X3DArrayField <SFMatrix4f>
    static readonly typeName: "MFMatrix4f";
 }
 
-class MFNode <T = X3DNode> extends X3DArrayField <SFNode <T>>
+class MFNode <T extends X3DNode = X3DNode> extends X3DArrayField <SFNode <T>>
 {
    static readonly typeName: "MFNode";
 }
