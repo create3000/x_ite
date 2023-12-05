@@ -848,6 +848,9 @@ interface SFNode extends X3DField
    metadata: SFNode;
 
    addFieldCallback (key: any, callback: (value: this) => void): void;
+   /**
+    * @deprecated Use `node .getField (name) .addFieldCallback (key, callback)`.
+    */
    addFieldCallback (name: string, key: any, callback: (value: X3DField) => void): void;
    getFieldDefinitions (): FieldDefinitionArray;
    getField (name: string): X3DField;
