@@ -695,7 +695,7 @@ type FieldCallback = (value: X3DField) => void;
 class SFBool extends X3DField
 {
    static readonly typeName: "SFBool";
-   
+
    constructor (arg?: any);
 
    copy (): SFBool;
@@ -715,7 +715,7 @@ class SFColor extends X3DField
    [index: number]: number;
 
    copy (): SFColor;
-   getHSV (result: number []): number [];
+   getHSV (): number [];
    setHSV (h: number, s: number, v: number): void;
    lerp (destination: SFColor, t: number): SFColor;
 }
@@ -734,7 +734,7 @@ class SFColorRGBA extends X3DField
    [index: number]: number;
 
    copy (): SFColorRGBA;
-   getHSVA (result: number []): number [];
+   getHSVA (): number [];
    setHSVA (h: number, s: number, v: number): void;
    lerp (destination: SFColor, t: number): SFColorRGBA;
 }
