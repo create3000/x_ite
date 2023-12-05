@@ -695,7 +695,8 @@ class SFBool extends X3DField
 {
    static readonly typeName: "SFBool";
 
-   constructor (value?: any);
+   constructor ();
+   constructor (value: boolean);
 
    valueOf (): boolean;
 }
@@ -704,7 +705,8 @@ class SFColor extends X3DField
 {
    static readonly typeName: "SFColor";
 
-   constructor (r?: number, g?: number, b?: number);
+   constructor ();
+   constructor (r: number, g: number, b: number);
 
    r: number;
    g: number;
@@ -721,7 +723,8 @@ class SFColorRGBA extends X3DField
 {
    static readonly typeName: "SFColorRGBA";
 
-   constructor (r?: number, g?: number, b?: number, a?: number);
+   constructor ();
+   constructor (r: number, g: number, b: number, a: number);
 
    r: number;
    g: number;
@@ -739,7 +742,8 @@ class SFDouble extends X3DField
 {
    static readonly typeName: "SFDouble";
 
-   constructor (value?: any);
+   constructor ();
+   constructor (value: number);
 
    valueOf (): number;
 }
@@ -748,7 +752,8 @@ class SFFloat extends X3DField
 {
    static readonly typeName: "SFFloat";
 
-   constructor (value?: any);
+   constructor ();
+   constructor (value: number);
 
    valueOf (): number;
 }
@@ -757,7 +762,8 @@ class SFImage extends X3DField
 {
    static readonly typeName: "SFImage";
 
-   constructor (width?: number, height?: number, components?: number, array?: MFInt32);
+   constructor ();
+   constructor (width: number, height: number, components: number, array: MFInt32);
 
    x: number;
    y: number;
@@ -771,7 +777,8 @@ class SFInt32 extends X3DField
 {
    static readonly typeName: "SFInt32";
 
-   constructor (value?: number);
+   constructor ();
+   constructor (value: number);
 }
 
 class SFMatrix3 extends X3DField
@@ -912,7 +919,8 @@ class SFString extends X3DField
 {
    static readonly typeName: "SFString";
 
-   constructor (value?: any);
+   constructor ();
+   constructor (value: string);
 
    valueOf (): string;
    length: number;
@@ -922,14 +930,16 @@ class SFTime extends X3DField
 {
    static readonly typeName: "SFTime";
 
-   constructor (value?: any);
+   constructor ();
+   constructor (value: number);
 
    valueOf (): number;
 }
 
 class SFVec2 extends X3DField
 {
-   constructor (x?: number, y?: number);
+   constructor ();
+   constructor (x: number, y: number);
 
    x: number;
    y: number;
@@ -966,7 +976,8 @@ class SFVec2f extends SFVec2
 
 class SFVec3 extends X3DField
 {
-   constructor (x?: number, y?: number, z?: number);
+   constructor ();
+   constructor (x: number, y: number, z: number);
 
    x: number;
    y: number;
@@ -1005,7 +1016,8 @@ class SFVec3f extends SFVec3
 
 class SFVec4 extends X3DField
 {
-   constructor (x?: number, y?: number, z?: number, w?: number);
+   constructor ();
+   constructor (x: number, y: number, z: number, w: number);
 
    x: number;
    y: number;
