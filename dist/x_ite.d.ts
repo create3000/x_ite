@@ -6367,7 +6367,7 @@ interface FontStyleProxy extends X3DFontStyleNodeProxy
    *
    * This field is of access type is 'inputOutput' and type MFString.
    */
-   justify: MFString <"MIDDLE" | "MIDDLE BEGIN" | "MIDDLE END" | "MIDDLE FIRST" | "MIDDLE MIDDLE" | "BEGIN" | "BEGIN BEGIN" | "BEGIN END" | "BEGIN FIRST" | "BEGIN MIDDLE" | "END" | "END BEGIN" | "END END" | "END FIRST" | "END MIDDLE" | "FIRST" | "FIRST BEGIN" | "FIRST END" | "FIRST FIRST" | "FIRST MIDDLE">,
+   justify: MFString <"MIDDLE" | "BEGIN" | "END" | "FIRST">,
    /**
    * Language codes consist of a primary code and a (possibly empty) series of subcodes.
    *
@@ -9211,7 +9211,7 @@ interface LayoutProxy extends X3DLayoutNodeProxy
    *
    * This field is of access type is 'inputOutput' and type MFString.
    */
-   align: MFString <"LEFT BOTTOM" | "LEFT CENTER" | "LEFT TOP" | "CENTER BOTTOM" | "CENTER CENTER" | "CENTER TOP" | "RIGHT BOTTOM" | "RIGHT CENTER" | "RIGHT TOP">,
+   align: MFString <"LEFT" | "BOTTOM" | "CENTER" | "TOP" | "RIGHT">,
    /**
    * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
    *
@@ -9229,13 +9229,13 @@ interface LayoutProxy extends X3DLayoutNodeProxy
    *
    * This field is of access type is 'inputOutput' and type MFString.
    */
-   offsetUnits: MFString <"WORLD WORLD" | "WORLD FRACTION" | "WORLD PIXEL" | "FRACTION WORLD" | "FRACTION FRACTION" | "FRACTION PIXEL" | "PIXEL WORLD" | "PIXEL FRACTION" | "PIXEL PIXEL">,
+   offsetUnits: MFString <"WORLD" | "FRACTION" | "PIXEL">,
    /**
    * The scaleMode field specifies how the scale of the parent is modified.
    *
    * This field is of access type is 'inputOutput' and type MFString.
    */
-   scaleMode: MFString <"NONE NONE" | "NONE FRACTION" | "NONE STRETCH" | "NONE PIXEL" | "FRACTION NONE" | "FRACTION FRACTION" | "FRACTION STRETCH" | "FRACTION PIXEL" | "STRETCH NONE" | "STRETCH FRACTION" | "STRETCH STRETCH" | "STRETCH PIXEL" | "PIXEL NONE" | "PIXEL FRACTION" | "PIXEL STRETCH" | "PIXEL PIXEL">,
+   scaleMode: MFString <"NONE" | "FRACTION" | "STRETCH" | "PIXEL">,
    /**
    * The two values in the size field define the width and height of the layout rectangle.
    *
@@ -9247,7 +9247,7 @@ interface LayoutProxy extends X3DLayoutNodeProxy
    *
    * This field is of access type is 'inputOutput' and type MFString.
    */
-   sizeUnits: MFString <"WORLD WORLD" | "WORLD FRACTION" | "WORLD PIXEL" | "FRACTION WORLD" | "FRACTION FRACTION" | "FRACTION PIXEL" | "PIXEL WORLD" | "PIXEL FRACTION" | "PIXEL PIXEL">,
+   sizeUnits: MFString <"WORLD" | "FRACTION" | "PIXEL">,
 }
 
 /** LayoutGroup is a Grouping node that can contain most nodes, whose children are related by a common layout within a parent layout. */
@@ -14053,7 +14053,7 @@ interface ScreenFontStyleProxy extends X3DFontStyleNodeProxy
    *
    * This field is of access type is 'inputOutput' and type MFString.
    */
-   justify: MFString <"MIDDLE" | "MIDDLE BEGIN" | "MIDDLE END" | "MIDDLE FIRST" | "MIDDLE MIDDLE" | "BEGIN" | "BEGIN BEGIN" | "BEGIN END" | "BEGIN FIRST" | "BEGIN MIDDLE" | "END" | "END BEGIN" | "END END" | "END FIRST" | "END MIDDLE" | "FIRST" | "FIRST BEGIN" | "FIRST END" | "FIRST FIRST" | "FIRST MIDDLE">,
+   justify: MFString <"MIDDLE" | "BEGIN" | "END" | "FIRST">,
    /**
    * Language codes consist of a primary code and a (possibly empty) series of subcodes.
    *

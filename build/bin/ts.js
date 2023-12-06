@@ -143,7 +143,7 @@ function FieldType (field)
       case "MFString":
          if (Array .isArray (field .enumeration))
             return `MFString <${field .enumeration
-               .flatMap (e => e .value .split (/\s+/))
+               .flatMap (e => e .value .split (/\s*,\s*|\s+/))
                .filter (unique)
                .map (v => `"${v .replace (/["']/g, "")}"`)
                .join (" | ")}>`;
