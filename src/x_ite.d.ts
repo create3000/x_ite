@@ -245,7 +245,7 @@ type ContextMenuOptions = {
 type UserMenuCallback = () => UserMenuItems
 type UserMenuItems = Record <string, UserMenuItem>
 type MenuCallback = (itemKey: string, options: ContextMenuOptions, event: Event) => (boolean | void)
-type MenuIconCallback = (options: ContextMenuOptions, $itemElement: HTMLElement,itemKey: string, item: unknown) => string
+type MenuIconCallback = (options: ContextMenuOptions, $itemElement: HTMLElement, itemKey: string, item: unknown) => string
 type MenuBoolCallback = (itemKey: string, options: ContextMenuOptions) => boolean
 type UserMenuItem = {
    name: string,
@@ -307,7 +307,7 @@ class X3DExecutionContext
    addImportedNode (inlineNode: SFNode, exportedName: string, importedName?: string): void;
    updateImportedNode (inlineNode: SFNode, exportedName: string, importedName?: string): void;
    removeImportedNode (importedName: string): void;
-   addRoute (sourceNode: SFNode, sourceField: string,destinationNode: SFNode, destinationField: string): X3DRoute;
+   addRoute (sourceNode: SFNode, sourceField: string, destinationNode: SFNode, destinationField: string): X3DRoute;
    deleteRoute (route: X3DRoute): void;
 
    toVRMLString (options?: ToStringOptions): string;
