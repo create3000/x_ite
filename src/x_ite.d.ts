@@ -286,7 +286,7 @@ class X3DScene extends X3DExecutionContext
 class X3DExecutionContext
 {
    readonly specificationVersion: string;
-   readonly encoding: "ASCII" | "VRML" | "XML" | "JSON" | "BINARY" | "SCRIPTED" | "BIFS" | "NONE";
+   readonly encoding: "ASCII" | "VRML" | "XML" | "JSON" | "BINARY" | "SCRIPTED" | "BIFS" | "NONE" | "GLTF" | "OBJ" | "STL" | "PLY" | "SVG";
    readonly profile: ProfileInfo | null;
    readonly components: ComponentInfoArray;
    readonly worldURL: string;
