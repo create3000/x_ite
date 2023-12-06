@@ -463,6 +463,7 @@ interface X3DConstants
    readonly MFVec4f: number;
 
    // CONCRETE NODE TYPES CONSTANTS START
+   // DO NOT EDIT THIS SECTION, THIS SECTION IS AUTOMATICALLY GENERATED.
 
    // Concrete Node Types
 
@@ -730,6 +731,7 @@ interface X3DConstants
    // CONCRETE NODE TYPES CONSTANTS END
 
    // ABSTRACT NODE TYPES CONSTANTS START
+   // DO NOT EDIT THIS SECTION, THIS SECTION IS AUTOMATICALLY GENERATED.
 
    // Abstract Node Types
 
@@ -1377,6 +1379,7 @@ declare class MFVec4f extends X3DArrayField <SFVec4f>
 }
 
 // NODES START
+// DO NOT EDIT THIS SECTION, THIS SECTION IS AUTOMATICALLY GENERATED.
 
 /** AcousticProperties specifies the interaction of sound waves with characteristics of geometric objects in the scene. */
 interface AcousticPropertiesProxy extends X3DAppearanceChildNodeProxy

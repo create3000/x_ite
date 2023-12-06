@@ -22,6 +22,7 @@ let ts = sh ("cat", "src/x_ite.d.ts");
 function ConcreteNodesConstants ()
 {
    const string = `// CONCRETE NODE TYPES CONSTANTS START
+   // DO NOT EDIT THIS SECTION, THIS SECTION IS AUTOMATICALLY GENERATED.
 
    // Concrete Node Types
 
@@ -35,6 +36,7 @@ ${[... concreteNodes .keys ()] .map (typeName => `   readonly ${typeName}: numbe
 function AbstractNodesConstants ()
 {
    const string = `// ABSTRACT NODE TYPES CONSTANTS START
+   // DO NOT EDIT THIS SECTION, THIS SECTION IS AUTOMATICALLY GENERATED.
 
    // Abstract Node Types
 
@@ -178,6 +180,7 @@ function AbstractNode (node)
 function NodeTypes ()
 {
    const string = `// NODES START
+// DO NOT EDIT THIS SECTION, THIS SECTION IS AUTOMATICALLY GENERATED.
 
 ${[... concreteNodes .values ()] .map (ConcreteNode) .join ("\n\n")}
 
