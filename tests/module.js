@@ -4,5 +4,5 @@ const browser = X3D .createBrowser () .browser;
 const scene = browser .currentScene;
 const nodes = scene .addRoute ();
 const r = scene .rootNodes;
-const n = scene .createNode ("ImageTextureAtlas");
-n .url
+const n = scene .createNode ("Appearance");
+n .blendMode .destinationAlphaFactor = ''
