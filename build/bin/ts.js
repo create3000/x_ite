@@ -109,7 +109,7 @@ function FieldDescription (field)
 
    const type = field .type === "xs:NMTOKEN" ? "SFString" : field .type;
 
-   strings .push (` This field is of access type is '${field .accessType}' and type ${type}.`);
+   strings .push (` This field is of access type '${field .accessType}' and type ${type}.`);
 
    return strings .join ("\n   *");
 }
