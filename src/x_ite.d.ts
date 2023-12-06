@@ -142,8 +142,8 @@ declare class X3DBrowser
    getCurrentSpeed (): number;
    getCurrentFrameRate (): number;
    getWorldURL (): string;
-   replaceWorld (nodes: MFNode): string;
-   createVrmlFromString (vrmlSyntax: string): MFNode;
+   replaceWorld (nodes: MFNode <X3DNodeProxy>): string;
+   createVrmlFromString (vrmlSyntax: string): MFNode <X3DNodeProxy>;
    createVrmlFromURL (url: MFString, node: SFNode, fieldName: string): void;
    addRoute (sourceNode: SFNode, sourceField: string, destinationNode: SFNode, destinationField: string): void;
    deleteRoute (sourceNode: SFNode, sourceField: string, destinationNode: SFNode, destinationField: string): void;
@@ -270,7 +270,7 @@ type UserMenuItem = {
 
 declare class X3DScene extends X3DExecutionContext
 {
-   rootNodes: MFNode;
+   rootNodes: MFNode <X3DNodeProxy>;
 
    getMetaData (name: string): string [];
    setMetaData (name: string, value: string | string []): void;
@@ -293,7 +293,7 @@ declare class X3DExecutionContext
    readonly worldURL: string;
    readonly baseURL: string;
    readonly units: UnitInfoArray;
-   readonly rootNodes: MFNode;
+   readonly rootNodes: MFNode <X3DNodeProxy>;
    readonly protos: ProtoDeclarationArray;
    readonly externprotos: ExternProtoDeclarationArray;
    readonly routes: RouteArray;
