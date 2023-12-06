@@ -8918,7 +8918,7 @@ interface IndexedTriangleStripSetProxy extends X3DComposedGeometryNodeProxy
 }
 
 /** Inline can load another X3D or VRML model into the current scene via url. */
-interface InlineProxy extends X3DChildNodeProxy
+interface InlineProxy extends X3DChildNodeProxy, X3DBoundedObjectProxy, X3DUrlObjectProxy
 {
    /**
    * autoRefresh defines interval in seconds before automatic reload of current url asset is performed.
@@ -10494,7 +10494,7 @@ interface MotorJointProxy extends X3DRigidJointNodeProxy
 }
 
 /** MovieTexture applies a 2D movie image to surface geometry, or provides audio for a Sound node. */
-interface MovieTextureProxy extends X3DSoundSourceNodeProxy
+interface MovieTextureProxy extends X3DSoundSourceNodeProxy, X3DTexture2DNodeProxy, X3DUrlObjectProxy
 {
    /**
    * autoRefresh defines interval in seconds before automatic reload of current url asset is performed.
@@ -11854,7 +11854,7 @@ interface OscillatorSourceProxy extends X3DSoundSourceNodeProxy
 }
 
 /** PackagedShader can contain field declarations, but no CDATA section of plain-text source code. */
-interface PackagedShaderProxy extends X3DShaderNodeProxy
+interface PackagedShaderProxy extends X3DShaderNodeProxy, X3DUrlObjectProxy, X3DProgrammableShaderObjectProxy
 {
    /**
    * activate forces the shader to activate the contained objects.
@@ -14465,7 +14465,7 @@ interface ShaderPartProxy extends X3DNodeProxy, X3DUrlObjectProxy
 }
 
 /** ShaderProgram can contain field declarations and a CDATA section of plain-text source code. */
-interface ShaderProgramProxy extends X3DNodeProxy
+interface ShaderProgramProxy extends X3DNodeProxy, X3DUrlObjectProxy, X3DProgrammableShaderObjectProxy
 {
    /**
    * autoRefresh defines interval in seconds before automatic reload of current url asset is performed.

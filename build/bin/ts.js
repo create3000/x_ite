@@ -54,11 +54,12 @@ function ConcreteNode (node)
    // Inheritance
 
    const baseTypes = [
-      node .InterfaceDefinition .Inheritance ?.baseType,
-      node .InterfaceDefinition .AdditionalInheritance ?.baseType,
+      node .InterfaceDefinition .Inheritance,
+      node .InterfaceDefinition .AdditionalInheritance,
    ]
-   .filter (type => type)
-   .map (type => `${type}Proxy`);
+   .filter (inheritance => inheritance)
+   .flatMap (inheritance => inheritance)
+   .map (inheritance => `${inheritance .baseType}Proxy`);
 
    if (!baseTypes .length)
       baseTypes .push ("SFNode");
