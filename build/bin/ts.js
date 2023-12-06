@@ -77,7 +77,7 @@ function ConcreteNode (node)
    const fields = node .InterfaceDefinition .field
       // .filter (field => !field .inheritedFrom)
       .filter (field => !field .name .match (/^(?:DEF|USE|IS|id|class)$/))
-      .filter (field => !field .description ?.match (/CSS/))
+      .filter (field => !field .description ?.includes ("CSS"))
       .sort ((a, b) => a .name .localeCompare (b .name));
 
    // if (node .name === "AcousticProperties")
