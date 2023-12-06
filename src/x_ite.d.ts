@@ -464,6 +464,8 @@ interface X3DConstants
 
    // CONCRETE NODE TYPES CONSTANTS START
 
+   // Concrete Node Types
+
    readonly AcousticProperties: number;
    readonly Analyser: number;
    readonly Anchor: number;
@@ -728,6 +730,8 @@ interface X3DConstants
    // CONCRETE NODE TYPES CONSTANTS END
 
    // ABSTRACT NODE TYPES CONSTANTS START
+
+   // Abstract Node Types
 
    readonly X3DAppearanceChildNode: number;
    readonly X3DAppearanceNode: number;

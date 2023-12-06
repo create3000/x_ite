@@ -22,6 +22,8 @@ function ConcreteNodesConstants ()
 {
    const string = `// CONCRETE NODE TYPES CONSTANTS START
 
+   // Concrete Node Types
+
 ${[... concreteNodes .keys ()] .map (typeName => `   readonly ${typeName}: number;`) .join ("\n")}
 
    // CONCRETE NODE TYPES CONSTANTS END`;
@@ -32,6 +34,8 @@ ${[... concreteNodes .keys ()] .map (typeName => `   readonly ${typeName}: numbe
 function AbstractNodesConstants ()
 {
    const string = `// ABSTRACT NODE TYPES CONSTANTS START
+
+   // Abstract Node Types
 
 ${[... abstractNodes .keys ()] .map (typeName => `   readonly ${typeName}: number;`) .join ("\n")}
 
