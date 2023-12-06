@@ -160,7 +160,7 @@ type JSONValue =
 
 interface JSONObject
 {
-   [k: string]: JSONValue
+   [k: string]: JSONValue,
 }
 
 type BrowserProperty = "ABSTRACT_NODES"
@@ -194,7 +194,7 @@ type BrowserOption = {
    Notifications:                boolean,
    OrderIndependentTransparency: boolean,
    StraightenHorizon:            boolean,
-   Timings:                      boolean
+   Timings:                      boolean,
 }
 
 type QualityLevels = "LOW" | "MEDIUM" | "HIGH";
@@ -211,7 +211,7 @@ type RenderingProperty = {
    ContentScale:           number,
    MaxSamples:             number,
    Multisampling:          number,
-   LogarithmicDepthBuffer: boolean
+   LogarithmicDepthBuffer: boolean,
 }
 
 class ContextMenu
@@ -239,7 +239,7 @@ type ContextMenuOptions = {
    determinePosition?: (menu: unknown) => void,
    callback?: MenuCallback,
    build?: ($triggerElement: unknown, e: Event) => ContextMenuOptions,
-   itemClickEvent?: string
+   itemClickEvent?: string,
 }
 
 type UserMenuCallback = () => UserMenuItems
@@ -264,7 +264,7 @@ type UserMenuItem = {
    height?: number,
    items?: UserMenuItems,
    accesskey?: string,
-   dataAttr?: Record <string, string>
+   dataAttr?: Record <string, string>,
 }
 
 class X3DScene extends X3DExecutionContext
@@ -1407,9 +1407,9 @@ type BlendFactor = "ZERO" | "ONE"
    | "SRC_ALPHA"      | "ONE_MINUS_SRC_ALPHA"
    | "DST_ALPHA"      | "ONE_MINUS_DST_ALPHA"
    | "CONSTANT_COLOR" | "ONE_MINUS_CONSTANT_COLOR"
-   | "CONSTANT_ALPHA" | "ONE_MINUS_CONSTANT_ALPHA"
+   | "CONSTANT_ALPHA" | "ONE_MINUS_CONSTANT_ALPHA";
 
-type BlendEquation = "FUNC_ADD" | "FUNC_SUBTRACT" | "FUNC_REVERSE_SUBTRACT"
+type BlendEquation = "FUNC_ADD" | "FUNC_SUBTRACT" | "FUNC_REVERSE_SUBTRACT";
 
 interface SFNodeBlendMode extends SFNode
 {
@@ -1996,7 +1996,7 @@ interface SFNodePeriodicWave extends SFNode
 {
    description: string;
    enabled: boolean;
-   type: "SINE" | "SQUARE" | "SAWTOOTH" | "TRIANGLE" | "CUSTOM"
+   type: "SINE" | "SQUARE" | "SAWTOOTH" | "TRIANGLE" | "CUSTOM";
    optionsReal: MFFloat;
    optionsImag: MFFloat;
 }
@@ -2470,7 +2470,7 @@ type ConcreteNodesType = {
    VisibilitySensor: X3DEnvironmentalSensorNode,
    WaveShaper: SFNodeWaveShaper,
    WorldInfo: SFNodeWorldInfo,
-   [name: string]: SFNode // catchall
+   [name: string]: SFNode, // catchall
 }
 
 // CONCRETE NODES END
