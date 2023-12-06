@@ -41,7 +41,7 @@ A reference to the X3DBrowser object that is associated with this element.
 
 See [HTMLCanvasElement.captureStream()](https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/captureStream){:target="_blank"}.
 
-#### Blob **toBlob** (*Function callback, [String type, Number quality]*)
+#### void **toBlob** (*Function callback, [String type, Number quality]*)
 
 See [HTMLCanvasElement.toBlob()](https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toBlob){:target="_blank"}.
 

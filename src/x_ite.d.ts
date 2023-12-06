@@ -16,60 +16,85 @@ interface X3D
    createBrowser (): X3DCanvasElement;
    getBrowser (selector?: string | X3DCanvasElement): X3DBrowser;
 
-   X3DConstants: X3DConstants;
+   readonly X3DConstants: X3DConstants,
+   readonly X3DBrowser: typeof X3DBrowser,
+   readonly X3DExecutionContext: typeof X3DExecutionContext,
+   readonly X3DScene: typeof X3DScene,
+   readonly ComponentInfo: typeof ComponentInfo,
+   readonly ComponentInfoArray: typeof ComponentInfoArray,
+   readonly ProfileInfo: typeof ProfileInfo,
+   readonly ProfileInfoArray: typeof ProfileInfoArray,
+   readonly UnitInfo: typeof UnitInfo,
+   readonly UnitInfoArray: typeof UnitInfoArray,
+   readonly ExternProtoDeclarationArray: typeof ExternProtoDeclarationArray,
+   readonly ProtoDeclarationArray: typeof ProtoDeclarationArray,
+   readonly X3DExternProtoDeclaration: typeof X3DExternProtoDeclaration,
+   readonly X3DProtoDeclaration: typeof X3DProtoDeclaration,
+   readonly RouteArray: typeof RouteArray,
+   readonly X3DRoute: typeof X3DRoute,
+
+   readonly X3DFieldDefinition: typeof X3DFieldDefinition,
+   readonly FieldDefinitionArray: typeof FieldDefinitionArray,
+
+   readonly X3DField: typeof X3DField,
+   readonly X3DArrayField: typeof X3DArrayField,
 
    // SF* fields
 
-   SFBool: typeof SFBool;
-   SFColor: typeof SFColor;
-   SFColorRGBA: typeof SFColorRGBA;
-   SFDouble: typeof SFDouble;
-   SFFloat: typeof SFFloat;
-   SFImage: typeof SFImage;
-   SFInt32: typeof SFInt32;
-   SFMatrix3d: typeof SFMatrix3d;
-   SFMatrix3f: typeof SFMatrix3f;
-   SFMatrix4d: typeof SFMatrix4d;
-   SFMatrix4f: typeof SFMatrix4f;
-   SFNode: typeof SFNode;
-   SFRotation: typeof SFRotation;
-   SFString: typeof SFString;
-   SFTime: typeof SFTime;
-   SFVec2d: typeof SFVec2d;
-   SFVec2f: typeof SFVec2f;
-   SFVec3d: typeof SFVec3d;
-   SFVec3f: typeof SFVec3f;
-   SFVec4d: typeof SFVec4d;
-   SFVec4f: typeof SFVec4f;
+   readonly SFBool: typeof SFBool;
+   readonly SFColor: typeof SFColor;
+   readonly SFColorRGBA: typeof SFColorRGBA;
+   readonly SFDouble: typeof SFDouble;
+   readonly SFFloat: typeof SFFloat;
+   readonly SFImage: typeof SFImage;
+   readonly SFInt32: typeof SFInt32;
+   readonly SFMatrix3d: typeof SFMatrix3d;
+   readonly SFMatrix3f: typeof SFMatrix3f;
+   readonly SFMatrix4d: typeof SFMatrix4d;
+   readonly SFMatrix4f: typeof SFMatrix4f;
+   readonly SFNode: typeof SFNode;
+   readonly SFRotation: typeof SFRotation;
+   readonly SFString: typeof SFString;
+   readonly SFTime: typeof SFTime;
+   readonly SFVec2d: typeof SFVec2d;
+   readonly SFVec2f: typeof SFVec2f;
+   readonly SFVec3d: typeof SFVec3d;
+   readonly SFVec3f: typeof SFVec3f;
+   readonly SFVec4d: typeof SFVec4d;
+   readonly SFVec4f: typeof SFVec4f;
 
    // MF* fields
 
-   MFBool: typeof MFBool;
-   MFColor: typeof MFColor;
-   MFColorRGBA: typeof MFColorRGBA;
-   MFDouble: typeof MFDouble;
-   MFFloat: typeof MFFloat;
-   MFImage: typeof MFImage;
-   MFInt32: typeof MFInt32;
-   MFMatrix3d: typeof MFMatrix3d;
-   MFMatrix3f: typeof MFMatrix3f;
-   MFMatrix4d: typeof MFMatrix4d;
-   MFMatrix4f: typeof MFMatrix4f;
-   MFNode: typeof MFNode;
-   MFRotation: typeof MFRotation;
-   MFString: typeof MFString;
-   MFTime: typeof MFTime;
-   MFVec2d: typeof MFVec2d;
-   MFVec2f: typeof MFVec2f;
-   MFVec3d: typeof MFVec3d;
-   MFVec3f: typeof MFVec3f;
-   MFVec4d: typeof MFVec4d;
-   MFVec4f: typeof MFVec4f;
+   readonly MFBool: typeof MFBool;
+   readonly MFColor: typeof MFColor;
+   readonly MFColorRGBA: typeof MFColorRGBA;
+   readonly MFDouble: typeof MFDouble;
+   readonly MFFloat: typeof MFFloat;
+   readonly MFImage: typeof MFImage;
+   readonly MFInt32: typeof MFInt32;
+   readonly MFMatrix3d: typeof MFMatrix3d;
+   readonly MFMatrix3f: typeof MFMatrix3f;
+   readonly MFMatrix4d: typeof MFMatrix4d;
+   readonly MFMatrix4f: typeof MFMatrix4f;
+   readonly MFNode: typeof MFNode;
+   readonly MFRotation: typeof MFRotation;
+   readonly MFString: typeof MFString;
+   readonly MFTime: typeof MFTime;
+   readonly MFVec2d: typeof MFVec2d;
+   readonly MFVec2f: typeof MFVec2f;
+   readonly MFVec3d: typeof MFVec3d;
+   readonly MFVec3f: typeof MFVec3f;
+   readonly MFVec4d: typeof MFVec4d;
+   readonly MFVec4f: typeof MFVec4f;
 }
 
 class X3DCanvasElement extends HTMLElement
 {
    readonly browser: X3DBrowser;
+
+   captureStream (frameRate?: number): MediaStream;
+   toBlob (callback: (blob: Blob) => void, type?: string, quality?: number): void;
+   toDataURL (type?: string, encoderOptions?: number): string;
 }
 
 class X3DBrowser
