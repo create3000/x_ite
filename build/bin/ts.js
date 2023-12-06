@@ -70,7 +70,7 @@ function ConcreteNode (node)
       .filter (field => !field .name .match (/^(?:DEF|USE|IS|id|class)$/) && !field .description ?.match (/CSS/))
       .sort ((a, b) => a .name .localeCompare (b .name));
 
-   if (node .name === "FontStyle")
+   if (node .name === "Shape")
       console .log (fields);
 
    const properties = fields
@@ -122,6 +122,11 @@ function FieldType (field)
       case "SFString":
       case "xs:NMTOKEN":
          return "string";
+      case "SFNode":
+         return field .acceptableNodeTypes
+            .split (/[|,]/)
+            .map (type => `${type .trim ()}Proxy`)
+            .join (" | ") || "SFNode";
       default:
          return field .type;
    }

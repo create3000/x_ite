@@ -1412,7 +1412,7 @@ interface AcousticPropertiesProxy extends X3DAppearanceChildNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * sound refraction coefficient of a medium, which determines change in propagation direction of sound wave when obliquely crossing boundary between two mediums where its speed is different.
    * 
@@ -1513,7 +1513,7 @@ interface AnalyserProxy extends X3DSoundProcessingNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * minDecibels represents minimum power value in scaling range for FFT analysis data.
    * 
@@ -1618,7 +1618,7 @@ interface AnchorProxy extends X3DGroupingNodeProxy, X3DUrlObjectProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * If provided, parameter tells the X3D player where to to redirect the loaded url.
    * 
@@ -1651,7 +1651,7 @@ interface AppearanceProxy extends X3DAppearanceNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   acousticProperties: SFNode,
+   acousticProperties: AcousticPropertiesProxy,
    /**
    * Threshold value used for pixel rendering either transparent or opaque, used when alphaMode="MASK".
    * 
@@ -1667,37 +1667,37 @@ interface AppearanceProxy extends X3DAppearanceNodeProxy
    /**
    * Access type is 'inputOutput'.
    */
-   backMaterial: SFNode,
+   backMaterial: X3DMaterialNodeProxy,
    /**
    * Single contained FillProperties node that can specify additional visual attributes applied to polygonal areas of corresponding geometry, on top of whatever other appearance is already defined.
    * 
    * Access type is 'inputOutput'.
    */
-   fillProperties: SFNode,
+   fillProperties: FillPropertiesProxy,
    /**
    * Single contained LineProperties node that can specify additional visual attributes applied to corresponding line geometry.
    * 
    * Access type is 'inputOutput'.
    */
-   lineProperties: SFNode,
+   lineProperties: LinePropertiesProxy,
    /**
    * Single contained Material node that can specify visual attributes for lighting response (color types, transparency, etc.
    * 
    * Access type is 'inputOutput'.
    */
-   material: SFNode,
+   material: X3DMaterialNodeProxy,
    /**
    * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Single contained PointProperties node that can specify additional visual attributes applied to corresponding point geometry.
    * 
    * Access type is 'inputOutput'.
    */
-   pointProperties: SFNode,
+   pointProperties: PointPropertiesProxy,
    /**
    * Zero or more contained programmable shader nodes (ComposedShader, PackagedShader, ProgramShader) that specify, in order of preference, author-programmed rendering characteristics.
    * 
@@ -1709,13 +1709,13 @@ interface AppearanceProxy extends X3DAppearanceNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   texture: SFNode,
+   texture: X3DTextureNodeProxy,
    /**
    * Single contained TextureTransform node that defines 2D transformation applied to texture coordinates.
    * 
    * Access type is 'inputOutput'.
    */
-   textureTransform: SFNode,
+   textureTransform: X3DTextureTransformNodeProxy,
 }
 
 /** Arc2D is a line-based geometry node that defines a linear circular arc with center (0,0) in X-Y plane, with angles measured starting at positive x-axis and sweeping towards positive y-axis. */
@@ -1732,7 +1732,7 @@ interface Arc2DProxy extends X3DGeometryNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * circle radius, of which the arc is a portion.
    * 
@@ -1767,7 +1767,7 @@ interface ArcClose2DProxy extends X3DGeometryNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * circle radius, of which the arc is a portion.
    * 
@@ -1862,7 +1862,7 @@ interface AudioClipProxy extends X3DSoundSourceNodeProxy, X3DUrlObjectProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * When time now >= pauseTime, isPaused becomes true and AudioClip becomes paused.
    * 
@@ -1969,7 +1969,7 @@ interface AudioDestinationProxy extends X3DSoundDestinationNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
 }
 
 /** Background simulates ground and sky, using vertical arrays of wraparound color values. */
@@ -2028,7 +2028,7 @@ interface BackgroundProxy extends X3DBackgroundNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Image background panorama between ground/sky backdrop and scene's geometry.
    * 
@@ -2081,7 +2081,7 @@ interface BallJointProxy extends X3DRigidJointNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   body1: SFNode,
+   body1: RigidBodyProxy,
    /**
    * body1AnchorPoint describes anchorPoint position relative to local coordinate reference frame.
    * 
@@ -2093,7 +2093,7 @@ interface BallJointProxy extends X3DRigidJointNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   body2: SFNode,
+   body2: RigidBodyProxy,
    /**
    * body2AnchorPoint describes anchorPoint position relative to local coordinate reference frame.
    * 
@@ -2111,7 +2111,7 @@ interface BallJointProxy extends X3DRigidJointNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
 }
 
 /** Billboard is a Grouping node that can contain most nodes. */
@@ -2156,7 +2156,7 @@ interface BillboardProxy extends X3DGroupingNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Access type is 'inputOnly'.
    */
@@ -2249,7 +2249,7 @@ interface BiquadFilterProxy extends X3DSoundProcessingNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * When time now >= pauseTime, isPaused becomes true and AudioClip becomes paused.
    * 
@@ -2308,19 +2308,19 @@ interface BlendedVolumeStyleProxy extends X3DComposableVolumeRenderStyleNodeProx
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Single contained X3DComposableVolumeRenderStyleNode node that defines specific rendering technique for data in the voxels field, and the result is blended with parent VolumeData or SegmentedVoliumeData node.
    * 
    * Access type is 'inputOutput'.
    */
-   renderStyle: SFNode,
+   renderStyle: X3DComposableVolumeRenderStyleNodeProxy,
    /**
    * Single contained X3DTexture3DNode (ComposedTexture3D, ImageTexture3D, PixelTexture3D) that provides second set of raw voxel information utilized by corresponding rendering styles.
    * 
    * Access type is 'inputOutput'.
    */
-   voxels: SFNode,
+   voxels: X3DTexture3DNodeProxy,
    /**
    * weightConstant1 is used when weightFunction1=CONSTANT.
    * 
@@ -2350,13 +2350,13 @@ interface BlendedVolumeStyleProxy extends X3DComposableVolumeRenderStyleNodeProx
    * 
    * Access type is 'inputOutput'.
    */
-   weightTransferFunction1: SFNode,
+   weightTransferFunction1: X3DTexture2DNodeProxy,
    /**
    * The weightTransferFunction1 and weightTransferFunction2 fields specify two-dimensional textures that are used to determine the weight values when the weight function is set to "TABLE".
    * 
    * Access type is 'inputOutput'.
    */
-   weightTransferFunction2: SFNode,
+   weightTransferFunction2: X3DTexture2DNodeProxy,
 }
 
 /** BooleanFilter selectively passes true, false or negated events. */
@@ -2385,7 +2385,7 @@ interface BooleanFilterProxy extends X3DChildNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * set_boolean is the input value to be filtered.
    * 
@@ -2414,7 +2414,7 @@ interface BooleanSequencerProxy extends X3DSequencerNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Send next output value in keyValue array, and reset internal fraction field to match corresponding value in key array.
    * 
@@ -2449,7 +2449,7 @@ interface BooleanToggleProxy extends X3DChildNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * If input event set_boolean is true, flip state by negating current value of the toggle field Hint: for logical consistency, input event set_boolean false has no effect (under review as part of Mantis issue 519).
    * 
@@ -2472,7 +2472,7 @@ interface BooleanTriggerProxy extends X3DTriggerNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * set_triggerTime provides input time event, typical event sent is TouchSensor touchTime.
    * 
@@ -2507,7 +2507,7 @@ interface BoundaryEnhancementVolumeStyleProxy extends X3DComposableVolumeRenderS
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * opacityFactor k_ge is the power function to control the slope of the opacity curve to highlight the set of data.
    * 
@@ -2536,13 +2536,13 @@ interface BoundedPhysicsModelProxy extends X3DParticlePhysicsModelNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   geometry: SFNode,
+   geometry: X3DGeometryNodeProxy,
    /**
    * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
 }
 
 /** Box is a geometry node specifying a rectangular cuboid. */
@@ -2553,7 +2553,7 @@ interface BoxProxy extends X3DGeometryNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * size x y z in meters.
    * 
@@ -2692,7 +2692,7 @@ interface BufferAudioSourceProxy extends X3DSoundSourceNodeProxy, X3DUrlObjectPr
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * numberOfChannels is number of audio channels found in this buffer source.
    * 
@@ -2779,7 +2779,7 @@ interface CADAssemblyProxy extends X3DGroupingNodeProxy, X3DProductStructureChil
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Optional name for this particular CAD node.
    * 
@@ -2824,7 +2824,7 @@ interface CADFaceProxy extends X3DProductStructureChildNodeProxy, X3DBoundedObje
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Optional name for this particular CAD node.
    * 
@@ -2836,7 +2836,7 @@ interface CADFaceProxy extends X3DProductStructureChildNodeProxy, X3DBoundedObje
    * 
    * Access type is 'inputOutput'.
    */
-   shape: SFNode,
+   shape: ShapeProxy | LODProxy | TransformProxy,
    /**
    * Whether or not renderable content within this node is visually displayed.
    * 
@@ -2881,7 +2881,7 @@ interface CADLayerProxy extends X3DGroupingNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Optional name for this particular CAD node.
    * 
@@ -2942,7 +2942,7 @@ interface CADPartProxy extends X3DProductStructureChildNodeProxy, X3DGroupingNod
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Optional name for this particular CAD node.
    * 
@@ -3005,7 +3005,7 @@ interface CartoonVolumeStyleProxy extends X3DComposableVolumeRenderStyleNodeProx
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * orthogonalColor is used for surface normals that are orthogonal (perpendicular) to viewer's current location.
    * 
@@ -3023,7 +3023,7 @@ interface CartoonVolumeStyleProxy extends X3DComposableVolumeRenderStyleNodeProx
    * 
    * Access type is 'inputOutput'.
    */
-   surfaceNormals: SFNode,
+   surfaceNormals: X3DTexture3DNodeProxy,
 }
 
 /** ChannelMerger unites different input channels into a single output channel. */
@@ -3076,7 +3076,7 @@ interface ChannelMergerProxy extends X3DSoundChannelNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
 }
 
 /** ChannelSelector selects a single channel output from all input channels. */
@@ -3135,7 +3135,7 @@ interface ChannelSelectorProxy extends X3DSoundChannelNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
 }
 
 /** ChannelSplitter separates the different channels of a single audio source into a set of monophonic output channels. */
@@ -3188,7 +3188,7 @@ interface ChannelSplitterProxy extends X3DSoundChannelNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * The outputs field is a set of output nodes receiving the split channels, and making up a section of the audio graph.
    * 
@@ -3205,7 +3205,7 @@ interface Circle2DProxy extends X3DGeometryNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * circle radius.
    * 
@@ -3228,7 +3228,7 @@ interface ClipPlaneProxy extends X3DChildNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * If (a,b,c,d) is the plane, with the first three components being a normalized vector describing the plane's normal direction (and thus the fourth component d being distance from the origin), a point (x,y,z) is visible to the user, with regards to the clipping plane, if a*x+b*y+c*z+d is greater than 0.
    * 
@@ -3263,7 +3263,7 @@ interface CollidableOffsetProxy extends X3DNBodyCollidableNodeProxy
    * 
    * Access type is 'initializeOnly'.
    */
-   collidable: SFNode,
+   collidable: X3DNBodyCollidableNodeProxy,
    /**
    * Enables/disables node operation.
    * 
@@ -3275,7 +3275,7 @@ interface CollidableOffsetProxy extends X3DNBodyCollidableNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Orientation (axis, angle in radians) of children relative to local coordinate system.
    * 
@@ -3328,7 +3328,7 @@ interface CollidableShapeProxy extends X3DNBodyCollidableNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Orientation (axis, angle in radians) of children relative to local coordinate system.
    * 
@@ -3340,7 +3340,7 @@ interface CollidableShapeProxy extends X3DNBodyCollidableNodeProxy
    * 
    * Access type is 'initializeOnly'.
    */
-   shape: SFNode,
+   shape: ShapeProxy,
    /**
    * Position (x, y, z in meters) of children relative to local coordinate system.
    * 
@@ -3415,13 +3415,13 @@ interface CollisionProxy extends X3DGroupingNodeProxy, X3DSensorNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * The proxy node is used as a substitute for Collision children during collision detection, simplifying collision-intersection computations.
    * 
    * Access type is 'initializeOnly'.
    */
-   proxy: SFNode,
+   proxy: X3DChildNodeProxy,
    /**
    * Access type is 'inputOnly'.
    */
@@ -3496,7 +3496,7 @@ interface CollisionCollectionProxy extends X3DChildNodeProxy, X3DBoundedObjectPr
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * minBounceSpeed m/s needed to bounce.
    * 
@@ -3543,7 +3543,7 @@ interface CollisionSensorProxy extends X3DSensorNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   collider: SFNode,
+   collider: CollisionCollectionProxy,
    /**
    * Access type is 'outputOnly'.
    */
@@ -3575,7 +3575,7 @@ interface CollisionSensorProxy extends X3DSensorNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
 }
 
 /** CollisionSpace holds collection of objects considered together for resolution of inter-object collisions. */
@@ -3616,7 +3616,7 @@ interface CollisionSpaceProxy extends X3DNBodyCollisionSpaceNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * useGeometry indicates whether collision-detection code checks down to level of geometry, or only make approximations using geometry bounds.
    * 
@@ -3645,7 +3645,7 @@ interface ColorProxy extends X3DColorNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
 }
 
 /** ColorChaser generates a series of SFColor values that progressively change from initial value to destination value. */
@@ -3680,7 +3680,7 @@ interface ColorChaserProxy extends X3DChaserNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * set_destination resets destination value of this node.
    * 
@@ -3727,7 +3727,7 @@ interface ColorDamperProxy extends X3DDamperNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * order defines the number of internal filters (larger means smoother response, longer delay).
    * 
@@ -3786,7 +3786,7 @@ interface ColorInterpolatorProxy extends X3DInterpolatorNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * set_fraction selects input key for corresponding keyValue output.
    * 
@@ -3815,7 +3815,7 @@ interface ColorRGBAProxy extends X3DColorNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
 }
 
 /** ComposedCubeMapTexture is a texture node that defines a cubic environment map source as an explicit set of images drawn from individual 2D texture nodes. */
@@ -3826,13 +3826,13 @@ interface ComposedCubeMapTextureProxy extends X3DEnvironmentTextureNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   backTexture: SFNode,
+   backTexture: X3DTexture2DNodeProxy,
    /**
    * Parent ComposedCubeMapTexture element can contain up to six image nodes (ImageTexture PixelTexture, other texture nodes).
    * 
    * Access type is 'inputOutput'.
    */
-   bottomTexture: SFNode,
+   bottomTexture: X3DTexture2DNodeProxy,
    /**
    * Author-provided prose that describes intended purpose of the url asset.
    * 
@@ -3844,37 +3844,37 @@ interface ComposedCubeMapTextureProxy extends X3DEnvironmentTextureNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   frontTexture: SFNode,
+   frontTexture: X3DTexture2DNodeProxy,
    /**
    * Parent ComposedCubeMapTexture element can contain up to six image nodes (ImageTexture PixelTexture MovieTexture, other texture nodese).
    * 
    * Access type is 'inputOutput'.
    */
-   leftTexture: SFNode,
+   leftTexture: X3DTexture2DNodeProxy,
    /**
    * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Parent ComposedCubeMapTexture element can contain up to six image nodes (ImageTexture PixelTexture MovieTexture, other texture nodes).
    * 
    * Access type is 'inputOutput'.
    */
-   rightTexture: SFNode,
+   rightTexture: X3DTexture2DNodeProxy,
    /**
    * Single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images.
    * 
    * Access type is 'initializeOnly'.
    */
-   textureProperties: SFNode,
+   textureProperties: TexturePropertiesProxy,
    /**
    * Parent ComposedCubeMapTexture element can contain up to six image nodes (ImageTexture PixelTexture MovieTexture, other texture nodes).
    * 
    * Access type is 'inputOutput'.
    */
-   topTexture: SFNode,
+   topTexture: X3DTexture2DNodeProxy,
 }
 
 /** ComposedShader can contain field declarations, but no CDATA section of plain-text source code, since programs are composed from child ShaderPart nodes. */
@@ -3915,7 +3915,7 @@ interface ComposedShaderProxy extends X3DShaderNodeProxy, X3DProgrammableShaderO
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * ComposedShader can contain multiple ShaderPart nodes in the parts field.
    * 
@@ -3938,7 +3938,7 @@ interface ComposedTexture3DProxy extends X3DTexture3DNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Whether to repeat texture along R axis from front to back.
    * 
@@ -3968,7 +3968,7 @@ interface ComposedTexture3DProxy extends X3DTexture3DNodeProxy
    * 
    * Access type is 'initializeOnly'.
    */
-   textureProperties: SFNode,
+   textureProperties: TexturePropertiesProxy,
 }
 
 /** ComposedVolumeStyle allows compositing multiple rendering styles into single rendering pass. */
@@ -3985,7 +3985,7 @@ interface ComposedVolumeStyleProxy extends X3DComposableVolumeRenderStyleNodePro
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * List of contributing rendering style nodes or node references that can be applied to the object.
    * 
@@ -4020,7 +4020,7 @@ interface ConeProxy extends X3DGeometryNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Whether to draw sides (other inside faces are not drawn).
    * 
@@ -4061,7 +4061,7 @@ interface ConeEmitterProxy extends X3DParticleEmitterNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Enables/disables production of particles from this emitter node.
    * 
@@ -4108,13 +4108,13 @@ interface ContactProxy extends X3DNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   body1: SFNode,
+   body1: RigidBodyProxy,
    /**
    * The body1 and body2 fields specify two top-level nodes that should be evaluated in the physics model as a single set of interactions with respect to each other.
    * 
    * Access type is 'inputOutput'.
    */
-   body2: SFNode,
+   body2: RigidBodyProxy,
    /**
    * bounce indicates bounciness (0 = no bounce at all, 1 = maximum bounce).
    * 
@@ -4150,19 +4150,19 @@ interface ContactProxy extends X3DNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   geometry1: SFNode,
+   geometry1: X3DNBodyCollidableNodeProxy,
    /**
    * The geometry1 and geometry2 fields specify collision-related information about body1 and body2.
    * 
    * Access type is 'inputOutput'.
    */
-   geometry2: SFNode,
+   geometry2: X3DNBodyCollidableNodeProxy,
    /**
    * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * minBounceSpeed m/s needed to bounce.
    * 
@@ -4219,7 +4219,7 @@ interface Contour2DProxy extends X3DNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Access type is 'inputOnly'.
    */
@@ -4240,7 +4240,7 @@ interface ContourPolyline2DProxy extends X3DNurbsControlCurveNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
 }
 
 /** Convolver performs a linear convolution on a given AudioBuffer, often used to achieve a reverberation effect. */
@@ -4317,7 +4317,7 @@ interface ConvolverProxy extends X3DSoundProcessingNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * normalize controls whether or not the impulse response from the buffer is scaled by an equal-power normalization when the buffer field is set.
    * 
@@ -4364,7 +4364,7 @@ interface CoordinateProxy extends X3DCoordinateNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * point contains a set of 3D coordinate (triplet) point values.
    * 
@@ -4405,7 +4405,7 @@ interface CoordinateChaserProxy extends X3DChaserNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * set_destination resets destination value of this node.
    * 
@@ -4452,7 +4452,7 @@ interface CoordinateDamperProxy extends X3DDamperNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * order defines the number of internal filters (larger means smoother response, longer delay).
    * 
@@ -4499,7 +4499,7 @@ interface CoordinateDoubleProxy extends X3DCoordinateNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * point contains a set of 3D coordinate (triplet) point values.
    * 
@@ -4528,7 +4528,7 @@ interface CoordinateInterpolatorProxy extends X3DInterpolatorNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * set_fraction selects input key for corresponding keyValue output.
    * 
@@ -4563,7 +4563,7 @@ interface CoordinateInterpolator2DProxy extends X3DInterpolatorNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * set_fraction selects input key for corresponding keyValue output.
    * 
@@ -4598,7 +4598,7 @@ interface CylinderProxy extends X3DGeometryNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Size in meters.
    * 
@@ -4681,7 +4681,7 @@ interface CylinderSensorProxy extends X3DDragSensorNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * clamps rotation_changed events within range of min/max values Hint: if minAngle > maxAngle, rotation is not clamped.
    * 
@@ -4788,7 +4788,7 @@ interface DelayProxy extends X3DSoundProcessingNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * When time now >= pauseTime, isPaused becomes true and AudioClip becomes paused.
    * 
@@ -4859,7 +4859,7 @@ interface DirectionalLightProxy extends X3DLightNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Enables/disables this light source.
    * 
@@ -4912,7 +4912,7 @@ interface DISEntityManagerProxy extends X3DChildNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Multicast network port, for example: 3000.
    * 
@@ -4995,7 +4995,7 @@ interface DISEntityTypeMappingProxy extends X3DInfoNodeProxy, X3DUrlObjectProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Specific information about an entity based on the subcategory field.
    * 
@@ -5030,7 +5030,7 @@ interface Disk2DProxy extends X3DGeometryNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Outer radius of circle, greater than or equal to inner radius.
    * 
@@ -5071,7 +5071,7 @@ interface DoubleAxisHingeJointProxy extends X3DRigidJointNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   body1: SFNode,
+   body1: RigidBodyProxy,
    /**
    * body1AnchorPoint describes anchorPoint position relative to local coordinate reference frame.
    * 
@@ -5089,7 +5089,7 @@ interface DoubleAxisHingeJointProxy extends X3DRigidJointNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   body2: SFNode,
+   body2: RigidBodyProxy,
    /**
    * body2AnchorPoint describes anchorPoint position relative to local coordinate reference frame.
    * 
@@ -5159,7 +5159,7 @@ interface DoubleAxisHingeJointProxy extends X3DRigidJointNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * minAngle1 is minimum rotation angle for hinge.
    * 
@@ -5278,7 +5278,7 @@ interface DynamicsCompressorProxy extends X3DSoundProcessingNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * When time now >= pauseTime, isPaused becomes true and AudioClip becomes paused.
    * 
@@ -5355,7 +5355,7 @@ interface EaseInEaseOutProxy extends X3DChildNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Interpolated output value determined by current key time, corresponding easeInEaseOut smoothing intervals, and corresponding key pair.
    * 
@@ -5396,13 +5396,13 @@ interface EdgeEnhancementVolumeStyleProxy extends X3DComposableVolumeRenderStyle
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * The surfaceNormals field contains a 3D texture with at least three component values.
    * 
    * Access type is 'inputOutput'.
    */
-   surfaceNormals: SFNode,
+   surfaceNormals: X3DTexture3DNodeProxy,
 }
 
 /** ElevationGrid is a geometry node defining a rectangular height field, with default values for a 1m by 1m square at height 0. */
@@ -5425,7 +5425,7 @@ interface ElevationGridProxy extends X3DGeometryNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   color: SFNode,
+   color: X3DColorNodeProxy,
    /**
    * Whether Color node color values are applied to each point vertex (true) or per quadrilateral (false).
    * 
@@ -5443,7 +5443,7 @@ interface ElevationGridProxy extends X3DGeometryNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   fogCoord: SFNode,
+   fogCoord: FogCoordinateProxy,
    /**
    * Grid array of height vertices with upward direction along +Y axis, with xDimension rows and zDimension columns.
    * 
@@ -5455,13 +5455,13 @@ interface ElevationGridProxy extends X3DGeometryNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
    * 
    * Access type is 'inputOutput'.
    */
-   normal: SFNode,
+   normal: X3DNormalNodeProxy,
    /**
    * Whether Normal node vector values are applied to each point vertex (true) or per quadrilateral (false).
    * 
@@ -5485,7 +5485,7 @@ interface ElevationGridProxy extends X3DGeometryNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   texCoord: SFNode,
+   texCoord: X3DSingleTextureCoordinateNodeProxy,
    /**
    * Number of elements in the height array along X direction.
    * 
@@ -5896,7 +5896,7 @@ interface EspduTransformProxy extends X3DGroupingNodeProxy, X3DNetworkSensorNode
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Fallback server address if multicast not available locally.
    * 
@@ -6091,7 +6091,7 @@ interface ExplosionEmitterProxy extends X3DParticleEmitterNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Enables/disables production of particles from this emitter node.
    * 
@@ -6168,7 +6168,7 @@ interface ExtrusionProxy extends X3DGeometryNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * The orientation array is a list of axis-angle 4-tuple values applied at each spine-aligned cross-section plane.
    * 
@@ -6251,7 +6251,7 @@ interface FillPropertiesProxy extends X3DAppearanceChildNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
 }
 
 /** FloatVertexAttribute defines a set of per-vertex single-precision floating-point attributes. */
@@ -6262,7 +6262,7 @@ interface FloatVertexAttributeProxy extends X3DVertexAttributeNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Required name for this particular VertexAttribute instance.
    * 
@@ -6315,7 +6315,7 @@ interface FogProxy extends X3DBindableNodeProxy, X3DFogObjectProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Receiving event set_bind=true activates and binds this node at the top of the binding stack.
    * 
@@ -6344,7 +6344,7 @@ interface FogCoordinateProxy extends X3DGeometricPropertyNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
 }
 
 /** FontStyle is an X3DFontStyleNode that defines the size, family, justification, and other styles used by Text nodes. */
@@ -6385,7 +6385,7 @@ interface FontStyleProxy extends X3DFontStyleNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Nominal height (in local coordinate system) of text glyphs, also sets default spacing between adjacent lines of text.
    * 
@@ -6432,7 +6432,7 @@ interface ForcePhysicsModelProxy extends X3DParticlePhysicsModelNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
 }
 
 /** The Gain node amplifies or deamplifies the input signal. */
@@ -6503,7 +6503,7 @@ interface GainProxy extends X3DSoundProcessingNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * When time now >= pauseTime, isPaused becomes true and AudioClip becomes paused.
    * 
@@ -6550,7 +6550,7 @@ interface GeneratedCubeMapTextureProxy extends X3DEnvironmentTextureNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * size indicates the resolution of the generated images in number of pixels per side.
    * 
@@ -6562,7 +6562,7 @@ interface GeneratedCubeMapTextureProxy extends X3DEnvironmentTextureNodeProxy
    * 
    * Access type is 'initializeOnly'.
    */
-   textureProperties: SFNode,
+   textureProperties: TexturePropertiesProxy,
    /**
    * update controls regeneration of the texture.
    * 
@@ -6579,7 +6579,7 @@ interface GeoCoordinateProxy extends X3DCoordinateNodeProxy
    * 
    * Access type is 'initializeOnly'.
    */
-   geoOrigin: SFNode,
+   geoOrigin: GeoOriginProxy,
    /**
    * Identifies spatial reference frame: Geodetic (GD), Geocentric (GC), Universal Transverse Mercator (UTM).
    * 
@@ -6591,7 +6591,7 @@ interface GeoCoordinateProxy extends X3DCoordinateNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * point contains a set of actual 3D geographic coordinates, provided in geoSystem format can split strings if desired: "x1 y1 z1 x2 y2 z2" or "x1 y1 z1", "x2 y2 z2".
    * 
@@ -6614,7 +6614,7 @@ interface GeoElevationGridProxy extends X3DGeometryNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   color: SFNode,
+   color: X3DColorNodeProxy,
    /**
    * Whether Color node color values are applied to each point vertex (true) or per quadrilateral (false).
    * 
@@ -6638,7 +6638,7 @@ interface GeoElevationGridProxy extends X3DGeometryNodeProxy
    * 
    * Access type is 'initializeOnly'.
    */
-   geoOrigin: SFNode,
+   geoOrigin: GeoOriginProxy,
    /**
    * Identifies spatial reference frame: Geodetic (GD), Geocentric (GC), Universal Transverse Mercator (UTM).
    * 
@@ -6656,13 +6656,13 @@ interface GeoElevationGridProxy extends X3DGeometryNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
    * 
    * Access type is 'inputOutput'.
    */
-   normal: SFNode,
+   normal: X3DNormalNodeProxy,
    /**
    * Whether Normal node vector values are applied to each point vertex (true) or per quadrilateral (false).
    * 
@@ -6686,7 +6686,7 @@ interface GeoElevationGridProxy extends X3DGeometryNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   texCoord: SFNode,
+   texCoord: X3DSingleTextureCoordinateNodeProxy,
    /**
    * Number of elements in the height array along east-west X direction.
    * 
@@ -6761,7 +6761,7 @@ interface GeoLocationProxy extends X3DGroupingNodeProxy
    * 
    * Access type is 'initializeOnly'.
    */
-   geoOrigin: SFNode,
+   geoOrigin: GeoOriginProxy,
    /**
    * Identifies spatial reference frame: Geodetic (GD), Geocentric (GC), Universal Transverse Mercator (UTM).
    * 
@@ -6773,7 +6773,7 @@ interface GeoLocationProxy extends X3DGroupingNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Access type is 'inputOnly'.
    */
@@ -6848,7 +6848,7 @@ interface GeoLODProxy extends X3DChildNodeProxy, X3DBoundedObjectProxy
    * 
    * Access type is 'initializeOnly'.
    */
-   geoOrigin: SFNode,
+   geoOrigin: GeoOriginProxy,
    /**
    * Identifies spatial reference frame: Geodetic (GD), Geocentric (GC), Universal Transverse Mercator (UTM).
    * 
@@ -6866,7 +6866,7 @@ interface GeoLODProxy extends X3DChildNodeProxy, X3DBoundedObjectProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Viewer range from geographic-coordinates center triggers quadtree loading/unloading.
    * 
@@ -6931,7 +6931,7 @@ interface GeoMetadataProxy extends X3DInfoNodeProxy, X3DUrlObjectProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * The summary string array contains a set of keyword/value pairs, with each keyword and its subsequent value contained in separate strings.
    * 
@@ -6966,7 +6966,7 @@ interface GeoOriginProxy extends X3DNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Whether to rotate coordinates of nodes using this GeoOrigin so that local-up direction aligns with VRML Y axis rotateYUp false means local up-direction is relative to planet surface rotateYUp true allows proper operation of NavigationInfo modes FLY, WALK.
    * 
@@ -6983,7 +6983,7 @@ interface GeoPositionInterpolatorProxy extends X3DInterpolatorNodeProxy
    * 
    * Access type is 'initializeOnly'.
    */
-   geoOrigin: SFNode,
+   geoOrigin: GeoOriginProxy,
    /**
    * Identifies spatial reference frame: Geodetic (GD), Geocentric (GC), Universal Transverse Mercator (UTM).
    * 
@@ -7013,7 +7013,7 @@ interface GeoPositionInterpolatorProxy extends X3DInterpolatorNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * set_fraction selects input key for corresponding keyValue output.
    * 
@@ -7084,7 +7084,7 @@ interface GeoProximitySensorProxy extends X3DEnvironmentalSensorNodeProxy
    * 
    * Access type is 'initializeOnly'.
    */
-   geoOrigin: SFNode,
+   geoOrigin: GeoOriginProxy,
    /**
    * Identifies spatial reference frame: Geodetic (GD), Geocentric (GC), Universal Transverse Mercator (UTM).
    * 
@@ -7102,7 +7102,7 @@ interface GeoProximitySensorProxy extends X3DEnvironmentalSensorNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Sends rotation event relative to center.
    * 
@@ -7143,7 +7143,7 @@ interface GeoTouchSensorProxy extends X3DTouchSensorNodeProxy
    * 
    * Access type is 'initializeOnly'.
    */
-   geoOrigin: SFNode,
+   geoOrigin: GeoOriginProxy,
    /**
    * Identifies spatial reference frame: Geodetic (G D), Geocentric (GC), Universal Transverse Mercator (UTM).
    * 
@@ -7191,7 +7191,7 @@ interface GeoTouchSensorProxy extends X3DTouchSensorNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Time event generated when touched.
    * 
@@ -7242,7 +7242,7 @@ interface GeoTransformProxy extends X3DGroupingNodeProxy
    * 
    * Access type is 'initializeOnly'.
    */
-   geoOrigin: SFNode,
+   geoOrigin: GeoOriginProxy,
    /**
    * Identifies spatial reference frame: Geodetic (GD), Geocentric (GC), Universal Transverse Mercator (UTM).
    * 
@@ -7254,7 +7254,7 @@ interface GeoTransformProxy extends X3DGroupingNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Access type is 'inputOnly'.
    */
@@ -7329,7 +7329,7 @@ interface GeoViewpointProxy extends X3DViewpointNodeProxy
    * 
    * Access type is 'initializeOnly'.
    */
-   geoOrigin: SFNode,
+   geoOrigin: GeoOriginProxy,
    /**
    * Identifies spatial reference frame: Geodetic (GD), Geocentric (GC), Universal Transverse Mercator (UTM).
    * 
@@ -7353,13 +7353,13 @@ interface GeoViewpointProxy extends X3DViewpointNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * The navigationInfo field defines a dedicated NavigationInfo node for this X3DViewpointNode.
    * 
    * Access type is 'inputOutput'.
    */
-   navigationInfo: SFNode,
+   navigationInfo: NavigationInfoProxy,
    /**
    * nearDistance defines minimum clipping plane distance necessary for object display.
    * 
@@ -7440,7 +7440,7 @@ interface GroupProxy extends X3DGroupingNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Access type is 'inputOnly'.
    */
@@ -7479,7 +7479,7 @@ interface HAnimDisplacerProxy extends X3DGeometricPropertyNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Unique name attribute must be defined so that HAnimDisplacer node can be identified at run time for animation purposes.
    * 
@@ -7568,7 +7568,7 @@ interface HAnimHumanoidProxy extends X3DChildNodeProxy, X3DBoundedObjectProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Contains any HAnimMotion nodes that can animate the HAnimHumanoid.
    * 
@@ -7640,25 +7640,25 @@ interface HAnimHumanoidProxy extends X3DChildNodeProxy, X3DBoundedObjectProxy
    * 
    * Access type is 'inputOutput'.
    */
-   skinBindingCoords: SFNode,
+   skinBindingCoords: CoordinateProxy | CoordinateDoubleProxy,
    /**
    * Array of Normal nodes to handle non-default source pose so that both skin and skeleton can be in same binding pose.
    * 
    * Access type is 'inputOutput'.
    */
-   skinBindingNormals: SFNode,
+   skinBindingNormals: X3DNormalNodeProxy,
    /**
    * Coordinate node utilized by indexed mesh definitions for skin.
    * 
    * Access type is 'inputOutput'.
    */
-   skinCoord: SFNode,
+   skinCoord: CoordinateProxy | CoordinateDoubleProxy,
    /**
    * Single Normal node utilized by indexed mesh definitions for skin.
    * 
    * Access type is 'inputOutput'.
    */
-   skinNormal: SFNode,
+   skinNormal: X3DNormalNodeProxy,
    /**
    * Position of children relative to local coordinate system.
    * 
@@ -7751,7 +7751,7 @@ interface HAnimJointProxy extends X3DChildNodeProxy, X3DBoundedObjectProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Unique name attribute must be defined so that HAnimJoint node can be identified at run time for animation purposes.
    * 
@@ -7910,7 +7910,7 @@ interface HAnimMotionProxy extends X3DChildNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Unique name attribute must be defined so that HAnimMotion node can be identified at run time for animation purposes.
    * 
@@ -7985,7 +7985,7 @@ interface HAnimSegmentProxy extends X3DGroupingNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   coord: SFNode,
+   coord: CoordinateProxy | CoordinateDoubleProxy,
    /**
    * Author-provided prose that describes intended purpose of this node.
    * 
@@ -8009,7 +8009,7 @@ interface HAnimSegmentProxy extends X3DGroupingNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * 3x3 moments of inertia matrix.
    * 
@@ -8082,7 +8082,7 @@ interface HAnimSiteProxy extends X3DGroupingNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Unique name attribute must be defined so that HAnimSite node can be identified at run time for animation purposes.
    * 
@@ -8157,13 +8157,13 @@ interface ImageCubeMapTextureProxy extends X3DEnvironmentTextureNodeProxy, X3DUr
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images.
    * 
    * Access type is 'initializeOnly'.
    */
-   textureProperties: SFNode,
+   textureProperties: TexturePropertiesProxy,
    /**
    * Location and filename of image.
    * 
@@ -8204,7 +8204,7 @@ interface ImageTextureProxy extends X3DTexture2DNodeProxy, X3DUrlObjectProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Whether to repeat texture along S axis horizontally from left to right.
    * 
@@ -8222,7 +8222,7 @@ interface ImageTextureProxy extends X3DTexture2DNodeProxy, X3DUrlObjectProxy
    * 
    * Access type is 'initializeOnly'.
    */
-   textureProperties: SFNode,
+   textureProperties: TexturePropertiesProxy,
    /**
    * Location and filename of image.
    * 
@@ -8263,7 +8263,7 @@ interface ImageTexture3DProxy extends X3DTexture3DNodeProxy, X3DUrlObjectProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Whether to repeat texture along R axis from front to back.
    * 
@@ -8287,7 +8287,7 @@ interface ImageTexture3DProxy extends X3DTexture3DNodeProxy, X3DUrlObjectProxy
    * 
    * Access type is 'initializeOnly'.
    */
-   textureProperties: SFNode,
+   textureProperties: TexturePropertiesProxy,
    /**
    * Location and filename of image.
    * 
@@ -8316,7 +8316,7 @@ interface IndexedFaceSetProxy extends X3DComposedGeometryNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   color: SFNode,
+   color: X3DColorNodeProxy,
    /**
    * colorIndex values define the order in which Color|ColorRGBA values are applied to polygons (or vertices).
    * 
@@ -8340,7 +8340,7 @@ interface IndexedFaceSetProxy extends X3DComposedGeometryNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   coord: SFNode,
+   coord: X3DCoordinateNodeProxy,
    /**
    * coordIndex indices provide the order in which coordinates are applied to construct each polygon face.
    * 
@@ -8358,19 +8358,19 @@ interface IndexedFaceSetProxy extends X3DComposedGeometryNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   fogCoord: SFNode,
+   fogCoord: FogCoordinateProxy,
    /**
    * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
    * 
    * Access type is 'inputOutput'.
    */
-   normal: SFNode,
+   normal: X3DNormalNodeProxy,
    /**
    * normalIndex values define the order in which normal vectors are applied to polygons (or vertices).
    * 
@@ -8418,7 +8418,7 @@ interface IndexedFaceSetProxy extends X3DComposedGeometryNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   texCoord: SFNode,
+   texCoord: X3DSingleTextureCoordinateNodeProxy | MultiTextureCoordinateProxy,
    /**
    * List of texture-coordinate indices mapping attached texture to corresponding coordinates.
    * 
@@ -8441,7 +8441,7 @@ interface IndexedLineSetProxy extends X3DGeometryNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   color: SFNode,
+   color: X3DColorNodeProxy,
    /**
    * colorIndex values define the order in which Color|ColorRGBA values are applied to polygons (or vertices).
    * 
@@ -8459,7 +8459,7 @@ interface IndexedLineSetProxy extends X3DGeometryNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   coord: SFNode,
+   coord: X3DCoordinateNodeProxy,
    /**
    * coordIndex indices provide the order in which coordinates are applied to construct each polygon face.
    * 
@@ -8471,19 +8471,19 @@ interface IndexedLineSetProxy extends X3DGeometryNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   fogCoord: SFNode,
+   fogCoord: FogCoordinateProxy,
    /**
    * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
    * 
    * Access type is 'inputOutput'.
    */
-   normal: SFNode,
+   normal: X3DNormalNodeProxy,
    /**
    * colorIndex values define the order in which Color|ColorRGBA values are applied to polygons (or vertices).
    * 
@@ -8518,7 +8518,7 @@ interface IndexedQuadSetProxy extends X3DComposedGeometryNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   color: SFNode,
+   color: X3DColorNodeProxy,
    /**
    * Whether Color|ColorRGBA values are applied to each point vertex (true) or to each polygon face (false).
    * 
@@ -8530,13 +8530,13 @@ interface IndexedQuadSetProxy extends X3DComposedGeometryNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   coord: SFNode,
+   coord: X3DCoordinateNodeProxy,
    /**
    * Single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry.
    * 
    * Access type is 'inputOutput'.
    */
-   fogCoord: SFNode,
+   fogCoord: FogCoordinateProxy,
    /**
    * index values provide order in which coordinates are applied.
    * 
@@ -8548,13 +8548,13 @@ interface IndexedQuadSetProxy extends X3DComposedGeometryNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
    * 
    * Access type is 'inputOutput'.
    */
-   normal: SFNode,
+   normal: X3DNormalNodeProxy,
    /**
    * Whether Normal node vector values are applied to each point vertex (true) or to each polygon face (false).
    * 
@@ -8578,7 +8578,7 @@ interface IndexedQuadSetProxy extends X3DComposedGeometryNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   texCoord: SFNode,
+   texCoord: X3DSingleTextureCoordinateNodeProxy | MultiTextureCoordinateProxy,
 }
 
 /** IndexedTriangleFanSet is a geometry node containing a Coordinate|CoordinateDouble node, and can also contain Color|ColorRGBA, Normal and TextureCoordinate nodes. */
@@ -8601,7 +8601,7 @@ interface IndexedTriangleFanSetProxy extends X3DComposedGeometryNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   color: SFNode,
+   color: X3DColorNodeProxy,
    /**
    * Whether Color|ColorRGBA values are applied to each point vertex (true) or to each polygon face (false).
    * 
@@ -8613,13 +8613,13 @@ interface IndexedTriangleFanSetProxy extends X3DComposedGeometryNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   coord: SFNode,
+   coord: X3DCoordinateNodeProxy,
    /**
    * Single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry.
    * 
    * Access type is 'inputOutput'.
    */
-   fogCoord: SFNode,
+   fogCoord: FogCoordinateProxy,
    /**
    * index list specifies triangles by connecting Coordinate vertices, each individual fan separated by -1 sentinel value.
    * 
@@ -8631,13 +8631,13 @@ interface IndexedTriangleFanSetProxy extends X3DComposedGeometryNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
    * 
    * Access type is 'inputOutput'.
    */
-   normal: SFNode,
+   normal: X3DNormalNodeProxy,
    /**
    * Whether Normal node vector values are applied to each point vertex (true) or to each polygon face (false).
    * 
@@ -8661,7 +8661,7 @@ interface IndexedTriangleFanSetProxy extends X3DComposedGeometryNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   texCoord: SFNode,
+   texCoord: X3DSingleTextureCoordinateNodeProxy | MultiTextureCoordinateProxy,
 }
 
 /** IndexedTriangleSet is a geometry node containing a Coordinate|CoordinateDouble node, and can also contain Color|ColorRGBA, Normal and TextureCoordinate nodes. */
@@ -8684,7 +8684,7 @@ interface IndexedTriangleSetProxy extends X3DComposedGeometryNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   color: SFNode,
+   color: X3DColorNodeProxy,
    /**
    * Whether Color|ColorRGBA values are applied to each point vertex (true) or to each polygon face (false).
    * 
@@ -8696,13 +8696,13 @@ interface IndexedTriangleSetProxy extends X3DComposedGeometryNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   coord: SFNode,
+   coord: X3DCoordinateNodeProxy,
    /**
    * Single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry.
    * 
    * Access type is 'inputOutput'.
    */
-   fogCoord: SFNode,
+   fogCoord: FogCoordinateProxy,
    /**
    * index list specifies triangles by connecting Coordinate vertices.
    * 
@@ -8714,13 +8714,13 @@ interface IndexedTriangleSetProxy extends X3DComposedGeometryNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
    * 
    * Access type is 'inputOutput'.
    */
-   normal: SFNode,
+   normal: X3DNormalNodeProxy,
    /**
    * Whether Normal node vector values are applied to each point vertex (true) or to each polygon face (false).
    * 
@@ -8744,7 +8744,7 @@ interface IndexedTriangleSetProxy extends X3DComposedGeometryNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   texCoord: SFNode,
+   texCoord: X3DSingleTextureCoordinateNodeProxy | MultiTextureCoordinateProxy,
 }
 
 /** IndexedTriangleStripSet is a geometry node containing a Coordinate|CoordinateDouble node, and can also contain Color|ColorRGBA, Normal and TextureCoordinate nodes. */
@@ -8767,7 +8767,7 @@ interface IndexedTriangleStripSetProxy extends X3DComposedGeometryNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   color: SFNode,
+   color: X3DColorNodeProxy,
    /**
    * Whether Color|ColorRGBA values are applied to each point vertex (true) or to each polygon face (false).
    * 
@@ -8779,13 +8779,13 @@ interface IndexedTriangleStripSetProxy extends X3DComposedGeometryNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   coord: SFNode,
+   coord: X3DCoordinateNodeProxy,
    /**
    * Single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry.
    * 
    * Access type is 'inputOutput'.
    */
-   fogCoord: SFNode,
+   fogCoord: FogCoordinateProxy,
    /**
    * index list specifies triangles by connecting Coordinate vertices for each individual strip, separated by -1 sentinel values.
    * 
@@ -8797,13 +8797,13 @@ interface IndexedTriangleStripSetProxy extends X3DComposedGeometryNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
    * 
    * Access type is 'inputOutput'.
    */
-   normal: SFNode,
+   normal: X3DNormalNodeProxy,
    /**
    * Whether Normal node vector values are applied to each point vertex (true) or to each polygon face (false).
    * 
@@ -8827,7 +8827,7 @@ interface IndexedTriangleStripSetProxy extends X3DComposedGeometryNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   texCoord: SFNode,
+   texCoord: X3DSingleTextureCoordinateNodeProxy | MultiTextureCoordinateProxy,
 }
 
 /** Inline can load another X3D or VRML model into the current scene via url. */
@@ -8886,7 +8886,7 @@ interface InlineProxy extends X3DChildNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Address of X3D world to load Inline with current scene, retrieved either from local system or an online address.
    * 
@@ -8921,7 +8921,7 @@ interface IntegerSequencerProxy extends X3DSequencerNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Send next output value in keyValue array, and reset internal fraction field to match corresponding value in key array.
    * 
@@ -8962,7 +8962,7 @@ interface IntegerTriggerProxy extends X3DTriggerNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * If input event set_boolean is true, trigger output of integer value.
    * 
@@ -9015,13 +9015,13 @@ interface IsoSurfaceVolumeDataProxy extends X3DVolumeDataNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   gradients: SFNode,
+   gradients: X3DTexture3DNodeProxy,
    /**
    * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Multiple contained X3DVolumeRenderStyleNode nodes corresponding to each isosurface that define specific rendering technique for this volumetric object.
    * 
@@ -9051,7 +9051,7 @@ interface IsoSurfaceVolumeDataProxy extends X3DVolumeDataNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   voxels: SFNode,
+   voxels: X3DTexture3DNodeProxy,
 }
 
 /** KeySensor generates events as the user presses keys on the keyboard. */
@@ -9116,7 +9116,7 @@ interface KeySensorProxy extends X3DKeyDeviceSensorNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * shiftKey generates true event when pressed, false event when released.
    * 
@@ -9143,7 +9143,7 @@ interface LayerProxy extends X3DLayerNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * The objectType field specifies a set of labels used in the picking process.
    * 
@@ -9165,7 +9165,7 @@ interface LayerProxy extends X3DLayerNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   viewport: SFNode,
+   viewport: X3DViewportNodeProxy,
    /**
    * Whether or not renderable content within this node is visually displayed.
    * 
@@ -9194,7 +9194,7 @@ interface LayerSetProxy extends X3DNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * The order list defines the order in which layers are rendered.
    * 
@@ -9217,7 +9217,7 @@ interface LayoutProxy extends X3DLayoutNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * The values of the offset field are used to translate the location of this rectangle after the initial alignment.
    * 
@@ -9286,13 +9286,13 @@ interface LayoutGroupProxy extends X3DNodeProxy, X3DGroupingNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   layout: SFNode,
+   layout: X3DLayoutNodeProxy,
    /**
    * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Access type is 'inputOnly'.
    */
@@ -9302,7 +9302,7 @@ interface LayoutGroupProxy extends X3DNodeProxy, X3DGroupingNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   viewport: SFNode,
+   viewport: X3DViewportNodeProxy,
    /**
    * Whether or not renderable content within this node is visually displayed.
    * 
@@ -9329,13 +9329,13 @@ interface LayoutLayerProxy extends X3DLayerNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   layout: SFNode,
+   layout: X3DLayoutNodeProxy,
    /**
    * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * The objectType field specifies a set of labels used in the picking process.
    * 
@@ -9357,7 +9357,7 @@ interface LayoutLayerProxy extends X3DLayerNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   viewport: SFNode,
+   viewport: X3DViewportNodeProxy,
    /**
    * Whether or not renderable content within this node is visually displayed.
    * 
@@ -9404,7 +9404,7 @@ interface LinePickSensorProxy extends X3DPickSensorNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * The objectType field specifies a set of labels used in the picking process.
    * 
@@ -9440,7 +9440,7 @@ interface LinePickSensorProxy extends X3DPickSensorNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   pickingGeometry: SFNode,
+   pickingGeometry: X3DGeometryNodeProxy,
    /**
    * pickTarget specifies the list of nodes against which picking operations are performed.
    * 
@@ -9481,7 +9481,7 @@ interface LinePropertiesProxy extends X3DAppearanceChildNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
 }
 
 /** LineSet is a geometry node that can contain a Coordinate|CoordinateDouble node and optionally a Color|ColorRGBA node. */
@@ -9498,31 +9498,31 @@ interface LineSetProxy extends X3DGeometryNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   color: SFNode,
+   color: X3DColorNodeProxy,
    /**
    * Single contained Coordinate or CoordinateDouble node that can specify a list of vertex values.
    * 
    * Access type is 'inputOutput'.
    */
-   coord: SFNode,
+   coord: X3DCoordinateNodeProxy,
    /**
    * Single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry.
    * 
    * Access type is 'inputOutput'.
    */
-   fogCoord: SFNode,
+   fogCoord: FogCoordinateProxy,
    /**
    * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
    * 
    * Access type is 'inputOutput'.
    */
-   normal: SFNode,
+   normal: X3DNormalNodeProxy,
    /**
    * vertexCount describes how many vertices are used in each individual polyline segment from the Coordinate point values.
    * 
@@ -9587,7 +9587,7 @@ interface ListenerPointSourceProxy extends X3DSoundSourceNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Rotation (axis, angle in radians) of listening point direction relative to default -Z axis direction in local coordinate system.
    * 
@@ -9676,7 +9676,7 @@ interface LoadSensorProxy extends X3DNetworkSensorNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Sends 0.
    * 
@@ -9717,7 +9717,7 @@ interface LocalFogProxy extends X3DChildNodeProxy, X3DFogObjectProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Distance in meters where objects are totally obscured by the fog, using local coordinate system.
    * 
@@ -9780,7 +9780,7 @@ interface LODProxy extends X3DGroupingNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Specifies ideal distances at which to switch between levels.
    * 
@@ -9813,7 +9813,7 @@ interface MaterialProxy extends X3DOneSidedMaterialNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   ambientTexture: SFNode,
+   ambientTexture: X3DSingleTextureNodeProxy,
    /**
    * The mapping label identifies which texture coordinates and transformations are used to compute texture effects from corresponding geometry on a given material.
    * 
@@ -9831,7 +9831,7 @@ interface MaterialProxy extends X3DOneSidedMaterialNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   diffuseTexture: SFNode,
+   diffuseTexture: X3DSingleTextureNodeProxy,
    /**
    * The mapping label identifies which texture coordinates and transformations are used to compute texture effects from corresponding geometry on a given material.
    * 
@@ -9849,7 +9849,7 @@ interface MaterialProxy extends X3DOneSidedMaterialNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   emissiveTexture: SFNode,
+   emissiveTexture: X3DSingleTextureNodeProxy,
    /**
    * The mapping label identifies which texture coordinates and transformations are used to compute texture effects from corresponding geometry on a given material.
    * 
@@ -9861,7 +9861,7 @@ interface MaterialProxy extends X3DOneSidedMaterialNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * normalScale controls the degree to which normalTexture RGB values apply XYZ-normal bump mapping to pixels in the parent material.
    * 
@@ -9873,7 +9873,7 @@ interface MaterialProxy extends X3DOneSidedMaterialNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   normalTexture: SFNode,
+   normalTexture: X3DSingleTextureNodeProxy,
    /**
    * The mapping label identifies which texture coordinates and transformations are used to compute texture effects from corresponding geometry on a given material.
    * 
@@ -9891,7 +9891,7 @@ interface MaterialProxy extends X3DOneSidedMaterialNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   occlusionTexture: SFNode,
+   occlusionTexture: X3DSingleTextureNodeProxy,
    /**
    * The mapping label identifies which texture coordinates and transformations are used to compute texture effects from corresponding geometry on a given material.
    * 
@@ -9909,7 +9909,7 @@ interface MaterialProxy extends X3DOneSidedMaterialNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   shininessTexture: SFNode,
+   shininessTexture: X3DSingleTextureNodeProxy,
    /**
    * The mapping label identifies which texture coordinates and transformations are used to compute texture effects from corresponding geometry on a given material.
    * 
@@ -9927,7 +9927,7 @@ interface MaterialProxy extends X3DOneSidedMaterialNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   specularTexture: SFNode,
+   specularTexture: X3DSingleTextureNodeProxy,
    /**
    * The mapping label identifies which texture coordinates and transformations are used to compute texture effects from corresponding geometry on a given material.
    * 
@@ -9950,7 +9950,7 @@ interface Matrix3VertexAttributeProxy extends X3DVertexAttributeNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Required name for this particular VertexAttribute instance.
    * 
@@ -9973,7 +9973,7 @@ interface Matrix4VertexAttributeProxy extends X3DVertexAttributeNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Required name for this particular VertexAttribute instance.
    * 
@@ -9996,7 +9996,7 @@ interface MetadataBooleanProxy extends X3DNodeProxy, X3DMetadataObjectProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Depending on the metadata vocabulary, the attribute name is usually required for metadata nodes.
    * 
@@ -10025,7 +10025,7 @@ interface MetadataDoubleProxy extends X3DNodeProxy, X3DMetadataObjectProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Depending on the metadata vocabulary, the attribute name is usually required for metadata nodes.
    * 
@@ -10054,7 +10054,7 @@ interface MetadataFloatProxy extends X3DNodeProxy, X3DMetadataObjectProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Depending on the metadata vocabulary, the attribute name is usually required for metadata nodes.
    * 
@@ -10083,7 +10083,7 @@ interface MetadataIntegerProxy extends X3DNodeProxy, X3DMetadataObjectProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Depending on the metadata vocabulary, the attribute name is usually required for metadata nodes.
    * 
@@ -10112,7 +10112,7 @@ interface MetadataSetProxy extends X3DNodeProxy, X3DMetadataObjectProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Depending on the metadata vocabulary, the attribute name is usually required for metadata nodes.
    * 
@@ -10141,7 +10141,7 @@ interface MetadataStringProxy extends X3DNodeProxy, X3DMetadataObjectProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Depending on the metadata vocabulary, the attribute name is usually required for metadata nodes.
    * 
@@ -10212,7 +10212,7 @@ interface MicrophoneSourceProxy extends X3DSoundSourceNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * When time now >= pauseTime, isPaused becomes true and AudioClip becomes paused.
    * 
@@ -10289,13 +10289,13 @@ interface MotorJointProxy extends X3DRigidJointNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   body1: SFNode,
+   body1: RigidBodyProxy,
    /**
    * The body1 and body2 fields indicate the two RigidBody nodes connected by this joint.
    * 
    * Access type is 'inputOutput'.
    */
-   body2: SFNode,
+   body2: RigidBodyProxy,
    /**
    * enabledAxes indicates which motor axes are active.
    * 
@@ -10313,7 +10313,7 @@ interface MotorJointProxy extends X3DRigidJointNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * motor1Angle provides calculated angle of rotation (radians) for this motor joint from last frame.
    * 
@@ -10480,7 +10480,7 @@ interface MovieTextureProxy extends X3DSoundSourceNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * When time now >= pauseTime, isPaused becomes true and MovieTexture becomes paused.
    * 
@@ -10534,7 +10534,7 @@ interface MovieTextureProxy extends X3DSoundSourceNodeProxy
    * 
    * Access type is 'initializeOnly'.
    */
-   textureProperties: SFNode,
+   textureProperties: TexturePropertiesProxy,
    /**
    * Location and filename of movie file or stream.
    * 
@@ -10575,7 +10575,7 @@ interface MultiTextureProxy extends X3DTextureNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * mode field indicates the type of blending operation, both for color and for alpha channel.
    * 
@@ -10604,7 +10604,7 @@ interface MultiTextureCoordinateProxy extends X3DTextureCoordinateNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Zero or more contained TextureCoordinate or TextureCoordinateGenerator nodes that specify texture coordinates for the different texture channels, used for texture mapping onto corresponding geometry.
    * 
@@ -10621,7 +10621,7 @@ interface MultiTextureTransformProxy extends X3DTextureTransformNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Zero or more contained TextureTransform nodes, for each of the different texture channels, that define 2D transformation applied to texture coordinates.
    * 
@@ -10662,7 +10662,7 @@ interface NavigationInfoProxy extends X3DBindableNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Receiving event set_bind=true activates and binds this node at the top of the binding stack.
    * 
@@ -10715,7 +10715,7 @@ interface NormalProxy extends X3DNormalNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * set of unit-length normal vectors, corresponding to indexed polygons or vertices.
    * 
@@ -10744,7 +10744,7 @@ interface NormalInterpolatorProxy extends X3DInterpolatorNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * set_fraction selects input key for corresponding keyValue output.
    * 
@@ -10773,7 +10773,7 @@ interface NurbsCurveProxy extends X3DParametricGeometryNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   controlPoint: SFNode,
+   controlPoint: CoordinateProxy | CoordinateDoubleProxy,
    /**
    * knot vector, where size = number of control points + order of curve.
    * 
@@ -10785,7 +10785,7 @@ interface NurbsCurveProxy extends X3DParametricGeometryNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * define order of surface by polynomials of degree = order-1.
    * 
@@ -10832,7 +10832,7 @@ interface NurbsCurve2DProxy extends X3DNurbsControlCurveNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * define order of surface by polynomials of degree = order-1.
    * 
@@ -10861,7 +10861,7 @@ interface NurbsOrientationInterpolatorProxy extends X3DChildNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   controlPoint: SFNode,
+   controlPoint: CoordinateProxy | CoordinateDoubleProxy,
    /**
    * knot vector, where size = number of control points + order of curve.
    * 
@@ -10873,7 +10873,7 @@ interface NurbsOrientationInterpolatorProxy extends X3DChildNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * define order of surface by polynomials of degree = order-1.
    * 
@@ -10908,13 +10908,13 @@ interface NurbsPatchSurfaceProxy extends X3DNurbsSurfaceGeometryNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   controlPoint: SFNode,
+   controlPoint: CoordinateProxy | CoordinateDoubleProxy,
    /**
    * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Setting solid true means draw only one side of polygons (backface culling on), setting solid false means draw both sides of polygons (backface culling off).
    * 
@@ -10926,7 +10926,7 @@ interface NurbsPatchSurfaceProxy extends X3DNurbsSurfaceGeometryNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   texCoord: SFNode,
+   texCoord: X3DSingleTextureCoordinateNodeProxy | NurbsTextureCoordinateProxy,
    /**
    * Whether opposite surface sides are closed (seamless) across u dimension.
    * 
@@ -11003,7 +11003,7 @@ interface NurbsPositionInterpolatorProxy extends X3DChildNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   controlPoint: SFNode,
+   controlPoint: CoordinateProxy | CoordinateDoubleProxy,
    /**
    * knot vector, where size = number of control points + order of curve.
    * 
@@ -11015,7 +11015,7 @@ interface NurbsPositionInterpolatorProxy extends X3DChildNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * define order of surface by polynomials of degree = order-1.
    * 
@@ -11078,7 +11078,7 @@ interface NurbsSetProxy extends X3DChildNodeProxy, X3DBoundedObjectProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Access type is 'inputOnly'.
    */
@@ -11105,13 +11105,13 @@ interface NurbsSurfaceInterpolatorProxy extends X3DChildNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   controlPoint: SFNode,
+   controlPoint: CoordinateProxy | CoordinateDoubleProxy,
    /**
    * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Computationaly interpolated output value determined by current key time and corresponding keyValue pair.
    * 
@@ -11188,13 +11188,13 @@ interface NurbsSweptSurfaceProxy extends X3DParametricGeometryNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   crossSectionCurve: SFNode,
+   crossSectionCurve: X3DNurbsControlCurveNodeProxy,
    /**
    * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Setting solid true means draw only one side of polygons (backface culling on), setting solid false means draw both sides of polygons (backface culling off).
    * 
@@ -11206,7 +11206,7 @@ interface NurbsSweptSurfaceProxy extends X3DParametricGeometryNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   trajectoryCurve: SFNode,
+   trajectoryCurve: NurbsCurveProxy,
 }
 
 /** NurbsSwungSurface contains a profileCurve and a trajectoryCurve [X3DNurbsControlCurveNode]. */
@@ -11223,13 +11223,13 @@ interface NurbsSwungSurfaceProxy extends X3DParametricGeometryNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * 2D curve in the yz-plane that describes the cross-sectional shape of the object.
    * 
    * Access type is 'inputOutput'.
    */
-   profileCurve: SFNode,
+   profileCurve: X3DNurbsControlCurveNodeProxy,
    /**
    * Setting solid true means draw only one side of polygons (backface culling on), setting solid false means draw both sides of polygons (backface culling off).
    * 
@@ -11241,7 +11241,7 @@ interface NurbsSwungSurfaceProxy extends X3DParametricGeometryNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   trajectoryCurve: SFNode,
+   trajectoryCurve: X3DNurbsControlCurveNodeProxy,
 }
 
 /** NurbsTextureCoordinate describes a 3D NURBS surface in the parametric domain of its surface host, specifying mapping of texture onto the surface. */
@@ -11258,7 +11258,7 @@ interface NurbsTextureCoordinateProxy extends X3DNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Number of control points in u dimension.
    * 
@@ -11315,13 +11315,13 @@ interface NurbsTrimmedSurfaceProxy extends X3DNurbsSurfaceGeometryNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   controlPoint: SFNode,
+   controlPoint: CoordinateProxy | CoordinateDoubleProxy,
    /**
    * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Access type is 'inputOnly'.
    */
@@ -11337,7 +11337,7 @@ interface NurbsTrimmedSurfaceProxy extends X3DNurbsSurfaceGeometryNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   texCoord: SFNode,
+   texCoord: X3DSingleTextureCoordinateNodeProxy | NurbsTextureCoordinateProxy,
    /**
    * A set of Contour2D nodes are used as trimming loops.
    * 
@@ -11426,13 +11426,13 @@ interface OpacityMapVolumeStyleProxy extends X3DComposableVolumeRenderStyleNodeP
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * The transferFunction field holds a single texture representation in either two or three dimensions that maps the voxel data values to a specific colour output.
    * 
    * Access type is 'inputOutput'.
    */
-   transferFunction: SFNode,
+   transferFunction: X3DTexture2DNodeProxy | X3DTexture3DNodeProxy,
 }
 
 /** OrientationChaser generates a series of 4-tuple axis-angle SFRotation values that progressively change from initial value to destination value. */
@@ -11467,7 +11467,7 @@ interface OrientationChaserProxy extends X3DChaserNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * set_destination resets destination value of this node.
    * 
@@ -11514,7 +11514,7 @@ interface OrientationDamperProxy extends X3DDamperNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * order defines the number of internal filters (larger means smoother response, longer delay).
    * 
@@ -11573,7 +11573,7 @@ interface OrientationInterpolatorProxy extends X3DInterpolatorNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * set_fraction selects input key for corresponding keyValue output.
    * 
@@ -11638,13 +11638,13 @@ interface OrthoViewpointProxy extends X3DViewpointNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * The navigationInfo field defines a dedicated NavigationInfo node for this X3DViewpointNode.
    * 
    * Access type is 'inputOutput'.
    */
-   navigationInfo: SFNode,
+   navigationInfo: NavigationInfoProxy,
    /**
    * nearDistance defines minimum clipping plane distance necessary for object display.
    * 
@@ -11739,7 +11739,7 @@ interface OscillatorSourceProxy extends X3DSoundSourceNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * When time now >= pauseTime, isPaused becomes true and AudioClip becomes paused.
    * 
@@ -11828,7 +11828,7 @@ interface PackagedShaderProxy extends X3DShaderNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * url points to a shader source-code file that may contain a number of shaders and combined effects.
    * 
@@ -11845,7 +11845,7 @@ interface ParticleSystemProxy extends X3DShapeNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   appearance: SFNode,
+   appearance: X3DAppearanceNodeProxy,
    /**
    * Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
    * 
@@ -11875,7 +11875,7 @@ interface ParticleSystemProxy extends X3DShapeNodeProxy
    * 
    * Access type is 'initializeOnly'.
    */
-   color: SFNode,
+   color: X3DColorNodeProxy,
    /**
    * Array of time intervals in seconds, corresponding to particle lifetime, that are used to interpolate color array values.
    * 
@@ -11893,7 +11893,7 @@ interface ParticleSystemProxy extends X3DShapeNodeProxy
    * 
    * Access type is 'initializeOnly'.
    */
-   emitter: SFNode,
+   emitter: X3DParticleEmitterNodeProxy,
    /**
    * Enables/disables node operation.
    * 
@@ -11905,7 +11905,7 @@ interface ParticleSystemProxy extends X3DShapeNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   geometry: SFNode,
+   geometry: X3DGeometryNodeProxy,
    /**
    * specifies type of geometry used to represent individual particles.
    * 
@@ -11935,7 +11935,7 @@ interface ParticleSystemProxy extends X3DShapeNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * TODO not properly defined in X3D spedification.
    * 
@@ -11959,7 +11959,7 @@ interface ParticleSystemProxy extends X3DShapeNodeProxy
    * 
    * Access type is 'initializeOnly'.
    */
-   texCoord: SFNode,
+   texCoord: TextureCoordinateProxy | TextureCoordinateGeneratorProxy,
    /**
    * Array of time intervals in seconds, corresponding to particle lifetime, that are used to sequence texCoord array values.
    * 
@@ -11994,7 +11994,7 @@ interface PeriodicWaveProxy extends X3DSoundNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * imaginary coefficients for defining a waveform.
    * 
@@ -12029,7 +12029,7 @@ interface PhysicalMaterialProxy extends X3DOneSidedMaterialNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   baseTexture: SFNode,
+   baseTexture: X3DSingleTextureNodeProxy,
    /**
    * The mapping label identifies which texture coordinates and transformations are used to compute texture effects from corresponding geometry on a given material.
    * 
@@ -12047,7 +12047,7 @@ interface PhysicalMaterialProxy extends X3DOneSidedMaterialNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   emissiveTexture: SFNode,
+   emissiveTexture: X3DSingleTextureNodeProxy,
    /**
    * The mapping label identifies which texture coordinates and transformations are used to compute texture effects from corresponding geometry on a given material.
    * 
@@ -12059,7 +12059,7 @@ interface PhysicalMaterialProxy extends X3DOneSidedMaterialNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * metallic is a PBR parameter (TODO elaborate).
    * 
@@ -12071,7 +12071,7 @@ interface PhysicalMaterialProxy extends X3DOneSidedMaterialNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metallicRoughnessTexture: SFNode,
+   metallicRoughnessTexture: X3DSingleTextureNodeProxy,
    /**
    * The mapping label identifies which texture coordinates and transformations are used to compute texture effects from corresponding geometry on a given material.
    * 
@@ -12089,7 +12089,7 @@ interface PhysicalMaterialProxy extends X3DOneSidedMaterialNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   normalTexture: SFNode,
+   normalTexture: X3DSingleTextureNodeProxy,
    /**
    * The mapping label identifies which texture coordinates and transformations are used to compute texture effects from corresponding geometry on a given material.
    * 
@@ -12107,7 +12107,7 @@ interface PhysicalMaterialProxy extends X3DOneSidedMaterialNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   occlusionTexture: SFNode,
+   occlusionTexture: X3DSingleTextureNodeProxy,
    /**
    * The mapping label identifies which texture coordinates and transformations are used to compute texture effects from corresponding geometry on a given material.
    * 
@@ -12170,7 +12170,7 @@ interface PickableGroupProxy extends X3DGroupingNodeProxy, X3DPickableObjectProx
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * The objectType field specifies a set of labels used in the picking process.
    * 
@@ -12215,7 +12215,7 @@ interface PixelTextureProxy extends X3DTexture2DNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Whether to repeat texture along S axis horizontally from left to right.
    * 
@@ -12233,7 +12233,7 @@ interface PixelTextureProxy extends X3DTexture2DNodeProxy
    * 
    * Access type is 'initializeOnly'.
    */
-   textureProperties: SFNode,
+   textureProperties: TexturePropertiesProxy,
 }
 
 /** PixelTexture3D defines a 3D image-based texture map as an explicit array of pixel values (image field). */
@@ -12256,7 +12256,7 @@ interface PixelTexture3DProxy extends X3DTexture3DNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Whether to repeat texture along R axis from front to back.
    * 
@@ -12280,7 +12280,7 @@ interface PixelTexture3DProxy extends X3DTexture3DNodeProxy
    * 
    * Access type is 'initializeOnly'.
    */
-   textureProperties: SFNode,
+   textureProperties: TexturePropertiesProxy,
 }
 
 /** PlaneSensor converts pointing device motion into 2D translation parallel to the local Z=0 plane. */
@@ -12333,7 +12333,7 @@ interface PlaneSensorProxy extends X3DDragSensorNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * minPosition and maxPosition clamp translations to a range of values measured from origin of Z=0 plane default maxPosition < minPosition means no clamping.
    * 
@@ -12380,7 +12380,7 @@ interface PointEmitterProxy extends X3DParticleEmitterNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Enables/disables production of particles from this emitter node.
    * 
@@ -12457,7 +12457,7 @@ interface PointLightProxy extends X3DLightNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Enables/disables this light source.
    * 
@@ -12522,7 +12522,7 @@ interface PointPickSensorProxy extends X3DPickSensorNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * The objectType field specifies a set of labels used in the picking process.
    * 
@@ -12546,7 +12546,7 @@ interface PointPickSensorProxy extends X3DPickSensorNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   pickingGeometry: SFNode,
+   pickingGeometry: X3DGeometryNodeProxy,
    /**
    * pickTarget specifies the list of nodes against which picking operations are performed.
    * 
@@ -12575,7 +12575,7 @@ interface PointPropertiesProxy extends X3DAppearanceChildNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * pointSizeMaxValue is maximum allowed scaling factor on nominal browser point scaling.
    * 
@@ -12610,31 +12610,31 @@ interface PointSetProxy extends X3DGeometryNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   color: SFNode,
+   color: X3DColorNodeProxy,
    /**
    * Single contained Coordinate or CoordinateDouble node that can specify a list of vertex values.
    * 
    * Access type is 'inputOutput'.
    */
-   coord: SFNode,
+   coord: X3DCoordinateNodeProxy,
    /**
    * Single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry.
    * 
    * Access type is 'inputOutput'.
    */
-   fogCoord: SFNode,
+   fogCoord: FogCoordinateProxy,
    /**
    * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations.
    * 
    * Access type is 'inputOutput'.
    */
-   normal: SFNode,
+   normal: X3DNormalNodeProxy,
 }
 
 /** Polyline2D is a geometry node that defines a connected set of vertices in a contiguous set of line segments in X-Y plane. */
@@ -12651,7 +12651,7 @@ interface Polyline2DProxy extends X3DGeometryNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
 }
 
 /** PolylineEmitter emits particles along a single polyline. */
@@ -12662,7 +12662,7 @@ interface PolylineEmitterProxy extends X3DParticleEmitterNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   coord: SFNode,
+   coord: X3DCoordinateNodeProxy,
    /**
    * coordIndex indices are applied to contained Coordinate values in order to define randomly generated initial geometry of the particles.
    * 
@@ -12686,7 +12686,7 @@ interface PolylineEmitterProxy extends X3DParticleEmitterNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Enables/disables production of particles from this emitter node.
    * 
@@ -12725,7 +12725,7 @@ interface Polypoint2DProxy extends X3DGeometryNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * 2D coordinates of vertices.
    * 
@@ -12766,7 +12766,7 @@ interface PositionChaserProxy extends X3DChaserNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * set_destination resets destination value of this node.
    * 
@@ -12819,7 +12819,7 @@ interface PositionChaser2DProxy extends X3DChaserNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * set_destination resets destination value of this node.
    * 
@@ -12866,7 +12866,7 @@ interface PositionDamperProxy extends X3DDamperNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * order defines the number of internal filters (larger means smoother response, longer delay).
    * 
@@ -12931,7 +12931,7 @@ interface PositionDamper2DProxy extends X3DDamperNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * order defines the number of internal filters (larger means smoother response, longer delay).
    * 
@@ -12990,7 +12990,7 @@ interface PositionInterpolatorProxy extends X3DInterpolatorNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * set_fraction selects input key for corresponding keyValue output.
    * 
@@ -13025,7 +13025,7 @@ interface PositionInterpolator2DProxy extends X3DInterpolatorNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * set_fraction selects input key for corresponding keyValue output.
    * 
@@ -13078,7 +13078,7 @@ interface PrimitivePickSensorProxy extends X3DPickSensorNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * The objectType field specifies a set of labels used in the picking process.
    * 
@@ -13096,7 +13096,7 @@ interface PrimitivePickSensorProxy extends X3DPickSensorNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   pickingGeometry: SFNode,
+   pickingGeometry: X3DGeometryNodeProxy,
    /**
    * pickTarget specifies the list of nodes against which picking operations are performed.
    * 
@@ -13143,7 +13143,7 @@ interface ProgramShaderProxy extends X3DShaderNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * ProgramShader contains zero or more ShaderProgram node instances.
    * 
@@ -13172,7 +13172,7 @@ interface ProjectionVolumeStyleProxy extends X3DVolumeRenderStyleNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * If type=MAX then Maximum Intensity Projection (MIP) or Least MIP (LMIP) algorithm is used to generate output color.
    * 
@@ -13193,7 +13193,7 @@ interface ProtoInstanceProxy extends X3DPrototypeInstanceProxy, X3DChildNodeProx
    /**
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * name of the prototype node being instanced.
    * 
@@ -13252,7 +13252,7 @@ interface ProximitySensorProxy extends X3DEnvironmentalSensorNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Sends rotation event relative to center.
    * 
@@ -13293,7 +13293,7 @@ interface QuadSetProxy extends X3DComposedGeometryNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   color: SFNode,
+   color: X3DColorNodeProxy,
    /**
    * Whether Color|ColorRGBA values are applied to each point vertex (true) or to each polygon face (false).
    * 
@@ -13305,25 +13305,25 @@ interface QuadSetProxy extends X3DComposedGeometryNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   coord: SFNode,
+   coord: X3DCoordinateNodeProxy,
    /**
    * Single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry.
    * 
    * Access type is 'inputOutput'.
    */
-   fogCoord: SFNode,
+   fogCoord: FogCoordinateProxy,
    /**
    * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
    * 
    * Access type is 'inputOutput'.
    */
-   normal: SFNode,
+   normal: X3DNormalNodeProxy,
    /**
    * Whether Normal node vector values are applied to each point vertex (true) or to each polygon face (false).
    * 
@@ -13341,7 +13341,7 @@ interface QuadSetProxy extends X3DComposedGeometryNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   texCoord: SFNode,
+   texCoord: X3DSingleTextureCoordinateNodeProxy | MultiTextureCoordinateProxy,
 }
 
 /** ReceiverPdu is a networked Protocol Data Unit (PDU) information node that transmits the state of radio frequency (RF) receivers modeled in a simulation. */
@@ -13442,7 +13442,7 @@ interface ReceiverPduProxy extends X3DNetworkSensorNodeProxy, X3DBoundedObjectPr
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Fallback server address if multicast not available locally.
    * 
@@ -13561,7 +13561,7 @@ interface Rectangle2DProxy extends X3DGeometryNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * 2D dimensions of Rectangle2D.
    * 
@@ -13704,13 +13704,13 @@ interface RigidBodyProxy extends X3DChildNodeProxy, X3DBoundedObjectProxy
    * 
    * Access type is 'inputOutput'.
    */
-   massDensityModel: SFNode,
+   massDensityModel: SphereProxy | BoxProxy | ConeProxy,
    /**
    * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * orientation sets body direction in world space, then reports physics updates.
    * 
@@ -13787,7 +13787,7 @@ interface RigidBodyCollectionProxy extends X3DChildNodeProxy, X3DBoundedObjectPr
    * 
    * Access type is 'initializeOnly'.
    */
-   collider: SFNode,
+   collider: CollisionCollectionProxy,
    /**
    * constantForceMix modifies damping calculations by violating normal constraints while applying small, constant forces in those calculations.
    * 
@@ -13859,7 +13859,7 @@ interface RigidBodyCollectionProxy extends X3DChildNodeProxy, X3DBoundedObjectPr
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * preferAccuracy provides hint for performance preference: higher accuracy or faster computational speed.
    * 
@@ -13912,7 +13912,7 @@ interface ScalarChaserProxy extends X3DChaserNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * set_destination resets destination value of this node.
    * 
@@ -13959,7 +13959,7 @@ interface ScalarDamperProxy extends X3DDamperNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * order defines the number of internal filters (larger means smoother response, longer delay).
    * 
@@ -14018,7 +14018,7 @@ interface ScalarInterpolatorProxy extends X3DInterpolatorNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * set_fraction selects input key for corresponding keyValue output.
    * 
@@ -14071,7 +14071,7 @@ interface ScreenFontStyleProxy extends X3DFontStyleNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * pointSize field specifies the size of text in points.
    * 
@@ -14134,7 +14134,7 @@ interface ScreenGroupProxy extends X3DGroupingNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Access type is 'inputOnly'.
    */
@@ -14191,7 +14191,7 @@ interface ScriptProxy extends X3DScriptNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * If mustEvaluate false, then the X3D player may delay sending input events to Script until output events are needed.
    * 
@@ -14244,7 +14244,7 @@ interface SegmentedVolumeDataProxy extends X3DVolumeDataNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Multiple contained X3DVolumeRenderStyleNode nodes corresponding to each isosurface that define specific rendering technique for this volumetric object.
    * 
@@ -14262,7 +14262,7 @@ interface SegmentedVolumeDataProxy extends X3DVolumeDataNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   segmentIdentifiers: SFNode,
+   segmentIdentifiers: X3DTexture3DNodeProxy,
    /**
    * Whether or not renderable content within this node is visually displayed.
    * 
@@ -14274,7 +14274,7 @@ interface SegmentedVolumeDataProxy extends X3DVolumeDataNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   voxels: SFNode,
+   voxels: X3DTexture3DNodeProxy,
 }
 
 /** All fields fully supported except shadows supported with at least Phong shading at level 3. All fields fully supported with at least Phong shading and Henyey-Greenstein phase function, shadows fully supported at level 4. */
@@ -14297,13 +14297,13 @@ interface ShadedVolumeStyleProxy extends X3DComposableVolumeRenderStyleNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   material: SFNode,
+   material: X3DMaterialNodeProxy,
    /**
    * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * define scattering model for implementations using global illumination (NONE or Henyey-Greenstein phase function).
    * 
@@ -14321,7 +14321,7 @@ interface ShadedVolumeStyleProxy extends X3DComposableVolumeRenderStyleNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   surfaceNormals: SFNode,
+   surfaceNormals: X3DTexture3DNodeProxy,
 }
 
 /** ShaderPart can contain a CDATA section of plain-text source code. */
@@ -14356,7 +14356,7 @@ interface ShaderPartProxy extends X3DNodeProxy, X3DUrlObjectProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Embedded scripting source code can be contained within the parent node as a plain-text CDATA block, without requiring escaping of special characters.
    * 
@@ -14415,7 +14415,7 @@ interface ShaderProgramProxy extends X3DNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Embedded scripting source code can be contained within the parent node as a plain-text CDATA block, without requiring escaping of special characters.
    * 
@@ -14444,7 +14444,7 @@ interface ShapeProxy extends X3DShapeNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   appearance: SFNode,
+   appearance: X3DAppearanceNodeProxy,
    /**
    * Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
    * 
@@ -14474,13 +14474,13 @@ interface ShapeProxy extends X3DShapeNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   geometry: SFNode,
+   geometry: X3DGeometryNodeProxy,
    /**
    * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Whether or not renderable content within this node is visually displayed.
    * 
@@ -14605,7 +14605,7 @@ interface SignalPduProxy extends X3DNetworkSensorNodeProxy, X3DBoundedObjectProx
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Fallback server address if multicast not available locally.
    * 
@@ -14712,7 +14712,7 @@ interface SilhouetteEnhancementVolumeStyleProxy extends X3DComposableVolumeRende
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * amount of the silhouette enhancement to use.
    * 
@@ -14736,7 +14736,7 @@ interface SilhouetteEnhancementVolumeStyleProxy extends X3DComposableVolumeRende
    * 
    * Access type is 'inputOutput'.
    */
-   surfaceNormals: SFNode,
+   surfaceNormals: X3DTexture3DNodeProxy,
 }
 
 /** SingleAxisHingeJoint has single axis about which to rotate, similar to a traditional door hinge. Contains two RigidBody nodes (containerField values body1, body2). */
@@ -14767,7 +14767,7 @@ interface SingleAxisHingeJointProxy extends X3DRigidJointNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   body1: SFNode,
+   body1: RigidBodyProxy,
    /**
    * body1AnchorPoint describes anchorPoint position relative to local coordinate reference frame.
    * 
@@ -14779,7 +14779,7 @@ interface SingleAxisHingeJointProxy extends X3DRigidJointNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   body2: SFNode,
+   body2: RigidBodyProxy,
    /**
    * body2AnchorPoint describes anchorPoint position relative to local coordinate reference frame.
    * 
@@ -14803,7 +14803,7 @@ interface SingleAxisHingeJointProxy extends X3DRigidJointNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * minAngle is minimum rotation angle for hinge.
    * 
@@ -14838,13 +14838,13 @@ interface SliderJointProxy extends X3DRigidJointNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   body1: SFNode,
+   body1: RigidBodyProxy,
    /**
    * The body1 and body2 fields indicate the two RigidBody nodes connected by this joint.
    * 
    * Access type is 'inputOutput'.
    */
-   body2: SFNode,
+   body2: RigidBodyProxy,
    /**
    * forceOutput controls which output fields are generated for the next frame.
    * 
@@ -14862,7 +14862,7 @@ interface SliderJointProxy extends X3DRigidJointNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * minSeparation is minimum separation distance between the two bodies.
    * 
@@ -14951,7 +14951,7 @@ interface SoundProxy extends X3DSoundNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Inner (full loudness) ellipsoid distance along back direction.
    * 
@@ -14975,7 +14975,7 @@ interface SoundProxy extends X3DSoundNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   source: SFNode,
+   source: X3DSoundSourceNodeProxy,
    /**
    * Whether to spatialize sound playback relative to viewer.
    * 
@@ -15076,7 +15076,7 @@ interface SpatialSoundProxy extends X3DSoundNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Player hint [0,1] if needed to choose which sounds to play.
    * 
@@ -15111,7 +15111,7 @@ interface SphereProxy extends X3DGeometryNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Size in meters.
    * 
@@ -15164,7 +15164,7 @@ interface SphereSensorProxy extends X3DDragSensorNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Sends event and remembers last value sensed.
    * 
@@ -15217,7 +15217,7 @@ interface SplinePositionInterpolatorProxy extends X3DInterpolatorNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * normalizeVelocity field specifies whether the velocity vectors are normalized to produce smooth speed transitions, or transformed into tangency vectors.
    * 
@@ -15270,7 +15270,7 @@ interface SplinePositionInterpolator2DProxy extends X3DInterpolatorNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * normalizeVelocity field specifies whether the velocity vectors are normalized to produce smooth speed transitions, or transformed into tangency vectors.
    * 
@@ -15323,7 +15323,7 @@ interface SplineScalarInterpolatorProxy extends X3DInterpolatorNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * normalizeVelocity field specifies whether the velocity vectors are normalized to produce smooth speed transitions, or transformed into tangency vectors.
    * 
@@ -15406,7 +15406,7 @@ interface SpotLightProxy extends X3DLightNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Enables/disables this light source.
    * 
@@ -15453,7 +15453,7 @@ interface SquadOrientationInterpolatorProxy extends X3DInterpolatorNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * normalizeVelocity field specifies whether the velocity vectors are normalized to produce smooth speed transitions, or transformed into tangency vectors.
    * 
@@ -15506,7 +15506,7 @@ interface StaticGroupProxy extends X3DChildNodeProxy, X3DBoundedObjectProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Whether or not renderable content within this node is visually displayed.
    * 
@@ -15577,7 +15577,7 @@ interface StreamAudioDestinationProxy extends X3DSoundDestinationNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Stream identification TBD Hint: W3C Media Capture and Streams https://www.
    * 
@@ -15642,7 +15642,7 @@ interface StreamAudioSourceProxy extends X3DSoundSourceNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * When time now >= pauseTime, isPaused becomes true and AudioClip becomes paused.
    * 
@@ -15719,7 +15719,7 @@ interface StringSensorProxy extends X3DKeyDeviceSensorNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
 }
 
 /** SurfaceEmitter generates particles from the surface of an object. */
@@ -15736,7 +15736,7 @@ interface SurfaceEmitterProxy extends X3DParticleEmitterNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Enables/disables production of particles from this emitter node.
    * 
@@ -15754,7 +15754,7 @@ interface SurfaceEmitterProxy extends X3DParticleEmitterNodeProxy
    * 
    * Access type is 'initializeOnly'.
    */
-   surface: SFNode,
+   surface: X3DGeometryNodeProxy,
    /**
    * Particle surface area in area base units (default is meters squared).
    * 
@@ -15805,7 +15805,7 @@ interface SwitchProxy extends X3DGroupingNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Access type is 'inputOnly'.
    */
@@ -15856,7 +15856,7 @@ interface TexCoordChaser2DProxy extends X3DChaserNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * set_destination resets destination value of this node.
    * 
@@ -15903,7 +15903,7 @@ interface TexCoordDamper2DProxy extends X3DDamperNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * order defines the number of internal filters (larger means smoother response, longer delay).
    * 
@@ -15950,7 +15950,7 @@ interface TextProxy extends X3DGeometryNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   fontStyle: SFNode,
+   fontStyle: X3DFontStyleNodeProxy,
    /**
    * Array of length values for each text string in the local coordinate system.
    * 
@@ -15974,7 +15974,7 @@ interface TextProxy extends X3DGeometryNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * origin of the text local coordinate system, in units of the coordinate system in which the Text node is embedded.
    * 
@@ -16009,7 +16009,7 @@ interface TextureBackgroundProxy extends X3DBackgroundNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   backTexture: SFNode,
+   backTexture: X3DTexture2DNodeProxy | MultiTextureProxy,
    /**
    * event sent when node becomes active/inactive.
    * 
@@ -16021,13 +16021,13 @@ interface TextureBackgroundProxy extends X3DBackgroundNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   bottomTexture: SFNode,
+   bottomTexture: X3DTexture2DNodeProxy | MultiTextureProxy,
    /**
    * Parent TextureBackground element can contain up to six image nodes (ImageTexture PixelTexture MovieTexture MultiTexture).
    * 
    * Access type is 'inputOutput'.
    */
-   frontTexture: SFNode,
+   frontTexture: X3DTexture2DNodeProxy | MultiTextureProxy,
    /**
    * The angle array values increase from 0.
    * 
@@ -16051,19 +16051,19 @@ interface TextureBackgroundProxy extends X3DBackgroundNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   leftTexture: SFNode,
+   leftTexture: X3DTexture2DNodeProxy | MultiTextureProxy,
    /**
    * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Parent TextureBackground element can contain up to six image nodes (ImageTexture PixelTexture MovieTexture MultiTexture).
    * 
    * Access type is 'inputOutput'.
    */
-   rightTexture: SFNode,
+   rightTexture: X3DTexture2DNodeProxy | MultiTextureProxy,
    /**
    * Input event set_bind=true makes this node active, input event set_bind=false makes this node inactive.
    * 
@@ -16087,7 +16087,7 @@ interface TextureBackgroundProxy extends X3DBackgroundNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   topTexture: SFNode,
+   topTexture: X3DTexture2DNodeProxy | MultiTextureProxy,
    /**
    * transparency applied to texture images, enabling an X3D scene to overlay an HTML page or desktop.
    * 
@@ -16110,7 +16110,7 @@ interface TextureCoordinateProxy extends X3DSingleTextureCoordinateNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * pairs of 2D (s,t) texture coordinates, either in range [0,1] or higher if repeating.
    * 
@@ -16133,7 +16133,7 @@ interface TextureCoordinate3DProxy extends X3DSingleTextureCoordinateNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * triplets of 3D (s,t,r) texture coordinates, either in range [0,1] or higher if repeating.
    * 
@@ -16156,7 +16156,7 @@ interface TextureCoordinate4DProxy extends X3DSingleTextureCoordinateNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * 4-tuple values of 4D texture coordinates, either in range [0,1] or higher if repeating.
    * 
@@ -16179,7 +16179,7 @@ interface TextureCoordinateGeneratorProxy extends X3DSingleTextureCoordinateNode
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * parameter field defines the algorithm used to compute texture coordinates.
    * 
@@ -16262,7 +16262,7 @@ interface TextureProjectorProxy extends X3DTextureProjectorNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * minimum distance necessary for texture display.
    * 
@@ -16292,7 +16292,7 @@ interface TextureProjectorProxy extends X3DTextureProjectorNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   texture: SFNode,
+   texture: X3DTexture2DNodeProxy,
    /**
    * upVector describes the roll of the camera by saying which direction is up for the camera's orientation.
    * 
@@ -16369,7 +16369,7 @@ interface TextureProjectorParallelProxy extends X3DTextureProjectorNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * minimum distance necessary for texture display.
    * 
@@ -16399,7 +16399,7 @@ interface TextureProjectorParallelProxy extends X3DTextureProjectorNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   texture: SFNode,
+   texture: X3DTexture2DNodeProxy,
 }
 
 /** TextureProperties allows precise fine-grained control over application of image textures to geometry. */
@@ -16458,7 +16458,7 @@ interface TexturePropertiesProxy extends X3DNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * minificationFilter indicates texture filter when image is larger than screen space representation.
    * 
@@ -16499,7 +16499,7 @@ interface TextureTransformProxy extends X3DTextureTransformNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * single rotation angle of texture about center (opposite effect appears on geometry).
    * 
@@ -16540,7 +16540,7 @@ interface TextureTransform3DProxy extends X3DTextureTransformNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * rotation angle of texture about center (opposite effect appears on geometry).
    * 
@@ -16581,7 +16581,7 @@ interface TextureTransformMatrix3DProxy extends X3DTextureTransformNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
 }
 
 /** TimeSensor continuously generates events as time passes. */
@@ -16646,7 +16646,7 @@ interface TimeSensorProxy extends X3DTimeDependentNodeProxy, X3DSensorNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * When time now >= pauseTime, isPaused becomes true and TimeSensor becomes paused.
    * 
@@ -16687,7 +16687,7 @@ interface TimeTriggerProxy extends X3DTriggerNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * If input event set_boolean is true, send output triggerTime event.
    * 
@@ -16722,13 +16722,13 @@ interface ToneMappedVolumeStyleProxy extends X3DComposableVolumeRenderStyleNodeP
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * The surfaceNormals field contains a 3D texture with at least three component values.
    * 
    * Access type is 'inputOutput'.
    */
-   surfaceNormals: SFNode,
+   surfaceNormals: X3DTexture3DNodeProxy,
    /**
    * warmColor is used for surfaces facing towards the light.
    * 
@@ -16787,7 +16787,7 @@ interface TouchSensorProxy extends X3DTouchSensorNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Time event generated when sensor is touched by pointing device, and then deselected by the user.
    * 
@@ -16838,7 +16838,7 @@ interface TransformProxy extends X3DGroupingNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Access type is 'inputOnly'.
    */
@@ -16919,7 +16919,7 @@ interface TransformSensorProxy extends X3DEnvironmentalSensorNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Sends rotation event relative to center whenever the target object is contained within the box region and results change.
    * 
@@ -16943,7 +16943,7 @@ interface TransformSensorProxy extends X3DEnvironmentalSensorNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   targetObject: SFNode,
+   targetObject: X3DGroupingNodeProxy | X3DShapeNodeProxy,
 }
 
 /** TransmitterPdu is a networked Protocol Data Unit (PDU) information node that provides detailed information about a radio transmitter modeled in a simulation. */
@@ -17092,7 +17092,7 @@ interface TransmitterPduProxy extends X3DNetworkSensorNodeProxy, X3DBoundedObjec
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Integer enumeration containing detailed information depending on the major modulation type.
    * 
@@ -17271,7 +17271,7 @@ interface TriangleFanSetProxy extends X3DComposedGeometryNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   color: SFNode,
+   color: X3DColorNodeProxy,
    /**
    * Whether Color|ColorRGBA values are applied to each point vertex (true) or to each polygon face (false).
    * 
@@ -17283,7 +17283,7 @@ interface TriangleFanSetProxy extends X3DComposedGeometryNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   coord: SFNode,
+   coord: X3DCoordinateNodeProxy,
    /**
    * fanCount array provides number of vertices in each fan.
    * 
@@ -17295,19 +17295,19 @@ interface TriangleFanSetProxy extends X3DComposedGeometryNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   fogCoord: SFNode,
+   fogCoord: FogCoordinateProxy,
    /**
    * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
    * 
    * Access type is 'inputOutput'.
    */
-   normal: SFNode,
+   normal: X3DNormalNodeProxy,
    /**
    * Whether Normal node vector values are applied to each point vertex (true) or to each polygon face (false).
    * 
@@ -17325,7 +17325,7 @@ interface TriangleFanSetProxy extends X3DComposedGeometryNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   texCoord: SFNode,
+   texCoord: X3DSingleTextureCoordinateNodeProxy | MultiTextureCoordinateProxy,
 }
 
 /** TriangleSet is a geometry node containing a Coordinate|CoordinateDouble node, and can also contain Color|ColorRGBA, Normal and TextureCoordinate nodes. */
@@ -17348,7 +17348,7 @@ interface TriangleSetProxy extends X3DComposedGeometryNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   color: SFNode,
+   color: X3DColorNodeProxy,
    /**
    * Whether Color|ColorRGBA values are applied to each point vertex (true) or to each polygon face (false).
    * 
@@ -17360,25 +17360,25 @@ interface TriangleSetProxy extends X3DComposedGeometryNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   coord: SFNode,
+   coord: X3DCoordinateNodeProxy,
    /**
    * Single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry.
    * 
    * Access type is 'inputOutput'.
    */
-   fogCoord: SFNode,
+   fogCoord: FogCoordinateProxy,
    /**
    * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
    * 
    * Access type is 'inputOutput'.
    */
-   normal: SFNode,
+   normal: X3DNormalNodeProxy,
    /**
    * Whether Normal node vector values are applied to each point vertex (true) or to each polygon face (false).
    * 
@@ -17396,7 +17396,7 @@ interface TriangleSetProxy extends X3DComposedGeometryNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   texCoord: SFNode,
+   texCoord: X3DSingleTextureCoordinateNodeProxy | MultiTextureCoordinateProxy,
 }
 
 /** TriangleSet2D is a geometry node that defines a set of filled 2D triangles in X-Y plane. */
@@ -17407,7 +17407,7 @@ interface TriangleSet2DProxy extends X3DGeometryNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Setting solid true means draw only one side of polygons (backface culling on), setting solid false means draw both sides of polygons (backface culling off).
    * 
@@ -17442,7 +17442,7 @@ interface TriangleStripSetProxy extends X3DComposedGeometryNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   color: SFNode,
+   color: X3DColorNodeProxy,
    /**
    * Whether Color|ColorRGBA values are applied to each point vertex (true) or to each polygon face (false).
    * 
@@ -17454,25 +17454,25 @@ interface TriangleStripSetProxy extends X3DComposedGeometryNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   coord: SFNode,
+   coord: X3DCoordinateNodeProxy,
    /**
    * Single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry.
    * 
    * Access type is 'inputOutput'.
    */
-   fogCoord: SFNode,
+   fogCoord: FogCoordinateProxy,
    /**
    * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
    * 
    * Access type is 'inputOutput'.
    */
-   normal: SFNode,
+   normal: X3DNormalNodeProxy,
    /**
    * Whether Normal node vector values are applied to each point vertex (true) or to each polygon face (false).
    * 
@@ -17496,7 +17496,7 @@ interface TriangleStripSetProxy extends X3DComposedGeometryNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   texCoord: SFNode,
+   texCoord: X3DSingleTextureCoordinateNodeProxy | MultiTextureCoordinateProxy,
 }
 
 /** TwoSidedMaterial specifies surface rendering properties for associated geometry nodes, for outer (front) and inner (back) sides of polygons. */
@@ -17561,7 +17561,7 @@ interface TwoSidedMaterialProxy extends X3DMaterialNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * separateBackColor determines whether separate Material values are used for back faces.
    * 
@@ -17614,7 +17614,7 @@ interface UniversalJointProxy extends X3DRigidJointNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   body1: SFNode,
+   body1: RigidBodyProxy,
    /**
    * body1AnchorPoint describes anchorPoint position relative to local coordinate reference frame.
    * 
@@ -17632,7 +17632,7 @@ interface UniversalJointProxy extends X3DRigidJointNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   body2: SFNode,
+   body2: RigidBodyProxy,
    /**
    * body2AnchorPoint describes anchorPoint position relative to local coordinate reference frame.
    * 
@@ -17656,7 +17656,7 @@ interface UniversalJointProxy extends X3DRigidJointNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * stop1Bounce is velocity factor for bounce back once stop point is reached.
    * 
@@ -17697,7 +17697,7 @@ interface UnlitMaterialProxy extends X3DOneSidedMaterialNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   emissiveTexture: SFNode,
+   emissiveTexture: X3DSingleTextureNodeProxy,
    /**
    * The mapping label identifies which texture coordinates and transformations are used to compute texture effects from corresponding geometry on a given material.
    * 
@@ -17709,7 +17709,7 @@ interface UnlitMaterialProxy extends X3DOneSidedMaterialNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * normalScale controls the degree to which normalTexture RGB values apply XYZ-normal bump mapping to pixels in the parent material.
    * 
@@ -17721,7 +17721,7 @@ interface UnlitMaterialProxy extends X3DOneSidedMaterialNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   normalTexture: SFNode,
+   normalTexture: X3DSingleTextureNodeProxy,
    /**
    * The mapping label identifies which texture coordinates and transformations are used to compute texture effects from corresponding geometry on a given material.
    * 
@@ -17786,13 +17786,13 @@ interface ViewpointProxy extends X3DViewpointNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * The navigationInfo field defines a dedicated NavigationInfo node for this X3DViewpointNode.
    * 
    * Access type is 'inputOutput'.
    */
-   navigationInfo: SFNode,
+   navigationInfo: NavigationInfoProxy,
    /**
    * nearDistance defines minimum clipping plane distance necessary for object display.
    * 
@@ -17863,7 +17863,7 @@ interface ViewpointGroupProxy extends X3DChildNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Retain (true) or reset to zero (false) any prior user navigation offsets from defined viewpoint position, orientation.
    * 
@@ -17920,7 +17920,7 @@ interface ViewportProxy extends X3DViewportNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Access type is 'inputOnly'.
    */
@@ -17977,7 +17977,7 @@ interface VisibilitySensorProxy extends X3DEnvironmentalSensorNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * size of visibility box around center location, oriented within local transformation frame.
    * 
@@ -18018,13 +18018,13 @@ interface VolumeDataProxy extends X3DVolumeDataNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Single contained X3DVolumeRenderStyleNode node that defines specific rendering technique for this volumetric object.
    * 
    * Access type is 'inputOutput'.
    */
-   renderStyle: SFNode,
+   renderStyle: X3DVolumeRenderStyleNodeProxy,
    /**
    * Whether or not renderable content within this node is visually displayed.
    * 
@@ -18036,7 +18036,7 @@ interface VolumeDataProxy extends X3DVolumeDataNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   voxels: SFNode,
+   voxels: X3DTexture3DNodeProxy,
 }
 
 /** VolumeEmitter emits particles from a random position confined within the given closed geometry volume. */
@@ -18047,7 +18047,7 @@ interface VolumeEmitterProxy extends X3DParticleEmitterNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   coord: SFNode,
+   coord: X3DCoordinateNodeProxy,
    /**
    * coordIndex indices are applied to contained Coordinate values in order to define randomly generated initial geometry of the particles.
    * 
@@ -18077,7 +18077,7 @@ interface VolumeEmitterProxy extends X3DParticleEmitterNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Enables/disables production of particles from this emitter node.
    * 
@@ -18146,7 +18146,7 @@ interface VolumePickSensorProxy extends X3DPickSensorNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * The objectType field specifies a set of labels used in the picking process.
    * 
@@ -18164,7 +18164,7 @@ interface VolumePickSensorProxy extends X3DPickSensorNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   pickingGeometry: SFNode,
+   pickingGeometry: X3DGeometryNodeProxy,
    /**
    * pickTarget specifies the list of nodes against which picking operations are performed.
    * 
@@ -18247,7 +18247,7 @@ interface WaveShaperProxy extends X3DSoundProcessingNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * The oversample field is specifies what type of oversampling (if any) should be used when applying the shaping curve.
    * 
@@ -18312,7 +18312,7 @@ interface WindPhysicsModelProxy extends X3DParticlePhysicsModelNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Initial linear speed (default is m/s) imparted to all particles along their direction of movement.
    * 
@@ -18341,7 +18341,7 @@ interface WorldInfoProxy extends X3DInfoNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * title of this world, placed in window title.
    * 
@@ -18356,7 +18356,7 @@ interface X3DAppearanceChildNodeProxy extends X3DNodeProxy
    /**
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
 }
 
 /** Base type for all Appearance nodes. */
@@ -18365,7 +18365,7 @@ interface X3DAppearanceNodeProxy extends X3DNodeProxy
    /**
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
 }
 
 /** Abstract type from which all backgrounds inherit, also defining a background binding stack. */
@@ -18390,7 +18390,7 @@ interface X3DBackgroundNodeProxy extends X3DBindableNodeProxy
    /**
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Access type is 'inputOnly'.
    */
@@ -18423,7 +18423,7 @@ interface X3DBindableNodeProxy extends X3DChildNodeProxy
    /**
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Access type is 'inputOnly'.
    */
@@ -18465,7 +18465,7 @@ interface X3DChaserNodeProxy extends X3DFollowerNodeProxy
    /**
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
 }
 
 /** A node that implements X3DChildNode is one of the legal children for a X3DGroupingNode parent. */
@@ -18474,7 +18474,7 @@ interface X3DChildNodeProxy extends X3DNodeProxy
    /**
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
 }
 
 /** Base type for color specifications in X3D. */
@@ -18483,7 +18483,7 @@ interface X3DColorNodeProxy extends X3DGeometricPropertyNodeProxy
    /**
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
 }
 
 /** The X3DComposableVolumeRenderStyleNode abstract node type is the base type for all node types that allow rendering styles to be sequentially composed together to form a single renderable output. */
@@ -18496,7 +18496,7 @@ interface X3DComposableVolumeRenderStyleNodeProxy extends X3DVolumeRenderStyleNo
    /**
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
 }
 
 /** Composed geometry nodes produce renderable geometry, can contain Color Coordinate Normal TextureCoordinate, and are contained by a Shape node. */
@@ -18513,7 +18513,7 @@ interface X3DComposedGeometryNodeProxy extends X3DGeometryNodeProxy
    /**
    * Access type is 'inputOutput'.
    */
-   color: SFNode,
+   color: X3DColorNodeProxy,
    /**
    * Access type is 'initializeOnly'.
    */
@@ -18521,19 +18521,19 @@ interface X3DComposedGeometryNodeProxy extends X3DGeometryNodeProxy
    /**
    * Access type is 'inputOutput'.
    */
-   coord: SFNode,
+   coord: X3DCoordinateNodeProxy,
    /**
    * Access type is 'inputOutput'.
    */
-   fogCoord: SFNode,
+   fogCoord: FogCoordinateProxy,
    /**
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Access type is 'inputOutput'.
    */
-   normal: SFNode,
+   normal: X3DNormalNodeProxy,
    /**
    * Access type is 'initializeOnly'.
    */
@@ -18545,7 +18545,7 @@ interface X3DComposedGeometryNodeProxy extends X3DGeometryNodeProxy
    /**
    * Access type is 'inputOutput'.
    */
-   texCoord: SFNode,
+   texCoord: X3DSingleTextureCoordinateNodeProxy | MultiTextureCoordinateProxy,
 }
 
 /** Base type for all coordinate node types in X3D. */
@@ -18554,7 +18554,7 @@ interface X3DCoordinateNodeProxy extends X3DGeometricPropertyNodeProxy
    /**
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
 }
 
 /** The X3DDamperNode abstract node type creates an IIR response that approaches the destination value according to the shape of the e-function only asymptotically but very quickly. */
@@ -18567,7 +18567,7 @@ interface X3DDamperNodeProxy extends X3DFollowerNodeProxy
    /**
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Access type is 'initializeOnly'.
    */
@@ -18608,7 +18608,7 @@ interface X3DDragSensorNodeProxy extends X3DPointingDeviceSensorNodeProxy
    /**
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Access type is 'outputOnly'.
    */
@@ -18633,7 +18633,7 @@ interface X3DEnvironmentalSensorNodeProxy extends X3DSensorNodeProxy
    /**
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Access type is 'inputOutput'.
    */
@@ -18650,7 +18650,7 @@ interface X3DEnvironmentTextureNodeProxy extends X3DTextureNodeProxy
    /**
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
 }
 
 /** Abstract type describing a node that influences the lighting equation through the use of fog semantics. */
@@ -18680,7 +18680,7 @@ interface X3DFollowerNodeProxy extends X3DChildNodeProxy
    /**
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
 }
 
 /** Base type for all font style nodes. */
@@ -18689,7 +18689,7 @@ interface X3DFontStyleNodeProxy extends X3DNodeProxy
    /**
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
 }
 
 /** Base type for all geometric property node types. */
@@ -18698,7 +18698,7 @@ interface X3DGeometricPropertyNodeProxy extends X3DNodeProxy
    /**
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
 }
 
 /** Geometry nodes produce renderable geometry and are contained by a Shape node. */
@@ -18707,7 +18707,7 @@ interface X3DGeometryNodeProxy extends X3DNodeProxy
    /**
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
 }
 
 /** Grouping nodes can contain other nodes as children, thus making up the backbone of a scene graph. */
@@ -18736,7 +18736,7 @@ interface X3DGroupingNodeProxy extends X3DChildNodeProxy, X3DBoundedObjectProxy
    /**
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Access type is 'inputOnly'.
    */
@@ -18753,7 +18753,7 @@ interface X3DInfoNodeProxy extends X3DChildNodeProxy
    /**
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
 }
 
 /** Interpolator nodes are designed for linear keyframed animation. Interpolators are driven by an input key ranging [0..1] and produce corresponding piecewise-linear output functions. */
@@ -18766,7 +18766,7 @@ interface X3DInterpolatorNodeProxy extends X3DChildNodeProxy
    /**
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Access type is 'inputOnly'.
    */
@@ -18791,7 +18791,7 @@ interface X3DKeyDeviceSensorNodeProxy extends X3DSensorNodeProxy
    /**
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
 }
 
 /** The X3DLayerNode abstract node type is the base node type for layer nodes. */
@@ -18800,7 +18800,7 @@ interface X3DLayerNodeProxy extends X3DNodeProxy, X3DPickableObjectProxy
    /**
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Access type is 'inputOutput'.
    */
@@ -18812,7 +18812,7 @@ interface X3DLayerNodeProxy extends X3DNodeProxy, X3DPickableObjectProxy
    /**
    * Access type is 'inputOutput'.
    */
-   viewport: SFNode,
+   viewport: X3DViewportNodeProxy,
    /**
    * Access type is 'inputOutput'.
    */
@@ -18825,7 +18825,7 @@ interface X3DLayoutNodeProxy extends X3DChildNodeProxy
    /**
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
 }
 
 /** Light nodes provide illumination for rendering geometry in the scene. Implementing nodes must include a global field with type SFBool and accessType inputOutput. */
@@ -18846,7 +18846,7 @@ interface X3DLightNodeProxy extends X3DChildNodeProxy
    /**
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Access type is 'inputOutput'.
    */
@@ -18867,7 +18867,7 @@ interface X3DMaterialNodeProxy extends X3DAppearanceChildNodeProxy
    /**
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
 }
 
 /** Each node inheriting the X3DMetadataObject interface contains a single array of strictly typed values: MFBool, MFInt32, MFFloat, MFDouble, MFString, or MFNode, the latter having children that are all Metadata nodes. */
@@ -18905,7 +18905,7 @@ interface X3DNBodyCollidableNodeProxy extends X3DChildNodeProxy, X3DBoundedObjec
    /**
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Access type is 'inputOutput'.
    */
@@ -18942,7 +18942,7 @@ interface X3DNBodyCollisionSpaceNodeProxy extends X3DNodeProxy, X3DBoundedObject
    /**
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Access type is 'inputOutput'.
    */
@@ -18967,7 +18967,7 @@ interface X3DNetworkSensorNodeProxy extends X3DSensorNodeProxy
    /**
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
 }
 
 /** All instantiable nodes implement X3DNode, which corresponds to SFNode type in the X3D specification. */
@@ -18978,7 +18978,7 @@ interface X3DNodeProxy extends SFNodeProxy
    * 
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
 }
 
 /** Base type for all normal node types in X3D. */
@@ -18987,7 +18987,7 @@ interface X3DNormalNodeProxy extends X3DGeometricPropertyNodeProxy
    /**
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
 }
 
 /** Base type for all nodes that provide control curve information in 2D space. */
@@ -19000,7 +19000,7 @@ interface X3DNurbsControlCurveNodeProxy extends X3DNodeProxy
    /**
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
 }
 
 /** Abstract geometry type for all types of NURBS surfaces. */
@@ -19009,11 +19009,11 @@ interface X3DNurbsSurfaceGeometryNodeProxy extends X3DParametricGeometryNodeProx
    /**
    * Access type is 'inputOutput'.
    */
-   controlPoint: SFNode,
+   controlPoint: CoordinateProxy | CoordinateDoubleProxy,
    /**
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Access type is 'initializeOnly'.
    */
@@ -19021,7 +19021,7 @@ interface X3DNurbsSurfaceGeometryNodeProxy extends X3DParametricGeometryNodeProx
    /**
    * Access type is 'inputOutput'.
    */
-   texCoord: SFNode,
+   texCoord: X3DSingleTextureCoordinateNodeProxy | NurbsTextureCoordinateProxy,
    /**
    * Access type is 'initializeOnly'.
    */
@@ -19078,7 +19078,7 @@ interface X3DOneSidedMaterialNodeProxy extends X3DMaterialNodeProxy
    /**
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Access type is 'inputOutput'.
    */
@@ -19095,7 +19095,7 @@ interface X3DParametricGeometryNodeProxy extends X3DGeometryNodeProxy
    /**
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
 }
 
 /** The X3DParticleEmitterNode abstract type represents any node that is an emitter of particles. */
@@ -19108,7 +19108,7 @@ interface X3DParticleEmitterNodeProxy extends X3DNodeProxy
    /**
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Access type is 'inputOutput'.
    */
@@ -19137,7 +19137,7 @@ interface X3DParticlePhysicsModelNodeProxy extends X3DNodeProxy
    /**
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
 }
 
 /** The X3DPickableObject abstract interface marks a node as being capable of having customized picking performed on its contents or children. */
@@ -19175,7 +19175,7 @@ interface X3DPickSensorNodeProxy extends X3DSensorNodeProxy
    /**
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Access type is 'inputOutput'.
    */
@@ -19187,7 +19187,7 @@ interface X3DPickSensorNodeProxy extends X3DSensorNodeProxy
    /**
    * Access type is 'inputOutput'.
    */
-   pickingGeometry: SFNode,
+   pickingGeometry: X3DGeometryNodeProxy,
    /**
    * Access type is 'inputOutput'.
    */
@@ -19220,7 +19220,7 @@ interface X3DPointingDeviceSensorNodeProxy extends X3DSensorNodeProxy
    /**
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
 }
 
 /** Base type marking nodes that are valid product structure children for the CADGeometry component. */
@@ -19229,7 +19229,7 @@ interface X3DProductStructureChildNodeProxy extends X3DChildNodeProxy
    /**
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Access type is 'inputOutput'.
    */
@@ -19248,7 +19248,7 @@ interface X3DPrototypeInstanceProxy extends X3DNodeProxy
    /**
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
 }
 
 /** The X3DRigidJointNode abstract node type is the base type for all joint types. */
@@ -19257,11 +19257,11 @@ interface X3DRigidJointNodeProxy extends X3DNodeProxy
    /**
    * Access type is 'inputOutput'.
    */
-   body1: SFNode,
+   body1: RigidBodyProxy,
    /**
    * Access type is 'inputOutput'.
    */
-   body2: SFNode,
+   body2: RigidBodyProxy,
    /**
    * Access type is 'inputOutput'.
    */
@@ -19269,7 +19269,7 @@ interface X3DRigidJointNodeProxy extends X3DNodeProxy
    /**
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
 }
 
 /** Base type for scripting nodes (but not shader nodes). */
@@ -19294,7 +19294,7 @@ interface X3DScriptNodeProxy extends X3DChildNodeProxy, X3DUrlObjectProxy
    /**
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Access type is 'inputOutput'.
    */
@@ -19319,7 +19319,7 @@ interface X3DSensorNodeProxy extends X3DChildNodeProxy
    /**
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
 }
 
 /** Base type from which all Sequencers are derived. */
@@ -19332,7 +19332,7 @@ interface X3DSequencerNodeProxy extends X3DChildNodeProxy
    /**
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Access type is 'inputOnly'.
    */
@@ -19369,7 +19369,7 @@ interface X3DShaderNodeProxy extends X3DAppearanceChildNodeProxy
    /**
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
 }
 
 /** Base type for all Shape nodes. */
@@ -19378,7 +19378,7 @@ interface X3DShapeNodeProxy extends X3DChildNodeProxy, X3DBoundedObjectProxy
    /**
    * Access type is 'inputOutput'.
    */
-   appearance: SFNode,
+   appearance: X3DAppearanceNodeProxy,
    /**
    * Access type is 'initializeOnly'.
    */
@@ -19398,11 +19398,11 @@ interface X3DShapeNodeProxy extends X3DChildNodeProxy, X3DBoundedObjectProxy
    /**
    * Access type is 'inputOutput'.
    */
-   geometry: SFNode,
+   geometry: X3DGeometryNodeProxy,
    /**
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Access type is 'inputOutput'.
    */
@@ -19419,7 +19419,7 @@ interface X3DSingleTextureCoordinateNodeProxy extends X3DTextureCoordinateNodePr
    /**
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
 }
 
 /** Base type for all texture node types that define a single texture. A single texture can be used to influence a parameter of various material nodes in the Shape component, and it can be a child of MultiTexture. */
@@ -19432,7 +19432,7 @@ interface X3DSingleTextureNodeProxy extends X3DTextureNodeProxy
    /**
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
 }
 
 /** Base type for all texture transform nodes which specify texture coordinate transformation for a single texture. */
@@ -19445,7 +19445,7 @@ interface X3DSingleTextureTransformNodeProxy extends X3DTextureTransformNodeProx
    /**
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
 }
 
 /** Base type for all sound destination nodes, which represent the final destination of an audio signal and are what the user can ultimately hear. */
@@ -19478,7 +19478,7 @@ interface X3DSoundChannelNodeProxy extends X3DSoundNodeProxy
    /**
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
 }
 
 /** Base type for all sound destination nodes, which represent the final destination of an audio signal and are what the user can ultimately hear. */
@@ -19519,7 +19519,7 @@ interface X3DSoundDestinationNodeProxy extends X3DSoundNodeProxy
    /**
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
 }
 
 /** Base type for all sound nodes. */
@@ -19536,7 +19536,7 @@ interface X3DSoundNodeProxy extends X3DChildNodeProxy
    /**
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
 }
 
 /** Base type for all sound processing nodes, which are used to enhance audio with filtering, delaying, changing gain, etc. */
@@ -19581,7 +19581,7 @@ interface X3DSoundProcessingNodeProxy extends X3DTimeDependentNodeProxy, X3DSoun
    /**
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Access type is 'inputOutput'.
    */
@@ -19634,7 +19634,7 @@ interface X3DSoundSourceNodeProxy extends X3DTimeDependentNodeProxy, X3DSoundNod
    /**
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Access type is 'inputOutput'.
    */
@@ -19669,7 +19669,7 @@ interface X3DTexture2DNodeProxy extends X3DSingleTextureNodeProxy
    /**
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Access type is 'initializeOnly'.
    */
@@ -19681,7 +19681,7 @@ interface X3DTexture2DNodeProxy extends X3DSingleTextureNodeProxy
    /**
    * Access type is 'initializeOnly'.
    */
-   textureProperties: SFNode,
+   textureProperties: TexturePropertiesProxy,
 }
 
 /** Base type for all nodes that specify 3D sources for texture images. */
@@ -19694,7 +19694,7 @@ interface X3DTexture3DNodeProxy extends X3DTextureNodeProxy
    /**
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Access type is 'initializeOnly'.
    */
@@ -19710,7 +19710,7 @@ interface X3DTexture3DNodeProxy extends X3DTextureNodeProxy
    /**
    * Access type is 'initializeOnly'.
    */
-   textureProperties: SFNode,
+   textureProperties: TexturePropertiesProxy,
 }
 
 /** Base type for all nodes which specify texture coordinates. */
@@ -19719,7 +19719,7 @@ interface X3DTextureCoordinateNodeProxy extends X3DGeometricPropertyNodeProxy
    /**
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
 }
 
 /** Base type for all nodes which specify sources for texture images. */
@@ -19732,7 +19732,7 @@ interface X3DTextureNodeProxy extends X3DAppearanceChildNodeProxy
    /**
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
 }
 
 /** Base type for all node types that specify texture projector nodes, which provide a form of lighting. */
@@ -19777,7 +19777,7 @@ interface X3DTextureProjectorNodeProxy extends X3DLightNodeProxy
    /**
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Access type is 'inputOutput'.
    */
@@ -19797,7 +19797,7 @@ interface X3DTextureProjectorNodeProxy extends X3DLightNodeProxy
    /**
    * Access type is 'inputOutput'.
    */
-   texture: SFNode,
+   texture: X3DTexture2DNodeProxy,
 }
 
 /** Base type for all nodes which specify a transformation of texture coordinates. */
@@ -19806,7 +19806,7 @@ interface X3DTextureTransformNodeProxy extends X3DAppearanceChildNodeProxy
    /**
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
 }
 
 /** Base type from which all time-dependent nodes are derived. */
@@ -19831,7 +19831,7 @@ interface X3DTimeDependentNodeProxy extends X3DChildNodeProxy
    /**
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Access type is 'inputOutput'.
    */
@@ -19872,7 +19872,7 @@ interface X3DTouchSensorNodeProxy extends X3DPointingDeviceSensorNodeProxy
    /**
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Access type is 'outputOnly'.
    */
@@ -19885,7 +19885,7 @@ interface X3DTriggerNodeProxy extends X3DChildNodeProxy
    /**
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
 }
 
 /** X3DUrlObject indicates that a node has content loaded from a Uniform Resource Locator (URL) and can be tracked via a LoadSensor. Such child nodes have containerField='children' to indicate their relationship to the parent LoadSensor node. */
@@ -19919,7 +19919,7 @@ interface X3DVertexAttributeNodeProxy extends X3DGeometricPropertyNodeProxy
    /**
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Access type is 'initializeOnly'.
    */
@@ -19952,11 +19952,11 @@ interface X3DViewpointNodeProxy extends X3DBindableNodeProxy
    /**
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Access type is 'inputOutput'.
    */
-   navigationInfo: SFNode,
+   navigationInfo: NavigationInfoProxy,
    /**
    * Access type is 'inputOutput'.
    */
@@ -20005,7 +20005,7 @@ interface X3DViewportNodeProxy extends X3DGroupingNodeProxy
    /**
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Access type is 'inputOnly'.
    */
@@ -20038,7 +20038,7 @@ interface X3DVolumeDataNodeProxy extends X3DChildNodeProxy, X3DBoundedObjectProx
    /**
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
    /**
    * Access type is 'inputOutput'.
    */
@@ -20055,7 +20055,7 @@ interface X3DVolumeRenderStyleNodeProxy extends X3DNodeProxy
    /**
    * Access type is 'inputOutput'.
    */
-   metadata: SFNode,
+   metadata: X3DMetadataObjectProxy,
 }
 
 type ConcreteNodesType = {
