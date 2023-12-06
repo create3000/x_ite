@@ -42,7 +42,8 @@ ${[... abstractNodes .keys ()] .map (typeName => `   readonly ${typeName}: numbe
 
 function ConcreteNode (node)
 {
-   const string = `interface ${node .name}Proxy
+   const string = `/** ${node .InterfaceDefinition .appinfo} */
+interface ${node .name}Proxy
 {
 
 }`;
@@ -52,7 +53,8 @@ function ConcreteNode (node)
 
 function AbstractNode (node)
 {
-   const string = `interface ${node .name}Proxy
+   const string = `/** ${node .InterfaceDefinition .appinfo} */
+interface ${node .name}Proxy
 {
 
 }`;
