@@ -78,7 +78,7 @@ function ConcreteNode (node)
 
    const properties = fields
       .map (field => `   /**
-   * ${FieldDescription (field)}
+   *${FieldDescription (field)}
    */
    ${FieldAccessType (field)}${field .name}: ${FieldType (field)},`)
       .join ("\n");
@@ -99,11 +99,11 @@ function FieldDescription (field)
    let strings = [ ];
 
    if (field .description)
-      strings .push (field .description, "");
+      strings .push (` ${field .description}`, "");
 
-   strings .push (`Access type is '${field .accessType}'.`);
+   strings .push (` Access type is '${field .accessType}'.`);
 
-   return strings .join ("\n   * ");
+   return strings .join ("\n   *");
 }
 
 function FieldAccessType (field)
