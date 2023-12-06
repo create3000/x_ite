@@ -126,29 +126,39 @@ function FieldType (field)
          return "number";
       case "SFString":
       case "xs:NMTOKEN":
+      {
          if (Array .isArray (field .enumeration))
             return field .enumeration .map (e => `"${e .value}"`) .join (" | ");
 
          return "string";
+      }
       case "SFNode":
+      {
          return field .acceptableNodeTypes
             .split (/[|,]/)
             .map (type => `${type .trim ()}Proxy`)
             .join (" | ") || "SFNode";
+      }
       case "MFNode":
+      {
          return `MFNode <${field .acceptableNodeTypes
             .split (/[|,]/)
             .map (type => `${type .trim ()}Proxy`)
             .join (" | ") || "SFNode"}>`;
+      }
       case "MFString":
+      {
          if (Array .isArray (field .enumeration))
+         {
             return `MFString <${field .enumeration
                .flatMap (e => e .value .split (/\s*,\s*|\s+/))
                .filter (unique)
                .map (v => `"${v .replace (/["']/g, "")}"`)
                .join (" | ")}>`;
+         }
 
          return field .type;
+      }
       default:
          return field .type;
    }
