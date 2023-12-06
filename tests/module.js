@@ -4,5 +4,5 @@ const browser = X3D .createBrowser () .browser;
 const scene = browser .currentScene;
 const nodes = scene .addRoute ();
 const r = scene .rootNodes;
-const n = scene .createNode ("NavigationInfo");
-
+const n = scene .createNode ("Transform");
+n .addChildren
