@@ -8,12 +8,13 @@ const
 const
    x3duom        = xml (sh (`wget -q -O - https://www.web3d.org/specifications/X3dUnifiedObjectModel-4.0.xml`)),
    experimental  = xml (sh (`cat`, `${__dirname}/ts.xml`)),
-   concreteNodes = map (x3duom .X3dUnifiedObjectModel .ConcreteNodes .ConcreteNode
+   concreteNodes = new Map (x3duom .X3dUnifiedObjectModel .ConcreteNodes .ConcreteNode
       .filter (node => node .InterfaceDefinition ?.componentInfo)
       .concat (experimental .X3dUnifiedObjectModel .ConcreteNodes .ConcreteNode)
+      .filter (uniqueMerge)
       .sort ((a, b) => a .name .localeCompare (b .name))
       .map (node => [node .name, node])),
-   abstractNodes = map (x3duom .X3dUnifiedObjectModel .AbstractNodeTypes .AbstractNodeType
+   abstractNodes = new Map (x3duom .X3dUnifiedObjectModel .AbstractNodeTypes .AbstractNodeType
       .concat (x3duom .X3dUnifiedObjectModel .AbstractObjectTypes .AbstractObjectType)
       .filter (node => node .InterfaceDefinition ?.componentInfo)
       .sort ((a, b) => a .name .localeCompare (b .name))
@@ -78,7 +79,7 @@ function ConcreteNode (node)
       // .filter (field => !field .inheritedFrom)
       .filter (field => !field .name .match (/^(?:DEF|USE|IS|id|class)$/))
       .filter (field => !field .description ?.includes ("CSS"))
-      .filter (fieldMerge)
+      .filter (uniqueMerge)
       .sort ((a, b) => a .name .localeCompare (b .name));
 
    // if (node .name === "NavigationInfo")
@@ -233,7 +234,7 @@ function unique (value, index, array)
    return array .indexOf (value) === index;
 }
 
-function fieldMerge (value, index, array)
+function uniqueMerge (value, index, array)
 {
    const i = array .findIndex (f => f .name === value .name);
 
@@ -258,16 +259,6 @@ function merge (target = { }, source = { })
    }
 
    return target;
-}
-
-function map (entries)
-{
-   const map = new Map ();
-
-   for (const [key, value] of entries)
-      map .set (key, map .has (key) ? merge (map .get (key), value) : value);
-
-   return map;
 }
 
 main ();
