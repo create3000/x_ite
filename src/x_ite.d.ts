@@ -10,7 +10,7 @@ declare const X3D: X3D;
 
 interface X3D
 {
-   (callback?: () => void, fallback?: (error: Error) => void): Promise <void | never>;
+   (callback?: () => void, fallback?: (error: Error) => void): Promise <void>;
 
    noConflict (): X3D;
    createBrowser (): X3DCanvasElement;
@@ -111,16 +111,16 @@ class X3DBrowser
    readonly currentScene: X3DScene;
 
    replaceWorld (scene: X3DScene): Promise <void>;
-   createX3DFromString (x3dSyntax: string): Promise <X3DScene | never>;
-   createX3DFromURL (url: MFString): Promise <X3DScene | never>;
+   createX3DFromString (x3dSyntax: string): Promise <X3DScene>;
+   createX3DFromURL (url: MFString): Promise <X3DScene>;
    createX3DFromURL (url: MFString, node: SFNode, fieldName: string): void;
-   loadURL (url: MFString, parameter?: MFString): Promise <void | never>;
-   importDocument (dom: HTMLElement | string): Promise <X3DScene | never>;
-   importJS (json: string | JSONObject): Promise <X3DScene | never>;
-   getBrowserProperty (name: BrowserProperty): boolean | never;
-   getBrowserOption <T extends keyof BrowserOption> (name: T): BrowserOption [T] | never;
-   setBrowserOption <T extends keyof BrowserOption> (name: T, value: BrowserOption [T]): void | never;
-   getRenderingProperty <T extends keyof RenderingProperty> (name: T): RenderingProperty [T] | never;
+   loadURL (url: MFString, parameter?: MFString): Promise <void>;
+   importDocument (dom: HTMLElement | string): Promise <X3DScene>;
+   importJS (json: string | JSONObject): Promise <X3DScene>;
+   getBrowserProperty (name: BrowserProperty): boolean;
+   getBrowserOption <T extends keyof BrowserOption> (name: T): BrowserOption [T];
+   setBrowserOption <T extends keyof BrowserOption> (name: T, value: BrowserOption [T]): void;
+   getRenderingProperty <T extends keyof RenderingProperty> (name: T): RenderingProperty [T];
    getContextMenu (): ContextMenu;
    addBrowserCallback (key: any, callback?: (event: number) => void): void;
    addBrowserCallback (key: any, event: number, callback?: (event: number) => void): void;
@@ -142,9 +142,9 @@ class X3DBrowser
    getCurrentFrameRate (): number;
    getWorldURL (): string;
    replaceWorld (nodes: MFNode): string;
-   createVrmlFromString (vrmlSyntax: string): MFNode | never;
-   createVrmlFromURL (url: MFString, node: SFNode, fieldName: string): void | never;
-   addRoute (sourceNode: SFNode, sourceField: string, destinationNode: SFNode, destinationField: string): void | never;
+   createVrmlFromString (vrmlSyntax: string): MFNode;
+   createVrmlFromURL (url: MFString, node: SFNode, fieldName: string): void;
+   addRoute (sourceNode: SFNode, sourceField: string, destinationNode: SFNode, destinationField: string): void;
    deleteRoute (sourceNode: SFNode, sourceField: string, destinationNode: SFNode, destinationField: string): void;
    loadURL (url: MFString, parameter?: MFString): void;
    setDescription (description: string): void;
@@ -277,9 +277,9 @@ class X3DScene extends X3DExecutionContext
    removeMetaData (name: string): void;
    addRootNode (node: SFNode): void;
    removeRootNode (node: SFNode): void;
-   getExportedNode (exportedName: string): SFNode | never;
-   addExportedNode (exportedName: string, node: SFNode): void | never;
-   updateExportedNode (exportedName: string, node: SFNode): void | never;
+   getExportedNode (exportedName: string): SFNode;
+   addExportedNode (exportedName: string, node: SFNode): void;
+   updateExportedNode (exportedName: string, node: SFNode): void;
    removeExportedNode (exportedName: string): void;
 }
 
@@ -297,17 +297,17 @@ class X3DExecutionContext
    readonly externprotos: ExternProtoDeclarationArray;
    readonly routes: RouteArray;
 
-   createNode <T extends keyof ConcreteNodesType> (spec: T): ConcreteNodesType [T] | never;
-   createProto (protoName: string): SFNode | never;
-   getNamedNode (name: string): SFNode | never;
-   addNamedNode (name: string, node: SFNode): void | never;
-   updateNamedNode (name: string, node: SFNode): void | never;
+   createNode <T extends keyof ConcreteNodesType> (spec: T): ConcreteNodesType [T];
+   createProto (protoName: string): SFNode;
+   getNamedNode (name: string): SFNode;
+   addNamedNode (name: string, node: SFNode): void;
+   updateNamedNode (name: string, node: SFNode): void;
    removeNamedNode (name: string): void;
-   getImportedNode (importedName: string): SFNode | never;
-   addImportedNode (inlineNode: SFNode, exportedName: string, importedName?: string): void | never;
-   updateImportedNode (inlineNode: SFNode, exportedName: string, importedName?: string): void | never;
+   getImportedNode (importedName: string): SFNode;
+   addImportedNode (inlineNode: SFNode, exportedName: string, importedName?: string): void;
+   updateImportedNode (inlineNode: SFNode, exportedName: string, importedName?: string): void;
    removeImportedNode (importedName: string): void;
-   addRoute (sourceNode: SFNode, sourceField: string,destinationNode: SFNode, destinationField: string): X3DRoute | never;
+   addRoute (sourceNode: SFNode, sourceField: string,destinationNode: SFNode, destinationField: string): X3DRoute;
    deleteRoute (route: X3DRoute): void;
 
    toVRMLString (options?: ToStringOptions): string;
