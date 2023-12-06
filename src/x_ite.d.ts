@@ -7740,7 +7740,7 @@ interface HAnimHumanoidProxy extends X3DChildNodeProxy, X3DBoundedObjectProxy
    *
    * This field is of access type 'inputOutput' and type SFString.
    */
-   version: string,
+   version: "2.0",
    /**
    * List of HAnimSite nodes containing Viewpoint nodes that appear in the skeleton model, usually as USE node references.
    *
@@ -10785,7 +10785,7 @@ interface NavigationInfoProxy extends X3DBindableNodeProxy
    *
    * This field is of access type 'inputOutput' and type MFString.
    */
-   type: MFString <"ANY" | "WALK" | "EXAMINE" | "FLY" | "LOOKAT" | "NONE" | "EXPLORE">,
+   type: MFString <"ANY" | "WALK" | "EXAMINE" | "FLY" | "LOOKAT" | "NONE" | "EXPLORE" | "PLANE" | "PLANE_create3000.github.io">,
    /**
    * Geometry beyond the visibilityLimit may not be rendered (far clipping plane of the view frustrum).
    *

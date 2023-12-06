@@ -78,10 +78,11 @@ function ConcreteNode (node)
       // .filter (field => !field .inheritedFrom)
       .filter (field => !field .name .match (/^(?:DEF|USE|IS|id|class)$/))
       .filter (field => !field .description ?.includes ("CSS"))
+      .filter (fieldMerge)
       .sort ((a, b) => a .name .localeCompare (b .name));
 
-   // if (node .name === "AcousticProperties")
-   //    console .log (node);
+   if (node .name === "NavigationInfo")
+      console .log (node .InterfaceDefinition .field);
 
    const properties = fields
       .map (field => `   /**
@@ -134,8 +135,15 @@ function FieldType (field)
       case "SFString":
       case "xs:NMTOKEN":
       {
-         if (Array .isArray (field .enumeration))
-            return field .enumeration .map (e => `"${e .value}"`) .join (" | ");
+         if (field .enumeration)
+         {
+            return [field .enumeration]
+               .flatMap (e => e)
+               .map (e => e .value)
+               .filter (unique)
+               .map (v => `"${v}"`)
+               .join (" | ");
+         }
 
          return "string";
       }
@@ -155,9 +163,10 @@ function FieldType (field)
       }
       case "MFString":
       {
-         if (Array .isArray (field .enumeration))
+         if (field .enumeration)
          {
-            return `MFString <${field .enumeration
+            return `MFString <${[field .enumeration]
+               .flatMap (e => e)
                .flatMap (e => e .value .split (/\s*,\s*|\s+/))
                .filter (unique)
                .map (v => `"${v .replace (/["']/g, "")}"`)
@@ -169,11 +178,6 @@ function FieldType (field)
       default:
          return field .type;
    }
-}
-
-function unique (value, index, array)
-{
-   return array .indexOf (value) === index;
 }
 
 function AbstractNode (node)
@@ -222,6 +226,23 @@ function xml (string)
    });
 
    return parser .parse (string);
+}
+
+function unique (value, index, array)
+{
+   return array .indexOf (value) === index;
+}
+
+function fieldMerge (value, index, array)
+{
+   const i = array .findIndex (f => f .name === value .name);
+
+   if (i === index)
+      return true;
+
+   merge (array [i], value);
+
+   return false;
 }
 
 function merge (target = { }, source = { })

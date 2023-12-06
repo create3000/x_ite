@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <X3dUnifiedObjectModel xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance" version="4.0" xsd:noNamespaceSchemaLocation="X3dUnifiedObjectModel.xsd">
    <ConcreteNodes>
+      <ConcreteNode name="NavigationInfo">
+         <InterfaceDefinition>
+            <field name="metadata"/>
+            <field name="type">
+               <enumeration value="PLANE"/>
+               <enumeration value="PLANE_create3000.github.io"/>
+            </field>
+         </InterfaceDefinition>
+      </ConcreteNode>
       <ConcreteNode name="Appearance">
          <InterfaceDefinition>
             <field name="blendMode"
