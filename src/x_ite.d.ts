@@ -8367,7 +8367,7 @@ interface ImageTexture3DProxy extends X3DTexture3DNodeProxy, X3DUrlObjectProxy
 }
 
 /** undefined */
-interface ImageTextureAtlasProxy extends X3DTexture3DNodeProxy
+interface ImageTextureAtlasProxy extends X3DTexture3DNodeProxy, X3DUrlObjectProxy
 {
    /**
    * This field is of access type is 'inputOutput' and type SFInt32.

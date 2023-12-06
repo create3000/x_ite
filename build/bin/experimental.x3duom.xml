@@ -183,6 +183,7 @@
             <componentInfo name="Texturing3D" level="1"/>
             <containerField default="texture" type="xs:NMTOKEN"/>
             <Inheritance baseType="X3DTexture3DNode"/>
+            <AdditionalInheritance baseType="X3DUrlObject"/>
             <field name="slicesOverX"
                   type="SFInt32"
                   accessType="inputOutput"
