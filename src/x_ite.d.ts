@@ -67,12 +67,12 @@ interface X3D
    MFVec4f: typeof MFVec4f;
 }
 
-interface X3DCanvasElement extends HTMLElement
+class X3DCanvasElement extends HTMLElement
 {
    readonly browser: X3DBrowser;
 }
 
-interface X3DBrowser
+class X3DBrowser
 {
    readonly name: string;
    readonly version: string;
@@ -92,13 +92,13 @@ interface X3DBrowser
    loadURL (url: MFString, parameter?: MFString): Promise <void>;
    importDocument (dom: HTMLElement | string): Promise <X3DScene>;
    importJS (json: string | JSONObject): Promise <X3DScene>;
-   getBrowserProperty (prop: BrowserProperty): boolean;
-   getBrowserOption <T extends keyof BrowserOption> (name: T): BrowserOption [T];
-   setBrowserOption <T extends keyof BrowserOption> (name: T, value: BrowserOption [T]): void;
-   getRenderingProperty <T extends keyof RenderingProperty> (name: T): RenderingProperty [T];
+   getBrowserProperty (name: BrowserProperty): boolean | never;
+   getBrowserOption <T extends keyof BrowserOption> (name: T): BrowserOption [T] | never;
+   setBrowserOption <T extends keyof BrowserOption> (name: T, value: BrowserOption [T]): void | never;
+   getRenderingProperty <T extends keyof RenderingProperty> (name: T): RenderingProperty [T] | never;
    getContextMenu (): ContextMenu;
-   addBrowserCallback (key: any, callback?: BrowserCallback): void;
-   addBrowserCallback (key: any, event: number, callback?: BrowserCallback): void;
+   addBrowserCallback (key: any, callback?: (event: number) => void): void;
+   addBrowserCallback (key: any, event: number, callback?: (event: number) => void): void;
    removeBrowserCallback (key: any, event?: number): void;
    viewAll (layer?: SFNode, transitionTime?: number): void;
    nextViewpoint (layer?: SFNode): void;
@@ -117,15 +117,13 @@ interface X3DBrowser
    getCurrentFrameRate (): number;
    getWorldURL (): string;
    replaceWorld (nodes: MFNode): string;
-   createVrmlFromString (vrmlSyntax: string): MFNode;
-   createVrmlFromURL (url: MFString, node: SFNode, fieldName: string): void;
-   addRoute (sourceNode: SFNode, sourceField: string, destinationNode: SFNode, destinationField: string): void;
+   createVrmlFromString (vrmlSyntax: string): MFNode | never;
+   createVrmlFromURL (url: MFString, node: SFNode, fieldName: string): void | never;
+   addRoute (sourceNode: SFNode, sourceField: string, destinationNode: SFNode, destinationField: string): void | never;
    deleteRoute (sourceNode: SFNode, sourceField: string, destinationNode: SFNode, destinationField: string): void;
    loadURL (url: MFString, parameter?: MFString): void;
    setDescription (description: string): void;
 }
-
-type BrowserCallback = (event: number) => void; // event is a Browser Event Constant
 
 type JSONValue =
    | string
@@ -141,7 +139,7 @@ interface JSONObject
 }
 
 type BrowserProperty = "ABSTRACT_NODES"
-   | "CONCRETE_NODES"
+   | "CONCRETE NODES"
    | "EXTERNAL_INTERACTIONS"
    | "PROTOTYPE_CREATE"
    | "DOM_IMPORT"
@@ -191,7 +189,7 @@ type RenderingProperty = {
    LogarithmicDepthBuffer: boolean
 }
 
-interface ContextMenu
+class ContextMenu
 {
    getUserMenu (): UserMenuCallback;
    setUserMenu (cb: UserMenuCallback): void;
@@ -244,7 +242,7 @@ type UserMenuItem = {
    dataAttr?: Record <string, string>
 }
 
-interface X3DScene extends X3DExecutionContext
+class X3DScene extends X3DExecutionContext
 {
    rootNodes: MFNode;
 
@@ -254,12 +252,13 @@ interface X3DScene extends X3DExecutionContext
    removeMetaData (name: string): void;
    addRootNode (node: SFNode): void;
    removeRootNode (node: SFNode): void;
-   getExportedNode (exportedName: string): SFNode;
-   updateExportedNode (exportedName: string, node: SFNode): void;
+   getExportedNode (exportedName: string): SFNode | never;
+   addExportedNode (exportedName: string, node: SFNode): void | never;
+   updateExportedNode (exportedName: string, node: SFNode): void | never;
    removeExportedNode (exportedName: string): void;
 }
 
-interface X3DExecutionContext
+class X3DExecutionContext
 {
    readonly specificationVersion: string;
    readonly encoding: "ASCII" | "VRML" | "XML" | "BINARY" | "SCRIPTED" | "BIFS" | "NONE";
@@ -273,15 +272,17 @@ interface X3DExecutionContext
    readonly externprotos: ExternProtoDeclarationArray;
    readonly routes: RouteArray;
 
-   createNode <T extends keyof ConcreteNodesType> (spec: T): ConcreteNodesType [T];
-   createProto (protoName: string): SFNode;
-   getNamedNode (name: string): SFNode;
-   updateNamedNode (name: string, node: SFNode): void;
+   createNode <T extends keyof ConcreteNodesType> (spec: T): ConcreteNodesType [T] | never;
+   createProto (protoName: string): SFNode | never;
+   getNamedNode (name: string): SFNode | never;
+   addNamedNode (name: string, node: SFNode): void | never;
+   updateNamedNode (name: string, node: SFNode): void | never;
    removeNamedNode (name: string): void;
-   getImportedNode (importedName: string): SFNode;
-   updateImportedNode (inlineNode: SFNode, exportedName: string, importedName: string): void;
+   getImportedNode (importedName: string): SFNode | never;
+   addImportedNode (inlineNode: SFNode, exportedName: string, importedName?: string): void | never;
+   updateImportedNode (inlineNode: SFNode, exportedName: string, importedName?: string): void | never;
    removeImportedNode (importedName: string): void;
-   addRoute (sourceNode: SFNode, sourceField: string,destinationNode: SFNode, destinationField: string): X3DRoute;
+   addRoute (sourceNode: SFNode, sourceField: string,destinationNode: SFNode, destinationField: string): X3DRoute | never;
    deleteRoute (route: X3DRoute): void;
 
    toVRMLString (options?: ToStringOptions): string;
@@ -289,9 +290,9 @@ interface X3DExecutionContext
    toJSONString (options?: ToStringOptions): string;
 }
 
-type ProfileInfoArray = X3DInfoArray <ProfileInfo>;
+class ProfileInfoArray extends X3DInfoArray <ProfileInfo> { };
 
-interface ProfileInfo
+class ProfileInfo
 {
    readonly name: string;
    readonly title: string;
@@ -299,9 +300,9 @@ interface ProfileInfo
    readonly components: ComponentInfoArray
 }
 
-type ComponentInfoArray = X3DInfoArray <ComponentInfo>;
+class ComponentInfoArray extends X3DInfoArray <ComponentInfo> { };
 
-interface ComponentInfo
+class ComponentInfo
 {
    readonly name: string;
    readonly level: number;
@@ -309,18 +310,18 @@ interface ComponentInfo
    readonly providerURL: string;
 }
 
-type UnitInfoArray = X3DInfoArray <UnitInfo>;
+class UnitInfoArray extends X3DInfoArray <UnitInfo> { };
 
-interface UnitInfo
+class UnitInfo
 {
    readonly category: string;
    readonly name: string;
    readonly conversionFactor: number;
 }
 
-type ProtoDeclarationArray = X3DInfoArray <X3DProtoDeclaration>;
+class ProtoDeclarationArray extends X3DInfoArray <X3DProtoDeclaration> { };
 
-interface X3DProtoDeclaration
+class X3DProtoDeclaration
 {
    readonly name: string;
    readonly fields: FieldDefinitionArray;
@@ -332,9 +333,9 @@ interface X3DProtoDeclaration
    toJSONString (options?: ToStringOptions): string;
 }
 
-type ExternProtoDeclarationArray = X3DInfoArray <X3DExternProtoDeclaration>;
+class ExternProtoDeclarationArray extends X3DInfoArray <X3DExternProtoDeclaration> { };
 
-interface X3DExternProtoDeclaration
+class X3DExternProtoDeclaration
 {
    readonly name: string;
    readonly fields: FieldDefinitionArray;
@@ -349,9 +350,9 @@ interface X3DExternProtoDeclaration
    toJSONString (options?: ToStringOptions): string;
 }
 
-type RouteArray = X3DInfoArray <X3DRoute>;
+class RouteArray extends X3DInfoArray <X3DRoute> { };
 
-interface X3DRoute
+class X3DRoute
 {
    readonly sourceNode: SFNode;
    readonly sourceField: string;
@@ -359,7 +360,11 @@ interface X3DRoute
    readonly destinationField: string;
 }
 
-type X3DInfoArray <T> = {[index: number]: T, length: number}
+class X3DInfoArray <T>
+{
+   [index: number]: T;
+   length: number;
+}
 
 interface X3DConstants
 {
@@ -649,9 +654,10 @@ interface X3DConstants
    // ABSTRACT NODE TYPES CONSTANTS END
 }
 
-type FieldDefinitionArray = X3DInfoArray <X3DFieldDefinition>;
+class FieldDefinitionArray extends X3DInfoArray <X3DFieldDefinition> { };
 
-type X3DFieldDefinition = {
+class X3DFieldDefinition
+{
    readonly accessType: number,
    readonly dataType: string,
    readonly name: string,
@@ -860,7 +866,7 @@ class SFMatrix4f extends SFMatrix4
    static readonly typeName: "SFMatrix4f";
 }
 
-class SFNode <T extends X3DNode = X3DNode> extends X3DField
+class SFNode extends X3DField
 {
    static readonly typeName: "SFNode";
 
@@ -1163,7 +1169,7 @@ class MFMatrix4f extends X3DArrayField <SFMatrix4f>
    static readonly typeName: "MFMatrix4f";
 }
 
-class MFNode <T extends X3DNode = X3DNode> extends X3DArrayField <SFNode <T>>
+class MFNode extends X3DArrayField <SFNode>
 {
    static readonly typeName: "MFNode";
 }
@@ -1213,7 +1219,7 @@ class MFVec4f extends X3DArrayField <SFVec4f>
    static readonly typeName: "MFVec4f";
 }
 
-// CONCRETE_NODES START
+// CONCRETE NODES START
 
 interface X3DNode { }
 
@@ -1364,8 +1370,7 @@ interface SFNodeBiquadFilter extends X3DTimeDependentNode, ChannelFields
 {
    frequency: number;
    detune: number;
-   type: "LOWPASS" | "HIGHPASS" | "BANDPASS"
-      | "LOWSHELF" | "HIGHSHELF" | "PEAKING" | "NOTCH" |  "ALLPASS";
+   type: "LOWPASS" | "HIGHPASS" | "BANDPASS" | "LOWSHELF" | "HIGHSHELF" | "PEAKING" | "NOTCH" |  "ALLPASS";
    qualityFactor: number;
    tailTime: SFTime;
    children: MFNode;
@@ -1919,12 +1924,12 @@ interface SFNodeMultiTextureTransform extends SFNode
 
 interface SFNodeNavigationInfo extends X3DBindableNode
 {
-   type: MFString <"EXAMINE" | "WALK" | "FLY" | "PLANE" | "PLANE_create3000.github.io" | "PLANE_create3000.de" | "LOOKAT" | "EXPLORE" | "ANY" | "NONE">;
+   type: ["EXAMINE" | "WALK" | "FLY" | "PLANE" | "PLANE_create3000.github.io" | "PLANE_create3000.de" | "LOOKAT" | "EXPLORE" | "ANY" | "NONE"];
    avatarSize: MFFloat;
    speed: number;
    headlight: boolean;
    visibilityLimit: number;
-   transitionType: MFString <"TELEPORT" | "LINEAR" | "ANIMATE">;
+   transitionType: "TELEPORT" | "LINEAR" | "ANIMATE";
    transitionTime: SFTime;
    transitionComplete: boolean;
 }
@@ -2443,4 +2448,4 @@ type ConcreteNodesType = {
    [name: string]: SFNode // catchall
 }
 
-// CONCRETE_NODES END
+// CONCRETE NODES END
