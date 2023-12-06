@@ -9,8 +9,8 @@ const
    x3duom        = xml (sh (`wget -q -O - https://www.web3d.org/specifications/X3dUnifiedObjectModel-4.0.xml`)),
    experimental  = xml (sh (`cat`, `${__dirname}/experimental.x3duom.xml`)),
    concreteNodes = map (x3duom .X3dUnifiedObjectModel .ConcreteNodes .ConcreteNode
-      .concat (experimental .X3dUnifiedObjectModel .ConcreteNodes .ConcreteNode)
       .filter (node => node .InterfaceDefinition ?.componentInfo)
+      .concat (experimental .X3dUnifiedObjectModel .ConcreteNodes .ConcreteNode)
       .sort ((a, b) => a .name .localeCompare (b .name))
       .map (node => [node .name, node])),
    abstractNodes = map (x3duom .X3dUnifiedObjectModel .AbstractNodeTypes .AbstractNodeType

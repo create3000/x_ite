@@ -3,7 +3,6 @@
    <ConcreteNodes>
       <ConcreteNode name="Appearance">
          <InterfaceDefinition>
-            <componentInfo name="Shape" level="1"/>
             <field name="blendMode"
                   type="SFNode"
                   accessType="inputOutput"
