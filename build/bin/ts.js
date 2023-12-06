@@ -73,7 +73,8 @@ function ConcreteNode (node)
       console .log (fields);
 
    const properties = fields
-      .map (field => `${field .description ? `   /** ${field .description} */\n` : ""}   ${field .name}: ${FieldType (field)},`)
+      .map (field => `   /** ${FieldDescription (field)} */
+   ${FieldAccessType (field)}${field .name}: ${FieldType (field)},`)
       .join ("\n");
 
    // Generate class
@@ -85,6 +86,23 @@ ${properties}
 }`;
 
    return string;
+}
+
+function FieldDescription (field)
+{
+   let strings = [ ];
+
+   if (field .description)
+      strings .push (field .description);
+
+   strings .push (`Access type is '${field .accessType}'.`);
+
+   return strings .join (" ");
+}
+
+function FieldAccessType (field)
+{
+   return field .accessType === "outputOnly" ? "readonly " : "";
 }
 
 function FieldType (field)
