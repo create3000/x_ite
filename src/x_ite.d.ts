@@ -1029,8 +1029,6 @@ declare class SFNode extends X3DField
 {
    static readonly typeName: "SFNode";
 
-   metadata: SFNode;
-
    addFieldCallback (key: any, callback: (value: this) => void): void;
    /**
     * @deprecated Use `node .getField (name) .addFieldCallback (key, callback)`.
@@ -1408,12 +1406,6 @@ interface AcousticPropertiesProxy extends X3DAppearanceChildNodeProxy
    */
    enabled: boolean,
    /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * sound refraction coefficient of a medium, which determines change in propagation direction of sound wave when obliquely crossing boundary between two mediums where its speed is different.
    *
    * This field is of access type is 'inputOutput' and type SFFloat.
@@ -1431,47 +1423,11 @@ interface AcousticPropertiesProxy extends X3DAppearanceChildNodeProxy
 interface AnalyserProxy extends X3DSoundProcessingNodeProxy
 {
    /**
-   * channelCount reports number of channels provided by input nodes.
-   *
-   * This field is of access type is 'outputOnly' and type SFInt32.
-   */
-   readonly channelCount: number,
-   /**
-   * channelCountMode determines how individual channels are counted when up-mixing and down-mixing connections to any inputs.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   channelCountMode: "MAX" | "CLAMPED_MAX" | "EXPLICIT",
-   /**
-   * channelInterpretation determines how individual channels are treated when up-mixing and down-mixing connections to any inputs.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   channelInterpretation: "SPEAKERS" | "DISCRETE",
-   /**
    * The children field specifies audio-graph sound sources providing input signals for this node.
    *
    * This field is of access type is 'inputOutput' and type MFNode.
    */
    children: MFNode <AnalyserProxy | AudioClipProxy | AudioDestinationProxy | BiquadFilterProxy | BufferAudioSourceProxy | ChannelMergerProxy | ChannelSelectorProxy | ChannelSplitterProxy | ConvolverProxy | DelayProxy | DynamicsCompressorProxy | GainProxy | ListenerPointSourceProxy | MicrophoneSourceProxy | MovieTextureProxy | OscillatorSourceProxy | SoundProxy | SpatialSoundProxy | StreamAudioDestinationProxy | StreamAudioSourceProxy | WaveShaperProxy>,
-   /**
-   * Author-provided prose that describes intended purpose of the url asset.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
-   * Current elapsed time since AudioClip activated/running, cumulative in seconds, and not counting any paused time.
-   *
-   * This field is of access type is 'outputOnly' and type SFTime.
-   */
-   readonly elapsedTime: number,
-   /**
-   * Enables/disables node operation.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   enabled: boolean,
    /**
    * fftSize represents size of Fast Fourier Transform (FFT) used to determine frequency domain.
    *
@@ -1485,35 +1441,11 @@ interface AnalyserProxy extends X3DSoundProcessingNodeProxy
    */
    frequencyBinCount: number,
    /**
-   * The gain field is a factor that represents the amount of linear amplification to apply to the output of the node.
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   gain: number,
-   /**
-   * isActive true/false events are sent when playback starts/stops.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isActive: boolean,
-   /**
-   * isPaused true/false events are sent when AudioClip is paused/resumed.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isPaused: boolean,
-   /**
    * maxDecibels represents maximum power value in scaling range for FFT analysis data.
    *
    * This field is of access type is 'inputOutput' and type SFFloat.
    */
    maxDecibels: number,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * minDecibels represents minimum power value in scaling range for FFT analysis data.
    *
@@ -1521,126 +1453,22 @@ interface AnalyserProxy extends X3DSoundProcessingNodeProxy
    */
    minDecibels: number,
    /**
-   * When time now >= pauseTime, isPaused becomes true and AudioClip becomes paused.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   pauseTime: number,
-   /**
-   * When resumeTime becomes <= time now, isPaused becomes false and AudioClip becomes active.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   resumeTime: number,
-   /**
    * smoothingTimeConstant represents averaging constant during last analysis frame.
    *
    * This field is of access type is 'inputOutput' and type SFFloat.
    */
    smoothingTimeConstant: number,
-   /**
-   * Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   startTime: number,
-   /**
-   * Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   stopTime: number,
-   /**
-   * tailTime is duration of time that a node continues to provide output signal after the input signal becomes silent.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   tailTime: number,
 }
 
 /** Anchor is a Grouping node that can contain most nodes. */
 interface AnchorProxy extends X3DGroupingNodeProxy, X3DUrlObjectProxy
 {
    /**
-   * This field is of access type is 'inputOnly' and type MFNode.
-   */
-   addChildren: MFNode <X3DChildNodeProxy>,
-   /**
-   * The [autoRefresh field has no effect, Anchor operation is only triggered by user selection.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   autoRefresh: number,
-   /**
-   * The [autoRefreshTimeLimit field has no effect, Anchor operation is only triggered by user selection.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   autoRefreshTimeLimit: number,
-   /**
-   * Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxCenter: SFVec3f,
-   /**
-   * Whether to display bounding box for associated geometry, aligned with world coordinates.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   bboxDisplay: boolean,
-   /**
-   * Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxSize: SFVec3f,
-   /**
-   * Grouping nodes contain an ordered list of children nodes.
-   *
-   * This field is of access type is 'inputOutput' and type MFNode.
-   */
-   children: MFNode <X3DChildNodeProxy>,
-   /**
-   * Author-provided prose that describes intended purpose of the url asset.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
-   * The load field has no effect, Anchor operation is only triggered by user selection.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   load: boolean,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * If provided, parameter tells the X3D player where to to redirect the loaded url.
    *
    * This field is of access type is 'inputOutput' and type MFString.
    */
    parameter: MFString,
-   /**
-   * This field is of access type is 'inputOnly' and type MFNode.
-   */
-   removeChildren: MFNode <X3DChildNodeProxy>,
-   /**
-   * Address of replacement world, or #ViewpointDEFName within the current scene, or alternate Web resource, activated by the user selecting Shape geometry within the Anchor children nodes.
-   *
-   * This field is of access type is 'inputOutput' and type MFString.
-   */
-   url: MFString,
-   /**
-   * Whether or not renderable content within this node is visually displayed.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   visible: boolean,
 }
 
 /** Appearance specifies the visual properties of geometry by containing the Material, ImageTexture/MovieTexture/PixelTexture, FillProperties, LineProperties, programmable shader nodes (ComposedShader, PackagedShader, ProgramShader) and TextureTransform nodes. */
@@ -1687,12 +1515,6 @@ interface AppearanceProxy extends X3DAppearanceNodeProxy
    */
    material: X3DMaterialNodeProxy,
    /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * Single contained PointProperties node that can specify additional visual attributes applied to corresponding point geometry.
    *
    * This field is of access type is 'inputOutput' and type SFNode.
@@ -1728,12 +1550,6 @@ interface Arc2DProxy extends X3DGeometryNodeProxy
    */
    endAngle: number,
    /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * circle radius, of which the arc is a portion.
    *
    * This field is of access type is 'initializeOnly' and type SFFloat.
@@ -1763,12 +1579,6 @@ interface ArcClose2DProxy extends X3DGeometryNodeProxy
    */
    endAngle: number,
    /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * circle radius, of which the arc is a portion.
    *
    * This field is of access type is 'initializeOnly' and type SFFloat.
@@ -1792,65 +1602,11 @@ interface ArcClose2DProxy extends X3DGeometryNodeProxy
 interface AudioClipProxy extends X3DSoundSourceNodeProxy, X3DUrlObjectProxy
 {
    /**
-   * autoRefresh defines interval in seconds before automatic reload of current url asset is performed.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   autoRefresh: number,
-   /**
-   * autoRefreshTimeLimit defines maximum duration that automatic refresh activity can occur.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   autoRefreshTimeLimit: number,
-   /**
-   * Author-provided prose that describes intended purpose of the url asset.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
    * or -1.
    *
    * This field is of access type is 'outputOnly' and type SFTime.
    */
    readonly duration_changed: number,
-   /**
-   * Current elapsed time since AudioClip activated/running, cumulative in seconds, and not counting any paused time.
-   *
-   * This field is of access type is 'outputOnly' and type SFTime.
-   */
-   readonly elapsedTime: number,
-   /**
-   * Enables/disables node operation.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   enabled: boolean,
-   /**
-   * The gain field is a factor that represents the amount of linear amplification to apply to the output of the node.
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   gain: number,
-   /**
-   * isActive true/false events are sent when playback starts/stops.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isActive: boolean,
-   /**
-   * isPaused true/false events are sent when AudioClip is paused/resumed.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isPaused: boolean,
-   /**
-   * load=true means load immediately, load=false means defer loading or else unload a previously loaded scene.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   load: boolean,
    /**
    * Repeat indefinitely when loop=true, repeat only once when loop=false.
    *
@@ -1858,70 +1614,16 @@ interface AudioClipProxy extends X3DSoundSourceNodeProxy, X3DUrlObjectProxy
    */
    loop: boolean,
    /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * When time now >= pauseTime, isPaused becomes true and AudioClip becomes paused.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   pauseTime: number,
-   /**
    * Multiplier for the rate at which sampled sound is played.
    *
    * This field is of access type is 'inputOutput' and type SFFloat.
    */
    pitch: number,
-   /**
-   * When resumeTime becomes <= time now, isPaused becomes false and AudioClip becomes active.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   resumeTime: number,
-   /**
-   * Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   startTime: number,
-   /**
-   * Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   stopTime: number,
-   /**
-   * Location and filename of sound file or stream.
-   *
-   * This field is of access type is 'inputOutput' and type MFString.
-   */
-   url: MFString,
 }
 
 /** AudioDestination node represents the final audio destination and is what user ultimately hears, typically from the speakers of user device. */
 interface AudioDestinationProxy extends X3DSoundDestinationNodeProxy
 {
-   /**
-   * channelCount reports number of channels provided by input nodes.
-   *
-   * This field is of access type is 'outputOnly' and type SFInt32.
-   */
-   readonly channelCount: number,
-   /**
-   * channelCountMode determines how individual channels are counted when up-mixing and down-mixing connections to any inputs.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   channelCountMode: "MAX" | "CLAMPED_MAX" | "EXPLICIT",
-   /**
-   * channelInterpretation determines how individual channels are treated when up-mixing and down-mixing connections to any inputs.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   channelInterpretation: "SPEAKERS" | "DISCRETE",
    /**
    * The children field specifies audio-graph sound sources providing input signals for this node.
    *
@@ -1929,47 +1631,11 @@ interface AudioDestinationProxy extends X3DSoundDestinationNodeProxy
    */
    children: MFNode <AnalyserProxy | AudioClipProxy | AudioDestinationProxy | BiquadFilterProxy | BufferAudioSourceProxy | ChannelMergerProxy | ChannelSelectorProxy | ChannelSplitterProxy | ConvolverProxy | DelayProxy | DynamicsCompressorProxy | GainProxy | ListenerPointSourceProxy | MicrophoneSourceProxy | MovieTextureProxy | OscillatorSourceProxy | SoundProxy | SpatialSoundProxy | StreamAudioDestinationProxy | StreamAudioSourceProxy | WaveShaperProxy>,
    /**
-   * Author-provided prose that describes intended purpose of the url asset.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
-   * Enables/disables node operation.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   enabled: boolean,
-   /**
-   * The gain field is a factor that represents the amount of linear amplification to apply to the output of the node.
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   gain: number,
-   /**
-   * isActive true/false events are sent when playback starts/stops.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isActive: boolean,
-   /**
    * [maxChannelCount.
    *
    * This field is of access type is 'inputOutput' and type SFInt32.
    */
    maxChannelCount: number,
-   /**
-   * mediaDeviceID field provides ID parameter functionality.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   mediaDeviceID: string,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
 }
 
 /** Background simulates ground and sky, using vertical arrays of wraparound color values. */
@@ -1981,12 +1647,6 @@ interface BackgroundProxy extends X3DBackgroundNodeProxy
    * This field is of access type is 'inputOutput' and type MFString.
    */
    backUrl: MFString,
-   /**
-   * event sent when node becomes active/inactive.
-   *
-   * This field is of access type is 'outputOnly' and type SFTime.
-   */
-   readonly bindTime: number,
    /**
    * Image background panorama between ground/sky backdrop and scene's geometry.
    *
@@ -2000,35 +1660,11 @@ interface BackgroundProxy extends X3DBackgroundNodeProxy
    */
    frontUrl: MFString,
    /**
-   * The angle array values increase from 0.
-   *
-   * This field is of access type is 'inputOutput' and type MFFloat.
-   */
-   groundAngle: MFFloat,
-   /**
-   * Color of the ground at the various angles on the ground partial sphere.
-   *
-   * This field is of access type is 'inputOutput' and type MFColor.
-   */
-   groundColor: MFColor,
-   /**
-   * event true sent when node becomes active, event false sent when unbound by another node.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isBound: boolean,
-   /**
    * Image background panorama between ground/sky backdrop and scene's geometry.
    *
    * This field is of access type is 'inputOutput' and type MFString.
    */
    leftUrl: MFString,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * Image background panorama between ground/sky backdrop and scene's geometry.
    *
@@ -2036,35 +1672,11 @@ interface BackgroundProxy extends X3DBackgroundNodeProxy
    */
    rightUrl: MFString,
    /**
-   * Input event set_bind=true makes this node active, input event set_bind=false makes this node inactive.
-   *
-   * This field is of access type is 'inputOnly' and type SFBool.
-   */
-   set_bind: boolean,
-   /**
-   * The angle array values increase from 0.
-   *
-   * This field is of access type is 'inputOutput' and type MFFloat.
-   */
-   skyAngle: MFFloat,
-   /**
-   * Color of the sky at various angles on the sky sphere.
-   *
-   * This field is of access type is 'inputOutput' and type MFColor.
-   */
-   skyColor: MFColor,
-   /**
    * Image background panorama between ground/sky backdrop and scene's geometry.
    *
    * This field is of access type is 'inputOutput' and type MFString.
    */
    topUrl: MFString,
-   /**
-   * how "clear" the background is, allows underlying page to show through: 1.
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   transparency: number,
 }
 
 /** BallJoint represents an unconstrained joint between two bodies that pivot about a common anchor point. */
@@ -2077,119 +1689,33 @@ interface BallJointProxy extends X3DRigidJointNodeProxy
    */
    anchorPoint: SFVec3f,
    /**
-   * The body1 and body2 fields indicate the two RigidBody nodes connected by this joint.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   body1: RigidBodyProxy,
-   /**
    * body1AnchorPoint describes anchorPoint position relative to local coordinate reference frame.
    *
    * This field is of access type is 'outputOnly' and type SFVec3f.
    */
    readonly body1AnchorPoint: SFVec3f,
    /**
-   * The body1 and body2 fields indicate the two RigidBody nodes connected by this joint.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   body2: RigidBodyProxy,
-   /**
    * body2AnchorPoint describes anchorPoint position relative to local coordinate reference frame.
    *
    * This field is of access type is 'outputOnly' and type SFVec3f.
    */
    readonly body2AnchorPoint: SFVec3f,
-   /**
-   * forceOutput controls which output fields are generated for the next frame.
-   *
-   * This field is of access type is 'inputOutput' and type MFString.
-   */
-   forceOutput: MFString <"ALL" | "NONE">,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
 }
 
 /** Billboard is a Grouping node that can contain most nodes. */
 interface BillboardProxy extends X3DGroupingNodeProxy
 {
    /**
-   * This field is of access type is 'inputOnly' and type MFNode.
-   */
-   addChildren: MFNode <X3DChildNodeProxy>,
-   /**
    * axisOfRotation direction is relative to local coordinate system.
    *
    * This field is of access type is 'inputOutput' and type SFVec3f.
    */
    axisOfRotation: SFVec3f,
-   /**
-   * Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxCenter: SFVec3f,
-   /**
-   * Whether to display bounding box for associated geometry, aligned with world coordinates.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   bboxDisplay: boolean,
-   /**
-   * Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxSize: SFVec3f,
-   /**
-   * Grouping nodes contain an ordered list of children nodes.
-   *
-   * This field is of access type is 'inputOutput' and type MFNode.
-   */
-   children: MFNode <X3DChildNodeProxy>,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * This field is of access type is 'inputOnly' and type MFNode.
-   */
-   removeChildren: MFNode <X3DChildNodeProxy>,
-   /**
-   * Whether or not renderable content within this node is visually displayed.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   visible: boolean,
 }
 
 /** BiquadFilter node is an AudioNode processor implementing common low-order filters. */
 interface BiquadFilterProxy extends X3DSoundProcessingNodeProxy
 {
-   /**
-   * channelCount reports number of channels provided by input nodes.
-   *
-   * This field is of access type is 'outputOnly' and type SFInt32.
-   */
-   readonly channelCount: number,
-   /**
-   * channelCountMode determines how individual channels are counted when up-mixing and down-mixing connections to any inputs.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   channelCountMode: "MAX" | "CLAMPED_MAX" | "EXPLICIT",
-   /**
-   * channelInterpretation determines how individual channels are treated when up-mixing and down-mixing connections to any inputs.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   channelInterpretation: "SPEAKERS" | "DISCRETE",
    /**
    * The children field specifies audio-graph sound sources providing input signals for this node.
    *
@@ -2197,29 +1723,11 @@ interface BiquadFilterProxy extends X3DSoundProcessingNodeProxy
    */
    children: MFNode <AnalyserProxy | AudioClipProxy | AudioDestinationProxy | BiquadFilterProxy | BufferAudioSourceProxy | ChannelMergerProxy | ChannelSelectorProxy | ChannelSplitterProxy | ConvolverProxy | DelayProxy | DynamicsCompressorProxy | GainProxy | ListenerPointSourceProxy | MicrophoneSourceProxy | MovieTextureProxy | OscillatorSourceProxy | SoundProxy | SpatialSoundProxy | StreamAudioDestinationProxy | StreamAudioSourceProxy | WaveShaperProxy>,
    /**
-   * Author-provided prose that describes intended purpose of the url asset.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
    * The detune field forms a compound field together with playbackRate that together determine a computedPlaybackRate value.
    *
    * This field is of access type is 'inputOutput' and type SFFloat.
    */
    detune: number,
-   /**
-   * Current elapsed time since AudioClip activated/running, cumulative in seconds, and not counting any paused time.
-   *
-   * This field is of access type is 'outputOnly' and type SFTime.
-   */
-   readonly elapsedTime: number,
-   /**
-   * Enables/disables node operation.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   enabled: boolean,
    /**
    * frequency at which the BiquadFilterNode operates, in Hz.
    *
@@ -2227,65 +1735,11 @@ interface BiquadFilterProxy extends X3DSoundProcessingNodeProxy
    */
    frequency: number,
    /**
-   * The gain field is a factor that represents the amount of linear amplification to apply to the output of the node.
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   gain: number,
-   /**
-   * isActive true/false events are sent when playback starts/stops.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isActive: boolean,
-   /**
-   * isPaused true/false events are sent when AudioClip is paused/resumed.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isPaused: boolean,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * When time now >= pauseTime, isPaused becomes true and AudioClip becomes paused.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   pauseTime: number,
-   /**
    * qualityFactor is Quality Factor (Q) of the respective filter algorithm.
    *
    * This field is of access type is 'inputOutput' and type SFFloat.
    */
    qualityFactor: number,
-   /**
-   * When resumeTime becomes <= time now, isPaused becomes false and AudioClip becomes active.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   resumeTime: number,
-   /**
-   * Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   startTime: number,
-   /**
-   * Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   stopTime: number,
-   /**
-   * tailTime is duration of time that a node continues to provide output signal after the input signal becomes silent.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   tailTime: number,
    /**
    * type selects which BiquadFilter algorithm is used.
    *
@@ -2297,18 +1751,6 @@ interface BiquadFilterProxy extends X3DSoundProcessingNodeProxy
 /** BlendedVolumeStyle combines rendering of two voxel data sets into one by blending voxel values. */
 interface BlendedVolumeStyleProxy extends X3DComposableVolumeRenderStyleNodeProxy
 {
-   /**
-   * Enables/disables node operation.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   enabled: boolean,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * Single contained X3DComposableVolumeRenderStyleNode node that defines specific rendering technique for data in the voxels field, and the result is blended with parent VolumeData or SegmentedVoliumeData node.
    *
@@ -2381,12 +1823,6 @@ interface BooleanFilterProxy extends X3DChildNodeProxy
    */
    readonly inputTrue: boolean,
    /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * set_boolean is the input value to be filtered.
    *
    * This field is of access type is 'inputOnly' and type SFBool.
@@ -2398,41 +1834,11 @@ interface BooleanFilterProxy extends X3DChildNodeProxy
 interface BooleanSequencerProxy extends X3DSequencerNodeProxy
 {
    /**
-   * Definition values for linear-interpolation function input intervals, listed in non-decreasing order and corresponding to a value in the keyValue array.
-   *
-   * This field is of access type is 'inputOutput' and type MFFloat.
-   */
-   key: MFFloat,
-   /**
    * Output values for linear sequencing, each corresponding to an input-fraction value in the key array.
    *
    * This field is of access type is 'inputOutput' and type MFBool.
    */
    keyValue: MFBool,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * Send next output value in keyValue array, and reset internal fraction field to match corresponding value in key array.
-   *
-   * This field is of access type is 'inputOnly' and type SFBool.
-   */
-   next: boolean,
-   /**
-   * Send previous output value in keyValue array, and reset internal fraction field to match corresponding value in key array.
-   *
-   * This field is of access type is 'inputOnly' and type SFBool.
-   */
-   previous: boolean,
-   /**
-   * set_fraction selects input key for corresponding keyValue output.
-   *
-   * This field is of access type is 'inputOnly' and type SFFloat.
-   */
-   set_fraction: number,
    /**
    * Single intermittent output value determined by current key time and corresponding keyValue entry.
    *
@@ -2444,12 +1850,6 @@ interface BooleanSequencerProxy extends X3DSequencerNodeProxy
 /** BooleanToggle maintains state and negates output when a true input is provided. */
 interface BooleanToggleProxy extends X3DChildNodeProxy
 {
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * If input event set_boolean is true, flip state by negating current value of the toggle field Hint: for logical consistency, input event set_boolean false has no effect (under review as part of Mantis issue 519).
    *
@@ -2467,12 +1867,6 @@ interface BooleanToggleProxy extends X3DChildNodeProxy
 /** BooleanTrigger converts time events to boolean true events. */
 interface BooleanTriggerProxy extends X3DTriggerNodeProxy
 {
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * set_triggerTime provides input time event, typical event sent is TouchSensor touchTime.
    *
@@ -2497,18 +1891,6 @@ interface BoundaryEnhancementVolumeStyleProxy extends X3DComposableVolumeRenderS
    */
    boundaryOpacity: number,
    /**
-   * Enables/disables node operation.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   enabled: boolean,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * opacityFactor k_ge is the power function to control the slope of the opacity curve to highlight the set of data.
    *
    * This field is of access type is 'inputOutput' and type SFFloat.
@@ -2526,34 +1908,16 @@ interface BoundaryEnhancementVolumeStyleProxy extends X3DComposableVolumeRenderS
 interface BoundedPhysicsModelProxy extends X3DParticlePhysicsModelNodeProxy
 {
    /**
-   * Enables/disables node operation.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   enabled: boolean,
-   /**
    * Single contained geometry node provides the geometry used for each particle when the parent ParticleSystem node has geometryType=GEOMETRY.
    *
    * This field is of access type is 'inputOutput' and type SFNode.
    */
    geometry: X3DGeometryNodeProxy,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
 }
 
 /** Box is a geometry node specifying a rectangular cuboid. */
 interface BoxProxy extends X3DGeometryNodeProxy
 {
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * size x y z in meters.
    *
@@ -2571,18 +1935,6 @@ interface BoxProxy extends X3DGeometryNodeProxy
 /** BufferAudioSource node represents a memory-resident audio asset that can contain one or more channels. */
 interface BufferAudioSourceProxy extends X3DSoundSourceNodeProxy, X3DUrlObjectProxy
 {
-   /**
-   * autoRefresh defines interval in seconds before automatic reload of current url asset is performed.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   autoRefresh: number,
-   /**
-   * autoRefreshTimeLimit defines maximum duration that automatic refresh activity can occur.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   autoRefreshTimeLimit: number,
    /**
    * buffer is a memory-resident audio asset that can contain one or more channels.
    *
@@ -2618,57 +1970,15 @@ interface BufferAudioSourceProxy extends X3DSoundSourceNodeProxy, X3DUrlObjectPr
    */
    channelInterpretation: "SPEAKERS" | "DISCRETE",
    /**
-   * Author-provided prose that describes intended purpose of the url asset.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
    * The detune field forms a compound field together with playbackRate that together determine a computedPlaybackRate value.
    *
    * This field is of access type is 'inputOutput' and type SFFloat.
    */
    detune: number,
    /**
-   * Current elapsed time since AudioClip activated/running, cumulative in seconds, and not counting any paused time.
-   *
-   * This field is of access type is 'outputOnly' and type SFTime.
-   */
-   readonly elapsedTime: number,
-   /**
-   * Enables/disables node operation.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   enabled: boolean,
-   /**
-   * The gain field is a factor that represents the amount of linear amplification to apply to the output of the node.
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   gain: number,
-   /**
-   * isActive true/false events are sent when playback starts/stops.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isActive: boolean,
-   /**
-   * isPaused true/false events are sent when AudioClip is paused/resumed.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isPaused: boolean,
-   /**
    * This field is of access type is 'outputOnly' and type SFInt32.
    */
    readonly length: number,
-   /**
-   * load=true means load immediately, load=false means defer loading or else unload a previously loaded scene.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   load: boolean,
    /**
    * Repeat indefinitely when loop=true, repeat only once when loop=false.
    *
@@ -2688,23 +1998,11 @@ interface BufferAudioSourceProxy extends X3DSoundSourceNodeProxy, X3DUrlObjectPr
    */
    loopStart: number,
    /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * numberOfChannels is number of audio channels found in this buffer source.
    *
    * This field is of access type is 'inputOutput' and type SFInt32.
    */
    numberOfChannels: number,
-   /**
-   * When time now >= pauseTime, isPaused becomes true and AudioClip becomes paused.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   pauseTime: number,
    /**
    * playbackRate field is speed at which to render the audio stream, and forms a compound field together with detune field Hint: negative values play in reverse.
    *
@@ -2712,192 +2010,39 @@ interface BufferAudioSourceProxy extends X3DSoundSourceNodeProxy, X3DUrlObjectPr
    */
    playbackRate: number,
    /**
-   * When resumeTime becomes <= time now, isPaused becomes false and AudioClip becomes active.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   resumeTime: number,
-   /**
    * sampleRate field is sample-frames per second.
    *
    * This field is of access type is 'inputOutput' and type SFFloat.
    */
    sampleRate: number,
-   /**
-   * Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   startTime: number,
-   /**
-   * Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   stopTime: number,
-   /**
-   * Location and filename of sound file.
-   *
-   * This field is of access type is 'inputOutput' and type MFString.
-   */
-   url: MFString,
 }
 
 /** CADAssembly holds a set of Computer-Aided Design (CAD) assemblies or parts grouped together. */
 interface CADAssemblyProxy extends X3DGroupingNodeProxy, X3DProductStructureChildNodeProxy
 {
-   /**
-   * This field is of access type is 'inputOnly' and type MFNode.
-   */
-   addChildren: MFNode <X3DChildNodeProxy>,
-   /**
-   * Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxCenter: SFVec3f,
-   /**
-   * Whether to display bounding box for associated geometry, aligned with world coordinates.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   bboxDisplay: boolean,
-   /**
-   * Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxSize: SFVec3f,
-   /**
-   * Grouping nodes contain an ordered list of children nodes.
-   *
-   * This field is of access type is 'inputOutput' and type MFNode.
-   */
-   children: MFNode <X3DChildNodeProxy>,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * Optional name for this particular CAD node.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   name: string,
-   /**
-   * This field is of access type is 'inputOnly' and type MFNode.
-   */
-   removeChildren: MFNode <X3DChildNodeProxy>,
-   /**
-   * Whether or not renderable content within this node is visually displayed.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   visible: boolean,
+
 }
 
 /** CADFace holds geometry representing one face in a Computer-Aided Design (CAD) CADPart. */
 interface CADFaceProxy extends X3DProductStructureChildNodeProxy, X3DBoundedObjectProxy
 {
    /**
-   * Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxCenter: SFVec3f,
-   /**
-   * Whether to display bounding box for associated geometry, aligned with world coordinates.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   bboxDisplay: boolean,
-   /**
-   * Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxSize: SFVec3f,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * Optional name for this particular CAD node.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   name: string,
-   /**
    * Contained Shape for this CADPart.
    *
    * This field is of access type is 'inputOutput' and type SFNode.
    */
    shape: ShapeProxy | LODProxy | TransformProxy,
-   /**
-   * Whether or not renderable content within this node is visually displayed.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   visible: boolean,
 }
 
 /** CADLayer nodes define a hierarchy that shows layer structure for a Computer-Aided Design (CAD) model. */
 interface CADLayerProxy extends X3DGroupingNodeProxy
 {
    /**
-   * This field is of access type is 'inputOnly' and type MFNode.
-   */
-   addChildren: MFNode <X3DChildNodeProxy>,
-   /**
-   * Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxCenter: SFVec3f,
-   /**
-   * Whether to display bounding box for associated geometry, aligned with world coordinates.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   bboxDisplay: boolean,
-   /**
-   * Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxSize: SFVec3f,
-   /**
-   * Grouping nodes contain an ordered list of children nodes.
-   *
-   * This field is of access type is 'inputOutput' and type MFNode.
-   */
-   children: MFNode <X3DChildNodeProxy>,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * Optional name for this particular CAD node.
    *
    * This field is of access type is 'inputOutput' and type SFString.
    */
    name: string,
-   /**
-   * This field is of access type is 'inputOnly' and type MFNode.
-   */
-   removeChildren: MFNode <X3DChildNodeProxy>,
-   /**
-   * Whether or not renderable content within this node is visually displayed.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   visible: boolean,
 }
 
 /** CADPart is an atomic part that defines both coordinate-system location and the faces that constitute a part in a Computer-Aided Design (CAD) model. */
@@ -2907,24 +2052,6 @@ interface CADPartProxy extends X3DProductStructureChildNodeProxy, X3DGroupingNod
    * This field is of access type is 'inputOnly' and type MFNode.
    */
    addChildren: MFNode <CADFaceProxy>,
-   /**
-   * Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxCenter: SFVec3f,
-   /**
-   * Whether to display bounding box for associated geometry, aligned with world coordinates.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   bboxDisplay: boolean,
-   /**
-   * Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxSize: SFVec3f,
    /**
    * Translation offset from origin of local coordinate system, applied prior to rotation or scaling.
    *
@@ -2937,18 +2064,6 @@ interface CADPartProxy extends X3DProductStructureChildNodeProxy, X3DGroupingNod
    * This field is of access type is 'inputOutput' and type MFNode.
    */
    children: MFNode <CADFaceProxy>,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * Optional name for this particular CAD node.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   name: string,
    /**
    * This field is of access type is 'inputOnly' and type MFNode.
    */
@@ -2977,12 +2092,6 @@ interface CADPartProxy extends X3DProductStructureChildNodeProxy, X3DGroupingNod
    * This field is of access type is 'inputOutput' and type SFVec3f.
    */
    translation: SFVec3f,
-   /**
-   * Whether or not renderable content within this node is visually displayed.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   visible: boolean,
 }
 
 /** CartoonVolumeStyle generates cartoon-style non-photorealistic rendering of associated volumetric data. */
@@ -2994,18 +2103,6 @@ interface CartoonVolumeStyleProxy extends X3DComposableVolumeRenderStyleNodeProx
    * This field is of access type is 'inputOutput' and type SFInt32.
    */
    colorSteps: number,
-   /**
-   * Enables/disables node operation.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   enabled: boolean,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * orthogonalColor is used for surface normals that are orthogonal (perpendicular) to viewer's current location.
    *
@@ -3030,76 +2127,16 @@ interface CartoonVolumeStyleProxy extends X3DComposableVolumeRenderStyleNodeProx
 interface ChannelMergerProxy extends X3DSoundChannelNodeProxy
 {
    /**
-   * channelCount reports number of channels provided by input nodes.
-   *
-   * This field is of access type is 'outputOnly' and type SFInt32.
-   */
-   readonly channelCount: number,
-   /**
-   * channelCountMode determines how individual channels are counted when up-mixing and down-mixing connections to any inputs.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   channelCountMode: "MAX" | "CLAMPED_MAX" | "EXPLICIT",
-   /**
-   * channelInterpretation determines how individual channels are treated when up-mixing and down-mixing connections to any inputs.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   channelInterpretation: "SPEAKERS" | "DISCRETE",
-   /**
    * The children field specifies audio-graph sound sources providing input signals for this node.
    *
    * This field is of access type is 'inputOutput' and type MFNode.
    */
    children: MFNode <AnalyserProxy | AudioClipProxy | AudioDestinationProxy | BiquadFilterProxy | BufferAudioSourceProxy | ChannelMergerProxy | ChannelSelectorProxy | ChannelSplitterProxy | ConvolverProxy | DelayProxy | DynamicsCompressorProxy | GainProxy | ListenerPointSourceProxy | MicrophoneSourceProxy | MovieTextureProxy | OscillatorSourceProxy | SoundProxy | SpatialSoundProxy | StreamAudioDestinationProxy | StreamAudioSourceProxy | WaveShaperProxy>,
-   /**
-   * Author-provided prose that describes intended purpose of the url asset.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
-   * Enables/disables node operation.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   enabled: boolean,
-   /**
-   * The gain field is a factor that represents the amount of linear amplification to apply to the output of the node.
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   gain: number,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
 }
 
 /** ChannelSelector selects a single channel output from all input channels. */
 interface ChannelSelectorProxy extends X3DSoundChannelNodeProxy
 {
-   /**
-   * channelCount reports number of channels provided by input nodes.
-   *
-   * This field is of access type is 'outputOnly' and type SFInt32.
-   */
-   readonly channelCount: number,
-   /**
-   * channelCountMode determines how individual channels are counted when up-mixing and down-mixing connections to any inputs.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   channelCountMode: "MAX" | "CLAMPED_MAX" | "EXPLICIT",
-   /**
-   * channelInterpretation determines how individual channels are treated when up-mixing and down-mixing connections to any inputs.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   channelInterpretation: "SPEAKERS" | "DISCRETE",
    /**
    * channelSelection is single channel of interest from those provided by input nodes.
    *
@@ -3112,83 +2149,17 @@ interface ChannelSelectorProxy extends X3DSoundChannelNodeProxy
    * This field is of access type is 'inputOutput' and type MFNode.
    */
    children: MFNode <AnalyserProxy | AudioClipProxy | AudioDestinationProxy | BiquadFilterProxy | BufferAudioSourceProxy | ChannelMergerProxy | ChannelSelectorProxy | ChannelSplitterProxy | ConvolverProxy | DelayProxy | DynamicsCompressorProxy | GainProxy | ListenerPointSourceProxy | MicrophoneSourceProxy | MovieTextureProxy | OscillatorSourceProxy | SoundProxy | SpatialSoundProxy | StreamAudioDestinationProxy | StreamAudioSourceProxy | WaveShaperProxy>,
-   /**
-   * Author-provided prose that describes intended purpose of the url asset.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
-   * Enables/disables node operation.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   enabled: boolean,
-   /**
-   * The gain field is a factor that represents the amount of linear amplification to apply to the output of the node.
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   gain: number,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
 }
 
 /** ChannelSplitter separates the different channels of a single audio source into a set of monophonic output channels. */
 interface ChannelSplitterProxy extends X3DSoundChannelNodeProxy
 {
    /**
-   * channelCount reports number of channels provided by input nodes.
-   *
-   * This field is of access type is 'outputOnly' and type SFInt32.
-   */
-   readonly channelCount: number,
-   /**
-   * channelCountMode determines how individual channels are counted when up-mixing and down-mixing connections to any inputs.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   channelCountMode: "MAX" | "CLAMPED_MAX" | "EXPLICIT",
-   /**
-   * channelInterpretation determines how individual channels are treated when up-mixing and down-mixing connections to any inputs.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   channelInterpretation: "SPEAKERS" | "DISCRETE",
-   /**
    * The children field specifies audio-graph sound sources providing input signals for this node, making up a section of the audio graph.
    *
    * This field is of access type is 'inputOutput' and type MFNode.
    */
    children: MFNode <AnalyserProxy | AudioClipProxy | AudioDestinationProxy | BiquadFilterProxy | BufferAudioSourceProxy | ChannelMergerProxy | ChannelSelectorProxy | ChannelSplitterProxy | ConvolverProxy | DelayProxy | DynamicsCompressorProxy | GainProxy | ListenerPointSourceProxy | MicrophoneSourceProxy | MovieTextureProxy | OscillatorSourceProxy | SoundProxy | SpatialSoundProxy | StreamAudioDestinationProxy | StreamAudioSourceProxy | WaveShaperProxy>,
-   /**
-   * Author-provided prose that describes intended purpose of the url asset.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
-   * Enables/disables node operation.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   enabled: boolean,
-   /**
-   * The gain field is a factor that represents the amount of linear amplification to apply to the output of the node.
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   gain: number,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * The outputs field is a set of output nodes receiving the split channels, and making up a section of the audio graph.
    *
@@ -3200,12 +2171,6 @@ interface ChannelSplitterProxy extends X3DSoundChannelNodeProxy
 /** Circle2D is a geometry node that defines a linear X-Y circle with center (0,0) in X-Y plane. */
 interface Circle2DProxy extends X3DGeometryNodeProxy
 {
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * circle radius.
    *
@@ -3224,12 +2189,6 @@ interface ClipPlaneProxy extends X3DChildNodeProxy
    */
    enabled: boolean,
    /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * If (a,b,c,d) is the plane, with the first three components being a normalized vector describing the plane's normal direction (and thus the fourth component d being distance from the origin), a point (x,y,z) is visible to the user, with regards to the clipping plane, if a*x+b*y+c*z+d is greater than 0.
    *
    * This field is of access type is 'inputOutput' and type SFVec4f.
@@ -3241,151 +2200,27 @@ interface ClipPlaneProxy extends X3DChildNodeProxy
 interface CollidableOffsetProxy extends X3DNBodyCollidableNodeProxy
 {
    /**
-   * Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxCenter: SFVec3f,
-   /**
-   * Whether to display bounding box for associated geometry, aligned with world coordinates.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   bboxDisplay: boolean,
-   /**
-   * Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxSize: SFVec3f,
-   /**
    * The collidable field holds a reference to a single nested item of a collidable scene graph.
    *
    * This field is of access type is 'initializeOnly' and type SFNode.
    */
    collidable: X3DNBodyCollidableNodeProxy,
-   /**
-   * Enables/disables node operation.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   enabled: boolean,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * Orientation (axis, angle in radians) of children relative to local coordinate system.
-   *
-   * This field is of access type is 'inputOutput' and type SFRotation.
-   */
-   rotation: SFRotation,
-   /**
-   * Position (x, y, z in meters) of children relative to local coordinate system.
-   *
-   * This field is of access type is 'inputOutput' and type SFVec3f.
-   */
-   translation: SFVec3f,
-   /**
-   * Whether or not renderable content within this node is visually displayed.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   visible: boolean,
 }
 
 /** CollidableShape connects the collision detection system, the rigid body model, and the renderable scene graph. */
 interface CollidableShapeProxy extends X3DNBodyCollidableNodeProxy
 {
    /**
-   * Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxCenter: SFVec3f,
-   /**
-   * Whether to display bounding box for associated geometry, aligned with world coordinates.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   bboxDisplay: boolean,
-   /**
-   * Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxSize: SFVec3f,
-   /**
-   * Enables/disables node operation.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   enabled: boolean,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * Orientation (axis, angle in radians) of children relative to local coordinate system.
-   *
-   * This field is of access type is 'inputOutput' and type SFRotation.
-   */
-   rotation: SFRotation,
-   /**
    * The shape field provides a geometry proxy for specifying which geometry best represents the collidable object.
    *
    * This field is of access type is 'initializeOnly' and type SFNode.
    */
    shape: ShapeProxy,
-   /**
-   * Position (x, y, z in meters) of children relative to local coordinate system.
-   *
-   * This field is of access type is 'inputOutput' and type SFVec3f.
-   */
-   translation: SFVec3f,
-   /**
-   * Whether or not renderable content within this node is visually displayed.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   visible: boolean,
 }
 
 /** Collision detects camera-to-object contact using current view and NavigationInfo avatarSize. */
 interface CollisionProxy extends X3DGroupingNodeProxy, X3DSensorNodeProxy
 {
-   /**
-   * This field is of access type is 'inputOnly' and type MFNode.
-   */
-   addChildren: MFNode <X3DChildNodeProxy>,
-   /**
-   * Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxCenter: SFVec3f,
-   /**
-   * Whether to display bounding box for associated geometry, aligned with world coordinates.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   bboxDisplay: boolean,
-   /**
-   * Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxSize: SFVec3f,
-   /**
-   * Grouping nodes contain an ordered list of children nodes.
-   *
-   * This field is of access type is 'inputOutput' and type MFNode.
-   */
-   children: MFNode <X3DChildNodeProxy>,
    /**
    * Time of collision between camera (avatar) and geometry.
    *
@@ -3393,45 +2228,11 @@ interface CollisionProxy extends X3DGroupingNodeProxy, X3DSensorNodeProxy
    */
    readonly collideTime: number,
    /**
-   * Author-provided prose that describes intended purpose of the node.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
-   * Enables/disables collision detection for children and all descendants.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   enabled: boolean,
-   /**
-   * isActive true/false events are sent when triggering the sensor.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isActive: boolean,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * The proxy node is used as a substitute for Collision children during collision detection, simplifying collision-intersection computations.
    *
    * This field is of access type is 'initializeOnly' and type SFNode.
    */
    proxy: X3DChildNodeProxy,
-   /**
-   * This field is of access type is 'inputOnly' and type MFNode.
-   */
-   removeChildren: MFNode <X3DChildNodeProxy>,
-   /**
-   * Whether or not renderable content within this node is visually displayed.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   visible: boolean,
 }
 
 /** CollisionCollection holds a collection of objects that can be managed as a single entity for resolution of inter-object collisions. */
@@ -3443,24 +2244,6 @@ interface CollisionCollectionProxy extends X3DChildNodeProxy, X3DBoundedObjectPr
    * This field is of access type is 'inputOutput' and type MFString.
    */
    appliedParameters: MFString <"BOUNCE" | "USER_FRICTION" | "FRICTION_COEFFICIENT-2" | "ERROR_REDUCTION" | "CONSTANT_FORCE" | "SPEED-1" | "SPEED-2" | "SLIP-1" | "SLIP-2">,
-   /**
-   * Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxCenter: SFVec3f,
-   /**
-   * Whether to display bounding box for associated geometry, aligned with world coordinates.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   bboxDisplay: boolean,
-   /**
-   * Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxSize: SFVec3f,
    /**
    * bounce indicates bounciness (0 = no bounce at all, 1 = maximum bounce).
    *
@@ -3492,12 +2275,6 @@ interface CollisionCollectionProxy extends X3DChildNodeProxy, X3DBoundedObjectPr
    */
    frictionCoefficients: SFVec2f,
    /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * minBounceSpeed m/s needed to bounce.
    *
    * This field is of access type is 'inputOutput' and type SFFloat.
@@ -3527,12 +2304,6 @@ interface CollisionCollectionProxy extends X3DChildNodeProxy, X3DBoundedObjectPr
    * This field is of access type is 'inputOutput' and type SFVec2f.
    */
    surfaceSpeed: SFVec2f,
-   /**
-   * Whether or not renderable content within this node is visually displayed.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   visible: boolean,
 }
 
 /** CollisionSensor generates collision-detection events. */
@@ -3549,56 +2320,14 @@ interface CollisionSensorProxy extends X3DSensorNodeProxy
    */
    readonly contacts: MFNode <ContactProxy>,
    /**
-   * Author-provided prose that describes intended purpose of the node.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
-   * Enables/disables node operation.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   enabled: boolean,
-   /**
    * This field is of access type is 'outputOnly' and type MFNode.
    */
    readonly intersections: MFNode <X3DNBodyCollidableNodeProxy>,
-   /**
-   * isActive true/false events are sent when sensing starts/stops.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isActive: boolean,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
 }
 
 /** CollisionSpace holds collection of objects considered together for resolution of inter-object collisions. */
 interface CollisionSpaceProxy extends X3DNBodyCollisionSpaceNodeProxy
 {
-   /**
-   * Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxCenter: SFVec3f,
-   /**
-   * Whether to display bounding box for associated geometry, aligned with world coordinates.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   bboxDisplay: boolean,
-   /**
-   * Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxSize: SFVec3f,
    /**
    * Collection of collidable objects as well as nested CollisionSpace collections.
    *
@@ -3606,29 +2335,11 @@ interface CollisionSpaceProxy extends X3DNBodyCollisionSpaceNodeProxy
    */
    collidables: MFNode <X3DNBodyCollisionSpaceNodeProxy | X3DNBodyCollidableNodeProxy>,
    /**
-   * Enables/disables node operation.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   enabled: boolean,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * useGeometry indicates whether collision-detection code checks down to level of geometry, or only make approximations using geometry bounds.
    *
    * This field is of access type is 'inputOutput' and type SFBool.
    */
    useGeometry: boolean,
-   /**
-   * Whether or not renderable content within this node is visually displayed.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   visible: boolean,
 }
 
 /** Color node defines a set of RGB color values that apply either to a sibling Coordinate|CoordinateDouble node, or else to a parent ElevationGrid node. */
@@ -3640,23 +2351,11 @@ interface ColorProxy extends X3DColorNodeProxy
    * This field is of access type is 'inputOutput' and type MFColor.
    */
    color: MFColor,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
 }
 
 /** ColorChaser generates a series of SFColor values that progressively change from initial value to destination value. */
 interface ColorChaserProxy extends X3DChaserNodeProxy
 {
-   /**
-   * duration is the time interval for filter response in seconds.
-   *
-   * This field is of access type is 'initializeOnly' and type SFTime.
-   */
-   duration: number,
    /**
    * Initial destination value for this node.
    *
@@ -3669,18 +2368,6 @@ interface ColorChaserProxy extends X3DChaserNodeProxy
    * This field is of access type is 'initializeOnly' and type SFColor.
    */
    initialValue: SFColor,
-   /**
-   * isActive true/false events are sent when follower-node computation starts/stops.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isActive: boolean,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * set_destination resets destination value of this node.
    *
@@ -3717,24 +2404,6 @@ interface ColorDamperProxy extends X3DDamperNodeProxy
    */
    initialValue: SFColor,
    /**
-   * isActive true/false events are sent when follower-node computation starts/stops.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isActive: boolean,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * order defines the number of internal filters (larger means smoother response, longer delay).
-   *
-   * This field is of access type is 'initializeOnly' and type SFInt32.
-   */
-   order: number,
-   /**
    * set_destination resets destination value of this node.
    *
    * This field is of access type is 'inputOnly' and type SFColor.
@@ -3747,18 +2416,6 @@ interface ColorDamperProxy extends X3DDamperNodeProxy
    */
    set_value: SFColor,
    /**
-   * tau is the exponential-decay time constant for filter response in seconds.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   tau: number,
-   /**
-   * or -1.
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   tolerance: number,
-   /**
    * Computed output value that approaches within tolerance of destination value, as determined by elapsed time, order and tau.
    *
    * This field is of access type is 'outputOnly' and type SFColor.
@@ -3770,29 +2427,11 @@ interface ColorDamperProxy extends X3DDamperNodeProxy
 interface ColorInterpolatorProxy extends X3DInterpolatorNodeProxy
 {
    /**
-   * Definition values for linear-interpolation function input intervals, listed in non-decreasing order and corresponding to a value in the keyValue array.
-   *
-   * This field is of access type is 'inputOutput' and type MFFloat.
-   */
-   key: MFFloat,
-   /**
    * Output values for linear interpolation, each corresponding to an input-fraction value in the key array.
    *
    * This field is of access type is 'inputOutput' and type MFColor.
    */
    keyValue: MFColor,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * set_fraction selects input key for corresponding keyValue output.
-   *
-   * This field is of access type is 'inputOnly' and type SFFloat.
-   */
-   set_fraction: number,
    /**
    * Linearly interpolated output value determined by current key time and corresponding keyValue pair.
    *
@@ -3810,12 +2449,6 @@ interface ColorRGBAProxy extends X3DColorNodeProxy
    * This field is of access type is 'inputOutput' and type MFColorRGBA.
    */
    color: MFColorRGBA,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
 }
 
 /** ComposedCubeMapTexture is a texture node that defines a cubic environment map source as an explicit set of images drawn from individual 2D texture nodes. */
@@ -3834,12 +2467,6 @@ interface ComposedCubeMapTextureProxy extends X3DEnvironmentTextureNodeProxy
    */
    bottomTexture: X3DTexture2DNodeProxy,
    /**
-   * Author-provided prose that describes intended purpose of the url asset.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
    * Parent ComposedCubeMapTexture element can contain up to six image nodes (ImageTexture PixelTexture MovieTexture, other texture nodes).
    *
    * This field is of access type is 'inputOutput' and type SFNode.
@@ -3851,12 +2478,6 @@ interface ComposedCubeMapTextureProxy extends X3DEnvironmentTextureNodeProxy
    * This field is of access type is 'inputOutput' and type SFNode.
    */
    leftTexture: X3DTexture2DNodeProxy,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * Parent ComposedCubeMapTexture element can contain up to six image nodes (ImageTexture PixelTexture MovieTexture, other texture nodes).
    *
@@ -3881,35 +2502,11 @@ interface ComposedCubeMapTextureProxy extends X3DEnvironmentTextureNodeProxy
 interface ComposedShaderProxy extends X3DShaderNodeProxy, X3DProgrammableShaderObjectProxy
 {
    /**
-   * activate forces the shader to activate the contained objects.
-   *
-   * This field is of access type is 'inputOnly' and type SFBool.
-   */
-   activate: boolean,
-   /**
    * Include a field statement for each field declaration in the ComposedShader node.
    *
    * This field is of access type is 'inputOutput' and type MFNode.
    */
    field: MFNode <fieldProxy>,
-   /**
-   * isSelected indicates this shader instance is selected for use by browser Warning: it is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isSelected: boolean,
-   /**
-   * isValid indicates whether current shader objects can be run as a shader program.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isValid: boolean,
-   /**
-   * The language field indicates to the X3D player which shading language is used.
-   *
-   * This field is of access type is 'initializeOnly' and type SFString.
-   */
-   language: "Cg" | "GLSL" | "HLSL",
    /**
    * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
    *
@@ -3928,64 +2525,16 @@ interface ComposedShaderProxy extends X3DShaderNodeProxy, X3DProgrammableShaderO
 interface ComposedTexture3DProxy extends X3DTexture3DNodeProxy
 {
    /**
-   * Author-provided prose that describes intended purpose of the url asset.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * Whether to repeat texture along R axis from front to back.
-   *
-   * This field is of access type is 'initializeOnly' and type SFBool.
-   */
-   repeatR: boolean,
-   /**
-   * Whether to repeat texture along S axis horizontally from left to right.
-   *
-   * This field is of access type is 'initializeOnly' and type SFBool.
-   */
-   repeatS: boolean,
-   /**
-   * Whether to repeat texture along T axis vertically from top to bottom.
-   *
-   * This field is of access type is 'initializeOnly' and type SFBool.
-   */
-   repeatT: boolean,
-   /**
    * collection of 2D texture sources.
    *
    * This field is of access type is 'inputOutput' and type MFNode.
    */
    texture: MFNode <X3DTexture2DNodeProxy>,
-   /**
-   * Single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images.
-   *
-   * This field is of access type is 'initializeOnly' and type SFNode.
-   */
-   textureProperties: TexturePropertiesProxy,
 }
 
 /** ComposedVolumeStyle allows compositing multiple rendering styles into single rendering pass. */
 interface ComposedVolumeStyleProxy extends X3DComposableVolumeRenderStyleNodeProxy
 {
-   /**
-   * Enables/disables node operation.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   enabled: boolean,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * List of contributing rendering style nodes or node references that can be applied to the object.
    *
@@ -4016,12 +2565,6 @@ interface ConeProxy extends X3DGeometryNodeProxy
    */
    height: number,
    /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * Whether to draw sides (other inside faces are not drawn).
    *
    * This field is of access type is 'inputOutput' and type SFBool.
@@ -4051,47 +2594,11 @@ interface ConeEmitterProxy extends X3DParticleEmitterNodeProxy
    */
    direction: SFVec3f,
    /**
-   * Basic mass of each particle, defined in mass base units (default is kilograms).
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   mass: number,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * Enables/disables production of particles from this emitter node.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   on: boolean,
-   /**
    * Point from which particles emanate.
    *
    * This field is of access type is 'inputOutput' and type SFVec3f.
    */
    position: SFVec3f,
-   /**
-   * Initial linear speed (default is m/s) imparted to all particles along their direction of movement.
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   speed: number,
-   /**
-   * Particle surface area in area base units (default is meters squared).
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   surfaceArea: number,
-   /**
-   * Multiplier for the randomness used to control the range of possible output values.
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   variation: number,
 }
 
 /** Contact nodes are produced as output events when two collidable objects or spaces make contact. */
@@ -4158,12 +2665,6 @@ interface ContactProxy extends X3DNodeProxy
    */
    geometry2: X3DNBodyCollidableNodeProxy,
    /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * minBounceSpeed m/s needed to bounce.
    *
    * This field is of access type is 'inputOutput' and type SFFloat.
@@ -4215,12 +2716,6 @@ interface Contour2DProxy extends X3DNodeProxy
    */
    children: MFNode <NurbsCurve2DProxy | ContourPolyline2DProxy>,
    /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * This field is of access type is 'inputOnly' and type MFNode.
    */
    removeChildren: MFNode <NurbsCurve2DProxy | ContourPolyline2DProxy>,
@@ -4229,18 +2724,7 @@ interface Contour2DProxy extends X3DNodeProxy
 /** ContourPolyline2D defines a linear curve segment as part of a trimming contour in the u-v domain of a NURBS surface. */
 interface ContourPolyline2DProxy extends X3DNurbsControlCurveNodeProxy
 {
-   /**
-   * controlPoint specifies the end points of each segment of the piecewise linear curve.
-   *
-   * This field is of access type is 'inputOutput' and type MFVec2d.
-   */
-   controlPoint: MFVec2d,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
+
 }
 
 /** Convolver performs a linear convolution on a given AudioBuffer, often used to achieve a reverberation effect. */
@@ -4253,118 +2737,22 @@ interface ConvolverProxy extends X3DSoundProcessingNodeProxy
    */
    buffer: MFFloat,
    /**
-   * channelCount reports number of channels provided by input nodes.
-   *
-   * This field is of access type is 'outputOnly' and type SFInt32.
-   */
-   readonly channelCount: number,
-   /**
-   * channelCountMode determines how individual channels are counted when up-mixing and down-mixing connections to any inputs.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   channelCountMode: "MAX" | "CLAMPED_MAX" | "EXPLICIT",
-   /**
-   * channelInterpretation determines how individual channels are treated when up-mixing and down-mixing connections to any inputs.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   channelInterpretation: "SPEAKERS" | "DISCRETE",
-   /**
    * The children field specifies audio-graph sound sources providing input signals for this node.
    *
    * This field is of access type is 'inputOutput' and type MFNode.
    */
    children: MFNode <AnalyserProxy | AudioClipProxy | AudioDestinationProxy | BiquadFilterProxy | BufferAudioSourceProxy | ChannelMergerProxy | ChannelSelectorProxy | ChannelSplitterProxy | ConvolverProxy | DelayProxy | DynamicsCompressorProxy | GainProxy | ListenerPointSourceProxy | MicrophoneSourceProxy | MovieTextureProxy | OscillatorSourceProxy | SoundProxy | SpatialSoundProxy | StreamAudioDestinationProxy | StreamAudioSourceProxy | WaveShaperProxy>,
    /**
-   * Author-provided prose that describes intended purpose of the url asset.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
-   * Current elapsed time since AudioClip activated/running, cumulative in seconds, and not counting any paused time.
-   *
-   * This field is of access type is 'outputOnly' and type SFTime.
-   */
-   readonly elapsedTime: number,
-   /**
-   * Enables/disables node operation.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   enabled: boolean,
-   /**
-   * The gain field is a factor that represents the amount of linear amplification to apply to the output of the node.
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   gain: number,
-   /**
-   * isActive true/false events are sent when playback starts/stops.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isActive: boolean,
-   /**
-   * isPaused true/false events are sent when AudioClip is paused/resumed.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isPaused: boolean,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * normalize controls whether or not the impulse response from the buffer is scaled by an equal-power normalization when the buffer field is set.
    *
    * This field is of access type is 'inputOutput' and type SFBool.
    */
    normalize: boolean,
-   /**
-   * When time now >= pauseTime, isPaused becomes true and AudioClip becomes paused.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   pauseTime: number,
-   /**
-   * When resumeTime becomes <= time now, isPaused becomes false and AudioClip becomes active.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   resumeTime: number,
-   /**
-   * Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   startTime: number,
-   /**
-   * Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   stopTime: number,
-   /**
-   * tailTime is duration of time that a node continues to provide output signal after the input signal becomes silent.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   tailTime: number,
 }
 
 /** Coordinate builds geometry by defining a set of 3D coordinate (triplet) point values. */
 interface CoordinateProxy extends X3DCoordinateNodeProxy
 {
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * point contains a set of 3D coordinate (triplet) point values.
    *
@@ -4377,12 +2765,6 @@ interface CoordinateProxy extends X3DCoordinateNodeProxy
 interface CoordinateChaserProxy extends X3DChaserNodeProxy
 {
    /**
-   * duration is the time interval for filter response in seconds.
-   *
-   * This field is of access type is 'initializeOnly' and type SFTime.
-   */
-   duration: number,
-   /**
    * Initial destination value for this node.
    *
    * This field is of access type is 'initializeOnly' and type MFVec3f.
@@ -4394,18 +2776,6 @@ interface CoordinateChaserProxy extends X3DChaserNodeProxy
    * This field is of access type is 'initializeOnly' and type MFVec3f.
    */
    initialValue: MFVec3f,
-   /**
-   * isActive true/false events are sent when follower-node computation starts/stops.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isActive: boolean,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * set_destination resets destination value of this node.
    *
@@ -4442,24 +2812,6 @@ interface CoordinateDamperProxy extends X3DDamperNodeProxy
    */
    initialValue: MFVec3f,
    /**
-   * isActive true/false events are sent when follower-node computation starts/stops.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isActive: boolean,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * order defines the number of internal filters (larger means smoother response, longer delay).
-   *
-   * This field is of access type is 'initializeOnly' and type SFInt32.
-   */
-   order: number,
-   /**
    * set_destination resets destination value of this node.
    *
    * This field is of access type is 'inputOnly' and type MFVec3f.
@@ -4472,18 +2824,6 @@ interface CoordinateDamperProxy extends X3DDamperNodeProxy
    */
    set_value: MFVec3f,
    /**
-   * tau is the exponential-decay time constant for filter response in seconds.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   tau: number,
-   /**
-   * or -1.
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   tolerance: number,
-   /**
    * Computed output value that approaches within tolerance of destination value, as determined by elapsed time, order and tau.
    *
    * This field is of access type is 'outputOnly' and type MFVec3f.
@@ -4494,12 +2834,6 @@ interface CoordinateDamperProxy extends X3DDamperNodeProxy
 /** CoordinateDouble builds geometry by defining a set of 3D coordinate (triplet) point values. */
 interface CoordinateDoubleProxy extends X3DCoordinateNodeProxy
 {
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * point contains a set of 3D coordinate (triplet) point values.
    *
@@ -4512,29 +2846,11 @@ interface CoordinateDoubleProxy extends X3DCoordinateNodeProxy
 interface CoordinateInterpolatorProxy extends X3DInterpolatorNodeProxy
 {
    /**
-   * Definition values for linear-interpolation function input intervals, listed in non-decreasing order and corresponding to a value in the keyValue array.
-   *
-   * This field is of access type is 'inputOutput' and type MFFloat.
-   */
-   key: MFFloat,
-   /**
    * Output values for linear interpolation, each corresponding to an input-fraction value in the key array.
    *
    * This field is of access type is 'inputOutput' and type MFVec3f.
    */
    keyValue: MFVec3f,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * set_fraction selects input key for corresponding keyValue output.
-   *
-   * This field is of access type is 'inputOnly' and type SFFloat.
-   */
-   set_fraction: number,
    /**
    * Linearly interpolated output value determined by current key time and corresponding keyValue pair.
    *
@@ -4547,29 +2863,11 @@ interface CoordinateInterpolatorProxy extends X3DInterpolatorNodeProxy
 interface CoordinateInterpolator2DProxy extends X3DInterpolatorNodeProxy
 {
    /**
-   * Definition values for linear-interpolation function input intervals, listed in non-decreasing order and corresponding to a value in the keyValue array.
-   *
-   * This field is of access type is 'inputOutput' and type MFFloat.
-   */
-   key: MFFloat,
-   /**
    * Output values for linear interpolation, each corresponding to an input-fraction value in the key array.
    *
    * This field is of access type is 'inputOutput' and type MFVec2f.
    */
    keyValue: MFVec2f,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * set_fraction selects input key for corresponding keyValue output.
-   *
-   * This field is of access type is 'inputOnly' and type SFFloat.
-   */
-   set_fraction: number,
    /**
    * Linearly interpolated output value determined by current key time and corresponding keyValue pair.
    *
@@ -4593,12 +2891,6 @@ interface CylinderProxy extends X3DGeometryNodeProxy
    * This field is of access type is 'initializeOnly' and type SFFloat.
    */
    height: number,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * Size in meters.
    *
@@ -4629,23 +2921,11 @@ interface CylinderProxy extends X3DGeometryNodeProxy
 interface CylinderSensorProxy extends X3DDragSensorNodeProxy
 {
    /**
-   * determines whether previous offset values are remembered/accumulated.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   autoOffset: boolean,
-   /**
    * axisRotation determines local sensor coordinate system by rotating the local coordinate system.
    *
    * This field is of access type is 'inputOutput' and type SFRotation.
    */
    axisRotation: SFRotation,
-   /**
-   * Author-provided prose that describes intended purpose of this node.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
    /**
    * Help decide rotation behavior from initial relative bearing of pointer drag: acute angle whether cylinder sides or end-cap disks of virtual-geometry sensor are used for manipulation.
    *
@@ -4653,35 +2933,11 @@ interface CylinderSensorProxy extends X3DDragSensorNodeProxy
    */
    diskAngle: number,
    /**
-   * Enables/disables node operation.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   enabled: boolean,
-   /**
-   * Select geometry by activating the pointing device (for example, clicking the mouse) to generate isActive events.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isActive: boolean,
-   /**
-   * Hover over geometry by aiming the mouse (or pointing device) to generate isOver events.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isOver: boolean,
-   /**
    * clamps rotation_changed events within range of min/max values Hint: if minAngle > maxAngle, rotation is not clamped.
    *
    * This field is of access type is 'inputOutput' and type SFFloat.
    */
    maxAngle: number,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * clamps rotation_changed events within range of min/max values Hint: if minAngle > maxAngle, rotation is not clamped.
    *
@@ -4700,35 +2956,11 @@ interface CylinderSensorProxy extends X3DDragSensorNodeProxy
    * This field is of access type is 'outputOnly' and type SFRotation.
    */
    readonly rotation_changed: SFRotation,
-   /**
-   * trackPoint_changed events give intersection point of bearing with sensor's virtual geometry.
-   *
-   * This field is of access type is 'outputOnly' and type SFVec3f.
-   */
-   readonly trackPoint_changed: SFVec3f,
 }
 
 /** Delay causes a time delay between the arrival of input data and subsequent propagation to the output. */
 interface DelayProxy extends X3DSoundProcessingNodeProxy
 {
-   /**
-   * channelCount reports number of channels provided by input nodes.
-   *
-   * This field is of access type is 'outputOnly' and type SFInt32.
-   */
-   readonly channelCount: number,
-   /**
-   * channelCountMode determines how individual channels are counted when up-mixing and down-mixing connections to any inputs.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   channelCountMode: "MAX" | "CLAMPED_MAX" | "EXPLICIT",
-   /**
-   * channelInterpretation determines how individual channels are treated when up-mixing and down-mixing connections to any inputs.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   channelInterpretation: "SPEAKERS" | "DISCRETE",
    /**
    * The children field specifies audio-graph sound sources providing input signals for this node.
    *
@@ -4742,100 +2974,16 @@ interface DelayProxy extends X3DSoundProcessingNodeProxy
    */
    delayTime: number,
    /**
-   * Author-provided prose that describes intended purpose of the url asset.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
-   * Current elapsed time since AudioClip activated/running, cumulative in seconds, and not counting any paused time.
-   *
-   * This field is of access type is 'outputOnly' and type SFTime.
-   */
-   readonly elapsedTime: number,
-   /**
-   * Enables/disables node operation.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   enabled: boolean,
-   /**
-   * The gain field is a factor that represents the amount of linear amplification to apply to the output of the node.
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   gain: number,
-   /**
-   * isActive true/false events are sent when playback starts/stops.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isActive: boolean,
-   /**
-   * isPaused true/false events are sent when AudioClip is paused/resumed.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isPaused: boolean,
-   /**
    * maxDelayTime is duration of maximum amount of delay (in seconds) that can be applied.
    *
    * This field is of access type is 'inputOutput' and type SFTime.
    */
    maxDelayTime: number,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * When time now >= pauseTime, isPaused becomes true and AudioClip becomes paused.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   pauseTime: number,
-   /**
-   * When resumeTime becomes <= time now, isPaused becomes false and AudioClip becomes active.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   resumeTime: number,
-   /**
-   * Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   startTime: number,
-   /**
-   * Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   stopTime: number,
-   /**
-   * tailTime is duration of time that a node continues to provide output signal after the input signal becomes silent.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   tailTime: number,
 }
 
 /** DirectionalLight might not be scoped by parent Group or Transform at levels 1 or 2. */
 interface DirectionalLightProxy extends X3DLightNodeProxy
 {
-   /**
-   * Brightness of ambient (nondirectional background) emission from the light.
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   ambientIntensity: number,
-   /**
-   * color of light, applied to colors of objects.
-   *
-   * This field is of access type is 'inputOutput' and type SFColor.
-   */
-   color: SFColor,
    /**
    * Orientation vector of light relative to local coordinate system.
    *
@@ -4848,36 +2996,6 @@ interface DirectionalLightProxy extends X3DLightNodeProxy
    * This field is of access type is 'inputOutput' and type SFBool.
    */
    global: boolean,
-   /**
-   * Brightness of direct emission from the light.
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   intensity: number,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * Enables/disables this light source.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   on: boolean,
-   /**
-   * shadowIntensity field defines how much light is obscured by shapes that cast shadows, ranging from 0 (light not obscured, no visible shadows) to 1 (light completely obscured, full-intensity shadows).
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   shadowIntensity: number,
-   /**
-   * shadows field indicates whether or not this light casts a shadow behind illuminated X3DShapeNode geometry.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   shadows: boolean,
 }
 
 /** DISEntityManager notifies a scene when new DIS ESPDU entities arrive or current entities leave. */
@@ -4908,12 +3026,6 @@ interface DISEntityManagerProxy extends X3DChildNodeProxy
    */
    children: MFNode <DISEntityTypeMappingProxy>,
    /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * Multicast network port, for example: 3000.
    *
    * This field is of access type is 'inputOutput' and type SFInt32.
@@ -4937,18 +3049,6 @@ interface DISEntityManagerProxy extends X3DChildNodeProxy
 interface DISEntityTypeMappingProxy extends X3DInfoNodeProxy, X3DUrlObjectProxy
 {
    /**
-   * autoRefresh defines interval in seconds before automatic reload of current url asset is performed.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   autoRefresh: number,
-   /**
-   * autoRefreshTimeLimit defines maximum duration that automatic refresh activity can occur.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   autoRefreshTimeLimit: number,
-   /**
    * Integer enumerations value for main category that describes the entity, semantics of each code varies according to domain.
    *
    * This field is of access type is 'initializeOnly' and type SFInt32.
@@ -4960,12 +3060,6 @@ interface DISEntityTypeMappingProxy extends X3DInfoNodeProxy, X3DUrlObjectProxy
    * This field is of access type is 'initializeOnly' and type SFInt32.
    */
    country: number,
-   /**
-   * Author-provided prose that describes intended purpose of the url asset.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
    /**
    * Integer enumerations value for domain in which the entity operates: LAND, AIR, SURFACE, SUBSURFACE, SPACE or OTHER.
    *
@@ -4985,18 +3079,6 @@ interface DISEntityTypeMappingProxy extends X3DInfoNodeProxy, X3DUrlObjectProxy
    */
    kind: number,
    /**
-   * load=true means load immediately, load=false means defer loading or else unload a previously loaded scene.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   load: boolean,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * Specific information about an entity based on the subcategory field.
    *
    * This field is of access type is 'initializeOnly' and type SFInt32.
@@ -5008,12 +3090,6 @@ interface DISEntityTypeMappingProxy extends X3DInfoNodeProxy, X3DUrlObjectProxy
    * This field is of access type is 'initializeOnly' and type SFInt32.
    */
    subcategory: number,
-   /**
-   * Local and/or online addresses of X3D model of interest, for example: "ExtrusionExampleShip.
-   *
-   * This field is of access type is 'inputOutput' and type MFString.
-   */
-   url: MFString,
 }
 
 /** Disk2D is a geometry node that defines a filled (or partially filled) planar circle with center (0,0). */
@@ -5025,12 +3101,6 @@ interface Disk2DProxy extends X3DGeometryNodeProxy
    * This field is of access type is 'initializeOnly' and type SFFloat.
    */
    innerRadius: number,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * Outer radius of circle, greater than or equal to inner radius.
    *
@@ -5067,12 +3137,6 @@ interface DoubleAxisHingeJointProxy extends X3DRigidJointNodeProxy
    */
    axis2: SFVec3f,
    /**
-   * The body1 and body2 fields indicate the two RigidBody nodes connected by this joint.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   body1: RigidBodyProxy,
-   /**
    * body1AnchorPoint describes anchorPoint position relative to local coordinate reference frame.
    *
    * This field is of access type is 'outputOnly' and type SFVec3f.
@@ -5084,12 +3148,6 @@ interface DoubleAxisHingeJointProxy extends X3DRigidJointNodeProxy
    * This field is of access type is 'outputOnly' and type SFVec3f.
    */
    readonly body1Axis: SFVec3f,
-   /**
-   * The body1 and body2 fields indicate the two RigidBody nodes connected by this joint.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   body2: RigidBodyProxy,
    /**
    * body2AnchorPoint describes anchorPoint position relative to local coordinate reference frame.
    *
@@ -5114,12 +3172,6 @@ interface DoubleAxisHingeJointProxy extends X3DRigidJointNodeProxy
    * This field is of access type is 'inputOutput' and type SFFloat.
    */
    desiredAngularVelocity2: number,
-   /**
-   * forceOutput controls which output fields are generated for the next frame.
-   *
-   * This field is of access type is 'inputOutput' and type MFString.
-   */
-   forceOutput: MFString <"ALL" | "NONE">,
    /**
    * This field is of access type is 'outputOnly' and type SFFloat.
    */
@@ -5154,12 +3206,6 @@ interface DoubleAxisHingeJointProxy extends X3DRigidJointNodeProxy
    * This field is of access type is 'inputOutput' and type SFFloat.
    */
    maxTorque2: number,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * minAngle1 is minimum rotation angle for hinge.
    *
@@ -5208,83 +3254,17 @@ interface DynamicsCompressorProxy extends X3DSoundProcessingNodeProxy
    */
    attack: number,
    /**
-   * channelCount reports number of channels provided by input nodes.
-   *
-   * This field is of access type is 'outputOnly' and type SFInt32.
-   */
-   readonly channelCount: number,
-   /**
-   * channelCountMode determines how individual channels are counted when up-mixing and down-mixing connections to any inputs.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   channelCountMode: "MAX" | "CLAMPED_MAX" | "EXPLICIT",
-   /**
-   * channelInterpretation determines how individual channels are treated when up-mixing and down-mixing connections to any inputs.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   channelInterpretation: "SPEAKERS" | "DISCRETE",
-   /**
    * The children field specifies audio-graph sound sources providing input signals for this node.
    *
    * This field is of access type is 'inputOutput' and type MFNode.
    */
    children: MFNode <AnalyserProxy | AudioClipProxy | AudioDestinationProxy | BiquadFilterProxy | BufferAudioSourceProxy | ChannelMergerProxy | ChannelSelectorProxy | ChannelSplitterProxy | ConvolverProxy | DelayProxy | DynamicsCompressorProxy | GainProxy | ListenerPointSourceProxy | MicrophoneSourceProxy | MovieTextureProxy | OscillatorSourceProxy | SoundProxy | SpatialSoundProxy | StreamAudioDestinationProxy | StreamAudioSourceProxy | WaveShaperProxy>,
    /**
-   * Author-provided prose that describes intended purpose of the url asset.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
-   * Current elapsed time since AudioClip activated/running, cumulative in seconds, and not counting any paused time.
-   *
-   * This field is of access type is 'outputOnly' and type SFTime.
-   */
-   readonly elapsedTime: number,
-   /**
-   * Enables/disables node operation.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   enabled: boolean,
-   /**
-   * The gain field is a factor that represents the amount of linear amplification to apply to the output of the node.
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   gain: number,
-   /**
-   * isActive true/false events are sent when playback starts/stops.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isActive: boolean,
-   /**
-   * isPaused true/false events are sent when AudioClip is paused/resumed.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isPaused: boolean,
-   /**
    * knee field contains a decibel value representing range above threshold where the curve smoothly transitions to compressed portion.
    *
    * This field is of access type is 'inputOutput' and type SFFloat.
    */
    knee: number,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * When time now >= pauseTime, isPaused becomes true and AudioClip becomes paused.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   pauseTime: number,
    /**
    * ratio field represents amount of input change, in dB, needed for 1 dB change in output.
    *
@@ -5303,30 +3283,6 @@ interface DynamicsCompressorProxy extends X3DSoundProcessingNodeProxy
    * This field is of access type is 'inputOutput' and type SFTime.
    */
    release: number,
-   /**
-   * When resumeTime becomes <= time now, isPaused becomes false and AudioClip becomes active.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   resumeTime: number,
-   /**
-   * Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   startTime: number,
-   /**
-   * Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   stopTime: number,
-   /**
-   * tailTime is duration of time that a node continues to provide output signal after the input signal becomes silent.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   tailTime: number,
    /**
    * threshold field represents decibel value above which compression starts taking effect.
    *
@@ -5351,12 +3307,6 @@ interface EaseInEaseOutProxy extends X3DChildNodeProxy
    */
    key: MFFloat,
    /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * Interpolated output value determined by current key time, corresponding easeInEaseOut smoothing intervals, and corresponding key pair.
    *
    * This field is of access type is 'outputOnly' and type SFFloat.
@@ -5380,23 +3330,11 @@ interface EdgeEnhancementVolumeStyleProxy extends X3DComposableVolumeRenderStyle
    */
    edgeColor: SFColorRGBA,
    /**
-   * Enables/disables node operation.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   enabled: boolean,
-   /**
    * minimum angle (in radians) away from view-direction vector for surface normal before applying enhancement.
    *
    * This field is of access type is 'inputOutput' and type SFFloat.
    */
    gradientThreshold: number,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * The surfaceNormals field contains a 3D texture with at least three component values.
    *
@@ -5450,12 +3388,6 @@ interface ElevationGridProxy extends X3DGeometryNodeProxy
    * This field is of access type is 'initializeOnly' and type MFFloat.
    */
    height: MFFloat,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * Single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
    *
@@ -5515,10 +3447,6 @@ interface ElevationGridProxy extends X3DGeometryNodeProxy
 /** EspduTransform is a networked Transform node that can contain most nodes. */
 interface EspduTransformProxy extends X3DGroupingNodeProxy, X3DNetworkSensorNodeProxy
 {
-   /**
-   * This field is of access type is 'inputOnly' and type MFNode.
-   */
-   addChildren: MFNode <X3DChildNodeProxy>,
    /**
    * Multicast network address, or else 'localhost'; Example: 224.
    *
@@ -5616,35 +3544,11 @@ interface EspduTransformProxy extends X3DGroupingNodeProxy, X3DNetworkSensorNode
    */
    readonly articulationParameterValue7_changed: number,
    /**
-   * Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxCenter: SFVec3f,
-   /**
-   * Whether to display bounding box for associated geometry, aligned with world coordinates.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   bboxDisplay: boolean,
-   /**
-   * Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxSize: SFVec3f,
-   /**
    * Translation offset from origin of local coordinate system.
    *
    * This field is of access type is 'inputOutput' and type SFVec3f.
    */
    center: SFVec3f,
-   /**
-   * Grouping nodes contain an ordered list of children nodes.
-   *
-   * This field is of access type is 'inputOutput' and type MFNode.
-   */
-   children: MFNode <X3DChildNodeProxy>,
    /**
    * When were we collided with? Warning: it is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
    *
@@ -5892,12 +3796,6 @@ interface EspduTransformProxy extends X3DGroupingNodeProxy, X3DNetworkSensorNode
    */
    marking: string,
    /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * Fallback server address if multicast not available locally.
    *
    * This field is of access type is 'inputOutput' and type SFString.
@@ -5963,10 +3861,6 @@ interface EspduTransformProxy extends X3DGroupingNodeProxy, X3DNetworkSensorNode
    * This field is of access type is 'inputOutput' and type SFTime.
    */
    readInterval: number,
-   /**
-   * This field is of access type is 'inputOnly' and type MFNode.
-   */
-   removeChildren: MFNode <X3DChildNodeProxy>,
    /**
    * Orientation of children relative to local coordinate system, usually read from (or written to) remote, networked EspduTransform nodes.
    *
@@ -6058,12 +3952,6 @@ interface EspduTransformProxy extends X3DGroupingNodeProxy, X3DNetworkSensorNode
    */
    translation: SFVec3f,
    /**
-   * Whether or not renderable content within this node is visually displayed.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   visible: boolean,
-   /**
    * Integer enumerations value for type of warhead on the munition.
    *
    * This field is of access type is 'inputOutput' and type SFInt32.
@@ -6081,47 +3969,11 @@ interface EspduTransformProxy extends X3DGroupingNodeProxy, X3DNetworkSensorNode
 interface ExplosionEmitterProxy extends X3DParticleEmitterNodeProxy
 {
    /**
-   * Basic mass of each particle, defined in mass base units (default is kilograms).
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   mass: number,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * Enables/disables production of particles from this emitter node.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   on: boolean,
-   /**
    * Point from which particles emanate.
    *
    * This field is of access type is 'inputOutput' and type SFVec3f.
    */
    position: SFVec3f,
-   /**
-   * Initial linear speed (default is m/s) imparted to all particles along their direction of movement.
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   speed: number,
-   /**
-   * Particle surface area in area base units (default is meters squared).
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   surfaceArea: number,
-   /**
-   * Multiplier for the randomness used to control the range of possible output values.
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   variation: number,
 }
 
 /** Extrusion is a geometry node that sequentially stretches a 2D cross section along a 3D-spine path in the local coordinate system, creating an outer hull. */
@@ -6163,12 +4015,6 @@ interface ExtrusionProxy extends X3DGeometryNodeProxy
    * This field is of access type is 'initializeOnly' and type SFBool.
    */
    endCap: boolean,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * The orientation array is a list of axis-angle 4-tuple values applied at each spine-aligned cross-section plane.
    *
@@ -6246,29 +4092,11 @@ interface FillPropertiesProxy extends X3DAppearanceChildNodeProxy
    * This field is of access type is 'inputOutput' and type SFInt32.
    */
    hatchStyle: number,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
 }
 
 /** FloatVertexAttribute defines a set of per-vertex single-precision floating-point attributes. */
 interface FloatVertexAttributeProxy extends X3DVertexAttributeNodeProxy
 {
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * Required name for this particular VertexAttribute instance.
-   *
-   * This field is of access type is 'initializeOnly' and type SFString.
-   */
-   name: string,
    /**
    * numComponents specifies how many consecutive floating-point values should be grouped together per vertex.
    *
@@ -6286,48 +4114,7 @@ interface FloatVertexAttributeProxy extends X3DVertexAttributeNodeProxy
 /** Fog simulates atmospheric effects by blending distant objects with fog color. */
 interface FogProxy extends X3DBindableNodeProxy, X3DFogObjectProxy
 {
-   /**
-   * Event sent reporting timestamp when node becomes active/inactive.
-   *
-   * This field is of access type is 'outputOnly' and type SFTime.
-   */
-   readonly bindTime: number,
-   /**
-   * Fog color.
-   *
-   * This field is of access type is 'inputOutput' and type SFColor.
-   */
-   color: SFColor,
-   /**
-   * Specifies algorithm for rate of increasing Fog, either LINEAR or EXPONENTIAL.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   fogType: "LINEAR" | "EXPONENTIAL",
-   /**
-   * Output event true gets sent when node becomes bound and activated, otherwise output event false gets sent when node becomes unbound and deactivated.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isBound: boolean,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * Receiving event set_bind=true activates and binds this node at the top of the binding stack.
-   *
-   * This field is of access type is 'inputOnly' and type SFBool.
-   */
-   set_bind: boolean,
-   /**
-   * Distance in meters where objects are totally obscured by the fog, using local coordinate system.
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   visibilityRange: number,
+
 }
 
 /** FogCoordinate defines a set of explicit fog depths on a per-vertex basis, overriding Fog visibilityRange. */
@@ -6339,12 +4126,6 @@ interface FogCoordinateProxy extends X3DGeometricPropertyNodeProxy
    * This field is of access type is 'inputOutput' and type MFFloat.
    */
    depth: MFFloat,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
 }
 
 /** FontStyle is an X3DFontStyleNode that defines the size, family, justification, and other styles used by Text nodes. */
@@ -6381,12 +4162,6 @@ interface FontStyleProxy extends X3DFontStyleNodeProxy
    */
    leftToRight: boolean,
    /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * Nominal height (in local coordinate system) of text glyphs, also sets default spacing between adjacent lines of text.
    *
    * This field is of access type is 'inputOutput' and type SFFloat.
@@ -6416,141 +4191,27 @@ interface FontStyleProxy extends X3DFontStyleNodeProxy
 interface ForcePhysicsModelProxy extends X3DParticlePhysicsModelNodeProxy
 {
    /**
-   * Enables/disables node operation.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   enabled: boolean,
-   /**
    * force field indicates strength and direction of the propelling force on the particles (for example, default is Earth's gravity).
    *
    * This field is of access type is 'inputOutput' and type SFVec3f.
    */
    force: SFVec3f,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
 }
 
 /** The Gain node amplifies or deamplifies the input signal. */
 interface GainProxy extends X3DSoundProcessingNodeProxy
 {
    /**
-   * channelCount reports number of channels provided by input nodes.
-   *
-   * This field is of access type is 'outputOnly' and type SFInt32.
-   */
-   readonly channelCount: number,
-   /**
-   * channelCountMode determines how individual channels are counted when up-mixing and down-mixing connections to any inputs.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   channelCountMode: "MAX" | "CLAMPED_MAX" | "EXPLICIT",
-   /**
-   * channelInterpretation determines how individual channels are treated when up-mixing and down-mixing connections to any inputs.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   channelInterpretation: "SPEAKERS" | "DISCRETE",
-   /**
    * The children field specifies audio-graph sound sources providing input signals for this node.
    *
    * This field is of access type is 'inputOutput' and type MFNode.
    */
    children: MFNode <AnalyserProxy | AudioClipProxy | AudioDestinationProxy | BiquadFilterProxy | BufferAudioSourceProxy | ChannelMergerProxy | ChannelSelectorProxy | ChannelSplitterProxy | ConvolverProxy | DelayProxy | DynamicsCompressorProxy | GainProxy | ListenerPointSourceProxy | MicrophoneSourceProxy | MovieTextureProxy | OscillatorSourceProxy | SoundProxy | SpatialSoundProxy | StreamAudioDestinationProxy | StreamAudioSourceProxy | WaveShaperProxy>,
-   /**
-   * Author-provided prose that describes intended purpose of the url asset.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
-   * Current elapsed time since AudioClip activated/running, cumulative in seconds, and not counting any paused time.
-   *
-   * This field is of access type is 'outputOnly' and type SFTime.
-   */
-   readonly elapsedTime: number,
-   /**
-   * Enables/disables node operation.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   enabled: boolean,
-   /**
-   * The gain field is a factor that represents the amount of linear amplification to apply to the output of the node.
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   gain: number,
-   /**
-   * isActive true/false events are sent when playback starts/stops.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isActive: boolean,
-   /**
-   * isPaused true/false events are sent when AudioClip is paused/resumed.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isPaused: boolean,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * When time now >= pauseTime, isPaused becomes true and AudioClip becomes paused.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   pauseTime: number,
-   /**
-   * When resumeTime becomes <= time now, isPaused becomes false and AudioClip becomes active.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   resumeTime: number,
-   /**
-   * Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   startTime: number,
-   /**
-   * Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   stopTime: number,
-   /**
-   * tailTime is duration of time that a node continues to provide output signal after the input signal becomes silent.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   tailTime: number,
 }
 
 /** GeneratedCubeMapTexture is a texture node that defines a cubic environment map that sources its data from internally generated images. */
 interface GeneratedCubeMapTextureProxy extends X3DEnvironmentTextureNodeProxy
 {
-   /**
-   * Author-provided prose that describes intended purpose of the url asset.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * size indicates the resolution of the generated images in number of pixels per side.
    *
@@ -6586,12 +4247,6 @@ interface GeoCoordinateProxy extends X3DCoordinateNodeProxy
    * This field is of access type is 'initializeOnly' and type MFString.
    */
    geoSystem: MFString,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * point contains a set of actual 3D geographic coordinates, provided in geoSystem format can split strings if desired: "x1 y1 z1 x2 y2 z2" or "x1 y1 z1", "x2 y2 z2".
    *
@@ -6651,12 +4306,6 @@ interface GeoElevationGridProxy extends X3DGeometryNodeProxy
    * This field is of access type is 'initializeOnly' and type MFDouble.
    */
    height: MFDouble,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * Single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
    *
@@ -6723,34 +4372,6 @@ interface GeoElevationGridProxy extends X3DGeometryNodeProxy
 interface GeoLocationProxy extends X3DGroupingNodeProxy
 {
    /**
-   * This field is of access type is 'inputOnly' and type MFNode.
-   */
-   addChildren: MFNode <X3DChildNodeProxy>,
-   /**
-   * Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxCenter: SFVec3f,
-   /**
-   * Whether to display bounding box for associated geometry, aligned with world coordinates.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   bboxDisplay: boolean,
-   /**
-   * Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxSize: SFVec3f,
-   /**
-   * Grouping nodes contain an ordered list of children nodes.
-   *
-   * This field is of access type is 'inputOutput' and type MFNode.
-   */
-   children: MFNode <X3DChildNodeProxy>,
-   /**
    * Geographic location (specified in current geoSystem coordinates) for children geometry (specified in relative coordinate system, in meters).
    *
    * This field is of access type is 'inputOutput' and type SFVec3d.
@@ -6768,45 +4389,11 @@ interface GeoLocationProxy extends X3DGroupingNodeProxy
    * This field is of access type is 'initializeOnly' and type MFString.
    */
    geoSystem: MFString,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * This field is of access type is 'inputOnly' and type MFNode.
-   */
-   removeChildren: MFNode <X3DChildNodeProxy>,
-   /**
-   * Whether or not renderable content within this node is visually displayed.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   visible: boolean,
 }
 
 /** Note that MFNode rootNode field can contain multiple nodes and has accessType inputOutput. Meanwhile MFNode children field is outputOnly, unlike other X3DGroupingNode exemplars. */
 interface GeoLODProxy extends X3DChildNodeProxy, X3DBoundedObjectProxy
 {
-   /**
-   * Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxCenter: SFVec3f,
-   /**
-   * Whether to display bounding box for associated geometry, aligned with world coordinates.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   bboxDisplay: boolean,
-   /**
-   * Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxSize: SFVec3f,
    /**
    * Viewer range from geographic-coordinates center triggers quadtree loading/unloading.
    *
@@ -6862,12 +4449,6 @@ interface GeoLODProxy extends X3DChildNodeProxy, X3DBoundedObjectProxy
    */
    readonly level_changed: number,
    /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * Viewer range from geographic-coordinates center triggers quadtree loading/unloading.
    *
    * This field is of access type is 'initializeOnly' and type SFFloat.
@@ -6885,29 +4466,11 @@ interface GeoLODProxy extends X3DChildNodeProxy, X3DBoundedObjectProxy
    * This field is of access type is 'initializeOnly' and type MFString.
    */
    rootUrl: MFString,
-   /**
-   * Whether or not renderable content within this node is visually displayed.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   visible: boolean,
 }
 
 /** GeoMetadata includes a generic subset of metadata about the geographic data. */
 interface GeoMetadataProxy extends X3DInfoNodeProxy, X3DUrlObjectProxy
 {
-   /**
-   * autoRefresh defines interval in seconds before automatic reload of current url asset is performed.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   autoRefresh: number,
-   /**
-   * autoRefreshTimeLimit defines maximum duration that automatic refresh activity can occur.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   autoRefreshTimeLimit: number,
    /**
    * DEF list of all nodes that implement this data.
    *
@@ -6915,35 +4478,11 @@ interface GeoMetadataProxy extends X3DInfoNodeProxy, X3DUrlObjectProxy
    */
    data: MFNode <X3DNodeProxy>,
    /**
-   * Author-provided prose that describes intended purpose of the url asset.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
-   * load=true means load immediately, load=false means defer loading or else unload a previously loaded scene.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   load: boolean,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * The summary string array contains a set of keyword/value pairs, with each keyword and its subsequent value contained in separate strings.
    *
    * This field is of access type is 'inputOutput' and type MFString.
    */
    summary: MFString,
-   /**
-   * Hypertext link to an external, complete metadata description.
-   *
-   * This field is of access type is 'inputOutput' and type MFString.
-   */
-   url: MFString,
 }
 
 /** GeoOrigin is deprecated and discouraged (but nevertheless allowed) in X3D version 3.3. GeoOrigin is restored in X3D version 4.0 for special use on devices with limited floating-point resolution. */
@@ -6961,12 +4500,6 @@ interface GeoOriginProxy extends X3DNodeProxy
    * This field is of access type is 'initializeOnly' and type MFString.
    */
    geoSystem: MFString,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * Whether to rotate coordinates of nodes using this GeoOrigin so that local-up direction aligns with VRML Y axis rotateYUp false means local up-direction is relative to planet surface rotateYUp true allows proper operation of NavigationInfo modes FLY, WALK.
    *
@@ -6997,29 +4530,11 @@ interface GeoPositionInterpolatorProxy extends X3DInterpolatorNodeProxy
    */
    readonly geovalue_changed: SFVec3d,
    /**
-   * Definition values for linear-interpolation function input intervals, listed in non-decreasing order and corresponding to a value in the keyValue array.
-   *
-   * This field is of access type is 'inputOutput' and type MFFloat.
-   */
-   key: MFFloat,
-   /**
    * Output values for linear interpolation, each corresponding to an input-fraction value in the key array.
    *
    * This field is of access type is 'inputOutput' and type MFVec3d.
    */
    keyValue: MFVec3d,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * set_fraction selects input key for corresponding keyValue output.
-   *
-   * This field is of access type is 'inputOnly' and type SFFloat.
-   */
-   set_fraction: number,
    /**
    * Linearly interpolated output value determined by current key time and corresponding keyValue pair.
    *
@@ -7043,18 +4558,6 @@ interface GeoProximitySensorProxy extends X3DEnvironmentalSensorNodeProxy
    * This field is of access type is 'outputOnly' and type SFVec3f.
    */
    readonly centerOfRotation_changed: SFVec3f,
-   /**
-   * Author-provided prose that describes intended purpose of the node.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
-   * Enables/disables node operation.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   enabled: boolean,
    /**
    * Time event generated when user's camera enters the box.
    *
@@ -7092,18 +4595,6 @@ interface GeoProximitySensorProxy extends X3DEnvironmentalSensorNodeProxy
    */
    geoSystem: MFString,
    /**
-   * isActive true/false events are sent as viewer enters/exits Proximity box.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isActive: boolean,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * Sends rotation event relative to center.
    *
    * This field is of access type is 'outputOnly' and type SFRotation.
@@ -7115,29 +4606,11 @@ interface GeoProximitySensorProxy extends X3DEnvironmentalSensorNodeProxy
    * This field is of access type is 'outputOnly' and type SFVec3f.
    */
    readonly position_changed: SFVec3f,
-   /**
-   * size of Proximity box around center location, oriented within local transformation frame.
-   *
-   * This field is of access type is 'inputOutput' and type SFVec3f.
-   */
-   size: SFVec3f,
 }
 
 /** GeoTouchSensor returns geographic coordinates for the object being selected. */
 interface GeoTouchSensorProxy extends X3DTouchSensorNodeProxy
 {
-   /**
-   * Author-provided prose that describes intended purpose of this node.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
-   * Enables/disables node operation.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   enabled: boolean,
    /**
    * Single contained GeoOrigin node that can specify a local coordinate frame for extended precision.
    *
@@ -7174,63 +4647,11 @@ interface GeoTouchSensorProxy extends X3DTouchSensorNodeProxy
    * This field is of access type is 'outputOnly' and type SFVec2f.
    */
    readonly hitTexCoord_changed: SFVec2f,
-   /**
-   * Select geometry by activating the pointing device (for example, clicking the mouse) to generate isActive events.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isActive: boolean,
-   /**
-   * Is pointing device over sensor's geometry?.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isOver: boolean,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * Time event generated when touched.
-   *
-   * This field is of access type is 'outputOnly' and type SFTime.
-   */
-   readonly touchTime: number,
 }
 
 /** GeoTransform is a Grouping node that can contain most nodes. */
 interface GeoTransformProxy extends X3DGroupingNodeProxy
 {
-   /**
-   * This field is of access type is 'inputOnly' and type MFNode.
-   */
-   addChildren: MFNode <X3DChildNodeProxy>,
-   /**
-   * Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxCenter: SFVec3f,
-   /**
-   * Whether to display bounding box for associated geometry, aligned with world coordinates.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   bboxDisplay: boolean,
-   /**
-   * Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxSize: SFVec3f,
-   /**
-   * Grouping nodes contain an ordered list of children nodes.
-   *
-   * This field is of access type is 'inputOutput' and type MFNode.
-   */
-   children: MFNode <X3DChildNodeProxy>,
    /**
    * Translation offset from origin of local coordinate system, applied prior to rotation or scaling.
    *
@@ -7249,16 +4670,6 @@ interface GeoTransformProxy extends X3DGroupingNodeProxy
    * This field is of access type is 'initializeOnly' and type MFString.
    */
    geoSystem: MFString,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * This field is of access type is 'inputOnly' and type MFNode.
-   */
-   removeChildren: MFNode <X3DChildNodeProxy>,
    /**
    * Orientation (axis, angle in radians) of children relative to local coordinate system.
    *
@@ -7283,41 +4694,17 @@ interface GeoTransformProxy extends X3DGroupingNodeProxy
    * This field is of access type is 'inputOutput' and type SFVec3f.
    */
    translation: SFVec3f,
-   /**
-   * Whether or not renderable content within this node is visually displayed.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   visible: boolean,
 }
 
 /** GeoViewpoint specifies viewpoints using geographic coordinates. */
 interface GeoViewpointProxy extends X3DViewpointNodeProxy
 {
    /**
-   * Event sent reporting timestamp when node becomes active/inactive.
-   *
-   * This field is of access type is 'outputOnly' and type SFTime.
-   */
-   readonly bindTime: number,
-   /**
    * centerOfRotation specifies center point about which to rotate user's eyepoint when in EXAMINE or LOOKAT mode.
    *
    * This field is of access type is 'inputOutput' and type SFVec3d.
    */
    centerOfRotation: SFVec3d,
-   /**
-   * Author-provided prose that describes intended purpose of this node.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
-   * farDistance defines maximum clipping plane distance allowed for object display.
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   farDistance: number,
    /**
    * Preferred minimum viewing angle from this viewpoint in radians, providing minimum height or minimum width (whichever is smaller).
    *
@@ -7337,120 +4724,23 @@ interface GeoViewpointProxy extends X3DViewpointNodeProxy
    */
    geoSystem: MFString,
    /**
-   * Output event true gets sent when node becomes bound and activated, otherwise output event false gets sent when node becomes unbound and deactivated.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isBound: boolean,
-   /**
-   * Whether to transition instantly by jumping, or else smoothly animate to this Viewpoint.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   jump: boolean,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * The navigationInfo field defines a dedicated NavigationInfo node for this X3DViewpointNode.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   navigationInfo: NavigationInfoProxy,
-   /**
-   * nearDistance defines minimum clipping plane distance necessary for object display.
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   nearDistance: number,
-   /**
-   * Rotation of Viewpoint, relative to default -Z axis direction in local coordinate system.
-   *
-   * This field is of access type is 'inputOutput' and type SFRotation.
-   */
-   orientation: SFRotation,
-   /**
    * position relative to local georeferenced coordinate system, in proper format.
    *
    * This field is of access type is 'inputOutput' and type SFVec3d.
    */
    position: SFVec3d,
    /**
-   * Retain (true) or reset to zero (false) any prior user navigation offsets from defined viewpoint position, orientation.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   retainUserOffsets: boolean,
-   /**
-   * set_bind true makes this node active, set_bind false makes this node inactive.
-   *
-   * This field is of access type is 'inputOnly' and type SFBool.
-   */
-   set_bind: boolean,
-   /**
    * speedFactor is a multiplier to modify the original elevation-based speed that is set automatically by the browser.
    *
    * This field is of access type is 'initializeOnly' and type SFFloat.
    */
    speedFactor: number,
-   /**
-   * Viewpoint is automatically adjusted to view all visible geometry.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   viewAll: boolean,
 }
 
 /** Group is a Grouping node that can contain most nodes. */
 interface GroupProxy extends X3DGroupingNodeProxy
 {
-   /**
-   * This field is of access type is 'inputOnly' and type MFNode.
-   */
-   addChildren: MFNode <X3DChildNodeProxy>,
-   /**
-   * Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxCenter: SFVec3f,
-   /**
-   * Whether to display bounding box for associated geometry, aligned with world coordinates.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   bboxDisplay: boolean,
-   /**
-   * Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxSize: SFVec3f,
-   /**
-   * Grouping nodes contain an ordered list of children nodes.
-   *
-   * This field is of access type is 'inputOutput' and type MFNode.
-   */
-   children: MFNode <X3DChildNodeProxy>,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * This field is of access type is 'inputOnly' and type MFNode.
-   */
-   removeChildren: MFNode <X3DChildNodeProxy>,
-   /**
-   * Whether or not renderable content within this node is visually displayed.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   visible: boolean,
+
 }
 
 /** HAnimDisplacer nodes alter the shape of coordinate-based geometry within parent HAnimJoint or HAnimSegment nodes. */
@@ -7475,12 +4765,6 @@ interface HAnimDisplacerProxy extends X3DGeometricPropertyNodeProxy
    */
    displacements: MFVec3f,
    /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * Unique name attribute must be defined so that HAnimDisplacer node can be identified at run time for animation purposes.
    *
    * This field is of access type is 'inputOutput' and type SFString.
@@ -7497,24 +4781,6 @@ interface HAnimDisplacerProxy extends X3DGeometricPropertyNodeProxy
 /** The HAnimHumanoid node is used to: (a) store references to the joints, segments, sites, skeleton, optional skin, and fixed viewpoints, (b) serve as a container for the entire humanoid, (c) provide a convenient way of moving the humanoid through its environment, and (d) store human-readable metadata such as name, version, author, copyright, age, gender and other information. */
 interface HAnimHumanoidProxy extends X3DChildNodeProxy, X3DBoundedObjectProxy
 {
-   /**
-   * Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxCenter: SFVec3f,
-   /**
-   * Whether to display bounding box for associated geometry, aligned with world coordinates.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   bboxDisplay: boolean,
-   /**
-   * Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxSize: SFVec3f,
    /**
    * Translation offset from origin of local coordinate system.
    *
@@ -7563,12 +4829,6 @@ interface HAnimHumanoidProxy extends X3DChildNodeProxy, X3DBoundedObjectProxy
    * This field is of access type is 'inputOutput' and type SFInt32.
    */
    loa: number,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * Contains any HAnimMotion nodes that can animate the HAnimHumanoid.
    *
@@ -7677,12 +4937,6 @@ interface HAnimHumanoidProxy extends X3DChildNodeProxy, X3DBoundedObjectProxy
    * This field is of access type is 'inputOutput' and type MFNode.
    */
    viewpoints: MFNode <HAnimSiteProxy>,
-   /**
-   * Whether or not renderable content within this node is visually displayed.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   visible: boolean,
 }
 
 /** HAnimJoint node can represent each joint in a body. */
@@ -7692,24 +4946,6 @@ interface HAnimJointProxy extends X3DChildNodeProxy, X3DBoundedObjectProxy
    * This field is of access type is 'inputOnly' and type MFNode.
    */
    addChildren: MFNode <HAnimJointProxy | HAnimSegmentProxy>,
-   /**
-   * Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxCenter: SFVec3f,
-   /**
-   * Whether to display bounding box for associated geometry, aligned with world coordinates.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   bboxDisplay: boolean,
-   /**
-   * Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxSize: SFVec3f,
    /**
    * Translation offset from origin of local coordinate system.
    *
@@ -7746,12 +4982,6 @@ interface HAnimJointProxy extends X3DChildNodeProxy, X3DBoundedObjectProxy
    * This field is of access type is 'inputOutput' and type MFFloat.
    */
    llimit: MFFloat,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * Unique name attribute must be defined so that HAnimJoint node can be identified at run time for animation purposes.
    *
@@ -7810,12 +5040,6 @@ interface HAnimJointProxy extends X3DChildNodeProxy, X3DBoundedObjectProxy
    * This field is of access type is 'inputOutput' and type MFFloat.
    */
    ulimit: MFFloat,
-   /**
-   * Whether or not renderable content within this node is visually displayed.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   visible: boolean,
 }
 
 /** An HAnimMotion node supports discrete frame-by-frame playback for HAnim motion data animation. */
@@ -7906,12 +5130,6 @@ interface HAnimMotionProxy extends X3DChildNodeProxy
    */
    loop: boolean,
    /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * Unique name attribute must be defined so that HAnimMotion node can be identified at run time for animation purposes.
    *
    * This field is of access type is 'inputOutput' and type SFString.
@@ -7947,39 +5165,11 @@ interface HAnimMotionProxy extends X3DChildNodeProxy
 interface HAnimSegmentProxy extends X3DGroupingNodeProxy
 {
    /**
-   * This field is of access type is 'inputOnly' and type MFNode.
-   */
-   addChildren: MFNode <X3DChildNodeProxy>,
-   /**
-   * Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxCenter: SFVec3f,
-   /**
-   * Whether to display bounding box for associated geometry, aligned with world coordinates.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   bboxDisplay: boolean,
-   /**
-   * Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxSize: SFVec3f,
-   /**
    * Location within segment of center of mass.
    *
    * This field is of access type is 'inputOutput' and type SFVec3f.
    */
    centerOfMass: SFVec3f,
-   /**
-   * Grouping nodes contain an ordered list of children nodes.
-   *
-   * This field is of access type is 'inputOutput' and type MFNode.
-   */
-   children: MFNode <X3DChildNodeProxy>,
    /**
    * the coord field is used for HAnimSegment objects that have deformable meshes and shall contain coordinates referenced from the IndexedFaceSet for the paarent HAnimSegment object.
    *
@@ -8005,12 +5195,6 @@ interface HAnimSegmentProxy extends X3DGroupingNodeProxy
    */
    mass: number,
    /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * 3x3 moments of inertia matrix.
    *
    * This field is of access type is 'inputOutput' and type MFFloat.
@@ -8022,43 +5206,11 @@ interface HAnimSegmentProxy extends X3DGroupingNodeProxy
    * This field is of access type is 'inputOutput' and type SFString.
    */
    name: "sacrum" | "pelvis" | "l_thigh" | "l_calf" | "l_talus" | "l_navicular" | "l_cuneiform_1" | "l_metatarsal_1" | "l_tarsal_proximal_phalanx_1" | "l_tarsal_distal_phalanx_1" | "l_cuneiform_2" | "l_metatarsal_2" | "l_tarsal_proximal_phalanx_2" | "l_tarsal_middle_phalanx_2" | "l_tarsal_distal_phalanx_2" | "l_cuneiform_3" | "l_metatarsal_3" | "l_tarsal_proximal_phalanx_3" | "l_tarsal_middle_phalanx_3" | "l_tarsal_distal_phalanx_3" | "l_calcaneus" | "l_cuboid" | "l_metatarsal_4" | "l_tarsal_proximal_phalanx_4" | "l_tarsal_middle_phalanx_4" | "l_tarsal_distal_phalanx_4" | "l_metatarsal_5" | "l_tarsal_proximal_phalanx_5" | "l_tarsal_middle_phalanx_5" | "l_tarsal_distal_phalanx_5" | "r_thigh" | "r_calf" | "r_talus" | "r_navicular" | "r_cuneiform_1" | "r_metatarsal_1" | "r_tarsal_proximal_phalanx_1" | "r_tarsal_distal_phalanx_1" | "r_cuneiform_2" | "r_metatarsal_2" | "r_tarsal_proximal_phalanx_2" | "r_tarsal_middle_phalanx_2" | "r_tarsal_distal_phalanx_2" | "r_cuneiform_3" | "r_metatarsal_3" | "r_tarsal_proximal_phalanx_3" | "r_tarsal_middle_phalanx_3" | "r_tarsal_distal_phalanx_3" | "r_calcaneus" | "r_cuboid" | "r_metatarsal_4" | "r_tarsal_proximal_phalanx_4" | "r_tarsal_middle_phalanx_4" | "r_tarsal_distal_phalanx_4" | "r_metatarsal_5" | "r_tarsal_proximal_phalanx_5" | "r_tarsal_middle_phalanx_5" | "r_tarsal_distal_phalanx_5" | "l5" | "l4" | "l3" | "l2" | "l1" | "t12" | "t11" | "t10" | "t9" | "t8" | "t7" | "t6" | "t5" | "t4" | "t3" | "t2" | "t1" | "c7" | "c6" | "c5" | "c4" | "c3" | "c2" | "c1" | "skull" | "l_eyelid" | "r_eyelid" | "l_eyeball" | "r_eyeball" | "l_eyebrow" | "r_eyebrow" | "jaw" | "l_clavicle" | "l_scapula" | "l_upperarm" | "l_forearm" | "l_carpal" | "l_trapezium" | "l_metacarpal_1" | "l_carpal_proximal_phalanx_1" | "l_carpal_distal_phalanx_1" | "l_trapezoid" | "l_metacarpal_2" | "l_carpal_proximal_phalanx_2" | "l_carpal_middle_phalanx_2" | "l_carpal_distal_phalanx_2" | "l_capitate" | "l_metacarpal_3" | "l_carpal_proximal_phalanx_3" | "l_carpal_middle_phalanx_3" | "l_carpal_distal_phalanx_3" | "l_hamate" | "l_metacarpal_4" | "l_carpal_proximal_phalanx_4" | "l_carpal_middle_phalanx_4" | "l_carpal_distal_phalanx_4" | "l_metacarpal_5" | "l_carpal_proximal_phalanx_5" | "l_carpal_middle_phalanx_5" | "l_carpal_distal_phalanx_5" | "r_clavicle" | "r_scapula" | "r_upperarm" | "r_forearm" | "r_carpal" | "r_trapezium" | "r_metacarpal_1" | "r_carpal_proximal_phalanx_1" | "r_carpal_distal_phalanx_1" | "r_trapezoid" | "r_metacarpal_2" | "r_carpal_proximal_phalanx_2" | "r_carpal_middle_phalanx_2" | "r_carpal_distal_phalanx_2" | "r_capitate" | "r_metacarpal_3" | "r_carpal_proximal_phalanx_3" | "r_carpal_middle_phalanx_3" | "r_carpal_distal_phalanx_3" | "r_hamate" | "r_metacarpal_4" | "r_carpal_proximal_phalanx_4" | "r_carpal_middle_phalanx_4" | "r_carpal_distal_phalanx_4" | "r_metacarpal_5" | "r_carpal_proximal_phalanx_5" | "r_carpal_middle_phalanx_5" | "r_carpal_distal_phalanx_5",
-   /**
-   * This field is of access type is 'inputOnly' and type MFNode.
-   */
-   removeChildren: MFNode <X3DChildNodeProxy>,
-   /**
-   * Whether or not renderable content within this node is visually displayed.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   visible: boolean,
 }
 
 /** An HAnimSite node serves three purposes: (a) define an "end effector" location which can be used by an inverse kinematics system, (b) define an attachment point for accessories such as jewelry and clothing, and (c) define a location for a Viewpoint virtual camera in the reference frame of an HAnimSegment (such as a view "through the eyes" of the humanoid for use in multi-user worlds). */
 interface HAnimSiteProxy extends X3DGroupingNodeProxy
 {
-   /**
-   * This field is of access type is 'inputOnly' and type MFNode.
-   */
-   addChildren: MFNode <X3DChildNodeProxy>,
-   /**
-   * Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxCenter: SFVec3f,
-   /**
-   * Whether to display bounding box for associated geometry, aligned with world coordinates.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   bboxDisplay: boolean,
-   /**
-   * Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxSize: SFVec3f,
    /**
    * Default location of this HAnimSite, i.
    *
@@ -8066,33 +5218,17 @@ interface HAnimSiteProxy extends X3DGroupingNodeProxy
    */
    center: SFVec3f,
    /**
-   * Grouping nodes contain an ordered list of children nodes.
-   *
-   * This field is of access type is 'inputOutput' and type MFNode.
-   */
-   children: MFNode <X3DChildNodeProxy>,
-   /**
    * Author-provided prose that describes intended purpose of this node.
    *
    * This field is of access type is 'inputOutput' and type SFString.
    */
    description: string,
    /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * Unique name attribute must be defined so that HAnimSite node can be identified at run time for animation purposes.
    *
    * This field is of access type is 'inputOutput' and type SFString.
    */
    name: "skull_vertex" | "glabella" | "sellion" | "l_infraorbitale" | "l_tragion" | "l_gonion" | "r_infraorbitale" | "r_tragion" | "r_gonion" | "supramenton" | "cervicale" | "adams_apple" | "suprasternale" | "substernale" | "l_clavicle" | "l_acromion" | "l_axilla_proximal" | "l_axilla_distal" | "l_axilla_posterior_folds" | "r_clavicle" | "r_acromion" | "r_axilla_proximal" | "r_axilla_distal" | "r_axilla_posterior_folds" | "spine_1_middle_back" | "spine_2_lower_back" | "waist_preferred_anterior" | "waist_preferred_posterior" | "l_rib10" | "l_thelion" | "r_rib10" | "r_thelion" | "l_asis" | "l_iliocristale" | "l_psis" | "r_asis" | "r_iliocristale" | "r_psis" | "crotch" | "l_femoral_lateral_epicondyle" | "l_femoral_medial_epicondyle" | "l_suprapatella" | "l_trochanterion" | "r_femoral_lateral_epicondyle" | "r_femoral_medial_epicondyle" | "r_suprapatella" | "r_trochanterion" | "l_tibiale" | "l_medial_malleolus" | "l_lateral_malleolus" | "l_sphyrion" | "r_tibiale" | "r_medial_malleolus" | "r_lateral_malleolus" | "r_sphyrion" | "l_metatarsal_phalanx_1" | "l_metatarsal_phalanx_5" | "l_dactylion" | "l_calcaneus_posterior" | "r_metatarsal_phalanx_1" | "r_metatarsal_phalanx_5" | "r_dactylion" | "r_calcaneus_posterior" | "l_humeral_lateral_epicondyle" | "l_humeral_medial_epicondyle" | "l_olecranon" | "r_humeral_lateral_epicondyle" | "r_humeral_medial_epicondyle" | "r_olecranon" | "l_radiale" | "l_ulnar_styloid" | "l_radial_styloid" | "r_radiale" | "r_ulnar_styloid" | "r_radial_styloid" | "l_metacarpal_phalanx_2" | "l_metacarpal_phalanx_3" | "l_metacarpal_phalanx_5" | "r_metacarpal_phalanx_2" | "r_metacarpal_phalanx_3" | "r_metacarpal_phalanx_5" | "nuchale" | "l_neck_base" | "r_neck_base" | "navel" | "l_ectocanthus" | "r_ectocanthus" | "menton" | "mesosternale" | "opisthocranion" | "l_knee_crease" | "r_knee_crease" | "rear_center_midsagittal_plane" | "buttocks_standing_wall_contact_point" | "l_chest_midsagittal_plane" | "r_chest_midsagittal_plane" | "l_bideltoid" | "r_bideltoid" | "l_carpal_distal_phalanx_1" | "l_carpal_distal_phalanx_2" | "l_carpal_distal_phalanx_3" | "l_carpal_distal_phalanx_4" | "l_carpal_distal_phalanx_5" | "r_carpal_distal_phalanx_1" | "r_carpal_distal_phalanx_2" | "r_carpal_distal_phalanx_3" | "r_carpal_distal_phalanx_4" | "r_carpal_distal_phalanx_5" | "l_tarsal_distal_phalanx_1" | "l_tarsal_distal_phalanx_2" | "l_tarsal_distal_phalanx_3" | "l_tarsal_distal_phalanx_4" | "l_tarsal_distal_phalanx_5" | "r_tarsal_distal_phalanx_1" | "r_tarsal_distal_phalanx_2" | "r_tarsal_distal_phalanx_3" | "r_tarsal_distal_phalanx_4" | "r_tarsal_distal_phalanx_5",
-   /**
-   * This field is of access type is 'inputOnly' and type MFNode.
-   */
-   removeChildren: MFNode <X3DChildNodeProxy>,
    /**
    * Orientation of children relative to local coordinate system.
    *
@@ -8117,206 +5253,34 @@ interface HAnimSiteProxy extends X3DGroupingNodeProxy
    * This field is of access type is 'inputOutput' and type SFVec3f.
    */
    translation: SFVec3f,
-   /**
-   * Whether or not renderable content within this node is visually displayed.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   visible: boolean,
 }
 
 /** ImageCubeMapTexture is a texture node that defines a cubic environment map source as a single file format that contains multiple images, one for each side. */
 interface ImageCubeMapTextureProxy extends X3DEnvironmentTextureNodeProxy, X3DUrlObjectProxy
 {
    /**
-   * autoRefresh defines interval in seconds before automatic reload of current url asset is performed.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   autoRefresh: number,
-   /**
-   * autoRefreshTimeLimit defines maximum duration that automatic refresh activity can occur.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   autoRefreshTimeLimit: number,
-   /**
-   * Author-provided prose that describes intended purpose of the url asset.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
-   * load=true means load immediately, load=false means defer loading or else unload a previously loaded scene.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   load: boolean,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * Single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images.
    *
    * This field is of access type is 'initializeOnly' and type SFNode.
    */
    textureProperties: TexturePropertiesProxy,
-   /**
-   * Location and filename of image.
-   *
-   * This field is of access type is 'inputOutput' and type MFString.
-   */
-   url: MFString,
 }
 
 /** ImageTexture maps a 2D-image file onto a geometric shape. */
 interface ImageTextureProxy extends X3DTexture2DNodeProxy, X3DUrlObjectProxy
 {
-   /**
-   * autoRefresh defines interval in seconds before automatic reload of current url asset is performed.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   autoRefresh: number,
-   /**
-   * autoRefreshTimeLimit defines maximum duration that automatic refresh activity can occur.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   autoRefreshTimeLimit: number,
-   /**
-   * Author-provided prose that describes intended purpose of the url asset.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
-   * load=true means load immediately, load=false means defer loading or else unload a previously loaded scene.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   load: boolean,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * Whether to repeat texture along S axis horizontally from left to right.
-   *
-   * This field is of access type is 'initializeOnly' and type SFBool.
-   */
-   repeatS: boolean,
-   /**
-   * Whether to repeat texture along T axis vertically from top to bottom.
-   *
-   * This field is of access type is 'initializeOnly' and type SFBool.
-   */
-   repeatT: boolean,
-   /**
-   * Single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images.
-   *
-   * This field is of access type is 'initializeOnly' and type SFNode.
-   */
-   textureProperties: TexturePropertiesProxy,
-   /**
-   * Location and filename of image.
-   *
-   * This field is of access type is 'inputOutput' and type MFString.
-   */
-   url: MFString,
+
 }
 
 /** ImageTexture3D defines a 3D image-based texture map by specifying a single image file that contains complete 3D data. */
 interface ImageTexture3DProxy extends X3DTexture3DNodeProxy, X3DUrlObjectProxy
 {
-   /**
-   * autoRefresh defines interval in seconds before automatic reload of current url asset is performed.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   autoRefresh: number,
-   /**
-   * autoRefreshTimeLimit defines maximum duration that automatic refresh activity can occur.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   autoRefreshTimeLimit: number,
-   /**
-   * Author-provided prose that describes intended purpose of the url asset.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
-   * load=true means load immediately, load=false means defer loading or else unload a previously loaded scene.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   load: boolean,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * Whether to repeat texture along R axis from front to back.
-   *
-   * This field is of access type is 'initializeOnly' and type SFBool.
-   */
-   repeatR: boolean,
-   /**
-   * Whether to repeat texture along S axis horizontally from left to right.
-   *
-   * This field is of access type is 'initializeOnly' and type SFBool.
-   */
-   repeatS: boolean,
-   /**
-   * Whether to repeat texture along T axis vertically from top to bottom.
-   *
-   * This field is of access type is 'initializeOnly' and type SFBool.
-   */
-   repeatT: boolean,
-   /**
-   * Single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images.
-   *
-   * This field is of access type is 'initializeOnly' and type SFNode.
-   */
-   textureProperties: TexturePropertiesProxy,
-   /**
-   * Location and filename of image.
-   *
-   * This field is of access type is 'inputOutput' and type MFString.
-   */
-   url: MFString,
+
 }
 
 /** IndexedFaceSet defines polygons using index lists corresponding to vertex coordinates. */
 interface IndexedFaceSetProxy extends X3DComposedGeometryNodeProxy
 {
-   /**
-   * Single contained FloatVertexAttribute node that can specify list of per-vertex attribute information for programmable shaders.
-   *
-   * This field is of access type is 'inputOutput' and type MFNode.
-   */
-   attrib: MFNode <X3DVertexAttributeNodeProxy>,
-   /**
-   * ccw defines clockwise/counterclockwise ordering of vertex coordinates, which in turn defines front/back orientation of polygon normals according to Right-Hand Rule (RHR).
-   *
-   * This field is of access type is 'initializeOnly' and type SFBool.
-   */
-   ccw: boolean,
-   /**
-   * Single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorIndex and colorPerVertex fields.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   color: X3DColorNodeProxy,
    /**
    * colorIndex values define the order in which Color|ColorRGBA values are applied to polygons (or vertices).
    *
@@ -8324,23 +5288,11 @@ interface IndexedFaceSetProxy extends X3DComposedGeometryNodeProxy
    */
    colorIndex: MFInt32,
    /**
-   * Whether Color|ColorRGBA values are applied to each point vertex (true) or to each polygon face (false).
-   *
-   * This field is of access type is 'initializeOnly' and type SFBool.
-   */
-   colorPerVertex: boolean,
-   /**
    * The convex field is a hint to renderers whether all polygons in a shape are convex (true), or possibly concave (false).
    *
    * This field is of access type is 'initializeOnly' and type SFBool.
    */
    convex: boolean,
-   /**
-   * Single contained Coordinate or CoordinateDouble node that can specify a list of vertex values.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   coord: X3DCoordinateNodeProxy,
    /**
    * coordIndex indices provide the order in which coordinates are applied to construct each polygon face.
    *
@@ -8354,35 +5306,11 @@ interface IndexedFaceSetProxy extends X3DComposedGeometryNodeProxy
    */
    creaseAngle: number,
    /**
-   * Single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   fogCoord: FogCoordinateProxy,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * Single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   normal: X3DNormalNodeProxy,
-   /**
    * normalIndex values define the order in which normal vectors are applied to polygons (or vertices).
    *
    * This field is of access type is 'initializeOnly' and type MFInt32.
    */
    normalIndex: MFInt32,
-   /**
-   * Whether Normal node vector values are applied to each point vertex (true) or to each polygon face (false).
-   *
-   * This field is of access type is 'initializeOnly' and type SFBool.
-   */
-   normalPerVertex: boolean,
    /**
    * colorIndex values define the order in which Color|ColorRGBA values are applied to polygons (or vertices).
    *
@@ -8407,18 +5335,6 @@ interface IndexedFaceSetProxy extends X3DComposedGeometryNodeProxy
    * This field is of access type is 'inputOnly' and type MFInt32.
    */
    set_texCoordIndex: MFInt32,
-   /**
-   * Setting solid true means draw only one side of polygons (backface culling on), setting solid false means draw both sides of polygons (backface culling off).
-   *
-   * This field is of access type is 'initializeOnly' and type SFBool.
-   */
-   solid: boolean,
-   /**
-   * Single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   texCoord: X3DSingleTextureCoordinateNodeProxy | MultiTextureCoordinateProxy,
    /**
    * List of texture-coordinate indices mapping attached texture to corresponding coordinates.
    *
@@ -8473,12 +5389,6 @@ interface IndexedLineSetProxy extends X3DGeometryNodeProxy
    */
    fogCoord: FogCoordinateProxy,
    /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * Single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
    *
    * This field is of access type is 'inputOutput' and type SFNode.
@@ -8502,444 +5412,90 @@ interface IndexedLineSetProxy extends X3DGeometryNodeProxy
 interface IndexedQuadSetProxy extends X3DComposedGeometryNodeProxy
 {
    /**
-   * Single contained FloatVertexAttribute node that can specify list of per-vertex attribute information for programmable shaders.
-   *
-   * This field is of access type is 'inputOutput' and type MFNode.
-   */
-   attrib: MFNode <X3DVertexAttributeNodeProxy>,
-   /**
-   * ccw defines clockwise/counterclockwise ordering of vertex coordinates, which in turn defines front/back orientation of polygon normals according to Right-Hand Rule (RHR).
-   *
-   * This field is of access type is 'initializeOnly' and type SFBool.
-   */
-   ccw: boolean,
-   /**
-   * Single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorIndex and colorPerVertex fields.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   color: X3DColorNodeProxy,
-   /**
-   * Whether Color|ColorRGBA values are applied to each point vertex (true) or to each polygon face (false).
-   *
-   * This field is of access type is 'initializeOnly' and type SFBool.
-   */
-   colorPerVertex: boolean,
-   /**
-   * Single contained Coordinate or CoordinateDouble node that can specify a list of vertex values.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   coord: X3DCoordinateNodeProxy,
-   /**
-   * Single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   fogCoord: FogCoordinateProxy,
-   /**
    * index values provide order in which coordinates are applied.
    *
    * This field is of access type is 'initializeOnly' and type MFInt32.
    */
    index: MFInt32,
    /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * Single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   normal: X3DNormalNodeProxy,
-   /**
-   * Whether Normal node vector values are applied to each point vertex (true) or to each polygon face (false).
-   *
-   * This field is of access type is 'initializeOnly' and type SFBool.
-   */
-   normalPerVertex: boolean,
-   /**
    * index values provide order in which coordinates are applied.
    *
    * This field is of access type is 'inputOnly' and type MFInt32.
    */
    set_index: MFInt32,
-   /**
-   * Setting solid true means draw only one side of polygons (backface culling on), setting solid false means draw both sides of polygons (backface culling off).
-   *
-   * This field is of access type is 'initializeOnly' and type SFBool.
-   */
-   solid: boolean,
-   /**
-   * Single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   texCoord: X3DSingleTextureCoordinateNodeProxy | MultiTextureCoordinateProxy,
 }
 
 /** IndexedTriangleFanSet is a geometry node containing a Coordinate|CoordinateDouble node, and can also contain Color|ColorRGBA, Normal and TextureCoordinate nodes. */
 interface IndexedTriangleFanSetProxy extends X3DComposedGeometryNodeProxy
 {
    /**
-   * Single contained FloatVertexAttribute node that can specify list of per-vertex attribute information for programmable shaders.
-   *
-   * This field is of access type is 'inputOutput' and type MFNode.
-   */
-   attrib: MFNode <X3DVertexAttributeNodeProxy>,
-   /**
-   * ccw defines clockwise/counterclockwise ordering of vertex coordinates, which in turn defines front/back orientation of polygon normals according to Right-Hand Rule (RHR).
-   *
-   * This field is of access type is 'initializeOnly' and type SFBool.
-   */
-   ccw: boolean,
-   /**
-   * Single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorIndex and colorPerVertex fields.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   color: X3DColorNodeProxy,
-   /**
-   * Whether Color|ColorRGBA values are applied to each point vertex (true) or to each polygon face (false).
-   *
-   * This field is of access type is 'initializeOnly' and type SFBool.
-   */
-   colorPerVertex: boolean,
-   /**
-   * Single contained Coordinate or CoordinateDouble node that can specify a list of vertex values.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   coord: X3DCoordinateNodeProxy,
-   /**
-   * Single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   fogCoord: FogCoordinateProxy,
-   /**
    * index list specifies triangles by connecting Coordinate vertices, each individual fan separated by -1 sentinel value.
    *
    * This field is of access type is 'initializeOnly' and type MFInt32.
    */
    index: MFInt32,
    /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * Single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   normal: X3DNormalNodeProxy,
-   /**
-   * Whether Normal node vector values are applied to each point vertex (true) or to each polygon face (false).
-   *
-   * This field is of access type is 'initializeOnly' and type SFBool.
-   */
-   normalPerVertex: boolean,
-   /**
    * index list specifies triangles by connecting Coordinate vertices, each individual fan separated by -1 sentinel value.
    *
    * This field is of access type is 'inputOnly' and type MFInt32.
    */
    set_index: MFInt32,
-   /**
-   * Setting solid true means draw only one side of polygons (backface culling on), setting solid false means draw both sides of polygons (backface culling off).
-   *
-   * This field is of access type is 'initializeOnly' and type SFBool.
-   */
-   solid: boolean,
-   /**
-   * Single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   texCoord: X3DSingleTextureCoordinateNodeProxy | MultiTextureCoordinateProxy,
 }
 
 /** IndexedTriangleSet is a geometry node containing a Coordinate|CoordinateDouble node, and can also contain Color|ColorRGBA, Normal and TextureCoordinate nodes. */
 interface IndexedTriangleSetProxy extends X3DComposedGeometryNodeProxy
 {
    /**
-   * Single contained FloatVertexAttribute node that can specify list of per-vertex attribute information for programmable shaders.
-   *
-   * This field is of access type is 'inputOutput' and type MFNode.
-   */
-   attrib: MFNode <X3DVertexAttributeNodeProxy>,
-   /**
-   * ccw defines clockwise/counterclockwise ordering of vertex coordinates, which in turn defines front/back orientation of polygon normals according to Right-Hand Rule (RHR).
-   *
-   * This field is of access type is 'initializeOnly' and type SFBool.
-   */
-   ccw: boolean,
-   /**
-   * Single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorIndex and colorPerVertex fields.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   color: X3DColorNodeProxy,
-   /**
-   * Whether Color|ColorRGBA values are applied to each point vertex (true) or to each polygon face (false).
-   *
-   * This field is of access type is 'initializeOnly' and type SFBool.
-   */
-   colorPerVertex: boolean,
-   /**
-   * Single contained Coordinate or CoordinateDouble node that can specify a list of vertex values.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   coord: X3DCoordinateNodeProxy,
-   /**
-   * Single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   fogCoord: FogCoordinateProxy,
-   /**
    * index list specifies triangles by connecting Coordinate vertices.
    *
    * This field is of access type is 'initializeOnly' and type MFInt32.
    */
    index: MFInt32,
    /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * Single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   normal: X3DNormalNodeProxy,
-   /**
-   * Whether Normal node vector values are applied to each point vertex (true) or to each polygon face (false).
-   *
-   * This field is of access type is 'initializeOnly' and type SFBool.
-   */
-   normalPerVertex: boolean,
-   /**
    * index list specifies triangles by connecting Coordinate vertices.
    *
    * This field is of access type is 'inputOnly' and type MFInt32.
    */
    set_index: MFInt32,
-   /**
-   * Setting solid true means draw only one side of polygons (backface culling on), setting solid false means draw both sides of polygons (backface culling off).
-   *
-   * This field is of access type is 'initializeOnly' and type SFBool.
-   */
-   solid: boolean,
-   /**
-   * Single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   texCoord: X3DSingleTextureCoordinateNodeProxy | MultiTextureCoordinateProxy,
 }
 
 /** IndexedTriangleStripSet is a geometry node containing a Coordinate|CoordinateDouble node, and can also contain Color|ColorRGBA, Normal and TextureCoordinate nodes. */
 interface IndexedTriangleStripSetProxy extends X3DComposedGeometryNodeProxy
 {
    /**
-   * Single contained FloatVertexAttribute node that can specify list of per-vertex attribute information for programmable shaders.
-   *
-   * This field is of access type is 'inputOutput' and type MFNode.
-   */
-   attrib: MFNode <X3DVertexAttributeNodeProxy>,
-   /**
-   * ccw defines clockwise/counterclockwise ordering of vertex coordinates, which in turn defines front/back orientation of polygon normals according to Right-Hand Rule (RHR).
-   *
-   * This field is of access type is 'initializeOnly' and type SFBool.
-   */
-   ccw: boolean,
-   /**
-   * Single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorIndex and colorPerVertex fields.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   color: X3DColorNodeProxy,
-   /**
-   * Whether Color|ColorRGBA values are applied to each point vertex (true) or to each polygon face (false).
-   *
-   * This field is of access type is 'initializeOnly' and type SFBool.
-   */
-   colorPerVertex: boolean,
-   /**
-   * Single contained Coordinate or CoordinateDouble node that can specify a list of vertex values.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   coord: X3DCoordinateNodeProxy,
-   /**
-   * Single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   fogCoord: FogCoordinateProxy,
-   /**
    * index list specifies triangles by connecting Coordinate vertices for each individual strip, separated by -1 sentinel values.
    *
    * This field is of access type is 'initializeOnly' and type MFInt32.
    */
    index: MFInt32,
    /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * Single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   normal: X3DNormalNodeProxy,
-   /**
-   * Whether Normal node vector values are applied to each point vertex (true) or to each polygon face (false).
-   *
-   * This field is of access type is 'initializeOnly' and type SFBool.
-   */
-   normalPerVertex: boolean,
-   /**
    * index list specifies triangles by connecting Coordinate vertices for each individual strip, separated by -1 sentinel values.
    *
    * This field is of access type is 'inputOnly' and type MFInt32.
    */
    set_index: MFInt32,
-   /**
-   * Setting solid true means draw only one side of polygons (backface culling on), setting solid false means draw both sides of polygons (backface culling off).
-   *
-   * This field is of access type is 'initializeOnly' and type SFBool.
-   */
-   solid: boolean,
-   /**
-   * Single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   texCoord: X3DSingleTextureCoordinateNodeProxy | MultiTextureCoordinateProxy,
 }
 
 /** Inline can load another X3D or VRML model into the current scene via url. */
 interface InlineProxy extends X3DChildNodeProxy
 {
    /**
-   * autoRefresh defines interval in seconds before automatic reload of current url asset is performed.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   autoRefresh: number,
-   /**
-   * autoRefreshTimeLimit defines maximum duration that automatic refresh activity can occur.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   autoRefreshTimeLimit: number,
-   /**
-   * Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxCenter: SFVec3f,
-   /**
-   * Whether to display bounding box for associated geometry, aligned with world coordinates.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   bboxDisplay: boolean,
-   /**
-   * Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxSize: SFVec3f,
-   /**
-   * Author-provided prose that describes intended purpose of the url asset.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
    * The global field controls potential external scoping effects of lights found within an Inline scene.
    *
    * This field is of access type is 'inputOutput' and type SFBool.
    */
    global: boolean,
-   /**
-   * load=true means load immediately, load=false means defer loading or else unload a previously loaded scene.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   load: boolean,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * Address of X3D world to load Inline with current scene, retrieved either from local system or an online address.
-   *
-   * This field is of access type is 'inputOutput' and type MFString.
-   */
-   url: MFString,
-   /**
-   * Whether or not renderable content within this node is visually displayed.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   visible: boolean,
 }
 
 /** IntegerSequencer generates periodic discrete integer values. */
 interface IntegerSequencerProxy extends X3DSequencerNodeProxy
 {
    /**
-   * Definition values for linear-interpolation function input intervals, listed in non-decreasing order and corresponding to a value in the keyValue array.
-   *
-   * This field is of access type is 'inputOutput' and type MFFloat.
-   */
-   key: MFFloat,
-   /**
    * Output values for linear sequencing, each corresponding to an input-fraction value in the key array.
    *
    * This field is of access type is 'inputOutput' and type MFInt32.
    */
    keyValue: MFInt32,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * Send next output value in keyValue array, and reset internal fraction field to match corresponding value in key array.
-   *
-   * This field is of access type is 'inputOnly' and type SFBool.
-   */
-   next: boolean,
-   /**
-   * Send previous output value in keyValue array, and reset internal fraction field to match corresponding value in key array.
-   *
-   * This field is of access type is 'inputOnly' and type SFBool.
-   */
-   previous: boolean,
-   /**
-   * set_fraction selects input key for corresponding keyValue output.
-   *
-   * This field is of access type is 'inputOnly' and type SFFloat.
-   */
-   set_fraction: number,
    /**
    * Single intermittent output value determined by current key time and corresponding keyValue entry.
    *
@@ -8958,12 +5514,6 @@ interface IntegerTriggerProxy extends X3DTriggerNodeProxy
    */
    integerKey: number,
    /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * If input event set_boolean is true, trigger output of integer value.
    *
    * This field is of access type is 'inputOnly' and type SFBool.
@@ -8981,47 +5531,17 @@ interface IntegerTriggerProxy extends X3DTriggerNodeProxy
 interface IsoSurfaceVolumeDataProxy extends X3DVolumeDataNodeProxy
 {
    /**
-   * Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxCenter: SFVec3f,
-   /**
-   * Whether to display bounding box for associated geometry, aligned with world coordinates.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   bboxDisplay: boolean,
-   /**
-   * Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxSize: SFVec3f,
-   /**
    * If contourStepSize is non-zero, also render all isosurfaces that are multiples of that step size from initial surface value.
    *
    * This field is of access type is 'inputOutput' and type SFFloat.
    */
    contourStepSize: number,
    /**
-   * Actual-size X-Y-Z dimensions of volume data in local coordinate system.
-   *
-   * This field is of access type is 'inputOutput' and type SFVec3f.
-   */
-   dimensions: SFVec3f,
-   /**
    * Single contained X3DTexture3DNode (ComposedTexture3D, ImageTexture3D, PixelTexture3D) that provides explicit per-voxel gradient direction information for determining surface boundaries, rather than having it implicitly calculated by the implementation.
    *
    * This field is of access type is 'inputOutput' and type SFNode.
    */
    gradients: X3DTexture3DNodeProxy,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * Multiple contained X3DVolumeRenderStyleNode nodes corresponding to each isosurface that define specific rendering technique for this volumetric object.
    *
@@ -9040,12 +5560,6 @@ interface IsoSurfaceVolumeDataProxy extends X3DVolumeDataNodeProxy
    * This field is of access type is 'inputOutput' and type MFFloat.
    */
    surfaceValues: MFFloat,
-   /**
-   * Whether or not renderable content within this node is visually displayed.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   visible: boolean,
    /**
    * Single contained X3DTexture3DNode (ComposedTexture3D, ImageTexture3D, PixelTexture3D) that provides raw voxel information utilized by corresponding rendering styles.
    *
@@ -9082,24 +5596,6 @@ interface KeySensorProxy extends X3DKeyDeviceSensorNodeProxy
    */
    readonly controlKey: boolean,
    /**
-   * Author-provided prose that describes intended purpose of the node.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
-   * Enables/disables node operation.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   enabled: boolean,
-   /**
-   * Select geometry by activating the pointing device (for example, clicking the mouse) to generate isActive events.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isActive: boolean,
-   /**
    * Events generated when user presses character-producing keys on keyboard produces integer UTF-8 character values.
    *
    * This field is of access type is 'outputOnly' and type SFString.
@@ -9111,12 +5607,6 @@ interface KeySensorProxy extends X3DKeyDeviceSensorNodeProxy
    * This field is of access type is 'outputOnly' and type SFString.
    */
    readonly keyRelease: string,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * shiftKey generates true event when pressed, false event when released.
    *
@@ -9139,39 +5629,9 @@ interface LayerProxy extends X3DLayerNodeProxy
    */
    children: MFNode <X3DChildNodeProxy>,
    /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * The objectType field specifies a set of labels used in the picking process.
-   *
-   * This field is of access type is 'inputOutput' and type MFString.
-   */
-   objectType: MFString <"ALL" | "NONE" | "TERRAIN">,
-   /**
-   * pickable determines whether pick traversal is performed for this layer.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   pickable: boolean,
-   /**
    * This field is of access type is 'inputOnly' and type MFNode.
    */
    removeChildren: MFNode <X3DChildNodeProxy>,
-   /**
-   * The viewport field is a single Viewport node that constrains layer output to a sub-region of the render surface.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   viewport: X3DViewportNodeProxy,
-   /**
-   * Whether or not renderable content within this node is visually displayed.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   visible: boolean,
 }
 
 /** LayerSet defines a list of layers and a rendering order. */
@@ -9190,12 +5650,6 @@ interface LayerSetProxy extends X3DNodeProxy
    */
    layers: MFNode <X3DLayerNodeProxy>,
    /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * The order list defines the order in which layers are rendered.
    *
    * This field is of access type is 'inputOutput' and type MFInt32.
@@ -9212,12 +5666,6 @@ interface LayoutProxy extends X3DLayoutNodeProxy
    * This field is of access type is 'inputOutput' and type MFString.
    */
    align: MFString <"LEFT" | "BOTTOM" | "CENTER" | "TOP" | "RIGHT">,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * The values of the offset field are used to translate the location of this rectangle after the initial alignment.
    *
@@ -9258,24 +5706,6 @@ interface LayoutGroupProxy extends X3DNodeProxy, X3DGroupingNodeProxy
    */
    addChildren: MFNode <X3DChildNodeProxy>,
    /**
-   * Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxCenter: SFVec3f,
-   /**
-   * Whether to display bounding box for associated geometry, aligned with world coordinates.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   bboxDisplay: boolean,
-   /**
-   * Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxSize: SFVec3f,
-   /**
    * Grouping nodes contain an ordered list of children nodes.
    *
    * This field is of access type is 'inputOutput' and type MFNode.
@@ -9288,12 +5718,6 @@ interface LayoutGroupProxy extends X3DNodeProxy, X3DGroupingNodeProxy
    */
    layout: X3DLayoutNodeProxy,
    /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * This field is of access type is 'inputOnly' and type MFNode.
    */
    removeChildren: MFNode <X3DChildNodeProxy>,
@@ -9303,12 +5727,6 @@ interface LayoutGroupProxy extends X3DNodeProxy, X3DGroupingNodeProxy
    * This field is of access type is 'inputOutput' and type SFNode.
    */
    viewport: X3DViewportNodeProxy,
-   /**
-   * Whether or not renderable content within this node is visually displayed.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   visible: boolean,
 }
 
 /** LayoutLayer is a Grouping node that can contain most nodes. */
@@ -9331,92 +5749,14 @@ interface LayoutLayerProxy extends X3DLayerNodeProxy
    */
    layout: X3DLayoutNodeProxy,
    /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * The objectType field specifies a set of labels used in the picking process.
-   *
-   * This field is of access type is 'inputOutput' and type MFString.
-   */
-   objectType: MFString <"ALL" | "NONE" | "TERRAIN">,
-   /**
-   * pickable determines whether pick traversal is performed for this layer.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   pickable: boolean,
-   /**
    * This field is of access type is 'inputOnly' and type MFNode.
    */
    removeChildren: MFNode <X3DChildNodeProxy>,
-   /**
-   * The content of the LayoutGroup is clipped by the specified viewport.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   viewport: X3DViewportNodeProxy,
-   /**
-   * Whether or not renderable content within this node is visually displayed.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   visible: boolean,
 }
 
 /** LinePickSensor uses one or more pickingGeometry line segments to compute intersections with pickTarget shapes. */
 interface LinePickSensorProxy extends X3DPickSensorNodeProxy
 {
-   /**
-   * Author-provided prose that describes intended purpose of the node.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
-   * Enables/disables node operation.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   enabled: boolean,
-   /**
-   * intersectionType specifies precision of the collision computation.
-   *
-   * This field is of access type is 'initializeOnly' and type SFString.
-   */
-   intersectionType: "BOUNDS" | "GEOMETRY",
-   /**
-   * isActive indicates when the intersecting object is picked by the picking geometry.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isActive: boolean,
-   /**
-   * defines whether the intersection test (i.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   matchCriterion: "MATCH_ANY" | "MATCH_EVERY" | "MATCH_ONLY_ONE",
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * The objectType field specifies a set of labels used in the picking process.
-   *
-   * This field is of access type is 'inputOutput' and type MFString.
-   */
-   objectType: MFString <"ALL" | "NONE" | "TERRAIN">,
-   /**
-   * Output event containing the node or nodes that have been found to intersect with the picking geometry from the last time this node performed a picking operation, given in the local coordinate system.
-   *
-   * This field is of access type is 'outputOnly' and type MFNode.
-   */
-   readonly pickedGeometry: MFNode <X3DChildNodeProxy>,
    /**
    * Output event containing surface normal vectors computed by the picking intersection computations.
    *
@@ -9435,24 +5775,6 @@ interface LinePickSensorProxy extends X3DPickSensorNodeProxy
    * This field is of access type is 'outputOnly' and type MFVec3f.
    */
    readonly pickedTextureCoordinate: MFVec3f,
-   /**
-   * pickingGeometry specifies the exact geometry coordinates that are used to perform the intersection testing of the picking operation.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   pickingGeometry: X3DGeometryNodeProxy,
-   /**
-   * pickTarget specifies the list of nodes against which picking operations are performed.
-   *
-   * This field is of access type is 'inputOutput' and type MFNode.
-   */
-   pickTarget: MFNode <X3DGroupingNodeProxy | X3DShapeNodeProxy | InlineProxy>,
-   /**
-   * The sortOrder field determines the order provided for picked output events.
-   *
-   * This field is of access type is 'initializeOnly' and type SFString.
-   */
-   sortOrder: "ANY" | "CLOSEST" | "ALL" | "ALL_SORTED",
 }
 
 /** LineProperties allows precise fine-grained control over the rendering style of lines and edges for associated geometry nodes inside the same Shape. */
@@ -9476,12 +5798,6 @@ interface LinePropertiesProxy extends X3DAppearanceChildNodeProxy
    * This field is of access type is 'inputOutput' and type SFFloat.
    */
    linewidthScaleFactor: number,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
 }
 
 /** LineSet is a geometry node that can contain a Coordinate|CoordinateDouble node and optionally a Color|ColorRGBA node. */
@@ -9512,12 +5828,6 @@ interface LineSetProxy extends X3DGeometryNodeProxy
    */
    fogCoord: FogCoordinateProxy,
    /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * Single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
    *
    * This field is of access type is 'inputOutput' and type SFNode.
@@ -9535,35 +5845,11 @@ interface LineSetProxy extends X3DGeometryNodeProxy
 interface ListenerPointSourceProxy extends X3DSoundSourceNodeProxy
 {
    /**
-   * Author-provided prose that describes intended purpose of the url asset.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
    * dopplerEnabled enables/disables whether real-time Doppler effects (due to relation motion between sources and listeners) are computed by browser between virtual sound sources and active listening locations, then applied to received frequency at active listening locations.
    *
    * This field is of access type is 'inputOutput' and type SFBool.
    */
    dopplerEnabled: boolean,
-   /**
-   * Current elapsed time since AudioClip activated/running, cumulative in seconds, and not counting any paused time.
-   *
-   * This field is of access type is 'outputOnly' and type SFTime.
-   */
-   readonly elapsedTime: number,
-   /**
-   * Enables/disables node operation.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   enabled: boolean,
-   /**
-   * The gain field is a factor that represents the amount of linear amplification to apply to the output of the node.
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   gain: number,
    /**
    * The interauralDistance field is.
    *
@@ -9571,59 +5857,17 @@ interface ListenerPointSourceProxy extends X3DSoundSourceNodeProxy
    */
    interauralDistance: number,
    /**
-   * isActive true/false events are sent when playback starts/stops.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isActive: boolean,
-   /**
-   * isPaused true/false events are sent when AudioClip is paused/resumed.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isPaused: boolean,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * Rotation (axis, angle in radians) of listening point direction relative to default -Z axis direction in local coordinate system.
    *
    * This field is of access type is 'inputOutput' and type SFRotation.
    */
    orientation: SFRotation,
    /**
-   * When time now >= pauseTime, isPaused becomes true and AudioClip becomes paused.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   pauseTime: number,
-   /**
    * position (x, y, z in meters) relative to local coordinate system.
    *
    * This field is of access type is 'inputOutput' and type SFVec3f.
    */
    position: SFVec3f,
-   /**
-   * When resumeTime becomes <= time now, isPaused becomes false and AudioClip becomes active.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   resumeTime: number,
-   /**
-   * Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   startTime: number,
-   /**
-   * Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   stopTime: number,
    /**
    * If trackCurrentView field is true then position and orientation match avatar's (user's) current view.
    *
@@ -9642,24 +5886,6 @@ interface LoadSensorProxy extends X3DNetworkSensorNodeProxy
    */
    children: MFNode <X3DUrlObjectProxy>,
    /**
-   * Author-provided prose that describes intended purpose of the node.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
-   * Enables/disables node operation.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   enabled: boolean,
-   /**
-   * isActive true/false events are sent when sensing starts/stops.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isActive: boolean,
-   /**
    * Notify when all watchList child nodes are loaded, or at least one has failed.
    *
    * This field is of access type is 'outputOnly' and type SFBool.
@@ -9671,12 +5897,6 @@ interface LoadSensorProxy extends X3DNetworkSensorNodeProxy
    * This field is of access type is 'outputOnly' and type SFTime.
    */
    readonly loadTime: number,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * Sends 0.
    *
@@ -9695,74 +5915,22 @@ interface LoadSensorProxy extends X3DNetworkSensorNodeProxy
 interface LocalFogProxy extends X3DChildNodeProxy, X3DFogObjectProxy
 {
    /**
-   * Fog color.
-   *
-   * This field is of access type is 'inputOutput' and type SFColor.
-   */
-   color: SFColor,
-   /**
    * Enables/disables node operation.
    *
    * This field is of access type is 'inputOutput' and type SFBool.
    */
    enabled: boolean,
-   /**
-   * Specifies algorithm for rate of increasing Fog, either LINEAR or EXPONENTIAL.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   fogType: "LINEAR" | "EXPONENTIAL",
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * Distance in meters where objects are totally obscured by the fog, using local coordinate system.
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   visibilityRange: number,
 }
 
 /** LOD (Level Of Detail) uses camera-to-object distance to switch among contained child levels. */
 interface LODProxy extends X3DGroupingNodeProxy
 {
    /**
-   * This field is of access type is 'inputOnly' and type MFNode.
-   */
-   addChildren: MFNode <X3DChildNodeProxy>,
-   /**
-   * Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxCenter: SFVec3f,
-   /**
-   * Whether to display bounding box for associated geometry, aligned with world coordinates.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   bboxDisplay: boolean,
-   /**
-   * Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxSize: SFVec3f,
-   /**
    * Viewpoint distance-measurement offset from origin of local coordinate system, used for LOD node distance calculations.
    *
    * This field is of access type is 'initializeOnly' and type SFVec3f.
    */
    center: SFVec3f,
-   /**
-   * Grouping nodes contain an ordered list of children nodes.
-   *
-   * This field is of access type is 'inputOutput' and type MFNode.
-   */
-   children: MFNode <X3DChildNodeProxy>,
    /**
    * Whether to perform every range-based transition, regardless of browser optimizations that might otherwise occur.
    *
@@ -9776,27 +5944,11 @@ interface LODProxy extends X3DGroupingNodeProxy
    */
    readonly level_changed: number,
    /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * Specifies ideal distances at which to switch between levels.
    *
    * This field is of access type is 'initializeOnly' and type MFFloat.
    */
    range: MFFloat,
-   /**
-   * This field is of access type is 'inputOnly' and type MFNode.
-   */
-   removeChildren: MFNode <X3DChildNodeProxy>,
-   /**
-   * Whether or not renderable content within this node is visually displayed.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   visible: boolean,
 }
 
 /** Material specifies surface rendering properties for associated geometry nodes. */
@@ -9851,35 +6003,11 @@ interface MaterialProxy extends X3DOneSidedMaterialNodeProxy
    */
    emissiveTexture: X3DSingleTextureNodeProxy,
    /**
-   * The mapping label identifies which texture coordinates and transformations are used to compute texture effects from corresponding geometry on a given material.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   emissiveTextureMapping: string,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * normalScale controls the degree to which normalTexture RGB values apply XYZ-normal bump mapping to pixels in the parent material.
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   normalScale: number,
-   /**
    * When applying normalScale for this material node, the contained texture modulates the texture across the surface.
    *
    * This field is of access type is 'inputOutput' and type SFNode.
    */
    normalTexture: X3DSingleTextureNodeProxy,
-   /**
-   * The mapping label identifies which texture coordinates and transformations are used to compute texture effects from corresponding geometry on a given material.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   normalTextureMapping: string,
    /**
    * occlusionStrength indicates areas of indirect lighting, typically called ambient occlusion.
    *
@@ -9946,18 +6074,6 @@ interface MaterialProxy extends X3DOneSidedMaterialNodeProxy
 interface Matrix3VertexAttributeProxy extends X3DVertexAttributeNodeProxy
 {
    /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * Required name for this particular VertexAttribute instance.
-   *
-   * This field is of access type is 'initializeOnly' and type SFString.
-   */
-   name: string,
-   /**
    * value specifies an arbitrary collection of matrix values that will be passed to the shader as per-vertex information.
    *
    * This field is of access type is 'inputOutput' and type MFMatrix3f.
@@ -9968,18 +6084,6 @@ interface Matrix3VertexAttributeProxy extends X3DVertexAttributeNodeProxy
 /** Matrix4VertexAttribute defines a set of per-vertex 4x4 matrix attributes. */
 interface Matrix4VertexAttributeProxy extends X3DVertexAttributeNodeProxy
 {
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * Required name for this particular VertexAttribute instance.
-   *
-   * This field is of access type is 'initializeOnly' and type SFString.
-   */
-   name: string,
    /**
    * value specifies an arbitrary collection of matrix values that will be passed to the shader as per-vertex information.
    *
@@ -9992,24 +6096,6 @@ interface Matrix4VertexAttributeProxy extends X3DVertexAttributeNodeProxy
 interface MetadataBooleanProxy extends X3DNodeProxy, X3DMetadataObjectProxy
 {
    /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * Depending on the metadata vocabulary, the attribute name is usually required for metadata nodes.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   name: string,
-   /**
-   * Reference to the metadata standard or definition defining this particular metadata value.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   reference: string,
-   /**
    * The value attribute is a strictly typed data array providing relevant metadata information.
    *
    * This field is of access type is 'inputOutput' and type MFBool.
@@ -10020,24 +6106,6 @@ interface MetadataBooleanProxy extends X3DNodeProxy, X3DMetadataObjectProxy
 /** The metadata provided by this node is contained in the double-precision floating point numbers of the value field. */
 interface MetadataDoubleProxy extends X3DNodeProxy, X3DMetadataObjectProxy
 {
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * Depending on the metadata vocabulary, the attribute name is usually required for metadata nodes.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   name: string,
-   /**
-   * Reference to the metadata standard or definition defining this particular metadata value.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   reference: string,
    /**
    * The value attribute is a strictly typed data array providing relevant metadata information.
    *
@@ -10050,24 +6118,6 @@ interface MetadataDoubleProxy extends X3DNodeProxy, X3DMetadataObjectProxy
 interface MetadataFloatProxy extends X3DNodeProxy, X3DMetadataObjectProxy
 {
    /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * Depending on the metadata vocabulary, the attribute name is usually required for metadata nodes.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   name: string,
-   /**
-   * Reference to the metadata standard or definition defining this particular metadata value.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   reference: string,
-   /**
    * The value attribute is a strictly typed data array providing relevant metadata information.
    *
    * This field is of access type is 'inputOutput' and type MFFloat.
@@ -10078,24 +6128,6 @@ interface MetadataFloatProxy extends X3DNodeProxy, X3DMetadataObjectProxy
 /** The metadata provided by this node is contained in the integer numbers of the value field. */
 interface MetadataIntegerProxy extends X3DNodeProxy, X3DMetadataObjectProxy
 {
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * Depending on the metadata vocabulary, the attribute name is usually required for metadata nodes.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   name: string,
-   /**
-   * Reference to the metadata standard or definition defining this particular metadata value.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   reference: string,
    /**
    * The value attribute is a strictly typed data array providing relevant metadata information.
    *
@@ -10114,18 +6146,6 @@ interface MetadataSetProxy extends X3DNodeProxy, X3DMetadataObjectProxy
    */
    metadata: X3DMetadataObjectProxy,
    /**
-   * Depending on the metadata vocabulary, the attribute name is usually required for metadata nodes.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   name: string,
-   /**
-   * Reference to the metadata standard or definition defining this particular metadata value.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   reference: string,
-   /**
    * The value field provides a list of X3DMetadataObject nodes whose meaning is determined by the name field.
    *
    * This field is of access type is 'inputOutput' and type MFNode.
@@ -10136,24 +6156,6 @@ interface MetadataSetProxy extends X3DNodeProxy, X3DMetadataObjectProxy
 /** The metadata provided by this node is contained in the strings of the value field. */
 interface MetadataStringProxy extends X3DNodeProxy, X3DMetadataObjectProxy
 {
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * Depending on the metadata vocabulary, the attribute name is usually required for metadata nodes.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   name: string,
-   /**
-   * Reference to the metadata standard or definition defining this particular metadata value.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   reference: string,
    /**
    * The value attribute is a strictly typed data array providing relevant metadata information.
    *
@@ -10166,77 +6168,11 @@ interface MetadataStringProxy extends X3DNodeProxy, X3DMetadataObjectProxy
 interface MicrophoneSourceProxy extends X3DSoundSourceNodeProxy
 {
    /**
-   * Author-provided prose that describes intended purpose of the url asset.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
-   * Current elapsed time since AudioClip activated/running, cumulative in seconds, and not counting any paused time.
-   *
-   * This field is of access type is 'outputOnly' and type SFTime.
-   */
-   readonly elapsedTime: number,
-   /**
-   * Enables/disables node operation.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   enabled: boolean,
-   /**
-   * The gain field is a factor that represents the amount of linear amplification to apply to the output of the node.
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   gain: number,
-   /**
-   * isActive true/false events are sent when playback starts/stops.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isActive: boolean,
-   /**
-   * isPaused true/false events are sent when AudioClip is paused/resumed.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isPaused: boolean,
-   /**
    * mediaDeviceID field provides ID parameter functionality.
    *
    * This field is of access type is 'inputOutput' and type SFString.
    */
    mediaDeviceID: string,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * When time now >= pauseTime, isPaused becomes true and AudioClip becomes paused.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   pauseTime: number,
-   /**
-   * When resumeTime becomes <= time now, isPaused becomes false and AudioClip becomes active.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   resumeTime: number,
-   /**
-   * Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   startTime: number,
-   /**
-   * Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   stopTime: number,
 }
 
 /** MotorJoint drives relative angular velocities between body1 and body2 within a common reference frame. */
@@ -10285,35 +6221,11 @@ interface MotorJointProxy extends X3DRigidJointNodeProxy
    */
    axis3Torque: number,
    /**
-   * The body1 and body2 fields indicate the two RigidBody nodes connected by this joint.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   body1: RigidBodyProxy,
-   /**
-   * The body1 and body2 fields indicate the two RigidBody nodes connected by this joint.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   body2: RigidBodyProxy,
-   /**
    * enabledAxes indicates which motor axes are active.
    *
    * This field is of access type is 'inputOutput' and type SFInt32.
    */
    enabledAxes: number,
-   /**
-   * forceOutput controls which output fields are generated for the next frame.
-   *
-   * This field is of access type is 'inputOutput' and type MFString.
-   */
-   forceOutput: MFString <"ALL" | "NONE">,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * motor1Angle provides calculated angle of rotation (radians) for this motor joint from last frame.
    *
@@ -10410,65 +6322,11 @@ interface MotorJointProxy extends X3DRigidJointNodeProxy
 interface MovieTextureProxy extends X3DSoundSourceNodeProxy
 {
    /**
-   * autoRefresh defines interval in seconds before automatic reload of current url asset is performed.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   autoRefresh: number,
-   /**
-   * autoRefreshTimeLimit defines maximum duration that automatic refresh activity can occur.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   autoRefreshTimeLimit: number,
-   /**
-   * Author-provided prose that describes intended purpose of the url asset.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
    * or -1.
    *
    * This field is of access type is 'outputOnly' and type SFTime.
    */
    readonly duration_changed: number,
-   /**
-   * Current elapsed time since MovieTexture activated/running, cumulative in seconds, and not counting any paused time.
-   *
-   * This field is of access type is 'outputOnly' and type SFTime.
-   */
-   readonly elapsedTime: number,
-   /**
-   * Enables/disables node operation.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   enabled: boolean,
-   /**
-   * The gain field is a factor that represents the amount of linear amplification to apply to the output of the node.
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   gain: number,
-   /**
-   * isActive true/false events are sent when playback starts/stops.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isActive: boolean,
-   /**
-   * isPaused true/false events are sent when MovieTexture is paused/resumed.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isPaused: boolean,
-   /**
-   * load=true means load immediately, load=false means defer loading or else unload a previously loaded scene.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   load: boolean,
    /**
    * Repeat indefinitely when loop=true, repeat only once when loop=false.
    *
@@ -10476,41 +6334,11 @@ interface MovieTextureProxy extends X3DSoundSourceNodeProxy
    */
    loop: boolean,
    /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * When time now >= pauseTime, isPaused becomes true and MovieTexture becomes paused.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   pauseTime: number,
-   /**
    * Multiplier for the rate at which sampled sound is played.
    *
    * This field is of access type is 'inputOutput' and type SFFloat.
    */
    pitch: number,
-   /**
-   * Whether to repeat texture along S axis horizontally from left to right.
-   *
-   * This field is of access type is 'initializeOnly' and type SFBool.
-   */
-   repeatS: boolean,
-   /**
-   * Whether to repeat texture along T axis vertically from top to bottom.
-   *
-   * This field is of access type is 'initializeOnly' and type SFBool.
-   */
-   repeatT: boolean,
-   /**
-   * When resumeTime becomes <= time now, isPaused becomes false and MovieTexture becomes active.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   resumeTime: number,
    /**
    * Factor for how fast the movie (or soundtrack) is played.
    *
@@ -10518,29 +6346,11 @@ interface MovieTextureProxy extends X3DSoundSourceNodeProxy
    */
    speed: number,
    /**
-   * Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   startTime: number,
-   /**
-   * Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   stopTime: number,
-   /**
    * Single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images.
    *
    * This field is of access type is 'initializeOnly' and type SFNode.
    */
    textureProperties: TexturePropertiesProxy,
-   /**
-   * Location and filename of movie file or stream.
-   *
-   * This field is of access type is 'inputOutput' and type MFString.
-   */
-   url: MFString,
 }
 
 /** MultiTexture applies several individual textures to a single geometry node, enabling a variety of visual effects that include light mapping and environment mapping. */
@@ -10559,23 +6369,11 @@ interface MultiTextureProxy extends X3DTextureNodeProxy
    */
    color: SFColor,
    /**
-   * Author-provided prose that describes intended purpose of the url asset.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
    * function operators COMPLEMENT or ALPHAREPLICATE can be applied after the mode blending operation.
    *
    * This field is of access type is 'inputOutput' and type MFString.
    */
    function: MFString <"COMPLEMENT" | "ALPHAREPLICATE" | "">,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * mode field indicates the type of blending operation, both for color and for alpha channel.
    *
@@ -10600,12 +6398,6 @@ interface MultiTextureProxy extends X3DTextureNodeProxy
 interface MultiTextureCoordinateProxy extends X3DTextureCoordinateNodeProxy
 {
    /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * Zero or more contained TextureCoordinate or TextureCoordinateGenerator nodes that specify texture coordinates for the different texture channels, used for texture mapping onto corresponding geometry.
    *
    * This field is of access type is 'inputOutput' and type MFNode.
@@ -10616,12 +6408,6 @@ interface MultiTextureCoordinateProxy extends X3DTextureCoordinateNodeProxy
 /** MultiTextureTransform contains multiple TextureTransform nodes, each provided for use by corresponding ImageTexture MovieTexture or PixelTexture nodes within a sibling MultiTexture node. */
 interface MultiTextureTransformProxy extends X3DTextureTransformNodeProxy
 {
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * Zero or more contained TextureTransform nodes, for each of the different texture channels, that define 2D transformation applied to texture coordinates.
    *
@@ -10640,35 +6426,11 @@ interface NavigationInfoProxy extends X3DBindableNodeProxy
    */
    avatarSize: MFFloat,
    /**
-   * Event sent reporting timestamp when node becomes active/inactive.
-   *
-   * This field is of access type is 'outputOnly' and type SFTime.
-   */
-   readonly bindTime: number,
-   /**
    * Enable/disable directional light that always points in the direction the user is looking.
    *
    * This field is of access type is 'inputOutput' and type SFBool.
    */
    headlight: boolean,
-   /**
-   * Output event true gets sent when node becomes bound and activated, otherwise output event false gets sent when node becomes unbound and deactivated.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isBound: boolean,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * Receiving event set_bind=true activates and binds this node at the top of the binding stack.
-   *
-   * This field is of access type is 'inputOnly' and type SFBool.
-   */
-   set_bind: boolean,
    /**
    * Default rate at which viewer travels through scene, meters/second.
    *
@@ -10711,12 +6473,6 @@ interface NavigationInfoProxy extends X3DBindableNodeProxy
 interface NormalProxy extends X3DNormalNodeProxy
 {
    /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * set of unit-length normal vectors, corresponding to indexed polygons or vertices.
    *
    * This field is of access type is 'inputOutput' and type MFVec3f.
@@ -10728,29 +6484,11 @@ interface NormalProxy extends X3DNormalNodeProxy
 interface NormalInterpolatorProxy extends X3DInterpolatorNodeProxy
 {
    /**
-   * Definition values for linear-interpolation function input intervals, listed in non-decreasing order and corresponding to a value in the keyValue array.
-   *
-   * This field is of access type is 'inputOutput' and type MFFloat.
-   */
-   key: MFFloat,
-   /**
    * Output values for linear interpolation, each corresponding to an input-fraction value in the key array.
    *
    * This field is of access type is 'inputOutput' and type MFVec3f.
    */
    keyValue: MFVec3f,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * set_fraction selects input key for corresponding keyValue output.
-   *
-   * This field is of access type is 'inputOnly' and type SFFloat.
-   */
-   set_fraction: number,
    /**
    * Linearly interpolated output value determined by current key time and corresponding keyValue pair.
    *
@@ -10781,12 +6519,6 @@ interface NurbsCurveProxy extends X3DParametricGeometryNodeProxy
    */
    knot: MFDouble,
    /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * define order of surface by polynomials of degree = order-1.
    *
    * This field is of access type is 'initializeOnly' and type SFInt32.
@@ -10816,23 +6548,11 @@ interface NurbsCurve2DProxy extends X3DNurbsControlCurveNodeProxy
    */
    closed: boolean,
    /**
-   * controlPoint defines a set of control points of dimension uDimension by vDimension, and defines a mesh where the points do not have uniform spacing.
-   *
-   * This field is of access type is 'inputOutput' and type MFVec2d.
-   */
-   controlPoint: MFVec2d,
-   /**
    * knot vector, where size = number of control points + order of curve.
    *
    * This field is of access type is 'initializeOnly' and type MFDouble.
    */
    knot: MFDouble,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * define order of surface by polynomials of degree = order-1.
    *
@@ -10869,12 +6589,6 @@ interface NurbsOrientationInterpolatorProxy extends X3DChildNodeProxy
    */
    knot: MFDouble,
    /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * define order of surface by polynomials of degree = order-1.
    *
    * This field is of access type is 'inputOutput' and type SFInt32.
@@ -10903,96 +6617,7 @@ interface NurbsOrientationInterpolatorProxy extends X3DChildNodeProxy
 /** NurbsPatchSurface defines a contiguous 3D Non-Uniform Rational B-Spline (NURBS) surface. */
 interface NurbsPatchSurfaceProxy extends X3DNurbsSurfaceGeometryNodeProxy
 {
-   /**
-   * Single contained Coordinate or CoordinateDouble node that can specify control points for NURBS geometry definitions.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   controlPoint: CoordinateProxy | CoordinateDoubleProxy,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * Setting solid true means draw only one side of polygons (backface culling on), setting solid false means draw both sides of polygons (backface culling off).
-   *
-   * This field is of access type is 'initializeOnly' and type SFBool.
-   */
-   solid: boolean,
-   /**
-   * Single contained NurbsTextureCoordinate, TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   texCoord: X3DSingleTextureCoordinateNodeProxy | NurbsTextureCoordinateProxy,
-   /**
-   * Whether opposite surface sides are closed (seamless) across u dimension.
-   *
-   * This field is of access type is 'initializeOnly' and type SFBool.
-   */
-   uClosed: boolean,
-   /**
-   * Number of control points in u dimension.
-   *
-   * This field is of access type is 'initializeOnly' and type SFInt32.
-   */
-   uDimension: number,
-   /**
-   * knot vector, where size = number of control points + order of curve.
-   *
-   * This field is of access type is 'initializeOnly' and type MFDouble.
-   */
-   uKnot: MFDouble,
-   /**
-   * define order of surface by polynomials of degree = order-1.
-   *
-   * This field is of access type is 'initializeOnly' and type SFInt32.
-   */
-   uOrder: number,
-   /**
-   * hint for surface tessellation.
-   *
-   * This field is of access type is 'inputOutput' and type SFInt32.
-   */
-   uTessellation: number,
-   /**
-   * Whether opposite surface sides are closed (seamless) across u dimension.
-   *
-   * This field is of access type is 'initializeOnly' and type SFBool.
-   */
-   vClosed: boolean,
-   /**
-   * Number of control points in v dimension.
-   *
-   * This field is of access type is 'initializeOnly' and type SFInt32.
-   */
-   vDimension: number,
-   /**
-   * knot vector, where size = number of control points + order of curve.
-   *
-   * This field is of access type is 'initializeOnly' and type MFDouble.
-   */
-   vKnot: MFDouble,
-   /**
-   * define order of surface by polynomials of degree = order-1.
-   *
-   * This field is of access type is 'initializeOnly' and type SFInt32.
-   */
-   vOrder: number,
-   /**
-   * hint for surface tessellation.
-   *
-   * This field is of access type is 'inputOutput' and type SFInt32.
-   */
-   vTessellation: number,
-   /**
-   * Vector assigning relative weight value to each control point.
-   *
-   * This field is of access type is 'inputOutput' and type MFDouble.
-   */
-   weight: MFDouble,
+
 }
 
 /** NurbsPositionInterpolator describes a 3D NURBS curve and outputs interpolated position values. */
@@ -11010,12 +6635,6 @@ interface NurbsPositionInterpolatorProxy extends X3DChildNodeProxy
    * This field is of access type is 'inputOutput' and type MFDouble.
    */
    knot: MFDouble,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * define order of surface by polynomials of degree = order-1.
    *
@@ -11050,35 +6669,11 @@ interface NurbsSetProxy extends X3DChildNodeProxy, X3DBoundedObjectProxy
    */
    addGeometry: MFNode <X3DParametricGeometryNodeProxy>,
    /**
-   * Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxCenter: SFVec3f,
-   /**
-   * Whether to display bounding box for associated geometry, aligned with world coordinates.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   bboxDisplay: boolean,
-   /**
-   * Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxSize: SFVec3f,
-   /**
    * The children form a closed loop with first point of first child repeated as last point of last child, and the last point of a segment repeated as first point of the consecutive one.
    *
    * This field is of access type is 'inputOutput' and type MFNode.
    */
    geometry: MFNode <X3DParametricGeometryNodeProxy>,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * This field is of access type is 'inputOnly' and type MFNode.
    */
@@ -11089,12 +6684,6 @@ interface NurbsSetProxy extends X3DChildNodeProxy, X3DBoundedObjectProxy
    * This field is of access type is 'inputOutput' and type SFFloat.
    */
    tessellationScale: number,
-   /**
-   * Whether or not renderable content within this node is visually displayed.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   visible: boolean,
 }
 
 /** NurbsSurfaceInterpolator describes a 3D NURBS curve and outputs interpolated position and normal values. */
@@ -11106,12 +6695,6 @@ interface NurbsSurfaceInterpolatorProxy extends X3DChildNodeProxy
    * This field is of access type is 'inputOutput' and type SFNode.
    */
    controlPoint: CoordinateProxy | CoordinateDoubleProxy,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * Computationaly interpolated output value determined by current key time and corresponding keyValue pair.
    *
@@ -11190,12 +6773,6 @@ interface NurbsSweptSurfaceProxy extends X3DParametricGeometryNodeProxy
    */
    crossSectionCurve: X3DNurbsControlCurveNodeProxy,
    /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * Setting solid true means draw only one side of polygons (backface culling on), setting solid false means draw both sides of polygons (backface culling off).
    *
    * This field is of access type is 'initializeOnly' and type SFBool.
@@ -11218,12 +6795,6 @@ interface NurbsSwungSurfaceProxy extends X3DParametricGeometryNodeProxy
    * This field is of access type is 'initializeOnly' and type SFBool.
    */
    ccw: boolean,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * 2D curve in the yz-plane that describes the cross-sectional shape of the object.
    *
@@ -11253,12 +6824,6 @@ interface NurbsTextureCoordinateProxy extends X3DNodeProxy
    * This field is of access type is 'inputOutput' and type MFVec2f.
    */
    controlPoint: MFVec2f,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * Number of control points in u dimension.
    *
@@ -11311,122 +6876,20 @@ interface NurbsTrimmedSurfaceProxy extends X3DNurbsSurfaceGeometryNodeProxy
    */
    addTrimmingContour: MFNode <Contour2DProxy>,
    /**
-   * Single contained Coordinate or CoordinateDouble node that can specify control points for NURBS geometry definitions.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   controlPoint: CoordinateProxy | CoordinateDoubleProxy,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * This field is of access type is 'inputOnly' and type MFNode.
    */
    removeTrimmingContour: MFNode <Contour2DProxy>,
-   /**
-   * Setting solid true means draw only one side of polygons (backface culling on), setting solid false means draw both sides of polygons (backface culling off).
-   *
-   * This field is of access type is 'initializeOnly' and type SFBool.
-   */
-   solid: boolean,
-   /**
-   * Single contained NurbsTextureCoordinate, TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   texCoord: X3DSingleTextureCoordinateNodeProxy | NurbsTextureCoordinateProxy,
    /**
    * A set of Contour2D nodes are used as trimming loops.
    *
    * This field is of access type is 'inputOutput' and type MFNode.
    */
    trimmingContour: MFNode <Contour2DProxy>,
-   /**
-   * Whether opposite surface sides are closed (seamless) across u dimension.
-   *
-   * This field is of access type is 'initializeOnly' and type SFBool.
-   */
-   uClosed: boolean,
-   /**
-   * Number of control points in u dimension.
-   *
-   * This field is of access type is 'initializeOnly' and type SFInt32.
-   */
-   uDimension: number,
-   /**
-   * Knot vector, where size = number of control points + order of curve.
-   *
-   * This field is of access type is 'initializeOnly' and type MFDouble.
-   */
-   uKnot: MFDouble,
-   /**
-   * Define order of surface by polynomials of degree = order-1.
-   *
-   * This field is of access type is 'initializeOnly' and type SFInt32.
-   */
-   uOrder: number,
-   /**
-   * hint for surface tessellation.
-   *
-   * This field is of access type is 'inputOutput' and type SFInt32.
-   */
-   uTessellation: number,
-   /**
-   * Whether opposite surface sides are closed (seamless) across u dimension.
-   *
-   * This field is of access type is 'initializeOnly' and type SFBool.
-   */
-   vClosed: boolean,
-   /**
-   * Number of control points in v dimension.
-   *
-   * This field is of access type is 'initializeOnly' and type SFInt32.
-   */
-   vDimension: number,
-   /**
-   * Knot vector, where size = number of control points + order of curve.
-   *
-   * This field is of access type is 'initializeOnly' and type MFDouble.
-   */
-   vKnot: MFDouble,
-   /**
-   * Define order of surface by polynomials of degree = order-1.
-   *
-   * This field is of access type is 'initializeOnly' and type SFInt32.
-   */
-   vOrder: number,
-   /**
-   * hint for surface tessellation.
-   *
-   * This field is of access type is 'inputOutput' and type SFInt32.
-   */
-   vTessellation: number,
-   /**
-   * Vector assigning relative weight value to each control point.
-   *
-   * This field is of access type is 'inputOutput' and type MFDouble.
-   */
-   weight: MFDouble,
 }
 
 /** OpacityMapVolumeStyle specifies that volumetric data is rendered using opacity mapped to a transfer function texture. */
 interface OpacityMapVolumeStyleProxy extends X3DComposableVolumeRenderStyleNodeProxy
 {
-   /**
-   * Enables/disables node operation.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   enabled: boolean,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * The transferFunction field holds a single texture representation in either two or three dimensions that maps the voxel data values to a specific colour output.
    *
@@ -11439,12 +6902,6 @@ interface OpacityMapVolumeStyleProxy extends X3DComposableVolumeRenderStyleNodeP
 interface OrientationChaserProxy extends X3DChaserNodeProxy
 {
    /**
-   * duration is the time interval for filter response in seconds.
-   *
-   * This field is of access type is 'initializeOnly' and type SFTime.
-   */
-   duration: number,
-   /**
    * Initial destination value for this node.
    *
    * This field is of access type is 'initializeOnly' and type SFRotation.
@@ -11456,18 +6913,6 @@ interface OrientationChaserProxy extends X3DChaserNodeProxy
    * This field is of access type is 'initializeOnly' and type SFRotation.
    */
    initialValue: SFRotation,
-   /**
-   * isActive true/false events are sent when follower-node computation starts/stops.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isActive: boolean,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * set_destination resets destination value of this node.
    *
@@ -11504,24 +6949,6 @@ interface OrientationDamperProxy extends X3DDamperNodeProxy
    */
    initialValue: SFRotation,
    /**
-   * isActive true/false events are sent when follower-node computation starts/stops.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isActive: boolean,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * order defines the number of internal filters (larger means smoother response, longer delay).
-   *
-   * This field is of access type is 'initializeOnly' and type SFInt32.
-   */
-   order: number,
-   /**
    * set_destination resets destination value of this node.
    *
    * This field is of access type is 'inputOnly' and type SFRotation.
@@ -11534,18 +6961,6 @@ interface OrientationDamperProxy extends X3DDamperNodeProxy
    */
    set_value: SFRotation,
    /**
-   * tau is the exponential-decay time constant for filter response in seconds.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   tau: number,
-   /**
-   * or -1.
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   tolerance: number,
-   /**
    * Computed output value that approaches within tolerance of destination value, as determined by elapsed time, order and tau.
    *
    * This field is of access type is 'outputOnly' and type SFRotation.
@@ -11557,29 +6972,11 @@ interface OrientationDamperProxy extends X3DDamperNodeProxy
 interface OrientationInterpolatorProxy extends X3DInterpolatorNodeProxy
 {
    /**
-   * Definition values for linear-interpolation function input intervals, listed in non-decreasing order and corresponding to a value in the keyValue array.
-   *
-   * This field is of access type is 'inputOutput' and type MFFloat.
-   */
-   key: MFFloat,
-   /**
    * Output values for linear interpolation, each corresponding to an input-fraction value in the key array.
    *
    * This field is of access type is 'inputOutput' and type MFRotation.
    */
    keyValue: MFRotation,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * set_fraction selects input key for corresponding keyValue output.
-   *
-   * This field is of access type is 'inputOnly' and type SFFloat.
-   */
-   set_fraction: number,
    /**
    * Linearly interpolated output value determined by current key time and corresponding keyValue pair.
    *
@@ -11592,29 +6989,11 @@ interface OrientationInterpolatorProxy extends X3DInterpolatorNodeProxy
 interface OrthoViewpointProxy extends X3DViewpointNodeProxy
 {
    /**
-   * Event sent reporting timestamp when node becomes active/inactive.
-   *
-   * This field is of access type is 'outputOnly' and type SFTime.
-   */
-   readonly bindTime: number,
-   /**
    * centerOfRotation specifies center point about which to rotate user's eyepoint when in EXAMINE or LOOKAT mode.
    *
    * This field is of access type is 'inputOutput' and type SFVec3f.
    */
    centerOfRotation: SFVec3f,
-   /**
-   * Text description or navigation hint to describe the significance of this model Viewpoint.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
-   * farDistance defines maximum clipping plane distance allowed for object display.
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   farDistance: number,
    /**
    * Minimum and maximum extents of view in units of local coordinate system.
    *
@@ -11622,76 +7001,16 @@ interface OrthoViewpointProxy extends X3DViewpointNodeProxy
    */
    fieldOfView: MFFloat,
    /**
-   * Output event true gets sent when node becomes bound and activated, otherwise output event false gets sent when node becomes unbound and deactivated.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isBound: boolean,
-   /**
-   * Transition instantly by jumping, otherwise smoothly adjust offsets in place when changing to this Viewpoint.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   jump: boolean,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * The navigationInfo field defines a dedicated NavigationInfo node for this X3DViewpointNode.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   navigationInfo: NavigationInfoProxy,
-   /**
-   * nearDistance defines minimum clipping plane distance necessary for object display.
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   nearDistance: number,
-   /**
-   * Rotation (axis, angle in radians) of Viewpoint, relative to default -Z axis direction in local coordinate system.
-   *
-   * This field is of access type is 'inputOutput' and type SFRotation.
-   */
-   orientation: SFRotation,
-   /**
    * position (x, y, z in meters) relative to local coordinate system.
    *
    * This field is of access type is 'inputOutput' and type SFVec3f.
    */
    position: SFVec3f,
-   /**
-   * Retain (true) or reset to zero (false) any prior user navigation offsets from defined viewpoint position, orientation.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   retainUserOffsets: boolean,
-   /**
-   * Sending event set_bind=true makes this node active.
-   *
-   * This field is of access type is 'inputOnly' and type SFBool.
-   */
-   set_bind: boolean,
-   /**
-   * Viewpoint is automatically adjusted to view all visible geometry.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   viewAll: boolean,
 }
 
 /** OscillatorSource node represents an audio source generating a periodic waveform, providing a constant tone. */
 interface OscillatorSourceProxy extends X3DSoundSourceNodeProxy
 {
-   /**
-   * Author-provided prose that describes intended purpose of the url asset.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
    /**
    * The detune ffield is an a-rate AudioParam representing detuning of oscillation in cents (though the AudioParam returned is read-only, the value it represents is not).
    *
@@ -11699,100 +7018,16 @@ interface OscillatorSourceProxy extends X3DSoundSourceNodeProxy
    */
    detune: number,
    /**
-   * Current elapsed time since AudioClip activated/running, cumulative in seconds, and not counting any paused time.
-   *
-   * This field is of access type is 'outputOnly' and type SFTime.
-   */
-   readonly elapsedTime: number,
-   /**
-   * Enables/disables node operation.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   enabled: boolean,
-   /**
    * The frequency of oscillation in hertz.
    *
    * This field is of access type is 'inputOutput' and type SFFloat.
    */
    frequency: number,
-   /**
-   * The gain field is a factor that represents the amount of linear amplification to apply to the output of the node.
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   gain: number,
-   /**
-   * isActive true/false events are sent when playback starts/stops.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isActive: boolean,
-   /**
-   * isPaused true/false events are sent when AudioClip is paused/resumed.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isPaused: boolean,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * When time now >= pauseTime, isPaused becomes true and AudioClip becomes paused.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   pauseTime: number,
-   /**
-   * When resumeTime becomes <= time now, isPaused becomes false and AudioClip becomes active.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   resumeTime: number,
-   /**
-   * Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   startTime: number,
-   /**
-   * Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   stopTime: number,
 }
 
 /** PackagedShader can contain field declarations, but no CDATA section of plain-text source code. */
 interface PackagedShaderProxy extends X3DShaderNodeProxy
 {
-   /**
-   * activate forces the shader to activate the contained objects.
-   *
-   * This field is of access type is 'inputOnly' and type SFBool.
-   */
-   activate: boolean,
-   /**
-   * autoRefresh defines interval in seconds before automatic reload of current url asset is performed.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   autoRefresh: number,
-   /**
-   * autoRefreshTimeLimit defines maximum duration that automatic refresh activity can occur.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   autoRefreshTimeLimit: number,
-   /**
-   * Author-provided prose that describes intended purpose of the url asset.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
    /**
    * Include a field statement for each field declaration in the PackagedShader node.
    *
@@ -11800,76 +7035,16 @@ interface PackagedShaderProxy extends X3DShaderNodeProxy
    */
    field: MFNode <fieldProxy>,
    /**
-   * isSelected indicates this shader instance is selected for use by browser Warning: it is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isSelected: boolean,
-   /**
-   * isValid indicates whether current shader objects can be run as a shader program.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isValid: boolean,
-   /**
-   * The language field indicates to the X3D player which shading language is used.
-   *
-   * This field is of access type is 'initializeOnly' and type SFString.
-   */
-   language: "Cg" | "GLSL" | "HLSL",
-   /**
-   * load=true means load immediately, load=false means defer loading or else unload a previously loaded scene.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   load: boolean,
-   /**
    * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
    *
    * This field is of access type is 'inputOutput' and type SFNode.
    */
    metadata: X3DMetadataObjectProxy,
-   /**
-   * url points to a shader source-code file that may contain a number of shaders and combined effects.
-   *
-   * This field is of access type is 'inputOutput' and type MFString.
-   */
-   url: MFString,
 }
 
 /** ParticleSystem specifies a complete particle system. */
 interface ParticleSystemProxy extends X3DShapeNodeProxy
 {
-   /**
-   * The appearance field holds an Appearance node that is used for the geometry.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   appearance: X3DAppearanceNodeProxy,
-   /**
-   * Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxCenter: SFVec3f,
-   /**
-   * Whether to display bounding box for associated geometry, aligned with world coordinates.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   bboxDisplay: boolean,
-   /**
-   * Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxSize: SFVec3f,
-   /**
-   * The castShadow field defines whether this Shape casts shadows as produced by lighting nodes.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   castShadow: boolean,
    /**
    * The color field contains Color|ColorRGBA nodes as a series of color values to be used at the given colorKey points in time.
    *
@@ -11931,12 +7106,6 @@ interface ParticleSystemProxy extends X3DShapeNodeProxy
    */
    maxParticles: number,
    /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * TODO not properly defined in X3D spedification.
    *
    * This field is of access type is 'inputOutput' and type SFFloat.
@@ -11966,35 +7135,11 @@ interface ParticleSystemProxy extends X3DShapeNodeProxy
    * This field is of access type is 'initializeOnly' and type MFFloat.
    */
    texCoordKey: MFFloat,
-   /**
-   * Whether or not renderable content within this node is visually displayed.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   visible: boolean,
 }
 
 /** PeriodicWave defines a periodic waveform that can be used to shape the output of an Oscillator. */
 interface PeriodicWaveProxy extends X3DSoundNodeProxy
 {
-   /**
-   * Author-provided prose that describes intended purpose of the url asset.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
-   * Enables/disables node operation.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   enabled: boolean,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * imaginary coefficients for defining a waveform.
    *
@@ -12049,18 +7194,6 @@ interface PhysicalMaterialProxy extends X3DOneSidedMaterialNodeProxy
    */
    emissiveTexture: X3DSingleTextureNodeProxy,
    /**
-   * The mapping label identifies which texture coordinates and transformations are used to compute texture effects from corresponding geometry on a given material.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   emissiveTextureMapping: string,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * metallic is a PBR parameter (TODO elaborate).
    *
    * This field is of access type is 'inputOutput' and type SFFloat.
@@ -12079,23 +7212,11 @@ interface PhysicalMaterialProxy extends X3DOneSidedMaterialNodeProxy
    */
    metallicRoughnessTextureMapping: string,
    /**
-   * normalScale controls the degree to which normalTexture RGB values apply XYZ-normal bump mapping to pixels in the parent material.
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   normalScale: number,
-   /**
    * When applying normalScale for this material node, the contained texture modulates the texture across the surface.
    *
    * This field is of access type is 'inputOutput' and type SFNode.
    */
    normalTexture: X3DSingleTextureNodeProxy,
-   /**
-   * The mapping label identifies which texture coordinates and transformations are used to compute texture effects from corresponding geometry on a given material.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   normalTextureMapping: string,
    /**
    * occlusionStrength indicates areas of indirect lighting, typically called ambient occlusion.
    *
@@ -12132,166 +7253,38 @@ interface PhysicalMaterialProxy extends X3DOneSidedMaterialNodeProxy
 interface PickableGroupProxy extends X3DGroupingNodeProxy, X3DPickableObjectProxy
 {
    /**
-   * This field is of access type is 'inputOnly' and type MFNode.
-   */
-   addChildren: MFNode <X3DChildNodeProxy>,
-   /**
-   * Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxCenter: SFVec3f,
-   /**
-   * Whether to display bounding box for associated geometry, aligned with world coordinates.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   bboxDisplay: boolean,
-   /**
-   * Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxSize: SFVec3f,
-   /**
-   * Grouping nodes contain an ordered list of children nodes.
-   *
-   * This field is of access type is 'inputOutput' and type MFNode.
-   */
-   children: MFNode <X3DChildNodeProxy>,
-   /**
    * Author-provided prose that describes intended purpose of the node.
    *
    * This field is of access type is 'inputOutput' and type SFString.
    */
    description: string,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * The objectType field specifies a set of labels used in the picking process.
-   *
-   * This field is of access type is 'inputOutput' and type MFString.
-   */
-   objectType: MFString <"ALL" | "NONE" | "TERRAIN">,
-   /**
-   * The pickable field determines whether pick traversal is performed on this node or its children.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   pickable: boolean,
-   /**
-   * This field is of access type is 'inputOnly' and type MFNode.
-   */
-   removeChildren: MFNode <X3DChildNodeProxy>,
-   /**
-   * Whether or not renderable content within this node is visually displayed.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   visible: boolean,
 }
 
 /** PixelTexture creates a 2D-image texture map using a numeric array of pixel values. */
 interface PixelTextureProxy extends X3DTexture2DNodeProxy
 {
    /**
-   * Author-provided prose that describes intended purpose of the url asset.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
    * Defines image: width, height, number_of_components per each pixel value, and list of pixel_values.
    *
    * This field is of access type is 'inputOutput' and type SFImage.
    */
    image: SFImage,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * Whether to repeat texture along S axis horizontally from left to right.
-   *
-   * This field is of access type is 'initializeOnly' and type SFBool.
-   */
-   repeatS: boolean,
-   /**
-   * Whether to repeat texture along T axis vertically from top to bottom.
-   *
-   * This field is of access type is 'initializeOnly' and type SFBool.
-   */
-   repeatT: boolean,
-   /**
-   * Single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images.
-   *
-   * This field is of access type is 'initializeOnly' and type SFNode.
-   */
-   textureProperties: TexturePropertiesProxy,
 }
 
 /** PixelTexture3D defines a 3D image-based texture map as an explicit array of pixel values (image field). */
 interface PixelTexture3DProxy extends X3DTexture3DNodeProxy
 {
    /**
-   * Author-provided prose that describes intended purpose of the url asset.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
    * image describes raw data for this 3D texture: number of components to the image [0,4], width, height and depth of the texture, followed by (width x height x depth) pixel values.
    *
    * This field is of access type is 'inputOutput' and type MFInt32.
    */
    image: MFInt32,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * Whether to repeat texture along R axis from front to back.
-   *
-   * This field is of access type is 'initializeOnly' and type SFBool.
-   */
-   repeatR: boolean,
-   /**
-   * Whether to repeat texture along S axis horizontally from left to right.
-   *
-   * This field is of access type is 'initializeOnly' and type SFBool.
-   */
-   repeatS: boolean,
-   /**
-   * Whether to repeat texture along T axis vertically from top to bottom.
-   *
-   * This field is of access type is 'initializeOnly' and type SFBool.
-   */
-   repeatT: boolean,
-   /**
-   * Single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images.
-   *
-   * This field is of access type is 'initializeOnly' and type SFNode.
-   */
-   textureProperties: TexturePropertiesProxy,
 }
 
 /** PlaneSensor converts pointing device motion into 2D translation parallel to the local Z=0 plane. */
 interface PlaneSensorProxy extends X3DDragSensorNodeProxy
 {
-   /**
-   * Determines whether previous offset values are remembered/accumulated.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   autoOffset: boolean,
    /**
    * axisRotation determines local sensor coordinate system by rotating the local coordinate system.
    *
@@ -12299,41 +7292,11 @@ interface PlaneSensorProxy extends X3DDragSensorNodeProxy
    */
    axisRotation: SFRotation,
    /**
-   * Author-provided prose that describes intended purpose of this node.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
-   * Enables/disables node operation.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   enabled: boolean,
-   /**
-   * Select geometry by activating the pointing device (for example, clicking the mouse) to generate isActive events.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isActive: boolean,
-   /**
-   * Hover over geometry by aiming the mouse (or pointing device) to generate isOver events.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isOver: boolean,
-   /**
    * minPosition and maxPosition clamp translations to a range of values measured from origin of Z=0 plane default maxPosition < minPosition means no clamping.
    *
    * This field is of access type is 'inputOutput' and type SFVec2f.
    */
    maxPosition: SFVec2f,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * minPosition and maxPosition clamp translations to a range of values measured from origin of Z=0 plane default maxPosition < minPosition means no clamping.
    *
@@ -12346,12 +7309,6 @@ interface PlaneSensorProxy extends X3DDragSensorNodeProxy
    * This field is of access type is 'inputOutput' and type SFVec3f.
    */
    offset: SFVec3f,
-   /**
-   * trackPoint_changed events give intersection point of bearing with sensor's virtual geometry.
-   *
-   * This field is of access type is 'outputOnly' and type SFVec3f.
-   */
-   readonly trackPoint_changed: SFVec3f,
    /**
    * translation_changed events equal sum of relative translation change plus offset value.
    *
@@ -12370,58 +7327,16 @@ interface PointEmitterProxy extends X3DParticleEmitterNodeProxy
    */
    direction: SFVec3f,
    /**
-   * Basic mass of each particle, defined in mass base units (default is kilograms).
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   mass: number,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * Enables/disables production of particles from this emitter node.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   on: boolean,
-   /**
    * Point from which particles emanate.
    *
    * This field is of access type is 'inputOutput' and type SFVec3f.
    */
    position: SFVec3f,
-   /**
-   * Initial linear speed (default is m/s) imparted to all particles along their direction of movement.
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   speed: number,
-   /**
-   * Particle surface area in area base units (default is meters squared).
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   surfaceArea: number,
-   /**
-   * Multiplier for the randomness used to control the range of possible output values.
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   variation: number,
 }
 
 /** Linear attenuation may occur at level 2, full support at level 3. */
 interface PointLightProxy extends X3DLightNodeProxy
 {
-   /**
-   * Brightness of ambient (nondirectional background) emission from the light.
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   ambientIntensity: number,
    /**
    * Constant, linear-distance and squared-distance dropoff factors as radial distance increases from the source.
    *
@@ -12429,23 +7344,11 @@ interface PointLightProxy extends X3DLightNodeProxy
    */
    attenuation: SFVec3f,
    /**
-   * color of light, applied to colors of objects.
-   *
-   * This field is of access type is 'inputOutput' and type SFColor.
-   */
-   color: SFColor,
-   /**
    * Global lights illuminate all objects within their volume of lighting influence.
    *
    * This field is of access type is 'inputOutput' and type SFBool.
    */
    global: boolean,
-   /**
-   * Brightness of direct emission from the light.
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   intensity: number,
    /**
    * Position of light relative to local coordinate system.
    *
@@ -12453,112 +7356,22 @@ interface PointLightProxy extends X3DLightNodeProxy
    */
    location: SFVec3f,
    /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * Enables/disables this light source.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   on: boolean,
-   /**
    * Maximum effective distance of light relative to local light position, affected by ancestor scaling.
    *
    * This field is of access type is 'inputOutput' and type SFFloat.
    */
    radius: number,
-   /**
-   * shadowIntensity field defines how much light is obscured by shapes that cast shadows, ranging from 0 (light not obscured, no visible shadows) to 1 (light completely obscured, full-intensity shadows).
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   shadowIntensity: number,
-   /**
-   * shadows field indicates whether or not this light casts a shadow behind illuminated X3DShapeNode geometry.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   shadows: boolean,
 }
 
 /** PointPickSensor tests one or more pickingGeometry points in space as lying inside the provided pickTarget geometry. */
 interface PointPickSensorProxy extends X3DPickSensorNodeProxy
 {
    /**
-   * Author-provided prose that describes intended purpose of the node.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
-   * Enables/disables node operation.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   enabled: boolean,
-   /**
-   * intersectionType specifies precision of the collision computation.
-   *
-   * This field is of access type is 'initializeOnly' and type SFString.
-   */
-   intersectionType: "BOUNDS" | "GEOMETRY",
-   /**
-   * isActive indicates when the intersecting object is picked by the picking geometry.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isActive: boolean,
-   /**
-   * defines whether the intersection test (i.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   matchCriterion: "MATCH_ANY" | "MATCH_EVERY" | "MATCH_ONLY_ONE",
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * The objectType field specifies a set of labels used in the picking process.
-   *
-   * This field is of access type is 'inputOutput' and type MFString.
-   */
-   objectType: MFString <"ALL" | "NONE" | "TERRAIN">,
-   /**
-   * Output event containing the node or nodes that have been found to intersect with the picking geometry from the last time this node performed a picking operation, given in the local coordinate system.
-   *
-   * This field is of access type is 'outputOnly' and type MFNode.
-   */
-   readonly pickedGeometry: MFNode <X3DChildNodeProxy>,
-   /**
    * Output event containing 3D points on surface of underlying pickingGeometry computed by the picking intersection computations, given in the local coordinate system.
    *
    * This field is of access type is 'outputOnly' and type MFVec3f.
    */
    readonly pickedPoint: MFVec3f,
-   /**
-   * pickingGeometry specifies the exact geometry coordinates that are used to perform the intersection testing of the picking operation.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   pickingGeometry: X3DGeometryNodeProxy,
-   /**
-   * pickTarget specifies the list of nodes against which picking operations are performed.
-   *
-   * This field is of access type is 'inputOutput' and type MFNode.
-   */
-   pickTarget: MFNode <X3DGroupingNodeProxy | X3DShapeNodeProxy | InlineProxy>,
-   /**
-   * The sortOrder field determines the order provided for picked output events.
-   *
-   * This field is of access type is 'initializeOnly' and type SFString.
-   */
-   sortOrder: "ANY" | "CLOSEST" | "ALL" | "ALL_SORTED",
 }
 
 /** PointProperties allows precise fine-grained control over the rendering style of PointSet node points inside the same Shape. */
@@ -12570,12 +7383,6 @@ interface PointPropertiesProxy extends X3DAppearanceChildNodeProxy
    * This field is of access type is 'inputOutput' and type SFVec3f.
    */
    attenuation: SFVec3f,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * pointSizeMaxValue is maximum allowed scaling factor on nominal browser point scaling.
    *
@@ -12624,12 +7431,6 @@ interface PointSetProxy extends X3DGeometryNodeProxy
    */
    fogCoord: FogCoordinateProxy,
    /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * Single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations.
    *
    * This field is of access type is 'inputOutput' and type SFNode.
@@ -12646,12 +7447,6 @@ interface Polyline2DProxy extends X3DGeometryNodeProxy
    * This field is of access type is 'initializeOnly' and type MFVec2f.
    */
    lineSegments: MFVec2f,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
 }
 
 /** PolylineEmitter emits particles along a single polyline. */
@@ -12676,56 +7471,14 @@ interface PolylineEmitterProxy extends X3DParticleEmitterNodeProxy
    */
    direction: SFVec3f,
    /**
-   * Basic mass of each particle, defined in mass base units (default is kilograms).
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   mass: number,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * Enables/disables production of particles from this emitter node.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   on: boolean,
-   /**
    * This field is of access type is 'inputOnly' and type MFInt32.
    */
    set_coordIndex: MFInt32,
-   /**
-   * Initial linear speed (default is m/s) imparted to all particles along their direction of movement.
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   speed: number,
-   /**
-   * Particle surface area in area base units (default is meters squared).
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   surfaceArea: number,
-   /**
-   * Multiplier for the randomness used to control the range of possible output values.
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   variation: number,
 }
 
 /** Polypoint2D is a geometry node that defines a set of 2D points in X-Y plane. */
 interface Polypoint2DProxy extends X3DGeometryNodeProxy
 {
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * 2D coordinates of vertices.
    *
@@ -12738,12 +7491,6 @@ interface Polypoint2DProxy extends X3DGeometryNodeProxy
 interface PositionChaserProxy extends X3DChaserNodeProxy
 {
    /**
-   * duration is the time interval for filter response in seconds.
-   *
-   * This field is of access type is 'initializeOnly' and type SFTime.
-   */
-   duration: number,
-   /**
    * Initial destination value for this node.
    *
    * This field is of access type is 'initializeOnly' and type SFVec3f.
@@ -12755,18 +7502,6 @@ interface PositionChaserProxy extends X3DChaserNodeProxy
    * This field is of access type is 'initializeOnly' and type SFVec3f.
    */
    initialValue: SFVec3f,
-   /**
-   * isActive true/false events are sent when follower-node computation starts/stops.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isActive: boolean,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * set_destination resets destination value of this node.
    *
@@ -12791,12 +7526,6 @@ interface PositionChaserProxy extends X3DChaserNodeProxy
 interface PositionChaser2DProxy extends X3DChaserNodeProxy
 {
    /**
-   * duration is the time interval for filter response in seconds.
-   *
-   * This field is of access type is 'initializeOnly' and type SFTime.
-   */
-   duration: number,
-   /**
    * Initial destination value for this node.
    *
    * This field is of access type is 'initializeOnly' and type SFVec2f.
@@ -12808,18 +7537,6 @@ interface PositionChaser2DProxy extends X3DChaserNodeProxy
    * This field is of access type is 'initializeOnly' and type SFVec2f.
    */
    initialValue: SFVec2f,
-   /**
-   * isActive true/false events are sent when follower-node computation starts/stops.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isActive: boolean,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * set_destination resets destination value of this node.
    *
@@ -12856,24 +7573,6 @@ interface PositionDamperProxy extends X3DDamperNodeProxy
    */
    initialValue: SFVec3f,
    /**
-   * isActive true/false events are sent when follower-node computation starts/stops.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isActive: boolean,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * order defines the number of internal filters (larger means smoother response, longer delay).
-   *
-   * This field is of access type is 'initializeOnly' and type SFInt32.
-   */
-   order: number,
-   /**
    * set_destination resets destination value of this node.
    *
    * This field is of access type is 'inputOnly' and type SFVec3f.
@@ -12885,18 +7584,6 @@ interface PositionDamperProxy extends X3DDamperNodeProxy
    * This field is of access type is 'inputOnly' and type SFVec3f.
    */
    set_value: SFVec3f,
-   /**
-   * tau is the exponential-decay time constant for filter response in seconds.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   tau: number,
-   /**
-   * or -1.
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   tolerance: number,
    /**
    * Computed output value that approaches within tolerance of destination value, as determined by elapsed time, order and tau.
    *
@@ -12921,24 +7608,6 @@ interface PositionDamper2DProxy extends X3DDamperNodeProxy
    */
    initialValue: SFVec2f,
    /**
-   * isActive true/false events are sent when follower-node computation starts/stops.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isActive: boolean,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * order defines the number of internal filters (larger means smoother response, longer delay).
-   *
-   * This field is of access type is 'initializeOnly' and type SFInt32.
-   */
-   order: number,
-   /**
    * set_destination resets destination value of this node.
    *
    * This field is of access type is 'inputOnly' and type SFVec2f.
@@ -12951,18 +7620,6 @@ interface PositionDamper2DProxy extends X3DDamperNodeProxy
    */
    set_value: SFVec2f,
    /**
-   * tau is the exponential-decay time constant for filter response in seconds.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   tau: number,
-   /**
-   * or -1.
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   tolerance: number,
-   /**
    * Computed output value that approaches within tolerance of destination value, as determined by elapsed time, order and tau.
    *
    * This field is of access type is 'outputOnly' and type SFVec2f.
@@ -12974,29 +7631,11 @@ interface PositionDamper2DProxy extends X3DDamperNodeProxy
 interface PositionInterpolatorProxy extends X3DInterpolatorNodeProxy
 {
    /**
-   * Definition values for linear-interpolation function input intervals, listed in non-decreasing order and corresponding to a value in the keyValue array.
-   *
-   * This field is of access type is 'inputOutput' and type MFFloat.
-   */
-   key: MFFloat,
-   /**
    * Output values for linear interpolation, each corresponding to an input-fraction value in the key array.
    *
    * This field is of access type is 'inputOutput' and type MFVec3f.
    */
    keyValue: MFVec3f,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * set_fraction selects input key for corresponding keyValue output.
-   *
-   * This field is of access type is 'inputOnly' and type SFFloat.
-   */
-   set_fraction: number,
    /**
    * Linearly interpolated output value determined by current key time and corresponding keyValue pair.
    *
@@ -13009,29 +7648,11 @@ interface PositionInterpolatorProxy extends X3DInterpolatorNodeProxy
 interface PositionInterpolator2DProxy extends X3DInterpolatorNodeProxy
 {
    /**
-   * Definition values for linear-interpolation function input intervals, listed in non-decreasing order and corresponding to a value in the keyValue array.
-   *
-   * This field is of access type is 'inputOutput' and type MFFloat.
-   */
-   key: MFFloat,
-   /**
    * Output values for linear interpolation, each corresponding to an input-fraction value in the key array.
    *
    * This field is of access type is 'inputOutput' and type MFVec2f.
    */
    keyValue: MFVec2f,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * set_fraction selects input key for corresponding keyValue output.
-   *
-   * This field is of access type is 'inputOnly' and type SFFloat.
-   */
-   set_fraction: number,
    /**
    * Linearly interpolated output value determined by current key time and corresponding keyValue pair.
    *
@@ -13043,107 +7664,12 @@ interface PositionInterpolator2DProxy extends X3DInterpolatorNodeProxy
 /** If a non-uniform scale is applied to the pick sensor, correct results may require level 3 support. */
 interface PrimitivePickSensorProxy extends X3DPickSensorNodeProxy
 {
-   /**
-   * Author-provided prose that describes intended purpose of the node.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
-   * Enables/disables node operation.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   enabled: boolean,
-   /**
-   * intersectionType specifies precision of the collision computation.
-   *
-   * This field is of access type is 'initializeOnly' and type SFString.
-   */
-   intersectionType: "BOUNDS" | "GEOMETRY",
-   /**
-   * isActive indicates when the intersecting object is picked by the picking geometry.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isActive: boolean,
-   /**
-   * defines whether the intersection test (i.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   matchCriterion: "MATCH_ANY" | "MATCH_EVERY" | "MATCH_ONLY_ONE",
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * The objectType field specifies a set of labels used in the picking process.
-   *
-   * This field is of access type is 'inputOutput' and type MFString.
-   */
-   objectType: MFString <"ALL" | "NONE" | "TERRAIN">,
-   /**
-   * Output event containing the node or nodes that have been found to intersect with the picking geometry from the last time this node performed a picking operation, given in the local coordinate system.
-   *
-   * This field is of access type is 'outputOnly' and type MFNode.
-   */
-   readonly pickedGeometry: MFNode <X3DChildNodeProxy>,
-   /**
-   * pickingGeometry specifies the exact geometry coordinates that are used to perform the intersection testing of the picking operation.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   pickingGeometry: X3DGeometryNodeProxy,
-   /**
-   * pickTarget specifies the list of nodes against which picking operations are performed.
-   *
-   * This field is of access type is 'inputOutput' and type MFNode.
-   */
-   pickTarget: MFNode <X3DGroupingNodeProxy | X3DShapeNodeProxy | InlineProxy>,
-   /**
-   * The sortOrder field determines the order provided for picked output events.
-   *
-   * This field is of access type is 'initializeOnly' and type SFString.
-   */
-   sortOrder: "ANY" | "CLOSEST" | "ALL" | "ALL_SORTED",
+
 }
 
 /** ProgramShader contains no field declarations and no plain-text source code. */
 interface ProgramShaderProxy extends X3DShaderNodeProxy
 {
-   /**
-   * activate forces the shader to activate the contained objects.
-   *
-   * This field is of access type is 'inputOnly' and type SFBool.
-   */
-   activate: boolean,
-   /**
-   * isSelected indicates this shader instance is selected for use by browser Warning: it is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isSelected: boolean,
-   /**
-   * isValid indicates whether current shader objects can be run as a shader program.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isValid: boolean,
-   /**
-   * The language field indicates to the X3D player which shading language is used.
-   *
-   * This field is of access type is 'initializeOnly' and type SFString.
-   */
-   language: "Cg" | "GLSL" | "HLSL",
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * ProgramShader contains zero or more ShaderProgram node instances.
    *
@@ -13156,23 +7682,11 @@ interface ProgramShaderProxy extends X3DShaderNodeProxy
 interface ProjectionVolumeStyleProxy extends X3DVolumeRenderStyleNodeProxy
 {
    /**
-   * Enables/disables node operation.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   enabled: boolean,
-   /**
    * Threshold value used when type=MIN (LMIP) or type=MAX (MIP).
    *
    * This field is of access type is 'inputOutput' and type SFFloat.
    */
    intensityThreshold: number,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * If type=MAX then Maximum Intensity Projection (MIP) or Least MIP (LMIP) algorithm is used to generate output color.
    *
@@ -13190,10 +7704,6 @@ interface ProtoInstanceProxy extends X3DPrototypeInstanceProxy, X3DChildNodeProx
    * This field is of access type is 'inputOutput' and type MFNode.
    */
    fieldValue: MFNode <fieldValueProxy>,
-   /**
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * name of the prototype node being instanced.
    *
@@ -13218,18 +7728,6 @@ interface ProximitySensorProxy extends X3DEnvironmentalSensorNodeProxy
    */
    readonly centerOfRotation_changed: SFVec3f,
    /**
-   * Author-provided prose that describes intended purpose of the node.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
-   * Enables/disables node operation.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   enabled: boolean,
-   /**
    * Time event generated when user's camera enters the box.
    *
    * This field is of access type is 'outputOnly' and type SFTime.
@@ -13242,18 +7740,6 @@ interface ProximitySensorProxy extends X3DEnvironmentalSensorNodeProxy
    */
    readonly exitTime: number,
    /**
-   * isActive true/false events are sent as viewer enters/exits Proximity box.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isActive: boolean,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * Sends rotation event relative to center.
    *
    * This field is of access type is 'outputOnly' and type SFRotation.
@@ -13265,83 +7751,12 @@ interface ProximitySensorProxy extends X3DEnvironmentalSensorNodeProxy
    * This field is of access type is 'outputOnly' and type SFVec3f.
    */
    readonly position_changed: SFVec3f,
-   /**
-   * size of Proximity box around center location, oriented within local transformation frame.
-   *
-   * This field is of access type is 'inputOutput' and type SFVec3f.
-   */
-   size: SFVec3f,
 }
 
 /** QuadSet is a geometry node that defines quadrilaterals. */
 interface QuadSetProxy extends X3DComposedGeometryNodeProxy
 {
-   /**
-   * Single contained FloatVertexAttribute node that can specify list of per-vertex attribute information for programmable shaders.
-   *
-   * This field is of access type is 'inputOutput' and type MFNode.
-   */
-   attrib: MFNode <X3DVertexAttributeNodeProxy>,
-   /**
-   * ccw defines clockwise/counterclockwise ordering of vertex coordinates, which in turn defines front/back orientation of polygon normals according to Right-Hand Rule (RHR).
-   *
-   * This field is of access type is 'initializeOnly' and type SFBool.
-   */
-   ccw: boolean,
-   /**
-   * Single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorIndex and colorPerVertex fields.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   color: X3DColorNodeProxy,
-   /**
-   * Whether Color|ColorRGBA values are applied to each point vertex (true) or to each polygon face (false).
-   *
-   * This field is of access type is 'initializeOnly' and type SFBool.
-   */
-   colorPerVertex: boolean,
-   /**
-   * Single contained Coordinate or CoordinateDouble node that can specify a list of vertex values.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   coord: X3DCoordinateNodeProxy,
-   /**
-   * Single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   fogCoord: FogCoordinateProxy,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * Single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   normal: X3DNormalNodeProxy,
-   /**
-   * Whether Normal node vector values are applied to each point vertex (true) or to each polygon face (false).
-   *
-   * This field is of access type is 'initializeOnly' and type SFBool.
-   */
-   normalPerVertex: boolean,
-   /**
-   * Setting solid true means draw only one side of polygons (backface culling on), setting solid false means draw both sides of polygons (backface culling off).
-   *
-   * This field is of access type is 'initializeOnly' and type SFBool.
-   */
-   solid: boolean,
-   /**
-   * Single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   texCoord: X3DSingleTextureCoordinateNodeProxy | MultiTextureCoordinateProxy,
+
 }
 
 /** ReceiverPdu is a networked Protocol Data Unit (PDU) information node that transmits the state of radio frequency (RF) receivers modeled in a simulation. */
@@ -13360,36 +7775,6 @@ interface ReceiverPduProxy extends X3DNetworkSensorNodeProxy, X3DBoundedObjectPr
    */
    applicationID: number,
    /**
-   * Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxCenter: SFVec3f,
-   /**
-   * Whether to display bounding box for associated geometry, aligned with world coordinates.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   bboxDisplay: boolean,
-   /**
-   * Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxSize: SFVec3f,
-   /**
-   * Author-provided prose that describes intended purpose of the node.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
-   * Enables/disables the sensor node.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   enabled: boolean,
-   /**
    * EntityID unique ID for entity within that application.
    *
    * This field is of access type is 'inputOutput' and type SFInt32.
@@ -13407,12 +7792,6 @@ interface ReceiverPduProxy extends X3DNetworkSensorNodeProxy, X3DBoundedObjectPr
    * This field is of access type is 'initializeOnly' and type MFString.
    */
    geoSystem: MFString,
-   /**
-   * confirm whether there has been a recent network update.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isActive: boolean,
    /**
    * Whether networkMode='remote' (listen to network as copy of remote entity).
    *
@@ -13437,12 +7816,6 @@ interface ReceiverPduProxy extends X3DNetworkSensorNodeProxy, X3DBoundedObjectPr
    * This field is of access type is 'outputOnly' and type SFBool.
    */
    readonly isStandAlone: boolean,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * Fallback server address if multicast not available locally.
    *
@@ -13534,12 +7907,6 @@ interface ReceiverPduProxy extends X3DNetworkSensorNodeProxy, X3DBoundedObjectPr
    */
    transmitterSiteID: number,
    /**
-   * Whether or not renderable content within this node is visually displayed.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   visible: boolean,
-   /**
    * Select geometry to render: -1 for no geometry, 0 for text trace, 1 for default geometry, (optional) higher values to render different states.
    *
    * This field is of access type is 'inputOutput' and type SFInt32.
@@ -13556,12 +7923,6 @@ interface ReceiverPduProxy extends X3DNetworkSensorNodeProxy, X3DBoundedObjectPr
 /** Rectangle2D is a geometry node that defines a 2D rectangle in X-Y plane. */
 interface Rectangle2DProxy extends X3DGeometryNodeProxy
 {
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * 2D dimensions of Rectangle2D.
    *
@@ -13603,24 +7964,6 @@ interface RigidBodyProxy extends X3DChildNodeProxy, X3DBoundedObjectProxy
    * This field is of access type is 'inputOutput' and type SFBool.
    */
    autoDisable: boolean,
-   /**
-   * Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxCenter: SFVec3f,
-   /**
-   * Whether to display bounding box for associated geometry, aligned with world coordinates.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   bboxDisplay: boolean,
-   /**
-   * Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxSize: SFVec3f,
    /**
    * centerOfMass defines local center of mass for physics calculations.
    *
@@ -13706,12 +8049,6 @@ interface RigidBodyProxy extends X3DChildNodeProxy, X3DBoundedObjectProxy
    */
    massDensityModel: SphereProxy | BoxProxy | ConeProxy,
    /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * orientation sets body direction in world space, then reports physics updates.
    *
    * This field is of access type is 'inputOutput' and type SFRotation.
@@ -13741,12 +8078,6 @@ interface RigidBodyProxy extends X3DChildNodeProxy, X3DBoundedObjectProxy
    * This field is of access type is 'inputOutput' and type SFBool.
    */
    useGlobalGravity: boolean,
-   /**
-   * Whether or not renderable content within this node is visually displayed.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   visible: boolean,
 }
 
 /** RigidBodyCollection represents a system of bodies that interact within a single physics model. */
@@ -13758,24 +8089,6 @@ interface RigidBodyCollectionProxy extends X3DChildNodeProxy, X3DBoundedObjectPr
    * This field is of access type is 'inputOutput' and type SFBool.
    */
    autoDisable: boolean,
-   /**
-   * Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxCenter: SFVec3f,
-   /**
-   * Whether to display bounding box for associated geometry, aligned with world coordinates.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   bboxDisplay: boolean,
-   /**
-   * Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxSize: SFVec3f,
    /**
    * Collection of top-level nodes that comprise a set of bodies evaluated as a single set of interactions.
    *
@@ -13855,12 +8168,6 @@ interface RigidBodyCollectionProxy extends X3DChildNodeProxy, X3DBoundedObjectPr
    */
    maxCorrectionSpeed: number,
    /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * preferAccuracy provides hint for performance preference: higher accuracy or faster computational speed.
    *
    * This field is of access type is 'inputOutput' and type SFBool.
@@ -13872,23 +8179,11 @@ interface RigidBodyCollectionProxy extends X3DChildNodeProxy, X3DBoundedObjectPr
    * This field is of access type is 'inputOnly' and type MFNode.
    */
    set_contacts: MFNode <ContactProxy>,
-   /**
-   * Whether or not renderable content within this node is visually displayed.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   visible: boolean,
 }
 
 /** ScalarChaser generates a series of single floating-point values that progressively change from initial value to destination value. */
 interface ScalarChaserProxy extends X3DChaserNodeProxy
 {
-   /**
-   * duration is the time interval for filter response in seconds.
-   *
-   * This field is of access type is 'initializeOnly' and type SFTime.
-   */
-   duration: number,
    /**
    * Initial destination value for this node.
    *
@@ -13901,18 +8196,6 @@ interface ScalarChaserProxy extends X3DChaserNodeProxy
    * This field is of access type is 'initializeOnly' and type SFFloat.
    */
    initialValue: number,
-   /**
-   * isActive true/false events are sent when follower-node computation starts/stops.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isActive: boolean,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * set_destination resets destination value of this node.
    *
@@ -13949,24 +8232,6 @@ interface ScalarDamperProxy extends X3DDamperNodeProxy
    */
    initialValue: number,
    /**
-   * isActive true/false events are sent when follower-node computation starts/stops.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isActive: boolean,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * order defines the number of internal filters (larger means smoother response, longer delay).
-   *
-   * This field is of access type is 'initializeOnly' and type SFInt32.
-   */
-   order: number,
-   /**
    * set_destination resets destination value of this node.
    *
    * This field is of access type is 'inputOnly' and type SFFloat.
@@ -13979,18 +8244,6 @@ interface ScalarDamperProxy extends X3DDamperNodeProxy
    */
    set_value: number,
    /**
-   * tau is the exponential-decay time constant for filter response in seconds.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   tau: number,
-   /**
-   * or -1.
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   tolerance: number,
-   /**
    * Computed output value that approaches within tolerance of destination value, as determined by elapsed time, order and tau.
    *
    * This field is of access type is 'outputOnly' and type SFFloat.
@@ -14002,29 +8255,11 @@ interface ScalarDamperProxy extends X3DDamperNodeProxy
 interface ScalarInterpolatorProxy extends X3DInterpolatorNodeProxy
 {
    /**
-   * Definition values for linear-interpolation function input intervals, listed in non-decreasing order and corresponding to a value in the keyValue array.
-   *
-   * This field is of access type is 'inputOutput' and type MFFloat.
-   */
-   key: MFFloat,
-   /**
    * Output values for linear interpolation, each corresponding to an input-fraction value in the key array.
    *
    * This field is of access type is 'inputOutput' and type MFFloat.
    */
    keyValue: MFFloat,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * set_fraction selects input key for corresponding keyValue output.
-   *
-   * This field is of access type is 'inputOnly' and type SFFloat.
-   */
-   set_fraction: number,
    /**
    * Linearly interpolated output value determined by current key time and corresponding keyValue pair.
    *
@@ -14067,12 +8302,6 @@ interface ScreenFontStyleProxy extends X3DFontStyleNodeProxy
    */
    leftToRight: boolean,
    /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * pointSize field specifies the size of text in points.
    *
    * This field is of access type is 'inputOutput' and type SFFloat.
@@ -14101,73 +8330,12 @@ interface ScreenFontStyleProxy extends X3DFontStyleNodeProxy
 /** ScreenGroup is a Grouping node that can contain most nodes. */
 interface ScreenGroupProxy extends X3DGroupingNodeProxy
 {
-   /**
-   * This field is of access type is 'inputOnly' and type MFNode.
-   */
-   addChildren: MFNode <X3DChildNodeProxy>,
-   /**
-   * Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxCenter: SFVec3f,
-   /**
-   * Whether to display bounding box for associated geometry, aligned with world coordinates.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   bboxDisplay: boolean,
-   /**
-   * Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxSize: SFVec3f,
-   /**
-   * Grouping nodes contain an ordered list of children nodes.
-   *
-   * This field is of access type is 'inputOutput' and type MFNode.
-   */
-   children: MFNode <X3DChildNodeProxy>,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * This field is of access type is 'inputOnly' and type MFNode.
-   */
-   removeChildren: MFNode <X3DChildNodeProxy>,
-   /**
-   * Whether or not renderable content within this node is visually displayed.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   visible: boolean,
+
 }
 
 /** Script contains author-programmed event behaviors for a scene. */
 interface ScriptProxy extends X3DScriptNodeProxy
 {
-   /**
-   * autoRefresh defines interval in seconds before automatic reload of current url asset is performed.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   autoRefresh: number,
-   /**
-   * autoRefreshTimeLimit defines maximum duration that automatic refresh activity can occur.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   autoRefreshTimeLimit: number,
-   /**
-   * Author-provided prose that describes intended purpose of the url asset.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
    /**
    * Set directOutput true if Script has field reference(s) of type SFNode/MFNode, and also uses direct access to modify attributes of a referenced node in the Scene.
    *
@@ -14181,18 +8349,6 @@ interface ScriptProxy extends X3DScriptNodeProxy
    */
    field: MFNode <fieldProxy>,
    /**
-   * load=true means load immediately, load=false means defer loading or else unload a previously loaded scene.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   load: boolean,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * If mustEvaluate false, then the X3D player may delay sending input events to Script until output events are needed.
    *
    * This field is of access type is 'initializeOnly' and type SFBool.
@@ -14204,47 +8360,11 @@ interface ScriptProxy extends X3DScriptNodeProxy
    * This field is of access type is 'inputOutput' and type SFString.
    */
    sourceCode: string,
-   /**
-   * List of address links for runnable script files.
-   *
-   * This field is of access type is 'inputOutput' and type MFString.
-   */
-   url: MFString,
 }
 
 /** SegmentedVolumeData displays a segmented voxel dataset with different RenderStyle nodes. */
 interface SegmentedVolumeDataProxy extends X3DVolumeDataNodeProxy
 {
-   /**
-   * Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxCenter: SFVec3f,
-   /**
-   * Whether to display bounding box for associated geometry, aligned with world coordinates.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   bboxDisplay: boolean,
-   /**
-   * Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxSize: SFVec3f,
-   /**
-   * Actual-size X-Y-Z dimensions of volume data in local coordinate system.
-   *
-   * This field is of access type is 'inputOutput' and type SFVec3f.
-   */
-   dimensions: SFVec3f,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * Multiple contained X3DVolumeRenderStyleNode nodes corresponding to each isosurface that define specific rendering technique for this volumetric object.
    *
@@ -14264,12 +8384,6 @@ interface SegmentedVolumeDataProxy extends X3DVolumeDataNodeProxy
    */
    segmentIdentifiers: X3DTexture3DNodeProxy,
    /**
-   * Whether or not renderable content within this node is visually displayed.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   visible: boolean,
-   /**
    * Single contained X3DTexture3DNode (ComposedTexture3D, ImageTexture3D, PixelTexture3D) that provides raw voxel information utilized by corresponding rendering styles.
    *
    * This field is of access type is 'inputOutput' and type SFNode.
@@ -14280,12 +8394,6 @@ interface SegmentedVolumeDataProxy extends X3DVolumeDataNodeProxy
 /** All fields fully supported except shadows supported with at least Phong shading at level 3. All fields fully supported with at least Phong shading and Henyey-Greenstein phase function, shadows fully supported at level 4. */
 interface ShadedVolumeStyleProxy extends X3DComposableVolumeRenderStyleNodeProxy
 {
-   /**
-   * Enables/disables node operation.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   enabled: boolean,
    /**
    * Whether rendering calculates and applies shading effects to visual output.
    *
@@ -14298,12 +8406,6 @@ interface ShadedVolumeStyleProxy extends X3DComposableVolumeRenderStyleNodeProxy
    * This field is of access type is 'inputOutput' and type SFNode.
    */
    material: X3DMaterialNodeProxy,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * define scattering model for implementations using global illumination (NONE or Henyey-Greenstein phase function).
    *
@@ -14328,36 +8430,6 @@ interface ShadedVolumeStyleProxy extends X3DComposableVolumeRenderStyleNodeProxy
 interface ShaderPartProxy extends X3DNodeProxy, X3DUrlObjectProxy
 {
    /**
-   * autoRefresh defines interval in seconds before automatic reload of current url asset is performed.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   autoRefresh: number,
-   /**
-   * autoRefreshTimeLimit defines maximum duration that automatic refresh activity can occur.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   autoRefreshTimeLimit: number,
-   /**
-   * Author-provided prose that describes intended purpose of the url asset.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
-   * load=true means load immediately, load=false means defer loading or else unload a previously loaded scene.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   load: boolean,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * Embedded scripting source code can be contained within the parent node as a plain-text CDATA block, without requiring escaping of special characters.
    *
    * This field is of access type is 'inputOutput' and type SFString.
@@ -14369,35 +8441,11 @@ interface ShaderPartProxy extends X3DNodeProxy, X3DUrlObjectProxy
    * This field is of access type is 'initializeOnly' and type SFString.
    */
    type: "VERTEX" | "FRAGMENT",
-   /**
-   * Location and filename of shader.
-   *
-   * This field is of access type is 'inputOutput' and type MFString.
-   */
-   url: MFString,
 }
 
 /** ShaderProgram can contain field declarations and a CDATA section of plain-text source code. */
 interface ShaderProgramProxy extends X3DNodeProxy
 {
-   /**
-   * autoRefresh defines interval in seconds before automatic reload of current url asset is performed.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   autoRefresh: number,
-   /**
-   * autoRefreshTimeLimit defines maximum duration that automatic refresh activity can occur.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   autoRefreshTimeLimit: number,
-   /**
-   * Author-provided prose that describes intended purpose of the url asset.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
    /**
    * Include a field statement for each field declaration in the ShaderProgram node.
    *
@@ -14405,18 +8453,6 @@ interface ShaderProgramProxy extends X3DNodeProxy
    */
    field: MFNode <fieldProxy>,
    /**
-   * load=true means load immediately, load=false means defer loading or else unload a previously loaded scene.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   load: boolean,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * Embedded scripting source code can be contained within the parent node as a plain-text CDATA block, without requiring escaping of special characters.
    *
    * This field is of access type is 'inputOutput' and type SFString.
@@ -14428,65 +8464,12 @@ interface ShaderProgramProxy extends X3DNodeProxy
    * This field is of access type is 'initializeOnly' and type SFString.
    */
    type: "VERTEX" | "FRAGMENT",
-   /**
-   * Location and filename of shader.
-   *
-   * This field is of access type is 'inputOutput' and type MFString.
-   */
-   url: MFString,
 }
 
 /** Shape can appear under any grouping node. */
 interface ShapeProxy extends X3DShapeNodeProxy
 {
-   /**
-   * Single contained Appearance node that can specify visual attributes (such as material, texture, fillProperties and lineProperties) applied to corresponding geometry.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   appearance: X3DAppearanceNodeProxy,
-   /**
-   * Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxCenter: SFVec3f,
-   /**
-   * Whether to display bounding box for associated geometry, aligned with world coordinates.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   bboxDisplay: boolean,
-   /**
-   * Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxSize: SFVec3f,
-   /**
-   * castShadow defines whether this Shape casts shadows as produced by lighting nodes.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   castShadow: boolean,
-   /**
-   * Single contained geometry node that is rendered according to corresponding appearance.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   geometry: X3DGeometryNodeProxy,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * Whether or not renderable content within this node is visually displayed.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   visible: boolean,
+
 }
 
 /** SignalPdu is a networked Protocol Data Unit (PDU) information node that communicates the transmission of voice, audio or other data modeled in a simulation. */
@@ -14505,24 +8488,6 @@ interface SignalPduProxy extends X3DNetworkSensorNodeProxy, X3DBoundedObjectProx
    */
    applicationID: number,
    /**
-   * Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxCenter: SFVec3f,
-   /**
-   * Whether to display bounding box for associated geometry, aligned with world coordinates.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   bboxDisplay: boolean,
-   /**
-   * Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxSize: SFVec3f,
-   /**
    * Holds audio or digital data conveyed by the radio transmission.
    *
    * This field is of access type is 'inputOutput' and type MFInt32.
@@ -14534,18 +8499,6 @@ interface SignalPduProxy extends X3DNetworkSensorNodeProxy, X3DBoundedObjectProx
    * This field is of access type is 'inputOutput' and type SFInt32.
    */
    dataLength: number,
-   /**
-   * Author-provided prose that describes intended purpose of the node.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
-   * Enables/disables the sensor node.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   enabled: boolean,
    /**
    * designates both Encoding Class and Encoding Type.
    *
@@ -14571,12 +8524,6 @@ interface SignalPduProxy extends X3DNetworkSensorNodeProxy, X3DBoundedObjectProx
    */
    geoSystem: MFString,
    /**
-   * confirm whether there has been a recent network update.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isActive: boolean,
-   /**
    * Whether networkMode='remote' (listen to network as copy of remote entity).
    *
    * This field is of access type is 'outputOnly' and type SFBool.
@@ -14600,12 +8547,6 @@ interface SignalPduProxy extends X3DNetworkSensorNodeProxy, X3DBoundedObjectProx
    * This field is of access type is 'outputOnly' and type SFBool.
    */
    readonly isStandAlone: boolean,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * Fallback server address if multicast not available locally.
    *
@@ -14679,12 +8620,6 @@ interface SignalPduProxy extends X3DNetworkSensorNodeProxy, X3DBoundedObjectProx
    */
    readonly timestamp: number,
    /**
-   * Whether or not renderable content within this node is visually displayed.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   visible: boolean,
-   /**
    * Select geometry to render: -1 for no geometry, 0 for text trace, 1 for default geometry, (optional) higher values to render different states.
    *
    * This field is of access type is 'inputOutput' and type SFInt32.
@@ -14701,18 +8636,6 @@ interface SignalPduProxy extends X3DNetworkSensorNodeProxy, X3DBoundedObjectProx
 /** SilhouetteEnhancementVolumeStyle specifies that volumetric data is rendered with silhouette enhancement. */
 interface SilhouetteEnhancementVolumeStyleProxy extends X3DComposableVolumeRenderStyleNodeProxy
 {
-   /**
-   * Enables/disables node operation.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   enabled: boolean,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * amount of the silhouette enhancement to use.
    *
@@ -14763,23 +8686,11 @@ interface SingleAxisHingeJointProxy extends X3DRigidJointNodeProxy
    */
    axis: SFVec3f,
    /**
-   * The body1 and body2 fields indicate the two RigidBody nodes connected by this joint.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   body1: RigidBodyProxy,
-   /**
    * body1AnchorPoint describes anchorPoint position relative to local coordinate reference frame.
    *
    * This field is of access type is 'outputOnly' and type SFVec3f.
    */
    readonly body1AnchorPoint: SFVec3f,
-   /**
-   * The body1 and body2 fields indicate the two RigidBody nodes connected by this joint.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   body2: RigidBodyProxy,
    /**
    * body2AnchorPoint describes anchorPoint position relative to local coordinate reference frame.
    *
@@ -14787,23 +8698,11 @@ interface SingleAxisHingeJointProxy extends X3DRigidJointNodeProxy
    */
    readonly body2AnchorPoint: SFVec3f,
    /**
-   * forceOutput controls which output fields are generated for the next frame.
-   *
-   * This field is of access type is 'inputOutput' and type MFString.
-   */
-   forceOutput: MFString <"ALL" | "NONE">,
-   /**
    * maxAngle is maximum rotation angle for hinge.
    *
    * This field is of access type is 'inputOutput' and type SFFloat.
    */
    maxAngle: number,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * minAngle is minimum rotation angle for hinge.
    *
@@ -14834,35 +8733,11 @@ interface SliderJointProxy extends X3DRigidJointNodeProxy
    */
    axis: SFVec3f,
    /**
-   * The body1 and body2 fields indicate the two RigidBody nodes connected by this joint.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   body1: RigidBodyProxy,
-   /**
-   * The body1 and body2 fields indicate the two RigidBody nodes connected by this joint.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   body2: RigidBodyProxy,
-   /**
-   * forceOutput controls which output fields are generated for the next frame.
-   *
-   * This field is of access type is 'inputOutput' and type MFString.
-   */
-   forceOutput: MFString <"ALL" | "NONE">,
-   /**
    * maxSeparation is maximum separation distance between the two bodies.
    *
    * This field is of access type is 'inputOutput' and type SFFloat.
    */
    maxSeparation: number,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * minSeparation is minimum separation distance between the two bodies.
    *
@@ -14905,23 +8780,11 @@ interface SliderJointProxy extends X3DRigidJointNodeProxy
 interface SoundProxy extends X3DSoundNodeProxy
 {
    /**
-   * Author-provided prose that describes intended purpose of this node.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
    * direction of sound axis, relative to local coordinate system.
    *
    * This field is of access type is 'inputOutput' and type SFVec3f.
    */
    direction: SFVec3f,
-   /**
-   * Enables/disables node operation.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   enabled: boolean,
    /**
    * Factor [0,1] adjusting loudness (decibels) of emitted sound.
    *
@@ -14946,12 +8809,6 @@ interface SoundProxy extends X3DSoundNodeProxy
    * This field is of access type is 'inputOutput' and type SFFloat.
    */
    maxFront: number,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * Inner (full loudness) ellipsoid distance along back direction.
    *
@@ -15012,12 +8869,6 @@ interface SpatialSoundProxy extends X3DSoundNodeProxy
    */
    coneOuterGain: number,
    /**
-   * Author-provided prose that describes intended purpose of the url asset.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
    * direction of sound axis, relative to local coordinate system.
    *
    * This field is of access type is 'inputOutput' and type SFVec3f.
@@ -15035,12 +8886,6 @@ interface SpatialSoundProxy extends X3DSoundNodeProxy
    * This field is of access type is 'inputOutput' and type SFBool.
    */
    dopplerEnabled: boolean,
-   /**
-   * Enables/disables node operation.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   enabled: boolean,
    /**
    * enableHRTF enables/disables Head Related Transfer Function (HRTF) auralization, if available.
    *
@@ -15072,12 +8917,6 @@ interface SpatialSoundProxy extends X3DSoundNodeProxy
    */
    maxDistance: number,
    /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * Player hint [0,1] if needed to choose which sounds to play.
    *
    * This field is of access type is 'inputOutput' and type SFFloat.
@@ -15107,12 +8946,6 @@ interface SpatialSoundProxy extends X3DSoundNodeProxy
 interface SphereProxy extends X3DGeometryNodeProxy
 {
    /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * Size in meters.
    *
    * This field is of access type is 'initializeOnly' and type SFFloat.
@@ -15130,42 +8963,6 @@ interface SphereProxy extends X3DGeometryNodeProxy
 interface SphereSensorProxy extends X3DDragSensorNodeProxy
 {
    /**
-   * Determines whether previous offset values are remembered/accumulated.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   autoOffset: boolean,
-   /**
-   * Author-provided prose that describes intended purpose of this node.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
-   * Enables/disables node operation.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   enabled: boolean,
-   /**
-   * Select geometry by activating the pointing device (for example, clicking the mouse) to generate isActive events.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isActive: boolean,
-   /**
-   * Hover over geometry by aiming the mouse (or pointing device) to generate isOver events.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isOver: boolean,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * Sends event and remembers last value sensed.
    *
    * This field is of access type is 'inputOutput' and type SFRotation.
@@ -15177,12 +8974,6 @@ interface SphereSensorProxy extends X3DDragSensorNodeProxy
    * This field is of access type is 'outputOnly' and type SFRotation.
    */
    readonly rotation_changed: SFRotation,
-   /**
-   * trackPoint_changed events give intersection point of bearing with sensor's virtual geometry.
-   *
-   * This field is of access type is 'outputOnly' and type SFVec3f.
-   */
-   readonly trackPoint_changed: SFVec3f,
 }
 
 /** SplinePositionInterpolator performs non-linear interpolation among paired lists of 3-tuple values and velocities to produce an SFVec3f value_changed output event. */
@@ -15194,12 +8985,6 @@ interface SplinePositionInterpolatorProxy extends X3DInterpolatorNodeProxy
    * This field is of access type is 'inputOutput' and type SFBool.
    */
    closed: boolean,
-   /**
-   * Definition parameters for nonlinear-interpolation function time intervals, listed in non-decreasing order and corresponding to keyValue, keyVelocity array values.
-   *
-   * This field is of access type is 'inputOutput' and type MFFloat.
-   */
-   key: MFFloat,
    /**
    * Output values for nonlinear interpolation, each corresponding to an input-fraction value in the key array.
    *
@@ -15213,23 +8998,11 @@ interface SplinePositionInterpolatorProxy extends X3DInterpolatorNodeProxy
    */
    keyVelocity: MFVec3f,
    /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * normalizeVelocity field specifies whether the velocity vectors are normalized to produce smooth speed transitions, or transformed into tangency vectors.
    *
    * This field is of access type is 'inputOutput' and type SFBool.
    */
    normalizeVelocity: boolean,
-   /**
-   * set_fraction selects input key for corresponding use of keyValue, keyVelocity values for output computation.
-   *
-   * This field is of access type is 'inputOnly' and type SFFloat.
-   */
-   set_fraction: number,
    /**
    * Nonlinearly interpolated output value computed by using current time fraction along with corresponding key, keyValue and keyVelocity values.
    *
@@ -15248,12 +9021,6 @@ interface SplinePositionInterpolator2DProxy extends X3DInterpolatorNodeProxy
    */
    closed: boolean,
    /**
-   * Definition parameters for nonlinear-interpolation function time intervals, listed in non-decreasing order and corresponding to keyValue, keyVelocity array values.
-   *
-   * This field is of access type is 'inputOutput' and type MFFloat.
-   */
-   key: MFFloat,
-   /**
    * Output values for nonlinear interpolation, each corresponding to an input-fraction value in the key array.
    *
    * This field is of access type is 'inputOutput' and type MFVec2f.
@@ -15266,23 +9033,11 @@ interface SplinePositionInterpolator2DProxy extends X3DInterpolatorNodeProxy
    */
    keyVelocity: MFVec2f,
    /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * normalizeVelocity field specifies whether the velocity vectors are normalized to produce smooth speed transitions, or transformed into tangency vectors.
    *
    * This field is of access type is 'inputOutput' and type SFBool.
    */
    normalizeVelocity: boolean,
-   /**
-   * set_fraction selects input key for corresponding use of keyValue, keyVelocity values for output computation.
-   *
-   * This field is of access type is 'inputOnly' and type SFFloat.
-   */
-   set_fraction: number,
    /**
    * Nonlinearly interpolated output value computed by using current time fraction along with corresponding key, keyValue and keyVelocity values.
    *
@@ -15301,12 +9056,6 @@ interface SplineScalarInterpolatorProxy extends X3DInterpolatorNodeProxy
    */
    closed: boolean,
    /**
-   * Definition parameters for nonlinear-interpolation function time intervals, listed in non-decreasing order and corresponding to keyValue, keyVelocity array values.
-   *
-   * This field is of access type is 'inputOutput' and type MFFloat.
-   */
-   key: MFFloat,
-   /**
    * Output values for nonlinear interpolation, each corresponding to an input-fraction value in the key array.
    *
    * This field is of access type is 'inputOutput' and type MFFloat.
@@ -15319,23 +9068,11 @@ interface SplineScalarInterpolatorProxy extends X3DInterpolatorNodeProxy
    */
    keyVelocity: MFFloat,
    /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * normalizeVelocity field specifies whether the velocity vectors are normalized to produce smooth speed transitions, or transformed into tangency vectors.
    *
    * This field is of access type is 'inputOutput' and type SFBool.
    */
    normalizeVelocity: boolean,
-   /**
-   * set_fraction selects input key for corresponding use of keyValue, keyVelocity values for output computation.
-   *
-   * This field is of access type is 'inputOnly' and type SFFloat.
-   */
-   set_fraction: number,
    /**
    * Nonlinearly interpolated output value computed by using current time fraction along with corresponding key, keyValue and keyVelocity values.
    *
@@ -15348,12 +9085,6 @@ interface SplineScalarInterpolatorProxy extends X3DInterpolatorNodeProxy
 interface SpotLightProxy extends X3DLightNodeProxy
 {
    /**
-   * Brightness of ambient (nondirectional background) emission from the light.
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   ambientIntensity: number,
-   /**
    * Constant, linear-distance and squared-distance dropoff factors as radial distance increases from the source.
    *
    * This field is of access type is 'inputOutput' and type SFVec3f.
@@ -15365,12 +9096,6 @@ interface SpotLightProxy extends X3DLightNodeProxy
    * This field is of access type is 'inputOutput' and type SFFloat.
    */
    beamWidth: number,
-   /**
-   * color of light, applied to colors of objects.
-   *
-   * This field is of access type is 'inputOutput' and type SFColor.
-   */
-   color: SFColor,
    /**
    * Outer conical solid angle (in radians) where light source intensity becomes zero.
    *
@@ -15390,58 +9115,22 @@ interface SpotLightProxy extends X3DLightNodeProxy
    */
    global: boolean,
    /**
-   * Brightness of direct emission from the light.
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   intensity: number,
-   /**
    * Position of light relative to local coordinate system.
    *
    * This field is of access type is 'inputOutput' and type SFVec3f.
    */
    location: SFVec3f,
    /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * Enables/disables this light source.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   on: boolean,
-   /**
    * Maximum effective distance of light relative to local light position, affected by ancestor scaling.
    *
    * This field is of access type is 'inputOutput' and type SFFloat.
    */
    radius: number,
-   /**
-   * shadowIntensity field defines how much light is obscured by shapes that cast shadows, ranging from 0 (light not obscured, no visible shadows) to 1 (light completely obscured, full-intensity shadows).
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   shadowIntensity: number,
-   /**
-   * shadows field indicates whether or not this light casts a shadow behind illuminated X3DShapeNode geometry.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   shadows: boolean,
 }
 
 /** SquadOrientationInterpolator performs non-linear interpolation among paired lists of rotation values to produce an SFRotation value_changed output event. */
 interface SquadOrientationInterpolatorProxy extends X3DInterpolatorNodeProxy
 {
-   /**
-   * Definition parameters for nonlinear-interpolation function time intervals, listed in non-decreasing order and corresponding to keyValue, keyVelocity array values.
-   *
-   * This field is of access type is 'inputOutput' and type MFFloat.
-   */
-   key: MFFloat,
    /**
    * Output values for nonlinear interpolation, each corresponding to an input-fraction value in the key array.
    *
@@ -15449,23 +9138,11 @@ interface SquadOrientationInterpolatorProxy extends X3DInterpolatorNodeProxy
    */
    keyValue: MFRotation,
    /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * normalizeVelocity field specifies whether the velocity vectors are normalized to produce smooth speed transitions, or transformed into tangency vectors.
    *
    * This field is of access type is 'inputOutput' and type SFBool.
    */
    normalizeVelocity: boolean,
-   /**
-   * set_fraction selects input key for corresponding use of keyValue, keyVelocity values for output computation.
-   *
-   * This field is of access type is 'inputOnly' and type SFFloat.
-   */
-   set_fraction: number,
    /**
    * Nonlinearly interpolated output value computed by using current time fraction along with corresponding key, keyValue and keyVelocity values.
    *
@@ -15478,106 +9155,22 @@ interface SquadOrientationInterpolatorProxy extends X3DInterpolatorNodeProxy
 interface StaticGroupProxy extends X3DChildNodeProxy, X3DBoundedObjectProxy
 {
    /**
-   * Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxCenter: SFVec3f,
-   /**
-   * Whether to display bounding box for associated geometry, aligned with world coordinates.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   bboxDisplay: boolean,
-   /**
-   * Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxSize: SFVec3f,
-   /**
    * Grouping nodes contain an ordered list of children nodes.
    *
    * This field is of access type is 'initializeOnly' and type MFNode.
    */
    children: MFNode <X3DChildNodeProxy>,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * Whether or not renderable content within this node is visually displayed.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   visible: boolean,
 }
 
 /** StreamAudioDestination node represents the final audio destination via a media stream. */
 interface StreamAudioDestinationProxy extends X3DSoundDestinationNodeProxy
 {
    /**
-   * channelCount reports number of channels provided by input nodes.
-   *
-   * This field is of access type is 'outputOnly' and type SFInt32.
-   */
-   readonly channelCount: number,
-   /**
-   * channelCountMode determines how individual channels are counted when up-mixing and down-mixing connections to any inputs.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   channelCountMode: "MAX" | "CLAMPED_MAX" | "EXPLICIT",
-   /**
-   * channelInterpretation determines how individual channels are treated when up-mixing and down-mixing connections to any inputs.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   channelInterpretation: "SPEAKERS" | "DISCRETE",
-   /**
    * The children field specifies audio-graph sound sources providing input signals for this node.
    *
    * This field is of access type is 'inputOutput' and type MFNode.
    */
    children: MFNode <AnalyserProxy | AudioClipProxy | AudioDestinationProxy | BiquadFilterProxy | BufferAudioSourceProxy | ChannelMergerProxy | ChannelSelectorProxy | ChannelSplitterProxy | ConvolverProxy | DelayProxy | DynamicsCompressorProxy | GainProxy | ListenerPointSourceProxy | MicrophoneSourceProxy | MovieTextureProxy | OscillatorSourceProxy | SoundProxy | SpatialSoundProxy | StreamAudioDestinationProxy | StreamAudioSourceProxy | WaveShaperProxy>,
-   /**
-   * Author-provided prose that describes intended purpose of the url asset.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
-   * Enables/disables node operation.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   enabled: boolean,
-   /**
-   * The gain field is a factor that represents the amount of linear amplification to apply to the output of the node.
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   gain: number,
-   /**
-   * isActive true/false events are sent when playback starts/stops.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isActive: boolean,
-   /**
-   * mediaDeviceID field provides ID parameter functionality.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   mediaDeviceID: string,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * Stream identification TBD Hint: W3C Media Capture and Streams https://www.
    *
@@ -15602,72 +9195,6 @@ interface StreamAudioSourceProxy extends X3DSoundSourceNodeProxy
    */
    channelInterpretation: "SPEAKERS" | "DISCRETE",
    /**
-   * Author-provided prose that describes intended purpose of the url asset.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
-   * Current elapsed time since AudioClip activated/running, cumulative in seconds, and not counting any paused time.
-   *
-   * This field is of access type is 'outputOnly' and type SFTime.
-   */
-   readonly elapsedTime: number,
-   /**
-   * Enables/disables node operation.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   enabled: boolean,
-   /**
-   * The gain field is a factor that represents the amount of linear amplification to apply to the output of the node.
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   gain: number,
-   /**
-   * isActive true/false events are sent when playback starts/stops.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isActive: boolean,
-   /**
-   * isPaused true/false events are sent when AudioClip is paused/resumed.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isPaused: boolean,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * When time now >= pauseTime, isPaused becomes true and AudioClip becomes paused.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   pauseTime: number,
-   /**
-   * When resumeTime becomes <= time now, isPaused becomes false and AudioClip becomes active.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   resumeTime: number,
-   /**
-   * Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   startTime: number,
-   /**
-   * Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   stopTime: number,
-   /**
    * Stream identification TBD Hint: W3C Media Capture and Streams https://www.
    *
    * This field is of access type is 'inputOutput' and type SFString.
@@ -15685,18 +9212,6 @@ interface StringSensorProxy extends X3DKeyDeviceSensorNodeProxy
    */
    deletionAllowed: boolean,
    /**
-   * Author-provided prose that describes intended purpose of the node.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
-   * Enables/disables node operation.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   enabled: boolean,
-   /**
    * Events generated as character-producing keys are pressed on keyboard.
    *
    * This field is of access type is 'outputOnly' and type SFString.
@@ -15708,114 +9223,22 @@ interface StringSensorProxy extends X3DKeyDeviceSensorNodeProxy
    * This field is of access type is 'outputOnly' and type SFString.
    */
    readonly finalText: string,
-   /**
-   * Select geometry by activating the pointing device (for example, clicking the mouse) to generate isActive events.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isActive: boolean,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
 }
 
 /** SurfaceEmitter generates particles from the surface of an object. */
 interface SurfaceEmitterProxy extends X3DParticleEmitterNodeProxy
 {
    /**
-   * Basic mass of each particle, defined in mass base units (default is kilograms).
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   mass: number,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * Enables/disables production of particles from this emitter node.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   on: boolean,
-   /**
-   * Initial linear speed (default is m/s) imparted to all particles along their direction of movement.
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   speed: number,
-   /**
    * The geometry node provides geometry used as the emitting surface.
    *
    * This field is of access type is 'initializeOnly' and type SFNode.
    */
    surface: X3DGeometryNodeProxy,
-   /**
-   * Particle surface area in area base units (default is meters squared).
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   surfaceArea: number,
-   /**
-   * Multiplier for the randomness used to control the range of possible output values.
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   variation: number,
 }
 
 /** Switch is a Grouping node that only renders one (or zero) child at a time. */
 interface SwitchProxy extends X3DGroupingNodeProxy
 {
-   /**
-   * This field is of access type is 'inputOnly' and type MFNode.
-   */
-   addChildren: MFNode <X3DChildNodeProxy>,
-   /**
-   * Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxCenter: SFVec3f,
-   /**
-   * Whether to display bounding box for associated geometry, aligned with world coordinates.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   bboxDisplay: boolean,
-   /**
-   * Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxSize: SFVec3f,
-   /**
-   * Grouping nodes contain an ordered list of children nodes.
-   *
-   * This field is of access type is 'inputOutput' and type MFNode.
-   */
-   children: MFNode <X3DChildNodeProxy>,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * This field is of access type is 'inputOnly' and type MFNode.
-   */
-   removeChildren: MFNode <X3DChildNodeProxy>,
-   /**
-   * Whether or not renderable content within this node is visually displayed.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   visible: boolean,
    /**
    * Index of active child choice, counting from 0.
    *
@@ -15828,12 +9251,6 @@ interface SwitchProxy extends X3DGroupingNodeProxy
 interface TexCoordChaser2DProxy extends X3DChaserNodeProxy
 {
    /**
-   * duration is the time interval for filter response in seconds.
-   *
-   * This field is of access type is 'initializeOnly' and type SFTime.
-   */
-   duration: number,
-   /**
    * Initial destination value for this node.
    *
    * This field is of access type is 'initializeOnly' and type MFVec2f.
@@ -15845,18 +9262,6 @@ interface TexCoordChaser2DProxy extends X3DChaserNodeProxy
    * This field is of access type is 'initializeOnly' and type MFVec2f.
    */
    initialValue: MFVec2f,
-   /**
-   * isActive true/false events are sent when follower-node computation starts/stops.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isActive: boolean,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * set_destination resets destination value of this node.
    *
@@ -15893,24 +9298,6 @@ interface TexCoordDamper2DProxy extends X3DDamperNodeProxy
    */
    initialValue: MFVec2f,
    /**
-   * isActive true/false events are sent when follower-node computation starts/stops.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isActive: boolean,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * order defines the number of internal filters (larger means smoother response, longer delay).
-   *
-   * This field is of access type is 'initializeOnly' and type SFInt32.
-   */
-   order: number,
-   /**
    * set_destination resets destination value of this node.
    *
    * This field is of access type is 'inputOnly' and type MFVec2f.
@@ -15922,18 +9309,6 @@ interface TexCoordDamper2DProxy extends X3DDamperNodeProxy
    * This field is of access type is 'inputOnly' and type MFVec2f.
    */
    set_value: MFVec2f,
-   /**
-   * tau is the exponential-decay time constant for filter response in seconds.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   tau: number,
-   /**
-   * or -1.
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   tolerance: number,
    /**
    * Computed output value that approaches within tolerance of destination value, as determined by elapsed time, order and tau.
    *
@@ -15970,12 +9345,6 @@ interface TextProxy extends X3DGeometryNodeProxy
    */
    maxExtent: number,
    /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * origin of the text local coordinate system, in units of the coordinate system in which the Text node is embedded.
    *
    * This field is of access type is 'outputOnly' and type SFVec3f.
@@ -16011,12 +9380,6 @@ interface TextureBackgroundProxy extends X3DBackgroundNodeProxy
    */
    backTexture: X3DTexture2DNodeProxy | MultiTextureProxy,
    /**
-   * event sent when node becomes active/inactive.
-   *
-   * This field is of access type is 'outputOnly' and type SFTime.
-   */
-   readonly bindTime: number,
-   /**
    * Parent TextureBackground element can contain up to six image nodes (ImageTexture PixelTexture MovieTexture MultiTexture).
    *
    * This field is of access type is 'inputOutput' and type SFNode.
@@ -16029,35 +9392,11 @@ interface TextureBackgroundProxy extends X3DBackgroundNodeProxy
    */
    frontTexture: X3DTexture2DNodeProxy | MultiTextureProxy,
    /**
-   * The angle array values increase from 0.
-   *
-   * This field is of access type is 'inputOutput' and type MFFloat.
-   */
-   groundAngle: MFFloat,
-   /**
-   * Color of the ground at the various angles on the ground partial sphere.
-   *
-   * This field is of access type is 'inputOutput' and type MFColor.
-   */
-   groundColor: MFColor,
-   /**
-   * event true sent when node becomes active, event false sent when unbound by another node.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isBound: boolean,
-   /**
    * Parent TextureBackground element can contain up to six image nodes (ImageTexture PixelTexture MovieTexture MultiTexture).
    *
    * This field is of access type is 'inputOutput' and type SFNode.
    */
    leftTexture: X3DTexture2DNodeProxy | MultiTextureProxy,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * Parent TextureBackground element can contain up to six image nodes (ImageTexture PixelTexture MovieTexture MultiTexture).
    *
@@ -16065,52 +9404,16 @@ interface TextureBackgroundProxy extends X3DBackgroundNodeProxy
    */
    rightTexture: X3DTexture2DNodeProxy | MultiTextureProxy,
    /**
-   * Input event set_bind=true makes this node active, input event set_bind=false makes this node inactive.
-   *
-   * This field is of access type is 'inputOnly' and type SFBool.
-   */
-   set_bind: boolean,
-   /**
-   * The angle array values increase from 0.
-   *
-   * This field is of access type is 'inputOutput' and type MFFloat.
-   */
-   skyAngle: MFFloat,
-   /**
-   * Color of the sky at various angles on the sky sphere.
-   *
-   * This field is of access type is 'inputOutput' and type MFColor.
-   */
-   skyColor: MFColor,
-   /**
    * Parent TextureBackground element can contain up to six image nodes (ImageTexture PixelTexture MovieTexture MultiTexture).
    *
    * This field is of access type is 'inputOutput' and type SFNode.
    */
    topTexture: X3DTexture2DNodeProxy | MultiTextureProxy,
-   /**
-   * transparency applied to texture images, enabling an X3D scene to overlay an HTML page or desktop.
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   transparency: number,
 }
 
 /** TextureCoordinate specifies 2D (s,t) texture-coordinate points, used by vertex-based geometry nodes (such as IndexedFaceSet or ElevationGrid) to map textures to vertices (and patches to NURBS surfaces). */
 interface TextureCoordinateProxy extends X3DSingleTextureCoordinateNodeProxy
 {
-   /**
-   * The mapping label identifies which texture coordinates and transformations are used to compute texture effects from corresponding geometry on a given material.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   mapping: string,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * pairs of 2D (s,t) texture coordinates, either in range [0,1] or higher if repeating.
    *
@@ -16123,18 +9426,6 @@ interface TextureCoordinateProxy extends X3DSingleTextureCoordinateNodeProxy
 interface TextureCoordinate3DProxy extends X3DSingleTextureCoordinateNodeProxy
 {
    /**
-   * The mapping label identifies which texture coordinates and transformations are used to compute texture effects from corresponding geometry on a given material.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   mapping: string,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * triplets of 3D (s,t,r) texture coordinates, either in range [0,1] or higher if repeating.
    *
    * This field is of access type is 'inputOutput' and type MFVec3f.
@@ -16146,18 +9437,6 @@ interface TextureCoordinate3DProxy extends X3DSingleTextureCoordinateNodeProxy
 interface TextureCoordinate4DProxy extends X3DSingleTextureCoordinateNodeProxy
 {
    /**
-   * The mapping label identifies which texture coordinates and transformations are used to compute texture effects from corresponding geometry on a given material.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   mapping: string,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * 4-tuple values of 4D texture coordinates, either in range [0,1] or higher if repeating.
    *
    * This field is of access type is 'inputOutput' and type MFVec4f.
@@ -16168,18 +9447,6 @@ interface TextureCoordinate4DProxy extends X3DSingleTextureCoordinateNodeProxy
 /** TextureCoordinateGenerator computes 2D (s,t) texture-coordinate points, used by vertex-based geometry nodes (such as IndexedFaceSet or ElevationGrid) to map textures to vertices (and patches to NURBS surfaces). */
 interface TextureCoordinateGeneratorProxy extends X3DSingleTextureCoordinateNodeProxy
 {
-   /**
-   * The mapping label identifies which texture coordinates and transformations are used to compute texture effects from corresponding geometry on a given material.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   mapping: string,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * parameter field defines the algorithm used to compute texture coordinates.
    *
@@ -16198,101 +9465,11 @@ interface TextureCoordinateGeneratorProxy extends X3DSingleTextureCoordinateNode
 interface TextureProjectorProxy extends X3DTextureProjectorNodeProxy
 {
    /**
-   * Brightness of ambient (nondirectional background) emission from the light.
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   ambientIntensity: number,
-   /**
-   * aspectRatio is the ratio of width and height that is projected.
-   *
-   * This field is of access type is 'outputOnly' and type SFFloat.
-   */
-   readonly aspectRatio: number,
-   /**
-   * color of light, applied to colors of objects.
-   *
-   * This field is of access type is 'inputOutput' and type SFColor.
-   */
-   color: SFColor,
-   /**
-   * Author-provided prose that describes intended purpose of the url asset.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
-   * Direction for projection.
-   *
-   * This field is of access type is 'inputOutput' and type SFVec3f.
-   */
-   direction: SFVec3f,
-   /**
-   * maximum distance necessary for texture display.
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   farDistance: number,
-   /**
    * Preferred minimum viewing angle for this projection in radians, providing minimum height or minimum width (whichever is smaller).
    *
    * This field is of access type is 'inputOutput' and type SFFloat.
    */
    fieldOfView: number,
-   /**
-   * Global texture projection illuminates all objects within their volume of influence.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   global: boolean,
-   /**
-   * Brightness of direct emission from the light.
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   intensity: number,
-   /**
-   * Position of center of texture projection relative to local coordinate system.
-   *
-   * This field is of access type is 'inputOutput' and type SFVec3f.
-   */
-   location: SFVec3f,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * minimum distance necessary for texture display.
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   nearDistance: number,
-   /**
-   * Enables/disables this texture projection source.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   on: boolean,
-   /**
-   * shadowIntensity field defines how much light is obscured by shapes that cast shadows, ranging from 0 (light not obscured, no visible shadows) to 1 (light completely obscured, full-intensity shadows).
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   shadowIntensity: number,
-   /**
-   * shadows field indicates whether or not this light casts a shadow behind illuminated X3DShapeNode geometry.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   shadows: boolean,
-   /**
-   * Single contained texture node (ImageTexture, MovieTexture, PixelTexture, MultiTexture) that maps image(s) to surface geometry.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   texture: X3DTexture2DNodeProxy,
    /**
    * upVector describes the roll of the camera by saying which direction is up for the camera's orientation.
    *
@@ -16305,101 +9482,11 @@ interface TextureProjectorProxy extends X3DTextureProjectorNodeProxy
 interface TextureProjectorParallelProxy extends X3DTextureProjectorNodeProxy
 {
    /**
-   * Brightness of ambient (nondirectional background) emission from the light.
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   ambientIntensity: number,
-   /**
-   * aspectRatio is the ratio of width and height that is projected.
-   *
-   * This field is of access type is 'outputOnly' and type SFFloat.
-   */
-   readonly aspectRatio: number,
-   /**
-   * color of light, applied to colors of objects.
-   *
-   * This field is of access type is 'inputOutput' and type SFColor.
-   */
-   color: SFColor,
-   /**
-   * Author-provided prose that describes intended purpose of the url asset.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
-   * Direction for projection.
-   *
-   * This field is of access type is 'inputOutput' and type SFVec3f.
-   */
-   direction: SFVec3f,
-   /**
-   * maximum distance necessary for texture display.
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   farDistance: number,
-   /**
    * Minimum and maximum extents of projection texture in units of local coordinate system.
    *
    * This field is of access type is 'inputOutput' and type SFVec4f.
    */
    fieldOfView: SFVec4f,
-   /**
-   * Global texture projection illuminates all objects within their volume of influence.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   global: boolean,
-   /**
-   * Brightness of direct emission from the light.
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   intensity: number,
-   /**
-   * Position of center of texture projection relative to local coordinate system.
-   *
-   * This field is of access type is 'inputOutput' and type SFVec3f.
-   */
-   location: SFVec3f,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * minimum distance necessary for texture display.
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   nearDistance: number,
-   /**
-   * Enables/disables this texture projection source.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   on: boolean,
-   /**
-   * shadowIntensity field defines how much light is obscured by shapes that cast shadows, ranging from 0 (light not obscured, no visible shadows) to 1 (light completely obscured, full-intensity shadows).
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   shadowIntensity: number,
-   /**
-   * shadows field indicates whether or not this light casts a shadow behind illuminated X3DShapeNode geometry.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   shadows: boolean,
-   /**
-   * Single contained texture node (ImageTexture, MovieTexture, PixelTexture, MultiTexture) that maps image(s) to surface geometry.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   texture: X3DTexture2DNodeProxy,
 }
 
 /** TextureProperties allows precise fine-grained control over application of image textures to geometry. */
@@ -16454,12 +9541,6 @@ interface TexturePropertiesProxy extends X3DNodeProxy
    */
    magnificationFilter: "AVG_PIXEL" | "DEFAULT" | "FASTEST" | "NEAREST_PIXEL" | "NICEST",
    /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * minificationFilter indicates texture filter when image is larger than screen space representation.
    *
    * This field is of access type is 'inputOutput' and type SFString.
@@ -16494,12 +9575,6 @@ interface TextureTransformProxy extends X3DTextureTransformNodeProxy
    * This field is of access type is 'inputOutput' and type SFString.
    */
    mapping: string,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * single rotation angle of texture about center (opposite effect appears on geometry).
    *
@@ -16536,12 +9611,6 @@ interface TextureTransform3DProxy extends X3DTextureTransformNodeProxy
    */
    mapping: string,
    /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * rotation angle of texture about center (opposite effect appears on geometry).
    *
    * This field is of access type is 'inputOutput' and type SFRotation.
@@ -16576,12 +9645,6 @@ interface TextureTransformMatrix3DProxy extends X3DTextureTransformNodeProxy
    * This field is of access type is 'inputOutput' and type SFMatrix4f.
    */
    matrix: SFMatrix4f,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
 }
 
 /** TimeSensor continuously generates events as time passes. */
@@ -16600,77 +9663,17 @@ interface TimeSensorProxy extends X3DTimeDependentNodeProxy, X3DSensorNodeProxy
    */
    readonly cycleTime: number,
    /**
-   * Author-provided prose that describes intended purpose of this node.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
-   * Current elapsed time since TimeSensor activated/running, cumulative in seconds, and not counting any paused time.
-   *
-   * This field is of access type is 'outputOnly' and type SFTime.
-   */
-   readonly elapsedTime: number,
-   /**
-   * Enables/disables node operation.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   enabled: boolean,
-   /**
    * fraction_changed continuously sends value in range [0,1] showing time progress in the current cycle.
    *
    * This field is of access type is 'outputOnly' and type SFFloat.
    */
    readonly fraction_changed: number,
    /**
-   * isActive true/false events are sent when TimeSensor starts/stops running.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isActive: boolean,
-   /**
-   * isPaused true/false events are sent when TimeSensor is paused/resumed.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isPaused: boolean,
-   /**
    * Repeat indefinitely when loop=true, repeat only once when loop=false.
    *
    * This field is of access type is 'inputOutput' and type SFBool.
    */
    loop: boolean,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * When time now >= pauseTime, isPaused becomes true and TimeSensor becomes paused.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   pauseTime: number,
-   /**
-   * When resumeTime becomes <= time now, isPaused becomes false and TimeSensor becomes inactive.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   resumeTime: number,
-   /**
-   * When time now >= startTime, isActive becomes true and TimeSensor becomes active.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   startTime: number,
-   /**
-   * When stopTime becomes <= time now, isActive becomes false and TimeSensor becomes inactive.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   stopTime: number,
    /**
    * Time continuously sends the absolute time (value 0.
    *
@@ -16682,12 +9685,6 @@ interface TimeSensorProxy extends X3DTimeDependentNodeProxy, X3DSensorNodeProxy
 /** TimeTrigger converts boolean true events to time events. */
 interface TimeTriggerProxy extends X3DTriggerNodeProxy
 {
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * If input event set_boolean is true, send output triggerTime event.
    *
@@ -16712,18 +9709,6 @@ interface ToneMappedVolumeStyleProxy extends X3DComposableVolumeRenderStyleNodeP
    */
    coolColor: SFColorRGBA,
    /**
-   * Enables/disables node operation.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   enabled: boolean,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * The surfaceNormals field contains a 3D texture with at least three component values.
    *
    * This field is of access type is 'inputOutput' and type SFNode.
@@ -16740,18 +9725,6 @@ interface ToneMappedVolumeStyleProxy extends X3DComposableVolumeRenderStyleNodeP
 /** TouchSensor tracks location and state of the pointing device, detecting when a user points at or selects (activates) geometry. */
 interface TouchSensorProxy extends X3DTouchSensorNodeProxy
 {
-   /**
-   * Author-provided prose that describes intended purpose of this node.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
-   * Enables/disables node operation.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   enabled: boolean,
    /**
    * When pointing device selects geometry, send event containing surface normal vector at the hitPoint.
    *
@@ -16770,79 +9743,17 @@ interface TouchSensorProxy extends X3DTouchSensorNodeProxy
    * This field is of access type is 'outputOnly' and type SFVec2f.
    */
    readonly hitTexCoord_changed: SFVec2f,
-   /**
-   * Select geometry by activating the pointing device (for example, clicking the mouse) to generate isActive events.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isActive: boolean,
-   /**
-   * Hover over geometry by aiming the mouse (or pointing device) to generate isOver events.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isOver: boolean,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * Time event generated when sensor is touched by pointing device, and then deselected by the user.
-   *
-   * This field is of access type is 'outputOnly' and type SFTime.
-   */
-   readonly touchTime: number,
 }
 
 /** Transform is a Grouping node that can contain most nodes. */
 interface TransformProxy extends X3DGroupingNodeProxy
 {
    /**
-   * This field is of access type is 'inputOnly' and type MFNode.
-   */
-   addChildren: MFNode <X3DChildNodeProxy>,
-   /**
-   * Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxCenter: SFVec3f,
-   /**
-   * Whether to display bounding box for associated geometry, aligned with world coordinates.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   bboxDisplay: boolean,
-   /**
-   * Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxSize: SFVec3f,
-   /**
    * Translation offset from origin of local coordinate system, applied prior to rotation or scaling.
    *
    * This field is of access type is 'inputOutput' and type SFVec3f.
    */
    center: SFVec3f,
-   /**
-   * Grouping nodes contain an ordered list of children nodes.
-   *
-   * This field is of access type is 'inputOutput' and type MFNode.
-   */
-   children: MFNode <X3DChildNodeProxy>,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * This field is of access type is 'inputOnly' and type MFNode.
-   */
-   removeChildren: MFNode <X3DChildNodeProxy>,
    /**
    * Orientation (axis, angle in radians) of children relative to local coordinate system.
    *
@@ -16867,12 +9778,6 @@ interface TransformProxy extends X3DGroupingNodeProxy
    * This field is of access type is 'inputOutput' and type SFVec3f.
    */
    translation: SFVec3f,
-   /**
-   * Whether or not renderable content within this node is visually displayed.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   visible: boolean,
 }
 
 /** TransformSensor generates output events when its targetObject enters, exits, and moves within a region in space (defined by a box). */
@@ -16884,18 +9789,6 @@ interface TransformSensorProxy extends X3DEnvironmentalSensorNodeProxy
    * This field is of access type is 'inputOutput' and type SFVec3f.
    */
    center: SFVec3f,
-   /**
-   * Author-provided prose that describes intended purpose of the node.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
-   * Enables/disables node operation.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   enabled: boolean,
    /**
    * Time event generated when targetObject enters the box region for sensor.
    *
@@ -16909,18 +9802,6 @@ interface TransformSensorProxy extends X3DEnvironmentalSensorNodeProxy
    */
    readonly exitTime: number,
    /**
-   * isActive true/false events are sent when triggering the sensor.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isActive: boolean,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * Sends rotation event relative to center whenever the target object is contained within the box region and results change.
    *
    * This field is of access type is 'outputOnly' and type SFRotation.
@@ -16932,12 +9813,6 @@ interface TransformSensorProxy extends X3DEnvironmentalSensorNodeProxy
    * This field is of access type is 'outputOnly' and type SFVec3f.
    */
    readonly position_changed: SFVec3f,
-   /**
-   * size of transformation-traccking box around center location, oriented within local transformation frame.
-   *
-   * This field is of access type is 'inputOutput' and type SFVec3f.
-   */
-   size: SFVec3f,
    /**
    * targetObject is the movable geometry represented by any valid X3DGroupingNode or X3DShapeNode which may enter or exit the box.
    *
@@ -16980,24 +9855,6 @@ interface TransmitterPduProxy extends X3DNetworkSensorNodeProxy, X3DBoundedObjec
    */
    applicationID: number,
    /**
-   * Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxCenter: SFVec3f,
-   /**
-   * Whether to display bounding box for associated geometry, aligned with world coordinates.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   bboxDisplay: boolean,
-   /**
-   * Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxSize: SFVec3f,
-   /**
    * Nonzero value corresponding to the simulated cryptographic key.
    *
    * This field is of access type is 'inputOutput' and type SFInt32.
@@ -17009,18 +9866,6 @@ interface TransmitterPduProxy extends X3DNetworkSensorNodeProxy, X3DBoundedObjec
    * This field is of access type is 'inputOutput' and type SFInt32.
    */
    cryptoSystem: number,
-   /**
-   * Author-provided prose that describes intended purpose of the node.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
-   * Enables/disables the sensor node.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   enabled: boolean,
    /**
    * EntityID unique ID for entity within that application.
    *
@@ -17052,12 +9897,6 @@ interface TransmitterPduProxy extends X3DNetworkSensorNodeProxy, X3DBoundedObjec
    */
    inputSource: number,
    /**
-   * confirm whether there has been a recent network update.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isActive: boolean,
-   /**
    * Whether networkMode='remote' (listen to network as copy of remote entity).
    *
    * This field is of access type is 'outputOnly' and type SFBool.
@@ -17087,12 +9926,6 @@ interface TransmitterPduProxy extends X3DNetworkSensorNodeProxy, X3DBoundedObjec
    * This field is of access type is 'inputOutput' and type SFInt32.
    */
    lengthOfModulationParameters: number,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * Integer enumeration containing detailed information depending on the major modulation type.
    *
@@ -17232,12 +10065,6 @@ interface TransmitterPduProxy extends X3DNetworkSensorNodeProxy, X3DBoundedObjec
    */
    transmitState: number,
    /**
-   * Whether or not renderable content within this node is visually displayed.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   visible: boolean,
-   /**
    * Select geometry to render: -1 for no geometry, 0 for text trace, 1 for default geometry, (optional) higher values to render different states.
    *
    * This field is of access type is 'inputOutput' and type SFInt32.
@@ -17255,159 +10082,22 @@ interface TransmitterPduProxy extends X3DNetworkSensorNodeProxy, X3DBoundedObjec
 interface TriangleFanSetProxy extends X3DComposedGeometryNodeProxy
 {
    /**
-   * Single contained FloatVertexAttribute node that can specify list of per-vertex attribute information for programmable shaders.
-   *
-   * This field is of access type is 'inputOutput' and type MFNode.
-   */
-   attrib: MFNode <X3DVertexAttributeNodeProxy>,
-   /**
-   * ccw defines clockwise/counterclockwise ordering of vertex coordinates, which in turn defines front/back orientation of polygon normals according to Right-Hand Rule (RHR).
-   *
-   * This field is of access type is 'initializeOnly' and type SFBool.
-   */
-   ccw: boolean,
-   /**
-   * Single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorIndex and colorPerVertex fields.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   color: X3DColorNodeProxy,
-   /**
-   * Whether Color|ColorRGBA values are applied to each point vertex (true) or to each polygon face (false).
-   *
-   * This field is of access type is 'initializeOnly' and type SFBool.
-   */
-   colorPerVertex: boolean,
-   /**
-   * Single contained Coordinate or CoordinateDouble node that can specify a list of vertex values.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   coord: X3DCoordinateNodeProxy,
-   /**
    * fanCount array provides number of vertices in each fan.
    *
    * This field is of access type is 'inputOutput' and type MFInt32.
    */
    fanCount: MFInt32,
-   /**
-   * Single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   fogCoord: FogCoordinateProxy,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * Single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   normal: X3DNormalNodeProxy,
-   /**
-   * Whether Normal node vector values are applied to each point vertex (true) or to each polygon face (false).
-   *
-   * This field is of access type is 'initializeOnly' and type SFBool.
-   */
-   normalPerVertex: boolean,
-   /**
-   * Setting solid true means draw only one side of polygons (backface culling on), setting solid false means draw both sides of polygons (backface culling off).
-   *
-   * This field is of access type is 'initializeOnly' and type SFBool.
-   */
-   solid: boolean,
-   /**
-   * Single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   texCoord: X3DSingleTextureCoordinateNodeProxy | MultiTextureCoordinateProxy,
 }
 
 /** TriangleSet is a geometry node containing a Coordinate|CoordinateDouble node, and can also contain Color|ColorRGBA, Normal and TextureCoordinate nodes. */
 interface TriangleSetProxy extends X3DComposedGeometryNodeProxy
 {
-   /**
-   * Single contained FloatVertexAttribute node that can specify list of per-vertex attribute information for programmable shaders.
-   *
-   * This field is of access type is 'inputOutput' and type MFNode.
-   */
-   attrib: MFNode <X3DVertexAttributeNodeProxy>,
-   /**
-   * ccw defines clockwise/counterclockwise ordering of vertex coordinates, which in turn defines front/back orientation of polygon normals according to Right-Hand Rule (RHR).
-   *
-   * This field is of access type is 'initializeOnly' and type SFBool.
-   */
-   ccw: boolean,
-   /**
-   * Single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorIndex and colorPerVertex fields.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   color: X3DColorNodeProxy,
-   /**
-   * Whether Color|ColorRGBA values are applied to each point vertex (true) or to each polygon face (false).
-   *
-   * This field is of access type is 'initializeOnly' and type SFBool.
-   */
-   colorPerVertex: boolean,
-   /**
-   * Single contained Coordinate or CoordinateDouble node that can specify a list of vertex values.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   coord: X3DCoordinateNodeProxy,
-   /**
-   * Single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   fogCoord: FogCoordinateProxy,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * Single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   normal: X3DNormalNodeProxy,
-   /**
-   * Whether Normal node vector values are applied to each point vertex (true) or to each polygon face (false).
-   *
-   * This field is of access type is 'initializeOnly' and type SFBool.
-   */
-   normalPerVertex: boolean,
-   /**
-   * Setting solid true means draw only one side of polygons (backface culling on), setting solid false means draw both sides of polygons (backface culling off).
-   *
-   * This field is of access type is 'initializeOnly' and type SFBool.
-   */
-   solid: boolean,
-   /**
-   * Single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   texCoord: X3DSingleTextureCoordinateNodeProxy | MultiTextureCoordinateProxy,
+
 }
 
 /** TriangleSet2D is a geometry node that defines a set of filled 2D triangles in X-Y plane. */
 interface TriangleSet2DProxy extends X3DGeometryNodeProxy
 {
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * Setting solid true means draw only one side of polygons (backface culling on), setting solid false means draw both sides of polygons (backface culling off).
    *
@@ -17426,77 +10116,11 @@ interface TriangleSet2DProxy extends X3DGeometryNodeProxy
 interface TriangleStripSetProxy extends X3DComposedGeometryNodeProxy
 {
    /**
-   * Single contained FloatVertexAttribute node that can specify list of per-vertex attribute information for programmable shaders.
-   *
-   * This field is of access type is 'inputOutput' and type MFNode.
-   */
-   attrib: MFNode <X3DVertexAttributeNodeProxy>,
-   /**
-   * ccw defines clockwise/counterclockwise ordering of vertex coordinates, which in turn defines front/back orientation of polygon normals according to Right-Hand Rule (RHR).
-   *
-   * This field is of access type is 'initializeOnly' and type SFBool.
-   */
-   ccw: boolean,
-   /**
-   * Single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorIndex and colorPerVertex fields.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   color: X3DColorNodeProxy,
-   /**
-   * Whether Color|ColorRGBA values are applied to each point vertex (true) or to each polygon face (false).
-   *
-   * This field is of access type is 'initializeOnly' and type SFBool.
-   */
-   colorPerVertex: boolean,
-   /**
-   * Single contained Coordinate or CoordinateDouble node that can specify a list of vertex values.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   coord: X3DCoordinateNodeProxy,
-   /**
-   * Single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   fogCoord: FogCoordinateProxy,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * Single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   normal: X3DNormalNodeProxy,
-   /**
-   * Whether Normal node vector values are applied to each point vertex (true) or to each polygon face (false).
-   *
-   * This field is of access type is 'initializeOnly' and type SFBool.
-   */
-   normalPerVertex: boolean,
-   /**
-   * Setting solid true means draw only one side of polygons (backface culling on), setting solid false means draw both sides of polygons (backface culling off).
-   *
-   * This field is of access type is 'initializeOnly' and type SFBool.
-   */
-   solid: boolean,
-   /**
    * stripCount array provides number of vertices in each strip.
    *
    * This field is of access type is 'inputOutput' and type MFInt32.
    */
    stripCount: MFInt32,
-   /**
-   * Single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   texCoord: X3DSingleTextureCoordinateNodeProxy | MultiTextureCoordinateProxy,
 }
 
 /** TwoSidedMaterial specifies surface rendering properties for associated geometry nodes, for outer (front) and inner (back) sides of polygons. */
@@ -17557,12 +10181,6 @@ interface TwoSidedMaterialProxy extends X3DMaterialNodeProxy
    */
    emissiveColor: SFColor,
    /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * separateBackColor determines whether separate Material values are used for back faces.
    *
    * This field is of access type is 'inputOutput' and type SFBool.
@@ -17610,12 +10228,6 @@ interface UniversalJointProxy extends X3DRigidJointNodeProxy
    */
    axis2: SFVec3f,
    /**
-   * The body1 and body2 fields indicate the two RigidBody nodes connected by this joint.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   body1: RigidBodyProxy,
-   /**
    * body1AnchorPoint describes anchorPoint position relative to local coordinate reference frame.
    *
    * This field is of access type is 'outputOnly' and type SFVec3f.
@@ -17628,12 +10240,6 @@ interface UniversalJointProxy extends X3DRigidJointNodeProxy
    */
    readonly body1Axis: SFVec3f,
    /**
-   * The body1 and body2 fields indicate the two RigidBody nodes connected by this joint.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   body2: RigidBodyProxy,
-   /**
    * body2AnchorPoint describes anchorPoint position relative to local coordinate reference frame.
    *
    * This field is of access type is 'outputOnly' and type SFVec3f.
@@ -17645,18 +10251,6 @@ interface UniversalJointProxy extends X3DRigidJointNodeProxy
    * This field is of access type is 'outputOnly' and type SFVec3f.
    */
    readonly body2Axis: SFVec3f,
-   /**
-   * forceOutput controls which output fields are generated for the next frame.
-   *
-   * This field is of access type is 'inputOutput' and type MFString.
-   */
-   forceOutput: MFString <"ALL" | "NONE">,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * stop1Bounce is velocity factor for bounce back once stop point is reached.
    *
@@ -17699,35 +10293,11 @@ interface UnlitMaterialProxy extends X3DOneSidedMaterialNodeProxy
    */
    emissiveTexture: X3DSingleTextureNodeProxy,
    /**
-   * The mapping label identifies which texture coordinates and transformations are used to compute texture effects from corresponding geometry on a given material.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   emissiveTextureMapping: string,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * normalScale controls the degree to which normalTexture RGB values apply XYZ-normal bump mapping to pixels in the parent material.
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   normalScale: number,
-   /**
    * When applying normalScale for this material node, the contained texture modulates the texture across the surface.
    *
    * This field is of access type is 'inputOutput' and type SFNode.
    */
    normalTexture: X3DSingleTextureNodeProxy,
-   /**
-   * The mapping label identifies which texture coordinates and transformations are used to compute texture effects from corresponding geometry on a given material.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   normalTextureMapping: string,
    /**
    * how "clear" an object is: 1.
    *
@@ -17740,29 +10310,11 @@ interface UnlitMaterialProxy extends X3DOneSidedMaterialNodeProxy
 interface ViewpointProxy extends X3DViewpointNodeProxy
 {
    /**
-   * Event sent reporting timestamp when node becomes active/inactive.
-   *
-   * This field is of access type is 'outputOnly' and type SFTime.
-   */
-   readonly bindTime: number,
-   /**
    * centerOfRotation specifies center point about which to rotate user's eyepoint when in EXAMINE or LOOKAT mode.
    *
    * This field is of access type is 'inputOutput' and type SFVec3f.
    */
    centerOfRotation: SFVec3f,
-   /**
-   * Text description or navigation hint to describe the significance of this model Viewpoint.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
-   * farDistance defines maximum clipping plane distance allowed for object display.
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   farDistance: number,
    /**
    * Preferred minimum viewing angle from this viewpoint in radians, providing minimum height or minimum width (whichever is smaller).
    *
@@ -17770,65 +10322,11 @@ interface ViewpointProxy extends X3DViewpointNodeProxy
    */
    fieldOfView: number,
    /**
-   * Output event true gets sent when node becomes bound and activated, otherwise output event false gets sent when node becomes unbound and deactivated.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isBound: boolean,
-   /**
-   * Transition instantly by jumping, otherwise smoothly adjust offsets in place when changing to this Viewpoint.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   jump: boolean,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * The navigationInfo field defines a dedicated NavigationInfo node for this X3DViewpointNode.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   navigationInfo: NavigationInfoProxy,
-   /**
-   * nearDistance defines minimum clipping plane distance necessary for object display.
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   nearDistance: number,
-   /**
-   * Rotation (axis, angle in radians) of Viewpoint, relative to default -Z axis direction in local coordinate system.
-   *
-   * This field is of access type is 'inputOutput' and type SFRotation.
-   */
-   orientation: SFRotation,
-   /**
    * position (x, y, z in meters) relative to local coordinate system.
    *
    * This field is of access type is 'inputOutput' and type SFVec3f.
    */
    position: SFVec3f,
-   /**
-   * Retain (true) or reset to zero (false) any prior user navigation offsets from defined viewpoint position, orientation.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   retainUserOffsets: boolean,
-   /**
-   * Sending event set_bind=true makes this node active.
-   *
-   * This field is of access type is 'inputOnly' and type SFBool.
-   */
-   set_bind: boolean,
-   /**
-   * Viewpoint is automatically adjusted to view all visible geometry.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   viewAll: boolean,
 }
 
 /** ViewpointGroup can contain Viewpoint, OrthoViewpoint, GeoViewpoint and other ViewpointGroup nodes for better user-navigation support with a shared description on the viewpoint list. */
@@ -17859,12 +10357,6 @@ interface ViewpointGroupProxy extends X3DChildNodeProxy
    */
    displayed: boolean,
    /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * Retain (true) or reset to zero (false) any prior user navigation offsets from defined viewpoint position, orientation.
    *
    * This field is of access type is 'inputOutput' and type SFBool.
@@ -17882,55 +10374,11 @@ interface ViewpointGroupProxy extends X3DChildNodeProxy
 interface ViewportProxy extends X3DViewportNodeProxy
 {
    /**
-   * This field is of access type is 'inputOnly' and type MFNode.
-   */
-   addChildren: MFNode <X3DChildNodeProxy>,
-   /**
-   * Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxCenter: SFVec3f,
-   /**
-   * Whether to display bounding box for associated geometry, aligned with world coordinates.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   bboxDisplay: boolean,
-   /**
-   * Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxSize: SFVec3f,
-   /**
-   * Grouping nodes contain an ordered list of children nodes.
-   *
-   * This field is of access type is 'inputOutput' and type MFNode.
-   */
-   children: MFNode <X3DChildNodeProxy>,
-   /**
    * clipBoundary is specified in fractions of the normal render surface in the sequence left/right/bottom/top.
    *
    * This field is of access type is 'inputOutput' and type MFFloat.
    */
    clipBoundary: MFFloat,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * This field is of access type is 'inputOnly' and type MFNode.
-   */
-   removeChildren: MFNode <X3DChildNodeProxy>,
-   /**
-   * Whether or not renderable content within this node is visually displayed.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   visible: boolean,
 }
 
 /** VisibilitySensor detects when user can see a specific object or region as they navigate the world. */
@@ -17943,18 +10391,6 @@ interface VisibilitySensorProxy extends X3DEnvironmentalSensorNodeProxy
    */
    center: SFVec3f,
    /**
-   * Author-provided prose that describes intended purpose of the node.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
-   * Enables/disables node operation.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   enabled: boolean,
-   /**
    * Time event generated when user's camera enters visibility region for sensor.
    *
    * This field is of access type is 'outputOnly' and type SFTime.
@@ -17966,71 +10402,17 @@ interface VisibilitySensorProxy extends X3DEnvironmentalSensorNodeProxy
    * This field is of access type is 'outputOnly' and type SFTime.
    */
    readonly exitTime: number,
-   /**
-   * isActive true/false events are sent when triggering the sensor.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isActive: boolean,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * size of visibility box around center location, oriented within local transformation frame.
-   *
-   * This field is of access type is 'inputOutput' and type SFVec3f.
-   */
-   size: SFVec3f,
 }
 
 /** VolumeData displays a simple non-segmented voxel dataset with a single RenderStyle node. */
 interface VolumeDataProxy extends X3DVolumeDataNodeProxy
 {
    /**
-   * Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxCenter: SFVec3f,
-   /**
-   * Whether to display bounding box for associated geometry, aligned with world coordinates.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   bboxDisplay: boolean,
-   /**
-   * Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost.
-   *
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxSize: SFVec3f,
-   /**
-   * Actual-size X-Y-Z dimensions of volume data in local coordinate system.
-   *
-   * This field is of access type is 'inputOutput' and type SFVec3f.
-   */
-   dimensions: SFVec3f,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * Single contained X3DVolumeRenderStyleNode node that defines specific rendering technique for this volumetric object.
    *
    * This field is of access type is 'inputOutput' and type SFNode.
    */
    renderStyle: X3DVolumeRenderStyleNodeProxy,
-   /**
-   * Whether or not renderable content within this node is visually displayed.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   visible: boolean,
    /**
    * Single contained X3DTexture3DNode (ComposedTexture3D, ImageTexture3D, PixelTexture3D) that provides raw voxel information utilized by corresponding rendering styles.
    *
@@ -18067,139 +10449,20 @@ interface VolumeEmitterProxy extends X3DParticleEmitterNodeProxy
    */
    internal: boolean,
    /**
-   * Basic mass of each particle, defined in mass base units (default is kilograms).
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   mass: number,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * Enables/disables production of particles from this emitter node.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   on: boolean,
-   /**
    * This field is of access type is 'inputOnly' and type MFInt32.
    */
    set_coordIndex: MFInt32,
-   /**
-   * Initial linear speed (default is m/s) imparted to all particles along their direction of movement.
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   speed: number,
-   /**
-   * Particle surface area in area base units (default is meters squared).
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   surfaceArea: number,
-   /**
-   * Multiplier for the randomness used to control the range of possible output values.
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   variation: number,
 }
 
 /** VolumePickSensor tests picking intersections using the pickingGeometry against the pickTarget geometry volume. */
 interface VolumePickSensorProxy extends X3DPickSensorNodeProxy
 {
-   /**
-   * Author-provided prose that describes intended purpose of the node.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
-   * Enables/disables node operation.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   enabled: boolean,
-   /**
-   * intersectionType specifies precision of the collision computation.
-   *
-   * This field is of access type is 'initializeOnly' and type SFString.
-   */
-   intersectionType: "BOUNDS" | "GEOMETRY",
-   /**
-   * isActive indicates when the intersecting object is picked by the picking geometry.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isActive: boolean,
-   /**
-   * defines whether the intersection test (i.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   matchCriterion: "MATCH_ANY" | "MATCH_EVERY" | "MATCH_ONLY_ONE",
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * The objectType field specifies a set of labels used in the picking process.
-   *
-   * This field is of access type is 'inputOutput' and type MFString.
-   */
-   objectType: MFString <"ALL" | "NONE" | "TERRAIN">,
-   /**
-   * Output event containing the node or nodes that have been found to intersect with the picking geometry from the last time this node performed a picking operation, given in the local coordinate system.
-   *
-   * This field is of access type is 'outputOnly' and type MFNode.
-   */
-   readonly pickedGeometry: MFNode <X3DChildNodeProxy>,
-   /**
-   * pickingGeometry specifies the exact geometry coordinates that are used to perform the intersection testing of the picking operation.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   pickingGeometry: X3DGeometryNodeProxy,
-   /**
-   * pickTarget specifies the list of nodes against which picking operations are performed.
-   *
-   * This field is of access type is 'inputOutput' and type MFNode.
-   */
-   pickTarget: MFNode <X3DGroupingNodeProxy | X3DShapeNodeProxy | InlineProxy>,
-   /**
-   * The sortOrder field determines the order provided for picked output events.
-   *
-   * This field is of access type is 'initializeOnly' and type SFString.
-   */
-   sortOrder: "ANY" | "CLOSEST" | "ALL" | "ALL_SORTED",
+
 }
 
 /** WaveShaper node represents a nonlinear distorter that applies a wave-shaping distortion curve to the signal. */
 interface WaveShaperProxy extends X3DSoundProcessingNodeProxy
 {
-   /**
-   * channelCount reports number of channels provided by input nodes.
-   *
-   * This field is of access type is 'outputOnly' and type SFInt32.
-   */
-   readonly channelCount: number,
-   /**
-   * channelCountMode determines how individual channels are counted when up-mixing and down-mixing connections to any inputs.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   channelCountMode: "MAX" | "CLAMPED_MAX" | "EXPLICIT",
-   /**
-   * channelInterpretation determines how individual channels are treated when up-mixing and down-mixing connections to any inputs.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   channelInterpretation: "SPEAKERS" | "DISCRETE",
    /**
    * The children field specifies audio-graph sound sources providing input signals for this node.
    *
@@ -18207,83 +10470,11 @@ interface WaveShaperProxy extends X3DSoundProcessingNodeProxy
    */
    children: MFNode <AnalyserProxy | AudioClipProxy | AudioDestinationProxy | BiquadFilterProxy | BufferAudioSourceProxy | ChannelMergerProxy | ChannelSelectorProxy | ChannelSplitterProxy | ConvolverProxy | DelayProxy | DynamicsCompressorProxy | GainProxy | ListenerPointSourceProxy | MicrophoneSourceProxy | MovieTextureProxy | OscillatorSourceProxy | SoundProxy | SpatialSoundProxy | StreamAudioDestinationProxy | StreamAudioSourceProxy | WaveShaperProxy>,
    /**
-   * Author-provided prose that describes intended purpose of the url asset.
-   *
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
-   * Current elapsed time since AudioClip activated/running, cumulative in seconds, and not counting any paused time.
-   *
-   * This field is of access type is 'outputOnly' and type SFTime.
-   */
-   readonly elapsedTime: number,
-   /**
-   * Enables/disables node operation.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   enabled: boolean,
-   /**
-   * The gain field is a factor that represents the amount of linear amplification to apply to the output of the node.
-   *
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   gain: number,
-   /**
-   * isActive true/false events are sent when playback starts/stops.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isActive: boolean,
-   /**
-   * isPaused true/false events are sent when AudioClip is paused/resumed.
-   *
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isPaused: boolean,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * The oversample field is specifies what type of oversampling (if any) should be used when applying the shaping curve.
    *
    * This field is of access type is 'inputOutput' and type SFString.
    */
    oversample: "NONE" | "2X" | "4X",
-   /**
-   * When time now >= pauseTime, isPaused becomes true and AudioClip becomes paused.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   pauseTime: number,
-   /**
-   * When resumeTime becomes <= time now, isPaused becomes false and AudioClip becomes active.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   resumeTime: number,
-   /**
-   * Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   startTime: number,
-   /**
-   * Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   stopTime: number,
-   /**
-   * tailTime is duration of time that a node continues to provide output signal after the input signal becomes silent.
-   *
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   tailTime: number,
 }
 
 /** WindPhysicsModel applies a wind effect to the particles. */
@@ -18296,23 +10487,11 @@ interface WindPhysicsModelProxy extends X3DParticlePhysicsModelNodeProxy
    */
    direction: SFVec3f,
    /**
-   * Enables/disables node operation.
-   *
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   enabled: boolean,
-   /**
    * gustiness specifies how much wind speed varies from the average speed.
    *
    * This field is of access type is 'inputOutput' and type SFFloat.
    */
    gustiness: number,
-   /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * Initial linear speed (default is m/s) imparted to all particles along their direction of movement.
    *
@@ -18337,12 +10516,6 @@ interface WorldInfoProxy extends X3DInfoNodeProxy
    */
    info: MFString,
    /**
-   * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-   *
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * title of this world, placed in window title.
    *
    * This field is of access type is 'inputOutput' and type SFString.
@@ -18353,28 +10526,18 @@ interface WorldInfoProxy extends X3DInfoNodeProxy
 /** Nodes of this type can be used as child nodes for Appearance. */
 interface X3DAppearanceChildNodeProxy extends X3DNodeProxy
 {
-   /**
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
+
 }
 
 /** Base type for all Appearance nodes. */
 interface X3DAppearanceNodeProxy extends X3DNodeProxy
 {
-   /**
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
+
 }
 
 /** Abstract type from which all backgrounds inherit, also defining a background binding stack. */
 interface X3DBackgroundNodeProxy extends X3DBindableNodeProxy
 {
-   /**
-   * This field is of access type is 'outputOnly' and type SFTime.
-   */
-   readonly bindTime: number,
    /**
    * This field is of access type is 'inputOutput' and type MFFloat.
    */
@@ -18383,18 +10546,6 @@ interface X3DBackgroundNodeProxy extends X3DBindableNodeProxy
    * This field is of access type is 'inputOutput' and type MFColor.
    */
    groundColor: MFColor,
-   /**
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isBound: boolean,
-   /**
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * This field is of access type is 'inputOnly' and type SFBool.
-   */
-   set_bind: boolean,
    /**
    * This field is of access type is 'inputOutput' and type MFFloat.
    */
@@ -18420,10 +10571,6 @@ interface X3DBindableNodeProxy extends X3DChildNodeProxy
    * This field is of access type is 'outputOnly' and type SFBool.
    */
    readonly isBound: boolean,
-   /**
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * This field is of access type is 'inputOnly' and type SFBool.
    */
@@ -18458,45 +10605,24 @@ interface X3DChaserNodeProxy extends X3DFollowerNodeProxy
    * This field is of access type is 'initializeOnly' and type SFTime.
    */
    duration: number,
-   /**
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isActive: boolean,
-   /**
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
 }
 
 /** A node that implements X3DChildNode is one of the legal children for a X3DGroupingNode parent. */
 interface X3DChildNodeProxy extends X3DNodeProxy
 {
-   /**
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
+
 }
 
 /** Base type for color specifications in X3D. */
 interface X3DColorNodeProxy extends X3DGeometricPropertyNodeProxy
 {
-   /**
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
+
 }
 
 /** The X3DComposableVolumeRenderStyleNode abstract node type is the base type for all node types that allow rendering styles to be sequentially composed together to form a single renderable output. */
 interface X3DComposableVolumeRenderStyleNodeProxy extends X3DVolumeRenderStyleNodeProxy
 {
-   /**
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   enabled: boolean,
-   /**
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
+
 }
 
 /** Composed geometry nodes produce renderable geometry, can contain Color Coordinate Normal TextureCoordinate, and are contained by a Shape node. */
@@ -18529,10 +10655,6 @@ interface X3DComposedGeometryNodeProxy extends X3DGeometryNodeProxy
    /**
    * This field is of access type is 'inputOutput' and type SFNode.
    */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
    normal: X3DNormalNodeProxy,
    /**
    * This field is of access type is 'initializeOnly' and type SFBool.
@@ -18551,23 +10673,12 @@ interface X3DComposedGeometryNodeProxy extends X3DGeometryNodeProxy
 /** Base type for all coordinate node types in X3D. */
 interface X3DCoordinateNodeProxy extends X3DGeometricPropertyNodeProxy
 {
-   /**
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
+
 }
 
 /** The X3DDamperNode abstract node type creates an IIR response that approaches the destination value according to the shape of the e-function only asymptotically but very quickly. */
 interface X3DDamperNodeProxy extends X3DFollowerNodeProxy
 {
-   /**
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isActive: boolean,
-   /**
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * This field is of access type is 'initializeOnly' and type SFInt32.
    */
@@ -18590,26 +10701,6 @@ interface X3DDragSensorNodeProxy extends X3DPointingDeviceSensorNodeProxy
    */
    autoOffset: boolean,
    /**
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   enabled: boolean,
-   /**
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isActive: boolean,
-   /**
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isOver: boolean,
-   /**
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * This field is of access type is 'outputOnly' and type SFVec3f.
    */
    readonly trackPoint_changed: SFVec3f,
@@ -18619,22 +10710,6 @@ interface X3DDragSensorNodeProxy extends X3DPointingDeviceSensorNodeProxy
 interface X3DEnvironmentalSensorNodeProxy extends X3DSensorNodeProxy
 {
    /**
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   enabled: boolean,
-   /**
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isActive: boolean,
-   /**
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * This field is of access type is 'inputOutput' and type SFVec3f.
    */
    size: SFVec3f,
@@ -18643,14 +10718,7 @@ interface X3DEnvironmentalSensorNodeProxy extends X3DSensorNodeProxy
 /** Base type for all nodes that specify cubic environment map sources for texture images. */
 interface X3DEnvironmentTextureNodeProxy extends X3DTextureNodeProxy
 {
-   /**
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
+
 }
 
 /** Abstract type describing a node that influences the lighting equation through the use of fog semantics. */
@@ -18677,10 +10745,6 @@ interface X3DFollowerNodeProxy extends X3DChildNodeProxy
    * This field is of access type is 'outputOnly' and type SFBool.
    */
    readonly isActive: boolean,
-   /**
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
 }
 
 /** Base type for all font style nodes. */
@@ -18695,19 +10759,13 @@ interface X3DFontStyleNodeProxy extends X3DNodeProxy
 /** Base type for all geometric property node types. */
 interface X3DGeometricPropertyNodeProxy extends X3DNodeProxy
 {
-   /**
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
+
 }
 
 /** Geometry nodes produce renderable geometry and are contained by a Shape node. */
 interface X3DGeometryNodeProxy extends X3DNodeProxy
 {
-   /**
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
+
 }
 
 /** Grouping nodes can contain other nodes as children, thus making up the backbone of a scene graph. */
@@ -18734,10 +10792,6 @@ interface X3DGroupingNodeProxy extends X3DChildNodeProxy, X3DBoundedObjectProxy
    */
    children: MFNode <X3DChildNodeProxy>,
    /**
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * This field is of access type is 'inputOnly' and type MFNode.
    */
    removeChildren: MFNode <X3DChildNodeProxy>,
@@ -18750,10 +10804,7 @@ interface X3DGroupingNodeProxy extends X3DChildNodeProxy, X3DBoundedObjectProxy
 /** Base type for all nodes that contain only information without visual semantics. */
 interface X3DInfoNodeProxy extends X3DChildNodeProxy
 {
-   /**
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
+
 }
 
 /** Interpolator nodes are designed for linear keyframed animation. Interpolators are driven by an input key ranging [0..1] and produce corresponding piecewise-linear output functions. */
@@ -18764,10 +10815,6 @@ interface X3DInterpolatorNodeProxy extends X3DChildNodeProxy
    */
    key: MFFloat,
    /**
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * This field is of access type is 'inputOnly' and type SFFloat.
    */
    set_fraction: number,
@@ -18776,31 +10823,12 @@ interface X3DInterpolatorNodeProxy extends X3DChildNodeProxy
 /** Base type for all sensor node types that operate using key devices. */
 interface X3DKeyDeviceSensorNodeProxy extends X3DSensorNodeProxy
 {
-   /**
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   enabled: boolean,
-   /**
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isActive: boolean,
-   /**
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
+
 }
 
 /** The X3DLayerNode abstract node type is the base node type for layer nodes. */
 interface X3DLayerNodeProxy extends X3DNodeProxy, X3DPickableObjectProxy
 {
-   /**
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * This field is of access type is 'inputOutput' and type MFString.
    */
@@ -18822,10 +10850,7 @@ interface X3DLayerNodeProxy extends X3DNodeProxy, X3DPickableObjectProxy
 /** X3DLayoutNode is the base node type for layout nodes. */
 interface X3DLayoutNodeProxy extends X3DChildNodeProxy
 {
-   /**
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
+
 }
 
 /** Light nodes provide illumination for rendering geometry in the scene. Implementing nodes must include a global field with type SFBool and accessType inputOutput. */
@@ -18844,10 +10869,6 @@ interface X3DLightNodeProxy extends X3DChildNodeProxy
    */
    intensity: number,
    /**
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * This field is of access type is 'inputOutput' and type SFBool.
    */
    on: boolean,
@@ -18864,10 +10885,7 @@ interface X3DLightNodeProxy extends X3DChildNodeProxy
 /** Base type for all Material nodes. */
 interface X3DMaterialNodeProxy extends X3DAppearanceChildNodeProxy
 {
-   /**
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
+
 }
 
 /** Each node inheriting the X3DMetadataObject interface contains a single array of strictly typed values: MFBool, MFInt32, MFFloat, MFDouble, MFString, or MFNode, the latter having children that are all Metadata nodes. */
@@ -18903,10 +10921,6 @@ interface X3DNBodyCollidableNodeProxy extends X3DChildNodeProxy, X3DBoundedObjec
    */
    enabled: boolean,
    /**
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * This field is of access type is 'inputOutput' and type SFRotation.
    */
    rotation: SFRotation,
@@ -18940,10 +10954,6 @@ interface X3DNBodyCollisionSpaceNodeProxy extends X3DNodeProxy, X3DBoundedObject
    */
    enabled: boolean,
    /**
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * This field is of access type is 'inputOutput' and type SFBool.
    */
    visible: boolean,
@@ -18952,22 +10962,7 @@ interface X3DNBodyCollisionSpaceNodeProxy extends X3DNodeProxy, X3DBoundedObject
 /** Base typefor all sensors that generate events based on network activity. */
 interface X3DNetworkSensorNodeProxy extends X3DSensorNodeProxy
 {
-   /**
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   enabled: boolean,
-   /**
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isActive: boolean,
-   /**
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
+
 }
 
 /** All instantiable nodes implement X3DNode, which corresponds to SFNode type in the X3D specification. */
@@ -18984,10 +10979,7 @@ interface X3DNodeProxy extends SFNode
 /** Base type for all normal node types in X3D. */
 interface X3DNormalNodeProxy extends X3DGeometricPropertyNodeProxy
 {
-   /**
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
+
 }
 
 /** Base type for all nodes that provide control curve information in 2D space. */
@@ -18997,10 +10989,6 @@ interface X3DNurbsControlCurveNodeProxy extends X3DNodeProxy
    * This field is of access type is 'inputOutput' and type MFVec2d.
    */
    controlPoint: MFVec2d,
-   /**
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
 }
 
 /** Abstract geometry type for all types of NURBS surfaces. */
@@ -19010,10 +10998,6 @@ interface X3DNurbsSurfaceGeometryNodeProxy extends X3DParametricGeometryNodeProx
    * This field is of access type is 'inputOutput' and type SFNode.
    */
    controlPoint: CoordinateProxy | CoordinateDoubleProxy,
-   /**
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * This field is of access type is 'initializeOnly' and type SFBool.
    */
@@ -19076,10 +11060,6 @@ interface X3DOneSidedMaterialNodeProxy extends X3DMaterialNodeProxy
    */
    emissiveTextureMapping: string,
    /**
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * This field is of access type is 'inputOutput' and type SFFloat.
    */
    normalScale: number,
@@ -19092,10 +11072,7 @@ interface X3DOneSidedMaterialNodeProxy extends X3DMaterialNodeProxy
 /** Base type for all geometry node types that are created parametrically and use control points to describe the final shape of the surface. */
 interface X3DParametricGeometryNodeProxy extends X3DGeometryNodeProxy
 {
-   /**
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
+
 }
 
 /** The X3DParticleEmitterNode abstract type represents any node that is an emitter of particles. */
@@ -19105,10 +11082,6 @@ interface X3DParticleEmitterNodeProxy extends X3DNodeProxy
    * This field is of access type is 'inputOutput' and type SFFloat.
    */
    mass: number,
-   /**
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * This field is of access type is 'inputOutput' and type SFBool.
    */
@@ -19134,10 +11107,6 @@ interface X3DParticlePhysicsModelNodeProxy extends X3DNodeProxy
    * This field is of access type is 'inputOutput' and type SFBool.
    */
    enabled: boolean,
-   /**
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
 }
 
 /** The X3DPickableObject abstract interface marks a node as being capable of having customized picking performed on its contents or children. */
@@ -19153,29 +11122,13 @@ interface X3DPickableObjectProxy extends SFNode
 interface X3DPickSensorNodeProxy extends X3DSensorNodeProxy
 {
    /**
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   enabled: boolean,
-   /**
    * This field is of access type is 'initializeOnly' and type SFString.
    */
    intersectionType: "BOUNDS" | "GEOMETRY",
    /**
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isActive: boolean,
-   /**
    * This field is of access type is 'inputOutput' and type SFString.
    */
    matchCriterion: "MATCH_ANY" | "MATCH_EVERY" | "MATCH_ONLY_ONE",
-   /**
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * This field is of access type is 'inputOutput' and type MFString.
    */
@@ -19202,34 +11155,14 @@ interface X3DPickSensorNodeProxy extends X3DSensorNodeProxy
 interface X3DPointingDeviceSensorNodeProxy extends X3DSensorNodeProxy
 {
    /**
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   enabled: boolean,
-   /**
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isActive: boolean,
-   /**
    * This field is of access type is 'outputOnly' and type SFBool.
    */
    readonly isOver: boolean,
-   /**
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
 }
 
 /** Base type marking nodes that are valid product structure children for the CADGeometry component. */
 interface X3DProductStructureChildNodeProxy extends X3DChildNodeProxy
 {
-   /**
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * This field is of access type is 'inputOutput' and type SFString.
    */
@@ -19266,10 +11199,6 @@ interface X3DRigidJointNodeProxy extends X3DNodeProxy
    * This field is of access type is 'inputOutput' and type MFString.
    */
    forceOutput: MFString <"ALL" | "NONE">,
-   /**
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
 }
 
 /** Base type for scripting nodes (but not shader nodes). */
@@ -19316,10 +11245,6 @@ interface X3DSensorNodeProxy extends X3DChildNodeProxy
    * This field is of access type is 'outputOnly' and type SFBool.
    */
    readonly isActive: boolean,
-   /**
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
 }
 
 /** Base type from which all Sequencers are derived. */
@@ -19329,10 +11254,6 @@ interface X3DSequencerNodeProxy extends X3DChildNodeProxy
    * This field is of access type is 'inputOutput' and type MFFloat.
    */
    key: MFFloat,
-   /**
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * This field is of access type is 'inputOnly' and type SFBool.
    */
@@ -19366,10 +11287,6 @@ interface X3DShaderNodeProxy extends X3DAppearanceChildNodeProxy
    * This field is of access type is 'initializeOnly' and type SFString.
    */
    language: "Cg" | "GLSL" | "HLSL",
-   /**
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
 }
 
 /** Base type for all Shape nodes. */
@@ -19400,10 +11317,6 @@ interface X3DShapeNodeProxy extends X3DChildNodeProxy, X3DBoundedObjectProxy
    */
    geometry: X3DGeometryNodeProxy,
    /**
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * This field is of access type is 'inputOutput' and type SFBool.
    */
    visible: boolean,
@@ -19416,23 +11329,12 @@ interface X3DSingleTextureCoordinateNodeProxy extends X3DTextureCoordinateNodePr
    * This field is of access type is 'inputOutput' and type SFString.
    */
    mapping: string,
-   /**
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
 }
 
 /** Base type for all texture node types that define a single texture. A single texture can be used to influence a parameter of various material nodes in the Shape component, and it can be a child of MultiTexture. */
 interface X3DSingleTextureNodeProxy extends X3DTextureNodeProxy
 {
-   /**
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
+
 }
 
 /** Base type for all texture transform nodes which specify texture coordinate transformation for a single texture. */
@@ -19442,10 +11344,6 @@ interface X3DSingleTextureTransformNodeProxy extends X3DTextureTransformNodeProx
    * This field is of access type is 'inputOutput' and type SFString.
    */
    mapping: string,
-   /**
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
 }
 
 /** Base type for all sound destination nodes, which represent the final destination of an audio signal and are what the user can ultimately hear. */
@@ -19464,21 +11362,9 @@ interface X3DSoundChannelNodeProxy extends X3DSoundNodeProxy
    */
    channelInterpretation: "SPEAKERS" | "DISCRETE",
    /**
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   enabled: boolean,
-   /**
    * This field is of access type is 'inputOutput' and type SFFloat.
    */
    gain: number,
-   /**
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
 }
 
 /** Base type for all sound destination nodes, which represent the final destination of an audio signal and are what the user can ultimately hear. */
@@ -19497,14 +11383,6 @@ interface X3DSoundDestinationNodeProxy extends X3DSoundNodeProxy
    */
    channelInterpretation: "SPEAKERS" | "DISCRETE",
    /**
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   enabled: boolean,
-   /**
    * This field is of access type is 'inputOutput' and type SFFloat.
    */
    gain: number,
@@ -19516,10 +11394,6 @@ interface X3DSoundDestinationNodeProxy extends X3DSoundNodeProxy
    * This field is of access type is 'inputOutput' and type SFString.
    */
    mediaDeviceID: string,
-   /**
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
 }
 
 /** Base type for all sound nodes. */
@@ -19533,10 +11407,6 @@ interface X3DSoundNodeProxy extends X3DChildNodeProxy
    * This field is of access type is 'inputOutput' and type SFBool.
    */
    enabled: boolean,
-   /**
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
 }
 
 /** Base type for all sound processing nodes, which are used to enhance audio with filtering, delaying, changing gain, etc. */
@@ -19555,14 +11425,6 @@ interface X3DSoundProcessingNodeProxy extends X3DTimeDependentNodeProxy, X3DSoun
    */
    channelInterpretation: "SPEAKERS" | "DISCRETE",
    /**
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
-   * This field is of access type is 'outputOnly' and type SFTime.
-   */
-   readonly elapsedTime: number,
-   /**
    * This field is of access type is 'inputOutput' and type SFBool.
    */
    enabled: boolean,
@@ -19570,34 +11432,6 @@ interface X3DSoundProcessingNodeProxy extends X3DTimeDependentNodeProxy, X3DSoun
    * This field is of access type is 'inputOutput' and type SFFloat.
    */
    gain: number,
-   /**
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isActive: boolean,
-   /**
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isPaused: boolean,
-   /**
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   pauseTime: number,
-   /**
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   resumeTime: number,
-   /**
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   startTime: number,
-   /**
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   stopTime: number,
    /**
    * This field is of access type is 'inputOutput' and type SFTime.
    */
@@ -19608,14 +11442,6 @@ interface X3DSoundProcessingNodeProxy extends X3DTimeDependentNodeProxy, X3DSoun
 interface X3DSoundSourceNodeProxy extends X3DTimeDependentNodeProxy, X3DSoundNodeProxy
 {
    /**
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
-   * This field is of access type is 'outputOnly' and type SFTime.
-   */
-   readonly elapsedTime: number,
-   /**
    * This field is of access type is 'inputOutput' and type SFBool.
    */
    enabled: boolean,
@@ -19623,34 +11449,6 @@ interface X3DSoundSourceNodeProxy extends X3DTimeDependentNodeProxy, X3DSoundNod
    * This field is of access type is 'inputOutput' and type SFFloat.
    */
    gain: number,
-   /**
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isActive: boolean,
-   /**
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isPaused: boolean,
-   /**
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   pauseTime: number,
-   /**
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   resumeTime: number,
-   /**
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   startTime: number,
-   /**
-   * This field is of access type is 'inputOutput' and type SFTime.
-   */
-   stopTime: number,
 }
 
 /** X3DStatement is a marker interface that identifies statements relating to nonrenderable scene graph structure. X3DStatement does not extend from any other node type since it is not an explicit part of the X3D node interface hierarchy, and DEF/USE is not appropriate for such statements. */
@@ -19662,14 +11460,6 @@ interface X3DStatementProxy extends SFNode
 /** Base type for all nodes which specify 2D sources for texture images. */
 interface X3DTexture2DNodeProxy extends X3DSingleTextureNodeProxy
 {
-   /**
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * This field is of access type is 'initializeOnly' and type SFBool.
    */
@@ -19687,14 +11477,6 @@ interface X3DTexture2DNodeProxy extends X3DSingleTextureNodeProxy
 /** Base type for all nodes that specify 3D sources for texture images. */
 interface X3DTexture3DNodeProxy extends X3DTextureNodeProxy
 {
-   /**
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * This field is of access type is 'initializeOnly' and type SFBool.
    */
@@ -19716,10 +11498,7 @@ interface X3DTexture3DNodeProxy extends X3DTextureNodeProxy
 /** Base type for all nodes which specify texture coordinates. */
 interface X3DTextureCoordinateNodeProxy extends X3DGeometricPropertyNodeProxy
 {
-   /**
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
+
 }
 
 /** Base type for all nodes which specify sources for texture images. */
@@ -19729,27 +11508,15 @@ interface X3DTextureNodeProxy extends X3DAppearanceChildNodeProxy
    * This field is of access type is 'inputOutput' and type SFString.
    */
    description: string,
-   /**
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
 }
 
 /** Base type for all node types that specify texture projector nodes, which provide a form of lighting. */
 interface X3DTextureProjectorNodeProxy extends X3DLightNodeProxy
 {
    /**
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   ambientIntensity: number,
-   /**
    * This field is of access type is 'outputOnly' and type SFFloat.
    */
    readonly aspectRatio: number,
-   /**
-   * This field is of access type is 'inputOutput' and type SFColor.
-   */
-   color: SFColor,
    /**
    * This field is of access type is 'inputOutput' and type SFString.
    */
@@ -19767,33 +11534,13 @@ interface X3DTextureProjectorNodeProxy extends X3DLightNodeProxy
    */
    global: boolean,
    /**
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   intensity: number,
-   /**
    * This field is of access type is 'inputOutput' and type SFVec3f.
    */
    location: SFVec3f,
    /**
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * This field is of access type is 'inputOutput' and type SFFloat.
    */
    nearDistance: number,
-   /**
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   on: boolean,
-   /**
-   * This field is of access type is 'inputOutput' and type SFFloat.
-   */
-   shadowIntensity: number,
-   /**
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   shadows: boolean,
    /**
    * This field is of access type is 'inputOutput' and type SFNode.
    */
@@ -19803,10 +11550,7 @@ interface X3DTextureProjectorNodeProxy extends X3DLightNodeProxy
 /** Base type for all nodes which specify a transformation of texture coordinates. */
 interface X3DTextureTransformNodeProxy extends X3DAppearanceChildNodeProxy
 {
-   /**
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
+
 }
 
 /** Base type from which all time-dependent nodes are derived. */
@@ -19829,10 +11573,6 @@ interface X3DTimeDependentNodeProxy extends X3DChildNodeProxy
    */
    readonly isPaused: boolean,
    /**
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * This field is of access type is 'inputOutput' and type SFTime.
    */
    pauseTime: number,
@@ -19854,26 +11594,6 @@ interface X3DTimeDependentNodeProxy extends X3DChildNodeProxy
 interface X3DTouchSensorNodeProxy extends X3DPointingDeviceSensorNodeProxy
 {
    /**
-   * This field is of access type is 'inputOutput' and type SFString.
-   */
-   description: string,
-   /**
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   enabled: boolean,
-   /**
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isActive: boolean,
-   /**
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isOver: boolean,
-   /**
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * This field is of access type is 'outputOnly' and type SFTime.
    */
    readonly touchTime: number,
@@ -19882,10 +11602,7 @@ interface X3DTouchSensorNodeProxy extends X3DPointingDeviceSensorNodeProxy
 /** Base type from which all trigger nodes are derived. */
 interface X3DTriggerNodeProxy extends X3DChildNodeProxy
 {
-   /**
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
+
 }
 
 /** X3DUrlObject indicates that a node has content loaded from a Uniform Resource Locator (URL) and can be tracked via a LoadSensor. Such child nodes have containerField='children' to indicate their relationship to the parent LoadSensor node. */
@@ -19917,10 +11634,6 @@ interface X3DUrlObjectProxy extends SFNode
 interface X3DVertexAttributeNodeProxy extends X3DGeometricPropertyNodeProxy
 {
    /**
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * This field is of access type is 'initializeOnly' and type SFString.
    */
    name: string,
@@ -19930,10 +11643,6 @@ interface X3DVertexAttributeNodeProxy extends X3DGeometricPropertyNodeProxy
 interface X3DViewpointNodeProxy extends X3DBindableNodeProxy
 {
    /**
-   * This field is of access type is 'outputOnly' and type SFTime.
-   */
-   readonly bindTime: number,
-   /**
    * This field is of access type is 'inputOutput' and type SFString.
    */
    description: string,
@@ -19942,17 +11651,9 @@ interface X3DViewpointNodeProxy extends X3DBindableNodeProxy
    */
    farDistance: number,
    /**
-   * This field is of access type is 'outputOnly' and type SFBool.
-   */
-   readonly isBound: boolean,
-   /**
    * This field is of access type is 'inputOutput' and type SFBool.
    */
    jump: boolean,
-   /**
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
    /**
    * This field is of access type is 'inputOutput' and type SFNode.
    */
@@ -19970,10 +11671,6 @@ interface X3DViewpointNodeProxy extends X3DBindableNodeProxy
    */
    retainUserOffsets: boolean,
    /**
-   * This field is of access type is 'inputOnly' and type SFBool.
-   */
-   set_bind: boolean,
-   /**
    * This field is of access type is 'inputOutput' and type SFBool.
    */
    viewAll: boolean,
@@ -19982,38 +11679,7 @@ interface X3DViewpointNodeProxy extends X3DBindableNodeProxy
 /** The X3DViewportNode abstract node type is the base node type for viewport nodes. */
 interface X3DViewportNodeProxy extends X3DGroupingNodeProxy
 {
-   /**
-   * This field is of access type is 'inputOnly' and type MFNode.
-   */
-   addChildren: MFNode <X3DChildNodeProxy>,
-   /**
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxCenter: SFVec3f,
-   /**
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   bboxDisplay: boolean,
-   /**
-   * This field is of access type is 'initializeOnly' and type SFVec3f.
-   */
-   bboxSize: SFVec3f,
-   /**
-   * This field is of access type is 'inputOutput' and type MFNode.
-   */
-   children: MFNode <X3DChildNodeProxy>,
-   /**
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
-   * This field is of access type is 'inputOnly' and type MFNode.
-   */
-   removeChildren: MFNode <X3DChildNodeProxy>,
-   /**
-   * This field is of access type is 'inputOutput' and type SFBool.
-   */
-   visible: boolean,
+
 }
 
 /** The X3DVolumeDataNode abstract node type is the base type for all node types that describe volumetric data to be rendered. */
@@ -20036,10 +11702,6 @@ interface X3DVolumeDataNodeProxy extends X3DChildNodeProxy, X3DBoundedObjectProx
    */
    dimensions: SFVec3f,
    /**
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
-   /**
    * This field is of access type is 'inputOutput' and type SFBool.
    */
    visible: boolean,
@@ -20052,10 +11714,6 @@ interface X3DVolumeRenderStyleNodeProxy extends X3DNodeProxy
    * This field is of access type is 'inputOutput' and type SFBool.
    */
    enabled: boolean,
-   /**
-   * This field is of access type is 'inputOutput' and type SFNode.
-   */
-   metadata: X3DMetadataObjectProxy,
 }
 
 type ConcreteNodesType = {
@@ -20323,4 +11981,4 @@ type ConcreteNodesType = {
 &
 { [name: string]: SFNode } // catch all;
 
-   // NODES END
+// NODES END

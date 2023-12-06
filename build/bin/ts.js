@@ -70,11 +70,12 @@ function ConcreteNode (node)
       node .InterfaceDefinition .field = [node .InterfaceDefinition .field];
 
    const fields = node .InterfaceDefinition .field
+      .filter (field => !field .inheritedFrom)
       .filter (field => !field .name .match (/^(?:DEF|USE|IS|id|class)$/) && !field .description ?.match (/CSS/))
       .sort ((a, b) => a .name .localeCompare (b .name));
 
-   // if (node .name === "NavigationInfo")
-   //    console .log (fields);
+   if (node .name === "X3DChildNode")
+      console .log (fields);
 
    const properties = fields
       .map (field => `   /**
@@ -188,7 +189,7 @@ ${[... concreteNodes .keys ()] .map (typeName => `   ${typeName}: ${typeName}Pro
 &
 { [name: string]: SFNode } // catch all;
 
-   // NODES END`;
+// NODES END`;
 
    ts = ts .replace (/(\/\/ NODES START).*?(\/\/ NODES END)/s, string);
 }
