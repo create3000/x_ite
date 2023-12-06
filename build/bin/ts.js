@@ -2,8 +2,8 @@
 "use strict";
 
 const
-   { systemSync, sh } = require ("shell-tools"),
-   fs                 = require ("fs");
+   { sh } = require ("shell-tools"),
+   fs     = require ("fs");
 
 const
    x3duom        = xml (sh (`wget -q -O - https://www.web3d.org/specifications/X3dUnifiedObjectModel-4.0.xml`)),
@@ -47,8 +47,7 @@ ${[... abstractNodes .keys ()] .map (typeName => `   readonly ${typeName}: numbe
 
 function ConcreteNode (node)
 {
-   if (node .name === "MetadataBoolean")
-      console .log (node);
+   // Inheritance
 
    const inheritance = [
       node .name === "X3DNode" ? "SFNode" : undefined,
@@ -59,13 +58,52 @@ function ConcreteNode (node)
    .map (type => `${type}Proxy`)
    .join (", ");
 
+   // Fields
+
+   if (!node .InterfaceDefinition .field)
+      node .InterfaceDefinition .field = [ ];
+
+   if (!Array .isArray (node .InterfaceDefinition .field))
+      node .InterfaceDefinition .field = [node .InterfaceDefinition .field];
+
+   const fields = node .InterfaceDefinition .field
+      ?.filter (field => !field .name .match (/^(?:DEF|USE|IS|id|class)$/) && !field .description ?.match (/CSS/));
+
+   if (node .name === "FontStyle")
+      console .log (fields);
+
+   const properties = fields
+      .map (field => `${field .description ? `   /** ${field .description} */\n` : ""}   ${field .name}: ${FieldType (field)},`)
+      .join ("\n");
+
+   // Generate class
+
    const string = `/** ${node .InterfaceDefinition .appinfo} */
 interface ${node .name}Proxy${inheritance ? ` extends ${inheritance}`: ""}
 {
-
+${properties}
 }`;
 
    return string;
+}
+
+function FieldType (field)
+{
+   switch (field .type)
+   {
+      case "SFBool":
+         return "boolean";
+      case "SFDouble":
+      case "SFFloat":
+      case "SFInt32":
+      case "SFTime":
+         return "number";
+      case "SFString":
+      case "xs:NMTOKEN":
+         return "string";
+      default:
+         return field .type;
+   }
 }
 
 function AbstractNode (node)
