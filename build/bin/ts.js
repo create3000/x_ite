@@ -46,8 +46,18 @@ ${[... abstractNodes .keys ()] .map (typeName => `   readonly ${typeName}: numbe
 
 function ConcreteNode (node)
 {
+   if (node .name === "MetadataBoolean")
+      console .log (node);
+
+   const inheritance = [
+      node .InterfaceDefinition .Inheritance ?.baseType,
+      node .InterfaceDefinition .AdditionalInheritance ?.baseType,
+   ]
+   .filter (type => type)
+   .join (", ");
+
    const string = `/** ${node .InterfaceDefinition .appinfo} */
-interface ${node .name}Proxy
+interface ${node .name}Proxy${inheritance ? ` extends ${inheritance}`: ""}
 {
 
 }`;
@@ -57,20 +67,14 @@ interface ${node .name}Proxy
 
 function AbstractNode (node)
 {
-   const string = `/** ${node .InterfaceDefinition .appinfo} */
-interface ${node .name}Proxy
-{
-
-}`;
-
-   return string;
+   return ConcreteNode (node);
 }
 
 function NodeTypes ()
 {
    const string = `// NODES START
 
-${[... concreteNodes .values ()] .map (AbstractNode) .join ("\n\n")}
+${[... concreteNodes .values ()] .map (ConcreteNode) .join ("\n\n")}
 
 ${[... abstractNodes .values ()] .map (AbstractNode) .join ("\n\n")}
 

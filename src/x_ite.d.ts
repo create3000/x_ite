@@ -1375,1735 +1375,1735 @@ declare class MFVec4f extends X3DArrayField <SFVec4f>
 // NODES START
 
 /** AcousticProperties specifies the interaction of sound waves with characteristics of geometric objects in the scene. */
-interface AcousticPropertiesProxy
+interface AcousticPropertiesProxy extends X3DAppearanceChildNode
 {
 
 }
 
 /** Analyser provides real-time frequency and time-domain analysis information, without any change to the input. */
-interface AnalyserProxy
+interface AnalyserProxy extends X3DSoundProcessingNode
 {
 
 }
 
 /** Anchor is a Grouping node that can contain most nodes. */
-interface AnchorProxy
+interface AnchorProxy extends X3DGroupingNode, X3DUrlObject
 {
 
 }
 
 /** Appearance specifies the visual properties of geometry by containing the Material, ImageTexture/MovieTexture/PixelTexture, FillProperties, LineProperties, programmable shader nodes (ComposedShader, PackagedShader, ProgramShader) and TextureTransform nodes. */
-interface AppearanceProxy
+interface AppearanceProxy extends X3DAppearanceNode
 {
 
 }
 
 /** Arc2D is a line-based geometry node that defines a linear circular arc with center (0,0) in X-Y plane, with angles measured starting at positive x-axis and sweeping towards positive y-axis. */
-interface Arc2DProxy
+interface Arc2DProxy extends X3DGeometryNode
 {
 
 }
 
 /** ArcClose2D is a polygonal geometry node that defines a linear circular arc, closed by PIE or CHORD line segments, with center (0,0) in X-Y plane, with angles measured starting at positive x-axis and sweeping towards positive y-axis. */
-interface ArcClose2DProxy
+interface ArcClose2DProxy extends X3DGeometryNode
 {
 
 }
 
 /** AudioClip provides audio data used by parent Sound nodes. */
-interface AudioClipProxy
+interface AudioClipProxy extends X3DSoundSourceNode, X3DUrlObject
 {
 
 }
 
 /** AudioDestination node represents the final audio destination and is what user ultimately hears, typically from the speakers of user device. */
-interface AudioDestinationProxy
+interface AudioDestinationProxy extends X3DSoundDestinationNode
 {
 
 }
 
 /** Background simulates ground and sky, using vertical arrays of wraparound color values. */
-interface BackgroundProxy
+interface BackgroundProxy extends X3DBackgroundNode
 {
 
 }
 
 /** BallJoint represents an unconstrained joint between two bodies that pivot about a common anchor point. */
-interface BallJointProxy
+interface BallJointProxy extends X3DRigidJointNode
 {
 
 }
 
 /** Billboard is a Grouping node that can contain most nodes. */
-interface BillboardProxy
+interface BillboardProxy extends X3DGroupingNode
 {
 
 }
 
 /** BiquadFilter node is an AudioNode processor implementing common low-order filters. */
-interface BiquadFilterProxy
+interface BiquadFilterProxy extends X3DSoundProcessingNode
 {
 
 }
 
 /** BlendedVolumeStyle combines rendering of two voxel data sets into one by blending voxel values. */
-interface BlendedVolumeStyleProxy
+interface BlendedVolumeStyleProxy extends X3DComposableVolumeRenderStyleNode
 {
 
 }
 
 /** BooleanFilter selectively passes true, false or negated events. */
-interface BooleanFilterProxy
+interface BooleanFilterProxy extends X3DChildNode
 {
 
 }
 
 /** BooleanSequencer generates periodic discrete Boolean values. */
-interface BooleanSequencerProxy
+interface BooleanSequencerProxy extends X3DSequencerNode
 {
 
 }
 
 /** BooleanToggle maintains state and negates output when a true input is provided. */
-interface BooleanToggleProxy
+interface BooleanToggleProxy extends X3DChildNode
 {
 
 }
 
 /** BooleanTrigger converts time events to boolean true events. */
-interface BooleanTriggerProxy
+interface BooleanTriggerProxy extends X3DTriggerNode
 {
 
 }
 
 /** BoundaryEnhancementVolumeStyle provides boundary enhancement for the volume rendering style. */
-interface BoundaryEnhancementVolumeStyleProxy
+interface BoundaryEnhancementVolumeStyleProxy extends X3DComposableVolumeRenderStyleNode
 {
 
 }
 
 /** BoundedPhysicsModel provides user-defined geometrical boundaries for particle motion. */
-interface BoundedPhysicsModelProxy
+interface BoundedPhysicsModelProxy extends X3DParticlePhysicsModelNode
 {
 
 }
 
 /** Box is a geometry node specifying a rectangular cuboid. */
-interface BoxProxy
+interface BoxProxy extends X3DGeometryNode
 {
 
 }
 
 /** BufferAudioSource node represents a memory-resident audio asset that can contain one or more channels. */
-interface BufferAudioSourceProxy
+interface BufferAudioSourceProxy extends X3DSoundSourceNode, X3DUrlObject
 {
 
 }
 
 /** CADAssembly holds a set of Computer-Aided Design (CAD) assemblies or parts grouped together. */
-interface CADAssemblyProxy
+interface CADAssemblyProxy extends X3DGroupingNode, X3DProductStructureChildNode
 {
 
 }
 
 /** CADFace holds geometry representing one face in a Computer-Aided Design (CAD) CADPart. */
-interface CADFaceProxy
+interface CADFaceProxy extends X3DProductStructureChildNode, X3DBoundedObject
 {
 
 }
 
 /** CADLayer nodes define a hierarchy that shows layer structure for a Computer-Aided Design (CAD) model. */
-interface CADLayerProxy
+interface CADLayerProxy extends X3DGroupingNode
 {
 
 }
 
 /** CADPart is an atomic part that defines both coordinate-system location and the faces that constitute a part in a Computer-Aided Design (CAD) model. */
-interface CADPartProxy
+interface CADPartProxy extends X3DProductStructureChildNode, X3DGroupingNode
 {
 
 }
 
 /** CartoonVolumeStyle generates cartoon-style non-photorealistic rendering of associated volumetric data. */
-interface CartoonVolumeStyleProxy
+interface CartoonVolumeStyleProxy extends X3DComposableVolumeRenderStyleNode
 {
 
 }
 
 /** ChannelMerger unites different input channels into a single output channel. */
-interface ChannelMergerProxy
+interface ChannelMergerProxy extends X3DSoundChannelNode
 {
 
 }
 
 /** ChannelSelector selects a single channel output from all input channels. */
-interface ChannelSelectorProxy
+interface ChannelSelectorProxy extends X3DSoundChannelNode
 {
 
 }
 
 /** ChannelSplitter separates the different channels of a single audio source into a set of monophonic output channels. */
-interface ChannelSplitterProxy
+interface ChannelSplitterProxy extends X3DSoundChannelNode
 {
 
 }
 
 /** Circle2D is a geometry node that defines a linear X-Y circle with center (0,0) in X-Y plane. */
-interface Circle2DProxy
+interface Circle2DProxy extends X3DGeometryNode
 {
 
 }
 
 /** ClipPlane specifies a single plane equation used to clip (i. */
-interface ClipPlaneProxy
+interface ClipPlaneProxy extends X3DChildNode
 {
 
 }
 
 /** CollidableOffset repositions geometry relative to center of owning body. */
-interface CollidableOffsetProxy
+interface CollidableOffsetProxy extends X3DNBodyCollidableNode
 {
 
 }
 
 /** CollidableShape connects the collision detection system, the rigid body model, and the renderable scene graph. */
-interface CollidableShapeProxy
+interface CollidableShapeProxy extends X3DNBodyCollidableNode
 {
 
 }
 
 /** Collision detects camera-to-object contact using current view and NavigationInfo avatarSize. */
-interface CollisionProxy
+interface CollisionProxy extends X3DGroupingNode, X3DSensorNode
 {
 
 }
 
 /** CollisionCollection holds a collection of objects that can be managed as a single entity for resolution of inter-object collisions. */
-interface CollisionCollectionProxy
+interface CollisionCollectionProxy extends X3DChildNode, X3DBoundedObject
 {
 
 }
 
 /** CollisionSensor generates collision-detection events. */
-interface CollisionSensorProxy
+interface CollisionSensorProxy extends X3DSensorNode
 {
 
 }
 
 /** CollisionSpace holds collection of objects considered together for resolution of inter-object collisions. */
-interface CollisionSpaceProxy
+interface CollisionSpaceProxy extends X3DNBodyCollisionSpaceNode
 {
 
 }
 
 /** Color node defines a set of RGB color values that apply either to a sibling Coordinate|CoordinateDouble node, or else to a parent ElevationGrid node. */
-interface ColorProxy
+interface ColorProxy extends X3DColorNode
 {
 
 }
 
 /** ColorChaser generates a series of SFColor values that progressively change from initial value to destination value. */
-interface ColorChaserProxy
+interface ColorChaserProxy extends X3DChaserNode
 {
 
 }
 
 /** ColorDamper generates a series of RGB color values that progressively change from initial value to destination value. */
-interface ColorDamperProxy
+interface ColorDamperProxy extends X3DDamperNode
 {
 
 }
 
 /** ColorInterpolator generates a range of color values. */
-interface ColorInterpolatorProxy
+interface ColorInterpolatorProxy extends X3DInterpolatorNode
 {
 
 }
 
 /** ColorRGBA node defines a set of RGBA color values that apply either to a sibling Coordinate|CoordinateDouble node, or else to a parent ElevationGrid node. */
-interface ColorRGBAProxy
+interface ColorRGBAProxy extends X3DColorNode
 {
 
 }
 
 /** ComposedCubeMapTexture is a texture node that defines a cubic environment map source as an explicit set of images drawn from individual 2D texture nodes. */
-interface ComposedCubeMapTextureProxy
+interface ComposedCubeMapTextureProxy extends X3DEnvironmentTextureNode
 {
 
 }
 
 /** ComposedShader can contain field declarations, but no CDATA section of plain-text source code, since programs are composed from child ShaderPart nodes. */
-interface ComposedShaderProxy
+interface ComposedShaderProxy extends X3DShaderNode, X3DProgrammableShaderObject
 {
 
 }
 
 /** ComposedTexture3D defines a 3D image-based texture map as a collection of 2D texture sources at various depths. */
-interface ComposedTexture3DProxy
+interface ComposedTexture3DProxy extends X3DTexture3DNode
 {
 
 }
 
 /** ComposedVolumeStyle allows compositing multiple rendering styles into single rendering pass. */
-interface ComposedVolumeStyleProxy
+interface ComposedVolumeStyleProxy extends X3DComposableVolumeRenderStyleNode
 {
 
 }
 
 /** Cone is a geometry node. */
-interface ConeProxy
+interface ConeProxy extends X3DGeometryNode
 {
 
 }
 
 /** ConeEmitter generates all available particles from a specific point in space. */
-interface ConeEmitterProxy
+interface ConeEmitterProxy extends X3DParticleEmitterNode
 {
 
 }
 
 /** Contact nodes are produced as output events when two collidable objects or spaces make contact. */
-interface ContactProxy
+interface ContactProxy extends X3DNode
 {
 
 }
 
 /** Contour2D groups a set of curve segments into a composite contour. */
-interface Contour2DProxy
+interface Contour2DProxy extends X3DNode
 {
 
 }
 
 /** ContourPolyline2D defines a linear curve segment as part of a trimming contour in the u-v domain of a NURBS surface. */
-interface ContourPolyline2DProxy
+interface ContourPolyline2DProxy extends X3DNurbsControlCurveNode
 {
 
 }
 
 /** Convolver performs a linear convolution on a given AudioBuffer, often used to achieve a reverberation effect. */
-interface ConvolverProxy
+interface ConvolverProxy extends X3DSoundProcessingNode
 {
 
 }
 
 /** Coordinate builds geometry by defining a set of 3D coordinate (triplet) point values. */
-interface CoordinateProxy
+interface CoordinateProxy extends X3DCoordinateNode
 {
 
 }
 
 /** CoordinateChaser generates a series of coordinate arrays that progressively change from initial value to destination value. */
-interface CoordinateChaserProxy
+interface CoordinateChaserProxy extends X3DChaserNode
 {
 
 }
 
 /** CoordinateDamper generates a series of coordinate arrays that progressively change from initial value to destination value. */
-interface CoordinateDamperProxy
+interface CoordinateDamperProxy extends X3DDamperNode
 {
 
 }
 
 /** CoordinateDouble builds geometry by defining a set of 3D coordinate (triplet) point values. */
-interface CoordinateDoubleProxy
+interface CoordinateDoubleProxy extends X3DCoordinateNode
 {
 
 }
 
 /** CoordinateInterpolator linearly interpolates among a list of 3-tuple MFVec3f arrays, producing a single MFVec3f array that is fractional average between two nearest arrays in the list. */
-interface CoordinateInterpolatorProxy
+interface CoordinateInterpolatorProxy extends X3DInterpolatorNode
 {
 
 }
 
 /** CoordinateInterpolator2D generates a series of SFVec2f or MFVec2f 2-tuple float values. */
-interface CoordinateInterpolator2DProxy
+interface CoordinateInterpolator2DProxy extends X3DInterpolatorNode
 {
 
 }
 
 /** Cylinder is a geometry node. */
-interface CylinderProxy
+interface CylinderProxy extends X3DGeometryNode
 {
 
 }
 
 /** CylinderSensor converts pointer motion (for example, a mouse or wand) into rotation values using an invisible cylinder aligned with local Y-axis. */
-interface CylinderSensorProxy
+interface CylinderSensorProxy extends X3DDragSensorNode
 {
 
 }
 
 /** Delay causes a time delay between the arrival of input data and subsequent propagation to the output. */
-interface DelayProxy
+interface DelayProxy extends X3DSoundProcessingNode
 {
 
 }
 
 /** DirectionalLight might not be scoped by parent Group or Transform at levels 1 or 2. */
-interface DirectionalLightProxy
+interface DirectionalLightProxy extends X3DLightNode
 {
 
 }
 
 /** DISEntityManager notifies a scene when new DIS ESPDU entities arrive or current entities leave. */
-interface DISEntityManagerProxy
+interface DISEntityManagerProxy extends X3DChildNode
 {
 
 }
 
 /** DISEntityTypeMapping provides a best-match mapping from DIS ESPDU entity type information to a specific X3D model, thus providing a visual and behavioral representation that best matches the entity type. */
-interface DISEntityTypeMappingProxy
+interface DISEntityTypeMappingProxy extends X3DInfoNode, X3DUrlObject
 {
 
 }
 
 /** Disk2D is a geometry node that defines a filled (or partially filled) planar circle with center (0,0). */
-interface Disk2DProxy
+interface Disk2DProxy extends X3DGeometryNode
 {
 
 }
 
 /** DoubleAxisHingeJoint has two independent axes located around a common anchor point. */
-interface DoubleAxisHingeJointProxy
+interface DoubleAxisHingeJointProxy extends X3DRigidJointNode
 {
 
 }
 
 /** DynamicsCompressor node implements a dynamics compression effect, lowering volume of loudest parts of signal and raising volume of softest parts. */
-interface DynamicsCompressorProxy
+interface DynamicsCompressorProxy extends X3DSoundProcessingNode
 {
 
 }
 
 /** EaseInEaseOut enables gradual animation transitions by modifying TimeSensor fraction outputs. */
-interface EaseInEaseOutProxy
+interface EaseInEaseOutProxy extends X3DChildNode
 {
 
 }
 
 /** EdgeEnhancementVolumeStyle specifies edge enhancement for the volume rendering style. */
-interface EdgeEnhancementVolumeStyleProxy
+interface EdgeEnhancementVolumeStyleProxy extends X3DComposableVolumeRenderStyleNode
 {
 
 }
 
 /** ElevationGrid is a geometry node defining a rectangular height field, with default values for a 1m by 1m square at height 0. */
-interface ElevationGridProxy
+interface ElevationGridProxy extends X3DGeometryNode
 {
 
 }
 
 /** EspduTransform is a networked Transform node that can contain most nodes. */
-interface EspduTransformProxy
+interface EspduTransformProxy extends X3DGroupingNode, X3DNetworkSensorNode
 {
 
 }
 
 /** ExplosionEmitter generates all particles from a specific point in space at the initial time enabled. */
-interface ExplosionEmitterProxy
+interface ExplosionEmitterProxy extends X3DParticleEmitterNode
 {
 
 }
 
 /** Extrusion is a geometry node that sequentially stretches a 2D cross section along a 3D-spine path in the local coordinate system, creating an outer hull. */
-interface ExtrusionProxy
+interface ExtrusionProxy extends X3DGeometryNode
 {
 
 }
 
 /** FillProperties indicates whether appearance is filled or hatched for associated geometry nodes inside the same Shape. */
-interface FillPropertiesProxy
+interface FillPropertiesProxy extends X3DAppearanceChildNode
 {
 
 }
 
 /** FloatVertexAttribute defines a set of per-vertex single-precision floating-point attributes. */
-interface FloatVertexAttributeProxy
+interface FloatVertexAttributeProxy extends X3DVertexAttributeNode
 {
 
 }
 
 /** Fog simulates atmospheric effects by blending distant objects with fog color. */
-interface FogProxy
+interface FogProxy extends X3DBindableNode, X3DFogObject
 {
 
 }
 
 /** FogCoordinate defines a set of explicit fog depths on a per-vertex basis, overriding Fog visibilityRange. */
-interface FogCoordinateProxy
+interface FogCoordinateProxy extends X3DGeometricPropertyNode
 {
 
 }
 
 /** FontStyle is an X3DFontStyleNode that defines the size, family, justification, and other styles used by Text nodes. */
-interface FontStyleProxy
+interface FontStyleProxy extends X3DFontStyleNode
 {
 
 }
 
 /** ForcePhysicsModel applies a constant force value to the particles. */
-interface ForcePhysicsModelProxy
+interface ForcePhysicsModelProxy extends X3DParticlePhysicsModelNode
 {
 
 }
 
 /** The Gain node amplifies or deamplifies the input signal. */
-interface GainProxy
+interface GainProxy extends X3DSoundProcessingNode
 {
 
 }
 
 /** GeneratedCubeMapTexture is a texture node that defines a cubic environment map that sources its data from internally generated images. */
-interface GeneratedCubeMapTextureProxy
+interface GeneratedCubeMapTextureProxy extends X3DEnvironmentTextureNode
 {
 
 }
 
 /** GeoCoordinate builds geometry as a set of geographic 3D coordinates. */
-interface GeoCoordinateProxy
+interface GeoCoordinateProxy extends X3DCoordinateNode
 {
 
 }
 
 /** GeoElevationGrid is a geometry node defining a rectangular height field, with default values for a 1m by 1m square at height 0. */
-interface GeoElevationGridProxy
+interface GeoElevationGridProxy extends X3DGeometryNode
 {
 
 }
 
 /** GeoLocation positions a regular X3D model onto earth's surface. */
-interface GeoLocationProxy
+interface GeoLocationProxy extends X3DGroupingNode
 {
 
 }
 
 /** Note that MFNode rootNode field can contain multiple nodes and has accessType inputOutput. Meanwhile MFNode children field is outputOnly, unlike other X3DGroupingNode exemplars. */
-interface GeoLODProxy
+interface GeoLODProxy extends X3DChildNode, X3DBoundedObject
 {
 
 }
 
 /** GeoMetadata includes a generic subset of metadata about the geographic data. */
-interface GeoMetadataProxy
+interface GeoMetadataProxy extends X3DInfoNode, X3DUrlObject
 {
 
 }
 
 /** GeoOrigin is deprecated and discouraged (but nevertheless allowed) in X3D version 3.3. GeoOrigin is restored in X3D version 4.0 for special use on devices with limited floating-point resolution. */
-interface GeoOriginProxy
+interface GeoOriginProxy extends X3DNode
 {
 
 }
 
 /** GeoPositionInterpolator animates objects within a geographic coordinate system. */
-interface GeoPositionInterpolatorProxy
+interface GeoPositionInterpolatorProxy extends X3DInterpolatorNode
 {
 
 }
 
 /** GeoProximitySensor generates events when the viewer enters, exits and moves within a region of space (defined by a box). */
-interface GeoProximitySensorProxy
+interface GeoProximitySensorProxy extends X3DEnvironmentalSensorNode
 {
 
 }
 
 /** GeoTouchSensor returns geographic coordinates for the object being selected. */
-interface GeoTouchSensorProxy
+interface GeoTouchSensorProxy extends X3DTouchSensorNode
 {
 
 }
 
 /** GeoTransform is a Grouping node that can contain most nodes. */
-interface GeoTransformProxy
+interface GeoTransformProxy extends X3DGroupingNode
 {
 
 }
 
 /** GeoViewpoint specifies viewpoints using geographic coordinates. */
-interface GeoViewpointProxy
+interface GeoViewpointProxy extends X3DViewpointNode
 {
 
 }
 
 /** Group is a Grouping node that can contain most nodes. */
-interface GroupProxy
+interface GroupProxy extends X3DGroupingNode
 {
 
 }
 
 /** HAnimDisplacer nodes alter the shape of coordinate-based geometry within parent HAnimJoint or HAnimSegment nodes. */
-interface HAnimDisplacerProxy
+interface HAnimDisplacerProxy extends X3DGeometricPropertyNode
 {
 
 }
 
 /** The HAnimHumanoid node is used to: (a) store references to the joints, segments, sites, skeleton, optional skin, and fixed viewpoints, (b) serve as a container for the entire humanoid, (c) provide a convenient way of moving the humanoid through its environment, and (d) store human-readable metadata such as name, version, author, copyright, age, gender and other information. */
-interface HAnimHumanoidProxy
+interface HAnimHumanoidProxy extends X3DChildNode, X3DBoundedObject
 {
 
 }
 
 /** HAnimJoint node can represent each joint in a body. */
-interface HAnimJointProxy
+interface HAnimJointProxy extends X3DChildNode, X3DBoundedObject
 {
 
 }
 
 /** An HAnimMotion node supports discrete frame-by-frame playback for HAnim motion data animation. */
-interface HAnimMotionProxy
+interface HAnimMotionProxy extends X3DChildNode
 {
 
 }
 
 /** HAnimSegment node contains Shape geometry for each body segment, providing a visual representation of the skeleton segment. */
-interface HAnimSegmentProxy
+interface HAnimSegmentProxy extends X3DGroupingNode
 {
 
 }
 
 /** An HAnimSite node serves three purposes: (a) define an "end effector" location which can be used by an inverse kinematics system, (b) define an attachment point for accessories such as jewelry and clothing, and (c) define a location for a Viewpoint virtual camera in the reference frame of an HAnimSegment (such as a view "through the eyes" of the humanoid for use in multi-user worlds). */
-interface HAnimSiteProxy
+interface HAnimSiteProxy extends X3DGroupingNode
 {
 
 }
 
 /** ImageCubeMapTexture is a texture node that defines a cubic environment map source as a single file format that contains multiple images, one for each side. */
-interface ImageCubeMapTextureProxy
+interface ImageCubeMapTextureProxy extends X3DEnvironmentTextureNode, X3DUrlObject
 {
 
 }
 
 /** ImageTexture maps a 2D-image file onto a geometric shape. */
-interface ImageTextureProxy
+interface ImageTextureProxy extends X3DTexture2DNode, X3DUrlObject
 {
 
 }
 
 /** ImageTexture3D defines a 3D image-based texture map by specifying a single image file that contains complete 3D data. */
-interface ImageTexture3DProxy
+interface ImageTexture3DProxy extends X3DTexture3DNode, X3DUrlObject
 {
 
 }
 
 /** IndexedFaceSet defines polygons using index lists corresponding to vertex coordinates. */
-interface IndexedFaceSetProxy
+interface IndexedFaceSetProxy extends X3DComposedGeometryNode
 {
 
 }
 
 /** IndexedLineSet defines polyline segments using index lists corresponding to vertex coordinates. */
-interface IndexedLineSetProxy
+interface IndexedLineSetProxy extends X3DGeometryNode
 {
 
 }
 
 /** IndexedQuadSet is a geometry node that defines quadrilaterals. */
-interface IndexedQuadSetProxy
+interface IndexedQuadSetProxy extends X3DComposedGeometryNode
 {
 
 }
 
 /** IndexedTriangleFanSet is a geometry node containing a Coordinate|CoordinateDouble node, and can also contain Color|ColorRGBA, Normal and TextureCoordinate nodes. */
-interface IndexedTriangleFanSetProxy
+interface IndexedTriangleFanSetProxy extends X3DComposedGeometryNode
 {
 
 }
 
 /** IndexedTriangleSet is a geometry node containing a Coordinate|CoordinateDouble node, and can also contain Color|ColorRGBA, Normal and TextureCoordinate nodes. */
-interface IndexedTriangleSetProxy
+interface IndexedTriangleSetProxy extends X3DComposedGeometryNode
 {
 
 }
 
 /** IndexedTriangleStripSet is a geometry node containing a Coordinate|CoordinateDouble node, and can also contain Color|ColorRGBA, Normal and TextureCoordinate nodes. */
-interface IndexedTriangleStripSetProxy
+interface IndexedTriangleStripSetProxy extends X3DComposedGeometryNode
 {
 
 }
 
 /** Inline can load another X3D or VRML model into the current scene via url. */
-interface InlineProxy
+interface InlineProxy extends X3DChildNode
 {
 
 }
 
 /** IntegerSequencer generates periodic discrete integer values. */
-interface IntegerSequencerProxy
+interface IntegerSequencerProxy extends X3DSequencerNode
 {
 
 }
 
 /** IntegerTrigger converts set_boolean true input events to an integer value (for example, useful when animating whichChoice in a Switch node). */
-interface IntegerTriggerProxy
+interface IntegerTriggerProxy extends X3DTriggerNode
 {
 
 }
 
 /** IsoSurfaceVolumeData displays one or more surfaces extracted from a voxel dataset. */
-interface IsoSurfaceVolumeDataProxy
+interface IsoSurfaceVolumeDataProxy extends X3DVolumeDataNode
 {
 
 }
 
 /** KeySensor generates events as the user presses keys on the keyboard. */
-interface KeySensorProxy
+interface KeySensorProxy extends X3DKeyDeviceSensorNode
 {
 
 }
 
 /** Layer contains a list of children nodes that define the contents of the layer. */
-interface LayerProxy
+interface LayerProxy extends X3DLayerNode
 {
 
 }
 
 /** LayerSet defines a list of layers and a rendering order. */
-interface LayerSetProxy
+interface LayerSetProxy extends X3DNode
 {
 
 }
 
 /** Layout node is used as layout field of LayoutLayer and LayoutGroup nodes. */
-interface LayoutProxy
+interface LayoutProxy extends X3DLayoutNode
 {
 
 }
 
 /** LayoutGroup is a Grouping node that can contain most nodes, whose children are related by a common layout within a parent layout. */
-interface LayoutGroupProxy
+interface LayoutGroupProxy extends X3DNode, X3DGroupingNode
 {
 
 }
 
 /** LayoutLayer is a Grouping node that can contain most nodes. */
-interface LayoutLayerProxy
+interface LayoutLayerProxy extends X3DLayerNode
 {
 
 }
 
 /** LinePickSensor uses one or more pickingGeometry line segments to compute intersections with pickTarget shapes. */
-interface LinePickSensorProxy
+interface LinePickSensorProxy extends X3DPickSensorNode
 {
 
 }
 
 /** LineProperties allows precise fine-grained control over the rendering style of lines and edges for associated geometry nodes inside the same Shape. */
-interface LinePropertiesProxy
+interface LinePropertiesProxy extends X3DAppearanceChildNode
 {
 
 }
 
 /** LineSet is a geometry node that can contain a Coordinate|CoordinateDouble node and optionally a Color|ColorRGBA node. */
-interface LineSetProxy
+interface LineSetProxy extends X3DGeometryNode
 {
 
 }
 
 /** ListenerPointSource node represents position and orientation of a person listening to virtual sound in the audio scene, and provides single or multiple sound channels as output. */
-interface ListenerPointSourceProxy
+interface ListenerPointSourceProxy extends X3DSoundSourceNode
 {
 
 }
 
 /** LoadSensor generates events as watchList child nodes are either loaded or fail to load. */
-interface LoadSensorProxy
+interface LoadSensorProxy extends X3DNetworkSensorNode
 {
 
 }
 
 /** LocalFog simulates atmospheric effects by blending distant objects with fog color. */
-interface LocalFogProxy
+interface LocalFogProxy extends X3DChildNode, X3DFogObject
 {
 
 }
 
 /** LOD (Level Of Detail) uses camera-to-object distance to switch among contained child levels. */
-interface LODProxy
+interface LODProxy extends X3DGroupingNode
 {
 
 }
 
 /** Material specifies surface rendering properties for associated geometry nodes. */
-interface MaterialProxy
+interface MaterialProxy extends X3DOneSidedMaterialNode
 {
 
 }
 
 /** Matrix3VertexAttribute defines a set of per-vertex 3x3 matrix attributes. */
-interface Matrix3VertexAttributeProxy
+interface Matrix3VertexAttributeProxy extends X3DVertexAttributeNode
 {
 
 }
 
 /** Matrix4VertexAttribute defines a set of per-vertex 4x4 matrix attributes. */
-interface Matrix4VertexAttributeProxy
+interface Matrix4VertexAttributeProxy extends X3DVertexAttributeNode
 {
 
 }
 
 /** The metadata provided by this node is contained in the Boolean values of the value field. */
-interface MetadataBooleanProxy
+interface MetadataBooleanProxy extends X3DNode, X3DMetadataObject
 {
 
 }
 
 /** The metadata provided by this node is contained in the double-precision floating point numbers of the value field. */
-interface MetadataDoubleProxy
+interface MetadataDoubleProxy extends X3DNode, X3DMetadataObject
 {
 
 }
 
 /** The metadata provided by this node is contained in the single-precision floating point numbers of the value field. */
-interface MetadataFloatProxy
+interface MetadataFloatProxy extends X3DNode, X3DMetadataObject
 {
 
 }
 
 /** The metadata provided by this node is contained in the integer numbers of the value field. */
-interface MetadataIntegerProxy
+interface MetadataIntegerProxy extends X3DNode, X3DMetadataObject
 {
 
 }
 
 /** The metadata provided by this node is contained in the metadata nodes of the value field. */
-interface MetadataSetProxy
+interface MetadataSetProxy extends X3DNode, X3DMetadataObject
 {
 
 }
 
 /** The metadata provided by this node is contained in the strings of the value field. */
-interface MetadataStringProxy
+interface MetadataStringProxy extends X3DNode, X3DMetadataObject
 {
 
 }
 
 /** MicrophoneSource captures input from a physical microphone in the real world. */
-interface MicrophoneSourceProxy
+interface MicrophoneSourceProxy extends X3DSoundSourceNode
 {
 
 }
 
 /** MotorJoint drives relative angular velocities between body1 and body2 within a common reference frame. */
-interface MotorJointProxy
+interface MotorJointProxy extends X3DRigidJointNode
 {
 
 }
 
 /** MovieTexture applies a 2D movie image to surface geometry, or provides audio for a Sound node. */
-interface MovieTextureProxy
+interface MovieTextureProxy extends X3DSoundSourceNode
 {
 
 }
 
 /** MultiTexture applies several individual textures to a single geometry node, enabling a variety of visual effects that include light mapping and environment mapping. */
-interface MultiTextureProxy
+interface MultiTextureProxy extends X3DTextureNode
 {
 
 }
 
 /** MultiTextureCoordinate contains multiple TextureCoordinate or TextureCoordinateGenerator nodes, for use by a parent polygonal geometry node such as IndexedFaceSet or a Triangle* node. */
-interface MultiTextureCoordinateProxy
+interface MultiTextureCoordinateProxy extends X3DTextureCoordinateNode
 {
 
 }
 
 /** MultiTextureTransform contains multiple TextureTransform nodes, each provided for use by corresponding ImageTexture MovieTexture or PixelTexture nodes within a sibling MultiTexture node. */
-interface MultiTextureTransformProxy
+interface MultiTextureTransformProxy extends X3DTextureTransformNode
 {
 
 }
 
 /** NavigationInfo describes the user's viewing model, user navigation-interaction modalities, and also dimensional characteristics of the user's (typically invisible) avatar. */
-interface NavigationInfoProxy
+interface NavigationInfoProxy extends X3DBindableNode
 {
 
 }
 
 /** Normal defines a set of 3D surface-normal vectors that apply either to a sibling Coordinate|CoordinateDouble node, or else to a parent ElevationGrid node. */
-interface NormalProxy
+interface NormalProxy extends X3DNormalNode
 {
 
 }
 
 /** NormalInterpolator generates a series of normal (perpendicular) 3-tuple SFVec3f values. */
-interface NormalInterpolatorProxy
+interface NormalInterpolatorProxy extends X3DInterpolatorNode
 {
 
 }
 
 /** NurbsCurve is a 3D curve analogous to NurbsPatchSurface. */
-interface NurbsCurveProxy
+interface NurbsCurveProxy extends X3DParametricGeometryNode
 {
 
 }
 
 /** NurbsCurve2D defines a trimming segment that is part of a trimming contour in the u-v domain of a surface. */
-interface NurbsCurve2DProxy
+interface NurbsCurve2DProxy extends X3DNurbsControlCurveNode
 {
 
 }
 
 /** NurbsOrientationInterpolator describes a 3D NURBS curve and outputs interpolated orientation values. */
-interface NurbsOrientationInterpolatorProxy
+interface NurbsOrientationInterpolatorProxy extends X3DChildNode
 {
 
 }
 
 /** NurbsPatchSurface defines a contiguous 3D Non-Uniform Rational B-Spline (NURBS) surface. */
-interface NurbsPatchSurfaceProxy
+interface NurbsPatchSurfaceProxy extends X3DNurbsSurfaceGeometryNode
 {
 
 }
 
 /** NurbsPositionInterpolator describes a 3D NURBS curve and outputs interpolated position values. */
-interface NurbsPositionInterpolatorProxy
+interface NurbsPositionInterpolatorProxy extends X3DChildNode
 {
 
 }
 
 /** NurbsSet collects a set of NurbsSurface nodes into a common group and treats NurbsSurface set as a unit during tessellation, thereby enforcing tessellation continuity along borders. */
-interface NurbsSetProxy
+interface NurbsSetProxy extends X3DChildNode, X3DBoundedObject
 {
 
 }
 
 /** NurbsSurfaceInterpolator describes a 3D NURBS curve and outputs interpolated position and normal values. */
-interface NurbsSurfaceInterpolatorProxy
+interface NurbsSurfaceInterpolatorProxy extends X3DChildNode
 {
 
 }
 
 /** NurbsSweptSurface uses a trajectoryCurve path to describe a generalized surface that is swept by a crossSectionCurve. */
-interface NurbsSweptSurfaceProxy
+interface NurbsSweptSurfaceProxy extends X3DParametricGeometryNode
 {
 
 }
 
 /** NurbsSwungSurface contains a profileCurve and a trajectoryCurve [X3DNurbsControlCurveNode]. */
-interface NurbsSwungSurfaceProxy
+interface NurbsSwungSurfaceProxy extends X3DParametricGeometryNode
 {
 
 }
 
 /** NurbsTextureCoordinate describes a 3D NURBS surface in the parametric domain of its surface host, specifying mapping of texture onto the surface. */
-interface NurbsTextureCoordinateProxy
+interface NurbsTextureCoordinateProxy extends X3DNode
 {
 
 }
 
 /** NurbsTrimmedSurface generates texture coordinates from a Non-Uniform Rational B-Spline (NURBS) surface. */
-interface NurbsTrimmedSurfaceProxy
+interface NurbsTrimmedSurfaceProxy extends X3DNurbsSurfaceGeometryNode
 {
 
 }
 
 /** OpacityMapVolumeStyle specifies that volumetric data is rendered using opacity mapped to a transfer function texture. */
-interface OpacityMapVolumeStyleProxy
+interface OpacityMapVolumeStyleProxy extends X3DComposableVolumeRenderStyleNode
 {
 
 }
 
 /** OrientationChaser generates a series of 4-tuple axis-angle SFRotation values that progressively change from initial value to destination value. */
-interface OrientationChaserProxy
+interface OrientationChaserProxy extends X3DChaserNode
 {
 
 }
 
 /** OrientationDamper generates a series of 4-tuple axis-angle SFRotation values that progressively change from initial value to destination value. */
-interface OrientationDamperProxy
+interface OrientationDamperProxy extends X3DDamperNode
 {
 
 }
 
 /** OrientationInterpolator generates a series of 4-tuple axis-angle SFRotation values. */
-interface OrientationInterpolatorProxy
+interface OrientationInterpolatorProxy extends X3DInterpolatorNode
 {
 
 }
 
 /** OrthoViewpoint provides an orthographic perspective-free view of a scene from a specific location and direction. */
-interface OrthoViewpointProxy
+interface OrthoViewpointProxy extends X3DViewpointNode
 {
 
 }
 
 /** OscillatorSource node represents an audio source generating a periodic waveform, providing a constant tone. */
-interface OscillatorSourceProxy
+interface OscillatorSourceProxy extends X3DSoundSourceNode
 {
 
 }
 
 /** PackagedShader can contain field declarations, but no CDATA section of plain-text source code. */
-interface PackagedShaderProxy
+interface PackagedShaderProxy extends X3DShaderNode
 {
 
 }
 
 /** ParticleSystem specifies a complete particle system. */
-interface ParticleSystemProxy
+interface ParticleSystemProxy extends X3DShapeNode
 {
 
 }
 
 /** PeriodicWave defines a periodic waveform that can be used to shape the output of an Oscillator. */
-interface PeriodicWaveProxy
+interface PeriodicWaveProxy extends X3DSoundNode
 {
 
 }
 
 /** PhysicalMaterial specifies surface rendering properties for associated geometry nodes. */
-interface PhysicalMaterialProxy
+interface PhysicalMaterialProxy extends X3DOneSidedMaterialNode
 {
 
 }
 
 /** PickableGroup is a Grouping node that can contain most nodes. */
-interface PickableGroupProxy
+interface PickableGroupProxy extends X3DGroupingNode, X3DPickableObject
 {
 
 }
 
 /** PixelTexture creates a 2D-image texture map using a numeric array of pixel values. */
-interface PixelTextureProxy
+interface PixelTextureProxy extends X3DTexture2DNode
 {
 
 }
 
 /** PixelTexture3D defines a 3D image-based texture map as an explicit array of pixel values (image field). */
-interface PixelTexture3DProxy
+interface PixelTexture3DProxy extends X3DTexture3DNode
 {
 
 }
 
 /** PlaneSensor converts pointing device motion into 2D translation parallel to the local Z=0 plane. */
-interface PlaneSensorProxy
+interface PlaneSensorProxy extends X3DDragSensorNode
 {
 
 }
 
 /** PointEmitter generates particles from a specific point in space using the specified direction and speed. */
-interface PointEmitterProxy
+interface PointEmitterProxy extends X3DParticleEmitterNode
 {
 
 }
 
 /** Linear attenuation may occur at level 2, full support at level 3. */
-interface PointLightProxy
+interface PointLightProxy extends X3DLightNode
 {
 
 }
 
 /** PointPickSensor tests one or more pickingGeometry points in space as lying inside the provided pickTarget geometry. */
-interface PointPickSensorProxy
+interface PointPickSensorProxy extends X3DPickSensorNode
 {
 
 }
 
 /** PointProperties allows precise fine-grained control over the rendering style of PointSet node points inside the same Shape. */
-interface PointPropertiesProxy
+interface PointPropertiesProxy extends X3DAppearanceChildNode
 {
 
 }
 
 /** PointSet is a node that contains a set of colored 3D points, represented by contained Color|ColorRGBA and Coordinate|CoordinateDouble nodes. */
-interface PointSetProxy
+interface PointSetProxy extends X3DGeometryNode
 {
 
 }
 
 /** Polyline2D is a geometry node that defines a connected set of vertices in a contiguous set of line segments in X-Y plane. */
-interface Polyline2DProxy
+interface Polyline2DProxy extends X3DGeometryNode
 {
 
 }
 
 /** PolylineEmitter emits particles along a single polyline. */
-interface PolylineEmitterProxy
+interface PolylineEmitterProxy extends X3DParticleEmitterNode
 {
 
 }
 
 /** Polypoint2D is a geometry node that defines a set of 2D points in X-Y plane. */
-interface Polypoint2DProxy
+interface Polypoint2DProxy extends X3DGeometryNode
 {
 
 }
 
 /** PositionChaser generates a series of position values that progressively change from initial value to destination value. */
-interface PositionChaserProxy
+interface PositionChaserProxy extends X3DChaserNode
 {
 
 }
 
 /** PositionChaser2D generates a series of 2D position values that progressively change from initial value to destination value. */
-interface PositionChaser2DProxy
+interface PositionChaser2DProxy extends X3DChaserNode
 {
 
 }
 
 /** PositionDamper generates a series of position values that progressively change from initial value to destination value. */
-interface PositionDamperProxy
+interface PositionDamperProxy extends X3DDamperNode
 {
 
 }
 
 /** PositionDamper2D generates a series of 2D floating-point values that progressively change from initial value to destination value. */
-interface PositionDamper2DProxy
+interface PositionDamper2DProxy extends X3DDamperNode
 {
 
 }
 
 /** PositionInterpolator generates a series of 3-tuple SFVec3f values. */
-interface PositionInterpolatorProxy
+interface PositionInterpolatorProxy extends X3DInterpolatorNode
 {
 
 }
 
 /** PositionInterpolator2D generates a series of SFVec2f values. */
-interface PositionInterpolator2DProxy
+interface PositionInterpolator2DProxy extends X3DInterpolatorNode
 {
 
 }
 
 /** If a non-uniform scale is applied to the pick sensor, correct results may require level 3 support. */
-interface PrimitivePickSensorProxy
+interface PrimitivePickSensorProxy extends X3DPickSensorNode
 {
 
 }
 
 /** ProgramShader contains no field declarations and no plain-text source code. */
-interface ProgramShaderProxy
+interface ProgramShaderProxy extends X3DShaderNode
 {
 
 }
 
 /** ProjectionVolumeStyle uses voxel data to directly generate output color. */
-interface ProjectionVolumeStyleProxy
+interface ProjectionVolumeStyleProxy extends X3DVolumeRenderStyleNode
 {
 
 }
 
 /** ProtoInstance can override field default values via fieldValue initializations. Non-recursive nested ProtoInstance and ProtoDeclare statements are allowed within a ProtoDeclare. */
-interface ProtoInstanceProxy
+interface ProtoInstanceProxy extends X3DPrototypeInstance, X3DChildNode
 {
 
 }
 
 /** ProximitySensor generates events when the viewer enters, exits and moves within a region of space (defined by a box). */
-interface ProximitySensorProxy
+interface ProximitySensorProxy extends X3DEnvironmentalSensorNode
 {
 
 }
 
 /** QuadSet is a geometry node that defines quadrilaterals. */
-interface QuadSetProxy
+interface QuadSetProxy extends X3DComposedGeometryNode
 {
 
 }
 
 /** ReceiverPdu is a networked Protocol Data Unit (PDU) information node that transmits the state of radio frequency (RF) receivers modeled in a simulation. */
-interface ReceiverPduProxy
+interface ReceiverPduProxy extends X3DNetworkSensorNode, X3DBoundedObject
 {
 
 }
 
 /** Rectangle2D is a geometry node that defines a 2D rectangle in X-Y plane. */
-interface Rectangle2DProxy
+interface Rectangle2DProxy extends X3DGeometryNode
 {
 
 }
 
 /** RigidBody describes a collection of shapes with a mass distribution that is affected by the physics model. */
-interface RigidBodyProxy
+interface RigidBodyProxy extends X3DChildNode, X3DBoundedObject
 {
 
 }
 
 /** RigidBodyCollection represents a system of bodies that interact within a single physics model. */
-interface RigidBodyCollectionProxy
+interface RigidBodyCollectionProxy extends X3DChildNode, X3DBoundedObject
 {
 
 }
 
 /** ScalarChaser generates a series of single floating-point values that progressively change from initial value to destination value. */
-interface ScalarChaserProxy
+interface ScalarChaserProxy extends X3DChaserNode
 {
 
 }
 
 /** ScalarDamper generates a series of floating-point values that progressively change from initial value to destination value. */
-interface ScalarDamperProxy
+interface ScalarDamperProxy extends X3DDamperNode
 {
 
 }
 
 /** ScalarInterpolator generates piecewise-linear SFFloat values. */
-interface ScalarInterpolatorProxy
+interface ScalarInterpolatorProxy extends X3DInterpolatorNode
 {
 
 }
 
 /** ScreenFontStyle is an X3DFontStyleNode defines the size, family, justification, and other styles used within a screen layout. */
-interface ScreenFontStyleProxy
+interface ScreenFontStyleProxy extends X3DFontStyleNode
 {
 
 }
 
 /** ScreenGroup is a Grouping node that can contain most nodes. */
-interface ScreenGroupProxy
+interface ScreenGroupProxy extends X3DGroupingNode
 {
 
 }
 
 /** Script contains author-programmed event behaviors for a scene. */
-interface ScriptProxy
+interface ScriptProxy extends X3DScriptNode
 {
 
 }
 
 /** SegmentedVolumeData displays a segmented voxel dataset with different RenderStyle nodes. */
-interface SegmentedVolumeDataProxy
+interface SegmentedVolumeDataProxy extends X3DVolumeDataNode
 {
 
 }
 
 /** All fields fully supported except shadows supported with at least Phong shading at level 3. All fields fully supported with at least Phong shading and Henyey-Greenstein phase function, shadows fully supported at level 4. */
-interface ShadedVolumeStyleProxy
+interface ShadedVolumeStyleProxy extends X3DComposableVolumeRenderStyleNode
 {
 
 }
 
 /** ShaderPart can contain a CDATA section of plain-text source code. */
-interface ShaderPartProxy
+interface ShaderPartProxy extends X3DNode, X3DUrlObject
 {
 
 }
 
 /** ShaderProgram can contain field declarations and a CDATA section of plain-text source code. */
-interface ShaderProgramProxy
+interface ShaderProgramProxy extends X3DNode
 {
 
 }
 
 /** Shape can appear under any grouping node. */
-interface ShapeProxy
+interface ShapeProxy extends X3DShapeNode
 {
 
 }
 
 /** SignalPdu is a networked Protocol Data Unit (PDU) information node that communicates the transmission of voice, audio or other data modeled in a simulation. */
-interface SignalPduProxy
+interface SignalPduProxy extends X3DNetworkSensorNode, X3DBoundedObject
 {
 
 }
 
 /** SilhouetteEnhancementVolumeStyle specifies that volumetric data is rendered with silhouette enhancement. */
-interface SilhouetteEnhancementVolumeStyleProxy
+interface SilhouetteEnhancementVolumeStyleProxy extends X3DComposableVolumeRenderStyleNode
 {
 
 }
 
 /** SingleAxisHingeJoint has single axis about which to rotate, similar to a traditional door hinge. Contains two RigidBody nodes (containerField values body1, body2). */
-interface SingleAxisHingeJointProxy
+interface SingleAxisHingeJointProxy extends X3DRigidJointNode
 {
 
 }
 
 /** SliderJoint constrains all movement between body1 and body2 along a single axis. Contains two RigidBody nodes (containerField values body1, body2). */
-interface SliderJointProxy
+interface SliderJointProxy extends X3DRigidJointNode
 {
 
 }
 
 /** The Sound node controls the 3D spatialization of sound playback by a child AudioClip or MovieTexture node. */
-interface SoundProxy
+interface SoundProxy extends X3DSoundNode
 {
 
 }
 
 /** The SpatialSound node controls the 3D spatialization of sound playback by a child AudioClip or MovieTexture node. */
-interface SpatialSoundProxy
+interface SpatialSoundProxy extends X3DSoundNode
 {
 
 }
 
 /** Sphere is a geometry node, representing a perfectly round geometrical object that is the surface of a completely round ball. */
-interface SphereProxy
+interface SphereProxy extends X3DGeometryNode
 {
 
 }
 
 /** SphereSensor converts pointing device motion into a spherical rotation about the origin of the local coordinate system. */
-interface SphereSensorProxy
+interface SphereSensorProxy extends X3DDragSensorNode
 {
 
 }
 
 /** SplinePositionInterpolator performs non-linear interpolation among paired lists of 3-tuple values and velocities to produce an SFVec3f value_changed output event. */
-interface SplinePositionInterpolatorProxy
+interface SplinePositionInterpolatorProxy extends X3DInterpolatorNode
 {
 
 }
 
 /** SplinePositionInterpolator2D performs non-linear interpolation among paired lists of 2-tuple values and velocities to produce an SFVec2f value_changed output event. */
-interface SplinePositionInterpolator2DProxy
+interface SplinePositionInterpolator2DProxy extends X3DInterpolatorNode
 {
 
 }
 
 /** SplineScalarInterpolator performs non-linear interpolation among paired lists of float values and velocities to produce an SFFloat value_changed output event. */
-interface SplineScalarInterpolatorProxy
+interface SplineScalarInterpolatorProxy extends X3DInterpolatorNode
 {
 
 }
 
 /** Linear attenuation may occur at level 2, full support at level 3. */
-interface SpotLightProxy
+interface SpotLightProxy extends X3DLightNode
 {
 
 }
 
 /** SquadOrientationInterpolator performs non-linear interpolation among paired lists of rotation values to produce an SFRotation value_changed output event. */
-interface SquadOrientationInterpolatorProxy
+interface SquadOrientationInterpolatorProxy extends X3DInterpolatorNode
 {
 
 }
 
 /** StaticGroup is similar to Group node but does not allow access to children after creation time. */
-interface StaticGroupProxy
+interface StaticGroupProxy extends X3DChildNode, X3DBoundedObject
 {
 
 }
 
 /** StreamAudioDestination node represents the final audio destination via a media stream. */
-interface StreamAudioDestinationProxy
+interface StreamAudioDestinationProxy extends X3DSoundDestinationNode
 {
 
 }
 
 /** StreamAudioSource operates as an audio source whose media is received from a MediaStream obtained using the WebRTC or Media Capture and Streams APIs. */
-interface StreamAudioSourceProxy
+interface StreamAudioSourceProxy extends X3DSoundSourceNode
 {
 
 }
 
 /** StringSensor generates events as the user presses keys on the keyboard. */
-interface StringSensorProxy
+interface StringSensorProxy extends X3DKeyDeviceSensorNode
 {
 
 }
 
 /** SurfaceEmitter generates particles from the surface of an object. */
-interface SurfaceEmitterProxy
+interface SurfaceEmitterProxy extends X3DParticleEmitterNode
 {
 
 }
 
 /** Switch is a Grouping node that only renders one (or zero) child at a time. */
-interface SwitchProxy
+interface SwitchProxy extends X3DGroupingNode
 {
 
 }
 
 /** TexCoordChaser2D generates a series of single floating-point values that progressively change from initial value to destination value. */
-interface TexCoordChaser2DProxy
+interface TexCoordChaser2DProxy extends X3DChaserNode
 {
 
 }
 
 /** TexCoordDamper2D generates a series of 2D floating-point arrays that progressively change from initial value to destination value. */
-interface TexCoordDamper2DProxy
+interface TexCoordDamper2DProxy extends X3DDamperNode
 {
 
 }
 
 /** Text is a 2D (flat) geometry node that can contain multiple lines of string values. */
-interface TextProxy
+interface TextProxy extends X3DGeometryNode
 {
 
 }
 
 /** TextureBackground simulates ground and sky, using vertical arrays of wraparound color values, TextureBackground can also provide backdrop texture images on all six sides. */
-interface TextureBackgroundProxy
+interface TextureBackgroundProxy extends X3DBackgroundNode
 {
 
 }
 
 /** TextureCoordinate specifies 2D (s,t) texture-coordinate points, used by vertex-based geometry nodes (such as IndexedFaceSet or ElevationGrid) to map textures to vertices (and patches to NURBS surfaces). */
-interface TextureCoordinateProxy
+interface TextureCoordinateProxy extends X3DSingleTextureCoordinateNode
 {
 
 }
 
 /** TextureCoordinate3D specifies a set of 3D texture coordinates used by vertex-based geometry nodes (such as IndexedFaceSet or ElevationGrid) to map 3D textures to vertices. */
-interface TextureCoordinate3DProxy
+interface TextureCoordinate3DProxy extends X3DSingleTextureCoordinateNode
 {
 
 }
 
 /** TextureCoordinate4D specifies a set of 4D (homogeneous 3D) texture coordinates used by vertex-based geometry nodes (such as IndexedFaceSet or ElevationGrid) to map 3D textures to vertices. */
-interface TextureCoordinate4DProxy
+interface TextureCoordinate4DProxy extends X3DSingleTextureCoordinateNode
 {
 
 }
 
 /** TextureCoordinateGenerator computes 2D (s,t) texture-coordinate points, used by vertex-based geometry nodes (such as IndexedFaceSet or ElevationGrid) to map textures to vertices (and patches to NURBS surfaces). */
-interface TextureCoordinateGeneratorProxy
+interface TextureCoordinateGeneratorProxy extends X3DSingleTextureCoordinateNode
 {
 
 }
 
 /** TextureProjector is similar to a light that projects a texture into the scene, illuminating geometry that intersects the perspective projection volume. */
-interface TextureProjectorProxy
+interface TextureProjectorProxy extends X3DTextureProjectorNode
 {
 
 }
 
 /** TextureProjectorParallel is similar to a light that projects a texture into the scene, illuminating geometry that intersects the parallel projection volume. */
-interface TextureProjectorParallelProxy
+interface TextureProjectorParallelProxy extends X3DTextureProjectorNode
 {
 
 }
 
 /** TextureProperties allows precise fine-grained control over application of image textures to geometry. */
-interface TexturePropertiesProxy
+interface TexturePropertiesProxy extends X3DNode
 {
 
 }
 
 /** TextureTransform shifts 2D texture coordinates for positioning, orienting and scaling image textures on geometry. */
-interface TextureTransformProxy
+interface TextureTransformProxy extends X3DTextureTransformNode
 {
 
 }
 
 /** TextureTransform3D applies a 3D transformation to texture coordinates. */
-interface TextureTransform3DProxy
+interface TextureTransform3DProxy extends X3DTextureTransformNode
 {
 
 }
 
 /** TextureTransformMatrix3D applies a 3D transformation to texture coordinates. */
-interface TextureTransformMatrix3DProxy
+interface TextureTransformMatrix3DProxy extends X3DTextureTransformNode
 {
 
 }
 
 /** TimeSensor continuously generates events as time passes. */
-interface TimeSensorProxy
+interface TimeSensorProxy extends X3DTimeDependentNode, X3DSensorNode
 {
 
 }
 
 /** TimeTrigger converts boolean true events to time events. */
-interface TimeTriggerProxy
+interface TimeTriggerProxy extends X3DTriggerNode
 {
 
 }
 
 /** ToneMappedVolumeStyle specifies that volumetric data is rendered with Gooch shading model of two-toned warm/cool coloring. */
-interface ToneMappedVolumeStyleProxy
+interface ToneMappedVolumeStyleProxy extends X3DComposableVolumeRenderStyleNode
 {
 
 }
 
 /** TouchSensor tracks location and state of the pointing device, detecting when a user points at or selects (activates) geometry. */
-interface TouchSensorProxy
+interface TouchSensorProxy extends X3DTouchSensorNode
 {
 
 }
 
 /** Transform is a Grouping node that can contain most nodes. */
-interface TransformProxy
+interface TransformProxy extends X3DGroupingNode
 {
 
 }
 
 /** TransformSensor generates output events when its targetObject enters, exits, and moves within a region in space (defined by a box). */
-interface TransformSensorProxy
+interface TransformSensorProxy extends X3DEnvironmentalSensorNode
 {
 
 }
 
 /** TransmitterPdu is a networked Protocol Data Unit (PDU) information node that provides detailed information about a radio transmitter modeled in a simulation. */
-interface TransmitterPduProxy
+interface TransmitterPduProxy extends X3DNetworkSensorNode, X3DBoundedObject
 {
 
 }
 
 /** TriangleFanSet is a geometry node containing a Coordinate|CoordinateDouble node, and can also contain Color|ColorRGBA, Normal and TextureCoordinate nodes. */
-interface TriangleFanSetProxy
+interface TriangleFanSetProxy extends X3DComposedGeometryNode
 {
 
 }
 
 /** TriangleSet is a geometry node containing a Coordinate|CoordinateDouble node, and can also contain Color|ColorRGBA, Normal and TextureCoordinate nodes. */
-interface TriangleSetProxy
+interface TriangleSetProxy extends X3DComposedGeometryNode
 {
 
 }
 
 /** TriangleSet2D is a geometry node that defines a set of filled 2D triangles in X-Y plane. */
-interface TriangleSet2DProxy
+interface TriangleSet2DProxy extends X3DGeometryNode
 {
 
 }
 
 /** TriangleStripSet is a geometry node containing a Coordinate|CoordinateDouble node, and can also contain Color|ColorRGBA, Normal and TextureCoordinate nodes. */
-interface TriangleStripSetProxy
+interface TriangleStripSetProxy extends X3DComposedGeometryNode
 {
 
 }
 
 /** TwoSidedMaterial specifies surface rendering properties for associated geometry nodes, for outer (front) and inner (back) sides of polygons. */
-interface TwoSidedMaterialProxy
+interface TwoSidedMaterialProxy extends X3DMaterialNode
 {
 
 }
 
 /** UniversalJoint is like a BallJoint that constrains an extra degree of rotational freedom. */
-interface UniversalJointProxy
+interface UniversalJointProxy extends X3DRigidJointNode
 {
 
 }
 
 /** UnlitMaterial specifies surface rendering properties for associated geometry nodes. */
-interface UnlitMaterialProxy
+interface UnlitMaterialProxy extends X3DOneSidedMaterialNode
 {
 
 }
 
 /** Viewpoint provides a specific location and direction where the user may view the scene. */
-interface ViewpointProxy
+interface ViewpointProxy extends X3DViewpointNode
 {
 
 }
 
 /** ViewpointGroup can contain Viewpoint, OrthoViewpoint, GeoViewpoint and other ViewpointGroup nodes for better user-navigation support with a shared description on the viewpoint list. */
-interface ViewpointGroupProxy
+interface ViewpointGroupProxy extends X3DChildNode
 {
 
 }
 
 /** Viewport is a Grouping node that can contain most nodes. */
-interface ViewportProxy
+interface ViewportProxy extends X3DViewportNode
 {
 
 }
 
 /** VisibilitySensor detects when user can see a specific object or region as they navigate the world. */
-interface VisibilitySensorProxy
+interface VisibilitySensorProxy extends X3DEnvironmentalSensorNode
 {
 
 }
 
 /** VolumeData displays a simple non-segmented voxel dataset with a single RenderStyle node. */
-interface VolumeDataProxy
+interface VolumeDataProxy extends X3DVolumeDataNode
 {
 
 }
 
 /** VolumeEmitter emits particles from a random position confined within the given closed geometry volume. */
-interface VolumeEmitterProxy
+interface VolumeEmitterProxy extends X3DParticleEmitterNode
 {
 
 }
 
 /** VolumePickSensor tests picking intersections using the pickingGeometry against the pickTarget geometry volume. */
-interface VolumePickSensorProxy
+interface VolumePickSensorProxy extends X3DPickSensorNode
 {
 
 }
 
 /** WaveShaper node represents a nonlinear distorter that applies a wave-shaping distortion curve to the signal. */
-interface WaveShaperProxy
+interface WaveShaperProxy extends X3DSoundProcessingNode
 {
 
 }
 
 /** WindPhysicsModel applies a wind effect to the particles. */
-interface WindPhysicsModelProxy
+interface WindPhysicsModelProxy extends X3DParticlePhysicsModelNode
 {
 
 }
 
 /** WorldInfo contains a title and simple persistent metadata information about an X3D scene. This node is strictly for documentation purposes and has no effect on the visual appearance or behaviour of the world. */
-interface WorldInfoProxy
+interface WorldInfoProxy extends X3DInfoNode
 {
 
 }
 
 /** Nodes of this type can be used as child nodes for Appearance. */
-interface X3DAppearanceChildNodeProxy
+interface X3DAppearanceChildNodeProxy extends X3DNode
 {
 
 }
 
 /** Base type for all Appearance nodes. */
-interface X3DAppearanceNodeProxy
+interface X3DAppearanceNodeProxy extends X3DNode
 {
 
 }
 
 /** Abstract type from which all backgrounds inherit, also defining a background binding stack. */
-interface X3DBackgroundNodeProxy
+interface X3DBackgroundNodeProxy extends X3DBindableNode
 {
 
 }
 
 /** Bindable nodes implement the binding stack, so that only one of each node type is active at a given time. */
-interface X3DBindableNodeProxy
+interface X3DBindableNodeProxy extends X3DChildNode
 {
 
 }
 
 /** The X3DChaserNode abstract node type calculates the output on value_changed as a finite impulse response (FIR) based on the events received on set_destination field. */
-interface X3DChaserNodeProxy
+interface X3DChaserNodeProxy extends X3DFollowerNode
 {
 
 }
 
 /** A node that implements X3DChildNode is one of the legal children for a X3DGroupingNode parent. */
-interface X3DChildNodeProxy
+interface X3DChildNodeProxy extends X3DNode
 {
 
 }
 
 /** Base type for color specifications in X3D. */
-interface X3DColorNodeProxy
+interface X3DColorNodeProxy extends X3DGeometricPropertyNode
 {
 
 }
 
 /** The X3DComposableVolumeRenderStyleNode abstract node type is the base type for all node types that allow rendering styles to be sequentially composed together to form a single renderable output. */
-interface X3DComposableVolumeRenderStyleNodeProxy
+interface X3DComposableVolumeRenderStyleNodeProxy extends X3DVolumeRenderStyleNode
 {
 
 }
 
 /** Composed geometry nodes produce renderable geometry, can contain Color Coordinate Normal TextureCoordinate, and are contained by a Shape node. */
-interface X3DComposedGeometryNodeProxy
+interface X3DComposedGeometryNodeProxy extends X3DGeometryNode
 {
 
 }
 
 /** Base type for all coordinate node types in X3D. */
-interface X3DCoordinateNodeProxy
+interface X3DCoordinateNodeProxy extends X3DGeometricPropertyNode
 {
 
 }
 
 /** The X3DDamperNode abstract node type creates an IIR response that approaches the destination value according to the shape of the e-function only asymptotically but very quickly. */
-interface X3DDamperNodeProxy
+interface X3DDamperNodeProxy extends X3DFollowerNode
 {
 
 }
 
 /** Base type for all drag-style pointing device sensors. */
-interface X3DDragSensorNodeProxy
+interface X3DDragSensorNodeProxy extends X3DPointingDeviceSensorNode
 {
 
 }
 
 /** Base type for the environmental sensor nodes ProximitySensor, TransformSensor and VisibilitySensor. */
-interface X3DEnvironmentalSensorNodeProxy
+interface X3DEnvironmentalSensorNodeProxy extends X3DSensorNode
 {
 
 }
 
 /** Base type for all nodes that specify cubic environment map sources for texture images. */
-interface X3DEnvironmentTextureNodeProxy
+interface X3DEnvironmentTextureNodeProxy extends X3DTextureNode
 {
 
 }
 
 /** X3DFollowerNode is the abstract base class for all nodes in the Followers component. */
-interface X3DFollowerNodeProxy
+interface X3DFollowerNodeProxy extends X3DChildNode
 {
 
 }
 
 /** Base type for all font style nodes. */
-interface X3DFontStyleNodeProxy
+interface X3DFontStyleNodeProxy extends X3DNode
 {
 
 }
 
 /** Base type for all geometric property node types. */
-interface X3DGeometricPropertyNodeProxy
+interface X3DGeometricPropertyNodeProxy extends X3DNode
 {
 
 }
 
 /** Geometry nodes produce renderable geometry and are contained by a Shape node. */
-interface X3DGeometryNodeProxy
+interface X3DGeometryNodeProxy extends X3DNode
 {
 
 }
 
 /** Grouping nodes can contain other nodes as children, thus making up the backbone of a scene graph. */
-interface X3DGroupingNodeProxy
+interface X3DGroupingNodeProxy extends X3DChildNode, X3DBoundedObject
 {
 
 }
 
 /** Base type for all nodes that contain only information without visual semantics. */
-interface X3DInfoNodeProxy
+interface X3DInfoNodeProxy extends X3DChildNode
 {
 
 }
 
 /** Interpolator nodes are designed for linear keyframed animation. Interpolators are driven by an input key ranging [0..1] and produce corresponding piecewise-linear output functions. */
-interface X3DInterpolatorNodeProxy
+interface X3DInterpolatorNodeProxy extends X3DChildNode
 {
 
 }
 
 /** Base type for all sensor node types that operate using key devices. */
-interface X3DKeyDeviceSensorNodeProxy
+interface X3DKeyDeviceSensorNodeProxy extends X3DSensorNode
 {
 
 }
 
 /** The X3DLayerNode abstract node type is the base node type for layer nodes. */
-interface X3DLayerNodeProxy
+interface X3DLayerNodeProxy extends X3DNode, X3DPickableObject
 {
 
 }
 
 /** X3DLayoutNode is the base node type for layout nodes. */
-interface X3DLayoutNodeProxy
+interface X3DLayoutNodeProxy extends X3DChildNode
 {
 
 }
 
 /** Light nodes provide illumination for rendering geometry in the scene. Implementing nodes must include a global field with type SFBool and accessType inputOutput. */
-interface X3DLightNodeProxy
+interface X3DLightNodeProxy extends X3DChildNode
 {
 
 }
 
 /** Base type for all Material nodes. */
-interface X3DMaterialNodeProxy
+interface X3DMaterialNodeProxy extends X3DAppearanceChildNode
 {
 
 }
 
 /** The X3DNBodyCollidableNode abstract node type represents objects that act as the interface between the rigid body physics, collision geometry proxy, and renderable objects in the scene graph hierarchy. */
-interface X3DNBodyCollidableNodeProxy
+interface X3DNBodyCollidableNodeProxy extends X3DChildNode, X3DBoundedObject
 {
 
 }
 
 /** The X3DNBodyCollisionSpaceNode abstract node type represents objects that act as a self-contained spatial collection of objects that can interact through collision detection routines. */
-interface X3DNBodyCollisionSpaceNodeProxy
+interface X3DNBodyCollisionSpaceNodeProxy extends X3DNode, X3DBoundedObject
 {
 
 }
 
 /** Base typefor all sensors that generate events based on network activity. */
-interface X3DNetworkSensorNodeProxy
+interface X3DNetworkSensorNodeProxy extends X3DSensorNode
 {
 
 }
@@ -3115,151 +3115,151 @@ interface X3DNodeProxy
 }
 
 /** Base type for all normal node types in X3D. */
-interface X3DNormalNodeProxy
+interface X3DNormalNodeProxy extends X3DGeometricPropertyNode
 {
 
 }
 
 /** Base type for all nodes that provide control curve information in 2D space. */
-interface X3DNurbsControlCurveNodeProxy
+interface X3DNurbsControlCurveNodeProxy extends X3DNode
 {
 
 }
 
 /** Abstract geometry type for all types of NURBS surfaces. */
-interface X3DNurbsSurfaceGeometryNodeProxy
+interface X3DNurbsSurfaceGeometryNodeProxy extends X3DParametricGeometryNode
 {
 
 }
 
 /** Base type for material nodes that describe how the shape looks like from one side. A different number of contanied texture nodes are allowed by each of the implementing nodes. */
-interface X3DOneSidedMaterialNodeProxy
+interface X3DOneSidedMaterialNodeProxy extends X3DMaterialNode
 {
 
 }
 
 /** Base type for all geometry node types that are created parametrically and use control points to describe the final shape of the surface. */
-interface X3DParametricGeometryNodeProxy
+interface X3DParametricGeometryNodeProxy extends X3DGeometryNode
 {
 
 }
 
 /** The X3DParticleEmitterNode abstract type represents any node that is an emitter of particles. */
-interface X3DParticleEmitterNodeProxy
+interface X3DParticleEmitterNodeProxy extends X3DNode
 {
 
 }
 
 /** The X3DParticlePhysicsModelNode abstract type represents any node that applies a form of constraints on the particles after they have been generated. */
-interface X3DParticlePhysicsModelNodeProxy
+interface X3DParticlePhysicsModelNodeProxy extends X3DNode
 {
 
 }
 
 /** The X3DPickSensorNode abstract node type is the base node type that represents the lowest common denominator of picking capabilities. */
-interface X3DPickSensorNodeProxy
+interface X3DPickSensorNodeProxy extends X3DSensorNode
 {
 
 }
 
 /** Base type for all pointing device sensors. */
-interface X3DPointingDeviceSensorNodeProxy
+interface X3DPointingDeviceSensorNodeProxy extends X3DSensorNode
 {
 
 }
 
 /** Base type marking nodes that are valid product structure children for the CADGeometry component. */
-interface X3DProductStructureChildNodeProxy
+interface X3DProductStructureChildNodeProxy extends X3DChildNode
 {
 
 }
 
 /** Base type for all prototype instances. Note that direct children nodes are disallowed, instead let fieldValue with type SFNode/MFNode contain them. Current practice is that, if desired, prototype authors must explicitly add the metadata SFNode field in the ProtoInterface. */
-interface X3DPrototypeInstanceProxy
+interface X3DPrototypeInstanceProxy extends X3DNode
 {
 
 }
 
 /** The X3DRigidJointNode abstract node type is the base type for all joint types. */
-interface X3DRigidJointNodeProxy
+interface X3DRigidJointNodeProxy extends X3DNode
 {
 
 }
 
 /** Base type for scripting nodes (but not shader nodes). */
-interface X3DScriptNodeProxy
+interface X3DScriptNodeProxy extends X3DChildNode, X3DUrlObject
 {
 
 }
 
 /** Base type for all sensors. */
-interface X3DSensorNodeProxy
+interface X3DSensorNodeProxy extends X3DChildNode
 {
 
 }
 
 /** Base type from which all Sequencers are derived. */
-interface X3DSequencerNodeProxy
+interface X3DSequencerNodeProxy extends X3DChildNode
 {
 
 }
 
 /** Base type for all nodes that specify a programmable shader. */
-interface X3DShaderNodeProxy
+interface X3DShaderNodeProxy extends X3DAppearanceChildNode
 {
 
 }
 
 /** Base type for all Shape nodes. */
-interface X3DShapeNodeProxy
+interface X3DShapeNodeProxy extends X3DChildNode, X3DBoundedObject
 {
 
 }
 
 /** Base type for all texture coordinate nodes which specify texture coordinates for a single texture. */
-interface X3DSingleTextureCoordinateNodeProxy
+interface X3DSingleTextureCoordinateNodeProxy extends X3DTextureCoordinateNode
 {
 
 }
 
 /** Base type for all texture node types that define a single texture. A single texture can be used to influence a parameter of various material nodes in the Shape component, and it can be a child of MultiTexture. */
-interface X3DSingleTextureNodeProxy
+interface X3DSingleTextureNodeProxy extends X3DTextureNode
 {
 
 }
 
 /** Base type for all texture transform nodes which specify texture coordinate transformation for a single texture. */
-interface X3DSingleTextureTransformNodeProxy
+interface X3DSingleTextureTransformNodeProxy extends X3DTextureTransformNode
 {
 
 }
 
 /** Base type for all sound destination nodes, which represent the final destination of an audio signal and are what the user can ultimately hear. */
-interface X3DSoundChannelNodeProxy
+interface X3DSoundChannelNodeProxy extends X3DSoundNode
 {
 
 }
 
 /** Base type for all sound destination nodes, which represent the final destination of an audio signal and are what the user can ultimately hear. */
-interface X3DSoundDestinationNodeProxy
+interface X3DSoundDestinationNodeProxy extends X3DSoundNode
 {
 
 }
 
 /** Base type for all sound nodes. */
-interface X3DSoundNodeProxy
+interface X3DSoundNodeProxy extends X3DChildNode
 {
 
 }
 
 /** Base type for all sound processing nodes, which are used to enhance audio with filtering, delaying, changing gain, etc. */
-interface X3DSoundProcessingNodeProxy
+interface X3DSoundProcessingNodeProxy extends X3DTimeDependentNode, X3DSoundNode
 {
 
 }
 
 /** Nodes implementing X3DSoundSourceNode provide signal inputs to the audio graph. */
-interface X3DSoundSourceNodeProxy
+interface X3DSoundSourceNodeProxy extends X3DTimeDependentNode, X3DSoundNode
 {
 
 }
@@ -3271,85 +3271,85 @@ interface X3DStatementProxy
 }
 
 /** Base type for all nodes which specify 2D sources for texture images. */
-interface X3DTexture2DNodeProxy
+interface X3DTexture2DNodeProxy extends X3DSingleTextureNode
 {
 
 }
 
 /** Base type for all nodes that specify 3D sources for texture images. */
-interface X3DTexture3DNodeProxy
+interface X3DTexture3DNodeProxy extends X3DTextureNode
 {
 
 }
 
 /** Base type for all nodes which specify texture coordinates. */
-interface X3DTextureCoordinateNodeProxy
+interface X3DTextureCoordinateNodeProxy extends X3DGeometricPropertyNode
 {
 
 }
 
 /** Base type for all nodes which specify sources for texture images. */
-interface X3DTextureNodeProxy
+interface X3DTextureNodeProxy extends X3DAppearanceChildNode
 {
 
 }
 
 /** Base type for all node types that specify texture projector nodes, which provide a form of lighting. */
-interface X3DTextureProjectorNodeProxy
+interface X3DTextureProjectorNodeProxy extends X3DLightNode
 {
 
 }
 
 /** Base type for all nodes which specify a transformation of texture coordinates. */
-interface X3DTextureTransformNodeProxy
+interface X3DTextureTransformNodeProxy extends X3DAppearanceChildNode
 {
 
 }
 
 /** Base type from which all time-dependent nodes are derived. */
-interface X3DTimeDependentNodeProxy
+interface X3DTimeDependentNodeProxy extends X3DChildNode
 {
 
 }
 
 /** Base type for all touch-style pointing device sensors. */
-interface X3DTouchSensorNodeProxy
+interface X3DTouchSensorNodeProxy extends X3DPointingDeviceSensorNode
 {
 
 }
 
 /** Base type from which all trigger nodes are derived. */
-interface X3DTriggerNodeProxy
+interface X3DTriggerNodeProxy extends X3DChildNode
 {
 
 }
 
 /** Base type for all nodes that specify per-vertex attribute information to the shader. */
-interface X3DVertexAttributeNodeProxy
+interface X3DVertexAttributeNodeProxy extends X3DGeometricPropertyNode
 {
 
 }
 
 /** Node type X3DViewpointNode defines a specific location in the local coordinate system from which the user may view the scene, and also defines a viewpoint binding stack. */
-interface X3DViewpointNodeProxy
+interface X3DViewpointNodeProxy extends X3DBindableNode
 {
 
 }
 
 /** The X3DViewportNode abstract node type is the base node type for viewport nodes. */
-interface X3DViewportNodeProxy
+interface X3DViewportNodeProxy extends X3DGroupingNode
 {
 
 }
 
 /** The X3DVolumeDataNode abstract node type is the base type for all node types that describe volumetric data to be rendered. */
-interface X3DVolumeDataNodeProxy
+interface X3DVolumeDataNodeProxy extends X3DChildNode, X3DBoundedObject
 {
 
 }
 
 /** The X3DVolumeRenderStyleNode abstract node type is the base type for all node types that specify a specific visual rendering style to be used when rendering volume data. */
-interface X3DVolumeRenderStyleNodeProxy
+interface X3DVolumeRenderStyleNodeProxy extends X3DNode
 {
 
 }
