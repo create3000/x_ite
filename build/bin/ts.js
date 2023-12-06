@@ -73,8 +73,8 @@ function ConcreteNode (node)
       .filter (field => !field .name .match (/^(?:DEF|USE|IS|id|class)$/) && !field .description ?.match (/CSS/))
       .sort ((a, b) => a .name .localeCompare (b .name));
 
-   if (node .name === "NavigationInfo")
-      console .log (fields);
+   // if (node .name === "NavigationInfo")
+   //    console .log (fields);
 
    const properties = fields
       .map (field => `   /**
