@@ -150,10 +150,16 @@ function FieldType (field)
       }
       case "SFNode":
       {
-         return field .acceptableNodeTypes
+         const types = field .acceptableNodeTypes
             .split (/[|,]/)
-            .map (type => `${type .trim ()}Proxy`)
-            .join (" | ") || "SFNode";
+            .map (type => `${type .trim ()}Proxy`);
+
+         if (!types .length)
+            types .push ("SFNode");
+
+         types .push ("null");
+
+         return types .join (" | ");
       }
       case "MFNode":
       {
