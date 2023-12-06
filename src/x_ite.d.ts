@@ -10,7 +10,7 @@ declare const X3D: X3D;
 
 interface X3D
 {
-   (callback?: () => void, fallback?: (error: Error) => void): Promise <void>;
+   (callback?: () => void, fallback?: (error: Error) => void): Promise <void | never>;
 
    noConflict (): X3D;
    createBrowser (): X3DCanvasElement;
@@ -111,12 +111,12 @@ class X3DBrowser
    readonly currentScene: X3DScene;
 
    replaceWorld (scene: X3DScene): Promise <void>;
-   createX3DFromString (x3dSyntax: string): Promise <X3DScene>;
-   createX3DFromURL (url: MFString): Promise <X3DScene>;
+   createX3DFromString (x3dSyntax: string): Promise <X3DScene | never>;
+   createX3DFromURL (url: MFString): Promise <X3DScene | never>;
    createX3DFromURL (url: MFString, node: SFNode, fieldName: string): void;
-   loadURL (url: MFString, parameter?: MFString): Promise <void>;
-   importDocument (dom: HTMLElement | string): Promise <X3DScene>;
-   importJS (json: string | JSONObject): Promise <X3DScene>;
+   loadURL (url: MFString, parameter?: MFString): Promise <void | never>;
+   importDocument (dom: HTMLElement | string): Promise <X3DScene | never>;
+   importJS (json: string | JSONObject): Promise <X3DScene | never>;
    getBrowserProperty (name: BrowserProperty): boolean | never;
    getBrowserOption <T extends keyof BrowserOption> (name: T): BrowserOption [T] | never;
    setBrowserOption <T extends keyof BrowserOption> (name: T, value: BrowserOption [T]): void | never;
