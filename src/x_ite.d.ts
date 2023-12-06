@@ -1331,7 +1331,7 @@ declare class MFMatrix4f extends X3DArrayField <SFMatrix4f>
    static readonly typeName: "MFMatrix4f";
 }
 
-declare class MFNode <T extends SFNode = SFNode> extends X3DArrayField <T>
+declare class MFNode <T extends SFNode | null = SFNode | null> extends X3DArrayField <T>
 {
    static readonly typeName: "MFNode";
 }

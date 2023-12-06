@@ -4,5 +4,5 @@ const browser = X3D .createBrowser () .browser;
 const scene = browser .currentScene;
 const nodes = scene .addRoute ();
 const r = scene .rootNodes;
-const n = scene .createNode ("Appearance");
-n .blendMode .destinationAlphaFactor = ''
+const n = scene .createNode ("Transform");
+n .children .push (null)

@@ -163,10 +163,14 @@ function FieldType (field)
       }
       case "MFNode":
       {
-         return `MFNode <${field .acceptableNodeTypes
+         const types = field .acceptableNodeTypes
             .split (/[|,]/)
-            .map (type => `${type .trim ()}Proxy`)
-            .join (" | ") || "SFNode"}>`;
+            .map (type => `${type .trim ()}Proxy`);
+
+         if (!types .length)
+            types .push ("SFNode");
+
+         return `MFNode <${types .join (" | ")}>`;
       }
       case "MFString":
       {
