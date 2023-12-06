@@ -480,6 +480,7 @@ interface X3DConstants
    readonly Billboard: number;
    readonly BiquadFilter: number;
    readonly BlendedVolumeStyle: number;
+   readonly BlendMode: number;
    readonly BooleanFilter: number;
    readonly BooleanSequencer: number;
    readonly BooleanToggle: number;
@@ -528,6 +529,7 @@ interface X3DConstants
    readonly Cylinder: number;
    readonly CylinderSensor: number;
    readonly Delay: number;
+   readonly DepthMode: number;
    readonly DirectionalLight: number;
    readonly DISEntityManager: number;
    readonly DISEntityTypeMapping: number;
@@ -569,6 +571,7 @@ interface X3DConstants
    readonly ImageCubeMapTexture: number;
    readonly ImageTexture: number;
    readonly ImageTexture3D: number;
+   readonly ImageTextureAtlas: number;
    readonly IndexedFaceSet: number;
    readonly IndexedLineSet: number;
    readonly IndexedQuadSet: number;
@@ -1670,6 +1673,14 @@ interface AppearanceProxy extends X3DAppearanceNodeProxy
    */
    backMaterial: X3DMaterialNodeProxy,
    /**
+   * This field is of access type is 'inputOutput' and type SFNode.
+   */
+   blendMode: BlendModeProxy,
+   /**
+   * This field is of access type is 'inputOutput' and type SFNode.
+   */
+   depthMode: DepthModeProxy,
+   /**
    * Single contained FillProperties node that can specify additional visual attributes applied to polygonal areas of corresponding geometry, on top of whatever other appearance is already defined.
    *
    * This field is of access type is 'inputOutput' and type SFNode.
@@ -2358,6 +2369,39 @@ interface BlendedVolumeStyleProxy extends X3DComposableVolumeRenderStyleNodeProx
    * This field is of access type is 'inputOutput' and type SFNode.
    */
    weightTransferFunction2: X3DTexture2DNodeProxy,
+}
+
+/** undefined */
+interface BlendModeProxy extends X3DAppearanceChildNodeProxy
+{
+   /**
+   * This field is of access type is 'inputOutput' and type SFString.
+   */
+   alphaEquation: "FUNC_ADD" | "FUNC_SUBTRACT" | "FUNC_REVERSE_SUBTRACT" | "MIN" | "MAX",
+   /**
+   * This field is of access type is 'inputOutput' and type SFColor.
+   */
+   blendColor: SFColor,
+   /**
+   * This field is of access type is 'inputOutput' and type SFString.
+   */
+   colorEquation: "FUNC_ADD" | "FUNC_SUBTRACT" | "FUNC_REVERSE_SUBTRACT" | "MIN" | "MAX",
+   /**
+   * This field is of access type is 'inputOutput' and type SFString.
+   */
+   destinationAlphaFactor: "ZERO" | "ONE" | "SRC_COLOR" | "ONE_MINUS_SRC_COLOR" | "DST_COLOR" | "ONE_MINUS_DST_COLOR" | "SRC_ALPHA" | "ONE_MINUS_SRC_ALPHA" | "DST_ALPHA" | "ONE_MINUS_DST_ALPHA" | "SRC_ALPHA_SATURATE" | "CONSTANT_COLOR" | "ONE_MINUS_CONSTANT_COLOR" | "CONSTANT_ALPHA" | "ONE_MINUS_CONSTANT_ALPHA",
+   /**
+   * This field is of access type is 'inputOutput' and type SFString.
+   */
+   destinationColorFactor: "ZERO" | "ONE" | "SRC_COLOR" | "ONE_MINUS_SRC_COLOR" | "DST_COLOR" | "ONE_MINUS_DST_COLOR" | "SRC_ALPHA" | "ONE_MINUS_SRC_ALPHA" | "DST_ALPHA" | "ONE_MINUS_DST_ALPHA" | "SRC_ALPHA_SATURATE" | "CONSTANT_COLOR" | "ONE_MINUS_CONSTANT_COLOR" | "CONSTANT_ALPHA" | "ONE_MINUS_CONSTANT_ALPHA",
+   /**
+   * This field is of access type is 'inputOutput' and type SFString.
+   */
+   sourceAlphaFactor: "ZERO" | "ONE" | "SRC_COLOR" | "ONE_MINUS_SRC_COLOR" | "DST_COLOR" | "ONE_MINUS_DST_COLOR" | "SRC_ALPHA" | "ONE_MINUS_SRC_ALPHA" | "DST_ALPHA" | "ONE_MINUS_DST_ALPHA" | "SRC_ALPHA_SATURATE" | "CONSTANT_COLOR" | "ONE_MINUS_CONSTANT_COLOR" | "CONSTANT_ALPHA" | "ONE_MINUS_CONSTANT_ALPHA",
+   /**
+   * This field is of access type is 'inputOutput' and type SFString.
+   */
+   sourceColorFactor: "ZERO" | "ONE" | "SRC_COLOR" | "ONE_MINUS_SRC_COLOR" | "DST_COLOR" | "ONE_MINUS_DST_COLOR" | "SRC_ALPHA" | "ONE_MINUS_SRC_ALPHA" | "DST_ALPHA" | "ONE_MINUS_DST_ALPHA" | "SRC_ALPHA_SATURATE" | "CONSTANT_COLOR" | "ONE_MINUS_CONSTANT_COLOR" | "CONSTANT_ALPHA" | "ONE_MINUS_CONSTANT_ALPHA",
 }
 
 /** BooleanFilter selectively passes true, false or negated events. */
@@ -4820,6 +4864,31 @@ interface DelayProxy extends X3DSoundProcessingNodeProxy
    * This field is of access type is 'inputOutput' and type SFTime.
    */
    tailTime: number,
+}
+
+/** undefined */
+interface DepthModeProxy extends X3DAppearanceChildNodeProxy
+{
+   /**
+   * This field is of access type is 'inputOutput' and type SFString.
+   */
+   depthFunc: "NEVER" | "LESS" | "EQUAL" | "LESS_EQUAL" | "GREATER" | "NOT_EQUAL" | "GREATER_EQUAL" | "ALWAYS",
+   /**
+   * This field is of access type is 'inputOutput' and type SFBool.
+   */
+   depthMask: boolean,
+   /**
+   * This field is of access type is 'inputOutput' and type SFVec2f.
+   */
+   depthRange: SFVec2f,
+   /**
+   * This field is of access type is 'inputOutput' and type SFBool.
+   */
+   depthTest: boolean,
+   /**
+   * This field is of access type is 'inputOutput' and type SFVec2f.
+   */
+   polygonOffset: SFVec2f,
 }
 
 /** DirectionalLight might not be scoped by parent Group or Transform at levels 1 or 2. */
@@ -8295,6 +8364,23 @@ interface ImageTexture3DProxy extends X3DTexture3DNodeProxy, X3DUrlObjectProxy
    * This field is of access type is 'inputOutput' and type MFString.
    */
    url: MFString,
+}
+
+/** undefined */
+interface ImageTextureAtlasProxy extends X3DTexture3DNodeProxy
+{
+   /**
+   * This field is of access type is 'inputOutput' and type SFInt32.
+   */
+   numberOfSlices: number,
+   /**
+   * This field is of access type is 'inputOutput' and type SFInt32.
+   */
+   slicesOverX: number,
+   /**
+   * This field is of access type is 'inputOutput' and type SFInt32.
+   */
+   slicesOverY: number,
 }
 
 /** IndexedFaceSet defines polygons using index lists corresponding to vertex coordinates. */
@@ -20073,6 +20159,7 @@ type ConcreteNodesType = {
    Billboard: BillboardProxy,
    BiquadFilter: BiquadFilterProxy,
    BlendedVolumeStyle: BlendedVolumeStyleProxy,
+   BlendMode: BlendModeProxy,
    BooleanFilter: BooleanFilterProxy,
    BooleanSequencer: BooleanSequencerProxy,
    BooleanToggle: BooleanToggleProxy,
@@ -20121,6 +20208,7 @@ type ConcreteNodesType = {
    Cylinder: CylinderProxy,
    CylinderSensor: CylinderSensorProxy,
    Delay: DelayProxy,
+   DepthMode: DepthModeProxy,
    DirectionalLight: DirectionalLightProxy,
    DISEntityManager: DISEntityManagerProxy,
    DISEntityTypeMapping: DISEntityTypeMappingProxy,
@@ -20162,6 +20250,7 @@ type ConcreteNodesType = {
    ImageCubeMapTexture: ImageCubeMapTextureProxy,
    ImageTexture: ImageTextureProxy,
    ImageTexture3D: ImageTexture3DProxy,
+   ImageTextureAtlas: ImageTextureAtlasProxy,
    IndexedFaceSet: IndexedFaceSetProxy,
    IndexedLineSet: IndexedLineSetProxy,
    IndexedQuadSet: IndexedQuadSetProxy,

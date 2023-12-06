@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<X3dUnifiedObjectModel xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance" version="4.0" xsd:noNamespaceSchemaLocation="X3dUnifiedObjectModel.xsd">
+   <ConcreteNodes>
+      <ConcreteNode name="Appearance">
+         <InterfaceDefinition>
+            <componentInfo name="Shape" level="1"/>
+            <field name="blendMode"
+                  type="SFNode"
+                  accessType="inputOutput"
+                  default="NULL"
+                  acceptableNodeTypes="BlendMode"
+                  description=""/>
+            <field name="depthMode"
+                  type="SFNode"
+                  accessType="inputOutput"
+                  default="NULL"
+                  acceptableNodeTypes="DepthMode"
+                  description=""/>
+         </InterfaceDefinition>
+      </ConcreteNode>
+      <ConcreteNode name="BlendMode">
+         <InterfaceDefinition>
+            <componentInfo name="X_ITE" level="1"/>
+            <containerField default="blendMode" type="xs:NMTOKEN"/>
+            <Inheritance baseType="X3DAppearanceChildNode"/>
+            <field name="blendColor"
+                  type="SFColor"
+                  accessType="inputOutput"
+                  default="0 0 0"
+                  minInclusive="0"
+                  maxInclusive="1"
+                  description=""/>
+            <field name="sourceColorFactor"
+                  type="SFString"
+                  accessType="inputOutput"
+                  default="SRC_ALPHA"
+                  description="">
+               <enumeration value="ZERO"/>
+               <enumeration value="ONE"/>
+               <enumeration value="SRC_COLOR"/>
+               <enumeration value="ONE_MINUS_SRC_COLOR"/>
+               <enumeration value="DST_COLOR"/>
+               <enumeration value="ONE_MINUS_DST_COLOR"/>
+               <enumeration value="SRC_ALPHA"/>
+               <enumeration value="ONE_MINUS_SRC_ALPHA"/>
+               <enumeration value="DST_ALPHA"/>
+               <enumeration value="ONE_MINUS_DST_ALPHA"/>
+               <enumeration value="SRC_ALPHA_SATURATE"/>
+               <enumeration value="CONSTANT_COLOR"/>
+               <enumeration value="ONE_MINUS_CONSTANT_COLOR"/>
+               <enumeration value="CONSTANT_ALPHA"/>
+               <enumeration value="ONE_MINUS_CONSTANT_ALPHA"/>
+            </field>
+            <field name="sourceAlphaFactor"
+                  type="SFString"
+                  accessType="inputOutput"
+                  default="ONE"
+                  description="">
+               <enumeration value="ZERO"/>
+               <enumeration value="ONE"/>
+               <enumeration value="SRC_COLOR"/>
+               <enumeration value="ONE_MINUS_SRC_COLOR"/>
+               <enumeration value="DST_COLOR"/>
+               <enumeration value="ONE_MINUS_DST_COLOR"/>
+               <enumeration value="SRC_ALPHA"/>
+               <enumeration value="ONE_MINUS_SRC_ALPHA"/>
+               <enumeration value="DST_ALPHA"/>
+               <enumeration value="ONE_MINUS_DST_ALPHA"/>
+               <enumeration value="SRC_ALPHA_SATURATE"/>
+               <enumeration value="CONSTANT_COLOR"/>
+               <enumeration value="ONE_MINUS_CONSTANT_COLOR"/>
+               <enumeration value="CONSTANT_ALPHA"/>
+               <enumeration value="ONE_MINUS_CONSTANT_ALPHA"/>
+            </field>
+            <field name="destinationColorFactor"
+                  type="SFString"
+                  accessType="inputOutput"
+                  default="ONE_MINUS_SRC_ALPHA"
+                  description="">
+               <enumeration value="ZERO"/>
+               <enumeration value="ONE"/>
+               <enumeration value="SRC_COLOR"/>
+               <enumeration value="ONE_MINUS_SRC_COLOR"/>
+               <enumeration value="DST_COLOR"/>
+               <enumeration value="ONE_MINUS_DST_COLOR"/>
+               <enumeration value="SRC_ALPHA"/>
+               <enumeration value="ONE_MINUS_SRC_ALPHA"/>
+               <enumeration value="DST_ALPHA"/>
+               <enumeration value="ONE_MINUS_DST_ALPHA"/>
+               <enumeration value="SRC_ALPHA_SATURATE"/>
+               <enumeration value="CONSTANT_COLOR"/>
+               <enumeration value="ONE_MINUS_CONSTANT_COLOR"/>
+               <enumeration value="CONSTANT_ALPHA"/>
+               <enumeration value="ONE_MINUS_CONSTANT_ALPHA"/>
+            </field>
+            <field name="destinationAlphaFactor"
+                  type="SFString"
+                  accessType="inputOutput"
+                  default="ONE_MINUS_SRC_ALPHA"
+                  description="">
+               <enumeration value="ZERO"/>
+               <enumeration value="ONE"/>
+               <enumeration value="SRC_COLOR"/>
+               <enumeration value="ONE_MINUS_SRC_COLOR"/>
+               <enumeration value="DST_COLOR"/>
+               <enumeration value="ONE_MINUS_DST_COLOR"/>
+               <enumeration value="SRC_ALPHA"/>
+               <enumeration value="ONE_MINUS_SRC_ALPHA"/>
+               <enumeration value="DST_ALPHA"/>
+               <enumeration value="ONE_MINUS_DST_ALPHA"/>
+               <enumeration value="SRC_ALPHA_SATURATE"/>
+               <enumeration value="CONSTANT_COLOR"/>
+               <enumeration value="ONE_MINUS_CONSTANT_COLOR"/>
+               <enumeration value="CONSTANT_ALPHA"/>
+               <enumeration value="ONE_MINUS_CONSTANT_ALPHA"/>
+            </field>
+            <field name="colorEquation"
+                  type="SFString"
+                  accessType="inputOutput"
+                  default="FUNC_ADD"
+                  description="">
+               <enumeration value="FUNC_ADD"/>
+               <enumeration value="FUNC_SUBTRACT"/>
+               <enumeration value="FUNC_REVERSE_SUBTRACT"/>
+               <enumeration value="MIN"/>
+               <enumeration value="MAX"/>
+            </field>
+            <field name="alphaEquation"
+                  type="SFString"
+                  accessType="inputOutput"
+                  default="FUNC_ADD"
+                  description="">
+               <enumeration value="FUNC_ADD"/>
+               <enumeration value="FUNC_SUBTRACT"/>
+               <enumeration value="FUNC_REVERSE_SUBTRACT"/>
+               <enumeration value="MIN"/>
+               <enumeration value="MAX"/>
+            </field>
+         </InterfaceDefinition>
+      </ConcreteNode>
+      <ConcreteNode name="DepthMode">
+         <InterfaceDefinition>
+            <componentInfo name="X_ITE" level="1"/>
+            <containerField default="depthMode" type="xs:NMTOKEN"/>
+            <Inheritance baseType="X3DAppearanceChildNode"/>
+            <field name="polygonOffset"
+                  type="SFVec2f"
+                  accessType="inputOutput"
+                  default="0 0"
+                  description=""/>
+            <field name="depthRange"
+                  type="SFVec2f"
+                  accessType="inputOutput"
+                  default="0 1"
+                  description=""/>
+            <field name="depthTest"
+                  type="SFBool"
+                  accessType="inputOutput"
+                  default="true"
+                  description=""/>
+            <field name="depthFunc"
+                  type="SFString"
+                  accessType="inputOutput"
+                  default="LESS_EQUAL"
+                  description="">
+               <enumeration value="NEVER"/>
+               <enumeration value="LESS"/>
+               <enumeration value="EQUAL"/>
+               <enumeration value="LESS_EQUAL"/>
+               <enumeration value="GREATER"/>
+               <enumeration value="NOT_EQUAL"/>
+               <enumeration value="GREATER_EQUAL"/>
+               <enumeration value="ALWAYS"/>
+            </field>
+            <field name="depthMask"
+                  type="SFBool"
+                  accessType="inputOutput"
+                  default="true"
+                  description=""/>
+         </InterfaceDefinition>
+      </ConcreteNode>
+      <ConcreteNode name="ImageTextureAtlas">
+         <InterfaceDefinition>
+            <componentInfo name="Texturing3D" level="1"/>
+            <containerField default="texture" type="xs:NMTOKEN"/>
+            <Inheritance baseType="X3DTexture3DNode"/>
+            <field name="slicesOverX"
+                  type="SFInt32"
+                  accessType="inputOutput"
+                  default="0"
+                  minInclusive="0"
+                  description=""/>
+            <field name="slicesOverY"
+                  type="SFInt32"
+                  accessType="inputOutput"
+                  default="0"
+                  minInclusive="0"
+                  description=""/>
+            <field name="numberOfSlices"
+                  type="SFInt32"
+                  accessType="inputOutput"
+                  default="0"
+                  minInclusive="0"
+                  description=""/>
+         </InterfaceDefinition>
+      </ConcreteNode>
+   </ConcreteNodes>
+</X3dUnifiedObjectModel>
