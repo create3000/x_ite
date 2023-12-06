@@ -1195,7 +1195,7 @@ declare class MFMatrix4f extends X3DArrayField <SFMatrix4f>
    static readonly typeName: "MFMatrix4f";
 }
 
-declare class MFNode extends X3DArrayField <SFNode>
+declare class MFNode <T extends SFNode = SFNode> extends X3DArrayField <T>
 {
    static readonly typeName: "MFNode";
 }
@@ -2080,7 +2080,10 @@ interface SFNodeShaderPart extends SFNode, URLFields
    type: "VERTEX" | "FRAGMENT";
 }
 
-type SFNodeShaderProgram = SFNodeShaderPart; // Why are there two node types?
+interface SFNodeShaderProgram extends SFNode, URLFields
+{
+   type: "VERTEX" | "FRAGMENT";
+}
 
 interface SFNodeShape extends Positioner
 {
@@ -2329,7 +2332,7 @@ interface SFNodeWorldInfo extends SFNode
 }
 
 type ConcreteNodesType = {
-   AcousticProperties: typeof SFNodeAcousticProperties,
+   AcousticProperties: SFNodeAcousticProperties,
    Analyser: SFNodeAnalyser,
    Anchor: SFNodeAnchor,
    Appearance: SFNodeAppearance,
@@ -2358,7 +2361,7 @@ type ConcreteNodesType = {
    CoordinateChaser: X3DChaserNode <MFVec3f>,
    CoordinateDamper: X3DDamperNode <MFVec3f>,
    CoordinateInterpolator: X3DInterpolatorNode <SFVec3f, MFVec3f>,
-   CoordinateInterpolator: X3DInterpolatorNode <SFVec2f, MFVec2f>,
+   CoordinateInterpolator2D: X3DInterpolatorNode <SFVec2f, MFVec2f>,
    Cylinder: SFNodeCylinder,
    CylinderSensor: SFNodeCylinderSensor,
    Delay: SFNodeDelay,
@@ -2471,7 +2474,8 @@ type ConcreteNodesType = {
    VisibilitySensor: X3DEnvironmentalSensorNode,
    WaveShaper: SFNodeWaveShaper,
    WorldInfo: SFNodeWorldInfo,
-   [name: string]: SFNode, // catchall
 }
+&
+{ [name: string]: SFNode } // catch all;
 
 // CONCRETE NODES END
