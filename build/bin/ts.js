@@ -81,8 +81,8 @@ function ConcreteNode (node)
       .filter (fieldMerge)
       .sort ((a, b) => a .name .localeCompare (b .name));
 
-   if (node .name === "NavigationInfo")
-      console .log (node .InterfaceDefinition .field);
+   // if (node .name === "NavigationInfo")
+   //    console .log (node .InterfaceDefinition .field);
 
    const properties = fields
       .map (field => `   /**
