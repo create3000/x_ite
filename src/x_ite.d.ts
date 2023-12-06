@@ -524,10 +524,10 @@ interface X3DConstants
    readonly CoordinateInterpolator2D: number;
    readonly Cylinder: number;
    readonly CylinderSensor: number;
-   readonly DISEntityManager: number;
-   readonly DISEntityTypeMapping: number;
    readonly Delay: number;
    readonly DirectionalLight: number;
+   readonly DISEntityManager: number;
+   readonly DISEntityTypeMapping: number;
    readonly Disk2D: number;
    readonly DoubleAxisHingeJoint: number;
    readonly DynamicsCompressor: number;
@@ -547,8 +547,8 @@ interface X3DConstants
    readonly GeneratedCubeMapTexture: number;
    readonly GeoCoordinate: number;
    readonly GeoElevationGrid: number;
-   readonly GeoLOD: number;
    readonly GeoLocation: number;
+   readonly GeoLOD: number;
    readonly GeoMetadata: number;
    readonly GeoOrigin: number;
    readonly GeoPositionInterpolator: number;
@@ -577,7 +577,6 @@ interface X3DConstants
    readonly IntegerTrigger: number;
    readonly IsoSurfaceVolumeData: number;
    readonly KeySensor: number;
-   readonly LOD: number;
    readonly Layer: number;
    readonly LayerSet: number;
    readonly Layout: number;
@@ -589,6 +588,7 @@ interface X3DConstants
    readonly ListenerPointSource: number;
    readonly LoadSensor: number;
    readonly LocalFog: number;
+   readonly LOD: number;
    readonly Material: number;
    readonly Matrix3VertexAttribute: number;
    readonly Matrix4VertexAttribute: number;
@@ -731,7 +731,6 @@ interface X3DConstants
 
    readonly X3DAppearanceChildNode: number;
    readonly X3DAppearanceNode: number;
-   readonly X3DArrayField: number;
    readonly X3DBackgroundNode: number;
    readonly X3DBindableNode: number;
    readonly X3DChaserNode: number;
@@ -742,9 +741,8 @@ interface X3DConstants
    readonly X3DCoordinateNode: number;
    readonly X3DDamperNode: number;
    readonly X3DDragSensorNode: number;
-   readonly X3DEnvironmentTextureNode: number;
    readonly X3DEnvironmentalSensorNode: number;
-   readonly X3DField: number;
+   readonly X3DEnvironmentTextureNode: number;
    readonly X3DFollowerNode: number;
    readonly X3DFontStyleNode: number;
    readonly X3DGeometricPropertyNode: number;
@@ -1370,1237 +1368,1921 @@ declare class MFVec4f extends X3DArrayField <SFVec4f>
    static readonly typeName: "MFVec4f";
 }
 
-// CONCRETE NODES START
+// NODES START
 
-interface X3DNode { }
+interface AcousticPropertiesProxy
+{
+
+}
+
+interface AnalyserProxy
+{
+
+}
+
+interface AnchorProxy
+{
+
+}
+
+interface AppearanceProxy
+{
+
+}
+
+interface Arc2DProxy
+{
+
+}
+
+interface ArcClose2DProxy
+{
+
+}
+
+interface AudioClipProxy
+{
+
+}
+
+interface AudioDestinationProxy
+{
+
+}
+
+interface BackgroundProxy
+{
+
+}
+
+interface BallJointProxy
+{
+
+}
+
+interface BillboardProxy
+{
+
+}
+
+interface BiquadFilterProxy
+{
+
+}
+
+interface BlendedVolumeStyleProxy
+{
+
+}
+
+interface BooleanFilterProxy
+{
+
+}
+
+interface BooleanSequencerProxy
+{
+
+}
+
+interface BooleanToggleProxy
+{
+
+}
+
+interface BooleanTriggerProxy
+{
+
+}
+
+interface BoundaryEnhancementVolumeStyleProxy
+{
+
+}
+
+interface BoundedPhysicsModelProxy
+{
+
+}
+
+interface BoxProxy
+{
+
+}
+
+interface BufferAudioSourceProxy
+{
+
+}
+
+interface CADAssemblyProxy
+{
+
+}
+
+interface CADFaceProxy
+{
+
+}
+
+interface CADLayerProxy
+{
+
+}
+
+interface CADPartProxy
+{
+
+}
+
+interface CartoonVolumeStyleProxy
+{
+
+}
+
+interface ChannelMergerProxy
+{
+
+}
+
+interface ChannelSelectorProxy
+{
+
+}
+
+interface ChannelSplitterProxy
+{
+
+}
+
+interface Circle2DProxy
+{
+
+}
+
+interface ClipPlaneProxy
+{
+
+}
+
+interface CollidableOffsetProxy
+{
+
+}
+
+interface CollidableShapeProxy
+{
+
+}
+
+interface CollisionProxy
+{
+
+}
+
+interface CollisionCollectionProxy
+{
+
+}
+
+interface CollisionSensorProxy
+{
+
+}
+
+interface CollisionSpaceProxy
+{
+
+}
+
+interface ColorProxy
+{
+
+}
+
+interface ColorChaserProxy
+{
+
+}
+
+interface ColorDamperProxy
+{
+
+}
+
+interface ColorInterpolatorProxy
+{
+
+}
+
+interface ColorRGBAProxy
+{
+
+}
+
+interface ComposedCubeMapTextureProxy
+{
+
+}
+
+interface ComposedShaderProxy
+{
+
+}
+
+interface ComposedTexture3DProxy
+{
+
+}
+
+interface ComposedVolumeStyleProxy
+{
+
+}
+
+interface ConeProxy
+{
+
+}
+
+interface ConeEmitterProxy
+{
+
+}
+
+interface ContactProxy
+{
+
+}
+
+interface Contour2DProxy
+{
+
+}
+
+interface ContourPolyline2DProxy
+{
+
+}
+
+interface ConvolverProxy
+{
+
+}
+
+interface CoordinateProxy
+{
+
+}
+
+interface CoordinateChaserProxy
+{
+
+}
+
+interface CoordinateDamperProxy
+{
+
+}
+
+interface CoordinateDoubleProxy
+{
+
+}
+
+interface CoordinateInterpolatorProxy
+{
+
+}
+
+interface CoordinateInterpolator2DProxy
+{
+
+}
+
+interface CylinderProxy
+{
+
+}
+
+interface CylinderSensorProxy
+{
+
+}
+
+interface DelayProxy
+{
+
+}
+
+interface DirectionalLightProxy
+{
+
+}
+
+interface DISEntityManagerProxy
+{
+
+}
+
+interface DISEntityTypeMappingProxy
+{
+
+}
+
+interface Disk2DProxy
+{
+
+}
+
+interface DoubleAxisHingeJointProxy
+{
+
+}
+
+interface DynamicsCompressorProxy
+{
+
+}
+
+interface EaseInEaseOutProxy
+{
+
+}
+
+interface EdgeEnhancementVolumeStyleProxy
+{
+
+}
+
+interface ElevationGridProxy
+{
+
+}
+
+interface EspduTransformProxy
+{
+
+}
+
+interface ExplosionEmitterProxy
+{
+
+}
+
+interface ExtrusionProxy
+{
+
+}
+
+interface FillPropertiesProxy
+{
+
+}
+
+interface FloatVertexAttributeProxy
+{
+
+}
+
+interface FogProxy
+{
+
+}
+
+interface FogCoordinateProxy
+{
+
+}
+
+interface FontStyleProxy
+{
+
+}
+
+interface ForcePhysicsModelProxy
+{
+
+}
+
+interface GainProxy
+{
+
+}
+
+interface GeneratedCubeMapTextureProxy
+{
+
+}
+
+interface GeoCoordinateProxy
+{
+
+}
+
+interface GeoElevationGridProxy
+{
+
+}
+
+interface GeoLocationProxy
+{
+
+}
+
+interface GeoLODProxy
+{
+
+}
+
+interface GeoMetadataProxy
+{
+
+}
+
+interface GeoOriginProxy
+{
+
+}
+
+interface GeoPositionInterpolatorProxy
+{
+
+}
+
+interface GeoProximitySensorProxy
+{
+
+}
+
+interface GeoTouchSensorProxy
+{
+
+}
+
+interface GeoTransformProxy
+{
+
+}
+
+interface GeoViewpointProxy
+{
+
+}
+
+interface GroupProxy
+{
+
+}
+
+interface HAnimDisplacerProxy
+{
+
+}
+
+interface HAnimHumanoidProxy
+{
+
+}
+
+interface HAnimJointProxy
+{
+
+}
+
+interface HAnimMotionProxy
+{
+
+}
+
+interface HAnimSegmentProxy
+{
+
+}
+
+interface HAnimSiteProxy
+{
+
+}
+
+interface ImageCubeMapTextureProxy
+{
+
+}
+
+interface ImageTextureProxy
+{
+
+}
+
+interface ImageTexture3DProxy
+{
+
+}
+
+interface IndexedFaceSetProxy
+{
+
+}
+
+interface IndexedLineSetProxy
+{
+
+}
+
+interface IndexedQuadSetProxy
+{
+
+}
+
+interface IndexedTriangleFanSetProxy
+{
+
+}
+
+interface IndexedTriangleSetProxy
+{
+
+}
+
+interface IndexedTriangleStripSetProxy
+{
+
+}
+
+interface InlineProxy
+{
+
+}
+
+interface IntegerSequencerProxy
+{
+
+}
+
+interface IntegerTriggerProxy
+{
+
+}
+
+interface IsoSurfaceVolumeDataProxy
+{
+
+}
+
+interface KeySensorProxy
+{
+
+}
+
+interface LayerProxy
+{
+
+}
+
+interface LayerSetProxy
+{
+
+}
+
+interface LayoutProxy
+{
+
+}
+
+interface LayoutGroupProxy
+{
+
+}
+
+interface LayoutLayerProxy
+{
+
+}
+
+interface LinePickSensorProxy
+{
+
+}
+
+interface LinePropertiesProxy
+{
+
+}
+
+interface LineSetProxy
+{
+
+}
+
+interface ListenerPointSourceProxy
+{
+
+}
+
+interface LoadSensorProxy
+{
+
+}
+
+interface LocalFogProxy
+{
+
+}
+
+interface LODProxy
+{
+
+}
+
+interface MaterialProxy
+{
+
+}
+
+interface Matrix3VertexAttributeProxy
+{
+
+}
+
+interface Matrix4VertexAttributeProxy
+{
+
+}
+
+interface MetadataBooleanProxy
+{
+
+}
+
+interface MetadataDoubleProxy
+{
+
+}
+
+interface MetadataFloatProxy
+{
+
+}
+
+interface MetadataIntegerProxy
+{
+
+}
+
+interface MetadataSetProxy
+{
+
+}
+
+interface MetadataStringProxy
+{
+
+}
+
+interface MicrophoneSourceProxy
+{
+
+}
+
+interface MotorJointProxy
+{
+
+}
+
+interface MovieTextureProxy
+{
+
+}
+
+interface MultiTextureProxy
+{
+
+}
+
+interface MultiTextureCoordinateProxy
+{
+
+}
+
+interface MultiTextureTransformProxy
+{
+
+}
+
+interface NavigationInfoProxy
+{
+
+}
+
+interface NormalProxy
+{
+
+}
+
+interface NormalInterpolatorProxy
+{
+
+}
+
+interface NurbsCurveProxy
+{
+
+}
+
+interface NurbsCurve2DProxy
+{
+
+}
+
+interface NurbsOrientationInterpolatorProxy
+{
+
+}
+
+interface NurbsPatchSurfaceProxy
+{
+
+}
+
+interface NurbsPositionInterpolatorProxy
+{
+
+}
+
+interface NurbsSetProxy
+{
+
+}
+
+interface NurbsSurfaceInterpolatorProxy
+{
+
+}
+
+interface NurbsSweptSurfaceProxy
+{
+
+}
+
+interface NurbsSwungSurfaceProxy
+{
+
+}
+
+interface NurbsTextureCoordinateProxy
+{
+
+}
+
+interface NurbsTrimmedSurfaceProxy
+{
+
+}
+
+interface OpacityMapVolumeStyleProxy
+{
+
+}
+
+interface OrientationChaserProxy
+{
+
+}
+
+interface OrientationDamperProxy
+{
+
+}
+
+interface OrientationInterpolatorProxy
+{
+
+}
+
+interface OrthoViewpointProxy
+{
+
+}
+
+interface OscillatorSourceProxy
+{
+
+}
+
+interface PackagedShaderProxy
+{
+
+}
+
+interface ParticleSystemProxy
+{
+
+}
+
+interface PeriodicWaveProxy
+{
+
+}
+
+interface PhysicalMaterialProxy
+{
+
+}
+
+interface PickableGroupProxy
+{
+
+}
+
+interface PixelTextureProxy
+{
+
+}
+
+interface PixelTexture3DProxy
+{
+
+}
+
+interface PlaneSensorProxy
+{
+
+}
+
+interface PointEmitterProxy
+{
+
+}
+
+interface PointLightProxy
+{
+
+}
+
+interface PointPickSensorProxy
+{
+
+}
+
+interface PointPropertiesProxy
+{
+
+}
+
+interface PointSetProxy
+{
+
+}
+
+interface Polyline2DProxy
+{
+
+}
+
+interface PolylineEmitterProxy
+{
+
+}
+
+interface Polypoint2DProxy
+{
+
+}
+
+interface PositionChaserProxy
+{
+
+}
+
+interface PositionChaser2DProxy
+{
+
+}
+
+interface PositionDamperProxy
+{
+
+}
+
+interface PositionDamper2DProxy
+{
+
+}
+
+interface PositionInterpolatorProxy
+{
+
+}
+
+interface PositionInterpolator2DProxy
+{
+
+}
+
+interface PrimitivePickSensorProxy
+{
+
+}
+
+interface ProgramShaderProxy
+{
+
+}
+
+interface ProjectionVolumeStyleProxy
+{
+
+}
+
+interface ProtoInstanceProxy
+{
+
+}
+
+interface ProximitySensorProxy
+{
+
+}
+
+interface QuadSetProxy
+{
+
+}
+
+interface ReceiverPduProxy
+{
+
+}
+
+interface Rectangle2DProxy
+{
+
+}
+
+interface RigidBodyProxy
+{
+
+}
+
+interface RigidBodyCollectionProxy
+{
+
+}
+
+interface ScalarChaserProxy
+{
+
+}
+
+interface ScalarDamperProxy
+{
+
+}
+
+interface ScalarInterpolatorProxy
+{
+
+}
+
+interface ScreenFontStyleProxy
+{
+
+}
+
+interface ScreenGroupProxy
+{
+
+}
 
-interface SFNodeAcousticProperties extends SFNode
+interface ScriptProxy
 {
-   description: string;
-   enabled: boolean;
-   absorption: number;
-   refraction: number;
-   diffuse: number;
-   specular: number;
+
 }
 
-interface SFNodeAnalyser extends SFNode
+interface SegmentedVolumeDataProxy
 {
-   description: string;
-   enabled: boolean;
-   gain: number;
-   fftSize: number;
-   minDecibels: number;
-   maxDecibels: number;
-   smoothingTimeConstant: number;
-   tailTime: SFTime;
+
 }
 
-interface Positioner extends SFNode
+interface ShadedVolumeStyleProxy
 {
-   visible: boolean;
-   bboxDisplay: boolean;
-   bboxSize: SFVec3;
-   bboxCenter: SFVec3;
+
 }
 
-interface GroupingFields
+interface ShaderPartProxy
 {
-   addChildren: MFNode;
-   removeChildren: MFNode;
-   children: MFNode;
+
 }
+
+interface ShaderProgramProxy
+{
 
-interface X3DGroupingNode extends Positioner, GroupingFields
-{ }
+}
 
-interface URLFields
+interface ShapeProxy
 {
-   description: string;
-   load: boolean;
-   url: MFString;
-   autoRefresh: SFTime;
-   autoRefreshTimeLimit: SFTime;
+
 }
 
-interface SFNodeAnchor extends X3DGroupingNode
+interface SignalPduProxy
 {
-   parameter: MFString;
+
 }
 
-interface SFNodeAppearance extends SFNode
+interface SilhouetteEnhancementVolumeStyleProxy
 {
-   acousticProperties: SFNodeAcousticProperties;
-   alphaMode: "AUTO" | "OPAQUE" | "MASK" | "BLEND";
-   alphaCutoff: number;
-   pointProperties: SFNodePointProperties;
-   lineProperties: SFNodeLineProperties;
-   fillProperties: SFNodeFillProperties;
-   material: SFNodeMaterial;
-   backMaterial: SFNodeMaterial;
-   texture: SFNode;
-   textureTransform: SFNodeTextureTransform;
-   shaders: MFNode;
-   blendMode: SFNodeBlendMode;
+
 }
 
-interface X3DTimeDependentNode extends SFNode
+interface SingleAxisHingeJointProxy
 {
-   startTime: SFTime;
-   resumeTime: SFTime;
-   pauseTime: SFTime;
-   stopTime: SFTime;
-   isPaused: boolean;
-   isActive: boolean;
-   elapsedTime: SFTime;
+
 }
 
-interface SFNodeAudioClip extends X3DTimeDependentNode, URLFields
+interface SliderJointProxy
 {
-   enabled: boolean;
-   gain: number;
-   pitch: number;
-   loop: boolean;
-   duration_changed: SFTime;
+
 }
 
-interface ChannelFields extends SFNode
+interface SoundProxy
 {
-   description: string;
-   enabled: boolean;
-   gain: number;
-   channelCount: number;
-   channelCountMode: "MAX" | "CLAMPED-MAX" | "EXPLICIT";
-   channelInterpretation: "SPEAKERS" | "DISCRETE";
+
 }
 
-interface X3DSoundDestinationNode extends ChannelFields
+interface SpatialSoundProxy
 {
-   mediaDeviceId: string;
-   isActive: boolean;
-   children: MFNode;
+
 }
 
-interface SFNodeAudioDestination extends X3DSoundDestinationNode
+interface SphereProxy
 {
-   maxChannelCount: number;
+
 }
 
-interface X3DBindableNode extends SFNode
+interface SphereSensorProxy
 {
-   set_bind: boolean;
-   isBound: boolean;
-   bindTime: SFTime;
+
 }
 
-interface X3DBackgroundNode extends X3DBindableNode
+interface SplinePositionInterpolatorProxy
 {
-   skyAngle: MFFloat;
-   skyColor: MFColor;
-   groundAngle: MFFloat;
-   groundColor: MFColor;
-   transparency: number;
+
 }
 
-interface SFNodeBackground extends X3DBackgroundNode
+interface SplinePositionInterpolator2DProxy
 {
-   frontUrl: MFString;
-   backUrl: MFString;
-   leftUrl: MFString;
-   rightUrl: MFString;
-   topUrl: MFString;
-   bottomUrl: MFString;
+
 }
 
-interface SFNodeBillboard extends X3DGroupingNode
+interface SplineScalarInterpolatorProxy
 {
-   axisOfRotation: SFVec3;
+
 }
 
-interface SFNodeBiquadFilter extends X3DTimeDependentNode, ChannelFields
+interface SpotLightProxy
 {
-   frequency: number;
-   detune: number;
-   type: "LOWPASS" | "HIGHPASS" | "BANDPASS" | "LOWSHELF" | "HIGHSHELF" | "PEAKING" | "NOTCH" |  "ALLPASS";
-   qualityFactor: number;
-   tailTime: SFTime;
-   children: MFNode;
+
 }
 
-type BlendFactor = "ZERO" | "ONE"
-   | "SRC_COLOR"      | "ONE_MINUS_SRC_COLOR"
-   | "DST_COLOR"      | "ONE_MINUS_DST_COLOR"
-   | "SRC_ALPHA"      | "ONE_MINUS_SRC_ALPHA"
-   | "DST_ALPHA"      | "ONE_MINUS_DST_ALPHA"
-   | "CONSTANT_COLOR" | "ONE_MINUS_CONSTANT_COLOR"
-   | "CONSTANT_ALPHA" | "ONE_MINUS_CONSTANT_ALPHA";
+interface SquadOrientationInterpolatorProxy
+{
 
-type BlendEquation = "FUNC_ADD" | "FUNC_SUBTRACT" | "FUNC_REVERSE_SUBTRACT";
+}
 
-interface SFNodeBlendMode extends SFNode
+interface StaticGroupProxy
 {
-   blendColor: SFColorRGBA;
-   sourceColorFactor: BlendFactor;
-   sourceAlphaFactor: BlendFactor;
-   destinationColorFactor: BlendFactor;
-   destinationAlphaFactor: BlendFactor;
-   colorEquation: BlendEquation;
-   alphaEquation: BlendEquation;
+
 }
 
-interface SFNodeBox extends SFNode
+interface StreamAudioDestinationProxy
 {
-   size: SFVec3;
-   solid: boolean;
+
 }
 
-interface SFNodeBufferAudioSource extends X3DTimeDependentNode, ChannelFields, URLFields
+interface StreamAudioSourceProxy
 {
-   detune: number;
-   buffer: MFFloat;
-   bufferDuration: SFTime;
-   bufferLength: number;
-   numberOfChannels: number;
-   sampleRate: number;
-   playbackRate: number;
-   loopStart: SFTime;
-   loopEnd: SFTime;
-   loop: boolean;
+
 }
 
-interface SFNodeChannelMerger extends ChannelFields
+interface StringSensorProxy
 {
-   children: MFNode;
+
 }
 
-interface SFNodeChannelSelector extends ChannelFields
+interface SurfaceEmitterProxy
 {
-   channelSelection: number;
-   children: MFNode;
+
 }
 
-interface SFNodeChannelSplitter extends ChannelFields
+interface SwitchProxy
 {
-   children: MFNode;
-   outputs:  MFNode;
+
 }
 
-interface SFNodeClipPlane extends SFNode
+interface TexCoordChaser2DProxy
 {
-   enabled: boolean;
-   plane: SFVec4;
+
 }
 
-interface SFNodeCollision extends X3DGroupingNode
+interface TexCoordDamper2DProxy
 {
-   enabled: boolean;
-   isActive: boolean;
-   collideTime: SFTime;
-   proxy: SFNode;
+
 }
 
-interface SFNodeColor extends SFNode
+interface TextProxy
 {
-   color: MFColor;
+
 }
 
-interface SFNodeColorRGBA extends SFNode
+interface TextureBackgroundProxy
 {
-   color: MFColorRGBA;
+
 }
 
-interface X3DChaserNode <T> extends SFNode
+interface TextureCoordinateProxy
 {
-   set_value: T;
-   set_destination: T;
-   initialValue: T;
-   initialDestination: T;
-   duration: SFTime;
-   isActive: boolean;
-   value_changed: T;
+
 }
 
-interface X3DDamperNode <T> extends SFNode
+interface TextureCoordinate3DProxy
 {
-   set_value: T;
-   set_destination: T;
-   initialValue: T;
-   initialDestination: T;
-   order: number;
-   tau: SFTime;
-   tolerance: number;
-   isActive: boolean;
-   value_changed: T;
+
 }
 
-interface X3DInterpolatorNode <T, V> extends SFNode
+interface TextureCoordinate4DProxy
 {
-   set_fraction: number;
-   key: MFFloat;
-   keyValue: X3DArrayField <T>;
-   value_changed: V;
+
 }
 
-interface X3DShaderNode extends SFNode
+interface TextureCoordinateGeneratorProxy
 {
-   activate: boolean;
-   isSelected: boolean;
-   isValid: boolean;
-   language: string;
+
 }
 
-interface SFNodeComposedShader extends X3DShaderNode
+interface TextureProjectorProxy
 {
-   parts: X3DArrayField <SFNodeShaderPart>;
+
 }
 
-interface SFNodeCone extends SFNode
+interface TextureProjectorParallelProxy
 {
-   side: boolean;
-   bottom: boolean;
-   height: number;
-   bottomRadius: number;
-   solid: boolean;
+
 }
 
-interface SFNodeConvolver extends  X3DTimeDependentNode, ChannelFields
+interface TexturePropertiesProxy
 {
-   buffer: MFFloat;
-   normalize: boolean;
-   tailTime: SFTime;
-   children: MFNode;
+
 }
 
-interface SFNodeCoordinate extends SFNode
+interface TextureTransformProxy
 {
-   point: MFVec3f;
+
 }
 
-interface SFNodeCylinder extends SFNode
+interface TextureTransform3DProxy
 {
-   top: boolean;
-   side: boolean;
-   bottom: boolean;
-   height: number;
-   radius: number;
-   solid: boolean;
+
 }
 
-interface X3DPointingDeviceSensorNode extends SFNode
+interface TextureTransformMatrix3DProxy
 {
-   description: string;
-   enabled: boolean;
-   isOver: boolean;
-   isActive: boolean;
+
 }
 
-interface X3DDragSensorNode extends X3DPointingDeviceSensorNode
+interface TimeSensorProxy
 {
-   offset: number;
-   autoOffset: boolean;
-   trackPoint_changed: SFVec3;
+
 }
 
-interface SFNodeCylinderSensor extends X3DDragSensorNode
+interface TimeTriggerProxy
 {
-   axisRotation: SFRotation,
-   diskAngle: number;
-   minAngle: number;
-   maxAngle: number;
-   rotation_changed: SFRotation;
+
 }
 
-interface SFNodeDelay extends X3DTimeDependentNode, ChannelFields
+interface ToneMappedVolumeStyleProxy
 {
-   delayTime: SFTime;
-   maxDelayTime: SFTime;
-   tailTime: SFTime;
-   children: MFNode;
+
 }
 
-interface X3DLightNode extends SFNode
+interface TouchSensorProxy
 {
-   global: boolean;
-   on: boolean;
-   color: SFColor;
-   intensity: number;
-   ambientIntensity: number;
-   shadows: boolean;
-   shadowColor: SFColor;
-   shadowIntensity: number;
-   shadowBias: number;
-   shadowMapSize: number;
+
 }
 
-interface SFNodeDirectionalLight extends X3DLightNode
+interface TransformProxy
 {
-   direction: SFVec3;
+
 }
 
-interface SFNodeDynamicsCompressor
-   extends X3DTimeDependentNode, ChannelFields
+interface TransformSensorProxy
 {
-      attack: number;
-      knee: number;
-      ratio: number;
-      reduction: number;
-      release: SFTime;
-      threshold: number;
-      tailTime: SFTime;
-      children: MFNode;
-   }
+
+}
 
-interface SFNodeEaseInEaseOut extends SFNode
+interface TransmitterPduProxy
 {
-   set_fraction: number;
-   key: MFFloat;
-   easeInEaseOut: MFVec2f;
-   modifiedFraction_changed: number;
+
 }
 
-interface GeometrySubnodes
+interface TriangleFanSetProxy
 {
-   attrib: X3DArrayField <SFNodeFloatVertexAttribute>;
-   fogCoord: SFNodeFogCoordinate;
-   color: SFNodeColor | SFNodeColorRGBA;
-   normal: SFNodeNormal;
+
 }
 
-interface SFNodeElevationGrid extends SFNode, GeometrySubnodes
+interface TriangleSetProxy
 {
-   set_height: MFFloat;
-   xDimension: number;
-   zDimension: number;
-   xSpacing: number;
-   zSpacing: number;
-   solid: boolean;
-   ccw: boolean;
-   creaseAngle: number;
-   colorPerVertex: boolean;
-   normalPerVertex: boolean;
-   texCoord: SFNode;
-   height: MFFloat;
+
 }
 
-interface SFNodeEnvironmentLight extends X3DLightNode
+interface TriangleSet2DProxy
 {
-   rotation: SFRotation;
-   diffuseCoefficients: MFFloat;
-   diffuse: SFNode;
-   diffuseTexture: SFNode;
-   specularTexture: SFNode;
+
 }
 
-interface SFNodeExtrusion extends SFNode
+interface TriangleStripSetProxy
 {
-   set_crossSection: MFVec2f;
-   set_orientation: MFRotation;
-   set_scale: MFVec2f;
-   set_spine: MFVec3f;
-   beginCap: boolean;
-   endCap: boolean;
-   solid: boolean;
-   ccw: boolean;
-   convex: boolean;
-   creaseAngle: number;
-   crossSection: MFVec2f;
-   orientation: MFRotation;
-   scale: MFVec2f;
-   spine: MFVec3f;
+
 }
 
-interface SFNodeFillProperties extends SFNode
+interface TwoSidedMaterialProxy
 {
-   filled: boolean;
-   hatched: boolean;
-   hatchStyle: number;
-   hatchColor: SFColor;
+
 }
 
-interface SFNodeFloatVertexAttribute extends SFNode
+interface UniversalJointProxy
 {
-   name: string;
-   numComponents: number;
-   value: MFFloat;
+
 }
 
-interface FogCommon extends SFNode
+interface UnlitMaterialProxy
 {
-   fogType: "LINEAR" | "EXPONENTIAL";
-   color: SFColor;
-   visibilityRange: number;
+
 }
 
-interface SFNodeFog extends X3DBindableNode, FogCommon
-{ }
+interface ViewpointProxy
+{
+
+}
 
-interface SFNodeFogCoordinate extends SFNode
+interface ViewpointGroupProxy
 {
-   depth: MFFloat;
+
 }
 
-interface SFNodeFontStyle extends SFNode
+interface ViewportProxy
 {
-   language: string;
-   family: MFString;
-   style:  "PLAIN" | "BOLD" | "ITALIC" | "BOLDITALIC" | "";
-   size: number;
-   spacing: number;
-   horizontal: boolean;
-   leftToRight: boolean;
-   topToBottom: boolean;
-   justify: X3DArrayField <"BEGIN" | "END" | "FIRST" | "MIDDLE" | "">;
+
 }
 
-interface SFNodeGain extends X3DTimeDependentNode, ChannelFields
+interface VisibilitySensorProxy
 {
-   tailTime: SFTime;
-   children: MFNode;
+
 }
 
-interface Texture2DFields
+interface VolumeDataProxy
 {
-   repeatS: boolean;
-   repeatT: boolean;
-   textureProperties: SFNodeTextureProperties;
+
 }
+
+interface VolumeEmitterProxy
+{
 
-interface SFNodeImageTexture extends SFNode, URLFields, Texture2DFields
-{ }
+}
 
-interface IndexedColorCoord
+interface VolumePickSensorProxy
 {
-   set_colorIndex: MFInt32;
-   set_coordIndex: MFInt32;
-   colorIndex: MFInt32;
-   coordIndex: MFInt32;
-   color: SFNodeColor | SFNodeColorRGBA;
-   coord: SFNodeCoordinate;
+
 }
 
-interface SFNodeIndexedFaceSet extends SFNodeIndexedLineSet
+interface WaveShaperProxy
 {
-   set_texCoordIndex: MFInt32;
-   set_normalIndex: MFInt32;
-   solid: boolean;
-   ccw: boolean;
-   convex: boolean;
-   creaseAngle: number;
-   normalPerVertex: boolean;
-   texCoordIndex: MFInt32;
-   normalIndex: MFInt32;
-   texCoord: SFNode;
+
 }
 
-interface SFNodeIndexedLineSet
-   extends SFNode, GeometrySubnodes, IndexedColorCoord
+interface WindPhysicsModelProxy
 {
-      colorPerVertex: boolean;
+
 }
 
-interface SFNodeTriangleSet extends SFNode, GeometrySubnodes
+interface WorldInfoProxy
 {
-   solid: boolean;
-   ccw: boolean;
-   colorPerVertex: boolean;
-   normalPerVertex: boolean;
-   texCoord: SFNode;
-   coord: SFNodeCoordinate;
+
 }
 
-interface IndexedTriangles extends SFNodeTriangleSet
+interface X3DAppearanceChildNodeProxy
 {
-   set_index: MFInt32;
-   index: MFInt32;
+
 }
 
-interface SFNodeInline extends Positioner, URLFields
+interface X3DAppearanceNodeProxy
 {
-   global: boolean;
+
 }
 
-interface SFNodeLOD extends X3DGroupingNode
+interface X3DBackgroundNodeProxy
 {
-   forceTransitions: boolean;
-   center: SFVec3;
-   range: MFFloat;
-   level_changed: number;
+
 }
 
-interface SFNodeLayer extends SFNode, GroupingFields
+interface X3DBindableNodeProxy
 {
-   pickable: boolean;
-   objectType: MFString;
-   visible: boolean;
-   viewport: SFNodeViewport;
+
 }
 
-interface SFNodeLayerSet extends SFNode
+interface X3DChaserNodeProxy
 {
-   activeLayer: number;
-   order: MFInt32;
-   layers: X3DArrayField <SFNodeLayer>;
+
 }
 
-interface SFNodeLineProperties extends SFNode
+interface X3DChildNodeProxy
 {
-   applied: boolean;
-   linetype: number;
-   linewidthScaleFactor: number;
+
 }
 
-interface SFNodeLineSet extends SFNode, GeometrySubnodes
+interface X3DColorNodeProxy
 {
-   vertexCount: MFInt32;
-   coord: SFNodeCoordinate;
+
 }
 
-interface SFNodeListenerPointSource extends X3DTimeDependentNode
+interface X3DComposableVolumeRenderStyleNodeProxy
 {
-   description: string;
-   enabled: boolean;
-   orientation: SFRotation;
-   gain: number;
-   dopplerEnabled: boolean;
-   interauralDistance: number;
-   trackCurrentView: boolean;
+
 }
 
-interface SFNodeLoadSensor extends SFNode
+interface X3DComposedGeometryNodeProxy
 {
-   enabled: boolean;
-   timeOut: SFTime;
-   isActive: boolean;
-   isLoaded: boolean;
-   progress: number;
-   loadTime: SFTime;
-   children: MFNode;
+
 }
 
-interface SFNodeLocalFog extends FogCommon
+interface X3DCoordinateNodeProxy
 {
-   enabled: boolean;
+
 }
 
-interface SFNodeUnlitMaterial extends SFNode
+interface X3DDamperNodeProxy
 {
-   emissiveColor: SFColor;
-   emissiveTextureMapping: string;
-   emissiveTexture: SFNode;
-   normalScale: number;
-   normalTextureMapping: string;
-   normalTexture: SFNode;
-   transparency: number;
+
 }
 
-interface MaterialCommon extends SFNodeUnlitMaterial
+interface X3DDragSensorNodeProxy
 {
-   occlusionStrength: number;
-   occlusionTextureMapping: string;
-   occlusionTexture: SFNode;
+
 }
 
-interface SFNodeMaterial extends MaterialCommon
+interface X3DEnvironmentalSensorNodeProxy
 {
-   ambientIntensity: number;
-   ambientTextureMapping: string;
-   ambientTexture: SFNode;
-   diffuseColor: SFColor;
-   diffuseTextureMapping: string;
-   diffuseTexture: SFNode;
-   specularColor: SFColor;
-   specularTextureMapping: string;
-   specularTexture: SFNode;
-   shininess: number;
-   shininessTextureMapping: string;
-   shininessTexture: SFNode;
+
 }
 
-interface SFNodeMatrix3VertexAttribute extends SFNode
+interface X3DEnvironmentTextureNodeProxy
 {
-   name: string;
-   value: MFMatrix3f;
+
 }
 
-interface SFNodeMatrix4VertexAttribute extends SFNode
+interface X3DFollowerNodeProxy
 {
-   name: string;
-   value: MFMatrix4f;
+
 }
 
-interface X3DMetadataNode extends SFNode
+interface X3DFontStyleNodeProxy
 {
-   name: string;
-   reference: string;
+
 }
 
-interface MetadataInstance <T> extends X3DMetadataNode
+interface X3DGeometricPropertyNodeProxy
 {
-   value: X3DArrayField <T>;
+
 }
 
-interface SFNodeMicrophoneSource extends X3DTimeDependentNode
+interface X3DGeometryNodeProxy
 {
-   description: string;
-   enabled: boolean;
-   gain: number;
-   mediaDeviceId: string;
+
 }
 
-interface SFNodeMovieTexture extends SFNodeAudioClip, Texture2DFields
+interface X3DGroupingNodeProxy
 {
-   speed: number;
+
 }
 
-interface SFNodeMultiTexture extends SFNode
+interface X3DInfoNodeProxy
 {
-   description: string;
-   color: SFColor;
-   alpha: number;
-   mode: MFString;
-   source: MFString;
-   function: MFString;
-   texture: MFNode;
+
 }
 
-interface SFNodeMultiTextureCoordinate extends SFNode
+interface X3DInterpolatorNodeProxy
 {
-   texCoord: X3DArrayField <SFNodeTextureCoordinate>;
+
 }
 
-interface SFNodeMultiTextureTransform extends SFNode
+interface X3DKeyDeviceSensorNodeProxy
 {
-   textureTransform: X3DArrayField <SFNodeTextureTransform>;
+
 }
 
-interface SFNodeNavigationInfo extends X3DBindableNode
+interface X3DLayerNodeProxy
 {
-   type: ["EXAMINE" | "WALK" | "FLY" | "PLANE" | "PLANE_create3000.github.io" | "PLANE_create3000.de" | "LOOKAT" | "EXPLORE" | "ANY" | "NONE"];
-   avatarSize: MFFloat;
-   speed: number;
-   headlight: boolean;
-   visibilityLimit: number;
-   transitionType: "TELEPORT" | "LINEAR" | "ANIMATE";
-   transitionTime: SFTime;
-   transitionComplete: boolean;
+
 }
 
-interface SFNodeNormal extends SFNode
+interface X3DLayoutNodeProxy
 {
-   vector: MFVec3f;
+
 }
 
-interface X3DViewpointNode extends X3DBindableNode
+interface X3DLightNodeProxy
 {
-   description: string;
-   position: SFVec3;
-   orientation: SFRotation;
-   centerOfRotation: SFVec3;
-   fieldOfView: number;
-   nearDistance: number;
-   farDistance: number;
-   viewAll: boolean;
-   jump: boolean;
-   retainUserOffsets: boolean;
-   navigationInfo: SFNodeNavigationInfo;
+
 }
 
-interface SFNodeOscillatorSource extends X3DTimeDependentNode
+interface X3DMaterialNodeProxy
 {
-   description: string;
-   enabled: boolean;
-   gain: number;
-   frequency: number;
-   detune: number;
-   periodicWave: SFNodePeriodicWave;
+
 }
 
-interface SFNodePackagedShader extends X3DShaderNode, URLFields
-{ }
+interface X3DNBodyCollidableNodeProxy
+{
+
+}
 
-interface SFNodePeriodicWave extends SFNode
+interface X3DNBodyCollisionSpaceNodeProxy
 {
-   description: string;
-   enabled: boolean;
-   type: "SINE" | "SQUARE" | "SAWTOOTH" | "TRIANGLE" | "CUSTOM";
-   optionsReal: MFFloat;
-   optionsImag: MFFloat;
+
 }
 
-interface SFNodePhysicalMaterial extends MaterialCommon
+interface X3DNetworkSensorNodeProxy
 {
-   baseColor: SFColor;
-   baseTextureMapping: String;
-   baseTexture: SFNode;
-   metallic: number;
-   roughness: number;
-   metallicRoughnessTextureMapping: string;
-   metallicRoughnessTexture: SFNode;
+
 }
 
-interface SFNodePixelTexture extends SFNode, Texture2DFields
+interface X3DNodeProxy
 {
-   description: string;
-   image: SFImage;
+
 }
 
-interface SFNodePlaneSensor extends X3DDragSensorNode
+interface X3DNormalNodeProxy
 {
-   axisRotation: SFRotation;
-   minPosition: SFVec2;
-   maxPosition: SFVec2;
-   translation_changed: SFVec3;
+
 }
 
-interface SFNodePointLight extends X3DLightNode
+interface X3DNurbsControlCurveNodeProxy
 {
-   attenuation: SFVec3;
-   location: SFVec3;
-   radius: number;
+
 }
 
-interface SFNodePointProperties extends SFNode
+interface X3DNurbsSurfaceGeometryNodeProxy
 {
-   pointSizeScaleFactor: number;
-   pointSizeMinValue: number;
-   pointSizeMaxValue: number;
-   attenuation: SFVec3;
+
 }
 
-interface SFNodePointSet extends SFNode, GeometrySubnodes
+interface X3DOneSidedMaterialNodeProxy
 {
-   coord: SFNodeCoordinate;
+
 }
 
-interface SFNodeProgramShader extends X3DShaderNode
+interface X3DParametricGeometryNodeProxy
 {
-   programs: MFNode <SFNodeShaderProgram>
+
 }
 
-interface X3DEnvironmentalSensorNode extends SFNode
+interface X3DParticleEmitterNodeProxy
 {
-   enabled: boolean;
-   size: SFVec3;
-   center: SFVec3;
-   enterTime: SFTime;
-   exitTime: SFTime;
-   isActive: boolean;
+
 }
 
-interface SFNodeProximitySensor extends X3DEnvironmentalSensorNode
+interface X3DParticlePhysicsModelNodeProxy
 {
-   position_changed: SFVec3;
-   orientation_changed: SFRotation;
-   centerOfRotation_changed: SFVec3;
+
 }
 
-interface SFNodeScript extends SFNode, URLFields
+interface X3DPickSensorNodeProxy
 {
-   directOutput: boolean;
-   mustEvaluate: boolean;
+
 }
 
-interface SFNodeShaderPart extends SFNode, URLFields
+interface X3DPointingDeviceSensorNodeProxy
 {
-   type: "VERTEX" | "FRAGMENT";
+
 }
 
-interface SFNodeShaderProgram extends SFNode, URLFields
+interface X3DProductStructureChildNodeProxy
 {
-   type: "VERTEX" | "FRAGMENT";
+
 }
 
-interface SFNodeShape extends Positioner
+interface X3DPrototypeInstanceProxy
 {
-   castShadow: boolean;
-   appearance: SFNodeAppearance;
-   geometry: SFNode;
+
 }
 
-interface SoundCommon extends SFNode
+interface X3DRigidJointNodeProxy
 {
-   description: string;
-   enabled: boolean;
-   spatialize: boolean;
-   location: SFVec3;
-   direction: SFVec3;
-   intensity: number;
-   priority: number;
-   children: MFNode;
+
 }
 
-interface SFNodeSound extends SFNode
+interface X3DScriptNodeProxy
 {
-   minBack: number;
-   minFront: number;
-   maxBack: number;
-   maxFront: number;
-   source: SFNode;
+
 }
 
-interface SFNodeSpatialSound extends SFNode
+interface X3DSensorNodeProxy
 {
-   coneInnerAngle: number;
-   coneOuterAngle: number;
-   coneOuterGain: number;
-   distanceModel: "LINEAR" | "INVERSE" | "EXPONENTIAL";
-   dopplerEnabled: boolean;
-   enableHRTF: boolean;
-   gain: number;
-   maxDistance: number;
-   referenceDistance: number;
-   rolloffFactor: number;
+
 }
 
-interface SFNodeSphere extends SFNode
+interface X3DSequencerNodeProxy
 {
-   radius: number;
-   solid: boolean;
+
 }
 
-interface SFNodeSphereSensor extends X3DPointingDeviceSensorNode
+interface X3DShaderNodeProxy
 {
-   rotation_changed: SFRotation;
+
 }
+
+interface X3DShapeNodeProxy
+{
 
-interface SplineInterpolator <U> extends X3DInterpolatorNode <U, U> {
-   closed: boolean;
-   keyVelocity: X3DArrayField <U>;
-   normalizeVelocity: boolean;
 }
 
-interface SFNodeSpotLight extends SFNodePointLight
+interface X3DSingleTextureCoordinateNodeProxy
 {
-   direction: SFVec3;
-   beamWidth: number;
-   cutOffAngle: number;
+
 }
+
+interface X3DSingleTextureNodeProxy
+{
 
-interface SFNodeSquadOrientationInterpolator
-   extends X3DInterpolatorNode <SFRotation, SFRotation> {
-      closed: boolean;
-   }
+}
 
-interface SFNodeStaticGroup extends Positioner
+interface X3DSingleTextureTransformNodeProxy
 {
-   children: MFNode;
+
 }
 
-interface SFNodeStreamAudioDestination extends X3DSoundDestinationNode
+interface X3DSoundChannelNodeProxy
 {
-   streamIdentifier: MFString;
+
 }
 
-interface SFNodeStreamAudioSource extends X3DTimeDependentNode
+interface X3DSoundDestinationNodeProxy
 {
-   description: string;
-   enabled: boolean;
-   gain: number;
-   streamIdentifier: MFString;
+
 }
 
-interface SFNodeSwitch extends X3DGroupingNode
+interface X3DSoundNodeProxy
 {
-   whichChoice: number;
+
 }
 
-interface SFNodeText extends SFNode
+interface X3DSoundProcessingNodeProxy
 {
-   string: MFString;
-   length: MFFloat;
-   maxExtent: number;
-   solid: boolean;
-   origin: SFVec3;
-   textBounds: SFVec2;
-   lineBounds: MFVec2f;
-   fontStyle: SFNodeFontStyle;
+
 }
 
-interface SFNodeTextureBackground extends X3DBackgroundNode
+interface X3DSoundSourceNodeProxy
 {
-   frontTexture: SFNode;
-   backTexture: SFNode;
-   leftTexture: SFNode;
-   rightTexture: SFNode;
-   topTexture: SFNode;
-   bottomTexture: SFNode;
+
 }
 
-interface SFNodeTextureCoordinate extends SFNode
+interface X3DStatementProxy
 {
-   mapping: string;
-   point: MFVec2f;
+
 }
 
-interface SFNodeTextureCoordinateGenerator extends SFNode
+interface X3DTexture2DNodeProxy
 {
-   mapping: string;
-   mode: "SPHERE" | "SPHERE-LOCAL" | "SPHERE-REFLECT" | "SPHERE-REFLECT-LOCAL"
-      | "COORD" | "COORD-EYE" | "NOISE" | "NOISE-EYE" | "CAMERASPACENORMAL"
-      | "CAMERASPACEPOSITION" | "CAMERASPACEREFLECTIONVECTOR" ;
-   parameter: MFFloat;
+
 }
 
-interface SFNodeTextureProperties extends SFNode
+interface X3DTexture3DNodeProxy
 {
-   borderColor: SFColorRGBA;
-   borderWidth: number;
-   anisotropicDegree: number;
-   generateMipMaps: boolean;
-   minificationFilter: string;
-   magnificationFilter: string;
-   boundaryModeS: string;
-   boundaryModeT: string;
-   boundaryModeR: string;
-   textureCompression: string;
-   texturePriority: number;
+
 }
 
-interface SFNodeTextureTransform extends SFNode
+interface X3DTextureCoordinateNodeProxy
 {
-   mapping: string;
-   translation: SFVec2;
-   rotation: number;
-   scale: SFVec2;
-   center: SFVec2;
+
 }
 
-interface SFNodeTimeSensor extends X3DTimeDependentNode
+interface X3DTextureNodeProxy
 {
-   description: string;
-   enabled: boolean;
-   cycleInterval: SFTime;
-   loop: boolean;
-   cycleTime: SFTime;
-   fraction_changed: number;
-   time: SFTime;
+
 }
 
-interface SFNodeTouchSensor extends X3DPointingDeviceSensorNode
+interface X3DTextureProjectorNodeProxy
 {
-   hitTexCoord_changed: SFVec2;
-   hitNormal_changed: SFVec3;
-   hitPoint_changed: SFVec3;
-   touchTime: SFTime;
+
 }
 
-interface SFNodeTransform extends X3DGroupingNode
+interface X3DTextureTransformNodeProxy
 {
-   translation: SFVec3;
-   rotation: SFRotation;
-   scale: SFVec3;
-   scaleOrientation: SFRotation;
-   center: SFVec3;
+
 }
 
-interface SFNodeTransformSensor extends X3DEnvironmentalSensorNode
+interface X3DTimeDependentNodeProxy
 {
-   position_changed: SFVec3;
-   orientation_changed: SFRotation;
-   targetObject: SFNode;
+
 }
 
-interface SFNodeTriangleFanSet extends SFNodeTriangleSet
+interface X3DTouchSensorNodeProxy
 {
-   fanCount: MFInt32;
+
 }
 
-interface SFNodeTriangleStripSet extends SFNodeTriangleSet
+interface X3DTriggerNodeProxy
 {
-   stripCount: MFInt32;
+
 }
 
-interface SFNodeTwoSidedMaterial extends SFNode
+interface X3DVertexAttributeNodeProxy
 {
-   ambientIntensity: number;
-   backAmbientIntensity: number;
-   backDiffuseColor: SFColor;
-   backEmissiveColor: SFColor;
-   backShininess: number;
-   backSpecularColor: SFColor;
-   backTransparency: number;
-   diffuseColor: SFColor;
-   emissiveColor: SFColor;
-   shininess: number;
-   separateBackColor: boolean;
-   specularColor: SFColor;
-   transparency: number;
+
 }
 
-interface SFNodeViewpointGroup extends SFNode
+interface X3DViewpointNodeProxy
 {
-   description: string;
-   displayed: boolean;
-   retainUserOffsets: boolean;
-   size: SFVec3;
-   center: SFVec3;
-   children: MFNode;
+
 }
 
-interface SFNodeViewport extends X3DGroupingNode
+interface X3DViewportNodeProxy
 {
-   clipBoundary: MFFloat;
+
 }
 
-interface SFNodeWaveShaper extends X3DTimeDependentNode, ChannelFields
+interface X3DVolumeDataNodeProxy
 {
-   curve: MFFloat;
-   oversample: "NONE" | "2x" | "4x";
-   tailTime: SFTime;
-   children: MFNode;
+
 }
 
-interface SFNodeWorldInfo extends SFNode
+interface X3DVolumeRenderStyleNodeProxy
 {
-   title: string;
-   info: MFString;
+
 }
 
 type ConcreteNodesType = {
-   AcousticProperties: SFNodeAcousticProperties,
-   Analyser: SFNodeAnalyser,
-   Anchor: SFNodeAnchor,
-   Appearance: SFNodeAppearance,
-   AudioClip: SFNodeAudioClip,
-   AudioDestination: SFNodeAudioDestination,
-   Background: SFNodeBackground,
-   Billboard: SFNodeBillboard,
-   BiquadFilter: SFNodeBiquadFilter,
-   BlendMode: SFNodeBlendMode,
-   Box: SFNodeBox,
-   BufferAudioSource: SFNodeBufferAudioSource,
-   ChannelMerger: SFNodeChannelMerger,
-   ChannelSelector: SFNodeChannelSelector,
-   ChannelSplitter: SFNodeChannelSplitter,
-   ClipPlane: SFNodeClipPlane,
-   Collision: SFNodeCollision,
-   Color: SFNodeColor,
-   ColorRGBA: SFNodeColorRGBA,
-   ColorChaser: X3DChaserNode <SFColor>,
-   ColorDamper: X3DDamperNode <SFColor>,
-   ColorInterpolator: X3DInterpolatorNode <SFColor, SFColor>,
-   ComposedShader: SFNodeComposedShader,
-   Cone: SFNodeCone,
-   Convolver: SFNodeConvolver,
-   Coordinate: SFNodeCoordinate,
-   CoordinateChaser: X3DChaserNode <MFVec3f>,
-   CoordinateDamper: X3DDamperNode <MFVec3f>,
-   CoordinateInterpolator: X3DInterpolatorNode <SFVec3f, MFVec3f>,
-   CoordinateInterpolator2D: X3DInterpolatorNode <SFVec2f, MFVec2f>,
-   Cylinder: SFNodeCylinder,
-   CylinderSensor: SFNodeCylinderSensor,
-   Delay: SFNodeDelay,
-   DirectionalLight: SFNodeDirectionalLight,
-   DynamicsCompressor: SFNodeDynamicsCompressor,
-   EaseInEaseOut: SFNodeEaseInEaseOut,
-   ElevationGrid: SFNodeElevationGrid,
-   EnvironmentLight: SFNodeEnvironmentLight,
-   Extrusion: SFNodeExtrusion,
-   FillProperties: SFNodeFillProperties,
-   FloatVertexAttribute: SFNodeFloatVertexAttribute,
-   Fog: SFNodeFog,
-   FogCoordinate: SFNodeFogCoordinate,
-   FontStyle: SFNodeFontStyle,
-   Gain: SFNodeGain,
-   Group: X3DGroupingNode,
-   ImageTexture: SFNodeImageTexture,
-   IndexedFaceSet: SFNodeIndexedFaceSet,
-   IndexedLineSet: SFNodeIndexedLineSet,
-   IndexedTriangleFanSet: IndexedTriangles,
-   IndexedTriangleSet: IndexedTriangles,
-   IndexedTriangleStripSet: IndexedTriangles,
-   Inline: SFNodeInline,
-   LOD: SFNodeLOD,
-   Layer: SFNodeLayer,
-   LayerSet: SFNodeLayerSet,
-   LineProperties: SFNodeLineProperties,
-   LineSet: SFNodeLineSet,
-   ListenerPointSource: SFNodeListenerPointSource,
-   LoadSensor: SFNodeLoadSensor,
-   LocalFog: SFNodeLocalFog,
-   Material: SFNodeMaterial,
-   Matrix3VertexAttribute: SFNodeMatrix3VertexAttribute,
-   Matrix4VertexAttribute: SFNodeMatrix4VertexAttribute,
-   MetadataBoolean: MetadataInstance <boolean>,
-   MetadataDouble: MetadataInstance <number>,
-   MetadataFloat: MetadataInstance <number>,
-   MetadataInteger: MetadataInstance <number>,
-   MetadataSet: MetadataInstance <X3DMetadataNode>,
-   MetadataString: MetadataInstance <string>,
-   MicrophoneSource: SFNodeMicrophoneSource,
-   MovieTexture: SFNodeMovieTexture,
-   MultiTexture: SFNodeMultiTexture,
-   MultiTextureCoordinate: SFNodeMultiTextureCoordinate,
-   MultiTextureTransform: SFNodeMultiTextureTransform,
-   NavigationInfo: SFNodeNavigationInfo,
-   Normal: SFNodeNormal,
-   NormalInterpolator: X3DInterpolatorNode <SFVec3f, MFVec3f>,
-   OrientationChaser: X3DChaserNode <SFRotation>,
-   OrientationDamper: X3DDamperNode <SFRotation>,
-   OrientationInterpolator: X3DInterpolatorNode <SFRotation, SFRotation>,
-   OrthoViewpoint: X3DViewpointNode,
-   OscillatorSource: SFNodeOscillatorSource,
-   PackagedShader: SFNodePackagedShader,
-   PeriodicWave: SFNodePeriodicWave,
-   PhysicalMaterial: SFNodePhysicalMaterial,
-   PixelTexture: SFNodePixelTexture,
-   PlaneSensor: SFNodePlaneSensor,
-   PointLight: SFNodePointLight,
-   PointProperties: SFNodePointProperties,
-   PointSet: SFNodePointSet,
-   PositionChaser: X3DChaserNode <SFVec3f>,
-   PositionChaser2D: X3DChaserNode <SFVec2f>,
-   PositionDamper: X3DDamperNode <SFVec3f>,
-   PositionDamper2D: X3DDamperNode <SFVec2f>,
-   PositionInterpolator: X3DInterpolatorNode <SFVec3f, SFVec3f>,
-   PositionInterpolator2D: X3DInterpolatorNode <SFVec2f, SFVec2f>,
-   ProgramShader: SFNodeProgramShader,
-   ProximitySensor: SFNodeProximitySensor,
-   ScalarChaser: X3DChaserNode <number>,
-   ScalarDamper: X3DDamperNode <number>,
-   ScalarInterpolator: X3DInterpolatorNode <number, number>,
-   Script: SFNodeScript,
-   ShaderPart: SFNodeShaderPart,
-   ShaderProgram: SFNodeShaderProgram,
-   Shape: SFNodeShape,
-   Sound: SFNodeSound,
-   SpatialSound: SFNodeSpatialSound,
-   Sphere: SFNodeSphere,
-   SphereSensor: SFNodeSphereSensor,
-   SplinePositionInterpolator: SplineInterpolator <SFVec3f>,
-   SplinePositionInterpolator2D: SplineInterpolator <SFVec2f>,
-   SplineScalarInterpolator: SplineInterpolator <number>,
-   SpotLight: SFNodePointLight,
-   SquadOrientationInterpolator: SFNodeSquadOrientationInterpolator,
-   StaticGroup: SFNodeStaticGroup,
-   StreamAudioDestination: SFNodeStreamAudioDestination,
-   StreamAudioSource: SFNodeStreamAudioSource,
-   Switch: SFNodeSwitch,
-   TexCoordChaser2D: X3DChaserNode <MFVec2f>,
-   TexCoordDamper2D: X3DDamperNode <MFVec2f>,
-   Text: SFNodeText,
-   TextureBackground: SFNodeTextureBackground,
-   TextureCoordinate: SFNodeTextureCoordinate,
-   TextureCoordinateGenerator: SFNodeTextureCoordinateGenerator,
-   TextureProperties: SFNodeTextureProperties,
-   TextureTransform: SFNodeTextureTransform,
-   TimeSensor: SFNodeTimeSensor,
-   TouchSensor: SFNodeTouchSensor,
-   Transform: SFNodeTransform,
-   TransformSensor: SFNodeTransformSensor,
-   TriangleFanSet: SFNodeTriangleFanSet,
-   TriangleSet: SFNodeTriangleSet,
-   TriangleStripSet: SFNodeTriangleStripSet,
-   TwoSidedMaterial: SFNodeTwoSidedMaterial,
-   UnlitMaterial: SFNodeUnlitMaterial,
-   Viewpoint: X3DViewpointNode,
-   ViewpointGroup: SFNodeViewpointGroup,
-   Viewport: SFNodeViewport,
-   VisibilitySensor: X3DEnvironmentalSensorNode,
-   WaveShaper: SFNodeWaveShaper,
-   WorldInfo: SFNodeWorldInfo,
+   AcousticProperties: AcousticPropertiesProxy,
+   Analyser: AnalyserProxy,
+   Anchor: AnchorProxy,
+   Appearance: AppearanceProxy,
+   Arc2D: Arc2DProxy,
+   ArcClose2D: ArcClose2DProxy,
+   AudioClip: AudioClipProxy,
+   AudioDestination: AudioDestinationProxy,
+   Background: BackgroundProxy,
+   BallJoint: BallJointProxy,
+   Billboard: BillboardProxy,
+   BiquadFilter: BiquadFilterProxy,
+   BlendedVolumeStyle: BlendedVolumeStyleProxy,
+   BooleanFilter: BooleanFilterProxy,
+   BooleanSequencer: BooleanSequencerProxy,
+   BooleanToggle: BooleanToggleProxy,
+   BooleanTrigger: BooleanTriggerProxy,
+   BoundaryEnhancementVolumeStyle: BoundaryEnhancementVolumeStyleProxy,
+   BoundedPhysicsModel: BoundedPhysicsModelProxy,
+   Box: BoxProxy,
+   BufferAudioSource: BufferAudioSourceProxy,
+   CADAssembly: CADAssemblyProxy,
+   CADFace: CADFaceProxy,
+   CADLayer: CADLayerProxy,
+   CADPart: CADPartProxy,
+   CartoonVolumeStyle: CartoonVolumeStyleProxy,
+   ChannelMerger: ChannelMergerProxy,
+   ChannelSelector: ChannelSelectorProxy,
+   ChannelSplitter: ChannelSplitterProxy,
+   Circle2D: Circle2DProxy,
+   ClipPlane: ClipPlaneProxy,
+   CollidableOffset: CollidableOffsetProxy,
+   CollidableShape: CollidableShapeProxy,
+   Collision: CollisionProxy,
+   CollisionCollection: CollisionCollectionProxy,
+   CollisionSensor: CollisionSensorProxy,
+   CollisionSpace: CollisionSpaceProxy,
+   Color: ColorProxy,
+   ColorChaser: ColorChaserProxy,
+   ColorDamper: ColorDamperProxy,
+   ColorInterpolator: ColorInterpolatorProxy,
+   ColorRGBA: ColorRGBAProxy,
+   ComposedCubeMapTexture: ComposedCubeMapTextureProxy,
+   ComposedShader: ComposedShaderProxy,
+   ComposedTexture3D: ComposedTexture3DProxy,
+   ComposedVolumeStyle: ComposedVolumeStyleProxy,
+   Cone: ConeProxy,
+   ConeEmitter: ConeEmitterProxy,
+   Contact: ContactProxy,
+   Contour2D: Contour2DProxy,
+   ContourPolyline2D: ContourPolyline2DProxy,
+   Convolver: ConvolverProxy,
+   Coordinate: CoordinateProxy,
+   CoordinateChaser: CoordinateChaserProxy,
+   CoordinateDamper: CoordinateDamperProxy,
+   CoordinateDouble: CoordinateDoubleProxy,
+   CoordinateInterpolator: CoordinateInterpolatorProxy,
+   CoordinateInterpolator2D: CoordinateInterpolator2DProxy,
+   Cylinder: CylinderProxy,
+   CylinderSensor: CylinderSensorProxy,
+   Delay: DelayProxy,
+   DirectionalLight: DirectionalLightProxy,
+   DISEntityManager: DISEntityManagerProxy,
+   DISEntityTypeMapping: DISEntityTypeMappingProxy,
+   Disk2D: Disk2DProxy,
+   DoubleAxisHingeJoint: DoubleAxisHingeJointProxy,
+   DynamicsCompressor: DynamicsCompressorProxy,
+   EaseInEaseOut: EaseInEaseOutProxy,
+   EdgeEnhancementVolumeStyle: EdgeEnhancementVolumeStyleProxy,
+   ElevationGrid: ElevationGridProxy,
+   EspduTransform: EspduTransformProxy,
+   ExplosionEmitter: ExplosionEmitterProxy,
+   Extrusion: ExtrusionProxy,
+   FillProperties: FillPropertiesProxy,
+   FloatVertexAttribute: FloatVertexAttributeProxy,
+   Fog: FogProxy,
+   FogCoordinate: FogCoordinateProxy,
+   FontStyle: FontStyleProxy,
+   ForcePhysicsModel: ForcePhysicsModelProxy,
+   Gain: GainProxy,
+   GeneratedCubeMapTexture: GeneratedCubeMapTextureProxy,
+   GeoCoordinate: GeoCoordinateProxy,
+   GeoElevationGrid: GeoElevationGridProxy,
+   GeoLocation: GeoLocationProxy,
+   GeoLOD: GeoLODProxy,
+   GeoMetadata: GeoMetadataProxy,
+   GeoOrigin: GeoOriginProxy,
+   GeoPositionInterpolator: GeoPositionInterpolatorProxy,
+   GeoProximitySensor: GeoProximitySensorProxy,
+   GeoTouchSensor: GeoTouchSensorProxy,
+   GeoTransform: GeoTransformProxy,
+   GeoViewpoint: GeoViewpointProxy,
+   Group: GroupProxy,
+   HAnimDisplacer: HAnimDisplacerProxy,
+   HAnimHumanoid: HAnimHumanoidProxy,
+   HAnimJoint: HAnimJointProxy,
+   HAnimMotion: HAnimMotionProxy,
+   HAnimSegment: HAnimSegmentProxy,
+   HAnimSite: HAnimSiteProxy,
+   ImageCubeMapTexture: ImageCubeMapTextureProxy,
+   ImageTexture: ImageTextureProxy,
+   ImageTexture3D: ImageTexture3DProxy,
+   IndexedFaceSet: IndexedFaceSetProxy,
+   IndexedLineSet: IndexedLineSetProxy,
+   IndexedQuadSet: IndexedQuadSetProxy,
+   IndexedTriangleFanSet: IndexedTriangleFanSetProxy,
+   IndexedTriangleSet: IndexedTriangleSetProxy,
+   IndexedTriangleStripSet: IndexedTriangleStripSetProxy,
+   Inline: InlineProxy,
+   IntegerSequencer: IntegerSequencerProxy,
+   IntegerTrigger: IntegerTriggerProxy,
+   IsoSurfaceVolumeData: IsoSurfaceVolumeDataProxy,
+   KeySensor: KeySensorProxy,
+   Layer: LayerProxy,
+   LayerSet: LayerSetProxy,
+   Layout: LayoutProxy,
+   LayoutGroup: LayoutGroupProxy,
+   LayoutLayer: LayoutLayerProxy,
+   LinePickSensor: LinePickSensorProxy,
+   LineProperties: LinePropertiesProxy,
+   LineSet: LineSetProxy,
+   ListenerPointSource: ListenerPointSourceProxy,
+   LoadSensor: LoadSensorProxy,
+   LocalFog: LocalFogProxy,
+   LOD: LODProxy,
+   Material: MaterialProxy,
+   Matrix3VertexAttribute: Matrix3VertexAttributeProxy,
+   Matrix4VertexAttribute: Matrix4VertexAttributeProxy,
+   MetadataBoolean: MetadataBooleanProxy,
+   MetadataDouble: MetadataDoubleProxy,
+   MetadataFloat: MetadataFloatProxy,
+   MetadataInteger: MetadataIntegerProxy,
+   MetadataSet: MetadataSetProxy,
+   MetadataString: MetadataStringProxy,
+   MicrophoneSource: MicrophoneSourceProxy,
+   MotorJoint: MotorJointProxy,
+   MovieTexture: MovieTextureProxy,
+   MultiTexture: MultiTextureProxy,
+   MultiTextureCoordinate: MultiTextureCoordinateProxy,
+   MultiTextureTransform: MultiTextureTransformProxy,
+   NavigationInfo: NavigationInfoProxy,
+   Normal: NormalProxy,
+   NormalInterpolator: NormalInterpolatorProxy,
+   NurbsCurve: NurbsCurveProxy,
+   NurbsCurve2D: NurbsCurve2DProxy,
+   NurbsOrientationInterpolator: NurbsOrientationInterpolatorProxy,
+   NurbsPatchSurface: NurbsPatchSurfaceProxy,
+   NurbsPositionInterpolator: NurbsPositionInterpolatorProxy,
+   NurbsSet: NurbsSetProxy,
+   NurbsSurfaceInterpolator: NurbsSurfaceInterpolatorProxy,
+   NurbsSweptSurface: NurbsSweptSurfaceProxy,
+   NurbsSwungSurface: NurbsSwungSurfaceProxy,
+   NurbsTextureCoordinate: NurbsTextureCoordinateProxy,
+   NurbsTrimmedSurface: NurbsTrimmedSurfaceProxy,
+   OpacityMapVolumeStyle: OpacityMapVolumeStyleProxy,
+   OrientationChaser: OrientationChaserProxy,
+   OrientationDamper: OrientationDamperProxy,
+   OrientationInterpolator: OrientationInterpolatorProxy,
+   OrthoViewpoint: OrthoViewpointProxy,
+   OscillatorSource: OscillatorSourceProxy,
+   PackagedShader: PackagedShaderProxy,
+   ParticleSystem: ParticleSystemProxy,
+   PeriodicWave: PeriodicWaveProxy,
+   PhysicalMaterial: PhysicalMaterialProxy,
+   PickableGroup: PickableGroupProxy,
+   PixelTexture: PixelTextureProxy,
+   PixelTexture3D: PixelTexture3DProxy,
+   PlaneSensor: PlaneSensorProxy,
+   PointEmitter: PointEmitterProxy,
+   PointLight: PointLightProxy,
+   PointPickSensor: PointPickSensorProxy,
+   PointProperties: PointPropertiesProxy,
+   PointSet: PointSetProxy,
+   Polyline2D: Polyline2DProxy,
+   PolylineEmitter: PolylineEmitterProxy,
+   Polypoint2D: Polypoint2DProxy,
+   PositionChaser: PositionChaserProxy,
+   PositionChaser2D: PositionChaser2DProxy,
+   PositionDamper: PositionDamperProxy,
+   PositionDamper2D: PositionDamper2DProxy,
+   PositionInterpolator: PositionInterpolatorProxy,
+   PositionInterpolator2D: PositionInterpolator2DProxy,
+   PrimitivePickSensor: PrimitivePickSensorProxy,
+   ProgramShader: ProgramShaderProxy,
+   ProjectionVolumeStyle: ProjectionVolumeStyleProxy,
+   ProtoInstance: ProtoInstanceProxy,
+   ProximitySensor: ProximitySensorProxy,
+   QuadSet: QuadSetProxy,
+   ReceiverPdu: ReceiverPduProxy,
+   Rectangle2D: Rectangle2DProxy,
+   RigidBody: RigidBodyProxy,
+   RigidBodyCollection: RigidBodyCollectionProxy,
+   ScalarChaser: ScalarChaserProxy,
+   ScalarDamper: ScalarDamperProxy,
+   ScalarInterpolator: ScalarInterpolatorProxy,
+   ScreenFontStyle: ScreenFontStyleProxy,
+   ScreenGroup: ScreenGroupProxy,
+   Script: ScriptProxy,
+   SegmentedVolumeData: SegmentedVolumeDataProxy,
+   ShadedVolumeStyle: ShadedVolumeStyleProxy,
+   ShaderPart: ShaderPartProxy,
+   ShaderProgram: ShaderProgramProxy,
+   Shape: ShapeProxy,
+   SignalPdu: SignalPduProxy,
+   SilhouetteEnhancementVolumeStyle: SilhouetteEnhancementVolumeStyleProxy,
+   SingleAxisHingeJoint: SingleAxisHingeJointProxy,
+   SliderJoint: SliderJointProxy,
+   Sound: SoundProxy,
+   SpatialSound: SpatialSoundProxy,
+   Sphere: SphereProxy,
+   SphereSensor: SphereSensorProxy,
+   SplinePositionInterpolator: SplinePositionInterpolatorProxy,
+   SplinePositionInterpolator2D: SplinePositionInterpolator2DProxy,
+   SplineScalarInterpolator: SplineScalarInterpolatorProxy,
+   SpotLight: SpotLightProxy,
+   SquadOrientationInterpolator: SquadOrientationInterpolatorProxy,
+   StaticGroup: StaticGroupProxy,
+   StreamAudioDestination: StreamAudioDestinationProxy,
+   StreamAudioSource: StreamAudioSourceProxy,
+   StringSensor: StringSensorProxy,
+   SurfaceEmitter: SurfaceEmitterProxy,
+   Switch: SwitchProxy,
+   TexCoordChaser2D: TexCoordChaser2DProxy,
+   TexCoordDamper2D: TexCoordDamper2DProxy,
+   Text: TextProxy,
+   TextureBackground: TextureBackgroundProxy,
+   TextureCoordinate: TextureCoordinateProxy,
+   TextureCoordinate3D: TextureCoordinate3DProxy,
+   TextureCoordinate4D: TextureCoordinate4DProxy,
+   TextureCoordinateGenerator: TextureCoordinateGeneratorProxy,
+   TextureProjector: TextureProjectorProxy,
+   TextureProjectorParallel: TextureProjectorParallelProxy,
+   TextureProperties: TexturePropertiesProxy,
+   TextureTransform: TextureTransformProxy,
+   TextureTransform3D: TextureTransform3DProxy,
+   TextureTransformMatrix3D: TextureTransformMatrix3DProxy,
+   TimeSensor: TimeSensorProxy,
+   TimeTrigger: TimeTriggerProxy,
+   ToneMappedVolumeStyle: ToneMappedVolumeStyleProxy,
+   TouchSensor: TouchSensorProxy,
+   Transform: TransformProxy,
+   TransformSensor: TransformSensorProxy,
+   TransmitterPdu: TransmitterPduProxy,
+   TriangleFanSet: TriangleFanSetProxy,
+   TriangleSet: TriangleSetProxy,
+   TriangleSet2D: TriangleSet2DProxy,
+   TriangleStripSet: TriangleStripSetProxy,
+   TwoSidedMaterial: TwoSidedMaterialProxy,
+   UniversalJoint: UniversalJointProxy,
+   UnlitMaterial: UnlitMaterialProxy,
+   Viewpoint: ViewpointProxy,
+   ViewpointGroup: ViewpointGroupProxy,
+   Viewport: ViewportProxy,
+   VisibilitySensor: VisibilitySensorProxy,
+   VolumeData: VolumeDataProxy,
+   VolumeEmitter: VolumeEmitterProxy,
+   VolumePickSensor: VolumePickSensorProxy,
+   WaveShaper: WaveShaperProxy,
+   WindPhysicsModel: WindPhysicsModelProxy,
+   WorldInfo: WorldInfoProxy,
 }
 &
 { [name: string]: SFNode } // catch all;
 
-// CONCRETE NODES END
+   // NODES END
