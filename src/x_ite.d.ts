@@ -1338,7 +1338,7 @@ declare class MFRotation extends X3DArrayField <SFRotation>
    static readonly typeName: "MFRotation";
 }
 
-declare class MFString extends X3DArrayField <string>
+declare class MFString <T extends string = string> extends X3DArrayField <T>
 {
    static readonly typeName: "MFString";
 }
@@ -1441,13 +1441,13 @@ interface AnalyserProxy extends X3DSoundProcessingNodeProxy
    *
    * This field is of access type is 'inputOutput' and type SFString.
    */
-   channelCountMode: string,
+   channelCountMode: "MAX" | "CLAMPED_MAX" | "EXPLICIT",
    /**
    * channelInterpretation determines how individual channels are treated when up-mixing and down-mixing connections to any inputs.
    *
    * This field is of access type is 'inputOutput' and type SFString.
    */
-   channelInterpretation: string,
+   channelInterpretation: "SPEAKERS" | "DISCRETE",
    /**
    * The children field specifies audio-graph sound sources providing input signals for this node.
    *
@@ -1663,7 +1663,7 @@ interface AppearanceProxy extends X3DAppearanceNodeProxy
    *
    * This field is of access type is 'inputOutput' and type SFString.
    */
-   alphaMode: string,
+   alphaMode: "AUTO" | "OPAQUE" | "MASK" | "BLEND",
    /**
    * This field is of access type is 'inputOutput' and type SFNode.
    */
@@ -1755,7 +1755,7 @@ interface ArcClose2DProxy extends X3DGeometryNodeProxy
    *
    * This field is of access type is 'initializeOnly' and type SFString.
    */
-   closureType: string,
+   closureType: "PIE" | "CHORD",
    /**
    * Arc extends from startAngle counterclockwise to endAngle, in radians.
    *
@@ -1915,13 +1915,13 @@ interface AudioDestinationProxy extends X3DSoundDestinationNodeProxy
    *
    * This field is of access type is 'inputOutput' and type SFString.
    */
-   channelCountMode: string,
+   channelCountMode: "MAX" | "CLAMPED_MAX" | "EXPLICIT",
    /**
    * channelInterpretation determines how individual channels are treated when up-mixing and down-mixing connections to any inputs.
    *
    * This field is of access type is 'inputOutput' and type SFString.
    */
-   channelInterpretation: string,
+   channelInterpretation: "SPEAKERS" | "DISCRETE",
    /**
    * The children field specifies audio-graph sound sources providing input signals for this node.
    *
@@ -2105,7 +2105,7 @@ interface BallJointProxy extends X3DRigidJointNodeProxy
    *
    * This field is of access type is 'inputOutput' and type MFString.
    */
-   forceOutput: MFString,
+   forceOutput: MFString <"ALL" | "NONE">,
    /**
    * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
    *
@@ -2183,13 +2183,13 @@ interface BiquadFilterProxy extends X3DSoundProcessingNodeProxy
    *
    * This field is of access type is 'inputOutput' and type SFString.
    */
-   channelCountMode: string,
+   channelCountMode: "MAX" | "CLAMPED_MAX" | "EXPLICIT",
    /**
    * channelInterpretation determines how individual channels are treated when up-mixing and down-mixing connections to any inputs.
    *
    * This field is of access type is 'inputOutput' and type SFString.
    */
-   channelInterpretation: string,
+   channelInterpretation: "SPEAKERS" | "DISCRETE",
    /**
    * The children field specifies audio-graph sound sources providing input signals for this node.
    *
@@ -2291,7 +2291,7 @@ interface BiquadFilterProxy extends X3DSoundProcessingNodeProxy
    *
    * This field is of access type is 'inputOutput' and type SFString.
    */
-   type: string,
+   type: "LOWPASS" | "HIGHPASS" | "BANDPASS" | "LOWSHELF" | "HIGHSHELF" | "PEAKING" | "NOTCH" | "ALLPASS",
 }
 
 /** BlendedVolumeStyle combines rendering of two voxel data sets into one by blending voxel values. */
@@ -2338,13 +2338,13 @@ interface BlendedVolumeStyleProxy extends X3DComposableVolumeRenderStyleNodeProx
    *
    * This field is of access type is 'inputOutput' and type SFString.
    */
-   weightFunction1: string,
+   weightFunction1: "CONSTANT" | "ALPHA1" | "ALPHA2" | "ONE_MINUS_ALPHA1" | "ONE_MINUS_ALPHA2" | "TABLE",
    /**
    * specifies 2D textures used to determine weight values when weight function is set to TABLE.
    *
    * This field is of access type is 'inputOutput' and type SFString.
    */
-   weightFunction2: string,
+   weightFunction2: "CONSTANT" | "ALPHA1" | "ALPHA2" | "ONE_MINUS_ALPHA1" | "ONE_MINUS_ALPHA2" | "TABLE",
    /**
    * The weightTransferFunction1 and weightTransferFunction2 fields specify two-dimensional textures that are used to determine the weight values when the weight function is set to "TABLE".
    *
@@ -2610,13 +2610,13 @@ interface BufferAudioSourceProxy extends X3DSoundSourceNodeProxy, X3DUrlObjectPr
    *
    * This field is of access type is 'inputOutput' and type SFString.
    */
-   channelCountMode: string,
+   channelCountMode: "MAX" | "CLAMPED_MAX" | "EXPLICIT",
    /**
    * channelInterpretation determines how individual channels are treated when up-mixing and down-mixing connections to any inputs.
    *
    * This field is of access type is 'inputOutput' and type SFString.
    */
-   channelInterpretation: string,
+   channelInterpretation: "SPEAKERS" | "DISCRETE",
    /**
    * Author-provided prose that describes intended purpose of the url asset.
    *
@@ -3040,13 +3040,13 @@ interface ChannelMergerProxy extends X3DSoundChannelNodeProxy
    *
    * This field is of access type is 'inputOutput' and type SFString.
    */
-   channelCountMode: string,
+   channelCountMode: "MAX" | "CLAMPED_MAX" | "EXPLICIT",
    /**
    * channelInterpretation determines how individual channels are treated when up-mixing and down-mixing connections to any inputs.
    *
    * This field is of access type is 'inputOutput' and type SFString.
    */
-   channelInterpretation: string,
+   channelInterpretation: "SPEAKERS" | "DISCRETE",
    /**
    * The children field specifies audio-graph sound sources providing input signals for this node.
    *
@@ -3093,13 +3093,13 @@ interface ChannelSelectorProxy extends X3DSoundChannelNodeProxy
    *
    * This field is of access type is 'inputOutput' and type SFString.
    */
-   channelCountMode: string,
+   channelCountMode: "MAX" | "CLAMPED_MAX" | "EXPLICIT",
    /**
    * channelInterpretation determines how individual channels are treated when up-mixing and down-mixing connections to any inputs.
    *
    * This field is of access type is 'inputOutput' and type SFString.
    */
-   channelInterpretation: string,
+   channelInterpretation: "SPEAKERS" | "DISCRETE",
    /**
    * channelSelection is single channel of interest from those provided by input nodes.
    *
@@ -3152,13 +3152,13 @@ interface ChannelSplitterProxy extends X3DSoundChannelNodeProxy
    *
    * This field is of access type is 'inputOutput' and type SFString.
    */
-   channelCountMode: string,
+   channelCountMode: "MAX" | "CLAMPED_MAX" | "EXPLICIT",
    /**
    * channelInterpretation determines how individual channels are treated when up-mixing and down-mixing connections to any inputs.
    *
    * This field is of access type is 'inputOutput' and type SFString.
    */
-   channelInterpretation: string,
+   channelInterpretation: "SPEAKERS" | "DISCRETE",
    /**
    * The children field specifies audio-graph sound sources providing input signals for this node, making up a section of the audio graph.
    *
@@ -3442,7 +3442,7 @@ interface CollisionCollectionProxy extends X3DChildNodeProxy, X3DBoundedObjectPr
    *
    * This field is of access type is 'inputOutput' and type MFString.
    */
-   appliedParameters: MFString,
+   appliedParameters: MFString <"BOUNCE" | "USER_FRICTION" | "FRICTION_COEFFICIENT-2" | "ERROR_REDUCTION" | "CONSTANT_FORCE" | "SPEED-1" | "SPEED-2" | "SLIP-1" | "SLIP-2">,
    /**
    * Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
    *
@@ -3909,7 +3909,7 @@ interface ComposedShaderProxy extends X3DShaderNodeProxy, X3DProgrammableShaderO
    *
    * This field is of access type is 'initializeOnly' and type SFString.
    */
-   language: string,
+   language: "Cg" | "GLSL" | "HLSL",
    /**
    * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
    *
@@ -4102,7 +4102,7 @@ interface ContactProxy extends X3DNodeProxy
    *
    * This field is of access type is 'inputOutput' and type MFString.
    */
-   appliedParameters: MFString,
+   appliedParameters: MFString <"BOUNCE" | "USER_FRICTION" | "FRICTION_COEFFICIENT-2" | "ERROR_REDUCTION" | "CONSTANT_FORCE" | "SPEED-1" | "SPEED-2" | "SLIP-1" | "SLIP-2">,
    /**
    * The body1 and body2 fields specify two top-level nodes that should be evaluated in the physics model as a single set of interactions with respect to each other.
    *
@@ -4263,13 +4263,13 @@ interface ConvolverProxy extends X3DSoundProcessingNodeProxy
    *
    * This field is of access type is 'inputOutput' and type SFString.
    */
-   channelCountMode: string,
+   channelCountMode: "MAX" | "CLAMPED_MAX" | "EXPLICIT",
    /**
    * channelInterpretation determines how individual channels are treated when up-mixing and down-mixing connections to any inputs.
    *
    * This field is of access type is 'inputOutput' and type SFString.
    */
-   channelInterpretation: string,
+   channelInterpretation: "SPEAKERS" | "DISCRETE",
    /**
    * The children field specifies audio-graph sound sources providing input signals for this node.
    *
@@ -4722,13 +4722,13 @@ interface DelayProxy extends X3DSoundProcessingNodeProxy
    *
    * This field is of access type is 'inputOutput' and type SFString.
    */
-   channelCountMode: string,
+   channelCountMode: "MAX" | "CLAMPED_MAX" | "EXPLICIT",
    /**
    * channelInterpretation determines how individual channels are treated when up-mixing and down-mixing connections to any inputs.
    *
    * This field is of access type is 'inputOutput' and type SFString.
    */
-   channelInterpretation: string,
+   channelInterpretation: "SPEAKERS" | "DISCRETE",
    /**
    * The children field specifies audio-graph sound sources providing input signals for this node.
    *
@@ -5119,7 +5119,7 @@ interface DoubleAxisHingeJointProxy extends X3DRigidJointNodeProxy
    *
    * This field is of access type is 'inputOutput' and type MFString.
    */
-   forceOutput: MFString,
+   forceOutput: MFString <"ALL" | "NONE">,
    /**
    * This field is of access type is 'outputOnly' and type SFFloat.
    */
@@ -5218,13 +5218,13 @@ interface DynamicsCompressorProxy extends X3DSoundProcessingNodeProxy
    *
    * This field is of access type is 'inputOutput' and type SFString.
    */
-   channelCountMode: string,
+   channelCountMode: "MAX" | "CLAMPED_MAX" | "EXPLICIT",
    /**
    * channelInterpretation determines how individual channels are treated when up-mixing and down-mixing connections to any inputs.
    *
    * This field is of access type is 'inputOutput' and type SFString.
    */
-   channelInterpretation: string,
+   channelInterpretation: "SPEAKERS" | "DISCRETE",
    /**
    * The children field specifies audio-graph sound sources providing input signals for this node.
    *
@@ -5950,7 +5950,7 @@ interface EspduTransformProxy extends X3DGroupingNodeProxy, X3DNetworkSensorNode
    *
    * This field is of access type is 'inputOutput' and type SFString.
    */
-   networkMode: string,
+   networkMode: "standAlone" | "networkReader" | "networkWriter",
    /**
    * Network connection port number (EXAMPLE 3000) for sending or receiving DIS messages.
    *
@@ -6303,7 +6303,7 @@ interface FogProxy extends X3DBindableNodeProxy, X3DFogObjectProxy
    *
    * This field is of access type is 'inputOutput' and type SFString.
    */
-   fogType: string,
+   fogType: "LINEAR" | "EXPONENTIAL",
    /**
    * Output event true gets sent when node becomes bound and activated, otherwise output event false gets sent when node becomes unbound and deactivated.
    *
@@ -6355,7 +6355,7 @@ interface FontStyleProxy extends X3DFontStyleNodeProxy
    *
    * This field is of access type is 'inputOutput' and type MFString.
    */
-   family: MFString,
+   family: MFString <"SANS" | "SERIF" | "TYPEWRITER">,
    /**
    * Whether text direction is horizontal (true) or vertical (false).
    *
@@ -6367,7 +6367,7 @@ interface FontStyleProxy extends X3DFontStyleNodeProxy
    *
    * This field is of access type is 'inputOutput' and type MFString.
    */
-   justify: MFString,
+   justify: MFString <"MIDDLE" | "MIDDLE BEGIN" | "MIDDLE END" | "MIDDLE FIRST" | "MIDDLE MIDDLE" | "BEGIN" | "BEGIN BEGIN" | "BEGIN END" | "BEGIN FIRST" | "BEGIN MIDDLE" | "END" | "END BEGIN" | "END END" | "END FIRST" | "END MIDDLE" | "FIRST" | "FIRST BEGIN" | "FIRST END" | "FIRST FIRST" | "FIRST MIDDLE">,
    /**
    * Language codes consist of a primary code and a (possibly empty) series of subcodes.
    *
@@ -6403,7 +6403,7 @@ interface FontStyleProxy extends X3DFontStyleNodeProxy
    *
    * This field is of access type is 'inputOutput' and type SFString.
    */
-   style: string,
+   style: "PLAIN" | "BOLD" | "ITALIC" | "BOLDITALIC",
    /**
    * Whether text direction is top-to-bottom (true) or bottom-to-top (false).
    *
@@ -6449,13 +6449,13 @@ interface GainProxy extends X3DSoundProcessingNodeProxy
    *
    * This field is of access type is 'inputOutput' and type SFString.
    */
-   channelCountMode: string,
+   channelCountMode: "MAX" | "CLAMPED_MAX" | "EXPLICIT",
    /**
    * channelInterpretation determines how individual channels are treated when up-mixing and down-mixing connections to any inputs.
    *
    * This field is of access type is 'inputOutput' and type SFString.
    */
-   channelInterpretation: string,
+   channelInterpretation: "SPEAKERS" | "DISCRETE",
    /**
    * The children field specifies audio-graph sound sources providing input signals for this node.
    *
@@ -6568,7 +6568,7 @@ interface GeneratedCubeMapTextureProxy extends X3DEnvironmentTextureNodeProxy
    *
    * This field is of access type is 'inputOutput' and type SFString.
    */
-   update: string,
+   update: "NONE" | "NEXT_FRAME_ONLY" | "ALWAYS",
 }
 
 /** GeoCoordinate builds geometry as a set of geographic 3D coordinates. */
@@ -7485,7 +7485,7 @@ interface HAnimDisplacerProxy extends X3DGeometricPropertyNodeProxy
    *
    * This field is of access type is 'inputOutput' and type SFString.
    */
-   name: string,
+   name: "skull_vertex" | "glabella" | "sellion" | "l_infraorbitale" | "l_tragion" | "l_gonion" | "r_infraorbitale" | "r_tragion" | "r_gonion" | "supramenton" | "cervicale" | "adams_apple" | "suprasternale" | "substernale" | "l_clavicle" | "l_acromion" | "l_axilla_proximal" | "l_axilla_distal" | "l_axilla_posterior_folds" | "r_clavicle" | "r_acromion" | "r_axilla_proximal" | "r_axilla_distal" | "r_axilla_posterior_folds" | "spine_1_middle_back" | "spine_2_lower_back" | "waist_preferred_anterior" | "waist_preferred_posterior" | "l_rib10" | "l_thelion" | "r_rib10" | "r_thelion" | "l_asis" | "l_iliocristale" | "l_psis" | "r_asis" | "r_iliocristale" | "r_psis" | "crotch" | "l_femoral_lateral_epicondyle" | "l_femoral_medial_epicondyle" | "l_suprapatella" | "l_trochanterion" | "r_femoral_lateral_epicondyle" | "r_femoral_medial_epicondyle" | "r_suprapatella" | "r_trochanterion" | "l_tibiale" | "l_medial_malleolus" | "l_lateral_malleolus" | "l_sphyrion" | "r_tibiale" | "r_medial_malleolus" | "r_lateral_malleolus" | "r_sphyrion" | "l_metatarsal_phalanx_1" | "l_metatarsal_phalanx_5" | "l_dactylion" | "l_calcaneus_posterior" | "r_metatarsal_phalanx_1" | "r_metatarsal_phalanx_5" | "r_dactylion" | "r_calcaneus_posterior" | "l_humeral_lateral_epicondyle" | "l_humeral_medial_epicondyle" | "l_olecranon" | "r_humeral_lateral_epicondyle" | "r_humeral_medial_epicondyle" | "r_olecranon" | "l_radiale" | "l_ulnar_styloid" | "l_radial_styloid" | "r_radiale" | "r_ulnar_styloid" | "r_radial_styloid" | "l_metacarpal_phalanx_2" | "l_metacarpal_phalanx_3" | "l_metacarpal_phalanx_5" | "r_metacarpal_phalanx_2" | "r_metacarpal_phalanx_3" | "r_metacarpal_phalanx_5" | "nuchale" | "l_neck_base" | "r_neck_base" | "navel" | "l_ectocanthus" | "r_ectocanthus" | "menton" | "mesosternale" | "opisthocranion" | "l_knee_crease" | "r_knee_crease" | "rear_center_midsagittal_plane" | "buttocks_standing_wall_contact_point" | "l_chest_midsagittal_plane" | "r_chest_midsagittal_plane" | "l_bideltoid" | "r_bideltoid" | "l_carpal_distal_phalanx_1" | "l_carpal_distal_phalanx_2" | "l_carpal_distal_phalanx_3" | "l_carpal_distal_phalanx_4" | "l_carpal_distal_phalanx_5" | "r_carpal_distal_phalanx_1" | "r_carpal_distal_phalanx_2" | "r_carpal_distal_phalanx_3" | "r_carpal_distal_phalanx_4" | "r_carpal_distal_phalanx_5" | "l_tarsal_distal_phalanx_1" | "l_tarsal_distal_phalanx_2" | "l_tarsal_distal_phalanx_3" | "l_tarsal_distal_phalanx_4" | "l_tarsal_distal_phalanx_5" | "r_tarsal_distal_phalanx_1" | "r_tarsal_distal_phalanx_2" | "r_tarsal_distal_phalanx_3" | "r_tarsal_distal_phalanx_4" | "r_tarsal_distal_phalanx_5",
    /**
    * The weigh factor has typical range [0,1] and defines the scale factor applied to displacement values before adding them to neutral vertex positions.
    *
@@ -7757,7 +7757,7 @@ interface HAnimJointProxy extends X3DChildNodeProxy, X3DBoundedObjectProxy
    *
    * This field is of access type is 'inputOutput' and type SFString.
    */
-   name: string,
+   name: "humanoid_root" | "sacroiliac" | "l_hip" | "l_knee" | "l_talocrural" | "l_talocalcaneonavicular" | "l_cuneonavicular_1" | "l_tarsometatarsal_1" | "l_metatarsophalangeal_1" | "l_tarsal_interphalangeal_1" | "l_cuneonavicular_2" | "l_tarsometatarsal_2" | "l_metatarsophalangeal_2" | "l_tarsal_proximal_interphalangeal_2" | "l_tarsal_distal_interphalangeal_2" | "l_cuneonavicular_3" | "l_tarsometatarsal_3" | "l_metatarsophalangeal_3" | "l_tarsal_proximal_interphalangeal_3" | "l_tarsal_distal_interphalangeal_3" | "l_calcaneocuboid" | "l_transversetarsal" | "l_tarsometatarsal_4" | "l_metatarsophalangeal_4" | "l_tarsal_proximal_interphalangeal_4" | "l_tarsal_distal_interphalangeal_4" | "l_tarsometatarsal_5" | "l_metatarsophalangeal_5" | "l_tarsal_proximal_interphalangeal_5" | "l_tarsal_distal_interphalangeal_5" | "r_hip" | "r_knee" | "r_talocrural" | "r_talocalcaneonavicular" | "r_cuneonavicular_1" | "r_tarsometatarsal_1" | "r_metatarsophalangeal_1" | "r_tarsal_interphalangeal_1" | "r_cuneonavicular_2" | "r_tarsometatarsal_2" | "r_metatarsophalangeal_2" | "r_tarsal_proximal_interphalangeal_2" | "r_tarsal_distal_interphalangeal_2" | "r_cuneonavicular_3" | "r_tarsometatarsal_3" | "r_metatarsophalangeal_3" | "r_tarsal_proximal_interphalangeal_3" | "r_tarsal_distal_interphalangeal_3" | "r_calcaneocuboid" | "r_transversetarsal" | "r_tarsometatarsal_4" | "r_metatarsophalangeal_4" | "r_tarsal_proximal_interphalangeal_4" | "r_tarsal_distal_interphalangeal_4" | "r_tarsometatarsal_5" | "r_metatarsophalangeal_5" | "r_tarsal_proximal_interphalangeal_5" | "r_tarsal_distal_interphalangeal_5" | "vl5" | "vl4" | "vl3" | "vl2" | "vl1" | "vt12" | "vt11" | "vt10" | "vt9" | "vt8" | "vt7" | "vt6" | "vt5" | "vt4" | "vt3" | "vt2" | "vt1" | "vc7" | "vc6" | "vc5" | "vc4" | "vc3" | "vc2" | "vc1" | "skullbase" | "l_eyelid_joint" | "r_eyelid_joint" | "l_eyeball_joint" | "r_eyeball_joint" | "l_eyebrow_joint" | "r_eyebrow_joint" | "temporomandibular" | "l_sternoclavicular" | "l_acromioclavicular" | "l_shoulder" | "l_elbow" | "l_radiocarpal" | "l_midcarpal_1" | "l_carpometacarpal_1" | "l_metacarpophalangeal_1" | "l_carpal_interphalangeal_1" | "l_midcarpal_2" | "l_carpometacarpal_2" | "l_metacarpophalangeal_2" | "l_carpal_proximal_interphalangeal_2" | "l_carpal_distal_interphalangeal_2" | "l_midcarpal_3" | "l_carpometacarpal_3" | "l_metacarpophalangeal_3" | "l_carpal_proximal_interphalangeal_3" | "l_carpal_distal_interphalangeal_3" | "l_midcarpal_4_5" | "l_carpometacarpal_4" | "l_metacarpophalangeal_4" | "l_carpal_proximal_interphalangeal_4" | "l_carpal_distal_interphalangeal_4" | "l_carpometacarpal_5" | "l_metacarpophalangeal_5" | "l_carpal_proximal_interphalangeal_5" | "l_carpal_distal_interphalangeal_5" | "r_sternoclavicular" | "r_acromioclavicular" | "r_shoulder" | "r_elbow" | "r_radiocarpal" | "r_midcarpal_1" | "r_carpometacarpal_1" | "r_metacarpophalangeal_1" | "r_carpal_interphalangeal_1" | "r_midcarpal_2" | "r_carpometacarpal_2" | "r_metacarpophalangeal_2" | "r_carpal_proximal_interphalangeal_2" | "r_carpal_distal_interphalangeal_2" | "r_midcarpal_3" | "r_carpometacarpal_3" | "r_metacarpophalangeal_3" | "r_carpal_proximal_interphalangeal_3" | "r_carpal_distal_interphalangeal_3" | "r_midcarpal_4_5" | "r_carpometacarpal_4" | "r_metacarpophalangeal_4" | "r_carpal_proximal_interphalangeal_4" | "r_carpal_distal_interphalangeal_4" | "r_carpometacarpal_5" | "r_metacarpophalangeal_5" | "r_carpal_proximal_interphalangeal_5" | "r_carpal_distal_interphalangeal_5",
    /**
    * This field is of access type is 'inputOnly' and type MFNode.
    */
@@ -8021,7 +8021,7 @@ interface HAnimSegmentProxy extends X3DGroupingNodeProxy
    *
    * This field is of access type is 'inputOutput' and type SFString.
    */
-   name: string,
+   name: "sacrum" | "pelvis" | "l_thigh" | "l_calf" | "l_talus" | "l_navicular" | "l_cuneiform_1" | "l_metatarsal_1" | "l_tarsal_proximal_phalanx_1" | "l_tarsal_distal_phalanx_1" | "l_cuneiform_2" | "l_metatarsal_2" | "l_tarsal_proximal_phalanx_2" | "l_tarsal_middle_phalanx_2" | "l_tarsal_distal_phalanx_2" | "l_cuneiform_3" | "l_metatarsal_3" | "l_tarsal_proximal_phalanx_3" | "l_tarsal_middle_phalanx_3" | "l_tarsal_distal_phalanx_3" | "l_calcaneus" | "l_cuboid" | "l_metatarsal_4" | "l_tarsal_proximal_phalanx_4" | "l_tarsal_middle_phalanx_4" | "l_tarsal_distal_phalanx_4" | "l_metatarsal_5" | "l_tarsal_proximal_phalanx_5" | "l_tarsal_middle_phalanx_5" | "l_tarsal_distal_phalanx_5" | "r_thigh" | "r_calf" | "r_talus" | "r_navicular" | "r_cuneiform_1" | "r_metatarsal_1" | "r_tarsal_proximal_phalanx_1" | "r_tarsal_distal_phalanx_1" | "r_cuneiform_2" | "r_metatarsal_2" | "r_tarsal_proximal_phalanx_2" | "r_tarsal_middle_phalanx_2" | "r_tarsal_distal_phalanx_2" | "r_cuneiform_3" | "r_metatarsal_3" | "r_tarsal_proximal_phalanx_3" | "r_tarsal_middle_phalanx_3" | "r_tarsal_distal_phalanx_3" | "r_calcaneus" | "r_cuboid" | "r_metatarsal_4" | "r_tarsal_proximal_phalanx_4" | "r_tarsal_middle_phalanx_4" | "r_tarsal_distal_phalanx_4" | "r_metatarsal_5" | "r_tarsal_proximal_phalanx_5" | "r_tarsal_middle_phalanx_5" | "r_tarsal_distal_phalanx_5" | "l5" | "l4" | "l3" | "l2" | "l1" | "t12" | "t11" | "t10" | "t9" | "t8" | "t7" | "t6" | "t5" | "t4" | "t3" | "t2" | "t1" | "c7" | "c6" | "c5" | "c4" | "c3" | "c2" | "c1" | "skull" | "l_eyelid" | "r_eyelid" | "l_eyeball" | "r_eyeball" | "l_eyebrow" | "r_eyebrow" | "jaw" | "l_clavicle" | "l_scapula" | "l_upperarm" | "l_forearm" | "l_carpal" | "l_trapezium" | "l_metacarpal_1" | "l_carpal_proximal_phalanx_1" | "l_carpal_distal_phalanx_1" | "l_trapezoid" | "l_metacarpal_2" | "l_carpal_proximal_phalanx_2" | "l_carpal_middle_phalanx_2" | "l_carpal_distal_phalanx_2" | "l_capitate" | "l_metacarpal_3" | "l_carpal_proximal_phalanx_3" | "l_carpal_middle_phalanx_3" | "l_carpal_distal_phalanx_3" | "l_hamate" | "l_metacarpal_4" | "l_carpal_proximal_phalanx_4" | "l_carpal_middle_phalanx_4" | "l_carpal_distal_phalanx_4" | "l_metacarpal_5" | "l_carpal_proximal_phalanx_5" | "l_carpal_middle_phalanx_5" | "l_carpal_distal_phalanx_5" | "r_clavicle" | "r_scapula" | "r_upperarm" | "r_forearm" | "r_carpal" | "r_trapezium" | "r_metacarpal_1" | "r_carpal_proximal_phalanx_1" | "r_carpal_distal_phalanx_1" | "r_trapezoid" | "r_metacarpal_2" | "r_carpal_proximal_phalanx_2" | "r_carpal_middle_phalanx_2" | "r_carpal_distal_phalanx_2" | "r_capitate" | "r_metacarpal_3" | "r_carpal_proximal_phalanx_3" | "r_carpal_middle_phalanx_3" | "r_carpal_distal_phalanx_3" | "r_hamate" | "r_metacarpal_4" | "r_carpal_proximal_phalanx_4" | "r_carpal_middle_phalanx_4" | "r_carpal_distal_phalanx_4" | "r_metacarpal_5" | "r_carpal_proximal_phalanx_5" | "r_carpal_middle_phalanx_5" | "r_carpal_distal_phalanx_5",
    /**
    * This field is of access type is 'inputOnly' and type MFNode.
    */
@@ -8088,7 +8088,7 @@ interface HAnimSiteProxy extends X3DGroupingNodeProxy
    *
    * This field is of access type is 'inputOutput' and type SFString.
    */
-   name: string,
+   name: "skull_vertex" | "glabella" | "sellion" | "l_infraorbitale" | "l_tragion" | "l_gonion" | "r_infraorbitale" | "r_tragion" | "r_gonion" | "supramenton" | "cervicale" | "adams_apple" | "suprasternale" | "substernale" | "l_clavicle" | "l_acromion" | "l_axilla_proximal" | "l_axilla_distal" | "l_axilla_posterior_folds" | "r_clavicle" | "r_acromion" | "r_axilla_proximal" | "r_axilla_distal" | "r_axilla_posterior_folds" | "spine_1_middle_back" | "spine_2_lower_back" | "waist_preferred_anterior" | "waist_preferred_posterior" | "l_rib10" | "l_thelion" | "r_rib10" | "r_thelion" | "l_asis" | "l_iliocristale" | "l_psis" | "r_asis" | "r_iliocristale" | "r_psis" | "crotch" | "l_femoral_lateral_epicondyle" | "l_femoral_medial_epicondyle" | "l_suprapatella" | "l_trochanterion" | "r_femoral_lateral_epicondyle" | "r_femoral_medial_epicondyle" | "r_suprapatella" | "r_trochanterion" | "l_tibiale" | "l_medial_malleolus" | "l_lateral_malleolus" | "l_sphyrion" | "r_tibiale" | "r_medial_malleolus" | "r_lateral_malleolus" | "r_sphyrion" | "l_metatarsal_phalanx_1" | "l_metatarsal_phalanx_5" | "l_dactylion" | "l_calcaneus_posterior" | "r_metatarsal_phalanx_1" | "r_metatarsal_phalanx_5" | "r_dactylion" | "r_calcaneus_posterior" | "l_humeral_lateral_epicondyle" | "l_humeral_medial_epicondyle" | "l_olecranon" | "r_humeral_lateral_epicondyle" | "r_humeral_medial_epicondyle" | "r_olecranon" | "l_radiale" | "l_ulnar_styloid" | "l_radial_styloid" | "r_radiale" | "r_ulnar_styloid" | "r_radial_styloid" | "l_metacarpal_phalanx_2" | "l_metacarpal_phalanx_3" | "l_metacarpal_phalanx_5" | "r_metacarpal_phalanx_2" | "r_metacarpal_phalanx_3" | "r_metacarpal_phalanx_5" | "nuchale" | "l_neck_base" | "r_neck_base" | "navel" | "l_ectocanthus" | "r_ectocanthus" | "menton" | "mesosternale" | "opisthocranion" | "l_knee_crease" | "r_knee_crease" | "rear_center_midsagittal_plane" | "buttocks_standing_wall_contact_point" | "l_chest_midsagittal_plane" | "r_chest_midsagittal_plane" | "l_bideltoid" | "r_bideltoid" | "l_carpal_distal_phalanx_1" | "l_carpal_distal_phalanx_2" | "l_carpal_distal_phalanx_3" | "l_carpal_distal_phalanx_4" | "l_carpal_distal_phalanx_5" | "r_carpal_distal_phalanx_1" | "r_carpal_distal_phalanx_2" | "r_carpal_distal_phalanx_3" | "r_carpal_distal_phalanx_4" | "r_carpal_distal_phalanx_5" | "l_tarsal_distal_phalanx_1" | "l_tarsal_distal_phalanx_2" | "l_tarsal_distal_phalanx_3" | "l_tarsal_distal_phalanx_4" | "l_tarsal_distal_phalanx_5" | "r_tarsal_distal_phalanx_1" | "r_tarsal_distal_phalanx_2" | "r_tarsal_distal_phalanx_3" | "r_tarsal_distal_phalanx_4" | "r_tarsal_distal_phalanx_5",
    /**
    * This field is of access type is 'inputOnly' and type MFNode.
    */
@@ -9149,7 +9149,7 @@ interface LayerProxy extends X3DLayerNodeProxy
    *
    * This field is of access type is 'inputOutput' and type MFString.
    */
-   objectType: MFString,
+   objectType: MFString <"ALL" | "NONE" | "TERRAIN">,
    /**
    * pickable determines whether pick traversal is performed for this layer.
    *
@@ -9211,7 +9211,7 @@ interface LayoutProxy extends X3DLayoutNodeProxy
    *
    * This field is of access type is 'inputOutput' and type MFString.
    */
-   align: MFString,
+   align: MFString <"LEFT BOTTOM" | "LEFT CENTER" | "LEFT TOP" | "CENTER BOTTOM" | "CENTER CENTER" | "CENTER TOP" | "RIGHT BOTTOM" | "RIGHT CENTER" | "RIGHT TOP">,
    /**
    * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
    *
@@ -9229,13 +9229,13 @@ interface LayoutProxy extends X3DLayoutNodeProxy
    *
    * This field is of access type is 'inputOutput' and type MFString.
    */
-   offsetUnits: MFString,
+   offsetUnits: MFString <"WORLD WORLD" | "WORLD FRACTION" | "WORLD PIXEL" | "FRACTION WORLD" | "FRACTION FRACTION" | "FRACTION PIXEL" | "PIXEL WORLD" | "PIXEL FRACTION" | "PIXEL PIXEL">,
    /**
    * The scaleMode field specifies how the scale of the parent is modified.
    *
    * This field is of access type is 'inputOutput' and type MFString.
    */
-   scaleMode: MFString,
+   scaleMode: MFString <"NONE NONE" | "NONE FRACTION" | "NONE STRETCH" | "NONE PIXEL" | "FRACTION NONE" | "FRACTION FRACTION" | "FRACTION STRETCH" | "FRACTION PIXEL" | "STRETCH NONE" | "STRETCH FRACTION" | "STRETCH STRETCH" | "STRETCH PIXEL" | "PIXEL NONE" | "PIXEL FRACTION" | "PIXEL STRETCH" | "PIXEL PIXEL">,
    /**
    * The two values in the size field define the width and height of the layout rectangle.
    *
@@ -9247,7 +9247,7 @@ interface LayoutProxy extends X3DLayoutNodeProxy
    *
    * This field is of access type is 'inputOutput' and type MFString.
    */
-   sizeUnits: MFString,
+   sizeUnits: MFString <"WORLD WORLD" | "WORLD FRACTION" | "WORLD PIXEL" | "FRACTION WORLD" | "FRACTION FRACTION" | "FRACTION PIXEL" | "PIXEL WORLD" | "PIXEL FRACTION" | "PIXEL PIXEL">,
 }
 
 /** LayoutGroup is a Grouping node that can contain most nodes, whose children are related by a common layout within a parent layout. */
@@ -9341,7 +9341,7 @@ interface LayoutLayerProxy extends X3DLayerNodeProxy
    *
    * This field is of access type is 'inputOutput' and type MFString.
    */
-   objectType: MFString,
+   objectType: MFString <"ALL" | "NONE" | "TERRAIN">,
    /**
    * pickable determines whether pick traversal is performed for this layer.
    *
@@ -9386,7 +9386,7 @@ interface LinePickSensorProxy extends X3DPickSensorNodeProxy
    *
    * This field is of access type is 'initializeOnly' and type SFString.
    */
-   intersectionType: string,
+   intersectionType: "BOUNDS" | "GEOMETRY",
    /**
    * isActive indicates when the intersecting object is picked by the picking geometry.
    *
@@ -9398,7 +9398,7 @@ interface LinePickSensorProxy extends X3DPickSensorNodeProxy
    *
    * This field is of access type is 'inputOutput' and type SFString.
    */
-   matchCriterion: string,
+   matchCriterion: "MATCH_ANY" | "MATCH_EVERY" | "MATCH_ONLY_ONE",
    /**
    * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
    *
@@ -9410,7 +9410,7 @@ interface LinePickSensorProxy extends X3DPickSensorNodeProxy
    *
    * This field is of access type is 'inputOutput' and type MFString.
    */
-   objectType: MFString,
+   objectType: MFString <"ALL" | "NONE" | "TERRAIN">,
    /**
    * Output event containing the node or nodes that have been found to intersect with the picking geometry from the last time this node performed a picking operation, given in the local coordinate system.
    *
@@ -9452,7 +9452,7 @@ interface LinePickSensorProxy extends X3DPickSensorNodeProxy
    *
    * This field is of access type is 'initializeOnly' and type SFString.
    */
-   sortOrder: string,
+   sortOrder: "ANY" | "CLOSEST" | "ALL" | "ALL_SORTED",
 }
 
 /** LineProperties allows precise fine-grained control over the rendering style of lines and edges for associated geometry nodes inside the same Shape. */
@@ -9711,7 +9711,7 @@ interface LocalFogProxy extends X3DChildNodeProxy, X3DFogObjectProxy
    *
    * This field is of access type is 'inputOutput' and type SFString.
    */
-   fogType: string,
+   fogType: "LINEAR" | "EXPONENTIAL",
    /**
    * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
    *
@@ -10307,7 +10307,7 @@ interface MotorJointProxy extends X3DRigidJointNodeProxy
    *
    * This field is of access type is 'inputOutput' and type MFString.
    */
-   forceOutput: MFString,
+   forceOutput: MFString <"ALL" | "NONE">,
    /**
    * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
    *
@@ -10569,7 +10569,7 @@ interface MultiTextureProxy extends X3DTextureNodeProxy
    *
    * This field is of access type is 'inputOutput' and type MFString.
    */
-   function: MFString,
+   function: MFString <"COMPLEMENT" | "ALPHAREPLICATE" | "">,
    /**
    * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
    *
@@ -10581,13 +10581,13 @@ interface MultiTextureProxy extends X3DTextureNodeProxy
    *
    * This field is of access type is 'inputOutput' and type MFString.
    */
-   mode: MFString,
+   mode: MFString <"ADD" | "ADDSIGNED" | "ADDSIGNED2X" | "ADDSMOOTH" | "BLENDCURRENTALPHA" | "BLENDDIFFUSEALPHA" | "BLENDFACTORALPHA" | "BLENDTEXTUREALPHA" | "DOTPRODUCT3" | "MODULATE" | "MODULATE2X" | "MODULATE4X" | "MODULATEALPHA_ADDCOLOR" | "MODULATEINVALPHA_ADDCOLOR" | "MODULATEINVCOLOR_ADDALPHA" | "OFF" | "REPLACE" | "SELECTARG1" | "SELECTARG2" | "SUBTRACT">,
    /**
    * source field determines whether each image source is treated as DIFFUSE, SPECULAR or a multiplicative FACTOR.
    *
    * This field is of access type is 'inputOutput' and type MFString.
    */
-   source: MFString,
+   source: MFString <"DIFFUSE" | "FACTOR" | "SPECULAR" | "">,
    /**
    * Contained texture nodes (ImageTexture, MovieTexture, PixelTexture) that map image(s) to surface geometry, defining each of the different texture channels.
    *
@@ -10692,13 +10692,13 @@ interface NavigationInfoProxy extends X3DBindableNodeProxy
    *
    * This field is of access type is 'inputOutput' and type MFString.
    */
-   transitionType: MFString,
+   transitionType: MFString <"TELEPORT" | "LINEAR" | "ANIMATE">,
    /**
    * Enter one or more quoted SFString values: "EXAMINE" "WALK" "FLY" "LOOKAT" "EXPLORE" "ANY" "NONE".
    *
    * This field is of access type is 'inputOutput' and type MFString.
    */
-   type: MFString,
+   type: MFString <"ANY" | "WALK" | "EXAMINE" | "FLY" | "LOOKAT" | "NONE" | "EXPLORE">,
    /**
    * Geometry beyond the visibilityLimit may not be rendered (far clipping plane of the view frustrum).
    *
@@ -11816,7 +11816,7 @@ interface PackagedShaderProxy extends X3DShaderNodeProxy
    *
    * This field is of access type is 'initializeOnly' and type SFString.
    */
-   language: string,
+   language: "Cg" | "GLSL" | "HLSL",
    /**
    * load=true means load immediately, load=false means defer loading or else unload a previously loaded scene.
    *
@@ -11911,7 +11911,7 @@ interface ParticleSystemProxy extends X3DShapeNodeProxy
    *
    * This field is of access type is 'initializeOnly' and type SFString.
    */
-   geometryType: string,
+   geometryType: "LINE" | "POINT" | "QUAD" | "SPRITE" | "TRIANGLE" | "GEOMETRY",
    /**
    * isActive true/false events are sent when playback starts/stops.
    *
@@ -12012,7 +12012,7 @@ interface PeriodicWaveProxy extends X3DSoundNodeProxy
    *
    * This field is of access type is 'inputOutput' and type SFString.
    */
-   type: string,
+   type: "SINE" | "SQUARE" | "SAWTOOTH" | "TRIANGLE" | "CUSTOM",
 }
 
 /** PhysicalMaterial specifies surface rendering properties for associated geometry nodes. */
@@ -12176,7 +12176,7 @@ interface PickableGroupProxy extends X3DGroupingNodeProxy, X3DPickableObjectProx
    *
    * This field is of access type is 'inputOutput' and type MFString.
    */
-   objectType: MFString,
+   objectType: MFString <"ALL" | "NONE" | "TERRAIN">,
    /**
    * The pickable field determines whether pick traversal is performed on this node or its children.
    *
@@ -12504,7 +12504,7 @@ interface PointPickSensorProxy extends X3DPickSensorNodeProxy
    *
    * This field is of access type is 'initializeOnly' and type SFString.
    */
-   intersectionType: string,
+   intersectionType: "BOUNDS" | "GEOMETRY",
    /**
    * isActive indicates when the intersecting object is picked by the picking geometry.
    *
@@ -12516,7 +12516,7 @@ interface PointPickSensorProxy extends X3DPickSensorNodeProxy
    *
    * This field is of access type is 'inputOutput' and type SFString.
    */
-   matchCriterion: string,
+   matchCriterion: "MATCH_ANY" | "MATCH_EVERY" | "MATCH_ONLY_ONE",
    /**
    * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
    *
@@ -12528,7 +12528,7 @@ interface PointPickSensorProxy extends X3DPickSensorNodeProxy
    *
    * This field is of access type is 'inputOutput' and type MFString.
    */
-   objectType: MFString,
+   objectType: MFString <"ALL" | "NONE" | "TERRAIN">,
    /**
    * Output event containing the node or nodes that have been found to intersect with the picking geometry from the last time this node performed a picking operation, given in the local coordinate system.
    *
@@ -12558,7 +12558,7 @@ interface PointPickSensorProxy extends X3DPickSensorNodeProxy
    *
    * This field is of access type is 'initializeOnly' and type SFString.
    */
-   sortOrder: string,
+   sortOrder: "ANY" | "CLOSEST" | "ALL" | "ALL_SORTED",
 }
 
 /** PointProperties allows precise fine-grained control over the rendering style of PointSet node points inside the same Shape. */
@@ -13060,7 +13060,7 @@ interface PrimitivePickSensorProxy extends X3DPickSensorNodeProxy
    *
    * This field is of access type is 'initializeOnly' and type SFString.
    */
-   intersectionType: string,
+   intersectionType: "BOUNDS" | "GEOMETRY",
    /**
    * isActive indicates when the intersecting object is picked by the picking geometry.
    *
@@ -13072,7 +13072,7 @@ interface PrimitivePickSensorProxy extends X3DPickSensorNodeProxy
    *
    * This field is of access type is 'inputOutput' and type SFString.
    */
-   matchCriterion: string,
+   matchCriterion: "MATCH_ANY" | "MATCH_EVERY" | "MATCH_ONLY_ONE",
    /**
    * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
    *
@@ -13084,7 +13084,7 @@ interface PrimitivePickSensorProxy extends X3DPickSensorNodeProxy
    *
    * This field is of access type is 'inputOutput' and type MFString.
    */
-   objectType: MFString,
+   objectType: MFString <"ALL" | "NONE" | "TERRAIN">,
    /**
    * Output event containing the node or nodes that have been found to intersect with the picking geometry from the last time this node performed a picking operation, given in the local coordinate system.
    *
@@ -13108,7 +13108,7 @@ interface PrimitivePickSensorProxy extends X3DPickSensorNodeProxy
    *
    * This field is of access type is 'initializeOnly' and type SFString.
    */
-   sortOrder: string,
+   sortOrder: "ANY" | "CLOSEST" | "ALL" | "ALL_SORTED",
 }
 
 /** ProgramShader contains no field declarations and no plain-text source code. */
@@ -13137,7 +13137,7 @@ interface ProgramShaderProxy extends X3DShaderNodeProxy
    *
    * This field is of access type is 'initializeOnly' and type SFString.
    */
-   language: string,
+   language: "Cg" | "GLSL" | "HLSL",
    /**
    * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
    *
@@ -13178,7 +13178,7 @@ interface ProjectionVolumeStyleProxy extends X3DVolumeRenderStyleNodeProxy
    *
    * This field is of access type is 'inputOutput' and type SFString.
    */
-   type: string,
+   type: "MAX" | "MIN" | "AVERAGE",
 }
 
 /** ProtoInstance can override field default values via fieldValue initializations. Non-recursive nested ProtoInstance and ProtoDeclare statements are allowed within a ProtoDeclare. */
@@ -13460,7 +13460,7 @@ interface ReceiverPduProxy extends X3DNetworkSensorNodeProxy, X3DBoundedObjectPr
    *
    * This field is of access type is 'inputOutput' and type SFString.
    */
-   networkMode: string,
+   networkMode: "standAlone" | "networkReader" | "networkWriter",
    /**
    * Multicast network port, for example: 3000.
    *
@@ -14041,7 +14041,7 @@ interface ScreenFontStyleProxy extends X3DFontStyleNodeProxy
    *
    * This field is of access type is 'inputOutput' and type MFString.
    */
-   family: MFString,
+   family: MFString <"SANS" | "SERIF" | "TYPEWRITER">,
    /**
    * Whether text direction is horizontal (true) or vertical (false).
    *
@@ -14053,7 +14053,7 @@ interface ScreenFontStyleProxy extends X3DFontStyleNodeProxy
    *
    * This field is of access type is 'inputOutput' and type MFString.
    */
-   justify: MFString,
+   justify: MFString <"MIDDLE" | "MIDDLE BEGIN" | "MIDDLE END" | "MIDDLE FIRST" | "MIDDLE MIDDLE" | "BEGIN" | "BEGIN BEGIN" | "BEGIN END" | "BEGIN FIRST" | "BEGIN MIDDLE" | "END" | "END BEGIN" | "END END" | "END FIRST" | "END MIDDLE" | "FIRST" | "FIRST BEGIN" | "FIRST END" | "FIRST FIRST" | "FIRST MIDDLE">,
    /**
    * Language codes consist of a primary code and a (possibly empty) series of subcodes.
    *
@@ -14089,7 +14089,7 @@ interface ScreenFontStyleProxy extends X3DFontStyleNodeProxy
    *
    * This field is of access type is 'inputOutput' and type SFString.
    */
-   style: string,
+   style: "PLAIN" | "BOLD" | "ITALIC" | "BOLDITALIC",
    /**
    * Whether text direction is top-to-bottom (true) or bottom-to-top (false).
    *
@@ -14309,7 +14309,7 @@ interface ShadedVolumeStyleProxy extends X3DComposableVolumeRenderStyleNodeProxy
    *
    * This field is of access type is 'initializeOnly' and type SFString.
    */
-   phaseFunction: string,
+   phaseFunction: "Henyey-Greenstein" | "NONE",
    /**
    * Whether rendering calculates and applies shadows to visual output (using global illumination model).
    *
@@ -14368,7 +14368,7 @@ interface ShaderPartProxy extends X3DNodeProxy, X3DUrlObjectProxy
    *
    * This field is of access type is 'initializeOnly' and type SFString.
    */
-   type: string,
+   type: "VERTEX" | "FRAGMENT",
    /**
    * Location and filename of shader.
    *
@@ -14427,7 +14427,7 @@ interface ShaderProgramProxy extends X3DNodeProxy
    *
    * This field is of access type is 'initializeOnly' and type SFString.
    */
-   type: string,
+   type: "VERTEX" | "FRAGMENT",
    /**
    * Location and filename of shader.
    *
@@ -14623,7 +14623,7 @@ interface SignalPduProxy extends X3DNetworkSensorNodeProxy, X3DBoundedObjectProx
    *
    * This field is of access type is 'inputOutput' and type SFString.
    */
-   networkMode: string,
+   networkMode: "standAlone" | "networkReader" | "networkWriter",
    /**
    * Multicast network port, for example: 3000.
    *
@@ -14791,7 +14791,7 @@ interface SingleAxisHingeJointProxy extends X3DRigidJointNodeProxy
    *
    * This field is of access type is 'inputOutput' and type MFString.
    */
-   forceOutput: MFString,
+   forceOutput: MFString <"ALL" | "NONE">,
    /**
    * maxAngle is maximum rotation angle for hinge.
    *
@@ -14850,7 +14850,7 @@ interface SliderJointProxy extends X3DRigidJointNodeProxy
    *
    * This field is of access type is 'inputOutput' and type MFString.
    */
-   forceOutput: MFString,
+   forceOutput: MFString <"ALL" | "NONE">,
    /**
    * maxSeparation is maximum separation distance between the two bodies.
    *
@@ -15028,7 +15028,7 @@ interface SpatialSoundProxy extends X3DSoundNodeProxy
    *
    * This field is of access type is 'inputOutput' and type SFString.
    */
-   distanceModel: string,
+   distanceModel: "LINEAR" | "INVERSE" | "EXPONENTIAL",
    /**
    * dopplerEnabled enables/disables whether real-time Doppler effects (due to relation motion between sources and listeners) are computed by browser between virtual sound sources and active listening locations, then applied to received frequency at active listening locations.
    *
@@ -15529,13 +15529,13 @@ interface StreamAudioDestinationProxy extends X3DSoundDestinationNodeProxy
    *
    * This field is of access type is 'inputOutput' and type SFString.
    */
-   channelCountMode: string,
+   channelCountMode: "MAX" | "CLAMPED_MAX" | "EXPLICIT",
    /**
    * channelInterpretation determines how individual channels are treated when up-mixing and down-mixing connections to any inputs.
    *
    * This field is of access type is 'inputOutput' and type SFString.
    */
-   channelInterpretation: string,
+   channelInterpretation: "SPEAKERS" | "DISCRETE",
    /**
    * The children field specifies audio-graph sound sources providing input signals for this node.
    *
@@ -15594,13 +15594,13 @@ interface StreamAudioSourceProxy extends X3DSoundSourceNodeProxy
    *
    * This field is of access type is 'inputOutput' and type SFString.
    */
-   channelCountMode: string,
+   channelCountMode: "MAX" | "CLAMPED_MAX" | "EXPLICIT",
    /**
    * channelInterpretation determines how individual channels are treated when up-mixing and down-mixing connections to any inputs.
    *
    * This field is of access type is 'inputOutput' and type SFString.
    */
-   channelInterpretation: string,
+   channelInterpretation: "SPEAKERS" | "DISCRETE",
    /**
    * Author-provided prose that describes intended purpose of the url asset.
    *
@@ -16185,7 +16185,7 @@ interface TextureCoordinateGeneratorProxy extends X3DSingleTextureCoordinateNode
    *
    * This field is of access type is 'inputOutput' and type SFString.
    */
-   mode: string,
+   mode: "SPHERE" | "CAMERASPACENORMAL" | "CAMERASPACEPOSITION" | "CAMERASPACEREFLECTIONVECTOR" | "SPHERE-LOCAL" | "COORD" | "COORD-EYE" | "NOISE" | "NOISE-EYE" | "SPHERE-REFLECT" | "SPHERE-REFLECT-LOCAL",
    /**
    * parameter array contains scale and translation (x y z) values for Perlin NOISE mode, parameter[0] contains index of refraction for SPHERE-REFLECT mode, parameter[0] contains index of refraction and parameter[1 to 3] contains the eye point in local coordinates for SPHERE-REFLECT-LOCAL mode.
    *
@@ -16428,19 +16428,19 @@ interface TexturePropertiesProxy extends X3DNodeProxy
    *
    * This field is of access type is 'inputOutput' and type SFString.
    */
-   boundaryModeR: string,
+   boundaryModeR: "CLAMP" | "CLAMP_TO_EDGE" | "CLAMP_TO_BOUNDARY" | "MIRRORED_REPEAT" | "REPEAT",
    /**
    * boundaryModeS describes handling of texture-coordinate boundaries.
    *
    * This field is of access type is 'inputOutput' and type SFString.
    */
-   boundaryModeS: string,
+   boundaryModeS: "CLAMP" | "CLAMP_TO_EDGE" | "CLAMP_TO_BOUNDARY" | "MIRRORED_REPEAT" | "REPEAT",
    /**
    * boundaryModeT describes handling of texture-coordinate boundaries.
    *
    * This field is of access type is 'inputOutput' and type SFString.
    */
-   boundaryModeT: string,
+   boundaryModeT: "CLAMP" | "CLAMP_TO_EDGE" | "CLAMP_TO_BOUNDARY" | "MIRRORED_REPEAT" | "REPEAT",
    /**
    * Determines whether MIPMAPs are generated for texture images.
    *
@@ -16452,7 +16452,7 @@ interface TexturePropertiesProxy extends X3DNodeProxy
    *
    * This field is of access type is 'inputOutput' and type SFString.
    */
-   magnificationFilter: string,
+   magnificationFilter: "AVG_PIXEL" | "DEFAULT" | "FASTEST" | "NEAREST_PIXEL" | "NICEST",
    /**
    * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
    *
@@ -16464,13 +16464,13 @@ interface TexturePropertiesProxy extends X3DNodeProxy
    *
    * This field is of access type is 'inputOutput' and type SFString.
    */
-   minificationFilter: string,
+   minificationFilter: "AVG_PIXEL" | "AVG_PIXEL_AVG_MIPMAP" | "AVG_PIXEL_NEAREST_MIPMAP" | "DEFAULT" | "FASTEST" | "NEAREST_PIXEL" | "NEAREST_PIXEL_AVG_MIPMAP" | "NEAREST_PIXEL_NEAREST_MIPMAP" | "NICEST",
    /**
    * textureCompression indicates compression algorithm selection mode.
    *
    * This field is of access type is 'inputOutput' and type SFString.
    */
-   textureCompression: string,
+   textureCompression: "DEFAULT" | "FASTEST" | "HIGH" | "LOW" | "MEDIUM" | "NICEST",
    /**
    * texturePriority defines relative priority for this texture when allocating texture memory, an important rendering resource in graphics-card hardware.
    *
@@ -17134,7 +17134,7 @@ interface TransmitterPduProxy extends X3DNetworkSensorNodeProxy, X3DBoundedObjec
    *
    * This field is of access type is 'inputOutput' and type SFString.
    */
-   networkMode: string,
+   networkMode: "standAlone" | "networkReader" | "networkWriter",
    /**
    * Multicast network port, for example: 3000.
    *
@@ -17650,7 +17650,7 @@ interface UniversalJointProxy extends X3DRigidJointNodeProxy
    *
    * This field is of access type is 'inputOutput' and type MFString.
    */
-   forceOutput: MFString,
+   forceOutput: MFString <"ALL" | "NONE">,
    /**
    * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
    *
@@ -18128,7 +18128,7 @@ interface VolumePickSensorProxy extends X3DPickSensorNodeProxy
    *
    * This field is of access type is 'initializeOnly' and type SFString.
    */
-   intersectionType: string,
+   intersectionType: "BOUNDS" | "GEOMETRY",
    /**
    * isActive indicates when the intersecting object is picked by the picking geometry.
    *
@@ -18140,7 +18140,7 @@ interface VolumePickSensorProxy extends X3DPickSensorNodeProxy
    *
    * This field is of access type is 'inputOutput' and type SFString.
    */
-   matchCriterion: string,
+   matchCriterion: "MATCH_ANY" | "MATCH_EVERY" | "MATCH_ONLY_ONE",
    /**
    * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
    *
@@ -18152,7 +18152,7 @@ interface VolumePickSensorProxy extends X3DPickSensorNodeProxy
    *
    * This field is of access type is 'inputOutput' and type MFString.
    */
-   objectType: MFString,
+   objectType: MFString <"ALL" | "NONE" | "TERRAIN">,
    /**
    * Output event containing the node or nodes that have been found to intersect with the picking geometry from the last time this node performed a picking operation, given in the local coordinate system.
    *
@@ -18176,7 +18176,7 @@ interface VolumePickSensorProxy extends X3DPickSensorNodeProxy
    *
    * This field is of access type is 'initializeOnly' and type SFString.
    */
-   sortOrder: string,
+   sortOrder: "ANY" | "CLOSEST" | "ALL" | "ALL_SORTED",
 }
 
 /** WaveShaper node represents a nonlinear distorter that applies a wave-shaping distortion curve to the signal. */
@@ -18193,13 +18193,13 @@ interface WaveShaperProxy extends X3DSoundProcessingNodeProxy
    *
    * This field is of access type is 'inputOutput' and type SFString.
    */
-   channelCountMode: string,
+   channelCountMode: "MAX" | "CLAMPED_MAX" | "EXPLICIT",
    /**
    * channelInterpretation determines how individual channels are treated when up-mixing and down-mixing connections to any inputs.
    *
    * This field is of access type is 'inputOutput' and type SFString.
    */
-   channelInterpretation: string,
+   channelInterpretation: "SPEAKERS" | "DISCRETE",
    /**
    * The children field specifies audio-graph sound sources providing input signals for this node.
    *
@@ -18253,7 +18253,7 @@ interface WaveShaperProxy extends X3DSoundProcessingNodeProxy
    *
    * This field is of access type is 'inputOutput' and type SFString.
    */
-   oversample: string,
+   oversample: "NONE" | "2X" | "4X",
    /**
    * When time now >= pauseTime, isPaused becomes true and AudioClip becomes paused.
    *
@@ -18663,7 +18663,7 @@ interface X3DFogObjectProxy extends SFNode
    /**
    * This field is of access type is 'inputOutput' and type SFString.
    */
-   fogType: string,
+   fogType: "LINEAR" | "EXPONENTIAL",
    /**
    * This field is of access type is 'inputOutput' and type SFFloat.
    */
@@ -18804,7 +18804,7 @@ interface X3DLayerNodeProxy extends X3DNodeProxy, X3DPickableObjectProxy
    /**
    * This field is of access type is 'inputOutput' and type MFString.
    */
-   objectType: MFString,
+   objectType: MFString <"ALL" | "NONE" | "TERRAIN">,
    /**
    * This field is of access type is 'inputOutput' and type SFBool.
    */
@@ -19163,7 +19163,7 @@ interface X3DPickSensorNodeProxy extends X3DSensorNodeProxy
    /**
    * This field is of access type is 'initializeOnly' and type SFString.
    */
-   intersectionType: string,
+   intersectionType: "BOUNDS" | "GEOMETRY",
    /**
    * This field is of access type is 'outputOnly' and type SFBool.
    */
@@ -19171,7 +19171,7 @@ interface X3DPickSensorNodeProxy extends X3DSensorNodeProxy
    /**
    * This field is of access type is 'inputOutput' and type SFString.
    */
-   matchCriterion: string,
+   matchCriterion: "MATCH_ANY" | "MATCH_EVERY" | "MATCH_ONLY_ONE",
    /**
    * This field is of access type is 'inputOutput' and type SFNode.
    */
@@ -19179,7 +19179,7 @@ interface X3DPickSensorNodeProxy extends X3DSensorNodeProxy
    /**
    * This field is of access type is 'inputOutput' and type MFString.
    */
-   objectType: MFString,
+   objectType: MFString <"ALL" | "NONE" | "TERRAIN">,
    /**
    * This field is of access type is 'outputOnly' and type MFNode.
    */
@@ -19195,7 +19195,7 @@ interface X3DPickSensorNodeProxy extends X3DSensorNodeProxy
    /**
    * This field is of access type is 'initializeOnly' and type SFString.
    */
-   sortOrder: string,
+   sortOrder: "ANY" | "CLOSEST" | "ALL" | "ALL_SORTED",
 }
 
 /** Base type for all pointing device sensors. */
@@ -19265,7 +19265,7 @@ interface X3DRigidJointNodeProxy extends X3DNodeProxy
    /**
    * This field is of access type is 'inputOutput' and type MFString.
    */
-   forceOutput: MFString,
+   forceOutput: MFString <"ALL" | "NONE">,
    /**
    * This field is of access type is 'inputOutput' and type SFNode.
    */
@@ -19365,7 +19365,7 @@ interface X3DShaderNodeProxy extends X3DAppearanceChildNodeProxy
    /**
    * This field is of access type is 'initializeOnly' and type SFString.
    */
-   language: string,
+   language: "Cg" | "GLSL" | "HLSL",
    /**
    * This field is of access type is 'inputOutput' and type SFNode.
    */
@@ -19458,11 +19458,11 @@ interface X3DSoundChannelNodeProxy extends X3DSoundNodeProxy
    /**
    * This field is of access type is 'inputOutput' and type SFString.
    */
-   channelCountMode: string,
+   channelCountMode: "MAX" | "CLAMPED_MAX" | "EXPLICIT",
    /**
    * This field is of access type is 'inputOutput' and type SFString.
    */
-   channelInterpretation: string,
+   channelInterpretation: "SPEAKERS" | "DISCRETE",
    /**
    * This field is of access type is 'inputOutput' and type SFString.
    */
@@ -19491,11 +19491,11 @@ interface X3DSoundDestinationNodeProxy extends X3DSoundNodeProxy
    /**
    * This field is of access type is 'inputOutput' and type SFString.
    */
-   channelCountMode: string,
+   channelCountMode: "MAX" | "CLAMPED_MAX" | "EXPLICIT",
    /**
    * This field is of access type is 'inputOutput' and type SFString.
    */
-   channelInterpretation: string,
+   channelInterpretation: "SPEAKERS" | "DISCRETE",
    /**
    * This field is of access type is 'inputOutput' and type SFString.
    */
@@ -19549,11 +19549,11 @@ interface X3DSoundProcessingNodeProxy extends X3DTimeDependentNodeProxy, X3DSoun
    /**
    * This field is of access type is 'inputOutput' and type SFString.
    */
-   channelCountMode: string,
+   channelCountMode: "MAX" | "CLAMPED_MAX" | "EXPLICIT",
    /**
    * This field is of access type is 'inputOutput' and type SFString.
    */
-   channelInterpretation: string,
+   channelInterpretation: "SPEAKERS" | "DISCRETE",
    /**
    * This field is of access type is 'inputOutput' and type SFString.
    */

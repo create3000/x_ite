@@ -73,7 +73,7 @@ function ConcreteNode (node)
       .filter (field => !field .name .match (/^(?:DEF|USE|IS|id|class)$/) && !field .description ?.match (/CSS/))
       .sort ((a, b) => a .name .localeCompare (b .name));
 
-   if (node .name === "Shape")
+   if (node .name === "NavigationInfo")
       console .log (fields);
 
    const properties = fields
@@ -126,6 +126,9 @@ function FieldType (field)
          return "number";
       case "SFString":
       case "xs:NMTOKEN":
+         if (Array .isArray (field .enumeration))
+            return field .enumeration .map (e => `"${e .value}"`) .join (" | ");
+
          return "string";
       case "SFNode":
          return field .acceptableNodeTypes
@@ -137,6 +140,11 @@ function FieldType (field)
             .split (/[|,]/)
             .map (type => `${type .trim ()}Proxy`)
             .join (" | ") || "SFNode"}>`;
+      case "MFString":
+         if (Array .isArray (field .enumeration))
+            return `MFString <${field .enumeration .map (e => `"${e .value .replace (/["']/g, "")}"`) .join (" | ")}>`;
+
+         return field .type;
       default:
          return field .type;
    }
