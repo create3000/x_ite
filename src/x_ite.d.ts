@@ -88,7 +88,7 @@ interface X3D
    readonly MFVec4f: typeof MFVec4f;
 }
 
-class X3DCanvasElement extends HTMLElement
+declare class X3DCanvasElement extends HTMLElement
 {
    readonly browser: X3DBrowser;
 
@@ -97,7 +97,7 @@ class X3DCanvasElement extends HTMLElement
    toDataURL (type?: string, encoderOptions?: number): string;
 }
 
-class X3DBrowser
+declare class X3DBrowser
 {
    readonly name: string;
    readonly version: string;
@@ -136,6 +136,7 @@ class X3DBrowser
    printLn (... args: any []): void;
 
    // VRML methods
+
    getName (): string;
    getVersion (): string;
    getCurrentSpeed (): number;
@@ -214,7 +215,7 @@ type RenderingProperty = {
    LogarithmicDepthBuffer: boolean,
 }
 
-class ContextMenu
+declare class ContextMenu
 {
    getUserMenu (): UserMenuCallback;
    setUserMenu (cb: UserMenuCallback): void;
@@ -267,7 +268,7 @@ type UserMenuItem = {
    dataAttr?: Record <string, string>,
 }
 
-class X3DScene extends X3DExecutionContext
+declare class X3DScene extends X3DExecutionContext
 {
    rootNodes: MFNode;
 
@@ -283,7 +284,7 @@ class X3DScene extends X3DExecutionContext
    removeExportedNode (exportedName: string): void;
 }
 
-class X3DExecutionContext
+declare class X3DExecutionContext
 {
    readonly specificationVersion: string;
    readonly encoding: "ASCII" | "VRML" | "XML" | "JSON" | "BINARY" | "SCRIPTED" | "BIFS" | "NONE" | "GLTF" | "OBJ" | "STL" | "PLY" | "SVG";
@@ -315,9 +316,9 @@ class X3DExecutionContext
    toJSONString (options?: ToStringOptions): string;
 }
 
-class ProfileInfoArray extends X3DInfoArray <ProfileInfo> { };
+declare class ProfileInfoArray extends X3DInfoArray <ProfileInfo> { }
 
-class ProfileInfo
+declare class ProfileInfo
 {
    readonly name: string;
    readonly title: string;
@@ -325,9 +326,9 @@ class ProfileInfo
    readonly components: ComponentInfoArray
 }
 
-class ComponentInfoArray extends X3DInfoArray <ComponentInfo> { };
+declare class ComponentInfoArray extends X3DInfoArray <ComponentInfo> { }
 
-class ComponentInfo
+declare class ComponentInfo
 {
    readonly name: string;
    readonly level: number;
@@ -335,18 +336,18 @@ class ComponentInfo
    readonly providerURL: string;
 }
 
-class UnitInfoArray extends X3DInfoArray <UnitInfo> { };
+declare class UnitInfoArray extends X3DInfoArray <UnitInfo> { }
 
-class UnitInfo
+declare class UnitInfo
 {
    readonly category: string;
    readonly name: string;
    readonly conversionFactor: number;
 }
 
-class ProtoDeclarationArray extends X3DInfoArray <X3DProtoDeclaration> { };
+declare class ProtoDeclarationArray extends X3DInfoArray <X3DProtoDeclaration> { }
 
-class X3DProtoDeclaration
+declare class X3DProtoDeclaration
 {
    readonly name: string;
    readonly fields: FieldDefinitionArray;
@@ -358,9 +359,9 @@ class X3DProtoDeclaration
    toJSONString (options?: ToStringOptions): string;
 }
 
-class ExternProtoDeclarationArray extends X3DInfoArray <X3DExternProtoDeclaration> { };
+declare class ExternProtoDeclarationArray extends X3DInfoArray <X3DExternProtoDeclaration> { }
 
-class X3DExternProtoDeclaration
+declare class X3DExternProtoDeclaration
 {
    readonly name: string;
    readonly fields: FieldDefinitionArray;
@@ -375,9 +376,9 @@ class X3DExternProtoDeclaration
    toJSONString (options?: ToStringOptions): string;
 }
 
-class RouteArray extends X3DInfoArray <X3DRoute> { };
+declare class RouteArray extends X3DInfoArray <X3DRoute> { }
 
-class X3DRoute
+declare class X3DRoute
 {
    readonly sourceNode: SFNode;
    readonly sourceField: string;
@@ -385,7 +386,7 @@ class X3DRoute
    readonly destinationField: string;
 }
 
-class X3DInfoArray <T>
+declare class X3DInfoArray <T>
 {
    [index: number]: T;
    length: number;
@@ -679,9 +680,9 @@ interface X3DConstants
    // ABSTRACT NODE TYPES CONSTANTS END
 }
 
-class FieldDefinitionArray extends X3DInfoArray <X3DFieldDefinition> { };
+declare class FieldDefinitionArray extends X3DInfoArray <X3DFieldDefinition> { }
 
-class X3DFieldDefinition
+declare class X3DFieldDefinition
 {
    readonly accessType: number;
    readonly dataType: string;
@@ -689,7 +690,7 @@ class X3DFieldDefinition
    readonly value: X3DField;
 }
 
-class X3DField
+declare class X3DField
 {
    copy (): this;
    equals (other: this): boolean;
@@ -728,7 +729,7 @@ class X3DField
    dispose (): void;
 }
 
-class SFBool extends X3DField
+declare class SFBool extends X3DField
 {
    static readonly typeName: "SFBool";
 
@@ -738,7 +739,7 @@ class SFBool extends X3DField
    valueOf (): boolean;
 }
 
-class SFColor extends X3DField
+declare class SFColor extends X3DField
 {
    static readonly typeName: "SFColor";
 
@@ -756,7 +757,7 @@ class SFColor extends X3DField
    lerp (destination: SFColor, t: number): SFColor;
 }
 
-class SFColorRGBA extends X3DField
+declare class SFColorRGBA extends X3DField
 {
    static readonly typeName: "SFColorRGBA";
 
@@ -775,7 +776,7 @@ class SFColorRGBA extends X3DField
    lerp (destination: SFColor, t: number): SFColorRGBA;
 }
 
-class SFDouble extends X3DField
+declare class SFDouble extends X3DField
 {
    static readonly typeName: "SFDouble";
 
@@ -785,7 +786,7 @@ class SFDouble extends X3DField
    valueOf (): number;
 }
 
-class SFFloat extends X3DField
+declare class SFFloat extends X3DField
 {
    static readonly typeName: "SFFloat";
 
@@ -795,7 +796,7 @@ class SFFloat extends X3DField
    valueOf (): number;
 }
 
-class SFImage extends X3DField
+declare class SFImage extends X3DField
 {
    static readonly typeName: "SFImage";
 
@@ -810,7 +811,7 @@ class SFImage extends X3DField
    array: MFInt32;
 }
 
-class SFInt32 extends X3DField
+declare class SFInt32 extends X3DField
 {
    static readonly typeName: "SFInt32";
 
@@ -820,7 +821,7 @@ class SFInt32 extends X3DField
    valueOf (): number;
 }
 
-class SFMatrix3 extends X3DField
+declare class SFMatrix3 extends X3DField
 {
    constructor ();
    constructor (r1: SFVec3, r2: SFVec3, r3: SFVec3);
@@ -845,17 +846,17 @@ class SFMatrix3 extends X3DField
    multMatrixDir <T extends SFVec2d | SFVec2f> (col: T): T;
 }
 
-class SFMatrix3d extends SFMatrix3
+declare class SFMatrix3d extends SFMatrix3
 {
    static readonly typeName: "SFMatrix3d";
 }
 
-class SFMatrix3f extends SFMatrix3
+declare class SFMatrix3f extends SFMatrix3
 {
    static readonly typeName: "SFMatrix3f";
 }
 
-class SFMatrix4 extends X3DField
+declare class SFMatrix4 extends X3DField
 {
    constructor ();
    constructor (r1: SFVec4, r2: SFVec4, r3: SFVec4, r4: SFVec4);
@@ -881,17 +882,17 @@ class SFMatrix4 extends X3DField
    multMatrixDir <T extends SFVec3d | SFVec3f> (col: T): T;
 }
 
-class SFMatrix4d extends SFMatrix4
+declare class SFMatrix4d extends SFMatrix4
 {
    static readonly typeName: "SFMatrix4d";
 }
 
-class SFMatrix4f extends SFMatrix4
+declare class SFMatrix4f extends SFMatrix4
 {
    static readonly typeName: "SFMatrix4f";
 }
 
-class SFNode extends X3DField
+declare class SFNode extends X3DField
 {
    static readonly typeName: "SFNode";
 
@@ -927,7 +928,7 @@ type ToStringOptions = {
    closingTags?: boolean,
 }
 
-class SFRotation extends X3DField
+declare class SFRotation extends X3DField
 {
    static readonly typeName: "SFRotation";
 
@@ -954,7 +955,7 @@ class SFRotation extends X3DField
    slerp (destination: SFRotation, t: number): SFRotation;
 }
 
-class SFString extends X3DField
+declare class SFString extends X3DField
 {
    static readonly typeName: "SFString";
 
@@ -966,7 +967,7 @@ class SFString extends X3DField
    valueOf (): string;
 }
 
-class SFTime extends X3DField
+declare class SFTime extends X3DField
 {
    static readonly typeName: "SFTime";
 
@@ -976,7 +977,7 @@ class SFTime extends X3DField
    valueOf (): number;
 }
 
-class SFVec2 extends X3DField
+declare class SFVec2 extends X3DField
 {
    constructor ();
    constructor (x: number, y: number);
@@ -1004,17 +1005,17 @@ class SFVec2 extends X3DField
    subtract (other: this): this;
 }
 
-class SFVec2d extends SFVec2
+declare class SFVec2d extends SFVec2
 {
    static readonly typeName: "SFVec2d";
 }
 
-class SFVec2f extends SFVec2
+declare class SFVec2f extends SFVec2
 {
    static readonly typeName: "SFVec2f";
 }
 
-class SFVec3 extends X3DField
+declare class SFVec3 extends X3DField
 {
    constructor ();
    constructor (x: number, y: number, z: number);
@@ -1044,17 +1045,17 @@ class SFVec3 extends X3DField
    subtract (other: this): this;
 }
 
-class SFVec3d extends SFVec3
+declare class SFVec3d extends SFVec3
 {
    static readonly typeName: "SFVec3d";
 }
 
-class SFVec3f extends SFVec3
+declare class SFVec3f extends SFVec3
 {
    static readonly typeName: "SFVec3f";
 }
 
-class SFVec4 extends X3DField
+declare class SFVec4 extends X3DField
 {
    constructor ();
    constructor (x: number, y: number, z: number, w: number);
@@ -1084,17 +1085,17 @@ class SFVec4 extends X3DField
    subtract (other: this): this;
 }
 
-class SFVec4d extends SFVec4
+declare class SFVec4d extends SFVec4
 {
    static readonly typeName: "SFVec4d";
 }
 
-class SFVec4f extends SFVec4
+declare class SFVec4f extends SFVec4
 {
    static readonly typeName: "SFVec4f";
 }
 
-class X3DArrayField <T> extends X3DField
+declare class X3DArrayField <T> extends X3DField
 {
    constructor (... elements: T []);
 
@@ -1139,107 +1140,107 @@ type ArrayTest <T> = (element: T, i: number, array: X3DArrayField <T>) => boolea
 type ArrayAction <T> = (element: T, i: number, array: X3DArrayField <T>) => void
 type ArrayReducer <T, U> = (accum: U, current: T, i: number, array: X3DArrayField <T>) => U
 
-class MFBool extends X3DArrayField <boolean>
+declare class MFBool extends X3DArrayField <boolean>
 {
    static readonly typeName: "MFBool";
 }
 
-class MFColor extends X3DArrayField <SFColor>
+declare class MFColor extends X3DArrayField <SFColor>
 {
    static readonly typeName: "MFColor";
 }
 
-class MFColorRGBA extends X3DArrayField <SFColorRGBA>
+declare class MFColorRGBA extends X3DArrayField <SFColorRGBA>
 {
    static readonly typeName: "MFColorRGBA";
 }
 
-class MFDouble extends X3DArrayField <number>
+declare class MFDouble extends X3DArrayField <number>
 {
    static readonly typeName: "MFDouble";
 }
 
-class MFFloat extends X3DArrayField <number>
+declare class MFFloat extends X3DArrayField <number>
 {
    static readonly typeName: "MFFloat";
 }
 
-class MFImage extends X3DArrayField <SFImage>
+declare class MFImage extends X3DArrayField <SFImage>
 {
    static readonly typeName: "MFImage";
 }
 
-class MFInt32 extends X3DArrayField <number>
+declare class MFInt32 extends X3DArrayField <number>
 {
    static readonly typeName: "MFInt32";
 }
 
-class MFMatrix3d extends X3DArrayField <SFMatrix3d>
+declare class MFMatrix3d extends X3DArrayField <SFMatrix3d>
 {
    static readonly typeName: "MFMatrix3d";
 }
 
-class MFMatrix3f extends X3DArrayField <SFMatrix3f>
+declare class MFMatrix3f extends X3DArrayField <SFMatrix3f>
 {
    static readonly typeName: "MFMatrix3f";
 }
 
-class MFMatrix4d extends X3DArrayField <SFMatrix4d>
+declare class MFMatrix4d extends X3DArrayField <SFMatrix4d>
 {
    static readonly typeName: "MFMatrix4d";
 }
 
-class MFMatrix4f extends X3DArrayField <SFMatrix4f>
+declare class MFMatrix4f extends X3DArrayField <SFMatrix4f>
 {
    static readonly typeName: "MFMatrix4f";
 }
 
-class MFNode extends X3DArrayField <SFNode>
+declare class MFNode extends X3DArrayField <SFNode>
 {
    static readonly typeName: "MFNode";
 }
 
-class MFRotation extends X3DArrayField <SFRotation>
+declare class MFRotation extends X3DArrayField <SFRotation>
 {
    static readonly typeName: "MFRotation";
 }
 
-class MFString extends X3DArrayField <string>
+declare class MFString extends X3DArrayField <string>
 {
    static readonly typeName: "MFString";
 }
 
-class MFTime extends X3DArrayField <number>
+declare class MFTime extends X3DArrayField <number>
 {
    static readonly typeName: "MFTime";
 }
 
-class MFVec2d extends X3DArrayField <SFVec2d>
+declare class MFVec2d extends X3DArrayField <SFVec2d>
 {
    static readonly typeName: "MFVec2d";
 }
 
-class MFVec2f extends X3DArrayField <SFVec2f>
+declare class MFVec2f extends X3DArrayField <SFVec2f>
 {
    static readonly typeName: "MFVec2f";
 }
 
-class MFVec3d extends X3DArrayField <SFVec3d>
+declare class MFVec3d extends X3DArrayField <SFVec3d>
 {
    static readonly typeName: "MFVec3d";
 }
 
-class MFVec3f extends X3DArrayField <SFVec3f>
+declare class MFVec3f extends X3DArrayField <SFVec3f>
 {
    static readonly typeName: "MFVec3f";
 }
 
-class MFVec4d extends X3DArrayField <SFVec4d>
+declare class MFVec4d extends X3DArrayField <SFVec4d>
 {
    static readonly typeName: "MFVec4d";
 }
 
-class MFVec4f extends X3DArrayField <SFVec4f>
+declare class MFVec4f extends X3DArrayField <SFVec4f>
 {
    static readonly typeName: "MFVec4f";
 }
@@ -2328,7 +2329,7 @@ interface SFNodeWorldInfo extends SFNode
 }
 
 type ConcreteNodesType = {
-   AcousticProperties: SFNodeAcousticProperties,
+   AcousticProperties: typeof SFNodeAcousticProperties,
    Analyser: SFNodeAnalyser,
    Anchor: SFNodeAnchor,
    Appearance: SFNodeAppearance,
