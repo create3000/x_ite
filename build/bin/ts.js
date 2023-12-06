@@ -21,30 +21,30 @@ let ts = sh ("cat", "src/x_ite.d.ts");
 
 function ConcreteNodesConstants ()
 {
-   const string = `// CONCRETE NODE TYPES CONSTANTS START
+   const string = `// CONCRETE NODE TYPE CONSTANTS START
    // DO NOT EDIT THIS SECTION, THIS SECTION IS AUTOMATICALLY GENERATED.
 
    // Concrete Node Types
 
 ${[... concreteNodes .keys ()] .map (typeName => `   readonly ${typeName}: number;`) .join ("\n")}
 
-   // CONCRETE NODE TYPES CONSTANTS END`;
+   // CONCRETE NODE TYPE CONSTANTS END`;
 
-   ts = ts .replace (/(\/\/ CONCRETE NODE TYPES CONSTANTS START).*?(\/\/ CONCRETE NODE TYPES CONSTANTS END)/s, string);
+   ts = ts .replace (/(\/\/ CONCRETE NODE TYPE CONSTANTS START).*?(\/\/ CONCRETE NODE TYPE CONSTANTS END)/s, string);
 }
 
 function AbstractNodesConstants ()
 {
-   const string = `// ABSTRACT NODE TYPES CONSTANTS START
+   const string = `// ABSTRACT NODE TYPE CONSTANTS START
    // DO NOT EDIT THIS SECTION, THIS SECTION IS AUTOMATICALLY GENERATED.
 
    // Abstract Node Types
 
 ${[... abstractNodes .keys ()] .map (typeName => `   readonly ${typeName}: number;`) .join ("\n")}
 
-   // ABSTRACT NODE TYPES CONSTANTS END`;
+   // ABSTRACT NODE TYPE CONSTANTS END`;
 
-   ts = ts .replace (/(\/\/ ABSTRACT NODE TYPES CONSTANTS START).*?(\/\/ ABSTRACT NODE TYPES CONSTANTS END)/s, string);
+   ts = ts .replace (/(\/\/ ABSTRACT NODE TYPE CONSTANTS START).*?(\/\/ ABSTRACT NODE TYPE CONSTANTS END)/s, string);
 }
 
 function ConcreteNode (node)

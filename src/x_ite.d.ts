@@ -462,7 +462,7 @@ interface X3DConstants
    readonly MFVec4d: number;
    readonly MFVec4f: number;
 
-   // CONCRETE NODE TYPES CONSTANTS START
+   // CONCRETE NODE TYPE CONSTANTS START
    // DO NOT EDIT THIS SECTION, THIS SECTION IS AUTOMATICALLY GENERATED.
 
    // Concrete Node Types
@@ -728,9 +728,9 @@ interface X3DConstants
    readonly WindPhysicsModel: number;
    readonly WorldInfo: number;
 
-   // CONCRETE NODE TYPES CONSTANTS END
+   // CONCRETE NODE TYPE CONSTANTS END
 
-   // ABSTRACT NODE TYPES CONSTANTS START
+   // ABSTRACT NODE TYPE CONSTANTS START
    // DO NOT EDIT THIS SECTION, THIS SECTION IS AUTOMATICALLY GENERATED.
 
    // Abstract Node Types
@@ -812,7 +812,7 @@ interface X3DConstants
    readonly X3DVolumeDataNode: number;
    readonly X3DVolumeRenderStyleNode: number;
 
-   // ABSTRACT NODE TYPES CONSTANTS END
+   // ABSTRACT NODE TYPE CONSTANTS END
 }
 
 declare class FieldDefinitionArray extends X3DInfoArray <X3DFieldDefinition> { }
