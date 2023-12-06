@@ -127,6 +127,11 @@ function FieldType (field)
             .split (/[|,]/)
             .map (type => `${type .trim ()}Proxy`)
             .join (" | ") || "SFNode";
+      case "MFNode":
+         return `MFNode <${field .acceptableNodeTypes
+            .split (/[|,]/)
+            .map (type => `${type .trim ()}Proxy`)
+            .join (" | ") || "SFNode"}>`;
       default:
          return field .type;
    }
