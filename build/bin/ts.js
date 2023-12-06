@@ -49,14 +49,17 @@ function ConcreteNode (node)
 {
    // Inheritance
 
-   const inheritance = [
-      node .name === "X3DNode" ? "SFNode" : undefined,
+   const baseTypes = [
       node .InterfaceDefinition .Inheritance ?.baseType,
       node .InterfaceDefinition .AdditionalInheritance ?.baseType,
    ]
    .filter (type => type)
-   .map (type => `${type}Proxy`)
-   .join (", ");
+   .map (type => `${type}Proxy`);
+
+   if (!baseTypes .length)
+      baseTypes .push ("SFNode");
+
+   const inheritance = baseTypes .join (", ");
 
    // Fields
 

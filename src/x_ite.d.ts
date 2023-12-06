@@ -18431,7 +18431,7 @@ interface X3DBindableNodeProxy extends X3DChildNodeProxy
 }
 
 /** X3DBoundedObject indicates that bounding box values can be provided (or computed) to encompass this node and any children. */
-interface X3DBoundedObjectProxy
+interface X3DBoundedObjectProxy extends SFNode
 {
    /**
    * Access type is 'initializeOnly'.
@@ -18654,7 +18654,7 @@ interface X3DEnvironmentTextureNodeProxy extends X3DTextureNodeProxy
 }
 
 /** Abstract type describing a node that influences the lighting equation through the use of fog semantics. */
-interface X3DFogObjectProxy
+interface X3DFogObjectProxy extends SFNode
 {
    /**
    * Access type is 'inputOutput'.
@@ -18871,7 +18871,7 @@ interface X3DMaterialNodeProxy extends X3DAppearanceChildNodeProxy
 }
 
 /** Each node inheriting the X3DMetadataObject interface contains a single array of strictly typed values: MFBool, MFInt32, MFFloat, MFDouble, MFString, or MFNode, the latter having children that are all Metadata nodes. */
-interface X3DMetadataObjectProxy
+interface X3DMetadataObjectProxy extends SFNode
 {
    /**
    * Access type is 'inputOutput'.
@@ -18971,7 +18971,7 @@ interface X3DNetworkSensorNodeProxy extends X3DSensorNodeProxy
 }
 
 /** All instantiable nodes implement X3DNode, which corresponds to SFNode type in the X3D specification. */
-interface X3DNodeProxy extends SFNodeProxy
+interface X3DNodeProxy extends SFNode
 {
    /**
    * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
@@ -19141,7 +19141,7 @@ interface X3DParticlePhysicsModelNodeProxy extends X3DNodeProxy
 }
 
 /** The X3DPickableObject abstract interface marks a node as being capable of having customized picking performed on its contents or children. */
-interface X3DPickableObjectProxy
+interface X3DPickableObjectProxy extends SFNode
 {
    /**
    * Access type is 'inputOutput'.
@@ -19237,7 +19237,7 @@ interface X3DProductStructureChildNodeProxy extends X3DChildNodeProxy
 }
 
 /** Base type for all nodes that specify arbitrary fields for interfacing with per-object attribute values. */
-interface X3DProgrammableShaderObjectProxy
+interface X3DProgrammableShaderObjectProxy extends SFNode
 {
 
 }
@@ -19654,7 +19654,7 @@ interface X3DSoundSourceNodeProxy extends X3DTimeDependentNodeProxy, X3DSoundNod
 }
 
 /** X3DStatement is a marker interface that identifies statements relating to nonrenderable scene graph structure. X3DStatement does not extend from any other node type since it is not an explicit part of the X3D node interface hierarchy, and DEF/USE is not appropriate for such statements. */
-interface X3DStatementProxy
+interface X3DStatementProxy extends SFNode
 {
 
 }
@@ -19889,7 +19889,7 @@ interface X3DTriggerNodeProxy extends X3DChildNodeProxy
 }
 
 /** X3DUrlObject indicates that a node has content loaded from a Uniform Resource Locator (URL) and can be tracked via a LoadSensor. Such child nodes have containerField='children' to indicate their relationship to the parent LoadSensor node. */
-interface X3DUrlObjectProxy
+interface X3DUrlObjectProxy extends SFNode
 {
    /**
    * Access type is 'inputOutput'.
