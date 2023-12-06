@@ -286,7 +286,7 @@ class X3DScene extends X3DExecutionContext
 class X3DExecutionContext
 {
    readonly specificationVersion: string;
-   readonly encoding: "ASCII" | "VRML" | "XML" | "BINARY" | "SCRIPTED" | "BIFS" | "NONE";
+   readonly encoding: "ASCII" | "VRML" | "XML" | "JSON" | "BINARY" | "SCRIPTED" | "BIFS" | "NONE";
    readonly profile: ProfileInfo | null;
    readonly components: ComponentInfoArray;
    readonly worldURL: string;
@@ -297,7 +297,7 @@ class X3DExecutionContext
    readonly externprotos: ExternProtoDeclarationArray;
    readonly routes: RouteArray;
 
-   createNode <T extends keyof ConcreteNodesType> (spec: T): ConcreteNodesType [T];
+   createNode <T extends keyof ConcreteNodesType> (typeName: T): ConcreteNodesType [T];
    createProto (protoName: string): SFNode;
    getNamedNode (name: string): SFNode;
    addNamedNode (name: string, node: SFNode): void;
