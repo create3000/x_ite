@@ -683,10 +683,10 @@ class FieldDefinitionArray extends X3DInfoArray <X3DFieldDefinition> { };
 
 class X3DFieldDefinition
 {
-   readonly accessType: number,
-   readonly dataType: string,
-   readonly name: string,
-   readonly value: X3DField,
+   readonly accessType: number;
+   readonly dataType: string;
+   readonly name: string;
+   readonly value: X3DField;
 }
 
 class X3DField
