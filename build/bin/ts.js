@@ -67,7 +67,8 @@ function ConcreteNode (node)
       node .InterfaceDefinition .field = [node .InterfaceDefinition .field];
 
    const fields = node .InterfaceDefinition .field
-      ?.filter (field => !field .name .match (/^(?:DEF|USE|IS|id|class)$/) && !field .description ?.match (/CSS/));
+      .filter (field => !field .name .match (/^(?:DEF|USE|IS|id|class)$/) && !field .description ?.match (/CSS/))
+      .sort ((a, b) => a .name .localeCompare (b .name));
 
    if (node .name === "FontStyle")
       console .log (fields);
