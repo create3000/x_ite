@@ -142,12 +142,21 @@ function FieldType (field)
             .join (" | ") || "SFNode"}>`;
       case "MFString":
          if (Array .isArray (field .enumeration))
-            return `MFString <${field .enumeration .map (e => `"${e .value .replace (/["']/g, "")}"`) .join (" | ")}>`;
+            return `MFString <${field .enumeration
+               .flatMap (e => e .value .split (/\s+/))
+               .filter (unique)
+               .map (v => `"${v .replace (/["']/g, "")}"`)
+               .join (" | ")}>`;
 
          return field .type;
       default:
          return field .type;
    }
+}
+
+function unique (value, index, array)
+{
+   return array .indexOf (value) === index;
 }
 
 function AbstractNode (node)
