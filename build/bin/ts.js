@@ -12,6 +12,7 @@ const
       .sort ((a, b) => a .name .localeCompare (b .name))
       .map (node => [node .name, node])),
    abstractNodes = new Map (x3duom .X3dUnifiedObjectModel .AbstractNodeTypes .AbstractNodeType
+      .concat (x3duom .X3dUnifiedObjectModel .AbstractObjectTypes .AbstractObjectType)
       .filter (node => node .InterfaceDefinition ?.componentInfo)
       .sort ((a, b) => a .name .localeCompare (b .name))
       .map (node => [node .name, node]));
@@ -50,10 +51,12 @@ function ConcreteNode (node)
       console .log (node);
 
    const inheritance = [
+      node .name === "X3DNode" ? "SFNode" : undefined,
       node .InterfaceDefinition .Inheritance ?.baseType,
       node .InterfaceDefinition .AdditionalInheritance ?.baseType,
    ]
    .filter (type => type)
+   .map (type => `${type}Proxy`)
    .join (", ");
 
    const string = `/** ${node .InterfaceDefinition .appinfo} */
