@@ -8,6 +8,9 @@ export = X3D;
 
 declare const X3D: X3D;
 
+/**
+ * Namespace for all X3D objects.
+ */
 interface X3D
 {
    (callback?: () => void, fallback?: (error: Error) => void): Promise <void>;
