@@ -100,7 +100,7 @@ function ConcreteNode (node)
       .map (field => `   /**
    *${FieldDescription (field)}
    */
-   ${FieldAccessType (field)}${field .name}: ${FieldType (field)},`)
+   ${FieldAccessType (field)}${field .name}: ${FieldType (field)};`)
       .join ("\n");
 
    // Generate class
