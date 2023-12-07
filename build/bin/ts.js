@@ -22,6 +22,18 @@ const
 
 let ts = sh ("cat", "src/x_ite.d.ts");
 
+function main ()
+{
+   console .log ("Updating TypeScript types ...");
+
+   ConcreteNodesConstants ();
+   AbstractNodesConstants ();
+   TypeNodeTypes ();
+   NodeTypes ();
+
+   fs .writeFileSync ("src/x_ite.d.ts", ts);
+}
+
 function ConcreteNodesConstants ()
 {
    const string = `// CONCRETE NODE TYPES CONSTANTS START
@@ -48,6 +60,19 @@ ${[... abstractNodes .keys ()] .map (typeName => `   readonly ${typeName}: numbe
    // ABSTRACT NODE TYPES CONSTANTS END`;
 
    ts = ts .replace (/(\/\/ ABSTRACT NODE TYPES CONSTANTS START).*?(\/\/ ABSTRACT NODE TYPES CONSTANTS END)/s, string);
+}
+
+function TypeNodeTypes ()
+{
+   const string = `// TYPE NODE TYPES START
+
+type NodeTypes = ${[... concreteNodes .keys (), ... abstractNodes .keys ()]
+   .map (typeName => `X3DConstants ["${typeName}"]`) .join ("\n   | ")};
+
+// TYPE NODE TYPES END`;
+
+   ts = ts .replace (/(\/\/ TYPE NODE TYPES START).*?(\/\/ TYPE NODE TYPES END)/s, string);
+
 }
 
 function ConcreteNode (node)
@@ -214,17 +239,6 @@ ${[... concreteNodes .keys ()] .map (typeName => `   ${typeName}: ${typeName}Pro
 // NODES END`;
 
    ts = ts .replace (/(\/\/ NODES START).*?(\/\/ NODES END)/s, string);
-}
-
-function main ()
-{
-   console .log ("Updating TypeScript types ...");
-
-   ConcreteNodesConstants ();
-   AbstractNodesConstants ();
-   NodeTypes ();
-
-   fs .writeFileSync ("src/x_ite.d.ts", ts);
 }
 
 function xml (string)
