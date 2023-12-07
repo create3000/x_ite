@@ -6,12 +6,14 @@ const
    fs     = require ("fs");
 
 const
+   excludes      = new Set (["ProtoInstance"]),
    x3duom        = xml (sh (`wget -q -O - https://www.web3d.org/specifications/X3dUnifiedObjectModel-4.0.xml`)),
    experimental  = xml (sh (`cat`, `${__dirname}/ts.xml`)),
    concreteNodes = new Map (x3duom .X3dUnifiedObjectModel .ConcreteNodes .ConcreteNode
       .filter (node => node .InterfaceDefinition ?.componentInfo)
       .concat (experimental .X3dUnifiedObjectModel .ConcreteNodes .ConcreteNode)
       .filter (uniqueMerge)
+      .filter (node => !excludes .has (node .name))
       .sort ((a, b) => a .name .localeCompare (b .name))
       .map (node => [node .name, node])),
    abstractNodes = new Map (x3duom .X3dUnifiedObjectModel .AbstractNodeTypes .AbstractNodeType
@@ -71,7 +73,7 @@ function ConcreteNode (node)
    ]
    .filter (inheritance => inheritance)
    .flatMap (inheritance => inheritance)
-   .map (inheritance => `${inheritance .baseType}Proxy`);
+   .map (inheritance => `${inheritance .baseType}Type`);
 
    if (!baseTypes .length)
       baseTypes .push ("SFNode");
@@ -106,7 +108,7 @@ function ConcreteNode (node)
    // Generate class
 
    const string = `/** ${node .InterfaceDefinition .appinfo} */
-interface ${node .name}Proxy${inheritance ? ` extends ${inheritance}`: ""}
+interface ${node .name}Type${inheritance ? ` extends ${inheritance}`: ""}
 {
 ${properties}
 }`;
@@ -163,7 +165,7 @@ function FieldType (field)
       {
          const types = field .acceptableNodeTypes
             .split (/[|,]/)
-            .map (type => `${type .trim ()}Proxy`);
+            .map (type => `${type .trim ()}Type`);
 
          if (!types .length)
             types .push ("SFNode");
@@ -176,7 +178,7 @@ function FieldType (field)
       {
          const types = field .acceptableNodeTypes
             .split (/[|,]/)
-            .map (type => `${type .trim ()}Proxy`);
+            .map (type => `${type .trim ()}Type`);
 
          if (!types .length)
             types .push ("SFNode");
@@ -217,7 +219,7 @@ ${[... concreteNodes .values ()] .map (ConcreteNode) .join ("\n\n")}
 ${[... abstractNodes .values ()] .map (AbstractNode) .join ("\n\n")}
 
 type ConcreteNodesType = {
-${[... concreteNodes .keys ()] .map (typeName => `   ${typeName}: ${typeName}Proxy,`) .join ("\n")}
+${[... concreteNodes .keys ()] .map (typeName => `   ${typeName}: ${typeName}Type,`) .join ("\n")}
 }
 &
 { [name: string]: SFNode } // catch all;
