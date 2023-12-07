@@ -90,64 +90,211 @@ interface X3D
 
 declare class X3DCanvasElement extends HTMLElement
 {
+   /**
+    * A reference to the X3DBrowser object that is associated with this element.
+    */
    readonly browser: X3DBrowser;
 
+   /**
+    * See https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/captureStream.
+    */
    captureStream (frameRate?: number): MediaStream;
+   /**
+    * See https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toBlob.
+    */
    toBlob (callback: (blob: Blob) => void, type?: string, quality?: number): void;
+   /**
+    * See https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toDataURL.
+    */
    toDataURL (type?: string, encoderOptions?: number): string;
 }
 
 declare class X3DBrowser
 {
+   /**
+    * A browser-implementation specific string describing the browser.
+    */
    readonly name: string;
+   /**
+    * A browser-implementation specific string describing the browser version.
+    */
    readonly version: string;
+   /**
+    * If provided, the URL to the entity that wrote this browser.
+    */
    readonly providerURL: string;
+   /**
+    * The current speed of the avatar in m/s.
+    */
    readonly currentSpeed: number;
+   /**
+    * The current frame rate in frames per second.
+    */
    readonly currentFrameRate: number;
+   /**
+    * A user-defined String which can be read and written.
+    */
    description: string;
-   readonly supportedComponents: ComponentInfoArray;
+   /**
+    * The property value cannot be changed, but the properties of the ProfileInfoArray can be.
+    */
    readonly supportedProfiles: ProfileInfoArray;
+   /**
+    * The property value cannot be changed, but the properties of the ComponentInfoArray can be.
+    */
+   readonly supportedComponents: ComponentInfoArray;
+   /**
+    * A String value containing the URL against which relative URLs are resolved. By default, this is the address of the web page itself. Although this feature is rarely needed, it can be useful when loading a `data:` or `blob:` URL with `Browser.loadURL`, or when using `Browser.createX3DFromString`. The value of baseURL will only be used with the external browser.
+    */
    baseURL: string;
+   /**
+    * The real type of this class is dependent on whether the user code is inside a prototype instance or not. If the user code is inside a prototype instance the property represent an X3DExecutionContext otherwise it represent an X3DScene.
+    */
    readonly currentScene: X3DScene;
 
+   /**
+    * Replace the current world with this new scene that has been loaded or constructed from somewhere. A Promise is returned that will be resolved when the scene is completely loaded.
+    */
    replaceWorld (scene: X3DScene): Promise <void>;
+   /**
+    * The string may be any valid X3D content in any language supported by the browser implementation. If the browser does not support the content encoding the appropriate exception will be thrown.
+    */
    createX3DFromString (x3dSyntax: string): Promise <X3DScene>;
+   /**
+    * Parse the passed URL into an X3D scene and return a Promise that resolves to an X3DScene object.
+    */
    createX3DFromURL (url: MFString): Promise <X3DScene>;
+   /**
+    * Parse the passed URL into an X3D scene. When complete send the passed event to the passed node. The event is a string with the name of an MFNode inputOnly field of the passed node.
+    */
    createX3DFromURL (url: MFString, node: SFNode, fieldName: string): void;
+   /**
+    * Load the passed URL, using the passed parameter string to possibly redirect it to another frame. If the destination is the frame containing the current scene, this method may never return. The return value is a Promise object, that is resolved when the new scene is loaded.
+    */
    loadURL (url: MFString, parameter?: MFString): Promise <void>;
+   /**
+    * Imports an X3D XML DOM document or fragment, converts it, and returns a Promise that resolves to an X3DScene object.
+    */
    importDocument (dom: HTMLElement | string): Promise <X3DScene>;
+   /**
+    * Imports an X3D JSON document or fragment, converts it, and returns a Promise that resolves to an X3DScene object.
+    */
    importJS (json: string | JSONObject): Promise <X3DScene>;
+   /**
+    * Returns a browser property with the corresponding name.
+    */
    getBrowserProperty (name: BrowserProperty): boolean;
+   /**
+    * Returns a browser option with the corresponding name.
+    */
    getBrowserOption <T extends keyof BrowserOption> (name: T): BrowserOption [T];
+   /**
+    * Sets a browser option with the corresponding name to the given value.
+    */
    setBrowserOption <T extends keyof BrowserOption> (name: T, value: BrowserOption [T]): void;
+   /**
+    * Returns a rendering property with the corresponding name.
+    */
    getRenderingProperty <T extends keyof RenderingProperty> (name: T): RenderingProperty [T];
    getContextMenu (): ContextMenu;
+   /**
+    * Adds a browser callback function associated with key, where key can be of any type. The callback function is called when a browser event has been occurred. If event is omitted, the callback function is added to all events. The signature of the callback function is function (event), where event can be any value listed below:
+    *
+    * - X3DConstants .CONNECTION_ERROR
+    * - X3DConstants .BROWSER_EVENT
+    * - X3DConstants .INITIALIZED_EVENT
+    * - X3DConstants .SHUTDOWN_EVENT
+    * - X3DConstants .INITIALIZED_ERROR
+    */
    addBrowserCallback (key: any, callback?: (event: number) => void): void;
    addBrowserCallback (key: any, event: number, callback?: (event: number) => void): void;
+   /**
+    * Removes a browser callback function associated with key and event. If event is omitted, all callback associated whit key are removed.
+    */
    removeBrowserCallback (key: any, event?: number): void;
+   /**
+    * Modifies the current view to show the entire visible scene within transitionTime seconds. If layerNode is omitted, the active layer is used.
+    */
    viewAll (layer?: SFNode, transitionTime?: number): void;
+   /**
+    * Changes the bound viewpoint node to the next viewpoint in the list of user viewpoints of layerNode. If layerNode is omitted, the active layer is used.
+    */
    nextViewpoint (layer?: SFNode): void;
+   /**
+    * Changes the bound viewpoint node to the previous viewpoint in the list of user viewpoints of layerNode. If layerNode is omitted, the active layer is used.
+    */
    previousViewpoint (layer?: SFNode): void;
+   /**
+    * Changes the bound viewpoint node to the first viewpoint in the list of user viewpoints of layerNode. If layerNode is omitted, the active layer is used.
+    */
    firstViewpoint (layer?: SFNode): void;
+   /**
+    * Changes the bound viewpoint node to the last viewpoint in the list of user viewpoints of layerNode. If layerNode is omitted, the active layer is used.
+    */
    lastViewpoint (layer?: SFNode): void;
+   /**
+    * Changes the bound viewpoint node to the viewpoint named name. The viewpoint must be available in layerNode. If layerNode is omitted, the active layer is used.
+    */
    changeViewpoint (name: string): void;
    changeViewpoint (layer: SFNode, name: string): void;
+   /**
+    * Prints objects to the browser’s console without a newline character. Successive calls to this function append the descriptions on the same line. The output is the implicit call to the object’s `toString ()` function.
+    */
    print (... args: any []): void;
+   /**
+    * Prints objects to the browser’s console, inserting a newline character after the output. Successive calls to this function will result in each output presented on separate lines. The output is the implicit call to the object’s `toString ()` function.
+    */
    printLn (... args: any []): void;
 
    // VRML methods
 
+   /**
+    * A browser-implementation specific string describing the browser.
+    */
    getName (): string;
+   /**
+    * A browser-implementation specific string describing the browser version.
+    */
    getVersion (): string;
+   /**
+    * The current speed of the avatar in m/s.
+    */
    getCurrentSpeed (): number;
+   /**
+    * The current frame rate in frames per second.
+    */
    getCurrentFrameRate (): number;
+   /**
+    * A string containing the URL of this execution context.
+    */
    getWorldURL (): string;
+   /**
+    * Replace the current world with this new nodes that has been loaded or constructed from somewhere.
+    */
    replaceWorld (nodes: MFNode): string;
+   /**
+    * The string may be any valid VRML content.
+    */
    createVrmlFromString (vrmlSyntax: string): MFNode;
+   /**
+    * Parse the passed URL into an VRML scene. When complete send the passed event to the passed node. The event is a string with the name of an MFNode inputOnly field of the passed node.
+    */
    createVrmlFromURL (url: MFString, node: SFNode, fieldName: string): void;
+   /**
+    * Add a route from the passed sourceField to the passed destinationField.
+    */
    addRoute (sourceNode: SFNode, sourceField: string, destinationNode: SFNode, destinationField: string): void;
+   /**
+    * Remove the route between the passed sourceField and passed destinationField, if one exists.
+    */
    deleteRoute (sourceNode: SFNode, sourceField: string, destinationNode: SFNode, destinationField: string): void;
+   /**
+    * Load the passed URL, using the passed parameter string to possibly redirect it to another frame. If the destination is the frame containing the current scene, this method may never return.
+    */
    loadURL (url: MFString, parameter?: MFString): void;
+   /**
+    * A user-defined String.
+    */
    setDescription (description: string): void;
 }
 

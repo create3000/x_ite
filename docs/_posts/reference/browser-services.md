@@ -39,13 +39,13 @@ The current frame rate in frames per second.
 
 A user-defined String which can be read and written.
 
-#### **supportedComponents**
-
-The property value cannot be changed, but the properties of the ComponentInfoArray can be.
-
 #### **supportedProfiles**
 
 The property value cannot be changed, but the properties of the ProfileInfoArray can be.
+
+#### **supportedComponents**
+
+The property value cannot be changed, but the properties of the ComponentInfoArray can be.
 
 #### **baseURL**
 
