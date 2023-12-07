@@ -222,7 +222,7 @@ type ConcreteNodeTypes = {
 ${[... concreteNodes .keys ()] .map (typeName => `   ${typeName}: ${typeName}Type,`) .join ("\n")}
 }
 &
-{ [name: string]: SFNode } // catch all;
+{ [name: string]: X3DNodeType } // catch all;
 
 // NODES END`;
 

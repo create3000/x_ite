@@ -20411,6 +20411,6 @@ type ConcreteNodeTypes = {
    WorldInfo: WorldInfoType,
 }
 &
-{ [name: string]: SFNode } // catch all;
+{ [name: string]: X3DNodeType } // catch all;
 
 // NODES END
