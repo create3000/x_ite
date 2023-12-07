@@ -1226,7 +1226,7 @@ declare class FieldDefinitionArray extends X3DInfoArray <X3DFieldDefinition> { }
 declare class X3DFieldDefinition
 {
    readonly accessType: AccessTypes;
-   readonly dataType: string;
+   readonly dataType: FieldTypes;
    readonly name: string;
    readonly value: X3DField;
 }
