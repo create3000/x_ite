@@ -417,50 +417,175 @@ type UserMenuItem = {
 
 declare class X3DScene extends X3DExecutionContext
 {
+   /**
+    * When used inside a prototype instance, this property is not writable. The MFNode object instance is also not be writable. When used anywhere else, it is writable.
+    */
    rootNodes: MFNode;
 
+   /**
+    * Returns the metadata values array associated with *name*.
+    */
    getMetaData (name: string): string [];
+   /**
+    * Creates or updates the metadata with *name* and *value.*
+    */
    setMetaData (name: string, value: string | string []): void;
+   /**
+    * Adds the metadata with *name* and *value.*
+    */
    addMetaData (name: string, value: string): void;
+   /**
+    * Removes the metadata *name.*
+    */
    removeMetaData (name: string): void;
+   /**
+    * Adds *node* to the list of root nodes. If the node already exists, the function silently returns.
+    */
    addRootNode (node: SFNode): void;
+   /**
+    * Removes *node* from the list of root nodes.
+    */
    removeRootNode (node: SFNode): void;
+   /**
+    * Returns a reference to the node with the exported name *exportedName.* If no exported node *exportedName* is found an exception is thrown.
+    */
    getExportedNode (exportedName: string): SFNode;
+   /**
+    * Creates the exported node *exportedName.*
+    */
    addExportedNode (exportedName: string, node: SFNode): void;
+   /**
+    * Creates or updates the exported node *exportedName.*
+    */
    updateExportedNode (exportedName: string, node: SFNode): void;
+   /**
+    * Removes the exported node *exportedName.*
+    */
    removeExportedNode (exportedName: string): void;
+   /**
+    * Returns the X3D VRML-encoded string that, if parsed as the value of `createX3DFromString ()` of X3DBrowser, produce this scene.
+    *
+    * #### Options
+    *
+    * An object with one or more of these properties:
+    *
+    * - **style:** String, output style, one of: **"TIDY"**, "COMPACT", "SMALL", "CLEAN"
+    * - **indent:** String, initial indent, default: ""
+    * - **precision:** Integer, float precision, default: 7
+    * - **doublePrecision:** Integer, double precision, default: 15
+    * - **html:** Boolean, HTML style, default: false
+    * - **closingTags:** Boolean, use closing tags, default: false
+    */
+   toVRMLString (options?: ToStringOptions): string;
+   /**
+    * Returns the X3D XML-encoded string that, if parsed as the value of `createX3DFromString ()` of X3DBrowser, produce this scene.
+    *
+    * For *options* see `X3DScene.toVRMLString`.
+    */
+   toXMLString (options?: ToStringOptions): string;
+   /**
+    * Returns the X3D JSON-encoded string that, if parsed as the value of `createX3DFromString ()` of X3DBrowser, produce this scene.
+    *
+    * For *options* see `X3DScene.toVRMLString`.
+    */
+   toJSONString (options?: ToStringOptions): string;
 }
 
 declare class X3DExecutionContext
 {
+   /**
+    * The string represent the basic specification version used by the parsed file in decimal format. For example, a scene conforming to this specification returns a value such as "4.0". This property is read only.
+    */
    readonly specificationVersion: string;
+   /**
+    * The encoding is represented as a string that describes the data encoding used. Valid values are "ASCII", "VRML", "XML", "BINARY", "SCRIPTED", "BIFS", "NONE". This property is read only.
+    */
    readonly encoding: "ASCII" | "VRML" | "XML" | "JSON" | "BINARY" | "SCRIPTED" | "BIFS" | "NONE" | "GLTF" | "OBJ" | "STL" | "PLY" | "SVG";
+   /**
+    * A reference to the ProfileInfo object used by this execution context. This property is read only.
+    */
    readonly profile: ProfileInfo | null;
+   /**
+    * A reference to the ComponentInfoArray object used by this execution context. This property is read only.
+    */
    readonly components: ComponentInfoArray;
+   /**
+    * A string containing the URL of this execution context. This property is read only.
+    */
    readonly worldURL: string;
+   /**
+    * A string containing the URL against which relative URLs are resolved. This property is read only.
+    */
    readonly baseURL: string;
+   /**
+    * A reference to the UnitInfoArray object used by this execution context. This property is read only.
+    */
    readonly units: UnitInfoArray;
+   /**
+    * When used inside a prototype instance, this property is not writable. The MFNode object instance is also not be writable. When used anywhere else, it is writable.
+    */
    readonly rootNodes: MFNode;
+   /**
+    * A reference to the ProtoDeclarationArray object used by this execution context. This property is read only.
+    */
    readonly protos: ProtoDeclarationArray;
+   /**
+    * A reference to the ExternProtoDeclarationArray object used by this execution context. This property is read only.
+    */
    readonly externprotos: ExternProtoDeclarationArray;
+   /**
+    * A reference to the RouteArray object used by this execution context. This property is read only.
+    */
    readonly routes: RouteArray;
 
+   /**
+    * Creates a new default instance of the node given by the *typeName* string containing the name of an X3D node type.
+    */
    createNode <T extends keyof ConcreteNodeTypes> (typeName: T): ConcreteNodeTypes [T];
+   /**
+    * Creates a new default instance of the prototype given by the *protoName* string containing the name of an prototype or extern prototype of this execution context.
+    */
    createProto (protoName: string): X3DPrototypeInstanceProxy;
+   /**
+    * Returns a reference to the named node named by the string *name.* If no named node with the name *name* exists an exception is throw.
+    */
    getNamedNode (name: string): SFNode;
+   /**
+    * Creates the named node referenced by *name.* This will give *node* a new name.
+    */
    addNamedNode (name: string, node: SFNode): void;
+   /**
+    * Creates or updates the named node referenced by *name.* This will give *node* a new name.
+    */
    updateNamedNode (name: string, node: SFNode): void;
+   /**
+    * Removes the named node *name.*
+    */
    removeNamedNode (name: string): void;
+   /**
+    * Returns a reference to the imported node named by the string *importedName.* If no imported node with the imported name *importedName* exists an exception is throw.
+    */
    getImportedNode (importedName: string): SFNode;
+   /**
+    * Creates the imported node *importedName.* If not *importedName* is given *exportedName* is used as imported name. The node to import must be an exported node named by *exportedName* in *inlineNode.*
+    */
    addImportedNode (inlineNode: SFNode, exportedName: string, importedName?: string): void;
+   /**
+    * Creates or updates the imported node *importedName.* If not *importedName* is given *exportedName* is used as imported name. The node to import must be an exported node named by *exportedName* in *inlineNode.*
+    */
    updateImportedNode (inlineNode: SFNode, exportedName: string, importedName?: string): void;
+   /**
+    * Removes the imported node *importedName.*
+    */
    removeImportedNode (importedName: string): void;
+   /**
+    * Add a route from the passed *sourceField* to the passed *destinationField.* The return value is an X3DRoute object.
+    */
    addRoute (sourceNode: SFNode, sourceField: string, destinationNode: SFNode, destinationField: string): X3DRoute;
+   /**
+    * Remove the route if it is connected.
+    */
    deleteRoute (route: X3DRoute): void;
-
-   toVRMLString (options?: ToStringOptions): string;
-   toXMLString (options?: ToStringOptions): string;
-   toJSONString (options?: ToStringOptions): string;
 }
 
 declare class ProfileInfoArray extends X3DInfoArray <ProfileInfo> { }

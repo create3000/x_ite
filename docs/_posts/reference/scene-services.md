@@ -21,7 +21,6 @@ The string represent the basic specification version used by the parsed file in 
 
 #### **encoding**
 
-Category Initial base unit
 The encoding is represented as a string that describes the data encoding used. Valid values are "ASCII", "VRML", "XML", "BINARY", "SCRIPTED", "BIFS", "NONE". This property is read only.
 
 #### **profile**
@@ -32,10 +31,6 @@ A reference to the ProfileInfo object used by this execution context. This prope
 
 A reference to the ComponentInfoArray object used by this execution context. This property is read only.
 
-#### **units**
-
-A reference to the UnitInfoArray object used by this execution context. This property is read only.
-
 #### **worldURL**
 
 A string containing the URL of this execution context. This property is read only.
@@ -43,6 +38,10 @@ A string containing the URL of this execution context. This property is read onl
 #### **baseURL**
 
 A string containing the URL against which relative URLs are resolved. This property is read only.
+
+#### **units**
+
+A reference to the UnitInfoArray object used by this execution context. This property is read only.
 
 #### **rootNodes**
 
@@ -74,6 +73,10 @@ Creates a new default instance of the prototype given by the *protoName* string 
 
 Returns a reference to the named node named by the string *name.* If no named node with the name *name* exists an exception is throw.
 
+#### void **addNamedNode** (*String name, SFNode node*)
+
+Creates the named node referenced by *name.* This will give *node* a new name.
+
 #### void **updateNamedNode** (*String name, SFNode node*)
 
 Creates or updates the named node referenced by *name.* This will give *node* a new name.
@@ -85,6 +88,10 @@ Removes the named node *name.*
 #### SFNode **getImportedNode** (*String importedName*)
 
 Returns a reference to the imported node named by the string *importedName.* If no imported node with the imported name *importedName* exists an exception is throw.
+
+#### void **addImportedNode** (*SFNode inlineNode, String exportedName, String importedName*)
+
+Creates the imported node *importedName.* If not *importedName* is given *exportedName* is used as imported name. The node to import must be an exported node named by *exportedName* in *inlineNode.*
 
 #### void **updateImportedNode** (*SFNode inlineNode, String exportedName, String importedName*)
 
@@ -148,6 +155,10 @@ Removes *node* from the list of root nodes.
 
 Returns a reference to the node with the exported name *exportedName.* If no exported node *exportedName* is found an exception is thrown.
 
+#### void **addExportedNode** (*String exportedName, SFNode node*)
+
+Creates the exported node *exportedName.*
+
 #### void **updateExportedNode** (*String exportedName, SFNode node*)
 
 Creates or updates the exported node *exportedName.*
@@ -158,7 +169,7 @@ Removes the exported node *exportedName.*
 
 #### String **toVRMLString** (\[options\])
 
-Returns the X3D VRML-encoded string that, if parsed as the value of createX3DFromString () of X3DBrowser, produce this scene.
+Returns the X3D VRML-encoded string that, if parsed as the value of `createX3DFromString ()` of X3DBrowser, produce this scene.
 
 ##### Options
 
@@ -173,13 +184,13 @@ An object with one or more of these properties:
 
 #### String **toXMLString** (\[options\])
 
-Returns the X3D XML-encoded string that, if parsed as the value of createX3DFromString () of X3DBrowser, produce this scene.
+Returns the X3D XML-encoded string that, if parsed as the value of `createX3DFromString ()` of X3DBrowser, produce this scene.
 
 For options see [X3DScene.toVRMLString](scene-services#string-tovrmlstring-options).
 
 #### String **toJSONString** (\[options\])
 
-Returns the X3D JSON-encoded string that, if parsed as the value of createX3DFromString () of X3DBrowser, produce this scene.
+Returns the X3D JSON-encoded string that, if parsed as the value of `createX3DFromString ()` of X3DBrowser, produce this scene.
 
 For options see [X3DScene.toVRMLString](scene-services#string-tovrmlstring-options).
 
