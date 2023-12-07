@@ -28,7 +28,6 @@ function main ()
 
    ConcreteNodesConstants ();
    AbstractNodesConstants ();
-   TypeNodeTypes ();
    NodeTypes ();
 
    fs .writeFileSync ("src/x_ite.d.ts", ts);
@@ -60,19 +59,6 @@ ${[... abstractNodes .keys ()] .map (typeName => `   readonly ${typeName}: numbe
    // ABSTRACT NODE TYPES CONSTANTS END`;
 
    ts = ts .replace (/(\/\/ ABSTRACT NODE TYPES CONSTANTS START).*?(\/\/ ABSTRACT NODE TYPES CONSTANTS END)/s, string);
-}
-
-function TypeNodeTypes ()
-{
-   const string = `// TYPE NODE TYPES START
-
-type NodeTypes = ${[... concreteNodes .keys (), ... abstractNodes .keys ()]
-   .map (typeName => `X3DConstants ["${typeName}"]`) .join ("\n   | ")};
-
-// TYPE NODE TYPES END`;
-
-   ts = ts .replace (/(\/\/ TYPE NODE TYPES START).*?(\/\/ TYPE NODE TYPES END)/s, string);
-
 }
 
 function ConcreteNode (node)
