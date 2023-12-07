@@ -144,7 +144,7 @@ declare class X3DBrowser
     */
    readonly supportedComponents: ComponentInfoArray;
    /**
-    * A String value containing the URL against which relative URLs are resolved. By default, this is the address of the web page itself. Although this feature is rarely needed, it can be useful when loading a `data:` or `blob:` URL with `Browser.loadURL`, or when using `Browser.createX3DFromString`. The value of baseURL will only be used with the external browser.
+    * A String value containing the URL against which relative URLs are resolved. By default, this is the address of the web page itself. Although this feature is rarely needed, it can be useful when loading a `data:` or `blob:` URL with `Browser.loadURL`, or when using `Browser.createX3DFromString`. The value of *baseURL* will only be used with the external browser.
     */
    baseURL: string;
    /**
@@ -181,24 +181,24 @@ declare class X3DBrowser
     */
    importJS (json: string | JSONObject): Promise <X3DScene>;
    /**
-    * Returns a browser property with the corresponding name.
+    * Returns a browser property with the corresponding *name*.
     */
    getBrowserProperty (name: BrowserProperty): boolean;
    /**
-    * Returns a browser option with the corresponding name.
+    * Returns a browser option with the corresponding *name*.
     */
    getBrowserOption <T extends keyof BrowserOption> (name: T): BrowserOption [T];
    /**
-    * Sets a browser option with the corresponding name to the given value.
+    * Sets a browser option with the corresponding *name* to the given value.
     */
    setBrowserOption <T extends keyof BrowserOption> (name: T, value: BrowserOption [T]): void;
    /**
-    * Returns a rendering property with the corresponding name.
+    * Returns a rendering property with the corresponding *name*.
     */
    getRenderingProperty <T extends keyof RenderingProperty> (name: T): RenderingProperty [T];
    getContextMenu (): ContextMenu;
    /**
-    * Adds a browser callback function associated with key, where key can be of any type. The callback function is called when a browser event has been occurred. If event is omitted, the callback function is added to all events. The signature of the callback function is function (event), where event can be any value listed below:
+    * Adds a browser *callback* function associated with *key,* where *key* can be of any type. The callback function is called when a browser event has been occurred. If *event* is omitted, the callback function is added to all events. The signature of the callback function is `function (event)`, where event can be any value listed below:
     *
     * - X3DConstants .CONNECTION_ERROR
     * - X3DConstants .BROWSER_EVENT
@@ -209,40 +209,40 @@ declare class X3DBrowser
    addBrowserCallback (key: any, callback?: (event: number) => void): void;
    addBrowserCallback (key: any, event: number, callback?: (event: number) => void): void;
    /**
-    * Removes a browser callback function associated with key and event. If event is omitted, all callback associated whit key are removed.
+    * Removes a browser callback function associated with *key* and *event*. If *event* is omitted, all callback associated whit key are removed.
     */
    removeBrowserCallback (key: any, event?: number): void;
    /**
-    * Modifies the current view to show the entire visible scene within transitionTime seconds. If layerNode is omitted, the active layer is used.
+    * Modifies the current view to show the entire visible scene within *transitionTime* seconds. If *layerNode* is omitted, the active layer is used.
     */
    viewAll (layer?: SFNode, transitionTime?: number): void;
    /**
-    * Changes the bound viewpoint node to the next viewpoint in the list of user viewpoints of layerNode. If layerNode is omitted, the active layer is used.
+    * Changes the bound viewpoint node to the next viewpoint in the list of user viewpoints of *layerNode*. If *layerNode* is omitted, the active layer is used.
     */
    nextViewpoint (layer?: SFNode): void;
    /**
-    * Changes the bound viewpoint node to the previous viewpoint in the list of user viewpoints of layerNode. If layerNode is omitted, the active layer is used.
+    * Changes the bound viewpoint node to the previous viewpoint in the list of user viewpoints of *layerNode*. If *layerNode* is omitted, the active layer is used.
     */
    previousViewpoint (layer?: SFNode): void;
    /**
-    * Changes the bound viewpoint node to the first viewpoint in the list of user viewpoints of layerNode. If layerNode is omitted, the active layer is used.
+    * Changes the bound viewpoint node to the first viewpoint in the list of user viewpoints of *layerNode*. If *layerNode* is omitted, the active layer is used.
     */
    firstViewpoint (layer?: SFNode): void;
    /**
-    * Changes the bound viewpoint node to the last viewpoint in the list of user viewpoints of layerNode. If layerNode is omitted, the active layer is used.
+    * Changes the bound viewpoint node to the last viewpoint in the list of user viewpoints of *layerNode*. If *layerNode* is omitted, the active layer is used.
     */
    lastViewpoint (layer?: SFNode): void;
    /**
-    * Changes the bound viewpoint node to the viewpoint named name. The viewpoint must be available in layerNode. If layerNode is omitted, the active layer is used.
+    * Changes the bound viewpoint node to the viewpoint named *name*. The viewpoint must be available in *layerNode*. If *layerNode* is omitted, the active layer is used.
     */
    changeViewpoint (name: string): void;
    changeViewpoint (layer: SFNode, name: string): void;
    /**
-    * Prints objects to the browser’s console without a newline character. Successive calls to this function append the descriptions on the same line. The output is the implicit call to the object’s `toString ()` function.
+    * Prints *args* to the browser's console without a newline character. Successive calls to this function append the descriptions on the same line. The output is the implicit call to the object's `toString ()` function.
     */
    print (... args: any []): void;
    /**
-    * Prints objects to the browser’s console, inserting a newline character after the output. Successive calls to this function will result in each output presented on separate lines. The output is the implicit call to the object’s `toString ()` function.
+    * Prints *args* to the browser’s console, inserting a newline character after the output. Successive calls to this function will result in each output presented on separate lines. The output is the implicit call to the object’s `toString ()` function.
     */
    printLn (... args: any []): void;
 
@@ -281,11 +281,11 @@ declare class X3DBrowser
     */
    createVrmlFromURL (url: MFString, node: SFNode, fieldName: string): void;
    /**
-    * Add a route from the passed sourceField to the passed destinationField.
+    * Add a route from the passed *sourceField* to the passed *destinationField*.
     */
    addRoute (sourceNode: SFNode, sourceField: string, destinationNode: SFNode, destinationField: string): void;
    /**
-    * Remove the route between the passed sourceField and passed destinationField, if one exists.
+    * Remove the route between the passed *sourceField* and passed *destinationField*, if one exists.
     */
    deleteRoute (sourceNode: SFNode, sourceField: string, destinationNode: SFNode, destinationField: string): void;
    /**

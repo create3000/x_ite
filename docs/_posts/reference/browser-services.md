@@ -87,7 +87,7 @@ Imports an X3D JSON document or fragment, converts it, and returns a Promise tha
 
 #### String **getBrowserProperty** (*String name*)
 
-Returns a browser property with the corresponding name.
+Returns a browser property with the corresponding *name*.
 
 ##### Browser Properties
 
@@ -145,7 +145,7 @@ Returns a browser property with the corresponding name.
 
 #### String **getBrowserOption** (*String name*)
 
-Returns a browser option with the corresponding name.
+Returns a browser option with the corresponding *name*.
 
 ##### Browser Options
 
@@ -409,13 +409,13 @@ Changes the bound viewpoint node to the last viewpoint in the list of user viewp
 
 Changes the bound viewpoint node to the viewpoint named *name*. The viewpoint must be available in *layerNode*. If *layerNode* is omitted, the active layer is used.
 
-#### void **print** (*Object object*)
+#### void **print** (*Object object*, ...)
 
-Prints *object* to the browser's console without a newline character. Successive calls to this function append the descriptions on the same line. The output is the implicit call to the object's `toString ()` function.
+Prints *objects* to the browser's console without a newline character. Successive calls to this function append the descriptions on the same line. The output is the implicit call to the object's `toString ()` function.
 
-#### void **println** (*Object object*)
+#### void **println** (*Object object, ...*)
 
-Prints *object* to the browser's console, inserting a newline character after the output. Successive calls to this function will result in each output presented on separate lines. The output is the implicit call to the object's `toString ()` function.
+Prints *objects* to the browser's console, inserting a newline character after the output. Successive calls to this function will result in each output presented on separate lines. The output is the implicit call to the object's `toString ()` function.
 
 ### VRML Methods
 
