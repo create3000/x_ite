@@ -73,7 +73,7 @@ function ConcreteNode (node)
    ]
    .filter (inheritance => inheritance)
    .flatMap (inheritance => inheritance)
-   .map (inheritance => `${inheritance .baseType}Type`);
+   .map (inheritance => `${inheritance .baseType}Proxy`);
 
    if (!baseTypes .length)
       baseTypes .push ("SFNode");
@@ -108,7 +108,7 @@ function ConcreteNode (node)
    // Generate class
 
    const string = `/** ${node .InterfaceDefinition .appinfo} */
-interface ${node .name}Type${inheritance ? ` extends ${inheritance}`: ""}
+interface ${node .name}Proxy${inheritance ? ` extends ${inheritance}`: ""}
 {
 ${properties}
 }`;
@@ -165,7 +165,7 @@ function FieldType (field)
       {
          const types = field .acceptableNodeTypes
             .split (/[|,]/)
-            .map (type => `${type .trim ()}Type`);
+            .map (type => `${type .trim ()}Proxy`);
 
          if (!types .length)
             types .push ("SFNode");
@@ -178,7 +178,7 @@ function FieldType (field)
       {
          const types = field .acceptableNodeTypes
             .split (/[|,]/)
-            .map (type => `${type .trim ()}Type`);
+            .map (type => `${type .trim ()}Proxy`);
 
          if (!types .length)
             types .push ("SFNode");
@@ -219,10 +219,10 @@ ${[... concreteNodes .values ()] .map (ConcreteNode) .join ("\n\n")}
 ${[... abstractNodes .values ()] .map (AbstractNode) .join ("\n\n")}
 
 type ConcreteNodeTypes = {
-${[... concreteNodes .keys ()] .map (typeName => `   ${typeName}: ${typeName}Type,`) .join ("\n")}
+${[... concreteNodes .keys ()] .map (typeName => `   ${typeName}: ${typeName}Proxy,`) .join ("\n")}
 }
 &
-{ [name: string]: X3DNodeType } // catch all;
+{ [name: string]: X3DNodeProxy } // catch all;
 
 // NODES END`;
 
