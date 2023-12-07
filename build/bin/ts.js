@@ -218,7 +218,7 @@ ${[... concreteNodes .values ()] .map (ConcreteNode) .join ("\n\n")}
 
 ${[... abstractNodes .values ()] .map (AbstractNode) .join ("\n\n")}
 
-type ConcreteNodesType = {
+type ConcreteNodeTypes = {
 ${[... concreteNodes .keys ()] .map (typeName => `   ${typeName}: ${typeName}Type,`) .join ("\n")}
 }
 &
