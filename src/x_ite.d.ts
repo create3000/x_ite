@@ -88,6 +88,9 @@ interface X3D
    readonly MFVec4f: typeof MFVec4f;
 }
 
+/**
+ * The X3DCanvasElement, \<x3d-canvas\>, is the main element that displays the X3D content. It defines some functions to be used with this object.
+ */
 declare class X3DCanvasElement extends HTMLElement
 {
    /**
@@ -109,6 +112,9 @@ declare class X3DCanvasElement extends HTMLElement
    toDataURL (type?: string, encoderOptions?: number): string;
 }
 
+/**
+ * This section lists the methods available in the *browser* object, which allows scripts to get and set browser information.
+ */
 declare class X3DBrowser
 {
    /**
@@ -415,6 +421,9 @@ type UserMenuItem = {
    dataAttr?: Record <string, string>,
 }
 
+/**
+ * A scene is an extension of the execution context services with additional services provided.
+ */
 declare class X3DScene extends X3DExecutionContext
 {
    /**
@@ -491,6 +500,9 @@ declare class X3DScene extends X3DExecutionContext
    toJSONString (options?: ToStringOptions): string;
 }
 
+/**
+ * This section lists the methods available in the X3DExecutionContext object, which allows scripts to get access to the scene graph.
+ */
 declare class X3DExecutionContext
 {
    /**
@@ -590,71 +602,197 @@ declare class X3DExecutionContext
 
 declare class ProfileInfoArray extends X3DInfoArray <ProfileInfo> { }
 
+/**
+ * This object stores information about a particular X3D profile.
+ */
 declare class ProfileInfo
 {
+   /**
+    * A string of the formal name of this profile. This property is read only.
+    */
    readonly name: string;
+   /**
+    * A generic, freeform title string provided by the browser manufacturer. This property is read only.
+    */
    readonly title: string;
+   /**
+    * If provided, the URL to the entity that wrote this component. This assumes that extensions to the browser may not necessarily be provided by the browser writer's themselves. This property is read only.
+    */
    readonly providerURL: string;
+   /**
+    * An ComponentInfoArray object of the ComponentInfo object instances that make up this profile. This property is read only.
+    */
    readonly components: ComponentInfoArray
 }
 
 declare class ComponentInfoArray extends X3DInfoArray <ComponentInfo> { }
 
+/**
+ * The ComponentInfo object stores information about a particular X3D component. The object consists solely of read-only properties. It does not define any additional functions.
+ */
 declare class ComponentInfo
 {
+   /**
+    * A string of the formal name of this profile. This property is read only.
+    */
    readonly name: string;
+   /**
+    * A number of the level of support of this instance. This property is read only.
+    */
    readonly level: number;
+   /**
+    * A generic, freeform title string provided by the browser manufacturer. This property is read only.
+    */
    readonly title: string;
+   /**
+    * If provided, the URL to the entity that wrote this component. This assumes that extensions to the browser may not necessarily be provided by the browser writer's themselves. This property is read only.
+    */
    readonly providerURL: string;
 }
 
 declare class UnitInfoArray extends X3DInfoArray <UnitInfo> { }
 
+/**
+ * The UnitInfo object stores information about a particular unit declaration. The object consists solely of read-only properties. It does not define any additional functions.
+ */
 declare class UnitInfo
 {
+   /**
+    * The category of default unit being modified as defined in the table. This property is read only.
+    */
    readonly category: string;
+   /**
+    * A string of the name assigned to the new default unit. This property is read only.
+    */
    readonly name: string;
+   /**
+    * The double-precision number needed to convert from the new default unit to the initial default unit. This property is read only.
+    */
    readonly conversionFactor: number;
 }
 
 declare class ProtoDeclarationArray extends X3DInfoArray <X3DProtoDeclaration> { }
 
+/**
+ * A PROTO declaration is represented by the X3DProtoDeclaration object. This object can only be fetched using the X3DExecutionContext object.
+ */
 declare class X3DProtoDeclaration
 {
+   /**
+    * A string of the declared name of this prototype. This property is read only.
+    */
    readonly name: string;
+   /**
+    * A reference to FieldDefinitionArray of all the fields defined for this prototype. This property is read only.
+    */
    readonly fields: FieldDefinitionArray;
+   /**
+    * Always has the value of false. This property is read only.
+    */
    readonly isExternProto: false;
 
+   /**
+    * Creates a new default instance of the prototype.
+    */
    newInstance (): X3DPrototypeInstanceProxy;
+   /**
+    * Returns the X3D VRML-encoded string that, if parsed as the value of createX3DFromString () of X3DBrowser, produce this prototype.
+    *
+    * For options see `X3DScene.toVRMLString`.
+    */
    toVRMLString (options?: ToStringOptions): string;
+   /**
+    * Returns the X3D XML-encoded string that, if parsed as the value of createX3DFromString () of X3DBrowser, produce this prototype.
+    *
+    * For options see `X3DScene.toVRMLString`.
+    */
    toXMLString (options?: ToStringOptions): string;
+   /**
+    * Returns the X3D JSON-encoded string that, if parsed as the value of createX3DFromString () of X3DBrowser, produce this prototype.
+    *
+    * For options see `X3DScene.toVRMLString`.
+    */
    toJSONString (options?: ToStringOptions): string;
 }
 
 declare class ExternProtoDeclarationArray extends X3DInfoArray <X3DExternProtoDeclaration> { }
 
+/**
+ * An EXTERNPROTO declaration is represented by the X3DExternProtoDeclaration object. EXTERNPROTO declarations can only be fetched using the X3DExecutionContext object.
+ */
 declare class X3DExternProtoDeclaration
 {
+   /**
+    * A string of the declared name of this extern prototype. This property is read only.
+    */
    readonly name: string;
+   /**
+    * A reference to FieldDefinitionArray of all the fields defined for this extern prototype. This property is read only.
+    */
    readonly fields: FieldDefinitionArray;
+   /**
+    * A MFString array of all the URI's defined for this extern prototype. This property is read only.
+    */
    readonly urls: MFString;
+   /**
+    * Always has the value of true. This property is read only.
+    */
    readonly isExternProto: true;
+   /**
+    * The value is one of the *_STATE* properties defined in the X3DConstants object. This property is read only.
+    */
    readonly loadState: number;
 
+   /**
+    * Creates a new default instance of the extern prototype.
+    */
    newInstance (): X3DPrototypeInstanceProxy;
+   /**
+    * Triggers the loading of the extern prototype. It returns a Promise that is resolved when the extern prototype is completely loaded and all instances are updated.
+    */
    loadNow (): Promise <void>;
+   /**
+    * Returns the X3D VRML-encoded string that, if parsed as the value of createX3DFromString () of X3DBrowser, produce this prototype.
+    *
+    * For options see `X3DScene.toVRMLString`.
+    */
    toVRMLString (options?: ToStringOptions): string;
+   /**
+    * Returns the X3D XML-encoded string that, if parsed as the value of createX3DFromString () of X3DBrowser, produce this prototype.
+    *
+    * For options see `X3DScene.toVRMLString`.
+    */
    toXMLString (options?: ToStringOptions): string;
+   /**
+    * Returns the X3D JSON-encoded string that, if parsed as the value of createX3DFromString () of X3DBrowser, produce this prototype.
+    *
+    * For options see `X3DScene.toVRMLString`.
+    */
    toJSONString (options?: ToStringOptions): string;
 }
 
 declare class RouteArray extends X3DInfoArray <X3DRoute> { }
 
+/**
+ * Routes are represented by the X3DRoute object. Routes can only be created through calls to the addRoute () function of X3DExecutionContext.
+ */
 declare class X3DRoute
 {
+   /**
+    * A reference to the node that is the source of this route.
+    */
    readonly sourceNode: SFNode;
+   /**
+    * A string of the name of the field in the source node.
+    */
    readonly sourceField: string;
+   /**
+    * A reference to the node that is the destination of this route.
+    */
    readonly destinationNode: SFNode;
+   /**
+    * A string of the name of the field in the destination node.
+    */
    readonly destinationField: string;
 }
 
@@ -664,6 +802,13 @@ declare class X3DInfoArray <T>
    readonly length: number;
 }
 
+/**
+ * The X3DConstants object is used to define constants values used throughout this language binding. Each property is defined as a numeric, read-only value. The individual values are not specified; these are implementation-dependent. These constants can be used anywhere that a service request wishes to return some fixed value such as if or switch statements. The list of known values are defined in the table below.
+ *
+ * The X3DConstants object is unique in ECMAScript in that there is exactly one globally available instance of the object, named X3DConstants. Properties can be accessed using the syntax X3DConstants.\<property-name\>.
+ *
+ * The object consists solely of read-only properties. It does not define any additional functions.
+ */
 interface X3DConstants
 {
    // Browser Event Constants
