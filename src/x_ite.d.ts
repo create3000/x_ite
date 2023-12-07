@@ -366,7 +366,7 @@ declare class X3DExternProtoDeclaration
    readonly name: string;
    readonly fields: FieldDefinitionArray;
    readonly urls: MFString;
-   readonly isExternProto: false;
+   readonly isExternProto: true;
    readonly loadState: number;
 
    newInstance (): SFNode;
@@ -388,8 +388,8 @@ declare class X3DRoute
 
 declare class X3DInfoArray <T>
 {
-   [index: number]: T;
-   length: number;
+   readonly [index: number]: T;
+   readonly length: number;
 }
 
 interface X3DConstants
