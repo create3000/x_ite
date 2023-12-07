@@ -539,6 +539,7 @@ interface X3DConstants
    readonly EaseInEaseOut: number;
    readonly EdgeEnhancementVolumeStyle: number;
    readonly ElevationGrid: number;
+   readonly EnvironmentLight: number;
    readonly EspduTransform: number;
    readonly ExplosionEmitter: number;
    readonly Extrusion: number;
@@ -5580,6 +5581,27 @@ interface ElevationGridProxy extends X3DGeometryNodeProxy
    * This field is of access type 'initializeOnly' and type SFFloat.
    */
    zSpacing: number;
+}
+
+/** undefined */
+interface EnvironmentLightProxy extends X3DLightNodeProxy
+{
+   /**
+   * This field is of access type 'inputOutput' and type MFFloat.
+   */
+   diffuseCoefficients: MFFloat;
+   /**
+   * This field is of access type 'inputOutput' and type SFNode.
+   */
+   diffuseTexture: X3DEnvironmentTextureNodeProxy | null;
+   /**
+   * This field is of access type 'inputOutput' and type SFRotation.
+   */
+   rotation: SFRotation;
+   /**
+   * This field is of access type 'inputOutput' and type SFNode.
+   */
+   specularTexture: X3DEnvironmentTextureNodeProxy | null;
 }
 
 /** EspduTransform is a networked Transform node that can contain most nodes. */
@@ -20218,6 +20240,7 @@ type ConcreteNodesType = {
    EaseInEaseOut: EaseInEaseOutProxy,
    EdgeEnhancementVolumeStyle: EdgeEnhancementVolumeStyleProxy,
    ElevationGrid: ElevationGridProxy,
+   EnvironmentLight: EnvironmentLightProxy,
    EspduTransform: EspduTransformProxy,
    ExplosionEmitter: ExplosionEmitterProxy,
    Extrusion: ExtrusionProxy,

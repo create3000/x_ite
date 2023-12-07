@@ -1,6 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <X3dUnifiedObjectModel xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance" version="4.0" xsd:noNamespaceSchemaLocation="X3dUnifiedObjectModel.xsd">
    <ConcreteNodes>
+      <ConcreteNode name="EnvironmentLight">
+         <InterfaceDefinition>
+            <componentInfo name="Lighting" level="3"/>
+            <containerField default="children" type="xs:NMTOKEN"/>
+            <Inheritance baseType="X3DLightNode"/>
+            <field name="rotation"
+                  type="SFRotation"
+                  accessType="inputOutput"
+                  default="0 0 1 0"
+                  description=""/>
+            <field name="diffuseTexture"
+                  type="SFNode"
+                  accessType="inputOutput"
+                  default="NULL"
+                  acceptableNodeTypes="X3DEnvironmentTextureNode"
+                  description=""/>
+            <field name="diffuseCoefficients"
+                  type="MFFloat"
+                  accessType="inputOutput"
+                  description=""/>
+            <field name="specularTexture"
+                  type="SFNode"
+                  accessType="inputOutput"
+                  default="NULL"
+                  acceptableNodeTypes="X3DEnvironmentTextureNode"
+                  description=""/>
+         </InterfaceDefinition>
+      </ConcreteNode>
       <ConcreteNode name="NavigationInfo">
          <InterfaceDefinition>
             <field name="metadata"/>

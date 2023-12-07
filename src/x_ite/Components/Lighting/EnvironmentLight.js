@@ -205,7 +205,7 @@ Object .defineProperties (EnvironmentLight,
    },
    componentInfo:
    {
-      value: Object .freeze ({ name: "Lighting", level: 1 }),
+      value: Object .freeze ({ name: "Lighting", level: 3 }),
       enumerable: true,
    },
    containerField:
