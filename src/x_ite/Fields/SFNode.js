@@ -213,8 +213,7 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
          target  = this [_target],
          current = target .getValue ();
 
-      if (current)
-         current .removeParent (target [_proxy]);
+      current ?.removeParent (target [_proxy]);
 
       // No need to test for X3DBaseNode, because there is a special version of SFNode in Script.
 
@@ -305,7 +304,7 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
          {
             return X3DField .prototype .addFieldCallback .apply (target, arguments);
          }
-         case 3:
+         case 3: // Depreciated
          {
             const value = target .getValue ();
 
@@ -326,7 +325,7 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
          {
             return X3DField .prototype .removeFieldCallback .apply (target, arguments);
          }
-         case 2:
+         case 2: // Depreciated
          {
             const value = target .getValue ();
 

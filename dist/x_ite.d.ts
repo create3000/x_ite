@@ -1287,13 +1287,13 @@ declare class X3DField
    getUnit (): string;
    hasReferences (): boolean;
    isReference (accessType: number): boolean;
-   addReferencesCallback (key: any, callback: (value: this) => void): void;
+   addReferencesCallback (key: any, callback: () => void): void;
    removeReferencesCallback (key: any): void;
-   getReferencesCallbacks (): Map <any, (value: this) => void>;
+   getReferencesCallbacks (): Map <any, () => void>;
    addFieldInterest (other: this): void;
    removeFieldInterest (other: this): void;
    getFieldInterests (): Set <this>
-   addFieldCallback (key: any, callback: (value: this) => void): void;
+   addFieldCallback (key: any, callback: (value: unknown) => void): void;
    removeFieldCallback (key: any): void;
    getFieldCallbacks (): Map <any, (value: this) => void>;
    addInputRoute (route: X3DRoute): void;
@@ -1302,9 +1302,9 @@ declare class X3DField
    addOutputRoute (route: X3DRoute): void;
    removeOutputRoute (route: X3DRoute): void;
    getOutputRoutes (): Set <X3DRoute>;
-   addRouteCallback (key: any, callback: (value: this) => void): void;
+   addRouteCallback (key: any, callback: () => void): void;
    removeRouteCallback (key: any): void;
-   getRouteCallbacks (): Map <any, (value: this) => void>;
+   getRouteCallbacks (): Map <any, () => void>;
    dispose (): void;
 }
 
@@ -1696,7 +1696,7 @@ declare class SFNode extends X3DField
    /**
     * @deprecated Use `node .getField (name) .addFieldCallback (key, callback)`.
     */
-   addFieldCallback (name: string, key: any, callback: (value: X3DField) => void): void;
+   addFieldCallback (name: string, key: any, callback: (value: unknown) => void): void;
    getFieldDefinitions (): FieldDefinitionArray;
    getField (name: string): X3DField;
    getNodeName (): string;
@@ -1705,6 +1705,9 @@ declare class SFNode extends X3DField
    getNodeTypeName (): string;
    getNodeUserData (key: any): any;
    removeFieldCallback (key: any): void;
+   /**
+    * @deprecated Use `node .getField (name) .removeFieldCallback (key)`.
+    */
    removeFieldCallback (name: string, key: any): void;
    removeNodeUserData (key: any): void;
    setNodeUserData (key: any, value: any): void;

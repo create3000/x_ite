@@ -223,7 +223,7 @@ function init ()
 
   // Add field callback to get informed when cycleTime is fired. "time" is an arbitrary
   // string to identify the callback, for instance if you later want to remove the callback.
-  timer .addFieldCallback ("cycleTime", "time", function (value)
+  timer .getField ("cycleTime") .addFieldCallback ("time", value =>
   {
     console .log ("cycleTime: " + value);
   });

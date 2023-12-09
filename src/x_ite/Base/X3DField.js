@@ -247,8 +247,8 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .pro
       {
          if (this [_referencesCallbacks] .size)
          {
-            for (const referencesCallback of MapUtilities .values (referencesCallbacksTemp, this [_referencesCallbacks]))
-               referencesCallback (this);
+            for (const callback of MapUtilities .values (referencesCallbacksTemp, this [_referencesCallbacks]))
+               callback ();
          }
       };
    })(),
@@ -345,8 +345,8 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .pro
       {
          if (this [_routeCallbacks] .size)
          {
-            for (const routeCallback of MapUtilities .values (routeCallbacksTemp, this [_routeCallbacks]))
-               routeCallback (this);
+            for (const callback of MapUtilities .values (routeCallbacksTemp, this [_routeCallbacks]))
+               callback ();
          }
       };
    })(),
@@ -397,7 +397,7 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .pro
          if (this [_fieldCallbacks] .size)
          {
             for (const callback of MapUtilities .values (fieldCallbacksTemp, this [_fieldCallbacks]))
-               callback (this);
+               callback (this .valueOf ());
          }
       };
    })(),

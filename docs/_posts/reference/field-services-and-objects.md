@@ -110,6 +110,16 @@ None
 
 Returns true if the passed SF* or MF* *field* of the same type is equals to this object, otherwise false.
 
+#### void **addFieldCallback** (*key, callback*)
+
+Adds a field callback function, if external browser interface is used. *Key* is a custom key of any type associated with the *callback*. The callback is called when the field has been changed.
+
+The callback has a signature of *function (value),* where value is the current value of the field.
+
+#### void **removeFieldCallback** (*key*)
+
+Removes a field callback function associated with *key*.
+
 ## SFColor Object
 
 The SFColor object corresponds to an X3D SFColor field. All properties are accessed using the syntax *sfColorObjectName.\<property\>*, where *sfColorObjectName* is an instance of a SFColor object. All methods are invoked using the syntax *sfColorObjectName.method (\<argument-list\>)*, where *sfColorObjectName* is an instance of a SFColor object.
@@ -415,7 +425,7 @@ The SFNode object corresponds to an X3D SFNode field.
 
 *vrmlSyntax* is a UTF-8 string containing the definition of an X3D node.
 
-If the specification version is greater than 2.0, SFNode will throw an error when instantiated directly, use [X3DExecutionContext.createNode](scene-services#sfnode-createnode-string-typename) or [X3DExecutionContext.createProto](scene-services#sfnode-createproto-string-protoname) instead.
+This constructor is only available inside Script nodes. If the specification version is greater than 2.0, SFNode will throw an error when instantiated directly, use [X3DExecutionContext.createNode](scene-services#sfnode-createnode-string-typename) or [X3DExecutionContext.createProto](scene-services#sfnode-createproto-string-protoname) instead.
 
 ### Properties
 
@@ -423,21 +433,13 @@ Each node may assign values to its inputOnly fields and obtain the last output v
 
 ### Methods
 
-#### void **addFieldCallback** (*name, key, callback*)
-
-Adds a field callback function, if external browser interface is used. *Name* is the name of the field. *Key* is a custom key of any type associated with the *callback*. The callback is called when the field has been changed.
-
-The callback has a signature of *function (value),* where value is the current value of the field.
-
 #### FieldDefinitionArray **getFieldDefinitions** ()
 
 Returns a list of fields defined for the SFNode object.
 
-<!--
 #### X3DField **getField** (*name*)
 
 Returns the corresponding X3DField object associated with *name*.
--->
 
 #### String **getNodeName** ()
 
@@ -450,10 +452,6 @@ Returns, in the array, a list of constant values that indicate node types as pro
 #### String **getNodeTypeName** ()
 
 Returns the node type name.
-
-#### void **removeFieldCallback** (*name, key*)
-
-Removes a field callback function associated with the parameters *name* and *key*.
 
 #### String **toVRMLString** (\[options\])
 

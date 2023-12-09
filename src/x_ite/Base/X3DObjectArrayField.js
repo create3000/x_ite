@@ -402,6 +402,10 @@ Object .assign (Object .setPrototypeOf (X3DObjectArrayField .prototype, X3DArray
 
       return target [_proxy];
    },
+   valueOf ()
+   {
+      return this [_proxy];
+   },
    toStream (generator)
    {
       const
